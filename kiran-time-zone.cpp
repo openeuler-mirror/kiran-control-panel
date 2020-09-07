@@ -99,7 +99,7 @@ void KiranTimeZone::initUI()
         m_hasChanged = true;
     });
 
-    ui->timeZoneList->loadAllTimeZone();
+    ui->timeZoneList->initAllTimeZone();
 }
 
 void KiranTimeZone::setEditHasFocus(bool editHasFocus)

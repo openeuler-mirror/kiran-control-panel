@@ -54,15 +54,17 @@ struct ZoneInfo{
         return false;
     }
 };
-typedef QList<ZoneInfo> TimeZoneList;
+typedef QList<ZoneInfo>        TimeZoneList;
+typedef QMap<QString,ZoneInfo> TimeZoneMap;
+
 Q_DECLARE_METATYPE(ZoneInfo)
 Q_DECLARE_METATYPE(TimeZoneList)
-
 /*
  * Proxy class for interface com.unikylin.Kiran.SystemDaemon.TimeDate
  */
 class ComUnikylinKiranSystemDaemonTimeDateInterface: public QDBusAbstractInterface
 {
+    friend class KiranTimeDateData;
     Q_OBJECT
 public:
     static inline const char *staticInterfaceName()
@@ -124,19 +126,6 @@ private:
         return res;
     }
 public Q_SLOTS: // METHODS
-
-    ///---------------------------------------------------------------------------
-    inline QDBusPendingReply<TimeZoneList> GetZoneList()
-    {
-        QList<QVariant> argumentList;
-        return asyncCallWithArgumentList(QLatin1String("GetZoneList"), argumentList);
-    }
-
-    inline QPair<bool,QString> SyncGetZoneList()
-    {
-        QList<QVariant> argumentList;
-        return handleEventSyncCall(QLatin1String("GetZoneList"), argumentList);
-    }
     ///---------------------------------------------------------------------------
     inline QDBusPendingReply<> SetLocalRTC(bool local, bool adjust_system)
     {
@@ -190,7 +179,15 @@ public Q_SLOTS: // METHODS
         return handleEventSyncCall(QLatin1String("SetTimezone"), argumentList);
     }
     ///---------------------------------------------------------------------------
+private slots:
+    void handlePropertiesChanged(QDBusMessage msg);
+    inline QDBusPendingReply<TimeZoneList> GetZoneList()
+    {
+        QList<QVariant> argumentList;
+        return asyncCallWithArgumentList(QLatin1String("GetZoneList"), argumentList);
+    }
 Q_SIGNALS: // SIGNALS
+    void propertyChanged(QString propertyName,QVariant value);
 };
 
 namespace com {

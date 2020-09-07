@@ -20,6 +20,7 @@ SOURCES += \
     disabledeselectlistwidget.cpp \
     kiran-clock.cpp \
     kiran-date-setting-widget.cpp \
+    kiran-time-date-data.cpp \
     kiran-time-setting-widget.cpp \
     kiran-time-zone-item.cpp \
     kiran-time-zone-list.cpp \
@@ -35,6 +36,7 @@ HEADERS += \
     kiran-clock.h \
     kiran-date-setting-widget.h \
     kiran-date-time-widget.h \
+    kiran-time-date-data.h \
     kiran-time-setting-widget.h \
     kiran-time-zone-item.h \
     kiran-time-zone-list.h \

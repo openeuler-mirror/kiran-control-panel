@@ -19,7 +19,7 @@ public:
     explicit KiranTimeZoneList(QWidget *parent = nullptr);
     ~KiranTimeZoneList();
 
-    bool loadAllTimeZone();
+    bool initAllTimeZone();
     void switchToAllTimeZone();
     //定时一段时间查询，避免输入过快
     void addSearchTimeoutTask(const QString& keyword);
@@ -50,7 +50,6 @@ protected:
 
 private:
     Ui::KiranTimeZoneList *ui;
-    TimeZoneList m_zoneInfoList;
     TimeZoneList m_filtedZoneInfoList;
     QString m_seletedZoneID;
     QString m_keyword;

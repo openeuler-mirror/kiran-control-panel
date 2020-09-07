@@ -2,6 +2,7 @@
 #include "ui_kiran-date-time-widget.h"
 #include "tab-item.h"
 #include "SystemDaemonTimeDate.h"
+#include "kiran-time-date-data.h"
 
 #include <QDebug>
 #include <QDateTime>
@@ -32,6 +33,11 @@ void KiranDateTimeWidget::initUI()
 {
     QListWidgetItem* item;
     TabItem* tabItem;
+
+    setWindowTitle("日期和时间管理");
+    QIcon icon = QIcon::fromTheme("preferences-system-time");
+    qInfo() << icon;
+    setWindowIcon(icon);
 
     /// 更改时区
     item = new QListWidgetItem(ui->tabList);
@@ -155,8 +161,29 @@ void KiranDateTimeWidget::initUI()
 
 void KiranDateTimeWidget::updateTimeZoneLabelAndTime()
 {
-    ComUnikylinKiranSystemDaemonTimeDateInterface::instance()->time_zone();
+    QString currentTimeZoneID = ComUnikylinKiranSystemDaemonTimeDateInterface::instance()->time_zone();
+    ZoneInfo zoneInfo;
 
+    if( KiranTimeDateData::instance()->getZoneInfoByID(currentTimeZoneID,zoneInfo) ){
+        QString city = zoneInfo.zone_city;
+        QStringList splitRes = city.split('/');
+
+        city = splitRes.last();
+        int hour = qAbs(zoneInfo.zone_utc)/3600;
+        int minute = (qAbs(zoneInfo.zone_utc)-hour*3600)/60;
+        QString utc = QString("UTC%1%2:%3")
+                .arg(zoneInfo.zone_utc>=0?"+":"-")
+                .arg(hour,2,10,QChar('0'))
+                .arg(minute,2,10,QChar('0'));
+        QString displayText = QString("%1时间(%2)").arg(city).arg(utc);
+        ui->label_utc->setText(displayText);
+    }else{
+        ui->label_utc->setText("???");
+    }
+
+    QDateTime currentDateTime = QDateTime::currentDateTime();
+    QString displayDateTime = currentDateTime.toString("yyyy-MM-dd HH:mm:ss ddd");
+    ui->label_dateTime->setText(displayDateTime);
 }
 
 void KiranDateTimeWidget::timerEvent(QTimerEvent *event)
