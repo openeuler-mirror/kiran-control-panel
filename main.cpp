@@ -1,9 +1,11 @@
 #include "kiran-date-time-widget.h"
-
 #include "log.h"
+#include "kiran-timedate-global-data.h"
+
 #include <QApplication>
 #include <QDebug>
 #include <QFile>
+#include <QMessageBox>
 
 #define DEFAULT_STYLE_FILE ":/themes/black_theme.qss"
 
@@ -31,7 +33,12 @@ int main(int argc, char *argv[])
 
     loadStyleSheet();
 
+    if( !KiranTimeDateGlobalData::instance()->init() ){
+        QMessageBox::warning(nullptr,"",QObject::tr("Failed to load time zone information"),QString("ok"));
+    }
+
     KiranDateTimeWidget widget;
     widget.show();
+
     return app.exec();
 }

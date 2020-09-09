@@ -59,22 +59,22 @@ typedef QMap<QString,ZoneInfo> TimeZoneMap;
 
 Q_DECLARE_METATYPE(ZoneInfo)
 Q_DECLARE_METATYPE(TimeZoneList)
+
 /*
  * Proxy class for interface com.unikylin.Kiran.SystemDaemon.TimeDate
  */
 class ComUnikylinKiranSystemDaemonTimeDateInterface: public QDBusAbstractInterface
 {
-    friend class KiranTimeDateData;
+    friend class KiranTimeDateGlobalData;
     Q_OBJECT
 public:
     static inline const char *staticInterfaceName()
     { return "com.unikylin.Kiran.SystemDaemon.TimeDate"; }
     static ComUnikylinKiranSystemDaemonTimeDateInterface* instance();
+    ~ComUnikylinKiranSystemDaemonTimeDateInterface();
 private:
     ComUnikylinKiranSystemDaemonTimeDateInterface(const QString &service, const QString &path, const QDBusConnection &connection, QObject *parent = 0);
-public:
-    ~ComUnikylinKiranSystemDaemonTimeDateInterface();
-
+private:
     Q_PROPERTY(bool can_ntp READ can_ntp)
     inline bool can_ntp() const
     { return qvariant_cast< bool >(property("can_ntp")); }
@@ -199,4 +199,6 @@ namespace com {
     }
   }
 }
+
+using com::unikylin::Kiran::SystemDaemon::TimeDate;
 #endif

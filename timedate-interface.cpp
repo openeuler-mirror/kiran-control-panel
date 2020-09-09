@@ -9,7 +9,7 @@
  * before re-generating it.
  */
 
-#include "SystemDaemonTimeDate.h"
+#include "timedate-interface.h"
 #include <QMutex>
 #include <QScopedPointer>
 #include <QDBusConnection>
@@ -42,6 +42,7 @@ ComUnikylinKiranSystemDaemonTimeDateInterface::ComUnikylinKiranSystemDaemonTimeD
     qDBusRegisterMetaType<ZoneInfo>();
     qRegisterMetaType<TimeZoneList>("TimeZoneList");
     qDBusRegisterMetaType<TimeZoneList>();
+
     ///获取属性变更,属性变更发送信号
     QDBusConnection::systemBus().connect("com.unikylin.Kiran.SystemDaemon",
                                          "/com/unikylin/Kiran/SystemDaemon/TimeDate",
@@ -51,6 +52,7 @@ ComUnikylinKiranSystemDaemonTimeDateInterface::ComUnikylinKiranSystemDaemonTimeD
 
 ComUnikylinKiranSystemDaemonTimeDateInterface::~ComUnikylinKiranSystemDaemonTimeDateInterface()
 {
+
 }
 
 void ComUnikylinKiranSystemDaemonTimeDateInterface::handlePropertiesChanged(QDBusMessage msg)
@@ -58,6 +60,7 @@ void ComUnikylinKiranSystemDaemonTimeDateInterface::handlePropertiesChanged(QDBu
     QList<QVariant> arguments = msg.arguments();
     QVariantMap changedProps = qdbus_cast<QVariantMap>(arguments.at(1).value<QDBusArgument>());
     for(auto iter=changedProps.begin();iter!=changedProps.end();iter++){
+        qInfo() << iter.key() << iter.value();
         emit propertyChanged(iter.key(),iter.value());
     }
 }

@@ -12,6 +12,8 @@ class KiranClock : public QWidget
 public:
     explicit KiranClock(QWidget *parent = nullptr);
     virtual ~KiranClock();
+
+    void setUpdateTimeout(int ms);
 protected:
     void loadPixmap();
     void initShadow();
@@ -29,6 +31,7 @@ signals:
 private:
     QGraphicsDropShadowEffect* m_effect;
     QRect m_drawRect;
+    int m_updateTimerID;
 
     QSvgRenderer m_dialReader;
     QSvgRenderer m_hourReader;

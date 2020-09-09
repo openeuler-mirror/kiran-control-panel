@@ -3,7 +3,7 @@
 
 #include <QWidget>
 
-#include "SystemDaemonTimeDate.h"
+#include "timedate-interface.h"
 
 namespace Ui {
 class KiranTimeZoneItem;
@@ -15,7 +15,7 @@ class KiranTimeZoneItem : public QWidget
     Q_PROPERTY(QColor searchHighLightColor READ searchHighLightColor WRITE setSearchHighLightColor)
     Q_PROPERTY(bool isSelected READ isSelected WRITE setisSelected NOTIFY isSelectedChanged)
 public:
-    explicit KiranTimeZoneItem(const ZoneInfo& zoneInfo,QWidget *parent = nullptr);
+    explicit KiranTimeZoneItem(const ZoneInfo zoneInfo,QWidget *parent = nullptr);
     explicit KiranTimeZoneItem(QWidget* parent=nullptr);
 
     ~KiranTimeZoneItem();

@@ -6,22 +6,32 @@
 #include <QPixmap>
 #include <QDateTime>
 #include <QGraphicsDropShadowEffect>
+#include <QTimerEvent>
 
 #define HOUR_HAND_TAIR_RATIO    0.23
 #define MINUTE_HAND_TAIR_RATIO  0.18
 #define SECOND_HAND_TAIR_RATIO  0.25
 
 KiranClock::KiranClock(QWidget *parent)
-    : QWidget(parent)
+    : QWidget(parent),
+      m_updateTimerID(0)
 {
     loadPixmap();
     initShadow();
-    startTimer(50);
+    m_updateTimerID = startTimer(50);
 }
 
 KiranClock::~KiranClock()
 {
 
+}
+
+void KiranClock::setUpdateTimeout(int ms)
+{
+    if(m_updateTimerID!=0){
+        killTimer(m_updateTimerID);
+    }
+    m_updateTimerID = startTimer(ms);
 }
 
 void KiranClock::loadPixmap()
@@ -188,7 +198,6 @@ void KiranClock::paintEvent(QPaintEvent *event)
     paintMinute(painter);
     paintSecond(painter);
 
-
     QWidget::paintEvent(event);
 }
 
@@ -200,5 +209,8 @@ void KiranClock::resizeEvent(QResizeEvent *event)
 
 void KiranClock::timerEvent(QTimerEvent *event)
 {
-    update();
+    if(event->timerId()==m_updateTimerID){
+        update();
+    }
+    QWidget::timerEvent(event);
 }

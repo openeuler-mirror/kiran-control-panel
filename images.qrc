@@ -13,5 +13,11 @@
         <file>images/time_disable.svg</file>
         <file>images/selected.png</file>
         <file>images/drap_down_arrow.png</file>
+        <file>images/icon_less_n.png</file>
+        <file>images/icon_less_pre.png</file>
+        <file>images/icon_Less_s.png</file>
+        <file>images/icon_plus_n.png</file>
+        <file>images/icon_plus_pre.png</file>
+        <file>images/icon_plus_s.png</file>
     </qresource>
 </RCC>

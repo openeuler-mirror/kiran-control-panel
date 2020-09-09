@@ -438,7 +438,7 @@
   <customwidget>
    <class>DisableDeselectListWidget</class>
    <extends>QListWidget</extends>
-   <header location="global">disabledeselectlistwidget.h</header>
+   <header location="global">disable-deselect-listwidget.h</header>
   </customwidget>
   <customwidget>
    <class>KiranTimeZone</class>

@@ -10,7 +10,6 @@
 ///NOTE:闰年二月29天
 static int DayCountOfMonth[12]={31,28,31,30,31,30,31,31,30,31,30,31};
 
-
 KiranDateSettingWidget::KiranDateSettingWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::KiranDateSettingWidget)
@@ -51,7 +50,6 @@ void KiranDateSettingWidget::initUI()
             return DayCountOfMonth[month-1];
         }
     };
-
 
     QListView* listview = nullptr;
     ///年

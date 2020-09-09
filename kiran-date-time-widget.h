@@ -16,7 +16,8 @@ public:
     ~KiranDateTimeWidget();
 private:
     void initUI();
-    void updateTimeZoneLabelAndTime();
+    void updateTimeLabel();
+    void updateTimeZoneLabel();
 protected:
     virtual void timerEvent(QTimerEvent* event) override;
 private:

@@ -1,7 +1,7 @@
 #include "kiran-time-zone.h"
 #include "ui_kiran-time-zone.h"
 #include "kiran-time-zone-item.h"
-#include "SystemDaemonTimeDate.h"
+#include "timedate-interface.h"
 
 #include <QStyleOption>
 #include <QStyle>

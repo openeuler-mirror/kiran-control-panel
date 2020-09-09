@@ -6,7 +6,7 @@
 #include <QDebug>
 #include <QMouseEvent>
 
-KiranTimeZoneItem::KiranTimeZoneItem(const ZoneInfo& zoneInfo, QWidget *parent) :
+KiranTimeZoneItem::KiranTimeZoneItem(const ZoneInfo zoneInfo, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::KiranTimeZoneItem),
     m_searchHighLightColor("#43a3f2"),
@@ -25,7 +25,7 @@ KiranTimeZoneItem::KiranTimeZoneItem(const ZoneInfo& zoneInfo, QWidget *parent) 
     int minute = (qAbs(zoneInfo.zone_utc)-hour*3600)/60;
     m_displayUTC = QString("UTC%1%2:%3").arg(zoneInfo.zone_utc>=0?"+":"-").arg(hour,2,10,QChar('0')).arg(minute,2,10,QChar('0'));
 
-    ui->label->setText(QString("(%1) %2").arg(m_displayUTC).arg(zoneInfo.zone_city));
+    ui->label->setText(QString("(%1) %2").arg(m_displayUTC).arg(m_city));
 }
 
 KiranTimeZoneItem::KiranTimeZoneItem(QWidget *parent):

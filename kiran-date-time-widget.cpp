@@ -1,8 +1,7 @@
 #include "kiran-date-time-widget.h"
 #include "ui_kiran-date-time-widget.h"
 #include "tab-item.h"
-#include "SystemDaemonTimeDate.h"
-#include "kiran-time-date-data.h"
+#include "kiran-timedate-global-data.h"
 
 #include <QDebug>
 #include <QDateTime>
@@ -33,10 +32,11 @@ void KiranDateTimeWidget::initUI()
 {
     QListWidgetItem* item;
     TabItem* tabItem;
+    KiranTimeDateGlobalData* globalData = KiranTimeDateGlobalData::instance();
 
     setWindowTitle("日期和时间管理");
+
     QIcon icon = QIcon::fromTheme("preferences-system-time");
-    qInfo() << icon;
     setWindowIcon(icon);
 
     /// 更改时区
@@ -94,7 +94,7 @@ void KiranDateTimeWidget::initUI()
         QListWidgetItem* dateTimeItem = ui->tabList->item(PAGE_DATETIME_SETTING);
         QWidget* dateTimeItemWidget = ui->tabList->itemWidget(dateTimeItem);
 
-        if( enable!=ComUnikylinKiranSystemDaemonTimeDateInterface::instance()->ntp() ){
+        if( enable!=KiranTimeDateGlobalData::instance()->systemNTP() ){
             QPair<bool,QString> setNtpRes;
             setNtpRes = ComUnikylinKiranSystemDaemonTimeDateInterface::instance()->SyncSetNTP(enable);
             if(!setNtpRes.first){
@@ -115,15 +115,24 @@ void KiranDateTimeWidget::initUI()
             dateTimeItemWidget->setEnabled(true);
         }
     });
+    connect(globalData,&KiranTimeDateGlobalData::systemNTPChanged,[this](bool ntp){
+        ui->checkbox_autoSync->setCheckState(ntp?Qt::Checked:Qt::Unchecked);
+    });
+    connect(globalData,&KiranTimeDateGlobalData::systemCanNTPChanged,[this](bool can_ntp){
+        ui->checkbox_autoSync->setEnabled(can_ntp);
+    });
     //获取ntp是否可开启
-    bool can_ntp = ComUnikylinKiranSystemDaemonTimeDateInterface::instance()->can_ntp();
+    bool can_ntp = globalData->systemCanNTP();
     ui->checkbox_autoSync->setChecked(false);
     ui->checkbox_autoSync->setEnabled(can_ntp);
     if(can_ntp){
         //时钟同步状态
-        bool ntpStatus = ComUnikylinKiranSystemDaemonTimeDateInterface::instance()->ntp();
+        bool ntpStatus = globalData->systemNTP();
         ui->checkbox_autoSync->setChecked(ntpStatus);
     }
+
+    ///侧边栏时区显示
+
 
     /// 保存
     connect(ui->btn_save,&QPushButton::clicked,[this](bool checked){
@@ -153,18 +162,31 @@ void KiranDateTimeWidget::initUI()
     });
 
     ///更新侧边栏时间文本和时区显示
-    updateTimeZoneLabelAndTime();
+    updateTimeZoneLabel();
+    connect(globalData,&KiranTimeDateGlobalData::systemTimeZoneChanged,[this](QString timeZone){
+        updateTimeZoneLabel();
+    });
+
+    updateTimeLabel();
 
     ///设置默认页
     ui->tabList->setCurrentRow(0);
 }
 
-void KiranDateTimeWidget::updateTimeZoneLabelAndTime()
+void KiranDateTimeWidget::updateTimeLabel()
 {
-    QString currentTimeZoneID = ComUnikylinKiranSystemDaemonTimeDateInterface::instance()->time_zone();
-    ZoneInfo zoneInfo;
+    QDateTime currentDateTime = QDateTime::currentDateTime();
+    QString displayDateTime = currentDateTime.toString("yyyy-MM-dd HH:mm:ss ddd");
+    ui->label_dateTime->setText(displayDateTime);
+}
 
-    if( KiranTimeDateData::instance()->getZoneInfoByID(currentTimeZoneID,zoneInfo) ){
+void KiranDateTimeWidget::updateTimeZoneLabel()
+{
+    ZoneInfo zoneInfo;
+    KiranTimeDateGlobalData* globalData = KiranTimeDateGlobalData::instance();
+    QString currentTimeZoneID = globalData->systemTimeZone();
+
+    if(globalData->findZoneInfoByZoneID(currentTimeZoneID,zoneInfo)){
         QString city = zoneInfo.zone_city;
         QStringList splitRes = city.split('/');
 
@@ -180,16 +202,12 @@ void KiranDateTimeWidget::updateTimeZoneLabelAndTime()
     }else{
         ui->label_utc->setText("???");
     }
-
-    QDateTime currentDateTime = QDateTime::currentDateTime();
-    QString displayDateTime = currentDateTime.toString("yyyy-MM-dd HH:mm:ss ddd");
-    ui->label_dateTime->setText(displayDateTime);
 }
 
 void KiranDateTimeWidget::timerEvent(QTimerEvent *event)
 {
     if(event->timerId()==m_updateTimer){
-        updateTimeZoneLabelAndTime();
+        updateTimeLabel();
     }else{
         QWidget::timerEvent(event);
     }

@@ -1,4 +1,4 @@
-#include "disabledeselectlistwidget.h"
+#include "disable-deselect-listwidget.h"
 #include <QDebug>
 #include <QEvent>
 #include <QMouseEvent>

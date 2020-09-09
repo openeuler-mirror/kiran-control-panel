@@ -1,6 +1,6 @@
 #include "kiran-time-zone-list.h"
 #include "ui_kiran-time-zone-list.h"
-#include "kiran-time-date-data.h"
+#include "kiran-timedate-global-data.h"
 
 #include <QTimerEvent>
 #include <QDebug>
@@ -28,13 +28,15 @@ bool KiranTimeZoneList::initAllTimeZone()
 {
     ZoneInfo info;
     KiranTimeZoneItem *item = nullptr;
+    KiranTimeDateGlobalData* globalData = KiranTimeDateGlobalData::instance();
 
-    auto timeDateInterface = ComUnikylinKiranSystemDaemonTimeDateInterface::instance();
-    m_seletedZoneID = timeDateInterface->time_zone();
+    m_seletedZoneID = globalData->systemTimeZone();
 
     switchToAllTimeZone();
-    auto iter = KiranTimeDateData::instance()->timeZoneListStart();
-    while(iter!=KiranTimeDateData::instance()->timeZoneListEnd()){
+
+    for(auto iter=globalData->allTimeZoneListBeginIter();
+        iter!=globalData->allTimeZoneListEndIter();
+        iter++){
         item = new KiranTimeZoneItem(*iter,ui->timezone);
         if(iter->zone_id==m_seletedZoneID){
             item->setisSelected(true);
@@ -46,7 +48,6 @@ bool KiranTimeZoneList::initAllTimeZone()
                 item,&KiranTimeZoneItem::seletedZoneInfoChanged);
 
         ui->timezone->layout()->addWidget(item);
-        iter++;
     }
 
     return true;
@@ -74,20 +75,23 @@ void KiranTimeZoneList::addSearchTimeoutTask(const QString &keyword)
 
 void KiranTimeZoneList::reset()
 {
-    m_seletedZoneID = ComUnikylinKiranSystemDaemonTimeDateInterface::instance()->time_zone();
+    m_seletedZoneID = KiranTimeDateGlobalData::instance()->systemTimeZone();
     emit sigSeletedZoneInfoChanged(m_seletedZoneID);
 }
 
 void KiranTimeZoneList::search()
 {
+    KiranTimeZoneItem *item = nullptr;
+    KiranTimeDateGlobalData* globalData = KiranTimeDateGlobalData::instance();
+
     ui->filter_timezone->setVisible(true);
     ui->timezone->setVisible(false);
 
     cleanFilterTimeZoneWidget();
 
-    KiranTimeZoneItem *item = nullptr;
-    auto iter = KiranTimeDateData::instance()->timeZoneListStart();
-    while(iter!=KiranTimeDateData::instance()->timeZoneListEnd()){
+    for(auto iter=globalData->allTimeZoneListBeginIter();
+        iter!=globalData->allTimeZoneListEndIter();
+        iter++){
         if(iter->zone_city.contains(m_keyword) ){
             item = new KiranTimeZoneItem(*iter,ui->filter_timezone);
             item->setHeightLightKeyword(m_keyword);
@@ -103,7 +107,6 @@ void KiranTimeZoneList::search()
             ui->filter_timezone->layout()->addWidget(item);
             m_filtedZoneInfoList.append(*iter);
         }
-        iter++;
     }
 
     if( m_filtedZoneInfoList.size()==0 ){
@@ -130,7 +133,7 @@ void KiranTimeZoneList::adjustHeight()
     int height = 0;
 
     if(ui->timezone->isVisible()){
-        height = KiranTimeDateData::instance()->timeZoneListSize()*40;
+        height = KiranTimeDateGlobalData::instance()->allTimeZoneListSize()*40;
         setFixedHeight(height);
         emit sigHeightChanged(height);
     }else if(ui->filter_timezone->isVisible()){

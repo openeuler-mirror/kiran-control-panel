@@ -5,7 +5,7 @@
 #include <QList>
 
 #include "kiran-time-zone-item.h"
-#include "SystemDaemonTimeDate.h"
+#include "timedate-interface.h"
 
 namespace Ui {
 class KiranTimeZoneList;
