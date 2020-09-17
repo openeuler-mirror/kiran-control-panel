@@ -2,27 +2,30 @@
 #define KIRANDATETIMEWIDGET_H
 
 #include <QWidget>
+#include <QGSettings>
 
 QT_BEGIN_NAMESPACE
-namespace Ui { class KiranDateTimeWidget; }
+namespace Ui { class KiranTimeDateWidget; }
 QT_END_NAMESPACE
 
-class KiranDateTimeWidget : public QWidget
+class KiranTimeDateWidget : public QWidget
 {
     Q_OBJECT
 
 public:
-    KiranDateTimeWidget(QWidget *parent = nullptr);
-    ~KiranDateTimeWidget();
+    KiranTimeDateWidget(QWidget *parent = nullptr);
+    ~KiranTimeDateWidget();
 private:
     void initUI();
     void updateTimeLabel();
     void updateTimeZoneLabel();
+    void updateFont();
 protected:
     virtual void timerEvent(QTimerEvent* event) override;
 private:
-    Ui::KiranDateTimeWidget *ui;
+    Ui::KiranTimeDateWidget *ui;
     int m_updateTimer;
+    QGSettings m_mateInterfaceSettings;
 };
 
 #endif // KIRANDATETIMEWIDGET_H

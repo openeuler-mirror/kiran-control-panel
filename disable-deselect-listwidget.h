@@ -4,6 +4,9 @@
 #include <QListWidget>
 #include <QItemSelectionModel>
 
+/**
+ * @brief 禁用按住ctrl进行反选，禁用用户按住鼠标在listwidget上移动进行切换选中的情况
+ */
 class DisableDeselectListWidget : public QListWidget
 {
 public:

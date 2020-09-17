@@ -1,7 +1,9 @@
-QWidget#KiranDateTimeWidget{
+/*主窗口*/
+QWidget#KiranTimeDateWidget{
     background:#222222;
 }
 
+/*侧边栏*/
 QWidget#siderbar{
     border-right:1px solid rgba(255,255,255,0.1);
     border-left:none;
@@ -9,13 +11,13 @@ QWidget#siderbar{
     border-bottom:none;
 }
 
+/*选择时区窗口*/
 KiranTimeZone[editHasFocus="false"]{
     border-width:1px;
     border-style:solid;
     border-color:rgba(255,255,255,25);
     border-radius:6px;
 }
-
 KiranTimeZone[editHasFocus="true"] {
     border-width:1px;
     border-style:solid;
@@ -23,19 +25,17 @@ KiranTimeZone[editHasFocus="true"] {
     border-color:rgb(67,163,242);
 }
 
+/*选择时区列表*/
 KiranTimeZoneList{
     background:transparent;
 }
-
 KiranTimeZoneItem{
     background:rgba(255,255,255,0);
     border-top:1px solid rgba(255,255,255,0.1);
 }
-
 KiranTimeZoneItem[isSelected="true"]{
     background:rgb(67,163,242);
 }
-
 KiranTimeZoneItem[isSelected="true"] QLabel#icon{
     border:none;
     background:transparent;
@@ -43,18 +43,15 @@ KiranTimeZoneItem[isSelected="true"] QLabel#icon{
     margin:0 0 0 0;
     border-image:url(:/images/selected.png);
 }
-
 KiranTimeZoneItem[isSelected="false"] QLabel#icon{
     border:none;
     background:transparent;
     border-image:none;
 }
-
 KiranTimeZoneItem QLabel{
     color:white;
     margin-left:10px;
 }
-
 /*Label*/
 #label_dateTime,
 #label_utc,
@@ -64,27 +61,24 @@ KiranTimeZoneItem QLabel{
 #label_setDate{
     color:white;
 }
-
 #label_dateTime{
     margin-top:8px;
 }
-
 #label_utc{
     margin-top:24px;
 }
-
 #label_timeZone,
 #label_setTime,
 #label_setDate{
     margin-top:24px;
     margin-bottom:10px;
 }
-
+#time_sep1,#time_sep2{
+    border-image:url(:/images/colon.png);
+}
 KiranTimeZone QLabel#label_search{
     qproperty-pixmap: url(:/images/search.svg);
 }
-
-
 /*QCheckBox*/
 QCheckBox::indicator{
     width: 40px;
@@ -106,21 +100,35 @@ QCheckBox::indicator{
     color:white;
     border-radius:10px;
 }
+
 #btn_save{
     border:none;
     background:#43a3f2;
 }
-#btn_reset{
-    background: rgba(255,255,255,0.1);
-    border:2px rgba(255,255,255,0.2);
+#btn_save:hover{
+    background:#79c3ff;
+}
+#btn_save:pressed{
+    background:#1568ad;
 }
 
-/**QListWidge**/
+#btn_reset{
+    background: rgba(255,255,255,0.05);
+    border:2px rgba(255,255,255,0.01);
+}
+#btn_reset:hover{
+    background: rgba(255,255,255,0.1);
+    border:2px rgba(67,163,242,0.1);
+}
+#btn_reset:pressed{
+    background: rgba(0,0,0,0.1);
+    border:2px rgba(67,163,242,0.03);
+}
+/**侧边栏链表**/
 QListView#tabList{
    show-decoration-selected: 0;
    background-color:transparent;
 }
-
 QListView#tabList::item{
     background-color:transparent;
     border-radius:10px;
@@ -129,41 +137,39 @@ QListView#tabList::item{
     width:296px;
     color:white;
 }
-
 QListView#tabList::item:selected{
     /*background: qlineargradient(spread:pad,x1:0,y1:0.5,x2:1,y2:0.5,stop:0 #9943f2,stop:1 #43a3f2);*/
     background:#43a3f2;
     border:none;
 }
-
+QListView#tabList::item:selected:hover{
+    background:#79c3ff;
+    border:none;
+}
 QListView#tabList::item{
     background-color: rgba(255,255,255,0.05);
 }
-
+QListView#tabList::item:!selected:hover{
+    background-color: rgba(255,255,255,0.1);
+}
 TabItem > QLabel#text{
     color:white;
 }
-
 TabItem > QLabel#text:disabled{
     color:rgba(255,255,255,0.2);
 }
-
 TabItem[isSelected="true"] > QLabel#indicator{
     qproperty-pixmap:url(:/images/arrow.svg);
 }
-
 TabItem[isSelected="false"] > QLabel#indicator{
     qproperty-pixmap:none;
 }
-
 #tab_setTimeManually > QLabel#image{
-    qproperty-pixmap: url(:/images/time.svg);
+    border-image:url(:/images/time.png);
 }
-
 #tab_setTimeManually > QLabel#image:disabled{
-    qproperty-pixmap: url(:/images/time_disable.svg);
+    border-image:url(:/images/time_d.png);
 }
-
 #tab_timeZone > QLabel#image{
     qproperty-pixmap: url(:/images/time_zone.svg);
 }
@@ -180,8 +186,8 @@ KiranTimeZone QWidget#scrollAreaWidgetContents{
 /*ScrollBar*/
 KiranTimeZone QScrollBar:vertical,
 QComboBox QScrollBar:vertical{
-    border: 0px solid grey;
-    background: transparent;
+    border: 0px;
+    background-color: transparent;
     width:10px;
     margin-top:4px;
     margin-bottom:4px;
@@ -197,7 +203,7 @@ QComboBox QScrollBar::handle:vertical{
 
 KiranTimeZone QScrollBar::add-line:vertical,
 QComboBox QScrollBar::add-line:vertical{
-    border: 0px solid grey;
+    border: 0px;
     height: 0px;
 }
 
@@ -206,7 +212,6 @@ QComboBox QScrollBar::sub-line:vertical{
     border: 0px;
     height: 0px;
 }
-
 KiranTimeZone QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical {
     border: 0px;
     width: 0px;
@@ -214,7 +219,7 @@ KiranTimeZone QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical {
 }
 
 KiranTimeZone QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
-    background: none;
+    background: transparent;
 }
 
 /*QLineEdit*/
@@ -224,46 +229,36 @@ KiranTimeZone QLineEdit#edit_search{
     color:white;
 }
 
-QComboBox{
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 6px;
-    background:transparent;
-    padding-left:10px;
-    color:white;
-    combobox-popup:0;
-}
-QComboBox:focus{
-    border: 1px solid rgb(33,166,255);
-}
-QComboBox::drop-down {
-    subcontrol-origin: padding;
-    subcontrol-position: center right;
-    width: 16px;
-    height:16px;
-    border:0px solid black;
-}
-
-QComboBox::down-arrow {
-    image: url(":/images/drap_down_arrow.png");
-    width:16px;
-    height:16px;
-    right:16px;
-}
-
-QComboBox QListView{
-    border: 1px solid rgb(33,166,255);
-    background: #202020;
+/*QSpinbox*/
+QSpinBox{
     border-radius:6px;
-    margin-top:3px;
+    border: 1px solid rgba(255,255,255,0.2);
+    background:transparent;
+    color:white;
 }
-
-QComboBox QListView::item{
-    height:40px;
-    color: white;
-    border-bottom:1px solid rgba(255,255,255,0.1);
+QSpinBox::up-button {
+    subcontrol-origin:border;
+    subcontrol-position:right;
+    image: url(:/images/icon_plus_n.png);
+    width: 36px;
+    height: 36px;
 }
-
-QComboBox QListView::item:hover,
-QComboBox QListView::alternate{
-    background:rgba(255,255,255,0.05);
+QSpinBox::down-button {
+    subcontrol-origin:border;
+    subcontrol-position:left;
+    image: url(:/images/icon_less_n.png);
+    width: 36px;
+    height: 36px;
+}
+QSpinBox::up-button:pressed{
+    image: url(:/images/icon_plus_pre.png);
+}
+QSpinBox::down-button:pressed{
+    image: url(:/images/icon_less_pre.png);
+}
+QSpinBox::up-button:hover:!pressed{
+    image: url(:/images/icon_plus_s.png);
+}
+QSpinBox::down-button:hover:!pressed{
+    image: url(:/images/icon_less_s.png);
 }

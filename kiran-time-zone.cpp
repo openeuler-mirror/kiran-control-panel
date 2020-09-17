@@ -2,6 +2,7 @@
 #include "ui_kiran-time-zone.h"
 #include "kiran-time-zone-item.h"
 #include "timedate-interface.h"
+#include "kiran-timedate-global-data.h"
 
 #include <QStyleOption>
 #include <QStyle>
@@ -12,11 +13,11 @@
 KiranTimeZone::KiranTimeZone(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::KiranTimeZone),
-    m_editHasFocus(false),
-    m_hasChanged(false)
+    m_editHasFocus(false)
 {
     ui->setupUi(this);
 
+    setAttribute(Qt::WA_TranslucentBackground);
     ui->edit_search->installEventFilter(this);
     initUI();;
 }
@@ -39,15 +40,9 @@ QSize KiranTimeZone::sizeHint() const
     return hint;
 }
 
-bool KiranTimeZone::hasChanged() const
-{
-    return m_hasChanged;
-}
-
 bool KiranTimeZone::save()
 {
-    if( !m_hasChanged ){
-        //TODO: 提示
+    if( KiranTimeDateGlobalData::instance()->systemTimeZone()==m_selectedZoneID ){
         return true;
     }
 
@@ -57,7 +52,6 @@ bool KiranTimeZone::save()
         qInfo() << "SetTimeZone failed," << res.second;
         return false;
     }
-    m_hasChanged = false;
     return true;
 }
 
@@ -67,10 +61,16 @@ void KiranTimeZone::reset()
     ui->timeZoneList->reset();
 }
 
+#include <QStyleFactory>
 void KiranTimeZone::initUI()
 {
-    ui->edit_search->setPlaceholderText("在所有时区中搜索...");
+    ui->edit_search->setPlaceholderText(tr("Search in all time zones..."));
     ui->scrollArea->setWidgetResizable(true);
+
+    ///FIXME:为了解决Adwaita滚动条没透明
+    qInfo() << QStyleFactory::keys();
+    QStyle* style = QStyleFactory::create("Fusion");
+    ui->scrollArea->setStyle(style);
 
     /// NOTE: 为了完成搜索项的数目变更，窗口高度自动适应的效果
     ///        通过设置最大高度setMaximumHeight,来将控件压缩到40px,不然始终占据过多空间
@@ -96,7 +96,6 @@ void KiranTimeZone::initUI()
 
     connect(ui->timeZoneList,&KiranTimeZoneList::sigSeletedZoneInfoChanged,[this](const QString& zoneID){
         m_selectedZoneID = zoneID;
-        m_hasChanged = true;
     });
 
     ui->timeZoneList->initAllTimeZone();

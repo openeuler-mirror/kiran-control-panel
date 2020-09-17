@@ -11,7 +11,6 @@ class KiranTimeZone : public QWidget
 {
     Q_OBJECT
     Q_PROPERTY(bool editHasFocus READ editHasFocus WRITE setEditHasFocus NOTIFY editHasFocusChanged)
-    Q_PROPERTY(bool hasChanged READ hasChanged)
 public:
     explicit KiranTimeZone(QWidget *parent = nullptr);
     ~KiranTimeZone();
@@ -19,7 +18,6 @@ public:
     bool editHasFocus() const;
     virtual QSize sizeHint() const override;
 
-    bool hasChanged() const;
     bool save();
 
     void reset();
@@ -39,7 +37,6 @@ protected:
 private:
     Ui::KiranTimeZone *ui;
     bool m_editHasFocus;;
-    bool m_hasChanged;
     QString m_selectedZoneID;
 };
 

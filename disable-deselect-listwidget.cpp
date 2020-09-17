@@ -11,7 +11,7 @@ DisableDeselectListWidget::DisableDeselectListWidget(QWidget *parent)
 
 QItemSelectionModel::SelectionFlags DisableDeselectListWidget::selectionCommand(const QModelIndex &index, const QEvent *event) const
 {
-    //FIXME:为了避免一些环境下会出现ItemFocus直接设置选中的情况
+    //NOTE:为了避免一些环境下会出现ItemFocus直接设置选中的情况
     if(event==nullptr){
         return QItemSelectionModel::NoUpdate;
     }

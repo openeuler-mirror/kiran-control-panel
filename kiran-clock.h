@@ -6,6 +6,10 @@
 #include <QSvgRenderer>
 
 class QGraphicsDropShadowEffect;
+
+/**
+ * @brief 时钟控件
+ */
 class KiranClock : public QWidget
 {
     Q_OBJECT
@@ -13,6 +17,7 @@ public:
     explicit KiranClock(QWidget *parent = nullptr);
     virtual ~KiranClock();
 
+    /// 设置更新时间ms
     void setUpdateTimeout(int ms);
 protected:
     void loadPixmap();

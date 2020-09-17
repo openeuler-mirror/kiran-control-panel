@@ -41,7 +41,7 @@ bool Log::init(QString filePath)
             fprintf(stderr,"make log file failed\n");
             return false;
         }
-        if( !file.open(QIODevice::WriteOnly|QIODevice::Append|QIODevice::Text) ){
+        if( !file.open(QIODevice::WriteOnly|QIODevice::Truncate|QIODevice::Text) ){
             return false;
         }
         file.close();
@@ -120,7 +120,7 @@ void Log::messageHandler(QtMsgType type, const QMessageLogContext &context, cons
 
 Log::Log()
     :m_savePath("")
-    ,m_msgType(QtDebugMsg)
+    ,m_msgType(QtWarningMsg)
     ,m_initOver(false)
     ,m_append2File(false)
 {

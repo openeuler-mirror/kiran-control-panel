@@ -40,7 +40,7 @@ KiranTimeZoneItem::KiranTimeZoneItem(QWidget *parent):
     this->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Fixed);
     this->setFixedHeight(40);
 
-    ui->label->setText(QString("<font color=\"gray\">%1</font>").arg(tr("无搜索结果,请重新搜索...")));
+    ui->label->setText(QString("<font color=\"gray\">%1</font>").arg(tr("No search results, please search again...")));
 }
 
 KiranTimeZoneItem::~KiranTimeZoneItem()

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>KiranDateTimeWidget</class>
- <widget class="QWidget" name="KiranDateTimeWidget">
+ <class>KiranTimeDateWidget</class>
+ <widget class="QWidget" name="KiranTimeDateWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>KiranDateTimeWidget</string>
+   <string>KiranTimeDateWidget</string>
   </property>
   <property name="styleSheet">
    <string notr="true"/>
@@ -108,7 +108,7 @@
          <string notr="true"/>
         </property>
         <property name="text">
-         <string>北京时间(UTC+8:00)</string>
+         <string/>
         </property>
        </widget>
       </item>
@@ -124,7 +124,7 @@
          <string notr="true"/>
         </property>
         <property name="text">
-         <string>2020-8-13 23:06:46 星期四</string>
+         <string/>
         </property>
        </widget>
       </item>
@@ -152,7 +152,7 @@
             <string notr="true"/>
            </property>
            <property name="text">
-            <string>自动同步</string>
+            <string>Automatic synchronizetion</string>
            </property>
           </widget>
          </item>
@@ -193,7 +193,7 @@
         <property name="minimumSize">
          <size>
           <width>300</width>
-          <height>0</height>
+          <height>300</height>
          </size>
         </property>
         <property name="maximumSize">
@@ -283,7 +283,7 @@
              <string notr="true"/>
             </property>
             <property name="text">
-             <string>选择时区</string>
+             <string>Select Time Zone</string>
             </property>
            </widget>
           </item>
@@ -317,33 +317,52 @@
            <number>0</number>
           </property>
           <property name="rightMargin">
-           <number>0</number>
+           <number>24</number>
           </property>
           <property name="bottomMargin">
            <number>0</number>
           </property>
           <item>
-           <widget class="QLabel" name="label_setDate">
+           <widget class="QLabel" name="label_setTime">
             <property name="styleSheet">
              <string notr="true"/>
             </property>
             <property name="text">
-             <string>日期设置</string>
+             <string>Select time</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="KiranDateSettingWidget" name="widget_dateSetting" native="true"/>
+           <widget class="KiranTimePickerWidget" name="widget_setTime" native="true">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>120</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>120</height>
+             </size>
+            </property>
+           </widget>
           </item>
           <item>
-           <widget class="QLabel" name="label_setTime">
+           <widget class="QLabel" name="label_setDate">
             <property name="text">
-             <string>时间设置</string>
+             <string>Select Date</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="KiranTimeSettingWidget" name="widget_timeSetting" native="true"/>
+           <widget class="KiranDatePickerWidget" name="widget_setDate" native="true"/>
           </item>
           <item>
            <spacer name="verticalSpacer_2">
@@ -363,32 +382,57 @@
        </widget>
       </item>
       <item>
-       <layout class="QHBoxLayout" name="horizontalLayout" stretch="5,1,5">
+       <layout class="QHBoxLayout" name="horizontalLayout" stretch="5,0,2,0,5">
         <property name="spacing">
-         <number>74</number>
+         <number>30</number>
         </property>
         <property name="leftMargin">
-         <number>24</number>
+         <number>0</number>
         </property>
         <property name="rightMargin">
-         <number>34</number>
+         <number>0</number>
         </property>
         <property name="bottomMargin">
          <number>0</number>
         </property>
         <item>
+         <spacer name="horizontalSpacer_5">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>10</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
          <widget class="QPushButton" name="btn_save">
           <property name="sizePolicy">
-           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>232</width>
+            <height>60</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>232</width>
+            <height>60</height>
+           </size>
           </property>
           <property name="styleSheet">
            <string notr="true"/>
           </property>
           <property name="text">
-           <string>保存</string>
+           <string>save</string>
           </property>
          </widget>
         </item>
@@ -399,7 +443,7 @@
           </property>
           <property name="sizeHint" stdset="0">
            <size>
-            <width>40</width>
+            <width>10</width>
             <height>20</height>
            </size>
           </property>
@@ -408,18 +452,43 @@
         <item>
          <widget class="QPushButton" name="btn_reset">
           <property name="sizePolicy">
-           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>232</width>
+            <height>60</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>232</width>
+            <height>60</height>
+           </size>
           </property>
           <property name="styleSheet">
            <string notr="true"/>
           </property>
           <property name="text">
-           <string>重置</string>
+           <string>reset</string>
           </property>
          </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_6">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>10</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
         </item>
        </layout>
       </item>
@@ -447,15 +516,15 @@
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>KiranDateSettingWidget</class>
+   <class>KiranTimePickerWidget</class>
    <extends>QWidget</extends>
-   <header location="global">kiran-date-setting-widget.h</header>
+   <header location="global">kiran-time-picker-widget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>KiranTimeSettingWidget</class>
+   <class>KiranDatePickerWidget</class>
    <extends>QWidget</extends>
-   <header location="global">kiran-time-setting-widget.h</header>
+   <header location="global">kiran-date-picker-widget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

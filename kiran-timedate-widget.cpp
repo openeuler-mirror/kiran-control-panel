@@ -1,5 +1,5 @@
-#include "kiran-date-time-widget.h"
-#include "ui_kiran-date-time-widget.h"
+#include "kiran-timedate-widget.h"
+#include "ui_kiran-timedate-widget.h"
 #include "tab-item.h"
 #include "kiran-timedate-global-data.h"
 
@@ -8,33 +8,44 @@
 #include <QMessageBox>
 #include <QTimerEvent>
 
-enum KiranDateTimeStackPageEnum{
+enum KiranTimeDateStackPageEnum{
     PAGE_TIMEZONE_SETTING,
     PAGE_DATETIME_SETTING
 };
 
-KiranDateTimeWidget::KiranDateTimeWidget(QWidget *parent)
+#define KEY_FONT_NAME "fontName"
+
+KiranTimeDateWidget::KiranTimeDateWidget(QWidget *parent)
     : QWidget(parent)
-    , ui(new Ui::KiranDateTimeWidget)
+    , ui(new Ui::KiranTimeDateWidget)
     , m_updateTimer(0)
+    , m_mateInterfaceSettings("org.mate.interface")
 {
     ui->setupUi(this);
     initUI();
+    connect(&m_mateInterfaceSettings,&QGSettings::changed,[this](const QString& key){
+        qDebug() << "changed:" << key;
+        if(key!=KEY_FONT_NAME){
+            return;
+        }
+        updateFont();
+    });
     m_updateTimer = startTimer(1000);
+    updateFont();
 }
 
-KiranDateTimeWidget::~KiranDateTimeWidget()
+KiranTimeDateWidget::~KiranTimeDateWidget()
 {
     delete ui;
 }
 
-void KiranDateTimeWidget::initUI()
+void KiranTimeDateWidget::initUI()
 {
     QListWidgetItem* item;
     TabItem* tabItem;
     KiranTimeDateGlobalData* globalData = KiranTimeDateGlobalData::instance();
 
-    setWindowTitle("日期和时间管理");
+    setWindowTitle(tr("Time And Date Manager"));
 
     QIcon icon = QIcon::fromTheme("preferences-system-time");
     setWindowIcon(icon);
@@ -43,7 +54,7 @@ void KiranDateTimeWidget::initUI()
     item = new QListWidgetItem(ui->tabList);
     tabItem = new TabItem(ui->tabList);
     tabItem->setObjectName("tab_timeZone");
-    tabItem->setText("更改时区");
+    tabItem->setText(tr("Change Time Zone"));
     ui->tabList->addItem(item);
     ui->tabList->setItemWidget(item,tabItem);
     //更改时区选中触发
@@ -60,14 +71,14 @@ void KiranDateTimeWidget::initUI()
     item = new QListWidgetItem(ui->tabList);
     tabItem = new TabItem(ui->tabList);
     tabItem->setObjectName("tab_setTimeManually");
-    tabItem->setText(tr("手动设置时间"));
+    tabItem->setText(tr("Set Time Manually"));
     ui->tabList->addItem(item);
     ui->tabList->setItemWidget(item,tabItem);
     connect(tabItem,&TabItem::isSelectedChanged,[this](bool isSelected){
         if(isSelected){
+            ui->widget_setDate->reset();
+            ui->widget_setTime->reset();
             ui->stack->setCurrentIndex(PAGE_DATETIME_SETTING);
-            ui->widget_dateSetting->reset();
-            ui->widget_timeSetting->reset();
         }
     });
 
@@ -98,7 +109,7 @@ void KiranDateTimeWidget::initUI()
             QPair<bool,QString> setNtpRes;
             setNtpRes = ComUnikylinKiranSystemDaemonTimeDateInterface::instance()->SyncSetNTP(enable);
             if(!setNtpRes.first){
-                qInfo() << "SetNTP failed," << setNtpRes.second;
+                qWarning() << "SetNTP failed," << setNtpRes.second;
                 ui->checkbox_autoSync->setCheckState(enable?Qt::Unchecked:Qt::Checked);
                 return;
             }
@@ -106,7 +117,6 @@ void KiranDateTimeWidget::initUI()
         if(enable){
             dateTimeItem->setFlags(dateTimeItem->flags()&(~Qt::ItemIsEnabled));
             dateTimeItemWidget->setEnabled(false);
-            TabItem* tabItem = dynamic_cast<TabItem*>(dateTimeItemWidget);
             if(ui->tabList->currentRow()==PAGE_DATETIME_SETTING){
                 ui->tabList->setCurrentRow(PAGE_TIMEZONE_SETTING);
             }
@@ -130,10 +140,6 @@ void KiranDateTimeWidget::initUI()
         bool ntpStatus = globalData->systemNTP();
         ui->checkbox_autoSync->setChecked(ntpStatus);
     }
-
-    ///侧边栏时区显示
-
-
     /// 保存
     connect(ui->btn_save,&QPushButton::clicked,[this](bool checked){
         bool bRes = true;
@@ -143,8 +149,8 @@ void KiranDateTimeWidget::initUI()
         }else if(ui->tabList->currentRow()==PAGE_DATETIME_SETTING){
             QDateTime dateTime;
             qint64 microsecondsSinceEpoch;
-            dateTime.setDate(ui->widget_dateSetting->getDate());
-            dateTime.setTime(ui->widget_timeSetting->getTime());
+            dateTime.setDate(ui->widget_setDate->currentDate());
+            dateTime.setTime(ui->widget_setTime->currentTime());
             microsecondsSinceEpoch = dateTime.toMSecsSinceEpoch()*1000;
             QPair<bool,QString> res = ComUnikylinKiranSystemDaemonTimeDateInterface::instance()->SyncSetTime(microsecondsSinceEpoch,false);
             bRes = res.first;
@@ -156,8 +162,8 @@ void KiranDateTimeWidget::initUI()
         if(ui->tabList->currentRow()==PAGE_TIMEZONE_SETTING){
             ui->timezone->reset();
         }else{
-            ui->widget_dateSetting->reset();
-            ui->widget_timeSetting->reset();
+            ui->widget_setDate->reset();
+            ui->widget_setTime->reset();
         }
     });
 
@@ -173,14 +179,14 @@ void KiranDateTimeWidget::initUI()
     ui->tabList->setCurrentRow(0);
 }
 
-void KiranDateTimeWidget::updateTimeLabel()
+void KiranTimeDateWidget::updateTimeLabel()
 {
     QDateTime currentDateTime = QDateTime::currentDateTime();
-    QString displayDateTime = currentDateTime.toString("yyyy-MM-dd HH:mm:ss ddd");
+    QString displayDateTime = currentDateTime.toString(tr("ddd MMM HH:mm:ss yyyy"));
     ui->label_dateTime->setText(displayDateTime);
 }
 
-void KiranDateTimeWidget::updateTimeZoneLabel()
+void KiranTimeDateWidget::updateTimeZoneLabel()
 {
     ZoneInfo zoneInfo;
     KiranTimeDateGlobalData* globalData = KiranTimeDateGlobalData::instance();
@@ -197,14 +203,37 @@ void KiranDateTimeWidget::updateTimeZoneLabel()
                 .arg(zoneInfo.zone_utc>=0?"+":"-")
                 .arg(hour,2,10,QChar('0'))
                 .arg(minute,2,10,QChar('0'));
-        QString displayText = QString("%1时间(%2)").arg(city).arg(utc);
+        QLocale systemLocale = QLocale::system();
+        QString displayText = QString(tr("%1(%2)")).arg(city).arg(utc);
         ui->label_utc->setText(displayText);
     }else{
         ui->label_utc->setText("???");
     }
 }
 
-void KiranDateTimeWidget::timerEvent(QTimerEvent *event)
+#include <QFontDatabase>
+void KiranTimeDateWidget::updateFont()
+{
+    ///FIXME:Qt5.11.1 QApplication::setFont 无效果
+#if 0
+    QVariant fontNameVar = m_mateInterfaceSettings.get(KEY_FONT_NAME);
+    QString fontNameString = fontNameVar.toString();
+    qInfo() << "org.mate.interface" << KEY_FONT_NAME << "changed," << fontNameString;
+    QStringList splitRes = fontNameString.split(" ",QString::SkipEmptyParts);
+    QString fontPxSize = splitRes.takeLast();
+    QString fontFamily = splitRes.join(" ");
+
+    QFontDatabase fontdatabase;
+    qInfo() << fontdatabase.hasFamily(fontFamily);
+    QFont font = fontdatabase.font(fontFamily,"normal",fontPxSize.toInt());
+
+    qInfo() << "setFont:" << font;
+    QApplication::setFont(font,"QWidget");
+    qInfo() << "after setFont:" << font;
+#endif
+}
+
+void KiranTimeDateWidget::timerEvent(QTimerEvent *event)
 {
     if(event->timerId()==m_updateTimer){
         updateTimeLabel();
