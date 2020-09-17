@@ -25,7 +25,9 @@ ScrollPicker::ScrollPicker(QWidget *parent)
       m_fontColor(Qt::white),
       m_fontAlphaEasingCurve(QEasingCurve::OutQuad),
       m_modelColumn(0),
-      m_hoverd(false)
+      m_hoverd(false),
+      m_hoverColor("#43a3f2"),
+      m_hoverIncreaseFont(3)
 {
     setAttribute(Qt::WA_Hover);
     init();
@@ -151,6 +153,16 @@ void ScrollPicker::setItemData(int index,
     }
 }
 
+QColor ScrollPicker::hoverColor() const
+{
+    return m_hoverColor;
+}
+
+int ScrollPicker::hoverIncreaseFont() const
+{
+    return m_hoverIncreaseFont;
+}
+
 void ScrollPicker::removeItem(int index)
 {
     if( index<0 && index>=count() ){
@@ -211,7 +223,25 @@ void ScrollPicker::setFontColor(QColor fontColor)
 
 void ScrollPicker::setModelColumn(int modelColumn)
 {
+    if( modelColumn==m_modelColumn ){
+        return;
+    }
     m_modelColumn = modelColumn;
+    update();
+}
+
+void ScrollPicker::setHoverColor(QColor hoverColor)
+{
+    if( hoverColor==m_hoverColor ){
+        return;
+    }
+    m_hoverColor = hoverColor;
+    update();
+}
+
+void ScrollPicker::setHoverIncreaseFont(int hoverIncreaseFont)
+{
+    m_hoverIncreaseFont = hoverIncreaseFont;
 }
 
 /**
@@ -468,7 +498,7 @@ void ScrollPicker::paintEvent(QPaintEvent *event)
         //偏移量越大，字越小
         int fontSize = m_fontSize-m_fontSize*(qAbs(deviation)/contentHeight);
         if(m_hoverd&&isMiddle){
-            fontSize += 3;
+            fontSize += m_hoverIncreaseFont;
         }
 
         //偏移量越大，越透明
@@ -488,7 +518,7 @@ void ScrollPicker::paintEvent(QPaintEvent *event)
         painter.setFont(font);
         QColor penColor = m_fontColor;
         if(m_hoverd){
-            penColor = QColor("#43a3f2");
+            penColor = m_hoverColor;
         }
         penColor.setAlpha(transparency);
         painter.setPen(penColor);

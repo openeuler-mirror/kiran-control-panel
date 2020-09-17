@@ -101,6 +101,7 @@ void KiranTimeZone::initUI()
     connect(ui->edit_search,&QLineEdit::textChanged,[this](const QString& text){
        if(text.isEmpty()){
            ui->timeZoneList->switchToAllTimeZone();
+           QTimer::singleShot(0,this,SLOT(scrollToCurrent()));
        }else{
            ui->timeZoneList->addSearchTimeoutTask(text);
        }

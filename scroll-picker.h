@@ -13,13 +13,24 @@ class QStandardItemModel;
 class ScrollPicker : public QWidget
 {
     Q_OBJECT
-    Q_PROPERTY(int    count       READ count)
-    Q_PROPERTY(int    deviation   READ deviation   WRITE setDeviation)
-    Q_PROPERTY(int    showCount   READ showCount   WRITE setShowCount)
-    Q_PROPERTY(bool   loop        READ loop        WRITE setLoop)
-    Q_PROPERTY(int    fontSize    READ fontSize    WRITE setFontSize)
-    Q_PROPERTY(QColor fontColor   READ fontColor   WRITE setFontColor)
-    Q_PROPERTY(int    modelColumn READ modelColumn WRITE setModelColumn)
+    ///当前模型条数
+    Q_PROPERTY(int    count             READ count)
+    ///当前值距离y轴中心偏移距离
+    Q_PROPERTY(int    deviation         READ deviation         WRITE setDeviation)
+    ///显示条数
+    Q_PROPERTY(int    showCount         READ showCount         WRITE setShowCount)
+    ///是否循环显示
+    Q_PROPERTY(bool   loop              READ loop              WRITE setLoop)
+    ///中心字体大小(pt)(会随着deviation偏移大字体而更小)
+    Q_PROPERTY(int    fontSize          READ fontSize          WRITE setFontSize)
+    ///字体颜色
+    Q_PROPERTY(QColor fontColor         READ fontColor         WRITE setFontColor)
+    ///当前数据来自模型的第几列
+    Q_PROPERTY(int    modelColumn       READ modelColumn       WRITE setModelColumn)
+    ///悬浮字体颜色
+    Q_PROPERTY(QColor hoverColor        READ hoverColor        WRITE setHoverColor)
+    ///悬浮之后当前值的字体增大多少pt
+    Q_PROPERTY(int    hoverIncreaseFont READ hoverIncreaseFont WRITE setHoverIncreaseFont )
 public:
     explicit ScrollPicker(QWidget *parent = nullptr);
     ~ScrollPicker();
@@ -51,6 +62,9 @@ public:
     void setItemText(int index, const QString &text);
     void setItemData(int index, const QVariant &value, int role = Qt::UserRole);
 
+    QColor hoverColor() const;
+    int hoverIncreaseFont() const;
+
 private:
     void init();
     void emitCurrentIndexChangedSignals();
@@ -77,6 +91,8 @@ public Q_SLOTS:
     void setFontSize(int fontSize);
     void setFontColor(QColor fontColor);
     void setModelColumn(int modelColumn);
+    void setHoverColor(QColor hoverColor);
+    void setHoverIncreaseFont(int hoverIncreaseFont);
 
 private Q_SLOTS:
     void modelDataChanged(const QModelIndex& topleft,
@@ -113,6 +129,8 @@ private:
     QEasingCurve m_fontAlphaEasingCurve;
     int m_modelColumn;
     bool m_hoverd;
+    QColor m_hoverColor;
+    int m_hoverIncreaseFont;
 };
 
 #endif // SCROLLPICKER_H
