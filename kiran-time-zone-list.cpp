@@ -64,6 +64,7 @@ void KiranTimeZoneList::switchToAllTimeZone()
     adjustHeight();
 }
 
+
 void KiranTimeZoneList::addSearchTimeoutTask(const QString &keyword)
 {
     if(m_timeoutSearchTaskID!=0){
@@ -77,6 +78,11 @@ void KiranTimeZoneList::reset()
 {
     m_seletedZoneID = KiranTimeDateGlobalData::instance()->systemTimeZone();
     emit sigSeletedZoneInfoChanged(m_seletedZoneID);
+}
+
+const QWidget *KiranTimeZoneList::allTimeZoneWidget()
+{
+    return ui->timezone;
 }
 
 void KiranTimeZoneList::search()

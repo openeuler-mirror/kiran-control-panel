@@ -21,6 +21,8 @@ public:
     bool save();
 
     void reset();
+
+    Q_INVOKABLE void scrollToCurrent();
 private:
     void initUI();
 

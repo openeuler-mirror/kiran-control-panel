@@ -24,8 +24,10 @@ ScrollPicker::ScrollPicker(QWidget *parent)
       m_fontSize(16),
       m_fontColor(Qt::white),
       m_fontAlphaEasingCurve(QEasingCurve::OutQuad),
-      m_modelColumn(0)
+      m_modelColumn(0),
+      m_hoverd(false)
 {
+    setAttribute(Qt::WA_Hover);
     init();
 }
 
@@ -297,6 +299,18 @@ void ScrollPicker::updateIndexBeforeChange()
     m_indexBeforeChange = m_currentIndex.row();
 }
 
+bool ScrollPicker::event(QEvent *event)
+{
+    if(event->type()==QEvent::HoverEnter){
+        m_hoverd = true;
+        update();
+    }else if(event->type()==QEvent::HoverLeave){
+        m_hoverd = false;
+        update();
+    }
+    return QWidget::event(event);
+}
+
 void ScrollPicker::init()
 {
     m_animation->setEasingCurve(QEasingCurve::OutQuad);
@@ -450,9 +464,12 @@ void ScrollPicker::paintEvent(QPaintEvent *event)
     int contentWidth = width();
     int itemHeight = contentHeight/showCount();
 
-    auto drawNumber = [=](QPainter& painter,QString text,double deviation){
+    auto drawNumber = [=](QPainter& painter,QString text,double deviation,bool isMiddle = false){
         //偏移量越大，字越小
         int fontSize = m_fontSize-m_fontSize*(qAbs(deviation)/contentHeight);
+        if(m_hoverd&&isMiddle){
+            fontSize += 3;
+        }
 
         //偏移量越大，越透明
         qreal fontCurveValue = m_fontAlphaEasingCurve.valueForProgress(qAbs(deviation)/(contentHeight/2));
@@ -470,6 +487,9 @@ void ScrollPicker::paintEvent(QPaintEvent *event)
         font.setPointSize(fontSize);
         painter.setFont(font);
         QColor penColor = m_fontColor;
+        if(m_hoverd){
+            penColor = QColor("#43a3f2");
+        }
         penColor.setAlpha(transparency);
         painter.setPen(penColor);
 
@@ -513,7 +533,7 @@ void ScrollPicker::paintEvent(QPaintEvent *event)
 
     ///绘制当前值
     QVariant displayRoleVar = itemText(m_currentIndex.row());
-    drawNumber(painter,displayRoleVar.toString(),m_deviation);
+    drawNumber(painter,displayRoleVar.toString(),m_deviation,true);
 
     ///绘制上下两侧的值
     QModelIndex upperIndex,downIndex;

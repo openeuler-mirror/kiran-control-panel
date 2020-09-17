@@ -25,6 +25,8 @@ public:
     void addSearchTimeoutTask(const QString& keyword);
 
     void reset();
+
+    const QWidget* allTimeZoneWidget();
 Q_SIGNALS:
     void sigHeightChanged(int height);
     void sigSeletedZoneInfoChanged(const QString& zoneID);

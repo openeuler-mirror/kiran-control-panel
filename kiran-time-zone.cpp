@@ -16,7 +16,6 @@ KiranTimeZone::KiranTimeZone(QWidget *parent) :
     m_editHasFocus(false)
 {
     ui->setupUi(this);
-
     setAttribute(Qt::WA_TranslucentBackground);
     ui->edit_search->installEventFilter(this);
     initUI();;
@@ -59,6 +58,20 @@ void KiranTimeZone::reset()
 {
     ui->edit_search->clear();
     ui->timeZoneList->reset();
+    QTimer::singleShot(0,this,SLOT(scrollToCurrent()));
+}
+
+void KiranTimeZone::scrollToCurrent()
+{
+    QObjectList objList = ui->timeZoneList->allTimeZoneWidget()->children();
+
+    foreach (QObject* obj, objList) {
+        KiranTimeZoneItem* item = qobject_cast<KiranTimeZoneItem*>(obj);
+        if(item&&item->getTimeZoneID()==m_selectedZoneID){
+            int ymargin = ui->timeZoneList->height()/2 - 20;
+            ui->scrollArea->ensureWidgetVisible(item,0,ymargin);
+        }
+    }
 }
 
 #include <QStyleFactory>
@@ -84,7 +97,6 @@ void KiranTimeZone::initUI()
                          2);
         updateGeometry();
     });
-
     /// 搜索文本变化时，调用timeZone
     connect(ui->edit_search,&QLineEdit::textChanged,[this](const QString& text){
        if(text.isEmpty()){
@@ -99,6 +111,7 @@ void KiranTimeZone::initUI()
     });
 
     ui->timeZoneList->initAllTimeZone();
+    QTimer::singleShot(0,this,SLOT(scrollToCurrent()));
 }
 
 void KiranTimeZone::setEditHasFocus(bool editHasFocus)

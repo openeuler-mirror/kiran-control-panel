@@ -90,6 +90,7 @@ private Q_SLOTS:
     void updateIndexBeforeChange();
 
 protected:
+    bool event(QEvent *event) Q_DECL_OVERRIDE;
     virtual void paintEvent(QPaintEvent *event) Q_DECL_OVERRIDE;
     virtual void mousePressEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
     virtual void mouseReleaseEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
@@ -111,6 +112,7 @@ private:
     QColor m_fontColor;
     QEasingCurve m_fontAlphaEasingCurve;
     int m_modelColumn;
+    bool m_hoverd;
 };
 
 #endif // SCROLLPICKER_H
