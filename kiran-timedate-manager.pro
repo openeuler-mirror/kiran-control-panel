@@ -73,11 +73,12 @@ exists($${LRELEASE_PATH}) {
 }
 LRELEASE_CMD = $$shell_path($$[QT_INSTALL_BINS]/lrelease) $${PWD}'/'$${TRANSLATIONS}
 target_translation.commands = $${LRELEASE_CMD}
-target_translation.files = ./translations/*.qm
+target_translation.files = $${TRANSLATIONS}
 target_translation.path = $$DESTDIR/usr/share/kiran-timedate-manager/translations/
 
 target_config.files = ./config/kiran-timedate-manager.desktop
 target_config.path = $$DESTDIR/usr/share/applications/
 
 target.path = $$DESTDIR/usr/bin/
+
 INSTALLS =  target target_translation target_config
