@@ -8,6 +8,7 @@
 #include <QFile>
 #include <QMessageBox>
 #include <QGSettings>
+#include <QLocale>
 
 #define DEFAULT_STYLE_FILE ":/themes/black_theme.qss"
 #define TRANSLATION_FILE_DIR "/usr/share/kiran-timedate-manager/translations/"
@@ -49,10 +50,6 @@ void scalingJudge()
 }
 
 ///TODO:样式表清理
-///TODO:Desktop
-///TODO:qmake install配置
-
-#include <QLocale>
 int main(int argc, char *argv[])
 {
     ///安装日志输出
@@ -62,7 +59,6 @@ int main(int argc, char *argv[])
     Log::instance()->setAppend2File(true);
     Log::instance()->setLogLevel(QtDebugMsg);
 #endif
-
     ///缩放
     scalingJudge();
 

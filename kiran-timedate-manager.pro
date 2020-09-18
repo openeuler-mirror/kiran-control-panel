@@ -55,7 +55,7 @@ RESOURCES += \
     themes.qrc
 
 TRANSLATIONS += \
-    translations/kiran-timedate-manager.zh_CN.ts
+    ./translations/kiran-timedate-manager.zh_CN.ts
 
 OTHER_FILES += \
     translations/kiran-timedate-manager.zh_CN.qm \
@@ -65,13 +65,19 @@ PKGCONFIG += gsettings-qt
 
 LIBS += -lX11 -lXrandr
 
-
-target_translation.files = ./translations/kiran-timedate-manager.zh_CN.qm
+LRELEASE_PATH=$$[QT_INSTALL_BINS]/lrelease
+exists($${LRELEASE_PATH}) {
+    message("find lrelease int $${LRELEASE_PATH}")
+} else {
+    error("can't find lrelease in $${LRELEASE_PATH}")
+}
+LRELEASE_CMD = $$shell_path($$[QT_INSTALL_BINS]/lrelease) $${PWD}'/'$${TRANSLATIONS}
+target_translation.commands = $${LRELEASE_CMD}
+target_translation.files = ./translations/*.qm
 target_translation.path = $$DESTDIR/usr/share/kiran-timedate-manager/translations/
 
 target_config.files = ./config/kiran-timedate-manager.desktop
 target_config.path = $$DESTDIR/usr/share/applications/
 
 target.path = $$DESTDIR/usr/bin/
-
 INSTALLS =  target target_translation target_config

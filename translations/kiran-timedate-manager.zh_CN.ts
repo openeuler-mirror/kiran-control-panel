@@ -128,7 +128,7 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../kiran-time-zone.cpp" line="67"/>
+        <location filename="../kiran-time-zone.cpp" line="80"/>
         <source>Search in all time zones...</source>
         <translation>在所有时区中搜索...</translation>
     </message>
@@ -141,7 +141,7 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../kiran-time-zone-item.cpp" line="43"/>
+        <location filename="../kiran-time-zone-item.cpp" line="45"/>
         <source>No search results, please search again...</source>
         <translation>无搜索结果，请重新搜索...</translation>
     </message>
