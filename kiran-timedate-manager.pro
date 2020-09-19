@@ -59,8 +59,6 @@ OTHER_FILES += \
     translations/kiran-timedate-manager.zh_CN.qm \
     config/kiran-timedate-manager.desktop
 
-PKGCONFIG += gsettings-qt
-
 LIBS += -lX11 -lXrandr
 
 LRELEASE_PATH=$$[QT_INSTALL_BINS]/lrelease
