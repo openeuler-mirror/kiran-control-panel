@@ -19,7 +19,6 @@ SOURCES += \
     kiran-time-zone-list.cpp \
     log.cpp \
     main.cpp \
-    scaling-helper.cpp \
     scroll-picker.cpp \
     tab-item.cpp \
     timedate-interface.cpp
@@ -36,7 +35,6 @@ HEADERS += \
     kiran-time-zone-item.h \
     kiran-time-zone-list.h \
     log.h \
-    scaling-helper.h \
     scroll-picker.h \
     tab-item.h \
     timedate-interface.h

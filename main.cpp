@@ -1,7 +1,6 @@
 #include "kiran-timedate-widget.h"
 #include "log.h"
 #include "kiran-timedate-global-data.h"
-#include "scaling-helper.h"
 
 #include <QApplication>
 #include <QDebug>
@@ -26,29 +25,6 @@ void loadStyleSheet()
     }
 }
 
-void scalingJudge()
-{
-    if(!QGSettings::isSchemaInstalled(MATE_INTERFACE_SCHEMA)){
-        return;
-    }
-    QGSettings mateInterfaceSetting("org.mate.interface");
-    QVariant scalingFactorVar = mateInterfaceSetting.get(KEY_SCALING_FACTOR);
-    int scalintFactor = scalingFactorVar.toInt();
-    switch (scalintFactor) {
-    case 0:
-        ScalingHelper::auto_calculate_screen_scaling();
-        break;
-    case 1:
-        break;
-    case 2:
-        ScalingHelper::set_scale_factor(2);
-        break;
-    default:
-        qWarning() << "Unsupported option" << "window-scaling-factor" << scalintFactor;
-        break;
-    }
-}
-
 ///TODO:样式表清理
 int main(int argc, char *argv[])
 {
@@ -59,8 +35,6 @@ int main(int argc, char *argv[])
     Log::instance()->setAppend2File(true);
     Log::instance()->setLogLevel(QtDebugMsg);
 #endif
-    ///缩放
-    scalingJudge();
 
     QApplication app(argc, argv);
     app.setStyle("Fusion");
