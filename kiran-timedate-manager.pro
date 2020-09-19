@@ -4,7 +4,9 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++11
 CONFIG += link_pkgconfig
+
 TARGET = kiran-timedate-manager
+
 DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
@@ -60,6 +62,8 @@ OTHER_FILES += \
     config/kiran-timedate-manager.desktop
 
 LIBS += -lX11 -lXrandr
+
+PKGCONFIG += gsettings-qt
 
 LRELEASE_PATH=$$[QT_INSTALL_BINS]/lrelease
 exists($${LRELEASE_PATH}) {
