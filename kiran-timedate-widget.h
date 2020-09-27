@@ -3,12 +3,13 @@
 
 #include <QWidget>
 #include <QGSettings>
+#include <kiranwidgets-qt5/kiran-titlebar-window.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class KiranTimeDateWidget; }
 QT_END_NAMESPACE
 
-class KiranTimeDateWidget : public QWidget
+class KiranTimeDateWidget : public KiranTitlebarWindow
 {
     Q_OBJECT
 

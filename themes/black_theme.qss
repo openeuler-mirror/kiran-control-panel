@@ -13,16 +13,12 @@ QWidget#siderbar{
 
 /*选择时区窗口*/
 KiranTimeZone[editHasFocus="false"]{
-    border-width:1px;
-    border-style:solid;
-    border-color:rgba(255,255,255,25);
+    border:1px solid rgb(255,255,255,25);
     border-radius:6px;
 }
 KiranTimeZone[editHasFocus="true"] {
-    border-width:1px;
-    border-style:solid;
+    border:1px solid rgb(67,163,242);
     border-radius:6px;
-    border-color:rgb(67,163,242);
 }
 
 /*选择时区列表*/
@@ -39,8 +35,6 @@ KiranTimeZoneItem[isSelected="true"]{
 KiranTimeZoneItem[isSelected="true"] QLabel#icon{
     border:none;
     background:transparent;
-    padding:0px;
-    margin:0 0 0 0;
     border-image:url(:/images/selected.png);
 }
 KiranTimeZoneItem[isSelected="false"] QLabel#icon{
@@ -50,7 +44,6 @@ KiranTimeZoneItem[isSelected="false"] QLabel#icon{
 }
 KiranTimeZoneItem QLabel{
     color:white;
-    margin-left:10px;
 }
 /*Label*/
 #label_dateTime,
@@ -60,18 +53,6 @@ KiranTimeZoneItem QLabel{
 #label_setTime,
 #label_setDate{
     color:white;
-}
-#label_dateTime{
-    margin-top:8px;
-}
-#label_utc{
-    margin-top:24px;
-}
-#label_timeZone,
-#label_setTime,
-#label_setDate{
-    margin-top:24px;
-    margin-bottom:10px;
 }
 #time_sep1,#time_sep2{
     border-image:url(:/images/colon.png);
@@ -95,8 +76,6 @@ QCheckBox::indicator{
 
 /*QPushButton*/
 #btn_save,#btn_reset{
-    min-width:252px;
-    height:60px;
     color:white;
     border-radius:10px;
 }
@@ -134,7 +113,6 @@ QListView#tabList::item{
     border-radius:10px;
     margin-top:24px;
     height:60px;
-    width:296px;
     color:white;
 }
 QListView#tabList::item:selected{

@@ -4,7 +4,7 @@
 
 1. 安装编译运行依赖
 
-   ` sudo yum install gcc-c++ libX11 libX11-devel libXrandr libXrandr-devel qt5-qtbase qt5-qtbase-devel qt5-qtsvg qt5-qtsvg-devel gsettings-qt gsettings-qt-devel`
+   ` sudo yum install gcc-c++ libX11 libX11-devel libXrandr libXrandr-devel qt5-qtbase qt5-qtbase-devel qt5-qtsvg qt5-qtsvg-devel gsettings-qt gsettings-qt-devel kiranwidgets-qt5`
 
 2. **源码根**目录下创建**build**目录`mkdir build`
 

@@ -7,6 +7,7 @@
 #include <QDateTime>
 #include <QMessageBox>
 #include <QTimerEvent>
+#include <QFontDatabase>
 
 enum KiranTimeDateStackPageEnum{
     PAGE_TIMEZONE_SETTING,
@@ -16,12 +17,12 @@ enum KiranTimeDateStackPageEnum{
 #define KEY_FONT_NAME "fontName"
 
 KiranTimeDateWidget::KiranTimeDateWidget(QWidget *parent)
-    : QWidget(parent)
+    : KiranTitlebarWindow()
     , ui(new Ui::KiranTimeDateWidget)
     , m_updateTimer(0)
     , m_mateInterfaceSettings("org.mate.interface")
 {
-    ui->setupUi(this);
+    ui->setupUi(getWindowContentWidget());
     initUI();
     connect(&m_mateInterfaceSettings,&QGSettings::changed,[this](const QString& key){
         qDebug() << "changed:" << key;
@@ -45,10 +46,21 @@ void KiranTimeDateWidget::initUI()
     TabItem* tabItem;
     KiranTimeDateGlobalData* globalData = KiranTimeDateGlobalData::instance();
 
-    setWindowTitle(tr("Time And Date Manager"));
+    setTitle(tr("Time And Date Manager"));
 
     QIcon icon = QIcon::fromTheme("preferences-system-time");
-    setWindowIcon(icon);
+    setIcon(icon);
+
+    /// 显示时区和所在区域
+    ui->label_utc->setContentsMargins(-1,24,-1,-1);
+    ui->label_dateTime->setContentsMargins(-1,8,-1,-1);
+
+    /// 时区列表上标签
+    ui->label_timeZone->setContentsMargins(-1,24,-1,10);
+
+    /// 设置时间日期上标签
+    ui->label_setTime->setContentsMargins(-1,24,-1,10);
+    ui->label_setDate->setContentsMargins(-1,24,-1,10);
 
     /// 更改时区
     item = new QListWidgetItem(ui->tabList);
@@ -141,6 +153,7 @@ void KiranTimeDateWidget::initUI()
         ui->checkbox_autoSync->setChecked(ntpStatus);
     }
     /// 保存
+    ui->btn_save->setFixedSize(252,60);
     connect(ui->btn_save,&QPushButton::clicked,[this](bool checked){
         bool bRes = true;
         QString error;
@@ -158,6 +171,7 @@ void KiranTimeDateWidget::initUI()
     });
 
     /// 重置
+    ui->btn_reset->setFixedSize(252,60);
     connect(ui->btn_reset,&QPushButton::clicked,[this](bool checked){
         if(ui->tabList->currentRow()==PAGE_TIMEZONE_SETTING){
             ui->timezone->reset();
@@ -211,11 +225,8 @@ void KiranTimeDateWidget::updateTimeZoneLabel()
     }
 }
 
-#include <QFontDatabase>
 void KiranTimeDateWidget::updateFont()
 {
-    ///FIXME:Qt5.11.1 QApplication::setFont 无效果
-#if 0
     QVariant fontNameVar = m_mateInterfaceSettings.get(KEY_FONT_NAME);
     QString fontNameString = fontNameVar.toString();
     qInfo() << "org.mate.interface" << KEY_FONT_NAME << "changed," << fontNameString;
@@ -227,10 +238,7 @@ void KiranTimeDateWidget::updateFont()
     qInfo() << fontdatabase.hasFamily(fontFamily);
     QFont font = fontdatabase.font(fontFamily,"normal",fontPxSize.toInt());
 
-    qInfo() << "setFont:" << font;
     QApplication::setFont(font,"QWidget");
-    qInfo() << "after setFont:" << font;
-#endif
 }
 
 void KiranTimeDateWidget::timerEvent(QTimerEvent *event)

@@ -1,7 +1,6 @@
 #include "kiran-timedate-widget.h"
 #include "log.h"
 #include "kiran-timedate-global-data.h"
-
 #include <QApplication>
 #include <QDebug>
 #include <QFile>
@@ -19,7 +18,7 @@ void loadStyleSheet()
 {
     QFile file(DEFAULT_STYLE_FILE);
     if(file.open(QIODevice::ReadOnly)){
-        qApp->setStyleSheet(file.readAll());
+        qApp->setStyleSheet(file.readAll()+qApp->styleSheet());
     }else{
         qWarning() << "load style sheet failed";
     }
@@ -37,9 +36,6 @@ int main(int argc, char *argv[])
 #endif
 
     QApplication app(argc, argv);
-    app.setStyle("Fusion");
-    QFont font("Noto Sans CJK SC",9);
-    app.setFont(font,"QWidget");
 
     ///翻译
     QTranslator tsor;

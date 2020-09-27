@@ -25,6 +25,7 @@ KiranTimeZoneItem::KiranTimeZoneItem(const ZoneInfo zoneInfo, QWidget *parent) :
     int minute = (qAbs(zoneInfo.zone_utc)-hour*3600)/60;
     m_displayUTC = QString("UTC%1%2:%3").arg(zoneInfo.zone_utc>=0?"+":"-").arg(hour,2,10,QChar('0')).arg(minute,2,10,QChar('0'));
 
+    ui->label->setContentsMargins(10,0,0,0);
     ui->label->setText(QString("(%1) %2").arg(m_displayUTC).arg(m_city));
 }
 
@@ -40,6 +41,7 @@ KiranTimeZoneItem::KiranTimeZoneItem(QWidget *parent):
     this->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Fixed);
     this->setFixedHeight(40);
 
+    ui->label->setContentsMargins(10,0,0,0);
     ui->label->setText(QString("<font color=\"gray\">%1</font>").arg(tr("No search results, please search again...")));
 }
 
