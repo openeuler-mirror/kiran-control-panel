@@ -59,7 +59,7 @@ void KiranDatePickerWidget::initUI()
     });
 
     //日
-    ui->spinbox_day->setMinimum(0);
+    ui->spinbox_day->setMinimum(1);
 
     setCurrentDate(QDate::currentDate());
 }
