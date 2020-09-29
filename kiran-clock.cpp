@@ -18,7 +18,7 @@ KiranClock::KiranClock(QWidget *parent)
 {
     loadPixmap();
     initShadow();
-    m_updateTimerID = startTimer(50);
+    m_updateTimerID = startTimer(1000);
 }
 
 KiranClock::~KiranClock()
@@ -164,7 +164,7 @@ void KiranClock::paintSecond(QPainter &painter)
     QPoint drawRectCenter(m_drawRect.x()+m_drawRect.width()/2,
                           m_drawRect.y()+m_drawRect.height()/2);
     painter.translate(drawRectCenter);
-    painter.rotate(sec*6.0+msec/1000.0*6.0);
+    painter.rotate(sec*6.0);
 
     ///计算出绘制区域和表盘默认大小缩放比例,算出秒针头长度、秒针绘制区域
     QRectF secondDrawRect;
