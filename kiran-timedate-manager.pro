@@ -1,4 +1,4 @@
-QT       += core gui svg dbus
+QT       += core gui svg dbus network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -19,6 +19,8 @@ SOURCES += \
     kiran-time-zone.cpp \
     kiran-time-zone-item.cpp \
     kiran-time-zone-list.cpp \
+    libs/SingleApplication/singleapplication.cpp \
+    libs/SingleApplication/singleapplication_p.cpp \
     log.cpp \
     main.cpp \
     scroll-picker.cpp \
@@ -36,6 +38,8 @@ HEADERS += \
     kiran-time-zone.h \
     kiran-time-zone-item.h \
     kiran-time-zone-list.h \
+    libs/SingleApplication/singleapplication.h \
+    libs/SingleApplication/singleapplication_p.h \
     log.h \
     scroll-picker.h \
     tab-item.h \
@@ -61,6 +65,8 @@ OTHER_FILES += \
     README.md \
     translations/kiran-timedate-manager.zh_CN.qm \
     config/kiran-timedate-manager.desktop
+
+INCLUDEPATH += ./libs/
 
 LIBS += -lX11 -lXrandr -lkiranwidgets-qt5
 

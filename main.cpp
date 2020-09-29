@@ -1,6 +1,8 @@
 #include "kiran-timedate-widget.h"
 #include "log.h"
 #include "kiran-timedate-global-data.h"
+#include "SingleApplication/singleapplication.h"
+
 #include <QApplication>
 #include <QDebug>
 #include <QFile>
@@ -35,7 +37,7 @@ int main(int argc, char *argv[])
     Log::instance()->setLogLevel(QtDebugMsg);
 #endif
 
-    QApplication app(argc, argv);
+    SingleApplication app(argc, argv);
 
     ///翻译
     QTranslator tsor;
