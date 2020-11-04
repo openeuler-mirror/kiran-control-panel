@@ -1,0 +1,256 @@
+/*全局设置*/
+QPushButton#btn_confirm,
+QPushButton#btn_save{
+    color:white;
+    background:#43a3f2;
+    border:none;
+    border-radius:10px;
+}
+QPushButton#btn_confirm:hover,
+QPushButton#btn_save:hover{
+    background:#79c3ff;
+}
+QPushButton#btn_confirm:pressed,
+QPushButton#btn_save:pressed{
+    background:#1568ad;
+}
+QPushButton#btn_cancel,
+QPushButton#btn_return{
+    background: rgba(255,255,255,0.05);
+    border:1px rgba(255,255,255,0.01);
+    border-radius:10px;
+    color:white;
+}
+QPushButton#btn_cancel:hover,
+QPushButton#btn_return:hover{
+    background: rgba(255,255,255,0.1);
+    border:1px solid rgba(67,163,242,0.1);
+}
+QPushButton#btn_cancel:pressed,
+QPushButton#btn_return:pressed{
+    background: rgba(0,0,0,0.1);
+    border:1px solid rgba(67,163,242,0.03);
+}
+QPushButton#btn_deleteUser{
+    color:white;
+    background:#fa4949;
+    border:none;
+    border-radius:10px;
+}
+QPushButton#btn_deleteUser:hover{
+    background:#ff7878;
+}
+QPushButton#btn_deleteUser:pressed{
+    background:#9d2c2c;
+}
+
+QCheckBox::indicator{
+    width: 50px;
+    height: 22px;
+    border:none;
+    background-color:transparent;
+}
+QCheckBox::indicator:unchecked{
+    border-image: url(:/images/off.png);
+}
+QCheckBox::indicator{
+    border-image: url(:/images/on.png);
+}
+
+QLineEdit#edit_name,
+QLineEdit#edit_userID,
+QLineEdit#edit_loginShell,
+QLineEdit#edit_userID,
+QLineEdit#edit_specifyUserHome{
+    background:transparent;
+    border-radius:6px;
+    border:1px solid rgba(255,255,255,0.2);
+    padding-left:10px;
+    color:white;
+}
+QLineEdit#edit_userID:disabled,
+QLineEdit#edit_specifyUserHome:disabled{
+    border:none;
+    background-color:rgba(255,255,255,0.05);
+}
+
+QLabel#label_name,
+QLabel#label_type,
+QLabel#label_passwd,
+QLabel#label_confirmPasswd,
+QLabel#label_loginShell,
+QLabel#label_specifyUserID,
+QLabel#label_specifyUserHome{
+    color:white;
+}
+/*ScrollBar*/
+QScrollBar:vertical{
+    border: 0px;
+    background-color: transparent;
+    width:10px;
+    margin-top:4px;
+    margin-bottom:4px;
+}
+QScrollBar::handle:vertical{
+    background: rgba(255,255,255,0.2);
+    min-height: 40px;
+    margin-right:4px;
+    width:6px;
+}
+QScrollBar::add-line:vertical{
+    border: 0px;
+    height: 0px;
+}
+QScrollBar::sub-line:vertical{
+    border: 0px;
+    height: 0px;
+}
+QScrollBar::up-arrow:vertical {
+    border: 0px;
+    width: 0px;
+    height: 0px;
+}
+QScrollBar::add-page:vertical{
+    background: transparent;
+}
+
+/*带验证的输入框*/
+LineEditWithCheckIcon{
+    background:transparent;
+    border-radius:6px;
+    border:1px solid rgba(255,255,255,0.2);
+}
+
+LineEditWithCheckIcon > QLineEdit{
+    border:none;
+    background:transparent;
+    color:white;
+    lineedit-password-character: 9679;
+}
+
+/*侧边栏*/
+QWidget#siderWidget{
+    background:transparent;
+    border-right:1px solid rgba(177,177,177,0.1);
+}
+
+QListView#tabList{
+   show-decoration-selected: 0;
+   background-color:transparent;
+}
+
+QListView#tabList::item{
+    background-color: rgba(255,255,255,0.05);
+    border-radius:10px;
+    color:white;
+}
+
+QListView#tabList::item:selected:hover{
+    background:#79c3ff;
+    border:none;
+}
+
+QListView#tabList::item:!selected:hover{
+    background-color: rgba(255,255,255,0.1);
+}
+
+QListView#tabList::item:selected{
+    /*background: qlineargradient(spread:pad,x1:0,y1:0.5,x2:1,y2:0.5,stop:0 #9943f2,stop:1 #43a3f2);*/
+    background:#43a3f2;
+    border:none;
+}
+
+AccountItemWidget > QLabel#label_account{
+    color:white;
+}
+
+AccountItemWidget[isSelected="true"] > QLabel#indicator{
+    qproperty-pixmap:url(:/images/arrow.svg);
+}
+
+AccountItemWidget[isSelected="false"] > QLabel#indicator{
+    qproperty-pixmap:none;
+}
+
+AccountItemWidget[isLocked="true"] > QLabel#label_status{
+    color:#fa4949;
+}
+
+AccountItemWidget[isSelected="false"][isLocked="false"] > QLabel#label_status{
+    color:#43a3f2;
+}
+
+AccountItemWidget[isSelected="true"] > QLabel#label_status{
+    color:white;
+}
+
+/*创建用户页面*/
+QPushButton#btn_advanceSetting{
+    background:transparent;
+    text-decoration:underline;
+    color:white;
+    border:none;
+}
+
+
+QComboBox#combo_accountType{
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius:6px;
+    background-color:transparent;
+    padding-left:10px;
+    color:white;
+    /*FIXME:若弹出列表Style为1，边框背景没有圆角
+    */
+    combobox-popup: 0;
+}
+QComboBox#combo_accountType:editable{
+}
+QComboBox#combo_accountType::drop-down{
+    subcontrol-origin: padding;
+    subcontrol-position: top right;
+    width: 15px;
+    margin-right:14px;
+    border:none;
+    image: url(:/images/down-arrow.png);
+}
+QComboBox#combo_accountType  QAbstractItemView{
+    border: 1px solid rgb(33,166,255);
+    border-radius: 6px;
+    margin-top:3px;
+    background: #202020;
+}
+QComboBox#combo_accountType QAbstractItemView::item{
+    height: 40px;
+    color: white;
+    padding-left:10px;
+    border-bottom:1px solid rgba(255,255,255,0.1);
+}
+QComboBox#combo_accountType  QAbstractItemView::item:selected{
+    background:rgb(33,166,255);
+    color: white;
+}
+
+/*用户信息页面*/
+UserInfoPage  QLabel#label_name,
+UserInfoPage  QLabel#label_userID,
+UserInfoPage  QLabel#label_accountType,
+UserInfoPage  QLabel#label_accountStatus,
+UserInfoPage  QLabel#label_curPasswd,
+UserInfoPage  QLabel#label_newPassswd,
+UserInfoPage  QLabel#label_confirmPasswd{
+    color:white;
+}
+
+QPushButton#btn_changePasswd{
+    background:transparent;
+    text-decoration:underline;
+    color:white;
+    border:none;
+}
+/*头像选择页面*/
+ScrollAreaContainer{
+    background:transparent;
+}
+QScrollArea{
+    background:transparent;
+}
