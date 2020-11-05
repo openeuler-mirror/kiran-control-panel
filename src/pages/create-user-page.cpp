@@ -1,15 +1,15 @@
 #include "create-user-page.h"
 #include "ui_create-user-page.h"
 #include "advance-settings.h"
-#include "accounts-interface.h"
 #include "passwd-helper.h"
 #include "accounts-global-info.h"
-#include "global-defines.h"
+#include "kiran-tips.h"
 
 #include <QListView>
 #include <QRegExpValidator>
 #include <QDebug>
 #include <QMessageBox>
+#include <kiranwidgets-qt5/kiran-message-box.h>
 
 CreateUserPage::CreateUserPage(QWidget *parent) :
     QWidget(parent),
@@ -24,7 +24,6 @@ CreateUserPage::~CreateUserPage()
     delete ui;
 }
 
-//清空界面显示的信息，和缓存在内存中的信息
 void CreateUserPage::reset()
 {
     ui->avatar->setDefaultImage();
@@ -39,7 +38,6 @@ void CreateUserPage::reset()
     m_advanceSettingsInfo.clear();
 }
 
-//提供给外部更新账户头像接口
 void CreateUserPage::setAvatarIconPath(const QString &iconPath)
 {
     ui->avatar->setImage(iconPath);
@@ -110,6 +108,7 @@ void CreateUserPage::handlerCreateNewUser() {
     //step1.检验账户名是否为空，是否重名
     qInfo() << "start check account name";
     QString account = ui->edit_name->text();
+
     if( account.isEmpty() ){
         m_errorTip->setText(tr("Please enter your account name"));
         m_errorTip->showTipAroundWidget(ui->edit_name);
@@ -152,9 +151,6 @@ void CreateUserPage::handlerCreateNewUser() {
         return;
     }
 
-    ///step4.创建用户
-    qInfo() << "start create user";
-    AccountsInterface accountDBusApi(QDBusConnection::systemBus());
     qint64 uid = -1;
     if( !m_advanceSettingsInfo.uid.isEmpty() ){
         bool toNumberOk = false;
@@ -163,77 +159,24 @@ void CreateUserPage::handlerCreateNewUser() {
             uid = -1;
         }
     }
-    QDBusPendingReply<QDBusObjectPath> createUserReply;
-    createUserReply = accountDBusApi.CreateUser(account,account,
-                                                ui->combo_accountType->currentIndex(),uid);
-    createUserReply.waitForFinished();
-    if( createUserReply.isError() ){
-        qWarning() << "CreateUser Error:" << createUserReply.error();
-        QMessageBox::warning(this,tr("Error"),tr("Create User failed"));
-        return;
-    }
-    QString userPath = createUserReply.value().path();
-
-
-    UserInterface userInterface(createUserReply.value().path(),
-                                QDBusConnection::systemBus());
-
-    QList<QString> setPropertyFailedList;
-
-    //step5.设置密码
-    qInfo() << "start set passwd";
-    QDBusPendingReply<> setPasswdReply = userInterface.SetPassword(encryptedPasswd,"");
-    setPasswdReply.waitForFinished();
-    if( setPasswdReply.isError() ){
-        qWarning() << "CreateUser Error:" << setPasswdReply.error();
-        setPropertyFailedList.append(tr("password"));
-    }
-
-    //step6.设置Home目录
-    qInfo() << "start set home directory";
-    if( !m_advanceSettingsInfo.homeDir.isEmpty() ){
-        QDBusPendingReply<> reply = userInterface.SetHomeDirectory(m_advanceSettingsInfo.homeDir);
-        reply.waitForFinished();
-        if( reply.isError() ){
-            qWarning() << "CreateUser SetHomeDirectory failed" << reply.error();
-            setPropertyFailedList.append(tr("home directory"));
-        }
-    }
-
-    //step7.设置Shell路径
-    qInfo() << "start set shell";
-    QString shell = m_advanceSettingsInfo.shell.isEmpty()?DEFAULT_SHELL:m_advanceSettingsInfo.shell;
-    QDBusPendingReply<> shellReply = userInterface.SetShell(shell);
-    shellReply.waitForFinished();
-    if( shellReply.isError() ){
-        qWarning() << "CreateUser SetShell failed" << shellReply.error();
-        setPropertyFailedList.append(tr("shell"));
-    }
-
-    //step8.设置图标
-    qInfo()  << "start set icon file";
+    int accountType = ui->combo_accountType->currentIndex();
+    QString homeDir = m_advanceSettingsInfo.homeDir;
+    QString shell = m_advanceSettingsInfo.shell;
     QString iconFile = ui->avatar->iconPath();
-    QDBusPendingReply<> iconFileReply = userInterface.SetIconFile(iconFile);
-    iconFileReply.waitForFinished();
-    if( iconFileReply.isError() ){
-        qWarning() << "CreateUser SetIocnFile failed" << iconFileReply.error();
-        setPropertyFailedList.append(tr("icon"));
-    }
 
-    if( setPropertyFailedList.size() > 0 ){
-        QString msgPrefix = tr("Failed to set user attributes");
-        QString msg = msgPrefix + "(";
-        for( auto iter = setPropertyFailedList.begin();
-             iter != setPropertyFailedList.end();
-             iter++ ){
-            if( iter!=setPropertyFailedList.begin() ){
-                msg.append(",");
-            }
-            msg.append(*iter);
-        }
-        msg.append(")");
-        QMessageBox::information(this,tr("Warning"),msg);
-    }
+    ui->btn_confirm->setBusy(true);
+    emit sigCreateUser(account,uid,accountType,
+                       encryptedPasswd,
+                       homeDir,
+                       shell,
+                       iconFile);
+}
 
-    emit sigRequestSetCurrentUser(userPath);
+void CreateUserPage::handlerCreateNewUserIsDone(const QString &userPath,
+                                                const QString &errMsg) {
+    ui->btn_confirm->setBusy(false);
+    if(!errMsg.isEmpty()){
+        KiranMessageBox::message(nullptr,tr("Error"),
+                                 errMsg,KiranMessageBox::Yes|KiranMessageBox::No);
+    }
 }

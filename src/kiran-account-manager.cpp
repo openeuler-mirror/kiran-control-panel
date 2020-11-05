@@ -5,6 +5,8 @@
 #include "user-info-page.h"
 #include "select-avatar-page.h"
 #include "listwidget-control.h"
+#include "mask-widget.h"
+#include "hard-worker.h"
 
 #include <QIcon>
 #include <QDebug>
@@ -19,11 +21,21 @@ enum StackWidgetPageEnum {
 };
 
 KiranAccountManager::KiranAccountManager()
-        : KiranTitlebarWindow() {
+        : KiranTitlebarWindow(){
+    m_workThread.start();
+    m_hardworker = new HardWorker();
+    m_hardworker->moveToThread(&m_workThread);
     initUI();
 }
 
-KiranAccountManager::~KiranAccountManager() = default;
+KiranAccountManager::~KiranAccountManager(){
+    //TODO: stop work thread
+    if( m_workThread.isRunning() ){
+        m_workThread.quit();
+        m_workThread.wait();
+    }
+    delete  m_hardworker;
+};
 
 void KiranAccountManager::setCurrentUser(const QString &userPath) {
     int findIdx = -1;
@@ -73,6 +85,10 @@ void KiranAccountManager::initUI() {
     setObjectName("KiranAccountManager");
     setTitle(tr("User Manager"));
     setIcon(QIcon::fromTheme("user-admin"));
+
+    //遮罩
+    m_maskWidget = new MaskWidget(this);
+    m_maskWidget->setVisible(false);
 
     //主布局
     auto contentLayout = new QHBoxLayout(getWindowContentWidget());
@@ -195,6 +211,11 @@ void KiranAccountManager::initPageCreateUser() {
             m_tabList->setCurrentRow(findIdx);
         });
     });
+    connect(m_page_createUser,&CreateUserPage::sigCreateUser,
+            m_hardworker,&HardWorker::doCreateUser);
+    connect(m_hardworker,&HardWorker::createUserisDnoe,
+            m_page_createUser,&CreateUserPage::handlerCreateNewUserIsDone);
+    //TODO:处理创建用户页面传出的繁忙信号，设置遮罩
 }
 
 void KiranAccountManager::initPageUserInfo() {
@@ -286,4 +307,13 @@ void KiranAccountManager::connectToInfoChanged() {
                     m_page_userinfo->updateInfo();
                 }
             });
+}
+
+void KiranAccountManager::showMask() {
+    this->stackUnder(m_maskWidget);
+    m_maskWidget->show();
+}
+
+void KiranAccountManager::hideMask() {
+    m_maskWidget->hide();
 }

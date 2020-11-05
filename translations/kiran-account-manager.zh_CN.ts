@@ -96,12 +96,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/pages/create-user-page.cpp" line="66"/>
+        <location filename="../src/pages/create-user-page.cpp" line="69"/>
         <source>standard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/pages/create-user-page.cpp" line="67"/>
+        <location filename="../src/pages/create-user-page.cpp" line="70"/>
         <source>administrator</source>
         <translation type="unfinished"></translation>
     </message>
@@ -142,78 +142,78 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/pages/create-user-page.cpp" line="85"/>
+        <location filename="../src/pages/create-user-page.cpp" line="88"/>
         <source>Please enter account name first</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/pages/create-user-page.cpp" line="116"/>
+        <location filename="../src/pages/create-user-page.cpp" line="126"/>
         <source>Please enter your account name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/pages/create-user-page.cpp" line="121"/>
+        <location filename="../src/pages/create-user-page.cpp" line="131"/>
         <source>Account already exists</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/pages/create-user-page.cpp" line="132"/>
+        <location filename="../src/pages/create-user-page.cpp" line="142"/>
         <source>Please enter your password</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/pages/create-user-page.cpp" line="138"/>
+        <location filename="../src/pages/create-user-page.cpp" line="148"/>
         <source>Please enter the password again</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/pages/create-user-page.cpp" line="144"/>
+        <location filename="../src/pages/create-user-page.cpp" line="154"/>
         <source>The password you enter must be the same as the former one</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/pages/create-user-page.cpp" line="153"/>
-        <location filename="../src/pages/create-user-page.cpp" line="174"/>
+        <location filename="../src/pages/create-user-page.cpp" line="163"/>
+        <location filename="../src/pages/create-user-page.cpp" line="184"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/pages/create-user-page.cpp" line="153"/>
+        <location filename="../src/pages/create-user-page.cpp" line="163"/>
         <source>Password encryption failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/pages/create-user-page.cpp" line="174"/>
+        <location filename="../src/pages/create-user-page.cpp" line="184"/>
         <source>Create User failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/pages/create-user-page.cpp" line="191"/>
+        <location filename="../src/pages/create-user-page.cpp" line="201"/>
         <source>password</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/pages/create-user-page.cpp" line="201"/>
+        <location filename="../src/pages/create-user-page.cpp" line="211"/>
         <source>home directory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/pages/create-user-page.cpp" line="212"/>
+        <location filename="../src/pages/create-user-page.cpp" line="222"/>
         <source>shell</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/pages/create-user-page.cpp" line="222"/>
+        <location filename="../src/pages/create-user-page.cpp" line="232"/>
         <source>icon</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/pages/create-user-page.cpp" line="226"/>
+        <location filename="../src/pages/create-user-page.cpp" line="236"/>
         <source>Failed to set user attributes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/pages/create-user-page.cpp" line="237"/>
+        <location filename="../src/pages/create-user-page.cpp" line="247"/>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
@@ -221,7 +221,7 @@
 <context>
     <name>KiranAccountManager</name>
     <message>
-        <location filename="../src/kiran-account-manager.cpp" line="74"/>
+        <location filename="../src/kiran-account-manager.cpp" line="86"/>
         <source>User Manager</source>
         <translation type="unfinished"></translation>
     </message>
