@@ -64,12 +64,12 @@ void AnimationPushButton::paintEvent(QPaintEvent *event) {
 }
 
 void AnimationPushButton::initTimeLine() {
-    //初始化时间线
     m_timeLine.setCurrentTime(0);
     m_timeLine.setLoopCount(0);
     m_timeLine.setUpdateInterval(50);
-    m_timeLine.setDuration(1000);
+    m_timeLine.setDuration(750);
     m_timeLine.setFrameRange(0,360);
+    m_timeLine.setCurveShape(QTimeLine::LinearCurve);
     connect(&m_timeLine,&QTimeLine::frameChanged,[this](int value){
         m_rotationAngle = value;
         update();
