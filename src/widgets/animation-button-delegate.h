@@ -7,7 +7,7 @@
 
 #include <QObject>
 
-#include "animation-button.h"
+#include "animation-push-button.h"
 
 
 class AnimationButtonDelegate : public QObject{
@@ -16,7 +16,7 @@ class AnimationButtonDelegate : public QObject{
     Q_PROPERTY(qreal dashLength WRITE setDashLength READ dashLength)
     Q_PROPERTY(int angle WRITE setAngle READ angle)
 public:
-    AnimationButtonDelegate(AnimationButton* btn);
+    AnimationButtonDelegate(AnimationPushButton* btn);
     ~AnimationButtonDelegate() = default;
 
     qreal dashOffset();
@@ -29,7 +29,7 @@ public Q_SLOTS:
     void setAngle(int angle);
 
 private:
-    AnimationButton *const m_button;
+    AnimationPushButton *const m_button;
     qreal m_offset = 0.0;
     qreal m_length = 0.1;
     int m_angle = 0;

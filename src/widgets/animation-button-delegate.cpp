@@ -4,7 +4,7 @@
 
 #include "animation-button-delegate.h"
 
-AnimationButtonDelegate::AnimationButtonDelegate(AnimationButton* btn)
+AnimationButtonDelegate::AnimationButtonDelegate(AnimationPushButton* btn)
     :QObject(btn),
     m_button(btn){
 
@@ -27,7 +27,7 @@ void AnimationButtonDelegate::setDashOffset(qreal offset) {
         return;
     }
     m_offset = offset;
-    m_button->update();
+    m_button->update(m_button->rect());
 }
 
 void AnimationButtonDelegate::setDashLength(qreal length) {
@@ -35,7 +35,7 @@ void AnimationButtonDelegate::setDashLength(qreal length) {
         return;
     }
     m_length = length;
-    m_button->update();
+    m_button->update(m_button->rect());
 }
 
 void AnimationButtonDelegate::setAngle(int angle) {
@@ -43,5 +43,5 @@ void AnimationButtonDelegate::setAngle(int angle) {
         return;
     }
     m_angle = angle;
-    m_button->update();
+    m_button->update(m_button->rect());
 }

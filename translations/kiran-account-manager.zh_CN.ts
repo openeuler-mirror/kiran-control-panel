@@ -85,13 +85,13 @@
     <name>CreateUserPage</name>
     <message>
         <location filename="../src/pages/create-user-page.ui" line="101"/>
-        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_create-user-page.h" line="286"/>
+        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_create-user-page.h" line="287"/>
         <source>Login name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/pages/create-user-page.ui" line="147"/>
-        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_create-user-page.h" line="287"/>
+        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_create-user-page.h" line="288"/>
         <source>Account type</source>
         <translation type="unfinished"></translation>
     </message>
@@ -107,37 +107,37 @@
     </message>
     <message>
         <location filename="../src/pages/create-user-page.ui" line="14"/>
-        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_create-user-page.h" line="285"/>
+        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_create-user-page.h" line="286"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/pages/create-user-page.ui" line="190"/>
-        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_create-user-page.h" line="288"/>
+        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_create-user-page.h" line="289"/>
         <source>Password</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/pages/create-user-page.ui" line="239"/>
-        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_create-user-page.h" line="289"/>
+        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_create-user-page.h" line="290"/>
         <source>Confirm password</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/pages/create-user-page.ui" line="294"/>
-        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_create-user-page.h" line="290"/>
+        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_create-user-page.h" line="291"/>
         <source>Advance setting</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/pages/create-user-page.ui" line="389"/>
-        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_create-user-page.h" line="291"/>
+        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_create-user-page.h" line="292"/>
         <source>Confirm</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/pages/create-user-page.ui" line="436"/>
-        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_create-user-page.h" line="292"/>
+        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_create-user-page.h" line="293"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -147,73 +147,73 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/pages/create-user-page.cpp" line="114"/>
+        <location filename="../src/pages/create-user-page.cpp" line="116"/>
         <source>Please enter your account name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/pages/create-user-page.cpp" line="119"/>
+        <location filename="../src/pages/create-user-page.cpp" line="121"/>
         <source>Account already exists</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/pages/create-user-page.cpp" line="130"/>
+        <location filename="../src/pages/create-user-page.cpp" line="132"/>
         <source>Please enter your password</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/pages/create-user-page.cpp" line="136"/>
+        <location filename="../src/pages/create-user-page.cpp" line="138"/>
         <source>Please enter the password again</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/pages/create-user-page.cpp" line="142"/>
+        <location filename="../src/pages/create-user-page.cpp" line="144"/>
         <source>The password you enter must be the same as the former one</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/pages/create-user-page.cpp" line="151"/>
-        <location filename="../src/pages/create-user-page.cpp" line="172"/>
+        <location filename="../src/pages/create-user-page.cpp" line="153"/>
+        <location filename="../src/pages/create-user-page.cpp" line="174"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/pages/create-user-page.cpp" line="151"/>
+        <location filename="../src/pages/create-user-page.cpp" line="153"/>
         <source>Password encryption failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/pages/create-user-page.cpp" line="172"/>
+        <location filename="../src/pages/create-user-page.cpp" line="174"/>
         <source>Create User failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/pages/create-user-page.cpp" line="189"/>
+        <location filename="../src/pages/create-user-page.cpp" line="191"/>
         <source>password</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/pages/create-user-page.cpp" line="199"/>
+        <location filename="../src/pages/create-user-page.cpp" line="201"/>
         <source>home directory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/pages/create-user-page.cpp" line="210"/>
+        <location filename="../src/pages/create-user-page.cpp" line="212"/>
         <source>shell</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/pages/create-user-page.cpp" line="220"/>
+        <location filename="../src/pages/create-user-page.cpp" line="222"/>
         <source>icon</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/pages/create-user-page.cpp" line="224"/>
+        <location filename="../src/pages/create-user-page.cpp" line="226"/>
         <source>Failed to set user attributes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/pages/create-user-page.cpp" line="235"/>
+        <location filename="../src/pages/create-user-page.cpp" line="237"/>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
