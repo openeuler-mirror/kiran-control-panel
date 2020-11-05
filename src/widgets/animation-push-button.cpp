@@ -8,124 +8,70 @@
 #include <QDebug>
 
 #include "animation-push-button.h"
-#include "animation-button-delegate.h"
 
 AnimationPushButton::AnimationPushButton(QWidget *parent)
         : QPushButton(parent),
-          m_animationDelegate(new AnimationButtonDelegate(this)) {
-    initAnimation();
-}
-
-int AnimationPushButton::circleSize() {
-    return m_circleSize;
-}
-
-int AnimationPushButton::circleWidth() {
-    return m_circleWidth;
-}
-
-QColor AnimationPushButton::circleColor() {
-    return m_circleColor;
+        m_svgRender(QString(":/images/loading.svg"),this){
+    initTimeLine();
 }
 
 void AnimationPushButton::setBusy(bool busy) {
     if (m_isBusy == busy) {
         return;
     }
+    if( busy && !m_svgRender.isValid() ){
+        qWarning() << "AnimationPushButton: animation pixmap isNull!";
+        return;
+    }
     m_isBusy = busy;
-    if (m_isBusy)
-        m_animationGroup->start();
-    else
-        m_animationGroup->stop();
+    if (m_isBusy){
+        m_rotationAngle = 0;
+        m_timeLine.setCurrentTime(0);
+        m_timeLine.start();
+    }else{
+        m_timeLine.stop();
+        m_timeLine.setCurrentTime(0);
+        m_rotationAngle = 0;
+    }
 }
 
 bool AnimationPushButton::busy() {
     return m_isBusy;
 }
 
-void AnimationPushButton::setCircleSize(int size) {
-    if (m_circleSize == size)
-        return;
-    m_circleSize = size;
-    update();
-}
-
-void AnimationPushButton::setCircleWidth(int width) {
-    if (m_circleWidth == width)
-        return;
-    m_circleWidth = width;
-    if (m_isBusy)
-        update();
-}
-
-void AnimationPushButton::setCircleColor(QColor color) {
-    if (m_circleColor == color)
-        return;
-    m_circleColor = color;
-    if (m_isBusy)
-        update();
-}
-
-void AnimationPushButton::initAnimation() {
-    m_animationGroup = new QParallelAnimationGroup(this);
-    m_animationGroup->setLoopCount(-1);
-
-
-    auto propertyAnimation = new QPropertyAnimation(this);
-    m_animationGroup->addAnimation(propertyAnimation);
-    propertyAnimation->setTargetObject(m_animationDelegate);
-    propertyAnimation->setPropertyName("dashLength");
-    propertyAnimation->setStartValue(0.1);
-    propertyAnimation->setKeyValueAt(0.15, 0.2);
-    propertyAnimation->setKeyValueAt(0.6, 20);
-    propertyAnimation->setKeyValueAt(0.7, 20);
-    propertyAnimation->setEndValue(20);
-    propertyAnimation->setDuration(2050);
-
-    propertyAnimation = new QPropertyAnimation(this);
-    m_animationGroup->addAnimation(propertyAnimation);
-    propertyAnimation->setTargetObject(m_animationDelegate);
-    propertyAnimation->setPropertyName("dashOffset");
-    propertyAnimation->setStartValue(0);
-    propertyAnimation->setKeyValueAt(0.15, 0);
-    propertyAnimation->setKeyValueAt(0.6, -7);
-    propertyAnimation->setKeyValueAt(0.7, -7);
-    propertyAnimation->setEndValue(-25);
-    propertyAnimation->setDuration(2050);
-
-    propertyAnimation = new QPropertyAnimation(this);
-    m_animationGroup->addAnimation(propertyAnimation);
-    propertyAnimation->setTargetObject(m_animationDelegate);
-    propertyAnimation->setPropertyName("angle");
-    propertyAnimation->setStartValue(0);
-    propertyAnimation->setEndValue(719);
-    propertyAnimation->setDuration(2050);
-}
-
 void AnimationPushButton::paintEvent(QPaintEvent *event) {
     if (m_isBusy && isEnabled()) {
         QPainter painter(this);
         painter.setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing);
-        //绘制背景
+
         QStyleOption opt;
         opt.init(this);
         style()->drawPrimitive(QStyle::PE_Widget, &opt, &painter, this);
 
-        //绘制等待线条
-        QPen pen;
-        pen.setCapStyle(Qt::RoundCap);
-        pen.setWidthF(m_circleWidth);
-        pen.setColor(m_circleColor);
-        painter.translate(width()/2, height()/2);
-        painter.rotate(m_animationDelegate->angle());
-        QVector<qreal> pattern;
-        pattern << m_animationDelegate->dashLength()*m_circleSize/50 << 30*m_circleSize/50;
-        pen.setDashOffset(m_animationDelegate->dashOffset()*m_circleSize/50);
-        pen.setDashPattern(pattern);
-        painter.setPen(pen);
-
-        painter.drawEllipse(QPoint(0, 0), m_circleSize/2, m_circleSize/2);
+        if( m_svgRender.isValid() ){
+            painter.translate(this->rect().center());
+            painter.rotate(m_rotationAngle);
+            int svgDrawSize = qMin(width(),height())-40;
+            QRect renderRect((width()-svgDrawSize)/2 - width()/2,
+                             (height()-svgDrawSize)/2 -height()/2,
+                             svgDrawSize,
+                             svgDrawSize);
+            m_svgRender.render(&painter,renderRect);
+        }
     } else {
         QPushButton::paintEvent(event);
     }
+}
+
+void AnimationPushButton::initTimeLine() {
+    //初始化时间线
+    m_timeLine.setCurrentTime(0);
+    m_timeLine.setLoopCount(0);
+    m_timeLine.setUpdateInterval(50);
+    m_timeLine.setDuration(1000);
+    m_timeLine.setFrameRange(0,360);
+    connect(&m_timeLine,&QTimeLine::frameChanged,[this](int value){
+        m_rotationAngle = value;
+        update();
+    });
 }

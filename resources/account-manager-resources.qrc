@@ -10,6 +10,7 @@
         <file>images/on.png</file>
         <file>images/icon_correct.svg</file>
         <file>images/icon_error.svg</file>
+        <file>images/loading.svg</file>
     </qresource>
     <qresource prefix="/">
         <file>themes/black_theme.qss</file>

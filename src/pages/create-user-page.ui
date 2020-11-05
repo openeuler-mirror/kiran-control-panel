@@ -360,7 +360,7 @@
       </spacer>
      </item>
      <item>
-      <widget class="QPushButton" name="btn_confirm">
+      <widget class="AnimationPushButton" name="btn_confirm">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -466,6 +466,11 @@
    <extends>QWidget</extends>
    <header location="global">lineedit-with-checkicon.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>AnimationPushButton</class>
+   <extends>QPushButton</extends>
+   <header location="global">animation-push-button.h</header>
   </customwidget>
  </customwidgets>
  <resources/>
