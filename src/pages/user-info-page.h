@@ -8,7 +8,7 @@
 namespace Ui {
     class UserInfoPage;
 }
-
+class HoverTips;
 class UserInfoPage : public QWidget {
     Q_OBJECT
     friend class KiranAccountManager;
@@ -94,6 +94,7 @@ private:
     QString m_curShowUserName;
     uid_t m_uid;
     KiranTips *m_errorTip;
+    HoverTips *m_hoverTip;
 };
 
 #endif // USERINFOPAGE_H

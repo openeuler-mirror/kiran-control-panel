@@ -11,6 +11,7 @@
 #include <QDebug>
 #include <QMap>
 
+//TODO:和kiran-avatar-editor使用公共头文件，避免引发未同步枚举问题
 QString avatarEditorError(int exitCode){
     static const QMap<int,QString> exitCodeMap = {
             {0,"success"},

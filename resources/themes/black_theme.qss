@@ -89,6 +89,16 @@ QLabel#label_specifyUserID,
 QLabel#label_specifyUserHome{
     color:white;
 }
+
+HoverTips {
+    background-color:#222222;
+    border:1px solid rgba(255,255,255,0.1);
+    border-radius:4px;
+}
+HoverTips > QLabel#label_text{
+   color:white;
+}
+
 /*ScrollBar*/
 QScrollBar:vertical{
     border: 0px;

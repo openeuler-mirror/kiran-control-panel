@@ -3,6 +3,7 @@
 #include "accounts-user-interface.h"
 #include "accounts-global-info.h"
 #include "passwd-helper.h"
+#include "hover-tips.h"
 
 #include <QListView>
 #include <kiranwidgets-qt5/kiran-message-box.h>
@@ -75,6 +76,8 @@ void UserInfoPage::initUI() {
     m_errorTip = new KiranTips(this);
     m_errorTip->setShowPosition(KiranTips::POSITION_BOTTM);
     m_errorTip->setAnimationEnable(true);
+
+    m_hoverTip = new HoverTips(this);
 
     /* 用户显示页面 */
     //账户头像
@@ -208,6 +211,8 @@ void UserInfoPage::handlerUpdateUserPropertyDone(QString errMsg) {
         KiranMessageBox::message(nullptr,
                                  tr("Error"),errMsg,
                                  KiranMessageBox::Yes|KiranMessageBox::No);
+    }else{
+        m_hoverTip->show(HoverTips::HOVE_TIPS_SUC,tr("Account information updated successfully"));
     }
     ///NOTE: 如果属性设置成功了AccountsGlobalInfo会更新当前页面
     ///      手动更新是为了避免设置失败,界面未复位
@@ -223,6 +228,7 @@ void UserInfoPage::handlerUpdatePasswdDone(QString errMsg) {
                                  KiranMessageBox::Yes|KiranMessageBox::No);
     }else{
         ui->stackedWidget->setCurrentIndex(PAGE_USER_INFO);
+        m_hoverTip->show(HoverTips::HOVE_TIPS_SUC,tr("Password updated successfully"));
     }
 }
 
