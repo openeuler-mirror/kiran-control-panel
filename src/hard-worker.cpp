@@ -8,11 +8,10 @@
 #include "global-defines.h"
 
 #include <QDebug>
-#include <QThread>
 #include <QDBusConnection>
 
 HardWorker::HardWorker(): QObject(nullptr){
-    qInfo() << QThread::currentThreadId();
+
 }
 
 HardWorker::~HardWorker() {

@@ -29,7 +29,6 @@ KiranAccountManager::KiranAccountManager()
 }
 
 KiranAccountManager::~KiranAccountManager(){
-    //TODO: stop work thread
     if( m_workThread.isRunning() ){
         m_workThread.quit();
         m_workThread.wait();

@@ -35,7 +35,7 @@ signals:
     /// \param encryptedPasswd  密码加密
     /// \param homeDir          家目录
     /// \param shell            shell路径
-    /// \param iconFile         图标路路径
+    /// \param iconFile         图标路径
     void sigCreateUser(const QString &account,
                        int uid,
                        int accountType,
