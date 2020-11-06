@@ -5,14 +5,27 @@
     <name>AccountItemWidget</name>
     <message>
         <location filename="../../src/widgets/account-itemwidget.ui" line="14"/>
-        <location filename="../../cmake-build-debug/kiran-account-manager_autogen/include/ui_account-itemwidget.h" line="83"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../src/widgets/account-itemwidget.ui" line="63"/>
-        <location filename="../../cmake-build-debug/kiran-account-manager_autogen/include/ui_account-itemwidget.h" line="84"/>
         <source>Tom Hardy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/account-itemwidget.cpp" line="16"/>
+        <source>Create new account</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/account-itemwidget.cpp" line="85"/>
+        <source>disable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/account-itemwidget.cpp" line="87"/>
+        <source>enable</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -25,31 +38,26 @@
     </message>
     <message>
         <location filename="../../src/pages/advance-settings.ui" line="14"/>
-        <location filename="../../cmake-build-debug/kiran-account-manager_autogen/include/ui_advance-settings.h" line="220"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../src/pages/advance-settings.ui" line="43"/>
-        <location filename="../../cmake-build-debug/kiran-account-manager_autogen/include/ui_advance-settings.h" line="221"/>
         <source>Login shell</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../src/pages/advance-settings.ui" line="89"/>
-        <location filename="../../cmake-build-debug/kiran-account-manager_autogen/include/ui_advance-settings.h" line="222"/>
         <source>Specify user id</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../src/pages/advance-settings.ui" line="288"/>
-        <location filename="../../cmake-build-debug/kiran-account-manager_autogen/include/ui_advance-settings.h" line="226"/>
         <source>confirm</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../src/pages/advance-settings.ui" line="329"/>
-        <location filename="../../cmake-build-debug/kiran-account-manager_autogen/include/ui_advance-settings.h" line="227"/>
         <source>cancel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -61,7 +69,6 @@
     </message>
     <message>
         <location filename="../../src/pages/advance-settings.ui" line="172"/>
-        <location filename="../../cmake-build-debug/kiran-account-manager_autogen/include/ui_advance-settings.h" line="224"/>
         <source>Specify user home</source>
         <translation type="unfinished"></translation>
     </message>
@@ -85,13 +92,11 @@
     <name>CreateUserPage</name>
     <message>
         <location filename="../../src/pages/create-user-page.ui" line="101"/>
-        <location filename="../../cmake-build-debug/kiran-account-manager_autogen/include/ui_create-user-page.h" line="287"/>
         <source>Login name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../src/pages/create-user-page.ui" line="147"/>
-        <location filename="../../cmake-build-debug/kiran-account-manager_autogen/include/ui_create-user-page.h" line="288"/>
         <source>Account type</source>
         <translation type="unfinished"></translation>
     </message>
@@ -107,37 +112,31 @@
     </message>
     <message>
         <location filename="../../src/pages/create-user-page.ui" line="14"/>
-        <location filename="../../cmake-build-debug/kiran-account-manager_autogen/include/ui_create-user-page.h" line="286"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../src/pages/create-user-page.ui" line="190"/>
-        <location filename="../../cmake-build-debug/kiran-account-manager_autogen/include/ui_create-user-page.h" line="289"/>
         <source>Password</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../src/pages/create-user-page.ui" line="239"/>
-        <location filename="../../cmake-build-debug/kiran-account-manager_autogen/include/ui_create-user-page.h" line="290"/>
         <source>Confirm password</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../src/pages/create-user-page.ui" line="294"/>
-        <location filename="../../cmake-build-debug/kiran-account-manager_autogen/include/ui_create-user-page.h" line="291"/>
         <source>Advance setting</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../src/pages/create-user-page.ui" line="389"/>
-        <location filename="../../cmake-build-debug/kiran-account-manager_autogen/include/ui_create-user-page.h" line="292"/>
         <source>Confirm</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../src/pages/create-user-page.ui" line="436"/>
-        <location filename="../../cmake-build-debug/kiran-account-manager_autogen/include/ui_create-user-page.h" line="293"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -276,7 +275,6 @@
     <name>KiranTips</name>
     <message>
         <location filename="../../src/widgets/kiran-tips.ui" line="29"/>
-        <location filename="../../cmake-build-debug/kiran-account-manager_autogen/include/ui_kiran-tips.h" line="71"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
@@ -285,7 +283,6 @@
     <name>LineEditWithCheckIcon</name>
     <message>
         <location filename="../../src/widgets/lineedit-with-checkicon.ui" line="14"/>
-        <location filename="../../cmake-build-debug/kiran-account-manager_autogen/include/ui_lineedit-with-checkicon.h" line="67"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
@@ -304,7 +301,7 @@
     </message>
     <message>
         <location filename="../../src/pages/select-avatar-page.cpp" line="140"/>
-        <source>select greeter background</source>
+        <source>select picture</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -317,142 +314,139 @@
     <name>UserInfoPage</name>
     <message>
         <location filename="../../src/pages/user-info-page.ui" line="14"/>
-        <location filename="../../cmake-build-debug/kiran-account-manager_autogen/include/ui_user-info-page.h" line="489"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../src/pages/user-info-page.ui" line="157"/>
-        <location filename="../../cmake-build-debug/kiran-account-manager_autogen/include/ui_user-info-page.h" line="490"/>
         <source>Account</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../src/pages/user-info-page.ui" line="203"/>
-        <location filename="../../cmake-build-debug/kiran-account-manager_autogen/include/ui_user-info-page.h" line="491"/>
         <source>Change password</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../src/pages/user-info-page.ui" line="233"/>
-        <location filename="../../cmake-build-debug/kiran-account-manager_autogen/include/ui_user-info-page.h" line="492"/>
         <source>User id</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../src/pages/user-info-page.ui" line="292"/>
-        <location filename="../../cmake-build-debug/kiran-account-manager_autogen/include/ui_user-info-page.h" line="493"/>
         <source>Account type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../src/pages/user-info-page.ui" line="354"/>
-        <location filename="../../cmake-build-debug/kiran-account-manager_autogen/include/ui_user-info-page.h" line="494"/>
         <source>Account status</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../src/pages/user-info-page.ui" line="482"/>
-        <location filename="../../cmake-build-debug/kiran-account-manager_autogen/include/ui_user-info-page.h" line="496"/>
         <source>Confirm</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../src/pages/user-info-page.ui" line="523"/>
-        <location filename="../../cmake-build-debug/kiran-account-manager_autogen/include/ui_user-info-page.h" line="497"/>
         <source>Delete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../src/pages/user-info-page.ui" line="582"/>
-        <location filename="../../cmake-build-debug/kiran-account-manager_autogen/include/ui_user-info-page.h" line="498"/>
         <source>Current password</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../src/pages/user-info-page.ui" line="643"/>
-        <location filename="../../cmake-build-debug/kiran-account-manager_autogen/include/ui_user-info-page.h" line="499"/>
         <source>New password</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../src/pages/user-info-page.ui" line="692"/>
-        <location filename="../../cmake-build-debug/kiran-account-manager_autogen/include/ui_user-info-page.h" line="500"/>
         <source>Enter the new password again</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../src/pages/user-info-page.ui" line="785"/>
-        <location filename="../../cmake-build-debug/kiran-account-manager_autogen/include/ui_user-info-page.h" line="501"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../src/pages/user-info-page.ui" line="826"/>
-        <location filename="../../cmake-build-debug/kiran-account-manager_autogen/include/ui_user-info-page.h" line="502"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/pages/user-info-page.cpp" line="90"/>
+        <location filename="../../src/pages/user-info-page.cpp" line="93"/>
         <source>standard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/pages/user-info-page.cpp" line="91"/>
+        <location filename="../../src/pages/user-info-page.cpp" line="94"/>
         <source>administrator</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/pages/user-info-page.cpp" line="230"/>
+        <location filename="../../src/pages/user-info-page.cpp" line="215"/>
+        <source>Account information updated successfully</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/pages/user-info-page.cpp" line="231"/>
+        <source>Password updated successfully</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/pages/user-info-page.cpp" line="236"/>
         <source>The directory and files under the user&apos;s home directory are deleted with the user.Are you sure you want to delete the user(%1)?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/pages/user-info-page.cpp" line="232"/>
+        <location filename="../../src/pages/user-info-page.cpp" line="238"/>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/pages/user-info-page.cpp" line="135"/>
+        <location filename="../../src/pages/user-info-page.cpp" line="138"/>
         <source>Please enter the new user password</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/pages/user-info-page.cpp" line="142"/>
+        <location filename="../../src/pages/user-info-page.cpp" line="145"/>
         <source>Please enter the password again</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/pages/user-info-page.cpp" line="147"/>
+        <location filename="../../src/pages/user-info-page.cpp" line="150"/>
         <source>The password you enter must be the same as the former one</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/pages/user-info-page.cpp" line="156"/>
+        <location filename="../../src/pages/user-info-page.cpp" line="159"/>
         <source>Please enter the current user password</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/pages/user-info-page.cpp" line="161"/>
+        <location filename="../../src/pages/user-info-page.cpp" line="164"/>
         <source>The current password is incorrect</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/pages/user-info-page.cpp" line="167"/>
+        <location filename="../../src/pages/user-info-page.cpp" line="170"/>
         <source>The new password cannot be the same as the current password</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/pages/user-info-page.cpp" line="175"/>
-        <location filename="../../src/pages/user-info-page.cpp" line="209"/>
-        <location filename="../../src/pages/user-info-page.cpp" line="222"/>
-        <location filename="../../src/pages/user-info-page.cpp" line="248"/>
+        <location filename="../../src/pages/user-info-page.cpp" line="178"/>
+        <location filename="../../src/pages/user-info-page.cpp" line="212"/>
+        <location filename="../../src/pages/user-info-page.cpp" line="227"/>
+        <location filename="../../src/pages/user-info-page.cpp" line="254"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/pages/user-info-page.cpp" line="175"/>
+        <location filename="../../src/pages/user-info-page.cpp" line="178"/>
         <source>Password encryption failed</source>
         <translation type="unfinished"></translation>
     </message>
