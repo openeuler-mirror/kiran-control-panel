@@ -1,0 +1,801 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>KiranDisplayConfiguration</class>
+ <widget class="QWidget" name="KiranDisplayConfiguration">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>724</width>
+    <height>599</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>KiranDisplayConfiguration</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QWidget:focus{
+outline: none;
+}
+
+QWidget{
+background-color: rgb(34, 34, 34);
+color: #ffffff;
+}
+
+
+  QWidget:disabled {
+      background-color: rgba(255,255,255,5);
+	color: rgba(255,255,255,60);
+  }
+</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="spacing">
+    <number>20</number>
+   </property>
+   <property name="leftMargin">
+    <number>24</number>
+   </property>
+   <property name="topMargin">
+    <number>24</number>
+   </property>
+   <property name="rightMargin">
+    <number>24</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <item>
+    <widget class="KiranDisplayConfigurationPanel" name="panel" native="true"/>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_3">
+     <property name="spacing">
+      <number>0</number>
+     </property>
+     <property name="bottomMargin">
+      <number>0</number>
+     </property>
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_copy_display">
+       <property name="minimumSize">
+        <size>
+         <width>120</width>
+         <height>30</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>120</width>
+         <height>30</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">
+QPushButton {
+    border: 1px solid #2eb3ff;
+	color: #2eb3ff;
+	border-top-left-radius: 4px;
+	border-bottom-left-radius: 4px;
+  }
+
+  QPushButton:hover {
+	background-color: rgb(121, 195, 255);
+	color: #ffffff;	
+  }
+  QPushButton:checked {
+      background-color:#2eb3ff;
+	 color: #ffffff;	
+	 border-top-left-radius: 4px;
+ 	 border-bottom-left-radius: 4px;
+  }
+</string>
+       </property>
+       <property name="text">
+        <string>复制显示</string>
+       </property>
+       <property name="checkable">
+        <bool>true</bool>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+       <property name="flat">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_extend_display">
+       <property name="minimumSize">
+        <size>
+         <width>120</width>
+         <height>30</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>120</width>
+         <height>30</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">
+QPushButton {
+    border: 1px solid #2eb3ff;
+	color: #2eb3ff;
+	border-top-right-radius: 4px;
+	border-bottom-right-radius: 4px;
+  }
+
+  QPushButton:hover {
+	background-color: rgb(121, 195, 255);
+	color: #ffffff;	
+  }
+  QPushButton:checked {
+      background-color: #2eb3ff;
+	 color: #ffffff;	
+	 border-top-right-radius: 4px;
+ 	 border-bottom-right-radius: 4px;
+  }
+</string>
+       </property>
+       <property name="text">
+        <string>扩展显示</string>
+       </property>
+       <property name="checkable">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QStackedWidget" name="stackedWidget">
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <widget class="QWidget" name="stackedWidgetPage1">
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <property name="spacing">
+        <number>24</number>
+       </property>
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>4</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout_7">
+         <property name="spacing">
+          <number>10</number>
+         </property>
+         <item>
+          <widget class="QLabel" name="label">
+           <property name="text">
+            <string>分辨率</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="KiranComboBox" name="comboBox_resolving">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>40</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>40</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout_8">
+         <property name="spacing">
+          <number>10</number>
+         </property>
+         <item>
+          <widget class="QLabel" name="label_2">
+           <property name="text">
+            <string>刷新率</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="KiranComboBox" name="comboBox_refreshRate">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>40</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>40</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout_9">
+         <property name="spacing">
+          <number>10</number>
+         </property>
+         <item>
+          <widget class="QLabel" name="label_3">
+           <property name="text">
+            <string>缩放率</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="KiranComboBox" name="comboBox_windowScalingFactor">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>40</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>40</height>
+            </size>
+           </property>
+           <item>
+            <property name="text">
+             <string>自动</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>100% (推荐)</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>200%</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_5">
+         <property name="spacing">
+          <number>58</number>
+         </property>
+         <property name="bottomMargin">
+          <number>40</number>
+         </property>
+         <item>
+          <spacer name="horizontalSpacer_7">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButton_ok">
+           <property name="minimumSize">
+            <size>
+             <width>250</width>
+             <height>60</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>250</width>
+             <height>60</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton {
+      border-radius:10px;
+	background-color: rgb(67, 163, 242);
+  }
+
+  QPushButton:hover {
+	background-color: rgb(121, 195, 255);
+  }
+  QPushButton:pressed {
+      background-color: rgb(21, 104, 173);
+  }
+
+  QPushButton:disabled {
+      background-color: rgba(255,255,255,5);
+	color: rgba(255,255,255,60);
+  }
+
+</string>
+           </property>
+           <property name="text">
+            <string>应用</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButton_cancel">
+           <property name="minimumSize">
+            <size>
+             <width>250</width>
+             <height>60</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>250</width>
+             <height>60</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton {
+border-radius:10px;
+background-color: rgba(255, 255, 255, 20);
+border: 2px solid rgba(255, 255, 255, 10);
+  }
+  QPushButton:hover {
+border-radius:10px;
+background-color: rgba(255, 255, 255, 30);
+border: 2px solid rgba(67, 163, 242,10);
+  }
+  QPushButton:pressed {
+border-radius:10px;
+background-color: rgba(255, 255, 255, 10);
+border: 2px solid rgba(255, 255, 255, 20);
+  }</string>
+           </property>
+           <property name="text">
+            <string>取消</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_8">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="stackedWidgetPage2">
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <property name="spacing">
+        <number>24</number>
+       </property>
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout_11">
+         <property name="spacing">
+          <number>18</number>
+         </property>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_2">
+           <item>
+            <widget class="QLabel" name="label_7">
+             <property name="text">
+              <string>开启</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_3">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushButton_enabled">
+             <property name="minimumSize">
+              <size>
+               <width>54</width>
+               <height>24</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>54</width>
+               <height>24</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QPushButton{ border-image:url(://images/close_btn.png) ;}
+
+  QPushButton:checked {
+       border-image: url(://images/open_btn.png);
+  }</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="checkable">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_4">
+           <item>
+            <widget class="QLabel" name="label_8">
+             <property name="text">
+              <string>设为主显示器</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_4">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushButton_extra_primary">
+             <property name="minimumSize">
+              <size>
+               <width>54</width>
+               <height>24</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>54</width>
+               <height>24</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QPushButton{ border-image:url(://images/close_btn.png) ;}
+
+  QPushButton:checked {
+       border-image: url(://images/open_btn.png);
+  }</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="checkable">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout_4">
+         <property name="spacing">
+          <number>10</number>
+         </property>
+         <item>
+          <widget class="QLabel" name="label_4">
+           <property name="text">
+            <string>分辨率</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="KiranComboBox" name="comboBox_extra_resolving">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>40</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>40</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout_5">
+         <property name="spacing">
+          <number>10</number>
+         </property>
+         <item>
+          <widget class="QLabel" name="label_5">
+           <property name="text">
+            <string>刷新率</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="KiranComboBox" name="comboBox_extra_refreshRate">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>40</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>40</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout_6">
+         <property name="spacing">
+          <number>10</number>
+         </property>
+         <item>
+          <widget class="QLabel" name="label_6">
+           <property name="text">
+            <string>缩放率</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="KiranComboBox" name="comboBox_extra_windowScalingFactor">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>40</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>40</height>
+            </size>
+           </property>
+           <item>
+            <property name="text">
+             <string>自动</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>100% (推荐)</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>200%</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <property name="spacing">
+          <number>58</number>
+         </property>
+         <property name="bottomMargin">
+          <number>40</number>
+         </property>
+         <item>
+          <spacer name="horizontalSpacer_5">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButton_extra_ok">
+           <property name="minimumSize">
+            <size>
+             <width>250</width>
+             <height>60</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>250</width>
+             <height>60</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton {
+      border-radius:10px;
+	background-color: rgb(67, 163, 242);
+  }
+
+  QPushButton:hover {
+	background-color: rgb(121, 195, 255);
+  }
+  QPushButton:pressed {
+      background-color: rgb(21, 104, 173);
+  }
+
+  QPushButton:disabled {
+      background-color: rgba(255,255,255,5);
+	color: rgba(255,255,255,60);
+  }
+
+</string>
+           </property>
+           <property name="text">
+            <string>应用</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButton_extra_cancel">
+           <property name="minimumSize">
+            <size>
+             <width>250</width>
+             <height>60</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>250</width>
+             <height>60</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton {
+border-radius:10px;
+background-color: rgba(255, 255, 255, 20);
+border: 2px solid rgba(255, 255, 255, 10);
+  }
+  QPushButton:hover {
+border-radius:10px;
+background-color: rgba(255, 255, 255, 30);
+border: 2px solid rgba(67, 163, 242,10);
+  }
+  QPushButton:pressed {
+border-radius:10px;
+background-color: rgba(255, 255, 255, 10);
+border: 2px solid rgba(255, 255, 255, 20);
+  }</string>
+           </property>
+           <property name="text">
+            <string>取消</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_6">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>KiranDisplayConfigurationPanel</class>
+   <extends>QWidget</extends>
+   <header>kiran-display-configuration-panel.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>KiranComboBox</class>
+   <extends>QComboBox</extends>
+   <header>kiran-combobox.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

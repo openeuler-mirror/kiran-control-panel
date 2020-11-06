@@ -1,0 +1,14 @@
+#!/usr/bin/env xdg-open
+
+[Desktop Entry]
+Encoding=UTF-8
+Name=Kiran Display Configuration
+Name[zh_CN]=显示器配置
+Comment=kiran display configuration
+Comment=Kiran显示器配置
+Exec=/usr/bin/kiran-display-configuration
+Icon=preferences-desktop-display
+Terminal=false
+Type=Application
+Categories=Lightdm;Greeter;Core;Settings;System;X-Common-Features;X-Common-Features;
+X-KIRAN-NoDisplay=true
