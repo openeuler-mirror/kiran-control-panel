@@ -212,9 +212,12 @@ void KiranAccountManager::initPageCreateUser() {
     });
     connect(m_page_createUser,&CreateUserPage::sigCreateUser,
             m_hardworker,&HardWorker::doCreateUser);
-    connect(m_hardworker,&HardWorker::createUserisDnoe,
+
+    connect(m_hardworker, &HardWorker::sigCreateUserDnoe,
             m_page_createUser,&CreateUserPage::handlerCreateNewUserIsDone);
-    //TODO:处理创建用户页面传出的繁忙信号，设置遮罩
+
+    connect(m_page_createUser,&CreateUserPage::sigIsBusyChanged,
+            this,&KiranAccountManager::setMaskVisible);
 }
 
 void KiranAccountManager::initPageUserInfo() {
@@ -224,6 +227,29 @@ void KiranAccountManager::initPageUserInfo() {
         m_page_selectAvatar->setCurrentAvatar(iconPath);
         m_stackWidget->setCurrentIndex(PAGE_SELECT_AVATAR);
     });
+
+    /// 修改属性
+    connect(m_page_userinfo,&UserInfoPage::sigUpdateUserProperty,
+            m_hardworker,&HardWorker::doUpdateUserProperty);
+
+    connect(m_hardworker,&HardWorker::sigUpdateUserPropertyDone,
+            m_page_userinfo,&UserInfoPage::handlerUpdateUserPropertyDone);
+
+    /// 修改密码
+    connect(m_page_userinfo,&UserInfoPage::sigUpdatePasswd,
+            m_hardworker,&HardWorker::doUpdatePasswd);
+    connect(m_hardworker,&HardWorker::sigUpdatePasswdDone,
+            m_page_userinfo,&UserInfoPage::handlerUpdatePasswdDone);
+
+    /// 删除用户
+    connect(m_page_userinfo,&UserInfoPage::sigDeleteUser,
+            m_hardworker,&HardWorker::doDeleteUser);
+    connect(m_hardworker,&HardWorker::sigDeleteUserDone,
+            m_page_userinfo,&UserInfoPage::handlerDeleteUserDone);
+
+    /// 忙碌显示/隐藏遮罩
+    connect(m_page_userinfo,&UserInfoPage::sigIsBusyChanged,
+            this,&KiranAccountManager::setMaskVisible);
 }
 
 void KiranAccountManager::initPageSelectAvatar() {
@@ -308,11 +334,12 @@ void KiranAccountManager::connectToInfoChanged() {
             });
 }
 
-void KiranAccountManager::showMask() {
-    this->stackUnder(m_maskWidget);
-    m_maskWidget->show();
+void KiranAccountManager::setMaskVisible(bool visible) {
+    if( visible ){
+        this->stackUnder(m_maskWidget);
+        m_maskWidget->show();
+    }else{
+        m_maskWidget->hide();
+    }
 }
 
-void KiranAccountManager::hideMask() {
-    m_maskWidget->hide();
-}

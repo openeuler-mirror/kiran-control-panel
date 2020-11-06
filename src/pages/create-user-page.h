@@ -36,13 +36,13 @@ signals:
     /// \param homeDir          家目录
     /// \param shell            shell路径
     /// \param iconFile         图标路径
-    void sigCreateUser(const QString &account,
+    void sigCreateUser(QString account,
                        int uid,
                        int accountType,
-                       const QString &encryptedPasswd,
-                       const QString &homeDir,
-                       const QString &shell,
-                       const QString &iconFile);
+                       QString encryptedPasswd,
+                       QString homeDir,
+                       QString shell,
+                       QString iconFile);
 
     /// 当用户点击头像时，请求切换到头像选择界面，参数为
     /// \param 当前所选头像的路径
@@ -67,7 +67,7 @@ private Q_SLOTS:
     /// 工作线程创建完用户的槽函数回调
     /// \param userPath 新用户的DBus对象路径
     /// \param errMsg   错误信息
-    void handlerCreateNewUserIsDone(const QString &userPath,const QString &errMsg);
+    void handlerCreateNewUserIsDone(QString userPath,QString errMsg);
 
 private:
     Ui::CreateUserPage *ui;

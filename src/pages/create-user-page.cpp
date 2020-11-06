@@ -164,6 +164,7 @@ void CreateUserPage::handlerCreateNewUser() {
     QString shell = m_advanceSettingsInfo.shell;
     QString iconFile = ui->avatar->iconPath();
 
+    emit sigIsBusyChanged(true);
     ui->btn_confirm->setBusy(true);
     emit sigCreateUser(account,uid,accountType,
                        encryptedPasswd,
@@ -172,11 +173,15 @@ void CreateUserPage::handlerCreateNewUser() {
                        iconFile);
 }
 
-void CreateUserPage::handlerCreateNewUserIsDone(const QString &userPath,
-                                                const QString &errMsg) {
+void CreateUserPage::handlerCreateNewUserIsDone(QString userPath,
+                                                QString errMsg) {
+    emit sigIsBusyChanged(false);
     ui->btn_confirm->setBusy(false);
     if(!errMsg.isEmpty()){
         KiranMessageBox::message(nullptr,tr("Error"),
                                  errMsg,KiranMessageBox::Yes|KiranMessageBox::No);
+    }
+    if(!userPath.isEmpty()){
+        emit sigRequestSetCurrentUser(userPath);
     }
 }

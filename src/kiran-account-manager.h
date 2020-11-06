@@ -22,6 +22,7 @@ public:
 
 private Q_SLOTS:
     void setCurrentUser(const QString &userPath);
+    void setMaskVisible(bool visible);
 
 private:
     void initUI();
@@ -33,8 +34,6 @@ private:
     void appendSiderbarItem(const QString &userPath);
     void setDefaultSiderbarItem();
 
-    void showMask();
-    void hideMask();
 private:
     ListWidgetControl *m_tabList;
     QStackedWidget *m_stackWidget;
