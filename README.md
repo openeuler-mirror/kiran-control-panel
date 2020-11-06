@@ -1,5 +1,6 @@
-#kiran-account-manager
-##编译
+# kiran-account-manager
+## 编译
+
 - 安装编译依赖  
 `sudo yum install kiranwidgets-qt5-devel qt5-qtbase-devel qt5-qtsvg-devel pam-devel libgcrypt-devel`
 - 在源码根目录下创建**build**目录  
@@ -8,9 +9,15 @@
 `cmake ..`
 - 编译  
 `make -j8`
-##安装
+
+## 安装
+
 `make install`
-##卸载
+
+## 卸载
+
 `make uninstall`
-##运行
+
+### 运行
+
 `$ /usr/bin/kiran-account-manager`
