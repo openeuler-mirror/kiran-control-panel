@@ -137,7 +137,7 @@ void SelectAvatarPage::initUI() {
     m_addButton = addAvatar(":/images/add_icon.png", AVATAR_ADD, false);
     connect(m_addButton, &AvatarItemButton::clicked, [this]() {
         //1.选择图片
-        QString fileName = QFileDialog::getOpenFileName(this, tr("select greeter background"),
+        QString fileName = QFileDialog::getOpenFileName(this, tr("select picture"),
                                                         QDir::homePath(),
                                                         tr("image files(*.bmp *.jpg *.png *.tif *.gif"
                                                            " *.pcx *.tga *.exif *.fpx *.svg *.psd *.cdr *.pcd"

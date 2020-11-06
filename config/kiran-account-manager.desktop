@@ -1,0 +1,14 @@
+[Desktop Entry]
+Name[zh_CN]=账户管理工具
+Name=Accounts Manager
+Comment[zh_CN]=管理账户
+Comment=Manager Account
+Terminal=false
+Type=Application
+Exec=kiran-account-manager
+Icon=user-admin
+StartupNotify=true
+Categories=GTK;Settings;Account;X-System-Server;X-Common-Features;
+Keywords=mate-control-center;MATE;clock;date;user;account;
+OnlyShowIn=MATE;
+X-KIRAN-NoDisplay=true

@@ -3,6 +3,7 @@
 #include "accounts-user-interface.h"
 #include "accounts-global-info.h"
 #include "passwd-helper.h"
+#include "hover-tips.h"
 
 #include <QListView>
 #include <kiranwidgets-qt5/kiran-message-box.h>
@@ -76,6 +77,8 @@ void UserInfoPage::initUI() {
     m_errorTip->setShowPosition(KiranTips::POSITION_BOTTM);
     m_errorTip->setAnimationEnable(true);
 
+    m_hoverTip = new HoverTips(this);
+
     /* 用户显示页面 */
     //账户头像
     ui->avatar->setHoverImage(":/images/change_user_icon.png");
@@ -98,26 +101,12 @@ void UserInfoPage::initUI() {
     });
 
     //确认按钮
-    connect(ui->btn_confirm, &QPushButton::clicked,
-            this, &UserInfoPage::handlerSaveUserProperty);
+    connect(ui->btn_saveProperty, &QPushButton::clicked,
+            this, &UserInfoPage::handlerUpdateUserProperty);
 
     //删除用户
-    connect(ui->btn_deleteUser, &QPushButton::clicked, [this] {
-        QString tip = QString(tr("The directory and files under the user's home directory are deleted with the user."
-                                 "Are you sure you want to delete the user(%1)?")).arg(m_curShowUserName);
-        KiranMessageBox::KiranStandardButton btn = KiranMessageBox::message(this,tr("Warning"),
-                                  tip,
-                                  KiranMessageBox::Yes|KiranMessageBox::No);
-
-        if (btn == KiranMessageBox::Yes) {
-            AccountsInterface accountInterface(QDBusConnection::systemBus());
-            QDBusPendingReply<> reply = accountInterface.DeleteUser(m_uid, true);
-            reply.waitForFinished();
-            if (reply.isError()) {
-                qInfo() << reply.error();
-            }
-        }
-    });
+    connect(ui->btn_deleteUser, &QPushButton::clicked,
+            this,&UserInfoPage::handlerDeleteUser);
 
 
     /* 修改密码页面 */
@@ -126,8 +115,8 @@ void UserInfoPage::initUI() {
     ui->editcheck_confirmPasswd->setEchoMode(QLineEdit::Password);
 
     //保存按钮
-    connect(ui->btn_save, &QPushButton::clicked,
-            this, &UserInfoPage::handlerSaveNewPasswd);
+    connect(ui->btn_savePasswd, &QPushButton::clicked,
+            this, &UserInfoPage::handlerUpdatePasswd);
 
     //取消按钮
     connect(ui->btn_cancel, &QPushButton::clicked, [this]() {
@@ -142,7 +131,7 @@ void UserInfoPage::resetPageSetPasswd() {
     ui->editcheck_confirmPasswd->clear();
 }
 
-void UserInfoPage::handlerSaveNewPasswd() {
+void UserInfoPage::handlerUpdatePasswd() {
     //新密码不能为空
     QString newpasswd = ui->editcheck_newPasswd->text();
     if (newpasswd.isEmpty()) {
@@ -150,7 +139,7 @@ void UserInfoPage::handlerSaveNewPasswd() {
         m_errorTip->showTipAroundWidget(ui->editcheck_newPasswd);
         return;
     }
-    //确认新密码不为空，并且和新密码相同
+    //确认新密码不为空，并且和确认密码相同
     QString confirmNewPasswd = ui->editcheck_confirmPasswd->text();
     if (confirmNewPasswd.isEmpty()) {
         m_errorTip->setText(tr("Please enter the password again"));
@@ -189,53 +178,79 @@ void UserInfoPage::handlerSaveNewPasswd() {
         QMessageBox::warning(this, tr("Error"), tr("Password encryption failed"));
         return;
     }
-    UserInterface interface(m_curShowUserPath, QDBusConnection::systemBus());
-    QDBusPendingReply<> passwdReply = interface.SetPassword(encryptedPasswd, "");
-    passwdReply.waitForFinished();
-    if (passwdReply.isError()) {
-        qWarning() << "SetPassword Failed." << passwdReply.error();
-        QMessageBox::warning(this, tr("Error"), tr("Failed to modify password"));
-        return;
-    }
-    m_errorTip->hideTip();
-    ui->stackedWidget->setCurrentIndex(PAGE_USER_INFO);
+    ui->btn_savePasswd->setBusy(true);
+    emit sigIsBusyChanged(true);
+    emit sigUpdatePasswd(getCurrentShowUserPath(),
+                         getCurrentShowUserName(),
+                         encryptedPasswd);
 }
 
-void UserInfoPage::handlerSaveUserProperty() {
-    UserInterface userInterface(m_curShowUserPath,
-                                QDBusConnection::systemBus());
+void UserInfoPage::handlerUpdateUserProperty() {
+    QString account,icon;
+    int accountType;
+    bool isLocked;
 
-    //icon file
-    QString iconFilePath = ui->avatar->iconPath();
-    if ( userInterface.icon_file() != iconFilePath ) {
-        QDBusPendingReply<> pendingReply = userInterface.SetIconFile(iconFilePath);
-        pendingReply.waitForFinished();
-        if( pendingReply.isError() ){
-            qWarning() << "Save User Property(Icon) Error" << pendingReply.error();
-        }
+    account = getCurrentShowUserName();
+    icon = ui->avatar->iconPath();
+    accountType = ui->combo_accountType->currentIndex();
+    isLocked = !ui->checkBox->isChecked();
+
+    ui->btn_saveProperty->setBusy(true);
+    emit sigIsBusyChanged(true);
+    emit sigUpdateUserProperty(getCurrentShowUserPath(),
+                               account,
+                               icon,
+                               accountType,
+                               isLocked);
+}
+
+void UserInfoPage::handlerUpdateUserPropertyDone(QString errMsg) {
+    ui->btn_saveProperty->setBusy(false);
+    emit sigIsBusyChanged(false);
+    if( !errMsg.isEmpty() ){
+        KiranMessageBox::message(nullptr,
+                                 tr("Error"),errMsg,
+                                 KiranMessageBox::Yes|KiranMessageBox::No);
+    }else{
+        m_hoverTip->show(HoverTips::HOVE_TIPS_SUC,tr("Account information updated successfully"));
     }
-
-    //account type
-    int accountType = ui->combo_accountType->currentIndex();
-    if (userInterface.account_type() != accountType) {
-        QDBusPendingReply<> pendingReply = userInterface.SetAccountType(accountType);
-        pendingReply.waitForFinished();
-        if( pendingReply.isError() ){
-            qWarning() << "Save User Property(AccountType) Error" << pendingReply.error();
-        }
-    }
-
-    //locked
-    int locked = !ui->checkBox->isChecked();
-    if (userInterface.locked() != locked) {
-        QDBusPendingReply<> pendingReply = userInterface.SetLocked(locked);
-        pendingReply.waitForFinished();
-        if( pendingReply.isError() ){
-            qWarning() << "Save User Property(Locked) Error" << pendingReply.error();
-        }
-    }
-
-    ///如果属性设置成功了AccountsGlobalInfo会更新当前页面
-    ///手动更新是为了避免设置失败,界面未复位
+    ///NOTE: 如果属性设置成功了AccountsGlobalInfo会更新当前页面
+    ///      手动更新是为了避免设置失败,界面未复位
     updateInfo();
+}
+
+void UserInfoPage::handlerUpdatePasswdDone(QString errMsg) {
+    ui->btn_savePasswd->setBusy(false);
+    emit sigIsBusyChanged(false);
+    if( !errMsg.isEmpty() ){
+        KiranMessageBox::message(nullptr,
+                                 tr("Error"),errMsg,
+                                 KiranMessageBox::Yes|KiranMessageBox::No);
+    }else{
+        ui->stackedWidget->setCurrentIndex(PAGE_USER_INFO);
+        m_hoverTip->show(HoverTips::HOVE_TIPS_SUC,tr("Password updated successfully"));
+    }
+}
+
+void UserInfoPage::handlerDeleteUser() {
+    QString tip = QString(tr("The directory and files under the user's home directory are deleted with the user."
+                             "Are you sure you want to delete the user(%1)?")).arg(m_curShowUserName);
+    KiranMessageBox::KiranStandardButton btn = KiranMessageBox::message(this,tr("Warning"),
+                                                                        tip,
+                                                                        KiranMessageBox::Yes|KiranMessageBox::No);
+    if( btn == KiranMessageBox::No ){
+        return;
+    }
+
+    ui->btn_deleteUser->setBusy(true);
+    emit sigIsBusyChanged(true);
+    emit sigDeleteUser(m_uid);
+}
+
+void UserInfoPage::handlerDeleteUserDone(QString errMsg) {
+    ui->btn_deleteUser->setBusy(false);
+    emit sigIsBusyChanged(false);
+    if( !errMsg.isEmpty() ){
+        KiranMessageBox::message(this,tr("Error"),errMsg,KiranMessageBox::Yes|KiranMessageBox::No);
+    }
 }

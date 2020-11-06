@@ -8,6 +8,7 @@
 
 #define LOG_PATH      "/tmp/kiran-account-manager.log"
 #define DEFAULT_THEME ":/themes/black_theme.qss"
+#define TRANSLATION_FILE_DIR "/usr/share/kiran-account-manager/translations/"
 
 //TODO:修改所有消息框为kiranwidgets-qt5中的消息框
 
@@ -43,7 +44,6 @@ void loadAccountInfo() {
     }
 }
 
-#include <QStyle>
 int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
 
@@ -54,6 +54,14 @@ int main(int argc, char *argv[]) {
     loadStyleSheet();
 
     loadAccountInfo();
+
+    QTranslator tsor;
+    tsor.load(QLocale(),
+              qAppName()/*filename*/,
+              "."/*prefix*/,
+              TRANSLATION_FILE_DIR/*dir*/,
+              ".qm"/*suffix*/);
+    qApp->installTranslator(&tsor);
 
     KiranAccountManager accountManager;
     accountManager.resize(975, 850);

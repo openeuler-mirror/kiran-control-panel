@@ -44,7 +44,7 @@
       </size>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="page_userInfo">
       <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -459,7 +459,7 @@
           </spacer>
          </item>
          <item>
-          <widget class="QPushButton" name="btn_confirm">
+          <widget class="AnimationPushButton" name="btn_saveProperty">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
              <horstretch>0</horstretch>
@@ -500,7 +500,7 @@
           </spacer>
          </item>
          <item>
-          <widget class="QPushButton" name="btn_deleteUser">
+          <widget class="AnimationPushButton" name="btn_deleteUser">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
              <horstretch>0</horstretch>
@@ -762,7 +762,7 @@
           </spacer>
          </item>
          <item>
-          <widget class="QPushButton" name="btn_save">
+          <widget class="AnimationPushButton" name="btn_savePasswd">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
              <horstretch>0</horstretch>
@@ -860,6 +860,11 @@
    <extends>QWidget</extends>
    <header location="global">lineedit-with-checkicon.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>AnimationPushButton</class>
+   <extends>QPushButton</extends>
+   <header location="global">animation-push-button.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

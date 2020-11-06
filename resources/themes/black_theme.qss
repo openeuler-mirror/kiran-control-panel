@@ -1,17 +1,23 @@
 /*全局设置*/
 QPushButton#btn_confirm,
-QPushButton#btn_save{
+QPushButton#btn_save,
+QPushButton#btn_saveProperty,
+QPushButton#btn_savePasswd{
     color:white;
     background:#43a3f2;
     border:none;
     border-radius:10px;
 }
 QPushButton#btn_confirm:hover,
-QPushButton#btn_save:hover{
+QPushButton#btn_save:hover,
+QPushButton#btn_saveProperty:hover,
+QPushButton#btn_savePasswd:hover{
     background:#79c3ff;
 }
 QPushButton#btn_confirm:pressed,
-QPushButton#btn_save:pressed{
+QPushButton#btn_save:pressed,
+QPushButton#btn_saveProperty:pressed,
+QPushButton#btn_savePasswd:pressed{
     background:#1568ad;
 }
 QPushButton#btn_cancel,
@@ -83,6 +89,16 @@ QLabel#label_specifyUserID,
 QLabel#label_specifyUserHome{
     color:white;
 }
+
+HoverTips {
+    background-color:#222222;
+    border:1px solid rgba(255,255,255,0.1);
+    border-radius:4px;
+}
+HoverTips > QLabel#label_text{
+   color:white;
+}
+
 /*ScrollBar*/
 QScrollBar:vertical{
     border: 0px;

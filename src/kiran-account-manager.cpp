@@ -5,6 +5,8 @@
 #include "user-info-page.h"
 #include "select-avatar-page.h"
 #include "listwidget-control.h"
+#include "mask-widget.h"
+#include "hard-worker.h"
 
 #include <QIcon>
 #include <QDebug>
@@ -19,11 +21,20 @@ enum StackWidgetPageEnum {
 };
 
 KiranAccountManager::KiranAccountManager()
-        : KiranTitlebarWindow() {
+        : KiranTitlebarWindow(){
+    m_workThread.start();
+    m_hardworker = new HardWorker();
+    m_hardworker->moveToThread(&m_workThread);
     initUI();
 }
 
-KiranAccountManager::~KiranAccountManager() = default;
+KiranAccountManager::~KiranAccountManager(){
+    if( m_workThread.isRunning() ){
+        m_workThread.quit();
+        m_workThread.wait();
+    }
+    delete  m_hardworker;
+};
 
 void KiranAccountManager::setCurrentUser(const QString &userPath) {
     int findIdx = -1;
@@ -73,6 +84,10 @@ void KiranAccountManager::initUI() {
     setObjectName("KiranAccountManager");
     setTitle(tr("User Manager"));
     setIcon(QIcon::fromTheme("user-admin"));
+
+    //遮罩
+    m_maskWidget = new MaskWidget(this);
+    m_maskWidget->setVisible(false);
 
     //主布局
     auto contentLayout = new QHBoxLayout(getWindowContentWidget());
@@ -195,6 +210,14 @@ void KiranAccountManager::initPageCreateUser() {
             m_tabList->setCurrentRow(findIdx);
         });
     });
+    connect(m_page_createUser,&CreateUserPage::sigCreateUser,
+            m_hardworker,&HardWorker::doCreateUser);
+
+    connect(m_hardworker, &HardWorker::sigCreateUserDnoe,
+            m_page_createUser,&CreateUserPage::handlerCreateNewUserIsDone);
+
+    connect(m_page_createUser,&CreateUserPage::sigIsBusyChanged,
+            this,&KiranAccountManager::setMaskVisible);
 }
 
 void KiranAccountManager::initPageUserInfo() {
@@ -204,6 +227,29 @@ void KiranAccountManager::initPageUserInfo() {
         m_page_selectAvatar->setCurrentAvatar(iconPath);
         m_stackWidget->setCurrentIndex(PAGE_SELECT_AVATAR);
     });
+
+    /// 修改属性
+    connect(m_page_userinfo,&UserInfoPage::sigUpdateUserProperty,
+            m_hardworker,&HardWorker::doUpdateUserProperty);
+
+    connect(m_hardworker,&HardWorker::sigUpdateUserPropertyDone,
+            m_page_userinfo,&UserInfoPage::handlerUpdateUserPropertyDone);
+
+    /// 修改密码
+    connect(m_page_userinfo,&UserInfoPage::sigUpdatePasswd,
+            m_hardworker,&HardWorker::doUpdatePasswd);
+    connect(m_hardworker,&HardWorker::sigUpdatePasswdDone,
+            m_page_userinfo,&UserInfoPage::handlerUpdatePasswdDone);
+
+    /// 删除用户
+    connect(m_page_userinfo,&UserInfoPage::sigDeleteUser,
+            m_hardworker,&HardWorker::doDeleteUser);
+    connect(m_hardworker,&HardWorker::sigDeleteUserDone,
+            m_page_userinfo,&UserInfoPage::handlerDeleteUserDone);
+
+    /// 忙碌显示/隐藏遮罩
+    connect(m_page_userinfo,&UserInfoPage::sigIsBusyChanged,
+            this,&KiranAccountManager::setMaskVisible);
 }
 
 void KiranAccountManager::initPageSelectAvatar() {
@@ -287,3 +333,13 @@ void KiranAccountManager::connectToInfoChanged() {
                 }
             });
 }
+
+void KiranAccountManager::setMaskVisible(bool visible) {
+    if( visible ){
+        this->stackUnder(m_maskWidget);
+        m_maskWidget->show();
+    }else{
+        m_maskWidget->hide();
+    }
+}
+

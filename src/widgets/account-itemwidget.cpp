@@ -13,7 +13,7 @@ AccountItemWidget::AccountItemWidget(QWidget *paren, bool isCreateAccountItem) :
     ui->setupUi(this);
     if(m_isCreateAccountItem){
         ui->avatar->setImage(":/images/add_icon.png");
-        ui->label_account->setText("Create new account");
+        ui->label_account->setText(tr("Create new account"));
         ui->label_status->setVisible(false);
     }
     updateStatusDesc();
@@ -82,8 +82,8 @@ void AccountItemWidget::setIsLocked(bool isLocked)
 void AccountItemWidget::updateStatusDesc()
 {
     if(m_isLocked){
-        ui->label_status->setText("disable");
+        ui->label_status->setText(tr("disable"));
     }else{
-        ui->label_status->setText("enable");
+        ui->label_status->setText(tr("enable"));
     }
 }
