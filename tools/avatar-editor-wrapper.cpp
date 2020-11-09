@@ -11,14 +11,13 @@
 #include <QDebug>
 #include <QMap>
 
-//TODO:和kiran-avatar-editor使用公共头文件，避免引发未同步枚举问题
 QString avatarEditorError(int exitCode){
     static const QMap<int,QString> exitCodeMap = {
-            {0,"success"},
-            {1,"user cancel"},
-            {2,"bad arg"},
-            {3,"save failed"},
-            {4,"missing paramter"}
+            {EXIT_CODE_SUCCESS,"success"},
+            {EXIT_CODE_CANCEL,"user cancel"},
+            {EXIT_CODE_BAD_ARG,"bad arg"},
+            {EXIT_CODE_SAVE_FAILED,"save failed"},
+            {EXIT_CODE_MISSING_PARAMTER,"missing paramter"}
     };
     static QString unknowError = "unknow exit code";
 
@@ -40,6 +39,7 @@ bool AvatarEditorWrapper::exec(const QString &srcImage,QString &dstImage) {
                                             QIODevice::NotOpen);
 
     if( !avatarEditorProcess.waitForStarted(3000) ){
+        qWarning() << "can't start" << KIRAN_AVATAR_EDITOR_PATH;
         return false;
     }
 
@@ -49,6 +49,6 @@ bool AvatarEditorWrapper::exec(const QString &srcImage,QString &dstImage) {
         dstImage = tempFilePath;
         return true;
     }
-
+    qWarning() << "kiran-avatar-editor:" << avatarEditorError(avatarEditorProcess.exitCode());
     return false;
 }
