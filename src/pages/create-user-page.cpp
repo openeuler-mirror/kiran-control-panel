@@ -70,6 +70,8 @@ void CreateUserPage::initUI()
     QRegExp regExp("^\\w+$");
     validator->setRegExp(regExp);
     ui->edit_name->setValidator(validator);
+    //NOTE:用户名不能超过32字符长
+    ui->edit_name->setMaxLength(32);
 
     /// 密码输入框
     ui->editcheck_passwd->setMaxLength(24);
