@@ -201,62 +201,57 @@
 <context>
     <name>HardWorker</name>
     <message>
-        <location filename="../src/hard-worker.cpp" line="40"/>
+        <location filename="../src/hard-worker.cpp" line="96"/>
         <source>Create User failed</source>
         <translation>创建用户失败</translation>
     </message>
     <message>
-        <location filename="../src/hard-worker.cpp" line="54"/>
         <source>password</source>
-        <translation>密码</translation>
+        <translation type="vanished">密码</translation>
     </message>
     <message>
-        <location filename="../src/hard-worker.cpp" line="63"/>
         <source>home directory</source>
-        <translation>用户目录</translation>
+        <translation type="vanished">用户目录</translation>
     </message>
     <message>
-        <location filename="../src/hard-worker.cpp" line="72"/>
         <source>shell</source>
-        <translation>shell</translation>
+        <translation type="vanished">shell</translation>
     </message>
     <message>
-        <location filename="../src/hard-worker.cpp" line="80"/>
         <source>icon</source>
-        <translation>头像</translation>
+        <translation type="vanished">头像</translation>
     </message>
     <message>
-        <location filename="../src/hard-worker.cpp" line="85"/>
         <source>Failed to set user attributes</source>
-        <translation>设置用户属性失败</translation>
+        <translation type="vanished">设置用户属性失败</translation>
     </message>
     <message>
-        <location filename="../src/hard-worker.cpp" line="109"/>
+        <location filename="../src/hard-worker.cpp" line="107"/>
         <source> update password failed</source>
         <translation>更新密码失败</translation>
     </message>
     <message>
-        <location filename="../src/hard-worker.cpp" line="130"/>
+        <location filename="../src/hard-worker.cpp" line="128"/>
         <source>icon file</source>
         <translation>头像</translation>
     </message>
     <message>
-        <location filename="../src/hard-worker.cpp" line="139"/>
+        <location filename="../src/hard-worker.cpp" line="137"/>
         <source>account type</source>
         <translation>账户类型</translation>
     </message>
     <message>
-        <location filename="../src/hard-worker.cpp" line="148"/>
+        <location filename="../src/hard-worker.cpp" line="146"/>
         <source>locked</source>
         <translation>启用状态</translation>
     </message>
     <message>
-        <location filename="../src/hard-worker.cpp" line="155"/>
+        <location filename="../src/hard-worker.cpp" line="153"/>
         <source>Failed to update user properties(%1)</source>
         <translation>更新用户属性失败(%1)</translation>
     </message>
     <message>
-        <location filename="../src/hard-worker.cpp" line="170"/>
+        <location filename="../src/hard-worker.cpp" line="169"/>
         <source>Failed to delete user</source>
         <translation>删除用户失败</translation>
     </message>
