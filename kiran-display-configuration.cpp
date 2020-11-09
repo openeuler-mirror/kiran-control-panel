@@ -244,38 +244,38 @@ void KiranDisplayConfiguration::curExtraData2Cache()
     map.insert("windowScalingFactor", ui->comboBox_extra_windowScalingFactor->currentIndex());
     m_extraData.insert(m_curMonitorPath, map);
 }
-
+#include <QShortcut>
 void KiranDisplayConfiguration::showMessageBox()
 {
-    KiranMessageBox *box=new KiranMessageBox();
-    box->setTitle(tr("显示是否正常?"));
+    KiranMessageBox box;
+    box.setTitle(tr("显示是否正常?"));
 
-    QPushButton *saveBtn = new QPushButton;
-    saveBtn->setShortcut(tr("ctr+k"));
-    saveBtn->setText(tr("保存当前配置(K)"));
-    saveBtn->setFixedSize(QSize(200, box->buttonSize().height()));
+    QPushButton saveBtn;
+    saveBtn.setText(tr("保存当前配置(K)"));
+    saveBtn.setFixedSize(QSize(200, box.buttonSize().height()));
 
-    QPushButton *cancelBtn = new QPushButton;
-    saveBtn->setShortcut(tr("ctr+r"));
-    cancelBtn->setText(tr("恢复之前的配置(R)"));
-    cancelBtn->setFixedSize(QSize(200, box->buttonSize().height()));
+    QPushButton cancelBtn;
+    cancelBtn.setText(tr("恢复之前的配置(R)"));
+    cancelBtn.setFixedSize(QSize(200, box.buttonSize().height()));
 
-    box->addButton(saveBtn, QDialogButtonBox::AcceptRole);
-    box->addButton(cancelBtn, QDialogButtonBox::RejectRole);
+    box.addButton(&saveBtn, QDialogButtonBox::AcceptRole);
+    box.addButton(&cancelBtn, QDialogButtonBox::RejectRole);
+    saveBtn.setShortcut(Qt::CTRL + Qt::Key_K);
+    cancelBtn.setShortcut(Qt::CTRL + Qt::Key_R);
 
     QString text = tr("显示将会在 %1 秒后恢复之前的配置");
     int countdown = 30;
     QTimer timer;
     timer.setInterval(1000);
     QObject::connect(&timer, &QTimer::timeout, [&](){
-         box->setText(text.arg(countdown--));
-         if(countdown < 0) box->reject();
+         box.setText(text.arg(countdown--));
+         if(countdown < 0) box.reject();
     });
     timer.start();
 
-    box->setText(text.arg(countdown--));
-    box->exec();
-    if( box->clickedButton() == saveBtn  )
+    box.setText(text.arg(countdown--));
+    box.exec();
+    if( box.clickedButton() == &saveBtn  )
     {
         Display("Save");
     }
