@@ -40,4 +40,9 @@ target_include_directories(kiran-account-manager PRIVATE
         tools)
 
 target_link_libraries(kiran-account-manager Qt5::Widgets Qt5::DBus Qt5::Svg pam crypt kiranwidgets-qt5)
+
+install(TARGETS ${PROJECT_NAME} DESTINATION ${CMAKE_INSTALL_PREFIX}/bin/)
+install(FILES ${QM_FILES} DESTINATION ${SHARE_INSTALL_PREFIX}/${PROJECT_NAME}/translations/ )
+install(FILES ./config/kiran-account-manager.desktop DESTINATION ${SHARE_INSTALL_PREFIX}/applications/ )
+
 add_subdirectory(avatar-editor)

@@ -6,7 +6,7 @@
 - 在源码根目录下创建**build**目录  
 `mkdir build`
 - 生成**Makefile**  
-`cmake ..`
+`cmake3 -DCMAKE_INSTALL_PREFIX=/usr -DSHARE_INSTALL_PREFIX=/usr/share   ../`
 - 编译  
 `make -j8`
 
