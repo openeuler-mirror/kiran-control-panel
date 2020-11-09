@@ -45,7 +45,7 @@ bool KiranTimeZone::save()
         return true;
     }
 
-    QPair<bool,QString> res = ComUnikylinKiranSystemDaemonTimeDateInterface::instance()->SyncSetTimeZone(m_selectedZoneID);
+    QPair<bool,QString> res = ComKylinsecKiranSystemDaemonTimeDateInterface::instance()->SyncSetTimeZone(m_selectedZoneID);
 
     if(!res.first){
         qInfo() << "SetTimeZone failed," << res.second;

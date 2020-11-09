@@ -60,18 +60,17 @@ KiranTimeZoneItem QLabel{
 KiranTimeZone QLabel#label_search{
     qproperty-pixmap: url(:/images/search.svg);
 }
+
 /*QCheckBox*/
 QCheckBox::indicator{
-    width: 40px;
-    height: 24px;
+    width: 50px;
+    height: 22px;
     border:none;
     background-color:transparent;
+    image: url(:/images/on.png);
 }
 QCheckBox::indicator:unchecked{
     image: url(:/images/off.png);
-}
-QCheckBox::indicator{
-    image: url(:/images/on.png);
 }
 
 /*QPushButton*/
@@ -95,13 +94,15 @@ QCheckBox::indicator{
     background: rgba(255,255,255,0.05);
     border:2px rgba(255,255,255,0.01);
 }
+
 #btn_reset:hover{
     background: rgba(255,255,255,0.1);
-    border:2px rgba(67,163,242,0.1);
+    border:1px solid rgba(67,163,242,0.1);
 }
+
 #btn_reset:pressed{
     background: rgba(0,0,0,0.1);
-    border:2px rgba(67,163,242,0.03);
+    border:1px solid rgba(67,163,242,0.03);
 }
 /**侧边栏链表**/
 QListView#tabList{
@@ -109,7 +110,7 @@ QListView#tabList{
    background-color:transparent;
 }
 QListView#tabList::item{
-    background-color:transparent;
+    background-color: rgba(255,255,255,0.05);
     border-radius:10px;
     margin-top:24px;
     height:60px;
@@ -124,9 +125,7 @@ QListView#tabList::item:selected:hover{
     background:#79c3ff;
     border:none;
 }
-QListView#tabList::item{
-    background-color: rgba(255,255,255,0.05);
-}
+
 QListView#tabList::item:!selected:hover{
     background-color: rgba(255,255,255,0.1);
 }

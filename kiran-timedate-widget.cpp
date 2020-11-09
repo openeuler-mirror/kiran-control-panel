@@ -8,6 +8,7 @@
 #include <QMessageBox>
 #include <QTimerEvent>
 #include <QFontDatabase>
+#include <QListWidgetItem>
 
 enum KiranTimeDateStackPageEnum{
     PAGE_TIMEZONE_SETTING,
@@ -119,7 +120,7 @@ void KiranTimeDateWidget::initUI()
 
         if( enable!=KiranTimeDateGlobalData::instance()->systemNTP() ){
             QPair<bool,QString> setNtpRes;
-            setNtpRes = ComUnikylinKiranSystemDaemonTimeDateInterface::instance()->SyncSetNTP(enable);
+            setNtpRes = ComKylinsecKiranSystemDaemonTimeDateInterface::instance()->SyncSetNTP(enable);
             if(!setNtpRes.first){
                 qWarning() << "SetNTP failed," << setNtpRes.second;
                 ui->checkbox_autoSync->setCheckState(enable?Qt::Unchecked:Qt::Checked);
@@ -152,6 +153,7 @@ void KiranTimeDateWidget::initUI()
         bool ntpStatus = globalData->systemNTP();
         ui->checkbox_autoSync->setChecked(ntpStatus);
     }
+
     /// 保存
     ui->btn_save->setFixedSize(252,60);
     connect(ui->btn_save,&QPushButton::clicked,[this](bool checked){
@@ -165,7 +167,7 @@ void KiranTimeDateWidget::initUI()
             dateTime.setDate(ui->widget_setDate->currentDate());
             dateTime.setTime(ui->widget_setTime->currentTime());
             microsecondsSinceEpoch = dateTime.toMSecsSinceEpoch()*1000;
-            QPair<bool,QString> res = ComUnikylinKiranSystemDaemonTimeDateInterface::instance()->SyncSetTime(microsecondsSinceEpoch,false);
+            QPair<bool,QString> res = ComKylinsecKiranSystemDaemonTimeDateInterface::instance()->SyncSetTime(microsecondsSinceEpoch,false);
             bRes = res.first;
         }
     });
