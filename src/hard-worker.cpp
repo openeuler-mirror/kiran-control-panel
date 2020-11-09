@@ -29,6 +29,8 @@ void HardWorker::doCreateUser(QString account,
                               QString iconFile) {
     AccountsInterface accountsService(QDBusConnection::systemBus());
     QString userObjPath;
+    QString errMsgPrefix = tr("Create User failed");
+    QString errMsgDetail;
 
     ///step1.创建用户
     QDBusPendingReply<QDBusObjectPath> createUserRep;
@@ -39,6 +41,7 @@ void HardWorker::doCreateUser(QString account,
     createUserRep.waitForFinished();
     if( createUserRep.isError() ){
         qWarning() << "create user failed," << createUserRep.error();
+        errMsgDetail = createUserRep.error().message();
         goto failed;
     }
 
@@ -52,6 +55,7 @@ void HardWorker::doCreateUser(QString account,
         setpwdRep.waitForFinished();
         if( setpwdRep.isError() ){
             qWarning() << "set passwd failed," << setpwdRep.error();
+            errMsgDetail = setpwdRep.error().message();
             goto failed;
         }
         ///step3.　设置Home
@@ -60,6 +64,7 @@ void HardWorker::doCreateUser(QString account,
             setHomeRep.waitForFinished();
             if(setHomeRep.isError()){
                 qWarning() << "set home directory failed," << setHomeRep.error();
+                errMsgDetail = setHomeRep.error().message();
                 goto failed;
             }
         }
@@ -68,6 +73,7 @@ void HardWorker::doCreateUser(QString account,
         setShellRep.waitForFinished();
         if( setShellRep.isError() ){
             qWarning() << "set shell failed," << setShellRep.error();
+            errMsgDetail = setShellRep.error().message();
             goto failed;
         }
         ///step5. 设置图标
@@ -75,6 +81,7 @@ void HardWorker::doCreateUser(QString account,
         setIconRep.waitForFinished();
         if(setIconRep.isError()){
             qWarning() << "set icon failed," << setIconRep.error();
+            errMsgDetail = setIconRep.error().message();
             goto failed;
         }
     }
@@ -94,7 +101,12 @@ failed:
             qWarning() << "create user failed,delete user:" << reply.error();
         }
     }
-    emit sigCreateUserDnoe("",tr("Create User failed"));
+    QString errMsg = errMsgPrefix;
+    if(!errMsgDetail.isEmpty()){
+        errMsg.append(",");
+        errMsg.append(errMsgDetail);
+    }
+    emit sigCreateUserDnoe("",errMsg);
 }
 
 void HardWorker::doUpdatePasswd(QString objPath,

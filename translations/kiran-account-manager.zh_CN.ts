@@ -157,43 +157,43 @@
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="../src/pages/create-user-page.cpp" line="83"/>
+        <location filename="../src/pages/create-user-page.cpp" line="85"/>
         <source>Please enter account name first</source>
         <translation>请先输入账户名</translation>
     </message>
     <message>
-        <location filename="../src/pages/create-user-page.cpp" line="113"/>
+        <location filename="../src/pages/create-user-page.cpp" line="115"/>
         <source>Please enter your account name</source>
         <translation>请输入账户名</translation>
     </message>
     <message>
-        <location filename="../src/pages/create-user-page.cpp" line="118"/>
+        <location filename="../src/pages/create-user-page.cpp" line="120"/>
         <source>Account already exists</source>
         <translation>账户名已存在</translation>
     </message>
     <message>
-        <location filename="../src/pages/create-user-page.cpp" line="129"/>
+        <location filename="../src/pages/create-user-page.cpp" line="131"/>
         <source>Please enter your password</source>
         <translation>请输出密码</translation>
     </message>
     <message>
-        <location filename="../src/pages/create-user-page.cpp" line="135"/>
+        <location filename="../src/pages/create-user-page.cpp" line="137"/>
         <source>Please enter the password again</source>
         <translation>请再次输入密码</translation>
     </message>
     <message>
-        <location filename="../src/pages/create-user-page.cpp" line="141"/>
+        <location filename="../src/pages/create-user-page.cpp" line="143"/>
         <source>The password you enter must be the same as the former one</source>
         <translation>两次密码不相同，请核对后，再次输入</translation>
     </message>
     <message>
-        <location filename="../src/pages/create-user-page.cpp" line="150"/>
-        <location filename="../src/pages/create-user-page.cpp" line="181"/>
+        <location filename="../src/pages/create-user-page.cpp" line="152"/>
+        <location filename="../src/pages/create-user-page.cpp" line="183"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../src/pages/create-user-page.cpp" line="150"/>
+        <location filename="../src/pages/create-user-page.cpp" line="152"/>
         <source>Password encryption failed</source>
         <translation>密码加密失败</translation>
     </message>
@@ -201,7 +201,7 @@
 <context>
     <name>HardWorker</name>
     <message>
-        <location filename="../src/hard-worker.cpp" line="96"/>
+        <location filename="../src/hard-worker.cpp" line="32"/>
         <source>Create User failed</source>
         <translation>创建用户失败</translation>
     </message>
@@ -226,32 +226,32 @@
         <translation type="vanished">设置用户属性失败</translation>
     </message>
     <message>
-        <location filename="../src/hard-worker.cpp" line="107"/>
+        <location filename="../src/hard-worker.cpp" line="120"/>
         <source> update password failed</source>
         <translation>更新密码失败</translation>
     </message>
     <message>
-        <location filename="../src/hard-worker.cpp" line="128"/>
+        <location filename="../src/hard-worker.cpp" line="141"/>
         <source>icon file</source>
         <translation>头像</translation>
     </message>
     <message>
-        <location filename="../src/hard-worker.cpp" line="137"/>
+        <location filename="../src/hard-worker.cpp" line="150"/>
         <source>account type</source>
         <translation>账户类型</translation>
     </message>
     <message>
-        <location filename="../src/hard-worker.cpp" line="146"/>
+        <location filename="../src/hard-worker.cpp" line="159"/>
         <source>locked</source>
         <translation>启用状态</translation>
     </message>
     <message>
-        <location filename="../src/hard-worker.cpp" line="153"/>
+        <location filename="../src/hard-worker.cpp" line="166"/>
         <source>Failed to update user properties(%1)</source>
         <translation>更新用户属性失败(%1)</translation>
     </message>
     <message>
-        <location filename="../src/hard-worker.cpp" line="169"/>
+        <location filename="../src/hard-worker.cpp" line="182"/>
         <source>Failed to delete user</source>
         <translation>删除用户失败</translation>
     </message>
@@ -259,7 +259,7 @@
 <context>
     <name>KiranAccountManager</name>
     <message>
-        <location filename="../src/kiran-account-manager.cpp" line="85"/>
+        <location filename="../src/kiran-account-manager.cpp" line="86"/>
         <source>User Manager</source>
         <translation>账户管理工具</translation>
     </message>
