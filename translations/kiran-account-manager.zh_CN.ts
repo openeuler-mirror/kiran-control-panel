@@ -173,43 +173,48 @@
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="../src/pages/create-user-page.cpp" line="85"/>
+        <location filename="../src/pages/create-user-page.cpp" line="82"/>
         <source>Please enter account name first</source>
         <translation>请先输入账户名</translation>
     </message>
     <message>
-        <location filename="../src/pages/create-user-page.cpp" line="115"/>
+        <location filename="../src/pages/create-user-page.cpp" line="112"/>
         <source>Please enter your account name</source>
         <translation>请输入账户名</translation>
     </message>
     <message>
-        <location filename="../src/pages/create-user-page.cpp" line="120"/>
+        <location filename="../src/pages/create-user-page.cpp" line="125"/>
+        <source>Account cannot be a pure number</source>
+        <translation>账户名不能全为数字</translation>
+    </message>
+    <message>
+        <location filename="../src/pages/create-user-page.cpp" line="131"/>
         <source>Account already exists</source>
         <translation>账户名已存在</translation>
     </message>
     <message>
-        <location filename="../src/pages/create-user-page.cpp" line="131"/>
+        <location filename="../src/pages/create-user-page.cpp" line="142"/>
         <source>Please enter your password</source>
         <translation>请输出密码</translation>
     </message>
     <message>
-        <location filename="../src/pages/create-user-page.cpp" line="137"/>
+        <location filename="../src/pages/create-user-page.cpp" line="148"/>
         <source>Please enter the password again</source>
         <translation>请再次输入密码</translation>
     </message>
     <message>
-        <location filename="../src/pages/create-user-page.cpp" line="143"/>
+        <location filename="../src/pages/create-user-page.cpp" line="154"/>
         <source>The password you enter must be the same as the former one</source>
         <translation>两次密码不相同，请核对后，再次输入</translation>
     </message>
     <message>
-        <location filename="../src/pages/create-user-page.cpp" line="152"/>
-        <location filename="../src/pages/create-user-page.cpp" line="183"/>
+        <location filename="../src/pages/create-user-page.cpp" line="163"/>
+        <location filename="../src/pages/create-user-page.cpp" line="194"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../src/pages/create-user-page.cpp" line="152"/>
+        <location filename="../src/pages/create-user-page.cpp" line="163"/>
         <source>Password encryption failed</source>
         <translation>密码加密失败</translation>
     </message>
