@@ -55,11 +55,12 @@ int main(int argc, char *argv[]) {
 
     loadAccountInfo();
 
+    QString translationDir = QString("/usr/share/%1/translations/").arg(qAppName());
     QTranslator tsor;
     tsor.load(QLocale(),
               qAppName()/*filename*/,
               "."/*prefix*/,
-              TRANSLATION_FILE_DIR/*dir*/,
+              translationDir/*dir*/,
               ".qm"/*suffix*/);
     qApp->installTranslator(&tsor);
 

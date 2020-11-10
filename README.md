@@ -8,7 +8,7 @@
 - 生成**Makefile**  
 `cmake3 -DCMAKE_INSTALL_PREFIX=/usr -DSHARE_INSTALL_PREFIX=/usr/share   ../`
 - 编译  
-`make -j8`
+`make -j4`
 
 ## 安装
 
