@@ -75,27 +75,27 @@
         <translation>重置</translation>
     </message>
     <message>
-        <location filename="../src/kiran-timedate-widget.cpp" line="50"/>
+        <location filename="../src/kiran-timedate-widget.cpp" line="41"/>
         <source>Time And Date Manager</source>
         <translation>日期时间管理工具</translation>
     </message>
     <message>
-        <location filename="../src/kiran-timedate-widget.cpp" line="70"/>
+        <location filename="../src/kiran-timedate-widget.cpp" line="61"/>
         <source>Change Time Zone</source>
         <translation>更改时区</translation>
     </message>
     <message>
-        <location filename="../src/kiran-timedate-widget.cpp" line="87"/>
+        <location filename="../src/kiran-timedate-widget.cpp" line="78"/>
         <source>Set Time Manually</source>
         <translation>手动设置时间</translation>
     </message>
     <message>
-        <location filename="../src/kiran-timedate-widget.cpp" line="201"/>
+        <location filename="../src/kiran-timedate-widget.cpp" line="192"/>
         <source>ddd MMM HH:mm:ss yyyy</source>
         <translation>yyyy-MM-dd HH:mm:ss dddd</translation>
     </message>
     <message>
-        <location filename="../src/kiran-timedate-widget.cpp" line="223"/>
+        <location filename="../src/kiran-timedate-widget.cpp" line="214"/>
         <source>%1(%2)</source>
         <translation>%1时间(%2)</translation>
     </message>
@@ -177,17 +177,17 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/main.cpp" line="53"/>
+        <location filename="../src/main.cpp" line="46"/>
         <source>append log to file</source>
         <translation>追加日志到文件</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="54"/>
+        <location filename="../src/main.cpp" line="48"/>
         <source>debug log level(0/DebugMsg,1/WarnngMsg,2/CriticalMsg|SystemMsg,3/FatalMsg,4/InfoMsg)</source>
         <translation>设置调试日志输出等级</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="82"/>
+        <location filename="../src/main.cpp" line="78"/>
         <source>Failed to load time zone information</source>
         <translation>加载时区信息失败</translation>
     </message>

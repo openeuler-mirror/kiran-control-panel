@@ -21,19 +21,10 @@ KiranTimeDateWidget::KiranTimeDateWidget(QWidget *parent)
     : KiranTitlebarWindow()
     , ui(new Ui::KiranTimeDateWidget)
     , m_updateTimer(0)
-    , m_mateInterfaceSettings("org.mate.interface")
 {
     ui->setupUi(getWindowContentWidget());
     initUI();
-    connect(&m_mateInterfaceSettings,&QGSettings::changed,[this](const QString& key){
-        qDebug() << "changed:" << key;
-        if(key!=KEY_FONT_NAME){
-            return;
-        }
-        updateFont();
-    });
     m_updateTimer = startTimer(1000);
-    updateFont();
 }
 
 KiranTimeDateWidget::~KiranTimeDateWidget()
@@ -225,22 +216,6 @@ void KiranTimeDateWidget::updateTimeZoneLabel()
     }else{
         ui->label_utc->setText("???");
     }
-}
-
-void KiranTimeDateWidget::updateFont()
-{
-    QVariant fontNameVar = m_mateInterfaceSettings.get(KEY_FONT_NAME);
-    QString fontNameString = fontNameVar.toString();
-    qInfo() << "org.mate.interface" << KEY_FONT_NAME << "changed," << fontNameString;
-    QStringList splitRes = fontNameString.split(" ",QString::SkipEmptyParts);
-    QString fontPxSize = splitRes.takeLast();
-    QString fontFamily = splitRes.join(" ");
-
-    QFontDatabase fontdatabase;
-    qInfo() << fontdatabase.hasFamily(fontFamily);
-    QFont font = fontdatabase.font(fontFamily,"normal",fontPxSize.toInt());
-
-    QApplication::setFont(font,"QWidget");
 }
 
 void KiranTimeDateWidget::timerEvent(QTimerEvent *event)

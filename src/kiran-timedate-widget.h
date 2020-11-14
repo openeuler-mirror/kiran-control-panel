@@ -20,13 +20,11 @@ private:
     void initUI();
     void updateTimeLabel();
     void updateTimeZoneLabel();
-    void updateFont();
 protected:
     virtual void timerEvent(QTimerEvent* event) override;
 private:
     Ui::KiranTimeDateWidget *ui;
     int m_updateTimer;
-    QGSettings m_mateInterfaceSettings;
 };
 
 #endif // KIRANDATETIMEWIDGET_H

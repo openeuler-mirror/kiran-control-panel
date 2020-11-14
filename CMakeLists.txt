@@ -40,7 +40,6 @@ target_include_directories(${PROJECT_NAME} PRIVATE
         src/dbus-api-wrapper
         src/timezone
         src/widgets
-        src/libs/SingleApplication
         tools
         ${KIRAN_WIDGETS_QT5_INCLUDE_DIRS})
 

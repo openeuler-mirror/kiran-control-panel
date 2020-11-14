@@ -1,7 +1,7 @@
 #include "kiran-timedate-widget.h"
-#include "../tools/log.h"
+#include "log.h"
 #include "kiran-timedate-global-data.h"
-#include "singleapplication.h"
+#include <kiran-single-application.h>
 
 #include <QApplication>
 #include <QDebug>
@@ -11,10 +11,6 @@
 #include <QLocale>
 
 #define DEFAULT_STYLE_FILE ":/themes/black_theme.qss"
-#define TRANSLATION_FILE_DIR "/usr/share/kiran-timedate-manager/translations/"
-
-#define MATE_INTERFACE_SCHEMA "org.mate.interface"
-#define KEY_SCALING_FACTOR  "window-scaling-factor"
 
 void loadStyleSheet()
 {
@@ -26,32 +22,31 @@ void loadStyleSheet()
     }
 }
 
-///TODO:样式表清理
 int main(int argc, char *argv[])
 {
     ///安装日志输出
     Log::instance()->init("/tmp/kiran-datetime-manager.log");
     qInstallMessageHandler(Log::messageHandler);
-#ifdef TEST
-    Log::instance()->setAppend2File(true);
-    Log::instance()->setLogLevel(QtDebugMsg);
-#endif
 
-    SingleApplication app(argc, argv);
+    KiranSingleApplication app(argc, argv);
 
     ///翻译
     QTranslator tsor;
     //filename+prefix+language name+suffix
-    qInfo() << "load translation file: " << tsor.load(QLocale(),
-                                                      "kiran-timedate-manager"/*filename*/,
-                                                      "."/*prefix*/,
-                                                      TRANSLATION_FILE_DIR/*dir*/,
-                                                      ".qm"/*suffix*/);
+    QString translationDir = QString("/usr/share/%1/translations/").arg(qAppName());
+    tsor.load(QLocale(),
+              qAppName(),
+              "."/*prefix*/,
+              translationDir/*dir*/,
+              ".qm"/*suffix*/);
     qApp->installTranslator(&tsor);
 
     ///命令行解析
-    QCommandLineOption logOutputOption({"g","debug"},QObject::tr("append log to file"));
-    QCommandLineOption logLevelOption({"l","debug-level"},QObject::tr("debug log level(0/DebugMsg,1/WarnngMsg,2/CriticalMsg|SystemMsg,3/FatalMsg,4/InfoMsg)"),"level","0");
+    QCommandLineOption logOutputOption({"g","debug"},
+                                       QObject::tr("append log to file"));
+    QCommandLineOption logLevelOption({"l","debug-level"},
+                                      QObject::tr("debug log level(0/DebugMsg,1/WarnngMsg,2/CriticalMsg|SystemMsg,3/FatalMsg,4/InfoMsg)"),
+                                      "level","0");
     QCommandLineParser cmdParser;
 
     cmdParser.addHelpOption();
@@ -79,7 +74,9 @@ int main(int argc, char *argv[])
 
     ///加载数据
     if( !KiranTimeDateGlobalData::instance()->init() ){
-        QMessageBox::warning(nullptr,"",QObject::tr("Failed to load time zone information"),QString("ok"));
+        QMessageBox::warning(nullptr,"",
+                             QObject::tr("Failed to load time zone information"),
+                             QString("ok"));
         return -1;
     }
 
