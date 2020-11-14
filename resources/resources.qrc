@@ -24,4 +24,7 @@
         <file>images/time_d.png</file>
         <file>images/time_zone.png</file>
     </qresource>
+    <qresource prefix="/">
+        <file>themes/black_theme.qss</file>
+    </qresource>
 </RCC>

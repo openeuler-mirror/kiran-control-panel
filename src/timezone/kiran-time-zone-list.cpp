@@ -1,6 +1,6 @@
 #include "kiran-time-zone-list.h"
 #include "ui_kiran-time-zone-list.h"
-#include "kiran-timedate-global-data.h"
+#include "../kiran-timedate-global-data.h"
 
 #include <QTimerEvent>
 #include <QDebug>

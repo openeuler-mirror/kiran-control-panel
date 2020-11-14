@@ -3,7 +3,7 @@
 
 #include <QWidget>
 
-#include "timedate-interface.h"
+#include "../dbus-api-wrapper/timedate-interface.h"
 
 namespace Ui {
 class KiranTimeZoneItem;

@@ -1,7 +1,7 @@
 #include "kiran-timedate-widget.h"
-#include "log.h"
+#include "../tools/log.h"
 #include "kiran-timedate-global-data.h"
-#include "SingleApplication/singleapplication.h"
+#include "singleapplication.h"
 
 #include <QApplication>
 #include <QDebug>

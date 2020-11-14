@@ -1,7 +1,7 @@
 #ifndef KIRANTIMEDATEGLOBALDATA_H
 #define KIRANTIMEDATEGLOBALDATA_H
 
-#include "timedate-interface.h"
+#include "dbus-api-wrapper/timedate-interface.h"
 
 #include <QObject>
 class KiranTimeDateGlobalData : public QObject

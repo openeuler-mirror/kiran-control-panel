@@ -4,8 +4,8 @@
 #include <QWidget>
 #include <QList>
 
-#include "kiran-time-zone-item.h"
-#include "timedate-interface.h"
+#include "widgets/kiran-time-zone-item.h"
+#include "dbus-api-wrapper/timedate-interface.h"
 
 namespace Ui {
 class KiranTimeZoneList;
