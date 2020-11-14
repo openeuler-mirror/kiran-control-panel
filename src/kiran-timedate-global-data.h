@@ -4,6 +4,7 @@
 #include "dbus-api-wrapper/timedate-interface.h"
 
 #include <QObject>
+
 class KiranTimeDateGlobalData : public QObject
 {
     Q_OBJECT

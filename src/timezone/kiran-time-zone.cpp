@@ -137,9 +137,7 @@ void KiranTimeZone::paintEvent(QPaintEvent *event)
 
 bool KiranTimeZone::eventFilter(QObject *obj, QEvent *event)
 {
-    ///NOTE: 通过event filter来获取输入框聚焦事件
-    ///      修改样式为聚焦样式
-
+    ///NOTE: 通过event filter来获取输入框聚焦事件,修改样式为聚焦样式
     if(obj==ui->edit_search){
         switch ( event->type() ) {
         case QEvent::FocusIn:

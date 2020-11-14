@@ -29,7 +29,6 @@ int main(int argc, char *argv[])
     qInstallMessageHandler(Log::messageHandler);
 
     KiranSingleApplication app(argc, argv);
-
     ///翻译
     QTranslator tsor;
     //filename+prefix+language name+suffix

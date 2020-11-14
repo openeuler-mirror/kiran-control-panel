@@ -54,6 +54,9 @@ void KiranTimeDateWidget::initUI()
     ui->label_setTime->setContentsMargins(-1,24,-1,10);
     ui->label_setDate->setContentsMargins(-1,24,-1,10);
 
+    ui->tabList->setSelectionMode(QListWidget::SingleSelection);
+    ui->tabList->setSelectionBehavior(QListWidget::SelectRows);
+
     /// 更改时区
     item = new QListWidgetItem(ui->tabList);
     tabItem = new TabItem(ui->tabList);
@@ -88,15 +91,19 @@ void KiranTimeDateWidget::initUI()
 
     /// 侧边栏切换
     //QListWidget的当前行切换设置与之关联的TabItem isSelected属性 更新stylesheet
-    connect(ui->tabList,&QListWidget::currentRowChanged,[this](int currentRow){
-        QListWidgetItem* currentItem = ui->tabList->item(currentRow);
-        TabItem* currentTabItem = dynamic_cast<TabItem*>(ui->tabList->itemWidget(currentItem));
-        currentTabItem->setSelected(true);
-        for(int i=0;i<ui->tabList->count();i++){
-            QListWidgetItem* item = ui->tabList->item(i);
-            if(item!=currentItem){
-                TabItem* tabItem = dynamic_cast<TabItem*>(ui->tabList->itemWidget(item));
-                if(tabItem!=nullptr)
+    connect(ui->tabList,&QListWidget::itemSelectionChanged,[this](){
+        QList<QListWidgetItem *> selectedItems = ui->tabList->selectedItems();
+        if (selectedItems.empty()) {
+            return;
+        }
+        QListWidgetItem *activatedItem = selectedItems.at(0);
+        TabItem *currentItem = qobject_cast<TabItem *>(ui->tabList->itemWidget(activatedItem));
+        currentItem->setSelected(true);
+        for (int i = 0; i < ui->tabList->count(); i++) {
+            QListWidgetItem *item = ui->tabList->item(i);
+            if (item != activatedItem) {
+                TabItem *tabItem = dynamic_cast<TabItem *>(ui->tabList->itemWidget(item));
+                if (tabItem != nullptr)
                     tabItem->setSelected(false);
             }
         }
