@@ -99,6 +99,7 @@ int main(int argc,char* argv[])
               "."/*prefix*/,
               translationDir,
               ".qm"/*suffix*/);
+    app.installTranslator(&tsor);
 
     handlerCommandOption(app);
 
