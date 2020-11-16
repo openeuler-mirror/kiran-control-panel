@@ -4,9 +4,9 @@
 #include "passwd-helper.h"
 #include "accounts-global-info.h"
 #include "kiran-tips.h"
+#include "account-validator.h"
 
 #include <QListView>
-#include <QRegExpValidator>
 #include <QDebug>
 #include <QMessageBox>
 #include <kiranwidgets-qt5/kiran-message-box.h>
@@ -66,10 +66,9 @@ void CreateUserPage::initUI()
     ui->combo_accountType->view()->window()->setAttribute(Qt::WA_TranslucentBackground);
 
     /// 用户账户名输入框
-    QRegExpValidator* validator = new QRegExpValidator(ui->edit_name);
-    QRegExp regExp("^\\w+$");
-    validator->setRegExp(regExp);
-    ui->edit_name->setValidator(validator);
+    ui->edit_name->setValidator(new AccountValidator(ui->edit_name));
+    //NOTE:用户名不能超过32字符长
+    ui->edit_name->setMaxLength(32);
 
     /// 密码输入框
     ui->editcheck_passwd->setMaxLength(24);
@@ -114,6 +113,20 @@ void CreateUserPage::handlerCreateNewUser() {
         m_errorTip->showTipAroundWidget(ui->edit_name);
         return;
     }
+
+    bool isPureDigital = true;
+    for(QChar ch:account){
+        if(!ch.isNumber()){
+            isPureDigital = false;
+            break;
+        }
+    }
+    if( isPureDigital ){
+        m_errorTip->setText(tr("Account cannot be a pure number"));
+        m_errorTip->showTipAroundWidget(ui->edit_name);
+        return;
+    }
+
     if( !AccountsGlobalInfo::instance()->checkUserNameAvaliable(account) ){
         m_errorTip->setText(tr("Account already exists"));
         m_errorTip->showTipAroundWidget(ui->edit_name);

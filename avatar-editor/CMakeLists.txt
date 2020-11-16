@@ -23,7 +23,16 @@ include_directories("${CMAKE_BINARY_DIR}" "src")
 
 find_package(Qt5 COMPONENTS Widgets LinguistTools)
 
-qt5_create_translation( AVATAR_EDITOR_QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES} )
+qt5_create_translation( AVATAR_EDITOR_QM_FILES ${CMAKE_SOURCE_DIR}/avatar-editor ${TS_FILES} )
+
 add_executable(kiran-avatar-editor ${SOURCES} ${HEADERS} ${TOOLS_SOURCES} ${TOOLS_HEADERS} ${RESOURCES} ${AVATAR_EDITOR_QM_FILES})
+
 target_include_directories(${PROJECT_NAME} PRIVATE include tools )
+
 target_link_libraries(kiran-avatar-editor Qt5::Widgets kiranwidgets-qt5)
+
+install(TARGETS ${PROJECT_NAME}
+        DESTINATION ${CMAKE_INSTALL_PREFIX}/bin/)
+
+install(FILES ${AVATAR_EDITOR_QM_FILES}
+        DESTINATION ${SHARE_INSTALL_PREFIX}/${PROJECT_NAME}/translations/ )

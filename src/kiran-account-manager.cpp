@@ -54,12 +54,13 @@ void KiranAccountManager::appendSiderbarItem(const QString &userPath) {
     AccountItemWidget *itemWidget = nullptr;
 
     item = new QListWidgetItem(m_tabList);
-    item->setSizeHint(QSize(286, 60));
+    item->setSizeHint(QSize(296, 60));
     item->setData(Qt::UserRole, userPath);
     m_tabList->addItem(item);
 
     itemWidget = new AccountItemWidget(m_tabList);
     itemWidget->setUserDBusObjectPath(userPath);
+    itemWidget->setFixedSize(296,60);
     m_tabList->setItemWidget(item, itemWidget);
     connect(itemWidget, &AccountItemWidget::isSelectedChanged, [this, itemWidget](bool isSelected) {
         if (isSelected) {
@@ -113,6 +114,7 @@ void KiranAccountManager::initUI() {
     m_tabList->setSelectionBehavior(QAbstractItemView::SelectRows);
     m_tabList->setUniformItemSizes(true);
     m_tabList->setSpacing(12);
+    m_tabList->setUniformItemSizes(true);
     vLayout->addWidget(m_tabList);
     initUserList();
 

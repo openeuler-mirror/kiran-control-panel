@@ -18,7 +18,8 @@ HardWorker::HardWorker(): QObject(nullptr){
 HardWorker::~HardWorker() {
 
 }
-
+//TODO: 拼接DBus接口返回的错误信息
+//TODO: 创建用户成功,设置属性失败，直接删除用户!
 void HardWorker::doCreateUser(QString account,
                               int uid,
                               int accountType,
@@ -27,6 +28,9 @@ void HardWorker::doCreateUser(QString account,
                               QString shell,
                               QString iconFile) {
     AccountsInterface accountsService(QDBusConnection::systemBus());
+    QString userObjPath;
+    QString errMsgPrefix = tr("Create User failed");
+    QString errMsgDetail;
 
     ///step1.创建用户
     QDBusPendingReply<QDBusObjectPath> createUserRep;
@@ -37,65 +41,72 @@ void HardWorker::doCreateUser(QString account,
     createUserRep.waitForFinished();
     if( createUserRep.isError() ){
         qWarning() << "create user failed," << createUserRep.error();
-        emit sigCreateUserDnoe("", tr("Create User failed"));
-        return;
+        errMsgDetail = createUserRep.error().message();
+        goto failed;
     }
 
-    QString userObj = createUserRep.value().path();
+    userObjPath = createUserRep.value().path();
 
-    UserInterface userInterface(userObj,
-                                QDBusConnection::systemBus());
-    QList<QString> setPropertyFailedList;
-    ///step2. 设置密码
-    QDBusPendingReply<> setpwdRep = userInterface.SetPassword(encryptedPasswd,"");
-    setpwdRep.waitForFinished();
-    if( setpwdRep.isError() ){
-        qWarning() << "set passwd failed," << setpwdRep.error();
-        setPropertyFailedList.append(tr("password"));
-    }
-
-    ///step3.　设置Home
-    if( !homeDir.isEmpty() ){
-        QDBusPendingReply<> setHomeRep = userInterface.SetHomeDirectory(homeDir);
-        setHomeRep.waitForFinished();
-        if(setHomeRep.isError()){
-            qWarning() << "set home directory failed," << setHomeRep.error();
-            setPropertyFailedList.append(tr("home directory"));
+    {
+        UserInterface userInterface(userObjPath,
+                                    QDBusConnection::systemBus());
+        ///step2. 设置密码
+        QDBusPendingReply<> setpwdRep = userInterface.SetPassword(encryptedPasswd,"");
+        setpwdRep.waitForFinished();
+        if( setpwdRep.isError() ){
+            qWarning() << "set passwd failed," << setpwdRep.error();
+            errMsgDetail = setpwdRep.error().message();
+            goto failed;
         }
-    }
-
-    ///step4. 设置shell
-    QDBusPendingReply<> setShellRep = userInterface.SetShell(shell.isEmpty()?DEFAULT_SHELL:shell);
-    setShellRep.waitForFinished();
-    if( setShellRep.isError() ){
-        qWarning() << "set shell failed," << setShellRep.error();
-        setPropertyFailedList.append(tr("shell"));
-    }
-
-    ///step5. 设置图标
-    QDBusPendingReply<> setIconRep = userInterface.SetIconFile(iconFile);
-    setIconRep.waitForFinished();
-    if(setIconRep.isError()){
-        qWarning() << "set icon failed," << setIconRep.error();
-        setPropertyFailedList.append(tr("icon"));
-    }
-
-    QString msg;
-    if( setPropertyFailedList.size() > 0 ){
-        QString msgPrefix = tr("Failed to set user attributes");
-        msg = msgPrefix + "(";
-        for( auto iter = setPropertyFailedList.begin();
-             iter != setPropertyFailedList.end();
-             iter++ ){
-            if( iter!=setPropertyFailedList.begin() ){
-                msg.append(",");
+        ///step3.　设置Home
+        if( !homeDir.isEmpty() ){
+            QDBusPendingReply<> setHomeRep = userInterface.SetHomeDirectory(homeDir);
+            setHomeRep.waitForFinished();
+            if(setHomeRep.isError()){
+                qWarning() << "set home directory failed," << setHomeRep.error();
+                errMsgDetail = setHomeRep.error().message();
+                goto failed;
             }
-            msg.append(*iter);
         }
-        msg.append(")");
+        ///step4. 设置shell
+        QDBusPendingReply<> setShellRep = userInterface.SetShell(shell.isEmpty()?DEFAULT_SHELL:shell);
+        setShellRep.waitForFinished();
+        if( setShellRep.isError() ){
+            qWarning() << "set shell failed," << setShellRep.error();
+            errMsgDetail = setShellRep.error().message();
+            goto failed;
+        }
+        ///step5. 设置图标
+        QDBusPendingReply<> setIconRep = userInterface.SetIconFile(iconFile);
+        setIconRep.waitForFinished();
+        if(setIconRep.isError()){
+            qWarning() << "set icon failed," << setIconRep.error();
+            errMsgDetail = setIconRep.error().message();
+            goto failed;
+        }
     }
+
     qInfo() << QString("create user(%1) is done").arg(account);
-    emit sigCreateUserDnoe(userObj, msg);
+    emit sigCreateUserDnoe(userObjPath, "");
+    return;
+failed:
+    if( !userObjPath.isEmpty() ){
+        UserInterface userInterface(userObjPath,
+                                    QDBusConnection::systemBus());
+        qulonglong userID = userInterface.uid();
+        AccountsInterface accountsInterface(QDBusConnection::systemBus());
+        auto reply = accountsInterface.DeleteUser(userID,true);
+        reply.waitForFinished();
+        if(reply.isError()){
+            qWarning() << "create user failed,delete user:" << reply.error();
+        }
+    }
+    QString errMsg = errMsgPrefix;
+    if(!errMsgDetail.isEmpty()){
+        errMsg.append(",");
+        errMsg.append(errMsgDetail);
+    }
+    emit sigCreateUserDnoe("",errMsg);
 }
 
 void HardWorker::doUpdatePasswd(QString objPath,
@@ -167,6 +178,7 @@ void HardWorker::doDeleteUser(int uid) {
     auto reply = interface.DeleteUser(uid,true);
     reply.waitForFinished();
     if(reply.isError()){
+        qInfo() << "delete user" << reply.error();
         emit sigDeleteUserDone(tr("Failed to delete user"));
     }else{
         emit sigDeleteUserDone("");

@@ -5,7 +5,7 @@
 #include <QPixmap>
 #include <QFileInfo>
 #include <QDir>
-#include <QTemporaryDir>
+#include <QTranslator>
 
 #include "tools/log.h"
 #include "include/exit-code-defines.h"
@@ -91,6 +91,14 @@ int main(int argc,char* argv[])
 
     Log::instance()->init("/tmp/kiran-account-manager.log");
     qInstallMessageHandler(Log::messageHandler);
+
+    QString translationDir = QString("/usr/share/%1/translations/").arg(qAppName());
+    QTranslator tsor;
+    tsor.load(QLocale(),
+              qAppName()/*filename*/,
+              "."/*prefix*/,
+              translationDir,
+              ".qm"/*suffix*/);
 
     handlerCommandOption(app);
 

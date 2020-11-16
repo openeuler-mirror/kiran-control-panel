@@ -6,6 +6,9 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
+find_package(PkgConfig REQUIRED)
+pkg_search_module(KIRAN_WIDGETS_QT5 REQUIRED kiranwidgets-qt5)
+
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
@@ -37,7 +40,29 @@ target_include_directories(kiran-account-manager PRIVATE
         src/dbus-api-wrapper
         src/pages
         src/widgets
-        tools)
+        tools
+        ${KIRAN_WIDGETS_QT5_INCLUDE_DIRS})
 
-target_link_libraries(kiran-account-manager Qt5::Widgets Qt5::DBus Qt5::Svg pam crypt kiranwidgets-qt5)
+target_link_libraries(kiran-account-manager
+        Qt5::Widgets
+        Qt5::DBus
+        Qt5::Svg
+        pam
+        crypt
+        kiranwidgets-qt5
+        ${KIRAN_WIDGETS_QT5_LIBRARIES})
+
+install(TARGETS ${PROJECT_NAME}
+        DESTINATION ${CMAKE_INSTALL_PREFIX}/bin/)
+
+install(FILES ${QM_FILES}
+        DESTINATION ${SHARE_INSTALL_PREFIX}/${PROJECT_NAME}/translations/ )
+
+install(FILES "./config/kiran-account-manager.desktop"
+        DESTINATION ${SHARE_INSTALL_PREFIX}/applications/ )
+
+file(GLOB BUILDIN_AVATARS "./buildin-avatar/*")
+install(FILES ${BUILDIN_AVATARS}
+        DESTINATION ${SHARE_INSTALL_PREFIX}/${PROJECT_NAME}/account-icons/ )
+
 add_subdirectory(avatar-editor)
