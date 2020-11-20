@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=password
+Name[zh_CN]=密码
+Comment=password settings
+Comment[zh_CN]=密码
+Icon=avatar-default
+Weight=2
+Category=accounts
+PluginFile=/root/kiran-control-panel/example/build-model01-5_11_1-Debug/libmode01.so

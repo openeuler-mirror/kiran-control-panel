@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Fonts
+Name[zh_CN]=字体
+Comment=font settings
+Comment[zh_CN]=系统字体设置
+Icon=avatar-default
+Keywords=font,appearance,personalize
+Weight=1
+Category=accounts
+PluginFile=/root/kiran-control-panel/example/build-model01-5_11_1-Debug/libmode01.so
