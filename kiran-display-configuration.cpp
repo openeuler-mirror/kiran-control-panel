@@ -1,6 +1,6 @@
 #include "kiran-display-configuration.h"
 #include "ui_kiran-display-configuration.h"
-#include "/usr/include/kiranwidgets-qt5/kiran-message-box.h"
+#include "kiranwidgets-qt5/kiran-message-box.h"
 #include <QTimer>
 #include <QButtonGroup>
 #include <QDebug>
@@ -244,7 +244,7 @@ void KiranDisplayConfiguration::curExtraData2Cache()
     map.insert("windowScalingFactor", ui->comboBox_extra_windowScalingFactor->currentIndex());
     m_extraData.insert(m_curMonitorPath, map);
 }
-#include <QShortcut>
+
 void KiranDisplayConfiguration::showMessageBox()
 {
     KiranMessageBox box;

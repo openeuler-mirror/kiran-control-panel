@@ -97,21 +97,11 @@
     </message>
     <message>
         <location filename="kiran-display-configuration.cpp" line="254"/>
-        <source>ctr+k</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="kiran-display-configuration.cpp" line="255"/>
         <source>保存当前配置(K)</source>
         <translation>保存当前配置(K)</translation>
     </message>
     <message>
-        <location filename="kiran-display-configuration.cpp" line="259"/>
-        <source>ctr+r</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="kiran-display-configuration.cpp" line="260"/>
+        <location filename="kiran-display-configuration.cpp" line="258"/>
         <source>恢复之前的配置(R)</source>
         <translation>恢复之前的配置(R)</translation>
     </message>
@@ -127,6 +117,32 @@
         <location filename="kiran-display-configuration-panel.ui" line="14"/>
         <source>Form</source>
         <translation></translation>
+    </message>
+</context>
+<context>
+    <name>KiranDisplayConfigurationWindow</name>
+    <message>
+        <location filename="kiran-display-configuration-window.cpp" line="9"/>
+        <source>显示器设置</source>
+        <translation>显示器设置</translation>
+    </message>
+</context>
+<context>
+    <name>QObject</name>
+    <message>
+        <location filename="main.cpp" line="24"/>
+        <source>提示</source>
+        <translation>提示</translation>
+    </message>
+    <message>
+        <location filename="main.cpp" line="27"/>
+        <source>确定(K)</source>
+        <translation>确定(K)</translation>
+    </message>
+    <message>
+        <location filename="main.cpp" line="31"/>
+        <source>后台D-Bus服务无法连接，程序启动失败，请检查D-Bus服务是否开启.</source>
+        <translation>后台D-Bus服务无法连接，程序启动失败，请检查D-Bus服务是否开启.</translation>
     </message>
 </context>
 </TS>
