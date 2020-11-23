@@ -4,7 +4,7 @@
 #include "kiran-control-panel-global.h"
 #include <QWidget>
 
-class KiranModeClassListWidget;
+class KiranModuleClassListWidget;
 using namespace KiranControlPanelGlobal;
 namespace Ui {
 class KiranControlPanel;
@@ -27,7 +27,7 @@ private:
 
 private:
     Ui::KiranControlPanel *ui;
-    KiranModeClassListWidget *m_classWgt;
+    KiranModuleClassListWidget *m_classWgt;
     QListWidgetItem *m_curClassListItem;
     QMap<int, ModelClass> m_data;
 };

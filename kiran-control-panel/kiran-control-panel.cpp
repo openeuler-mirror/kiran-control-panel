@@ -1,6 +1,6 @@
 #include "kiran-control-panel.h"
 #include "ui_kiran-control-panel.h"
-#include "kiran-mode-class-listwidget.h"
+#include "kiran-module-class-listwidget.h"
 #include <QTimer>
 #include <QListWidgetItem>
 
@@ -10,8 +10,8 @@ KiranControlPanel::KiranControlPanel(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    m_classWgt = new KiranModeClassListWidget(this);
-    connect(m_classWgt, &KiranModeClassListWidget::currentItemChanged, this, [=](QListWidgetItem *current, QListWidgetItem*){
+    m_classWgt = new KiranModuleClassListWidget(this);
+    connect(m_classWgt, &KiranModuleClassListWidget::currentItemChanged, this, [=](QListWidgetItem *current, QListWidgetItem*){
         if(!ui->widget_itemWgt->checkHasUnSaved())
         {
             QTimer::singleShot(5, this, [=](){

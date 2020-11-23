@@ -28,21 +28,20 @@ SOURCES += \
     kiran-control-panel-window.cpp \
     kiran-control-panel.cpp \
     ../global/kiran-control-panel-global.cpp \
-    kiran-mode-class-listwidget.cpp \
-    kiran-mode-class-listwidget-item-widget.cpp
+    kiran-module-class-listwidget.cpp \
+    kiran-module-class-listwidget-itemwidget.cpp
 
 HEADERS += \
     kiran-control-panel-window.h \
     kiran-control-panel.h \
-    interface/kiran-control-panel-model-interface.h \
     ../global/kiran-control-panel-global.h \
-    kiran-mode-class-listwidget.h \
-    kiran-mode-class-listwidget-item-widget.h
+    kiran-module-class-listwidget.h \
+    kiran-module-class-listwidget-itemwidget.h
 
 FORMS += \
     kiran-control-panel.ui
 
-include(../widgets/kiran-model-widget/kiran-model-widget.pri)
+include(../widgets/kiran-module-widget/kiran-module-widget.pri)
 include(../widgets/kiran-search-lineedit/kiran-search-lineedit.pri)
 INCLUDEPATH += ../widgets \
                 ../global

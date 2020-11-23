@@ -162,7 +162,7 @@ void KiranControlPanelGlobal::ModelItemStu::getModeItemSubInfo()
     fun(subNameList, subIconList, subKeyList);
     if(subNameList.count() != subIconList.count() || subIconList.count() != subKeyList.count())
     {
-        qWarning() << "model name、icon、key quantity discrepancy!";
+        qWarning() << "module name、icon、key quantity discrepancy!";
     }
     else
     {

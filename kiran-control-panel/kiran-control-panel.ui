@@ -47,15 +47,15 @@ QWidget:disabled {
     <number>0</number>
    </property>
    <item>
-    <widget class="KiranModelWidget" name="widget_itemWgt" native="true"/>
+    <widget class="KiranModuleWidget" name="widget_itemWgt" native="true"/>
    </item>
   </layout>
  </widget>
  <customwidgets>
   <customwidget>
-   <class>KiranModelWidget</class>
+   <class>KiranModuleWidget</class>
    <extends>QWidget</extends>
-   <header>kiran-model-widget/kiran-model-widget.h</header>
+   <header>kiran-module-widget/kiran-module-widget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

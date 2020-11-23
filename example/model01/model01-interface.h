@@ -7,7 +7,7 @@
 #define INTERFACE_H
 
 #include <QDebug>
-#include "../../interface/kiran-control-panel-model-interface.h"
+#include "../../interface/kiran-control-panel-module-interface.h"
 #include "dialog001.h"
 #include "dialog002.h"
 
