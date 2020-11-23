@@ -14,7 +14,6 @@ KiranModuleClassListWidgetItemWidget::KiranModuleClassListWidgetItemWidget(QWidg
     setAttribute(Qt::WA_Hover,true);
     installEventFilter(this);
     setStyleSheet("QToolTip{color:#000000;border: 0px solid #ffffff;background:#b3b3b3;}");
-    setCursor(Qt::OpenHandCursor);
     m_iconRect = QRect(cClassItemWgtLRPadding, cClassItemWgtTBPadding, cClassItemIconWd, cClassItemIconWd);
     m_textRect = QRect(cClassItemWgtLRPadding+cClassItemIconWd+cClassItemSpace, cClassItemWgtTBPadding, cClassItemTextWd, cClassItemIconWd);
 }

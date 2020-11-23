@@ -40,6 +40,7 @@ private slots:
 private:
     void closeCenterWidgetPlugin(QListWidgetItem *current);
     bool eventFilter(QObject *obj, QEvent *event);
+    void selectFirstItem();
 
 private:
     Ui::KiranModuleWidget *ui;

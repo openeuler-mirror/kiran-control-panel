@@ -24,7 +24,7 @@ protected:
 
 private:
     QString m_regFindKeyWords;
-    void paintKeywordHighlight(QPainter *painter, const QStyleOptionViewItem &itemOption, const QModelIndex &index) const;
+    void paintKeywordHighlight(QPainter *painter, const QStyleOptionViewItem &itemOption, QStyle *pStyle, const QModelIndex &index) const;
     //QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const;
 };
 

@@ -40,6 +40,9 @@ void KiranModuleClassListWidget::setData(QMap<int, ModelClass> *data)
         m_btns.insert(item, btn);
     }
     setIconMode();
+
+    if(count() <= 0) return;
+    setCurrentRow(0);
 }
 
 void KiranModuleClassListWidget::setIconMode()

@@ -12,7 +12,7 @@ KiranControlPanel::KiranControlPanel(QWidget *parent) :
 
     m_classWgt = new KiranModuleClassListWidget(this);
     connect(m_classWgt, &KiranModuleClassListWidget::currentItemChanged, this, [=](QListWidgetItem *current, QListWidgetItem*){
-        if(!ui->widget_itemWgt->checkHasUnSaved())
+        if(!ui->module_widget->checkHasUnSaved())
         {
             QTimer::singleShot(5, this, [=](){
                 m_classWgt->blockSignals(true);
@@ -23,14 +23,14 @@ KiranControlPanel::KiranControlPanel(QWidget *parent) :
             return;
         }
         m_curClassListItem = current;
-        ui->widget_itemWgt->onSelectedClassItemChanged(current);
+        ui->module_widget->onSelectedClassItemChanged(current);
     });
 
     m_classWgt->move(0, 0);
 
     m_data = getModeCLass();
     m_classWgt->setData(&m_data);
-    ui->widget_itemWgt->setLeftContentsMargins(m_classWgt->iconModeWd());
+    ui->module_widget->setLeftContentsMargins(m_classWgt->iconModeWd());
 }
 
 KiranControlPanel::~KiranControlPanel()
@@ -55,10 +55,10 @@ void KiranControlPanel::onSearch(const QString &request)
     QMapIterator<int, ModelClass> i(m_data);
     while (i.hasNext()) {
         i.next();
+        //如果与模块类的关键字匹配.模块类关键字与模块关键字分开存储.
         if(i.value().keywords.contains(request))
         {
             m_classWgt->setCurrentItem(i.value().item);
-            ui->widget_itemWgt->setCurModelSubItem(nullptr);
         }
         else if(i.value().itemKeys().contains(request))
         {
@@ -66,7 +66,7 @@ void KiranControlPanel::onSearch(const QString &request)
             if(!item) return;
 
             m_classWgt->setCurrentItem(i.value().item);
-            ui->widget_itemWgt->setCurModelSubItem(item);
+            ui->module_widget->setCurModelSubItem(item);
         }
         ++row;
     }

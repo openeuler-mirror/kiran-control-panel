@@ -26,6 +26,11 @@ KiranModuleWidget::~KiranModuleWidget()
     delete ui;
 }
 
+void KiranModuleWidget::selectFirstItem()
+{
+
+}
+
 void KiranModuleWidget::setLeftContentsMargins(const int &leftmargin)
 {
     ui->horizontalLayout->setContentsMargins(leftmargin, 0, 0, 0);
@@ -33,10 +38,13 @@ void KiranModuleWidget::setLeftContentsMargins(const int &leftmargin)
 
 void KiranModuleWidget::setModelsData(QMap<int, ModelItem> &data)
 {
-    //    if(data.isEmpty() || (data.count()==1 && data.first()))
-    //    {
+    //当分类下模块数量为0时.
+    if(data.count() == 0)
+    {
+        ui->listWidget_item->hide();
+        return;
+    }
 
-    //    }
     QMapIterator<int, ModelItem> i(data);
     while (i.hasNext()) {
         i.next();
@@ -44,6 +52,27 @@ void KiranModuleWidget::setModelsData(QMap<int, ModelItem> &data)
         QStringList names = modeItem.subNameList;
         QStringList icons = modeItem.subIconList;
         int count = names.count();
+        //当模块数量为1,且模块中的功能项目小于等于1时.
+        if(data.count()==1 && count <= 1)
+        {
+            ui->listWidget_item->hide();
+            continue;
+        }
+        else if(count == 0)//当模块数量大于1,而某个模块的功能项为0时.
+        {
+            QListWidgetItem *item = new QListWidgetItem();
+            item->setSizeHint(QSize(item->sizeHint().width(), 60));
+            item->setText(modeItem.name);
+            item->setIcon(QIcon(modeItem.icon));
+            item->setData(Qt::UserRole, QVariant::fromValue((void *) &modeItem));
+            item->setData(Qt::UserRole+1, modeItem.name);
+            item->setToolTip(modeItem.commentF());
+            ui->listWidget_item->addItem(item);
+            modeItem.subItemList << item;
+            continue;
+        }
+
+        if(ui->listWidget_item->isHidden()) ui->listWidget_item->show();
         for(int i=0; i<count; ++i)
         {
             QListWidgetItem *item = new QListWidgetItem();
@@ -57,6 +86,9 @@ void KiranModuleWidget::setModelsData(QMap<int, ModelItem> &data)
             modeItem.subItemList << item;
         }
     }
+    //加载完数据后,默认选中第一行.
+    if(ui->listWidget_item->count() <= 0) return;
+    ui->listWidget_item->setCurrentRow(0);
 }
 
 void KiranModuleWidget::setCurModelSubItem( QListWidgetItem *item)
