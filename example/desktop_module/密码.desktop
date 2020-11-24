@@ -7,4 +7,4 @@ Icon=avatar-default
 Keywords=font,appearance,personalize
 Weight=1
 Category=accounts
-PluginFile=/root/kiran-control-panel/example/build-model01-5_11_1-Debug/libmode01.so
+PluginFile=/root/kiran-control-panel/example/build-module01-5_11_1-Debug/libmodule01.so

@@ -3,28 +3,22 @@
  *   Copyright ©2020 KylinSec. All rights reserved.                      *
  *                                                                         *
  ***************************************************************************/
-#ifndef DIALOG002_H
-#define DIALOG002_H
+#include "dialog002.h"
+#include "ui_dialog002.h"
 
-#include <QDialog>
-
-namespace Ui {
-class Dialog002;
+Dialog002::Dialog002(QWidget *parent) :
+    QDialog(parent),
+    ui(new Ui::Dialog002)
+{
+    ui->setupUi(this);
 }
 
-class Dialog002 : public QDialog
+Dialog002::~Dialog002()
 {
-    Q_OBJECT
+    delete ui;
+}
 
-public:
-    explicit Dialog002(QWidget *parent = 0);
-    ~Dialog002();
-
-private slots:
-    void on_lineEdit_textChanged(const QString &arg1);
-
-private:
-    Ui::Dialog002 *ui;
-};
-
-#endif // DIALOG002_H
+void Dialog002::on_lineEdit_textChanged(const QString &arg1)
+{
+    gHasUnsavedOptions = true;
+}

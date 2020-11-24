@@ -29,7 +29,7 @@ private:
     Ui::KiranControlPanel *ui;
     KiranModuleClassListWidget *m_classWgt;
     QListWidgetItem *m_curClassListItem;
-    QMap<int, ModelClass> m_data;
+    QMap<int, ModuleClass> m_data;
 };
 
 #endif // KIRANCONTROLPANEL_H

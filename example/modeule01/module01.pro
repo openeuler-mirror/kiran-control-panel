@@ -8,7 +8,7 @@ QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = mode01
+TARGET = module01
 TEMPLATE = lib #编译成库文件
 
 # The following define makes your compiler emit warnings if you use
@@ -26,12 +26,12 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     dialog001.cpp \
     dialog002.cpp \
-    model01-interface.cpp
+    module01-interface.cpp
 
 HEADERS += \
     dialog001.h \
     dialog002.h \
-    model01-interface.h
+    module01-interface.h
 
 FORMS += \
     dialog001.ui \

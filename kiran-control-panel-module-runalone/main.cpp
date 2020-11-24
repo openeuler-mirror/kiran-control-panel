@@ -23,16 +23,16 @@ int main(int argc, char *argv[])
     //                                           QGuiApplication::translate("main", "DesktopFilePath"), "800");
     //    parser.addOption(modeDesktopFilePath);
 
-    QCommandLineOption modeDesktopFileName(QStringList() << "name" << "DesktopFileName",
+    QCommandLineOption moduleDesktopFileName(QStringList() << "name" << "DesktopFileName",
                                            QGuiApplication::translate("main", "Mode desktop file name."),
                                            QGuiApplication::translate("main", "DesktopFileName"), "Fonts");
-    parser.addOption(modeDesktopFileName);
+    parser.addOption(moduleDesktopFileName);
     parser.process(a);
 
-    QString fileName = parser.value(modeDesktopFileName) ;
+    QString fileName = parser.value(moduleDesktopFileName);
 
     KiranControlPanelModuleRunaloneWindow w;
-    w.setModeName(fileName);
+    w.setModuleName(fileName);
     w.show();
 
     return a.exec();

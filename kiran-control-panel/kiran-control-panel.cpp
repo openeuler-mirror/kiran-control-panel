@@ -28,7 +28,7 @@ KiranControlPanel::KiranControlPanel(QWidget *parent) :
 
     m_classWgt->move(0, 0);
 
-    m_data = getModeCLass();
+    m_data = getModuleCLass();
     m_classWgt->setData(&m_data);
     ui->module_widget->setLeftContentsMargins(m_classWgt->iconModeWd());
 }
@@ -41,7 +41,7 @@ KiranControlPanel::~KiranControlPanel()
 QStringList KiranControlPanel::completerKeys()
 {
     QStringList ret;
-    QMapIterator<int, ModelClass> i(m_data);
+    QMapIterator<int, ModuleClass> i(m_data);
     while (i.hasNext()) {
         i.next();
         ret << i.value().keywords << i.value().itemKeys();
@@ -52,7 +52,7 @@ QStringList KiranControlPanel::completerKeys()
 void KiranControlPanel::onSearch(const QString &request)
 {
     int row = 0;
-    QMapIterator<int, ModelClass> i(m_data);
+    QMapIterator<int, ModuleClass> i(m_data);
     while (i.hasNext()) {
         i.next();
         //如果与模块类的关键字匹配.模块类关键字与模块关键字分开存储.
@@ -66,7 +66,7 @@ void KiranControlPanel::onSearch(const QString &request)
             if(!item) return;
 
             m_classWgt->setCurrentItem(i.value().item);
-            ui->module_widget->setCurModelSubItem(item);
+            ui->module_widget->setCurModuleSubItem(item);
         }
         ++row;
     }

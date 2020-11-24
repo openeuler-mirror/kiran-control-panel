@@ -17,7 +17,10 @@ KiranModuleClassListWidgetItemWidget::KiranModuleClassListWidgetItemWidget(QWidg
     m_iconRect = QRect(cClassItemWgtLRPadding, cClassItemWgtTBPadding, cClassItemIconWd, cClassItemIconWd);
     m_textRect = QRect(cClassItemWgtLRPadding+cClassItemIconWd+cClassItemSpace, cClassItemWgtTBPadding, cClassItemTextWd, cClassItemIconWd);
 }
-
+/*!
+ * \brief KiranModuleClassListWidgetItemWidget::paintEvent
+ * 按钮的图片和文字都是绘制的,间距通过预先规定的两个rect实现.
+ */
 void KiranModuleClassListWidgetItemWidget::paintEvent(QPaintEvent *)
 {
     QPainter painter(this);
@@ -28,7 +31,7 @@ void KiranModuleClassListWidgetItemWidget::paintEvent(QPaintEvent *)
     pen.setColor("#ffffff");
     painter.setPen(pen);
     painter.drawPixmap(m_iconRect, m_icon);
-    if(m_showText) painter.drawText(m_textRect, Qt::TextWrapAnywhere|Qt::AlignCenter, m_text);
+    if(m_showText) painter.drawText(m_textRect, Qt::TextWrapAnywhere|Qt::AlignLeft|Qt::AlignVCenter, m_text);
 }
 
 

@@ -18,10 +18,10 @@ class KiranControlPanelModuleRunaloneWindow : public KiranTitlebarWindow
 public:
     explicit KiranControlPanelModuleRunaloneWindow();
     ~KiranControlPanelModuleRunaloneWindow();
-    void setModeName(const QString &name);
+    void setModuleName(const QString &name);
 
 private:
-     QMap<int, ModelItem> m_map;
+     QMap<int, ModuleItem> m_map;
 };
 
 #endif // KIRANCONTROLPANELMODULERUNALONEWINDOW_H

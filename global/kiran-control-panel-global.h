@@ -10,13 +10,13 @@
 
 class QListWidgetItem;
 namespace KiranControlPanelGlobal {
-//########################### ModelItemStu ############################################
-typedef struct ModelItemStu{
+//########################### ModuleItemStu ############################################
+typedef struct ModuleItemStu{
     bool isEmpty;
     QString name;
     QString nameZh;
     QString comment;
-    QString commnetZh;
+    QString commentZh;
     QString icon;
     QStringList subNameList;
     QStringList subIconList;
@@ -31,32 +31,32 @@ public:
     void init()
     {
         openPlugin();
-        getModeItemSubInfo();
+        getModuleItemSubInfo();
         getTranslationPath();
         closePlugin();
     }
 
-    QString nameF();
-    QString commentF();
-    QWidget *createModeItemSubWgt(const QString &name);
+    QString getNameTranslate();
+    QString getCommentTranslate();
+    QWidget *createModuleItemSubWgt(const QString &name);
     bool hasUnsavedOptions();
 
-    ModelItemStu():isEmpty(true),modePlugin(nullptr){}
-    ~ModelItemStu(){
+    ModuleItemStu():isEmpty(true),modulePlugin(nullptr){}
+    ~ModuleItemStu(){
         closePlugin();
     }
     void closePlugin();
 
 private:
-    void* modePlugin;
+    void* modulePlugin;
 
 private:
     bool openPlugin();
     template <typename T>
-    T getModeItemFun(const QString &funName, T * = NULL)
+    T getModuleItemFun(const QString &funName, T * = NULL)
     {
-        if(!modePlugin) return nullptr;
-        T funPtr = (T) dlsym(modePlugin, funName.toLatin1().data());
+        if(!modulePlugin) return nullptr;
+        T funPtr = (T) dlsym(modulePlugin, funName.toLatin1().data());
         const char* dlsym_error = dlerror();
         if (dlsym_error) {
             qWarning() << "Cannot load symbol create: " << dlsym_error;
@@ -65,12 +65,12 @@ private:
         return funPtr;
     }
     void getTranslationPath();
-    void getModeItemSubInfo();
-}ModelItem;
+    void getModuleItemSubInfo();
+}ModuleItem;
 
-//############################### ModelClassStu #########################################
-typedef struct ModelClassStu{
-    ModelClassStu():item(nullptr){}
+//############################### ModuleClassStu #########################################
+typedef struct ModuleClassStu{
+    ModuleClassStu():item(nullptr){}
     QString name;
     QString nameZh;
     QString comment;
@@ -80,18 +80,18 @@ typedef struct ModelClassStu{
     QStringList keywords;
     QListWidgetItem *item;
 
-    QString nameF();
-    QString commentF();
-    QMap<int, ModelItem> itemMap;
+    QString getNameTranslate();
+    QString getCommentTranslate();
+    QMap<int, ModuleItem> itemMap;
     QStringList itemKeys()const ;
     QListWidgetItem *completeredItem(const QString &c);
     int completeredItemRow(const QString &c);
-}ModelClass;
+}ModuleClass;
 
 //#############################  ##################################3333
-QMap<int, ModelClass> getModeCLass();
-QHash<QString, QMap<int, ModelItem> > getModeItem();
-ModelItem getModeItem(const QString &modeName);
+QMap<int, ModuleClass> getModuleCLass();
+QHash<QString, QMap<int, ModuleItem> > getModuleItem();
+ModuleItem getModuleItem(const QString &moduleName);
 }
 
 #endif // KIRANCONTROLPANELGLOBAL_H

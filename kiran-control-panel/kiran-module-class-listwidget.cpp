@@ -21,21 +21,21 @@ KiranModuleClassListWidget::KiranModuleClassListWidget(QWidget *parent) : QListW
     connect(this, &KiranModuleClassListWidget::currentItemChanged, this, &KiranModuleClassListWidget::onCurrentItemChanged);
 }
 
-void KiranModuleClassListWidget::setData(QMap<int, ModelClass> *data)
+void KiranModuleClassListWidget::setData(QMap<int, ModuleClass> *data)
 {
-    QMapIterator<int, ModelClass> i(*data);
+    QMapIterator<int, ModuleClass> i(*data);
     while (i.hasNext()) {
         i.next();
-        ModelClass &modeClass = (*data)[i.key()];
+        ModuleClass &moduleClass = (*data)[i.key()];
         QListWidgetItem *item = new QListWidgetItem();
-        item->setData(Qt::UserRole,  QVariant::fromValue((void *) &modeClass));
+        item->setData(Qt::UserRole,  QVariant::fromValue((void *) &moduleClass));
         item->setSizeHint(QSize(KiranModuleClassListWidgetItemWidget::iconModeWd(), KiranModuleClassListWidgetItemWidget::iconModeWd()));
         addItem(item);
-        modeClass.item = item;
+        moduleClass.item = item;
         KiranModuleClassListWidgetItemWidget *btn = new KiranModuleClassListWidgetItemWidget(this);
-        btn->setText(modeClass.nameZh);
-        btn->setIcon(modeClass.icon);
-        btn->setToolTip(modeClass.commentF());
+        btn->setText(moduleClass.getNameTranslate());
+        btn->setIcon(moduleClass.icon);
+        btn->setToolTip(moduleClass.getCommentTranslate());
         setItemWidget(item, btn);
         m_btns.insert(item, btn);
     }

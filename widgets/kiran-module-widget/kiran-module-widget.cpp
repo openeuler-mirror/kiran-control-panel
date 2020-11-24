@@ -26,18 +26,14 @@ KiranModuleWidget::~KiranModuleWidget()
     delete ui;
 }
 
-void KiranModuleWidget::selectFirstItem()
-{
-
-}
-
 void KiranModuleWidget::setLeftContentsMargins(const int &leftmargin)
 {
     ui->horizontalLayout->setContentsMargins(leftmargin, 0, 0, 0);
 }
 
-void KiranModuleWidget::setModelsData(QMap<int, ModelItem> &data)
+void KiranModuleWidget::setModulesData(QMap<int, ModuleItem> &data)
 {
+    if(ui->listWidget_item->isHidden()) ui->listWidget_item->show();
     //当分类下模块数量为0时.
     if(data.count() == 0)
     {
@@ -45,12 +41,12 @@ void KiranModuleWidget::setModelsData(QMap<int, ModelItem> &data)
         return;
     }
 
-    QMapIterator<int, ModelItem> i(data);
+    QMapIterator<int, ModuleItem> i(data);
     while (i.hasNext()) {
         i.next();
-        ModelItem &modeItem = data[i.key()];
-        QStringList names = modeItem.subNameList;
-        QStringList icons = modeItem.subIconList;
+        ModuleItem &moduleItem = data[i.key()];
+        QStringList names = moduleItem.subNameList;
+        QStringList icons = moduleItem.subIconList;
         int count = names.count();
         //当模块数量为1,且模块中的功能项目小于等于1时.
         if(data.count()==1 && count <= 1)
@@ -62,28 +58,27 @@ void KiranModuleWidget::setModelsData(QMap<int, ModelItem> &data)
         {
             QListWidgetItem *item = new QListWidgetItem();
             item->setSizeHint(QSize(item->sizeHint().width(), 60));
-            item->setText(modeItem.name);
-            item->setIcon(QIcon(modeItem.icon));
-            item->setData(Qt::UserRole, QVariant::fromValue((void *) &modeItem));
-            item->setData(Qt::UserRole+1, modeItem.name);
-            item->setToolTip(modeItem.commentF());
+            item->setText(moduleItem.getNameTranslate());
+            item->setIcon(QIcon(moduleItem.icon));
+            item->setData(Qt::UserRole, QVariant::fromValue((void *) &moduleItem));
+            item->setData(Qt::UserRole+1, moduleItem.name);
+            item->setToolTip(moduleItem.getCommentTranslate());
             ui->listWidget_item->addItem(item);
-            modeItem.subItemList << item;
+            moduleItem.subItemList << item;
             continue;
         }
 
-        if(ui->listWidget_item->isHidden()) ui->listWidget_item->show();
         for(int i=0; i<count; ++i)
         {
             QListWidgetItem *item = new QListWidgetItem();
             item->setSizeHint(QSize(item->sizeHint().width(), 60));
             item->setText(names.at(i));
             item->setIcon(QIcon(icons.at(i)));
-            item->setData(Qt::UserRole, QVariant::fromValue((void *) &modeItem));
+            item->setData(Qt::UserRole, QVariant::fromValue((void *) &moduleItem));
             item->setData(Qt::UserRole+1, names.at(i));
-            item->setToolTip(modeItem.commentF());
+            item->setToolTip(moduleItem.getCommentTranslate());
             ui->listWidget_item->addItem(item);
-            modeItem.subItemList << item;
+            moduleItem.subItemList << item;
         }
     }
     //加载完数据后,默认选中第一行.
@@ -91,7 +86,7 @@ void KiranModuleWidget::setModelsData(QMap<int, ModelItem> &data)
     ui->listWidget_item->setCurrentRow(0);
 }
 
-void KiranModuleWidget::setCurModelSubItem( QListWidgetItem *item)
+void KiranModuleWidget::setCurModuleSubItem( QListWidgetItem *item)
 {
     ui->listWidget_item->setCurrentItem(item);
 }
@@ -100,8 +95,8 @@ bool KiranModuleWidget::checkHasUnSaved()
 {
     if(m_curItem && m_curCenterWgt)
     {
-        ModelItem *preModeItem = (ModelItem *)m_curItem->data(Qt::UserRole).value<void *>();
-        if(preModeItem->hasUnsavedOptions())
+        ModuleItem *preModuleItem = (ModuleItem *)m_curItem->data(Qt::UserRole).value<void *>();
+        if(preModuleItem->hasUnsavedOptions())
         {
             KiranMessageBox box;
             box.setTitle(tr("警告"));
@@ -144,14 +139,14 @@ void KiranModuleWidget::onSelectedClassItemChanged(QListWidgetItem *current)
     closeCenterWidgetPlugin(ui->listWidget_item->currentItem());
     ui->listWidget_item->clear();
 
-    ModelClass *modelClass =  (ModelClass *) current->data(Qt::UserRole).value<void *>();
+    ModuleClass *moduleClass =  (ModuleClass *) current->data(Qt::UserRole).value<void *>();
 
-    QMap<int, ModelItem> &modeItemMap = modelClass->itemMap;
-    setModelsData(modeItemMap);
+    QMap<int, ModuleItem> &moduleItemMap = moduleClass->itemMap;
+    setModulesData(moduleItemMap);
 }
 
 
-void KiranModuleWidget::changeCurModelSubItem(QListWidgetItem *current)
+void KiranModuleWidget::changeCurModuleSubItem(QListWidgetItem *current)
 {
     if(!checkHasUnSaved()) return;
 
@@ -162,10 +157,10 @@ void KiranModuleWidget::changeCurModelSubItem(QListWidgetItem *current)
 
     if(!current) return;
 
-    ModelItem *modeItem = (ModelItem *)current->data(Qt::UserRole).value<void *>();
+    ModuleItem *moduleItem = (ModuleItem *)current->data(Qt::UserRole).value<void *>();
     QString name = current->data(Qt::UserRole+1).toString();
 
-    QWidget *wgt = modeItem->createModeItemSubWgt(name);
+    QWidget *wgt = moduleItem->createModuleItemSubWgt(name);
     if(!wgt) return;
     ui->centerLayout->addWidget(wgt);
     m_curItem = current;
@@ -176,12 +171,12 @@ void KiranModuleWidget::closeCenterWidgetPlugin(QListWidgetItem *current)
 {
     if(!current || !m_curCenterWgt) return;
 
-    ModelItem *preModeItem = (ModelItem *)current->data(Qt::UserRole).value<void *>();
+    ModuleItem *preModuleItem = (ModuleItem *)current->data(Qt::UserRole).value<void *>();
     m_curCenterWgt->deleteLater();
     m_curCenterWgt = nullptr;
     m_curItem = nullptr;
     //其它属性值从插件中获取之后，可以立即关闭插件。QWidget在使用完之后再关闭插件。
-    preModeItem->closePlugin();
+    preModuleItem->closePlugin();
 }
 
 bool KiranModuleWidget::eventFilter(QObject *obj, QEvent *event)
@@ -202,5 +197,5 @@ bool KiranModuleWidget::eventFilter(QObject *obj, QEvent *event)
 
 void KiranModuleWidget::on_listWidget_item_currentItemChanged(QListWidgetItem *current, QListWidgetItem *)
 {
-    changeCurModelSubItem(current);
+    changeCurModuleSubItem(current);
 }

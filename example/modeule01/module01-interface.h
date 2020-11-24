@@ -10,7 +10,7 @@
 #include "../../interface/kiran-control-panel-module-interface.h"
 #include "dialog001.h"
 #include "dialog002.h"
-
+extern bool gHasUnsavedOptions;
 void getSubitems(QStringList &nameList, QStringList &iconList, QStringList &keyList)
 {
     nameList << "dialog001"   << "dialog002";
@@ -20,7 +20,7 @@ void getSubitems(QStringList &nameList, QStringList &iconList, QStringList &keyL
 
 QWidget *getSubitemWidget(QString name)
 {
-    qDebug() << name;
+    gHasUnsavedOptions = false;
     if("dialog001" == name)
     {
         return new Dialog001();
@@ -40,7 +40,7 @@ QString getTranslationPath()
 
 bool hasUnsavedOptions()
 {
-    return true;
+    return gHasUnsavedOptions;
 }
 
 #endif // INTERFACE_H

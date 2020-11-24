@@ -5,48 +5,50 @@
 #include <QPushButton>
 #include <QDialogButtonBox>
 
-#define KIRAN_MODE_CLASS_PATH "/root/kiran-control-panel/example/desktop_modeclass"
-#define KIRAN_MODE_ITEM_PATH "/root/kiran-control-panel/example/desktop_modeitem"
+#define KIRAN_MODULE_CLASS_PATH "/root/kiran-control-panel/example/desktop_class"
+#define KIRAN_MODULE_ITEM_PATH "/root/kiran-control-panel/example/desktop_module"
 
 typedef void (*GetSubItemsFun)(QStringList &nameList, QStringList &iconList, QStringList &keyList);
 typedef QWidget*(*GetSubItemWidgetFun)(QString);
 typedef QString(*GetTranslationPathFun)();
 typedef bool(*HasUnsavedOptionsFun)();
 
-QMap<int, KiranControlPanelGlobal::ModelClass> KiranControlPanelGlobal::getModeCLass()
+QString gLocaleName;
+
+QMap<int, KiranControlPanelGlobal::ModuleClass> KiranControlPanelGlobal::getModuleCLass()
 {
-    QMap<int, KiranControlPanelGlobal::ModelClass> ret;
-    QHash<QString, QMap<int, KiranControlPanelGlobal::ModelItem> >  items = getModeItem();
+    QMap<int, KiranControlPanelGlobal::ModuleClass> ret;
+    QHash<QString, QMap<int, KiranControlPanelGlobal::ModuleItem> >  items = getModuleItem();
     //
-    QString modeItemPath = KIRAN_MODE_CLASS_PATH;
-    QDirIterator it(modeItemPath, QStringList() << "*.desktop", QDir::Files);
+    QString moduleItemPath = KIRAN_MODULE_CLASS_PATH;
+    QDirIterator it(moduleItemPath, QStringList() << "*.desktop", QDir::Files);
     while (it.hasNext()) {
         QSettings settings(it.next(), QSettings::IniFormat);
         settings.beginGroup("Desktop Entry");
 
-        KiranControlPanelGlobal::ModelClass modeClass;
-        modeClass.name = QString::fromUtf8(settings.value("Name").toString().toLatin1().data());
-        modeClass.nameZh = QString::fromUtf8(settings.value("Name[zh_CN]").toString().toLatin1().data());
-        modeClass.comment = settings.value("Comment").toString();
-        modeClass.commentZh = QString::fromUtf8(settings.value("Comment[zh_CN]").toString().toLatin1().data());
-        modeClass.icon = "/usr/share/icons/Kiran/emblems/scalable/"+settings.value("Icon").toString();
+        KiranControlPanelGlobal::ModuleClass moduleClass;
+        moduleClass.name = QString::fromUtf8(settings.value("Name").toString().toLatin1().data());
+        moduleClass.nameZh = QString::fromUtf8(settings.value("Name[zh_CN]").toString().toLatin1().data());
+        moduleClass.comment = settings.value("Comment").toString();
+        moduleClass.commentZh = QString::fromUtf8(settings.value("Comment[zh_CN]").toString().toLatin1().data());
+        moduleClass.icon = "/usr/share/icons/Kiran/emblems/scalable/"+settings.value("Icon").toString();
         QVariantList keys = settings.value("Keywords").toList();
         foreach (QVariant var, keys) {
-            modeClass.keywords <<QString::fromUtf8(var.toString().toLatin1().data());
+            moduleClass.keywords <<QString::fromUtf8(var.toString().toLatin1().data());
         }
 
-        modeClass.itemMap = items.value(modeClass.name);
-        ret .insert(settings.value("Weight").toInt(), modeClass);
+        moduleClass.itemMap = items.value(moduleClass.name);
+        ret .insert(settings.value("Weight").toInt(), moduleClass);
     }
     return ret;
 }
 
-QHash<QString, QMap<int, KiranControlPanelGlobal::ModelItem> > KiranControlPanelGlobal::getModeItem()
+QHash<QString, QMap<int, KiranControlPanelGlobal::ModuleItem> > KiranControlPanelGlobal::getModuleItem()
 {
-    QHash<QString, QMap<int, KiranControlPanelGlobal::ModelItem> >  ret;
+    QHash<QString, QMap<int, KiranControlPanelGlobal::ModuleItem> >  ret;
 
-    QString modeItemPath = KIRAN_MODE_ITEM_PATH;
-    QDirIterator it(modeItemPath, QStringList() << "*.desktop", QDir::Files);
+    QString moduleItemPath = KIRAN_MODULE_ITEM_PATH;
+    QDirIterator it(moduleItemPath, QStringList() << "*.desktop", QDir::Files);
     while (it.hasNext()) {
         QString filePath = it.next();
         QSettings settings(filePath, QSettings::IniFormat);
@@ -55,18 +57,18 @@ QHash<QString, QMap<int, KiranControlPanelGlobal::ModelItem> > KiranControlPanel
         QString category = settings.value("Category").toString();
         if(!ret.contains(category))
         {
-            QMap<int, KiranControlPanelGlobal::ModelItem> m;
+            QMap<int, KiranControlPanelGlobal::ModuleItem> m;
             ret.insert(category, m);
         }
 
-        QMap<int, KiranControlPanelGlobal::ModelItem> &m = ret[category];
+        QMap<int, KiranControlPanelGlobal::ModuleItem> &m = ret[category];
 
-        KiranControlPanelGlobal::ModelItem stu;
+        KiranControlPanelGlobal::ModuleItem stu;
         stu.isEmpty    = false;
         stu.name       = QString::fromUtf8(settings.value("Name").toString().toLatin1().data());
         stu.nameZh     = QString::fromUtf8(settings.value("Name[zh_CN]").toString().toLatin1().data());
         stu.comment    = settings.value("Comment").toString();
-        stu.commnetZh  = QString::fromUtf8(settings.value("Comment[zh_CN]").toString().toLatin1().data());
+        stu.commentZh  = QString::fromUtf8(settings.value("Comment[zh_CN]").toString().toLatin1().data());
         stu.icon       = "/usr/share/icons/Kiran/emblems/scalable/"+settings.value("Icon").toString();
         stu.pluginFile = settings.value("PluginFile").toString();
         stu.init();
@@ -77,23 +79,23 @@ QHash<QString, QMap<int, KiranControlPanelGlobal::ModelItem> > KiranControlPanel
     return ret;
 }
 
-KiranControlPanelGlobal::ModelItem KiranControlPanelGlobal::getModeItem(const QString &modeName)
+KiranControlPanelGlobal::ModuleItem KiranControlPanelGlobal::getModuleItem(const QString &moduleName)
 {
-    KiranControlPanelGlobal::ModelItem ret;
+    KiranControlPanelGlobal::ModuleItem ret;
 
-    QString modeItemPath = KIRAN_MODE_ITEM_PATH;
-    QDirIterator it(modeItemPath, QStringList() << "*.desktop", QDir::Files);
+    QString moduleItemPath = KIRAN_MODULE_ITEM_PATH;
+    QDirIterator it(moduleItemPath, QStringList() << "*.desktop", QDir::Files);
     while (it.hasNext()) {
         QString filePath = it.next();
         QSettings settings(filePath, QSettings::IniFormat);
         settings.beginGroup("Desktop Entry");
-        if(settings.value("Name").toString() != modeName) continue;
+        if(settings.value("Name").toString() != moduleName) continue;
 
         ret.isEmpty = false;
         ret.name       = QString::fromUtf8(settings.value("Name").toString().toLatin1().data());
         ret.nameZh     = QString::fromUtf8(settings.value("Name[zh_CN]").toString().toLatin1().data());
         ret.comment    = settings.value("Comment").toString();
-        ret.commnetZh  = QString::fromUtf8(settings.value("Comment[zh_CN]").toString().toLatin1().data());
+        ret.commentZh  = QString::fromUtf8(settings.value("Comment[zh_CN]").toString().toLatin1().data());
         ret.icon       = "/usr/share/icons/Kiran/emblems/scalable/"+settings.value("Icon").toString();
         ret.pluginFile = settings.value("PluginFile").toString();
         ret.init();
@@ -103,20 +105,24 @@ KiranControlPanelGlobal::ModelItem KiranControlPanelGlobal::getModeItem(const QS
     return ret;
 }
 
-QString KiranControlPanelGlobal::ModelClassStu::nameF()
+QString KiranControlPanelGlobal::ModuleClassStu::getNameTranslate()
 {
-    if(1) return nameZh;
+    if(gLocaleName == "en_US") return name;
+    else if(gLocaleName == "zh_CN") return nameZh;
+    else return name;
 }
 
-QString KiranControlPanelGlobal::ModelClassStu::commentF()
+QString KiranControlPanelGlobal::ModuleClassStu::getCommentTranslate()
 {
-    if(1) return commentZh;
+    if(gLocaleName == "en_US") return comment;
+    else if(gLocaleName == "zh_CN") return commentZh;
+    else return comment;
 }
 
-QStringList KiranControlPanelGlobal::ModelClassStu::itemKeys() const
+QStringList KiranControlPanelGlobal::ModuleClassStu::itemKeys() const
 {
     QStringList ret;
-    QMapIterator<int, KiranControlPanelGlobal::ModelItem> i(itemMap);
+    QMapIterator<int, KiranControlPanelGlobal::ModuleItem> i(itemMap);
     while (i.hasNext()) {
         i.next();
         ret << i.value().subKeyList;
@@ -124,9 +130,9 @@ QStringList KiranControlPanelGlobal::ModelClassStu::itemKeys() const
     return ret;
 }
 
-QListWidgetItem *KiranControlPanelGlobal::ModelClassStu::completeredItem(const QString &c)
+QListWidgetItem *KiranControlPanelGlobal::ModuleClassStu::completeredItem(const QString &c)
 {
-    QMapIterator<int, KiranControlPanelGlobal::ModelItem> i(itemMap);
+    QMapIterator<int, KiranControlPanelGlobal::ModuleItem> i(itemMap);
     while (i.hasNext()) {
         i.next();
         int index = i.value().subKeyList.indexOf(c);
@@ -137,10 +143,10 @@ QListWidgetItem *KiranControlPanelGlobal::ModelClassStu::completeredItem(const Q
     }
     return nullptr;
 }
-int KiranControlPanelGlobal::ModelClassStu::completeredItemRow(const QString &c)
+int KiranControlPanelGlobal::ModuleClassStu::completeredItemRow(const QString &c)
 {
     int row = 0;
-    QMapIterator<int, KiranControlPanelGlobal::ModelItem> i(itemMap);
+    QMapIterator<int, KiranControlPanelGlobal::ModuleItem> i(itemMap);
     while (i.hasNext()) {
         i.next();
         if(i.value().subKeyList.contains(c))
@@ -150,10 +156,10 @@ int KiranControlPanelGlobal::ModelClassStu::completeredItemRow(const QString &c)
     return -1;
 }
 
-void KiranControlPanelGlobal::ModelItemStu::getModeItemSubInfo()
+void KiranControlPanelGlobal::ModuleItemStu::getModuleItemSubInfo()
 {
     openPlugin();
-    auto fun = getModeItemFun<GetSubItemsFun>("getSubitems");
+    auto fun = getModuleItemFun<GetSubItemsFun>("getSubitems");
     if(!fun) return;
 
     subNameList.clear();
@@ -179,32 +185,36 @@ void KiranControlPanelGlobal::ModelItemStu::getModeItemSubInfo()
     closePlugin();
 }
 
-QWidget *KiranControlPanelGlobal::ModelItemStu::createModeItemSubWgt(const QString &name)
+QWidget *KiranControlPanelGlobal::ModuleItemStu::createModuleItemSubWgt(const QString &name)
 {
     openPlugin();
-    auto fun = getModeItemFun<GetSubItemWidgetFun>("getSubitemWidget");
+    auto fun = getModuleItemFun<GetSubItemWidgetFun>("getSubitemWidget");
     if(!fun) return nullptr;
     auto ret = fun(name);
     //closePlugin();
     return ret;
 }
 
-QString KiranControlPanelGlobal::ModelItemStu::nameF()
+QString KiranControlPanelGlobal::ModuleItemStu::getNameTranslate()
 {
-    if(1) return nameZh;
+    if(gLocaleName == "en_US") return name;
+    else if(gLocaleName == "zh_CN") return nameZh;
+    else return name;
 }
 
-QString KiranControlPanelGlobal::ModelItemStu::commentF()
+QString KiranControlPanelGlobal::ModuleItemStu::getCommentTranslate()
 {
-    if(1) return commnetZh;
+    if(gLocaleName == "en_US") return comment;
+    else if(gLocaleName == "zh_CN") return commentZh;
+    else return comment;
 }
 
-bool KiranControlPanelGlobal::ModelItemStu::openPlugin()
+bool KiranControlPanelGlobal::ModuleItemStu::openPlugin()
 {
-//    if(!modePlugin)
+//    if(!modulePlugin)
 //    {
-        modePlugin = dlopen(pluginFile.toLatin1().data(), RTLD_LAZY);
-        if (!modePlugin) {
+        modulePlugin = dlopen(pluginFile.toLatin1().data(), RTLD_LAZY);
+        if (!modulePlugin) {
             KiranMessageBox box;
             box.setTitle(QObject::tr("提示"));
 
@@ -224,33 +234,33 @@ bool KiranControlPanelGlobal::ModelItemStu::openPlugin()
     return true;
 }
 
-void KiranControlPanelGlobal::ModelItemStu::closePlugin()
+void KiranControlPanelGlobal::ModuleItemStu::closePlugin()
 {
-    if(modePlugin)
+    if(modulePlugin)
     {
-        if(!dlclose(modePlugin))
+        if(!dlclose(modulePlugin))
         {
             //关闭插件成功，计数器为0，将句柄置空，防止再次操作该句柄。
-            modePlugin = nullptr;
-            qDebug() << "dlclose plugin:" << modePlugin;
+            modulePlugin = nullptr;
+            qDebug() << "dlclose plugin:" << modulePlugin;
         }
     }
 }
 
-bool KiranControlPanelGlobal::ModelItemStu::hasUnsavedOptions()
+bool KiranControlPanelGlobal::ModuleItemStu::hasUnsavedOptions()
 {
     openPlugin();
-    auto fun = getModeItemFun<HasUnsavedOptionsFun>("hasUnsavedOptions");
+    auto fun = getModuleItemFun<HasUnsavedOptionsFun>("hasUnsavedOptions");
     if(!fun) return false;
     auto ret = fun();
     closePlugin();
     return ret;
 }
 
-void KiranControlPanelGlobal::ModelItemStu::getTranslationPath()
+void KiranControlPanelGlobal::ModuleItemStu::getTranslationPath()
 {
     openPlugin();
-    auto fun = getModeItemFun<GetTranslationPathFun>("getTranslationPath");
+    auto fun = getModuleItemFun<GetTranslationPathFun>("getTranslationPath");
     if(!fun) return;
     translationPath = fun();
     closePlugin();

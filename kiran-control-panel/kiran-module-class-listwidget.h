@@ -19,7 +19,7 @@ class KiranModuleClassListWidget : public QListWidget
     bool eventFilter(QObject *obj, QEvent *event);
 public:
     explicit KiranModuleClassListWidget(QWidget *parent = nullptr);
-    void setData(QMap<int, ModelClass> *data);
+    void setData(QMap<int, ModuleClass> *data);
 
 signals:
 

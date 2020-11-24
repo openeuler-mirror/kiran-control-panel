@@ -20,14 +20,14 @@ KiranControlPanelModuleRunaloneWindow::~KiranControlPanelModuleRunaloneWindow()
 
 }
 
-void KiranControlPanelModuleRunaloneWindow::setModeName(const QString &name)
+void KiranControlPanelModuleRunaloneWindow::setModuleName(const QString &name)
 {
-    ModelItem data = getModeItem(name);
+    ModuleItem data = getModuleItem(name);
     m_map.insert(1, data);
 
     setIcon(QIcon(data.icon));
-    setTitle(data.name);
+    setTitle(data.getNameTranslate());
     KiranModuleWidget *centerWgt = new KiranModuleWidget(this);
-    centerWgt->setModelsData(m_map);
+    centerWgt->setModulesData(m_map);
     setWindowContentWidget(centerWgt);
 }

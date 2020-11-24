@@ -3,4 +3,5 @@
  *   Copyright ©2020 KylinSec. All rights reserved.                      *
  *                                                                         *
  ***************************************************************************/
-#include "model01-interface.h"
+#include "module01-interface.h"
+bool gHasUnsavedOptions = false;
