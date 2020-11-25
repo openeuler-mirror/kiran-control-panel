@@ -26,7 +26,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     dialog001.cpp \
     dialog002.cpp \
-    module01-interface.cpp
+    module01-interface.cpp \
+    main.cpp
 
 HEADERS += \
     dialog001.h \
@@ -36,3 +37,9 @@ HEADERS += \
 FORMS += \
     dialog001.ui \
     dialog002.ui
+
+
+TRANSLATIONS += \
+    module01.zh_CN.ts \
+    module01.en_US.ts
+

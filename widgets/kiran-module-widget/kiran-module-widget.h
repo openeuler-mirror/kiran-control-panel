@@ -29,16 +29,18 @@ public:
      */
     void setLeftContentsMargins(const int &leftmargin);
     //多个模块数据合并。
-    void setModulesData(QMap<int, ModuleItem> &data);
-    void setCurModuleSubItem( QListWidgetItem *item);
+    void setData(QMap<int, ModuleItem> *data);
+    void setCurModuleSubRow(const int &row);
     bool checkHasUnSaved();
     void changeCurModuleSubItem(QListWidgetItem *current);
 
+    void setDefaultSelectFirstItem(bool defaultSelectFirstItem);
+
 public slots:
-    void onSelectedClassItemChanged(QListWidgetItem *current);
+    void onSelectedClassItemChanged(QMap<int, ModuleItem> *modules);
 
 private slots:
-    void on_listWidget_item_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous);
+    void on_listWidget_module_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous);
 
 private:
     void closeCenterWidgetPlugin(QListWidgetItem *current);
@@ -48,7 +50,8 @@ private:
     Ui::KiranModuleWidget *ui;
     QListWidgetItem *m_curItem;
     QWidget *m_curCenterWgt;
-    bool m_retracement;
+    bool m_defaultSelectFirstItem;
+
 };
 
 #endif // KIRANMODULEWIDGET_H

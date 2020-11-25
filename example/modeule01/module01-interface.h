@@ -14,9 +14,10 @@ extern bool gHasUnsavedOptions;
 void getSubitems(QStringList &nameList, QStringList &iconList, QStringList &keyList)
 {
     nameList << "dialog001"   << "dialog002";
-    iconList << "./icon1.svg" << "./icon2.svg";
+    iconList << "avatar-default" << "avatar-default";
     keyList  << "001"         << "002" ;
 }
+
 
 QWidget *getSubitemWidget(QString name)
 {
@@ -35,7 +36,9 @@ QWidget *getSubitemWidget(QString name)
 
 QString getTranslationPath()
 {
-    return "/usr/share/xx/";
+
+
+    return "/root/kiran-control-panel/example/modeule01/";
 }
 
 bool hasUnsavedOptions()

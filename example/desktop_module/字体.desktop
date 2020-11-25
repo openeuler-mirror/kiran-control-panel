@@ -1,8 +1,8 @@
 [Desktop Entry]
-Name=password
+Name=module01
 Name[zh_CN]=密码
-Comment=password settings
-Comment[zh_CN]=密码
+Comment=password settings描述
+Comment[zh_CN]=密码描述
 Icon=avatar-default
 Weight=2
 Category=accounts

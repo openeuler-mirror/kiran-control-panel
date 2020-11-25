@@ -4,9 +4,18 @@
 #include <QSettings>
 #include <QPushButton>
 #include <QDialogButtonBox>
+#include <QTranslator>
+#include <QApplication>
+#include <QDir>
+#include <QApplication>
+#include <QTranslator>
+#include <QDebug>
 
-#define KIRAN_MODULE_CLASS_PATH "/root/kiran-control-panel/example/desktop_class"
-#define KIRAN_MODULE_ITEM_PATH "/root/kiran-control-panel/example/desktop_module"
+#define KIRAN_MODULE_CLASS_DESKTOP_PATH "/usr/share/applications/kiran-control-panel/class"
+#define KIRAN_MODULE_ITEM_DESKTOP_PATH "/usr/share/applications/kiran-control-panel/module"
+#define KIRAN_MODULE_CLASS_ICON_PATH "/usr/share/icons/Kiran/emblems/scalable/"
+#define KIRAN_MODULE_ITEM_ICON_PATH "/usr/share/icons/Kiran/emblems/scalable/"
+#define KIRAN_MODULE_ITEM_FUNCTION_ICON_PATH "/usr/share/icons/Kiran/emblems/scalable/"
 
 typedef void (*GetSubItemsFun)(QStringList &nameList, QStringList &iconList, QStringList &keyList);
 typedef QWidget*(*GetSubItemWidgetFun)(QString);
@@ -14,13 +23,16 @@ typedef QString(*GetTranslationPathFun)();
 typedef bool(*HasUnsavedOptionsFun)();
 
 QString gLocaleName;
-
+/*!
+ * \brief KiranControlPanelGlobal::getModuleCLass
+ * \return
+ */
 QMap<int, KiranControlPanelGlobal::ModuleClass> KiranControlPanelGlobal::getModuleCLass()
 {
     QMap<int, KiranControlPanelGlobal::ModuleClass> ret;
     QHash<QString, QMap<int, KiranControlPanelGlobal::ModuleItem> >  items = getModuleItem();
     //
-    QString moduleItemPath = KIRAN_MODULE_CLASS_PATH;
+    QString moduleItemPath = KIRAN_MODULE_CLASS_DESKTOP_PATH;
     QDirIterator it(moduleItemPath, QStringList() << "*.desktop", QDir::Files);
     while (it.hasNext()) {
         QSettings settings(it.next(), QSettings::IniFormat);
@@ -31,7 +43,7 @@ QMap<int, KiranControlPanelGlobal::ModuleClass> KiranControlPanelGlobal::getModu
         moduleClass.nameZh = QString::fromUtf8(settings.value("Name[zh_CN]").toString().toLatin1().data());
         moduleClass.comment = settings.value("Comment").toString();
         moduleClass.commentZh = QString::fromUtf8(settings.value("Comment[zh_CN]").toString().toLatin1().data());
-        moduleClass.icon = "/usr/share/icons/Kiran/emblems/scalable/"+settings.value("Icon").toString();
+        moduleClass.icon = KIRAN_MODULE_CLASS_ICON_PATH+settings.value("Icon").toString();
         QVariantList keys = settings.value("Keywords").toList();
         foreach (QVariant var, keys) {
             moduleClass.keywords <<QString::fromUtf8(var.toString().toLatin1().data());
@@ -42,12 +54,15 @@ QMap<int, KiranControlPanelGlobal::ModuleClass> KiranControlPanelGlobal::getModu
     }
     return ret;
 }
-
+/*!
+ * \brief KiranControlPanelGlobal::getModuleItem 此函数在模块集成运行时被使用.
+ * \return
+ */
 QHash<QString, QMap<int, KiranControlPanelGlobal::ModuleItem> > KiranControlPanelGlobal::getModuleItem()
 {
     QHash<QString, QMap<int, KiranControlPanelGlobal::ModuleItem> >  ret;
 
-    QString moduleItemPath = KIRAN_MODULE_ITEM_PATH;
+    QString moduleItemPath = KIRAN_MODULE_ITEM_DESKTOP_PATH;
     QDirIterator it(moduleItemPath, QStringList() << "*.desktop", QDir::Files);
     while (it.hasNext()) {
         QString filePath = it.next();
@@ -69,7 +84,7 @@ QHash<QString, QMap<int, KiranControlPanelGlobal::ModuleItem> > KiranControlPane
         stu.nameZh     = QString::fromUtf8(settings.value("Name[zh_CN]").toString().toLatin1().data());
         stu.comment    = settings.value("Comment").toString();
         stu.commentZh  = QString::fromUtf8(settings.value("Comment[zh_CN]").toString().toLatin1().data());
-        stu.icon       = "/usr/share/icons/Kiran/emblems/scalable/"+settings.value("Icon").toString();
+        stu.icon       = KIRAN_MODULE_ITEM_ICON_PATH+settings.value("Icon").toString();
         stu.pluginFile = settings.value("PluginFile").toString();
         stu.init();
 
@@ -78,12 +93,16 @@ QHash<QString, QMap<int, KiranControlPanelGlobal::ModuleItem> > KiranControlPane
 
     return ret;
 }
-
+/*!
+ * \brief KiranControlPanelGlobal::getModuleItem 此函数在模块单独运行时被使用.
+ * \param moduleName
+ * \return
+ */
 KiranControlPanelGlobal::ModuleItem KiranControlPanelGlobal::getModuleItem(const QString &moduleName)
 {
     KiranControlPanelGlobal::ModuleItem ret;
 
-    QString moduleItemPath = KIRAN_MODULE_ITEM_PATH;
+    QString moduleItemPath = KIRAN_MODULE_ITEM_DESKTOP_PATH;
     QDirIterator it(moduleItemPath, QStringList() << "*.desktop", QDir::Files);
     while (it.hasNext()) {
         QString filePath = it.next();
@@ -96,7 +115,7 @@ KiranControlPanelGlobal::ModuleItem KiranControlPanelGlobal::getModuleItem(const
         ret.nameZh     = QString::fromUtf8(settings.value("Name[zh_CN]").toString().toLatin1().data());
         ret.comment    = settings.value("Comment").toString();
         ret.commentZh  = QString::fromUtf8(settings.value("Comment[zh_CN]").toString().toLatin1().data());
-        ret.icon       = "/usr/share/icons/Kiran/emblems/scalable/"+settings.value("Icon").toString();
+        ret.icon       = KIRAN_MODULE_ITEM_ICON_PATH+settings.value("Icon").toString();
         ret.pluginFile = settings.value("PluginFile").toString();
         ret.init();
         return ret;
@@ -130,19 +149,6 @@ QStringList KiranControlPanelGlobal::ModuleClassStu::itemKeys() const
     return ret;
 }
 
-QListWidgetItem *KiranControlPanelGlobal::ModuleClassStu::completeredItem(const QString &c)
-{
-    QMapIterator<int, KiranControlPanelGlobal::ModuleItem> i(itemMap);
-    while (i.hasNext()) {
-        i.next();
-        int index = i.value().subKeyList.indexOf(c);
-        if(index >= 0)
-        {
-            return i.value().subItemList.at(index);
-        }
-    }
-    return nullptr;
-}
 int KiranControlPanelGlobal::ModuleClassStu::completeredItemRow(const QString &c)
 {
     int row = 0;
@@ -172,6 +178,7 @@ void KiranControlPanelGlobal::ModuleItemStu::getModuleItemSubInfo()
     }
     else
     {
+        //如果某一功能项关键字表为空,则使用功能项名称作为搜索关键字.
         int count = subNameList.count();
         for(int i=0; i<count; ++i)
         {
@@ -179,14 +186,24 @@ void KiranControlPanelGlobal::ModuleItemStu::getModuleItemSubInfo()
             {
                 subKeyList[i] = subNameList.at(i);
             }
+            //给功能项图标添加全路径.
+            subIconList[i] = KIRAN_MODULE_ITEM_FUNCTION_ICON_PATH + subIconList.at(i);
         }
     }
+    //如果模块中所有功能项关键字都为空,则整体使用功能项名称作为关键字.
     if(subKeyList.isEmpty()) subKeyList = subNameList;
     closePlugin();
 }
 
 QWidget *KiranControlPanelGlobal::ModuleItemStu::createModuleItemSubWgt(const QString &name)
 {
+    QString qmFile = QString("%1%2.%3.qm").arg(translationPath).arg(this->name).arg(gLocaleName);
+    QTranslator translator;
+    if(translator.load(qmFile) == false)
+        qDebug() << "load qm: " << qmFile <<  " error.";
+    else
+        qApp->installTranslator(&translator);
+
     openPlugin();
     auto fun = getModuleItemFun<GetSubItemWidgetFun>("getSubitemWidget");
     if(!fun) return nullptr;
@@ -242,7 +259,6 @@ void KiranControlPanelGlobal::ModuleItemStu::closePlugin()
         {
             //关闭插件成功，计数器为0，将句柄置空，防止再次操作该句柄。
             modulePlugin = nullptr;
-            qDebug() << "dlclose plugin:" << modulePlugin;
         }
     }
 }
@@ -257,6 +273,26 @@ bool KiranControlPanelGlobal::ModuleItemStu::hasUnsavedOptions()
     return ret;
 }
 
+void KiranControlPanelGlobal::ModuleItemStu::loadTranslator()
+{
+    QString qmFile = QString("%1%2.%3.qm").arg(translationPath).arg(this->name).arg(gLocaleName);
+    QTranslator translator;
+    if(translator.load(qmFile) == false)
+        qDebug() << "load qm: " << qmFile <<  " error.";
+    else
+        qApp->installTranslator(&translator);
+}
+
+void KiranControlPanelGlobal::ModuleItemStu::removeTranslator()
+{
+    QString qmFile = QString("%1%2.%3.qm").arg(translationPath).arg(this->name).arg(gLocaleName);
+    QTranslator translator;
+    if(translator.load(qmFile) == false)
+        qDebug() << "load qm: " << qmFile <<  " error.";
+    else
+        qApp->removeTranslator(&translator);
+}
+
 void KiranControlPanelGlobal::ModuleItemStu::getTranslationPath()
 {
     openPlugin();
@@ -264,5 +300,9 @@ void KiranControlPanelGlobal::ModuleItemStu::getTranslationPath()
     if(!fun) return;
     translationPath = fun();
     closePlugin();
+
+    translationPath = QDir::toNativeSeparators(translationPath);
+    if(!translationPath.endsWith(QDir::separator()))
+        translationPath += QDir::separator();
 }
 

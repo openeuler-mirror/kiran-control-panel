@@ -12,16 +12,18 @@
 #include <QTimer>
 #include <QDebug>
 
-KiranModuleWidget::KiranModuleWidget(QWidget *parent) : QWidget(parent), ui(new Ui::KiranModuleWidget), m_curItem(nullptr), m_curCenterWgt(nullptr),m_retracement(false)
+KiranModuleWidget::KiranModuleWidget(QWidget *parent) : QWidget(parent), ui(new Ui::KiranModuleWidget), m_curItem(nullptr), m_curCenterWgt(nullptr),m_defaultSelectFirstItem(true)
 {
     ui->setupUi(this);
+    ui->listWidget_module->setGridSize(QSize(296, 84));//设置item的总占用大小,包括间隙.
 }
 
 KiranModuleWidget::~KiranModuleWidget()
 {
     if(m_curCenterWgt)
     {
-        closeCenterWidgetPlugin(ui->listWidget_item->currentItem());
+        //窗口关闭时,右侧的插件实例对象可能没有delete,同时插件可能没有dlclose.这里关闭插件,释放实例.
+        closeCenterWidgetPlugin(ui->listWidget_module->currentItem());
     }
     delete ui;
 }
@@ -31,27 +33,27 @@ void KiranModuleWidget::setLeftContentsMargins(const int &leftmargin)
     ui->horizontalLayout->setContentsMargins(leftmargin, 0, 0, 0);
 }
 
-void KiranModuleWidget::setModulesData(QMap<int, ModuleItem> &data)
+void KiranModuleWidget::setData(QMap<int, ModuleItem> *data)
 {
-    if(ui->listWidget_item->isHidden()) ui->listWidget_item->show();
+    if(ui->listWidget_module->isHidden()) ui->listWidget_module->show();
     //当分类下模块数量为0时.
-    if(data.count() == 0)
+    if(data->count() == 0)
     {
-        ui->listWidget_item->hide();
+        ui->listWidget_module->hide();
         return;
     }
 
-    QMapIterator<int, ModuleItem> i(data);
+    QMapIterator<int, ModuleItem> i(*data);
     while (i.hasNext()) {
         i.next();
-        ModuleItem &moduleItem = data[i.key()];
+        ModuleItem &moduleItem = (*data)[i.key()];
         QStringList names = moduleItem.subNameList;
         QStringList icons = moduleItem.subIconList;
         int count = names.count();
         //当模块数量为1,且模块中的功能项目小于等于1时.
-        if(data.count()==1 && count <= 1)
+        if(data->count()==1 && count <= 1)
         {
-            ui->listWidget_item->hide();
+            ui->listWidget_module->hide();
             continue;
         }
         else if(count == 0)//当模块数量大于1,而某个模块的功能项为0时.
@@ -63,8 +65,7 @@ void KiranModuleWidget::setModulesData(QMap<int, ModuleItem> &data)
             item->setData(Qt::UserRole, QVariant::fromValue((void *) &moduleItem));
             item->setData(Qt::UserRole+1, moduleItem.name);
             item->setToolTip(moduleItem.getCommentTranslate());
-            ui->listWidget_item->addItem(item);
-            moduleItem.subItemList << item;
+            ui->listWidget_module->addItem(item);
             continue;
         }
 
@@ -74,21 +75,20 @@ void KiranModuleWidget::setModulesData(QMap<int, ModuleItem> &data)
             item->setSizeHint(QSize(item->sizeHint().width(), 60));
             item->setText(names.at(i));
             item->setIcon(QIcon(icons.at(i)));
-            item->setData(Qt::UserRole, QVariant::fromValue((void *) &moduleItem));
-            item->setData(Qt::UserRole+1, names.at(i));
+            item->setData(Qt::UserRole, QVariant::fromValue((void *) &moduleItem));//item中保存数据机构体指针,数据结构体中保存item指针.双向绑定,方便寻址减少计算量.
+            item->setData(Qt::UserRole+1, names.at(i));//存储功能项的名称,当切换为此item时,通过功能项名称获取功能项实例.
             item->setToolTip(moduleItem.getCommentTranslate());
-            ui->listWidget_item->addItem(item);
-            moduleItem.subItemList << item;
+            ui->listWidget_module->addItem(item);
         }
     }
     //加载完数据后,默认选中第一行.
-    if(ui->listWidget_item->count() <= 0) return;
-    ui->listWidget_item->setCurrentRow(0);
+    if(m_defaultSelectFirstItem && ui->listWidget_module->count() > 0)
+        ui->listWidget_module->setCurrentRow(0);
 }
 
-void KiranModuleWidget::setCurModuleSubItem( QListWidgetItem *item)
+void KiranModuleWidget::setCurModuleSubRow(const int &row)
 {
-    ui->listWidget_item->setCurrentItem(item);
+    ui->listWidget_module->setCurrentRow(row);
 }
 
 bool KiranModuleWidget::checkHasUnSaved()
@@ -113,17 +113,18 @@ bool KiranModuleWidget::checkHasUnSaved()
             box.addButton(&cancelBtn, QDialogButtonBox::RejectRole);
             saveBtn.setShortcut(Qt::CTRL + Qt::Key_K);
             cancelBtn.setShortcut(Qt::CTRL + Qt::Key_R);
-            box.setText(tr("当前页面未保存，确定要切换吗？"));
+            box.setText(tr("%1 中编辑内容未保存，切换后编辑内容将丢失, 确定要切换吗？").arg(m_curItem->text()));
             box.exec();
             if( box.clickedButton() == &saveBtn  )
             {
             }
             else
             {
+                //此时item的切换信号绑定的槽可能还未全部执行完,等待它们全部执行完成,再开始回撤.
                 QTimer::singleShot(5, this, [=](){
-                    ui->listWidget_item->blockSignals(true);
-                    ui->listWidget_item->setCurrentItem(m_curItem);
-                    ui->listWidget_item->blockSignals(false);
+                    ui->listWidget_module->blockSignals(true);
+                    ui->listWidget_module->setCurrentItem(m_curItem);
+                    ui->listWidget_module->blockSignals(false);
                 });
 
                 return false;
@@ -133,19 +134,17 @@ bool KiranModuleWidget::checkHasUnSaved()
 
     return true;
 }
-
-void KiranModuleWidget::onSelectedClassItemChanged(QListWidgetItem *current)
+void KiranModuleWidget::onSelectedClassItemChanged(QMap<int, ModuleItem> *modules)
 {
-    closeCenterWidgetPlugin(ui->listWidget_item->currentItem());
-    ui->listWidget_item->clear();
+    closeCenterWidgetPlugin(ui->listWidget_module->currentItem());
+    ui->listWidget_module->clear();
 
-    ModuleClass *moduleClass =  (ModuleClass *) current->data(Qt::UserRole).value<void *>();
-
-    QMap<int, ModuleItem> &moduleItemMap = moduleClass->itemMap;
-    setModulesData(moduleItemMap);
+    setData(modules);
 }
-
-
+/*!
+ * \brief KiranModuleWidget::changeCurModuleSubItem 功能项切换时都通过此函数处理.
+ * \param current
+ */
 void KiranModuleWidget::changeCurModuleSubItem(QListWidgetItem *current)
 {
     if(!checkHasUnSaved()) return;
@@ -172,18 +171,26 @@ void KiranModuleWidget::closeCenterWidgetPlugin(QListWidgetItem *current)
     if(!current || !m_curCenterWgt) return;
 
     ModuleItem *preModuleItem = (ModuleItem *)current->data(Qt::UserRole).value<void *>();
+    if(!preModuleItem) return;
+
     m_curCenterWgt->deleteLater();
     m_curCenterWgt = nullptr;
     m_curItem = nullptr;
     //其它属性值从插件中获取之后，可以立即关闭插件。QWidget在使用完之后再关闭插件。
     preModuleItem->closePlugin();
+    preModuleItem->removeTranslator();
 }
-
+/*!
+ * \brief KiranModuleWidget::eventFilter 这个函数暂时没有用到,作为备注.
+ * \param obj
+ * \param event
+ * \return
+ */
 bool KiranModuleWidget::eventFilter(QObject *obj, QEvent *event)
 {
     if (event->type() == QEvent::MouseButtonPress) {
         QMouseEvent *e = static_cast<QMouseEvent *>(event);
-        if(m_curItem && ui->listWidget_item->itemAt(e->pos()) != m_curItem)
+        if(m_curItem && ui->listWidget_module->itemAt(e->pos()) != m_curItem)
         {
             if(!checkHasUnSaved())
             {
@@ -195,7 +202,16 @@ bool KiranModuleWidget::eventFilter(QObject *obj, QEvent *event)
     return QObject::eventFilter(obj, event);
 }
 
-void KiranModuleWidget::on_listWidget_item_currentItemChanged(QListWidgetItem *current, QListWidgetItem *)
+void KiranModuleWidget::setDefaultSelectFirstItem(bool defaultSelectFirstItem)
 {
-    changeCurModuleSubItem(current);
+    m_defaultSelectFirstItem = defaultSelectFirstItem;
+}
+
+
+void KiranModuleWidget::on_listWidget_module_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous)
+{
+    //让被点击的item先绘制完选中效果,避免回撤后再绘制,出现闪动.
+    QTimer::singleShot(5, this, [=](){
+        changeCurModuleSubItem(current);
+    });
 }

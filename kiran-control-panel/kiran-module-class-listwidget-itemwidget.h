@@ -9,12 +9,13 @@
 #include <QWidget>
 #include <QEvent>
 
-const int cListWidgetPadding = 12;
+const int cListWidgetPadding = 10;
 const int cClassItemIconWd = 40;
 const int cClassItemWgtTBPadding = 10;
 const int cClassItemWgtLRPadding = 12;
 const int cClassItemTextWd = 166;
 const int cClassItemSpace = 10;
+const int cClassItemMargin = 2;
 
 class KiranModuleClassListWidgetItemWidget : public QWidget
 {
@@ -30,8 +31,6 @@ public:
     static int iconModeWd();
     static int heightInt();
 
-    void setChecked(bool checked);
-
 private:
     void paintEvent(QPaintEvent *event);
     bool eventFilter(QObject *obj, QEvent *event);
@@ -44,7 +43,6 @@ private:
     QRect m_iconRect;
     QRect m_textRect;
     bool m_showText;
-    bool m_checked;
 };
 
 #endif // KIRANMODULECLASSLISTWIDGETITEMWIDGET_H

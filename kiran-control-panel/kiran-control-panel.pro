@@ -53,8 +53,7 @@ TRANSLATIONS += \
     kiran-control-panel.en_US.ts
 
 
-LIBS += -L/usr/share -lkiranwidgets-qt5
-#LIBS += -L/root/build-kiranwidgets-qt5-Desktop_Qt_5_9_1_GCC_64bit-Debug -lkiranwidgets-qt5
+LIBS += -L/usr/lib -lkiranwidgets-qt5
 
 
 isEmpty( LIB_DIR ){
@@ -62,6 +61,10 @@ isEmpty( LIB_DIR ){
 }
 
 target.path = $$DESTDIR/$${LIB_DIR}
+
+target1.files += kiran-control-panel.zh_CN.qm \
+                kiran-control-panel.en_US.qm
+target1.path = /usr/share/kiran-control-panel
 
 target1.files += kiran-control-panel.zh_CN.qm \
                 kiran-control-panel.en_US.qm

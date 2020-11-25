@@ -39,5 +39,5 @@ INCLUDEPATH += ../widgets \
                 ../global
 
 LIBS=-ldl
-LIBS += -L/usr/share -lkiranwidgets-qt5
+LIBS += -L/usr/lib -lkiranwidgets-qt5
 

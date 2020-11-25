@@ -9,7 +9,7 @@
 #include <QBitmap>
 #include <QDebug>
 
-KiranModuleClassListWidgetItemWidget::KiranModuleClassListWidgetItemWidget(QWidget *parent) : QWidget(parent), m_statusType(QEvent::None),m_showText(false), m_checked(false)
+KiranModuleClassListWidgetItemWidget::KiranModuleClassListWidgetItemWidget(QWidget *parent) : QWidget(parent), m_statusType(QEvent::None),m_showText(false)
 {
     setAttribute(Qt::WA_Hover,true);
     installEventFilter(this);
@@ -34,7 +34,6 @@ void KiranModuleClassListWidgetItemWidget::paintEvent(QPaintEvent *)
     if(m_showText) painter.drawText(m_textRect, Qt::TextWrapAnywhere|Qt::AlignLeft|Qt::AlignVCenter, m_text);
 }
 
-
 QPixmap KiranModuleClassListWidgetItemWidget::pixmapToRound(const QPixmap &src, const QSize &size, int radius)
 {
     if (Q_UNLIKELY(src.isNull())) {
@@ -52,11 +51,6 @@ QPixmap KiranModuleClassListWidgetItemWidget::pixmapToRound(const QPixmap &src, 
     QPixmap image = src.scaled(size);
     image.setMask(mask);
     return image;
-}
-
-void KiranModuleClassListWidgetItemWidget::setChecked(bool checked)
-{
-    m_checked = checked;
 }
 
 bool KiranModuleClassListWidgetItemWidget::eventFilter(QObject * obj, QEvent * event)

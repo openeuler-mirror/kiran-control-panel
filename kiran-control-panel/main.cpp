@@ -24,5 +24,6 @@ int main(int argc, char *argv[])
     const QRect &screenRect = QApplication::desktop()->screenGeometry();
     w.move(screenRect.center()-QPoint(w.rect().width()/2, w.rect().height()/2));
     w.show();
+    w.setContentWrapperMarginBottom(0);
     return a.exec();
 }

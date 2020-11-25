@@ -24,7 +24,6 @@ public:
 signals:
 
 public slots:
-
     void setIconMode();
     void setListMode();
     int iconModeWd();
@@ -33,8 +32,6 @@ public slots:
 private:
     QString styleSheetStr();
     void initTimer();
-
-    void onCurrentItemChanged(QListWidgetItem *item);
 
 private:
     QHash<QListWidgetItem *, KiranModuleClassListWidgetItemWidget *> m_btns;

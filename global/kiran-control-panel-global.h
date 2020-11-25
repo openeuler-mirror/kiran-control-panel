@@ -8,6 +8,7 @@
 #include <QHash>
 #include <QDebug>
 
+
 class QListWidgetItem;
 namespace KiranControlPanelGlobal {
 //########################### ModuleItemStu ############################################
@@ -24,8 +25,7 @@ typedef struct ModuleItemStu{
     QString translationPath;
 
     QString category;
-    QString pluginFile/*="/root/build-untitled-Desktop_Qt_5_9_1_GCC_64bit-Debug/libuntitled.so"*/;
-    QList<QListWidgetItem *> subItemList;
+    QString pluginFile;
 
 public:
     void init()
@@ -40,6 +40,8 @@ public:
     QString getCommentTranslate();
     QWidget *createModuleItemSubWgt(const QString &name);
     bool hasUnsavedOptions();
+    void loadTranslator();
+    void removeTranslator();
 
     ModuleItemStu():isEmpty(true),modulePlugin(nullptr){}
     ~ModuleItemStu(){
@@ -70,7 +72,7 @@ private:
 
 //############################### ModuleClassStu #########################################
 typedef struct ModuleClassStu{
-    ModuleClassStu():item(nullptr){}
+    ModuleClassStu():row(0){}
     QString name;
     QString nameZh;
     QString comment;
@@ -78,13 +80,12 @@ typedef struct ModuleClassStu{
     QString icon;
 
     QStringList keywords;
-    QListWidgetItem *item;
+    int row;//用于搜索时选中item.
 
     QString getNameTranslate();
     QString getCommentTranslate();
     QMap<int, ModuleItem> itemMap;
     QStringList itemKeys()const ;
-    QListWidgetItem *completeredItem(const QString &c);
     int completeredItemRow(const QString &c);
 }ModuleClass;
 
@@ -92,6 +93,28 @@ typedef struct ModuleClassStu{
 QMap<int, ModuleClass> getModuleCLass();
 QHash<QString, QMap<int, ModuleItem> > getModuleItem();
 ModuleItem getModuleItem(const QString &moduleName);
-}
 
+/*!
+ *获取map排序中第row个元素。
+ */
+template <typename T>
+T *getMapValueByRow(const int &row, QMap<int, T> &map, T * = NULL)
+{
+    if(map.isEmpty()) return nullptr;
+    int index = 0;
+    QMapIterator<int, T> i(map);
+    while (i.hasNext()) {
+        i.next();
+        if(row == index)
+        {
+            return &map[i.key()];
+        }
+        ++index;
+    }
+
+    return nullptr;
+}
+}
+Q_DECLARE_METATYPE(KiranControlPanelGlobal::ModuleClass*)
+Q_DECLARE_METATYPE(KiranControlPanelGlobal::ModuleItem*)
 #endif // KIRANCONTROLPANELGLOBAL_H

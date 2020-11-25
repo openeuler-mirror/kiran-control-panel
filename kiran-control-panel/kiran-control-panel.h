@@ -24,6 +24,7 @@ public slots:
 
 private:
     void resizeEvent(QResizeEvent *event);
+    void onCurrentItemChanged(QListWidgetItem *current, QListWidgetItem *previous);
 
 private:
     Ui::KiranControlPanel *ui;
