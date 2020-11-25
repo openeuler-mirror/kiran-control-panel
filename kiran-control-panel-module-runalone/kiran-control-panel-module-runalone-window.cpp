@@ -28,6 +28,6 @@ void KiranControlPanelModuleRunaloneWindow::setModuleName(const QString &name)
     setIcon(QIcon(data.icon));
     setTitle(data.getNameTranslate());
     KiranModuleWidget *centerWgt = new KiranModuleWidget(this);
-    centerWgt->setData(m_map);
+    centerWgt->setData(&m_map);
     setWindowContentWidget(centerWgt);
 }

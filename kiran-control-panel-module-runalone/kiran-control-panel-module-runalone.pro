@@ -41,3 +41,13 @@ INCLUDEPATH += ../widgets \
 LIBS=-ldl
 LIBS += -L/usr/lib -lkiranwidgets-qt5
 
+
+isEmpty( LIB_DIR ){
+    LIB_DIR = "/usr/bin/"
+}
+
+target.path = $$DESTDIR/$${LIB_DIR}
+
+INSTALLS += target
+
+CONFIG += console

@@ -54,7 +54,6 @@ void KiranModuleWidget::setData(QMap<int, ModuleItem> *data)
         if(data->count()==1 && count <= 1)
         {
             ui->listWidget_module->hide();
-            continue;
         }
         else if(count == 0)//当模块数量大于1,而某个模块的功能项为0时.
         {
@@ -63,7 +62,7 @@ void KiranModuleWidget::setData(QMap<int, ModuleItem> *data)
             item->setText(moduleItem.getNameTranslate());
             item->setIcon(QIcon(moduleItem.icon));
             item->setData(Qt::UserRole, QVariant::fromValue((void *) &moduleItem));
-            item->setData(Qt::UserRole+1, moduleItem.name);
+            item->setData(Qt::UserRole+1, moduleItem.name);//当功能项为空时，使用模块名，实际上都是创建不了窗口对象的。
             item->setToolTip(moduleItem.getCommentTranslate());
             ui->listWidget_module->addItem(item);
             continue;
@@ -201,7 +200,10 @@ bool KiranModuleWidget::eventFilter(QObject *obj, QEvent *event)
 
     return QObject::eventFilter(obj, event);
 }
-
+/*!
+ * \brief KiranModuleWidget::setDefaultSelectFirstItem 搜索某一功能项时，如果class需要切换，切换后引起module的item重新加载，此时禁止默认选中第一行。后续在将搜索到的功能项设为选中。
+ * \param defaultSelectFirstItem
+ */
 void KiranModuleWidget::setDefaultSelectFirstItem(bool defaultSelectFirstItem)
 {
     m_defaultSelectFirstItem = defaultSelectFirstItem;

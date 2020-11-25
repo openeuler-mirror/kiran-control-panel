@@ -7,6 +7,7 @@
 #include <QApplication>
 #include <QCommandLineParser>
 
+extern QString gLocaleName;
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
@@ -23,14 +24,16 @@ int main(int argc, char *argv[])
     //                                           QGuiApplication::translate("main", "DesktopFilePath"), "800");
     //    parser.addOption(modeDesktopFilePath);
 
-    QCommandLineOption moduleDesktopFileName(QStringList() << "name" << "DesktopFileName",
-                                           QGuiApplication::translate("main", "Mode desktop file name."),
-                                           QGuiApplication::translate("main", "DesktopFileName"), "Fonts");
+    QCommandLineOption moduleDesktopFileName(QStringList() << "m-name" << "Module Name",
+                                           QGuiApplication::translate("main", "Module name."),
+                                           QGuiApplication::translate("main", "Module name."), "Fonts");
     parser.addOption(moduleDesktopFileName);
     parser.process(a);
 
     QString fileName = parser.value(moduleDesktopFileName);
-
+    //
+    gLocaleName = QLocale::system().name();//当前翻译类型,必须在加载模块数据之前赋值.模块的名称将根据此变量选择翻译类型.
+    //
     KiranControlPanelModuleRunaloneWindow w;
     w.setModuleName(fileName);
     w.show();
