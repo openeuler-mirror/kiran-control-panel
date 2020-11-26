@@ -30,6 +30,7 @@ public:
     void setLeftContentsMargins(const int &leftmargin);
     //多个模块数据合并。
     void setData(QMap<int, ModuleItem> *data);
+    void setModuleCurSubItem(const QString &functionName);
     void setCurModuleSubRow(const int &row);
     bool checkHasUnSaved();
     void changeCurModuleSubItem(QListWidgetItem *current);
@@ -48,10 +49,11 @@ private:
 
 private:
     Ui::KiranModuleWidget *ui;
+    //存储当前item和当前widget，用于切换时清除。
     QListWidgetItem *m_curItem;
-    QWidget *m_curCenterWgt;
+    QWidget *m_curCenterWidget;
+    //分类切换时，是否默认选中第一项。搜索的时候不需要默认选择，避免无效的切换。
     bool m_defaultSelectFirstItem;
-
 };
 
 #endif // KIRANMODULEWIDGET_H

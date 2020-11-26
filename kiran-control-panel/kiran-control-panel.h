@@ -31,6 +31,7 @@ private:
     KiranModuleClassListWidget *m_classWgt;
     QListWidgetItem *m_curClassListItem;
     QMap<int, ModuleClass> m_data;
+    QString m_request;
 };
 
 #endif // KIRANCONTROLPANEL_H

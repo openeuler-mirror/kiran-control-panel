@@ -22,7 +22,6 @@ KiranControlPanel::KiranControlPanel(QWidget *parent) :
 
 void KiranControlPanel::onSearch(const QString &request)
 {
-    int row = 0;
     QMapIterator<int, ModuleClass> i(m_data);
     while (i.hasNext()) {
         i.next();
@@ -34,15 +33,19 @@ void KiranControlPanel::onSearch(const QString &request)
         }
         else if(i.value().itemKeys().contains(request))
         {
-            int row = m_data[i.key()].completeredItemRow(request);
-
-            ui->module_widget->setDefaultSelectFirstItem(false);
-            m_classWgt->setCurrentRow(i.value().row);
-            ui->module_widget->setCurModuleSubRow(row);
-            ui->module_widget->setDefaultSelectFirstItem(true);
+            if(m_classWgt->currentRow() == i.value().row)
+            {
+                //class不需要切换，没有延时，可以在这里直接设置模块的的当前项。
+                ui->module_widget->setModuleCurSubItem(request);
+            }
+            else
+            {
+                //class不需要切换，有延时，确保在class切换后再设置模块的当前项。
+                m_request = request;
+                m_classWgt->setCurrentRow(i.value().row);
+            }
             break;
         }
-        ++row;
     }
 }
 
@@ -70,6 +73,7 @@ void KiranControlPanel::resizeEvent(QResizeEvent *event)
 
 void KiranControlPanel::onCurrentItemChanged(QListWidgetItem *current, QListWidgetItem *)
 {
+    //item的绘制事件执行顺序在此函数之后，为了便面溃退闪动，延时让item先绘制完成。延时处理要注意执行顺序问题,class切换后再设置模块的当前项目。
     QTimer::singleShot(5, this, [=](){
         if(!ui->module_widget->checkHasUnSaved())
         {
@@ -88,7 +92,19 @@ void KiranControlPanel::onCurrentItemChanged(QListWidgetItem *current, QListWidg
 
         QMap<int, ModuleItem> &moduleItemMap = moduleClass->itemMap;
 
-        ui->module_widget->onSelectedClassItemChanged(&moduleItemMap);
+        if(m_request.isEmpty())
+        {
+            ui->module_widget->onSelectedClassItemChanged(&moduleItemMap);
+        }
+        else
+        {
+            ui->module_widget->setDefaultSelectFirstItem(false);
+            ui->module_widget->onSelectedClassItemChanged(&moduleItemMap);
+            ui->module_widget->setDefaultSelectFirstItem(true);
+
+            ui->module_widget->setModuleCurSubItem(m_request);
+            m_request.clear();
+        }
     });
 }
 

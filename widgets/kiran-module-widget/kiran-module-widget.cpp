@@ -12,7 +12,12 @@
 #include <QTimer>
 #include <QDebug>
 
-KiranModuleWidget::KiranModuleWidget(QWidget *parent) : QWidget(parent), ui(new Ui::KiranModuleWidget), m_curItem(nullptr), m_curCenterWgt(nullptr),m_defaultSelectFirstItem(true)
+#define MODULE_STU_POINTER Qt::UserRole
+#define FUNCTION_NAME Qt::UserRole +1
+#define FUNCTION_KEY Qt::UserRole + 2
+
+
+KiranModuleWidget::KiranModuleWidget(QWidget *parent) : QWidget(parent), ui(new Ui::KiranModuleWidget), m_curItem(nullptr), m_curCenterWidget(nullptr),m_defaultSelectFirstItem(true)
 {
     ui->setupUi(this);
     ui->listWidget_module->setGridSize(QSize(296, 84));//设置item的总占用大小,包括间隙.
@@ -20,7 +25,7 @@ KiranModuleWidget::KiranModuleWidget(QWidget *parent) : QWidget(parent), ui(new 
 
 KiranModuleWidget::~KiranModuleWidget()
 {
-    if(m_curCenterWgt)
+    if(m_curCenterWidget)
     {
         //窗口关闭时,右侧的插件实例对象可能没有delete,同时插件可能没有dlclose.这里关闭插件,释放实例.
         closeCenterWidgetPlugin(ui->listWidget_module->currentItem());
@@ -49,6 +54,7 @@ void KiranModuleWidget::setData(QMap<int, ModuleItem> *data)
         ModuleItem &moduleItem = (*data)[i.key()];
         QStringList names = moduleItem.subNameList;
         QStringList icons = moduleItem.subIconList;
+        QStringList keys = moduleItem.subKeyList;
         int count = names.count();
         //当模块数量为1,且模块中的功能项目小于等于1时.
         if(data->count()==1 && count <= 1)
@@ -61,21 +67,23 @@ void KiranModuleWidget::setData(QMap<int, ModuleItem> *data)
             item->setSizeHint(QSize(item->sizeHint().width(), 60));
             item->setText(moduleItem.getNameTranslate());
             item->setIcon(QIcon(moduleItem.icon));
-            item->setData(Qt::UserRole, QVariant::fromValue((void *) &moduleItem));
-            item->setData(Qt::UserRole+1, moduleItem.name);//当功能项为空时，使用模块名，实际上都是创建不了窗口对象的。
+            item->setData(MODULE_STU_POINTER, QVariant::fromValue(&(*data)[i.key()]));
+            item->setData(FUNCTION_NAME, moduleItem.name);//当功能项为空时，使用模块名，实际上都是创建不了窗口对象的。
+            item->setData(FUNCTION_KEY, moduleItem.name);
             item->setToolTip(moduleItem.getCommentTranslate());
             ui->listWidget_module->addItem(item);
             continue;
         }
 
-        for(int i=0; i<count; ++i)
+        for(int j=0; j<count; ++j)
         {
             QListWidgetItem *item = new QListWidgetItem();
             item->setSizeHint(QSize(item->sizeHint().width(), 60));
-            item->setText(names.at(i));
-            item->setIcon(QIcon(icons.at(i)));
-            item->setData(Qt::UserRole, QVariant::fromValue((void *) &moduleItem));//item中保存数据机构体指针,数据结构体中保存item指针.双向绑定,方便寻址减少计算量.
-            item->setData(Qt::UserRole+1, names.at(i));//存储功能项的名称,当切换为此item时,通过功能项名称获取功能项实例.
+            item->setText(names.at(j));
+            item->setIcon(QIcon(icons.at(j)));
+            item->setData(MODULE_STU_POINTER, QVariant::fromValue(&(*data)[i.key()]));//item中保存数据机构体指针,数据结构体中保存item指针.双向绑定,方便寻址减少计算量.
+            item->setData(FUNCTION_NAME, names.at(j));//存储功能项的名称,当切换为此item时,通过功能项名称获取功能项实例.
+            item->setData(FUNCTION_KEY, keys.at(j));
             item->setToolTip(moduleItem.getCommentTranslate());
             ui->listWidget_module->addItem(item);
         }
@@ -83,6 +91,23 @@ void KiranModuleWidget::setData(QMap<int, ModuleItem> *data)
     //加载完数据后,默认选中第一行.
     if(m_defaultSelectFirstItem && ui->listWidget_module->count() > 0)
         ui->listWidget_module->setCurrentRow(0);
+}
+/*!
+ * \brief KiranModuleWidget::setModuleCurSubItem 多个模块的功能项合并，不能使用数据结构体中的row选取listWidget中的row.
+ * \param functionName
+ */
+void KiranModuleWidget::setModuleCurSubItem(const QString &functionName)
+{
+    int count = ui->listWidget_module->count();
+    for(int i=0; i<count; ++i)
+    {
+        QString f_name = ui->listWidget_module->item(i)->data(FUNCTION_KEY).toString();
+        if(f_name == functionName)
+        {
+            ui->listWidget_module->setCurrentRow(i);
+            return;
+        }
+    }
 }
 
 void KiranModuleWidget::setCurModuleSubRow(const int &row)
@@ -92,9 +117,11 @@ void KiranModuleWidget::setCurModuleSubRow(const int &row)
 
 bool KiranModuleWidget::checkHasUnSaved()
 {
-    if(m_curItem && m_curCenterWgt)
+    if(m_curItem && m_curCenterWidget)
     {
-        ModuleItem *preModuleItem = (ModuleItem *)m_curItem->data(Qt::UserRole).value<void *>();
+        ModuleItem *preModuleItem = m_curItem->data(MODULE_STU_POINTER).value<ModuleItem *>();
+        if(!preModuleItem) return false;
+
         if(preModuleItem->hasUnsavedOptions())
         {
             KiranMessageBox box;
@@ -148,37 +175,39 @@ void KiranModuleWidget::changeCurModuleSubItem(QListWidgetItem *current)
 {
     if(!checkHasUnSaved()) return;
 
-    if(m_curItem && m_curCenterWgt)
+    if(m_curItem && m_curCenterWidget)
     {
         closeCenterWidgetPlugin(m_curItem);
     }
 
     if(!current) return;
 
-    ModuleItem *moduleItem = (ModuleItem *)current->data(Qt::UserRole).value<void *>();
-    QString name = current->data(Qt::UserRole+1).toString();
+    ModuleItem *moduleItem = current->data(MODULE_STU_POINTER).value<ModuleItem *>();
+    if(!moduleItem) return;
+    QString name = current->data(FUNCTION_NAME).toString();
 
     QWidget *wgt = moduleItem->createModuleItemSubWgt(name);
     if(!wgt) return;
     ui->centerLayout->addWidget(wgt);
     m_curItem = current;
-    m_curCenterWgt = wgt;
+    m_curCenterWidget = wgt;
 }
 
 void KiranModuleWidget::closeCenterWidgetPlugin(QListWidgetItem *current)
 {
-    if(!current || !m_curCenterWgt) return;
+    if(!current || !m_curCenterWidget) return;
 
-    ModuleItem *preModuleItem = (ModuleItem *)current->data(Qt::UserRole).value<void *>();
+    ModuleItem *preModuleItem = current->data(MODULE_STU_POINTER).value<ModuleItem *>();
     if(!preModuleItem) return;
 
-    m_curCenterWgt->deleteLater();
-    m_curCenterWgt = nullptr;
+    m_curCenterWidget->deleteLater();
+    m_curCenterWidget = nullptr;
     m_curItem = nullptr;
     //其它属性值从插件中获取之后，可以立即关闭插件。QWidget在使用完之后再关闭插件。
     preModuleItem->closePlugin();
     preModuleItem->removeTranslator();
 }
+
 /*!
  * \brief KiranModuleWidget::eventFilter 这个函数暂时没有用到,作为备注.
  * \param obj

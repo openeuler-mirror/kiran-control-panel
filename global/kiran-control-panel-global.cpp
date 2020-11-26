@@ -149,19 +149,6 @@ QStringList KiranControlPanelGlobal::ModuleClassStu::itemKeys() const
     return ret;
 }
 
-int KiranControlPanelGlobal::ModuleClassStu::completeredItemRow(const QString &c)
-{
-    int row = 0;
-    QMapIterator<int, KiranControlPanelGlobal::ModuleItem> i(itemMap);
-    while (i.hasNext()) {
-        i.next();
-        if(i.value().subKeyList.contains(c))
-            return row;
-        ++row;
-    }
-    return -1;
-}
-
 void KiranControlPanelGlobal::ModuleItemStu::getModuleItemSubInfo()
 {
     openPlugin();

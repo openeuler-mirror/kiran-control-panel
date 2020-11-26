@@ -80,13 +80,12 @@ typedef struct ModuleClassStu{
     QString icon;
 
     QStringList keywords;
-    int row;//用于搜索时选中item.
+    int row;//用于搜索时选中分类项，减少查找计算。分类列表不会改变。
 
     QString getNameTranslate();
     QString getCommentTranslate();
     QMap<int, ModuleItem> itemMap;
     QStringList itemKeys()const ;
-    int completeredItemRow(const QString &c);
 }ModuleClass;
 
 //#############################  ##################################3333
