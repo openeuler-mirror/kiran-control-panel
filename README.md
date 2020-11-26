@@ -29,7 +29,7 @@ example目录下模块model01。
 3、getSubitems返回的nameList,iconList,keyList中的元素个数须保证一样。keyList中的元素可以存在空字符。   
 
 ## Desktop文件
-###分类描述文件的格式如下:
+#### 分类描述文件的格式如下:
 [Desktop Entry]  
 Name=accounts  
 Name[zh_CN]=账户设置  
@@ -39,7 +39,7 @@ Icon=avatar-default
 Keywords=账户，用户，帐号  
 Weight=2  
   
-###模块描述文件示例如下:  
+#### 模块描述文件示例如下:  
 [Desktop Entry]  
 Name=Fonts  
 Name[zh_CN]=字体  
