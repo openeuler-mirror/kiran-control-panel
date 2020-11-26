@@ -23,10 +23,10 @@ kiran桌面环境的控制面板
 doc下"模块接口文档.doc"
 ## 模块demo
 example目录下模块model01。  
-## 模块注意事项：   
+#### 模块注意事项：   
 1、接口头文件名："kiran-control-panel-module-interface.h"   
 2、getSubitemWidget是通过getSubitems给出的name创建窗口,所以这两处要一致.   
-3、getSubitems返回的nameList,iconList,keyList中的元素个数须保证一样。keyList中的元素可以存在空字符。   
+3、getSubitems返回的nameList,iconList,keyList中的元素个数须保证一致。keyList中的元素可以存在空字符。   
 
 ## Desktop文件
 #### 分类描述文件的格式如下:
@@ -50,8 +50,8 @@ Weight=1
 Category=accounts      #Category对应分类描述文件中的Name字段。  
 PluginFile=/usr/share/kiran-control-center/plugins/libaccounts.so  
 
-## Desktop文件注意事项:
-1、模块的desktop文件中模块的Weight权重在同一个分类中不能相同.  
+#### Desktop文件注意事项:
+1、模块的desktop文件中模块的权重Weight字段在同一个分类组中不能出现重复.  
 2、分类的desktop文件存放的目录 "/usr/share/applications/kiran-control-panel/class"  
   模块的desktop文件存放的目录  "/usr/share/applications/kiran-control-panel/module"  
   图标存放的目录 "/usr/share/icons/Kiran/emblems/scalable/"  
