@@ -14,7 +14,7 @@ KiranDisplayConfigurationPanel::KiranDisplayConfigurationPanel(QWidget *parent) 
 {
     ui->setupUi(this);
 
-    connect(ui->contain, &KiranDisplayConfigItemContain::buttonChecked, this, &KiranDisplayConfigurationPanel::buttonChecked);
+    connect(ui->contain, &KiranDisplayConfigItemContain::buttonChecked, this, &KiranDisplayConfigurationPanel::onButtonChecked);
 }
 
 KiranDisplayConfigurationPanel::~KiranDisplayConfigurationPanel()
@@ -79,4 +79,14 @@ void KiranDisplayConfigurationPanel::on_pushButton_identifying_clicked()
     KiranDisplayConfigIdentifying identify(this);
     identify.setText(text);
     identify.exec(pos);
+}
+
+void KiranDisplayConfigurationPanel::onButtonChecked(const QString &monitorPath)
+{
+    bool enabled = MonitorProperty(monitorPath, "enabled").toBool();
+    ui->pushButton_left->setEnabled(enabled);
+    ui->pushButton_right->setEnabled(enabled);
+    ui->pushButton_vertical->setEnabled(enabled);
+    ui->pushButton_identifying->setEnabled(enabled);
+    emit buttonChecked(monitorPath);
 }

@@ -41,11 +41,18 @@ void KiranDisplayConfigIdentifying::paintEvent(QPaintEvent *)
 {
     QPainter painter(this);
     painter.fillRect(this->rect(), QBrush(QColor(34, 34, 34)));
+    QPen pen;
+    pen.setWidth(2);
+    pen.setColor("#4b4b4b");
+    painter.setPen(pen);
+    QRect rect = this->rect();
+    rect.adjust(0, 0, -1, -1);
+    painter.drawRect(rect);
 
     QFont font;
     font.setPixelSize(62);
     painter.setFont(font);
-    QPen pen;
+
     pen.setWidth(1);
     pen.setColor("#ffffff");
     painter.setPen(pen);

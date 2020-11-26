@@ -99,6 +99,9 @@
          <height>24</height>
         </size>
        </property>
+       <property name="toolTip">
+        <string>左旋转90度</string>
+       </property>
        <property name="styleSheet">
         <string notr="true">QPushButton{
  border-image:url(://images/rotation_left_btn_n.svg) ;
@@ -110,7 +113,7 @@ border-radius:4px;
   QPushButton:pressed {
  border-image: url(://images/rotation_left_btn_pre.svg);
   }
-</string>
+QToolTip{color:#000000;border: 0px solid #ffffff;background:#b3b3b3;}</string>
        </property>
        <property name="text">
         <string/>
@@ -131,6 +134,9 @@ border-radius:4px;
          <height>24</height>
         </size>
        </property>
+       <property name="toolTip">
+        <string>右旋转90度</string>
+       </property>
        <property name="styleSheet">
         <string notr="true">QPushButton{
  border-image:url(://images/rotation_right_btn_n.svg) ;
@@ -141,7 +147,8 @@ border-radius:4px;
   }
   QPushButton:pressed {
  border-image: url(://images/rotation_right_btn_pre.svg);
-  }</string>
+  }
+QToolTip{color:#000000;border: 0px solid #ffffff;background:#b3b3b3;}</string>
        </property>
        <property name="text">
         <string/>
@@ -162,6 +169,9 @@ border-radius:4px;
          <height>24</height>
         </size>
        </property>
+       <property name="toolTip">
+        <string>上下颠倒</string>
+       </property>
        <property name="styleSheet">
         <string notr="true">QPushButton{
  border-image:url(://images/Flip vertically_btn_n.svg) ;
@@ -172,7 +182,8 @@ border-radius:4px;
   }
   QPushButton:pressed {
  border-image: url(://images/Flip vertically_btn_pre.svg);
-  }</string>
+  }
+QToolTip{color:#000000;border: 0px solid #ffffff;background:#b3b3b3;}</string>
        </property>
        <property name="text">
         <string/>
@@ -193,6 +204,9 @@ border-radius:4px;
          <height>24</height>
         </size>
        </property>
+       <property name="toolTip">
+        <string>标识显示器</string>
+       </property>
        <property name="styleSheet">
         <string notr="true">QPushButton{
  border-image:url(://images/identification_btn_n.svg) ;
@@ -205,16 +219,7 @@ border-radius:4px;
  border-image: url(://images/identification_btn_pre.svg);
   }
 
-QToolTip
-{
-    color:#505050;
-    background-color:transparent;
-    border-color:transparent;
-    border:5px;
-    border-image:url(://images/kiran-display-configuration-pane.svg);
-    margin:0;
-    padding:-3px;
-}</string>
+QToolTip{color:#000000;border: 0px solid #ffffff;background:#b3b3b3;}</string>
        </property>
        <property name="text">
         <string/>

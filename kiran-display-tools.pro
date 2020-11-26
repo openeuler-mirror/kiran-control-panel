@@ -8,7 +8,7 @@ QT       += core gui dbus
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = kiran-display-configuration
+TARGET = kiran-display-tools
 TEMPLATE = app
 
 # The following define makes your compiler emit warnings if you use
@@ -53,12 +53,11 @@ RESOURCES += \
 
 
 TRANSLATIONS += \
-    kiran-display-configuration.zh_CN.ts \
-    kiran-display-configuration.en_US.ts
+    kiran-display-tools.zh_CN.ts \
+    kiran-display-tools.en_US.ts
 
 
-LIBS += -L/usr/share -lkiranwidgets-qt5
-#LIBS += -L/root/build-kiranwidgets-qt5-Desktop_Qt_5_9_1_GCC_64bit-Debug -lkiranwidgets-qt5
+LIBS += -L/usr/lib -lkiranwidgets-qt5
 
 
 isEmpty( LIB_DIR ){
@@ -67,10 +66,10 @@ isEmpty( LIB_DIR ){
 
 target.path = $$DESTDIR/$${LIB_DIR}
 
-target1.files += kiran-display-configuration.zh_CN.qm \
-                kiran-display-configuration.en_US.qm
-target1.path = /usr/share/kiran-display-configuration
-target2.files += kiran-display-configuration.desktop
+target1.files += kiran-display-tools.zh_CN.qm \
+                kiran-display-tools.en_US.qm
+target1.path = /usr/share/kiran-display-tools
+target2.files += kiran-display-tools.desktop
 target2.path = /usr/share/applications
 
 INSTALLS += target \

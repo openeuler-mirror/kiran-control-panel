@@ -28,6 +28,7 @@ private slots:
     void on_pushButton_vertical_clicked();
     void on_pushButton_right_clicked();
     void on_pushButton_identifying_clicked();
+    void onButtonChecked(const QString &monitorPath);
 
 private:
     Ui::KiranDisplayConfigurationPanel *ui;

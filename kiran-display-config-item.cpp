@@ -3,7 +3,7 @@
 #include <QPainter>
 #include <QDebug>
 
-KiranDisplayConfigItem::KiranDisplayConfigItem(QWidget *parent) : QPushButton(parent), m_mousePress(false), m_mouseDrag(false), m_statusType(QEvent::None), m_anchorByBtn(NULL), m_rotateDrect(ROTATION_0)
+KiranDisplayConfigItem::KiranDisplayConfigItem(QWidget *parent) : QPushButton(parent), m_mousePress(false), m_mouseDrag(false), m_statusType(QEvent::None), m_enabled(true), m_anchorByBtn(NULL), m_rotateDrect(ROTATION_0)
 {
     setCheckable(true);
     setAttribute(Qt::WA_Hover,true);
@@ -29,11 +29,14 @@ void KiranDisplayConfigItem::paintEvent(QPaintEvent *)
     painter.setFont(font);
 
     QPen pen;
+    if(m_enabled)
+        pen.setColor("#ffffff");
+    else
+        pen.setColor(Qt::gray);
     QBrush brush;
     if(isChecked())
     {
         pen.setWidth(1);
-        pen.setColor("#ffffff");
         brush = QBrush("#2eb3ff");
         painter.setPen(pen);
         painter.fillRect(rect, brush);
@@ -45,15 +48,14 @@ void KiranDisplayConfigItem::paintEvent(QPaintEvent *)
     {
         switch (m_statusType) {
         case QEvent::HoverEnter://hover
-            pen.setColor("#ffffff");
             brush = QBrush(QColor(121, 195, 255));
             break;
         case QEvent::FocusIn://checked
-            pen.setColor("#ffffff");
             brush = QBrush("#2eb3ff");
             break;
         default:
             brush = QBrush("#b3b3b3");
+            if(m_enabled) pen.setColor("#000000");
             break;
         }
 
@@ -283,6 +285,11 @@ void KiranDisplayConfigItem::updateOffset(KiranDisplayConfigItem *anchorByBtn, c
     default:
         break;
     }
+}
+
+void KiranDisplayConfigItem::setEnabled(bool enabled)
+{
+    m_enabled = enabled;
 }
 
 QString KiranDisplayConfigItem::monitorPath() const

@@ -2,11 +2,11 @@
 
 [Desktop Entry]
 Encoding=UTF-8
-Name=Kiran Display Configuration
-Name[zh_CN]=显示器配置
-Comment=kiran display configuration
+Name=Kiran Display Tool
+Name[zh_CN]=kiran-display-tools.desktop
+Comment=kiran display tool
 Comment=Kiran显示器配置
-Exec=/usr/bin/kiran-display-configuration
+Exec=/usr/bin/kiran-display-tool
 Icon=preferences-desktop-display
 Terminal=false
 Type=Application

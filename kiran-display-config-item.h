@@ -55,6 +55,8 @@ public:
     QString monitorPath() const;
     void setMonitorPath(const QString &monitorPath);
 
+    void setEnabled(bool enabled);
+
 signals:
     void sigDrag(QAbstractButton* btn);
     void sigEndDrag(QAbstractButton* btn);
@@ -80,6 +82,7 @@ private:
     KiranDisplayConfigItem *m_anchorByBtn;
     QPair<int, int> m_zoomPair;
     //reality data
+    bool m_enabled;
     QString m_monitorPath;
     AnchorByDrect m_anchorByDrect;
     QPointF m_screenOffset;

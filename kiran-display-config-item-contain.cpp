@@ -50,6 +50,7 @@ void KiranDisplayConfigItemContain::setData(const QVariantList &var_btns, const 
         QVariantMap var = var_btns.at(i).toMap();
         KiranDisplayConfigItem *btn = new KiranDisplayConfigItem(this);
         btn->setText(var.value("text").toString());
+        btn->setEnabled(var.value("enabled").toBool());
         btn->setToolTip(var.value("text").toString());
         btn->setMonitorPath(var.value("monitorPath", KIRAN_SCREEN_COPY_MODE_MONITOR_PATH).toString());
         btn->setScreenGeometryF(QRectF(var.value("x").toFloat(), var.value("y").toFloat(), var.value("w").toFloat(), var.value("h").toFloat()));

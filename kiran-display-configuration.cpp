@@ -247,7 +247,7 @@ void KiranDisplayConfiguration::curExtraData2Cache()
 
 void KiranDisplayConfiguration::showMessageBox()
 {
-    KiranMessageBox box;
+    KiranMessageBox box(this);
     box.setTitle(tr("显示是否正常?"));
 
     QPushButton saveBtn;
@@ -268,8 +268,8 @@ void KiranDisplayConfiguration::showMessageBox()
     QTimer timer;
     timer.setInterval(1000);
     QObject::connect(&timer, &QTimer::timeout, [&](){
-         box.setText(text.arg(countdown--));
-         if(countdown < 0) box.reject();
+        box.setText(text.arg(countdown--));
+        if(countdown < 0) box.reject();
     });
     timer.start();
 
@@ -331,6 +331,7 @@ void KiranDisplayConfiguration::initCopeMode()
     map.insert("w", 1920);
     map.insert("h", 1080);
     map.insert("rotation", rotation);
+    map.insert("enabled", true);
     list << map;
     ui->panel->setData(list);
 
@@ -368,8 +369,15 @@ void KiranDisplayConfiguration::initExtraMode(const bool &clearChecked)
         map.insert("x", MonitorProperty(monitorPath, "x"));
         map.insert("y", MonitorProperty(monitorPath, "y"));
         map.insert("rotation", MonitorProperty(monitorPath, "rotation"));
+        map.insert("enabled", MonitorProperty(monitorPath, "enabled").toBool());
 
         DisplayModesStu displayModeStu = Monitor<DisplayModesStu>(monitorPath, "GetCurrentMode");
+        if(displayModeStu.w <= 0 || displayModeStu.h <= 0)
+        {
+            map.insert("x", 99999);//让x足够大，保证从右侧合并过来。
+            displayModeStu.w = 1920;
+            displayModeStu.h = 1080;
+        }
         map.insert("w", displayModeStu.w);
         map.insert("h", displayModeStu.h);
         map.insert("monitorPath", monitorPath);
@@ -383,6 +391,13 @@ void KiranDisplayConfiguration::initExtraMode(const bool &clearChecked)
     }
 
     ui->panel->setData(list, clearChecked);
+    //如果只有一个屏幕，禁用‘设置主屏’‘关闭’按钮。
+    QString toolTipStr;
+    if(list.count() <= 1) toolTipStr = tr("禁用");
+    ui->pushButton_extra_primary->setDisabled(list.count()<=1);
+    ui->pushButton_enabled->setDisabled(list.count()<=1);
+    ui->pushButton_extra_primary->setToolTip(toolTipStr);
+    ui->pushButton_enabled->setToolTip(toolTipStr);
     qDebug() << "接收数据:" << list;
 }
 
@@ -437,7 +452,14 @@ void KiranDisplayConfiguration::on_pushButton_enabled_toggled(bool checked)
     ui->pushButton_extra_primary->setEnabled(checked);
     ui->comboBox_extra_resolving->setEnabled((checked));
     ui->comboBox_extra_refreshRate->setEnabled(checked);
-    ui->pushButton_extra_ok->setEnabled(checked);
+    ui->comboBox_extra_windowScalingFactor->setEnabled(checked);
+
+    QString toolTipStr;
+    if(!checked <= 1) toolTipStr = tr("禁用");
+    ui->pushButton_extra_primary->setToolTip(toolTipStr);
+    ui->comboBox_extra_resolving->setToolTip(toolTipStr);
+    ui->comboBox_extra_refreshRate->setToolTip(toolTipStr);
+    ui->comboBox_extra_windowScalingFactor->setToolTip(toolTipStr);
 }
 
 void KiranDisplayConfiguration::on_pushButton_extra_ok_clicked()

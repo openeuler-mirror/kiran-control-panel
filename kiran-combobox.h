@@ -3,6 +3,7 @@
 
 #include <QComboBox>
 
+class QListView;
 class KiranComboBox : public QComboBox
 {
     Q_OBJECT
@@ -12,6 +13,10 @@ public:
 signals:
 
 public slots:
+
+private:
+    bool eventFilter(QObject *obj, QEvent *event);
+    QListView *m_listView;
 };
 
 #endif // KIRANCOMBOBOX_H
