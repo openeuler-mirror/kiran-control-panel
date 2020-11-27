@@ -6,18 +6,18 @@
 #include <QDebug>
 
 KiranDisplayConfiguration::KiranDisplayConfiguration(QWidget *parent) :
-    QWidget(parent),
+    QWidget(parent), m_btnGroup(nullptr),
     ui(new Ui::KiranDisplayConfiguration)
 {
     ui->setupUi(this);
-    QButtonGroup *btnGroup = new QButtonGroup(this);
-    btnGroup->addButton(ui->pushButton_copy_display, 0);
-    btnGroup->addButton(ui->pushButton_extend_display, 1);
-    connect(btnGroup, SIGNAL(buttonToggled(int,bool)), this, SLOT(onTabChanged(int, bool)));
+    m_btnGroup = new QButtonGroup(this);
+    m_btnGroup->addButton(ui->pushButton_copy_display, 0);
+    m_btnGroup->addButton(ui->pushButton_extend_display, 1);
+    connect(m_btnGroup, SIGNAL(buttonToggled(int,bool)), this, SLOT(onTabChanged(int, bool)));
 
     connect(ui->panel, &KiranDisplayConfigurationPanel::buttonChecked, this, &KiranDisplayConfiguration::onScreenItemChecked);
 
-    onTabChanged(0, true);
+    isCopyMode() ? onTabChanged(0, true) : onTabChanged(1, true);
 
     QDBusConnection::sessionBus().connect(KIRAN_DBUS_SERVICE_NAME, KIRAN_DBUS_DISPLAY, KIRAN_DBUS_INTREFACE_PROPERTIES, KIRAN_DBUS_PROPERTIES_FUN,
                                           this,
@@ -63,6 +63,7 @@ void KiranDisplayConfiguration::on_pushButton_cancel_clicked()
 void KiranDisplayConfiguration::onTabChanged(int index, const bool &checked)
 {
     if(!checked) return;
+    if(m_btnGroup && m_btnGroup->checkedId() != index) m_btnGroup->button(index)->setChecked(true);
 
     if(index == 0)
     {
@@ -89,6 +90,7 @@ void KiranDisplayConfiguration::onScreenItemChecked(QString monitorPath)
         QMap<int, QPair<QSize, QList<int> > > map = getResolutionFromModes(list);
         initComboBoxResolution(ui->comboBox_resolving, map);
         DisplayModesStu stu = curIntersectionMonitorMode();
+        //复制模式没有推荐，直接set text。
         ui->comboBox_resolving->setCurrentText(QString("%1x%2").arg(stu.w).arg(stu.h));
         ui->comboBox_refreshRate->setCurrentText(QString("%1HZ").arg((int)stu.refreshRate));
 
@@ -114,8 +116,8 @@ void KiranDisplayConfiguration::onScreenItemChecked(QString monitorPath)
             ui->pushButton_extra_primary->setChecked(m_primaryMonitorName == clickedName);
             ui->pushButton_enabled->setChecked(map.value("enabled").toBool());
             QSize size = map.value("resolving").toSize();
-            ui->comboBox_extra_resolving->setCurrentText(QString("%1x%2").arg(size.width()).arg(size.height()));
-            ui->comboBox_extra_refreshRate->setCurrentText(QString("%1HZ").arg(map.value("refreshRate").toInt()));
+            selectResolutionComboboxItem(ui->comboBox_extra_resolving, size.width(), size.height());
+            selectRefreshRateComboboxItem(ui->comboBox_extra_refreshRate, map.value("refreshRate").toInt());
 
             ui->comboBox_extra_windowScalingFactor->setCurrentIndex(map.value("windowScalingFactor").toInt());
         }
@@ -126,8 +128,8 @@ void KiranDisplayConfiguration::onScreenItemChecked(QString monitorPath)
             ui->pushButton_enabled->setChecked( MonitorProperty(monitorPath, "enabled").toBool() );
             //
             DisplayModesStu stu = Monitor<DisplayModesStu>(monitorPath, "GetCurrentMode");
-            ui->comboBox_extra_resolving->setCurrentText(QString("%1x%2").arg(stu.w).arg(stu.h));
-            ui->comboBox_extra_refreshRate->setCurrentText(QString("%1HZ").arg((int)stu.refreshRate));
+            selectResolutionComboboxItem(ui->comboBox_extra_resolving, stu.w, stu.h);
+            selectRefreshRateComboboxItem(ui->comboBox_extra_refreshRate, (int)stu.refreshRate);
 
             ui->comboBox_extra_windowScalingFactor->setCurrentIndex(windowScalingFactor);
         }
@@ -283,6 +285,61 @@ void KiranDisplayConfiguration::showMessageBox()
     {
         Display("RestoreChanges");
     }
+}
+
+void KiranDisplayConfiguration::selectResolutionComboboxItem(QComboBox *comboBox, const int &w, const int &h)
+{
+    if(!comboBox) return;
+
+    int count = comboBox->count();
+    for(int i=0; i<count; ++i)
+    {
+        QPair<QSize, QList<int> > pair = comboBox->itemData(i).value<QPair<QSize, QList<int> > >();
+        if(pair.first.width() == w && pair.first.height() == h)
+        {
+            comboBox->setCurrentIndex(i);
+            return;
+        }
+    }
+}
+
+void KiranDisplayConfiguration::selectRefreshRateComboboxItem(QComboBox *comboBox, const int &r)
+{
+    if(!comboBox) return;
+
+    int count = comboBox->count();
+    for(int i=0; i<count; ++i)
+    {
+        int t_r= comboBox->itemData(i).toInt();
+        if(r == t_r)
+        {
+            comboBox->setCurrentIndex(i);
+            return;
+        }
+    }
+}
+
+bool KiranDisplayConfiguration::isCopyMode()
+{
+    QStringList listMonitors = Display("ListMonitors").toStringList();
+    int count = listMonitors.count();
+    int x = 0;
+    int y = 0;
+    if(count > 0)
+    {
+        x = MonitorProperty(listMonitors.first(), "x").toInt();
+        y = MonitorProperty(listMonitors.first(), "y").toInt();
+    }
+    for(int i=1; i<count; ++i)
+    {
+        QString monitorPath = listMonitors.at(i);
+        if(x != MonitorProperty(monitorPath, "x").toInt() || y != MonitorProperty(monitorPath, "y").toInt())
+        {
+            return false;
+        }
+    }
+
+    return true;
 }
 
 DisplayModesStu KiranDisplayConfiguration::curIntersectionMonitorMode()

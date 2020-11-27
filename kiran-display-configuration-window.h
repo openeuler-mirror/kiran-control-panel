@@ -1,7 +1,7 @@
 #ifndef KIRANDISPLAYCONFIGURATIONWINDOW_H
 #define KIRANDISPLAYCONFIGURATIONWINDOW_H
 
-#include "/usr/include/kiranwidgets-qt5/kiran-titlebar-window.h"
+#include "kiranwidgets-qt5/kiran-titlebar-window.h"
 
 class KiranDisplayConfigurationWindow : public KiranTitlebarWindow
 {

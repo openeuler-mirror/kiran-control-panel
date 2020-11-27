@@ -11,6 +11,7 @@ namespace Ui {
 class KiranDisplayConfiguration;
 }
 
+class QButtonGroup;
 class KiranDisplayConfiguration : public QWidget
 {
     Q_OBJECT
@@ -51,6 +52,9 @@ private:
     void initExtraComboBoxRefreshRate(QComboBox *comboBox, const QList<int> &refreshRateList);
     void curExtraData2Cache();
     void showMessageBox();
+    void selectResolutionComboboxItem(QComboBox *comboBox, const int &w, const int &h);
+    void selectRefreshRateComboboxItem(QComboBox *comboBox, const int &r);
+    bool isCopyMode();
 
 private:
     Ui::KiranDisplayConfiguration *ui;
@@ -58,6 +62,7 @@ private:
     QString m_primaryMonitorName;
     QMap<QString, QVariantMap> m_extraData;
     QStringList m_dbusConnectList;
+    QButtonGroup *m_btnGroup;
 };
 
 #endif // KIRANDISPLAYCONFIGURATION_H
