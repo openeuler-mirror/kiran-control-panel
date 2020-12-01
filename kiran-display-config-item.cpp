@@ -32,7 +32,7 @@ void KiranDisplayConfigItem::paintEvent(QPaintEvent *)
     if(m_enabled)
         pen.setColor("#ffffff");
     else
-        pen.setColor(Qt::gray);
+        pen.setColor(QColor(255,255,255,60));
     QBrush brush;
     if(isChecked())
     {
@@ -287,9 +287,23 @@ void KiranDisplayConfigItem::updateOffset(KiranDisplayConfigItem *anchorByBtn, c
     }
 }
 
+bool KiranDisplayConfigItem::enabled() const
+{
+    return m_enabled;
+}
+/*!
+ * \brief KiranDisplayConfigItem::setEnabled setData函数中调用了此函数，如果在这里发送按钮禁用信号，外部再调用contain，可能此时item还未加入contain中，从而导致异常。
+ * \param enabled
+ */
 void KiranDisplayConfigItem::setEnabled(bool enabled)
 {
     m_enabled = enabled;
+}
+
+void KiranDisplayConfigItem::changeEnabled(const bool &enabled)
+{
+    m_enabled = enabled;
+    update();
 }
 
 QString KiranDisplayConfigItem::monitorPath() const

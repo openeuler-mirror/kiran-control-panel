@@ -36,12 +36,18 @@ public:
     QVariantMap getData();
     void setData(const QVariantList &var_btns, const bool &clearChecked=false);
     void setRotateDrect(const KiranDisplayConfigItem::RotateDrect &rotateDrect);
+    void changeItemEnabled(const bool &enbled);
 
     QString getCurMonitorText();
     QString getCurMonitorPath() const;
 
 Q_SIGNALS:
-    void buttonChecked(QString monitorPath);
+    void sigButtonChecked(QString monitorPath);
+    /*!
+     * \brief sigEnableChanged 状态更新信号与点击信号分开，两者需要执行的内容流程不能完全一致。
+     * \param enabled
+     */
+    void sigItemEnableChanged(const bool &enabled);
 
 public slots:
 protected slots:

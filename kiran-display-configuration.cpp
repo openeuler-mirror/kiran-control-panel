@@ -17,7 +17,7 @@ KiranDisplayConfiguration::KiranDisplayConfiguration(QWidget *parent) :
 
     connect(ui->panel, &KiranDisplayConfigurationPanel::buttonChecked, this, &KiranDisplayConfiguration::onScreenItemChecked);
 
-    isCopyMode() ? onTabChanged(0, true) : onTabChanged(1, true);
+    refreshWidget();
 
     QDBusConnection::sessionBus().connect(KIRAN_DBUS_SERVICE_NAME, KIRAN_DBUS_DISPLAY, KIRAN_DBUS_INTREFACE_PROPERTIES, KIRAN_DBUS_PROPERTIES_FUN,
                                           this,
@@ -34,6 +34,7 @@ void KiranDisplayConfiguration::on_pushButton_ok_clicked()
     QVariantMap map = ui->panel->getData().value(m_curMonitorPath).toMap();
     //添加当前编辑界面的数据
     QPair<QSize, QList<int> > pair = ui->comboBox_resolving->currentData().value<QPair<QSize, QList<int> > >();
+    //复制模式，分辨率和刷新率都是一样的。
     map.insert("resolving", pair.first);
     map.insert("refreshRate", ui->comboBox_refreshRate->currentData());
 
@@ -44,6 +45,38 @@ void KiranDisplayConfiguration::on_pushButton_ok_clicked()
 
     Display("SetWindowScalingFactor", QVariantList() << ui->comboBox_windowScalingFactor->currentIndex());
     Display("ApplyChanges");
+    //可能设置失败，界面根据设置实际情况再刷新。
+    refreshWidget();
+
+    showMessageBox();
+}
+
+void KiranDisplayConfiguration::on_pushButton_extra_ok_clicked()
+{
+    //添加当前编辑界面的数据
+    curExtraData2Cache();
+
+    QVariantMap map = ui->panel->getData();
+    QMapIterator<QString, QVariant> i(map);
+    while (i.hasNext()) {
+        i.next();
+        QVariantMap d = i.value().toMap();
+        if(m_extraData.contains(i.key()))
+        {
+            QVariantMap extraMap =  m_extraData.value(i.key());
+            d.insert("primary", m_primaryMonitorName==d.value("name").toString());
+            d.insert("enabled", extraMap.value("enabled"));
+            d.insert("resolving", extraMap.value("resolving"));
+            d.insert("refreshRate", extraMap.value("refreshRate"));
+        }
+
+        setMonitorProperty(i.key(), d);
+    }
+    //缩放率所有屏幕都是通用的。
+    Display("SetWindowScalingFactor", QVariantList() << ui->comboBox_extra_windowScalingFactor->currentIndex());
+    Display("ApplyChanges");
+    //可能设置失败，界面根据设置实际情况再刷新。
+    refreshWidget();
 
     showMessageBox();
 }
@@ -279,11 +312,40 @@ void KiranDisplayConfiguration::showMessageBox()
     box.exec();
     if( box.clickedButton() == &saveBtn  )
     {
-        Display("Save");
+        int flag = 0;
+        //后期可能根据var中返回的值来判断异常。
+        QVariant var = Display("Save", QVariantList(), &flag);
+        if(flag < 0)
+        {
+            KiranMessageBox box;
+            box.setTitle(QObject::tr("提示"));
+
+            QPushButton btn;
+            btn.setText(QObject::tr("确定(K)"));
+            btn.setFixedSize(QSize(200, box.buttonSize().height()));
+            btn.setShortcut(Qt::CTRL + Qt::Key_K);
+            box.addButton(&btn, QDialogButtonBox::AcceptRole);
+            box.setText(QObject::tr("应用显示设置失败!"));
+            box.exec();
+        }
     }
     else
     {
-        Display("RestoreChanges");
+        int flag = 0;
+        QVariant var = Display("RestoreChanges", QVariantList(), &flag);
+        if(flag < 0)
+        {
+            KiranMessageBox box;
+            box.setTitle(QObject::tr("提示"));
+
+            QPushButton btn;
+            btn.setText(QObject::tr("确定(K)"));
+            btn.setFixedSize(QSize(200, box.buttonSize().height()));
+            btn.setShortcut(Qt::CTRL + Qt::Key_K);
+            box.addButton(&btn, QDialogButtonBox::AcceptRole);
+            box.setText(QObject::tr("回撤显示设置失败!"));
+            box.exec();
+        }
     }
 }
 
@@ -323,23 +385,49 @@ bool KiranDisplayConfiguration::isCopyMode()
 {
     QStringList listMonitors = Display("ListMonitors").toStringList();
     int count = listMonitors.count();
+
     int x = 0;
     int y = 0;
+    int w = 0;
+    int h = 0;
     if(count > 0)
     {
         x = MonitorProperty(listMonitors.first(), "x").toInt();
         y = MonitorProperty(listMonitors.first(), "y").toInt();
+
+        DisplayModesStu displayModeStu = Monitor<DisplayModesStu>(listMonitors.first(), "GetCurrentMode");
+        w = displayModeStu.w;
+        h = displayModeStu.h;
     }
     for(int i=1; i<count; ++i)
     {
         QString monitorPath = listMonitors.at(i);
-        if(x != MonitorProperty(monitorPath, "x").toInt() || y != MonitorProperty(monitorPath, "y").toInt())
+        DisplayModesStu displayModeStu = Monitor<DisplayModesStu>(monitorPath, "GetCurrentMode");
+
+        if(x != MonitorProperty(monitorPath, "x").toInt() || y != MonitorProperty(monitorPath, "y").toInt() || w != displayModeStu.w || h != displayModeStu.h)
         {
             return false;
         }
     }
 
     return true;
+}
+
+void KiranDisplayConfiguration::refreshWidget()
+{
+    //如果只有一个屏幕，应当隐藏“复制模式”和“扩展模式”的选项卡。
+    QStringList listMonitors = Display("ListMonitors").toStringList();
+    ui->tabBtnWidget->setVisible(listMonitors.count() > 1);
+    if(listMonitors.count() <= 1)
+    {
+        onTabChanged(0, true);
+    }
+    else
+    {
+
+        isCopyMode() ? onTabChanged(0, true) : onTabChanged(1, true);
+
+    }
 }
 
 DisplayModesStu KiranDisplayConfiguration::curIntersectionMonitorMode()
@@ -420,15 +508,18 @@ void KiranDisplayConfiguration::initExtraMode(const bool &clearChecked)
 
     QVariantList list;
     QStringList listMonitors = Display("ListMonitors").toStringList();
+    int offset = 0;
+    bool isCopy = isCopyMode();
     foreach (QString monitorPath, listMonitors) {
         QVariantMap map;
         map.insert("text", MonitorProperty(monitorPath, "name"));
-        map.insert("x", MonitorProperty(monitorPath, "x"));
+        map.insert("x", MonitorProperty(monitorPath, "x").toInt()+offset);
         map.insert("y", MonitorProperty(monitorPath, "y"));
         map.insert("rotation", MonitorProperty(monitorPath, "rotation"));
         map.insert("enabled", MonitorProperty(monitorPath, "enabled").toBool());
 
         DisplayModesStu displayModeStu = Monitor<DisplayModesStu>(monitorPath, "GetCurrentMode");
+        //当显示器关闭时，大小将为0。
         if(displayModeStu.w <= 0 || displayModeStu.h <= 0)
         {
             map.insert("x", 99999);//让x足够大，保证从右侧合并过来。
@@ -439,6 +530,8 @@ void KiranDisplayConfiguration::initExtraMode(const bool &clearChecked)
         map.insert("h", displayModeStu.h);
         map.insert("monitorPath", monitorPath);
 
+        if(isCopy) offset += map.value("w").toInt();//如果点击扩展页面时，当前正处于复制模式，那所有x的值都往右边位移。
+
         list << map;
 
         QDBusConnection::sessionBus().connect(KIRAN_DBUS_SERVICE_NAME, monitorPath, KIRAN_DBUS_INTREFACE_PROPERTIES, KIRAN_DBUS_PROPERTIES_FUN,
@@ -448,13 +541,15 @@ void KiranDisplayConfiguration::initExtraMode(const bool &clearChecked)
     }
 
     ui->panel->setData(list, clearChecked);
-    //如果只有一个屏幕，禁用‘设置主屏’‘关闭’按钮。
-    QString toolTipStr;
-    if(list.count() <= 1) toolTipStr = tr("禁用");
-    ui->pushButton_extra_primary->setDisabled(list.count()<=1);
-    ui->pushButton_enabled->setDisabled(list.count()<=1);
-    ui->pushButton_extra_primary->setToolTip(toolTipStr);
-    ui->pushButton_enabled->setToolTip(toolTipStr);
+    //如果只有一个屏幕,不会进入这个函数，而是进入tab的index为0的函数。
+    //    //如果只有一个屏幕，禁用‘设置主屏’‘关闭’按钮。
+    //    QString toolTipStr;
+    //    if(list.count() <= 1) toolTipStr = tr("禁用");
+    //    ui->pushButton_extra_primary->setDisabled(list.count()<=1);
+    //    ui->pushButton_enabled->setDisabled(list.count()<=1);
+    //    ui->pushButton_extra_primary->setToolTip(toolTipStr);
+    //    ui->pushButton_enabled->setToolTip(toolTipStr);
+
     qDebug() << "接收数据:" << list;
 }
 
@@ -495,7 +590,8 @@ void KiranDisplayConfiguration::on_comboBox_extra_resolving_currentTextChanged(c
 void KiranDisplayConfiguration::onDbusPropertiesChanged(QDBusMessage)
 {
     m_extraData.clear();
-    onTabChanged(ui->stackedWidget->currentIndex(), true);
+    refreshWidget();
+    //onTabChanged(ui->stackedWidget->currentIndex(), true);
 }
 
 void KiranDisplayConfiguration::on_comboBox_resolving_currentTextChanged(const QString &)
@@ -510,41 +606,14 @@ void KiranDisplayConfiguration::on_pushButton_enabled_toggled(bool checked)
     ui->comboBox_extra_resolving->setEnabled((checked));
     ui->comboBox_extra_refreshRate->setEnabled(checked);
     ui->comboBox_extra_windowScalingFactor->setEnabled(checked);
+    ui->panel->changeItemDisabled(checked);
 
-    QString toolTipStr;
-    if(!checked <= 1) toolTipStr = tr("禁用");
-    ui->pushButton_extra_primary->setToolTip(toolTipStr);
-    ui->comboBox_extra_resolving->setToolTip(toolTipStr);
-    ui->comboBox_extra_refreshRate->setToolTip(toolTipStr);
-    ui->comboBox_extra_windowScalingFactor->setToolTip(toolTipStr);
-}
-
-void KiranDisplayConfiguration::on_pushButton_extra_ok_clicked()
-{
-    //添加当前编辑界面的数据
-    curExtraData2Cache();
-
-    QVariantMap map = ui->panel->getData();
-    QMapIterator<QString, QVariant> i(map);
-    while (i.hasNext()) {
-        i.next();
-        QVariantMap d = i.value().toMap();
-        if(m_extraData.contains(i.key()))
-        {
-            QVariantMap extraMap =  m_extraData.value(i.key());
-            d.insert("primary", m_primaryMonitorName==d.value("name").toString());
-            d.insert("enabled", extraMap.value("enabled"));
-            d.insert("resolving", extraMap.value("resolving"));
-            d.insert("refreshRate", extraMap.value("refreshRate"));
-        }
-
-        setMonitorProperty(i.key(), d);
-    }
-
-    Display("SetWindowScalingFactor", QVariantList() << ui->comboBox_extra_windowScalingFactor->currentIndex());
-    Display("ApplyChanges");
-
-    showMessageBox();
+//    QString toolTipStr;
+//    if(!checked <= 1) toolTipStr = tr("禁用");
+//    ui->pushButton_extra_primary->setToolTip(toolTipStr);
+//    ui->comboBox_extra_resolving->setToolTip(toolTipStr);
+//    ui->comboBox_extra_refreshRate->setToolTip(toolTipStr);
+//    ui->comboBox_extra_windowScalingFactor->setToolTip(toolTipStr);
 }
 
 void KiranDisplayConfiguration::on_pushButton_extra_cancel_clicked()

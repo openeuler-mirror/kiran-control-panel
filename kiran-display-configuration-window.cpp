@@ -10,5 +10,5 @@ KiranDisplayConfigurationWindow::KiranDisplayConfigurationWindow() : KiranTitleb
     KiranDisplayConfiguration *centerWgt = new KiranDisplayConfiguration(this);
     setWindowContentWidget(centerWgt);
     connect(centerWgt, &KiranDisplayConfiguration::sigClose, this, &KiranDisplayConfigurationWindow::close);
-    resize(708, 830);
+    resize(708, 880);
 }

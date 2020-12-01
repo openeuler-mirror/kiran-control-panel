@@ -9,58 +9,63 @@
         <translation>Display Configuration</translation>
     </message>
     <message>
-        <location filename="kiran-display-configuration.ui" line="109"/>
+        <location filename="kiran-display-configuration.ui" line="127"/>
         <source>复制显示</source>
         <translation>Copy display</translation>
     </message>
     <message>
-        <location filename="kiran-display-configuration.ui" line="158"/>
+        <location filename="kiran-display-configuration.ui" line="176"/>
         <source>扩展显示</source>
         <translation>Extended display</translation>
     </message>
     <message>
-        <location filename="kiran-display-configuration.ui" line="210"/>
-        <location filename="kiran-display-configuration.ui" line="571"/>
+        <location filename="kiran-display-configuration.ui" line="328"/>
+        <location filename="kiran-display-configuration.ui" line="710"/>
         <source>分辨率</source>
         <translation>Resolving power</translation>
     </message>
     <message>
-        <location filename="kiran-display-configuration.ui" line="240"/>
-        <location filename="kiran-display-configuration.ui" line="601"/>
+        <location filename="kiran-display-configuration.ui" line="358"/>
+        <location filename="kiran-display-configuration.ui" line="740"/>
         <source>刷新率</source>
         <translation>Refresh rate</translation>
     </message>
     <message>
-        <location filename="kiran-display-configuration.ui" line="460"/>
+        <location filename="kiran-display-configuration.ui" line="581"/>
         <source>开启</source>
         <translation>Open</translation>
     </message>
     <message>
-        <location filename="kiran-display-configuration.ui" line="513"/>
+        <location filename="kiran-display-configuration.ui" line="642"/>
         <source>设为主显示器</source>
         <translation>Set as main display</translation>
     </message>
     <message>
-        <location filename="kiran-display-configuration.ui" line="270"/>
-        <location filename="kiran-display-configuration.ui" line="631"/>
+        <location filename="kiran-display-configuration.ui" line="912"/>
+        <source>关闭</source>
+        <translation>Close</translation>
+    </message>
+    <message>
+        <location filename="kiran-display-configuration.ui" line="388"/>
+        <location filename="kiran-display-configuration.ui" line="770"/>
         <source>缩放率</source>
         <translation>Zoom rate</translation>
     </message>
     <message>
-        <location filename="kiran-display-configuration.ui" line="290"/>
-        <location filename="kiran-display-configuration.ui" line="651"/>
+        <location filename="kiran-display-configuration.ui" line="408"/>
+        <location filename="kiran-display-configuration.ui" line="790"/>
         <source>自动</source>
         <translation>Auto</translation>
     </message>
     <message>
-        <location filename="kiran-display-configuration.ui" line="295"/>
-        <location filename="kiran-display-configuration.ui" line="656"/>
+        <location filename="kiran-display-configuration.ui" line="413"/>
+        <location filename="kiran-display-configuration.ui" line="795"/>
         <source>100% (推荐)</source>
         <translation>100% (recommended)</translation>
     </message>
     <message>
-        <location filename="kiran-display-configuration.ui" line="300"/>
-        <location filename="kiran-display-configuration.ui" line="661"/>
+        <location filename="kiran-display-configuration.ui" line="418"/>
+        <location filename="kiran-display-configuration.ui" line="800"/>
         <source>200%</source>
         <translation></translation>
     </message>
@@ -73,40 +78,39 @@
         <translation type="vanished">Set as main display</translation>
     </message>
     <message>
-        <location filename="kiran-display-configuration.ui" line="376"/>
-        <location filename="kiran-display-configuration.ui" line="724"/>
+        <location filename="kiran-display-configuration.ui" line="497"/>
+        <location filename="kiran-display-configuration.ui" line="876"/>
         <source>应用</source>
         <translation>Apply</translation>
     </message>
     <message>
-        <location filename="kiran-display-configuration.ui" line="412"/>
-        <location filename="kiran-display-configuration.ui" line="760"/>
+        <location filename="kiran-display-configuration.ui" line="533"/>
         <source>取消</source>
         <translation>Cancel</translation>
     </message>
     <message>
-        <location filename="kiran-display-configuration.cpp" line="209"/>
-        <location filename="kiran-display-configuration.cpp" line="231"/>
+        <location filename="kiran-display-configuration.cpp" line="213"/>
+        <location filename="kiran-display-configuration.cpp" line="235"/>
         <source> (推荐)</source>
         <translation> (recommended)</translation>
     </message>
     <message>
-        <location filename="kiran-display-configuration.cpp" line="251"/>
+        <location filename="kiran-display-configuration.cpp" line="255"/>
         <source>显示是否正常?</source>
         <translation>Is the display normal?</translation>
     </message>
     <message>
-        <location filename="kiran-display-configuration.cpp" line="254"/>
+        <location filename="kiran-display-configuration.cpp" line="258"/>
         <source>保存当前配置(K)</source>
         <translation>Save current configuration</translation>
     </message>
     <message>
-        <location filename="kiran-display-configuration.cpp" line="258"/>
+        <location filename="kiran-display-configuration.cpp" line="262"/>
         <source>恢复之前的配置(R)</source>
         <translation>Restore previous configuration</translation>
     </message>
     <message>
-        <location filename="kiran-display-configuration.cpp" line="266"/>
+        <location filename="kiran-display-configuration.cpp" line="270"/>
         <source>显示将会在 %1 秒后恢复之前的配置</source>
         <translation>Display the previous configuration that will be restored in%1 seconds</translation>
     </message>
@@ -117,6 +121,26 @@
         <location filename="kiran-display-configuration-panel.ui" line="14"/>
         <source>Form</source>
         <translation></translation>
+    </message>
+    <message>
+        <location filename="kiran-display-configuration-panel.ui" line="121"/>
+        <source>左旋转90度</source>
+        <translation>Rotate left 90 degrees</translation>
+    </message>
+    <message>
+        <location filename="kiran-display-configuration-panel.ui" line="161"/>
+        <source>右旋转90度</source>
+        <translation>Rotate right 90 degrees</translation>
+    </message>
+    <message>
+        <location filename="kiran-display-configuration-panel.ui" line="197"/>
+        <source>上下颠倒</source>
+        <translation>Upside down</translation>
+    </message>
+    <message>
+        <location filename="kiran-display-configuration-panel.ui" line="232"/>
+        <source>标识显示器</source>
+        <translation>Identification display</translation>
     </message>
 </context>
 <context>

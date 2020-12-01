@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>791</width>
+    <width>739</width>
     <height>775</height>
    </rect>
   </property>
@@ -50,42 +50,60 @@ color: #ffffff;
     <widget class="KiranDisplayConfigurationPanel" name="panel" native="true"/>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_3">
-     <property name="spacing">
-      <number>0</number>
-     </property>
-     <property name="bottomMargin">
-      <number>0</number>
-     </property>
-     <item>
-      <spacer name="horizontalSpacer">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QPushButton" name="pushButton_copy_display">
-       <property name="minimumSize">
-        <size>
-         <width>120</width>
-         <height>30</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>120</width>
-         <height>30</height>
-        </size>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">
+    <widget class="QWidget" name="tabBtnWidget" native="true">
+     <layout class="QVBoxLayout" name="verticalLayout_12">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_3">
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButton_copy_display">
+          <property name="minimumSize">
+           <size>
+            <width>120</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>120</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">
 QPushButton {
     border: 1px solid #2eb3ff;
 	color: #2eb3ff;
@@ -104,37 +122,37 @@ QPushButton {
  	 border-bottom-left-radius: 4px;
   }
 </string>
-       </property>
-       <property name="text">
-        <string>复制显示</string>
-       </property>
-       <property name="checkable">
-        <bool>true</bool>
-       </property>
-       <property name="checked">
-        <bool>true</bool>
-       </property>
-       <property name="flat">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="pushButton_extend_display">
-       <property name="minimumSize">
-        <size>
-         <width>120</width>
-         <height>30</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>120</width>
-         <height>30</height>
-        </size>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">
+          </property>
+          <property name="text">
+           <string>复制显示</string>
+          </property>
+          <property name="checkable">
+           <bool>true</bool>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
+          </property>
+          <property name="flat">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButton_extend_display">
+          <property name="minimumSize">
+           <size>
+            <width>120</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>120</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">
 QPushButton {
     border: 1px solid #2eb3ff;
 	color: #2eb3ff;
@@ -153,29 +171,32 @@ QPushButton {
  	 border-bottom-right-radius: 4px;
   }
 </string>
-       </property>
-       <property name="text">
-        <string>扩展显示</string>
-       </property>
-       <property name="checkable">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <spacer name="horizontalSpacer_2">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-    </layout>
+          </property>
+          <property name="text">
+           <string>扩展显示</string>
+          </property>
+          <property name="checkable">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
    </item>
    <item>
     <widget class="QScrollArea" name="scrollArea">
@@ -245,7 +266,7 @@ QPushButton {
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>729</width>
+        <width>685</width>
         <height>503</height>
        </rect>
       </property>
@@ -593,6 +614,14 @@ border: 2px solid rgba(255, 255, 255, 20);
 
   QPushButton:checked {
        border-image: url(://images/open_btn.png);
+  }
+
+  QPushButton:checked:disabled {
+       border-image: url(://images/open_btn_disable.png);
+  }
+
+  QPushButton:disabled {
+       border-image: url(://images/close_btn_disable.png);
   }</string>
                  </property>
                  <property name="text">
@@ -629,6 +658,9 @@ border: 2px solid rgba(255, 255, 255, 20);
                </item>
                <item>
                 <widget class="QPushButton" name="pushButton_extra_primary">
+                 <property name="enabled">
+                  <bool>true</bool>
+                 </property>
                  <property name="minimumSize">
                   <size>
                    <width>54</width>
@@ -647,9 +679,12 @@ border: 2px solid rgba(255, 255, 255, 20);
   QPushButton:checked {
        border-image: url(://images/open_btn.png);
   }
+  QPushButton:checked:disabled {
+       border-image: url(://images/open_btn_disable.png);
+  }
+
   QPushButton:disabled {
-      background-color: rgba(255,255,255,5);
-	color: rgba(255,255,255,60);
+       border-image: url(://images/close_btn_disable.png);
   }</string>
                  </property>
                  <property name="text">
@@ -874,7 +909,7 @@ border: 2px solid rgba(255, 255, 255, 20);
   }</string>
                </property>
                <property name="text">
-                <string>取消</string>
+                <string>关闭</string>
                </property>
               </widget>
              </item>

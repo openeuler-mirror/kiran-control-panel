@@ -5,7 +5,7 @@
 #include <QDBusInterface>
 #include <QDebug>
 
-QVariant KiranDisplayConfigGlobal::Display(const QString &function, const QVariantList &paras)
+QVariant KiranDisplayConfigGlobal::Display(const QString &function, const QVariantList &paras, int *flag)
 {
     //构造一个method_call消息，服务名称为：com.kscmms.security.center.qtdbus，对象路径为：/message, 接口名称为com.kscmms.security.center.qtdbus.sf，method名称为 setLoginFailedOpr
     QDBusMessage message = QDBusMessage::createMethodCall(KIRAN_DBUS_SERVICE_NAME, KIRAN_DBUS_DISPLAY, KIRAN_DBUS_SERVICE_NAME,
@@ -23,6 +23,8 @@ QVariant KiranDisplayConfigGlobal::Display(const QString &function, const QVaria
     else
     {
         qDebug() << "DBus调用失败:" << function << paras << response.errorMessage();
+        if(flag) *flag = -1;
+        return response.errorMessage();
     }
 
     return QVariant();

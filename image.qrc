@@ -17,5 +17,12 @@
         <file>images/identification_btn_s.svg</file>
         <file>images/icon_arrow.svg</file>
         <file>images/ok.png</file>
+        <file>images/open_disable.png</file>
+        <file>images/close_btn_disable.png</file>
+        <file>images/open_btn_disable.png</file>
+        <file>images/Flip vertically_btn_d.svg</file>
+        <file>images/identification_btn_d.svg</file>
+        <file>images/rotation_left_btn_d.svg</file>
+        <file>images/rotation_right_btn_d.svg</file>
     </qresource>
 </RCC>

@@ -62,7 +62,7 @@ void KiranDisplayConfigItemContain::setData(const QVariantList &var_btns, const 
 
         if(checkedBtn)
         {
-            if(checkedBtn->screenGeometryF().left() > btn->screenGeometryF().left()) checkedBtn = btn;
+            if(checkedBtn->screenGeometryF().left() > btn->screenGeometryF().left()) checkedBtn = btn;//选出最左边的一个作为默认选中项。
         }
         else
         {
@@ -89,6 +89,15 @@ void KiranDisplayConfigItemContain::setRotateDrect(const KiranDisplayConfigItem:
 
     KiranDisplayConfigItem *item = static_cast<KiranDisplayConfigItem *>(m_btnGroup->checkedButton());
     item->alterRotateDrect(rotateDrect);
+}
+
+void KiranDisplayConfigItemContain::changeItemEnabled(const bool &enbled)
+{
+    if(Q_UNLIKELY(!m_btnGroup)) return;
+
+    KiranDisplayConfigItem *item = static_cast<KiranDisplayConfigItem *>(m_btnGroup->checkedButton());
+    item->changeEnabled(enbled);
+    emit sigItemEnableChanged(item->enabled());
 }
 
 QString KiranDisplayConfigItemContain::getCurMonitorText()
@@ -221,7 +230,8 @@ void KiranDisplayConfigItemContain::onItemClicked(QAbstractButton *btn, bool isC
     if(isChecked)
     {
         m_curCheckedItem = static_cast<KiranDisplayConfigItem *>(btn);
-        emit buttonChecked(m_curCheckedItem->monitorPath());
+        emit sigButtonChecked(m_curCheckedItem->monitorPath());
+        emit sigItemEnableChanged(m_curCheckedItem->enabled());
     }
 }
 
@@ -260,7 +270,14 @@ void KiranDisplayConfigItemContain::paintEvent(QPaintEvent *event)
     //        painter.drawLine(m_anchorPos.line);
     //    }
 }
-
+/*!
+ * \brief KiranDisplayConfigItemContain::getAvailableGeometry 获取指定方向上的Anchor Rect
+ * \param g1
+ * \param g2
+ * \param drect
+ * \param magnet
+ * \return
+ */
 KiranDisplayConfigItemContain::AnchorRectPos KiranDisplayConfigItemContain::getAvailableGeometry(const QRect &g1, const QRect &g2, const KiranDisplayConfigItem::AnchorByDrect &drect, const bool &magnet)
 {
     QRect r = g1;
@@ -394,7 +411,13 @@ KiranDisplayConfigItemContain::AnchorRectPos KiranDisplayConfigItemContain::getA
     ret.zoomPair = zoomPair;
     return ret;
 }
-
+/*!
+ * \brief KiranDisplayConfigItemContain::getAvailableGeometrys 获取所有方向的Anchor Rect
+ * \param g1
+ * \param g2
+ * \param magnet
+ * \return
+ */
 QList<KiranDisplayConfigItemContain::AnchorRectPos> KiranDisplayConfigItemContain::getAvailableGeometrys(const QRect &g1, const QRect &g2, const bool &magnet)
 {
     QList<KiranDisplayConfigItemContain::AnchorRectPos>  ret;

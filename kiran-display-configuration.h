@@ -55,6 +55,7 @@ private:
     void selectResolutionComboboxItem(QComboBox *comboBox, const int &w, const int &h);
     void selectRefreshRateComboboxItem(QComboBox *comboBox, const int &r);
     bool isCopyMode();
+    void refreshWidget();
 
 private:
     Ui::KiranDisplayConfiguration *ui;

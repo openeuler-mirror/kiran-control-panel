@@ -56,6 +56,8 @@ public:
     void setMonitorPath(const QString &monitorPath);
 
     void setEnabled(bool enabled);
+    void changeEnabled(const bool &enabled);
+    bool enabled() const;
 
 signals:
     void sigDrag(QAbstractButton* btn);

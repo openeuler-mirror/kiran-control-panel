@@ -18,6 +18,7 @@ public:
 
     QVariantMap getData();
     void setData(const QVariantList &list, const bool &clearChecked=false);
+    void changeItemDisabled(const bool &disabled);
 
 Q_SIGNALS:
     void buttonChecked(QString monitorPath);
@@ -28,7 +29,6 @@ private slots:
     void on_pushButton_vertical_clicked();
     void on_pushButton_right_clicked();
     void on_pushButton_identifying_clicked();
-    void onButtonChecked(const QString &monitorPath);
 
 private:
     Ui::KiranDisplayConfigurationPanel *ui;

@@ -45,7 +45,7 @@ Q_DECLARE_METATYPE(ListDisplayModesStu)
 
 namespace KiranDisplayConfigGlobal
 {
-QVariant Display(const QString &function, const QVariantList &paras=QVariantList());
+QVariant Display(const QString &function, const QVariantList &paras=QVariantList(), int *flag=nullptr);
 QVariant DisplayProperty( const char *name);
 
 template<typename T>
