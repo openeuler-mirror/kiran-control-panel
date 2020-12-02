@@ -15,6 +15,7 @@ KiranTimeZoneItem::KiranTimeZoneItem(const ZoneInfo zoneInfo, QWidget *parent) :
 {
     ui->setupUi(this);
 
+    setFocusPolicy(Qt::TabFocus);
     this->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Fixed);
     this->setFixedHeight(40);
 

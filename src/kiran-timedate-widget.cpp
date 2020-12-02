@@ -2,6 +2,7 @@
 #include "ui_kiran-timedate-widget.h"
 #include "tab-item.h"
 #include "kiran-timedate-global-data.h"
+#include "mask-widget.h"
 
 #include <QDebug>
 #include <QDateTime>
@@ -21,6 +22,7 @@ KiranTimeDateWidget::KiranTimeDateWidget(QWidget *parent)
     : KiranTitlebarWindow()
     , ui(new Ui::KiranTimeDateWidget)
     , m_updateTimer(0)
+    , m_maskWidget(new MaskWidget(this))
 {
     ui->setupUi(getWindowContentWidget());
     initUI();
@@ -118,7 +120,13 @@ void KiranTimeDateWidget::initUI()
 
         if( enable!=KiranTimeDateGlobalData::instance()->systemNTP() ){
             QPair<bool,QString> setNtpRes;
+
+            setMaskWidgetVisible(true);
+            qInfo() << "start set ntp";
             setNtpRes = ComKylinsecKiranSystemDaemonTimeDateInterface::instance()->SyncSetNTP(enable);
+            setMaskWidgetVisible(false);
+            qInfo() << "end set ntp";
+
             if(!setNtpRes.first){
                 qWarning() << "SetNTP failed," << setNtpRes.second;
                 ui->checkbox_autoSync->setCheckState(enable?Qt::Unchecked:Qt::Checked);
@@ -142,6 +150,7 @@ void KiranTimeDateWidget::initUI()
     connect(globalData,&KiranTimeDateGlobalData::systemCanNTPChanged,[this](bool can_ntp){
         ui->checkbox_autoSync->setEnabled(can_ntp);
     });
+
     //获取ntp是否可开启
     bool can_ntp = globalData->systemCanNTP();
     ui->checkbox_autoSync->setChecked(false);
@@ -158,14 +167,18 @@ void KiranTimeDateWidget::initUI()
         bool bRes = true;
         QString error;
         if(ui->tabList->currentRow()==PAGE_TIMEZONE_SETTING){
+            setMaskWidgetVisible(true);
             bRes = ui->timezone->save();
+            setMaskWidgetVisible(false);
         }else if(ui->tabList->currentRow()==PAGE_DATETIME_SETTING){
             QDateTime dateTime;
             qint64 microsecondsSinceEpoch;
             dateTime.setDate(ui->widget_setDate->currentDate());
             dateTime.setTime(ui->widget_setTime->currentTime());
             microsecondsSinceEpoch = dateTime.toMSecsSinceEpoch()*1000;
+            setMaskWidgetVisible(true);
             QPair<bool,QString> res = ComKylinsecKiranSystemDaemonTimeDateInterface::instance()->SyncSetTime(microsecondsSinceEpoch,false);
+            setMaskWidgetVisible(false);
             bRes = res.first;
         }
     });
@@ -231,5 +244,13 @@ void KiranTimeDateWidget::timerEvent(QTimerEvent *event)
         updateTimeLabel();
     }else{
         QWidget::timerEvent(event);
+    }
+}
+
+void KiranTimeDateWidget::setMaskWidgetVisible(bool visible)
+{
+    m_maskWidget->setVisible(visible);
+    if( visible ){
+        this->stackUnder(m_maskWidget);
     }
 }

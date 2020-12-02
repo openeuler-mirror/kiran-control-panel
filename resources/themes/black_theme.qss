@@ -29,6 +29,12 @@ KiranTimeZoneItem{
     background:rgba(255,255,255,0);
     border-top:1px solid rgba(255,255,255,0.1);
 }
+KiranTimeZoneItem:focus{
+    background:rgba(255,255,255,0.05);
+}
+KiranTimeZoneItem:hover{
+    background:rgba(255,255,255,0.05);
+}
 KiranTimeZoneItem[isSelected="true"]{
     background:rgb(67,163,242);
 }

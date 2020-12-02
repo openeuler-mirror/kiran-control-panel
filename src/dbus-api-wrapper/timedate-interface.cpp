@@ -49,7 +49,6 @@ ComKylinsecKiranSystemDaemonTimeDateInterface::ComKylinsecKiranSystemDaemonTimeD
                                          "org.freedesktop.DBus.Properties",
                                          "PropertiesChanged",this,SLOT(handlePropertiesChanged(QDBusMessage)));
 
-    setTimeout(300);
 }
 
 ComKylinsecKiranSystemDaemonTimeDateInterface::~ComKylinsecKiranSystemDaemonTimeDateInterface()

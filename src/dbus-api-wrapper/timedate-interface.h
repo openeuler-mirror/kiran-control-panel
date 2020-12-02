@@ -105,7 +105,6 @@ private:
         QDBusPendingCall pendingCall = asyncCallWithArgumentList(methondName,args);
         QDBusPendingCallWatcher watcher(pendingCall);
         QEventLoop loop;
-
         connect(&watcher,&QDBusPendingCallWatcher::finished,[&res,&loop](QDBusPendingCallWatcher*watcher){
             QDBusMessage msg = watcher->reply();
             if(msg.type()==QDBusMessage::ErrorMessage){
@@ -121,8 +120,7 @@ private:
             return res;
         }
 
-        loop.exec(QEventLoop::ExcludeUserInputEvents);
-
+        loop.exec(QEventLoop::AllEvents);
         return res;
     }
 public Q_SLOTS: // METHODS
