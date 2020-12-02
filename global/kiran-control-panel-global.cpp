@@ -17,11 +17,6 @@
 #define KIRAN_MODULE_ITEM_ICON_PATH "/usr/share/icons/Kiran/emblems/scalable/"
 #define KIRAN_MODULE_ITEM_FUNCTION_ICON_PATH "/usr/share/icons/Kiran/emblems/scalable/"
 
-typedef void (*GetSubItemsFun)(QStringList &nameList, QStringList &iconList, QStringList &keyList);
-typedef QWidget*(*GetSubItemWidgetFun)(QString);
-typedef QString(*GetTranslationPathFun)();
-typedef bool(*HasUnsavedOptionsFun)();
-
 QString gLocaleName;
 /*!
  * \brief KiranControlPanelGlobal::getModuleCLass
@@ -144,7 +139,11 @@ QStringList KiranControlPanelGlobal::ModuleClassStu::itemKeys() const
     QMapIterator<int, KiranControlPanelGlobal::ModuleItem> i(itemMap);
     while (i.hasNext()) {
         i.next();
-        ret << i.value().subKeyList;
+        int count = i.value().subItems.count();
+        for(int j=0; j<count; ++j)
+        {
+            ret << i.value().subItems.at(j).key;
+        }
     }
     return ret;
 }
@@ -152,33 +151,22 @@ QStringList KiranControlPanelGlobal::ModuleClassStu::itemKeys() const
 void KiranControlPanelGlobal::ModuleItemStu::getModuleItemSubInfo()
 {
     openPlugin();
-    auto fun = getModuleItemFun<GetSubItemsFun>("getSubitems");
+    auto fun = getModuleItemFun<GetSubItemsFun*>("getSubitems");
     if(!fun) return;
 
-    subNameList.clear();
-    subIconList.clear();
-    subKeyList.clear();
-    fun(subNameList, subIconList, subKeyList);
-    if(subNameList.count() != subIconList.count() || subIconList.count() != subKeyList.count())
+    subItems = fun();
+    //如果某一功能项关键字表为空,则使用功能项名称作为搜索关键字.
+    int count = subItems.count();
+    for(int i=0; i<count; ++i)
     {
-        qWarning() << "module name、icon、key quantity discrepancy!";
-    }
-    else
-    {
-        //如果某一功能项关键字表为空,则使用功能项名称作为搜索关键字.
-        int count = subNameList.count();
-        for(int i=0; i<count; ++i)
+        if(subItems.at(i).key.isEmpty())
         {
-            if(subKeyList.at(i).isEmpty())
-            {
-                subKeyList[i] = subNameList.at(i);
-            }
-            //给功能项图标添加全路径.
-            subIconList[i] = KIRAN_MODULE_ITEM_FUNCTION_ICON_PATH + subIconList.at(i);
+            subItems[i].key = subItems.at(i).name;
         }
+        //给功能项图标添加全路径.
+        subItems[i].icon = KIRAN_MODULE_ITEM_FUNCTION_ICON_PATH + subItems.at(i).icon;
     }
-    //如果模块中所有功能项关键字都为空,则整体使用功能项名称作为关键字.
-    if(subKeyList.isEmpty()) subKeyList = subNameList;
+
     closePlugin();
 }
 
@@ -192,7 +180,7 @@ QWidget *KiranControlPanelGlobal::ModuleItemStu::createModuleItemSubWgt(const QS
         qApp->installTranslator(&translator);
 
     openPlugin();
-    auto fun = getModuleItemFun<GetSubItemWidgetFun>("getSubitemWidget");
+    auto fun = getModuleItemFun<GetSubItemWidgetFun*>("getSubitemWidget");
     if(!fun) return nullptr;
     auto ret = fun(name);
     //closePlugin();
@@ -253,7 +241,7 @@ void KiranControlPanelGlobal::ModuleItemStu::closePlugin()
 bool KiranControlPanelGlobal::ModuleItemStu::hasUnsavedOptions()
 {
     openPlugin();
-    auto fun = getModuleItemFun<HasUnsavedOptionsFun>("hasUnsavedOptions");
+    auto fun = getModuleItemFun<HasUnsavedOptionsFun*>("hasUnsavedOptions");
     if(!fun) return false;
     auto ret = fun();
     closePlugin();
@@ -283,7 +271,7 @@ void KiranControlPanelGlobal::ModuleItemStu::removeTranslator()
 void KiranControlPanelGlobal::ModuleItemStu::getTranslationPath()
 {
     openPlugin();
-    auto fun = getModuleItemFun<GetTranslationPathFun>("getTranslationPath");
+    auto fun = getModuleItemFun<GetTranslationPathFun*>("getTranslationPath");
     if(!fun) return;
     translationPath = fun();
     closePlugin();

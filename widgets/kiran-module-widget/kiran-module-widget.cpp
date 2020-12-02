@@ -27,8 +27,9 @@ KiranModuleWidget::~KiranModuleWidget()
 {
     if(m_curCenterWidget)
     {
+        //模块窗口释放表示程序退出了。
         //窗口关闭时,右侧的插件实例对象可能没有delete,同时插件可能没有dlclose.这里关闭插件,释放实例.
-        closeCenterWidgetPlugin(ui->listWidget_module->currentItem());
+        //closeCenterWidgetPlugin(ui->listWidget_module->currentItem());
     }
     delete ui;
 }
@@ -52,10 +53,7 @@ void KiranModuleWidget::setData(QMap<int, ModuleItem> *data)
     while (i.hasNext()) {
         i.next();
         ModuleItem &moduleItem = (*data)[i.key()];
-        QStringList names = moduleItem.subNameList;
-        QStringList icons = moduleItem.subIconList;
-        QStringList keys = moduleItem.subKeyList;
-        int count = names.count();
+        int count = moduleItem.subItems.count();
         //当模块数量为1,且模块中的功能项目小于等于1时.
         if(data->count()==1 && count <= 1)
         {
@@ -79,11 +77,11 @@ void KiranModuleWidget::setData(QMap<int, ModuleItem> *data)
         {
             QListWidgetItem *item = new QListWidgetItem();
             item->setSizeHint(QSize(item->sizeHint().width(), 60));
-            item->setText(names.at(j));
-            item->setIcon(QIcon(icons.at(j)));
+            item->setText(moduleItem.subItems.at(j).name);
+            item->setIcon(QIcon(moduleItem.subItems.at(j).icon));
             item->setData(MODULE_STU_POINTER, QVariant::fromValue(&(*data)[i.key()]));//item中保存数据机构体指针,数据结构体中保存item指针.双向绑定,方便寻址减少计算量.
-            item->setData(FUNCTION_NAME, names.at(j));//存储功能项的名称,当切换为此item时,通过功能项名称获取功能项实例.
-            item->setData(FUNCTION_KEY, keys.at(j));
+            item->setData(FUNCTION_NAME, moduleItem.subItems.at(j).name);//存储功能项的名称,当切换为此item时,通过功能项名称获取功能项实例.
+            item->setData(FUNCTION_KEY, moduleItem.subItems.at(j).key);
             item->setToolTip(moduleItem.getCommentTranslate());
             ui->listWidget_module->addItem(item);
         }
@@ -124,7 +122,7 @@ bool KiranModuleWidget::checkHasUnSaved()
 
         if(preModuleItem->hasUnsavedOptions())
         {
-            KiranMessageBox box;
+            KiranMessageBox box(this);
             box.setTitle(tr("警告"));
 
             QPushButton saveBtn;

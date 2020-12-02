@@ -10,14 +10,14 @@
 #include "../../interface/kiran-control-panel-module-interface.h"
 #include "dialog001.h"
 #include "dialog002.h"
-extern bool gHasUnsavedOptions;
-void getSubitems(QStringList &nameList, QStringList &iconList, QStringList &keyList)
-{
-    nameList << "dialog001"   << "dialog002";
-    iconList << "avatar-default" << "avatar-default";
-    keyList  << "001"         << "002" ;
-}
 
+using namespace KiranControlPanelModuleInterface;
+extern bool gHasUnsavedOptions;
+
+QList<SubItem> getSubitems()
+{
+    return QList<SubItem>() << SubItem("dialog001", "avatar-default", "001") << SubItem("dialog002", "avatar-default", "002");
+}
 
 QWidget *getSubitemWidget(QString name)
 {

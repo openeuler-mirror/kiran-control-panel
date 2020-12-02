@@ -2,11 +2,13 @@
 #define KIRANCONTROLPANELGLOBAL_H
 
 #include <dlfcn.h>
+#include "../interface/kiran-control-panel-module-interface.h"
 #include <QWidget>
 #include <QString>
 #include <QMap>
 #include <QHash>
 #include <QDebug>
+using namespace KiranControlPanelModuleInterface;
 
 
 class QListWidgetItem;
@@ -19,9 +21,7 @@ typedef struct ModuleItemStu{
     QString comment;
     QString commentZh;
     QString icon;
-    QStringList subNameList;
-    QStringList subIconList;
-    QStringList subKeyList;
+    QList<SubItem> subItems;
     QString translationPath;
 
     QString category;

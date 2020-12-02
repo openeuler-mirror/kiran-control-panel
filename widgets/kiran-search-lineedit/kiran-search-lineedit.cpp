@@ -11,6 +11,7 @@
 #include <QListView>
 #include <QEvent>
 #include <QStandardItemModel>
+#include <QDebug>
 
 KiranSearchLineEdit::KiranSearchLineEdit(const QStringList &completerKeys, QWidget *parent) : QLineEdit(parent), m_completerKeys(completerKeys)
 {
@@ -37,6 +38,7 @@ KiranSearchLineEdit::KiranSearchLineEdit(const QStringList &completerKeys, QWidg
 
     //popup窗口
     QListView *listView = new QListView();
+    m_listView = listView;
     listView->installEventFilter(this);
     listView->setMouseTracking(true);
     //需要一个module,没有自带module.
@@ -55,20 +57,34 @@ KiranSearchLineEdit::KiranSearchLineEdit(const QStringList &completerKeys, QWidg
 
     connect(this, &KiranSearchLineEdit::editingFinished, this, [=](){emit sigSearch(text());});
 
-    QString style = "QAbstractItemView {border: 1px solid #43a3f2;border-top: 0px;border-bottom-right-radius: 6px;border-bottom-left-radius: 6px;background-color: #222222; color:#ffffff;}"\
-                    "QAbstractItemView::item {padding: 0px 16px 0px 10px;height: 40px; border-top: 1px solid rgba(255, 255, 255, 30);}"\
-                    "QAbstractItemView::item:hover{ background-color: rgba(255, 255, 255, 30);} " \
-                    "QAbstractItemView::item:selected{ background-color: rgba(255, 255, 255, 50);} ";
-
-    listView->setStyleSheet(style);
-
     setStyleSheet("QLineEdit { color:#ffffff; border-radius: 6px; background: rgba(0,0,0,0);border: 1px solid rgba(255,255,255,20);}");;
 }
 //只有QListView *listView = new QListView();对象被监听
 bool KiranSearchLineEdit::eventFilter(QObject *obj, QEvent *event)
 {
     if (event->type() == QEvent::Show) {
-        setStyleSheet("QLineEdit { color:#ffffff; border: 1px solid #43a3f2;border-bottom: 0px;background-color: rgba(255, 255, 255, 0);border-radius: 6px;border-bottom-right-radius: 0px;border-bottom-left-radius: 0px;}");
+        if(m_listView->pos().y() > mapToGlobal( this->pos()).y())
+        {
+            setStyleSheet("QLineEdit { color:#ffffff; border: 1px solid #43a3f2;border-bottom: 0px;background-color: rgba(255, 255, 255, 0);border-radius: 6px;border-bottom-right-radius: 0px;border-bottom-left-radius: 0px;}");
+
+            QString style = "QAbstractItemView {border: 1px solid #43a3f2;border-top: 0px;border-bottom-right-radius: 6px;border-bottom-left-radius: 6px;background-color: #222222; color:#ffffff;}"\
+                            "QAbstractItemView::item {padding: 0px 16px 0px 10px;height: 40px; border-top: 1px solid rgba(255, 255, 255, 30);}"\
+                            "QAbstractItemView::item:hover{ background-color: rgba(255, 255, 255, 30);} " \
+                            "QAbstractItemView::item:selected{ background-color: rgba(255, 255, 255, 50);} ";
+
+            m_listView->setStyleSheet(style);
+        }
+        else
+        {
+            setStyleSheet("QLineEdit { color:#ffffff; border: 1px solid #43a3f2;border-top: 0px;background-color: rgba(255, 255, 255, 0);border-radius: 6px;border-top-right-radius: 0px;border-top-left-radius: 0px;}");
+
+            QString style = "QAbstractItemView {border: 1px solid #43a3f2;border-bottom: 0px;border-top-right-radius: 6px;border-top-left-radius: 6px;background-color: #222222; color:#ffffff;}"\
+                            "QAbstractItemView::item {padding: 0px 16px 0px 10px;height: 40px; border-top: 1px solid rgba(255, 255, 255, 30);}"\
+                            "QAbstractItemView::item:hover{ background-color: rgba(255, 255, 255, 30);} " \
+                            "QAbstractItemView::item:selected{ background-color: rgba(255, 255, 255, 50);} ";
+
+            m_listView->setStyleSheet(style);
+        }
         return true;
     }
     else if(event->type() == QEvent::Hide)

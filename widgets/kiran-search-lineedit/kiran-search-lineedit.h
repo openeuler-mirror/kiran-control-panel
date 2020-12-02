@@ -8,6 +8,7 @@
 
 #include <QLineEdit>
 
+class QListView;
 class KiranSearchLineEdit : public QLineEdit
 {
     Q_OBJECT
@@ -22,6 +23,8 @@ public slots:
 private:
     QStringList m_completerKeys;
     bool eventFilter(QObject *obj, QEvent *event);
+
+    QListView *m_listView;
 };
 
 #endif // KIRANSEARCHLINEEDIT_H

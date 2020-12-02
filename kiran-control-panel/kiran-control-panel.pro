@@ -36,7 +36,8 @@ HEADERS += \
     kiran-control-panel.h \
     ../global/kiran-control-panel-global.h \
     kiran-module-class-listwidget.h \
-    kiran-module-class-listwidget-itemwidget.h
+    kiran-module-class-listwidget-itemwidget.h \
+    ../interface/kiran-control-panel-module-interface.h
 
 FORMS += \
     kiran-control-panel.ui
@@ -76,4 +77,3 @@ INSTALLS += target \
 RESOURCES += \
     image.qrc
 
-CONFIG += console
