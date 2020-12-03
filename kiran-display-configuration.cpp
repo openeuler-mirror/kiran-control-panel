@@ -29,7 +29,7 @@ KiranDisplayConfiguration::~KiranDisplayConfiguration()
     delete ui;
 }
 
-bool KiranDisplayConfiguration::monitorsHasChanged()
+bool KiranDisplayConfiguration::hasUnsavedOptions()
 {
     if(ui->stackedWidget->currentIndex() == 0)//复制模式
     {

@@ -2,6 +2,7 @@
 #define KIRANDISPLAYCONFIGURATION_H
 
 #include "kiran-display-config-global.h"
+#include "kiran-display-module-base.h"
 #include <QWidget>
 #include <QComboBox>
 
@@ -12,14 +13,14 @@ class KiranDisplayConfiguration;
 }
 
 class QButtonGroup;
-class KiranDisplayConfiguration : public QWidget
+class KiranDisplayConfiguration : public QWidget, public KiranDisplayModuleBase
 {
     Q_OBJECT
 
 public:
     explicit KiranDisplayConfiguration(QWidget *parent = 0);
     ~KiranDisplayConfiguration();
-    bool monitorsHasChanged();
+    bool hasUnsavedOptions() override;
 
 Q_SIGNALS:
     void sigClose();

@@ -31,7 +31,8 @@ SOURCES += \
     kiran-combobox.cpp \
     kiran-display-config-global.cpp \
     kiran-display-config-identifying.cpp \
-    interface.cpp
+    interface.cpp \
+    kiran-display-module-base.cpp
 
 HEADERS += \
         kiran-display-configuration.h \
@@ -42,7 +43,8 @@ HEADERS += \
     kiran-combobox.h \
     kiran-display-config-global.h \
     kiran-display-config-identifying.h \
-    interface.h
+    interface.h \
+    kiran-display-module-base.h
 
 FORMS += \
         kiran-display-configuration.ui \
@@ -59,8 +61,8 @@ TRANSLATIONS += \
 
 LIBS += -L/usr/lib -lkiranwidgets-qt5
 
-TEMPLATE = app
-#TEMPLATE = lib
+#TEMPLATE = app
+TEMPLATE = lib
 
 equals(TEMPLATE, app){
 SOURCES += main.cpp

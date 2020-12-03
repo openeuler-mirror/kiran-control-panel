@@ -12,7 +12,7 @@
 
 using namespace KiranControlPanelModuleInterface;
 
-extern bool gHasUnsavedOptions;
+extern KiranDisplayModuleBase *gCurWidget;
 
 QString gName = "显示设置";
 QList<SubItem> getSubitems()
@@ -22,10 +22,11 @@ QList<SubItem> getSubitems()
 
 QWidget *getSubitemWidget(QString name)
 {
-    gHasUnsavedOptions = false;
     if(gName == name)
     {
-        return new KiranDisplayConfiguration();
+        auto widget = new KiranDisplayConfiguration();
+        gCurWidget = widget;
+        return widget;
     }
 
     return nullptr;
@@ -38,7 +39,8 @@ QString getTranslationPath()
 
 bool hasUnsavedOptions()
 {
-    return gHasUnsavedOptions;
+    if(!gCurWidget) return false;
+    return gCurWidget->hasUnsavedOptions();
 }
 
 #endif // INTERFACE_H
