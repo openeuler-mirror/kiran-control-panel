@@ -18,7 +18,7 @@
 控制面板：   
 [root@localhost ~]# /usr/bin/kiran-control-panel   
 模块独立运行:   
-[root@localhost ~]# /usr/bin/kiran-control-panel-model-runalone
+[root@localhost ~]# /usr/bin/kiran-control-panel-module-runalone
 # 模块开发接口文档
 doc下"模块接口文档.doc"
 # 模块demo
