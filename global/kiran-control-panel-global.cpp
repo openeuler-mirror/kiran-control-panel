@@ -169,7 +169,7 @@ void KiranControlPanelGlobal::ModuleItemStu::getModuleItemSubInfo()
     closePlugin();
 }
 
-QWidget *KiranControlPanelGlobal::ModuleItemStu::createModuleItemSubWgt(const QString &name)
+void KiranControlPanelGlobal::ModuleItemStu::loadTranslator()
 {
     QString qmFile = QString("%1.%2.qm").arg(translationPath).arg(gLocaleName);
     QTranslator translator;
@@ -177,8 +177,18 @@ QWidget *KiranControlPanelGlobal::ModuleItemStu::createModuleItemSubWgt(const QS
         qDebug() << "load qm: " << qmFile <<  " error.";
     else
         qApp->installTranslator(&translator);
+}
 
+QWidget *KiranControlPanelGlobal::ModuleItemStu::createModuleItemSubWgt(const QString &name)
+{
     openPlugin();
+    QString qmFile = QString("%1.%2.qm").arg(translationPath).arg(gLocaleName);
+    QTranslator translator;
+    if(translator.load(qmFile) == false)
+        qDebug() << "load qm: " << qmFile <<  " error.";
+    else
+        qApp->installTranslator(&translator);
+
     auto fun = getModuleItemFun<GetSubItemWidgetFun*>("getSubitemWidget");
     if(!fun) return nullptr;
     auto ret = fun(name);
@@ -247,22 +257,12 @@ bool KiranControlPanelGlobal::ModuleItemStu::hasUnsavedOptions()
     return ret;
 }
 
-void KiranControlPanelGlobal::ModuleItemStu::loadTranslator()
-{
-    QString qmFile = QString("%1.%2.qm").arg(translationPath).arg(gLocaleName);
-    QTranslator translator;
-    if(translator.load(qmFile) == false)
-        qDebug() << "load qm: " << qmFile <<  " error.";
-    else
-        qApp->installTranslator(&translator);
-}
-
 void KiranControlPanelGlobal::ModuleItemStu::removeTranslator()
 {
     QString qmFile = QString("%1.%2.qm").arg(translationPath).arg(gLocaleName);
     QTranslator translator;
     if(translator.load(qmFile) == false)
-        qDebug() << "load qm: " << qmFile <<  " error.";
+        qDebug() << "remove qm: " << qmFile <<  " error.";
     else
         qApp->removeTranslator(&translator);
 }
@@ -276,7 +276,7 @@ void KiranControlPanelGlobal::ModuleItemStu::getTranslationPath()
     closePlugin();
 
     translationPath = QDir::toNativeSeparators(translationPath);
-    if(!translationPath.endsWith(QDir::separator()))
-        translationPath += QDir::separator();
+//    if(!translationPath.endsWith(QDir::separator()))
+//        translationPath += QDir::separator();
 }
 

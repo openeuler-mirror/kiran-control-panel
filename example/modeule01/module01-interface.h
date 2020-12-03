@@ -18,8 +18,8 @@ QString gName1 = "dialog001";
 QString gName2 = "dialog002";
 QList<SubItem> getSubitems()
 {
-    return QList<SubItem>() << SubItem(gName1, "/usr/share/kiran-control-panel/plugins/iconsavatar-default.svg", "001")
-                            << SubItem(gName2, "/usr/share/kiran-control-panel/plugins/icons/avatar-default.avg", "002");
+    return QList<SubItem>() << SubItem(gName1, "/usr/share/kiran-control-panel/plugins/icons/avatar-default.svg", "001")
+                            << SubItem(gName2, "/usr/share/kiran-control-panel/plugins/icons/avatar-default.svg", "002");
 }
 
 QWidget *getSubitemWidget(QString name)
@@ -39,7 +39,7 @@ QWidget *getSubitemWidget(QString name)
 
 QString getTranslationPath()
 {
-    return "/usr/share/kiran-control-panel/plugins/translate/modeule01";
+    return "/usr/share/kiran-control-panel/plugins/translate/module01";
 }
 
 bool hasUnsavedOptions()
