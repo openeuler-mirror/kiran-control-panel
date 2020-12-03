@@ -43,3 +43,26 @@ TRANSLATIONS += \
     module01.zh_CN.ts \
     module01.en_US.ts
 
+equals(TEMPLATE, lib){
+isEmpty( LIB_DIR ){
+    LIB_DIR = "/usr/lib/"
+}
+}
+target.path = $$DESTDIR/$${LIB_DIR}
+
+translate.files += module01.zh_CN.qm \
+                module01.en_US.qm
+translate.path = /usr/share/kiran-control-panel/plugins/translate
+
+DESKTOP_FILES_PATH = "/usr/share/kiran-control-panel/plugins"
+desktop_files.path = $${DESKTOP_FILES_PATH}
+desktop_files.files += desktop/files/*
+
+DESKTOP_IMAGES_PATH = "/usr/share/kiran-control-panel/plugins/icons"
+desktop_images.path = $${DESKTOP_IMAGES_PATH}
+desktop_images.files += desktop/images/*
+
+INSTALLS += target \
+            translate \
+            desktop_files \
+            desktop_images

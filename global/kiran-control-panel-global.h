@@ -84,7 +84,7 @@ typedef struct ModuleClassStu{
 
     QString getNameTranslate();
     QString getCommentTranslate();
-    QMap<int, ModuleItem> itemMap;
+    QMap<int, ModuleItem> itemMap;//分类中的子模块。
     QStringList itemKeys()const ;
 }ModuleClass;
 

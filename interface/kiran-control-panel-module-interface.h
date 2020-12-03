@@ -9,13 +9,15 @@
 #include <QWidget>
 #include <QStringList>
 
+#define KIRAN_MODULE_ITEM_DESKTOP_PATH "/usr/share/kiran-control-panel/plugins" //插件(模块)desktop文件安装目录。控制面板主程序将从这里读取插件的desktop，加载插件。
+
 namespace KiranControlPanelModuleInterface {
 
 typedef struct SubItemStu{
     /*!
      * \brief SubItemStu 功能项结构体
      * \param name 功能项名
-     * \param icon 功能项图标
+     * \param icon 功能项图标 可以为图标的全路径，或只包含图标名称(将使用系统图标)。
      * \param key  功能项搜索关键字
      */
     SubItemStu(const QString &name, const QString &icon, const QString &key){this->name = name; this->icon = icon; this->key = key;}

@@ -7,26 +7,29 @@
 #define INTERFACE_H
 
 #include <QDebug>
-#include "../../interface/kiran-control-panel-module-interface.h"
+#include "kiran-control-panel-module-interface.h"
 #include "dialog001.h"
 #include "dialog002.h"
 
 using namespace KiranControlPanelModuleInterface;
 extern bool gHasUnsavedOptions;
 
+QString gName1 = "dialog001";
+QString gName2 = "dialog002";
 QList<SubItem> getSubitems()
 {
-    return QList<SubItem>() << SubItem("dialog001", "avatar-default", "001") << SubItem("dialog002", "avatar-default", "002");
+    return QList<SubItem>() << SubItem(gName1, "/usr/share/kiran-control-panel/plugins/iconsavatar-default.svg", "001")
+                            << SubItem(gName2, "/usr/share/kiran-control-panel/plugins/icons/avatar-default.avg", "002");
 }
 
 QWidget *getSubitemWidget(QString name)
 {
     gHasUnsavedOptions = false;
-    if("dialog001" == name)
+    if(gName1 == name)
     {
         return new Dialog001();
     }
-    else if("dialog002" == name)
+    else if(gName2 == name)
     {
         return new Dialog002();
     }
@@ -36,9 +39,7 @@ QWidget *getSubitemWidget(QString name)
 
 QString getTranslationPath()
 {
-
-
-    return "/root/kiran-control-panel/example/modeule01/";
+    return "/usr/share/kiran-control-panel/plugins/translate/modeule01";
 }
 
 bool hasUnsavedOptions()

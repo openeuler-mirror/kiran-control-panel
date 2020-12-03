@@ -11,11 +11,10 @@
 #include <QTranslator>
 #include <QDebug>
 
-#define KIRAN_MODULE_CLASS_DESKTOP_PATH "/usr/share/applications/kiran-control-panel/class"
-#define KIRAN_MODULE_ITEM_DESKTOP_PATH "/usr/share/applications/kiran-control-panel/module"
-#define KIRAN_MODULE_CLASS_ICON_PATH "/usr/share/icons/Kiran/emblems/scalable/"
-#define KIRAN_MODULE_ITEM_ICON_PATH "/usr/share/icons/Kiran/emblems/scalable/"
-#define KIRAN_MODULE_ITEM_FUNCTION_ICON_PATH "/usr/share/icons/Kiran/emblems/scalable/"
+#define KIRAN_MODULE_CLASS_DESKTOP_PATH "/usr/share/kiran-control-panel/categories"//分类desktop文件所在目录。
+#define KIRAN_MODULE_CLASS_ICON_PATH QString("/usr/share/kiran-control-panel/icons")//分类图标目录。
+#define KIRAN_MODULE_ITEM_ICON_PATH ""
+#define KIRAN_MODULE_ITEM_FUNCTION_ICON_PATH ""
 
 QString gLocaleName;
 /*!
@@ -38,7 +37,7 @@ QMap<int, KiranControlPanelGlobal::ModuleClass> KiranControlPanelGlobal::getModu
         moduleClass.nameZh = QString::fromUtf8(settings.value("Name[zh_CN]").toString().toLatin1().data());
         moduleClass.comment = settings.value("Comment").toString();
         moduleClass.commentZh = QString::fromUtf8(settings.value("Comment[zh_CN]").toString().toLatin1().data());
-        moduleClass.icon = KIRAN_MODULE_CLASS_ICON_PATH+settings.value("Icon").toString();
+        moduleClass.icon = KIRAN_MODULE_CLASS_ICON_PATH+QDir::separator()+settings.value("Icon").toString();
         QVariantList keys = settings.value("Keywords").toList();
         foreach (QVariant var, keys) {
             moduleClass.keywords <<QString::fromUtf8(var.toString().toLatin1().data());
@@ -172,7 +171,7 @@ void KiranControlPanelGlobal::ModuleItemStu::getModuleItemSubInfo()
 
 QWidget *KiranControlPanelGlobal::ModuleItemStu::createModuleItemSubWgt(const QString &name)
 {
-    QString qmFile = QString("%1%2.%3.qm").arg(translationPath).arg(this->name).arg(gLocaleName);
+    QString qmFile = QString("%1.%2.qm").arg(translationPath).arg(gLocaleName);
     QTranslator translator;
     if(translator.load(qmFile) == false)
         qDebug() << "load qm: " << qmFile <<  " error.";
@@ -250,7 +249,7 @@ bool KiranControlPanelGlobal::ModuleItemStu::hasUnsavedOptions()
 
 void KiranControlPanelGlobal::ModuleItemStu::loadTranslator()
 {
-    QString qmFile = QString("%1%2.%3.qm").arg(translationPath).arg(this->name).arg(gLocaleName);
+    QString qmFile = QString("%1.%2.qm").arg(translationPath).arg(gLocaleName);
     QTranslator translator;
     if(translator.load(qmFile) == false)
         qDebug() << "load qm: " << qmFile <<  " error.";
@@ -260,7 +259,7 @@ void KiranControlPanelGlobal::ModuleItemStu::loadTranslator()
 
 void KiranControlPanelGlobal::ModuleItemStu::removeTranslator()
 {
-    QString qmFile = QString("%1%2.%3.qm").arg(translationPath).arg(this->name).arg(gLocaleName);
+    QString qmFile = QString("%1.%2.qm").arg(translationPath).arg(gLocaleName);
     QTranslator translator;
     if(translator.load(qmFile) == false)
         qDebug() << "load qm: " << qmFile <<  " error.";

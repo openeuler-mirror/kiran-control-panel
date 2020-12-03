@@ -25,8 +25,9 @@ doc下"模块接口文档.doc"
 example目录下模块model01。  
 #### 模块注意事项：   
 1、接口头文件名："kiran-control-panel-module-interface.h"   
-2、getSubitemWidget是通过getSubitems给出的name创建窗口,所以这两处要一致.   
-3、getSubitems返回的nameList,iconList,keyList中的元素个数须保证一致。keyList中的元素可以存在空字符。   
+2、QList<SubItem> getSubitems() 接口返回值中SubItem结构体的icon字段，可以为图标的全路径，或只包含图标名称(将使用系统图标)。
+3、`getSubitemWidget是通过getSubitems给出的name创建窗口,所以这两处要一致.`   
+4、 `getTranslationPath 只需返回全路径+翻译文件名，无需添加翻译文件后缀。如：‘/usr/share/kiran-control-panel/module/kiran-display-tools/kiran-display-tools.*_*.qm’ 只需返回 ‘/usr/share/kiran-control-panel/module/kiran-display-tools/kiran-display-tools’即可，主程序将根据当前翻译类型选择合适的翻译文件。`
 
 ## Desktop文件
 #### 分类描述文件的格式如下:
@@ -47,13 +48,10 @@ Comment=font settings
 Comment[zh_CN]=系统字体设置  
 Icon=fonts  
 Weight=1  
-Category=accounts      #Category对应分类描述文件中的Name字段。  
+Category=accounts      #`Category对应分类描述文件中的Name字段。`  
 PluginFile=/usr/share/kiran-control-center/plugins/libaccounts.so  
 
 #### Desktop文件注意事项:
-1、模块的desktop文件中模块的权重Weight字段在同一个分类组中不能出现重复.  
-2、分类的desktop文件存放的目录 "/usr/share/applications/kiran-control-panel/class"  
-  模块的desktop文件存放的目录  "/usr/share/applications/kiran-control-panel/module"  
-  图标存放的目录 "/usr/share/icons/Kiran/emblems/scalable/"  
+1、模块的desktop文件中模块的权重Weight字段在同一个分类组中不能出现重复.  。  
 
 
