@@ -14,11 +14,11 @@
 KiranModuleClassListWidget::KiranModuleClassListWidget(QWidget *parent) : QListWidget(parent),m_showText(false)
 {
     installEventFilter(this);
-    setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setAttribute(Qt::WA_Hover,true);
     setStyleSheet(styleSheetStr());
     m_btnGroup = new QButtonGroup(this);
     resize(iconModeWd(), height());
+    setViewportMargins(cListWidgetPadding,12,cListWidgetPadding,12);
 
     //    QGraphicsDropShadowEffect *effect = new QGraphicsDropShadowEffect(this);
     //    effect->setOffset(1, 1);          //设置向哪个方向产生阴影效果(dx,dy)，特别地，(0,0)代表向四周发散
@@ -78,10 +78,6 @@ QString KiranModuleClassListWidget::styleExpandSheetStr()
                     "border-right: 1px solid rgba(255, 255, 255, 20);"\
                     "border-bottom: 0px;"\
                     //                    "border-bottom-left-radius: 8px;"
-                    "padding-left:%1px;"\
-                    "padding-right:%1px;"\
-                    "padding-top:12px;"\
-                    "padding-bottom:12px;"\
                     "background-color:#333333;"\
                     "outline:0px;"\
                     "}"\
@@ -118,10 +114,6 @@ QString KiranModuleClassListWidget::styleSheetStr()
                     "border-right: 1px solid rgba(255, 255, 255, 20);"\
                     "border-bottom: 0px;"\
                     //                    "border-bottom-left-radius: 8px;"
-                    "padding-left:%1px;"\
-                    "padding-right:%1px;"\
-                    "padding-top:12px;"\
-                    "padding-bottom:12px;"\
                     "outline:0px;"\
                     "}"\
                     "QListView::item{"\
