@@ -54,8 +54,8 @@ void KiranModuleClassListWidget::setData(QMap<int, ModuleClass> *data)
 
 void KiranModuleClassListWidget::setIconMode(const bool &iconMode)
 {
-    m_showText = iconMode;
-    setStyleSheet(styleSheetStr());
+    m_showText = !iconMode;
+    iconMode ? setStyleSheet(styleSheetStr()) : setStyleSheet(styleExpandSheetStr());
     QHashIterator<QListWidgetItem *, KiranModuleClassListWidgetItemWidget *> i(m_btns);
     while (i.hasNext()) {
         i.next();
@@ -63,10 +63,10 @@ void KiranModuleClassListWidget::setIconMode(const bool &iconMode)
     }
     //
     QPropertyAnimation *animation = new QPropertyAnimation(this, "geometry");
-    animation->setDuration(iconMode ? 300 : 100 );
+    animation->setDuration(iconMode ? 100 : 300 );
     animation->setStartValue(QRect(0, 0, width(), this->height()));
-    animation->setEndValue(QRect(0, 0, iconMode ? textModeWd() : iconModeWd(), this->height()));
-    animation->setEasingCurve(iconMode ? QEasingCurve::OutBounce : QEasingCurve::InOutQuad);
+    animation->setEndValue(QRect(0, 0, iconMode ? iconModeWd() : textModeWd(), this->height()));
+    animation->setEasingCurve(iconMode ? QEasingCurve::InOutQuad : QEasingCurve::OutBounce);
     animation->start(QAbstractAnimation::DeleteWhenStopped);
 }
 
@@ -142,10 +142,10 @@ bool KiranModuleClassListWidget::eventFilter(QObject * obj, QEvent * event)
     {
         switch (event->type()) {
         case QEvent::HoverEnter:
-            setIconMode(true);
+            setIconMode(false);
             break;
         case QEvent::HoverLeave:
-            setIconMode(false);
+            setIconMode(true);
             break;
         default:
             break;

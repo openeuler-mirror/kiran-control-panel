@@ -1,9 +1,0 @@
-[Desktop Entry]
-Name=Fonts
-Name[zh_CN]=字体
-Comment=font settings
-Comment[zh_CN]=系统字体设置描述
-Icon=avatar-default
-Weight=3
-Category=accounts
-PluginFile=/root/kiran-control-panel/example/build-module01-5_11_1-Debug/libmodule01.so
