@@ -78,9 +78,9 @@ isEmpty( LIB_DIR ){
 
 target.path = $$DESTDIR/$${LIB_DIR}
 
-target1.files += kiran-display-tools.zh_CN.qm \
+translate.files += kiran-display-tools.zh_CN.qm \
                 kiran-display-tools.en_US.qm
-target1.path = /usr/share/kiran-control-panel/module/kiran-display-tools
+translate.path = /usr/share/kiran-control-panel/plugins/kiran-display-tools/translate
 
 
 DESKTOP_FILES_PATH = "/usr/share/kiran-control-panel/plugins"
@@ -88,12 +88,13 @@ desktop_files.path = $${DESKTOP_FILES_PATH}
 desktop_files.files += desktop/files/*
 DEFINES += DESKTOP_FILES_PATHDEFINES=$${DESKTOP_FILES_PATH}
 
-DESKTOP_IMAGES_PATH = "/usr/share/kiran-control-panel/plugins/icons"
+DESKTOP_IMAGES_PATH = "/usr/share/kiran-control-panel/plugins/kiran-display-tools/icons"
 desktop_images.path = $${DESKTOP_IMAGES_PATH}
 desktop_images.files += desktop/images/*
 DEFINES += DESKTOP_IMAGES_PATH_DEFINES=$${DESKTOP_IMAGES_PATH}
 
 
 INSTALLS += target \
-            target1 \
-            desktop_files
+            translate \
+            desktop_files \
+            desktop_images

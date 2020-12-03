@@ -17,7 +17,7 @@ extern bool gHasUnsavedOptions;
 QString gName = "显示设置";
 QList<SubItem> getSubitems()
 {
-    return QList<SubItem>() << SubItem(gName, "/usr/share/kiran-control-panel/plugins/icons/display-settings.svg", "");
+    return QList<SubItem>() << SubItem(gName, "/usr/share/kiran-control-panel/plugins/kiran-display-tools/icons/display-settings.svg", "");
 }
 
 QWidget *getSubitemWidget(QString name)
@@ -33,7 +33,7 @@ QWidget *getSubitemWidget(QString name)
 
 QString getTranslationPath()
 {
-    return "/usr/share/kiran-control-panel/module/kiran-display-tools";
+    return "/usr/share/kiran-control-panel/plugins/kiran-display-tools/translate/kiran-display-tools";
 }
 
 bool hasUnsavedOptions()
