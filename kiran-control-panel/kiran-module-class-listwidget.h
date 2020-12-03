@@ -24,8 +24,7 @@ public:
 signals:
 
 public slots:
-    void setIconMode();
-    void setIconTextMode();
+    void setIconMode(const bool &iconMode=true);
     int iconModeWd();
     int textModeWd();
 
@@ -37,7 +36,6 @@ private:
 private:
     QHash<QListWidgetItem *, KiranModuleClassListWidgetItemWidget *> m_btns;
     int m_step;
-    QTimer *m_timer;
     bool m_showText;
     QButtonGroup *m_btnGroup;
 };

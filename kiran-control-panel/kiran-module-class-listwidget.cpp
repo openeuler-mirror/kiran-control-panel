@@ -8,6 +8,7 @@
 #include <QTimer>
 #include <QButtonGroup>
 #include <QGraphicsDropShadowEffect>
+#include <QPropertyAnimation>
 #include <QDebug>
 
 KiranModuleClassListWidget::KiranModuleClassListWidget(QWidget *parent) : QListWidget(parent),m_showText(false)
@@ -16,16 +17,15 @@ KiranModuleClassListWidget::KiranModuleClassListWidget(QWidget *parent) : QListW
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setAttribute(Qt::WA_Hover,true);
     setStyleSheet(styleSheetStr());
-    initTimer();
     m_btnGroup = new QButtonGroup(this);
-    setFixedWidth(iconModeWd());
+    resize(iconModeWd(), height());
 
-//    QGraphicsDropShadowEffect *effect = new QGraphicsDropShadowEffect(this);
-//    effect->setOffset(1, 1);          //设置向哪个方向产生阴影效果(dx,dy)，特别地，(0,0)代表向四周发散
-//    effect->setColor("#333333");       //设置阴影颜色，也可以setColor(QColor(220,220,220))
-//    effect->setBlurRadius(10);        //设定阴影的模糊半径，数值越大越模糊
-//    setGraphicsEffect(effect);
-//    setSpacing(cClassItemMargin);
+    //    QGraphicsDropShadowEffect *effect = new QGraphicsDropShadowEffect(this);
+    //    effect->setOffset(1, 1);          //设置向哪个方向产生阴影效果(dx,dy)，特别地，(0,0)代表向四周发散
+    //    effect->setColor("#333333");       //设置阴影颜色，也可以setColor(QColor(220,220,220))
+    //    effect->setBlurRadius(10);        //设定阴影的模糊半径，数值越大越模糊
+    //    setGraphicsEffect(effect);
+    //    setSpacing(cClassItemMargin);
 }
 
 void KiranModuleClassListWidget::setData(QMap<int, ModuleClass> *data)
@@ -46,29 +46,28 @@ void KiranModuleClassListWidget::setData(QMap<int, ModuleClass> *data)
         setItemWidget(item, itemWidget);
         m_btns.insert(item, itemWidget);//方便icon模式和text模式切换
     }
-    setIconMode();
+    //setIconMode();
 
     if(count() <= 0) return;
     setCurrentRow(0);
 }
 
-void KiranModuleClassListWidget::setIconMode()
+void KiranModuleClassListWidget::setIconMode(const bool &iconMode)
 {
-    m_showText = false;
-    m_timer->start();
+    m_showText = iconMode;
     setStyleSheet(styleSheetStr());
-}
-
-void KiranModuleClassListWidget::setIconTextMode()
-{
     QHashIterator<QListWidgetItem *, KiranModuleClassListWidgetItemWidget *> i(m_btns);
     while (i.hasNext()) {
         i.next();
-        i.value()->setTextVisible(true);
+        i.value()->setTextVisible(m_showText);
     }
-    m_showText = true;
-    m_timer->start();
-    setStyleSheet(styleExpandSheetStr());
+    //
+    QPropertyAnimation *animation = new QPropertyAnimation(this, "geometry");
+    animation->setDuration(iconMode ? 300 : 100 );
+    animation->setStartValue(QRect(0, 0, width(), this->height()));
+    animation->setEndValue(QRect(0, 0, iconMode ? textModeWd() : iconModeWd(), this->height()));
+    animation->setEasingCurve(iconMode ? QEasingCurve::OutBounce : QEasingCurve::InOutQuad);
+    animation->start(QAbstractAnimation::DeleteWhenStopped);
 }
 
 QString KiranModuleClassListWidget::styleExpandSheetStr()
@@ -78,7 +77,7 @@ QString KiranModuleClassListWidget::styleExpandSheetStr()
                     "border-top: 0px;"\
                     "border-right: 1px solid rgba(255, 255, 255, 20);"\
                     "border-bottom: 0px;"\
-//                    "border-bottom-left-radius: 8px;"
+                    //                    "border-bottom-left-radius: 8px;"
                     "padding-left:%1px;"\
                     "padding-right:%1px;"\
                     "padding-top:12px;"\
@@ -96,34 +95,6 @@ QString KiranModuleClassListWidget::styleExpandSheetStr()
                     "background-color:#43a3f2;"\
                     "}"
                     ).arg(cListWidgetPadding);
-}
-/*!
- * \brief KiranModuleClassListWidget::initTimer 模拟class列表展开的动画效果
- */
-void KiranModuleClassListWidget::initTimer()
-{
-    m_step = (textModeWd()-iconModeWd());  //步长
-
-    m_timer = new QTimer();
-    m_timer->setInterval(1);
-    QObject::connect(m_timer, &QTimer::timeout, [=](){
-        if((!m_showText && width()<=iconModeWd()) || (m_showText && width() >= textModeWd()))
-        {
-            m_timer->stop();
-            if(!m_showText)
-            {
-                QHashIterator<QListWidgetItem *, KiranModuleClassListWidgetItemWidget *> i(m_btns);
-                while (i.hasNext()) {
-                    i.next();
-                    i.value()->setTextVisible(false);
-                }
-            }
-
-            return;
-        }
-
-        setFixedWidth(width() + (m_showText ? m_step : -m_step));
-    });
 }
 /*!
  * \brief KiranModuleClassListWidget::iconModeWd listWidget的总宽度,包括item的宽度+item的Space属性的宽度+listWidget的padding宽度.
@@ -146,7 +117,7 @@ QString KiranModuleClassListWidget::styleSheetStr()
                     "border-top: 0px;"\
                     "border-right: 1px solid rgba(255, 255, 255, 20);"\
                     "border-bottom: 0px;"\
-//                    "border-bottom-left-radius: 8px;"
+                    //                    "border-bottom-left-radius: 8px;"
                     "padding-left:%1px;"\
                     "padding-right:%1px;"\
                     "padding-top:12px;"\
@@ -171,10 +142,10 @@ bool KiranModuleClassListWidget::eventFilter(QObject * obj, QEvent * event)
     {
         switch (event->type()) {
         case QEvent::HoverEnter:
-            setIconTextMode();
+            setIconMode(true);
             break;
         case QEvent::HoverLeave:
-            setIconMode();
+            setIconMode(false);
             break;
         default:
             break;
