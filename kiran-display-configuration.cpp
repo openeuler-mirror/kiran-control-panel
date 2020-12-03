@@ -403,6 +403,7 @@ bool KiranDisplayConfiguration::isCopyMode()
 {
     QStringList listMonitors = Display("ListMonitors").toStringList();
     int count = listMonitors.count();
+    if(count == 1) return false;//如果只有一个屏幕，则为扩展模式。
 
     int x = 0;
     int y = 0;
@@ -436,15 +437,16 @@ void KiranDisplayConfiguration::refreshWidget()
     //如果只有一个屏幕，应当隐藏“复制模式”和“扩展模式”的选项卡。
     QStringList listMonitors = Display("ListMonitors").toStringList();
     ui->tabBtnWidget->setVisible(listMonitors.count() > 1);
-    if(listMonitors.count() <= 1)
-    {
-        onTabChanged(0, true);
-    }
-    else
-    {
+    ui->enable_widget->setVisible(listMonitors.count() > 1);
+//    if(listMonitors.count() <= 1)
+//    {
+//        onTabChanged(0, true);
+//    }
+//    else
+//    {
 
         isCopyMode() ? onTabChanged(0, true) : onTabChanged(1, true);
-    }
+//    }
 }
 
 QVariantMap KiranDisplayConfiguration::getCopyModeUiData()
@@ -480,6 +482,16 @@ QVariantMap KiranDisplayConfiguration::getExtraModeUiData()
             d.insert("enabled", extraMap.value("enabled"));
             d.insert("resolving", extraMap.value("resolving"));
             d.insert("refreshRate", extraMap.value("refreshRate"));
+        }
+        else //如果缓存中还没有暂存数据，则从后台获取。
+        {
+            QString monitorPath = i.key();
+            d.insert("primary", m_primaryMonitorName == MonitorProperty(monitorPath, "name").toString());
+            d.insert("enabled", MonitorProperty(monitorPath, "enabled").toBool());
+
+            DisplayModesStu stu = Monitor<DisplayModesStu>(monitorPath, "GetCurrentMode");
+            d.insert("resolving", QSize(stu.w, stu.h));
+            d.insert("refreshRate", (int)stu.refreshRate);
         }
 
         ret.insert(i.key(), d);
