@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Display settings
+Name[zh_CN]=显示设置
+Comment=Display settings
+Comment=显示设置
+Icon=display-settings.svg
+Weight=1
+Category=Display
+PluginFile=/usr/lib/libkiran-display-tools.so

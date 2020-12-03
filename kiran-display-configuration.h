@@ -19,6 +19,7 @@ class KiranDisplayConfiguration : public QWidget
 public:
     explicit KiranDisplayConfiguration(QWidget *parent = 0);
     ~KiranDisplayConfiguration();
+    bool monitorsHasChanged();
 
 Q_SIGNALS:
     void sigClose();
@@ -56,6 +57,9 @@ private:
     void selectRefreshRateComboboxItem(QComboBox *comboBox, const int &r);
     bool isCopyMode();
     void refreshWidget();
+    //start用于检查是否修改
+    QVariantMap getCopyModeUiData();
+    QVariantMap getExtraModeUiData();
 
 private:
     Ui::KiranDisplayConfiguration *ui;
@@ -64,6 +68,10 @@ private:
     QMap<QString, QVariantMap> m_extraData;
     QStringList m_dbusConnectList;
     QButtonGroup *m_btnGroup;
+    //start用于检查是否修改
+    QVariantMap m_copyModeSavedData;
+    QVariantMap m_extraModeSavedData;
+    //end
 };
 
 #endif // KIRANDISPLAYCONFIGURATION_H

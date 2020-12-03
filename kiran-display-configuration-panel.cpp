@@ -13,6 +13,7 @@ KiranDisplayConfigurationPanel::KiranDisplayConfigurationPanel(QWidget *parent) 
     ui(new Ui::KiranDisplayConfigurationPanel)
 {
     ui->setupUi(this);
+    ui->btns_widget->setAttribute(Qt::WA_TranslucentBackground, true);
 
     connect(ui->contain, &KiranDisplayConfigItemContain::sigButtonChecked, this, &KiranDisplayConfigurationPanel::buttonChecked);
     connect(ui->contain, &KiranDisplayConfigItemContain::sigItemEnableChanged, this, [=](const bool &enabled){ui->btns_widget->setEnabled(enabled);});

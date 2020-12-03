@@ -12,7 +12,7 @@
 #define KIRAN_DBUS_DISPLAY "/com/kylinsec/Kiran/SessionDaemon/Display"
 #define KIRAN_DBUS_INTREFACE_PROPERTIES "org.freedesktop.DBus.Properties"
 #define KIRAN_DBUS_PROPERTIES_FUN "PropertiesChanged"
-#define KIRAN_SCREEN_COPY_MODE_MONITOR_PATH "kiran.screen.copy.mode.monitor.path"
+#define KIRAN_SCREEN_COPY_MODE_MONITOR_PATH "kiran.screen.copy.mode.monitor.path" //复制模式标志，在dbus后台中不存在，仅仅是一个标识而以。
 
 struct DisplayModesStu
 {
