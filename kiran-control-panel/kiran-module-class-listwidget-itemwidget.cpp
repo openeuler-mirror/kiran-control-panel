@@ -25,6 +25,7 @@ void KiranModuleClassListWidgetItemWidget::paintEvent(QPaintEvent *)
 {
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
+    painter.setRenderHint(QPainter::SmoothPixmapTransform);
 
     QPen pen;
     pen.setWidth(1);
@@ -74,7 +75,7 @@ bool KiranModuleClassListWidgetItemWidget::eventFilter(QObject * obj, QEvent * e
 
 void KiranModuleClassListWidgetItemWidget::setIcon(const QString &icon)
 {
-    m_icon =  pixmapToRound(QPixmap(icon), m_iconRect.size(), 15);
+    m_icon =  QPixmap(icon);//pixmapToRound(QPixmap(icon), m_iconRect.size(), 15);
 }
 
 void KiranModuleClassListWidgetItemWidget::setTextVisible(const bool &visible)

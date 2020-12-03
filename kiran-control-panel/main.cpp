@@ -21,6 +21,7 @@ int main(int argc, char *argv[])
 
     //窗口屏幕居中显示.
     KiranControlPanelWindow w;
+
     const QRect &screenRect = QApplication::desktop()->screenGeometry();
     w.move(screenRect.center()-QPoint(w.rect().width()/2, w.rect().height()/2));
     w.show();

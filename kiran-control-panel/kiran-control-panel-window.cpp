@@ -25,5 +25,5 @@ KiranControlPanelWindow::KiranControlPanelWindow() : KiranTitlebarWindow()
     //绑定搜索槽函数
     connect(search, SIGNAL(sigSearch(QString)), centerWgt, SLOT(onSearch(QString)));
 
-    resize(1060, 730);
+    resize(1060, 830);
 }

@@ -25,12 +25,13 @@ signals:
 
 public slots:
     void setIconMode();
-    void setListMode();
+    void setIconTextMode();
     int iconModeWd();
     int textModeWd();
 
 private:
     QString styleSheetStr();
+    QString styleExpandSheetStr();
     void initTimer();
 
 private:

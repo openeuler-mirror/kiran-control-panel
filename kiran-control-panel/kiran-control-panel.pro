@@ -37,6 +37,7 @@ HEADERS += \
     ../global/kiran-control-panel-global.h \
     kiran-module-class-listwidget.h \
     kiran-module-class-listwidget-itemwidget.h \
+    ../interface/kiran-control-panel-module-interface.h \
     ../interface/kiran-control-panel-module-interface.h
 
 FORMS += \
@@ -63,16 +64,25 @@ isEmpty( LIB_DIR ){
 
 target.path = $$DESTDIR/$${LIB_DIR}
 
-target1.files += kiran-control-panel.zh_CN.qm \
+translate.files += kiran-control-panel.zh_CN.qm \
                 kiran-control-panel.en_US.qm
-target1.path = /usr/share/kiran-control-panel
+translate.path = /usr/share/kiran-control-panel
 
-target1.files += kiran-control-panel.zh_CN.qm \
-                kiran-control-panel.en_US.qm
-target1.path = /usr/share/kiran-control-panel
+interface.files += ../interface/kiran-control-panel-module-interface.h
+interface.path = /usr/include
+
+desktop_files.path = /usr/share/kiran-control-panel/categories
+desktop_files.files += desktop/files/*
+
+desktop_images.path = /usr/share/kiran-control-panel/icons
+desktop_images.files += desktop/images/*
 
 INSTALLS += target \
-            target1
+            translate \
+            interface \
+            desktop_files \
+            desktop_images
+
 
 RESOURCES += \
     image.qrc

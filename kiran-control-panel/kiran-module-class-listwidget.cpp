@@ -56,9 +56,10 @@ void KiranModuleClassListWidget::setIconMode()
 {
     m_showText = false;
     m_timer->start();
+    setStyleSheet(styleSheetStr());
 }
 
-void KiranModuleClassListWidget::setListMode()
+void KiranModuleClassListWidget::setIconTextMode()
 {
     QHashIterator<QListWidgetItem *, KiranModuleClassListWidgetItemWidget *> i(m_btns);
     while (i.hasNext()) {
@@ -67,9 +68,10 @@ void KiranModuleClassListWidget::setListMode()
     }
     m_showText = true;
     m_timer->start();
+    setStyleSheet(styleExpandSheetStr());
 }
 
-QString KiranModuleClassListWidget::styleSheetStr()
+QString KiranModuleClassListWidget::styleExpandSheetStr()
 {
     return  QString(" QListWidget{"\
                     "border: 0px;"\
@@ -137,13 +139,39 @@ int KiranModuleClassListWidget::textModeWd()
     return KiranModuleClassListWidgetItemWidget::textModeWd()+2*cListWidgetPadding+2*cClassItemMargin;
 }
 
+QString KiranModuleClassListWidget::styleSheetStr()
+{
+    return  QString(" QListWidget{"\
+                    "border: 0px;"\
+                    "border-top: 0px;"\
+                    "border-right: 1px solid rgba(255, 255, 255, 20);"\
+                    "border-bottom: 0px;"\
+//                    "border-bottom-left-radius: 8px;"
+                    "padding-left:%1px;"\
+                    "padding-right:%1px;"\
+                    "padding-top:12px;"\
+                    "padding-bottom:12px;"\
+                    "outline:0px;"\
+                    "}"\
+                    "QListView::item{"\
+                    "border-radius:10px;"\
+                    "}"\
+                    "QListWidget::item:hover {"\
+                    "background-color: rgba(255, 255, 255, 10);"\
+                    "}"\
+                    "QListWidget::item:selected {"\
+                    "background-color:#43a3f2;"\
+                    "}"
+                    ).arg(cListWidgetPadding);
+}
+
 bool KiranModuleClassListWidget::eventFilter(QObject * obj, QEvent * event)
 {
     if(Q_LIKELY(obj == this))
     {
         switch (event->type()) {
         case QEvent::HoverEnter:
-            setListMode();
+            setIconTextMode();
             break;
         case QEvent::HoverLeave:
             setIconMode();
