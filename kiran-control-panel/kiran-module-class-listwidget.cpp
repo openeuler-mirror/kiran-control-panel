@@ -7,25 +7,17 @@
 #include <QEvent>
 #include <QTimer>
 #include <QButtonGroup>
-#include <QGraphicsDropShadowEffect>
-#include <QPropertyAnimation>
 #include <QDebug>
+#include <QScrollBar>
 
-KiranModuleClassListWidget::KiranModuleClassListWidget(QWidget *parent) : QListWidget(parent),m_showText(false)
+KiranModuleClassListWidget::KiranModuleClassListWidget(QWidget *parent) : QListWidget(parent), m_showText(false)
 {
     installEventFilter(this);
     setAttribute(Qt::WA_Hover,true);
+    setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setStyleSheet(styleSheetStr());
     m_btnGroup = new QButtonGroup(this);
-    resize(iconModeWd(), height());
-    setViewportMargins(cListWidgetPadding,12,cListWidgetPadding,12);
-
-    //    QGraphicsDropShadowEffect *effect = new QGraphicsDropShadowEffect(this);
-    //    effect->setOffset(1, 1);          //设置向哪个方向产生阴影效果(dx,dy)，特别地，(0,0)代表向四周发散
-    //    effect->setColor("#333333");       //设置阴影颜色，也可以setColor(QColor(220,220,220))
-    //    effect->setBlurRadius(10);        //设定阴影的模糊半径，数值越大越模糊
-    //    setGraphicsEffect(effect);
-    //    setSpacing(cClassItemMargin);
+    setViewportMargins(cListWidgetLeftPadding,12,cListWidgetRightPadding,12);
 }
 
 void KiranModuleClassListWidget::setData(QMap<int, ModuleClass> *data)
@@ -46,7 +38,6 @@ void KiranModuleClassListWidget::setData(QMap<int, ModuleClass> *data)
         setItemWidget(item, itemWidget);
         m_btns.insert(item, itemWidget);//方便icon模式和text模式切换
     }
-    //setIconMode();
 
     if(count() <= 0) return;
     setCurrentRow(0);
@@ -54,20 +45,16 @@ void KiranModuleClassListWidget::setData(QMap<int, ModuleClass> *data)
 
 void KiranModuleClassListWidget::setIconMode(const bool &iconMode)
 {
-    m_showText = !iconMode;
     iconMode ? setStyleSheet(styleSheetStr()) : setStyleSheet(styleExpandSheetStr());
+}
+
+void KiranModuleClassListWidget::setTextShow(const bool &showText)
+{
     QHashIterator<QListWidgetItem *, KiranModuleClassListWidgetItemWidget *> i(m_btns);
     while (i.hasNext()) {
         i.next();
-        i.value()->setTextVisible(m_showText);
+        i.value()->setTextVisible(showText);
     }
-    //
-    QPropertyAnimation *animation = new QPropertyAnimation(this, "geometry");
-    animation->setDuration(iconMode ? 100 : 300 );
-    animation->setStartValue(QRect(0, 0, width(), this->height()));
-    animation->setEndValue(QRect(0, 0, iconMode ? iconModeWd() : textModeWd(), this->height()));
-    animation->setEasingCurve(iconMode ? QEasingCurve::InOutQuad : QEasingCurve::OutBounce);
-    animation->start(QAbstractAnimation::DeleteWhenStopped);
 }
 
 QString KiranModuleClassListWidget::styleExpandSheetStr()
@@ -90,21 +77,9 @@ QString KiranModuleClassListWidget::styleExpandSheetStr()
                     "QListWidget::item:selected {"\
                     "background-color:#43a3f2;"\
                     "}"
-                    ).arg(cListWidgetPadding);
-}
-/*!
- * \brief KiranModuleClassListWidget::iconModeWd listWidget的总宽度,包括item的宽度+item的Space属性的宽度+listWidget的padding宽度.
- * \return
- */
-int KiranModuleClassListWidget::iconModeWd()
-{
-    return KiranModuleClassListWidgetItemWidget::iconModeWd()+2*cListWidgetPadding+2*cClassItemMargin;
+                    );
 }
 
-int KiranModuleClassListWidget::textModeWd()
-{
-    return KiranModuleClassListWidgetItemWidget::textModeWd()+2*cListWidgetPadding+2*cClassItemMargin;
-}
 
 QString KiranModuleClassListWidget::styleSheetStr()
 {
@@ -125,24 +100,11 @@ QString KiranModuleClassListWidget::styleSheetStr()
                     "QListWidget::item:selected {"\
                     "background-color:#43a3f2;"\
                     "}"
-                    ).arg(cListWidgetPadding);
+                    );
 }
 
-bool KiranModuleClassListWidget::eventFilter(QObject * obj, QEvent * event)
+void KiranModuleClassListWidget::resizeEvent(QResizeEvent *event)
 {
-    if(Q_LIKELY(obj == this))
-    {
-        switch (event->type()) {
-        case QEvent::HoverEnter:
-            setIconMode(false);
-            break;
-        case QEvent::HoverLeave:
-            setIconMode(true);
-            break;
-        default:
-            break;
-        }
-    }
-
-    return QListWidget::eventFilter(obj, event);
+    setViewportMargins(cListWidgetLeftPadding, 12, verticalScrollBar()->isVisible() ? (cListWidgetRightPadding-6) : cListWidgetRightPadding, 12);
+    QListWidget::resizeEvent(event);
 }

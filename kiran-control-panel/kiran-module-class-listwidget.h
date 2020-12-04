@@ -12,21 +12,21 @@ using namespace KiranControlPanelGlobal;
 
 #include <QListWidget>
 #include <QButtonGroup>
+class QGraphicsDropShadowEffect;
 
 class KiranModuleClassListWidget : public QListWidget
 {
     Q_OBJECT
-    bool eventFilter(QObject *obj, QEvent *event);
 public:
     explicit KiranModuleClassListWidget(QWidget *parent = nullptr);
     void setData(QMap<int, ModuleClass> *data);
 
 signals:
+    void sigShowShadow(const bool &show);
 
 public slots:
     void setIconMode(const bool &iconMode=true);
-    int iconModeWd();
-    int textModeWd();
+    void setTextShow(const bool &showText);
 
 private:
     QString styleSheetStr();
@@ -38,6 +38,7 @@ private:
     int m_step;
     bool m_showText;
     QButtonGroup *m_btnGroup;
+    void resizeEvent(QResizeEvent *event);
 };
 
 #endif // KIRANMODULECLASSLISTWIDGET_H

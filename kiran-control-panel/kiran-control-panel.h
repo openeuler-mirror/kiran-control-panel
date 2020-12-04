@@ -4,12 +4,13 @@
 #include "kiran-control-panel-global.h"
 #include <QWidget>
 
-class KiranModuleClassListWidget;
+class KiranModuleClassWidget;
 using namespace KiranControlPanelGlobal;
 namespace Ui {
 class KiranControlPanel;
 }
 
+class QFrame;
 class KiranControlPanel : public QWidget
 {
     Q_OBJECT
@@ -28,10 +29,11 @@ private:
 
 private:
     Ui::KiranControlPanel *ui;
-    KiranModuleClassListWidget *m_classWgt;
+    KiranModuleClassWidget *m_classWgt;
     QListWidgetItem *m_curClassListItem;
     QMap<int, ModuleClass> m_data;
     QString m_request;
+//    QFrame *m_shadowFrame;
 };
 
 #endif // KIRANCONTROLPANEL_H

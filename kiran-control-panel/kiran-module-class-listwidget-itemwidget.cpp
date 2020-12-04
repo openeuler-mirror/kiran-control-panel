@@ -34,7 +34,13 @@ void KiranModuleClassListWidgetItemWidget::paintEvent(QPaintEvent *)
     painter.drawPixmap(m_iconRect, m_icon);
     if(m_showText) painter.drawText(m_textRect, Qt::TextWrapAnywhere|Qt::AlignLeft|Qt::AlignVCenter, m_text);
 }
-
+/*!
+ * \brief KiranModuleClassListWidgetItemWidget::pixmapToRound 图片圆角化.此函数没有用到,暂时保留.
+ * \param src
+ * \param size
+ * \param radius
+ * \return
+ */
 QPixmap KiranModuleClassListWidgetItemWidget::pixmapToRound(const QPixmap &src, const QSize &size, int radius)
 {
     if (Q_UNLIKELY(src.isNull())) {

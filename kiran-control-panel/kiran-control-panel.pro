@@ -29,7 +29,8 @@ SOURCES += \
     kiran-control-panel.cpp \
     ../global/kiran-control-panel-global.cpp \
     kiran-module-class-listwidget.cpp \
-    kiran-module-class-listwidget-itemwidget.cpp
+    kiran-module-class-listwidget-itemwidget.cpp \
+    kiran-module-class-widget.cpp
 
 HEADERS += \
     kiran-control-panel-window.h \
@@ -38,10 +39,12 @@ HEADERS += \
     kiran-module-class-listwidget.h \
     kiran-module-class-listwidget-itemwidget.h \
     ../interface/kiran-control-panel-module-interface.h \
-    ../interface/kiran-control-panel-module-interface.h
+    ../interface/kiran-control-panel-module-interface.h \
+    kiran-module-class-widget.h
 
 FORMS += \
-    kiran-control-panel.ui
+    kiran-control-panel.ui \
+    kiran-module-class-widget.ui
 
 include(../widgets/kiran-module-widget/kiran-module-widget.pri)
 include(../widgets/kiran-search-lineedit/kiran-search-lineedit.pri)

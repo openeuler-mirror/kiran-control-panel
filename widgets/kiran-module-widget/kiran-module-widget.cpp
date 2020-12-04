@@ -21,6 +21,7 @@ KiranModuleWidget::KiranModuleWidget(QWidget *parent) : QWidget(parent), ui(new 
 {
     ui->setupUi(this);
     ui->listWidget_module->setGridSize(QSize(296, 84));//设置item的总占用大小,包括间隙.
+    ui->listWidget_module->setIconSize(QSize(15, 15));
 }
 
 KiranModuleWidget::~KiranModuleWidget()

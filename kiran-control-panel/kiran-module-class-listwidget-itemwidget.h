@@ -9,13 +9,14 @@
 #include <QWidget>
 #include <QEvent>
 
-const int cListWidgetPadding = 10;
-const int cClassItemIconWd = 40;
-const int cClassItemWgtTBPadding = 10;
-const int cClassItemWgtLRPadding = 12;
-const int cClassItemTextWd = 166;
-const int cClassItemSpace = 10;
-const int cClassItemMargin = 2;
+const int cListWidgetLeftPadding = 12;//ListWidget内空间左右的边距。
+const int cListWidgetRightPadding = 20;//ListWidget内空间左右的边距。
+const int cClassItemIconWd = 40;//按钮未选中时的大小.
+const int cClassItemWgtTBPadding = 10;//按钮选中后上下的颜色边距.
+const int cClassItemWgtLRPadding = 12;//按钮选中后左右的颜色边距.
+const int cClassItemTextWd = 166;//文字部分的宽度.
+const int cClassItemSpace = 10;//item按钮之间的距离.
+const int cClassItemMargin = 0;//
 
 class KiranModuleClassListWidgetItemWidget : public QWidget
 {

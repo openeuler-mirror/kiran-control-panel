@@ -1,8 +1,10 @@
 #include "kiran-control-panel.h"
 #include "ui_kiran-control-panel.h"
-#include "kiran-module-class-listwidget.h"
+#include "kiran-module-class-widget.h"
 #include <QTimer>
 #include <QListWidgetItem>
+#include <QGraphicsDropShadowEffect>
+#include <QFrame>
 
 KiranControlPanel::KiranControlPanel(QWidget *parent) :
     QWidget(parent), m_curClassListItem(nullptr),
@@ -10,14 +12,27 @@ KiranControlPanel::KiranControlPanel(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    m_classWgt = new KiranModuleClassListWidget(this);
+    m_classWgt = new KiranModuleClassWidget(this);
     m_classWgt->move(0, 0);
     //使信号槽绑定在m_classWgt->setData(&m_data)之前生效。
-    connect(m_classWgt, &KiranModuleClassListWidget::currentItemChanged, this, &KiranControlPanel::onCurrentItemChanged);
+    connect(m_classWgt->m_listWidget, &KiranModuleClassListWidget::currentItemChanged, this, &KiranControlPanel::onCurrentItemChanged);
 
     m_data = getModuleCLass();
-    m_classWgt->setData(&m_data);
+    m_classWgt->m_listWidget->setData(&m_data);
     ui->module_widget->setLeftContentsMargins(m_classWgt->iconModeWd());
+
+//    m_shadowFrame = new QFrame(this);
+//    m_shadowFrame->setFixedWidth(10);
+//    m_shadowFrame->move(m_classWgt->m_listWidget->textModeWd()-10, -9999);
+//    QGraphicsDropShadowEffect *effect = new QGraphicsDropShadowEffect(this);
+//    effect->setOffset(2, 2);          //设置向哪个方向产生阴影效果(dx,dy)，特别地，(0,0)代表向四周发散
+//    effect->setColor("#333333");       //设置阴影颜色，也可以setColor(QColor(220,220,220))
+//    effect->setBlurRadius(20);        //设定阴影的模糊半径，数值越大越模糊
+//    m_shadowFrame->setGraphicsEffect(effect);
+//    m_classWgt->raise();
+//    connect(m_classWgt, &KiranModuleClassListWidget::sigShowShadow, this, [=](const bool &show){
+//        m_shadowFrame->move(m_shadowFrame->pos().x(), show ? 0 : 9999);
+//    });
 }
 
 void KiranControlPanel::onSearch(const QString &request)
@@ -28,12 +43,12 @@ void KiranControlPanel::onSearch(const QString &request)
         //如果与模块类的关键字匹配.模块类关键字与模块关键字分开存储.
         if(i.value().keywords.contains(request))
         {
-            m_classWgt->setCurrentRow(i.value().row);
+            m_classWgt->m_listWidget->setCurrentRow(i.value().row);
             break;
         }
         else if(i.value().itemKeys().contains(request))
         {
-            if(m_classWgt->currentRow() == i.value().row)
+            if(m_classWgt->m_listWidget->currentRow() == i.value().row)
             {
                 //class不需要切换，没有延时，可以在这里直接设置模块的的当前项。
                 ui->module_widget->setModuleCurSubItem(request);
@@ -42,7 +57,7 @@ void KiranControlPanel::onSearch(const QString &request)
             {
                 //class不需要切换，有延时，确保在class切换后再设置模块的当前项。
                 m_request = request;
-                m_classWgt->setCurrentRow(i.value().row);
+                m_classWgt->m_listWidget->setCurrentRow(i.value().row);
             }
             break;
         }
@@ -78,15 +93,15 @@ void KiranControlPanel::onCurrentItemChanged(QListWidgetItem *current, QListWidg
         if(!ui->module_widget->checkHasUnSaved())
         {
             QTimer::singleShot(5, this, [=](){
-                m_classWgt->blockSignals(true);
-                m_classWgt->setCurrentItem(m_curClassListItem);
-                m_classWgt->blockSignals(false);
+                m_classWgt->m_listWidget->blockSignals(true);
+                m_classWgt->m_listWidget->setCurrentItem(m_curClassListItem);
+                m_classWgt->m_listWidget->blockSignals(false);
             });
 
             return;
         }
         m_curClassListItem = current;
-        int row = m_classWgt->row(current);
+        int row = m_classWgt->m_listWidget->row(current);
         ModuleClass *moduleClass = getMapValueByRow<ModuleClass>(row, m_data);
         if(!moduleClass) return;
 
