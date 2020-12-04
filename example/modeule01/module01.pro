@@ -9,7 +9,6 @@ QT       += core gui
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = module01
-TEMPLATE = lib #编译成库文件
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which as been marked as deprecated (the exact warnings
@@ -54,15 +53,43 @@ translate.files += module01.zh_CN.qm \
                 module01.en_US.qm
 translate.path = /usr/share/kiran-control-panel/plugins/translate
 
-DESKTOP_FILES_PATH = "/usr/share/kiran-control-panel/plugins"
-desktop_files.path = $${DESKTOP_FILES_PATH}
-desktop_files.files += desktop/files/*
+equals(TEMPLATE, app){
+    SOURCES += main.cpp
+    isEmpty( LIB_DIR ){
+        LIB_DIR = "/usr/bin/"
+    }
 
-DESKTOP_IMAGES_PATH = "/usr/share/kiran-control-panel/plugins/icons"
-desktop_images.path = $${DESKTOP_IMAGES_PATH}
-desktop_images.files += desktop/images/*
+    DESKTOP_FILES_PATH = "/usr/share/applications"
+    desktop_files.path = $${DESKTOP_FILES_PATH}
+    desktop_files.files += desktop/files/*
+    DEFINES += DESKTOP_FILES_PATHDEFINES=$${DESKTOP_FILES_PATH}
 
-INSTALLS += target \
+    DESKTOP_IMAGES_PATH = "/usr/share/icons/Kiran/places/16x16/"
+    desktop_images.path = $${DESKTOP_IMAGES_PATH}
+    desktop_images.files += desktop/images/*
+    DEFINES += DESKTOP_IMAGES_PATH_DEFINES=$${DESKTOP_IMAGES_PATH}
+
+    INSTALLS += target \
             translate \
             desktop_files \
             desktop_images
+}
+
+equals(TEMPLATE, lib){
+    isEmpty( LIB_DIR ){
+        LIB_DIR = "/usr/lib/"
+    }
+
+    DESKTOP_FILES_PATH = "/usr/share/kiran-control-panel/plugins"
+    desktop_files.path = $${DESKTOP_FILES_PATH}
+    desktop_files.files += desktop/files/*
+
+    DESKTOP_IMAGES_PATH = "/usr/share/kiran-control-panel/plugins/icons"
+    desktop_images.path = $${DESKTOP_IMAGES_PATH}
+    desktop_images.files += desktop/images/*
+
+    INSTALLS += target \
+                translate \
+                desktop_files \
+                desktop_images
+}
