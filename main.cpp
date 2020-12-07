@@ -4,7 +4,6 @@
 #include <QApplication>
 #include <QDesktopWidget>
 #include <QTranslator>
-#include <QDBusInterface>
 #include <QPushButton>
 #include <QDialogButtonBox>
 #include <QDebug>
@@ -16,20 +15,6 @@ int main(int argc, char *argv[])
     if (!QDBusConnection::sessionBus().isConnected()) {
         qWarning("Cannot connect to the D-Bus session bus.\n"
                  "Please check your system settings and try again.\n");
-        return 1;
-    }
-    if(!QDBusInterface(KIRAN_DBUS_SERVICE_NAME, KIRAN_DBUS_DISPLAY).isValid())
-    {
-        KiranMessageBox box;
-        box.setTitle(QObject::tr("提示"));
-
-        QPushButton btn;
-        btn.setText(QObject::tr("确定(K)"));
-        btn.setFixedSize(QSize(200, box.buttonSize().height()));
-        btn.setShortcut(Qt::CTRL + Qt::Key_K);
-        box.addButton(&btn, QDialogButtonBox::AcceptRole);
-        box.setText(QObject::tr("后台D-Bus服务无法连接，程序启动失败，请检查D-Bus服务是否开启."));
-        box.exec();
         return 1;
     }
 

@@ -3,13 +3,30 @@
 #include "kiranwidgets-qt5/kiran-message-box.h"
 #include <QTimer>
 #include <QButtonGroup>
+#include <QDBusInterface>
 #include <QDebug>
 
 KiranDisplayConfiguration::KiranDisplayConfiguration(QWidget *parent) :
     QWidget(parent), m_btnGroup(nullptr),
     ui(new Ui::KiranDisplayConfiguration)
 {
+    if(!QDBusInterface(KIRAN_DBUS_SERVICE_NAME, KIRAN_DBUS_DISPLAY).isValid())
+    {
+        KiranMessageBox box;
+        box.setTitle(QObject::tr("提示"));
+
+        QPushButton btn;
+        btn.setText(QObject::tr("确定(K)"));
+        btn.setFixedSize(QSize(200, box.buttonSize().height()));
+        btn.setShortcut(Qt::CTRL + Qt::Key_K);
+        box.addButton(&btn, QDialogButtonBox::AcceptRole);
+        box.setText(QObject::tr("后台D-Bus服务无法连接，程序启动失败，请检查D-Bus服务是否开启."));
+        box.exec();
+        this->close();
+    }
+
     ui->setupUi(this);
+    ui->scrollAreaWidgetContents->setContentsMargins(0, 0, 10, 0);
     m_btnGroup = new QButtonGroup(this);
     m_btnGroup->addButton(ui->pushButton_copy_display, 0);
     m_btnGroup->addButton(ui->pushButton_extend_display, 1);

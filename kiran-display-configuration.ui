@@ -291,7 +291,7 @@ QPushButton {
         <number>0</number>
        </property>
        <property name="rightMargin">
-        <number>10</number>
+        <number>0</number>
        </property>
        <property name="bottomMargin">
         <number>0</number>
