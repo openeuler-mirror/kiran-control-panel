@@ -200,11 +200,13 @@ void KiranDisplayConfiguration::onScreenItemChecked(QString monitorPath)
         }
         if(enablePaths.count() <= 1 && enablePaths.contains(m_curMonitorPath))
         {
-            ui->enable_widget->setVisible(false);//最后一个屏幕，不再配置主屏幕。
+            ui->pushButton_enabled->setEnabled(false);
+            ui->pushButton_extra_primary->setEnabled(false);
         }
         else
         {
-            ui->enable_widget->setVisible(true);
+            ui->pushButton_enabled->setEnabled(true);
+            ui->pushButton_extra_primary->setEnabled(true);
         }
     }
 }
