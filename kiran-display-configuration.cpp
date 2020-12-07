@@ -23,6 +23,11 @@ KiranDisplayConfiguration::KiranDisplayConfiguration(QWidget *parent) :
     QDBusConnection::sessionBus().connect(KIRAN_DBUS_SERVICE_NAME, KIRAN_DBUS_DISPLAY, KIRAN_DBUS_INTREFACE_PROPERTIES, KIRAN_DBUS_PROPERTIES_FUN,
                                           this,
                                           SLOT(onDbusPropertiesChanged(QDBusMessage)));
+
+#ifdef BUILD_LIB
+    ui->pushButton_cancel->hide();
+    ui->pushButton_extra_cancel->hide();
+#endif
 }
 
 KiranDisplayConfiguration::~KiranDisplayConfiguration()

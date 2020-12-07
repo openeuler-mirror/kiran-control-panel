@@ -61,7 +61,7 @@ TRANSLATIONS += \
 
 LIBS += -L/usr/lib -lkiranwidgets-qt5
 
-TEMPLATE = app
+#TEMPLATE = app
 #TEMPLATE = lib
 
 equals(TEMPLATE, app){
@@ -72,6 +72,7 @@ isEmpty( LIB_DIR ){
 }
 
 equals(TEMPLATE, lib){
+DEFINES += BUILD_LIB
 isEmpty( LIB_DIR ){
     LIB_DIR = "/usr/lib/"
 }
