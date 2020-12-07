@@ -185,6 +185,27 @@ void KiranDisplayConfiguration::onScreenItemChecked(QString monitorPath)
 
             ui->comboBox_extra_windowScalingFactor->setCurrentIndex(windowScalingFactor);
         }
+        //多屏幕扩展模式，只有一个屏幕可用时，该屏幕不现实‘关闭’‘设为主屏幕’两项。
+        QStringList enablePaths;//可用的屏幕的路径集合
+        QStringList listMonitors = Display("ListMonitors").toStringList();
+        foreach (QString monitorPath, listMonitors) {
+            if(m_extraData.contains(monitorPath))
+            {
+                if(m_extraData.value(monitorPath).value("enabled").toBool()) enablePaths << monitorPath;
+            }
+            else
+            {
+                if(MonitorProperty(monitorPath, "enabled").toBool()) enablePaths << monitorPath;
+            }
+        }
+        if(enablePaths.count() <= 1 && enablePaths.contains(m_curMonitorPath))
+        {
+            ui->enable_widget->setVisible(false);//最后一个屏幕，不再配置主屏幕。
+        }
+        else
+        {
+            ui->enable_widget->setVisible(true);
+        }
     }
 }
 
@@ -435,19 +456,19 @@ bool KiranDisplayConfiguration::isCopyMode()
 
 void KiranDisplayConfiguration::refreshWidget()
 {
-    //如果只有一个屏幕，应当隐藏“复制模式”和“扩展模式”的选项卡。
+    //如果只有一个屏幕，应当隐藏“复制模式”和“扩展模式”的选项卡。多屏幕扩展模式（包含单屏幕扩展）。多屏幕复制模式。
     QStringList listMonitors = Display("ListMonitors").toStringList();
     ui->tabBtnWidget->setVisible(listMonitors.count() > 1);
     ui->enable_widget->setVisible(listMonitors.count() > 1);
-//    if(listMonitors.count() <= 1)
-//    {
-//        onTabChanged(0, true);
-//    }
-//    else
-//    {
+    //    if(listMonitors.count() <= 1)
+    //    {
+    //        onTabChanged(0, true);
+    //    }
+    //    else
+    //    {
 
-        isCopyMode() ? onTabChanged(0, true) : onTabChanged(1, true);
-//    }
+    isCopyMode() ? onTabChanged(0, true) : onTabChanged(1, true);
+    //    }
 }
 
 QVariantMap KiranDisplayConfiguration::getCopyModeUiData()

@@ -38,7 +38,7 @@ QWidget *getSubitemWidget(QString name)
             btn.setFixedSize(QSize(200, box.buttonSize().height()));
             btn.setShortcut(Qt::CTRL + Qt::Key_K);
             box.addButton(&btn, QDialogButtonBox::AcceptRole);
-            box.setText(QObject::tr("后台D-Bus服务无法连接，程序启动失败，请检查D-Bus服务是否开启."));
+            box.setText(QObject::tr("后台D-Bus服务无法连接，显示设置启动失败，请检查D-Bus服务是否开启."));
             box.exec();
             return nullptr;
         }

@@ -61,7 +61,7 @@ TRANSLATIONS += \
 
 LIBS += -L/usr/lib -lkiranwidgets-qt5
 
-#TEMPLATE = app
+TEMPLATE = app
 #TEMPLATE = lib
 
 equals(TEMPLATE, app){
