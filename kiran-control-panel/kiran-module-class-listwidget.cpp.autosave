@@ -38,7 +38,7 @@ void KiranModuleClassListWidget::setData(QMap<int, ModuleClass> *data)
         setItemWidget(item, itemWidget);
         m_btns.insert(item, itemWidget);//方便icon模式和text模式切换
     }
-
+    
     if(count() <= 0) return;
     setCurrentRow(0);
 }
