@@ -7,11 +7,11 @@
 #define INTERFACE_H
 
 #include <QDebug>
-#include "kiran-control-panel-module-interface.h"
+#include "kiran-control-panel/module-interface.h"
 #include "dialog001.h"
 #include "dialog002.h"
 
-using namespace KiranControlPanelModuleInterface;
+using namespace ModuleInterface;
 extern bool gHasUnsavedOptions;
 
 QString gName1 = "dialog001";

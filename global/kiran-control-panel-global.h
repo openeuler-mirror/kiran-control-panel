@@ -2,13 +2,13 @@
 #define KIRANCONTROLPANELGLOBAL_H
 
 #include <dlfcn.h>
-#include "../interface/kiran-control-panel-module-interface.h"
+#include "../interface/module-interface.h"
 #include <QWidget>
 #include <QString>
 #include <QMap>
 #include <QHash>
 #include <QDebug>
-using namespace KiranControlPanelModuleInterface;
+using namespace ModuleInterface;
 
 
 class QListWidgetItem;

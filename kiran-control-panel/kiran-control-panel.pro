@@ -38,9 +38,8 @@ HEADERS += \
     ../global/kiran-control-panel-global.h \
     kiran-module-class-listwidget.h \
     kiran-module-class-listwidget-itemwidget.h \
-    ../interface/kiran-control-panel-module-interface.h \
-    ../interface/kiran-control-panel-module-interface.h \
-    kiran-module-class-widget.h
+    kiran-module-class-widget.h \
+    ../interface/module-interface.h
 
 FORMS += \
     kiran-control-panel.ui \
@@ -71,8 +70,8 @@ translate.files += kiran-control-panel.zh_CN.qm \
                 kiran-control-panel.en_US.qm
 translate.path = /usr/share/kiran-control-panel
 
-interface.files += ../interface/kiran-control-panel-module-interface.h
-interface.path = /usr/include
+interface.files += ../interface/module-interface.h
+interface.path = /usr/include/kiran-control-panel
 
 desktop_files.path = /usr/share/kiran-control-panel/categories
 desktop_files.files += desktop/files/*

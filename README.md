@@ -37,7 +37,7 @@ example目录下模块module01。
 1. 在**build**目录下执行`sudo make uninstall`
 
 ###### 模块开发注意事项：   
-1、接口头文件名："kiran-control-panel-module-interface.h"   
+1、接口头文件名：`#include "kiran-control-panel/module-interface.h"`   
 2、QList<SubItem> getSubitems() 接口返回值中SubItem结构体的icon字段，可以为图标的全路径，或只包含图标名称(将使用系统图标)。   
 3、`getSubitemWidget是通过getSubitems给出的name创建窗口,所以这两处要一致.`   
 4、 `getTranslationPath 只需返回全路径+翻译文件名，无需添加翻译文件后缀。   

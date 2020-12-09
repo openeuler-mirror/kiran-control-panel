@@ -25,13 +25,11 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     dialog001.cpp \
     dialog002.cpp \
-    module01-interface.cpp \
     main.cpp
 
 HEADERS += \
     dialog001.h \
-    dialog002.h \
-    module01-interface.h
+    dialog002.h
 
 FORMS += \
     dialog001.ui \
@@ -42,11 +40,6 @@ TRANSLATIONS += \
     module01.zh_CN.ts \
     module01.en_US.ts
 
-equals(TEMPLATE, lib){
-isEmpty( LIB_DIR ){
-    LIB_DIR = "/usr/lib/"
-}
-}
 target.path = $$DESTDIR/$${LIB_DIR}
 
 translate.files += module01.zh_CN.qm \
@@ -76,6 +69,8 @@ equals(TEMPLATE, app){
 }
 
 equals(TEMPLATE, lib){
+    HEADERS += module01-interface.h
+    SOURCES += module01-interface.cpp
     isEmpty( LIB_DIR ){
         LIB_DIR = "/usr/lib/"
     }

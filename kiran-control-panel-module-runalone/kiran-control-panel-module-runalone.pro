@@ -30,7 +30,8 @@ SOURCES += \
 
 HEADERS += \
     ../global/kiran-control-panel-global.h \
-    kiran-control-panel-module-runalone-window.h
+    kiran-control-panel-module-runalone-window.h \
+    ../interface/module-interface.h
 
 FORMS +=
 

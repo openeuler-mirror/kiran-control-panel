@@ -3,15 +3,15 @@
  *   Copyright ©2020 KylinSec. All rights reserved.                      *
  *                                                                         *
  ***************************************************************************/
-#ifndef KIRANCONTROLPANELMODULEINTERFACE_H
-#define KIRANCONTROLPANELMODULEINTERFACE_H
+#ifndef MODULEINTERFACE_H
+#define MODULEINTERFACE_H
 
 #include <QWidget>
 #include <QStringList>
 
 #define KIRAN_MODULE_ITEM_DESKTOP_PATH "/usr/share/kiran-control-panel/plugins" //将插件(模块)的desktop文件安装到此处。控制面板主程序将从这里读取插件的desktop，根据desktop描述加载插件。
 
-namespace KiranControlPanelModuleInterface {
+namespace ModuleInterface {
 
 typedef struct SubItemStu{
     /*!
@@ -28,7 +28,7 @@ typedef struct SubItemStu{
 
 }
 
-typedef QList<KiranControlPanelModuleInterface::SubItem> (GetSubItemsFun)();
+typedef QList<ModuleInterface::SubItem> (GetSubItemsFun)();
 typedef QWidget*(GetSubItemWidgetFun)(QString);
 typedef QString(GetTranslationPathFun)();
 typedef bool(HasUnsavedOptionsFun)();
@@ -45,4 +45,4 @@ GetTranslationPathFun getTranslationPath;
 HasUnsavedOptionsFun hasUnsavedOptions;//当前功能项是否有未保存的内容。当前功能项被修改且未保存时，返回true,否则返回false.
 }
 
-#endif // KIRANCONTROLPANELMODULEINTERFACE_H
+#endif // MODULEINTERFACE_H
