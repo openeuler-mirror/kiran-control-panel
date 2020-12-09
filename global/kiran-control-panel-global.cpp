@@ -131,7 +131,10 @@ QString KiranControlPanelGlobal::ModuleClassStu::getCommentTranslate()
     else if(gLocaleName == "zh_CN") return commentZh;
     else return comment;
 }
-
+/*!
+ * \brief KiranControlPanelGlobal::ModuleClassStu::itemKeys
+ * \return 返回所有功能项的搜索关键字。
+ */
 QStringList KiranControlPanelGlobal::ModuleClassStu::itemKeys() const
 {
     QStringList ret;
@@ -146,7 +149,10 @@ QStringList KiranControlPanelGlobal::ModuleClassStu::itemKeys() const
     }
     return ret;
 }
-
+/*!
+ * \brief KiranControlPanelGlobal::ModuleItemStu::getModuleItemSubInfo
+ * 从动态可中获取所有功能项的名称、图标、搜索关键字信息。
+ */
 void KiranControlPanelGlobal::ModuleItemStu::getModuleItemSubInfo()
 {
     openPlugin();
@@ -171,38 +177,47 @@ void KiranControlPanelGlobal::ModuleItemStu::getModuleItemSubInfo()
 
 void KiranControlPanelGlobal::ModuleItemStu::loadTranslator()
 {
+    if(translator) return;
+
     QString qmFile = QString("%1.%2.qm").arg(translationPath).arg(gLocaleName);
-    QTranslator translator;
-    if(translator.load(qmFile) == false)
+    translator = new QTranslator();//在界面被切换之后释放。
+    if(translator->load(qmFile) == false)
         qDebug() << "load qm: " << qmFile <<  " error.";
     else
-        qApp->installTranslator(&translator);
+        qApp->installTranslator(translator);
 }
-
+/*!
+ * \brief KiranControlPanelGlobal::ModuleItemStu::createModuleItemSubWgt
+ * \param name 根据功能项名称，创建功能项节目。
+ * \return
+ */
 QWidget *KiranControlPanelGlobal::ModuleItemStu::createModuleItemSubWgt(const QString &name)
 {
     openPlugin();
-    QString qmFile = QString("%1.%2.qm").arg(translationPath).arg(gLocaleName);
-    QTranslator translator;
-    if(translator.load(qmFile) == false)
-        qDebug() << "load qm: " << qmFile <<  " error.";
-    else
-        qApp->installTranslator(&translator);
+    //加载 要创建的界面的翻译文件。当界面被切换之后，翻译文件会被删除。
+    loadTranslator();
 
     auto fun = getModuleItemFun<GetSubItemWidgetFun*>("getSubitemWidget");
     if(!fun) return nullptr;
+
     auto ret = fun(name);
     //closePlugin();
     return ret;
 }
-
+/*!
+ * \brief KiranControlPanelGlobal::ModuleItemStu::getNameTranslate
+ * \return  根据本地语言类型，返回模块的desktop文件中的模块名翻译。
+ */
 QString KiranControlPanelGlobal::ModuleItemStu::getNameTranslate()
 {
     if(gLocaleName == "en_US") return name;
     else if(gLocaleName == "zh_CN") return nameZh;
     else return name;
 }
-
+/*!
+ * \brief KiranControlPanelGlobal::ModuleItemStu::getCommentTranslate
+ * \return 根据本地语言类型，返回模块的desktop文件中的介绍的翻译。
+ */
 QString KiranControlPanelGlobal::ModuleItemStu::getCommentTranslate()
 {
     if(gLocaleName == "en_US") return comment;
@@ -259,12 +274,12 @@ bool KiranControlPanelGlobal::ModuleItemStu::hasUnsavedOptions()
 
 void KiranControlPanelGlobal::ModuleItemStu::removeTranslator()
 {
-    QString qmFile = QString("%1.%2.qm").arg(translationPath).arg(gLocaleName);
-    QTranslator translator;
-    if(translator.load(qmFile) == false)
-        qDebug() << "remove qm: " << qmFile <<  " error.";
-    else
-        qApp->removeTranslator(&translator);
+    if(translator)
+    {
+        qApp->removeTranslator(translator);
+        delete translator;
+        translator = nullptr;
+    }
 }
 
 void KiranControlPanelGlobal::ModuleItemStu::getTranslationPath()

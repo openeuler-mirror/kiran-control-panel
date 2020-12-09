@@ -10,6 +10,8 @@
 #include "kiran-control-panel/module-interface.h"
 #include "dialog001.h"
 #include "dialog002.h"
+#include <QApplication>
+#include <QTranslator>
 
 using namespace ModuleInterface;
 extern bool gHasUnsavedOptions;
@@ -18,12 +20,22 @@ QString gName1 = "dialog001";
 QString gName2 = "dialog002";
 QList<SubItem> getSubitems()
 {
+
+
+
     return QList<SubItem>() << SubItem(gName1, "/usr/share/kiran-control-panel/plugins/icons/avatar-default.svg", "001")
                             << SubItem(gName2, "/usr/share/kiran-control-panel/plugins/icons/avatar-default.svg", "002");
 }
 
 QWidget *getSubitemWidget(QString name)
 {
+    QString qmFile = QString("%1.%2.qm").arg("/usr/share/kiran-control-panel/plugins/translate/module01").arg("zh_CN");
+    QTranslator translator;
+    if(translator.load(qmFile) == false)
+        qDebug() << "load qm: " << qmFile <<  " error.";
+    else
+        qApp->installTranslator(&translator);
+
     gHasUnsavedOptions = false;
     if(gName1 == name)
     {

@@ -8,6 +8,7 @@
 #include <QMap>
 #include <QHash>
 #include <QDebug>
+#include <QTranslator>
 using namespace ModuleInterface;
 
 
@@ -23,6 +24,7 @@ typedef struct ModuleItemStu{
     QString icon;
     QList<SubItem> subItems;
     QString translationPath;
+    QTranslator *translator;
 
     QString category;
     QString pluginFile;
@@ -43,7 +45,7 @@ public:
     void loadTranslator();
     void removeTranslator();
 
-    ModuleItemStu():isEmpty(true),modulePlugin(nullptr){}
+    ModuleItemStu():isEmpty(true),modulePlugin(nullptr),translator(nullptr){}
     ~ModuleItemStu(){
         closePlugin();
     }

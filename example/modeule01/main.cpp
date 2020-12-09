@@ -16,7 +16,6 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
 
     QString qmFile = "/root/kiran-control-panel/example/modeule01/module01.zh_CN.qm";
-    qDebug() << "111111" << qmFile;
     QTranslator translator;
     if(translator.load(qmFile) == false)
         qDebug() << "load qm: " << qmFile <<  " error.";

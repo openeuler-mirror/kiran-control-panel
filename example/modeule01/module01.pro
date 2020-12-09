@@ -25,22 +25,23 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     dialog001.cpp \
     dialog002.cpp \
-    main.cpp
+    main.cpp \
+    popup.cpp
 
 HEADERS += \
     dialog001.h \
-    dialog002.h
+    dialog002.h \
+    popup.h
 
 FORMS += \
     dialog001.ui \
-    dialog002.ui
+    dialog002.ui \
+    popup.ui
 
 
 TRANSLATIONS += \
     module01.zh_CN.ts \
     module01.en_US.ts
-
-target.path = $$DESTDIR/$${LIB_DIR}
 
 translate.files += module01.zh_CN.qm \
                 module01.en_US.qm
@@ -52,6 +53,7 @@ equals(TEMPLATE, app){
         LIB_DIR = "/usr/bin/"
     }
 
+    target.path = $$DESTDIR/$${LIB_DIR}
     DESKTOP_FILES_PATH = "/usr/share/applications"
     desktop_files.path = $${DESKTOP_FILES_PATH}
     desktop_files.files += desktop/files/*
@@ -75,6 +77,7 @@ equals(TEMPLATE, lib){
         LIB_DIR = "/usr/lib/"
     }
 
+    target.path = $$DESTDIR/$${LIB_DIR}
     DESKTOP_FILES_PATH = "/usr/share/kiran-control-panel/plugins"
     desktop_files.path = $${DESKTOP_FILES_PATH}
     desktop_files.files += desktop/files/*

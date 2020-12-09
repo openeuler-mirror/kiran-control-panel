@@ -3,29 +3,19 @@
  *   Copyright ©2020 KylinSec. All rights reserved.                      *
  *                                                                         *
  ***************************************************************************/
-#include "dialog001.h"
-#include "ui_dialog001.h"
 #include "popup.h"
+#include "ui_popup.h"
 
-Dialog001::Dialog001(QWidget *parent) :
+Popup::Popup(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::Dialog001)
+    ui(new Ui::Popup)
 {
     ui->setupUi(this);
+    ui->label_2->setText(tr("cancel"));
+    ui->retranslateUi(this);
 }
 
-Dialog001::~Dialog001()
+Popup::~Popup()
 {
     delete ui;
-}
-
-void Dialog001::on_lineEdit_textChanged(const QString &arg1)
-{
-    gHasUnsavedOptions = true;
-}
-
-void Dialog001::on_pushButton_clicked()
-{
-    Popup popup;
-    popup.exec();
 }

@@ -17,7 +17,7 @@
    <item>
     <widget class="QPushButton" name="pushButton">
      <property name="text">
-      <string>3.0</string>
+      <string>弹窗</string>
      </property>
     </widget>
    </item>
