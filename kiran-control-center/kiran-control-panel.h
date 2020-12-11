@@ -33,7 +33,6 @@ private:
     QListWidgetItem *m_curClassListItem;
     QMap<int, ModuleClass> m_data;
     QString m_request;
-//    QFrame *m_shadowFrame;
 };
 
 #endif // KIRANCONTROLPANEL_H

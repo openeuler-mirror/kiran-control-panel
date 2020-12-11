@@ -20,19 +20,6 @@ KiranControlPanel::KiranControlPanel(QWidget *parent) :
     m_data = getModuleCLass();
     m_classWgt->m_listWidget->setData(&m_data);
     ui->module_widget->setLeftContentsMargins(m_classWgt->iconModeWd());
-
-//    m_shadowFrame = new QFrame(this);
-//    m_shadowFrame->setFixedWidth(10);
-//    m_shadowFrame->move(m_classWgt->m_listWidget->textModeWd()-10, -9999);
-//    QGraphicsDropShadowEffect *effect = new QGraphicsDropShadowEffect(this);
-//    effect->setOffset(2, 2);          //设置向哪个方向产生阴影效果(dx,dy)，特别地，(0,0)代表向四周发散
-//    effect->setColor("#333333");       //设置阴影颜色，也可以setColor(QColor(220,220,220))
-//    effect->setBlurRadius(20);        //设定阴影的模糊半径，数值越大越模糊
-//    m_shadowFrame->setGraphicsEffect(effect);
-//    m_classWgt->raise();
-//    connect(m_classWgt, &KiranModuleClassListWidget::sigShowShadow, this, [=](const bool &show){
-//        m_shadowFrame->move(m_shadowFrame->pos().x(), show ? 0 : 9999);
-//    });
 }
 
 void KiranControlPanel::onSearch(const QString &request)
@@ -88,7 +75,7 @@ void KiranControlPanel::resizeEvent(QResizeEvent *event)
 
 void KiranControlPanel::onCurrentItemChanged(QListWidgetItem *current, QListWidgetItem *)
 {
-    //item的绘制事件执行顺序在此函数之后，为了便面溃退闪动，延时让item先绘制完成。延时处理要注意执行顺序问题,class切换后再设置模块的当前项目。
+    //item的绘制事件执行顺序在此函数之后，为了避免闪动，延时让item先绘制完成。延时处理要注意执行顺序问题,class切换后再设置模块的当前项目。
     QTimer::singleShot(5, this, [=](){
         if(!ui->module_widget->checkHasUnSaved())
         {
@@ -108,11 +95,11 @@ void KiranControlPanel::onCurrentItemChanged(QListWidgetItem *current, QListWidg
         QMap<int, ModuleItem> &moduleItemMap = moduleClass->itemMap;
 
         if(m_request.isEmpty())
-        {
+        {   //非搜索跳转，加载模块之后，默认选择第一项。
             ui->module_widget->onSelectedClassItemChanged(&moduleItemMap);
         }
         else
-        {
+        {   //搜索，加载模块之后，选择搜索到的项。
             ui->module_widget->setDefaultSelectFirstItem(false);
             ui->module_widget->onSelectedClassItemChanged(&moduleItemMap);
             ui->module_widget->setDefaultSelectFirstItem(true);

@@ -8,7 +8,7 @@ QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = kiran-control-panel
+TARGET = kiran-control-center
 TEMPLATE = app
 
 # The following define makes your compiler emit warnings if you use
@@ -73,17 +73,25 @@ translate.path = /usr/share/kiran-control-panel
 interface.files += ../interface/module-interface.h
 interface.path = /usr/include/kiran-control-panel
 
-desktop_files.path = /usr/share/kiran-control-panel/categories
-desktop_files.files += desktop/files/*
+desktop_files.path = /usr/share/applications
+desktop_files.files += app-desktop/files/*
 
 desktop_images.path = /usr/share/kiran-control-panel/icons
-desktop_images.files += desktop/images/*
+desktop_images.files += app-desktop//images/*
+
+desktop_files_categories.path = /usr/share/kiran-control-panel/categories
+desktop_files_categories.files += categories-desktop/files/*
+
+desktop_images_categories.path = /usr/share/kiran-control-panel/icons
+desktop_images_categories.files += categories-desktop/images/*
 
 INSTALLS += target \
             translate \
             interface \
             desktop_files \
-            desktop_images
+            desktop_images \
+            desktop_files_categories \
+            desktop_images_categories
 
 
 RESOURCES += \

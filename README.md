@@ -1,5 +1,5 @@
-# kiran-control-panel
-# kiran桌面环境的控制面板
+# kiran-control-center
+# kiran桌面环境的控制中心
 
 ###### 编译
 1.  安装编译依赖  
@@ -15,8 +15,8 @@
 1. 在**build**目录下执行`sudo make uninstall`
 
 ###### 具体控件的使用
-控制面板：   
-[root@localhost ~]# /usr/bin/kiran-control-panel   
+控制中心：   
+[root@localhost ~]# /usr/bin/kiran-control-center   
 模块独立运行:   
 [root@localhost ~]# /usr/bin/kiran-control-panel-module-runalone
 # 模块开发接口文档

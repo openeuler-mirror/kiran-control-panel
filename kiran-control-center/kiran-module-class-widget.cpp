@@ -84,7 +84,7 @@ void KiranModuleClassWidget::setIconMode(const bool &iconMode)
     animation->setEndValue(QRect(0, 0, iconMode ? iconModeWd() : textModeWd(), this->height()));
     animation->setEasingCurve(iconMode ? QEasingCurve::InExpo : QEasingCurve::OutExpo);
     animation->start(QAbstractAnimation::DeleteWhenStopped);
-    //文字、阴影隐藏顺序
+    //控制文字、阴影隐藏的先后顺序
     if(iconMode)
     {
         connect(animation, &QPropertyAnimation::finished, this, [=](){

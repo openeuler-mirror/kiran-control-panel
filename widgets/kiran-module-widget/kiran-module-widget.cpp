@@ -237,7 +237,6 @@ void KiranModuleWidget::setDefaultSelectFirstItem(bool defaultSelectFirstItem)
     m_defaultSelectFirstItem = defaultSelectFirstItem;
 }
 
-
 void KiranModuleWidget::on_listWidget_module_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous)
 {
     //让被点击的item先绘制完选中效果,避免回撤后再绘制,出现闪动.
