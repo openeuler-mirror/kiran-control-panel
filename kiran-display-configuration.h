@@ -57,6 +57,7 @@ private:
     void selectResolutionComboboxItem(QComboBox *comboBox, const int &w, const int &h);
     void selectRefreshRateComboboxItem(QComboBox *comboBox, const int &r);
     bool isCopyMode();
+    //UI创建之后，加载数据的入口
     void refreshWidget();
     //start用于检查是否修改
     QVariantMap getCopyModeUiData();

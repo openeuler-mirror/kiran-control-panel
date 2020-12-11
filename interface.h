@@ -7,14 +7,14 @@
 #define INTERFACE_H
 
 #include <QDebug>
-#include "kiran-control-panel-module-interface.h"
+#include "kiran-control-panel/module-interface.h"
 #include "kiran-display-configuration.h"
 #include "kiranwidgets-qt5/kiran-message-box.h"
 #include <QDBusInterface>
 #include <QApplication>
 #include <QPushButton>
 
-using namespace KiranControlPanelModuleInterface;
+using namespace ModuleInterface;
 
 extern KiranDisplayModuleBase *gCurWidget;
 

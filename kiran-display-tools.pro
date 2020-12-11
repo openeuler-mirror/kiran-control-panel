@@ -31,7 +31,6 @@ SOURCES += \
     kiran-combobox.cpp \
     kiran-display-config-global.cpp \
     kiran-display-config-identifying.cpp \
-    interface.cpp \
     kiran-display-module-base.cpp
 
 HEADERS += \
@@ -43,7 +42,6 @@ HEADERS += \
     kiran-combobox.h \
     kiran-display-config-global.h \
     kiran-display-config-identifying.h \
-    interface.h \
     kiran-display-module-base.h
 
 FORMS += \
@@ -64,40 +62,55 @@ LIBS += -L/usr/lib -lkiranwidgets-qt5
 #TEMPLATE = app
 #TEMPLATE = lib
 
-equals(TEMPLATE, app){
-SOURCES += main.cpp
-isEmpty( LIB_DIR ){
-    LIB_DIR = "/usr/bin/"
-}
-}
-
-equals(TEMPLATE, lib){
-DEFINES += BUILD_LIB
-isEmpty( LIB_DIR ){
-    LIB_DIR = "/usr/lib/"
-}
-}
-
-
-target.path = $$DESTDIR/$${LIB_DIR}
-
 translate.files += kiran-display-tools.zh_CN.qm \
                 kiran-display-tools.en_US.qm
 translate.path = /usr/share/kiran-control-panel/plugins/kiran-display-tools/translate
 
+#########################
+equals(TEMPLATE, app){
+    SOURCES += main.cpp
+    isEmpty( LIB_DIR ){
+        LIB_DIR = "/usr/bin/"
+    }
 
-DESKTOP_FILES_PATH = "/usr/share/kiran-control-panel/plugins"
-desktop_files.path = $${DESKTOP_FILES_PATH}
-desktop_files.files += desktop/files/*
-DEFINES += DESKTOP_FILES_PATHDEFINES=$${DESKTOP_FILES_PATH}
+    target.path = $$DESTDIR/$${LIB_DIR}
+    DESKTOP_FILES_PATH = "/usr/share/applications"
+    desktop_files.path = $${DESKTOP_FILES_PATH}
+    desktop_files.files += app-desktop/files/*
+    DEFINES += DESKTOP_FILES_PATHDEFINES=$${DESKTOP_FILES_PATH}
 
-DESKTOP_IMAGES_PATH = "/usr/share/kiran-control-panel/plugins/kiran-display-tools/icons"
-desktop_images.path = $${DESKTOP_IMAGES_PATH}
-desktop_images.files += desktop/images/*
-DEFINES += DESKTOP_IMAGES_PATH_DEFINES=$${DESKTOP_IMAGES_PATH}
+    DESKTOP_IMAGES_PATH = "/usr/share/icons/Kiran/places/16x16/"
+    desktop_images.path = $${DESKTOP_IMAGES_PATH}
+    desktop_images.files += app-desktop/images/*
+    DEFINES += DESKTOP_IMAGES_PATH_DEFINES=$${DESKTOP_IMAGES_PATH}
 
-
-INSTALLS += target \
+    INSTALLS += target \
             translate \
             desktop_files \
             desktop_images
+}
+
+equals(TEMPLATE, lib){
+    HEADERS += interface.h
+    SOURCES += interface.cpp
+    isEmpty( LIB_DIR ){
+        LIB_DIR = "/usr/lib/"
+    }
+
+    target.path = $$DESTDIR/$${LIB_DIR}
+
+    DESKTOP_FILES_PATH = "/usr/share/kiran-control-panel/plugins"
+    desktop_files.path = $${DESKTOP_FILES_PATH}
+    desktop_files.files += desktop/files/*
+    DEFINES += DESKTOP_FILES_PATHDEFINES=$${DESKTOP_FILES_PATH}
+
+    DESKTOP_IMAGES_PATH = "/usr/share/kiran-control-panel/plugins/kiran-display-tools/icons"
+    desktop_images.path = $${DESKTOP_IMAGES_PATH}
+    desktop_images.files += desktop/images/*
+    DEFINES += DESKTOP_IMAGES_PATH_DEFINES=$${DESKTOP_IMAGES_PATH}
+
+    INSTALLS += target \
+            translate \
+            desktop_files \
+            desktop_images
+}

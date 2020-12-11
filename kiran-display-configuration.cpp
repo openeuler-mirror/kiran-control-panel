@@ -474,6 +474,10 @@ void KiranDisplayConfiguration::refreshWidget()
     //    else
     //    {
 
+    /*
+     * 当一个屏幕时，为扩展显示中的特殊情况，单屏扩展。当多个屏幕时，屏幕位置x,y全部一样，表示为‘复制显示’，否则为‘扩展显示’。
+     *‘复制显示’和‘扩展显示’的数据加载函数分别为“onTabChanged(0, true) ”和“onTabChanged(1, true)。
+     */
     isCopyMode() ? onTabChanged(0, true) : onTabChanged(1, true);
     //    }
 }
