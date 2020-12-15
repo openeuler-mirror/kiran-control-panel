@@ -1,0 +1,53 @@
+##############################################################################
+# CMake version
+##############################################################################
+ 
+cmake_minimum_required(VERSION 2.8)
+##############################################################################
+# Project name
+##############################################################################
+project(kiran-display-tools)
+##############################################################################
+# Catkin
+##############################################################################
+## Compile as C++11,kiranwidgets-qt5
+add_compile_options(-std=c++11)
+add_definitions(-std=c++11)
+ 
+#find_package(kiranwidgets-qt5 REQUIRED)
+##############################################################################
+# Qt Environment
+##############################################################################
+find_package(Qt5  REQUIRED COMPONENTS  Widgets Core Gui DBus)
+###########
+## Build ##
+###########
+include_directories(
+  ${CMAKE_CURRENT_BINARY_DIR}/..
+)
+##############################################################################
+# Sections
+##############################################################################
+set(CMAKE_AUTOMOC ON) # 设置自动生成moc文件,AUTOMOC打开可以省去QT5_WRAP_CPP命令
+set(CMAKE_AUTORCC ON) # Resource files
+set(CMAKE_AUTOUIC ON) # 设置自动生成ui.h文件,AUTOUIC打开可以省去QT5_WRAP_UI命令
+# Find includes in corresponding build directories
+set(CMAKE_INCLUDE_CURRENT_DIR ON) # 设置工程包含当前目录，非必须
+##############################################################################
+# Sources
+##############################################################################
+file(GLOB_RECURSE SRC_FILES  *.cpp)
+#同理，查找当前文件夹中所有的头文件
+file(GLOB_RECURSE HEAD_FILES  *.h)
+#添加资源文件
+SET(RCC_FILES image.qrc)
+##############################################################################
+# Binaries
+##############################################################################
+##############################################################################
+# 创建工程文件
+##############################################################################
+add_executable(${PROJECT_NAME} ${SRC_FILES} ${HEAD_FILES} ${RCC_FILES})
+ 
+target_link_libraries(${PROJECT_NAME}  Qt5::Widgets Qt5::Core Qt5::Gui Qt5::DBus)
+target_link_libraries(${PROJECT_NAME} -lkiranwidgets-qt5 ) #这是自己调用的外部库

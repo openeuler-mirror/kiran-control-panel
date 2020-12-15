@@ -181,7 +181,8 @@ void KiranDisplayConfigItemContain::clear()
         QList<QAbstractButton*> btns = m_btnGroup->buttons();
         foreach (QAbstractButton *btn, btns) {
             m_btnGroup->removeButton(btn);
-            btn->deleteLater();
+            delete btn; //deleteLater() 会导致点击应用弹出MessageBox后，关闭一个显示器，模拟显示器窗刷新不及时的问题。
+            //btn->deleteLater();
         }
     }
 }

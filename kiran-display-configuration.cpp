@@ -372,7 +372,7 @@ void KiranDisplayConfiguration::showMessageBox()
             btn.setFixedSize(QSize(200, box.buttonSize().height()));
             btn.setShortcut(Qt::CTRL + Qt::Key_K);
             box.addButton(&btn, QDialogButtonBox::AcceptRole);
-            box.setText(QObject::tr("应用显示设置失败!"));
+            box.setText(QObject::tr("应用显示设置失败!%1").arg(var.toString()));
             box.exec();
         }
     }
@@ -390,7 +390,7 @@ void KiranDisplayConfiguration::showMessageBox()
             btn.setFixedSize(QSize(200, box.buttonSize().height()));
             btn.setShortcut(Qt::CTRL + Qt::Key_K);
             box.addButton(&btn, QDialogButtonBox::AcceptRole);
-            box.setText(QObject::tr("回撤显示设置失败!"));
+            box.setText(QObject::tr("回撤显示设置失败! %1").arg(var.toString()));
             box.exec();
         }
     }
