@@ -69,6 +69,6 @@ PluginFile=/usr/lib/libkiran-start-menu-settings.so     #插件路径，主程�
 ###### Desktop文件注意事项:
 1、desktop文件中Weight字段用于排序权重，在同一个层级中不能出现重复 。  
 ###### 模块desktop文件的安装目录
-执行 `kiran-control-panel --print-plugins-path` 打印模块desktop文件的安装目录. eg:输入安装目录 `Plugin Desktop Path: /usr/share/kiran-control-panel/plugins`
+执行 `kiran-control-panel --print-plugins-path` 打印模块desktop文件的安装目录. eg:输出安装目录 `Plugin Desktop Path: /usr/share/kiran-control-panel/plugins`
 
 
