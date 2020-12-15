@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
     bool print = parser.isSet(printPluginsPath);
     if(print)
     {
-        qDebug() << "Plugin Desktop Path: " KIRAN_MODULE_ITEM_DESKTOP_PATH;
+        qDebug() << "Plugin Desktop Path:" << KIRAN_MODULE_ITEM_DESKTOP_PATH;
     }
 
     //窗口屏幕居中显示.

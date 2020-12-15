@@ -8,7 +8,7 @@ QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = kiran-control-center
+TARGET = kiran-control-panel
 TEMPLATE = app
 
 # The following define makes your compiler emit warnings if you use
