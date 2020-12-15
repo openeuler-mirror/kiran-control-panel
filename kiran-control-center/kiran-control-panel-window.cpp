@@ -1,5 +1,4 @@
 #include "kiran-control-panel-window.h"
-#include "kiran-control-panel.h"
 #include "kiran-search-lineedit/kiran-search-lineedit.h"
 #include <QHBoxLayout>
 #include <QCompleter>

@@ -2,6 +2,7 @@
 #include <QApplication>
 #include <QTranslator>
 #include <QDesktopWidget>
+#include <QCommandLineParser>
 #include <QDebug>
 
 extern QString gLocaleName;
@@ -18,6 +19,21 @@ int main(int argc, char *argv[])
         qDebug() << "load qm: " << qmFile <<  " error.";
     else
         a.installTranslator(&translator);
+
+    //
+    QCommandLineParser parser;
+    parser.setApplicationDescription("kiran control center");  // 设置应用程序描述信息
+    parser.addHelpOption();  // 添加帮助选项 （"-h" 或 "--help"）
+    parser.setSingleDashWordOptionMode(QCommandLineParser::ParseAsLongOptions);  // 举例说明：将 "-adb" 当成一个选项来看，而不是看成 "-a -b -c"
+    QCommandLineOption printPluginsPath("print-plugins-path", QCoreApplication::translate("main", "Print plugins path"));
+    parser.addOption(printPluginsPath);
+    parser.process(a);
+
+    bool print = parser.isSet(printPluginsPath);
+    if(print)
+    {
+        qDebug() << "Plugin Desktop Path: " KIRAN_MODULE_ITEM_DESKTOP_PATH;
+    }
 
     //窗口屏幕居中显示.
     KiranControlPanelWindow w;

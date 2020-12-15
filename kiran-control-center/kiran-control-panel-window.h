@@ -2,6 +2,7 @@
 #define KIRANCONTROLPANELWINDOW_H
 
 #include "kiranwidgets-qt5/kiran-titlebar-window.h"
+#include "kiran-control-panel.h"
 
 class KiranControlPanelWindow : public KiranTitlebarWindow
 {
