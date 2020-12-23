@@ -10,6 +10,8 @@ namespace Ui { class KiranTimeDateWidget; }
 QT_END_NAMESPACE
 
 class MaskWidget;
+class KiranSwitchButton;
+class QListWidgetItem;
 class KiranTimeDateWidget : public KiranTitlebarWindow
 {
     Q_OBJECT
@@ -28,8 +30,11 @@ protected:
 
 private:
     Ui::KiranTimeDateWidget *ui;
-    int m_updateTimer;
-    MaskWidget *m_maskWidget;
+    int m_updateTimer = -1;
+    MaskWidget *m_maskWidget = nullptr;
+    KiranSwitchButton *m_autoSyncSwitch = nullptr;
+    QListWidgetItem *m_changeTimeZoneItem = nullptr;
+    QListWidgetItem *m_setTimeManuallyItem = nullptr;
 };
 
 #endif // KIRANDATETIMEWIDGET_H

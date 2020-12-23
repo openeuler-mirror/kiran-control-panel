@@ -10,6 +10,8 @@
 #include <QTimerEvent>
 #include <QFontDatabase>
 #include <QListWidgetItem>
+#include <kiran-switch-button.h>
+#include <style-property-helper.h>
 
 enum KiranTimeDateStackPageEnum{
     PAGE_TIMEZONE_SETTING,
@@ -36,8 +38,6 @@ KiranTimeDateWidget::~KiranTimeDateWidget()
 
 void KiranTimeDateWidget::initUI()
 {
-    QListWidgetItem* item;
-    TabItem* tabItem;
     KiranTimeDateGlobalData* globalData = KiranTimeDateGlobalData::instance();
 
     setTitle(tr("Time And Date Manager"));
@@ -50,118 +50,107 @@ void KiranTimeDateWidget::initUI()
     ui->label_dateTime->setContentsMargins(-1,8,-1,-1);
 
     /// 时区列表上标签
-    ui->label_timeZone->setContentsMargins(-1,24,-1,10);
+    QMargins labelTimeZoneMargins = ui->label_timeZone->contentsMargins();
+    labelTimeZoneMargins.setTop(24);
+    labelTimeZoneMargins.setBottom(10);
+    ui->label_timeZone->setContentsMargins(labelTimeZoneMargins);
 
     /// 设置时间日期上标签
-    ui->label_setTime->setContentsMargins(-1,24,-1,10);
-    ui->label_setDate->setContentsMargins(-1,24,-1,10);
+    QMargins labelSetTimeMargins = ui->label_setTime->contentsMargins();
+    labelSetTimeMargins.setTop(24);
+    labelSetTimeMargins.setBottom(10);
+    ui->label_setTime->setContentsMargins(labelSetTimeMargins);
 
-    ui->tabList->setSelectionMode(QListWidget::SingleSelection);
-    ui->tabList->setSelectionBehavior(QListWidget::SelectRows);
+    QMargins labelSetDateMargins = ui->label_setTime->contentsMargins();
+    labelSetDateMargins.setTop(24);
+    labelSetDateMargins.setBottom(10);
+    ui->label_setDate->setContentsMargins(labelSetDateMargins);
 
+    /* 初始化侧边栏Tab列表 */
+    ui->tabList->setIconSize(QSize(16,16));
     /// 更改时区
-    item = new QListWidgetItem(ui->tabList);
-    tabItem = new TabItem(ui->tabList);
-    tabItem->setObjectName("tab_timeZone");
-    tabItem->setText(tr("Change Time Zone"));
-    ui->tabList->addItem(item);
-    ui->tabList->setItemWidget(item,tabItem);
-    //更改时区选中触发
-    connect(tabItem,&TabItem::isSelectedChanged,[this](bool isSelected){
-        //TODO:切换判断是否修改
-        if(isSelected){
-            ui->stack->setCurrentIndex(PAGE_TIMEZONE_SETTING);
-            ui->timezone->reset();
-        }
-    });
+    m_changeTimeZoneItem = new QListWidgetItem(ui->tabList);
+    m_changeTimeZoneItem->setText(tr("Change Time Zone"));
+    m_changeTimeZoneItem->setIcon(QIcon(":/images/time_zone.png"));
+    ui->tabList->addItem(m_changeTimeZoneItem);
 
     /// 更改时间
-    //手动设置时区选中触发
-    item = new QListWidgetItem(ui->tabList);
-    tabItem = new TabItem(ui->tabList);
-    tabItem->setObjectName("tab_setTimeManually");
-    tabItem->setText(tr("Set Time Manually"));
-    ui->tabList->addItem(item);
-    ui->tabList->setItemWidget(item,tabItem);
-    connect(tabItem,&TabItem::isSelectedChanged,[this](bool isSelected){
-        if(isSelected){
-            ui->widget_setDate->reset();
-            ui->widget_setTime->reset();
-            ui->stack->setCurrentIndex(PAGE_DATETIME_SETTING);
-        }
-    });
+    m_setTimeManuallyItem = new QListWidgetItem(ui->tabList);
+    m_setTimeManuallyItem->setText(tr("Set Time Manually"));
+    QIcon setTimeManualIcon;
+    setTimeManualIcon.addPixmap(QPixmap(":/images/time.png"),QIcon::Normal);
+    setTimeManualIcon.addPixmap(QPixmap(":/images/time_d.png"),QIcon::Disabled);
+    m_setTimeManuallyItem->setIcon(setTimeManualIcon);
+    ui->tabList->addItem(m_setTimeManuallyItem);
 
-    /// 侧边栏切换
-    //QListWidget的当前行切换设置与之关联的TabItem isSelected属性 更新stylesheet
-    connect(ui->tabList,&QListWidget::itemSelectionChanged,[this](){
-        QList<QListWidgetItem *> selectedItems = ui->tabList->selectedItems();
-        if (selectedItems.empty()) {
+    /* 侧边栏切换处理 */
+    connect(ui->tabList,&KiranSidebarWidget::itemSelectionChanged,[this](){
+        QList<QListWidgetItem*> selecteds = ui->tabList->selectedItems();
+        if(selecteds.size()!=1){
+            qFatal("tabList: selecteds size != 1");
             return;
         }
-        QListWidgetItem *activatedItem = selectedItems.at(0);
-        TabItem *currentItem = qobject_cast<TabItem *>(ui->tabList->itemWidget(activatedItem));
-        currentItem->setSelected(true);
-        for (int i = 0; i < ui->tabList->count(); i++) {
-            QListWidgetItem *item = ui->tabList->item(i);
-            if (item != activatedItem) {
-                TabItem *tabItem = dynamic_cast<TabItem *>(ui->tabList->itemWidget(item));
-                if (tabItem != nullptr)
-                    tabItem->setSelected(false);
-            }
+        int row = ui->tabList->row(selecteds.at(0));
+        if( row == PAGE_DATETIME_SETTING ){/* 切换到设置日期事件Tab,复位日期和时间 */
+            ui->widget_setDate->reset();
+            ui->widget_setTime->reset();
+        }else if( row == PAGE_TIMEZONE_SETTING ){/* 切换到时区设置,当前选择的时区居中 */
+            ui->timezone->reset();
         }
+        ui->stack->setCurrentIndex(row);
     });
 
     /// 自动同步
+    m_autoSyncSwitch = new KiranSwitchButton(this);
+    ui->widget_autoSync->layout()->addWidget(m_autoSyncSwitch);
+
     //自动同步开关的触发，设置"手动设置时间"标签的enable,判断当前页并切换
-    connect(ui->checkbox_autoSync,&QCheckBox::stateChanged,[this](int state){
-        bool enable = state!=0;
+    connect(m_autoSyncSwitch,&KiranSwitchButton::toggled,[this](bool checked){
+        bool autoSyncEnable = checked;
         QListWidgetItem* dateTimeItem = ui->tabList->item(PAGE_DATETIME_SETTING);
         QWidget* dateTimeItemWidget = ui->tabList->itemWidget(dateTimeItem);
 
-        if( enable!=KiranTimeDateGlobalData::instance()->systemNTP() ){
+        if(autoSyncEnable != KiranTimeDateGlobalData::instance()->systemNTP() ){
             QPair<bool,QString> setNtpRes;
 
             setMaskWidgetVisible(true);
-            qInfo() << "start set ntp";
-            setNtpRes = ComKylinsecKiranSystemDaemonTimeDateInterface::instance()->SyncSetNTP(enable);
+            setNtpRes = ComKylinsecKiranSystemDaemonTimeDateInterface::instance()->SyncSetNTP(autoSyncEnable);
             setMaskWidgetVisible(false);
-            qInfo() << "end set ntp";
 
             if(!setNtpRes.first){
                 qWarning() << "SetNTP failed," << setNtpRes.second;
-                ui->checkbox_autoSync->setCheckState(enable?Qt::Unchecked:Qt::Checked);
+                m_autoSyncSwitch->setChecked(autoSyncEnable ? Qt::Unchecked : Qt::Checked);
                 return;
             }
         }
-        if(enable){
+        if(autoSyncEnable){
             dateTimeItem->setFlags(dateTimeItem->flags()&(~Qt::ItemIsEnabled));
-            dateTimeItemWidget->setEnabled(false);
             if(ui->tabList->currentRow()==PAGE_DATETIME_SETTING){
                 ui->tabList->setCurrentRow(PAGE_TIMEZONE_SETTING);
             }
         }else{
             dateTimeItem->setFlags(dateTimeItem->flags()|Qt::ItemIsEnabled);
-            dateTimeItemWidget->setEnabled(true);
         }
     });
     connect(globalData,&KiranTimeDateGlobalData::systemNTPChanged,[this](bool ntp){
-        ui->checkbox_autoSync->setCheckState(ntp?Qt::Checked:Qt::Unchecked);
+        m_autoSyncSwitch->setChecked(ntp?Qt::Checked:Qt::Unchecked);
     });
     connect(globalData,&KiranTimeDateGlobalData::systemCanNTPChanged,[this](bool can_ntp){
-        ui->checkbox_autoSync->setEnabled(can_ntp);
+        m_autoSyncSwitch->setEnabled(can_ntp?true:false);
     });
 
     //获取ntp是否可开启
     bool can_ntp = globalData->systemCanNTP();
-    ui->checkbox_autoSync->setChecked(false);
-    ui->checkbox_autoSync->setEnabled(can_ntp);
+    m_autoSyncSwitch->setChecked(false);
+    m_autoSyncSwitch->setEnabled(can_ntp);
     if(can_ntp){
         //时钟同步状态
         bool ntpStatus = globalData->systemNTP();
-        ui->checkbox_autoSync->setChecked(ntpStatus);
+        m_autoSyncSwitch->setChecked(ntpStatus);
     }
 
     /// 保存
+    Kiran::PropertyHelper::setButtonType(ui->btn_save,Kiran::BUTTON_Default);
     ui->btn_save->setFixedSize(252,60);
     connect(ui->btn_save,&QPushButton::clicked,[this](bool checked){
         bool bRes = true;
@@ -185,6 +174,7 @@ void KiranTimeDateWidget::initUI()
 
     /// 重置
     ui->btn_reset->setFixedSize(252,60);
+    Kiran::PropertyHelper::setButtonType(ui->btn_reset,Kiran::BUTTON_Warning);
     connect(ui->btn_reset,&QPushButton::clicked,[this](bool checked){
         if(ui->tabList->currentRow()==PAGE_TIMEZONE_SETTING){
             ui->timezone->reset();

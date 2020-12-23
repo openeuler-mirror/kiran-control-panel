@@ -74,16 +74,10 @@ void KiranTimeZone::scrollToCurrent()
     }
 }
 
-#include <QStyleFactory>
 void KiranTimeZone::initUI()
 {
     ui->edit_search->setPlaceholderText(tr("Search in all time zones..."));
     ui->scrollArea->setWidgetResizable(true);
-
-    ///FIXME:为了解决Adwaita滚动条没透明
-    qInfo() << QStyleFactory::keys();
-    QStyle* style = QStyleFactory::create("Fusion");
-    ui->scrollArea->setStyle(style);
 
     /// NOTE: 为了完成搜索项的数目变更，窗口高度自动适应的效果
     ///        通过设置最大高度setMaximumHeight,来将控件压缩到40px,不然始终占据过多空间
