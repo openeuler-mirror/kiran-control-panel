@@ -1,6 +1,5 @@
 #include "kiran-timedate-widget.h"
 #include "ui_kiran-timedate-widget.h"
-#include "tab-item.h"
 #include "kiran-timedate-global-data.h"
 #include "mask-widget.h"
 
@@ -21,7 +20,7 @@ enum KiranTimeDateStackPageEnum{
 #define KEY_FONT_NAME "fontName"
 
 KiranTimeDateWidget::KiranTimeDateWidget(QWidget *parent)
-    : KiranTitlebarWindow()
+    : KiranTitlebarWindow(nullptr)
     , ui(new Ui::KiranTimeDateWidget)
     , m_updateTimer(0)
     , m_maskWidget(new MaskWidget(this))
