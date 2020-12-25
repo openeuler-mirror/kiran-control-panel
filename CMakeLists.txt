@@ -14,60 +14,37 @@ set(CMAKE_AUTORCC ON)
 
 file(GLOB_RECURSE PUBLIC_CPP "*.cpp")
 file(GLOB_RECURSE PUBLIC_H "*.h")
+file(GLOB_RECURSE RESOURCES "*.qrc")
+file(GLOB_RECURSE TS_FILES "*.ts")
 
-set(RCC_FILES *.qrc)
-set(TS_FILES kiran-display-tools.zh_CN.ts)
-
-include_directories("${CMAKE_BINARY_DIR}")
-
-find_package(Qt5 COMPONENTS Widgets DBus X11Extras)
-
-#qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
-
-#if(DFL_BUILD_SHARED)
-#add_library(flFTP SHARED flFTP.cpp flFTP.h)
-#else()
-#add_library(flFTP STATIC flFTP.cpp flFTP.h)
-#endif()
+find_package(Qt5 COMPONENTS Widgets DBus X11Extras Svg )
 
 
-#    add_executable(${PROJECT_NAME}
-#        ${PUBLIC_CPP}
-#        ${PUBLIC_H}
-#        ${RESOURCES}
-#        ${QM_FILES})
-
-#    add_library(${PROJECT_NAME} SHARED
-#        ${PUBLIC_CPP}
-#        ${PUBLIC_H}
-#        ${RESOURCES}
-#        ${QM_FILES})
-
+if(${BUILD_APP})
+    add_executable(${PROJECT_NAME}
+        ${PUBLIC_CPP}
+        ${PUBLIC_H}
+        ${RESOURCES}
+        ${TS_FILES})
+else()
+    add_library(${PROJECT_NAME} SHARED
+        ${PUBLIC_CPP}
+        ${PUBLIC_H}
+        ${RESOURCES}
+        ${TS_FILES})
+endif()
 
 
 target_include_directories(${PROJECT_NAME} PRIVATE
-    widgets/
-    public/
-    widgets/kiran-application/
-    ${GSETTINGS_QT_INCLUDE_DIRS})
+    widgets/kiran-application/)
 
 target_link_libraries(${PROJECT_NAME}
-    Qt5::Widgets
-    Qt5::X11Extras
-    Qt5::DBus
-    kiranwidgets-qt5
-    X11
-    xcb
-    xcb-util
-    ${GSETTINGS_QT_LIBRARIES})
+    Qt5::Core Qt5::Gui Qt5::Svg Qt5::Widgets Qt5::X11Extras Qt5::DBus kiranwidgets-qt5 X11)
 
-##安装SO
-#install(TARGETS ${PROJECT_NAME} DESTINATION ${LIB_INSTALL_DIR}/)
+#安装
+install(TARGETS ${PROJECT_NAME} DESTINATION ${BIN_INSTALL_DIR}/)
 
-##开发头文件
-#install(FILES ${DEVEL_HEADER} DESTINATION ${INCLUDE_INSTALL_DIR}/${PROJECT_NAME}/)
-
-##翻译
-#install(FILES ${QM_FILES} DESTINATION ${SHARE_INSTALL_PREFIX}/${PROJECT_NAME}/translations/)
+#翻译
+install(FILES ${TS_FILES} DESTINATION ${SHARE_INSTALL_PREFIX}/${PROJECT_NAME}/translations/)
 
 
