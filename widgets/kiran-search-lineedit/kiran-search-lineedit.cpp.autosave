@@ -4,7 +4,7 @@
  *                                                                         *
  ***************************************************************************/
 #include "kiran-search-lineedit.h"
-#include "kiran-search-popup-delegate.h"
+#include "kiran-search-lineedit/kiran-search-popup-delegate.h"
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QCompleter>
