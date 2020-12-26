@@ -10,7 +10,7 @@
 #include <QFontDatabase>
 #include <QListWidgetItem>
 #include <kiran-switch-button.h>
-#include <style-property-helper.h>
+#include <widget-property-helper.h>
 
 enum KiranTimeDateStackPageEnum{
     PAGE_TIMEZONE_SETTING,
@@ -149,7 +149,7 @@ void KiranTimeDateWidget::initUI()
     }
 
     /// 保存
-    Kiran::PropertyHelper::setButtonType(ui->btn_save,Kiran::BUTTON_Default);
+    Kiran::WidgetPropertyHelper::setButtonType(ui->btn_save,Kiran::BUTTON_Default);
     ui->btn_save->setFixedSize(252,60);
     connect(ui->btn_save,&QPushButton::clicked,[this](bool checked){
         bool bRes = true;
@@ -173,7 +173,7 @@ void KiranTimeDateWidget::initUI()
 
     /// 重置
     ui->btn_reset->setFixedSize(252,60);
-    Kiran::PropertyHelper::setButtonType(ui->btn_reset,Kiran::BUTTON_Warning);
+    Kiran::WidgetPropertyHelper::setButtonType(ui->btn_reset,Kiran::BUTTON_Warning);
     connect(ui->btn_reset,&QPushButton::clicked,[this](bool checked){
         if(ui->tabList->currentRow()==PAGE_TIMEZONE_SETTING){
             ui->timezone->reset();
