@@ -6,7 +6,6 @@
 #include <QWidget>
 #include <QThread>
 
-class ListWidgetControl;
 class QStackedWidget;
 class CreateUserPage;
 class UserInfoPage;
@@ -14,7 +13,8 @@ class SelectAvatarPage;
 class AuthManagerPage;
 class MaskWidget;
 class HardWorker;
-
+class KiranSidebarWidget;
+class QListWidgetItem;
 class KiranAccountManager : public KiranTitlebarWindow {
     Q_OBJECT
 public:
@@ -37,7 +37,8 @@ private:
     void setDefaultSiderbarItem();
 
 private:
-    ListWidgetControl *m_tabList;
+    KiranSidebarWidget *m_tabList;
+    QListWidgetItem *m_createUserItem;
     QStackedWidget *m_stackWidget;
     CreateUserPage *m_page_createUser;
     UserInfoPage *m_page_userinfo;

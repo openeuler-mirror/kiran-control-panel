@@ -8,6 +8,8 @@
 #include <QListView>
 #include <kiranwidgets-qt5/kiran-message-box.h>
 #include <QMessageBox>
+#include <kiran-switch-button.h>
+#include <widget-property-helper.h>
 
 enum PageEnum
 {
@@ -45,7 +47,7 @@ void UserInfoPage::updateInfo ()
     ui->edit_userID->setText(QString::number(m_uid));
     ui->combo_accountType->setCurrentIndex(accountType);
     ui->avatar->setImage(iconFile);
-    ui->checkBox->setChecked(!locked);
+    m_accountStatusSwitch->setChecked(!locked);
     m_curShowUserName = userName;
 
     if (m_curShowUserName != AccountsGlobalInfo::instance()->getCurrentUser())
@@ -91,6 +93,14 @@ void UserInfoPage::initUI ()
 
     m_hoverTip = new HoverTips(this);
 
+    /* 账户状态的开关按钮 */
+    m_accountStatusSwitch = new KiranSwitchButton(this);
+    ui->layout_accountStatusSwitch->insertWidget(0,m_accountStatusSwitch);
+
+    Kiran::WidgetPropertyHelper::setButtonType(ui->btn_saveProperty,Kiran::BUTTON_Default);
+    Kiran::WidgetPropertyHelper::setButtonType(ui->btn_deleteUser,Kiran::BUTTON_Warning);
+    Kiran::WidgetPropertyHelper::setButtonType(ui->btn_savePasswd,Kiran::BUTTON_Default);
+
     /* 用户显示页面 */
     //账户头像
     ui->avatar->setHoverImage(":/images/change_user_icon.png");
@@ -100,11 +110,8 @@ void UserInfoPage::initUI ()
     });
 
     //用户类型显示
-    auto view = new QListView(ui->combo_accountType);
-    ui->combo_accountType->setView(view);
     ui->combo_accountType->addItem(tr("standard"));
     ui->combo_accountType->addItem(tr("administrator"));
-    ui->combo_accountType->view()->window()->setAttribute(Qt::WA_TranslucentBackground);
 
     //修改密码按钮
     connect(ui->btn_changePasswd, &QPushButton::clicked, [this] () {
@@ -224,7 +231,7 @@ void UserInfoPage::handlerUpdateUserProperty ()
     account = getCurrentShowUserName();
     icon = ui->avatar->iconPath();
     accountType = ui->combo_accountType->currentIndex();
-    isLocked = !ui->checkBox->isChecked();
+    isLocked = !m_accountStatusSwitch->isChecked();
 
     ui->btn_saveProperty->setBusy(true);
     emit sigIsBusyChanged(true);

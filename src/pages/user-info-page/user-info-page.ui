@@ -371,44 +371,13 @@
         </layout>
        </item>
        <item>
-        <layout class="QHBoxLayout" name="userInfo_row_9">
+        <layout class="QHBoxLayout" name="layout_accountStatusSwitch">
          <property name="spacing">
           <number>0</number>
          </property>
          <property name="topMargin">
           <number>10</number>
          </property>
-         <item>
-          <widget class="QCheckBox" name="checkBox">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="iconSize">
-            <size>
-             <width>16</width>
-             <height>16</height>
-            </size>
-           </property>
-          </widget>
-         </item>
          <item>
           <spacer name="horizontalSpacer_9">
            <property name="orientation">

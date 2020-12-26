@@ -13,6 +13,7 @@
 #include <QDebug>
 #include <QDir>
 #include <QFileDialog>
+#include <widget-property-helper.h>
 
 #define SYSTEM_AVATAR_OBJ_NAME "avatar_button_system"
 #define USER_AVATAR_OBJ_NAME   "avatar_button_user"
@@ -130,6 +131,7 @@ void SelectAvatarPage::initUI ()
     btn->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     btn->setFixedSize(252, 60);
     btn->setText(tr("Confirm"));
+    Kiran::WidgetPropertyHelper::setButtonType(btn,Kiran::BUTTON_Default);
     m_btnLayout->addWidget(btn);
     connect(btn, &QPushButton::clicked, [this] () {
         sigReturnToPrevPage(m_mode, true);

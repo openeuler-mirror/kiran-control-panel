@@ -2,19 +2,14 @@
 #define LINEEDITWITHCHECKICON_H
 
 #include <QWidget>
-#include <QLineEdit>
+#include <kiran-icon-line-edit.h>
 
-namespace Ui
-{
-    class LineEditWithCheckIcon;
-}
-
-class LineEditWithCheckIcon : public QWidget
+class LineEditWithCheckIcon : public KiranIconLineEdit
 {
     Q_OBJECT
+
 public:
-    enum VerificationStatusEnum
-    {
+    enum VerificationStatusEnum{
         VERIFICATION_PASSED,
         VERIFICATION_ERROR,
         VERIFICATION_NONE
@@ -22,38 +17,26 @@ public:
     Q_ENUM(VerificationStatusEnum)
 
 public:
-    explicit LineEditWithCheckIcon (QWidget *parent = nullptr);
-    ~LineEditWithCheckIcon ();
+    explicit LineEditWithCheckIcon(QWidget *parent = nullptr);
+    ~LineEditWithCheckIcon();
 
-    void setEchoMode (QLineEdit::EchoMode echoMode);
-    void setMaxLength (int length);
-    void setPlaceholderText (const QString &placeholder);
-
-    void resetVerificationStatus ();
-    void setVerificationStatus (bool isPassed);
-
-    QString text ();
-
-    void clear ();
+    void resetVerificationStatus();
+    void setVerificationStatus(bool isPassed);
 
 private:
-    void initUI ();
+    void initUI();
     ///@biref 设置普通字符间距
-    void setNormalLetterSpacing ();
+    void setNormalLetterSpacing();
     ///@biref 设置密码字符间距
-    void setPasswdLetterSpacing ();
+    void setPasswdLetterSpacing();
     ///@biref 设置输入密码样式
-    void setShowPasswordModeStyle (bool showPasswordModeStyle);
-
-signals:
-    void editTextChanged (const QString &text);
+    void setShowPasswordModeStyle(bool showPasswordModeStyle);
 
 protected:
-    bool eventFilter (QObject *obj, QEvent *event) override;
-    virtual void paintEvent (QPaintEvent *event) override;
+    virtual void keyPressEvent(QKeyEvent *event) override;
+    virtual void focusInEvent(QFocusEvent *event) override;
 
 private:
-    Ui::LineEditWithCheckIcon *ui;
     VerificationStatusEnum m_verificationStatus;
     bool m_showPasswordModeStyle;
 };

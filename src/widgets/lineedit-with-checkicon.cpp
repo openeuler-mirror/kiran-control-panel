@@ -1,5 +1,4 @@
 #include "lineedit-with-checkicon.h"
-#include "ui_lineedit-with-checkicon.h"
 
 #include <QStyleOption>
 #include <QPainter>
@@ -7,132 +6,82 @@
 #include <QSvgRenderer>
 #include <QKeyEvent>
 
-LineEditWithCheckIcon::LineEditWithCheckIcon (QWidget *parent) :
-        QWidget(parent),
-        ui(new Ui::LineEditWithCheckIcon),
-        m_verificationStatus(VERIFICATION_NONE)
+LineEditWithCheckIcon::LineEditWithCheckIcon(QWidget *parent)
+        : KiranIconLineEdit(parent),
+          m_verificationStatus(VERIFICATION_NONE)
 {
-    ui->setupUi(this);
     initUI();
 }
 
-LineEditWithCheckIcon::~LineEditWithCheckIcon ()
+LineEditWithCheckIcon::~LineEditWithCheckIcon()
 {
-    delete ui;
+
 }
 
-void LineEditWithCheckIcon::setEchoMode (QLineEdit::EchoMode echoMode)
-{
-    ui->lineEdit->setEchoMode(echoMode);
-}
-
-void LineEditWithCheckIcon::setMaxLength (int length)
-{
-    ui->lineEdit->setMaxLength(length);
-}
-
-void LineEditWithCheckIcon::setPlaceholderText (const QString &placeholder)
-{
-    ui->lineEdit->setPlaceholderText(placeholder);
-}
-
-void LineEditWithCheckIcon::resetVerificationStatus ()
-{
-    ui->checkIndicator->setPixmap(QPixmap());
-    m_verificationStatus = VERIFICATION_NONE;
-}
-
-void LineEditWithCheckIcon::setVerificationStatus (bool isPassed)
+void LineEditWithCheckIcon::setVerificationStatus(bool isPassed)
 {
     QString iconPath = isPassed ? ":/images/icon_cor`rect.svg" : ":/images/icon_error.svg";
-    m_verificationStatus = isPassed ? VERIFICATION_PASSED : VERIFICATION_ERROR;
-
-    ui->checkIndicator->setPixmap(iconPath);
+    m_verificationStatus = isPassed ? VERIFICATION_PASSED:VERIFICATION_ERROR;
+    setIcon(QIcon(iconPath));
 }
 
-QString LineEditWithCheckIcon::text ()
+void LineEditWithCheckIcon::initUI()
 {
-    return ui->lineEdit->text();
-}
-
-void LineEditWithCheckIcon::clear ()
-{
-    ui->lineEdit->clear();
-}
-
-void LineEditWithCheckIcon::initUI ()
-{
-    ui->lineEdit->installEventFilter(this);
-    ui->lineEdit->setContextMenuPolicy(Qt::NoContextMenu);
-    connect(ui->lineEdit, &QLineEdit::textChanged, [this] (const QString &text) {
-        emit editTextChanged(text);
-
+    setContextMenuPolicy(Qt::NoContextMenu);
+    setIconSize(QSize(16,16));
+    setIconPosition(Kiran::ICON_POSITION_RIGHT);
+    setAlignment(Qt::AlignLeft|Qt::AlignVCenter);
+    connect(this, &QLineEdit::textChanged, [this](const QString &text) {
         ///密码框输入密码不为空的情况下调整字体和字间距
-        if (ui->lineEdit->echoMode() == QLineEdit::Password && text.isEmpty())
-        {
+        if (echoMode() == QLineEdit::Password && text.isEmpty()) {
             setShowPasswordModeStyle(false);
             setNormalLetterSpacing();
-        }
-        else if (ui->lineEdit->echoMode() == QLineEdit::Password && !text.isEmpty())
-        {
+        } else if (echoMode() == QLineEdit::Password && !text.isEmpty()) {
             setShowPasswordModeStyle(true);
             setPasswdLetterSpacing();
         }
     });
 }
 
-void LineEditWithCheckIcon::setNormalLetterSpacing ()
+void LineEditWithCheckIcon::setNormalLetterSpacing()
 {
-    QFont font = ui->lineEdit->font();
-    font.setLetterSpacing(QFont::PercentageSpacing, 0);
-    ui->lineEdit->setFont(font);
+    QFont currentFont = font();
+    currentFont.setLetterSpacing(QFont::PercentageSpacing, 0);
+    setFont(currentFont);
 }
 
-void LineEditWithCheckIcon::setPasswdLetterSpacing ()
+void LineEditWithCheckIcon::setPasswdLetterSpacing()
 {
-    QFont font = ui->lineEdit->font();
-    font.setLetterSpacing(QFont::AbsoluteSpacing, 4);
-    ui->lineEdit->setFont(font);
+    QFont currentFont = font();
+    currentFont.setLetterSpacing(QFont::AbsoluteSpacing, 4);
+    setFont(currentFont);
 }
 
-void LineEditWithCheckIcon::setShowPasswordModeStyle (bool showPasswordModeStyle)
+void LineEditWithCheckIcon::setShowPasswordModeStyle(bool showPasswordModeStyle)
 {
-    if (m_showPasswordModeStyle == showPasswordModeStyle)
-    {
+    if (m_showPasswordModeStyle == showPasswordModeStyle) {
         return;
     }
     m_showPasswordModeStyle = showPasswordModeStyle;
     style()->polish(this);
-    style()->polish(ui->lineEdit);
 }
 
-bool LineEditWithCheckIcon::eventFilter (QObject *obj, QEvent *event)
+void LineEditWithCheckIcon::keyPressEvent(QKeyEvent *event)
 {
-    if (obj == ui->lineEdit)
-    {
-        switch (event->type())
-        {
-            case QEvent::FocusIn:resetVerificationStatus();
-                break;
-            case QEvent::KeyPress:
-            {
-                QKeyEvent *keyEvent = dynamic_cast<QKeyEvent *>(event);
-                if (keyEvent->key() == Qt::Key_Escape && ui->lineEdit->echoMode() == QLineEdit::Password)
-                {
-                    ui->lineEdit->clear();
-                }
-            }
-            default:break;
-        }
+    if (event->key() == Qt::Key_Escape && echoMode() == QLineEdit::Password) {
+        clear();
     }
-    return false;
+    KiranIconLineEdit::keyPressEvent(event);
 }
 
-void LineEditWithCheckIcon::paintEvent (QPaintEvent *event)
+void LineEditWithCheckIcon::focusInEvent(QFocusEvent *event)
 {
-    QStyleOption opt;
-    QPainter painter(this);
+    resetVerificationStatus();
+    KiranIconLineEdit::focusInEvent(event);
+}
 
-    opt.init(this);
-    style()->drawPrimitive(QStyle::PE_Widget, &opt, &painter, this);
+void LineEditWithCheckIcon::resetVerificationStatus()
+{
+    m_verificationStatus = VERIFICATION_NONE;
+    setIcon(QIcon());
 }
