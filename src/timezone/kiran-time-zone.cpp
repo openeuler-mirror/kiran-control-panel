@@ -58,7 +58,6 @@ void KiranTimeZone::reset()
 {
     ui->edit_search->clear();
     ui->timeZoneList->reset();
-    QTimer::singleShot(0,this,SLOT(scrollToCurrent()));
 }
 
 void KiranTimeZone::scrollToCurrent()

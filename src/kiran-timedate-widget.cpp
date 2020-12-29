@@ -90,13 +90,13 @@ void KiranTimeDateWidget::initUI()
             return;
         }
         int row = ui->tabList->row(selecteds.at(0));
+        ui->stack->setCurrentIndex(row);
         if( row == PAGE_DATETIME_SETTING ){/* 切换到设置日期事件Tab,复位日期和时间 */
             ui->widget_setDate->reset();
             ui->widget_setTime->reset();
         }else if( row == PAGE_TIMEZONE_SETTING ){/* 切换到时区设置,当前选择的时区居中 */
             ui->timezone->reset();
         }
-        ui->stack->setCurrentIndex(row);
     });
 
     /// 自动同步
