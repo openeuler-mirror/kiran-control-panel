@@ -8,6 +8,7 @@
 #include <QFileInfo>
 #include <QDir>
 #include <kiran-switch-button.h>
+#include <widget-property-helper.h>
 
 AdvanceSettings::AdvanceSettings() :
         KiranTitlebarWindow(),
@@ -119,6 +120,7 @@ void AdvanceSettings::initUI() {
     });
 
     /// confirm,cancel
+    Kiran::WidgetPropertyHelper::setButtonType(ui->btn_confirm,Kiran::BUTTON_Default);
     connect(ui->btn_confirm, &QPushButton::clicked, [this]() {
         QFileInfo fileInfo;
         ///数据校验

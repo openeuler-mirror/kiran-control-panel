@@ -2,10 +2,10 @@
 // Created by lxh on 2020/10/22.
 //
 #include <QVBoxLayout>
-#include <QHBoxLayout>
 #include <QPushButton>
 #include <QApplication>
 #include <QMessageBox>
+#include <widget-property-helper.h>
 
 #include "kiran-avatar-editor.h"
 #include "image-preview-widget.h"
@@ -70,6 +70,7 @@ void KiranAvatarEditor::initUI (const QString &srcImagePath,
     buttonLayout->addItem(spacerItem_1);
 
     m_btnConfrim = new QPushButton(this);
+    Kiran::WidgetPropertyHelper::setButtonType(m_btnConfrim,Kiran::BUTTON_Default);
     m_btnConfrim->setObjectName("btn_confirm");
     m_btnConfrim->setFixedSize(100, 50);
     m_btnConfrim->setText(tr("Confirm"));
