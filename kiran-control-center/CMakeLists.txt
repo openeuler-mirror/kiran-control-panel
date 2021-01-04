@@ -62,7 +62,7 @@ target_include_directories(${PROJECT_NAME} PRIVATE
 
 
 #安装SO
-install(TARGETS ${PROJECT_NAME} DESTINATION ${LIB_INSTALL_DIR}/)
+install(TARGETS ${PROJECT_NAME} DESTINATION ${INSTALL_DIR}/)
 
 #开发头文件
 install(FILES "../interface/module-interface.h" DESTINATION ${INCLUDE_INSTALL_DIR}/${PROJECT_NAME}/)
@@ -70,4 +70,4 @@ install(FILES "../interface/module-interface.h" DESTINATION ${INCLUDE_INSTALL_DI
 #pkgconfig
 configure_file( kiran-control-panel.pc.in kiran-control-panel.pc @ONLY)
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/kiran-control-panel.pc
-    DESTINATION ${LIB_INSTALL_DIR}/pkgconfig/)
+    DESTINATION ${INSTALL_DIR}/pkgconfig/)

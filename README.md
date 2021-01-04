@@ -5,7 +5,7 @@
 1.  安装编译依赖  
    `sudo yum install gcc-c++ qt5-qtbase qt5-qtbase-devel qt5-qtx11extras qt5-qtx11extras-devel libX11 libX11-devel kiranwidgets-qt5`
 2. **源码根目录中的kiran-control-center**下创建**build**目录`mkdir build`
-3. 进入**build**目录,执行`cmake -DINCLUDE_INSTALL_DIR=/usr/include -DSHARE_INSTALL_DIR=/usr/share ..`生成**Makefile**
+3. 进入**build**目录,执行`cmake -DINCLUDE_INSTALL_DIR=/usr/include -DSHARE_INSTALL_DIR=/usr/share -DINSTALL_DIR=/usr/bin ..`生成**Makefile**
 4. 执行`make`进行编译
 
 ###### 安装
