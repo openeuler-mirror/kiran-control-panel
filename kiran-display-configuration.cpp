@@ -490,8 +490,18 @@ bool KiranDisplayConfiguration::extraPrimaryBtnStatus(const bool &onlyEnableScre
 void KiranDisplayConfiguration::refreshWidget()
 {
     m_listMonitors = Display("ListMonitors").toStringList();
-    foreach (QString monitor, m_listMonitors) {
-
+    foreach (QString monitorPath, m_listMonitors) { //如果显示器未开启，且没有最佳分辨率，就认为时虚拟机中的异常情况，就认为此显示器不存在。
+        if(!MonitorProperty(monitorPath, "enabled").toBool())
+        {
+            QList<DisplayModesStu> list = Monitor<QList<DisplayModesStu> >(monitorPath, "ListPreferredModes");
+            if(!list.isEmpty())
+            {
+                if(list.first().w == 0 && list.first().h == 0)
+                {
+                    m_listMonitors.removeAll(monitorPath);
+                }
+            }
+        }
     }
     //如果只有一个屏幕，应当隐藏“复制模式”和“扩展模式”的选项卡。多屏幕扩展模式（包含单屏幕扩展）。多屏幕复制模式。
     QStringList listMonitors = m_listMonitors;
