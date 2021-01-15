@@ -57,6 +57,7 @@ private:
     void selectResolutionComboboxItem(QComboBox *comboBox, const int &w, const int &h);
     void selectRefreshRateComboboxItem(QComboBox *comboBox, const int &r);
     bool isCopyMode();
+    bool extraPrimaryBtnStatus(const bool &onlyEnableScreen, const bool &enable);
     //UI创建之后，加载数据的入口
     void refreshWidget();
     //start用于检查是否修改
@@ -74,6 +75,8 @@ private:
     QVariantMap m_copyModeSavedData;
     QVariantMap m_extraModeSavedData;
     //end
+    QStringList m_listMonitors;//用于处理虚拟机中，没有勾选显示器，xrandr返回两个显示器，但是部分显示器的dbus却无法调用的情况。
+    bool m_dbusPropertiesChangedBlock;
 };
 
 #endif // KIRANDISPLAYCONFIGURATION_H

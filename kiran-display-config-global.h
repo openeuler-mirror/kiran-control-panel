@@ -1,6 +1,8 @@
 #ifndef KIRANDISPLAYCONFIGGLOBAL_H
 #define KIRANDISPLAYCONFIGGLOBAL_H
 
+#include "kiranwidgets-qt5/kiran-message-box.h"
+#include <QPushButton>
 #include <QVariant>
 #include <QString>
 #include <QDBusArgument>
@@ -16,6 +18,7 @@
 
 struct DisplayModesStu
 {
+    DisplayModesStu():w(0),h(0),refreshRate(0){}
     uint32_t index;
     uint32_t w;
     uint32_t h;
@@ -45,11 +48,11 @@ Q_DECLARE_METATYPE(ListDisplayModesStu)
 
 namespace KiranDisplayConfigGlobal
 {
-QVariant Display(const QString &function, const QVariantList &paras=QVariantList(), int *flag=nullptr);
+QVariant Display(const QString &function, const QVariantList &paras=QVariantList(), int *flag=nullptr, const bool &showErrorBox=true);
 QVariant DisplayProperty( const char *name);
 
 template<typename T>
-T Monitor(const QString &dbusPath, const QString &function, const QVariantList &paras=QVariantList(), T * = NULL)
+T Monitor(const QString &dbusPath, const QString &function, const QVariantList &paras=QVariantList(), const bool &showErrorBox=true, T * = NULL)
 {
     QDBusMessage message = QDBusMessage::createMethodCall(KIRAN_DBUS_SERVICE_NAME, dbusPath, "com.kylinsec.Kiran.SessionDaemon.Display.Monitor",
                                                           function);
@@ -63,6 +66,19 @@ T Monitor(const QString &dbusPath, const QString &function, const QVariantList &
     else
     {
         qDebug() << "DBus调用失败:" << function << paras << response.errorMessage();
+        if(showErrorBox)
+        {
+            KiranMessageBox box;
+            box.setTitle(QObject::tr("提示"));
+
+            QPushButton btn;
+            btn.setText(QObject::tr("确定(K)"));
+            btn.setFixedSize(QSize(200, box.buttonSize().height()));
+            btn.setShortcut(Qt::CTRL + Qt::Key_K);
+            box.addButton(&btn, QDialogButtonBox::AcceptRole);
+            box.setText(response.errorMessage());
+            box.exec();
+        }
     }
 
     return T();
