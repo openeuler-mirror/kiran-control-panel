@@ -152,12 +152,15 @@ void KiranDisplayConfiguration::onScreenItemChecked(QString monitorPath)
         QList<DisplayModesStu> list = intersectionMonitorModes();
         QMap<int, QPair<QSize, QList<int> > > map = getResolutionFromModes(list);
         initComboBoxResolution(ui->comboBox_resolving, map);
-        DisplayModesStu stu = curIntersectionMonitorMode();
-        //复制模式没有推荐，直接set text。
-        ui->comboBox_resolving->setCurrentText(QString("%1x%2").arg(stu.w).arg(stu.h));
-        ui->comboBox_refreshRate->setCurrentText(QString("%1HZ").arg((int)stu.refreshRate));
+        if(isCopyMode())//当前实际模式不是复制模式，而是从扩展模式初次切换到复制模式，此时，不获取的那个前模式。
+        {
+            DisplayModesStu stu = curIntersectionMonitorMode();
+            //复制模式没有推荐，直接set text。
+            ui->comboBox_resolving->setCurrentText(QString("%1x%2").arg(stu.w).arg(stu.h));
+            ui->comboBox_refreshRate->setCurrentText(QString("%1HZ").arg((int)stu.refreshRate));
 
-        ui->comboBox_windowScalingFactor->setCurrentIndex(windowScalingFactor);
+            ui->comboBox_windowScalingFactor->setCurrentIndex(windowScalingFactor);
+        }
     }
     else
     {
