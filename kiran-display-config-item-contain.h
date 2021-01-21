@@ -35,7 +35,11 @@ public:
 
     QVariantMap getData();
     void setData(const QVariantList &var_btns, const bool &clearChecked=false);
-    void setRotateDrect(const KiranDisplayConfigItem::RotateDrect &rotateDrect);
+    void setRotateDrect(const int &step=1);
+    bool getHorizontalDisplayReflectType();
+    bool getVerticalDisplayReflectType();
+    void setHorizontalDisplayReflectType(bool checked);
+    void setVerticalDisplayReflectType(bool checked);
     void changeItemEnabled(const bool &enbled);
 
     QString getCurMonitorText();

@@ -26,6 +26,7 @@ QVariantMap KiranDisplayConfigItemContain::getData()
         map.insert("x", item->screenGeometryF().x());
         map.insert("y", item->screenGeometryF().y());
         map.insert("rotation", item->rotateDrect());
+        map.insert("reflect", (uint16_t)item->displayReflectType());
         map.insert("name", item->text());
         ret.insert(item->monitorPath(), map);
     }
@@ -54,7 +55,8 @@ void KiranDisplayConfigItemContain::setData(const QVariantList &var_btns, const 
         btn->setToolTip(var.value("text").toString());
         btn->setMonitorPath(var.value("monitorPath", KIRAN_SCREEN_COPY_MODE_MONITOR_PATH).toString());
         btn->setScreenGeometryF(QRectF(var.value("x").toFloat(), var.value("y").toFloat(), var.value("w").toFloat(), var.value("h").toFloat()));
-        btn->initRotateDrect((KiranDisplayConfigItem::RotateDrect)var.value("rotation", KiranDisplayConfigItem::ROTATION_0).toInt());
+        btn->initRotateDrect((KiranDisplayConfigItem::DisplayRotationType)var.value("rotation", KiranDisplayConfigItem::DISPLAY_ROTATION_0).toInt());
+        btn->setDisplayReflectType((KiranDisplayConfigItem::DisplayReflectType)var.value("reflect").toInt());
         m_btnGroup->addButton(btn, i);
         btn->show();
         connect(btn, &KiranDisplayConfigItem::sigDrag, this, &KiranDisplayConfigItemContain::onBtnDraging);
@@ -83,12 +85,50 @@ void KiranDisplayConfigItemContain::setData(const QVariantList &var_btns, const 
     }
 }
 
-void KiranDisplayConfigItemContain::setRotateDrect(const KiranDisplayConfigItem::RotateDrect &rotateDrect)
+void KiranDisplayConfigItemContain::setRotateDrect(const int &step)
 {
     if(Q_UNLIKELY(!m_btnGroup)) return;
 
     KiranDisplayConfigItem *item = static_cast<KiranDisplayConfigItem *>(m_btnGroup->checkedButton());
-    item->alterRotateDrect(rotateDrect);
+    item->alterRotateDrect(step);
+}
+
+bool KiranDisplayConfigItemContain::getHorizontalDisplayReflectType()
+{
+    if(Q_UNLIKELY(!m_btnGroup)) return false;
+
+    KiranDisplayConfigItem *item = static_cast<KiranDisplayConfigItem *>(m_btnGroup->checkedButton());
+    KiranDisplayConfigItem::DisplayReflectTypes type = item->displayReflectType();
+    return type & KiranDisplayConfigItem::DISPLAY_REFLECT_X;
+}
+
+bool KiranDisplayConfigItemContain::getVerticalDisplayReflectType()
+{
+    if(Q_UNLIKELY(!m_btnGroup)) return false;
+
+    KiranDisplayConfigItem *item = static_cast<KiranDisplayConfigItem *>(m_btnGroup->checkedButton());
+    KiranDisplayConfigItem::DisplayReflectTypes type = item->displayReflectType();
+    return type & KiranDisplayConfigItem::DISPLAY_REFLECT_Y;
+}
+
+void KiranDisplayConfigItemContain::setHorizontalDisplayReflectType(bool checked)
+{
+    if(Q_UNLIKELY(!m_btnGroup)) return;
+
+    KiranDisplayConfigItem *item = static_cast<KiranDisplayConfigItem *>(m_btnGroup->checkedButton());
+    KiranDisplayConfigItem::DisplayReflectTypes type = item->displayReflectType();
+    type = checked ? (type | KiranDisplayConfigItem::DISPLAY_REFLECT_X) : (type & ~KiranDisplayConfigItem::DISPLAY_REFLECT_X);
+    item->setDisplayReflectType(type);
+}
+
+void KiranDisplayConfigItemContain::setVerticalDisplayReflectType(bool checked)
+{
+    if(Q_UNLIKELY(!m_btnGroup)) return;
+
+    KiranDisplayConfigItem *item = static_cast<KiranDisplayConfigItem *>(m_btnGroup->checkedButton());
+    KiranDisplayConfigItem::DisplayReflectTypes type = item->displayReflectType();
+    type = checked ? (type | KiranDisplayConfigItem::DISPLAY_REFLECT_Y) : (type & ~KiranDisplayConfigItem::DISPLAY_REFLECT_Y);
+    item->setDisplayReflectType(type);
 }
 
 void KiranDisplayConfigItemContain::changeItemEnabled(const bool &enbled)

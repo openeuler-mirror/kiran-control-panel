@@ -69,10 +69,10 @@ T Monitor(const QString &dbusPath, const QString &function, const QVariantList &
         if(showErrorBox)
         {
             KiranMessageBox box;
-            box.setTitle(QObject::tr("提示"));
+            box.setTitle(QObject::tr("Tips"));
 
             QPushButton btn;
-            btn.setText(QObject::tr("确定(K)"));
+            btn.setText(QObject::tr("OK(K)"));
             btn.setFixedSize(QSize(200, box.buttonSize().height()));
             btn.setShortcut(Qt::CTRL + Qt::Key_K);
             box.addButton(&btn, QDialogButtonBox::AcceptRole);

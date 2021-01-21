@@ -28,14 +28,21 @@ if(${BUILD_APP})
         ${PUBLIC_H}
         ${RESOURCES}
         ${QM_FILES})
+
+    #翻译
+    install(FILES ${QM_FILES} DESTINATION ${SHARE_INSTALL_PREFIX}/${PROJECT_NAME}/translations/)
+    ADD_DEFINITIONS(-DTRANSLATE_PREFIX=\"${SHARE_INSTALL_PREFIX}/${PROJECT_NAME}/translations/${PROJECT_NAME}\")
 else()
     add_library(${PROJECT_NAME} SHARED
         ${PUBLIC_CPP}
         ${PUBLIC_H}
         ${RESOURCES}
         ${QM_FILES})
-endif()
 
+    #翻译
+    install(FILES ${QM_FILES} DESTINATION ${SHARE_INSTALL_PREFIX}/kiran-control-panel/plugins/${PROJECT_NAME}/translate/)
+    ADD_DEFINITIONS(-DTRANSLATE_PREFIX=\"${SHARE_INSTALL_PREFIX}/kiran-control-panel/plugins/${PROJECT_NAME}/translate/${PROJECT_NAME}\")
+endif()
 
 target_include_directories(${PROJECT_NAME} PRIVATE
     widgets/kiran-application/)
@@ -46,7 +53,6 @@ target_link_libraries(${PROJECT_NAME}
 #安装
 install(TARGETS ${PROJECT_NAME} DESTINATION ${INSTALL_DIR}/)
 
-#翻译
-install(FILES ${QM_FILES} DESTINATION ${SHARE_INSTALL_PREFIX}/${PROJECT_NAME}/translations/)
+
 
 

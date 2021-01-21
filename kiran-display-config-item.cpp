@@ -3,7 +3,8 @@
 #include <QPainter>
 #include <QDebug>
 
-KiranDisplayConfigItem::KiranDisplayConfigItem(QWidget *parent) : QPushButton(parent), m_mousePress(false), m_mouseDrag(false), m_statusType(QEvent::None), m_enabled(true), m_anchorByBtn(NULL), m_rotateDrect(ROTATION_0)
+KiranDisplayConfigItem::KiranDisplayConfigItem(QWidget *parent) : QPushButton(parent), m_mousePress(false), m_mouseDrag(false),
+    m_statusType(QEvent::None), m_enabled(true), m_anchorByBtn(NULL), m_rotateDrect(DISPLAY_ROTATION_0), m_displayReflectType(DISPLAY_REFLECT_NORMAL)
 {
     setCheckable(true);
     setAttribute(Qt::WA_Hover,true);
@@ -33,6 +34,7 @@ void KiranDisplayConfigItem::paintEvent(QPaintEvent *)
         pen.setColor("#ffffff");
     else
         pen.setColor(QColor(255,255,255,60));
+
     QBrush brush;
     if(isChecked())
     {
@@ -40,7 +42,6 @@ void KiranDisplayConfigItem::paintEvent(QPaintEvent *)
         brush = QBrush("#2eb3ff");
         painter.setPen(pen);
         painter.fillRect(rect, brush);
-        painter.drawText(rect, Qt::TextWrapAnywhere|Qt::AlignCenter, text());
         rect.adjust(0, 0, -1, -1);
         painter.drawRect(rect);
     }
@@ -61,8 +62,71 @@ void KiranDisplayConfigItem::paintEvent(QPaintEvent *)
 
         painter.setPen(pen);
         painter.fillRect(rect, brush);
-        painter.drawText(rect, Qt::TextWrapAnywhere|Qt::AlignCenter, text());
     }
+
+    //矩形绘制完成后，再处理文字旋转、镜像问题。缩小旋转、镜像的影响范围。
+    //先旋转
+    int flag = 0;//以X轴翻转。
+    int flag2 = 0; //以Y轴翻转。
+    switch (m_rotateDrect) {
+    case DISPLAY_ROTATION_0://含义逆时针
+    {
+
+        rect.moveTo(0, 0);
+        flag = -1;
+        flag2 = -1;
+    }
+        break;
+    case DISPLAY_ROTATION_90://含义逆时针
+    {
+        painter.rotate(270);//顺时针旋转
+        int height = rect.height();
+        rect.setHeight(rect.width());
+        rect.setWidth(height);
+        rect.moveTo(-rect.width(), 0);
+        flag = -1;
+        flag2 = 1;
+    }
+        break;
+    case DISPLAY_ROTATION_180:
+    {
+        painter.rotate(180);
+        rect.moveTo(-rect.width(), -rect.height());
+        flag = 1;
+        flag2 = 1;
+    }
+        break;
+    case DISPLAY_ROTATION_270:
+    {
+        painter.rotate(90);
+        int height = rect.height();
+        rect.setHeight(rect.width());
+        rect.setWidth(height);
+        rect.moveTo(0, -rect.height());
+        flag = 1;
+        flag2 = -1;
+    }
+        break;
+    default:
+        break;
+    }
+
+    //x,y轴翻转。
+    qreal sx = 1, sy = 1;
+    if(m_displayReflectType & DISPLAY_REFLECT_Y)
+    {
+        int textHeight = painter.fontMetrics().ascent() - painter.fontMetrics().descent();
+        rect.moveTo(rect.x(), rect.y() + flag*rect.height() - textHeight/5);//防止文字翻转之后，位置变动。为什么是除以5
+        sy = -1;
+    }
+    if(m_displayReflectType & DISPLAY_REFLECT_X)
+    {
+        rect.moveTo(rect.x() + flag2*rect.width(), rect.y());
+        sx = -1;
+    }
+    painter.scale(sx, sy);
+
+    painter.drawText(rect, Qt::TextWrapAnywhere|Qt::AlignCenter, text());
 }
 
 bool KiranDisplayConfigItem::eventFilter(QObject * obj, QEvent * event)
@@ -84,11 +148,53 @@ bool KiranDisplayConfigItem::eventFilter(QObject * obj, QEvent * event)
     return QPushButton::eventFilter(obj, event);
 }
 
-void KiranDisplayConfigItem::initRotateDrect(const RotateDrect &rotateDrect)
+KiranDisplayConfigItem::DisplayRotationType KiranDisplayConfigItem::rotateDrect() const
+{
+    return m_rotateDrect;
+}
+
+void KiranDisplayConfigItem::alterRotateDrect(const int &step)
+{
+    DisplayRotationType rotateDrect = rotationType(m_rotateDrect, step);
+    switch (rotateDrect) {
+    case DISPLAY_ROTATION_90:
+    case DISPLAY_ROTATION_270:
+    {
+        if(m_rotateDrect == DISPLAY_ROTATION_0 || m_rotateDrect == DISPLAY_ROTATION_180)
+        {
+            QRectF t = m_screenGeometryF;
+            m_screenGeometryF.setWidth(t.height());
+            m_screenGeometryF.setHeight(t.width());
+            emit sigDrag(this);
+            emit sigEndDrag(this);
+        }
+    }
+        break;
+    case DISPLAY_ROTATION_0:
+    case DISPLAY_ROTATION_180:
+    {
+        if(m_rotateDrect == DISPLAY_ROTATION_90 || m_rotateDrect == DISPLAY_ROTATION_270)
+        {
+            QRectF t = m_screenGeometryF;
+            m_screenGeometryF.setWidth(t.height());
+            m_screenGeometryF.setHeight(t.width());
+            emit sigDrag(this);
+            emit sigEndDrag(this);
+        }
+    }
+        break;
+    default:
+        break;
+    }
+
+    m_rotateDrect = rotateDrect;
+}
+
+void KiranDisplayConfigItem::initRotateDrect(const DisplayRotationType &rotateDrect)
 {
     switch (rotateDrect) {
-    case Left:
-    case Right:
+    case DISPLAY_ROTATION_90:
+    case DISPLAY_ROTATION_270:
     {
         QRectF t = m_screenGeometryF;
         m_screenGeometryF.setWidth(t.height());
@@ -102,47 +208,15 @@ void KiranDisplayConfigItem::initRotateDrect(const RotateDrect &rotateDrect)
     m_rotateDrect = rotateDrect;
 }
 
-KiranDisplayConfigItem::RotateDrect KiranDisplayConfigItem::rotateDrect() const
+KiranDisplayConfigItem::DisplayReflectTypes KiranDisplayConfigItem::displayReflectType() const
 {
-    return m_rotateDrect;
+    return m_displayReflectType;
 }
 
-void KiranDisplayConfigItem::alterRotateDrect(const RotateDrect &rotateDrect)
+void KiranDisplayConfigItem::setDisplayReflectType(const KiranDisplayConfigItem::DisplayReflectTypes &displayReflectType)
 {
-    switch (rotateDrect) {
-    case Left:
-    case Right:
-    {
-        if(m_rotateDrect == ROTATION_0 || m_rotateDrect == Inverted)
-        {
-            QRectF t = m_screenGeometryF;
-            m_screenGeometryF.setWidth(t.height());
-            m_screenGeometryF.setHeight(t.width());
-            emit sigDrag(this);
-            emit sigEndDrag(this);
-        }
-
-        m_rotateDrect = rotateDrect;
-    }
-        break;
-    case ROTATION_0:
-    case Inverted:
-    {
-        if(m_rotateDrect == Left || m_rotateDrect == Right)
-        {
-            QRectF t = m_screenGeometryF;
-            m_screenGeometryF.setWidth(t.height());
-            m_screenGeometryF.setHeight(t.width());
-            emit sigDrag(this);
-            emit sigEndDrag(this);
-        }
-
-        m_rotateDrect = m_rotateDrect==Inverted ? ROTATION_0 : Inverted;
-    }
-        break;
-    default:
-        break;
-    }
+    m_displayReflectType = displayReflectType;
+    update();
 }
 
 QPair<int, int> KiranDisplayConfigItem::zoomPair() const
@@ -285,6 +359,20 @@ void KiranDisplayConfigItem::updateOffset(KiranDisplayConfigItem *anchorByBtn, c
     default:
         break;
     }
+}
+
+KiranDisplayConfigItem::DisplayRotationType KiranDisplayConfigItem::rotationType(const KiranDisplayConfigItem::DisplayRotationType &curType, const int &step)
+{
+    QList<DisplayRotationType> list;
+    list << DISPLAY_ROTATION_0 << DISPLAY_ROTATION_90 << DISPLAY_ROTATION_180 << DISPLAY_ROTATION_270;
+
+    int index = list.indexOf(curType);
+    index += step;
+    index %= 4;
+    if(index < 0) index += 4;
+
+    if(index<0 || index >3) return DISPLAY_ROTATION_0;
+    return list.at(index);
 }
 
 bool KiranDisplayConfigItem::enabled() const

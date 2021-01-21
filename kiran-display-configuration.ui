@@ -125,7 +125,7 @@ QPushButton {
 </string>
           </property>
           <property name="text">
-           <string>复制显示</string>
+           <string>Copy display</string>
           </property>
           <property name="checkable">
            <bool>true</bool>
@@ -174,7 +174,7 @@ QPushButton {
 </string>
           </property>
           <property name="text">
-           <string>扩展显示</string>
+           <string>Extended display</string>
           </property>
           <property name="checkable">
            <bool>true</bool>
@@ -267,7 +267,7 @@ QPushButton {
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>692</width>
+        <width>700</width>
         <height>501</height>
        </rect>
       </property>
@@ -326,7 +326,7 @@ QPushButton {
              <item>
               <widget class="QLabel" name="label">
                <property name="text">
-                <string>分辨率</string>
+                <string>Resolution ratio</string>
                </property>
               </widget>
              </item>
@@ -356,7 +356,7 @@ QPushButton {
              <item>
               <widget class="QLabel" name="label_2">
                <property name="text">
-                <string>刷新率</string>
+                <string>Refresh rate</string>
                </property>
               </widget>
              </item>
@@ -386,7 +386,7 @@ QPushButton {
              <item>
               <widget class="QLabel" name="label_3">
                <property name="text">
-                <string>缩放率</string>
+                <string>Zoom rate</string>
                </property>
               </widget>
              </item>
@@ -406,12 +406,12 @@ QPushButton {
                </property>
                <item>
                 <property name="text">
-                 <string>自动</string>
+                 <string>Automatic</string>
                 </property>
                </item>
                <item>
                 <property name="text">
-                 <string>100% (推荐)</string>
+                 <string>100% (recommended)</string>
                 </property>
                </item>
                <item>
@@ -495,7 +495,7 @@ QPushButton {
 </string>
                </property>
                <property name="text">
-                <string>应用</string>
+                <string>Apply</string>
                </property>
               </widget>
              </item>
@@ -531,7 +531,7 @@ border: 2px solid rgba(255, 255, 255, 20);
   }</string>
                </property>
                <property name="text">
-                <string>取消</string>
+                <string>Close</string>
                </property>
               </widget>
              </item>
@@ -598,7 +598,7 @@ border: 2px solid rgba(255, 255, 255, 20);
                 <item>
                  <widget class="QLabel" name="label_7">
                   <property name="text">
-                   <string>开启</string>
+                   <string>Open</string>
                   </property>
                  </widget>
                 </item>
@@ -677,7 +677,7 @@ border: 2px solid rgba(255, 255, 255, 20);
                    <item>
                     <widget class="QLabel" name="label_8">
                      <property name="text">
-                      <string>设为主显示器</string>
+                      <string>Set as main display</string>
                      </property>
                     </widget>
                    </item>
@@ -751,7 +751,7 @@ border: 2px solid rgba(255, 255, 255, 20);
              <item>
               <widget class="QLabel" name="label_4">
                <property name="text">
-                <string>分辨率</string>
+                <string>Resolution ratio</string>
                </property>
               </widget>
              </item>
@@ -781,7 +781,7 @@ border: 2px solid rgba(255, 255, 255, 20);
              <item>
               <widget class="QLabel" name="label_5">
                <property name="text">
-                <string>刷新率</string>
+                <string>Refresh rate</string>
                </property>
               </widget>
              </item>
@@ -811,7 +811,7 @@ border: 2px solid rgba(255, 255, 255, 20);
              <item>
               <widget class="QLabel" name="label_6">
                <property name="text">
-                <string>缩放率</string>
+                <string>Zoom rate</string>
                </property>
               </widget>
              </item>
@@ -831,12 +831,12 @@ border: 2px solid rgba(255, 255, 255, 20);
                </property>
                <item>
                 <property name="text">
-                 <string>自动</string>
+                 <string>Automatic</string>
                 </property>
                </item>
                <item>
                 <property name="text">
-                 <string>100% (推荐)</string>
+                 <string>100% (recommended)</string>
                 </property>
                </item>
                <item>
@@ -917,7 +917,7 @@ border: 2px solid rgba(255, 255, 255, 20);
 </string>
                </property>
                <property name="text">
-                <string>应用</string>
+                <string>Apply</string>
                </property>
               </widget>
              </item>
@@ -953,7 +953,7 @@ border: 2px solid rgba(255, 255, 255, 20);
   }</string>
                </property>
                <property name="text">
-                <string>关闭</string>
+                <string>Close</string>
                </property>
               </widget>
              </item>

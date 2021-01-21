@@ -59,7 +59,7 @@ TRANSLATIONS += \
 
 LIBS += -L/usr/lib -lkiranwidgets-qt5
 
-#TEMPLATE = app
+TEMPLATE = app
 #TEMPLATE = lib
 
 translate.files += kiran-display-tools.zh_CN.qm \

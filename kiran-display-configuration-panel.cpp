@@ -15,7 +15,11 @@ KiranDisplayConfigurationPanel::KiranDisplayConfigurationPanel(QWidget *parent) 
     ui->setupUi(this);
     ui->btns_widget->setAttribute(Qt::WA_TranslucentBackground, true);
 
-    connect(ui->contain, &KiranDisplayConfigItemContain::sigButtonChecked, this, &KiranDisplayConfigurationPanel::buttonChecked);
+    connect(ui->contain, &KiranDisplayConfigItemContain::sigButtonChecked, this, [=](QString monitorPath){
+        ui->pushButton_horizontal->setChecked(ui->contain->getHorizontalDisplayReflectType());
+        ui->pushButton_vertical->setChecked(ui->contain->getVerticalDisplayReflectType());
+        emit buttonChecked(monitorPath);
+    });
     connect(ui->contain, &KiranDisplayConfigItemContain::sigItemEnableChanged, this, [=](const bool &enabled){ui->btns_widget->setEnabled(enabled);});
 }
 
@@ -33,8 +37,8 @@ void KiranDisplayConfigurationPanel::setData(const QVariantList &list, const boo
 {
     ui->pushButton_identifying->setVisible(list.count() > 1);
     ui->contain->setData(list, clearChecked);
-    m_textList = list;
-    m_textSize.clear();
+   // m_textList = list;
+   // m_textSize.clear();
 }
 
 void KiranDisplayConfigurationPanel::changeItemDisabled(const bool &disabled)
@@ -42,38 +46,43 @@ void KiranDisplayConfigurationPanel::changeItemDisabled(const bool &disabled)
     ui->contain->changeItemEnabled(disabled);
 }
 
-void KiranDisplayConfigurationPanel::paintEvent(QPaintEvent *event)
-{
-    if(m_textSize.isEmpty())
-    {
-        QPainter painter(this);
-        painter.save();
-        QFont pen = painter.font();
-        pen.setPixelSize(64);
-        QFontMetrics fm = painter.fontMetrics();
-        foreach (QVariant var, m_textList) {
-            QString text = var.toMap().value("text").toString();
-            m_textSize.insert(text, QSize(fm.width(text), fm.height()));
-        }
-        painter.restore();
-    }
+//void KiranDisplayConfigurationPanel::paintEvent(QPaintEvent *event)
+//{
+////    if(m_textSize.isEmpty())
+////    {
+////        QPainter painter(this);
+////        painter.save();
+////        QFont pen = painter.font();
+////        pen.setPixelSize(64);
+////        QFontMetrics fm = painter.fontMetrics();
+////        foreach (QVariant var, m_textList) {
+////            QString text = var.toMap().value("text").toString();
+////            m_textSize.insert(text, QSize(fm.width(text), fm.height()));
+////        }
+////        painter.restore();
+////    }
 
-    QFrame::paintEvent(event);
-}
+//    QFrame::paintEvent(event);
+//}
 
 void KiranDisplayConfigurationPanel::on_pushButton_left_clicked()
 {
-    ui->contain->setRotateDrect(KiranDisplayConfigItem::Left);
+    ui->contain->setRotateDrect(1);
 }
 
-void KiranDisplayConfigurationPanel::on_pushButton_vertical_clicked()
+void KiranDisplayConfigurationPanel::on_pushButton_horizontal_clicked(bool checked)
 {
-    ui->contain->setRotateDrect(KiranDisplayConfigItem::Inverted);
+    ui->contain->setHorizontalDisplayReflectType(checked);
+}
+
+void KiranDisplayConfigurationPanel::on_pushButton_vertical_clicked(bool checked)
+{
+    ui->contain->setVerticalDisplayReflectType(checked);
 }
 
 void KiranDisplayConfigurationPanel::on_pushButton_right_clicked()
 {
-    ui->contain->setRotateDrect(KiranDisplayConfigItem::Right);
+    ui->contain->setRotateDrect(-1);
 }
 //标注屏幕
 void KiranDisplayConfigurationPanel::on_pushButton_identifying_clicked()
@@ -87,4 +96,3 @@ void KiranDisplayConfigurationPanel::on_pushButton_identifying_clicked()
     identify.setText(text);
     identify.exec(pos);
 }
-

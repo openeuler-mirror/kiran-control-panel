@@ -302,7 +302,7 @@ void KiranDisplayConfiguration::initExtraComboBoxResolution(QComboBox *comboBox,
         i.previous();
         QPair<QSize, QList<int> > pair = i.value();
         QString text = QString("%1x%2").arg(pair.first.width()).arg(pair.first.height());
-        if(text == recommend) text += tr(" (推荐)");
+        if(text == recommend) text += tr(" (recommended)");
         QVariant var;
         var.setValue(pair);
         comboBox->addItem(text, var);
@@ -324,7 +324,7 @@ void KiranDisplayConfiguration::initExtraComboBoxRefreshRate(QComboBox *comboBox
     std::sort(t_refreshRateList.begin(), t_refreshRateList.end(), std::greater<int>());
     foreach (int r, t_refreshRateList) {
         QString text = QString("%1HZ").arg(r);
-        if(text == recommend) text += tr(" (推荐)");
+        if(text == recommend) text += tr(" (recommended)");
         comboBox->addItem(text, r);
     }
 }
@@ -344,14 +344,14 @@ void KiranDisplayConfiguration::curExtraData2Cache()
 void KiranDisplayConfiguration::showMessageBox()
 {
     KiranMessageBox box(this);
-    box.setTitle(tr("显示是否正常?"));
+    box.setTitle(tr("Is the display normal?"));
 
     QPushButton saveBtn;
-    saveBtn.setText(tr("保存当前配置(K)"));
+    saveBtn.setText(tr("Save current configuration(K)"));
     saveBtn.setFixedSize(QSize(200, box.buttonSize().height()));
 
     QPushButton cancelBtn;
-    cancelBtn.setText(tr("恢复之前的配置(R)"));
+    cancelBtn.setText(tr("Restore previous configuration(R)"));
     cancelBtn.setFixedSize(QSize(200, box.buttonSize().height()));
 
     box.addButton(&saveBtn, QDialogButtonBox::AcceptRole);
@@ -359,7 +359,7 @@ void KiranDisplayConfiguration::showMessageBox()
     saveBtn.setShortcut(Qt::CTRL + Qt::Key_K);
     cancelBtn.setShortcut(Qt::CTRL + Qt::Key_R);
 
-    QString text = tr("显示将会在 %1 秒后恢复之前的配置");
+    QString text = tr("The display will resume the previous configuration in %1 seconds");
     int countdown = 30;
     QTimer timer;
     timer.setInterval(1000);
@@ -379,14 +379,14 @@ void KiranDisplayConfiguration::showMessageBox()
         if(flag < 0)
         {
             KiranMessageBox box;
-            box.setTitle(QObject::tr("提示"));
+            box.setTitle(QObject::tr("Tips"));
 
             QPushButton btn;
-            btn.setText(QObject::tr("确定(K)"));
+            btn.setText(QObject::tr("OK(K)"));
             btn.setFixedSize(QSize(200, box.buttonSize().height()));
             btn.setShortcut(Qt::CTRL + Qt::Key_K);
             box.addButton(&btn, QDialogButtonBox::AcceptRole);
-            box.setText(QObject::tr("应用显示设置失败!%1").arg(var.toString()));
+            box.setText(QObject::tr("Failed to apply display settings!%1").arg(var.toString()));
             box.exec();
         }
     }
@@ -397,14 +397,14 @@ void KiranDisplayConfiguration::showMessageBox()
         if(flag < 0)
         {
             KiranMessageBox box;
-            box.setTitle(QObject::tr("提示"));
+            box.setTitle(QObject::tr("Tips"));
 
             QPushButton btn;
-            btn.setText(QObject::tr("确定(K)"));
+            btn.setText(QObject::tr("OK(K)"));
             btn.setFixedSize(QSize(200, box.buttonSize().height()));
             btn.setShortcut(Qt::CTRL + Qt::Key_K);
             box.addButton(&btn, QDialogButtonBox::AcceptRole);
-            box.setText(QObject::tr("回撤显示设置失败! %1").arg(var.toString()));
+            box.setText(QObject::tr("Fallback display setting failed! %1").arg(var.toString()));
             box.exec();
         }
     }
@@ -593,7 +593,7 @@ DisplayModesStu KiranDisplayConfiguration::curIntersectionMonitorMode()
 
 void KiranDisplayConfiguration::setMonitorProperty(const QString &monitorPath, const QVariantMap &map)
 {
-    qDebug() << "发送数据:" << monitorPath << map;
+    qDebug() << "send data:" << monitorPath << map;
     // property enabled must be set before others
     if(map.contains("enabled")) Monitor<QVariant>(monitorPath, "Enable", QVariantList() << map.value("enabled").toBool());
 
@@ -602,6 +602,11 @@ void KiranDisplayConfiguration::setMonitorProperty(const QString &monitorPath, c
         QVariant var;
         var.setValue(QDBusArgument() << (ushort)map.value("rotation").toUInt());
         Monitor<QVariant>(monitorPath, "SetRotation", QVariantList() << var);
+    }
+    if(map.contains("reflect")){
+        QVariant var;
+        var.setValue(QDBusArgument() << (ushort)map.value("reflect").toUInt());
+        Monitor<QVariant>(monitorPath, "SetReflect", QVariantList() << var);
     }
 
     if(map.contains("primary") && map.value("primary").toBool()) Display("SetPrimary", QVariantList() << map.value("name"));
@@ -614,12 +619,16 @@ void KiranDisplayConfiguration::initCopeMode()
 {
     QString text;
     int rotation = 0;
+    int reflect = 0;
     QStringList listMonitors = m_listMonitors;
     foreach (QString monitorPath, listMonitors) {
         text += (text.isEmpty() ? "" : "|" ) + MonitorProperty(monitorPath, "name").toString();
     }
     if(listMonitors.count() > 0)
+    {
         rotation = MonitorProperty(listMonitors.first(), "rotation").toInt();
+        reflect = MonitorProperty(listMonitors.first(), "reflect").toInt();
+    }
 
     QVariantList list;
     QVariantMap map;
@@ -629,11 +638,12 @@ void KiranDisplayConfiguration::initCopeMode()
     map.insert("w", 1920);
     map.insert("h", 1080);
     map.insert("rotation", rotation);
+    map.insert("reflect", reflect);
     map.insert("enabled", true);
     list << map;
     ui->panel->setData(list);
 
-    qDebug() << "接收数据:" << list;
+    qDebug() << "receive data:" << list;
 
     foreach (QString name, m_dbusConnectList) {
         QDBusConnection::sessionBus().disconnect(KIRAN_DBUS_SERVICE_NAME, name, KIRAN_DBUS_INTREFACE_PROPERTIES, KIRAN_DBUS_PROPERTIES_FUN,
@@ -669,6 +679,7 @@ void KiranDisplayConfiguration::initExtraMode(const bool &clearChecked)
         map.insert("x", MonitorProperty(monitorPath, "x").toInt()+offset);
         map.insert("y", MonitorProperty(monitorPath, "y"));
         map.insert("rotation", MonitorProperty(monitorPath, "rotation"));
+        map.insert("reflect", MonitorProperty(monitorPath, "reflect"));
         map.insert("enabled", MonitorProperty(monitorPath, "enabled").toBool());
 
         DisplayModesStu displayModeStu;
@@ -707,7 +718,7 @@ void KiranDisplayConfiguration::initExtraMode(const bool &clearChecked)
     //    ui->pushButton_extra_primary->setToolTip(toolTipStr);
     //    ui->pushButton_enabled->setToolTip(toolTipStr);
 
-    qDebug() << "接收数据:" << list;
+    qDebug() << "receive data:" << list;
 }
 
 void KiranDisplayConfiguration::initComboBoxResolution(QComboBox *comboBox, const QMap<int, QPair<QSize, QList<int> > > &map)

@@ -31,14 +31,14 @@ QWidget *getSubitemWidget(QString name)
         if(!QDBusInterface(KIRAN_DBUS_SERVICE_NAME, KIRAN_DBUS_DISPLAY).isValid())
         {
             KiranMessageBox box(qApp->allWidgets().isEmpty() ? nullptr : qApp->allWidgets().first());
-            box.setTitle(QObject::tr("提示"));
+            box.setTitle(QObject::tr("Tips"));
 
             QPushButton btn;
-            btn.setText(QObject::tr("确定(K)"));
+            btn.setText(QObject::tr("OK(K)"));
             btn.setFixedSize(QSize(200, box.buttonSize().height()));
             btn.setShortcut(Qt::CTRL + Qt::Key_K);
             box.addButton(&btn, QDialogButtonBox::AcceptRole);
-            box.setText(QObject::tr("后台D-Bus服务无法连接，显示设置启动失败，请检查D-Bus服务是否开启."));
+            box.setText(QObject::tr("Background D-Bus service failed to connect, display setting failed to start, please check if D-Bus service is start."));
             box.exec();
             return nullptr;
         }
