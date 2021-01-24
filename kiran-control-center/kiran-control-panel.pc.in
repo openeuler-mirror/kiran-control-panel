@@ -1,7 +1,6 @@
-IncludeDir=@INCLUDE_INSTALL_DIR@
-PluginDesktopDir=@PluginDesktopInstallDir@
+IncludeDir=@KCP_INSTALL_INCLUDE@
 
 Name: @PROJECT_NAME@
 Description: kiran control panel
 Version: @KIRAN_CONTROL_PANEL_VERSION@
-Cflags: -I${IncludeDir}/@PROJECT_NAME@/
+Cflags: -I${IncludeDir}

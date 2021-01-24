@@ -11,8 +11,12 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
 
-set(PluginDesktopInstallDir ${SHARE_INSTALL_DIR}/${PROJECT_NAME}/plugins)
-ADD_DEFINITIONS(-DPLUGIN_DESKTOP_DIR=\"${PluginDesktopInstallDir}\")
+include(GNUInstallDirs)
+set(KCP_INSTALL_BINDIR ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_BINDIR})
+set(KCP_INSTALL_INCLUDE ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/)
+set(KCP_INSTALL_LIBDIR ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR})
+set(KCP_PLUGIN_DESKTOP_DIR ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATADIR}/${PROJECT_NAME}/plugins)
+ADD_DEFINITIONS(-DPLUGIN_DESKTOP_DIR=\"${KCP_PLUGIN_DESKTOP_DIR}\")
 #公共部分代码
 file(GLOB_RECURSE GLOBAL_C "../global/*.cpp")
 file(GLOB_RECURSE GLOBAL_H "../global/*.h")
@@ -62,12 +66,12 @@ target_include_directories(${PROJECT_NAME} PRIVATE
 
 
 #安装SO
-install(TARGETS ${PROJECT_NAME} DESTINATION ${INSTALL_DIR}/)
+install(TARGETS ${PROJECT_NAME} DESTINATION ${KCP_INSTALL_BINDIR}/)
 
 #开发头文件
-install(FILES "../interface/module-interface.h" DESTINATION ${INCLUDE_INSTALL_DIR}/${PROJECT_NAME}/)
+install(FILES "../interface/module-interface.h" DESTINATION ${KCP_INSTALL_INCLUDE}/)
 
 #pkgconfig
 configure_file( kiran-control-panel.pc.in kiran-control-panel.pc @ONLY)
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/kiran-control-panel.pc
-    DESTINATION ${INSTALL_DIR}/pkgconfig/)
+    DESTINATION ${KCP_INSTALL_LIBDIR}/pkgconfig/)
