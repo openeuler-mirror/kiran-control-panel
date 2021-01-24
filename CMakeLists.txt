@@ -61,14 +61,15 @@ if(${BUILD_APP})
         ${RESOURCES}
         ${QM_FILES}
         ${main})
+
     #翻译
     SET(TRANSLATE_PATH ${KDT_INSTALL_DATADIR}/${PROJECT_NAME}/translations/)
     install(FILES ${QM_FILES} DESTINATION ${TRANSLATE_PATH})
     ADD_DEFINITIONS(-DTRANSLATE_PREFIX=\"${TRANSLATE_PATH}${PROJECT_NAME}\")
     #desktop and desktop image
-    set(KDT_DESKTOP_DIR ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATADIR}/applications)
+    set(KDT_DESKTOP_DIR ${KDT_INSTALL_DATADIR}/applications)
     install(FILES ${desktop_files} DESTINATION ${KDT_DESKTOP_DIR})
-    set(KDT_DESKTOP_IMAGES_DIR ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATADIR}/icons/Kiran/places/16x16/)
+    set(KDT_DESKTOP_IMAGES_DIR ${KDT_INSTALL_DATADIR}/icons/Kiran/places/16x16/)
     install(FILES ${desktop_images} DESTINATION ${KDT_DESKTOP_IMAGES_DIR})
 
     #安装
@@ -90,18 +91,17 @@ else()
         ${RESOURCES}
         ${QM_FILES}
         ${interface})
+    #desktop and desktop image
+    set(KDT_DESKTOP_DIR ${KDT_INSTALL_DATADIR}/kiran-control-panel/plugins)
+    install(FILES ${desktop_files} DESTINATION ${KDT_DESKTOP_DIR})
+    set(KDT_DESKTOP_IMAGES_DIR ${KDT_DESKTOP_DIR}/${PROJECT_NAME}/icons)
+    install(FILES ${desktop_images} DESTINATION ${KDT_DESKTOP_IMAGES_DIR})
     #翻译
-    SET(PLUGIN_PATH ${KDT_INSTALL_DATADIR}/kiran-control-panel/plugins/${PROJECT_NAME})
+    SET(PLUGIN_PATH ${KDT_DESKTOP_DIR}/${PROJECT_NAME})
     SET(PLUGIN_TRANSLATE_PATH ${PLUGIN_PATH}/translate/)
     install(FILES ${QM_FILES} DESTINATION ${PLUGIN_TRANSLATE_PATH})
     ADD_DEFINITIONS(-DPLUGIN_TRANSLATE_PATH_PREFIX=\"${PLUGIN_TRANSLATE_PATH}${PROJECT_NAME}\")
     ADD_DEFINITIONS(-DPLUGIN_TRANSLATE_ICON_PATH=\"${PLUGIN_PATH}/icons/\")
-    #desktop and desktop image
-    set(KDT_DESKTOP_DIR ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATADIR}/kiran-control-panel/plugins)
-    install(FILES ${desktop_files} DESTINATION ${KDT_DESKTOP_DIR})
-    set(KDT_DESKTOP_IMAGES_DIR ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATADIR}/kiran-control-panel/plugins/${PROJECT_NAME}/icons)
-    install(FILES ${desktop_images} DESTINATION ${KDT_DESKTOP_IMAGES_DIR})
-
     #安装
     install(TARGETS ${PROJECT_NAME} DESTINATION ${KDT_INSTALL_LIBDIR}/)
 endif()
