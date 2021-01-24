@@ -34,11 +34,7 @@ int main(int argc, char *argv[])
     }
 
     QString locale = QLocale::system().name();
-    QString qmFile;
-#ifdef TRANSLATE_PREFIX
-     qmFile = QString("%1.%2.qm").arg(TRANSLATE_PREFIX).arg(locale);
-#endif
-     qDebug() << qmFile;
+    QString qmFile = QString("%1.%2.qm").arg(TRANSLATE_PREFIX).arg(locale);
     QTranslator translator;
     if(translator.load(qmFile) == false)
         qDebug() << "load qm: " << qmFile <<  " error.";

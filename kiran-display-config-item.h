@@ -1,41 +1,18 @@
 #ifndef KIRANDISPLAYCONFIGITEM_H
 #define KIRANDISPLAYCONFIGITEM_H
 
+#include "kiran-session-daemon/display_i.h"
 #include <QPushButton>
 #include <QEvent>
+
+Q_DECLARE_FLAGS(DisplayReflectTypes, DisplayReflectType)
+Q_DECLARE_OPERATORS_FOR_FLAGS(DisplayReflectTypes)
 
 class KiranDisplayConfigItem : public QPushButton
 {
     Q_OBJECT
 public:
     explicit KiranDisplayConfigItem(QWidget *parent = nullptr);
-
-    // 显示器的旋转角度
-    enum DisplayRotationType
-    {
-        // 不旋转
-        DISPLAY_ROTATION_0 = (1 << 0),
-        // 90度旋转
-        DISPLAY_ROTATION_90 = (1 << 1),
-        // 180度旋转
-        DISPLAY_ROTATION_180 = (1 << 2),
-        // 270度旋转
-        DISPLAY_ROTATION_270 = (1 << 3),
-    };
-
-    // 显示器的翻转方向
-    enum DisplayReflectType
-    {
-        // 正常
-        DISPLAY_REFLECT_NORMAL = 0,
-        // X方向翻转
-        DISPLAY_REFLECT_X = (1 << 4),
-        // Y方向翻转
-        DISPLAY_REFLECT_Y = (1 << 5),
-        // XY方向翻转
-        DISPLAY_REFLECT_XY = (1 << 4) + (1 << 5)
-    };
-    Q_DECLARE_FLAGS(DisplayReflectTypes, DisplayReflectType)
 
     enum AnchorByDrect{PosLeft=0,PosRight,PosTop,PosBottom,PosTopLeft,PosTopRight,PosBottomLeft,PosBottomRight};
 
@@ -69,8 +46,8 @@ public:
     void alterRotateDrect(const int &step=1);
     void initRotateDrect(const DisplayRotationType &rotateDrect);
 
-    KiranDisplayConfigItem::DisplayReflectTypes displayReflectType() const;
-    void setDisplayReflectType(const KiranDisplayConfigItem::DisplayReflectTypes &displayReflectType);
+    DisplayReflectTypes displayReflectType() const;
+    void setDisplayReflectType(const DisplayReflectTypes &displayReflectType);
 
     QString monitorPath() const;
     void setMonitorPath(const QString &monitorPath);
@@ -116,5 +93,4 @@ private:
     QList<KiranDisplayConfigItem *> m_childAnchorBtns;
 };
 
-Q_DECLARE_OPERATORS_FOR_FLAGS(KiranDisplayConfigItem::DisplayReflectTypes)
 #endif // KIRANDISPLAYCONFIGITEM_H

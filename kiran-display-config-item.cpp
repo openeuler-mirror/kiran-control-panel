@@ -148,7 +148,7 @@ bool KiranDisplayConfigItem::eventFilter(QObject * obj, QEvent * event)
     return QPushButton::eventFilter(obj, event);
 }
 
-KiranDisplayConfigItem::DisplayRotationType KiranDisplayConfigItem::rotateDrect() const
+DisplayRotationType KiranDisplayConfigItem::rotateDrect() const
 {
     return m_rotateDrect;
 }
@@ -208,12 +208,12 @@ void KiranDisplayConfigItem::initRotateDrect(const DisplayRotationType &rotateDr
     m_rotateDrect = rotateDrect;
 }
 
-KiranDisplayConfigItem::DisplayReflectTypes KiranDisplayConfigItem::displayReflectType() const
+DisplayReflectTypes KiranDisplayConfigItem::displayReflectType() const
 {
     return m_displayReflectType;
 }
 
-void KiranDisplayConfigItem::setDisplayReflectType(const KiranDisplayConfigItem::DisplayReflectTypes &displayReflectType)
+void KiranDisplayConfigItem::setDisplayReflectType(const DisplayReflectTypes &displayReflectType)
 {
     m_displayReflectType = displayReflectType;
     update();
@@ -361,7 +361,7 @@ void KiranDisplayConfigItem::updateOffset(KiranDisplayConfigItem *anchorByBtn, c
     }
 }
 
-KiranDisplayConfigItem::DisplayRotationType KiranDisplayConfigItem::rotationType(const KiranDisplayConfigItem::DisplayRotationType &curType, const int &step)
+DisplayRotationType KiranDisplayConfigItem::rotationType(const DisplayRotationType &curType, const int &step)
 {
     QList<DisplayRotationType> list;
     list << DISPLAY_ROTATION_0 << DISPLAY_ROTATION_90 << DISPLAY_ROTATION_180 << DISPLAY_ROTATION_270;
