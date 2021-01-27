@@ -5,7 +5,7 @@
 KiranDisplayConfigurationWindow::KiranDisplayConfigurationWindow() : KiranTitlebarWindow()
 {
     setButtonHints(KiranTitlebarWindow::TitlebarMinimizeButtonHint|KiranTitlebarWindow::TitlebarMaximizeButtonHint|KiranTitlebarWindow::TitlebarCloseButtonHint);
-    setIcon(QIcon("://images/kiran-display-configuration-pane.svg"));
+    setIcon(QIcon(KDT_DESKTOP_IMAGES_PATH));
     setTitle(tr("Display Setting"));
     KiranDisplayConfiguration *centerWgt = new KiranDisplayConfiguration(this);
     setWindowContentWidget(centerWgt);

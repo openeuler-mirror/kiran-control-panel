@@ -30,7 +30,6 @@ file(GLOB_RECURSE kiran-display-config-item "kiran-display-config-item.*")
 file(GLOB_RECURSE kiran-display-config-item-contain "kiran-display-config-item-contain.*")
 file(GLOB_RECURSE kiran-display-configuration "kiran-display-configuration.*")
 file(GLOB_RECURSE kiran-display-configuration-panel "kiran-display-configuration-panel.*")
-file(GLOB_RECURSE kiran-display-configuration-window "kiran-display-configuration-window.*")
 file(GLOB_RECURSE kiran-display-module-base "kiran-display-module-base.*")
 
 file(GLOB_RECURSE RESOURCES "./*.qrc")
@@ -46,6 +45,7 @@ set(KDT_INSTALL_DATADIR ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATADIR})
 
 if(${BUILD_APP})
     file(GLOB_RECURSE main "main.cpp")
+    file(GLOB_RECURSE kiran-display-configuration-window "kiran-display-configuration-window.*")
     file(GLOB_RECURSE desktop_files "app-desktop/files/*")
     file(GLOB_RECURSE desktop_images "app-desktop/images/*")
     add_executable(${PROJECT_NAME}
@@ -71,6 +71,7 @@ if(${BUILD_APP})
     install(FILES ${desktop_files} DESTINATION ${KDT_DESKTOP_DIR})
     set(KDT_DESKTOP_IMAGES_DIR ${KDT_INSTALL_DATADIR}/icons/Kiran/places/16x16/)
     install(FILES ${desktop_images} DESTINATION ${KDT_DESKTOP_IMAGES_DIR})
+    ADD_DEFINITIONS(-DKDT_DESKTOP_IMAGES_PATH=\"${KDT_DESKTOP_IMAGES_DIR}${PROJECT_NAME}.svg\")
 
     #安装
     install(TARGETS ${PROJECT_NAME} DESTINATION ${KDT_INSTALL_BINDIR}/)
@@ -86,7 +87,6 @@ else()
         ${kiran-display-config-item-contain}
         ${kiran-display-configuration}
         ${kiran-display-configuration-panel}
-        ${kiran-display-configuration-window}
         ${kiran-display-module-base}
         ${RESOURCES}
         ${QM_FILES}
@@ -97,11 +97,10 @@ else()
     set(KDT_DESKTOP_IMAGES_DIR ${KDT_DESKTOP_DIR}/${PROJECT_NAME}/icons)
     install(FILES ${desktop_images} DESTINATION ${KDT_DESKTOP_IMAGES_DIR})
     #翻译
-    SET(PLUGIN_PATH ${KDT_DESKTOP_DIR}/${PROJECT_NAME})
-    SET(PLUGIN_TRANSLATE_PATH ${PLUGIN_PATH}/translate/)
+    set(PLUGIN_TRANSLATE_PATH ${KDT_DESKTOP_DIR}/${PROJECT_NAME}/translate/)
     install(FILES ${QM_FILES} DESTINATION ${PLUGIN_TRANSLATE_PATH})
     ADD_DEFINITIONS(-DPLUGIN_TRANSLATE_PATH_PREFIX=\"${PLUGIN_TRANSLATE_PATH}${PROJECT_NAME}\")
-    ADD_DEFINITIONS(-DPLUGIN_TRANSLATE_ICON_PATH=\"${PLUGIN_PATH}/icons/\")
+    ADD_DEFINITIONS(-DPLUGIN_ICON_PATH=\"${KDT_DESKTOP_IMAGES_DIR}/\")
     #安装
     install(TARGETS ${PROJECT_NAME} DESTINATION ${KDT_INSTALL_LIBDIR}/)
 endif()
