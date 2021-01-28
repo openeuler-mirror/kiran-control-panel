@@ -124,21 +124,21 @@ bool KiranModuleWidget::checkHasUnSaved()
         if(preModuleItem->hasUnsavedOptions())
         {
             KiranMessageBox box(this);
-            box.setTitle(tr("警告"));
+            box.setTitle(tr("Warning"));
 
             QPushButton saveBtn;
-            saveBtn.setText(tr("确定(K)"));
+            saveBtn.setText(tr("OK(K)"));
             saveBtn.setFixedSize(QSize(200, box.buttonSize().height()));
 
             QPushButton cancelBtn;
-            cancelBtn.setText(tr("取消(R)"));
+            cancelBtn.setText(tr("Cancel(R)"));
             cancelBtn.setFixedSize(QSize(200, box.buttonSize().height()));
 
             box.addButton(&saveBtn, QDialogButtonBox::AcceptRole);
             box.addButton(&cancelBtn, QDialogButtonBox::RejectRole);
             saveBtn.setShortcut(Qt::CTRL + Qt::Key_K);
             cancelBtn.setShortcut(Qt::CTRL + Qt::Key_R);
-            box.setText(tr("%1 中编辑内容未保存，切换后编辑内容将丢失, 确定要切换吗？").arg(m_curItem->text()));
+            box.setText(tr("The edited content in %1 is not saved. After switching, the edited content will be lost. Are you sure you want to switch？").arg(m_curItem->text()));
             box.exec();
             if( box.clickedButton() == &saveBtn  )
             {

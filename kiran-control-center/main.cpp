@@ -1,4 +1,4 @@
-#include "kiran-control-panel-window.h"
+#include "kiran-control-center-window.h"
 #include <QApplication>
 #include <QTranslator>
 #include <QDesktopWidget>
@@ -13,7 +13,7 @@ int main(int argc, char *argv[])
 
     QString locale = QLocale::system().name();
     gLocaleName = locale;//当前翻译类型,必须在加载模块数据之前赋值.模块的名称将根据此变量选择翻译类型.
-    QString qmFile = QString("/usr/share/kiran-control-panel/kiran-control-panel.%1.qm").arg(locale);
+    QString qmFile = QString("%1.%2.qm").arg(TRANSLATE_PREFIX).arg(locale);
     QTranslator translator;
     if(translator.load(qmFile) == false)
         qDebug() << "load qm: " << qmFile <<  " error.";
@@ -36,7 +36,7 @@ int main(int argc, char *argv[])
     }
 
     //窗口屏幕居中显示.
-    KiranControlPanelWindow w;
+    KiranControlCenterWindow w;
 
     const QRect &screenRect = QApplication::desktop()->screenGeometry();
     w.move(screenRect.center()-QPoint(w.rect().width()/2, w.rect().height()/2));

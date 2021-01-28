@@ -9,11 +9,7 @@
 #include <QWidget>
 #include <QStringList>
 
-#ifdef PLUGIN_DESKTOP_DIR
 #define KIRAN_MODULE_ITEM_DESKTOP_PATH PLUGIN_DESKTOP_DIR //将插件(模块)的desktop文件安装到此处。控制面板主程序将从这里读取插件的desktop，根据desktop描述加载插件。
-#else
-#define KIRAN_MODULE_ITEM_DESKTOP_PATH "/usr/share/kiran-control-panel/plugins" //将插件(模块)的desktop文件安装到此处。控制面板主程序将从这里读取插件的desktop，根据desktop描述加载插件。
-#endif
 
 namespace ModuleInterface {
 

@@ -1,23 +1,22 @@
-#ifndef KIRANCONTROLPANEL_H
-#define KIRANCONTROLPANEL_H
+#pragma once
 
-#include "kiran-control-panel-global.h"
+#include "kiran-control-center-global.h"
 #include <QWidget>
 
 class KiranModuleClassWidget;
-using namespace KiranControlPanelGlobal;
+using namespace KiranControlCenterGlobal;
 namespace Ui {
-class KiranControlPanel;
+class KiranControlCenter;
 }
 
 class QFrame;
-class KiranControlPanel : public QWidget
+class KiranControlCenter : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit KiranControlPanel(QWidget *parent = 0);
-    ~KiranControlPanel();
+    explicit KiranControlCenter(QWidget *parent = 0);
+    ~KiranControlCenter();
     QStringList completerKeys();
 
 public slots:
@@ -28,11 +27,10 @@ private:
     void onCurrentItemChanged(QListWidgetItem *current, QListWidgetItem *previous);
 
 private:
-    Ui::KiranControlPanel *ui;
+    Ui::KiranControlCenter *ui;
     KiranModuleClassWidget *m_classWgt;
     QListWidgetItem *m_curClassListItem;
     QMap<int, ModuleClass> m_data;
     QString m_request;
 };
 
-#endif // KIRANCONTROLPANEL_H

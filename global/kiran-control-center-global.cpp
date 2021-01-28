@@ -1,4 +1,4 @@
-#include "kiran-control-panel-global.h"
+#include "kiran-control-center-global.h"
 #include "kiranwidgets-qt5/kiran-message-box.h"
 #include <QDirIterator>
 #include <QSettings>
@@ -21,10 +21,10 @@ QString gLocaleName;
  * \brief KiranControlPanelGlobal::getModuleCLass
  * \return
  */
-QMap<int, KiranControlPanelGlobal::ModuleClass> KiranControlPanelGlobal::getModuleCLass()
+QMap<int, KiranControlCenterGlobal::ModuleClass> KiranControlCenterGlobal::getModuleCLass()
 {
-    QMap<int, KiranControlPanelGlobal::ModuleClass> ret;
-    QHash<QString, QMap<int, KiranControlPanelGlobal::ModuleItem> >  items = getModuleItem();
+    QMap<int, KiranControlCenterGlobal::ModuleClass> ret;
+    QHash<QString, QMap<int, KiranControlCenterGlobal::ModuleItem> >  items = getModuleItem();
     //
     QString moduleItemPath = KIRAN_MODULE_CLASS_DESKTOP_PATH;
     QDirIterator it(moduleItemPath, QStringList() << "*.desktop", QDir::Files);
@@ -32,7 +32,7 @@ QMap<int, KiranControlPanelGlobal::ModuleClass> KiranControlPanelGlobal::getModu
         QSettings settings(it.next(), QSettings::IniFormat);
         settings.beginGroup("Desktop Entry");
 
-        KiranControlPanelGlobal::ModuleClass moduleClass;
+        KiranControlCenterGlobal::ModuleClass moduleClass;
         moduleClass.name = QString::fromUtf8(settings.value("Name").toString().toLatin1().data());
         moduleClass.nameZh = QString::fromUtf8(settings.value("Name[zh_CN]").toString().toLatin1().data());
         moduleClass.comment = settings.value("Comment").toString();
@@ -52,9 +52,9 @@ QMap<int, KiranControlPanelGlobal::ModuleClass> KiranControlPanelGlobal::getModu
  * \brief KiranControlPanelGlobal::getModuleItem 此函数在模块集成运行时被使用.
  * \return
  */
-QHash<QString, QMap<int, KiranControlPanelGlobal::ModuleItem> > KiranControlPanelGlobal::getModuleItem()
+QHash<QString, QMap<int, KiranControlCenterGlobal::ModuleItem> > KiranControlCenterGlobal::getModuleItem()
 {
-    QHash<QString, QMap<int, KiranControlPanelGlobal::ModuleItem> >  ret;
+    QHash<QString, QMap<int, KiranControlCenterGlobal::ModuleItem> >  ret;
 
     QString moduleItemPath = KIRAN_MODULE_ITEM_DESKTOP_PATH;
     QDirIterator it(moduleItemPath, QStringList() << "*.desktop", QDir::Files);
@@ -66,13 +66,13 @@ QHash<QString, QMap<int, KiranControlPanelGlobal::ModuleItem> > KiranControlPane
         QString category = settings.value("Category").toString();
         if(!ret.contains(category))
         {
-            QMap<int, KiranControlPanelGlobal::ModuleItem> m;
+            QMap<int, KiranControlCenterGlobal::ModuleItem> m;
             ret.insert(category, m);
         }
 
-        QMap<int, KiranControlPanelGlobal::ModuleItem> &m = ret[category];
+        QMap<int, KiranControlCenterGlobal::ModuleItem> &m = ret[category];
 
-        KiranControlPanelGlobal::ModuleItem stu;
+        KiranControlCenterGlobal::ModuleItem stu;
         stu.isEmpty    = false;
         stu.name       = QString::fromUtf8(settings.value("Name").toString().toLatin1().data());
         stu.nameZh     = QString::fromUtf8(settings.value("Name[zh_CN]").toString().toLatin1().data());
@@ -92,9 +92,9 @@ QHash<QString, QMap<int, KiranControlPanelGlobal::ModuleItem> > KiranControlPane
  * \param moduleName
  * \return
  */
-KiranControlPanelGlobal::ModuleItem KiranControlPanelGlobal::getModuleItem(const QString &moduleName)
+KiranControlCenterGlobal::ModuleItem KiranControlCenterGlobal::getModuleItem(const QString &moduleName)
 {
-    KiranControlPanelGlobal::ModuleItem ret;
+    KiranControlCenterGlobal::ModuleItem ret;
 
     QString moduleItemPath = KIRAN_MODULE_ITEM_DESKTOP_PATH;
     QDirIterator it(moduleItemPath, QStringList() << "*.desktop", QDir::Files);
@@ -118,14 +118,14 @@ KiranControlPanelGlobal::ModuleItem KiranControlPanelGlobal::getModuleItem(const
     return ret;
 }
 
-QString KiranControlPanelGlobal::ModuleClassStu::getNameTranslate()
+QString KiranControlCenterGlobal::ModuleClassStu::getNameTranslate()
 {
     if(gLocaleName == "en_US") return name;
     else if(gLocaleName == "zh_CN") return nameZh;
     else return name;
 }
 
-QString KiranControlPanelGlobal::ModuleClassStu::getCommentTranslate()
+QString KiranControlCenterGlobal::ModuleClassStu::getCommentTranslate()
 {
     if(gLocaleName == "en_US") return comment;
     else if(gLocaleName == "zh_CN") return commentZh;
@@ -135,10 +135,10 @@ QString KiranControlPanelGlobal::ModuleClassStu::getCommentTranslate()
  * \brief KiranControlPanelGlobal::ModuleClassStu::itemKeys
  * \return 返回所有功能项的搜索关键字。
  */
-QStringList KiranControlPanelGlobal::ModuleClassStu::itemKeys() const
+QStringList KiranControlCenterGlobal::ModuleClassStu::itemKeys() const
 {
     QStringList ret;
-    QMapIterator<int, KiranControlPanelGlobal::ModuleItem> i(itemMap);
+    QMapIterator<int, KiranControlCenterGlobal::ModuleItem> i(itemMap);
     while (i.hasNext()) {
         i.next();
         int count = i.value().subItems.count();
@@ -153,7 +153,7 @@ QStringList KiranControlPanelGlobal::ModuleClassStu::itemKeys() const
  * \brief KiranControlPanelGlobal::ModuleItemStu::getModuleItemSubInfo
  * 从动态可中获取所有功能项的名称、图标、搜索关键字信息。
  */
-void KiranControlPanelGlobal::ModuleItemStu::getModuleItemSubInfo()
+void KiranControlCenterGlobal::ModuleItemStu::getModuleItemSubInfo()
 {
     openPlugin();
     auto fun = getModuleItemFun<GetSubItemsFun*>("getSubitems");
@@ -175,7 +175,7 @@ void KiranControlPanelGlobal::ModuleItemStu::getModuleItemSubInfo()
     closePlugin();
 }
 
-void KiranControlPanelGlobal::ModuleItemStu::loadTranslator()
+void KiranControlCenterGlobal::ModuleItemStu::loadTranslator()
 {
     if(translator) return;
 
@@ -191,7 +191,7 @@ void KiranControlPanelGlobal::ModuleItemStu::loadTranslator()
  * \param name 根据功能项名称，创建功能项节目。
  * \return
  */
-QWidget *KiranControlPanelGlobal::ModuleItemStu::createModuleItemSubWgt(const QString &name)
+QWidget *KiranControlCenterGlobal::ModuleItemStu::createModuleItemSubWgt(const QString &name)
 {
     openPlugin();
     //加载 要创建的界面的翻译文件。当界面被切换之后，翻译文件会被删除。
@@ -208,7 +208,7 @@ QWidget *KiranControlPanelGlobal::ModuleItemStu::createModuleItemSubWgt(const QS
  * \brief KiranControlPanelGlobal::ModuleItemStu::getNameTranslate
  * \return  根据本地语言类型，返回模块的desktop文件中的模块名翻译。
  */
-QString KiranControlPanelGlobal::ModuleItemStu::getNameTranslate()
+QString KiranControlCenterGlobal::ModuleItemStu::getNameTranslate()
 {
     if(gLocaleName == "en_US") return name;
     else if(gLocaleName == "zh_CN") return nameZh;
@@ -218,28 +218,28 @@ QString KiranControlPanelGlobal::ModuleItemStu::getNameTranslate()
  * \brief KiranControlPanelGlobal::ModuleItemStu::getCommentTranslate
  * \return 根据本地语言类型，返回模块的desktop文件中的介绍的翻译。
  */
-QString KiranControlPanelGlobal::ModuleItemStu::getCommentTranslate()
+QString KiranControlCenterGlobal::ModuleItemStu::getCommentTranslate()
 {
     if(gLocaleName == "en_US") return comment;
     else if(gLocaleName == "zh_CN") return commentZh;
     else return comment;
 }
 
-bool KiranControlPanelGlobal::ModuleItemStu::openPlugin()
+bool KiranControlCenterGlobal::ModuleItemStu::openPlugin()
 {
 //    if(!modulePlugin)
 //    {
         modulePlugin = dlopen(pluginFile.toLatin1().data(), RTLD_LAZY);
         if (!modulePlugin) {
             KiranMessageBox box;
-            box.setTitle(QObject::tr("提示"));
+            box.setTitle(QObject::tr("Tips"));
 
             QPushButton btn;
-            btn.setText(QObject::tr("确定(K)"));
+            btn.setText(QObject::tr("OK(K)"));
             btn.setFixedSize(QSize(200, box.buttonSize().height()));
             btn.setShortcut(Qt::CTRL + Qt::Key_K);
             box.addButton(&btn, QDialogButtonBox::AcceptRole);
-            box.setText(QObject::tr("加载插件%1失败。%2").arg(pluginFile).arg(dlerror()));
+            box.setText(QObject::tr("Failed to load plug-in %1。%2").arg(pluginFile).arg(dlerror()));
             box.exec();
 
             return false;
@@ -250,7 +250,7 @@ bool KiranControlPanelGlobal::ModuleItemStu::openPlugin()
     return true;
 }
 
-void KiranControlPanelGlobal::ModuleItemStu::closePlugin()
+void KiranControlCenterGlobal::ModuleItemStu::closePlugin()
 {
     if(modulePlugin)
     {
@@ -262,7 +262,7 @@ void KiranControlPanelGlobal::ModuleItemStu::closePlugin()
     }
 }
 
-bool KiranControlPanelGlobal::ModuleItemStu::hasUnsavedOptions()
+bool KiranControlCenterGlobal::ModuleItemStu::hasUnsavedOptions()
 {
     openPlugin();
     auto fun = getModuleItemFun<HasUnsavedOptionsFun*>("hasUnsavedOptions");
@@ -272,7 +272,7 @@ bool KiranControlPanelGlobal::ModuleItemStu::hasUnsavedOptions()
     return ret;
 }
 
-void KiranControlPanelGlobal::ModuleItemStu::removeTranslator()
+void KiranControlCenterGlobal::ModuleItemStu::removeTranslator()
 {
     if(translator)
     {
@@ -282,7 +282,7 @@ void KiranControlPanelGlobal::ModuleItemStu::removeTranslator()
     }
 }
 
-void KiranControlPanelGlobal::ModuleItemStu::getTranslationPath()
+void KiranControlCenterGlobal::ModuleItemStu::getTranslationPath()
 {
     openPlugin();
     auto fun = getModuleItemFun<GetTranslationPathFun*>("getTranslationPath");

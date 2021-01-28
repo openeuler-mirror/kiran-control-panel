@@ -1,28 +1,28 @@
-#include "kiran-control-panel.h"
-#include "ui_kiran-control-panel.h"
+#include "kiran-control-center.h"
+#include "ui_kiran-control-center.h"
 #include "kiran-module-class-widget.h"
 #include <QTimer>
 #include <QListWidgetItem>
 #include <QGraphicsDropShadowEffect>
 #include <QFrame>
 
-KiranControlPanel::KiranControlPanel(QWidget *parent) :
+KiranControlCenter::KiranControlCenter(QWidget *parent) :
     QWidget(parent), m_curClassListItem(nullptr),
-    ui(new Ui::KiranControlPanel)
+    ui(new Ui::KiranControlCenter)
 {
     ui->setupUi(this);
 
     m_classWgt = new KiranModuleClassWidget(this);
     m_classWgt->move(0, 0);
     //使信号槽绑定在m_classWgt->setData(&m_data)之前生效。
-    connect(m_classWgt->m_listWidget, &KiranModuleClassListWidget::currentItemChanged, this, &KiranControlPanel::onCurrentItemChanged);
+    connect(m_classWgt->m_listWidget, &KiranModuleClassListWidget::currentItemChanged, this, &KiranControlCenter::onCurrentItemChanged);
 
     m_data = getModuleCLass();
     m_classWgt->m_listWidget->setData(&m_data);
     ui->module_widget->setLeftContentsMargins(m_classWgt->iconModeWd());
 }
 
-void KiranControlPanel::onSearch(const QString &request)
+void KiranControlCenter::onSearch(const QString &request)
 {
     QMapIterator<int, ModuleClass> i(m_data);
     while (i.hasNext()) {
@@ -51,12 +51,12 @@ void KiranControlPanel::onSearch(const QString &request)
     }
 }
 
-KiranControlPanel::~KiranControlPanel()
+KiranControlCenter::~KiranControlCenter()
 {
     delete ui;
 }
 
-QStringList KiranControlPanel::completerKeys()
+QStringList KiranControlCenter::completerKeys()
 {
     QStringList ret;
     QMapIterator<int, ModuleClass> i(m_data);
@@ -67,13 +67,13 @@ QStringList KiranControlPanel::completerKeys()
     return ret;
 }
 
-void KiranControlPanel::resizeEvent(QResizeEvent *event)
+void KiranControlCenter::resizeEvent(QResizeEvent *event)
 {
     m_classWgt->resize(m_classWgt->width(), this->height());
     QWidget::resizeEvent(event);
 }
 
-void KiranControlPanel::onCurrentItemChanged(QListWidgetItem *current, QListWidgetItem *)
+void KiranControlCenter::onCurrentItemChanged(QListWidgetItem *current, QListWidgetItem *)
 {
     //item的绘制事件执行顺序在此函数之后，为了避免闪动，延时让item先绘制完成。延时处理要注意执行顺序问题,class切换后再设置模块的当前项目。
     QTimer::singleShot(5, this, [=](){

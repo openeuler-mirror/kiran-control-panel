@@ -6,8 +6,8 @@
 #ifndef KIRANMODULEWIDGET_H
 #define KIRANMODULEWIDGET_H
 
-#include "kiran-control-panel-global.h"
-using namespace KiranControlPanelGlobal;
+#include "kiran-control-center-global.h"
+using namespace KiranControlCenterGlobal;
 
 #include <QWidget>
 

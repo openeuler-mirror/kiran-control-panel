@@ -1,5 +1,4 @@
-#ifndef KIRANCONTROLPANELGLOBAL_H
-#define KIRANCONTROLPANELGLOBAL_H
+#pragma once
 
 #include <dlfcn.h>
 #include "../interface/module-interface.h"
@@ -13,7 +12,7 @@ using namespace ModuleInterface;
 
 
 class QListWidgetItem;
-namespace KiranControlPanelGlobal {
+namespace KiranControlCenterGlobal {
 //########################### ModuleItemStu ############################################
 typedef struct ModuleItemStu{
     bool isEmpty;
@@ -116,6 +115,5 @@ T *getMapValueByRow(const int &row, QMap<int, T> &map, T * = NULL)
     return nullptr;
 }
 }
-Q_DECLARE_METATYPE(KiranControlPanelGlobal::ModuleClass*)
-Q_DECLARE_METATYPE(KiranControlPanelGlobal::ModuleItem*)
-#endif // KIRANCONTROLPANELGLOBAL_H
+Q_DECLARE_METATYPE(KiranControlCenterGlobal::ModuleClass*)
+Q_DECLARE_METATYPE(KiranControlCenterGlobal::ModuleItem*)

@@ -1,4 +1,4 @@
-#include "kiran-control-panel-window.h"
+#include "kiran-control-center-window.h"
 #include "kiran-search-lineedit/kiran-search-lineedit.h"
 #include <QHBoxLayout>
 #include <QCompleter>
@@ -9,13 +9,13 @@
 #include <QStandardItemModel>
 #include <QDebug>
 
-KiranControlPanelWindow::KiranControlPanelWindow() : KiranTitlebarWindow()
+KiranControlCenterWindow::KiranControlCenterWindow() : KiranTitlebarWindow()
 {
     setButtonHints(KiranTitlebarWindow::TitlebarMinimizeButtonHint|KiranTitlebarWindow::TitlebarMaximizeButtonHint|KiranTitlebarWindow::TitlebarCloseButtonHint);
-    setIcon(QIcon("://image/kiran-display-configuration-pane.png"));
+    setIcon(QIcon(KCP_DESKTOP_IMAGES_PATH));
     setTitle(tr("Control Center"));
 
-    KiranControlPanel *centerWgt = new KiranControlPanel(this);
+    KiranControlCenter *centerWgt = new KiranControlCenter(this);
     setWindowContentWidget(centerWgt);
 
     QHBoxLayout *layout = getTitlebarCustomLayout();

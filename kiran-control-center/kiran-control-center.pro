@@ -8,7 +8,7 @@ QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = kiran-control-panel
+TARGET = kiran-control-center
 TEMPLATE = app
 
 # The following define makes your compiler emit warnings if you use
@@ -25,25 +25,25 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-    kiran-control-panel-window.cpp \
-    kiran-control-panel.cpp \
-    ../global/kiran-control-panel-global.cpp \
     kiran-module-class-listwidget.cpp \
     kiran-module-class-listwidget-itemwidget.cpp \
-    kiran-module-class-widget.cpp
+    kiran-module-class-widget.cpp \
+    kiran-control-center-window.cpp \
+    kiran-control-center.cpp \
+    ../global/kiran-control-center-global.cpp
 
 HEADERS += \
-    kiran-control-panel-window.h \
-    kiran-control-panel.h \
-    ../global/kiran-control-panel-global.h \
     kiran-module-class-listwidget.h \
     kiran-module-class-listwidget-itemwidget.h \
     kiran-module-class-widget.h \
-    ../interface/module-interface.h
+    ../interface/module-interface.h \
+    kiran-control-center-window.h \
+    kiran-control-center.h \
+    ../global/kiran-control-center-global.h
 
 FORMS += \
-    kiran-control-panel.ui \
-    kiran-module-class-widget.ui
+    kiran-module-class-widget.ui \
+    kiran-control-center.ui
 
 include(../widgets/kiran-module-widget/kiran-module-widget.pri)
 include(../widgets/kiran-search-lineedit/kiran-search-lineedit.pri)
@@ -53,8 +53,8 @@ INCLUDEPATH += ../widgets \
 LIBS=-ldl
 
 TRANSLATIONS += \
-    kiran-control-panel.zh_CN.ts \
-    kiran-control-panel.en_US.ts
+    kiran-control-center.zh_CN.ts \
+    kiran-control-center.en_US.ts
 
 
 LIBS += -L/usr/lib -lkiranwidgets-qt5

@@ -6,9 +6,9 @@
 #ifndef KIRANMODULECLASSLISTWIDGET_H
 #define KIRANMODULECLASSLISTWIDGET_H
 
-#include "kiran-control-panel-global.h"
+#include "kiran-control-center-global.h"
 #include "kiran-module-class-listwidget-itemwidget.h"
-using namespace KiranControlPanelGlobal;
+using namespace KiranControlCenterGlobal;
 
 #include <QListWidget>
 #include <QButtonGroup>

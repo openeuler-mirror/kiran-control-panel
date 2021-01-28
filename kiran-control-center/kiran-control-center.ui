@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>KiranControlPanel</class>
- <widget class="QWidget" name="KiranControlPanel">
+ <class>KiranControlCenter</class>
+ <widget class="QWidget" name="KiranControlCenter">
   <property name="geometry">
    <rect>
     <x>0</x>
