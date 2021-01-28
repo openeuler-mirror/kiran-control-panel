@@ -12,8 +12,8 @@ link_directories(${KIRANWIDGETS_QT5_LIBRARY_DIRS})
 pkg_search_module(KIRAN_CC_DAEMON REQUIRED kiran-cc-daemon)
 include_directories(${KIRAN_CC_DAEMON_INCLUDE_DIRS})
 
-pkg_search_module(KIRAN_CONTROL_PANEL REQUIRED kiran-control-panel)
-include_directories(${KIRAN_CONTROL_PANEL_INCLUDE_DIRS})
+pkg_search_module(KIRAN_CONTROL_CENTER REQUIRED kiran-control-center)
+include_directories(${KIRAN_CONTROL_CENTER_INCLUDE_DIRS})
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -92,7 +92,7 @@ else()
         ${QM_FILES}
         ${interface})
     #desktop and desktop image
-    set(KDT_DESKTOP_DIR ${KDT_INSTALL_DATADIR}/kiran-control-panel/plugins)
+    set(KDT_DESKTOP_DIR /usr/share/kiran-control-center/plugins)#此路径通过控制中心命令获取：/usr/bin/kiran-control-center --print-plugins-path。而代码中可以通过控制中心接口的宏定义 KIRAN_MODULE_ITEM_DESKTOP_PATH 获取,为了两处统一，代码中也可以从cmake中获取。
     install(FILES ${desktop_files} DESTINATION ${KDT_DESKTOP_DIR})
     set(KDT_DESKTOP_IMAGES_DIR ${KDT_DESKTOP_DIR}/${PROJECT_NAME}/icons)
     install(FILES ${desktop_images} DESTINATION ${KDT_DESKTOP_IMAGES_DIR})
