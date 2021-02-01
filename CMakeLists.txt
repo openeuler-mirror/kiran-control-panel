@@ -25,12 +25,12 @@ file(GLOB_RECURSE kiran-display-configuration "kiran-display-configuration.*")
 file(GLOB_RECURSE kiran-display-configuration-panel "kiran-display-configuration-panel.*")
 file(GLOB_RECURSE kiran-display-module-base "kiran-display-module-base.*")
 
-file(GLOB_RECURSE RESOURCES "./*.qrc")
-file(GLOB_RECURSE TS_FILES "./*.ts")
+file(GLOB_RECURSE RESOURCES "*.qrc")
+file(GLOB_RECURSE TS_FILES "*.ts")
 
-find_package(Qt5 COMPONENTS Widgets DBus X11Extras Svg) #LinguistTools
-#qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
-file(GLOB_RECURSE QM_FILES "./*.qm")
+find_package(Qt5 COMPONENTS Widgets DBus X11Extras Svg LinguistTools) #
+qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
+#file(GLOB_RECURSE QM_FILES "./*.qm")
 #编译参数传入
 include(GNUInstallDirs)
 set(KDT_INSTALL_BINDIR ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_BINDIR})
