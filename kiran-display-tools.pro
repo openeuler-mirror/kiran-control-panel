@@ -22,95 +22,17 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 CONFIG += c++11
-SOURCES += \
-        kiran-display-configuration.cpp \
-    kiran-display-configuration-window.cpp \
-    kiran-display-config-item-contain.cpp \
-    kiran-display-configuration-panel.cpp \
-    kiran-display-config-item.cpp \
-    kiran-combobox.cpp \
-    kiran-display-config-global.cpp \
-    kiran-display-config-identifying.cpp \
-    kiran-display-module-base.cpp
-
-HEADERS += \
-        kiran-display-configuration.h \
-    kiran-display-configuration-window.h \
-    kiran-display-config-item-contain.h \
-    kiran-display-configuration-panel.h \
-    kiran-display-config-item.h \
-    kiran-combobox.h \
-    kiran-display-config-global.h \
-    kiran-display-config-identifying.h \
-    kiran-display-module-base.h
-
-FORMS += \
-        kiran-display-configuration.ui \
-    kiran-display-configuration-panel.ui
-
-RESOURCES += \
-    image.qrc
-
-
-TRANSLATIONS += \
-    kiran-display-tools.zh_CN.ts \
-    kiran-display-tools.en_US.ts
+SOURCES += src/*.cpp \
+            src/interface/*.cpp  \ #.pro文件用于开发过程中，管理所有文件、编辑ui文件和生成qm文件。所有不区分app或plugin，不编写安装配置。只是为了解决对cmake支持不够好，用.pro方便编写代码而以。
+            src/main/*.cpp
+HEADERS += src/*.h\
+            src/interface/*.h  \
+            src/main/*.h
+FORMS += src/*.ui
+RESOURCES += images/*.qrc
+TRANSLATIONS += translations/*.ts
 
 
 LIBS += -L/usr/lib -lkiranwidgets-qt5
 
 TEMPLATE = app
-#TEMPLATE = lib
-
-translate.files += kiran-display-tools.zh_CN.qm \
-                kiran-display-tools.en_US.qm
-translate.path = /usr/share/kiran-control-panel/plugins/kiran-display-tools/translate
-
-#########################
-equals(TEMPLATE, app){
-    SOURCES += main.cpp
-    isEmpty( LIB_DIR ){
-        LIB_DIR = "/usr/bin/"
-    }
-
-    target.path = $$DESTDIR/$${LIB_DIR}
-    DESKTOP_FILES_PATH = "/usr/share/applications"
-    desktop_files.path = $${DESKTOP_FILES_PATH}
-    desktop_files.files += app-desktop/files/*
-    DEFINES += DESKTOP_FILES_PATHDEFINES=$${DESKTOP_FILES_PATH}
-
-    DESKTOP_IMAGES_PATH = "/usr/share/icons/Kiran/places/16x16/"
-    desktop_images.path = $${DESKTOP_IMAGES_PATH}
-    desktop_images.files += app-desktop/images/*
-    DEFINES += DESKTOP_IMAGES_PATH_DEFINES=$${DESKTOP_IMAGES_PATH}
-
-    INSTALLS += target \
-            translate \
-            desktop_files \
-            desktop_images
-}
-
-equals(TEMPLATE, lib){
-    HEADERS += interface.h
-    SOURCES += interface.cpp
-    isEmpty( LIB_DIR ){
-        LIB_DIR = "/usr/lib/"
-    }
-
-    target.path = $$DESTDIR/$${LIB_DIR}
-
-    DESKTOP_FILES_PATH = "/usr/share/kiran-control-panel/plugins"
-    desktop_files.path = $${DESKTOP_FILES_PATH}
-    desktop_files.files += desktop/files/*
-    DEFINES += DESKTOP_FILES_PATHDEFINES=$${DESKTOP_FILES_PATH}
-
-    DESKTOP_IMAGES_PATH = "/usr/share/kiran-control-panel/plugins/kiran-display-tools/icons"
-    desktop_images.path = $${DESKTOP_IMAGES_PATH}
-    desktop_images.files += desktop/images/*
-    DEFINES += DESKTOP_IMAGES_PATH_DEFINES=$${DESKTOP_IMAGES_PATH}
-
-    INSTALLS += target \
-            translate \
-            desktop_files \
-            desktop_images
-}

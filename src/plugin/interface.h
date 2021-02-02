@@ -53,7 +53,7 @@ QWidget *getSubitemWidget(QString name)
 
 QString getTranslationPath()
 {
-    return QString(PLUGIN_TRANSLATE_PATH_PREFIX);
+    return QString(TRANSLATE_PATH_PREFIX);
 }
 
 bool hasUnsavedOptions()
