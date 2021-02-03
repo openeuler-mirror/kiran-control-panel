@@ -10,6 +10,10 @@ file(GLOB SRC
     "./kiran-*.ui"
     "../images/*.qrc"
     )
+#翻译文件
+file(GLOB TS_FILES "translations/*.ts")
+find_package(Qt5 COMPONENTS Widgets LinguistTools)
+qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 
 if(DEFINED PLUGIN_DIR)
     message("********build plugin.*********")
@@ -24,6 +28,7 @@ if(DEFINED PLUGIN_DIR)
     add_library(${PROJECT_NAME} SHARED
         ${SRC}
         ${PLUGIN}
+        ${QM_FILES}
         )
     #安装
     install(TARGETS ${PROJECT_NAME} DESTINATION ${KDT_INSTALL_LIBDIR}/)
@@ -45,6 +50,7 @@ else()
     add_executable(${PROJECT_NAME}
         ${SRC}
         ${APP}
+        ${QM_FILES}
         )
 
     #安装
@@ -54,3 +60,5 @@ else()
         Qt5::Core Qt5::Gui Qt5::Svg Qt5::Widgets Qt5::X11Extras Qt5::DBus kiranwidgets-qt5 X11)
 
 endif()
+
+add_subdirectory(translations)

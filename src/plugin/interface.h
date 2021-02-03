@@ -21,7 +21,7 @@ extern KiranDisplayModuleBase *gCurWidget;
 QString gName = "显示设置";
 QList<SubItem> getSubitems()
 {
-    return QList<SubItem>() << SubItem(gName, QString(PLUGIN_ICON_PATH) + "display-settings.svg", "");
+    return QList<SubItem>() << SubItem(gName, QString(PLUGIN_ITME_ICON_DIR) + "display-settings.svg", "");
 }
 
 QWidget *getSubitemWidget(QString name)

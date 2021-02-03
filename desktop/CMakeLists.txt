@@ -7,6 +7,9 @@ if(DEFINED PLUGIN_DIR)
     file(GLOB desktop_images "plugin/images/*")
     set(KDT_DESKTOP_IMAGES_DIR ${KDT_DESKTOP_DIR}/${PROJECT_NAME}/icons)
     install(FILES ${desktop_images} DESTINATION ${KDT_DESKTOP_IMAGES_DIR})
+    #功能项图片
+    file(GLOB desktop_item_images "plugin/item-images/*")
+    install(FILES ${desktop_item_images} DESTINATION ${KDT_DESKTOP_ITEM_IMAGES_DIR})
 
 else()
     #文件

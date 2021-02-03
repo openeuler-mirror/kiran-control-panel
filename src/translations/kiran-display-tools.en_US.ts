@@ -4,8 +4,8 @@
 <context>
     <name>KiranDisplayConfiguration</name>
     <message>
-        <location filename="kiran-display-configuration.ui" line="14"/>
-        <location filename="build/kiran-display-tools_autogen/include/ui_kiran-display-configuration.h" line="650"/>
+        <location filename="../kiran-display-configuration.ui" line="14"/>
+        <location filename="../../build/src/kiran-display-tools_autogen/include/ui_kiran-display-configuration.h" line="650"/>
         <source>KiranDisplayConfiguration</source>
         <translation>Display Configuration</translation>
     </message>
@@ -42,82 +42,82 @@
         <translation type="vanished">Zoom rate</translation>
     </message>
     <message>
-        <location filename="kiran-display-configuration.ui" line="128"/>
-        <location filename="build/kiran-display-tools_autogen/include/ui_kiran-display-configuration.h" line="651"/>
+        <location filename="../kiran-display-configuration.ui" line="128"/>
+        <location filename="../../build/src/kiran-display-tools_autogen/include/ui_kiran-display-configuration.h" line="651"/>
         <source>Copy display</source>
         <translation>Copy display</translation>
     </message>
     <message>
-        <location filename="kiran-display-configuration.ui" line="177"/>
-        <location filename="build/kiran-display-tools_autogen/include/ui_kiran-display-configuration.h" line="652"/>
+        <location filename="../kiran-display-configuration.ui" line="177"/>
+        <location filename="../../build/src/kiran-display-tools_autogen/include/ui_kiran-display-configuration.h" line="652"/>
         <source>Extended display</source>
         <translation>Extended display</translation>
     </message>
     <message>
-        <location filename="kiran-display-configuration.ui" line="329"/>
-        <location filename="kiran-display-configuration.ui" line="754"/>
-        <location filename="build/kiran-display-tools_autogen/include/ui_kiran-display-configuration.h" line="653"/>
-        <location filename="build/kiran-display-tools_autogen/include/ui_kiran-display-configuration.h" line="666"/>
+        <location filename="../kiran-display-configuration.ui" line="329"/>
+        <location filename="../kiran-display-configuration.ui" line="754"/>
+        <location filename="../../build/src/kiran-display-tools_autogen/include/ui_kiran-display-configuration.h" line="653"/>
+        <location filename="../../build/src/kiran-display-tools_autogen/include/ui_kiran-display-configuration.h" line="666"/>
         <source>Resolution ratio</source>
         <translation>Resolution ratio</translation>
     </message>
     <message>
-        <location filename="kiran-display-configuration.ui" line="359"/>
-        <location filename="kiran-display-configuration.ui" line="784"/>
-        <location filename="build/kiran-display-tools_autogen/include/ui_kiran-display-configuration.h" line="654"/>
-        <location filename="build/kiran-display-tools_autogen/include/ui_kiran-display-configuration.h" line="667"/>
+        <location filename="../kiran-display-configuration.ui" line="359"/>
+        <location filename="../kiran-display-configuration.ui" line="784"/>
+        <location filename="../../build/src/kiran-display-tools_autogen/include/ui_kiran-display-configuration.h" line="654"/>
+        <location filename="../../build/src/kiran-display-tools_autogen/include/ui_kiran-display-configuration.h" line="667"/>
         <source>Refresh rate</source>
         <translation>Refresh rate</translation>
     </message>
     <message>
-        <location filename="kiran-display-configuration.ui" line="389"/>
-        <location filename="kiran-display-configuration.ui" line="814"/>
-        <location filename="build/kiran-display-tools_autogen/include/ui_kiran-display-configuration.h" line="655"/>
-        <location filename="build/kiran-display-tools_autogen/include/ui_kiran-display-configuration.h" line="668"/>
+        <location filename="../kiran-display-configuration.ui" line="389"/>
+        <location filename="../kiran-display-configuration.ui" line="814"/>
+        <location filename="../../build/src/kiran-display-tools_autogen/include/ui_kiran-display-configuration.h" line="655"/>
+        <location filename="../../build/src/kiran-display-tools_autogen/include/ui_kiran-display-configuration.h" line="668"/>
         <source>Zoom rate</source>
         <translation>Zoom rate</translation>
     </message>
     <message>
-        <location filename="kiran-display-configuration.ui" line="409"/>
-        <location filename="kiran-display-configuration.ui" line="834"/>
-        <location filename="build/kiran-display-tools_autogen/include/ui_kiran-display-configuration.h" line="656"/>
-        <location filename="build/kiran-display-tools_autogen/include/ui_kiran-display-configuration.h" line="669"/>
+        <location filename="../kiran-display-configuration.ui" line="409"/>
+        <location filename="../kiran-display-configuration.ui" line="834"/>
+        <location filename="../../build/src/kiran-display-tools_autogen/include/ui_kiran-display-configuration.h" line="656"/>
+        <location filename="../../build/src/kiran-display-tools_autogen/include/ui_kiran-display-configuration.h" line="669"/>
         <source>Automatic</source>
         <translation>Automatic</translation>
     </message>
     <message>
-        <location filename="kiran-display-configuration.ui" line="414"/>
-        <location filename="kiran-display-configuration.ui" line="839"/>
-        <location filename="build/kiran-display-tools_autogen/include/ui_kiran-display-configuration.h" line="657"/>
-        <location filename="build/kiran-display-tools_autogen/include/ui_kiran-display-configuration.h" line="670"/>
+        <location filename="../kiran-display-configuration.ui" line="414"/>
+        <location filename="../kiran-display-configuration.ui" line="839"/>
+        <location filename="../../build/src/kiran-display-tools_autogen/include/ui_kiran-display-configuration.h" line="657"/>
+        <location filename="../../build/src/kiran-display-tools_autogen/include/ui_kiran-display-configuration.h" line="670"/>
         <source>100% (recommended)</source>
         <translation>100% (recommended)</translation>
     </message>
     <message>
-        <location filename="kiran-display-configuration.ui" line="498"/>
-        <location filename="kiran-display-configuration.ui" line="920"/>
-        <location filename="build/kiran-display-tools_autogen/include/ui_kiran-display-configuration.h" line="660"/>
-        <location filename="build/kiran-display-tools_autogen/include/ui_kiran-display-configuration.h" line="673"/>
+        <location filename="../kiran-display-configuration.ui" line="498"/>
+        <location filename="../kiran-display-configuration.ui" line="920"/>
+        <location filename="../../build/src/kiran-display-tools_autogen/include/ui_kiran-display-configuration.h" line="660"/>
+        <location filename="../../build/src/kiran-display-tools_autogen/include/ui_kiran-display-configuration.h" line="673"/>
         <source>Apply</source>
         <translation>Apply</translation>
     </message>
     <message>
-        <location filename="kiran-display-configuration.ui" line="534"/>
-        <location filename="kiran-display-configuration.ui" line="956"/>
-        <location filename="build/kiran-display-tools_autogen/include/ui_kiran-display-configuration.h" line="661"/>
-        <location filename="build/kiran-display-tools_autogen/include/ui_kiran-display-configuration.h" line="674"/>
+        <location filename="../kiran-display-configuration.ui" line="534"/>
+        <location filename="../kiran-display-configuration.ui" line="956"/>
+        <location filename="../../build/src/kiran-display-tools_autogen/include/ui_kiran-display-configuration.h" line="661"/>
+        <location filename="../../build/src/kiran-display-tools_autogen/include/ui_kiran-display-configuration.h" line="674"/>
         <source>Close</source>
         <translation>Close</translation>
     </message>
     <message>
-        <location filename="kiran-display-configuration.ui" line="601"/>
-        <location filename="build/kiran-display-tools_autogen/include/ui_kiran-display-configuration.h" line="662"/>
+        <location filename="../kiran-display-configuration.ui" line="601"/>
+        <location filename="../../build/src/kiran-display-tools_autogen/include/ui_kiran-display-configuration.h" line="662"/>
         <source>Open</source>
         <translation>Open</translation>
     </message>
     <message>
-        <location filename="kiran-display-configuration.ui" line="680"/>
-        <location filename="build/kiran-display-tools_autogen/include/ui_kiran-display-configuration.h" line="664"/>
+        <location filename="../kiran-display-configuration.ui" line="680"/>
+        <location filename="../../build/src/kiran-display-tools_autogen/include/ui_kiran-display-configuration.h" line="664"/>
         <source>Set as main display</source>
         <translation>Set as main display</translation>
     </message>
@@ -130,10 +130,10 @@
         <translation type="vanished">100% (recommended)</translation>
     </message>
     <message>
-        <location filename="kiran-display-configuration.ui" line="419"/>
-        <location filename="kiran-display-configuration.ui" line="844"/>
-        <location filename="build/kiran-display-tools_autogen/include/ui_kiran-display-configuration.h" line="658"/>
-        <location filename="build/kiran-display-tools_autogen/include/ui_kiran-display-configuration.h" line="671"/>
+        <location filename="../kiran-display-configuration.ui" line="419"/>
+        <location filename="../kiran-display-configuration.ui" line="844"/>
+        <location filename="../../build/src/kiran-display-tools_autogen/include/ui_kiran-display-configuration.h" line="658"/>
+        <location filename="../../build/src/kiran-display-tools_autogen/include/ui_kiran-display-configuration.h" line="671"/>
         <source>200%</source>
         <translation></translation>
     </message>
@@ -174,28 +174,28 @@
         <translation type="vanished">Display the previous configuration that will be restored in%1 seconds</translation>
     </message>
     <message>
-        <location filename="kiran-display-configuration.cpp" line="305"/>
-        <location filename="kiran-display-configuration.cpp" line="327"/>
+        <location filename="../kiran-display-configuration.cpp" line="305"/>
+        <location filename="../kiran-display-configuration.cpp" line="327"/>
         <source> (recommended)</source>
         <translation> (recommended)</translation>
     </message>
     <message>
-        <location filename="kiran-display-configuration.cpp" line="347"/>
+        <location filename="../kiran-display-configuration.cpp" line="347"/>
         <source>Is the display normal?</source>
         <translation>Is the display normal?</translation>
     </message>
     <message>
-        <location filename="kiran-display-configuration.cpp" line="350"/>
+        <location filename="../kiran-display-configuration.cpp" line="350"/>
         <source>Save current configuration(K)</source>
         <translation>Save current configuration(K)</translation>
     </message>
     <message>
-        <location filename="kiran-display-configuration.cpp" line="354"/>
+        <location filename="../kiran-display-configuration.cpp" line="354"/>
         <source>Restore previous configuration(R)</source>
         <translation>Restore previous configuration(R)</translation>
     </message>
     <message>
-        <location filename="kiran-display-configuration.cpp" line="362"/>
+        <location filename="../kiran-display-configuration.cpp" line="362"/>
         <source>The display will resume the previous configuration in %1 seconds</source>
         <translation>The display will resume the previous configuration in %1 seconds</translation>
     </message>
@@ -203,40 +203,40 @@
 <context>
     <name>KiranDisplayConfigurationPanel</name>
     <message>
-        <location filename="kiran-display-configuration-panel.ui" line="14"/>
-        <location filename="build/kiran-display-tools_autogen/include/ui_kiran-display-configuration-panel.h" line="218"/>
+        <location filename="../kiran-display-configuration-panel.ui" line="14"/>
+        <location filename="../../build/src/kiran-display-tools_autogen/include/ui_kiran-display-configuration-panel.h" line="218"/>
         <source>Form</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="kiran-display-configuration-panel.ui" line="124"/>
-        <location filename="build/kiran-display-tools_autogen/include/ui_kiran-display-configuration-panel.h" line="220"/>
+        <location filename="../kiran-display-configuration-panel.ui" line="124"/>
+        <location filename="../../build/src/kiran-display-tools_autogen/include/ui_kiran-display-configuration-panel.h" line="220"/>
         <source>Rotate left 90 degrees</source>
         <oldsource>Rotate 90 degrees to the lef</oldsource>
         <translation>Rotate left 90 degrees</translation>
     </message>
     <message>
-        <location filename="kiran-display-configuration-panel.ui" line="164"/>
-        <location filename="build/kiran-display-tools_autogen/include/ui_kiran-display-configuration-panel.h" line="224"/>
+        <location filename="../kiran-display-configuration-panel.ui" line="164"/>
+        <location filename="../../build/src/kiran-display-tools_autogen/include/ui_kiran-display-configuration-panel.h" line="224"/>
         <source>Rotate right 90 degrees</source>
         <translation>Rotate right 90 degrees</translation>
     </message>
     <message>
-        <location filename="kiran-display-configuration-panel.ui" line="203"/>
-        <location filename="build/kiran-display-tools_autogen/include/ui_kiran-display-configuration-panel.h" line="228"/>
+        <location filename="../kiran-display-configuration-panel.ui" line="203"/>
+        <location filename="../../build/src/kiran-display-tools_autogen/include/ui_kiran-display-configuration-panel.h" line="228"/>
         <source>Turn left and right</source>
         <translation>Turn left and right</translation>
     </message>
     <message>
-        <location filename="kiran-display-configuration-panel.ui" line="247"/>
-        <location filename="build/kiran-display-tools_autogen/include/ui_kiran-display-configuration-panel.h" line="232"/>
+        <location filename="../kiran-display-configuration-panel.ui" line="247"/>
+        <location filename="../../build/src/kiran-display-tools_autogen/include/ui_kiran-display-configuration-panel.h" line="232"/>
         <source>upside down</source>
         <oldsource>upside down </oldsource>
         <translation>upside down</translation>
     </message>
     <message>
-        <location filename="kiran-display-configuration-panel.ui" line="291"/>
-        <location filename="build/kiran-display-tools_autogen/include/ui_kiran-display-configuration-panel.h" line="236"/>
+        <location filename="../kiran-display-configuration-panel.ui" line="291"/>
+        <location filename="../../build/src/kiran-display-tools_autogen/include/ui_kiran-display-configuration-panel.h" line="236"/>
         <source>Identification display</source>
         <translation>Identification display</translation>
     </message>
@@ -264,7 +264,7 @@
         <translation type="vanished">Display settings</translation>
     </message>
     <message>
-        <location filename="kiran-display-configuration-window.cpp" line="9"/>
+        <location filename="../app/kiran-display-configuration-window.cpp" line="9"/>
         <source>Display Setting</source>
         <translation>Display Setting</translation>
     </message>
@@ -276,19 +276,19 @@
         <translation type="vanished">Tips</translation>
     </message>
     <message>
-        <location filename="interface.h" line="37"/>
-        <location filename="kiran-display-config-global.cpp" line="35"/>
-        <location filename="kiran-display-config-global.h" line="75"/>
-        <location filename="kiran-display-configuration.cpp" line="385"/>
-        <location filename="kiran-display-configuration.cpp" line="403"/>
-        <location filename="main.cpp" line="27"/>
+        <location filename="../app/main.cpp" line="27"/>
+        <location filename="../kiran-display-config-global.cpp" line="35"/>
+        <location filename="../kiran-display-config-global.h" line="75"/>
+        <location filename="../kiran-display-configuration.cpp" line="385"/>
+        <location filename="../kiran-display-configuration.cpp" line="403"/>
+        <location filename="../plugin/interface.h" line="37"/>
         <source>OK(K)</source>
         <oldsource>确定(K)</oldsource>
         <translation>OK(K)</translation>
     </message>
     <message>
-        <location filename="interface.h" line="41"/>
-        <location filename="main.cpp" line="31"/>
+        <location filename="../app/main.cpp" line="31"/>
+        <location filename="../plugin/interface.h" line="41"/>
         <source>Background D-Bus service failed to connect, display setting failed to start, please check if D-Bus service is start.</source>
         <translation>Background D-Bus service failed to connect, display setting failed to start, please check if D-Bus service is start.</translation>
     </message>
@@ -306,22 +306,22 @@
         <translation type="vanished">Failed to withdraw display settings!% 1</translation>
     </message>
     <message>
-        <location filename="interface.h" line="34"/>
-        <location filename="kiran-display-config-global.cpp" line="32"/>
-        <location filename="kiran-display-config-global.h" line="72"/>
-        <location filename="kiran-display-configuration.cpp" line="382"/>
-        <location filename="kiran-display-configuration.cpp" line="400"/>
-        <location filename="main.cpp" line="24"/>
+        <location filename="../app/main.cpp" line="24"/>
+        <location filename="../kiran-display-config-global.cpp" line="32"/>
+        <location filename="../kiran-display-config-global.h" line="72"/>
+        <location filename="../kiran-display-configuration.cpp" line="382"/>
+        <location filename="../kiran-display-configuration.cpp" line="400"/>
+        <location filename="../plugin/interface.h" line="34"/>
         <source>Tips</source>
         <translation>Tips</translation>
     </message>
     <message>
-        <location filename="kiran-display-configuration.cpp" line="389"/>
+        <location filename="../kiran-display-configuration.cpp" line="389"/>
         <source>Failed to apply display settings!%1</source>
         <translation>Failed to apply display settings!%1</translation>
     </message>
     <message>
-        <location filename="kiran-display-configuration.cpp" line="407"/>
+        <location filename="../kiran-display-configuration.cpp" line="407"/>
         <source>Fallback display setting failed! %1</source>
         <translation>Fallback display setting failed! %1</translation>
     </message>
