@@ -1,0 +1,42 @@
+/*******************QLabel***************/
+QLabel#label_list_text
+{
+    color:#ffffff;
+    font-family: "Noto Sans CJK SC light";
+    font-size:12px;
+}
+
+/*******************QWidget**********/
+QWidget#kiranSystemInformation
+{
+    background-color: #222222;
+    border:none;
+}
+
+QWidget#widget_page,QWidget#HardwareInformationWidget
+{
+    background-color: #222222;
+    border:none;
+}
+
+/****************QListWidget************/
+QListWidget#infoListWidget
+{
+    background-color: transparent;
+/*    border-right:1px solid #2d2d2d;*/
+    border:none;
+    margin-right:24px;
+    margin-left:12px;
+    margin-top:10px;
+}
+
+QListWidget#infoListWidget::item
+{
+    background-color: #2d2d2d;
+    border-radius: 10px;
+    border:none;
+}
+QListWidget#infoListWidget::Item:selected
+{
+    background-color: #2eb3ff;
+}
