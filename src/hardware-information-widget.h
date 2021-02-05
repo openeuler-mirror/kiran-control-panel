@@ -23,7 +23,7 @@ public:
     ~HardwareInformationWidget();
 
 private:
-    initUI();
+    void initUI(void);
 
 private:
     Ui::HardwareInformationWidget *ui;

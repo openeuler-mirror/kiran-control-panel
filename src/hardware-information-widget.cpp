@@ -21,7 +21,7 @@ HardwareInformationWidget::~HardwareInformationWidget()
     delete ui;
 }
 
-HardwareInformationWidget::initUI()
+void HardwareInformationWidget::initUI(void)
 {
 
 }
