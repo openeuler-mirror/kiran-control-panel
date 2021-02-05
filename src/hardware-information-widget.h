@@ -23,6 +23,9 @@ public:
     ~HardwareInformationWidget();
 
 private:
+    initUI();
+
+private:
     Ui::HardwareInformationWidget *ui;
 };
 

@@ -4,9 +4,13 @@
 #include <QMessageBox>
 #include <QDebug>
 #include <QLoggingCategory>
+#include <QTranslator>
 
 #include "general-functions-class.h"
 #include "single/singleapplication.h"
+
+/*FIXME: add config.in to define translate file dir later*/
+#define TRANSLATION_DIR "/usr/share/kiran-system-information/translations/"
 
 int main(int argc, char *argv[])
 {
@@ -32,6 +36,14 @@ int main(int argc, char *argv[])
     }
 
     ///加载翻译文件
+    QTranslator *qtTranslator = new QTranslator(qApp);
+    if(qtTranslator->load(QLocale(),"kiran-system-information",".",TRANSLATION_DIR,".qm")){
+        a.installTranslator(qtTranslator);
+    }
+    else
+    {
+        qDebug("Load Translator File failed : %s\n", TRANSLATION_DIR);
+    }
 
     kiranSystemInformation w;
     w.show();

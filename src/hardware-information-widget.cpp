@@ -13,9 +13,15 @@ HardwareInformationWidget::HardwareInformationWidget(QWidget *parent) :
     ui(new Ui::HardwareInformationWidget)
 {
     ui->setupUi(this);
+    initUI();
 }
 
 HardwareInformationWidget::~HardwareInformationWidget()
 {
     delete ui;
+}
+
+HardwareInformationWidget::initUI()
+{
+
 }

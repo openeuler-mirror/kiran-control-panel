@@ -72,8 +72,6 @@ void kiranSystemInformation::addPagesToStackWidget()
     QStackedWidget *stackedWidget = new QStackedWidget;
     stackedWidget->addWidget(hardwareInfoWidget);
 
-    //QVBoxLayout *layout = new QVBoxLayout;
-    //stackedWidget->setLayout(layout);
     ui->scrollArea->setWidget(stackedWidget);
 }
 
