@@ -7,6 +7,7 @@
 
 #include "kiran-system-information.h"
 #include "ui_kiran-system-information.h"
+#include "system-information-widget.h"
 
 #include <QPainter>
 #include <QStackedWidget>
@@ -18,6 +19,8 @@ kiranSystemInformation::kiranSystemInformation(QWidget *parent) :
     ui->setupUi(this);
     addPagesToStackWidget();
     initUI();
+
+    connect(ui->infoListWidget, SIGNAL(itemClicked(QListWidgetItem*)),this,SLOT(changeWidgetWhenItemClicked(QListWidgetItem*)));
 }
 
 kiranSystemInformation::~kiranSystemInformation()
@@ -66,13 +69,31 @@ InformationListItem *kiranSystemInformation::createInformationItem(const QString
 void kiranSystemInformation::addPagesToStackWidget()
 {
     /*获取右侧信息页滑动区域*/
-    QWidget *hardwareInfoWidget = new HardwareInformationWidget;
+    hardwareInfoWidget = new HardwareInformationWidget;
     hardwareInfoWidget->setStyleSheet("#hardwareInfoWidget{background-color: #222222;}");
 
-    QStackedWidget *stackedWidget = new QStackedWidget;
+    systemInfoWidget = new SystemInformationWidget;
+    systemInfoWidget->setStyleSheet("#systemInfoWidget{background-color: #222222;}");
+
+    stackedWidget = new QStackedWidget;
     stackedWidget->addWidget(hardwareInfoWidget);
+    stackedWidget->addWidget(systemInfoWidget);
 
     ui->scrollArea->setWidget(stackedWidget);
+}
+
+void kiranSystemInformation::changeWidgetWhenItemClicked(QListWidgetItem * currentItem)
+{
+    int itemNum = ui->infoListWidget->row(currentItem);
+    if(itemNum == itemSystemInfo)
+    {
+        stackedWidget->setCurrentWidget(systemInfoWidget);
+    }
+    else if(itemNum == itemHardwareInfo)
+    {
+        stackedWidget->setCurrentWidget(hardwareInfoWidget);
+    }
+
 }
 
 //void kiranSystemInformation::paintEvent(QPaintEvent *)

@@ -24,6 +24,8 @@ public:
 
 private:
     void initUI(void);
+    void readHardwareInfo(int infoType);
+    void getJsonValueFromString(QString jsonString);
 
 private:
     Ui::HardwareInformationWidget *ui;

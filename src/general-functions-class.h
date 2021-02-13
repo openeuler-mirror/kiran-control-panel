@@ -1,8 +1,16 @@
+/**
+ * @file general-functions-class.h
+ * @brief 通用的一些函数
+ * @author yuanxing@kylinos.com.cn
+ * @copyright Copyright ©2020 KylinSec. All rights reserved.
+ */
+
 #ifndef GENERALFUNCTIONSCLASS_H
 #define GENERALFUNCTIONSCLASS_H
 
 #include <QMessageLogContext>
 #include <QString>
+
 class GeneralFunctionsClass
 {
 public:

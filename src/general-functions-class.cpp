@@ -1,3 +1,10 @@
+/**
+ * @file general-functions-class.cpp
+ * @brief 通用的一些函数
+ * @author yuanxing@kylinos.com.cn
+ * @copyright Copyright ©2020 KylinSec. All rights reserved.
+ */
+
 #include "general-functions-class.h"
 #include <QFile>
 #include <QMessageBox>
@@ -17,6 +24,12 @@ GeneralFunctionsClass::GeneralFunctionsClass()
 
 }
 
+/**
+ * @brief GeneralFunctionsClass::customMessageHandler:自定义调试信息
+ * @param type 消息类型
+ * @param context 消息输出位置
+ * @param msg 消息内容
+ */
 void GeneralFunctionsClass::customMessageHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
     static QMutex mutex;

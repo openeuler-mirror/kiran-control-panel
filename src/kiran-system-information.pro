@@ -42,7 +42,8 @@ SOURCES += \
     general-functions-class.cpp \
     single/singleapplication.cpp \
     single/singleapplication_p.cpp \
-    system-info-dbus.cpp
+    system-info-dbus.cpp \
+    system-information-widget.cpp
 
 HEADERS += \
         kiran-system-information.h \
@@ -51,12 +52,14 @@ HEADERS += \
     general-functions-class.h \
     single/singleapplication.h \
     single/singleapplication_p.h \
-    system-info-dbus.h
+    system-info-dbus.h \
+    system-information-widget.h
 
 FORMS += \
         kiran-system-information.ui \
     information-list-item.ui \
     hardware-information-widget.ui \
+    system-information-widget.ui
 
 RESOURCES += \
     res.qrc

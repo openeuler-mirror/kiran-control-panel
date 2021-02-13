@@ -1,11 +1,11 @@
 <RCC>
     <qresource prefix="/images">
-        <file>data/hardware-information.svg</file>
-        <file>data/menu.svg</file>
-        <file>data/system-information.svg</file>
-        <file>data/arrow.png</file>
+        <file>../data/arrow.png</file>
+        <file>../data/hardware-information.svg</file>
+        <file>../data/menu.svg</file>
+        <file>../data/system-information.svg</file>
     </qresource>
     <qresource prefix="/qss">
-        <file>data/style.qss</file>
+        <file>../data/style.qss</file>
     </qresource>
 </RCC>

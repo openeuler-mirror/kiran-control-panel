@@ -9,6 +9,8 @@
 #define KIRANSYSTEMINFORMATION_H
 
 #include <QWidget>
+#include <QListWidgetItem>
+#include <QStackedWidget>
 #include "information-list-item.h"
 #include "hardware-information-widget.h"
 
@@ -35,18 +37,22 @@ private:
 signals:
 
 public slots:
+    void changeWidgetWhenItemClicked(QListWidgetItem* currentItem);
 
 protected:
     //void paintEvent(QPaintEvent*);
 
 private:
     enum {pageSystemInfo, PageHardwareInfo};
+    enum {itemSystemInfo, itemHardwareInfo};
     Ui::kiranSystemInformation *ui;
+    QStackedWidget *stackedWidget;
+
     InformationListItem* systemInfomationItem;
     InformationListItem* hardwareInformationItem;
 
-    QWidget* SystemInformation;
-    QWidget* hardwareInformation;
+    QWidget* systemInfoWidget;
+    QWidget* hardwareInfoWidget;
 
 
 };
