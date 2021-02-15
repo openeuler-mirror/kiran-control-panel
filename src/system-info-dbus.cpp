@@ -156,5 +156,29 @@ bool InfoDbus::KylinLicense::registerOnline(QString ip, QString &errorMsg)
 
 bool InfoDbus::KylinLicense::getServiceStatus(int &status)
 {
+    QDBusMessage msgMethodCall = QDBusMessage::createMethodCall(LICENSE_DBUS_NAME,
+                                                                LICENSE_DBUS_OBJECT_PATH,
+                                                                KIRAN_LICENSE_INTERFACE,
+                                                                METHOD_GETSERVICESTATUS);
 
+
+    QDBusMessage msgReply = QDBusConnection::systemBus().call(msgMethodCall,
+                                                              QDBus::Block,
+                                                              TIMEOUT_MS);
+    qDebug() << "msgReply " << msgReply <<endl;
+    QString errMsg;
+    if(msgReply.type() == QDBusMessage::ReplyMessage){
+        QList<QVariant> args = msgReply.arguments();
+        if( args.size() < 1 ){
+            errMsg = "arguments size < 1";
+            goto failed;
+        }
+        QVariant firstArg = args.takeFirst();
+        status = firstArg.toInt();
+        return true;
+    }
+failed:
+    qWarning() << LICENSE_DBUS_NAME << METHOD_GETSERVICESTATUS
+               << msgReply.errorName() << msgReply.errorMessage() << errMsg;
+    return false;
 }

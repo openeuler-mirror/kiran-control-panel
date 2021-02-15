@@ -43,7 +43,10 @@ SOURCES += \
     single/singleapplication.cpp \
     single/singleapplication_p.cpp \
     system-info-dbus.cpp \
-    system-information-widget.cpp
+    system-information-widget.cpp \
+    ../../kylin-license/src/tool/actguidewidget.cpp \
+    actguidewidget.cpp \
+    actguidewidget.cpp
 
 HEADERS += \
         kiran-system-information.h \
@@ -53,13 +56,17 @@ HEADERS += \
     single/singleapplication.h \
     single/singleapplication_p.h \
     system-info-dbus.h \
-    system-information-widget.h
+    system-information-widget.h \
+    ../../kylin-license/src/tool/actguidewidget.h \
+    actguidewidget.h
 
 FORMS += \
         kiran-system-information.ui \
     information-list-item.ui \
     hardware-information-widget.ui \
-    system-information-widget.ui
+    system-information-widget.ui \
+    ../../kylin-license/src/tool/actguidewidget.ui \
+    actguidewidget.ui
 
 RESOURCES += \
     res.qrc

@@ -36,6 +36,8 @@ void kiranSystemInformation::initUI()
     systemInfomationItem = createInformationItem(QString(tr("System Information")) , systemInfomationIcon);
     hardwareInformationItem = createInformationItem(QString(tr("Hardware Information")) , hardwareInformationIcon);
     hardwareInformationItem->setStyleSheet("#hardwareInformationItem{margin-top:24px};");
+
+    ui->infoListWidget->setCurrentRow(0);
 }
 
 
@@ -75,9 +77,9 @@ void kiranSystemInformation::addPagesToStackWidget()
     systemInfoWidget = new SystemInformationWidget;
     systemInfoWidget->setStyleSheet("#systemInfoWidget{background-color: #222222;}");
 
-    stackedWidget = new QStackedWidget;
-    stackedWidget->addWidget(hardwareInfoWidget);
+    stackedWidget = new QStackedWidget;  
     stackedWidget->addWidget(systemInfoWidget);
+    stackedWidget->addWidget(hardwareInfoWidget);
 
     ui->scrollArea->setWidget(stackedWidget);
 }

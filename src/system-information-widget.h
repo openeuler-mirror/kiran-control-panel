@@ -19,9 +19,24 @@ private:
     void initUI();
     void readSystemInfo(int infoType);
     void getJsonValueFromString(QString jsonString);
+    void readLicenseInfo();
+
+private slots:
+    void changeCurrentHostName(void);
 
 private:
     Ui::SystemInformationWidget *ui;
+
+    bool isActive;
+    QString mc_code;
+    QString lc_code;
+    // 授权状态
+    quint16 license_status = 0;
+    // 过期时间
+    quint32 expired_time;
+    // 安装时间
+    quint32 start_time;
+    QString installTime;
 };
 
 #endif // SYSTEMINFORMATIONWIDGET_H

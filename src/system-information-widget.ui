@@ -336,14 +336,14 @@
           </spacer>
          </item>
          <item>
-          <widget class="QLabel" name="lab_register_status_info">
+          <widget class="QLabel" name="lab_status">
            <property name="text">
             <string>TextLabel</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButton">
+          <widget class="QPushButton" name="btn_status">
            <property name="text">
             <string>PushButton</string>
            </property>
@@ -439,7 +439,7 @@
           </spacer>
          </item>
          <item>
-          <widget class="QLabel" name="label_contact_info">
+          <widget class="QLabel" name="lab_contact_info">
            <property name="text">
             <string>TextLabel</string>
            </property>

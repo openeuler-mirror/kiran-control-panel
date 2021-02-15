@@ -33,7 +33,7 @@ HardwareInformationWidget::HardwareInformationWidget(QWidget *parent) :
 {
     ui->setupUi(this);
     initUI();
-    readSystemInfo(1);
+    readHardwareInfo(1);
 
 }
 
@@ -56,11 +56,13 @@ void HardwareInformationWidget::readHardwareInfo(int infoType)
     QString systemInfo;
     if(!InfoDbus::SystemInfo::getSystemInfo(infoType , systemInfo))
     {
+        qDebug() << "get hardware information failed"<< endl;
         ui->label_CPU_info->setText(tr("Unknow"));
         ui->label_memory_info->setText(tr("Unknow"));
         ui->label_hard_disk_info->setText(tr("Unknow"));
         ui->label_graphics_card_info->setText(tr("Unknow"));
         ui->label_network_card_info->setText(tr("Unknow"));
+        return;
     }
     else
     {
