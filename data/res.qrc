@@ -1,0 +1,21 @@
+<RCC>
+    <qresource prefix="/images">
+        <file>arrow.svg</file>
+        <file>checked.svg</file>
+        <file>failed.png</file>
+        <file>hardware-information.svg</file>
+        <file>KEY.png</file>
+        <file>kylin-about.png</file>
+        <file>menu.svg</file>
+        <file>qrcode.svg</file>
+        <file>successful.png</file>
+        <file>system-information.svg</file>
+        <file>uncheckable.svg</file>
+        <file>uncheckable_check.svg</file>
+        <file>unchecked.svg</file>
+    </qresource>
+    <qresource prefix="/qss">
+        <file>license-style.qss</file>
+        <file>style.qss</file>
+    </qresource>
+</RCC>

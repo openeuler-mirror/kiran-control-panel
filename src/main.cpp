@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
     SingleApplication a(argc, argv);
 
     ///加载qss样式表
-    QFile file(":/qss/data/style.qss");
+    QFile file(":/qss/style.qss");
     if( file.open(QFile::ReadOnly))
     {
         QString styleSheet = QLatin1String(file.readAll());

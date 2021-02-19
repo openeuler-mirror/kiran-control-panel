@@ -1,3 +1,10 @@
+/**
+ * @file system-information-widget.cpp
+ * @brief  获取系统信息，包括授权信息，并显示在界面中，提供用户授权的接口
+ * @author yuanxing@kylinos.com.cn
+ * @copyright Copyright ©2020 KylinSec. All rights reserved.
+ */
+
 #include "system-information-widget.h"
 #include "ui_system-information-widget.h"
 #include "system-info-dbus.h"
@@ -24,7 +31,8 @@
 
 SystemInformationWidget::SystemInformationWidget(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::SystemInformationWidget)
+    ui(new Ui::SystemInformationWidget),
+    activeGuide(nullptr)
 {
     ui->setupUi(this);
     initUI();
@@ -33,11 +41,16 @@ SystemInformationWidget::SystemInformationWidget(QWidget *parent) :
     
 
     connect(ui->btn_change_name, SIGNAL(clicked()), this, SLOT(changeCurrentHostName()));
+    connect(ui->btn_status, SIGNAL(clicked()), this, SLOT(onBtnStatusClicked()));
 }
 
 SystemInformationWidget::~SystemInformationWidget()
 {
     delete ui;
+    if(activeGuide!=nullptr)
+    {
+        delete activeGuide;
+    }
 }
 
 void SystemInformationWidget::initUI()
@@ -47,6 +60,10 @@ void SystemInformationWidget::initUI()
     ui->lab_contact_info->setText("800820820");
 }
 
+/**
+ * @brief SystemInformationWidget::readSystemInfo:读取系统信息
+ * @param infoType: 传入DBUS接口的参数，0：获取系统信息，1：获取硬件信息
+ */
 void SystemInformationWidget::readSystemInfo(int infoType)
 {
     QString systemInfo;
@@ -68,6 +85,9 @@ void SystemInformationWidget::readSystemInfo(int infoType)
 
 }
 
+/**
+ * @brief SystemInformationWidget::readLicenseInfo:读取系统授权信息
+ */
 void SystemInformationWidget::readLicenseInfo()
 {
     QString licenseInfo;
@@ -168,6 +188,10 @@ void SystemInformationWidget::readLicenseInfo()
     }
 }
 
+/**
+ * @brief SystemInformationWidget::getJsonValueFromString: 解析从DBUS后端获取的Json字符串
+ * @param jsonString: DBUS后端获取的Json字符串
+ */
 void SystemInformationWidget::getJsonValueFromString(QString jsonString)
 {
     QJsonParseError jsonError;
@@ -263,8 +287,71 @@ void SystemInformationWidget::getJsonValueFromString(QString jsonString)
     }
 }
 
+/**
+ * @brief SystemInformationWidget::changeCurrentHostName: 当点击更改用户名后的槽函数
+ */
 void SystemInformationWidget::changeCurrentHostName()
 {
 
+}
+
+/**
+ * @brief  槽函数，用户点击授权状态按钮，
+ *         未激活，则弹出激活向导窗口
+ *         已激活，则弹出授权信息窗口
+ */
+void SystemInformationWidget::onBtnStatusClicked()
+{
+    if(!isActive)  //popup Active Guide
+    {
+        if(activeGuide==nullptr)
+        {
+            activeGuide = new ActGuideWidget;
+        }
+        activeGuide->setAttribute(Qt::WA_QuitOnClose,false);
+        activeGuide->installEventFilter(this);
+        connect(activeGuide, SIGNAL(systemIsActived(bool)) , this ,SLOT(updateLicenseInfo(bool)));
+        activeGuide->raise();
+        activeGuide->show();
+    }
+//    else //popup informations
+//    {
+//        if(licenseInfoWidget == nullptr)
+//        {
+//            licenseInfoWidget = new LicenseInfoWidget(mc_code ,lc_code);
+//        }
+
+//        licenseInfoWidget->setAttribute(Qt::WA_QuitOnClose,false);
+//        licenseInfoWidget->installEventFilter(this);
+//        licenseInfoWidget->setLicenseCode(lc_code);
+//        licenseInfoWidget->setMachineCode(mc_code);
+//        licenseInfoWidget->raise();
+
+//        licenseInfoWidget->show();
+//        QDesktopWidget *desktop = QApplication::desktop();
+//        licenseInfoWidget->move((desktop->width() - licenseInfoWidget->width())/2 , (desktop->height() - licenseInfoWidget->height())/2 );
+//    }
+
+}
+
+/**
+ * @brief  事件监听，当收到激活向导窗口或者授权信息窗口的关闭事件时，释放窗口内存
+ * @param  obj  事件对象
+ * @param  obj  事件
+ * @return 是否过滤
+ */
+bool SystemInformationWidget::eventFilter(QObject *obj, QEvent *event)
+{
+    if(obj==activeGuide&&event->type()==QEvent::Close)
+    {
+        activeGuide->deleteLater();
+        activeGuide = nullptr;
+    }
+//    else if(obj == licenseInfoWidget && event->type()==QEvent::Close)
+//    {
+//        licenseInfoWidget->deleteLater();
+//        licenseInfoWidget = nullptr;
+//    }
+    return false;
 }
 

@@ -44,9 +44,13 @@ SOURCES += \
     single/singleapplication_p.cpp \
     system-info-dbus.cpp \
     system-information-widget.cpp \
-    ../../kylin-license/src/tool/actguidewidget.cpp \
-    actguidewidget.cpp \
-    actguidewidget.cpp
+    license/active-guide-widget.cpp \
+    license/show-qrcode.cpp \
+    license/qrcode-widget.cpp \
+    license/active-list-item.cpp \
+    license/load-animation-widget.cpp \
+    license/license-info-widget.cpp \
+    license/user-license-agreement.cpp
 
 HEADERS += \
         kiran-system-information.h \
@@ -57,19 +61,28 @@ HEADERS += \
     single/singleapplication_p.h \
     system-info-dbus.h \
     system-information-widget.h \
-    ../../kylin-license/src/tool/actguidewidget.h \
-    actguidewidget.h
+    license/active-guide-widget.h \
+    license/show-qrcode.h \
+    license/qrcode-widget.h \
+    license/active-list-item.h \
+    license/load-animation-widget.h \
+    license/license-info-widget.h \
+    license/user-license-agreement.h
 
 FORMS += \
         kiran-system-information.ui \
     information-list-item.ui \
     hardware-information-widget.ui \
     system-information-widget.ui \
-    ../../kylin-license/src/tool/actguidewidget.ui \
-    actguidewidget.ui
+    license/active-guide-widget.ui \
+    license/show-qrcode.ui \
+    license/active-list-item.ui \
+    license/license-info-widget.ui \
+    license/user-license-agreement.ui
 
 RESOURCES += \
-    res.qrc
+    ../data/res.qrc \
+    ../data/loading-data.qrc
 
 LIBS += \
         -lQZint \

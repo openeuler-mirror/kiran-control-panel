@@ -31,8 +31,8 @@ kiranSystemInformation::~kiranSystemInformation()
 void kiranSystemInformation::initUI()
 {
     /*创建左侧列表*/
-    QString systemInfomationIcon = ":/images/data/system-information.svg";
-    QString hardwareInformationIcon = ":/images/data/hardware-information.svg";
+    QString systemInfomationIcon = ":/images/system-information.svg";
+    QString hardwareInformationIcon = ":/images/hardware-information.svg";
     systemInfomationItem = createInformationItem(QString(tr("System Information")) , systemInfomationIcon);
     hardwareInformationItem = createInformationItem(QString(tr("Hardware Information")) , hardwareInformationIcon);
     hardwareInformationItem->setStyleSheet("#hardwareInformationItem{margin-top:24px};");

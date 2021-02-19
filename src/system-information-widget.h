@@ -1,8 +1,15 @@
+/**
+ * @file system-information-widget.h
+ * @brief  获取系统信息，包括授权信息，并显示在界面中，提供用户授权的接口
+ * @author yuanxing@kylinos.com.cn
+ * @copyright Copyright ©2020 KylinSec. All rights reserved.
+ */
+
 #ifndef SYSTEMINFORMATIONWIDGET_H
 #define SYSTEMINFORMATIONWIDGET_H
 
 #include <QWidget>
-
+#include "license/active-guide-widget.h"
 namespace Ui {
 class SystemInformationWidget;
 }
@@ -23,6 +30,10 @@ private:
 
 private slots:
     void changeCurrentHostName(void);
+    void onBtnStatusClicked();
+
+protected:
+    bool eventFilter(QObject *obj, QEvent *event);
 
 private:
     Ui::SystemInformationWidget *ui;
@@ -37,6 +48,8 @@ private:
     // 安装时间
     quint32 start_time;
     QString installTime;
+
+    ActGuideWidget *activeGuide;
 };
 
 #endif // SYSTEMINFORMATIONWIDGET_H

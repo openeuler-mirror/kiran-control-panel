@@ -37,5 +37,5 @@ void InformationListItem::setItemIcon(const QString &iconPath)
 {
     ui->label_icon_info->setFixedSize(16,16);
     ui->label_icon_info->setStyleSheet(QString("QLabel#label_icon_info{border-image:url(%1)};").arg(iconPath));
-    ui->label_icon_arrow->setStyleSheet("QLabel#label_icon_arrow{border-image:url(:/images/data/arrow.png)};");
+    ui->label_icon_arrow->setStyleSheet("QLabel#label_icon_arrow{border-image:url(:/images/arrow.svg)};");
 }

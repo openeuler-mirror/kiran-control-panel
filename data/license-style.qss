@@ -1,0 +1,254 @@
+/****************QLabel*************/
+QLabel
+{
+    color:#ffffff;
+    font-size:12px;
+    font-family:"Noto Sans CJK SC Light";
+}
+
+QLabel#label
+{
+    font-size:22px;
+}
+
+QLabel#lab_name , QLabel#lab_version ,QLabel#lab_time,
+QLabel#label_mc_manual, QLabel#label_mc_online ,QLabel#label_mc_key,
+QLabel#label_lc ,QLabel#label_mc
+{
+    color :rgba(255,255,255,0.3);
+}
+
+QLabel#label_successful , QLabel#label_failed
+{
+    font-size:16px;
+}
+
+QLabel#error_text
+{
+    color :#fe4935;
+}
+QLabel#label_authorized_points,QLabel#authorized_points,
+QLabel#label_remaining_points,QLabel#remaining_points,
+QLabel#label_desktop_points,QLabel#desktop_points,
+QLabel#label_development_points,QLabel#development_points,
+QLabel#label_industrial_points,QLabel#industrial_points,
+QLabel#label_server_points,QLabel#server_points
+{
+    color :#5ab940;
+}
+QLabel#label_key
+{
+    margin-left:28px;
+}
+
+/****************QWidget************/
+QWidget#widget_pro_name , QWidget#widget_pro_version , QWidget#widget_pro_time , QWidget#widget_pro_status, QWidget#widget_EULA,
+QWidget#widget_mc, QWidget#widget_lc,
+QWidget#widget_manual,QWidget#widget_key,QWidget#widget_online
+{
+    border-radius: 6px;
+    background-color: rgba(255,255,255,0.05);
+}
+
+QWidget#QKLWidget ,QWidget#ActGuideWidget , QWidget#LicenseInfoWidget, QWidget#ShowQRCode , QWidget#UserlicenseAgreement
+{
+	background-color: #222222;
+        border:none;
+}
+QWidget#widget_choose
+{
+	border:none;
+}
+QWidget#widget_kylinsec
+{
+        border-image:url(:/images/data/KEY.png)
+}
+/****************QStackedWidget*********/
+QStackedWidget#stackedWidget
+{
+    /*border:none;*/
+}
+/****************QPushButton************/
+QPushButton#btn_active_key, QPushButton#btn_EULA,
+QPushButton#btn_close_failde,QPushButton#btn_close_success,QPushButton#btn_close,QPushButton#btn_eula_close,
+QPushButton#btn_next,QPushButton#btn_status,QPushButton#btn_EULA
+{
+        color:#ffffff;
+        background-color: #43a3f2;
+        font-size:12px;
+        font-family: "Noto Sans CJK SC light";
+        border-radius: 10px;
+        outline: none;
+}
+QPushButton#btn_active_manual,QPushButton#btn_active_online
+{
+        color: rgba(255,255,255,0.3);
+        background-color: #43a3f2;
+        font-size:12px;
+        font-family: "Noto Sans CJK SC light";
+        border-radius: 10px;
+        outline: none;
+}
+QPushButton#btn_status,QPushButton#btn_EULA
+{
+        border-radius: 4px;
+}
+
+QPushButton#btn_active_manual:hover,QPushButton#btn_active_key:hover,QPushButton#btn_active_online:hover,
+QPushButton#btn_close_failde:hover,QPushButton#btn_close_success:hover,QPushButton#btn_close:hover,QPushButton#btn_eula_close:hover,
+QPushButton#btn_next:hover,QPushButton#btn_status:hover ,QPushButton#btn_EULA:hover
+{
+        background-color: #79c3ff;
+}
+
+QPushButton#btn_active_manual:pressed,QPushButton#btn_active_key:pressed,QPushButton#btn_active_online:pressed,
+QPushButton#btn_close_failde:pressed,QPushButton#btn_close_success:pressed,QPushButton#btn_close:pressed, QPushButton#btn_eula_close:pressed,
+QPushButton#btn_next:pressed,QPushButton#btn_status:pressed , QPushButton#btn_EULA:pressed
+{
+        background-color: #1568ad;
+}
+
+QPushButton#btn_back_manual ,QPushButton#btn_back_key ,QPushButton#btn_back_online,QPushButton#btn_back_failed
+{
+        color:#ffffff;
+        font-size:12px;
+        font-family: "Noto Sans CJK SC light";
+        border-radius: 10px;
+        border:1px solid rgba(255,255,255,0.1);
+        outline: none;
+	background-color:rgba(255,255,255,0.05);
+}
+
+QPushButton#btn_back_manual:hover,QPushButton#btn_back_key:hover,QPushButton#btn_back_online:hover,QPushButton#btn_back_failed:hover
+{
+        background-color:rgba(255,255,255,0.1);
+        border-color:rgba(67,163,242,0.1);
+}
+
+QPushButton#btn_back_manual:pressed ,QPushButton#btn_back_key:pressed ,QPushButton#btn_back_online:pressed,QPushButton#btn_back_failed:pressed
+{
+        background-color :rgba(0,0,0,0.1);
+        border-color:rgba(67,163,242,0.3);
+}
+
+QPushButton#btn_qrcode_manual , QPushButton#btn_qrcode_online,QPushButton#btn_qrcode_key,
+QPushButton#btn_qrcode_mc , QPushButton#btn_qrcode_lc
+{
+    background-color: transparent;
+    border:none;
+    border-radius: 0px;
+    outline: none;
+}
+
+/****************QEditLine************/
+QLineEdit
+{
+    color:#ffffff;
+    background-color: #222222;
+    border-radius: 6px;
+    border:1px solid rgba(255,255,255,0.2);
+    padding-left:10px;
+}
+QLineEdit:focus
+{
+    border:1px solid #43a3f2;
+    border-radius: 6px;
+}
+
+/****************QListWidget************/
+QListWidget
+{
+    background-color: #222222;
+    border-right:1px solid rgba(255,255,255,0.05);
+    margin-right:13px;
+    margin-left:9px;
+    margin-top:7px;
+}
+
+QListItem#ActListItem
+{
+    color:#ffffff;
+    font-family: "Noto Sans CJK SC light";
+    font-size:12px;
+    background-color: rgba(255,255,255,0.05);
+    margin:14px;
+}
+QListWidget::Item:selected
+{
+    background-color: #43a3f2;
+}
+QListWidget::item
+{
+    height:60px;
+    border-radius: 10px;
+    border: none;
+    color:#ffffff;
+    background-color: rgba(255,255,255,0.05);
+ }
+
+/****************QRadioButton************/
+QRadioButton
+{
+	
+    color:#ffffff;
+    font-size:12px;
+    font-family: "Noto Sans CJK SC light";
+    spacing:12px;
+    outline: none;
+}
+
+QRadioButton::indicator {
+    width: 14px;
+    height: 14px;
+}
+
+QRadioButton::indicator::unchecked {
+    image: url(:/images/data/unchecked.svg);
+}
+
+
+QRadioButton::indicator::checked {
+    image: url(:/images/data/checked.svg);
+}
+
+
+/*************QTextEdit****************/
+QTextBrowser#text_eula
+{
+    background-color:transparent;
+    color: #ffffff;
+    font-size:14px;
+    font-family: "Noto Sans CJK SC Light";
+    text-align:justify;
+    line-height:28px;
+}
+
+
+QScrollBar:vertical
+{
+    background: transparent;
+    width:6px;
+    min-height :10px;
+}
+QScrollBar::handle:vertical
+{
+      background: rgba(255,255,255,0.1);
+      min-width: 20px;
+}
+QScrollBar::handle:vertical:pressed
+{
+      background: rgba(255,255,255,0.3);
+}
+QScrollBar::add-line:vertical
+{
+      background: transparent;
+}
+QScrollBar::sub-line:vertical
+{
+      background: transparent;
+}
+
+
+
+
+

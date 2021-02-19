@@ -1,3 +1,4 @@
 /build/
 *.pro.user
 kiran-system-information.pro.user
+/build-kiran-system-information-unknown-Debug/
