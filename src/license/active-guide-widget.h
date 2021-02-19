@@ -36,14 +36,14 @@ private:
 
 signals:
     void systemIsActived(bool actived);
-    void sig_showQRCodeWgt(QPoint oPoint);
+    void sigShowqrcodewgt(QPoint oPoint);
 
 public slots:
     //void get_page_index();
     void handleNextButton();
     void handleActiveButton();
     void handleBackButton();
-    void HandleCloseButton();
+    void handleCloseButton();
     void getLicenseStatus(bool isRegister);
     void popupQRCode(QPoint oPoint);
     void setManualLineEditStatus();

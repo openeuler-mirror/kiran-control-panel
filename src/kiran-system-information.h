@@ -35,6 +35,7 @@ private:
 
 
 signals:
+    void sigClose();
 
 public slots:
     void changeWidgetWhenItemClicked(QListWidgetItem* currentItem);

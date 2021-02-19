@@ -9,6 +9,7 @@
 #define HARDWAREINFORMATIONWIDGET_H
 
 #include <QWidget>
+#include <QStringList>
 
 namespace Ui {
 class HardwareInformationWidget;
@@ -26,9 +27,13 @@ private:
     void initUI(void);
     void readHardwareInfo(int infoType);
     void getJsonValueFromString(QString jsonString);
+    void showListInfo();
 
 private:
     Ui::HardwareInformationWidget *ui;
+    QStringList diskList;
+    QStringList graphicsList;
+    QStringList ethsList;
 };
 
 #endif // HARDWAREINFORMATIONWIDGET_H

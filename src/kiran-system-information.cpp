@@ -30,6 +30,7 @@ kiranSystemInformation::~kiranSystemInformation()
 
 void kiranSystemInformation::initUI()
 {
+    setWindowFlags(Qt::FramelessWindowHint);
     /*创建左侧列表*/
     QString systemInfomationIcon = ":/images/system-information.svg";
     QString hardwareInformationIcon = ":/images/hardware-information.svg";

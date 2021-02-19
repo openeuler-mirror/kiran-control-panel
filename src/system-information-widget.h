@@ -10,6 +10,7 @@
 
 #include <QWidget>
 #include "license/active-guide-widget.h"
+#include "license/license-info-widget.h"
 namespace Ui {
 class SystemInformationWidget;
 }
@@ -31,6 +32,7 @@ private:
 private slots:
     void changeCurrentHostName(void);
     void onBtnStatusClicked();
+    void updateLicenseInfo(bool isregister);
 
 protected:
     bool eventFilter(QObject *obj, QEvent *event);
@@ -50,6 +52,7 @@ private:
     QString installTime;
 
     ActGuideWidget *activeGuide;
+    LicenseInfoWidget *licenseInfoWidget;
 };
 
 #endif // SYSTEMINFORMATIONWIDGET_H

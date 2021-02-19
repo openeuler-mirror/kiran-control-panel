@@ -13,6 +13,7 @@
         <file>uncheckable.svg</file>
         <file>uncheckable_check.svg</file>
         <file>unchecked.svg</file>
+        <file>license_info.svg</file>
     </qresource>
     <qresource prefix="/qss">
         <file>license-style.qss</file>

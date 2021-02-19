@@ -16,14 +16,16 @@
 #include <QJsonObject>
 #include <kiran-cc-daemon/kiran-system-daemon/systeminfo_i.h>
 
-#define MEMORY      "mem"
-#define TOTAL_SIZE  "total_size"
-#define CPU         "cpu"
-#define DISKS       "disks"
-#define DISK_SIZE   "size"
-#define GRAPHICS    "graphics"
-#define MODEL       "model"
-#define VENDOR      "vendor"
+#define MEMORY          "mem"
+#define TOTAL_SIZE      "total_size"
+#define CPU             "cpu"
+#define DISKS           "disks"
+#define DISK_SIZE       "size"
+#define GRAPHICS        "graphics"
+#define MODEL           "model"
+#define VENDOR          "vendor"
+#define CORES_NUMBER    "cores_number"
+#define ETHS            "eths"
 
 using namespace std;
 
@@ -34,6 +36,7 @@ HardwareInformationWidget::HardwareInformationWidget(QWidget *parent) :
     ui->setupUi(this);
     initUI();
     readHardwareInfo(1);
+    showListInfo();
 
 }
 
@@ -110,16 +113,28 @@ void HardwareInformationWidget::getJsonValueFromString(QString jsonString)
            QJsonValue value = obj.take(CPU);
            if(value.isObject())
            {
+               QString model;
+               int coresNumber;
                QJsonObject object = value.toObject();
                if(object.contains(MODEL))
                {
                    QJsonValue value = object.value(MODEL);
                    if(value.isString())
                    {
-                       QString model = value.toString();
-                       ui->label_CPU_info->setText(model);
+                       model = value.toString();
                    }
                }
+               if(object.contains(CORES_NUMBER))
+               {
+                   QJsonValue value = object.value(CORES_NUMBER);
+                   if(value.isDouble())
+                   {
+                       coresNumber = value.toVariant().toInt();
+                   }
+               }
+               QString cpuInfo = QString("%1 X %2").arg(model).arg(coresNumber);
+               ui->label_CPU_info->setText(cpuInfo);
+
            }
        }
        if(obj.contains(DISKS))
@@ -154,9 +169,9 @@ void HardwareInformationWidget::getJsonValueFromString(QString jsonString)
                                size = QString::number(disk_size);
                            }
                        }
-                       ///FIXME:后续将界面要显示disk值，在解析时添加一个for循环，做成数组
-                       QString array_0 = QString("%1 (%2)").arg(disk_model).arg(size);
-                       ui->label_hard_disk_info->setText(array_0);
+                       ///FIXME:后续将界面要显示disk值，做成数组
+                       QString diskInfo = QString("%1 (%2)").arg(disk_model).arg(size);
+                       diskList << diskInfo;
                    }
                }
            }
@@ -174,22 +189,95 @@ void HardwareInformationWidget::getJsonValueFromString(QString jsonString)
                    if(value.isObject())
                    {
                        QJsonObject object = value.toObject();
-                       QString graphics_vendor;
+                       QString vendor;
+                       QString model;
                        if(object.contains(VENDOR))
                        {
                            QJsonValue value = object.value(VENDOR);
                            if(value.isString())
                            {
-                               graphics_vendor = value.toString();
+                               vendor = value.toString();
+                           }
+                       }
+                       if(object.contains(MODEL))
+                       {
+                           QJsonValue value = object.value(MODEL);
+                           if(value.isString())
+                           {
+                               model = value.toString();
                            }
                        }
 
-                       ///FIXME:后续将界面要显示graphics值，在解析时添加一个for循环，做成数组
-                       QString array_0 = graphics_vendor;
-                       ui->label_graphics_card_info->setText(array_0);
+                       ///FIXME:后续将界面要显示graphics值，做成数组
+                       QString graphicsInfo = QString("%1 (%2)").arg(model).arg(vendor);
+                       graphicsList << graphicsInfo;
                    }
                }
            }
        }
+       if(obj.contains(ETHS))
+       {
+           QJsonValue value = obj.take(ETHS);
+           if(value.isArray())
+           {
+               QJsonArray array = value.toArray();
+               int nSize = array.size();
+               for (int i = 0; i < nSize; ++i)
+               {
+                   QJsonValue value = array.at(i);
+                   if(value.isObject())
+                   {
+                       QJsonObject object = value.toObject();
+                       QString vendor;
+                       QString model;
+                       if(object.contains(VENDOR))
+                       {
+                           QJsonValue value = object.value(VENDOR);
+                           if(value.isString())
+                           {
+                               vendor = value.toString();
+                           }
+                       }
+                       if(object.contains(MODEL))
+                       {
+                           QJsonValue value = object.value(MODEL);
+                           if(value.isString())
+                           {
+                               model = value.toString();
+                           }
+                       }
+
+                       ///FIXME:后续将界面要显示graphics值，做成数组
+                       QString ethsInfo = QString("%1 (%2)").arg(model).arg(vendor);
+                       ethsList << ethsInfo;
+                   }
+               }
+           }
+       }
+    }
+}
+
+/**
+ * @brief HardwareInformationWidget::showListInfo: 在硬件信息界面中显示所有的硬盘、网卡、显卡信息列表
+ */
+void HardwareInformationWidget::showListInfo()
+{
+    int i;
+    int diskNum = diskList.size();
+    int graphicsNum = graphicsList.size();
+    int ethsNum = ethsList.size();
+
+
+    for(i=0; i<diskNum; i++)
+    {
+        qInfo() << diskList.at(i);
+    }
+    for(i=0; i<graphicsNum; i++)
+    {
+        qInfo() << graphicsList.at(i);
+    }
+    for(i=0; i<ethsNum; i++)
+    {
+        qInfo() << ethsList.at(i);
     }
 }

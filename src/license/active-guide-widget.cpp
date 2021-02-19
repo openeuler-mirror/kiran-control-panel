@@ -67,7 +67,7 @@ ActGuideWidget::ActGuideWidget() :
     connect(ui->btn_close_success , SIGNAL(clicked()) , this , SLOT(HandleCloseButton()));
 
     connect(this,SIGNAL( systemIsActived(bool)) ,this ,SLOT(getLicenseStatus(bool)));
-    connect(this ,SIGNAL(sig_showQRCodeWgt(QPoint)) ,this ,SLOT(popupQRCode(QPoint)));
+    connect(this ,SIGNAL(sigShowqrcodewgt(QPoint)) ,this ,SLOT(popupQRCode(QPoint)));
 
     connect(ui->lineEdit_lc , SIGNAL(textChanged(QString)),SLOT(setManualLineEditStatus()));
     connect(ui->lineEdit_address , SIGNAL(textChanged(QString)),SLOT(setKeyLineEditStatus()));
@@ -158,7 +158,7 @@ bool ActGuideWidget::eventFilter(QObject *target, QEvent *e)
         if(e->type()==QEvent::Enter)
         {
             QPoint oPoint = this->mapToGlobal(QPoint(610,70));
-            emit sig_showQRCodeWgt(oPoint);
+            emit sigShowqrcodewgt(oPoint);
         }
         else if (e->type()==QEvent::Leave)
         {
@@ -560,7 +560,7 @@ void ActGuideWidget::handleBackButton()
     ui->lineEdit_lc->setFocus();
 }
 
-void ActGuideWidget::HandleCloseButton()
+void ActGuideWidget::handleCloseButton()
 {
     this->close();
 }

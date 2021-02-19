@@ -8,6 +8,7 @@
 #include "system-information-widget.h"
 #include "ui_system-information-widget.h"
 #include "system-info-dbus.h"
+#include "license/active-guide-widget.h"
 #include <kylin-license/license_i.h>
 
 #include <QDebug>
@@ -15,6 +16,7 @@
 #include <QJsonObject>
 #include <QJsonValue>
 #include <QDateTime>
+#include <QDesktopWidget>
 
 #define HOST_NAME        "host_name"
 #define ARCH             "arch"
@@ -32,13 +34,13 @@
 SystemInformationWidget::SystemInformationWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::SystemInformationWidget),
-    activeGuide(nullptr)
+    activeGuide(nullptr),
+    licenseInfoWidget(nullptr)
 {
     ui->setupUi(this);
     initUI();
     readSystemInfo(0);
     readLicenseInfo();
-    
 
     connect(ui->btn_change_name, SIGNAL(clicked()), this, SLOT(changeCurrentHostName()));
     connect(ui->btn_status, SIGNAL(clicked()), this, SLOT(onBtnStatusClicked()));
@@ -50,6 +52,10 @@ SystemInformationWidget::~SystemInformationWidget()
     if(activeGuide!=nullptr)
     {
         delete activeGuide;
+    }
+    if(licenseInfoWidget!=nullptr)
+    {
+        delete licenseInfoWidget;
     }
 }
 
@@ -95,10 +101,12 @@ void SystemInformationWidget::readLicenseInfo()
     {
         qDebug() << "get license information failed"<< endl;
         ui->lab_expire_date_info->setText(tr("Unknow"));
-        ui->lab_status->setText(tr("Unknow"));
+        ui->lab_status->setText(tr("Can't get license information"));
+        ui->lab_status->setStyleSheet("QLabel#lab_status {color:#ff3838}");
         ui->btn_status->hide();
         ui->lab_install_time_info->setText(tr("Unknow"));
         ui->lab_expire_date_info->setText(tr("Unknow"));
+        lc_code = "NULL";
         return;
     }
     else
@@ -314,23 +322,71 @@ void SystemInformationWidget::onBtnStatusClicked()
         activeGuide->raise();
         activeGuide->show();
     }
-//    else //popup informations
-//    {
-//        if(licenseInfoWidget == nullptr)
-//        {
-//            licenseInfoWidget = new LicenseInfoWidget(mc_code ,lc_code);
-//        }
+    else //popup informations
+    {
+        if(licenseInfoWidget == nullptr)
+        {
+            licenseInfoWidget = new LicenseInfoWidget(mc_code ,lc_code);
+        }
 
-//        licenseInfoWidget->setAttribute(Qt::WA_QuitOnClose,false);
-//        licenseInfoWidget->installEventFilter(this);
-//        licenseInfoWidget->setLicenseCode(lc_code);
-//        licenseInfoWidget->setMachineCode(mc_code);
-//        licenseInfoWidget->raise();
+        licenseInfoWidget->setAttribute(Qt::WA_QuitOnClose,false);
+        licenseInfoWidget->installEventFilter(this);
+        licenseInfoWidget->setLicenseCode(lc_code);
+        licenseInfoWidget->setMachineCode(mc_code);
+        licenseInfoWidget->raise();
 
-//        licenseInfoWidget->show();
-//        QDesktopWidget *desktop = QApplication::desktop();
-//        licenseInfoWidget->move((desktop->width() - licenseInfoWidget->width())/2 , (desktop->height() - licenseInfoWidget->height())/2 );
-//    }
+        licenseInfoWidget->show();
+        QDesktopWidget *desktop = QApplication::desktop();
+        licenseInfoWidget->move((desktop->width() - licenseInfoWidget->width())/2 , (desktop->height() - licenseInfoWidget->height())/2 );
+    }
+
+}
+
+/**
+ * @brief  接收到激活向导窗口发出的激活状态信号，更新当前窗口的激活状态信息
+ * @param  isregister 是否激活成功
+ */
+void SystemInformationWidget::updateLicenseInfo(bool isregister)
+{
+    qInfo("updateLicenseInformation\n");
+    if(isregister)
+    {
+        QString licenseInfo;
+        if(!InfoDbus::KylinLicense::getLicenseJson(licenseInfo))
+        {
+            qDebug() << "get license information failed"<< endl;
+            ui->lab_expire_date_info->setText(tr("Unknow"));
+            ui->lab_status->setText(tr("Can't get license information"));
+            ui->lab_status->setStyleSheet("QLabel#lab_status {color:#ff3838}");
+            ui->btn_status->hide();
+            ui->lab_install_time_info->setText(tr("Unknow"));
+            ui->lab_expire_date_info->setText(tr("Unknow"));
+
+            lc_code = "NULL";
+            return;
+        }
+        else
+        {
+            //解析后端传入的授权信息Json字符串
+            getJsonValueFromString(licenseInfo);
+            qInfo() <<"licensed = "<<license_status <<endl;
+
+            //给激活状态赋值
+            isActive = license_status;
+
+            ui->lab_status->setText(tr("Official Version"));
+            ui->lab_status->setStyleSheet("QLabel#lab_status {color:#5ab940}");
+            ui->btn_status->setText(NULL);
+            ui->btn_status->setIcon(QIcon(":/images/license_info.svg"));
+            ui->btn_status->setStyleSheet( "QPushButton#btn_status{background: transparent;}" );
+            ui->btn_status->setFixedSize(QSize(16,16));
+
+            QDateTime time = QDateTime::fromTime_t(expired_time);
+            QString dueTime  = time.toString("yyyy-MM-dd");
+            qInfo() << "due time = " <<dueTime<<endl;
+            ui->lab_expire_date_info->setText(dueTime);
+        }
+    }
 
 }
 
@@ -347,11 +403,11 @@ bool SystemInformationWidget::eventFilter(QObject *obj, QEvent *event)
         activeGuide->deleteLater();
         activeGuide = nullptr;
     }
-//    else if(obj == licenseInfoWidget && event->type()==QEvent::Close)
-//    {
-//        licenseInfoWidget->deleteLater();
-//        licenseInfoWidget = nullptr;
-//    }
+    else if(obj == licenseInfoWidget && event->type()==QEvent::Close)
+    {
+        licenseInfoWidget->deleteLater();
+        licenseInfoWidget = nullptr;
+    }
     return false;
 }
 

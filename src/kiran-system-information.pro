@@ -50,7 +50,8 @@ SOURCES += \
     license/active-list-item.cpp \
     license/load-animation-widget.cpp \
     license/license-info-widget.cpp \
-    license/user-license-agreement.cpp
+    license/user-license-agreement.cpp \
+    kiran-system-widget.cpp
 
 HEADERS += \
         kiran-system-information.h \
@@ -67,7 +68,8 @@ HEADERS += \
     license/active-list-item.h \
     license/load-animation-widget.h \
     license/license-info-widget.h \
-    license/user-license-agreement.h
+    license/user-license-agreement.h \
+    kiran-system-widget.h
 
 FORMS += \
         kiran-system-information.ui \

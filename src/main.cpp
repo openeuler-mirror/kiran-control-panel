@@ -1,4 +1,4 @@
-#include "kiran-system-information.h"
+#include "kiran-system-widget.h"
 #include <QApplication>
 #include <QFile>
 #include <QMessageBox>
@@ -45,7 +45,7 @@ int main(int argc, char *argv[])
         qDebug("Load Translator File failed : %s\n", TRANSLATION_DIR);
     }
 
-    kiranSystemInformation w;
+    KiranSystemWidget w;
     w.show();
 
     return a.exec();
