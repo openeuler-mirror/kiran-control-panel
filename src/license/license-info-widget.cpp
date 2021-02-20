@@ -30,7 +30,7 @@ void LicenseInfoWidget::iniUI()
     setWindowModality(Qt::ApplicationModal);
     setButtonHints(TitlebarMinimizeButtonHint|TitlebarCloseButtonHint);
     setResizeable(false);
-    setIcon(QIcon(":/images/data/kylin-about.png"));
+    setIcon(QIcon(":/images/kylin-about.png"));
 }
 
 /**

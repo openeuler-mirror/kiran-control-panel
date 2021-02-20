@@ -16,7 +16,6 @@
         <file>license_info.svg</file>
     </qresource>
     <qresource prefix="/qss">
-        <file>license-style.qss</file>
         <file>style.qss</file>
     </qresource>
 </RCC>

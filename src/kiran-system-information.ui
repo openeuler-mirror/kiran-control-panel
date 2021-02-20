@@ -107,7 +107,7 @@
            <property name="geometry">
             <rect>
              <x>0</x>
-             <y>0</y>
+             <y>-20</y>
              <width>562</width>
              <height>670</height>
             </rect>
@@ -118,6 +118,29 @@
              <height>670</height>
             </size>
            </property>
+           <layout class="QVBoxLayout" name="verticalLayout_3">
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QStackedWidget" name="stackedWidget">
+              <widget class="SystemInformationWidget" name="page_system_info"/>
+              <widget class="HardwareInformationWidget" name="page_hardware_info"/>
+             </widget>
+            </item>
+           </layout>
           </widget>
          </widget>
         </item>
@@ -129,6 +152,20 @@
   </layout>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>SystemInformationWidget</class>
+   <extends>QWidget</extends>
+   <header location="global">system-information-widget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>HardwareInformationWidget</class>
+   <extends>QWidget</extends>
+   <header location="global">hardware-information-widget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

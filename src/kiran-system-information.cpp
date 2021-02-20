@@ -72,17 +72,21 @@ InformationListItem *kiranSystemInformation::createInformationItem(const QString
 void kiranSystemInformation::addPagesToStackWidget()
 {
     /*获取右侧信息页滑动区域*/
-    hardwareInfoWidget = new HardwareInformationWidget;
-    hardwareInfoWidget->setStyleSheet("#hardwareInfoWidget{background-color: #222222;}");
+    //hardwareInfoWidget = new HardwareInformationWidget;
+    //hardwareInfoWidget->setStyleSheet("QWidget#hardwareInfoWidget{background-color: #222222;}");
 
-    systemInfoWidget = new SystemInformationWidget;
-    systemInfoWidget->setStyleSheet("#systemInfoWidget{background-color: #222222;}");
+    //systemInfoWidget = new SystemInformationWidget;
+    //systemInfoWidget->setStyleSheet("QWidget#systemInfoWidget{background-color: #222222;}");
 
-    stackedWidget = new QStackedWidget;  
-    stackedWidget->addWidget(systemInfoWidget);
-    stackedWidget->addWidget(hardwareInfoWidget);
+    //stackedWidget = new QStackedWidget;
+    //stackedWidget->addWidget(systemInfoWidget);
+    //stackedWidget->addWidget(hardwareInfoWidget);
 
-    ui->scrollArea->setWidget(stackedWidget);
+    //ui->scrollArea->setWidget(stackedWidget);
+
+    //QHBoxLayout * hLayout = new QHBoxLayout;
+    //hLayout->addWidget(stackedWidget);
+    //ui->scrollAreaWidgetContents->setLayout(hLayout);
 }
 
 void kiranSystemInformation::changeWidgetWhenItemClicked(QListWidgetItem * currentItem)
@@ -90,11 +94,11 @@ void kiranSystemInformation::changeWidgetWhenItemClicked(QListWidgetItem * curre
     int itemNum = ui->infoListWidget->row(currentItem);
     if(itemNum == itemSystemInfo)
     {
-        stackedWidget->setCurrentWidget(systemInfoWidget);
+        ui->stackedWidget->setCurrentWidget(ui->page_system_info);
     }
     else if(itemNum == itemHardwareInfo)
     {
-        stackedWidget->setCurrentWidget(hardwareInfoWidget);
+        ui->stackedWidget->setCurrentWidget(ui->page_hardware_info);
     }
 
 }

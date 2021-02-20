@@ -168,7 +168,7 @@
          <number>0</number>
         </property>
         <property name="currentIndex">
-         <number>2</number>
+         <number>3</number>
         </property>
         <widget class="QWidget" name="Pg_choose_mode">
          <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -193,7 +193,7 @@
              <number>0</number>
             </property>
             <item>
-             <widget class="QLabel" name="label">
+             <widget class="QLabel" name="label_choose_text">
               <property name="text">
                <string>Please choose activation mode:</string>
               </property>
@@ -325,7 +325,7 @@
              <number>10</number>
             </property>
             <item>
-             <widget class="QLabel" name="label_2">
+             <widget class="QLabel" name="label_mc_code_manual">
               <property name="text">
                <string>Current machine code:</string>
               </property>
@@ -414,7 +414,7 @@
              <number>10</number>
             </property>
             <item>
-             <widget class="QLabel" name="label_3">
+             <widget class="QLabel" name="label_input_lc">
               <property name="text">
                <string>Please input license code:</string>
               </property>
@@ -549,7 +549,7 @@
              <number>0</number>
             </property>
             <item>
-             <widget class="QLabel" name="label_4">
+             <widget class="QLabel" name="label_mc_code_usb">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                 <horstretch>0</horstretch>
@@ -647,7 +647,7 @@
              <number>0</number>
             </property>
             <item>
-             <widget class="QLabel" name="label_13">
+             <widget class="QLabel" name="label_insert_usb">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                 <horstretch>0</horstretch>
@@ -677,7 +677,7 @@
                <string/>
               </property>
               <property name="pixmap">
-               <pixmap>:/images/KEY.png</pixmap>
+               <pixmap resource="../../data/res.qrc">:/images/KEY.png</pixmap>
               </property>
               <property name="scaledContents">
                <bool>true</bool>
@@ -791,7 +791,7 @@
              <number>10</number>
             </property>
             <item>
-             <widget class="QLabel" name="label_11">
+             <widget class="QLabel" name="label_mc_code_online">
               <property name="text">
                <string>Current machine code:</string>
               </property>
@@ -880,7 +880,7 @@
              <number>10</number>
             </property>
             <item>
-             <widget class="QLabel" name="label_12">
+             <widget class="QLabel" name="label_input_address">
               <property name="text">
                <string>Please enter the active server address:</string>
               </property>
@@ -1031,7 +1031,7 @@
              <layout class="QVBoxLayout" name="animation_layout"/>
             </item>
             <item>
-             <widget class="QLabel" name="label_14">
+             <widget class="QLabel" name="label_activiting">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                 <horstretch>0</horstretch>
@@ -1122,7 +1122,7 @@
                <string/>
               </property>
               <property name="pixmap">
-               <pixmap>:/images/successful.png</pixmap>
+               <pixmap resource="../../data/res.qrc">:/images/successful.png</pixmap>
               </property>
               <property name="scaledContents">
                <bool>true</bool>
@@ -1409,7 +1409,7 @@
                <string/>
               </property>
               <property name="pixmap">
-               <pixmap>:/images/failed.png</pixmap>
+               <pixmap resource="../../data/res.qrc">:/images/failed.png</pixmap>
               </property>
               <property name="scaledContents">
                <bool>true</bool>
@@ -1534,6 +1534,8 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../../data/res.qrc"/>
+ </resources>
  <connections/>
 </ui>
