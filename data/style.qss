@@ -37,17 +37,16 @@ QWidget#widget_kernel_version,QWidget#widget_host_name,QWidget#widget_system_ver
 
 QWidget#kiranSystemInformation
 {
-    background-color: #151515;
+    background-color: #222222;
     border:none;
 }
 
 QWidget#scrollAreaWidgetContents
 {
     background-color: transparent;
-    /*border-left-color:#2d2d2d;
+    border-left:1px solid #2d2d2d;
     border-bottom:none;
-    border-right:none;*/
-    border:none;
+    border-right:none;
 }
 
 /****************QScrollArea************/
@@ -65,11 +64,12 @@ QPushButton#btn_change_name,QPushButton#btn_status
     font-family: "Noto Sans CJK SC light";
     font-size:12px;
 }
+
 /****************QListWidget************/
 QListWidget#infoListWidget
 {
     background-color: transparent;
-/*    border-right:1px solid #2d2d2d;*/
+    border-right:1px solid #2d2d2d;
     border:none;
     margin-right:24px;
     margin-left:12px;

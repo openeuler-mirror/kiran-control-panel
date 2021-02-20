@@ -63,8 +63,8 @@ ActGuideWidget::ActGuideWidget() :
     connect(ui->btn_back_online ,SIGNAL(clicked()) ,this ,SLOT(handleBackButton()));
     connect(ui->btn_back_failed ,SIGNAL(clicked()) ,this ,SLOT(handleBackButton()));
 
-    connect(ui->btn_close_failde , SIGNAL(clicked()) ,this ,SLOT(HandleCloseButton()));
-    connect(ui->btn_close_success , SIGNAL(clicked()) , this , SLOT(HandleCloseButton()));
+    connect(ui->btn_close_failde , SIGNAL(clicked()) ,this ,SLOT(handleCloseButton()));
+    connect(ui->btn_close_success , SIGNAL(clicked()) , this , SLOT(handleCloseButton()));
 
     connect(this,SIGNAL( systemIsActived(bool)) ,this ,SLOT(getLicenseStatus(bool)));
     connect(this ,SIGNAL(sigShowqrcodewgt(QPoint)) ,this ,SLOT(popupQRCode(QPoint)));

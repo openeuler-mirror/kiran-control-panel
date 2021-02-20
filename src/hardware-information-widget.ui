@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>636</width>
-    <height>493</height>
+    <height>670</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -85,8 +85,8 @@
        <widget class="QWidget" name="widget_CPU" native="true">
         <property name="minimumSize">
          <size>
-          <width>588</width>
-          <height>40</height>
+          <width>0</width>
+          <height>0</height>
          </size>
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout">

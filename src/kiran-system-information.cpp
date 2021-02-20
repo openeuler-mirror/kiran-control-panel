@@ -8,16 +8,18 @@
 #include "kiran-system-information.h"
 #include "ui_kiran-system-information.h"
 #include "system-information-widget.h"
+#include "general-functions-class.h"
 
 #include <QPainter>
 #include <QStackedWidget>
+#include <QDesktopWidget>
+#include <QDebug>
 
 kiranSystemInformation::kiranSystemInformation(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::kiranSystemInformation)
 {
     ui->setupUi(this);
-    addPagesToStackWidget();
     initUI();
 
     connect(ui->infoListWidget, SIGNAL(itemClicked(QListWidgetItem*)),this,SLOT(changeWidgetWhenItemClicked(QListWidgetItem*)));
@@ -37,8 +39,16 @@ void kiranSystemInformation::initUI()
     systemInfomationItem = createInformationItem(QString(tr("System Information")) , systemInfomationIcon);
     hardwareInformationItem = createInformationItem(QString(tr("Hardware Information")) , hardwareInformationIcon);
     hardwareInformationItem->setStyleSheet("#hardwareInformationItem{margin-top:24px};");
-
     ui->infoListWidget->setCurrentRow(0);
+
+    /*根据系统分辨率设置窗口大小*/
+    QDesktopWidget *desktop = QApplication::desktop();
+    qInfo() << desktop->width() << desktop->height();
+    if(desktop->height() >= 670 && desktop->width() >= 918) //能显示全
+    {
+        this->resize(QSize(918,670));
+    }
+
 }
 
 
@@ -64,29 +74,6 @@ InformationListItem *kiranSystemInformation::createInformationItem(const QString
     ui->infoListWidget->setItemWidget(newItem , customItem);
 
     return customItem;
-}
-
-/**
- * @brief addPagesToStackWidget 将系统信息页和硬件信息页添加到QStackWidget控件中，然后添加至界面右边滑动区域
- */
-void kiranSystemInformation::addPagesToStackWidget()
-{
-    /*获取右侧信息页滑动区域*/
-    //hardwareInfoWidget = new HardwareInformationWidget;
-    //hardwareInfoWidget->setStyleSheet("QWidget#hardwareInfoWidget{background-color: #222222;}");
-
-    //systemInfoWidget = new SystemInformationWidget;
-    //systemInfoWidget->setStyleSheet("QWidget#systemInfoWidget{background-color: #222222;}");
-
-    //stackedWidget = new QStackedWidget;
-    //stackedWidget->addWidget(systemInfoWidget);
-    //stackedWidget->addWidget(hardwareInfoWidget);
-
-    //ui->scrollArea->setWidget(stackedWidget);
-
-    //QHBoxLayout * hLayout = new QHBoxLayout;
-    //hLayout->addWidget(stackedWidget);
-    //ui->scrollAreaWidgetContents->setLayout(hLayout);
 }
 
 void kiranSystemInformation::changeWidgetWhenItemClicked(QListWidgetItem * currentItem)

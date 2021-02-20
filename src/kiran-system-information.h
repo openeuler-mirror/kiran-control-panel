@@ -29,7 +29,6 @@ public:
 private:
     void initUI();
     InformationListItem *createInformationItem(const QString text , const QString iconPath);
-    void addPagesToStackWidget(void);
     QWidget* createSystemInfoPage(void);
     QWidget* createHardwareInfoPage(void);
 

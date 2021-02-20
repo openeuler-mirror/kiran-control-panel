@@ -11,6 +11,8 @@
 #include <kiranwidgets-qt5/kiran-titlebar-window.h>
 #include "kiran-system-information.h"
 
+#include <QPushButton>
+
 class KiranSystemWidget : public KiranTitlebarWindow
 {
     Q_OBJECT
@@ -19,7 +21,15 @@ public:
     ~KiranSystemWidget();
 
 private:
+    QMenu* createMenu();
+    void setMenuIntoTitlebar();
+
+protected:
+    bool eventFilter(QObject *target, QEvent *event);
+
+private:
      kiranSystemInformation *centerWgt;
+     QPushButton* btnMenu;
 };
 
 #endif // KIRANSYSTEMWIDGET_H

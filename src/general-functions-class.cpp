@@ -102,6 +102,10 @@ void GeneralFunctionsClass::customMessageHandler(QtMsgType type, const QMessageL
     stream << mmsg << "\r\n";
     file.flush();
     file.close();
-    mutex.unlock();
+    mutex.unlock();  
+}
 
+QSize GeneralFunctionsClass::sizeHint(int x, int y) const
+{
+    return QSize(x, y);
 }
