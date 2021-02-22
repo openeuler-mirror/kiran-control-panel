@@ -19,9 +19,6 @@ public:
 
 public:
     static void customMessageHandler(QtMsgType type, const QMessageLogContext &context, const QString& msg);
-
-protected:
-    virtual QSize sizeHint(int x,int y) const ;
 };
 
 #endif // GENERALFUNCTIONSCLASS_H

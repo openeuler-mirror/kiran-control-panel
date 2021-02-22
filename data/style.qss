@@ -8,6 +8,11 @@ QLabel#lab_host_name,QLabel#lab_system_version,QLabel#lab_core_version,QLabel#la
     font-family: "Noto Sans CJK SC light";
     font-size:12px;
 }
+QLabel#label_CPU,QLabel#label_memory,QLabel#label_hard_disk,QLabel#label_graphics_card,QLabel#label_network_card,
+QLabel#lab_host_name,QLabel#lab_system_version,QLabel#lab_core_version,QLabel#lab_system_arch,QLabel#lab_install_time,QLabel#lab_register_status,QLabel#lab_expire_date,QLabel#lab_contact
+{
+    margin-right:24px;
+}
 
 QLabel#label_CPU_info,QLabel#label_memory_info,QLabel#label_hard_disk_info,QLabel#label_graphics_card_info,QLabel#label_network_card_info,
 QLabel#lab_name_info,QLabel#lab_system_version_info,QLabel#lab_core_version_info,QLabel#lab_system_arch_info,QLabel#lab_install_time_info,QLabel#lab_expire_date_info,QLabel#lab_contact_info
@@ -91,6 +96,10 @@ QListWidget#infoListWidget::Item:selected
     background-color: #2eb3ff;
 }
 
+QListWidgetItem
+{
+
+}
 /****************QScrollBar*****************/
 QScrollBar:vertical
 {
@@ -98,20 +107,25 @@ QScrollBar:vertical
     width:6px;
     min-height :10px;
 }
-QScrollBar::handle:vertical
+QScrollBar:horizontal
+{
+    background: transparent;
+    height :6px;
+}
+QScrollBar::handle:vertical,QScrollBar::handle:horizontal
 {
       background: rgba(255,255,255,0.1);
       min-width: 20px;
 }
-QScrollBar::handle:vertical:pressed
+QScrollBar::handle:vertical:pressed,QScrollBar::handle:horizontal:pressed
 {
       background: rgba(255,255,255,0.3);
 }
-QScrollBar::add-line:vertical
+QScrollBar::add-line:vertical,QScrollBar::add-line:horizontal
 {
       background: transparent;
 }
-QScrollBar::sub-line:vertical
+QScrollBar::sub-line:vertical,QScrollBar::sub-line:horizontal
 {
       background: transparent;
 }

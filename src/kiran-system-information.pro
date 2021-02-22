@@ -52,7 +52,8 @@ SOURCES += \
     license/license-info-widget.cpp \
     license/user-license-agreement.cpp \
     kiran-system-widget.cpp \
-    kiran-scroll-area.cpp
+    kiran-scroll-area.cpp \
+    kiran-list-widget.cpp
 
 HEADERS += \
         kiran-system-information.h \
@@ -71,7 +72,8 @@ HEADERS += \
     license/license-info-widget.h \
     license/user-license-agreement.h \
     kiran-system-widget.h \
-    kiran-scroll-area.h
+    kiran-scroll-area.h \
+    kiran-list-widget.h
 
 FORMS += \
         kiran-system-information.ui \

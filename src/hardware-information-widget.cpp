@@ -37,7 +37,6 @@ HardwareInformationWidget::HardwareInformationWidget(QWidget *parent) :
     ui->setupUi(this);
     initUI();
     readHardwareInfo(1);
-    showListInfo();
 
 }
 
@@ -58,20 +57,36 @@ void HardwareInformationWidget::initUI(void)
 void HardwareInformationWidget::readHardwareInfo(int infoType)
 {
     QString systemInfo;
+    QLabel *labelDisk = new QLabel();
+    labelDisk->setText(tr("Unknow"));
+    labelDisk->setStyleSheet("QLabel{color:#7e7e7e;font-family: \"Noto Sans CJK SC regular\";font-size:12px;}");
+    QLabel *labelGraphics = new QLabel();
+    labelGraphics->setText(tr("Unknow"));
+    labelGraphics->setStyleSheet("QLabel{color:#7e7e7e;font-family: \"Noto Sans CJK SC regular\";font-size:12px;}");
+    QLabel *labelEths = new QLabel();
+    labelEths->setText(tr("Unknow"));
+    labelEths->setStyleSheet("QLabel{color:#7e7e7e;font-family: \"Noto Sans CJK SC regular\";font-size:12px;}");
+
     if(!InfoDbus::SystemInfo::getSystemInfo(infoType , systemInfo))
     {
         qDebug() << "get hardware information failed"<< endl;
         ui->label_CPU_info->setText(tr("Unknow"));
-       // ui->label_memory_info->setText(tr("Unknow"));
-       //ui->label_hard_disk_info->setText(tr("Unknow"));
-       //ui->label_graphics_card_info->setText(tr("Unknow"));
-       //ui->label_network_card_info->setText(tr("Unknow"));
+        ui->label_memory_info->setText(tr("Unknow"));
+
+        ui->gridLayout_graphics_card->addWidget(labelGraphics,1,0,Qt::AlignRight);
+        ui->gridLayout_hard_disk->addWidget(labelDisk,1,0,Qt::AlignRight);
+        ui->gridLayout_network_card->addWidget(labelEths,1,0,Qt::AlignRight);
         return;
     }
     else
     {
         qInfo() << systemInfo << endl;
+        ui->gridLayout_graphics_card->removeWidget(labelGraphics);
+        ui->gridLayout_hard_disk->removeWidget(labelDisk);
+        ui->gridLayout_network_card->removeWidget(labelEths);
+
         getJsonValueFromString(systemInfo);
+        showListInfo();
     }
 }
 
@@ -249,6 +264,7 @@ void HardwareInformationWidget::getJsonValueFromString(QString jsonString)
 
                        ///FIXME:后续将界面要显示graphics值，做成数组
                        QString ethsInfo = QString("%1 (%2)").arg(model).arg(vendor);
+                       //QString ethsInfo = QString("123bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
                        ethsList << ethsInfo;
                    }
                }
@@ -262,22 +278,31 @@ void HardwareInformationWidget::getJsonValueFromString(QString jsonString)
  */
 void HardwareInformationWidget::showListInfo()
 {
-    QString disk_info_2 = "disk_info_2";
-    diskList << disk_info_2;
-    QString graphics_info_2 = "graphics_info_2";
-    graphicsList << graphics_info_2 ;
-    QString eths_info_2 = "eths_info_2";
-    ethsList << eths_info_2;
+//    QString disk_info_2 = "disk_info_2";
+//    diskList << disk_info_2;
+//    QString graphics_info_2 = "graphics_info_2";
+//    graphicsList << graphics_info_2 ;
+//    QString eths_info_2 = "eths_info_2";
+//    ethsList << eths_info_2;
     int i;
     //根据数量设置各行的行高及左侧标签的布局
     int diskNum = diskList.size();
-    ui->label_hard_disk->setFixedHeight(40*diskNum);
+    if(diskNum > 0)
+    {
+        ui->label_hard_disk->setFixedHeight(40*diskNum);
+    }
 
     int graphicsNum = graphicsList.size();
-    ui->label_graphics_card->setFixedHeight(40*graphicsNum);
+    if(graphicsNum > 0 )
+    {
+        ui->label_graphics_card->setFixedHeight(40*graphicsNum);
+    }
 
     int ethsNum = ethsList.size();
-    ui->label_network_card->setFixedHeight(40*ethsNum);
+    if(ethsNum > 0)
+    {
+        ui->label_network_card->setFixedHeight(40*ethsNum);
+    }
 
     if(diskNum >1 )
     {

@@ -196,6 +196,11 @@ void SystemInformationWidget::readLicenseInfo()
     }
 }
 
+void SystemInformationWidget::resizeEvent(QResizeEvent *event)
+{
+     //qInfo() << "Page width: " << ui->widget_host_name->width() << " Page height: " << ui->widget_host_name->height() << endl;
+}
+
 /**
  * @brief SystemInformationWidget::getJsonValueFromString: 解析从DBUS后端获取的Json字符串
  * @param jsonString: DBUS后端获取的Json字符串

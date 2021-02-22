@@ -31,6 +31,7 @@ private:
     InformationListItem *createInformationItem(const QString text , const QString iconPath);
     QWidget* createSystemInfoPage(void);
     QWidget* createHardwareInfoPage(void);
+    virtual void resizeEvent(QResizeEvent *event) override;
 
 
 signals:

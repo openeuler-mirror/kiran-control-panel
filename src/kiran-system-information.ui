@@ -43,6 +43,12 @@
        <height>0</height>
       </size>
      </property>
+     <property name="maximumSize">
+      <size>
+       <width>288</width>
+       <height>16777215</height>
+      </size>
+     </property>
      <property name="baseSize">
       <size>
        <width>0</width>
@@ -59,10 +65,19 @@
       <enum>Qt::ScrollBarAsNeeded</enum>
      </property>
      <property name="horizontalScrollBarPolicy">
-      <enum>Qt::ScrollBarAlwaysOff</enum>
+      <enum>Qt::ScrollBarAsNeeded</enum>
+     </property>
+     <property name="sizeAdjustPolicy">
+      <enum>QAbstractScrollArea::AdjustIgnored</enum>
      </property>
      <property name="autoScroll">
-      <bool>true</bool>
+      <bool>false</bool>
+     </property>
+     <property name="autoScrollMargin">
+      <number>0</number>
+     </property>
+     <property name="resizeMode">
+      <enum>QListView::Adjust</enum>
      </property>
      <property name="spacing">
       <number>0</number>
@@ -105,9 +120,9 @@
          <number>0</number>
         </property>
         <item>
-         <widget class="QScrollArea" name="scrollArea">
+         <widget class="KiranScrollArea" name="scrollArea">
           <property name="horizontalScrollBarPolicy">
-           <enum>Qt::ScrollBarAlwaysOff</enum>
+           <enum>Qt::ScrollBarAsNeeded</enum>
           </property>
           <property name="sizeAdjustPolicy">
            <enum>QAbstractScrollArea::AdjustToContents</enum>
@@ -120,14 +135,14 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>644</width>
-             <height>670</height>
+             <width>658</width>
+             <height>666</height>
             </rect>
            </property>
            <property name="minimumSize">
             <size>
-             <width>636</width>
-             <height>670</height>
+             <width>0</width>
+             <height>0</height>
             </size>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -175,6 +190,12 @@
    <class>HardwareInformationWidget</class>
    <extends>QWidget</extends>
    <header location="global">hardware-information-widget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>KiranScrollArea</class>
+   <extends>QScrollArea</extends>
+   <header location="global">kiran-scroll-area.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

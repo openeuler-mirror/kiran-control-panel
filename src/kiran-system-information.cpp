@@ -14,6 +14,7 @@
 #include <QStackedWidget>
 #include <QDesktopWidget>
 #include <QDebug>
+#include <QBoxLayout>
 
 kiranSystemInformation::kiranSystemInformation(QWidget *parent) :
     QWidget(parent),
@@ -38,16 +39,19 @@ void kiranSystemInformation::initUI()
     QString hardwareInformationIcon = ":/images/hardware-information.svg";
     systemInfomationItem = createInformationItem(QString(tr("System Information")) , systemInfomationIcon);
     hardwareInformationItem = createInformationItem(QString(tr("Hardware Information")) , hardwareInformationIcon);
-    hardwareInformationItem->setStyleSheet("#hardwareInformationItem{margin-top:24px};");
+    //hardwareInformationItem->setStyleSheet("QWidget{margin-top:24px};");
     ui->infoListWidget->setCurrentRow(0);
+    qInfo() << "hardwareInformationItem: " <<  hardwareInformationItem->width() << endl;
 
+    //QLayout *listLayout =  ui->infoListWidget->layout();;
+    //listLayout->setSpacing(24);
     /*根据系统分辨率设置窗口大小*/
     QDesktopWidget *desktop = QApplication::desktop();
     qInfo() << desktop->width() << desktop->height();
-    if(desktop->height() >= 670 && desktop->width() >= 918) //能显示全
-    {
-        this->resize(QSize(918,670));
-    }
+//    if(desktop->height() >= 670 && desktop->width() >= 918) //能显示全
+//    {
+//        this->resize(QSize(918,670));
+//    }
 
 }
 
@@ -74,6 +78,12 @@ InformationListItem *kiranSystemInformation::createInformationItem(const QString
     ui->infoListWidget->setItemWidget(newItem , customItem);
 
     return customItem;
+}
+
+void kiranSystemInformation::resizeEvent(QResizeEvent *event)
+{
+    qInfo() << "list width: " << ui->infoListWidget->width() << " list height: " << ui->infoListWidget->height() << endl;
+    qInfo() << "page width: " << ui->widget_page->width() << " page height: " << ui->widget_page->height() << endl;
 }
 
 void kiranSystemInformation::changeWidgetWhenItemClicked(QListWidgetItem * currentItem)

@@ -6,7 +6,7 @@
 #include <QHBoxLayout>
 #include <QAction>
 #include <QEvent>
-
+#include <QDebug>
 #include <QTimer>
 KiranSystemWidget::KiranSystemWidget(): KiranTitlebarWindow()
 {
@@ -34,6 +34,19 @@ KiranSystemWidget::~KiranSystemWidget()
     {
        delete centerWgt;
     }
+}
+
+QSize KiranSystemWidget::sizeHint() const
+{
+    QSize size = QSize(918,670);
+    return size;
+}
+
+void KiranSystemWidget::resizeEvent(QResizeEvent *event)
+{
+
+     qInfo() << "width: " << this->width() << " height: " << this->height() << endl;
+
 }
 
 QMenu* KiranSystemWidget::createMenu()
@@ -68,7 +81,7 @@ void KiranSystemWidget::setMenuIntoTitlebar()
                            "QPushButton{border: none;}");
 
     QMenu* menu = createMenu();
-    menu->setStyleSheet("QMenu{background-color: #222222;border-radius: 8px; border:1px solid rgba(255,255,255,0.2);padding-top:24px;"
+    menu->setStyleSheet("QMenu{background-color: #222222;border-radius: 8px; border:1px solid rgba(255,255,255,0.2);padding-top:12px;"
                               "color:#ffffff; font-family: \"Noto Sans CJK SC regular\"; font-size:10px;}"
                         "QMenu::item{margin-bottom:5px;"
                                     "height :30px;"
@@ -96,10 +109,11 @@ bool KiranSystemWidget::eventFilter(QObject *target, QEvent *event)
         int menuXPos = btnMenu->menu()->pos().x();
         int menuYPos = btnMenu->menu()->pos().y();
 
-        QPoint pos = QPoint(menuXPos,menuYPos+5);
+        QPoint pos = QPoint(menuXPos,menuYPos+4);
 
         btnMenu->menu()->move(pos);
         return true;
     }
+
     return false;
 }

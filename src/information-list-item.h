@@ -25,6 +25,7 @@ public:
 public:
     void setItemText(const QString &text);
     void setItemIcon(const QString &iconPath);
+    virtual QSize sizeHint() const override;
 
 private:
     Ui::InformationListItem *ui;

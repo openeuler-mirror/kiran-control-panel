@@ -19,6 +19,8 @@ class KiranSystemWidget : public KiranTitlebarWindow
 public:
     explicit KiranSystemWidget();
     ~KiranSystemWidget();
+    virtual QSize sizeHint() const override;
+    virtual void resizeEvent(QResizeEvent *event) override;
 
 private:
     QMenu* createMenu();

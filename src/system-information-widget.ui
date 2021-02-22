@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>719</width>
-    <height>749</height>
+    <width>636</width>
+    <height>670</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -118,6 +118,9 @@
            <property name="text">
             <string>TextLabel</string>
            </property>
+           <property name="wordWrap">
+            <bool>true</bool>
+           </property>
           </widget>
          </item>
          <item>
@@ -203,6 +206,9 @@
            <property name="text">
             <string>TextLabel</string>
            </property>
+           <property name="wordWrap">
+            <bool>false</bool>
+           </property>
           </widget>
          </item>
         </layout>
@@ -275,6 +281,9 @@
            <property name="text">
             <string>TextLabel</string>
            </property>
+           <property name="wordWrap">
+            <bool>false</bool>
+           </property>
           </widget>
          </item>
         </layout>
@@ -334,6 +343,9 @@
           <widget class="QLabel" name="lab_system_arch_info">
            <property name="text">
             <string>TextLabel</string>
+           </property>
+           <property name="wordWrap">
+            <bool>false</bool>
            </property>
           </widget>
          </item>
@@ -395,6 +407,9 @@
            <property name="text">
             <string>TextLabel</string>
            </property>
+           <property name="wordWrap">
+            <bool>false</bool>
+           </property>
           </widget>
          </item>
         </layout>
@@ -454,6 +469,9 @@
           <widget class="QLabel" name="lab_status">
            <property name="text">
             <string>TextLabel</string>
+           </property>
+           <property name="wordWrap">
+            <bool>false</bool>
            </property>
           </widget>
          </item>
@@ -540,6 +558,9 @@
            <property name="text">
             <string>TextLabel</string>
            </property>
+           <property name="wordWrap">
+            <bool>false</bool>
+           </property>
           </widget>
          </item>
         </layout>
@@ -599,6 +620,9 @@
           <widget class="QLabel" name="lab_contact_info">
            <property name="text">
             <string>TextLabel</string>
+           </property>
+           <property name="wordWrap">
+            <bool>false</bool>
            </property>
           </widget>
          </item>
