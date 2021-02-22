@@ -1,6 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>image/search.svg</file>
-        <file>image/kiran-display-configuration-pane.png</file>
-    </qresource>
-</RCC>

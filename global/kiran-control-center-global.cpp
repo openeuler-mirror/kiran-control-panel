@@ -11,14 +11,9 @@
 #include <QTranslator>
 #include <QDebug>
 
-#define KIRAN_MODULE_CLASS_DESKTOP_PATH "/usr/share/kiran-control-panel/categories"//分类desktop文件所在目录。
-#define KIRAN_MODULE_CLASS_ICON_PATH QString("/usr/share/kiran-control-panel/icons")//分类图标目录。
-#define KIRAN_MODULE_ITEM_ICON_PATH ""
-#define KIRAN_MODULE_ITEM_FUNCTION_ICON_PATH ""
-
 QString gLocaleName;
 /*!
- * \brief KiranControlPanelGlobal::getModuleCLass
+ * \brief KiranControlCenterGlobal::getModuleCLass
  * \return
  */
 QMap<int, KiranControlCenterGlobal::ModuleClass> KiranControlCenterGlobal::getModuleCLass()
@@ -26,7 +21,7 @@ QMap<int, KiranControlCenterGlobal::ModuleClass> KiranControlCenterGlobal::getMo
     QMap<int, KiranControlCenterGlobal::ModuleClass> ret;
     QHash<QString, QMap<int, KiranControlCenterGlobal::ModuleItem> >  items = getModuleItem();
     //
-    QString moduleItemPath = KIRAN_MODULE_CLASS_DESKTOP_PATH;
+    QString moduleItemPath = CATEGORY_DESKTOP_DIR;
     QDirIterator it(moduleItemPath, QStringList() << "*.desktop", QDir::Files);
     while (it.hasNext()) {
         QSettings settings(it.next(), QSettings::IniFormat);
@@ -37,7 +32,7 @@ QMap<int, KiranControlCenterGlobal::ModuleClass> KiranControlCenterGlobal::getMo
         moduleClass.nameZh = QString::fromUtf8(settings.value("Name[zh_CN]").toString().toLatin1().data());
         moduleClass.comment = settings.value("Comment").toString();
         moduleClass.commentZh = QString::fromUtf8(settings.value("Comment[zh_CN]").toString().toLatin1().data());
-        moduleClass.icon = KIRAN_MODULE_CLASS_ICON_PATH+QDir::separator()+settings.value("Icon").toString();
+        moduleClass.icon = QString(CATEGORY_DESKTOP_ICON_DIR)+QDir::separator()+settings.value("Icon").toString();
         QVariantList keys = settings.value("Keywords").toList();
         foreach (QVariant var, keys) {
             moduleClass.keywords <<QString::fromUtf8(var.toString().toLatin1().data());
@@ -49,14 +44,14 @@ QMap<int, KiranControlCenterGlobal::ModuleClass> KiranControlCenterGlobal::getMo
     return ret;
 }
 /*!
- * \brief KiranControlPanelGlobal::getModuleItem 此函数在模块集成运行时被使用.
+ * \brief KiranControlCenterGlobal::getModuleItem 此函数在模块集成运行时被使用.
  * \return
  */
 QHash<QString, QMap<int, KiranControlCenterGlobal::ModuleItem> > KiranControlCenterGlobal::getModuleItem()
 {
     QHash<QString, QMap<int, KiranControlCenterGlobal::ModuleItem> >  ret;
 
-    QString moduleItemPath = KIRAN_MODULE_ITEM_DESKTOP_PATH;
+    QString moduleItemPath = PLUGIN_DESKTOP_DIR;
     QDirIterator it(moduleItemPath, QStringList() << "*.desktop", QDir::Files);
     while (it.hasNext()) {
         QString filePath = it.next();
@@ -78,7 +73,7 @@ QHash<QString, QMap<int, KiranControlCenterGlobal::ModuleItem> > KiranControlCen
         stu.nameZh     = QString::fromUtf8(settings.value("Name[zh_CN]").toString().toLatin1().data());
         stu.comment    = settings.value("Comment").toString();
         stu.commentZh  = QString::fromUtf8(settings.value("Comment[zh_CN]").toString().toLatin1().data());
-        stu.icon       = KIRAN_MODULE_ITEM_ICON_PATH+settings.value("Icon").toString();
+        stu.icon       = PLUGIN_DESKTOP_ICON_DIR+settings.value("Icon").toString();
         stu.pluginFile = settings.value("PluginFile").toString();
         stu.init();
 
@@ -88,7 +83,7 @@ QHash<QString, QMap<int, KiranControlCenterGlobal::ModuleItem> > KiranControlCen
     return ret;
 }
 /*!
- * \brief KiranControlPanelGlobal::getModuleItem 此函数在模块单独运行时被使用.
+ * \brief KiranControlCenterGlobal::getModuleItem 此函数在模块单独运行时被使用.
  * \param moduleName
  * \return
  */
@@ -96,7 +91,7 @@ KiranControlCenterGlobal::ModuleItem KiranControlCenterGlobal::getModuleItem(con
 {
     KiranControlCenterGlobal::ModuleItem ret;
 
-    QString moduleItemPath = KIRAN_MODULE_ITEM_DESKTOP_PATH;
+    QString moduleItemPath = PLUGIN_DESKTOP_DIR;
     QDirIterator it(moduleItemPath, QStringList() << "*.desktop", QDir::Files);
     while (it.hasNext()) {
         QString filePath = it.next();
@@ -109,7 +104,7 @@ KiranControlCenterGlobal::ModuleItem KiranControlCenterGlobal::getModuleItem(con
         ret.nameZh     = QString::fromUtf8(settings.value("Name[zh_CN]").toString().toLatin1().data());
         ret.comment    = settings.value("Comment").toString();
         ret.commentZh  = QString::fromUtf8(settings.value("Comment[zh_CN]").toString().toLatin1().data());
-        ret.icon       = KIRAN_MODULE_ITEM_ICON_PATH+settings.value("Icon").toString();
+        ret.icon       = PLUGIN_DESKTOP_ICON_DIR+settings.value("Icon").toString();
         ret.pluginFile = settings.value("PluginFile").toString();
         ret.init();
         return ret;
@@ -132,7 +127,7 @@ QString KiranControlCenterGlobal::ModuleClassStu::getCommentTranslate()
     else return comment;
 }
 /*!
- * \brief KiranControlPanelGlobal::ModuleClassStu::itemKeys
+ * \brief KiranControlCenterGlobal::ModuleClassStu::itemKeys
  * \return 返回所有功能项的搜索关键字。
  */
 QStringList KiranControlCenterGlobal::ModuleClassStu::itemKeys() const
@@ -150,7 +145,7 @@ QStringList KiranControlCenterGlobal::ModuleClassStu::itemKeys() const
     return ret;
 }
 /*!
- * \brief KiranControlPanelGlobal::ModuleItemStu::getModuleItemSubInfo
+ * \brief KiranControlCenterGlobal::ModuleItemStu::getModuleItemSubInfo
  * 从动态可中获取所有功能项的名称、图标、搜索关键字信息。
  */
 void KiranControlCenterGlobal::ModuleItemStu::getModuleItemSubInfo()
@@ -169,7 +164,7 @@ void KiranControlCenterGlobal::ModuleItemStu::getModuleItemSubInfo()
             subItems[i].key = subItems.at(i).name;
         }
         //给功能项图标添加全路径.
-        subItems[i].icon = KIRAN_MODULE_ITEM_FUNCTION_ICON_PATH + subItems.at(i).icon;
+        subItems[i].icon = subItems.at(i).icon;
     }
 
     closePlugin();
@@ -187,7 +182,7 @@ void KiranControlCenterGlobal::ModuleItemStu::loadTranslator()
         qApp->installTranslator(translator);
 }
 /*!
- * \brief KiranControlPanelGlobal::ModuleItemStu::createModuleItemSubWgt
+ * \brief KiranControlCenterGlobal::ModuleItemStu::createModuleItemSubWgt
  * \param name 根据功能项名称，创建功能项节目。
  * \return
  */
@@ -205,7 +200,7 @@ QWidget *KiranControlCenterGlobal::ModuleItemStu::createModuleItemSubWgt(const Q
     return ret;
 }
 /*!
- * \brief KiranControlPanelGlobal::ModuleItemStu::getNameTranslate
+ * \brief KiranControlCenterGlobal::ModuleItemStu::getNameTranslate
  * \return  根据本地语言类型，返回模块的desktop文件中的模块名翻译。
  */
 QString KiranControlCenterGlobal::ModuleItemStu::getNameTranslate()
@@ -215,7 +210,7 @@ QString KiranControlCenterGlobal::ModuleItemStu::getNameTranslate()
     else return name;
 }
 /*!
- * \brief KiranControlPanelGlobal::ModuleItemStu::getCommentTranslate
+ * \brief KiranControlCenterGlobal::ModuleItemStu::getCommentTranslate
  * \return 根据本地语言类型，返回模块的desktop文件中的介绍的翻译。
  */
 QString KiranControlCenterGlobal::ModuleItemStu::getCommentTranslate()

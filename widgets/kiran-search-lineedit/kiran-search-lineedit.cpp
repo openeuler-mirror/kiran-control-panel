@@ -21,7 +21,7 @@ KiranSearchLineEdit::KiranSearchLineEdit(const QStringList &completerKeys, QWidg
     QLabel *lock = new QLabel(this);
     lock->setMaximumSize(20, 20);
     lock->setCursor(QCursor(Qt::ArrowCursor));
-    lock->setPixmap(QPixmap("://image/search.svg"));
+    lock->setPixmap(QPixmap(":/image/search.svg"));
     //Layout是透明的. layout,setpos,paint.
     QSpacerItem *spaceItem = new QSpacerItem(322, 40, QSizePolicy::Expanding);
     QHBoxLayout *editLayout = new QHBoxLayout();

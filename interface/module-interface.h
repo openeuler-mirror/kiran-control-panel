@@ -9,8 +9,6 @@
 #include <QWidget>
 #include <QStringList>
 
-#define KIRAN_MODULE_ITEM_DESKTOP_PATH PLUGIN_DESKTOP_DIR //将插件(模块)的desktop文件安装到此处。控制面板主程序将从这里读取插件的desktop，根据desktop描述加载插件。
-
 namespace ModuleInterface {
 
 typedef struct SubItemStu{
@@ -38,8 +36,8 @@ GetSubItemsFun getSubitems;//获取模块的功能项列表。模块中有多少
 GetSubItemWidgetFun getSubitemWidget;//获取给定名称的功能项的界面QWidget。给定的名称来自getSubitems函数返回的name,所以要保证这两处name名称一致.
 /*!
  * \brief getTranslationPath 获取模块的翻译文件路径.只需返回全路径+翻译文件名，无需添加翻译文件后缀。
- * 如：‘/usr/share/kiran-control-panel/module/kiran-display-tools/kiran-display-tools.*_*.qm’ 只需返回
- * ‘/usr/share/kiran-control-panel/module/kiran-display-tools/kiran-display-tools’即可，主程序将根据当前翻译类型补全后缀名，加载合适的翻译文件。
+ * 如：‘/usr/share/kiran-control-center/module/kiran-display-tools/kiran-display-tools.*_*.qm’ 只需返回
+ * ‘/usr/share/kiran-control-center/module/kiran-display-tools/kiran-display-tools’即可，主程序将根据当前翻译类型补全后缀名，加载合适的翻译文件。
  */
 GetTranslationPathFun getTranslationPath;
 HasUnsavedOptionsFun hasUnsavedOptions;//当前功能项是否有未保存的内容。当前功能项被修改且未保存时，返回true,否则返回false.

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <dlfcn.h>
+#include "config.h"
 #include "../interface/module-interface.h"
 #include <QWidget>
 #include <QString>
