@@ -16,6 +16,10 @@ QLabel#lab_name_info,QLabel#lab_system_version_info,QLabel#lab_core_version_info
     font-family: "Noto Sans CJK SC regular";
     font-size:12px;
 }
+/*QLabel#label_hard_disk,QLabel#label_graphics_card,QLabel#label_network_card
+{
+    margin-top:14px;
+}*/
 
 QLabel#lab_status
 {

@@ -14,6 +14,7 @@
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QLabel>
 #include <kiran-cc-daemon/kiran-system-daemon/systeminfo_i.h>
 
 #define MEMORY          "mem"
@@ -61,10 +62,10 @@ void HardwareInformationWidget::readHardwareInfo(int infoType)
     {
         qDebug() << "get hardware information failed"<< endl;
         ui->label_CPU_info->setText(tr("Unknow"));
-        ui->label_memory_info->setText(tr("Unknow"));
-        ui->label_hard_disk_info->setText(tr("Unknow"));
-        ui->label_graphics_card_info->setText(tr("Unknow"));
-        ui->label_network_card_info->setText(tr("Unknow"));
+       // ui->label_memory_info->setText(tr("Unknow"));
+       //ui->label_hard_disk_info->setText(tr("Unknow"));
+       //ui->label_graphics_card_info->setText(tr("Unknow"));
+       //ui->label_network_card_info->setText(tr("Unknow"));
         return;
     }
     else
@@ -101,8 +102,8 @@ void HardwareInformationWidget::getJsonValueFromString(QString jsonString)
                    QJsonValue value = object.value(TOTAL_SIZE);
                    if(value.isDouble())
                    {
-                       unsigned int memory_size = value.toVariant().toUInt();
-                       QString size = QString::number(memory_size);
+                       double memory_size = value.toVariant().toDouble();
+                       QString size = QString("%1G").arg(memory_size/1024/1024/1024);
                        ui->label_memory_info->setText(size);
                    }
                }
@@ -151,7 +152,7 @@ void HardwareInformationWidget::getJsonValueFromString(QString jsonString)
                    {
                        QJsonObject object = value.toObject();
                        QString disk_model;
-                       QString size ;
+                       float size ;
                        if(object.contains(MODEL))
                        {
                            QJsonValue value = object.value(MODEL);
@@ -165,12 +166,12 @@ void HardwareInformationWidget::getJsonValueFromString(QString jsonString)
                            QJsonValue value = object.value(DISK_SIZE);
                            if(value.isDouble())
                            {
-                               unsigned int disk_size = value.toVariant().toUInt();
-                               size = QString::number(disk_size);
+                               double disk_size = value.toVariant().toDouble();
+                               size = disk_size/1024/1024/1024;
                            }
                        }
                        ///FIXME:后续将界面要显示disk值，做成数组
-                       QString diskInfo = QString("%1 (%2)").arg(disk_model).arg(size);
+                       QString diskInfo = QString("%1 (%2G)").arg(disk_model).arg(size);
                        diskList << diskInfo;
                    }
                }
@@ -207,7 +208,6 @@ void HardwareInformationWidget::getJsonValueFromString(QString jsonString)
                                model = value.toString();
                            }
                        }
-
                        ///FIXME:后续将界面要显示graphics值，做成数组
                        QString graphicsInfo = QString("%1 (%2)").arg(model).arg(vendor);
                        graphicsList << graphicsInfo;
@@ -262,22 +262,65 @@ void HardwareInformationWidget::getJsonValueFromString(QString jsonString)
  */
 void HardwareInformationWidget::showListInfo()
 {
+    QString disk_info_2 = "disk_info_2";
+    diskList << disk_info_2;
+    QString graphics_info_2 = "graphics_info_2";
+    graphicsList << graphics_info_2 ;
+    QString eths_info_2 = "eths_info_2";
+    ethsList << eths_info_2;
     int i;
+    //根据数量设置各行的行高及左侧标签的布局
     int diskNum = diskList.size();
+    ui->label_hard_disk->setFixedHeight(40*diskNum);
+
     int graphicsNum = graphicsList.size();
+    ui->label_graphics_card->setFixedHeight(40*graphicsNum);
+
     int ethsNum = ethsList.size();
+    ui->label_network_card->setFixedHeight(40*ethsNum);
 
+    if(diskNum >1 )
+    {
+        qInfo() << "set disk label style" << endl;
+        ui->label_hard_disk->setAlignment(Qt::AlignTop);
+        ui->label_hard_disk->setStyleSheet("QLabel{padding-top:10px}");
 
+    }
+    if(graphicsNum > 1)
+    {
+        ui->label_graphics_card->setAlignment(Qt::AlignTop);
+        ui->label_graphics_card->setStyleSheet("QLabel{padding-top:10px}");
+    }
+    if(ethsNum > 1)
+    {
+        ui->label_network_card->setAlignment(Qt::AlignTop);
+        ui->label_network_card->setStyleSheet("QLabel{padding-top:10px}");
+    }
+
+    //依次将各个信息插入至布局
     for(i=0; i<diskNum; i++)
     {
         qInfo() << diskList.at(i);
+        QLabel* labelDisk = new QLabel(diskList.at(i));
+        //设置QLabel的样式
+        labelDisk->setStyleSheet("QLabel{color:#7e7e7e;font-family: \"Noto Sans CJK SC regular\";font-size:12px;}");
+        ui->gridLayout_hard_disk->addWidget(labelDisk,i,0,Qt::AlignRight);
     }
+
     for(i=0; i<graphicsNum; i++)
     {
         qInfo() << graphicsList.at(i);
+        QLabel* labelGraphics = new QLabel(graphicsList.at(i));
+        //设置QLabel的样式
+        labelGraphics->setStyleSheet("QLabel{color:#7e7e7e;font-family: \"Noto Sans CJK SC regular\";font-size:12px;}");
+        ui->gridLayout_graphics_card->addWidget(labelGraphics,i,0,Qt::AlignRight);
     }
     for(i=0; i<ethsNum; i++)
     {
         qInfo() << ethsList.at(i);
+        QLabel* labelEths = new QLabel(ethsList.at(i));
+        //设置QLabel的样式
+        labelEths->setStyleSheet("QLabel{color:#7e7e7e;font-family: \"Noto Sans CJK SC regular\";font-size:12px;}");
+        ui->gridLayout_network_card->addWidget(labelEths,i,0,Qt::AlignRight);
     }
 }

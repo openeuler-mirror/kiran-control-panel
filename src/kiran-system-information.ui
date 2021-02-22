@@ -71,6 +71,12 @@
    </item>
    <item>
     <widget class="QWidget" name="widget_page" native="true">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="minimumSize">
       <size>
        <width>0</width>
@@ -104,7 +110,7 @@
            <enum>Qt::ScrollBarAlwaysOff</enum>
           </property>
           <property name="sizeAdjustPolicy">
-           <enum>QAbstractScrollArea::AdjustIgnored</enum>
+           <enum>QAbstractScrollArea::AdjustToContents</enum>
           </property>
           <property name="widgetResizable">
            <bool>true</bool>
@@ -115,13 +121,13 @@
              <x>0</x>
              <y>0</y>
              <width>644</width>
-             <height>1000</height>
+             <height>670</height>
             </rect>
            </property>
            <property name="minimumSize">
             <size>
-             <width>0</width>
-             <height>1000</height>
+             <width>636</width>
+             <height>670</height>
             </size>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_3">

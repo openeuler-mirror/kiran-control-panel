@@ -37,6 +37,12 @@
        <height>157</height>
       </size>
      </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>157</height>
+      </size>
+     </property>
      <layout class="QHBoxLayout" name="horizontalLayout_7">
       <property name="spacing">
        <number>0</number>
@@ -86,7 +92,13 @@
         <property name="minimumSize">
          <size>
           <width>0</width>
-          <height>0</height>
+          <height>40</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>40</height>
          </size>
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout">
@@ -139,7 +151,13 @@
        <widget class="QWidget" name="widget_memory" native="true">
         <property name="minimumSize">
          <size>
-          <width>588</width>
+          <width>0</width>
+          <height>40</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
           <height>40</height>
          </size>
         </property>
@@ -191,9 +209,15 @@
       </item>
       <item>
        <widget class="QWidget" name="widget_hard_disk" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="minimumSize">
          <size>
-          <width>588</width>
+          <width>0</width>
           <height>40</height>
          </size>
         </property>
@@ -218,6 +242,9 @@
            <property name="text">
             <string>Hard disk:</string>
            </property>
+           <property name="alignment">
+            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+           </property>
           </widget>
          </item>
          <item>
@@ -234,20 +261,41 @@
           </spacer>
          </item>
          <item>
-          <widget class="QLabel" name="label_hard_disk_info">
-           <property name="text">
-            <string>TextLabel</string>
+          <layout class="QGridLayout" name="gridLayout_hard_disk">
+           <property name="leftMargin">
+            <number>0</number>
            </property>
-          </widget>
+           <property name="topMargin">
+            <number>14</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>14</number>
+           </property>
+           <property name="horizontalSpacing">
+            <number>0</number>
+           </property>
+           <property name="verticalSpacing">
+            <number>24</number>
+           </property>
+          </layout>
          </item>
         </layout>
        </widget>
       </item>
       <item>
        <widget class="QWidget" name="widget_graphics_card" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="minimumSize">
          <size>
-          <width>588</width>
+          <width>0</width>
           <height>40</height>
          </size>
         </property>
@@ -272,6 +320,9 @@
            <property name="text">
             <string>Graphics card:</string>
            </property>
+           <property name="alignment">
+            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+           </property>
           </widget>
          </item>
          <item>
@@ -288,20 +339,41 @@
           </spacer>
          </item>
          <item>
-          <widget class="QLabel" name="label_graphics_card_info">
-           <property name="text">
-            <string>TextLabel</string>
+          <layout class="QGridLayout" name="gridLayout_graphics_card">
+           <property name="leftMargin">
+            <number>0</number>
            </property>
-          </widget>
+           <property name="topMargin">
+            <number>14</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>14</number>
+           </property>
+           <property name="horizontalSpacing">
+            <number>0</number>
+           </property>
+           <property name="verticalSpacing">
+            <number>24</number>
+           </property>
+          </layout>
          </item>
         </layout>
        </widget>
       </item>
       <item>
        <widget class="QWidget" name="widget_network_card" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="minimumSize">
          <size>
-          <width>588</width>
+          <width>0</width>
           <height>40</height>
          </size>
         </property>
@@ -326,6 +398,9 @@
            <property name="text">
             <string>Network card:</string>
            </property>
+           <property name="alignment">
+            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+           </property>
           </widget>
          </item>
          <item>
@@ -342,14 +417,42 @@
           </spacer>
          </item>
          <item>
-          <widget class="QLabel" name="label_network_card_info">
-           <property name="text">
-            <string>TextLabel</string>
+          <layout class="QGridLayout" name="gridLayout_network_card">
+           <property name="leftMargin">
+            <number>0</number>
            </property>
-          </widget>
+           <property name="topMargin">
+            <number>14</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>14</number>
+           </property>
+           <property name="horizontalSpacing">
+            <number>0</number>
+           </property>
+           <property name="verticalSpacing">
+            <number>24</number>
+           </property>
+          </layout>
          </item>
         </layout>
        </widget>
+      </item>
+      <item>
+       <spacer name="verticalSpacer">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
       </item>
      </layout>
     </widget>

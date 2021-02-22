@@ -23,9 +23,9 @@ KiranSystemWidget::KiranSystemWidget(): KiranTitlebarWindow()
 
 //    this->adjustSize();
 
-    QTimer::singleShot(1000,this,[this](){
-        this->adjustSize();
-    });
+//    QTimer::singleShot(1000,this,[this](){
+//        this->adjustSize();
+//    });
 }
 
 KiranSystemWidget::~KiranSystemWidget()
