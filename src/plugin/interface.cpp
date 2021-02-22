@@ -4,4 +4,4 @@
  *                                                                         *
  ***************************************************************************/
 #include "interface.h"
-KiranDisplayModuleBase *gCurWidget = nullptr;
+PluginSubItemBase *gCurWidget = nullptr;

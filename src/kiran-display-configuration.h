@@ -13,7 +13,7 @@ class KiranDisplayConfiguration;
 }
 
 class QButtonGroup;
-class KiranDisplayConfiguration : public QWidget, public KiranDisplayModuleBase
+class KiranDisplayConfiguration : public QWidget, public PluginSubItemBase
 {
     Q_OBJECT
 

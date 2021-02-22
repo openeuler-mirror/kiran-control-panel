@@ -1,42 +1,10 @@
 cmake_minimum_required(VERSION 3.0)
 project(kiran-display-tools VERSION 1.0)
-find_package(PkgConfig REQUIRED)
 
-set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
-
-set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTOUIC ON)
-set(CMAKE_AUTORCC ON)
-
-#编译参数传入
-include(GNUInstallDirs)
-set(KDT_INSTALL_BINDIR ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_BINDIR})
-set(KDT_INSTALL_LIBDIR ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR})
-set(KDT_INSTALL_DATADIR ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATADIR})
-
-#由于cmakelist向下继承变量，所以这里提前申明宏定义。
-if(DEFINED PLUGIN_DIR)
-    #desktop
-    set(KDT_DESKTOP_DIR ${PLUGIN_DIR}) #此路径通过控制中心命令获取：/usr/bin/kiran-control-center --print-plugins-path。而代码中可以通过控制中心接口的宏定义 KIRAN_MODULE_ITEM_DESKTOP_PATH 获取,为了两处统一，代码中也可以从cmake中获取。
-
-    set(KDT_DESKTOP_ITEM_IMAGES_DIR ${KDT_DESKTOP_DIR}/${PROJECT_NAME}/item-icons)
-    ADD_DEFINITIONS(-DPLUGIN_ITME_ICON_DIR=\"${KDT_DESKTOP_ITEM_IMAGES_DIR}/\")
-    #翻译
-    set(TRANSLATE_PATH ${KDT_DESKTOP_DIR}/${PROJECT_NAME}/translate/)
-    ADD_DEFINITIONS(-DTRANSLATE_PATH_PREFIX=\"${TRANSLATE_PATH}${PROJECT_NAME}\")
-
-else()
-    #desktop
-    set(KDT_DESKTOP_IMAGES_DIR ${KDT_INSTALL_DATADIR}/icons/Kiran/places/16x16/)
-    ADD_DEFINITIONS(-DKDT_DESKTOP_IMAGES_PATH=\"${KDT_DESKTOP_IMAGES_DIR}${PROJECT_NAME}.svg\")
-    #翻译
-    SET(TRANSLATE_PATH ${KDT_INSTALL_DATADIR}/${PROJECT_NAME}/translations/)
-    ADD_DEFINITIONS(-DTRANSLATE_PREFIX=\"${TRANSLATE_PATH}${PROJECT_NAME}\")
-
-endif()
-
+set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/)
+include(qt)
+include(app_plugin_var_declare)
+include(app_plugin_var_define)
 #添加子目录
 add_subdirectory(desktop)
 add_subdirectory(src)

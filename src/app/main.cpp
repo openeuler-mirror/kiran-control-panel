@@ -12,6 +12,14 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+    //报警中也需要翻译，所以加载翻译文件需要前置。
+    QString locale = QLocale::system().name();
+    QString qmFile = QString("%1.%2.qm").arg(APP_TRANSLATE_PATH_PREFIX).arg(locale);
+    QTranslator translator;
+    if(translator.load(qmFile) == false)
+        qDebug() << "load qm: " << qmFile <<  " error.";
+    else
+        a.installTranslator(&translator);
 
     if (!QDBusConnection::sessionBus().isConnected()) {
         qWarning("Cannot connect to the D-Bus session bus.\n"
@@ -28,18 +36,10 @@ int main(int argc, char *argv[])
         btn.setFixedSize(QSize(200, box.buttonSize().height()));
         btn.setShortcut(Qt::CTRL + Qt::Key_K);
         box.addButton(&btn, QDialogButtonBox::AcceptRole);
-        box.setText(QObject::tr("Background D-Bus service failed to connect, display setting failed to start, please check if D-Bus service is start."));
+        box.setText(QObject::tr("D-Bus service failed to connect, display setting failed to start, please check if D-Bus service is start."));
         box.exec();
         return 1;
     }
-
-    QString locale = QLocale::system().name();
-    QString qmFile = QString("%1.%2.qm").arg(TRANSLATE_PREFIX).arg(locale);
-    QTranslator translator;
-    if(translator.load(qmFile) == false)
-        qDebug() << "load qm: " << qmFile <<  " error.";
-    else
-        a.installTranslator(&translator);
 
     DisplayModesStu::registerMetaType();
 

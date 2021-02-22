@@ -276,19 +276,23 @@
         <translation type="vanished">Tips</translation>
     </message>
     <message>
-        <location filename="../app/main.cpp" line="27"/>
+        <location filename="../app/main.cpp" line="35"/>
         <location filename="../kiran-display-config-global.cpp" line="35"/>
         <location filename="../kiran-display-config-global.h" line="75"/>
         <location filename="../kiran-display-configuration.cpp" line="385"/>
         <location filename="../kiran-display-configuration.cpp" line="403"/>
-        <location filename="../plugin/interface.h" line="37"/>
+        <location filename="../plugin/interface.h" line="38"/>
         <source>OK(K)</source>
         <oldsource>确定(K)</oldsource>
         <translation>OK(K)</translation>
     </message>
     <message>
-        <location filename="../app/main.cpp" line="31"/>
-        <location filename="../plugin/interface.h" line="41"/>
+        <location filename="../app/main.cpp" line="39"/>
+        <source>D-Bus service failed to connect, display setting failed to start, please check if D-Bus service is start.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../plugin/interface.h" line="42"/>
         <source>Background D-Bus service failed to connect, display setting failed to start, please check if D-Bus service is start.</source>
         <translation>Background D-Bus service failed to connect, display setting failed to start, please check if D-Bus service is start.</translation>
     </message>
@@ -306,12 +310,12 @@
         <translation type="vanished">Failed to withdraw display settings!% 1</translation>
     </message>
     <message>
-        <location filename="../app/main.cpp" line="24"/>
+        <location filename="../app/main.cpp" line="32"/>
         <location filename="../kiran-display-config-global.cpp" line="32"/>
         <location filename="../kiran-display-config-global.h" line="72"/>
         <location filename="../kiran-display-configuration.cpp" line="382"/>
         <location filename="../kiran-display-configuration.cpp" line="400"/>
-        <location filename="../plugin/interface.h" line="34"/>
+        <location filename="../plugin/interface.h" line="35"/>
         <source>Tips</source>
         <translation>Tips</translation>
     </message>

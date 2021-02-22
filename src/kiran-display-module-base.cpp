@@ -5,12 +5,12 @@
  ***************************************************************************/
 #include "kiran-display-module-base.h"
 
-KiranDisplayModuleBase::KiranDisplayModuleBase()
+PluginSubItemBase::PluginSubItemBase()
 {
 
 }
 
-bool KiranDisplayModuleBase::hasUnsavedOptions()
+bool PluginSubItemBase::hasUnsavedOptions()
 {
     return false;
 }

@@ -3,16 +3,12 @@
  *   Copyright ©2020 KylinSec. All rights reserved.                      *
  *                                                                         *
  ***************************************************************************/
-#ifndef KIRANDISPLAYMODULEBASE_H
-#define KIRANDISPLAYMODULEBASE_H
+#pragma once
 
-
-class KiranDisplayModuleBase
+class PluginSubItemBase
 {
 public:
-    KiranDisplayModuleBase();
+    PluginSubItemBase();
 
     virtual bool hasUnsavedOptions();
 };
-
-#endif // KIRANDISPLAYMODULEBASE_H

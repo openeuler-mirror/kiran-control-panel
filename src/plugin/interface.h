@@ -7,6 +7,7 @@
 #define INTERFACE_H
 
 #include <QDebug>
+#include "config.h"
 #include "module-interface.h"
 #include "kiran-display-configuration.h"
 #include "kiranwidgets-qt5/kiran-message-box.h"
@@ -16,12 +17,12 @@
 
 using namespace ModuleInterface;
 
-extern KiranDisplayModuleBase *gCurWidget;
+extern PluginSubItemBase *gCurWidget;
 
 QString gName = "显示设置";
 QList<SubItem> getSubitems()
 {
-    return QList<SubItem>() << SubItem(gName, QString(PLUGIN_ITME_ICON_DIR) + "display-settings.svg", "");
+    return QList<SubItem>() << SubItem(gName, QString(PLUGIN_SUB_ITME_ICON_DIR) + "display-settings.svg", "");
 }
 
 QWidget *getSubitemWidget(QString name)
@@ -53,7 +54,7 @@ QWidget *getSubitemWidget(QString name)
 
 QString getTranslationPath()
 {
-    return QString(TRANSLATE_PATH_PREFIX);
+    return QString(PLUGIN_SUB_ITME_TRANSLATE_DIR_PREFIX);
 }
 
 bool hasUnsavedOptions()

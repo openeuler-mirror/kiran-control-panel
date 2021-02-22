@@ -5,14 +5,19 @@ include_directories(${KIRAN_CC_DAEMON_INCLUDE_DIRS})
 find_package(Qt5 COMPONENTS Widgets DBus X11Extras Svg) #
 #定义公用代码文件集
 file(GLOB SRC
-    "./kiran-*.cpp"
-    "./kiran-*.h"
-    "./kiran-*.ui"
+    "./*.cpp"
+    "./*.h"
+    "./*.ui"
     "../images/*.qrc"
     )
 #翻译文件
+include_directories("${CMAKE_BINARY_DIR}/src")
 file(GLOB TS_FILES "translations/*.ts")
+#config.h
+include_directories(${CMAKE_BINARY_DIR})
+
 find_package(Qt5 COMPONENTS Widgets LinguistTools)
+SET_DIRECTORY_PROPERTIES(PROPERTIES CLEAN_NO_CUSTOM TRUE)
 qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 
 if(DEFINED PLUGIN_DIR)
@@ -31,7 +36,7 @@ if(DEFINED PLUGIN_DIR)
         ${QM_FILES}
         )
     #安装
-    install(TARGETS ${PROJECT_NAME} DESTINATION ${KDT_INSTALL_LIBDIR}/)
+    install(TARGETS ${PROJECT_NAME} DESTINATION ${INSTALL_LIBDIR}/)
 
     target_link_libraries(${PROJECT_NAME}
         Qt5::Core Qt5::Gui Qt5::Svg Qt5::Widgets Qt5::X11Extras Qt5::DBus X11)
@@ -54,11 +59,11 @@ else()
         )
 
     #安装
-    install(TARGETS ${PROJECT_NAME} DESTINATION ${KDT_INSTALL_BINDIR}/)
+    install(TARGETS ${PROJECT_NAME} DESTINATION ${INSTALL_BINDIR}/)
 
     target_link_libraries(${PROJECT_NAME}
         Qt5::Core Qt5::Gui Qt5::Svg Qt5::Widgets Qt5::X11Extras Qt5::DBus kiranwidgets-qt5 X11)
 
 endif()
 
-add_subdirectory(translations)
+include(app_plugin_translate)
