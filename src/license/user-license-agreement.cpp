@@ -23,6 +23,12 @@ UserlicenseAgreement::~UserlicenseAgreement()
     delete ui;
 }
 
+QString UserlicenseAgreement::getEulaText()
+{
+    QString text = ui->text_eula->toPlainText();
+    return text;
+}
+
 void UserlicenseAgreement::initUI()
 {
     setTitle(UserlicenseAgreement::tr("User End License Agreement"));

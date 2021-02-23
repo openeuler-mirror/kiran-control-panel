@@ -22,7 +22,8 @@ kiranSystemInformation::kiranSystemInformation(QWidget *parent) :
 {
     ui->setupUi(this);
     initUI();
-
+    QSize size = ui->widget_page->sizeHint();
+    qInfo() << "widget page size hint = " << size.width() << "," << size.height() << endl;
     connect(ui->infoListWidget, SIGNAL(itemClicked(QListWidgetItem*)),this,SLOT(changeWidgetWhenItemClicked(QListWidgetItem*)));
 }
 
@@ -45,14 +46,6 @@ void kiranSystemInformation::initUI()
 
     //QLayout *listLayout =  ui->infoListWidget->layout();;
     //listLayout->setSpacing(24);
-    /*根据系统分辨率设置窗口大小*/
-    QDesktopWidget *desktop = QApplication::desktop();
-    qInfo() << desktop->width() << desktop->height();
-//    if(desktop->height() >= 670 && desktop->width() >= 918) //能显示全
-//    {
-//        this->resize(QSize(918,670));
-//    }
-
 }
 
 

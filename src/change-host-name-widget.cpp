@@ -28,6 +28,16 @@ void ChangeHostNameWidget::initUI()
     setButtonHints(TitlebarMinimizeButtonHint|TitlebarCloseButtonHint);
     setResizeable(false);
     ui->btn_save->setEnabled(false);
+
+    int height = ui->label_text->height()+ui->lineEdit_input_name->height()+ui->btn_cancel->height();
+    qInfo() << "all widget height = " << ui->label_text->height() <<"," <<ui->lineEdit_input_name->height()<<"," <<ui->btn_cancel->height() << endl;
+    qInfo() << "change height = " << getWindowContentWidget()->height() << endl;
+//    int left;
+//    int right;
+//    int top;
+//    int bottom;
+//    this->getContentsMargins(&left,&top,&right,&bottom);
+//    qInfo() << left << ", " <<top << "," << right << "," << bottom << endl;
 }
 
 void ChangeHostNameWidget::setNewHostName()

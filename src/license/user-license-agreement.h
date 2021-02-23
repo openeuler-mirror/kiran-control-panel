@@ -15,6 +15,7 @@ class UserlicenseAgreement : public KiranTitlebarWindow
 public:
     explicit UserlicenseAgreement();
     ~UserlicenseAgreement();
+    QString getEulaText();
 
 private:
     void initUI();

@@ -1,14 +1,25 @@
 #include "kiran-system-widget.h"
 #include "kiran-system-information.h"
-
+#include "license/user-license-agreement.h"
+#include <kiranwidgets-qt5/kiran-message-box.h>
 #include <QPushButton>
 #include <QMenu>
 #include <QHBoxLayout>
 #include <QAction>
 #include <QEvent>
 #include <QDebug>
+#include <QDesktopWidget>
+#include <QApplication>
+#include <QFile>
+#include <QFileDialog>
+#include <QMessageBox>
 #include <QTimer>
-KiranSystemWidget::KiranSystemWidget(): KiranTitlebarWindow()
+
+#define EULAFILE "/usr/share/kylin-release/EULA"
+
+KiranSystemWidget::KiranSystemWidget():
+    KiranTitlebarWindow(),
+    userlicenseAgreement(nullptr)
 {
     setButtonHints(KiranTitlebarWindow::TitlebarMinMaxCloseHints);
     setTitle(tr("kiran-system-imformation"));
@@ -34,25 +45,41 @@ KiranSystemWidget::~KiranSystemWidget()
     {
        delete centerWgt;
     }
+    if(userlicenseAgreement != nullptr )
+    {
+        delete userlicenseAgreement;
+    }
 }
 
 QSize KiranSystemWidget::sizeHint() const
 {
-    QSize size = QSize(918,670);
-    return size;
+    /*根据系统分辨率设置窗口大小*/
+    QDesktopWidget *desktop = QApplication::desktop();
+    qInfo() << desktop->width() << desktop->height();
+    QSize windowSize;
+    if(desktop->height() >= 730 && desktop->width() >= 918 ) //能显示全
+    {
+        windowSize = QSize(918,730);
+    }
+    else
+    {
+        windowSize = QSize(desktop->width() , desktop->height());
+    }
+
+    return windowSize;
 }
 
 void KiranSystemWidget::resizeEvent(QResizeEvent *event)
 {
 
-     qInfo() << "width: " << this->width() << " height: " << this->height() << endl;
+     qInfo() << "width: " << getWindowContentWidget()->width() << " height: " << getWindowContentWidget()->height() << endl;
 
 }
 
 QMenu* KiranSystemWidget::createMenu()
 {
-    QAction* actionEULA = new QAction(this);
-    QAction* actionExport = new QAction(this);
+    actionEULA = new QAction(this);
+    actionExport = new QAction(this);
 
     actionEULA->setText(tr("EULA"));
     actionExport->setText(tr("export"));
@@ -80,7 +107,7 @@ void KiranSystemWidget::setMenuIntoTitlebar()
                            "QPushButton:hover{background-color: #2d2d2d;}"
                            "QPushButton{border: none;}");
 
-    QMenu* menu = createMenu();
+    menu = createMenu();
     menu->setStyleSheet("QMenu{background-color: #222222;border-radius: 8px; border:1px solid rgba(255,255,255,0.2);padding-top:12px;"
                               "color:#ffffff; font-family: \"Noto Sans CJK SC regular\"; font-size:10px;}"
                         "QMenu::item{margin-bottom:5px;"
@@ -99,7 +126,43 @@ void KiranSystemWidget::setMenuIntoTitlebar()
 
     layout->addWidget(widget);
     layout->setSpacing(10);
+
+    connect(actionEULA , SIGNAL(triggered()), this,SLOT(actionEulaClicked()));
+    connect(actionExport, SIGNAL(triggered()), this, SLOT(actionExportClicked()));
 }
+
+void KiranSystemWidget::actionEulaClicked()
+{
+    if(userlicenseAgreement == nullptr)
+    {
+        userlicenseAgreement = new UserlicenseAgreement();
+    }
+    userlicenseAgreement->show();
+}
+
+void KiranSystemWidget::actionExportClicked()
+{
+
+    QString fileName = QFileDialog::getSaveFileName(this,
+                                                    tr("保存"),
+                                                    "/root",
+                                                    tr("Text(*.txt)"));
+    QFile file(fileName);
+
+    if (!file.open(QIODevice::WriteOnly|QIODevice::Text))
+    {
+        QMessageBox::critical(this, "critical", tr("文件保存失败！"),
+                              QMessageBox::Yes, QMessageBox::Yes);
+    }
+    else
+    {
+        QFileInfo fileInfo(fileName);
+//        if (fileInfo.exists())
+//            QFile::remove(fileName);
+        QFile::copy(EULAFILE, fileName);
+    }
+}
+
 
 bool KiranSystemWidget::eventFilter(QObject *target, QEvent *event)
 {

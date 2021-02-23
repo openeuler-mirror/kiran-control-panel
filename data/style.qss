@@ -179,6 +179,16 @@ QScrollBar::sub-line:vertical,QScrollBar::sub-line:horizontal
       background: transparent;
 }
 
+/*************QTextEdit****************/
+QTextBrowser#text_eula
+{
+    background-color:transparent;
+    color: #ffffff;
+    font-size:14px;
+    font-family: "Noto Sans CJK SC Light";
+    text-align:justify;
+    line-height:28px;
+}
 /***************************************************license********************************/
 /**************QLabel****************/
 QLabel#label_choose_text,

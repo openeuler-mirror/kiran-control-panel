@@ -10,8 +10,10 @@
 
 #include <kiranwidgets-qt5/kiran-titlebar-window.h>
 #include "kiran-system-information.h"
+#include "license/user-license-agreement.h"
 
 #include <QPushButton>
+#include <QMenu>
 
 class KiranSystemWidget : public KiranTitlebarWindow
 {
@@ -25,6 +27,9 @@ public:
 private:
     QMenu* createMenu();
     void setMenuIntoTitlebar();
+private slots:
+    void actionEulaClicked();
+    void actionExportClicked();
 
 protected:
     bool eventFilter(QObject *target, QEvent *event);
@@ -32,6 +37,10 @@ protected:
 private:
      kiranSystemInformation *centerWgt;
      QPushButton* btnMenu;
+     QMenu* menu;
+     QAction* actionEULA ;
+     QAction* actionExport;
+     UserlicenseAgreement *userlicenseAgreement;
 };
 
 #endif // KIRANSYSTEMWIDGET_H
