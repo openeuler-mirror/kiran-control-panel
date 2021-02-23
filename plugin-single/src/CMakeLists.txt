@@ -1,17 +1,20 @@
-set(KCP_PLUGIN_DESKTOP_DIR ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATADIR}/${PROJECT_NAME}/plugins)
-ADD_DEFINITIONS(-DPLUGIN_DESKTOP_DIR=\"${KCP_PLUGIN_DESKTOP_DIR}\")
 
 file(GLOB src-code
-    "*.cpp"
     "*.h"
+    "*.cpp"
     )
+
+#翻译文件
+find_package(Qt5 COMPONENTS Widgets LinguistTools)
+file(GLOB TS_FILES "translations/*.ts")
+qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 
 add_executable(${PROJECT_NAME}
     ${global}
     ${interface}
     ${kiran-module-widget}
-    ${kiran-search-lineedit}
     ${src-code}
+    ${QM_FILES}
     )
 
 target_include_directories(${PROJECT_NAME} PRIVATE
@@ -25,4 +28,7 @@ target_include_directories(${PROJECT_NAME} PRIVATE
 target_link_libraries(${PROJECT_NAME}  Qt5::Core Qt5::Gui Qt5::Svg Qt5::X11Extras Qt5::Widgets dl kiranwidgets-qt5)
 
 #安装
-install(TARGETS ${PROJECT_NAME} DESTINATION ${KCP_INSTALL_BINDIR}/)
+install(TARGETS ${PROJECT_NAME} DESTINATION ${INSTALL_BINDIR}/)
+
+add_subdirectory(translations)
+

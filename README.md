@@ -61,12 +61,12 @@ eg:
 *********************Print plugins dir**********************  
    
 Plugin desktop dir:  /usr/share/kiran-control-center/plugins/desktop  //将插件(模块)的desktop文件安装到此处。控制面板主程序将从这里读取插件的desktop，根据desktop描述加载插件。  
-Plugin icon dir:     /usr/share/kiran-control-center/plugins/icons //将插件(模块)的desktop文件中Icon字段指定的图标文件安装到此处。   
+Plugin icon dir:     /usr/share/kiran-control-center/plugins/icons    //将插件(模块)的desktop文件中Icon字段指定的图标文件安装到此处。   
      
 ************************************************************`
 
 # 模块demo
-example目录下模块plugin_demo。
+example目录下模块plugin-demo。
 
 ## 模块编译成APP
 2. **源码根目录**下创建**build**目录`mkdir build`   
@@ -85,9 +85,25 @@ example目录下模块plugin_demo。
 1. 在**build**目录下执行`sudo make uninstall`
 
 ## 模块作为app的使用
-[root@localhost ~]# /usr/bin/plugin_demo
+[root@localhost ~]# /usr/bin/plugin-demo
 
 ## 模块作为plugin的使用
 插件编译安装后，运行控制中心程序，在控制中心程序中加载插件:    
 [root@localhost ~]# /usr/bin/kiran-control-center
 
+# kiran桌面环境的控制中心单独运行指定的插件
+###### 控制中心框架编译
+1.  安装编译依赖  
+   `sudo yum install gcc-c++ qt5-qtbase qt5-qtbase-devel qt5-qtx11extras qt5-qtx11extras-devel libX11 libX11-devel kiranwidgets-qt5`
+2. **源码根目录下创建**build**目录`mkdir build`
+3. 进入**build**目录,执行`cmake -DCMAKE_INSTALL_PREFIX=/usr -DSINGAL_PLUGIN=on ..`生成**Makefile**
+4. 执行`make`进行编译
+
+###### 安装
+1. 在**build**目录下执行`sudo make install`
+
+###### 卸载
+1. 在**build**目录下执行`sudo make uninstall`
+
+###### 具体控件的使用
+[root@localhost ~]# /usr/bin/kiran-control-center-single-plugin -m-name=plugin-demo     `// -m-name指定插件名称，对应于插件(模块)的desktop文件中Name字段的内容。注意：控制中心在此编译下，不会生成插件接口头文件和pc文件。开发插件时请按照文章开头的方式编译控制中心。`   

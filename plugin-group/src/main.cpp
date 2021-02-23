@@ -38,6 +38,7 @@ int main(int argc, char *argv[])
         printf("Plugin desktop dir: %s\n", PLUGIN_DESKTOP_DIR);
         printf("Plugin icon dir:    %s\n", PLUGIN_DESKTOP_ICON_DIR);
         printf("\n************************************************************\n");
+        return 0;
     }
 
     //窗口屏幕居中显示.

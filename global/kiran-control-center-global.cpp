@@ -104,7 +104,7 @@ KiranControlCenterGlobal::ModuleItem KiranControlCenterGlobal::getModuleItem(con
         ret.nameZh     = QString::fromUtf8(settings.value("Name[zh_CN]").toString().toLatin1().data());
         ret.comment    = settings.value("Comment").toString();
         ret.commentZh  = QString::fromUtf8(settings.value("Comment[zh_CN]").toString().toLatin1().data());
-        ret.icon       = PLUGIN_DESKTOP_ICON_DIR+settings.value("Icon").toString();
+        ret.icon       = PLUGIN_DESKTOP_ICON_DIR+QString(QDir::separator())+settings.value("Icon").toString();
         ret.pluginFile = settings.value("PluginFile").toString();
         ret.init();
         return ret;

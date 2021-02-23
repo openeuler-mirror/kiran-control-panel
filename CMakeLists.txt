@@ -14,10 +14,12 @@
 
 cmake_minimum_required(VERSION 3.0)
 if(${SINGAL_PLUGIN})
+    message("*********** build kiran-control-center-single-plugin ***********")
     project(kiran-control-center-single-plugin VERSION 1.0)
     set(KIRAN_CONTROL_CENTER_VERSION     1.0.0)
 
 else()
+    message("*********** build kiran-control-center ***********")
     project(kiran-control-center VERSION 1.0)
     set(KIRAN_CONTROL_CENTER_VERSION     1.0.0)
 endif()
@@ -42,33 +44,31 @@ set(INSTALL_LIBDIR ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR})
 set(INSTALL_DATADIR ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATADIR})
 
 #######################  由于cmakelist向下继承变量，所以这里提前申明宏定义。#######################
-####start 需要与插件开发人员约定的路径。
+#-------------   需要与插件开发人员约定的路径。  -------------#
 set(KCP_INSTALL_INCLUDE ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/) #接口头文件安装路径，与pc文件中对应。
-set(INSTALL_DATA_PROJECT_DIR ${INSTALL_DATADIR}/${PROJECT_NAME})
+if(${SINGAL_PLUGIN})
+    set(INSTALL_DATA_PLUGIN_DIR ${INSTALL_DATADIR}/kiran-control-center) #单独运行时，也是去kiran-control-center目录下加载插件。
+else()
+    set(INSTALL_DATA_PLUGIN_DIR ${INSTALL_DATADIR}/${PROJECT_NAME})
+endif()
 
 #category desktop
-set(INSTALL_DATA_CATEGORY_DIR ${INSTALL_DATA_PROJECT_DIR}/category)
+set(INSTALL_DATA_CATEGORY_DIR ${INSTALL_DATA_PLUGIN_DIR}/category)
 set(CATEGORY_DESKTOP_DIR ${INSTALL_DATA_CATEGORY_DIR}/desktop)
-#ADD_DEFINITIONS(-DCATEGORY_DESKTOP_DIR=\"${CATEGORY_DESKTOP_DIR}\")
 set(CATEGORY_DESKTOP_ICON_DIR ${INSTALL_DATA_CATEGORY_DIR}/icons)
-#ADD_DEFINITIONS(-DCATEGORY_DESKTOP_ICON_DIR=\"${CATEGORY_DESKTOP_ICON_DIR}\")
 
 #plugins desktop path
-set(INSTALL_DATA_PLUGIN_DIR ${INSTALL_DATA_PROJECT_DIR}/plugins)
-#ADD_DEFINITIONS(-DPLUGIN_DESKTOP_DIR=\"${INSTALL_DATA_PLUGIN_DIR}/desktop\") #插件的desktop安装路径。这个需要打印输出。
-#ADD_DEFINITIONS(-DPLUGIN_DESKTOP_ICON_DIR=\"${INSTALL_DATA_PLUGIN_DIR}/icons\") #插件的图标安装路径。这个也需要打印输出。
-####end
+set(INSTALL_DATA_PLUGIN_DIR ${INSTALL_DATA_PLUGIN_DIR}/plugins)
+#-------------------------------------------------#
 
 #app
 ###desktop
 set(SYSTEM_IMAGES_DIR ${INSTALL_DATADIR}/${PROJECT_NAME}/icons/)  #app图标安装路径。
-#ADD_DEFINITIONS(-DAPP_IMAGE_PATH=\"${SYSTEM_IMAGES_DIR}${PROJECT_NAME}.svg\") #app加载图标路径。
 ###翻译
-SET(INSTALL_DATA_TRANSLATE_DIR ${INSTALL_DATA_PROJECT_DIR}/translations/)  #app翻译文件安装路径。
-#ADD_DEFINITIONS(-DTRANSLATE_PREFIX=\"${INSTALL_DATA_TRANSLATE_DIR}${PROJECT_NAME}\")  #app加载翻译文件路径。
+SET(INSTALL_DATA_TRANSLATE_DIR ${INSTALL_DATADIR}/${PROJECT_NAME}/translations/)  #app翻译文件安装路径。
 
-configure_file(${CMAKE_SOURCE_DIR}/config.h.in ${CMAKE_BINARY_DIR}/config.h)
 #config.h
+configure_file(${CMAKE_SOURCE_DIR}/config.h.in ${CMAKE_BINARY_DIR}/config.h)
 include_directories(${CMAKE_BINARY_DIR})
 ##########################      end         #################################
 
@@ -78,13 +78,12 @@ file(GLOB interface "interface/*" )
 file(GLOB kiran-module-widget "widgets/kiran-module-widget/*" )
 file(GLOB kiran-search-lineedit "widgets/kiran-search-lineedit/*" )
 
-add_subdirectory(interface)
-add_subdirectory(data)
-
 if(${SINGAL_PLUGIN})
     add_subdirectory(plugin-single)
 
 else()
+    add_subdirectory(interface) #开发插件时，需要在正常状态下编译控制中心框架。
+    add_subdirectory(data)
     add_subdirectory(plugin-group)
 
 endif()

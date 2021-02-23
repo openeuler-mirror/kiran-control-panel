@@ -1,12 +1,11 @@
 #!/usr/bin/env xdg-open
-
 [Desktop Entry]
 Encoding=UTF-8
-Name=Control Center Single Plugin
-Name[zh_CN]=kiran-control-center-single-plugin.desktop
-Comment=kiran control center single plugin
-Comment=Kiran控制中心
-Exec=/usr/bin/kiran-control-center-single-plugin
+Name=Control Center Plugin
+Name[zh_CN]=控制中心插件运行
+Comment=kiran control center plugin
+Comment=Kiran控制中心插件运行
+Exec=@INSTALL_BINDIR@/@PROJECT_NAME@
 Icon=kiran-control-center-single-plugin.svg
 Terminal=false
 Type=Application
