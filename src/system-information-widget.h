@@ -11,6 +11,7 @@
 #include <QWidget>
 #include "license/active-guide-widget.h"
 #include "license/license-info-widget.h"
+#include "change-host-name-widget.h"
 namespace Ui {
 class SystemInformationWidget;
 }
@@ -31,9 +32,10 @@ private:
     virtual void resizeEvent(QResizeEvent *event) override;
 
 private slots:
-    void changeCurrentHostName(void);
+    void onBtnchangeHostName(void);
     void onBtnStatusClicked();
     void updateLicenseInfo(bool isregister);
+    void updateHostName(bool isChanged,QString name);
 
 protected:
     bool eventFilter(QObject *obj, QEvent *event);
@@ -54,6 +56,7 @@ private:
 
     ActGuideWidget *activeGuide;
     LicenseInfoWidget *licenseInfoWidget;
+    ChangeHostNameWidget* hostNameWidget;
 };
 
 #endif // SYSTEMINFORMATIONWIDGET_H

@@ -53,7 +53,8 @@ SOURCES += \
     license/user-license-agreement.cpp \
     kiran-system-widget.cpp \
     kiran-scroll-area.cpp \
-    kiran-list-widget.cpp
+    kiran-list-widget.cpp \
+    change-host-name-widget.cpp
 
 HEADERS += \
         kiran-system-information.h \
@@ -73,7 +74,8 @@ HEADERS += \
     license/user-license-agreement.h \
     kiran-system-widget.h \
     kiran-scroll-area.h \
-    kiran-list-widget.h
+    kiran-list-widget.h \
+    change-host-name-widget.h
 
 FORMS += \
         kiran-system-information.ui \
@@ -84,7 +86,8 @@ FORMS += \
     license/show-qrcode.ui \
     license/active-list-item.ui \
     license/license-info-widget.ui \
-    license/user-license-agreement.ui
+    license/user-license-agreement.ui \
+    change-host-name-widget.ui
 
 RESOURCES += \
     ../data/res.qrc \

@@ -30,7 +30,7 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="QListWidget" name="infoListWidget">
+    <widget class="KiranListWidget" name="infoListWidget">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
        <horstretch>0</horstretch>
@@ -65,10 +65,10 @@
       <enum>Qt::ScrollBarAsNeeded</enum>
      </property>
      <property name="horizontalScrollBarPolicy">
-      <enum>Qt::ScrollBarAsNeeded</enum>
+      <enum>Qt::ScrollBarAlwaysOff</enum>
      </property>
      <property name="sizeAdjustPolicy">
-      <enum>QAbstractScrollArea::AdjustIgnored</enum>
+      <enum>QAbstractScrollArea::AdjustToContents</enum>
      </property>
      <property name="autoScroll">
       <bool>false</bool>
@@ -135,7 +135,7 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>658</width>
+             <width>804</width>
              <height>666</height>
             </rect>
            </property>
@@ -197,6 +197,11 @@
    <extends>QScrollArea</extends>
    <header location="global">kiran-scroll-area.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>KiranListWidget</class>
+   <extends>QListWidget</extends>
+   <header>kiran-list-widget.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

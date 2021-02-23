@@ -9,6 +9,7 @@
 #include "ui_system-information-widget.h"
 #include "system-info-dbus.h"
 #include "license/active-guide-widget.h"
+#include "change-host-name-widget.h"
 #include <kylin-license/license_i.h>
 
 #include <QDebug>
@@ -35,14 +36,15 @@ SystemInformationWidget::SystemInformationWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::SystemInformationWidget),
     activeGuide(nullptr),
-    licenseInfoWidget(nullptr)
+    licenseInfoWidget(nullptr),
+    hostNameWidget(nullptr)
 {
     ui->setupUi(this);
     initUI();
     readSystemInfo(0);
     readLicenseInfo();
 
-    connect(ui->btn_change_name, SIGNAL(clicked()), this, SLOT(changeCurrentHostName()));
+    connect(ui->btn_change_name, SIGNAL(clicked()), this, SLOT(onBtnchangeHostName()));
     connect(ui->btn_status, SIGNAL(clicked()), this, SLOT(onBtnStatusClicked()));
 }
 
@@ -56,6 +58,10 @@ SystemInformationWidget::~SystemInformationWidget()
     if(licenseInfoWidget!=nullptr)
     {
         delete licenseInfoWidget;
+    }
+    if(hostNameWidget != nullptr)
+    {
+        delete hostNameWidget;
     }
 }
 
@@ -301,11 +307,19 @@ void SystemInformationWidget::getJsonValueFromString(QString jsonString)
 }
 
 /**
- * @brief SystemInformationWidget::changeCurrentHostName: 当点击更改用户名后的槽函数
+ * @brief SystemInformationWidget::onBtnchangeHostName: 当点击更改用户名后的槽函数
  */
-void SystemInformationWidget::changeCurrentHostName()
+void SystemInformationWidget::onBtnchangeHostName()
 {
-
+    if(hostNameWidget == nullptr)
+    {
+        hostNameWidget = new ChangeHostNameWidget;
+    }
+    hostNameWidget->setAttribute(Qt::WA_QuitOnClose,false);
+    hostNameWidget->installEventFilter(this);
+    connect(hostNameWidget, SIGNAL(sigChangeNameSuccessful(bool,QString)), this, SLOT(updateHostName(bool,QString)));
+    hostNameWidget->raise();
+    hostNameWidget->show();
 }
 
 /**
@@ -395,6 +409,20 @@ void SystemInformationWidget::updateLicenseInfo(bool isregister)
 
 }
 
+void SystemInformationWidget::updateHostName(bool isChanged, QString name)
+{
+    qInfo() << "update host name!" << endl;
+    if(isChanged)
+    {
+        qInfo() <<"new host name is" <<  name << endl;
+        ui->lab_name_info->setText(name);
+    }
+    else
+    {
+        return;
+    }
+}
+
 /**
  * @brief  事件监听，当收到激活向导窗口或者授权信息窗口的关闭事件时，释放窗口内存
  * @param  obj  事件对象
@@ -412,6 +440,11 @@ bool SystemInformationWidget::eventFilter(QObject *obj, QEvent *event)
     {
         licenseInfoWidget->deleteLater();
         licenseInfoWidget = nullptr;
+    }
+    else if(obj == hostNameWidget && event->type() == QEvent::Close)
+    {
+        hostNameWidget->deleteLater();
+        hostNameWidget = nullptr;
     }
     return false;
 }
