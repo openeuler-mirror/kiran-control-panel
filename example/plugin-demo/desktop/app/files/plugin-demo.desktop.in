@@ -2,12 +2,12 @@
 
 [Desktop Entry]
 Encoding=UTF-8
-Name=plugin_demo
+Name=plugin-demo
 Name[zh_CN]=插件demo
-Comment=plugin_demo
+Comment=plugin-demo
 Comment=插件demo
 Exec=@INSTALL_BINDIR@/@PROJECT_NAME@
-Icon=plugin_demo.svg
+Icon=plugin-demo.svg
 Terminal=false
 Type=Application
 Categories=Lightdm;Greeter;Core;Settings;System;X-Common-Features;X-Common-Features;
