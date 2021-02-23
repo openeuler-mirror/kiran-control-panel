@@ -57,7 +57,7 @@ PluginFile=/usr/lib/libkiran-start-menu-settings.so     #插件路径，主程�
 ###### 模块desktop文件的安装目录
 执行 `kiran-control-center --print-plugins-dir` 打印模块desktop文件的安装目录.   
 eg:  
-`[root@localhost ~]# kiran-control-center --print-plugins-dir  
+`[root@localhost ~]# /usr/bin/kiran-control-center --print-plugins-dir  
 *********************Print plugins dir**********************  
    
 Plugin desktop dir:  /usr/share/kiran-control-center/plugins/desktop  //将插件(模块)的desktop文件安装到此处。控制面板主程序将从这里读取插件的desktop，根据desktop描述加载插件。  

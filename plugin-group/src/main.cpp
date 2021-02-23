@@ -1,10 +1,12 @@
 #include "kiran-control-center-window.h"
+#include "stdio.h"
 #include <QApplication>
 #include <QTranslator>
 #include <QDesktopWidget>
 #include <QCommandLineParser>
 #include <QDebug>
 
+using namespace std;
 extern QString gLocaleName;
 
 int main(int argc, char *argv[])
@@ -32,10 +34,10 @@ int main(int argc, char *argv[])
     bool print = parser.isSet(printPluginsPath);
     if(print)
     {
-        qDebug() << "*********************Print plugins dir**********************\n";
-        qDebug() << "Plugin desktop dir: " << PLUGIN_DESKTOP_DIR;
-        qDebug() << "Plugin icon dir:    " << PLUGIN_DESKTOP_ICON_DIR;
-        qDebug() << "\n************************************************************";
+        printf("*********************Print plugins dir**********************\n\n");
+        printf("Plugin desktop dir: %s\n", PLUGIN_DESKTOP_DIR);
+        printf("Plugin icon dir:    %s\n", PLUGIN_DESKTOP_ICON_DIR);
+        printf("\n************************************************************\n");
     }
 
     //窗口屏幕居中显示.
