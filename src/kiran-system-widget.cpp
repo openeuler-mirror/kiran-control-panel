@@ -13,6 +13,8 @@
 #include <QFile>
 #include <QFileDialog>
 #include <QMessageBox>
+#include <QtPrintSupport/QPrinter>
+#include <QTextDocument>
 #include <QTimer>
 
 #define EULAFILE "/usr/share/kylin-release/EULA"
@@ -142,24 +144,43 @@ void KiranSystemWidget::actionEulaClicked()
 
 void KiranSystemWidget::actionExportClicked()
 {
+    //获取界面显示的EULA文字
+    if(userlicenseAgreement == nullptr)
+    {
+        userlicenseAgreement = new UserlicenseAgreement();
+    }
+    QString eulaText = userlicenseAgreement->getEulaText();
 
     QString fileName = QFileDialog::getSaveFileName(this,
                                                     tr("保存"),
-                                                    "/root",
-                                                    tr("Text(*.txt)"));
+                                                    "/root/EULA.pdf",
+                                                    tr("PDF(*.pdf)"));
+    if(fileName.isNull())
+    {
+        return;
+    }
     QFile file(fileName);
 
     if (!file.open(QIODevice::WriteOnly|QIODevice::Text))
     {
-        QMessageBox::critical(this, "critical", tr("文件保存失败！"),
-                              QMessageBox::Yes, QMessageBox::Yes);
+        KiranMessageBox::KiranStandardButton button = KiranMessageBox::message(nullptr,QString(tr("Export EULA")),QString(tr("Export EULA failed!")),KiranMessageBox::Ok);
+        if(button == KiranMessageBox::Ok)
+        {
+            return;
+        }
     }
     else
     {
-        QFileInfo fileInfo(fileName);
-//        if (fileInfo.exists())
-//            QFile::remove(fileName);
-        QFile::copy(EULAFILE, fileName);
+        //将EULA文字转化为PDF
+        QPrinter printer(QPrinter::PrinterResolution);
+        printer.setOutputFormat(QPrinter::PdfFormat);
+        printer.setPaperSize(QPrinter::A4);
+        printer.setOutputFileName(fileName);
+
+        QTextDocument doc;
+        doc.setPlainText(eulaText); /* 可替换为文档内容 */
+        doc.setPageSize(printer.pageRect().size());
+        doc.print(&printer);
     }
 }
 
