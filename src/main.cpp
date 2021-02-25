@@ -8,9 +8,10 @@
 
 #include "general-functions-class.h"
 #include "single/singleapplication.h"
+#include "config/config.h"
 
 /*FIXME: add config.in to define translate file dir later*/
-#define TRANSLATION_DIR "/usr/share/kiran-system-information/translations/"
+#define TRANSLATION_DIR TRANSLATIONS_FILE_DIR
 
 int main(int argc, char *argv[])
 {

@@ -84,7 +84,9 @@ QMenu* KiranSystemWidget::createMenu()
     actionExport = new QAction(this);
 
     actionEULA->setText(tr("EULA"));
-    actionExport->setText(tr("export"));
+    actionEULA->setToolTip(tr("Look over EULA"));
+    actionExport->setText(tr("Export"));
+    actionExport->setToolTip(tr("Export EULA"));
 
     QMenu* menu = new QMenu(this);
     menu->addAction(actionEULA);

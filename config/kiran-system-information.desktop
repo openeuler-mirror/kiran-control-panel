@@ -1,0 +1,16 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Encoding=UTF-8
+Name=Kiran System Information
+Name[zh_CN]=系统信息
+Comment=Kiran System Information
+Comment[zh_CN]=系统信息
+#Exec=@BIN_PATH@/kiran-system-information
+#Icon=@ICON_PATH@/kylin-license.png
+Exec=kiran-system-information
+Terminal=false
+Type=Application
+Categories=GNOME;GTK;Application;Core;Documentation;X-Kylin-Doc;
+StartupNotify=true
+X-KIRAN-NoDisplay=true
+
