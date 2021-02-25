@@ -65,5 +65,6 @@ install(FILES "./config/kiran-system-information.desktop"
 install(FILES ${QM_FILES}
         DESTINATION ${TRANSLATIONS_DIR})
 
-
+add_subdirectory(data)
+add_subdirectory(config)
 

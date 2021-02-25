@@ -15,6 +15,7 @@
 #include <QMessageBox>
 #include <QtPrintSupport/QPrinter>
 #include <QTextDocument>
+#include <QStandardPaths>
 #include <QTimer>
 
 #define EULAFILE "/usr/share/kylin-release/EULA"
@@ -152,10 +153,10 @@ void KiranSystemWidget::actionExportClicked()
         userlicenseAgreement = new UserlicenseAgreement();
     }
     QString eulaText = userlicenseAgreement->getEulaText();
-
+    QString currentHomePath = "/" + QStandardPaths::writableLocation(QStandardPaths::HomeLocation) +"/EULA.pdf" ;
     QString fileName = QFileDialog::getSaveFileName(this,
-                                                    tr("保存"),
-                                                    "/root/EULA.pdf",
+                                                    tr("Save"),
+                                                    currentHomePath,
                                                     tr("PDF(*.pdf)"));
     if(fileName.isNull())
     {
