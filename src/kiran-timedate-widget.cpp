@@ -21,7 +21,7 @@ enum KiranTimeDateStackPageEnum{
 #define DEFAULT_STYLE_FILE ":/themes/black_theme.qss"
 
 KiranTimeDateWidget::KiranTimeDateWidget(QWidget *parent)
-    : KiranTitlebarWindow(nullptr)
+    : QWidget(parent)
     , ui(new Ui::KiranTimeDateWidget)
     , m_updateTimer(0)
     , m_maskWidget(new MaskWidget(this))

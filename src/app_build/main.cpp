@@ -1,4 +1,4 @@
-#include "kiran-timedate-widget.h"
+#include "kiran-time-date-window.h"
 #include "log.h"
 #include "kiran-timedate-global-data.h"
 #include <kiran-single-application.h>

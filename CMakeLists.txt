@@ -17,14 +17,23 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
 
-file(GLOB_RECURSE SOURCES "src/*.cpp")
-file(GLOB_RECURSE HEADERS "src/*.h")
-file(GLOB_RECURSE FORMS "src/*.ui")
-file(GLOB_RECURSE TOOLS_SOURCES "tools/*.cpp")
-file(GLOB_RECURSE TOOLS_HEADERS "tools/*.h")
-file(GLOB_RECURSE RESOURCES "resources/*.qrc")
-set( TS_FILES "translations/${PROJECT_NAME}.zh_CN.ts" )
-
+file(GLOB_RECURSE SRC
+        "src/dbus-api-wrapper/*.cpp"
+        "src/dbus-api-wrapper/*.h"
+        "src/timezone/*.cpp"
+        "src/timezone/*.h"
+        "src/tools/*.cpp"
+        "src/tools/*.h"
+        "src/widgets/*.cpp"
+        "src/widgets/*.h"
+        "resources/*.qrc"
+        "libs/*.cpp"
+        "libs/*.h")
+file(GLOB SRC_TIMEDATE
+        "src/*.cpp"
+        "src/*.h"
+        "src/*.ui")
+list(APPEND SRC ${SRC_TIMEDATE})
 include_directories("${CMAKE_BINARY_DIR}" "src" )
 
 set( TS_FILES "translations/${PROJECT_NAME}.zh_CN.ts" )
@@ -44,7 +53,7 @@ target_include_directories(${PROJECT_NAME} PRIVATE
         src/dbus-api-wrapper
         src/timezone
         src/widgets
-        tools
+        src/tools
         ${KIRAN_WIDGETS_QT5_INCLUDE_DIRS})
 
 target_link_libraries(${PROJECT_NAME}
