@@ -18,4 +18,13 @@
     <qresource prefix="/qss">
         <file>style.qss</file>
     </qresource>
+    <qresource prefix="/logos">
+        <file>logos/amd.svg</file>
+        <file>logos/HUAWEI Kunpeng.png</file>
+        <file>logos/Loongson.gif</file>
+        <file>logos/PHYTIUM.png</file>
+        <file>logos/sw_64.png</file>
+        <file>logos/ZHAOXIN.png</file>
+        <file>logos/intel.jpg</file>
+    </qresource>
 </RCC>

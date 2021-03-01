@@ -36,6 +36,10 @@ QLabel#lab_status,QLabel#lab_name_info
 {
     margin-right:8px;
 }
+/*QLabel#label_logo
+{
+    background-color: yellow;
+}*/
 
 /*******************QWidget**********/
 QWidget#widget_CPU,QWidget#widget_memory,QWidget#widget_hard_disk,QWidget#widget_graphics_card,QWidget#widget_network_card,

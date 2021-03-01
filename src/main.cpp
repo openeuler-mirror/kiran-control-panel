@@ -5,7 +5,7 @@
 #include <QDebug>
 #include <QLoggingCategory>
 #include <QTranslator>
-
+#include <kiranwidgets-qt5/kiran-application.h>
 #include "general-functions-class.h"
 #include "single/singleapplication.h"
 #include "config/config.h"
@@ -20,8 +20,9 @@ int main(int argc, char *argv[])
     QLoggingCategory::defaultCategory()->setEnabled(QtMsgType::QtDebugMsg,true);
     qDebug("******New Output*********\n");
 
-    SingleApplication a(argc, argv);
+    KiranApplication a(argc, argv);
 
+    qInfo()<< "one process " << endl;
     ///加载qss样式表
     QFile file(":/qss/style.qss");
     if( file.open(QFile::ReadOnly))

@@ -42,25 +42,22 @@ add_executable(kiran-system-information
 			${HEADERS}
 			${FORMS}
 			${RESOURCES}
-        	${QM_FILES}
+	        	${QM_FILES}
 			${QSS})
 			
 target_link_libraries(kiran-system-information 
         Qt5::Widgets
         Qt5::DBus
         Qt5::Svg
-		 Qt5::PrintSupport
-		 QZint
-		 glib-2.0
+	Qt5::PrintSupport
+	Qt5::Core
+	QZint
+	glib-2.0
         kiranwidgets-qt5
         ${KIRAN_WIDGETS_QT5_LIBRARIES})
 
 install(TARGETS ${PROJECT_NAME}
         DESTINATION ${CMAKE_INSTALL_PREFIX}/bin/)
-
-install(FILES "./config/kiran-system-information.desktop"
-        DESTINATION ${SHARE_INSTALL_PREFIX}/applications/ )
-
 
 install(FILES ${QM_FILES}
         DESTINATION ${TRANSLATIONS_DIR})

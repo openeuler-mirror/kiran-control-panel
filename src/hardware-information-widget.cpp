@@ -15,6 +15,9 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QLabel>
+#include <QImage>
+#include <QPixmap>
+#include <Qt>
 #include <kiran-cc-daemon/kiran-system-daemon/systeminfo_i.h>
 
 #define MEMORY          "mem"
@@ -150,6 +153,7 @@ void HardwareInformationWidget::getJsonValueFromString(QString jsonString)
                }
                QString cpuInfo = QString("%1 X %2").arg(model).arg(coresNumber);
                ui->label_CPU_info->setText(cpuInfo);
+               setCpuLogo(model);
 
            }
        }
@@ -348,4 +352,103 @@ void HardwareInformationWidget::showListInfo()
         labelEths->setStyleSheet("QLabel{color:#7e7e7e;font-family: \"Noto Sans CJK SC regular\";font-size:12px;}");
         ui->gridLayout_network_card->addWidget(labelEths,i,0,Qt::AlignRight);
     }
+}
+
+void HardwareInformationWidget::setCpuLogo(QString cpuModel)
+{
+    qInfo() << "set logo " << endl;
+    //根据cpu 型号名添加对应logo
+    QImage imgLogo ;
+    if(cpuModel.contains("Intel",Qt::CaseInsensitive))
+    {
+        if(!imgLogo.load(":/logos/logos/intel.jpg"))
+        {
+            qDebug() << "can't load logo image" << endl;
+            return;
+        }
+    }
+    else if(cpuModel.contains("ZHAOXIN", Qt::CaseInsensitive))
+    {
+        if(!imgLogo.load(":/logos/logos/ZHAOXIN.png"))
+        {
+            qDebug() << "can't load logo image" << endl;
+            return;
+        }
+    }
+    else if(cpuModel.contains("HUAWEI Kunpeng", Qt::CaseInsensitive))
+    {
+        if(!imgLogo.load(":/logos/logos/HUAWEI Kunpeng.png"))
+        {
+            qDebug() << "can't load logo image" << endl;
+            return;
+        }
+    }
+    else if(cpuModel.contains("LOONGSON", Qt::CaseInsensitive))
+    {
+        if(!imgLogo.load(":/logos/logos/Loongson.gif"))
+        {
+            qDebug() << "can't load logo image" << endl;
+            return;
+        }
+    }
+    else if(cpuModel.contains("PHYTIUM", Qt::CaseInsensitive))
+    {
+        if(!imgLogo.load(":/logos/logos/PHYTIUM.png"))
+        {
+            qDebug() << "can't load logo image" << endl;
+            return;
+        }
+    }
+    else if(cpuModel.contains("AMD", Qt::CaseInsensitive))
+    {
+        if(!imgLogo.load(":/logos/logos/amd.svg"))
+        {
+            qDebug() << "can't load logo image" << endl;
+            return;
+        }
+    }
+    else if(cpuModel.contains("sw_64", Qt::CaseInsensitive))
+    {
+        if(!imgLogo.load(":/logos/logos/sw_64.png"))
+        {
+            qDebug() << "can't load logo image" << endl;
+            return;
+        }
+    }
+    scaledPixmap(imgLogo);
+}
+
+void HardwareInformationWidget::scaledPixmap(QImage img)
+{
+    float labelLogoWidth = this->width();
+    float labelLogoHeight = ui->widget_logo->height() - 80;
+    float newWidth, newHeight;  //新的宽和高
+
+    qInfo() << "label width:" << labelLogoWidth << " label height:" << labelLogoHeight << endl;
+    QPixmap pixmap;
+    pixmap = QPixmap::fromImage(img);
+    float scaledWidth = labelLogoWidth/pixmap.width();
+    float scaledHeight = labelLogoHeight/pixmap.height();
+
+    qInfo() << "pixmap width: " << pixmap.width() << " pixmap height: " << pixmap.height() << endl;
+
+    if(pixmap.width() < labelLogoWidth && pixmap.height() < labelLogoHeight)
+    {
+        ui->label_logo->setPixmap(pixmap);
+        return;
+    }
+    else if(scaledHeight < scaledWidth)
+    {
+        qInfo() << "pixmap height heighter" << endl;
+        newWidth = pixmap.width() * scaledHeight;
+        newHeight = pixmap.height() * scaledHeight;
+    }
+    else if(scaledHeight >= scaledWidth)
+    {
+        qInfo() << "pixmap height heighter" << endl;
+        newWidth = pixmap.width() * scaledWidth;
+        newHeight = pixmap.height() * scaledWidth;
+    }
+    pixmap = pixmap.scaled(newWidth,newHeight,Qt::KeepAspectRatio);
+    ui->label_logo->setPixmap(pixmap);
 }

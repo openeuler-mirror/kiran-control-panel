@@ -10,6 +10,7 @@
 
 #include <QWidget>
 #include <QStringList>
+#include <QImage>
 
 namespace Ui {
 class HardwareInformationWidget;
@@ -28,6 +29,8 @@ private:
     void readHardwareInfo(int infoType);
     void getJsonValueFromString(QString jsonString);
     void showListInfo();
+    void setCpuLogo(QString cpuModel);
+    void scaledPixmap(QImage img);
 
 private:
     Ui::HardwareInformationWidget *ui;

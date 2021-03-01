@@ -17,7 +17,7 @@
 #include <iostream>
 
 using namespace std;
-#define OUTPUTFILE "/tmp/kylin-system-information.log"
+#define OUTPUTFILE "/tmp/kiran-system-information.log"
 
 GeneralFunctionsClass::GeneralFunctionsClass()
 {
@@ -84,23 +84,45 @@ void GeneralFunctionsClass::customMessageHandler(QtMsgType type, const QMessageL
     }
     QFile file(OUTPUTFILE);
     QFileInfo fileInfo(OUTPUTFILE);
-    if(!fileInfo.dir().exists() && !fileInfo.dir().mkpath(fileInfo.dir().path())){
-        fprintf(stderr,"make output file failed\n");
-        return ;
-    }
-    if(!file.open(QIODevice::WriteOnly | QIODevice::Append))
+    //调试文件没有被创建过
+    if(!fileInfo.dir().exists() && !fileInfo.dir().mkpath(fileInfo.dir().path()))
     {
+       fprintf(stderr,"make log file failed\n");
+       goto Create;
+    }
+
+Create:
+    while(!file.open(QIODevice::WriteOnly | QIODevice::Append))
+    {
+
+        cout << "open log file " << endl;
         QFlags<QFile::Permission> flags = QFile::ReadOwner|QFile::WriteOwner|
                                                           QFile::ReadUser |QFile::WriteUser |
                                                           QFile::ReadGroup|QFile::WriteGroup|
                                                           QFile::ReadOther|QFile::WriteOther;
+//        file.setPermissions(QFile::ReadOwner|QFile::WriteOwner|
+//                            QFile::ReadUser |QFile::WriteUser |
+//                            QFile::ReadGroup|QFile::WriteGroup|
+//                            QFile::ReadOther|QFile::WriteOther);
         if( file.permissions() != flags ){
-            file.setPermissions(flags);
+            if(file.setPermissions(flags))
+            {
+                cout << "set permission ok" << endl;
+            }
+            else
+            {
+                cout << "set permission failed " << endl;
+            }
+        }
+        else
+        {
+            cout << "permission  == flag " << endl;
         }
     }
     QTextStream stream(&file);
     stream << mmsg << "\r\n";
     file.flush();
     file.close();
-    mutex.unlock();  
+    mutex.unlock();
+
 }
