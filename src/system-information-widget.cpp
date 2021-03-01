@@ -18,6 +18,9 @@
 #include <QJsonValue>
 #include <QDateTime>
 #include <QDesktopWidget>
+#include <QFont>
+
+#define SYSTEM_LOGO     "KylinSecOS"
 
 #define HOST_NAME        "host_name"
 #define ARCH             "arch"
@@ -447,5 +450,16 @@ bool SystemInformationWidget::eventFilter(QObject *obj, QEvent *event)
         hostNameWidget = nullptr;
     }
     return false;
+}
+
+void SystemInformationWidget::paintEvent(QPaintEvent *painEvent)
+{
+    QPainter painter(this);
+    QFont font = QFont("Noto Sans CJK SC regular", 58);
+    QRect drawRec =QRect(0,40,this->width(),ui->widget_logo->height());
+
+    painter.setPen(QColor(46,179,255));  //#2eb3FF
+    painter.setFont(font);
+    painter.drawText(drawRec, Qt::AlignHCenter,SYSTEM_LOGO);
 }
 

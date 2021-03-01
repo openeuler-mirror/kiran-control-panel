@@ -9,6 +9,7 @@
 #define SYSTEMINFORMATIONWIDGET_H
 
 #include <QWidget>
+#include <QPaintEvent>
 #include "license/active-guide-widget.h"
 #include "license/license-info-widget.h"
 #include "change-host-name-widget.h"
@@ -39,6 +40,7 @@ private slots:
 
 protected:
     bool eventFilter(QObject *obj, QEvent *event);
+    void paintEvent(QPaintEvent* painEvent);
 
 private:
     Ui::SystemInformationWidget *ui;
