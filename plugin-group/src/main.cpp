@@ -34,10 +34,7 @@ int main(int argc, char *argv[])
     bool print = parser.isSet(printPluginsPath);
     if(print)
     {
-        printf("*********************Print plugins dir**********************\n\n");
-        printf("Plugin desktop dir: %s\n", PLUGIN_DESKTOP_DIR);
-        printf("Plugin icon dir:    %s\n", PLUGIN_DESKTOP_ICON_DIR);
-        printf("\n************************************************************\n");
+        printf("%s", PLUGIN_DESKTOP_DIR);
         return 0;
     }
 
