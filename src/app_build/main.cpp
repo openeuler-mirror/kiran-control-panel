@@ -79,8 +79,8 @@ int main(int argc, char *argv[])
         return -1;
     }
 
-    KiranTimeDateWidget widget;
-    widget.show();
+    KiranTimeDateWindow window;
+    window.show();
 
     return app.exec();
 }

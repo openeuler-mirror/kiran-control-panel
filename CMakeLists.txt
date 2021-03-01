@@ -6,8 +6,12 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
+include(kdtm-variables)
+
 find_package(PkgConfig REQUIRED)
 pkg_search_module(KIRAN_WIDGETS_QT5 REQUIRED kiranwidgets-qt5)
+find_package(Qt5 COMPONENTS Widgets Svg DBus Network LinguistTools)
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
@@ -23,17 +27,17 @@ set( TS_FILES "translations/${PROJECT_NAME}.zh_CN.ts" )
 
 include_directories("${CMAKE_BINARY_DIR}" "src" )
 
-find_package(Qt5 COMPONENTS Widgets Svg DBus Network LinguistTools)
-
+set( TS_FILES "translations/${PROJECT_NAME}.zh_CN.ts" )
 qt5_create_translation( QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES} )
+set(TRANSLATE_INSTALL_DIR "${KDTM_DATA_INSTALL_DIR}/${PROJECT_NAME}/translations/")
 
-add_executable(${PROJECT_NAME}
-        ${SOURCES}
-        ${HEADERS}
-        ${TOOLS_SOURCES}
-        ${TOOLS_HEADERS}
-        ${RESOURCES}
-        ${QM_FILES})
+#若定义了插件Desktop文件目录，则编译成插件
+if( DEFINED PLUGIN_DESKTOP_DIR )
+    configure_file(./config/config.h.in ${CMAKE_BINARY_DIR}/config.h @ONLY)
+    include(plugin-build)
+else()
+    include(app-build)
+endif()
 
 target_include_directories(${PROJECT_NAME} PRIVATE
         include
@@ -53,11 +57,4 @@ target_link_libraries(${PROJECT_NAME}
         kiranwidgets-qt5
         ${KIRAN_WIDGETS_QT5_LIBRARIES})
 
-install(TARGETS ${PROJECT_NAME}
-        DESTINATION ${CMAKE_INSTALL_PREFIX}/bin/)
-
-install(FILES ${QM_FILES}
-        DESTINATION ${SHARE_INSTALL_PREFIX}/${PROJECT_NAME}/translations/ )
-
-install(FILES "./config/${PROJECT_NAME}.desktop"
-        DESTINATION ${SHARE_INSTALL_PREFIX}/applications/ )
+install(FILES ${QM_FILES} DESTINATION ${TRANSLATE_INSTALL_DIR} )

@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=TimeDate
+Name[zh_CN]=日期时间设置
+Comment=Time date settings
+Comment[zh_CN]=日期时间设置
+Icon=datetime.png
+Weight=1
+Category=Datetime
+PluginFile=@KDTM_LIB_INSTALL_DIR@/lib@PROJECT_NAME@.so

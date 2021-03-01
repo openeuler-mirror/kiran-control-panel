@@ -18,6 +18,7 @@ enum KiranTimeDateStackPageEnum{
 };
 
 #define KEY_FONT_NAME "fontName"
+#define DEFAULT_STYLE_FILE ":/themes/black_theme.qss"
 
 KiranTimeDateWidget::KiranTimeDateWidget(QWidget *parent)
     : KiranTitlebarWindow(nullptr)
@@ -25,7 +26,7 @@ KiranTimeDateWidget::KiranTimeDateWidget(QWidget *parent)
     , m_updateTimer(0)
     , m_maskWidget(new MaskWidget(this))
 {
-    ui->setupUi(getWindowContentWidget());
+    ui->setupUi(this);
     initUI();
     m_updateTimer = startTimer(1000);
 }
@@ -38,11 +39,6 @@ KiranTimeDateWidget::~KiranTimeDateWidget()
 void KiranTimeDateWidget::initUI()
 {
     KiranTimeDateGlobalData* globalData = KiranTimeDateGlobalData::instance();
-
-    setTitle(tr("Time And Date Manager"));
-
-    QIcon icon = QIcon::fromTheme("preferences-system-time");
-    setIcon(icon);
 
     /// 显示时区和所在区域
     ui->label_utc->setContentsMargins(-1,24,-1,-1);
@@ -190,7 +186,7 @@ void KiranTimeDateWidget::initUI()
     });
 
     updateTimeLabel();
-
+    loadStyleSheet();
     ///设置默认页
     ui->tabList->setCurrentRow(0);
 }
@@ -241,5 +237,14 @@ void KiranTimeDateWidget::setMaskWidgetVisible(bool visible)
     m_maskWidget->setVisible(visible);
     if( visible ){
         this->stackUnder(m_maskWidget);
+    }
+}
+
+void KiranTimeDateWidget::loadStyleSheet() {
+    QFile file(DEFAULT_STYLE_FILE);
+    if(file.open(QIODevice::ReadOnly)){
+        this->setStyleSheet(file.readAll()+qApp->styleSheet());
+    }else{
+        qWarning() << "load style sheet failed";
     }
 }

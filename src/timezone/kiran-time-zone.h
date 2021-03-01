@@ -7,6 +7,8 @@ namespace Ui {
 class KiranTimeZone;
 }
 
+#include <QEvent>
+
 class KiranTimeZone : public QWidget
 {
     Q_OBJECT
@@ -33,6 +35,13 @@ signals:
     void editHasFocusChanged(bool editHasFocus);
 
 protected:
+    virtual bool event(QEvent *event) override {
+        if(event->type()==QEvent::ShowToParent){
+            scrollToCurrent();
+        }
+        return QWidget::event(event);
+    }
+
     virtual void paintEvent(QPaintEvent *event) override;
     bool eventFilter(QObject *obj, QEvent *event) override;
 

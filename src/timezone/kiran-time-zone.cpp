@@ -63,7 +63,6 @@ void KiranTimeZone::reset()
 void KiranTimeZone::scrollToCurrent()
 {
     QObjectList objList = ui->timeZoneList->allTimeZoneWidget()->children();
-
     foreach (QObject* obj, objList) {
         KiranTimeZoneItem* item = qobject_cast<KiranTimeZoneItem*>(obj);
         if(item&&item->getTimeZoneID()==m_selectedZoneID){
@@ -105,7 +104,6 @@ void KiranTimeZone::initUI()
     });
 
     ui->timeZoneList->initAllTimeZone();
-    QTimer::singleShot(0,this,SLOT(scrollToCurrent()));
 }
 
 void KiranTimeZone::setEditHasFocus(bool editHasFocus)

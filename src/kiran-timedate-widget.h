@@ -3,7 +3,6 @@
 
 #include <QWidget>
 #include <QGSettings>
-#include <kiranwidgets-qt5/kiran-titlebar-window.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class KiranTimeDateWidget; }
@@ -12,7 +11,7 @@ QT_END_NAMESPACE
 class MaskWidget;
 class KiranSwitchButton;
 class QListWidgetItem;
-class KiranTimeDateWidget : public KiranTitlebarWindow
+class KiranTimeDateWidget : public QWidget
 {
     Q_OBJECT
 
@@ -22,6 +21,7 @@ public:
 
 private:
     void initUI();
+    void loadStyleSheet();
     void updateTimeLabel();
     void updateTimeZoneLabel();
     void setMaskWidgetVisible(bool visible);

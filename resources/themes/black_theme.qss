@@ -30,6 +30,7 @@ KiranTimeZoneItem:focus{
 KiranTimeZoneItem:hover{
     background:rgba(255,255,255,0.05);
 }
+
 KiranTimeZoneItem[isSelected="true"]{
     background:rgb(67,163,242);
 }
@@ -45,6 +46,7 @@ KiranTimeZoneItem[isSelected="false"] QLabel#icon{
 }
 KiranTimeZoneItem QLabel{
     color:white;
+    background:transparent;
 }
 
 #time_sep1,#time_sep2{
