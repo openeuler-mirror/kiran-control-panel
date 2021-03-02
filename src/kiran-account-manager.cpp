@@ -191,7 +191,7 @@ void KiranAccountManager::initPageCreateUser() {
         QTimer::singleShot(0, this, [=]() {
             int findIdx = -1;
             for (int i = 0; i < m_tabList->count(); i++) {
-                if (m_tabList->item(i)->data(Qt::UserRole) != userPath) {
+                if (m_tabList->item(i)->data(ITEM_USER_OBJ_PATH_ROLE) != userPath) {
                     continue;
                 }
                 findIdx = i;
