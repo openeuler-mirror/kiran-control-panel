@@ -70,7 +70,7 @@ example目录下模块plugin-demo。
 
 ## 模块编译成LIB
 2. **源码根目录**下创建**build**目录`mkdir build`   
-3. 进行**build**目录,执行`cmake -DCMAKE_INSTALL_PREFIX=/usr -DPLUGIN_DIR=/usr/share/kiran-control-center/plugins ..`生成**Makefile**，PLUGIN_DIR的路径，通过执行： kiran-control-center --print-plugins-dir 输出.   
+3. 进行**build**目录,执行`cmake -DCMAKE_INSTALL_PREFIX=/usr -DBUILD_PLUGIN=on ..`生成**Makefile**，PLUGIN_DIR的路径，通过执行： kiran-control-center --print-plugins-dir 输出.   
 4. 执行`make`进行编译
 
 ## 模块安装

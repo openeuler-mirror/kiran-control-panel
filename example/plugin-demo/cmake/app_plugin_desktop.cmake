@@ -2,7 +2,7 @@ if(DEFINED PLUGIN_DIR)
 	configure_file(${CMAKE_SOURCE_DIR}/desktop/plugin/files/${PROJECT_NAME}.desktop.in ${CMAKE_BINARY_DIR}/desktop/plugin/files/${PROJECT_NAME}.desktop)
     #文件
     file(GLOB desktop_files "${CMAKE_BINARY_DIR}/desktop/plugin/files/*")
-    install(FILES ${desktop_files} DESTINATION ${PLUGIN_DIR}/desktop)
+    install(FILES ${desktop_files} DESTINATION ${PLUGIN_DIR})
     #图片
     file(GLOB desktop_images "plugin/images/*")
     install(FILES ${desktop_images} DESTINATION ${PLUGIN_DIR}/icons)
