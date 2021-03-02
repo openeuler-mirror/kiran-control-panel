@@ -454,12 +454,28 @@ bool SystemInformationWidget::eventFilter(QObject *obj, QEvent *event)
 
 void SystemInformationWidget::paintEvent(QPaintEvent *painEvent)
 {
+    QDate currentDate = QDate::currentDate();
+    QString date = currentDate.toString("yyyy-MM-dd");
+    QString year = date.left(4);
+    QString copyright = QString(tr("Copyright ©"))+ QString("%1 ").arg(year)+QString(tr("KylinSec. All rights reserved."));
+
     QPainter painter(this);
-    QFont font = QFont("Noto Sans CJK SC regular", 58);
-    QRect drawRec =QRect(0,40,this->width(),ui->widget_logo->height());
+    QFont font = QFont("Noto Sans CJK SC regular",46);
+    QRect drawRecLogo = QRect(this->geometry().x(),this->geometry().y()+16,this->width(),ui->widget_logo->height()-16);
 
     painter.setPen(QColor(46,179,255));  //#2eb3FF
     painter.setFont(font);
-    painter.drawText(drawRec, Qt::AlignHCenter,SYSTEM_LOGO);
+    painter.drawText(drawRecLogo, Qt::AlignHCenter,SYSTEM_LOGO);
+
+    QFontMetrics fm = painter.fontMetrics();
+    int heightText = fm.height();
+
+    int offsetHeight = heightText+5+16;
+    QRect drawRecCopyright = QRect(0,this->geometry().y()+offsetHeight, this->width(),ui->widget_logo->height()-offsetHeight);
+    font.setPointSize(10);
+    font.setWeight(QFont::Normal);
+    painter.setPen(QColor(255,255,255));
+    painter.setFont(font);
+    painter.drawText(drawRecCopyright,Qt::AlignHCenter,copyright);
 }
 
