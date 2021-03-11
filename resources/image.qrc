@@ -1,0 +1,31 @@
+<RCC>
+    <qresource prefix="/">
+        <file>images/rotation_right_btn_s.svg</file>
+        <file>images/rotation_right_btn_pre.svg</file>
+        <file>images/rotation_right_btn_n.svg</file>
+        <file>images/rotation_right_btn_d.svg</file>
+        <file>images/rotation_left_btn_s.svg</file>
+        <file>images/rotation_left_btn_pre.svg</file>
+        <file>images/rotation_left_btn_n.svg</file>
+        <file>images/rotation_left_btn_d.svg</file>
+        <file>images/open_btn_disable.png</file>
+        <file>images/open_btn.png</file>
+        <file>images/ok.png</file>
+        <file>images/identification_btn_s.svg</file>
+        <file>images/identification_btn_pre.svg</file>
+        <file>images/identification_btn_n.svg</file>
+        <file>images/identification_btn_d.svg</file>
+        <file>images/icon_arrow.svg</file>
+        <file>images/Flip vertically_btn_s.svg</file>
+        <file>images/Flip vertically_btn_pre.svg</file>
+        <file>images/Flip vertically_btn_n.svg</file>
+        <file>images/Flip vertically_btn_d.svg</file>
+        <file>images/Flip vertically_btn_check.svg</file>
+        <file>images/Flip horizontally_btn_s.svg</file>
+        <file>images/Flip horizontally_btn_pre.svg</file>
+        <file>images/Flip horizontally_btn_n.svg</file>
+        <file>images/Flip horizontally_btn_check.svg</file>
+        <file>images/close_btn_disable.png</file>
+        <file>images/close_btn.png</file>
+    </qresource>
+</RCC>

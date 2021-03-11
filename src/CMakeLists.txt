@@ -8,7 +8,7 @@ file(GLOB SRC
     "./*.cpp"
     "./*.h"
     "./*.ui"
-    "../images/*.qrc"
+    "../resources/*.qrc"
     )
 #翻译文件
 include_directories("${CMAKE_BINARY_DIR}/src")

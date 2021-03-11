@@ -125,19 +125,19 @@
           </property>
           <property name="styleSheet">
            <string notr="true">QPushButton{
- border-image:url(:/images/rotation_left_btn_n.svg) ;
+ border-image:url(://images/rotation_left_btn_n.svg) ;
 border-radius:4px;
 }
  QPushButton:hover {
- border-image: url(:/images/rotation_left_btn_s.svg);
+ border-image: url(://images/rotation_left_btn_s.svg);
   }
   QPushButton:pressed {
- border-image: url(:/images/rotation_left_btn_pre.svg);
+ border-image: url(://images/rotation_left_btn_pre.svg);
   }
 QToolTip{color:#000000;border: 0px solid #ffffff;background:#b3b3b3;}
 
   QPushButton:disabled {
- border-image: url(:/images/rotation_left_btn_d.svg);
+ border-image: url(://images/rotation_left_btn_d.svg);
   }
 </string>
           </property>
@@ -165,19 +165,19 @@ QToolTip{color:#000000;border: 0px solid #ffffff;background:#b3b3b3;}
           </property>
           <property name="styleSheet">
            <string notr="true">QPushButton{
- border-image:url(:/images/rotation_right_btn_n.svg) ;
+ border-image:url(://images/rotation_right_btn_n.svg) ;
 border-radius:4px;
 }
  QPushButton:hover {
- border-image: url(:/images/rotation_right_btn_s.svg);
+ border-image: url(://images/rotation_right_btn_s.svg);
   }
   QPushButton:pressed {
- border-image: url(:/images/rotation_right_btn_pre.svg);
+ border-image: url(://images/rotation_right_btn_pre.svg);
   }
 
 QToolTip{color:#000000;border: 0px solid #ffffff;background:#b3b3b3;}
   QPushButton:disabled {
- border-image: url(:/images/rotation_right_btn_d.svg);
+ border-image: url(://images/rotation_right_btn_d.svg);
   }</string>
           </property>
           <property name="text">
@@ -204,21 +204,21 @@ QToolTip{color:#000000;border: 0px solid #ffffff;background:#b3b3b3;}
           </property>
           <property name="styleSheet">
            <string notr="true">QPushButton{
- border-image:url(:/images/Flip horizontally_btn_n.svg) ;
+ border-image:url(://images/Flip horizontally_btn_n.svg) ;
 border-radius:4px;
 }
  QPushButton:hover {
- border-image: url(:/images/Flip horizontally_btn_s.svg);
+ border-image: url(://images/Flip horizontally_btn_s.svg);
   }
   QPushButton:pressed {
- border-image: url(:/images/Flip horizontally_btn_pre.svg);
+ border-image: url(://images/Flip horizontally_btn_pre.svg);
   }
   QPushButton:checked {
- border-image: url(:/images/Flip horizontally_btn_check.svg);
+ border-image: url(://images/Flip horizontally_btn_check.svg);
   }
 QToolTip{color:#000000;border: 0px solid #ffffff;background:#b3b3b3;}
   QPushButton:disabled {
- border-image: url(:/images/Flip horizontally_btn_d.svg);
+ border-image: url(://images/Flip horizontally_btn_d.svg);
   }</string>
           </property>
           <property name="text">
@@ -248,21 +248,21 @@ QToolTip{color:#000000;border: 0px solid #ffffff;background:#b3b3b3;}
           </property>
           <property name="styleSheet">
            <string notr="true">QPushButton{
- border-image:url(:/images/Flip vertically_btn_n.svg) ;
+ border-image:url(://images/Flip vertically_btn_n.svg) ;
 border-radius:4px;
 }
  QPushButton:hover {
- border-image: url(:/images/Flip vertically_btn_s.svg);
+ border-image: url(://images/Flip vertically_btn_s.svg);
   }
   QPushButton:pressed {
- border-image: url(:/images/Flip vertically_btn_pre.svg);
+ border-image: url(://images/Flip vertically_btn_pre.svg);
   }
   QPushButton:checked {
- border-image: url(:/images/Flip vertically_btn_check.svg);
+ border-image: url(://images/Flip vertically_btn_check.svg);
   }
 QToolTip{color:#000000;border: 0px solid #ffffff;background:#b3b3b3;}
   QPushButton:disabled {
- border-image: url(:/images/Flip vertically_btn_d.svg);
+ border-image: url(://images/Flip vertically_btn_d.svg);
   }</string>
           </property>
           <property name="text">
@@ -292,20 +292,20 @@ QToolTip{color:#000000;border: 0px solid #ffffff;background:#b3b3b3;}
           </property>
           <property name="styleSheet">
            <string notr="true">QPushButton{
- border-image:url(:/images/identification_btn_n.svg) ;
+ border-image:url(://images/identification_btn_n.svg) ;
 border-radius:4px;
 }
  QPushButton:hover {
- border-image: url(:/images/identification_btn_s.svg);
+ border-image: url(://images/identification_btn_s.svg);
   }
   QPushButton:pressed {
- border-image: url(:/images/identification_btn_pre.svg);
+ border-image: url(://images/identification_btn_pre.svg);
   }
 
 QToolTip{color:#000000;border: 0px solid #ffffff;background:#b3b3b3;}
 
   QPushButton:disabled {
- border-image: url(:/images/identification_btn_d.svg);
+ border-image: url(://images/identification_btn_d.svg);
   }</string>
           </property>
           <property name="text">

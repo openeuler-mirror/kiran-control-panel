@@ -630,18 +630,18 @@ border: 2px solid rgba(255, 255, 255, 20);
                    </size>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true">QPushButton{ border-image:url(:/images/close_btn.png) ;}
+                   <string notr="true">QPushButton{ border-image:url(://images/close_btn.png) ;}
 
   QPushButton:checked {
-       border-image: url(:/images/open_btn.png);
+       border-image: url(://images/open_btn.png);
   }
 
   QPushButton:checked:disabled {
-       border-image: url(:/images/open_btn_disable.png);
+       border-image: url(://images/open_btn_disable.png);
   }
 
   QPushButton:disabled {
-       border-image: url(:/images/close_btn_disable.png);
+       border-image: url(://images/close_btn_disable.png);
   }</string>
                   </property>
                   <property name="text">
@@ -712,17 +712,17 @@ border: 2px solid rgba(255, 255, 255, 20);
                       </size>
                      </property>
                      <property name="styleSheet">
-                      <string notr="true">QPushButton{ border-image:url(:/images/close_btn.png) ;}
+                      <string notr="true">QPushButton{ border-image:url(://images/close_btn.png) ;}
 
   QPushButton:checked {
-       border-image: url(:/images/open_btn.png);
+       border-image: url(://images/open_btn.png);
   }
   QPushButton:checked:disabled {
-       border-image: url(:/images/open_btn_disable.png);
+       border-image: url(://images/open_btn_disable.png);
   }
 
   QPushButton:disabled {
-       border-image: url(:/images/close_btn_disable.png);
+       border-image: url(://images/close_btn_disable.png);
   }</string>
                      </property>
                      <property name="text">

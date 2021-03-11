@@ -16,14 +16,14 @@ KiranComboBox::KiranComboBox(QWidget *parent) : QComboBox(parent)
                     "QComboBox QAbstractItemView::item:selected  { background-color: #2eb3ff;} "\
                     "QComboBox QAbstractItemView{border: 1px solid #2eb3ff;border-radius: 6px;}"\
                     "QComboBox::drop-down{border:0px;width:48px}" \
-                    "QComboBox::down-arrow {image: url(:/images/icon_arrow.svg);}" \
-                    "QComboBox::down-arrow:hover {image: url(:/images/icon_arrow.svg);}"\
-                    "QComboBox::down-arrow:pressed {border-image: url(:/images/icon_arrow.svg);}" \
+                    "QComboBox::down-arrow {image: url(://images/icon_arrow.svg);}" \
+                    "QComboBox::down-arrow:hover {image: url(://images/icon_arrow.svg);}"\
+                    "QComboBox::down-arrow:pressed {border-image: url(://images/icon_arrow.svg);}" \
                     "QComboBox QAbstractScrollArea QScrollBar:vertical{width: 0px;background-color: #21a6ff;}"
             ;
 
     setStyleSheet(style);
-    //"QComboBox::down-arrow:on { image: url(:/images/open_btn.png);}"
+    //"QComboBox::down-arrow:on { image: url(://images/open_btn.png);}"
 
    // m_listView->installEventFilter(this);
 }
@@ -42,9 +42,9 @@ bool KiranComboBox::eventFilter(QObject *obj, QEvent *event)
                             "QComboBox QAbstractItemView::item:selected  { background-color: #2eb3ff;} "\
                             "QComboBox QAbstractItemView{border: 1px solid #2eb3ff;border-top: 0px;border-bottom-right-radius: 6px;border-bottom-left-radius: 6px;}"\
                             "QComboBox::drop-down{border:0px;width:48px}" \
-                            "QComboBox::down-arrow {image: url(:/images/icon_arrow.svg);}" \
-                            "QComboBox::down-arrow:hover {image: url(:/images/icon_arrow.svg);}"\
-                            "QComboBox::down-arrow:pressed {border-image: url(:/images/icon_arrow.svg);}" \
+                            "QComboBox::down-arrow {image: url(://images/icon_arrow.svg);}" \
+                            "QComboBox::down-arrow:hover {image: url(://images/icon_arrow.svg);}"\
+                            "QComboBox::down-arrow:pressed {border-image: url(://images/icon_arrow.svg);}" \
                             "QComboBox QAbstractScrollArea QScrollBar:vertical{width: 0px;background-color: #21a6ff;}"
                     ;
 
@@ -60,9 +60,9 @@ bool KiranComboBox::eventFilter(QObject *obj, QEvent *event)
                             "QComboBox QAbstractItemView::item:selected  { background-color: #2eb3ff;} "\
                             "QComboBox QAbstractItemView{border: 1px solid #2eb3ff;border-bottom: 0px;border-top-right-radius: 6px;border-top-left-radius: 6px;}"\
                             "QComboBox::drop-down{border:0px;width:48px}" \
-                            "QComboBox::down-arrow {image: url(:/images/icon_arrow.svg);}" \
-                            "QComboBox::down-arrow:hover {image: url(:/images/icon_arrow.svg);}"\
-                            "QComboBox::down-arrow:pressed {border-image: url(:/images/icon_arrow.svg);}" \
+                            "QComboBox::down-arrow {image: url(://images/icon_arrow.svg);}" \
+                            "QComboBox::down-arrow:hover {image: url(://images/icon_arrow.svg);}"\
+                            "QComboBox::down-arrow:pressed {border-image: url(://images/icon_arrow.svg);}" \
                             "QComboBox QAbstractScrollArea QScrollBar:vertical{width: 0px;background-color: #21a6ff;}"
                     ;
 
@@ -79,9 +79,9 @@ bool KiranComboBox::eventFilter(QObject *obj, QEvent *event)
                         "QComboBox QAbstractItemView::item:selected  { background-color: #2eb3ff;} "\
                         "QComboBox QAbstractItemView{border: 1px solid #2eb3ff;border-top: 0px;border-bottom-right-radius: 6px;border-bottom-left-radius: 6px;}"\
                         "QComboBox::drop-down{border:0px;width:48px}" \
-                        "QComboBox::down-arrow {image: url(:/images/icon_arrow.svg);}" \
-                        "QComboBox::down-arrow:hover {image: url(:/images/icon_arrow.svg);}"\
-                        "QComboBox::down-arrow:pressed {border-image: url(:/images/icon_arrow.svg);}" \
+                        "QComboBox::down-arrow {image: url(://images/icon_arrow.svg);}" \
+                        "QComboBox::down-arrow:hover {image: url(://images/icon_arrow.svg);}"\
+                        "QComboBox::down-arrow:pressed {border-image: url(://images/icon_arrow.svg);}" \
                         "QComboBox QAbstractScrollArea QScrollBar:vertical{width: 0px;background-color: #21a6ff;}"
                 ;
 
