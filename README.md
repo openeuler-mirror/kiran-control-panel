@@ -105,4 +105,4 @@ example目录下模块plugin-demo。
 1. 在**build**目录下执行`sudo make uninstall`
 
 ###### 具体控件的使用
-[root@localhost ~]# /usr/bin/kiran-control-center-single-plugin -m-name=plugin-demo     `// -m-name指定插件名称，对应于插件(模块)的desktop文件中Name字段的内容。注意：控制中心在此编译下，不会生成插件接口头文件和pc文件。开发插件时请按照文章开头的方式编译控制中心。`   
+[root@localhost ~]# /usr/bin/kiran-control-center-single-plugin -m-name='Plugin Demo'     `// -m-name指定插件名称，对应于插件(模块)的desktop文件中Name字段的内容。注意：控制中心在此编译下，不会生成插件接口头文件和pc文件。开发插件时请按照文章开头的方式编译控制中心。`   
