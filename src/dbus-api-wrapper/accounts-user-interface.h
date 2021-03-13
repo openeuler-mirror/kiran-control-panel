@@ -103,6 +103,10 @@ public:
     inline QString x_session() const
     { return qvariant_cast< QString >(property("x_session")); }
 
+    Q_PROPERTY(int auth_modes READ auth_modes)
+    inline int auth_modes() const
+    { return qvariant_cast< int >(property("auth_modes")); }
+
 public Q_SLOTS: // METHODS
     inline QDBusPendingReply<qlonglong, qlonglong, qlonglong, qlonglong, qlonglong, qlonglong> GetPasswordExpirationPolicy()
     {
@@ -235,11 +239,40 @@ public Q_SLOTS: // METHODS
         return asyncCallWithArgumentList(QLatin1String("SetXSession"), argumentList);
     }
 
+    inline QDBusPendingReply<> AddAuthItem(int mode,const QString& name,const QString& data_id)
+    {
+        QList<QVariant> argumentList;
+        argumentList << QVariant::fromValue(mode) << QVariant::fromValue(name) << QVariant::fromValue(data_id);
+        return asyncCallWithArgumentList(QLatin1String("AddAuthItem"),argumentList);
+    }
+
+    inline QDBusPendingReply<> DelAuthItem(int mode,const QString& name)
+    {
+        QList<QVariant> argumentList;
+        argumentList << QVariant::fromValue(mode) << QVariant::fromValue(name);
+        return asyncCallWithArgumentList(QLatin1String("DelAuthItem"),argumentList);
+    }
+
+    inline QDBusPendingReply<QString> GetAuthItems(int mode)
+    {
+        QList<QVariant> argumentList;
+        argumentList << QVariant::fromValue(mode);
+        return asyncCallWithArgumentList(QLatin1String("GetAuthItems"),argumentList);
+    }
+
+    inline QDBusPendingReply<> EnableAuthMode(int mode,bool enabled)
+    {
+        QList<QVariant> argumentList;
+        argumentList << QVariant::fromValue(mode) << QVariant::fromValue(enabled);
+        return asyncCallWithArgumentList(QLatin1String("EnableAuthMode"),argumentList);
+    }
+
 private Q_SLOTS:
     void handlePropertiesChanged(QDBusMessage msg);
 
 Q_SIGNALS: // SIGNALS
     void propertyChanged(QString path,QString propertyName,QVariant value);
+    void AuthItemChanged(int mode);
 
 };
 

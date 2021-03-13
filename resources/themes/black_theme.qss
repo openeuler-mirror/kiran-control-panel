@@ -263,10 +263,69 @@ QPushButton#btn_changePasswd{
     color:white;
     border:none;
 }
+
+QPushButton#btn_authManager{
+    background:transparent;
+    text-decoration:underline;
+    color:white;
+    border:none;
+}
+
 /*头像选择页面*/
 ScrollAreaContainer{
     background:transparent;
 }
 QScrollArea{
     background:transparent;
+}
+
+/*认证管理页面*/
+AuthManagerPage QLabel#label_fingerAuth,
+AuthManagerPage QLabel#label_faceAuth,
+AuthManagerPage QLabel#label_passwdAuth{
+    color:white;
+}
+
+BiometricItem{
+    background:#2d2d2d;
+    border-radius:6px;
+}
+
+BiometricItem QLabel#label_text{
+    color:white;
+    background:transparent;
+}
+
+BiometricItem QToolButton#btn_delete{
+    border-image: url(:/images/trash.svg);
+    background:transparent;
+}
+
+BiometricItem QToolButton#btn_delete:hover{
+    border-image: url(:/images/trash_hover.svg);
+    background:transparent;
+}
+
+BiometricItem QToolButton#btn_delete:pressed{
+    border-image: url(:/images/trash_pressed.svg);
+    background:transparent;
+}
+
+BiometricItem QToolButton#btn_delete:pressed{
+    border-image: url(:/images/trash_pressed.svg);
+    background:transparent;
+}
+
+BiometricItem QPushButton#btn_add{
+    color:white;
+    background:#43a3f2;
+    border-radius:4px;
+}
+
+BiometricItem QPushButton#btn_add:disabled{
+    background:#393939;
+}
+
+FingerprintInputDialog QLabel#label_msg{
+    color:white;
 }

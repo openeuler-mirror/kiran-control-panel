@@ -15,6 +15,13 @@
         <file>images/info.svg</file>
         <file>images/suc.svg</file>
         <file>images/warning.svg</file>
+        <file>images/finger_0.svg</file>
+        <file>images/finger_25.svg</file>
+        <file>images/finger_75.svg</file>
+        <file>images/finger_100.svg</file>
+        <file>images/trash.svg</file>
+        <file>images/trash_hover.svg</file>
+        <file>images/trash_pressed.svg</file>
     </qresource>
     <qresource prefix="/">
         <file>themes/black_theme.qss</file>

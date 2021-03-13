@@ -8,6 +8,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 find_package(PkgConfig REQUIRED)
 pkg_search_module(KIRAN_WIDGETS_QT5 REQUIRED kiranwidgets-qt5)
+pkg_search_module(KIRAN_CC_DAEMON REQUIRED kiran-cc-daemon)
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
@@ -21,7 +22,7 @@ file(GLOB_RECURSE TOOLS_HEADERS "tools/*.h")
 file(GLOB_RECURSE RESOURCES "resources/*.qrc")
 set( TS_FILES "translations/kiran-account-manager.zh_CN.ts" )
 
-include_directories("${CMAKE_BINARY_DIR}" "src" )
+include_directories("${CMAKE_BINARY_DIR}" "src" "src/pages/" "src/widgets" )
 
 find_package(Qt5 COMPONENTS Widgets Svg DBus LinguistTools)
 
@@ -41,7 +42,8 @@ target_include_directories(kiran-account-manager PRIVATE
         src/pages
         src/widgets
         tools
-        ${KIRAN_WIDGETS_QT5_INCLUDE_DIRS})
+        ${KIRAN_WIDGETS_QT5_INCLUDE_DIRS}
+        ${KIRAN_CC_DAEMON_INCLUDE_DIRS})
 
 target_link_libraries(kiran-account-manager
         Qt5::Widgets
@@ -50,7 +52,8 @@ target_link_libraries(kiran-account-manager
         pam
         crypt
         kiranwidgets-qt5
-        ${KIRAN_WIDGETS_QT5_LIBRARIES})
+        ${KIRAN_WIDGETS_QT5_LIBRARIES}
+        ${KIRAN_CC_DAEMON_LIBRARIES})
 
 install(TARGETS ${PROJECT_NAME}
         DESTINATION ${CMAKE_INSTALL_PREFIX}/bin/)

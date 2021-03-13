@@ -4,7 +4,7 @@
 #include <QWidget>
 #include <QThread>
 
-#include "advance-settings.h"
+#include "src/pages/advance-settings-page/advance-settings.h"
 
 class KiranTips;
 

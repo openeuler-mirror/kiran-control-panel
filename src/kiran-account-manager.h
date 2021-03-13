@@ -11,6 +11,7 @@ class QStackedWidget;
 class CreateUserPage;
 class UserInfoPage;
 class SelectAvatarPage;
+class AuthManagerPage;
 class MaskWidget;
 class HardWorker;
 
@@ -30,6 +31,7 @@ private:
     void initPageCreateUser();
     void initPageUserInfo();
     void initPageSelectAvatar();
+    void initPageAuthManager();
     void connectToInfoChanged();
     void appendSiderbarItem(const QString &userPath);
     void setDefaultSiderbarItem();
@@ -40,6 +42,7 @@ private:
     CreateUserPage *m_page_createUser;
     UserInfoPage *m_page_userinfo;
     SelectAvatarPage *m_page_selectAvatar;
+    AuthManagerPage *m_page_authManager;
     MaskWidget *m_maskWidget;
     QThread m_workThread;
     HardWorker *m_hardworker;

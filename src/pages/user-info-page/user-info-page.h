@@ -40,6 +40,10 @@ signals:
     /// \param iconPath 当前所选头像的路径
     void sigUserChangeIcon(const QString &iconPath);
 
+    /// @brief 当用户点击认证管理时，跳转到认证管理界面
+    /// @param userObj 认证管理的用户DBus对象
+    void sigAuthManager(const QString &userObj);
+
     /// 当用户点击保存按钮时,发出的保存用户属性信号，请求工作线程处理
     /// \param account      账户名
     /// \param iconfile     头像路径

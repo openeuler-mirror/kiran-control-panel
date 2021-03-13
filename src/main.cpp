@@ -5,6 +5,7 @@
 
 #include <QApplication>
 #include <QFile>
+#include <QStyleFactory>
 
 #define LOG_PATH      "/tmp/kiran-account-manager.log"
 #define DEFAULT_THEME ":/themes/black_theme.qss"
@@ -46,6 +47,7 @@ void loadAccountInfo() {
 
 int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
+    QApplication::setStyle(QStyleFactory::create("fusion"));
 
     initLog();
 
@@ -67,5 +69,6 @@ int main(int argc, char *argv[]) {
     KiranAccountManager accountManager;
     accountManager.resize(975, 850);
     accountManager.show();
+
     return app.exec();
 }

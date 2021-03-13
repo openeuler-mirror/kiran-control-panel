@@ -50,7 +50,6 @@ signals:
     void UserPropertyChanged(QString userPath,
                              QString propertyName,
                              QVariant value);
-
 private Q_SLOTS:
     void handlerPropertyChanged(QString userPath,QString propertyName,QVariant value);
 

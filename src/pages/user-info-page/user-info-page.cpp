@@ -123,6 +123,10 @@ void UserInfoPage::initUI() {
         m_errorTip->hideTip();
         ui->stackedWidget->setCurrentIndex(PAGE_USER_INFO);
     });
+
+    connect(ui->btn_authManager,&QPushButton::clicked,[this](){
+        emit sigAuthManager(m_curShowUserPath);
+    });
 }
 
 void UserInfoPage::resetPageSetPasswd() {

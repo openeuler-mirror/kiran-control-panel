@@ -1,9 +1,10 @@
 #include "kiran-account-manager.h"
 #include "account-itemwidget.h"
 #include "accounts-global-info.h"
-#include "create-user-page.h"
-#include "user-info-page.h"
-#include "select-avatar-page.h"
+#include "create-user-page/create-user-page.h"
+#include "user-info-page/user-info-page.h"
+#include "select-avatar-page/select-avatar-page.h"
+#include "auth-manager-page/auth-manager-page.h"
 #include "listwidget-control.h"
 #include "mask-widget.h"
 #include "hard-worker.h"
@@ -17,7 +18,8 @@
 enum StackWidgetPageEnum {
     PAGE_CREATE_USER,
     PAGE_USER_INFO,
-    PAGE_SELECT_AVATAR
+    PAGE_SELECT_AVATAR,
+    PAGE_AUTH_MANAGER
 };
 
 KiranAccountManager::KiranAccountManager()
@@ -124,16 +126,21 @@ void KiranAccountManager::initUI() {
     m_stackWidget->setObjectName("StackWidget");
 
     m_page_createUser = new CreateUserPage(m_stackWidget);
-    m_stackWidget->addWidget(m_page_createUser);
+    m_stackWidget->insertWidget(PAGE_CREATE_USER,m_page_createUser);
     initPageCreateUser();
 
     m_page_userinfo = new UserInfoPage(m_stackWidget);
-    m_stackWidget->addWidget(m_page_userinfo);
+    m_stackWidget->insertWidget(PAGE_USER_INFO,m_page_userinfo);
     initPageUserInfo();
 
     m_page_selectAvatar = new SelectAvatarPage(m_stackWidget);
-    m_stackWidget->addWidget(m_page_selectAvatar);
+    m_stackWidget->insertWidget(PAGE_SELECT_AVATAR,m_page_selectAvatar);
     initPageSelectAvatar();
+
+    m_page_authManager = new AuthManagerPage(m_stackWidget);
+    m_stackWidget->insertWidget(PAGE_AUTH_MANAGER,m_page_authManager);
+    initPageAuthManager();
+
     connectToInfoChanged();
     setDefaultSiderbarItem();
 
@@ -230,6 +237,12 @@ void KiranAccountManager::initPageUserInfo() {
         m_stackWidget->setCurrentIndex(PAGE_SELECT_AVATAR);
     });
 
+    //用户信息页面，认证管理点击时请求跳转至认证管理页面
+    connect(m_page_userinfo,&UserInfoPage::sigAuthManager,[this](const QString &userObj){
+        m_page_authManager->setCurrentUser(userObj);
+        m_stackWidget->setCurrentIndex(PAGE_AUTH_MANAGER);
+    });
+
     /// 修改属性
     connect(m_page_userinfo,&UserInfoPage::sigUpdateUserProperty,
             m_hardworker,&HardWorker::doUpdateUserProperty);
@@ -273,6 +286,13 @@ void KiranAccountManager::initPageSelectAvatar() {
                         break;
                 }
             });
+}
+
+void KiranAccountManager::initPageAuthManager() {
+    //TODO:init auth manager page
+    connect(m_page_authManager,&AuthManagerPage::sigReturn,[this](){
+        m_stackWidget->setCurrentIndex(PAGE_USER_INFO);
+    });
 }
 
 void KiranAccountManager::connectToInfoChanged() {
@@ -344,4 +364,3 @@ void KiranAccountManager::setMaskVisible(bool visible) {
         m_maskWidget->hide();
     }
 }
-
