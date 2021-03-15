@@ -38,7 +38,8 @@ private:
     void save();
 
     BiometricList getBiometricItemsFromUI(AccountsAuthMode mode);
-    BiometricList getBiometricItemsFrmoBackend(AccountsAuthMode mode);
+    BiometricList getBiometricItemsFromBackend(AccountsAuthMode mode);
+
 private slots:
     void slotCheckAuthTypes(int state);
 

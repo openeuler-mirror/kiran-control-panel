@@ -82,7 +82,7 @@ void AuthManagerPage::updateInfo() {
     /* 添加指纹信息进界面 */
     BiometricItem* item = nullptr;
     BiometricList fingerAuthItemsList;
-    fingerAuthItemsList = getBiometricItemsFrmoBackend(ACCOUNTS_AUTH_MODE_FINGERPRINT);
+    fingerAuthItemsList = getBiometricItemsFromBackend(ACCOUNTS_AUTH_MODE_FINGERPRINT);
     for(auto & fingerTemplate : fingerAuthItemsList){
         item = new BiometricItem(fingerTemplate.first,fingerTemplate.second,BiometricItem::BIOMETRIC_ITEM_NORMAL,this);
         connect(item,&BiometricItem::sigDeleteBiometricItem,[=](const QString &name){
@@ -100,11 +100,11 @@ void AuthManagerPage::updateInfo() {
         QEventLoop eventLoop;
         connect(&fingerPrint,&FingerprintInputDialog::sigClose,&eventLoop,&QEventLoop::quit);
         eventLoop.exec();
-        //TODO:add finger 图形，先不存储到后端
+        //NOTE:add finger 图形，先不存储到后端
     });
     /* 添加人脸信息 */
     BiometricList faceAuthItemsList;
-    faceAuthItemsList = getBiometricItemsFrmoBackend(ACCOUNTS_AUTH_MODE_FACE);
+    faceAuthItemsList = getBiometricItemsFromBackend(ACCOUNTS_AUTH_MODE_FACE);
     for(auto & faceTemplate : faceAuthItemsList){
         item = new BiometricItem(faceTemplate.first,faceTemplate.second,BiometricItem::BIOMETRIC_ITEM_NORMAL,this);
         connect(item,&BiometricItem::sigDeleteBiometricItem,[=](const QString &name){
@@ -117,7 +117,7 @@ void AuthManagerPage::updateInfo() {
     ui->layout_faceTemplate->addWidget(item);
     connect(item,&BiometricItem::sigAddBiometricItem,[this](){
         qInfo() << "enroll face";
-        //TODO:add face只添加图形，先不存储到后端
+        //NOTE:add face只添加图形，先不存储到后端
     });
 }
 
@@ -248,7 +248,7 @@ BiometricList AuthManagerPage::getBiometricItemsFromUI(AccountsAuthMode mode) {
     return res;
 }
 
-BiometricList AuthManagerPage::getBiometricItemsFrmoBackend(AccountsAuthMode mode) {
+BiometricList AuthManagerPage::getBiometricItemsFromBackend(AccountsAuthMode mode) {
     /* 解析获取生物特征列表函数 */
     auto funcParseAuthItmes = [](const QString& jsonStr,BiometricList& authItems ) -> bool{
         auto errorPtr =  new QSharedPointer<QJsonParseError>(new QJsonParseError);
