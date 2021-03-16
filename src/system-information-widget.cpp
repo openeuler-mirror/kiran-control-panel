@@ -465,7 +465,7 @@ void SystemInformationWidget::paintEvent(QPaintEvent *painEvent)
 
     painter.setPen(QColor(46,179,255));  //#2eb3FF
     painter.setFont(font);
-    painter.drawText(drawRecLogo, Qt::AlignHCenter,SYSTEM_LOGO);
+    painter.drawText(drawRecLogo, SYSTEM_LOGO);
 
     QFontMetrics fm = painter.fontMetrics();
     int heightText = fm.height();
@@ -476,6 +476,6 @@ void SystemInformationWidget::paintEvent(QPaintEvent *painEvent)
     font.setWeight(QFont::Normal);
     painter.setPen(QColor(255,255,255));
     painter.setFont(font);
-    painter.drawText(drawRecCopyright,Qt::AlignHCenter,copyright);
+    painter.drawText(drawRecCopyright,copyright);
 }
 

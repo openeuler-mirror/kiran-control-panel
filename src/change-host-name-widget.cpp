@@ -24,8 +24,9 @@ ChangeHostNameWidget::~ChangeHostNameWidget()
 void ChangeHostNameWidget::initUI()
 {
     setTitle(tr("Host Name"));
-    //setIcon(QIcon());
+    setIcon(QIcon(":/images/kylin-about.png"));
     setButtonHints(TitlebarMinimizeButtonHint|TitlebarCloseButtonHint);
+    setContentWrapperMarginBottom(0);
     setResizeable(false);
     ui->btn_save->setEnabled(false);
 

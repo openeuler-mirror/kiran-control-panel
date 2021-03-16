@@ -40,7 +40,6 @@ HardwareInformationWidget::HardwareInformationWidget(QWidget *parent) :
     ui->setupUi(this);
     initUI();
     readHardwareInfo(1);
-
 }
 
 HardwareInformationWidget::~HardwareInformationWidget()
@@ -424,7 +423,7 @@ void HardwareInformationWidget::scaledPixmap(QImage img)
     float labelLogoHeight = ui->widget_logo->height() - 80;
     float newWidth, newHeight;  //新的宽和高
 
-    qInfo() << "label width:" << labelLogoWidth << " label height:" << labelLogoHeight << endl;
+    qInfo() << "label logo width:" << labelLogoWidth << " label logo height:" << labelLogoHeight << endl;
     QPixmap pixmap;
     pixmap = QPixmap::fromImage(img);
     float scaledWidth = labelLogoWidth/pixmap.width();

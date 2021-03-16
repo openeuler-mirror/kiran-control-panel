@@ -15,6 +15,7 @@
 #include <QDesktopWidget>
 #include <QDebug>
 #include <QBoxLayout>
+#include <QScroller>
 
 kiranSystemInformation::kiranSystemInformation(QWidget *parent) :
     QWidget(parent),
@@ -24,7 +25,12 @@ kiranSystemInformation::kiranSystemInformation(QWidget *parent) :
     initUI();
     QSize size = ui->widget_page->sizeHint();
     qInfo() << "widget page size hint = " << size.width() << "," << size.height() << endl;
+
+    QSize size_scroll = ui->scrollArea->sizeHint();
+    qInfo() << "widget scroll size hint = " << size_scroll.width() << "," << size_scroll.height() << endl;
+
     connect(ui->infoListWidget, SIGNAL(itemClicked(QListWidgetItem*)),this,SLOT(changeWidgetWhenItemClicked(QListWidgetItem*)));
+
 }
 
 kiranSystemInformation::~kiranSystemInformation()
@@ -40,12 +46,10 @@ void kiranSystemInformation::initUI()
     QString hardwareInformationIcon = ":/images/hardware-information.svg";
     systemInfomationItem = createInformationItem(QString(tr("System Information")) , systemInfomationIcon);
     hardwareInformationItem = createInformationItem(QString(tr("Hardware Information")) , hardwareInformationIcon);
-    //hardwareInformationItem->setStyleSheet("QWidget{margin-top:24px};");
     ui->infoListWidget->setCurrentRow(0);
     qInfo() << "hardwareInformationItem: " <<  hardwareInformationItem->width() << endl;
 
-    //QLayout *listLayout =  ui->infoListWidget->layout();;
-    //listLayout->setSpacing(24);
+    QScroller::grabGesture(ui->infoListWidget,QScroller::LeftMouseButtonGesture);
 }
 
 
@@ -70,6 +74,7 @@ InformationListItem *kiranSystemInformation::createInformationItem(const QString
     ui->infoListWidget->addItem(newItem);
     ui->infoListWidget->setItemWidget(newItem , customItem);
 
+    ui->infoListWidget->setGridSize(QSize(246,84));
     return customItem;
 }
 
@@ -85,11 +90,16 @@ void kiranSystemInformation::changeWidgetWhenItemClicked(QListWidgetItem * curre
     if(itemNum == itemSystemInfo)
     {
         ui->stackedWidget->setCurrentWidget(ui->page_system_info);
+        systemInfomationItem->setItemArrow(true);
+        hardwareInformationItem->setItemArrow(false);
     }
     else if(itemNum == itemHardwareInfo)
     {
         ui->stackedWidget->setCurrentWidget(ui->page_hardware_info);
+        hardwareInformationItem->setItemArrow(true);
+        systemInfomationItem->setItemArrow(false);
     }
+
 
 }
 

@@ -7,17 +7,29 @@
 
 #include "information-list-item.h"
 #include "ui_information-list-item.h"
+#include <QStyleOption>
+#include <QPainter>
 
 InformationListItem::InformationListItem(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::InformationListItem)
 {
     ui->setupUi(this);
+    //setAttribute(Qt::WA_StyledBackground);
+    setAttribute(Qt::WA_StyleSheet);
 }
 
 InformationListItem::~InformationListItem()
 {
     delete ui;
+}
+
+void InformationListItem::paintEvent(QPaintEvent *event)
+{
+    QStyleOption opt;
+    opt.init(this);
+    QPainter p(this);
+    style()->drawPrimitive(QStyle::PE_Widget, &opt, &p, this);
 }
 
 /**
@@ -37,7 +49,14 @@ void InformationListItem::setItemIcon(const QString &iconPath)
 {
     ui->label_icon_info->setFixedSize(16,16);
     ui->label_icon_info->setStyleSheet(QString("QLabel#label_icon_info{border-image:url(%1)};").arg(iconPath));
-    ui->label_icon_arrow->setStyleSheet("QLabel#label_icon_arrow{border-image:url(:/images/arrow.svg)};");
+}
+
+void InformationListItem::setItemArrow(bool isSelected)
+{
+    if(isSelected)
+        ui->label_icon_arrow->setStyleSheet("QLabel#label_icon_arrow{border-image:url(:/images/arrow.svg)};");
+    else
+        ui->label_icon_arrow->setStyleSheet("QLabel#label_icon_arrow{border-image:none");
 }
 
 QSize InformationListItem::sizeHint() const

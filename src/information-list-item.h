@@ -22,9 +22,13 @@ public:
     explicit InformationListItem(QWidget *parent = 0);
     ~InformationListItem();
 
+protected:
+    void paintEvent(QPaintEvent*event);
+
 public:
     void setItemText(const QString &text);
     void setItemIcon(const QString &iconPath);
+    void setItemArrow(bool isSelected);
     virtual QSize sizeHint() const override;
 
 private:

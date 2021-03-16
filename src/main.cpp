@@ -49,6 +49,8 @@ int main(int argc, char *argv[])
 
     KiranSystemWidget w;
 //    w.resize(w.sizeHint());
+    w.resize(948,776);
     w.show();
+    qInfo() << "w width: " << w.width() << " w height: " << w.height()<< endl;
     return a.exec();
 }

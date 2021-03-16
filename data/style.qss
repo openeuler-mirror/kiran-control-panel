@@ -47,6 +47,7 @@ QWidget#widget_kernel_version,QWidget#widget_host_name,QWidget#widget_system_ver
 {
     background-color: #2d2d2d;
     border-radius: 6px;
+    border:none;
 }
 
 QWidget#kiranSystemInformation
@@ -192,6 +193,7 @@ QTextBrowser#text_eula
     font-family: "Noto Sans CJK SC Light";
     text-align:justify;
     line-height:28px;
+    border:none;
 }
 /***************************************************license********************************/
 /**************QLabel****************/
@@ -377,15 +379,6 @@ QListWidget#listWidget
     margin-right:13px;
     margin-left:9px;
     margin-top:7px;
-}
-
-QListItem#ActListItem
-{
-    color:#ffffff;
-    font-family: "Noto Sans CJK SC light";
-    font-size:12px;
-    background-color: rgba(255,255,255,0.05);
-    margin:14px;
 }
 QListWidget#listWidget::Item:selected
 {

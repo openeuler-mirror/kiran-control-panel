@@ -54,28 +54,29 @@ KiranSystemWidget::~KiranSystemWidget()
     }
 }
 
-QSize KiranSystemWidget::sizeHint() const
-{
-    /*根据系统分辨率设置窗口大小*/
-    QDesktopWidget *desktop = QApplication::desktop();
-    qInfo() << desktop->width() << desktop->height();
-    QSize windowSize;
-    if(desktop->height() >= 730 && desktop->width() >= 918 ) //能显示全
-    {
-        windowSize = QSize(918,730);
-    }
-    else
-    {
-        windowSize = QSize(desktop->width() , desktop->height());
-    }
+//QSize KiranSystemWidget::sizeHint() const
+//{
+//    /*根据系统分辨率设置窗口大小*/
+//    QDesktopWidget *desktop = QApplication::desktop();
+//    qInfo() << desktop->width() << desktop->height();
+//    QSize windowSize;
+//    if(desktop->height() >= 730 && desktop->width() >= 924 ) //能显示全
+//    {
+//        windowSize = QSize(924,675);
 
-    return windowSize;
-}
+//    }
+//    else
+//    {
+//        windowSize = QSize(desktop->width() , desktop->height());
+//    }
+
+//    return windowSize;
+//}
 
 void KiranSystemWidget::resizeEvent(QResizeEvent *event)
 {
 
-     qInfo() << "width: " << getWindowContentWidget()->width() << " height: " << getWindowContentWidget()->height() << endl;
+     qInfo() << "ContentWidget width: " << getWindowContentWidget()->width() << "ContentWidget height: " << getWindowContentWidget()->height() << endl;
 
 }
 

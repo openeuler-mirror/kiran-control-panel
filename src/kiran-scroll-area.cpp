@@ -16,7 +16,7 @@ QSize KiranScrollArea::sizeHint() const
         return QScrollArea::sizeHint();
     }
 
-    QSize areaSizeHint = QSize(636,630);
+    QSize areaSizeHint = QSize(636,690);
     areaSizeHint+=QSize(verticalScrollBar()->width(),horizontalScrollBar()->height());
 
     return areaSizeHint;
