@@ -1,3 +1,10 @@
+/**
+ * @file change-host-name-widget.c
+ * @brief 修改用户名接口
+ * @author yuanxing@kylinos.com.cn
+ * @copyright Copyright ©2020 KylinSec. All rights reserved.
+ */
+
 #include "change-host-name-widget.h"
 #include "ui_change-host-name-widget.h"
 #include "system-info-dbus.h"
@@ -29,16 +36,6 @@ void ChangeHostNameWidget::initUI()
     setContentWrapperMarginBottom(0);
     setResizeable(false);
     ui->btn_save->setEnabled(false);
-
-    int height = ui->label_text->height()+ui->lineEdit_input_name->height()+ui->btn_cancel->height();
-    qInfo() << "all widget height = " << ui->label_text->height() <<"," <<ui->lineEdit_input_name->height()<<"," <<ui->btn_cancel->height() << endl;
-    qInfo() << "change height = " << getWindowContentWidget()->height() << endl;
-//    int left;
-//    int right;
-//    int top;
-//    int bottom;
-//    this->getContentsMargins(&left,&top,&right,&bottom);
-//    qInfo() << left << ", " <<top << "," << right << "," << bottom << endl;
 }
 
 void ChangeHostNameWidget::setNewHostName()

@@ -30,7 +30,6 @@ private:
     void readSystemInfo(int infoType);
     void getJsonValueFromString(QString jsonString);
     void readLicenseInfo();
-    virtual void resizeEvent(QResizeEvent *event) override;
 
 private slots:
     void onBtnchangeHostName(void);

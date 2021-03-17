@@ -1,3 +1,10 @@
+/**
+ * @file kiran-scroll-area.cpp
+ * @brief 用于UI界面提升的滑动条
+ * @author yuanxing@kylinos.com.cn
+ * @copyright Copyright ©2020 KylinSec. All rights reserved.
+ */
+
 #include "kiran-scroll-area.h"
 #include <QScrollBar>
 #include <QDesktopWidget>

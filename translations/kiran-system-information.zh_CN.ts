@@ -251,44 +251,44 @@
     <name>ChangeHostNameWidget</name>
     <message>
         <location filename="../src/change-host-name-widget.ui" line="32"/>
-        <location filename="../build/kiran-system-information_autogen/include/ui_change-host-name-widget.h" line="112"/>
-        <location filename="../build-kiran-system-information-unknown-Debug/ui_change-host-name-widget.h" line="112"/>
+        <location filename="../build/kiran-system-information_autogen/include/ui_change-host-name-widget.h" line="117"/>
+        <location filename="../build-kiran-system-information-unknown-Debug/ui_change-host-name-widget.h" line="117"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/change-host-name-widget.ui" line="86"/>
-        <location filename="../build/kiran-system-information_autogen/include/ui_change-host-name-widget.h" line="113"/>
-        <location filename="../build-kiran-system-information-unknown-Debug/ui_change-host-name-widget.h" line="113"/>
+        <location filename="../src/change-host-name-widget.ui" line="92"/>
+        <location filename="../build/kiran-system-information_autogen/include/ui_change-host-name-widget.h" line="118"/>
+        <location filename="../build-kiran-system-information-unknown-Debug/ui_change-host-name-widget.h" line="118"/>
         <source>Host Name:</source>
         <translation>主机名:</translation>
     </message>
     <message>
-        <location filename="../src/change-host-name-widget.ui" line="148"/>
-        <location filename="../build/kiran-system-information_autogen/include/ui_change-host-name-widget.h" line="114"/>
-        <location filename="../build-kiran-system-information-unknown-Debug/ui_change-host-name-widget.h" line="114"/>
+        <location filename="../src/change-host-name-widget.ui" line="154"/>
+        <location filename="../build/kiran-system-information_autogen/include/ui_change-host-name-widget.h" line="119"/>
+        <location filename="../build-kiran-system-information-unknown-Debug/ui_change-host-name-widget.h" line="119"/>
         <source>Save</source>
         <translation>保存</translation>
     </message>
     <message>
-        <location filename="../src/change-host-name-widget.ui" line="167"/>
-        <location filename="../build/kiran-system-information_autogen/include/ui_change-host-name-widget.h" line="115"/>
-        <location filename="../build-kiran-system-information-unknown-Debug/ui_change-host-name-widget.h" line="115"/>
+        <location filename="../src/change-host-name-widget.ui" line="173"/>
+        <location filename="../build/kiran-system-information_autogen/include/ui_change-host-name-widget.h" line="120"/>
+        <location filename="../build-kiran-system-information-unknown-Debug/ui_change-host-name-widget.h" line="120"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="../src/change-host-name-widget.cpp" line="26"/>
+        <location filename="../src/change-host-name-widget.cpp" line="33"/>
         <source>Host Name</source>
         <translation>主机名</translation>
     </message>
     <message>
-        <location filename="../src/change-host-name-widget.cpp" line="50"/>
+        <location filename="../src/change-host-name-widget.cpp" line="47"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="../src/change-host-name-widget.cpp" line="51"/>
+        <location filename="../src/change-host-name-widget.cpp" line="48"/>
         <source>Change host name failed! Please check the Dbus service!</source>
         <translation>修改主机名失败！请 检查Dbus服务!</translation>
     </message>
@@ -370,33 +370,33 @@
 <context>
     <name>KiranSystemWidget</name>
     <message>
-        <location filename="../src/kiran-system-widget.cpp" line="28"/>
+        <location filename="../src/kiran-system-widget.cpp" line="35"/>
         <source>kiran-system-imformation</source>
         <translation>系统信息</translation>
     </message>
     <message>
-        <location filename="../src/kiran-system-widget.cpp" line="88"/>
+        <location filename="../src/kiran-system-widget.cpp" line="81"/>
         <source>EULA</source>
         <translation>最终用户许可协议</translation>
     </message>
     <message>
-        <location filename="../src/kiran-system-widget.cpp" line="89"/>
+        <location filename="../src/kiran-system-widget.cpp" line="82"/>
         <source>Look over EULA</source>
         <translation>点击查看最终用户许可协议</translation>
     </message>
     <message>
-        <location filename="../src/kiran-system-widget.cpp" line="90"/>
+        <location filename="../src/kiran-system-widget.cpp" line="83"/>
         <source>Export</source>
         <translation>导出</translation>
     </message>
     <message>
-        <location filename="../src/kiran-system-widget.cpp" line="91"/>
-        <location filename="../src/kiran-system-widget.cpp" line="170"/>
+        <location filename="../src/kiran-system-widget.cpp" line="84"/>
+        <location filename="../src/kiran-system-widget.cpp" line="163"/>
         <source>Export EULA</source>
         <translation>导出最终用户许可协议</translation>
     </message>
     <message>
-        <location filename="../src/kiran-system-widget.cpp" line="159"/>
+        <location filename="../src/kiran-system-widget.cpp" line="152"/>
         <source>Save</source>
         <translation>保存</translation>
     </message>
@@ -405,12 +405,12 @@
         <translation type="obsolete">保存</translation>
     </message>
     <message>
-        <location filename="../src/kiran-system-widget.cpp" line="161"/>
+        <location filename="../src/kiran-system-widget.cpp" line="154"/>
         <source>PDF(*.pdf)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/kiran-system-widget.cpp" line="170"/>
+        <location filename="../src/kiran-system-widget.cpp" line="163"/>
         <source>Export EULA failed!</source>
         <translation>导出最终用户许可协议失败!</translation>
     </message>
@@ -615,7 +615,7 @@
     <message>
         <location filename="../src/system-information-widget.cpp" line="74"/>
         <location filename="../src/system-information-widget.cpp" line="140"/>
-        <location filename="../src/system-information-widget.cpp" line="190"/>
+        <location filename="../src/system-information-widget.cpp" line="191"/>
         <source>Active</source>
         <translation>激活</translation>
     </message>
@@ -628,15 +628,15 @@
         <location filename="../src/system-information-widget.cpp" line="116"/>
         <location filename="../src/system-information-widget.cpp" line="117"/>
         <location filename="../src/system-information-widget.cpp" line="172"/>
+        <location filename="../src/system-information-widget.cpp" line="376"/>
         <location filename="../src/system-information-widget.cpp" line="380"/>
-        <location filename="../src/system-information-widget.cpp" line="384"/>
-        <location filename="../src/system-information-widget.cpp" line="385"/>
+        <location filename="../src/system-information-widget.cpp" line="381"/>
         <source>Unknow</source>
         <translation>未知</translation>
     </message>
     <message>
         <location filename="../src/system-information-widget.cpp" line="113"/>
-        <location filename="../src/system-information-widget.cpp" line="381"/>
+        <location filename="../src/system-information-widget.cpp" line="377"/>
         <source>Can&apos;t get license information</source>
         <translation>无法获取授权信息</translation>
     </message>
@@ -661,18 +661,18 @@
         <translation>获取服务状态信息失败</translation>
     </message>
     <message>
-        <location filename="../src/system-information-widget.cpp" line="178"/>
-        <location filename="../src/system-information-widget.cpp" line="399"/>
+        <location filename="../src/system-information-widget.cpp" line="179"/>
+        <location filename="../src/system-information-widget.cpp" line="395"/>
         <source>Official Version</source>
         <translation>正式版</translation>
     </message>
     <message>
-        <location filename="../src/system-information-widget.cpp" line="460"/>
+        <location filename="../src/system-information-widget.cpp" line="456"/>
         <source>Copyright ©</source>
         <translation>版权所有 ©</translation>
     </message>
     <message>
-        <location filename="../src/system-information-widget.cpp" line="460"/>
+        <location filename="../src/system-information-widget.cpp" line="456"/>
         <source>KylinSec. All rights reserved.</source>
         <translation>KylinSec.保留所有权利.</translation>
     </message>
@@ -724,18 +724,18 @@ p, li { white-space: pre-wrap; }
     <name>kiranSystemInformation</name>
     <message>
         <location filename="../src/kiran-system-information.ui" line="26"/>
-        <location filename="../build/kiran-system-information_autogen/include/ui_kiran-system-information.h" line="137"/>
+        <location filename="../build/kiran-system-information_autogen/include/ui_kiran-system-information.h" line="138"/>
         <location filename="../build-kiran-system-information-unknown-Debug/ui_kiran-system-information.h" line="137"/>
         <source>kiranSystemInformation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/kiran-system-information.cpp" line="46"/>
+        <location filename="../src/kiran-system-information.cpp" line="41"/>
         <source>System Information</source>
         <translation>系统信息</translation>
     </message>
     <message>
-        <location filename="../src/kiran-system-information.cpp" line="47"/>
+        <location filename="../src/kiran-system-information.cpp" line="42"/>
         <source>Hardware Information</source>
         <translation>硬件信息</translation>
     </message>

@@ -72,7 +72,7 @@ void SystemInformationWidget::initUI()
 {
     ui->btn_change_name->setText(tr("Change"));
     ui->btn_status->setText(tr("Active"));
-    ui->lab_contact_info->setText("800820820");
+    ui->lab_contact_info->setText("400-625-6606");
 }
 
 /**
@@ -99,7 +99,7 @@ void SystemInformationWidget::readSystemInfo(int infoType)
     }
 
 }
-
+//7NZDN-162GJ-X97JF-T7V91-9W58B
 /**
  * @brief SystemInformationWidget::readLicenseInfo:读取系统授权信息
  */
@@ -175,6 +175,7 @@ void SystemInformationWidget::readLicenseInfo()
         case KylinSec::LicenseStatus::LICENSE_STATUS_REGISTERD:
         {
             /*已激活*/
+            ui->btn_status->show();
             ui->lab_status->setText(tr("Official Version"));
             ui->lab_status->setStyleSheet("QLabel#lab_status {color:#5ab940}");
 
@@ -191,10 +192,10 @@ void SystemInformationWidget::readLicenseInfo()
                 isActive = false;
                 return ;
             }
-            ui->btn_status->setFixedSize(QSize(20,20));
+            ui->btn_status->setFixedSize(QSize(16,16));
 
             ui->btn_status->setText(NULL);
-            ui->btn_status->setIcon(QIcon(":/data/license_info.svg"));
+            ui->btn_status->setIcon(QIcon(":/images/license_info.svg"));
             ui->btn_status->setStyleSheet( "QPushButton#btn_status{background: transparent;}" );
             break;
         }
@@ -203,11 +204,6 @@ void SystemInformationWidget::readLicenseInfo()
         }
 
     }
-}
-
-void SystemInformationWidget::resizeEvent(QResizeEvent *event)
-{
-     //qInfo() << "Page width: " << ui->widget_host_name->width() << " Page height: " << ui->widget_host_name->height() << endl;
 }
 
 /**

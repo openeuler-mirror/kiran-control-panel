@@ -23,14 +23,8 @@ kiranSystemInformation::kiranSystemInformation(QWidget *parent) :
 {
     ui->setupUi(this);
     initUI();
-    QSize size = ui->widget_page->sizeHint();
-    qInfo() << "widget page size hint = " << size.width() << "," << size.height() << endl;
-
-    QSize size_scroll = ui->scrollArea->sizeHint();
-    qInfo() << "widget scroll size hint = " << size_scroll.width() << "," << size_scroll.height() << endl;
 
     connect(ui->infoListWidget, SIGNAL(itemClicked(QListWidgetItem*)),this,SLOT(changeWidgetWhenItemClicked(QListWidgetItem*)));
-
 }
 
 kiranSystemInformation::~kiranSystemInformation()
@@ -47,9 +41,6 @@ void kiranSystemInformation::initUI()
     systemInfomationItem = createInformationItem(QString(tr("System Information")) , systemInfomationIcon);
     hardwareInformationItem = createInformationItem(QString(tr("Hardware Information")) , hardwareInformationIcon);
     ui->infoListWidget->setCurrentRow(0);
-    qInfo() << "hardwareInformationItem: " <<  hardwareInformationItem->width() << endl;
-
-    QScroller::grabGesture(ui->infoListWidget,QScroller::LeftMouseButtonGesture);
 }
 
 
@@ -78,12 +69,6 @@ InformationListItem *kiranSystemInformation::createInformationItem(const QString
     return customItem;
 }
 
-void kiranSystemInformation::resizeEvent(QResizeEvent *event)
-{
-    qInfo() << "list width: " << ui->infoListWidget->width() << " list height: " << ui->infoListWidget->height() << endl;
-    qInfo() << "page width: " << ui->widget_page->width() << " page height: " << ui->widget_page->height() << endl;
-}
-
 void kiranSystemInformation::changeWidgetWhenItemClicked(QListWidgetItem * currentItem)
 {
     int itemNum = ui->infoListWidget->row(currentItem);
@@ -102,11 +87,3 @@ void kiranSystemInformation::changeWidgetWhenItemClicked(QListWidgetItem * curre
 
 
 }
-
-//void kiranSystemInformation::paintEvent(QPaintEvent *)
-//{
-//    QStyleOption opt;
-//    opt.init(this);
-//    QPainter p(this);
-//    style()->drawPrimitive(QStyle::PE_Widget, &opt, &p, this);
-//}

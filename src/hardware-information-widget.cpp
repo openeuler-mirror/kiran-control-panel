@@ -264,10 +264,7 @@ void HardwareInformationWidget::getJsonValueFromString(QString jsonString)
                                model = value.toString();
                            }
                        }
-
-                       ///FIXME:后续将界面要显示graphics值，做成数组
                        QString ethsInfo = QString("%1 (%2)").arg(model).arg(vendor);
-                       //QString ethsInfo = QString("123bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
                        ethsList << ethsInfo;
                    }
                }
@@ -281,12 +278,6 @@ void HardwareInformationWidget::getJsonValueFromString(QString jsonString)
  */
 void HardwareInformationWidget::showListInfo()
 {
-//    QString disk_info_2 = "disk_info_2";
-//    diskList << disk_info_2;
-//    QString graphics_info_2 = "graphics_info_2";
-//    graphicsList << graphics_info_2 ;
-//    QString eths_info_2 = "eths_info_2";
-//    ethsList << eths_info_2;
     int i;
     //根据数量设置各行的行高及左侧标签的布局
     int diskNum = diskList.size();
@@ -423,13 +414,10 @@ void HardwareInformationWidget::scaledPixmap(QImage img)
     float labelLogoHeight = ui->widget_logo->height() - 80;
     float newWidth, newHeight;  //新的宽和高
 
-    qInfo() << "label logo width:" << labelLogoWidth << " label logo height:" << labelLogoHeight << endl;
     QPixmap pixmap;
     pixmap = QPixmap::fromImage(img);
     float scaledWidth = labelLogoWidth/pixmap.width();
     float scaledHeight = labelLogoHeight/pixmap.height();
-
-    qInfo() << "pixmap width: " << pixmap.width() << " pixmap height: " << pixmap.height() << endl;
 
     if(pixmap.width() < labelLogoWidth && pixmap.height() < labelLogoHeight)
     {
@@ -438,13 +426,11 @@ void HardwareInformationWidget::scaledPixmap(QImage img)
     }
     else if(scaledHeight < scaledWidth)
     {
-        qInfo() << "pixmap height heighter" << endl;
         newWidth = pixmap.width() * scaledHeight;
         newHeight = pixmap.height() * scaledHeight;
     }
     else if(scaledHeight >= scaledWidth)
     {
-        qInfo() << "pixmap height heighter" << endl;
         newWidth = pixmap.width() * scaledWidth;
         newHeight = pixmap.height() * scaledWidth;
     }

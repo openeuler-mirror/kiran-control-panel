@@ -41,8 +41,6 @@ SOURCES += \
     information-list-item.cpp \
     hardware-information-widget.cpp \
     general-functions-class.cpp \
-    single/singleapplication.cpp \
-    single/singleapplication_p.cpp \
     system-info-dbus.cpp \
     system-information-widget.cpp \
     license/active-guide-widget.cpp \
@@ -62,8 +60,6 @@ HEADERS += \
     information-list-item.h \
     hardware-information-widget.h \
     general-functions-class.h \
-    single/singleapplication.h \
-    single/singleapplication_p.h \
     system-info-dbus.h \
     system-information-widget.h \
     license/active-guide-widget.h \

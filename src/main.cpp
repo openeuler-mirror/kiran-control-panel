@@ -7,10 +7,8 @@
 #include <QTranslator>
 #include <kiranwidgets-qt5/kiran-application.h>
 #include "general-functions-class.h"
-#include "single/singleapplication.h"
 #include "config/config.h"
 
-/*FIXME: add config.in to define translate file dir later*/
 #define TRANSLATION_DIR TRANSLATIONS_FILE_DIR
 
 int main(int argc, char *argv[])
@@ -48,9 +46,7 @@ int main(int argc, char *argv[])
     }
 
     KiranSystemWidget w;
-//    w.resize(w.sizeHint());
-    w.resize(948,776);
+    w.resize(w.sizeHint());
     w.show();
-    qInfo() << "w width: " << w.width() << " w height: " << w.height()<< endl;
     return a.exec();
 }

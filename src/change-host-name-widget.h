@@ -1,3 +1,10 @@
+/**
+ * @file change-host-name-widget.h
+ * @brief 修改用户名接口
+ * @author yuanxing@kylinos.com.cn
+ * @copyright Copyright ©2020 KylinSec. All rights reserved.
+ */
+
 #ifndef CHANGEHOSTNAMEWIDGET_H
 #define CHANGEHOSTNAMEWIDGET_H
 

@@ -1,3 +1,10 @@
+/**
+ * @file kiran-system-widget.cpp
+ * @brief 带有自定义标题栏的系统信息界面
+ * @author yuanxing@kylinos.com.cn
+ * @copyright Copyright ©2020 KylinSec. All rights reserved.
+ */
+
 #include "kiran-system-widget.h"
 #include "kiran-system-information.h"
 #include "license/user-license-agreement.h"
@@ -27,19 +34,12 @@ KiranSystemWidget::KiranSystemWidget():
     setButtonHints(KiranTitlebarWindow::TitlebarMinMaxCloseHints);
     setTitle(tr("kiran-system-imformation"));
     setIcon(QIcon(":/images/kylin-about.png"));
-    //setWindowModality(Qt::NonModal);
 
     centerWgt = new kiranSystemInformation;
     setWindowContentWidget(centerWgt);
 
     setMenuIntoTitlebar();
     connect(centerWgt, &kiranSystemInformation::destroyed, this, &KiranSystemWidget::close);
-
-//    this->adjustSize();
-
-//    QTimer::singleShot(1000,this,[this](){
-//        this->adjustSize();
-//    });
 }
 
 KiranSystemWidget::~KiranSystemWidget()
@@ -54,30 +54,23 @@ KiranSystemWidget::~KiranSystemWidget()
     }
 }
 
-//QSize KiranSystemWidget::sizeHint() const
-//{
-//    /*根据系统分辨率设置窗口大小*/
-//    QDesktopWidget *desktop = QApplication::desktop();
-//    qInfo() << desktop->width() << desktop->height();
-//    QSize windowSize;
-//    if(desktop->height() >= 730 && desktop->width() >= 924 ) //能显示全
-//    {
-//        windowSize = QSize(924,675);
-
-//    }
-//    else
-//    {
-//        windowSize = QSize(desktop->width() , desktop->height());
-//    }
-
-//    return windowSize;
-//}
-
-void KiranSystemWidget::resizeEvent(QResizeEvent *event)
+QSize KiranSystemWidget::sizeHint() const
 {
+    /*根据系统分辨率设置窗口大小*/
+    QDesktopWidget *desktop = QApplication::desktop();
+    qInfo() << desktop->width() << desktop->height();
+    QSize windowSize;
+    if(desktop->height() >= 776 && desktop->width() >= 948 ) //能显示全
+    {
+        windowSize = QSize(948,776);
 
-     qInfo() << "ContentWidget width: " << getWindowContentWidget()->width() << "ContentWidget height: " << getWindowContentWidget()->height() << endl;
+    }
+    else
+    {
+        windowSize = QSize(desktop->width() , desktop->height());
+    }
 
+    return windowSize;
 }
 
 QMenu* KiranSystemWidget::createMenu()

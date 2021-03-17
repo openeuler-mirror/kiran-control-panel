@@ -31,17 +31,12 @@ private:
     InformationListItem *createInformationItem(const QString text , const QString iconPath);
     QWidget* createSystemInfoPage(void);
     QWidget* createHardwareInfoPage(void);
-    virtual void resizeEvent(QResizeEvent *event) override;
-
 
 signals:
     void sigClose();
 
 public slots:
     void changeWidgetWhenItemClicked(QListWidgetItem* currentItem);
-
-protected:
-    //void paintEvent(QPaintEvent*);
 
 private:
     enum {pageSystemInfo, PageHardwareInfo};
@@ -54,7 +49,6 @@ private:
 
     QWidget* systemInfoWidget;
     QWidget* hardwareInfoWidget;
-
 
 };
 

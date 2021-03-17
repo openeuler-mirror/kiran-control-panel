@@ -100,10 +100,6 @@ Create:
                                                           QFile::ReadUser |QFile::WriteUser |
                                                           QFile::ReadGroup|QFile::WriteGroup|
                                                           QFile::ReadOther|QFile::WriteOther;
-//        file.setPermissions(QFile::ReadOwner|QFile::WriteOwner|
-//                            QFile::ReadUser |QFile::WriteUser |
-//                            QFile::ReadGroup|QFile::WriteGroup|
-//                            QFile::ReadOther|QFile::WriteOther);
         if( file.permissions() != flags ){
             if(file.setPermissions(flags))
             {
