@@ -9,8 +9,8 @@
 #include <QIcon>
 #include <QDebug>
 
-KiranControlCenterSinglePlugin::KiranControlCenterSinglePlugin() :
-    KiranTitlebarWindow()
+KiranControlCenterSinglePlugin::KiranControlCenterSinglePlugin(QWidget *parent) :
+    KiranTitlebarWindow(parent)
 {
     setButtonHints(KiranTitlebarWindow::TitlebarMinimizeButtonHint|KiranTitlebarWindow::TitlebarMaximizeButtonHint|KiranTitlebarWindow::TitlebarCloseButtonHint);
     resize(708, 830);

@@ -7,7 +7,7 @@ class KiranControlCenterWindow : public KiranTitlebarWindow
 {
     Q_OBJECT
 public:
-    explicit KiranControlCenterWindow();
+    explicit KiranControlCenterWindow(QWidget *parent=0);
 
 signals:
 

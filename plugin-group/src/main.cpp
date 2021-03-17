@@ -1,6 +1,6 @@
 #include "kiran-control-center-window.h"
 #include "stdio.h"
-#include <QApplication>
+#include <kiran-application.h>
 #include <QTranslator>
 #include <QDesktopWidget>
 #include <QCommandLineParser>
@@ -11,7 +11,7 @@ extern QString gLocaleName;
 
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
+    KiranApplication a(argc, argv);
 
     QString locale = QLocale::system().name();
     gLocaleName = locale;//当前翻译类型,必须在加载模块数据之前赋值.模块的名称将根据此变量选择翻译类型.

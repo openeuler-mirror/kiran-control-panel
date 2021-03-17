@@ -17,7 +17,7 @@ class KiranControlCenterSinglePlugin : public KiranTitlebarWindow
     Q_OBJECT
 
 public:
-    explicit KiranControlCenterSinglePlugin();
+    explicit KiranControlCenterSinglePlugin(QWidget *parent=0);
     ~KiranControlCenterSinglePlugin();
     void setModuleName(const QString &name);
 

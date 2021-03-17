@@ -4,13 +4,13 @@
  *                                                                         *
  ***************************************************************************/
 #include "kiran-control-center-single-plugin.h"
-#include <QApplication>
+#include <kiran-application.h>
 #include <QCommandLineParser>
 
 extern QString gLocaleName;
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
+    KiranApplication a(argc, argv);
 
     QCommandLineParser parser;
     parser.setApplicationDescription(QGuiApplication::translate("main", "kiran control panel module runalone"));  // 设置应用程序描述信息

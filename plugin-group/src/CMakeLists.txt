@@ -22,11 +22,10 @@ target_include_directories(${PROJECT_NAME} PRIVATE
     ../../interface/
     ../../global/
     ../../widgets/
-    src/widgets/kiran-application/
-    src/kiran-style/
+    ${KIRAN_WIDGETS_QT5_INCLUDE_DIRS}
     )
 
-target_link_libraries(${PROJECT_NAME}  Qt5::Core Qt5::Gui Qt5::Svg Qt5::X11Extras Qt5::Widgets dl kiranwidgets-qt5)
+target_link_libraries(${PROJECT_NAME}  Qt5::Core Qt5::Gui Qt5::Svg Qt5::X11Extras Qt5::Widgets dl ${KIRAN_WIDGETS_QT5_LIBRARIES})
 
 #安装
 install(TARGETS ${PROJECT_NAME} DESTINATION ${INSTALL_BINDIR}/)
