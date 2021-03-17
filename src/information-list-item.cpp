@@ -15,7 +15,6 @@ InformationListItem::InformationListItem(QWidget *parent) :
     ui(new Ui::InformationListItem)
 {
     ui->setupUi(this);
-    //setAttribute(Qt::WA_StyledBackground);
     setAttribute(Qt::WA_StyleSheet);
 }
 
