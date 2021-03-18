@@ -1,7 +1,7 @@
 #include "kiran-display-configuration-window.h"
 #include "kiran-display-config-global.h"
 #include "kiranwidgets-qt5/kiran-message-box.h"
-#include <QApplication>
+#include <kiran-application.h>
 #include <QDesktopWidget>
 #include <QTranslator>
 #include <QDBusInterface>
@@ -11,7 +11,7 @@
 
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
+    KiranApplication a(argc, argv);
     //报警中也需要翻译，所以加载翻译文件需要前置。
     QString locale = QLocale::system().name();
     QString qmFile = QString("%1.%2.qm").arg(APP_TRANSLATE_PATH_PREFIX).arg(locale);

@@ -267,8 +267,8 @@ QPushButton {
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>692</width>
-        <height>501</height>
+        <width>700</width>
+        <height>493</height>
        </rect>
       </property>
       <property name="sizePolicy">
@@ -616,39 +616,12 @@ border: 2px solid rgba(255, 255, 255, 20);
                  </spacer>
                 </item>
                 <item>
-                 <widget class="QPushButton" name="pushButton_enabled">
+                 <widget class="KiranSwitchButton" name="pushButton_enabled" native="true">
                   <property name="minimumSize">
                    <size>
-                    <width>54</width>
-                    <height>24</height>
+                    <width>40</width>
+                    <height>0</height>
                    </size>
-                  </property>
-                  <property name="maximumSize">
-                   <size>
-                    <width>54</width>
-                    <height>24</height>
-                   </size>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true">QPushButton{ border-image:url(://images/close_btn.png) ;}
-
-  QPushButton:checked {
-       border-image: url(://images/open_btn.png);
-  }
-
-  QPushButton:checked:disabled {
-       border-image: url(://images/open_btn_disable.png);
-  }
-
-  QPushButton:disabled {
-       border-image: url(://images/close_btn_disable.png);
-  }</string>
-                  </property>
-                  <property name="text">
-                   <string/>
-                  </property>
-                  <property name="checkable">
-                   <bool>true</bool>
                   </property>
                  </widget>
                 </item>
@@ -695,41 +668,12 @@ border: 2px solid rgba(255, 255, 255, 20);
                     </spacer>
                    </item>
                    <item>
-                    <widget class="QPushButton" name="pushButton_extra_primary">
-                     <property name="enabled">
-                      <bool>true</bool>
-                     </property>
+                    <widget class="KiranSwitchButton" name="pushButton_extra_primary" native="true">
                      <property name="minimumSize">
                       <size>
-                       <width>54</width>
-                       <height>24</height>
+                       <width>40</width>
+                       <height>0</height>
                       </size>
-                     </property>
-                     <property name="maximumSize">
-                      <size>
-                       <width>54</width>
-                       <height>24</height>
-                      </size>
-                     </property>
-                     <property name="styleSheet">
-                      <string notr="true">QPushButton{ border-image:url(://images/close_btn.png) ;}
-
-  QPushButton:checked {
-       border-image: url(://images/open_btn.png);
-  }
-  QPushButton:checked:disabled {
-       border-image: url(://images/open_btn_disable.png);
-  }
-
-  QPushButton:disabled {
-       border-image: url(://images/close_btn_disable.png);
-  }</string>
-                     </property>
-                     <property name="text">
-                      <string/>
-                     </property>
-                     <property name="checkable">
-                      <bool>true</bool>
                      </property>
                     </widget>
                    </item>
@@ -994,6 +938,12 @@ border: 2px solid rgba(255, 255, 255, 20);
    <class>KiranComboBox</class>
    <extends>QComboBox</extends>
    <header>kiran-combobox.h</header>
+  </customwidget>
+  <customwidget>
+   <class>KiranSwitchButton</class>
+   <extends>QWidget</extends>
+   <header>kiranwidgets-qt5/kiran-switch-button.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>

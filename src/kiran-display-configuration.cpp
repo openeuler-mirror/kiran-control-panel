@@ -1,6 +1,7 @@
 #include "kiran-display-configuration.h"
 #include "ui_kiran-display-configuration.h"
 #include "kiranwidgets-qt5/kiran-message-box.h"
+#include "widget-property-helper.h"
 #include <QTimer>
 #include <QButtonGroup>
 #include <QDebug>
@@ -10,6 +11,10 @@ KiranDisplayConfiguration::KiranDisplayConfiguration(QWidget *parent) :
     ui(new Ui::KiranDisplayConfiguration)
 {
     ui->setupUi(this);
+    Kiran::WidgetPropertyHelper::setButtonType(ui->pushButton_ok, Kiran::BUTTON_Default);
+    Kiran::WidgetPropertyHelper::setButtonType(ui->pushButton_cancel, Kiran::BUTTON_Normal);
+    Kiran::WidgetPropertyHelper::setButtonType(ui->pushButton_extra_ok, Kiran::BUTTON_Default);
+    Kiran::WidgetPropertyHelper::setButtonType(ui->pushButton_extra_cancel, Kiran::BUTTON_Normal);
     ui->scrollAreaWidgetContents->setContentsMargins(0, 0, 10, 0);
     m_btnGroup = new QButtonGroup(this);
     m_btnGroup->addButton(ui->pushButton_copy_display, 0);

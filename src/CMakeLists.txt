@@ -39,13 +39,10 @@ if(DEFINED PLUGIN_DIR)
     install(TARGETS ${PROJECT_NAME} DESTINATION ${INSTALL_LIBDIR}/)
 
     target_link_libraries(${PROJECT_NAME}
-        Qt5::Core Qt5::Gui Qt5::Svg Qt5::Widgets Qt5::X11Extras Qt5::DBus X11)
+        Qt5::Core Qt5::Gui Qt5::Svg Qt5::Widgets Qt5::X11Extras Qt5::DBus ${KIRAN_WIDGETS_QT5_LIBRARIES} X11)
 
 else()
     message("********** build app. *********")
-    pkg_search_module(KIRANWIDGETS_QT5 REQUIRED kiranwidgets-qt5)
-    include_directories(${KIRANWIDGETS_QT5_INCLUDE_DIRS})
-    link_directories(${KIRANWIDGETS_QT5_LIBRARY_DIRS})
 
     file(GLOB APP
         "app/*.cpp"
@@ -62,7 +59,7 @@ else()
     install(TARGETS ${PROJECT_NAME} DESTINATION ${INSTALL_BINDIR}/)
 
     target_link_libraries(${PROJECT_NAME}
-        Qt5::Core Qt5::Gui Qt5::Svg Qt5::Widgets Qt5::X11Extras Qt5::DBus kiranwidgets-qt5 X11)
+        Qt5::Core Qt5::Gui Qt5::Svg Qt5::Widgets Qt5::X11Extras Qt5::DBus ${KIRAN_WIDGETS_QT5_LIBRARIES} X11)
 
 endif()
 

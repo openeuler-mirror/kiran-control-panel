@@ -9,6 +9,3 @@ include(app_plugin_var_define)
 #添加子目录
 add_subdirectory(desktop)
 add_subdirectory(src)
-
-
-
