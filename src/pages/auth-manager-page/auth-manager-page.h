@@ -13,6 +13,7 @@ namespace Ui { class AuthManagerPage; }
 QT_END_NAMESPACE
 
 class UserInterface;
+class BiometricItem;
 typedef QList<QPair<QString,QString>> BiometricList;
 
 class AuthManagerPage : public QWidget {
@@ -37,16 +38,24 @@ private:
     /* 保存界面信息 */
     void save();
 
+    QString generateBiometricsItemName(AccountsAuthMode mode);
     BiometricList getBiometricItemsFromUI(AccountsAuthMode mode);
     BiometricList getBiometricItemsFromBackend(AccountsAuthMode mode);
 
+    BiometricItem * newBiometricItem(const QString& name, const QString& dataID);
+
 private slots:
     void slotCheckAuthTypes(int state);
+    void slotItemDeleteClicked();
+    void slotAddBiometricsItem();
 
 private:
     Ui::AuthManagerPage *ui;
     QString m_userObjPath;
     UserInterface* m_userInterface = nullptr;
+
+    BiometricItem* m_addFingerItem = nullptr;
+    BiometricItem* m_addFaceItem = nullptr;
 };
 
 #endif //KIRAN_ACCOUNT_MANAGER_AUTH_MANAGER_PAGE_H

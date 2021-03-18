@@ -54,6 +54,7 @@ void AuthManagerPage::initUI() {
 }
 
 void AuthManagerPage::updateInfo() {
+    qInfo() << "load biometrics , update ui";
     //获取认证类型开关
     bool fingerAuth,faceAuth,passwdAuth;
     int authModes = m_userInterface->auth_modes();
@@ -61,9 +62,8 @@ void AuthManagerPage::updateInfo() {
         authModes = ACCOUNTS_AUTH_MODE_PASSWORD;
     }
     ui->check_passwdAuth->setChecked( (authModes & ACCOUNTS_AUTH_MODE_PASSWORD) );
-    ui->check_faceAuth->setChecked( (authModes & ACCOUNTS_AUTH_MODE_FINGERPRINT) );
-    ui->check_fingerAuth->setChecked( (authModes & ACCOUNTS_AUTH_MODE_FACE) );
-
+    ui->check_faceAuth->setChecked( (authModes & ACCOUNTS_AUTH_MODE_FACE ) );
+    ui->check_fingerAuth->setChecked( (authModes & ACCOUNTS_AUTH_MODE_FINGERPRINT ) );
 
     //清空之前的生物特征值
     auto cleanLayoutFunc = [](QLayout* layout){
@@ -84,44 +84,29 @@ void AuthManagerPage::updateInfo() {
     BiometricList fingerAuthItemsList;
     fingerAuthItemsList = getBiometricItemsFromBackend(ACCOUNTS_AUTH_MODE_FINGERPRINT);
     for(auto & fingerTemplate : fingerAuthItemsList){
-        item = new BiometricItem(fingerTemplate.first,fingerTemplate.second,BiometricItem::BIOMETRIC_ITEM_NORMAL,this);
-        connect(item,&BiometricItem::sigDeleteBiometricItem,[=](const QString &name){
-            ui->layout_fingerTemplate->removeWidget(item);
-        });
-        ui->layout_fingerTemplate->addWidget(item);
+        auto newItem = newBiometricItem(fingerTemplate.first,fingerTemplate.second);
+        ui->layout_fingerTemplate->addWidget(newItem);
     }
-    item = new BiometricItem("add fingerprint","",BiometricItem::BIOMETRIC_ITEM_ADD,this);
-    item->setItemAddEnabled(fingerAuthItemsList.isEmpty());
-    ui->layout_fingerTemplate->addWidget(item);
-    connect(item,&BiometricItem::sigAddBiometricItem,[this](){
-        qInfo() << "enroll fingerprint";
-        FingerprintInputDialog fingerPrint;
-        fingerPrint.show();
-        QEventLoop eventLoop;
-        connect(&fingerPrint,&FingerprintInputDialog::sigClose,&eventLoop,&QEventLoop::quit);
-        eventLoop.exec();
-        //NOTE:add finger 图形，先不存储到后端
-    });
+    m_addFingerItem = new BiometricItem("add fingerprint","",BiometricItem::BIOMETRIC_ITEM_ADD,this);
+    m_addFingerItem->setItemAddEnabled(fingerAuthItemsList.isEmpty());
+    ui->layout_fingerTemplate->addWidget(m_addFingerItem);
+    connect(m_addFingerItem,&BiometricItem::sigAddBiometricItem,this, &AuthManagerPage::slotAddBiometricsItem);
+
     /* 添加人脸信息 */
     BiometricList faceAuthItemsList;
     faceAuthItemsList = getBiometricItemsFromBackend(ACCOUNTS_AUTH_MODE_FACE);
     for(auto & faceTemplate : faceAuthItemsList){
-        item = new BiometricItem(faceTemplate.first,faceTemplate.second,BiometricItem::BIOMETRIC_ITEM_NORMAL,this);
-        connect(item,&BiometricItem::sigDeleteBiometricItem,[=](const QString &name){
-            ui->layout_faceTemplate->removeWidget(item);
-        });
-        ui->layout_faceTemplate->addWidget(item);
+        auto newItem = newBiometricItem(faceTemplate.first,faceTemplate.second);
+        ui->layout_faceTemplate->addWidget(newItem);
     }
-    item = new BiometricItem("add face","",BiometricItem::BIOMETRIC_ITEM_ADD,this);
-    item->setItemAddEnabled(faceAuthItemsList.isEmpty());
-    ui->layout_faceTemplate->addWidget(item);
-    connect(item,&BiometricItem::sigAddBiometricItem,[this](){
-        qInfo() << "enroll face";
-        //NOTE:add face只添加图形，先不存储到后端
-    });
+    m_addFaceItem = new BiometricItem("add face","",BiometricItem::BIOMETRIC_ITEM_ADD,this);
+    m_addFaceItem->setItemAddEnabled(faceAuthItemsList.isEmpty());
+    ui->layout_faceTemplate->addWidget(m_addFaceItem);
+    connect(m_addFaceItem,&BiometricItem::sigAddBiometricItem,this, &AuthManagerPage::slotAddBiometricsItem);
 }
 
 void AuthManagerPage::save() {
+    qInfo() << "save..";
     bool uiPasswdAuth,uiFingerAuth,uiFaceAuth;
     uiPasswdAuth = ui->check_passwdAuth->isChecked();
     uiFingerAuth = ui->check_fingerAuth->isChecked();
@@ -140,6 +125,19 @@ void AuthManagerPage::save() {
     backendPasswdAuth = authModes&ACCOUNTS_AUTH_MODE_PASSWORD;
     backendFingerAuth = authModes&ACCOUNTS_AUTH_MODE_FINGERPRINT;
     backendFaceAuth = authModes&ACCOUNTS_AUTH_MODE_FACE;
+    /* 保存验证选项 */
+    if( uiPasswdAuth!=backendPasswdAuth ){
+        qInfo() << "update passwd auth mode: " << uiPasswdAuth;
+        m_userInterface->EnableAuthMode(ACCOUNTS_AUTH_MODE_PASSWORD,uiPasswdAuth);
+    }
+    if( uiFingerAuth!=backendFingerAuth ){
+        qInfo() << "update finger auth mode: " << uiFingerAuth;
+        m_userInterface->EnableAuthMode(ACCOUNTS_AUTH_MODE_FINGERPRINT,uiFingerAuth);
+    }
+    if( uiFaceAuth!=backendFaceAuth ){
+        qInfo() << "update face auth mode: " << uiFaceAuth;
+        m_userInterface->EnableAuthMode(ACCOUNTS_AUTH_MODE_FACE,uiFaceAuth);
+    }
 
     /* 从界面上获取生物识别特征值 */
     BiometricList uiFingerTemplates,uiFaceTemplates;
@@ -148,30 +146,19 @@ void AuthManagerPage::save() {
 
     /* 从后端获取生物识别特征值 */
     BiometricList backendFingerTemplates,backendFaceTemplates;
-    backendFingerTemplates = getBiometricItemsFromUI(ACCOUNTS_AUTH_MODE_FINGERPRINT);
-    backendFaceTemplates = getBiometricItemsFromUI(ACCOUNTS_AUTH_MODE_FACE);
+    backendFingerTemplates = getBiometricItemsFromBackend(ACCOUNTS_AUTH_MODE_FINGERPRINT);
+    backendFaceTemplates = getBiometricItemsFromBackend(ACCOUNTS_AUTH_MODE_FACE);
 
-    /* 保存验证选项 */
-    if( uiPasswdAuth!=backendPasswdAuth ){
-        m_userInterface->EnableAuthMode(ACCOUNTS_AUTH_MODE_PASSWORD,uiPasswdAuth);
-    }
-    if( uiFingerAuth!=backendFingerAuth ){
-        m_userInterface->EnableAuthMode(ACCOUNTS_AUTH_MODE_FINGERPRINT,uiFingerAuth);
-    }
-    if( uiFaceAuth!=backendFaceAuth ){
-        m_userInterface->EnableAuthMode(ACCOUNTS_AUTH_MODE_FACE,uiFaceAuth);
-    }
+
     auto funcCompareBiometricItems = [](const BiometricList& newItems,const BiometricList& oldItems,
                                         BiometricList& deletedItems,BiometricList& addItems ){
         deletedItems.clear();
         addItems.clear();
-
         for(auto &item : newItems){
             if( !oldItems.contains(item) ){
                 addItems.append(item);
             }
         }
-
         for(auto &item : oldItems){
             if( !newItems.contains(item) ){
                 deletedItems.append(item);
@@ -180,6 +167,9 @@ void AuthManagerPage::save() {
     };
     BiometricList deletedItems,addItems;
     funcCompareBiometricItems(uiFingerTemplates,backendFingerTemplates,deletedItems,addItems);
+    qInfo() << "finger biometric items:";
+    qInfo() << "need delete item:" << deletedItems;
+    qInfo() << "need add item:   " << addItems;
     for( auto &item:deletedItems ){
         m_userInterface->DelAuthItem(ACCOUNTS_AUTH_MODE_FINGERPRINT,item.first);
     }
@@ -188,6 +178,9 @@ void AuthManagerPage::save() {
     }
 
     funcCompareBiometricItems(uiFaceTemplates,backendFaceTemplates,deletedItems,addItems);
+    qInfo() << "face biometric items:";
+    qInfo() << "need delete item:" << deletedItems;
+    qInfo() << "need add item:   " << addItems;
     for( auto &item:deletedItems ){
         m_userInterface->DelAuthItem(ACCOUNTS_AUTH_MODE_FACE,item.first);
     }
@@ -220,7 +213,7 @@ void AuthManagerPage::slotCheckAuthTypes(int state) {
 
 BiometricList AuthManagerPage::getBiometricItemsFromUI(AccountsAuthMode mode) {
     //从布局中取出每项保存的数据
-    auto funcGetBiometricItems = [](QLayout* layout,BiometricList& biometricItems ){
+        auto funcGetBiometricItems = [](QLayout* layout,BiometricList& biometricItems ){
         for(int i=0;i<layout->count();i++){
             auto item = layout->itemAt(i);
             if( !item->widget() ){
@@ -284,5 +277,81 @@ BiometricList AuthManagerPage::getBiometricItemsFromBackend(AccountsAuthMode mod
     QDBusPendingReply<QString> reply = m_userInterface->GetAuthItems(mode);
     reply.waitForFinished();
     funcParseAuthItmes(reply.value(),res);
+    return res;
+}
+
+void AuthManagerPage::slotItemDeleteClicked() {
+    auto item =qobject_cast<BiometricItem*>(sender());
+    delete item;
+    m_addFingerItem->setItemAddEnabled(ui->layout_fingerTemplate->count()<=1);
+    m_addFaceItem->setItemAddEnabled(ui->layout_faceTemplate->count()<=1);
+}
+
+BiometricItem * AuthManagerPage::newBiometricItem(const QString &name, const QString &dataID) {
+    BiometricItem* item = new BiometricItem(name,dataID,BiometricItem::BIOMETRIC_ITEM_NORMAL,this);
+    connect(item,&BiometricItem::sigDeleteBiometricItem,this,&AuthManagerPage::slotItemDeleteClicked);
+    return item;
+}
+
+void AuthManagerPage::slotAddBiometricsItem() {
+    auto item = qobject_cast<BiometricItem*>(sender());
+
+    if(item==m_addFingerItem){
+        FingerprintInputDialog fingerPrint;
+        fingerPrint.show();
+        QEventLoop eventLoop;
+        connect(&fingerPrint,&FingerprintInputDialog::sigClose,&eventLoop,&QEventLoop::quit);
+        eventLoop.exec();
+
+        QString fingerDataID = fingerPrint.getFingerDataID();
+        if( fingerDataID.isEmpty() ){
+            return;
+        }
+
+        QString fingerName = generateBiometricsItemName(ACCOUNTS_AUTH_MODE_FINGERPRINT);
+        auto newItem = newBiometricItem(fingerName,fingerDataID);
+        ui->layout_fingerTemplate->insertWidget(ui->layout_fingerTemplate->count()-1,newItem);
+        m_addFingerItem->setItemAddEnabled(ui->layout_fingerTemplate->count()<=1);
+    }else{
+        qWarning() << "not support!!";
+    }
+}
+
+QString AuthManagerPage::generateBiometricsItemName(AccountsAuthMode mode) {
+    QSet<uint> set;
+    QVBoxLayout* layout = mode==ACCOUNTS_AUTH_MODE_FINGERPRINT?ui->layout_fingerTemplate:ui->layout_faceTemplate;
+
+    for(int i=0;i<layout->count();i++){
+        auto layoutItem = layout->itemAt(i);
+        if(!layoutItem->widget()){
+            continue;
+        }
+        BiometricItem* item = qobject_cast<BiometricItem*>(layoutItem->widget());
+        if(!item || item->getItemType()==BiometricItem::BIOMETRIC_ITEM_ADD){
+            continue;
+        }
+        QString name = item->getBiometricItemName();
+        QStringList splitRes = name.split("_");
+        if(splitRes.size()<2){
+            continue;
+        }
+        bool isOK = false;
+        uint idx = splitRes.at(1).toUInt(&isOK);
+        if(!isOK){
+            continue;
+        }
+        set.insert(idx);
+    }
+
+    uint idx = 1;
+    forever{
+        if(!set.contains(idx)){
+            break;
+        }else{
+            idx++;
+        }
+    };
+    QString prefix = mode==ACCOUNTS_AUTH_MODE_FINGERPRINT?"fingerprint_":"face_";
+    QString res = prefix+QString::number(idx);
     return res;
 }

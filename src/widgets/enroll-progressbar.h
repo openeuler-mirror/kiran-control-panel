@@ -17,15 +17,16 @@ public:
     void setProgressValue(unsigned int value);
     ///设置进度条中心图片
     void updateCenterImage(const QPixmap& centerPixmap);
-    ///获取圆形进度条中间显示图片大小
-    QSize getCenterImageSize();
+    ///获取中心原型图片大小
+    qreal getCenterImageRadius();
 
 private:
     void initUI();
+    void paintProgressBar(QPainter& painter);
+    void paintCenterPixmap(QPainter& painter,const QPixmap& pixmap);
 
 protected:
     virtual void paintEvent(QPaintEvent *event) override;
-    virtual void timerEvent(QTimerEvent *event) override;
 
 private:
     /* 进度条线段长度 */

@@ -20,14 +20,24 @@ void EnrollProgressBar::paintEvent(QPaintEvent *event) {
     QPainter painter(this);
     painter.setRenderHint(QPainter::HighQualityAntialiasing);
 
+    painter.save();
+    paintProgressBar(painter);
+    painter.restore();
+
+    paintCenterPixmap(painter,m_centerPixmap);
+}
+
+void EnrollProgressBar::setProgressValue(unsigned int value) {
+    m_progressValue = value;
+    update();
+}
+
+void EnrollProgressBar::paintProgressBar(QPainter &painter) {
     QColor normalColor("#2d2d2d");
     QColor activeColor("#2eb3ff");
-
     painter.translate(width()/2,height()/2);
-
     QPen pen;
     pen.setWidthF(1.4);
-
     qreal rotateAngle = 0;
     for(int i=0;i<m_progressLinesCount;i++){
         qreal percent = rotateAngle/360;
@@ -45,11 +55,25 @@ void EnrollProgressBar::paintEvent(QPaintEvent *event) {
     }
 }
 
-void EnrollProgressBar::timerEvent(QTimerEvent *event) {
-    m_progressValue+=1;
-    if( m_progressValue>100 ){
-        m_progressValue = 0;
-    }
+void EnrollProgressBar::paintCenterPixmap(QPainter& painter, const QPixmap &pixmap) {
+    QPoint center = this->rect().center();
+    qreal imageRadius = getCenterImageRadius();
+    QPainterPath painterPath;
+    painterPath.addEllipse(center.x()-imageRadius,center.y()-imageRadius,imageRadius*2,imageRadius*2);
+    painter.setClipPath(painterPath);
+    painter.drawPixmap( center.x()-(m_centerPixmap.size().width()/2),
+                        center.y()-(m_centerPixmap.size().height()/2),
+                        m_centerPixmap.size().width(),
+                        m_centerPixmap.size().height(),
+                        m_centerPixmap);
+}
+
+qreal EnrollProgressBar::getCenterImageRadius() {
+    qreal  imageRadius = (height()/2.0-m_borerMargin-m_paintProgressLength);
+    return imageRadius;
+}
+
+void EnrollProgressBar::updateCenterImage(const QPixmap &centerPixmap) {
+    m_centerPixmap = centerPixmap;
     update();
-    QObject::timerEvent(event);
 }
