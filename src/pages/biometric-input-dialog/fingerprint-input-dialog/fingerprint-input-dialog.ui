@@ -37,14 +37,14 @@
      </property>
      <property name="minimumSize">
       <size>
-       <width>220</width>
-       <height>220</height>
+       <width>274</width>
+       <height>274</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>220</width>
-       <height>220</height>
+       <width>274</width>
+       <height>260</height>
       </size>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_2"/>

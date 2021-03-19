@@ -135,14 +135,14 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="137"/>
-        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="218"/>
+        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="117"/>
+        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="206"/>
         <source>error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="138"/>
-        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="219"/>
+        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="118"/>
+        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="207"/>
         <source>please ensure that at least one authentication option exists</source>
         <translation type="unfinished"></translation>
     </message>
@@ -316,7 +316,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/pages/biometric-input-dialog/fingerprint-input-dialog/fingerprint-input-dialog.cpp" line="63"/>
+        <location filename="../src/pages/biometric-input-dialog/fingerprint-input-dialog/fingerprint-input-dialog.cpp" line="71"/>
         <source>Error</source>
         <translation type="unfinished">错误</translation>
     </message>
@@ -324,7 +324,7 @@
 <context>
     <name>FingerprintInputWorker</name>
     <message>
-        <location filename="../src/pages/biometric-input-dialog/fingerprint-input-dialog/fingerprint-input-worker.cpp" line="53"/>
+        <location filename="../src/pages/biometric-input-dialog/fingerprint-input-dialog/fingerprint-input-worker.cpp" line="51"/>
         <source>initializing fingerprint collection environment...</source>
         <translation type="unfinished"></translation>
     </message>

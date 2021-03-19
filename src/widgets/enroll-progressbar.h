@@ -30,7 +30,7 @@ protected:
 
 private:
     /* 进度条线段长度 */
-    unsigned int m_paintProgressLength = 16;
+    unsigned int m_paintProgressLength = 18;
     /* 进度条线段数量 */
     unsigned int m_progressLinesCount = 80;
     /* 进度值 */
