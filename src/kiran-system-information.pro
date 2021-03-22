@@ -53,7 +53,9 @@ SOURCES += \
     kiran-system-widget.cpp \
     kiran-scroll-area.cpp \
     kiran-list-widget.cpp \
-    change-host-name-widget.cpp
+    change-host-name-widget.cpp \
+    single-application/single-application.cpp \
+    single-application/single-application_p.cpp
 
 HEADERS += \
         kiran-system-information.h \
@@ -72,7 +74,9 @@ HEADERS += \
     kiran-system-widget.h \
     kiran-scroll-area.h \
     kiran-list-widget.h \
-    change-host-name-widget.h
+    change-host-name-widget.h \
+    single-application/single-application.h \
+    single-application/single-application_p.h
 
 FORMS += \
         kiran-system-information.ui \

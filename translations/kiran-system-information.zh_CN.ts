@@ -300,11 +300,11 @@
         <translation>网卡:</translation>
     </message>
     <message>
-        <location filename="../src/hardware-information-widget.cpp" line="63"/>
         <location filename="../src/hardware-information-widget.cpp" line="66"/>
         <location filename="../src/hardware-information-widget.cpp" line="69"/>
-        <location filename="../src/hardware-information-widget.cpp" line="75"/>
-        <location filename="../src/hardware-information-widget.cpp" line="76"/>
+        <location filename="../src/hardware-information-widget.cpp" line="72"/>
+        <location filename="../src/hardware-information-widget.cpp" line="78"/>
+        <location filename="../src/hardware-information-widget.cpp" line="79"/>
         <source>Unknow</source>
         <translation>未知</translation>
     </message>
@@ -533,71 +533,71 @@
         <translation>联系我们:</translation>
     </message>
     <message>
-        <location filename="../src/system-information-widget.cpp" line="73"/>
+        <location filename="../src/system-information-widget.cpp" line="75"/>
         <source>Change</source>
         <translation>更改</translation>
     </message>
     <message>
-        <location filename="../src/system-information-widget.cpp" line="74"/>
-        <location filename="../src/system-information-widget.cpp" line="140"/>
-        <location filename="../src/system-information-widget.cpp" line="191"/>
+        <location filename="../src/system-information-widget.cpp" line="76"/>
+        <location filename="../src/system-information-widget.cpp" line="142"/>
+        <location filename="../src/system-information-widget.cpp" line="193"/>
         <source>Active</source>
         <translation>激活</translation>
     </message>
     <message>
-        <location filename="../src/system-information-widget.cpp" line="88"/>
-        <location filename="../src/system-information-widget.cpp" line="89"/>
         <location filename="../src/system-information-widget.cpp" line="90"/>
         <location filename="../src/system-information-widget.cpp" line="91"/>
-        <location filename="../src/system-information-widget.cpp" line="112"/>
-        <location filename="../src/system-information-widget.cpp" line="116"/>
-        <location filename="../src/system-information-widget.cpp" line="117"/>
-        <location filename="../src/system-information-widget.cpp" line="172"/>
-        <location filename="../src/system-information-widget.cpp" line="376"/>
-        <location filename="../src/system-information-widget.cpp" line="380"/>
-        <location filename="../src/system-information-widget.cpp" line="381"/>
+        <location filename="../src/system-information-widget.cpp" line="92"/>
+        <location filename="../src/system-information-widget.cpp" line="93"/>
+        <location filename="../src/system-information-widget.cpp" line="114"/>
+        <location filename="../src/system-information-widget.cpp" line="118"/>
+        <location filename="../src/system-information-widget.cpp" line="119"/>
+        <location filename="../src/system-information-widget.cpp" line="174"/>
+        <location filename="../src/system-information-widget.cpp" line="379"/>
+        <location filename="../src/system-information-widget.cpp" line="383"/>
+        <location filename="../src/system-information-widget.cpp" line="384"/>
         <source>Unknow</source>
         <translation>未知</translation>
     </message>
     <message>
-        <location filename="../src/system-information-widget.cpp" line="113"/>
-        <location filename="../src/system-information-widget.cpp" line="377"/>
+        <location filename="../src/system-information-widget.cpp" line="115"/>
+        <location filename="../src/system-information-widget.cpp" line="380"/>
         <source>Can&apos;t get license information</source>
         <translation>无法获取授权信息</translation>
     </message>
     <message>
-        <location filename="../src/system-information-widget.cpp" line="148"/>
+        <location filename="../src/system-information-widget.cpp" line="150"/>
         <source>The current time is illegal</source>
         <translation>当前时间不合法</translation>
     </message>
     <message>
-        <location filename="../src/system-information-widget.cpp" line="149"/>
+        <location filename="../src/system-information-widget.cpp" line="151"/>
         <source>Less than the installation time</source>
         <translation>小于安装时间</translation>
     </message>
     <message>
-        <location filename="../src/system-information-widget.cpp" line="160"/>
+        <location filename="../src/system-information-widget.cpp" line="162"/>
         <source>Trial Version. Trial expire: </source>
         <translation>试用版.试用到期: </translation>
     </message>
     <message>
-        <location filename="../src/system-information-widget.cpp" line="169"/>
+        <location filename="../src/system-information-widget.cpp" line="171"/>
         <source>get service status failed</source>
         <translation>获取服务状态信息失败</translation>
     </message>
     <message>
-        <location filename="../src/system-information-widget.cpp" line="179"/>
-        <location filename="../src/system-information-widget.cpp" line="395"/>
+        <location filename="../src/system-information-widget.cpp" line="181"/>
+        <location filename="../src/system-information-widget.cpp" line="398"/>
         <source>Official Version</source>
         <translation>正式版</translation>
     </message>
     <message>
-        <location filename="../src/system-information-widget.cpp" line="456"/>
+        <location filename="../src/system-information-widget.cpp" line="459"/>
         <source>Copyright ©</source>
         <translation>版权所有 ©</translation>
     </message>
     <message>
-        <location filename="../src/system-information-widget.cpp" line="456"/>
+        <location filename="../src/system-information-widget.cpp" line="459"/>
         <source>KylinSec. All rights reserved.</source>
         <translation>KylinSec.保留所有权利.</translation>
     </message>
