@@ -14,7 +14,7 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
 set(TRANSLATIONS_DIR "${SHARE_INSTALL_PREFIX}/${PROJECT_NAME}/translations/")
 set( TS_FILES "translations/kiran-system-information.zh_CN.ts" )
-set( INCLUDE_PATH "/usr/include/glib-2.0/" "/usr/lib64/glib-2.0/include/" "/usr/include")
+set( INCLUDE_PATH "/usr/include/glib-2.0/" "/usr/lib64/glib-2.0/include/" "/usr/include" "/usr/include/kylin-license")
 
 #添加config.h.in文件
 configure_file (

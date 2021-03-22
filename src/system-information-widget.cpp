@@ -25,6 +25,8 @@
 #define HOST_NAME        "host_name"
 #define ARCH             "arch"
 #define KERNEL_VERSION   "kernel_version"
+#define KERNEL_NAME      "kernal_name"
+#define KERNEL_RELEASE   "kernel_release"
 #define PRODUCT_RELEASE  "product_release"
 #define EXPIRED_TIME     "expired_time"
 #define START_TIME       "start_time"
@@ -248,12 +250,13 @@ void SystemInformationWidget::getJsonValueFromString(QString jsonString)
                ui->lab_system_version_info->setText(system_vresion);
            }
        }
-       if(obj.contains(KERNEL_VERSION))
+       if(obj.contains(KERNEL_NAME) && obj.contains(KERNEL_RELEASE))
        {
-           QJsonValue value = obj.take(KERNEL_VERSION);
-           if(value.isString())
+           QJsonValue value_name = obj.take(KERNEL_NAME);
+           QJsonValue value_release = obj.take(KERNEL_RELEASE);
+           if(value_name.isString() && value_release.isString())
            {
-               QString kernel_version = value.toString();
+               QString kernel_version = value_name.toString() + " " + value_release.toString();
                ui->lab_core_version_info->setText(kernel_version);
            }
        }
@@ -457,7 +460,7 @@ void SystemInformationWidget::paintEvent(QPaintEvent *painEvent)
 
     QPainter painter(this);
     QFont font = QFont("Noto Sans CJK SC regular",46);
-    QRect drawRecLogo = QRect(this->geometry().x(),this->geometry().y()+16,this->width(),ui->widget_logo->height()-16);
+    QRect drawRecLogo = QRect(this->geometry().x()+24,this->geometry().y()+16,this->width(),ui->widget_logo->height()-16);
 
     painter.setPen(QColor(46,179,255));  //#2eb3FF
     painter.setFont(font);
@@ -467,10 +470,10 @@ void SystemInformationWidget::paintEvent(QPaintEvent *painEvent)
     int heightText = fm.height();
 
     int offsetHeight = heightText+5+16;
-    QRect drawRecCopyright = QRect(0,this->geometry().y()+offsetHeight, this->width(),ui->widget_logo->height()-offsetHeight);
+    QRect drawRecCopyright = QRect(24,this->geometry().y()+offsetHeight, this->width(),ui->widget_logo->height()-offsetHeight);
     font.setPointSize(10);
     font.setWeight(QFont::Normal);
-    painter.setPen(QColor(255,255,255));
+    painter.setPen(QColor(145,145,145));
     painter.setFont(font);
     painter.drawText(drawRecCopyright,copyright);
 }
