@@ -18,6 +18,9 @@
 #include <QImage>
 #include <QPixmap>
 #include <Qt>
+#include <math.h>
+#include<sstream>
+#include <iomanip>
 #include <kiran-cc-daemon/kiran-system-daemon/systeminfo_i.h>
 
 #define MEMORY          "mem"
@@ -119,8 +122,12 @@ void HardwareInformationWidget::getJsonValueFromString(QString jsonString)
                    QJsonValue value = object.value(TOTAL_SIZE);
                    if(value.isDouble())
                    {
-                       double memory_size = value.toVariant().toDouble();
-                       QString size = QString("%1G").arg(memory_size/1024/1024/1024);
+                       double memory_size = value.toVariant().toDouble() /1024/1024/1024;
+                       stringstream ss;
+                       ss << setiosflags(ios::fixed) << setprecision(2) << memory_size;//保留两位小数
+                       string str = ss.str();
+
+                       QString size = QString("%1G").arg(QString::fromStdString(str));
                        ui->label_memory_info->setText(size);
                    }
                }

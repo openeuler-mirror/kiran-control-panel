@@ -62,7 +62,7 @@ QSize KiranSystemWidget::sizeHint() const
     QSize windowSize;
     if(desktop->height() >= 776 && desktop->width() >= 948 ) //能显示全
     {
-        windowSize = QSize(948,776);
+        windowSize = QSize(950,780);
 
     }
     else
