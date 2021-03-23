@@ -148,6 +148,7 @@ QListWidget#infoListWidget::item
 QListWidget#infoListWidget::Item:selected
 {
     background-color: #2eb3ff;
+    border:none;
 }
 
 QListWidgetItem

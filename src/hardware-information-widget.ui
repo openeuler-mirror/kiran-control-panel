@@ -366,7 +366,7 @@
             <number>0</number>
            </property>
            <property name="verticalSpacing">
-            <number>24</number>
+            <number>18</number>
            </property>
           </layout>
          </item>

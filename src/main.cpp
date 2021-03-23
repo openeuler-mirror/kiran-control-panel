@@ -1,5 +1,6 @@
 #include "kiran-system-widget.h"
 #include <QApplication>
+#include <QDesktopWidget>
 #include <QFile>
 #include <QMessageBox>
 #include <QDebug>
@@ -48,5 +49,7 @@ int main(int argc, char *argv[])
     KiranSystemWidget w;
     w.resize(w.sizeHint());
     w.show();
+    QDesktopWidget *desktop = QApplication::desktop();
+    w.move((desktop->width() - w.width())/2 , (desktop->height() - w.height())/2 );
     return a.exec();
 }

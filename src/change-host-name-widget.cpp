@@ -11,6 +11,7 @@
 #include <kiranwidgets-qt5/kiran-message-box.h>
 
 #include <QDebug>
+#include <QDesktopWidget>
 
 ChangeHostNameWidget::ChangeHostNameWidget() :
     KiranTitlebarWindow(),
@@ -36,6 +37,9 @@ void ChangeHostNameWidget::initUI()
     setContentWrapperMarginBottom(0);
     setResizeable(false);
     ui->btn_save->setEnabled(false);
+
+    QDesktopWidget *desktop = QApplication::desktop();
+    this->move((desktop->width() - this->width())/2 , (desktop->height() - this->height())/2 );
 }
 
 void ChangeHostNameWidget::setNewHostName()
