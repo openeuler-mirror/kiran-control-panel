@@ -1,5 +1,7 @@
-set(ICON_DIR "${SHARE_INSTALL_PREFIX}/${PROJECT_NAME}/icons")
-set(BIN_DIR "${CMAKE_INSTALL_PREFIX}/bin")
+#set(DATA_DIR "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATAROOTDIR}")
+
+set(ICON_DIR "${DATA_DIR}/${PROJECT_NAME}/icons")
+set(BIN_DIR "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_BINDIR}")
 
 #添加kiran-system-information.desktop.in文件
 configure_file (
@@ -9,7 +11,7 @@ configure_file (
 
 
 install(FILES "${PROJECT_BINARY_DIR}/config/kiran-system-information.desktop"
-        DESTINATION ${SHARE_INSTALL_PREFIX}/applications/ )
+	DESTINATION ${DATA_DIR}/applications/ )
 
 
 
