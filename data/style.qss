@@ -376,7 +376,7 @@ QLineEdit:focus
 QListWidget#listWidget
 {
     background-color: #222222;
-    border-right:1px solid rgba(255,255,255,0.05);
+    border-right:1px solid #2d2d2d;
     margin-right:13px;
     margin-left:9px;
     margin-top:7px;
