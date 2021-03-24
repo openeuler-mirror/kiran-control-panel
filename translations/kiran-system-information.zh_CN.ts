@@ -257,45 +257,45 @@
     <name>HardwareInformationWidget</name>
     <message>
         <location filename="../src/hardware-information-widget.ui" line="14"/>
-        <location filename="../build/kiran-system-information_autogen/include/ui_hardware-information-widget.h" line="256"/>
+        <location filename="../build/kiran-system-information_autogen/include/ui_hardware-information-widget.h" line="254"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/hardware-information-widget.ui" line="133"/>
-        <location filename="../build/kiran-system-information_autogen/include/ui_hardware-information-widget.h" line="258"/>
+        <location filename="../build/kiran-system-information_autogen/include/ui_hardware-information-widget.h" line="256"/>
         <source>CPU:</source>
         <translation>CPU:</translation>
     </message>
     <message>
         <location filename="../src/hardware-information-widget.ui" line="153"/>
         <location filename="../src/hardware-information-widget.ui" line="213"/>
+        <location filename="../build/kiran-system-information_autogen/include/ui_hardware-information-widget.h" line="257"/>
         <location filename="../build/kiran-system-information_autogen/include/ui_hardware-information-widget.h" line="259"/>
-        <location filename="../build/kiran-system-information_autogen/include/ui_hardware-information-widget.h" line="261"/>
         <source>TextLabel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/hardware-information-widget.ui" line="193"/>
-        <location filename="../build/kiran-system-information_autogen/include/ui_hardware-information-widget.h" line="260"/>
+        <location filename="../build/kiran-system-information_autogen/include/ui_hardware-information-widget.h" line="258"/>
         <source>Memory:</source>
         <translation>内存:</translation>
     </message>
     <message>
         <location filename="../src/hardware-information-widget.ui" line="253"/>
-        <location filename="../build/kiran-system-information_autogen/include/ui_hardware-information-widget.h" line="262"/>
+        <location filename="../build/kiran-system-information_autogen/include/ui_hardware-information-widget.h" line="260"/>
         <source>Hard disk:</source>
         <translation>硬盘:</translation>
     </message>
     <message>
         <location filename="../src/hardware-information-widget.ui" line="331"/>
-        <location filename="../build/kiran-system-information_autogen/include/ui_hardware-information-widget.h" line="263"/>
+        <location filename="../build/kiran-system-information_autogen/include/ui_hardware-information-widget.h" line="261"/>
         <source>Graphics card:</source>
         <translation>显卡:</translation>
     </message>
     <message>
-        <location filename="../src/hardware-information-widget.ui" line="409"/>
-        <location filename="../build/kiran-system-information_autogen/include/ui_hardware-information-widget.h" line="264"/>
+        <location filename="../src/hardware-information-widget.ui" line="406"/>
+        <location filename="../build/kiran-system-information_autogen/include/ui_hardware-information-widget.h" line="262"/>
         <source>Network card:</source>
         <translation>网卡:</translation>
     </message>
