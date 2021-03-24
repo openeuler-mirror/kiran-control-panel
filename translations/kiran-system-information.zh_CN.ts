@@ -238,17 +238,17 @@
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="../src/change-host-name-widget.cpp" line="33"/>
+        <location filename="../src/change-host-name-widget.cpp" line="34"/>
         <source>Host Name</source>
         <translation>主机名</translation>
     </message>
     <message>
-        <location filename="../src/change-host-name-widget.cpp" line="47"/>
+        <location filename="../src/change-host-name-widget.cpp" line="51"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="../src/change-host-name-widget.cpp" line="48"/>
+        <location filename="../src/change-host-name-widget.cpp" line="52"/>
         <source>Change host name failed! Please check the Dbus service!</source>
         <translation>修改主机名失败！请 检查Dbus服务!</translation>
     </message>

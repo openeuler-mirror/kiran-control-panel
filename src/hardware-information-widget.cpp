@@ -177,7 +177,7 @@ void HardwareInformationWidget::getJsonValueFromString(QString jsonString)
                    {
                        QJsonObject object = value.toObject();
                        QString disk_model;
-                       float size ;
+                       double size ;
                        if(object.contains(MODEL))
                        {
                            QJsonValue value = object.value(MODEL);
@@ -195,8 +195,11 @@ void HardwareInformationWidget::getJsonValueFromString(QString jsonString)
                                size = disk_size/1024/1024/1024;
                            }
                        }
+                       stringstream ss;
+                       ss << setiosflags(ios::fixed) << setprecision(2) << size;//保留两位小数
+                       string str = ss.str();
                        ///FIXME:后续将界面要显示disk值，做成数组
-                       QString diskInfo = QString("%1 (%2G)").arg(disk_model).arg(size);
+                       QString diskInfo = QString("%1 (%2G)").arg(disk_model).arg(QString::fromStdString(str));
                        diskList << diskInfo;
                    }
                }
@@ -330,6 +333,9 @@ void HardwareInformationWidget::showListInfo()
         QLabel* labelDisk = new QLabel(diskList.at(i));
         //设置QLabel的样式
         labelDisk->setStyleSheet("QLabel{color:#7e7e7e;font-family: \"Noto Sans CJK SC regular\";font-size:12px;}");
+        QFont font = labelDisk->font();
+        int fontSize = font.pixelSize();
+        qInfo() << "fontSize= " << fontSize;
         ui->gridLayout_hard_disk->addWidget(labelDisk,i,0,Qt::AlignRight);
     }
 
