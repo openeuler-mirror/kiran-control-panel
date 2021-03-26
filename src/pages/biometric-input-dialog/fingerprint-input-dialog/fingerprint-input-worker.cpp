@@ -66,6 +66,7 @@ void FingerprintInputWorker::run ()
     reply.waitForFinished();
     if (reply.isError())
     {
+        qInfo() << reply.error();
         emit sigEnrollError(reply.error().message());
         return;
     }

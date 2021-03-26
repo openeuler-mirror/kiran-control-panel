@@ -22,7 +22,6 @@ HardWorker::~HardWorker ()
 }
 
 //TODO: 拼接DBus接口返回的错误信息
-//TODO: 创建用户成功,设置属性失败，直接删除用户!
 void HardWorker::doCreateUser (QString account,
                                int uid,
                                int accountType,
@@ -99,7 +98,7 @@ void HardWorker::doCreateUser (QString account,
     qInfo() << QString("create user(%1) is done").arg(account);
     emit sigCreateUserDnoe(userObjPath, "");
     return;
-    failed:
+failed:
     if (!userObjPath.isEmpty())
     {
         UserInterface userInterface(userObjPath,

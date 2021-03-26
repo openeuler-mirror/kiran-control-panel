@@ -12,6 +12,8 @@
 
 Q_DECLARE_METATYPE(QList<QRect>);
 
+#define REFRESH_DELAY_TIME_MS  100
+
 FaceInputDialog::FaceInputDialog (QWidget *parent) :
         KiranTitlebarWindow(),
         ui(new Ui::FaceInputDialog),
@@ -47,11 +49,12 @@ void FaceInputDialog::init ()
         close();
     });
 
-    m_refeshDelayTimer.setInterval(100);
+    m_refeshDelayTimer.setInterval(REFRESH_DELAY_TIME_MS);
     connect(&m_refeshDelayTimer, &QTimer::timeout, [this] () {
-        qInfo() << "timeout !!!!!!!";
         generateNewPreviewImage();
     });
+
+    setTips(TIP_TYPE_INFO,tr("initializing face collection environment..."));
 
     ///开始采集
     startEnroll();
@@ -86,7 +89,7 @@ void FaceInputDialog::closeEvent (QCloseEvent *event)
     QWidget::closeEvent(event);
 }
 
-void FaceInputDialog::startEnroll ()
+bool FaceInputDialog::startEnroll ()
 {
 
     auto reply = m_interface->EnrollFaceStart();
@@ -102,7 +105,8 @@ void FaceInputDialog::startEnroll ()
             if (stopEnrollReply.isError())
             {
                 qWarning() << "stop enroll face error:" << stopEnrollReply.error();
-                return;
+                setTips(TIP_TYPE_ERROR,tr("failed to initialize face collection environment!"));
+                return false;
             }
             else
             {
@@ -111,18 +115,28 @@ void FaceInputDialog::startEnroll ()
                 if (reply.isError())
                 {
                     qWarning() << "enroll face start error:" << reply.error();
-                    return;
+                    QString errMsg = QString("%1(%2)")
+                            .arg(tr("Failed to start collection"))
+                            .arg(reply.error().message());
+                    setTips(TIP_TYPE_ERROR,errMsg);
+                    return false;
                 }
             }
         }
         else
         {
-            return;
+            qWarning() << "enroll face start error:" << reply.error();
+            QString errMsg = QString("%1(%2)")
+                    .arg(tr("Failed to start collection"))
+                    .arg(reply.error().message());
+            setTips(TIP_TYPE_ERROR,errMsg);
+            return false;
         }
     }
     m_enrollThread->setZeroMQAddr(reply.value());
     m_enrollThread->start();
     m_enrollStarted = true;
+    return true;
 }
 
 void FaceInputDialog::stopEnroll ()

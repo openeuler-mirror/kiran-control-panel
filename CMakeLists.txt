@@ -6,6 +6,8 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
+include(GNUInstallDirs)
+
 find_package(PkgConfig REQUIRED)
 pkg_search_module(KIRAN_WIDGETS_QT5 REQUIRED kiranwidgets-qt5)
 pkg_search_module(KIRAN_CC_DAEMON REQUIRED kiran-cc-daemon)
@@ -62,13 +64,13 @@ install(TARGETS ${PROJECT_NAME}
         DESTINATION ${CMAKE_INSTALL_PREFIX}/bin/)
 
 install(FILES ${QM_FILES}
-        DESTINATION ${SHARE_INSTALL_PREFIX}/${PROJECT_NAME}/translations/ )
+        DESTINATION ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATAROOTDIR}/${PROJECT_NAME}/translations/ )
 
 install(FILES "./config/kiran-account-manager.desktop"
-        DESTINATION ${SHARE_INSTALL_PREFIX}/applications/ )
+        DESTINATION ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATAROOTDIR}/applications/ )
 
 file(GLOB BUILDIN_AVATARS "./buildin-avatar/*")
 install(FILES ${BUILDIN_AVATARS}
-        DESTINATION ${SHARE_INSTALL_PREFIX}/${PROJECT_NAME}/account-icons/ )
+        DESTINATION ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATAROOTDIR}/${PROJECT_NAME}/account-icons/ )
 
 add_subdirectory(avatar-editor)

@@ -37,7 +37,7 @@ public:
 private:
     void init ();
     void initUI ();
-    void startEnroll ();
+    bool startEnroll ();
     void stopEnroll ();
     void generateNewPreviewImage ();
     void setTips (FaceInputDialog::TipType type, const QString &tip);;

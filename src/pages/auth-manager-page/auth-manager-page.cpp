@@ -54,7 +54,6 @@ void AuthManagerPage::initUI ()
     connect(ui->btn_return, &QPushButton::clicked, [this] () {
         Q_EMIT sigReturn();
     });
-    //TODO:连接到每个CheckBox切换时判断是否存在勾选项
     connect(ui->check_passwdAuth, &QCheckBox::stateChanged, this, &AuthManagerPage::slotCheckAuthTypes);
     connect(ui->check_fingerAuth, &QCheckBox::stateChanged, this, &AuthManagerPage::slotCheckAuthTypes);
     connect(ui->check_faceAuth, &QCheckBox::stateChanged, this, &AuthManagerPage::slotCheckAuthTypes);
@@ -99,7 +98,7 @@ void AuthManagerPage::updateInfo ()
         auto newItem = newBiometricItem(fingerTemplate.first, fingerTemplate.second);
         ui->layout_fingerTemplate->addWidget(newItem);
     }
-    m_addFingerItem = new BiometricItem("add fingerprint", "", BiometricItem::BIOMETRIC_ITEM_ADD, this);
+    m_addFingerItem = new BiometricItem(tr("add fingerprint"), "", BiometricItem::BIOMETRIC_ITEM_ADD, this);
     m_addFingerItem->setItemAddEnabled(fingerAuthItemsList.isEmpty());
     ui->layout_fingerTemplate->addWidget(m_addFingerItem);
     connect(m_addFingerItem, &BiometricItem::sigAddBiometricItem, this, &AuthManagerPage::slotAddBiometricsItem);
@@ -112,7 +111,7 @@ void AuthManagerPage::updateInfo ()
         auto newItem = newBiometricItem(faceTemplate.first, faceTemplate.second);
         ui->layout_faceTemplate->addWidget(newItem);
     }
-    m_addFaceItem = new BiometricItem("add face", "", BiometricItem::BIOMETRIC_ITEM_ADD, this);
+    m_addFaceItem = new BiometricItem(tr("add face"), "", BiometricItem::BIOMETRIC_ITEM_ADD, this);
     m_addFaceItem->setItemAddEnabled(faceAuthItemsList.isEmpty());
     ui->layout_faceTemplate->addWidget(m_addFaceItem);
     connect(m_addFaceItem, &BiometricItem::sigAddBiometricItem, this, &AuthManagerPage::slotAddBiometricsItem);
@@ -426,7 +425,7 @@ QString AuthManagerPage::generateBiometricsItemName (AccountsAuthMode mode)
             idx++;
         }
     };
-    QString prefix = mode == ACCOUNTS_AUTH_MODE_FINGERPRINT ? "fingerprint_" : "face_";
+    QString prefix = mode == ACCOUNTS_AUTH_MODE_FINGERPRINT ? AuthManagerPage::tr("fingerprint_") : AuthManagerPage::tr("face_");
     QString res = prefix + QString::number(idx);
     return res;
 }
