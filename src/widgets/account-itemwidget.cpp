@@ -3,15 +3,17 @@
 #include "accounts-user-interface.h"
 
 #include <QStyle>
-AccountItemWidget::AccountItemWidget(QWidget *paren, bool isCreateAccountItem) :
-    QWidget(paren),
-    ui(new Ui::AccountItemWidget),
-    m_isSelected(false),
-    m_isCreateAccountItem(isCreateAccountItem),
-    m_isLocked(false)
+
+AccountItemWidget::AccountItemWidget (QWidget *paren, bool isCreateAccountItem) :
+        QWidget(paren),
+        ui(new Ui::AccountItemWidget),
+        m_isSelected(false),
+        m_isCreateAccountItem(isCreateAccountItem),
+        m_isLocked(false)
 {
     ui->setupUi(this);
-    if(m_isCreateAccountItem){
+    if (m_isCreateAccountItem)
+    {
         ui->avatar->setImage(":/images/add_icon.png");
         ui->label_account->setText(tr("Create new account"));
         ui->label_status->setVisible(false);
@@ -19,48 +21,49 @@ AccountItemWidget::AccountItemWidget(QWidget *paren, bool isCreateAccountItem) :
     updateStatusDesc();
 }
 
-AccountItemWidget::~AccountItemWidget()
+AccountItemWidget::~AccountItemWidget ()
 {
     delete ui;
 }
 
-bool AccountItemWidget::isSelected() const
+bool AccountItemWidget::isSelected () const
 {
     return m_isSelected;
 }
 
-bool AccountItemWidget::isCreateAccountItem() const
+bool AccountItemWidget::isCreateAccountItem () const
 {
     return m_isCreateAccountItem;
 }
 
-bool AccountItemWidget::isLocked() const
+bool AccountItemWidget::isLocked () const
 {
     return m_isLocked;
 }
 
-void AccountItemWidget::setUserDBusObjectPath(const QString &objPath)
+void AccountItemWidget::setUserDBusObjectPath (const QString &objPath)
 {
     m_objectPath = objPath;
     updateInfo();
 }
 
-QString AccountItemWidget::getUserDBusObjectPath()
+QString AccountItemWidget::getUserDBusObjectPath ()
 {
     return m_objectPath;
 }
 
-void AccountItemWidget::updateInfo()
+void AccountItemWidget::updateInfo ()
 {
-    UserInterface userInterface(m_objectPath,QDBusConnection::systemBus());
+    UserInterface userInterface(m_objectPath, QDBusConnection::systemBus());
     ui->label_account->setText(userInterface.user_name());
     setIsLocked(userInterface.locked());
     ui->avatar->setImage(userInterface.icon_file());
 }
 
-void AccountItemWidget::setSelected(bool isSelected)
+void AccountItemWidget::setSelected (bool isSelected)
 {
-    if( m_isSelected==isSelected ){
+    if (m_isSelected == isSelected)
+    {
         return;
     }
     m_isSelected = isSelected;
@@ -69,9 +72,10 @@ void AccountItemWidget::setSelected(bool isSelected)
     emit isSelectedChanged(m_isSelected);
 }
 
-void AccountItemWidget::setIsLocked(bool isLocked)
+void AccountItemWidget::setIsLocked (bool isLocked)
 {
-    if(m_isLocked==isLocked){
+    if (m_isLocked == isLocked)
+    {
         return;
     }
     m_isLocked = isLocked;
@@ -79,11 +83,14 @@ void AccountItemWidget::setIsLocked(bool isLocked)
     style()->polish(ui->label_status);
 }
 
-void AccountItemWidget::updateStatusDesc()
+void AccountItemWidget::updateStatusDesc ()
 {
-    if(m_isLocked){
+    if (m_isLocked)
+    {
         ui->label_status->setText(tr("disable"));
-    }else{
+    }
+    else
+    {
         ui->label_status->setText(tr("enable"));
     }
 }

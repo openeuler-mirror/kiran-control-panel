@@ -11,13 +11,18 @@
 #include <QWidget>
 
 QT_BEGIN_NAMESPACE
-namespace Ui { class BiometricItem; }
+namespace Ui
+{
+    class BiometricItem;
+}
 QT_END_NAMESPACE
 
-class BiometricItem : public QWidget {
+class BiometricItem : public QWidget
+{
     Q_OBJECT
 public:
-    enum BiometricItemType{
+    enum BiometricItemType
+    {
         BIOMETRIC_ITEM_ADD,
         BIOMETRIC_ITEM_NORMAL
     };
@@ -26,26 +31,26 @@ public:
     /// @param biometricID  生物识别ID
     /// @param type         该条的类型
     /// @param parent       控件的父控件
-    explicit BiometricItem(const QString &text,
-                           const QString &biometricID,
-                           BiometricItemType type,
-                           QWidget *parent = nullptr);
-    ~BiometricItem() override;
+    explicit BiometricItem (const QString &text,
+                            const QString &biometricID,
+                            BiometricItemType type,
+                            QWidget *parent = nullptr);
+    ~BiometricItem () override;
 
-    void setItemAddEnabled(bool enabled);
-    BiometricItemType getItemType();
-    QString getBiometricItemName();
-    QString getBiometricItemDataID();
+    void setItemAddEnabled (bool enabled);
+    BiometricItemType getItemType ();
+    QString getBiometricItemName ();
+    QString getBiometricItemDataID ();
 
 Q_SIGNALS:
-    void sigAddBiometricItem();
-    void sigDeleteBiometricItem(const QString &biometricID);
+    void sigAddBiometricItem ();
+    void sigDeleteBiometricItem (const QString &biometricID);
 
 private:
-    void initUI(const QString& text,const QString& biometricID,BiometricItemType type);
+    void initUI (const QString &text, const QString &biometricID, BiometricItemType type);
 
 protected:
-    virtual void paintEvent(QPaintEvent *event) override;
+    virtual void paintEvent (QPaintEvent *event) override;
 
 private:
     Ui::BiometricItem *ui;

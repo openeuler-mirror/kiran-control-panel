@@ -7,21 +7,22 @@
 
 #include <QString>
 
-class TemporaryDirManager {
+class TemporaryDirManager
+{
 public:
-    static TemporaryDirManager* instance();
-    ~TemporaryDirManager();
+    static TemporaryDirManager *instance ();
+    ~TemporaryDirManager ();
 
     //初始化,创建临时目录(若存在则删除)
-    bool init(const QString& dirName);
+    bool init (const QString &dirName);
 
     //生成临时目录下唯一文件名
-    QString generateTempFilePath();
+    QString generateTempFilePath ();
 
 private:
-    TemporaryDirManager();
+    TemporaryDirManager ();
     //删除临时目录
-    void remove();
+    void remove ();
 
 private:
     bool m_initFinished = false;

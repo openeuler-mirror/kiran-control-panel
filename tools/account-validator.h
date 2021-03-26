@@ -7,11 +7,12 @@
 
 #include <QValidator>
 
-class AccountValidator :public QValidator{
+class AccountValidator : public QValidator
+{
     Q_OBJECT
 public:
-    explicit AccountValidator(QObject* parent=nullptr);
-    State validate(QString &input, int &pos) const Q_DECL_OVERRIDE;
+    explicit AccountValidator (QObject *parent = nullptr);
+    State validate (QString &input, int &pos) const Q_DECL_OVERRIDE;
 };
 
 

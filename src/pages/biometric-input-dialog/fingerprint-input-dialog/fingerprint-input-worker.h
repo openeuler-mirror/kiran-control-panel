@@ -10,26 +10,28 @@
 #include <QThread>
 
 class BiometricsInterface;
-class FingerprintInputWorker : public QThread {
-Q_OBJECT
+
+class FingerprintInputWorker : public QThread
+{
+    Q_OBJECT
 public:
-    FingerprintInputWorker(QObject* parent = nullptr);
-    ~FingerprintInputWorker();
+    FingerprintInputWorker (QObject *parent = nullptr);
+    ~FingerprintInputWorker ();
 
 public:
-    void startFingerprintEnroll();
-    void stopFingerprintEnroll();
+    void startFingerprintEnroll ();
+    void stopFingerprintEnroll ();
 
 signals:
-    void sigShowStatus(unsigned int progress,const QString& msg);
-    void sigEnrollComplete(bool isSuccess,const QString& msg,const QString& id);
-    void sigEnrollError(const QString& errMsg);
+    void sigShowStatus (unsigned int progress, const QString &msg);
+    void sigEnrollComplete (bool isSuccess, const QString &msg, const QString &id);
+    void sigEnrollError (const QString &errMsg);
 
 protected:
-    void run() override;
+    void run () override;
 
 private:
-    BiometricsInterface* m_interface;
+    BiometricsInterface *m_interface;
     bool m_started;//标识采集是否由这次这次认证发出
 };
 

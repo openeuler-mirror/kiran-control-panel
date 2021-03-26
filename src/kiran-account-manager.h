@@ -16,7 +16,7 @@ class MaskWidget;
 class HardWorker;
 
 class KiranAccountManager : public KiranTitlebarWindow {
-Q_OBJECT
+    Q_OBJECT
 public:
     KiranAccountManager();
     ~KiranAccountManager();

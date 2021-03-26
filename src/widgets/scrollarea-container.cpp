@@ -3,17 +3,17 @@
 #include <QStyleOption>
 #include <QPainter>
 
-ScrollAreaContainer::ScrollAreaContainer(QWidget *parent) : QWidget(parent)
+ScrollAreaContainer::ScrollAreaContainer (QWidget *parent) : QWidget(parent)
 {
 
 }
 
-QSize ScrollAreaContainer::sizeHint() const
+QSize ScrollAreaContainer::sizeHint () const
 {
     return minimumSize();
 }
 
-void ScrollAreaContainer::paintEvent(QPaintEvent *event)
+void ScrollAreaContainer::paintEvent (QPaintEvent *event)
 {
     QStyleOption opt;
     opt.init(this);

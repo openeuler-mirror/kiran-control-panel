@@ -6,14 +6,17 @@
 
 #include <QDebug>
 
-AccountValidator::AccountValidator(QObject *parent) : QValidator(parent) {
+AccountValidator::AccountValidator (QObject *parent) : QValidator(parent)
+{
 
 }
 
 /// 只允许输入数字、字母、下划线
-QValidator::State AccountValidator::validate(QString &input, int &pos) const {
+QValidator::State AccountValidator::validate (QString &input, int &pos) const
+{
     ///为空
-    if (pos == 0 || input.isEmpty()) {
+    if (pos == 0 || input.isEmpty())
+    {
         return Acceptable;
     }
 
@@ -21,7 +24,8 @@ QValidator::State AccountValidator::validate(QString &input, int &pos) const {
     if (!ch.isNumber() &&
         !ch.isUpper() &&
         !ch.isLower() &&
-        (ch != QChar('_'))) {
+        (ch != QChar('_')))
+    {
         return Invalid;
     }
 

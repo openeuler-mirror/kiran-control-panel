@@ -10,41 +10,45 @@
  */
 #include "accounts-user-interface.h"
 #include "accounts-interface.h"
+
 /*
  * Implementation of interface class ComUnikylinKiranSystemDaemonAccountsUserInterface
  */
 
 
-UserInterface::UserInterface(const QString &path, const QDBusConnection &connection, QObject *parent)
-    : QDBusAbstractInterface("com.kylinsec.Kiran.SystemDaemon.Accounts", path, staticInterfaceName(), connection, parent)
+UserInterface::UserInterface (const QString &path, const QDBusConnection &connection, QObject *parent)
+        : QDBusAbstractInterface("com.kylinsec.Kiran.SystemDaemon.Accounts", path, staticInterfaceName(), connection,
+                                 parent)
 {
     QDBusConnection::systemBus().connect(AccountsInterface::staticInterfaceName(),
                                          path,
                                          "org.freedesktop.DBus.Properties",
-                                         "PropertiesChanged",this,
+                                         "PropertiesChanged", this,
                                          SLOT(handlePropertiesChanged(QDBusMessage)));
 }
 
-UserInterface::~UserInterface()
+UserInterface::~UserInterface ()
 {
     QDBusConnection::systemBus().disconnect(AccountsInterface::staticInterfaceName(),
-                                         path(),
-                                         "org.freedesktop.DBus.Properties",
-                                         "PropertiesChanged",this,
-                                         SLOT(handlePropertiesChanged(QDBusMessage)));
+                                            path(),
+                                            "org.freedesktop.DBus.Properties",
+                                            "PropertiesChanged", this,
+                                            SLOT(handlePropertiesChanged(QDBusMessage)));
 }
 
-void UserInterface::handlePropertiesChanged(QDBusMessage msg)
+void UserInterface::handlePropertiesChanged (QDBusMessage msg)
 {
     QList<QVariant> arguments = msg.arguments();
-    if( arguments.size()<1 ){
+    if (arguments.size() < 1)
+    {
         return;
     }
     QVariantMap changeProperties = qdbus_cast<QVariantMap>(arguments.at(1).value<QDBusArgument>());
-    for(auto iter=changeProperties.begin();
-        iter!=changeProperties.end();
-        iter++){
-        emit propertyChanged(path(),iter.key(),iter.value());
+    for (auto iter = changeProperties.begin();
+         iter != changeProperties.end();
+         iter++)
+    {
+        emit propertyChanged(path(), iter.key(), iter.value());
     }
 }
 

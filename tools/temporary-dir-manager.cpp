@@ -10,29 +10,35 @@
 
 #include "temporary-dir-manager.h"
 
-TemporaryDirManager::TemporaryDirManager() {
+TemporaryDirManager::TemporaryDirManager ()
+{
 
 }
 
-TemporaryDirManager::~TemporaryDirManager() {
+TemporaryDirManager::~TemporaryDirManager ()
+{
     remove();
 }
 
-bool TemporaryDirManager::init(const QString& dirName) {
+bool TemporaryDirManager::init (const QString &dirName)
+{
     QString temporarDirPath = QString("/tmp/%1").arg(dirName);
     QFileInfo fileInfo(temporarDirPath);
 
-    if( m_initFinished ){
+    if (m_initFinished)
+    {
         return true;
     }
 
-    if( fileInfo.exists() ){
+    if (fileInfo.exists())
+    {
         QDir dir(fileInfo.absoluteFilePath());
         qInfo() << "remove " << dir.path() << (dir.removeRecursively() ? "success" : "failed");
     }
 
     QDir tempDir("/tmp");
-    if( tempDir.mkdir(dirName) ){
+    if (tempDir.mkdir(dirName))
+    {
         m_initFinished = true;
         m_temporaryDirPath = temporarDirPath;
         qInfo() << "Temporary Dir Path:" << m_temporaryDirPath;
@@ -42,16 +48,20 @@ bool TemporaryDirManager::init(const QString& dirName) {
     return false;
 }
 
-void TemporaryDirManager::remove() {
+void TemporaryDirManager::remove ()
+{
     QFileInfo fileInfo(m_temporaryDirPath);
-    if(fileInfo.exists()){
+    if (fileInfo.exists())
+    {
         QDir dir(m_temporaryDirPath);
         dir.removeRecursively();
     }
 }
 
-QString TemporaryDirManager::generateTempFilePath() {
-    if( !m_initFinished ){
+QString TemporaryDirManager::generateTempFilePath ()
+{
+    if (!m_initFinished)
+    {
         qWarning() << "not initialized,call TemporaryDirManager::init";
         return QString("");
     }
@@ -59,13 +69,16 @@ QString TemporaryDirManager::generateTempFilePath() {
     return QString("%1/%2").arg(m_temporaryDirPath).arg(id.toString(QUuid::WithoutBraces));
 }
 
-TemporaryDirManager *TemporaryDirManager::instance() {
+TemporaryDirManager *TemporaryDirManager::instance ()
+{
     static QMutex mutex;
     static QScopedPointer<TemporaryDirManager> pInst;
 
-    if(Q_UNLIKELY(!pInst)){
+    if (Q_UNLIKELY(!pInst))
+    {
         QMutexLocker locker(&mutex);
-        if(pInst.isNull()){
+        if (pInst.isNull())
+        {
             pInst.reset(new TemporaryDirManager);
         }
     }

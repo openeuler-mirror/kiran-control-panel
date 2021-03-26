@@ -135,14 +135,14 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="117"/>
-        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="206"/>
+        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="118"/>
+        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="207"/>
         <source>error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="118"/>
-        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="207"/>
+        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="119"/>
+        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="208"/>
         <source>please ensure that at least one authentication option exists</source>
         <translation type="unfinished"></translation>
     </message>
@@ -278,10 +278,28 @@
 <context>
     <name>FaceInputDialog</name>
     <message>
-        <location filename="../src/pages/biometric-input-dialog/face-input-dialog/face-input-dialog.ui" line="17"/>
-        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_face-input-dialog.h" line="35"/>
+        <location filename="../src/pages/biometric-input-dialog/face-input-dialog/face-input-dialog.ui" line="14"/>
+        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_face-input-dialog.h" line="122"/>
         <source>FaceInputDialog</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/biometric-input-dialog/face-input-dialog/face-input-dialog.ui" line="63"/>
+        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_face-input-dialog.h" line="123"/>
+        <source>balabalalbala...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/biometric-input-dialog/face-input-dialog/face-input-dialog.ui" line="121"/>
+        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_face-input-dialog.h" line="124"/>
+        <source>save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/biometric-input-dialog/face-input-dialog/face-input-dialog.ui" line="159"/>
+        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_face-input-dialog.h" line="125"/>
+        <source>cancel</source>
+        <translation type="unfinished">取消</translation>
     </message>
 </context>
 <context>
@@ -316,7 +334,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/pages/biometric-input-dialog/fingerprint-input-dialog/fingerprint-input-dialog.cpp" line="71"/>
+        <location filename="../src/pages/biometric-input-dialog/fingerprint-input-dialog/fingerprint-input-dialog.cpp" line="73"/>
         <source>Error</source>
         <translation type="unfinished">错误</translation>
     </message>
@@ -324,7 +342,7 @@
 <context>
     <name>FingerprintInputWorker</name>
     <message>
-        <location filename="../src/pages/biometric-input-dialog/fingerprint-input-dialog/fingerprint-input-worker.cpp" line="51"/>
+        <location filename="../src/pages/biometric-input-dialog/fingerprint-input-dialog/fingerprint-input-worker.cpp" line="52"/>
         <source>initializing fingerprint collection environment...</source>
         <translation type="unfinished"></translation>
     </message>

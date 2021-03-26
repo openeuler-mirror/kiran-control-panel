@@ -7,9 +7,9 @@ class UidValidator : public QValidator
 {
     Q_OBJECT
 public:
-    explicit UidValidator(QObject* parent=nullptr);
+    explicit UidValidator (QObject *parent = nullptr);
 
-    virtual State validate(QString &, int &) const Q_DECL_OVERRIDE;
+    virtual State validate (QString &, int &) const Q_DECL_OVERRIDE;
 };
 
 #endif // UIDVALIDATOR_H

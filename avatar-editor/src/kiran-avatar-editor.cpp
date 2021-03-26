@@ -12,17 +12,20 @@
 #include "ui-defines.h"
 #include "exit-code-defines.h"
 
-KiranAvatarEditor::KiranAvatarEditor(const QString &srcImagePath, const QString &dstImagePath)
-        : KiranTitlebarWindow(){
-    initUI(srcImagePath,dstImagePath);
+KiranAvatarEditor::KiranAvatarEditor (const QString &srcImagePath, const QString &dstImagePath)
+        : KiranTitlebarWindow()
+{
+    initUI(srcImagePath, dstImagePath);
 }
 
-KiranAvatarEditor::~KiranAvatarEditor() {
+KiranAvatarEditor::~KiranAvatarEditor ()
+{
 
 }
 
-void KiranAvatarEditor::initUI(const QString &srcImagePath,
-                               const QString &dstImagePath) {
+void KiranAvatarEditor::initUI (const QString &srcImagePath,
+                                const QString &dstImagePath)
+{
     setTitle(tr("Avatar Editor"));
     setResizeable(false);
     setFixedSize(500, 570);
@@ -62,8 +65,8 @@ void KiranAvatarEditor::initUI(const QString &srcImagePath,
     buttonLayout->setSpacing(0);
     buttonLayout->setContentsMargins(-1, -1, -1, -1);
     auto *spacerItem_1 = new QSpacerItem(10, 10,
-                                                QSizePolicy::Expanding,
-                                                QSizePolicy::Preferred);
+                                         QSizePolicy::Expanding,
+                                         QSizePolicy::Preferred);
     buttonLayout->addItem(spacerItem_1);
 
     m_btnConfrim = new QPushButton(this);
@@ -71,24 +74,27 @@ void KiranAvatarEditor::initUI(const QString &srcImagePath,
     m_btnConfrim->setFixedSize(100, 50);
     m_btnConfrim->setText(tr("Confirm"));
     buttonLayout->addWidget(m_btnConfrim);
-    connect(m_btnConfrim,&QPushButton::clicked,[this](){
-        if( m_imagePreview->saveAvatar() ){
+    connect(m_btnConfrim, &QPushButton::clicked, [this] () {
+        if (m_imagePreview->saveAvatar())
+        {
             qApp->exit(EXIT_CODE_SUCCESS);
-        }else{
+        }
+        else
+        {
             qApp->exit(EXIT_CODE_SAVE_FAILED);
         }
     });
 
     auto *spacerItem_2 = new QSpacerItem(80, 20,
-                                                QSizePolicy::Fixed,
-                                                QSizePolicy::Preferred);
+                                         QSizePolicy::Fixed,
+                                         QSizePolicy::Preferred);
     buttonLayout->addItem(spacerItem_2);
 
     m_btnCancel = new QPushButton(this);
     m_btnCancel->setObjectName("btn_cancel");
     m_btnCancel->setFixedSize(100, 50);
     m_btnCancel->setText(tr("Cancel"));
-    connect(m_btnCancel,&QPushButton::clicked,[this](){
+    connect(m_btnCancel, &QPushButton::clicked, [this] () {
         //TODO:询问，退出不会保存
         qApp->exit(EXIT_CODE_CANCEL);
     });
@@ -101,7 +107,8 @@ void KiranAvatarEditor::initUI(const QString &srcImagePath,
     buttonLayout->addItem(spacerItem_3);
 }
 
-void KiranAvatarEditor::closeEvent(QCloseEvent *event) {
+void KiranAvatarEditor::closeEvent (QCloseEvent *event)
+{
     qApp->exit(EXIT_CODE_CANCEL);
     QWidget::closeEvent(event);
 }

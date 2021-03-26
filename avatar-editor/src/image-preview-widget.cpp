@@ -14,19 +14,23 @@
 #include "image-preview-widget.h"
 #include "include/ui-defines.h"
 
-ImagePreviewWidget::ImagePreviewWidget(QWidget *parent) : QWidget(parent) {
+ImagePreviewWidget::ImagePreviewWidget (QWidget *parent) : QWidget(parent)
+{
 
 }
 
-ImagePreviewWidget::~ImagePreviewWidget() {
+ImagePreviewWidget::~ImagePreviewWidget ()
+{
 
 }
 
-void ImagePreviewWidget::paintEvent(QPaintEvent *event) {
+void ImagePreviewWidget::paintEvent (QPaintEvent *event)
+{
     QPainter painter(this);
     painter.setRenderHints(QPainter::HighQualityAntialiasing);
 
-    if (!m_scaledPixmap.isNull()) {
+    if (!m_scaledPixmap.isNull())
+    {
         painter.drawPixmap(m_pixmapLefttop, m_scaledPixmap);
     }
 
@@ -53,26 +57,33 @@ void ImagePreviewWidget::paintEvent(QPaintEvent *event) {
     painter.drawEllipse(circleRect);
 }
 
-void ImagePreviewWidget::mousePressEvent(QMouseEvent *event) {
-    if (event->button() == Qt::LeftButton) {
+void ImagePreviewWidget::mousePressEvent (QMouseEvent *event)
+{
+    if (event->button() == Qt::LeftButton)
+    {
         m_btnIsPressed = true;
         m_btnPressedPoint = event->pos();
     }
 }
 
-void ImagePreviewWidget::mouseReleaseEvent(QMouseEvent *event) {
-    if (m_btnIsPressed) {
+void ImagePreviewWidget::mouseReleaseEvent (QMouseEvent *event)
+{
+    if (m_btnIsPressed)
+    {
         m_btnIsPressed = false;
         m_btnPressedPoint = QPoint(0, 0);
-        if (!imagePositionVerification()) {
+        if (!imagePositionVerification())
+        {
             imageAutomaticPosition();
             update();
         }
     }
 }
 
-void ImagePreviewWidget::mouseMoveEvent(QMouseEvent *event) {
-    if (m_btnIsPressed) {
+void ImagePreviewWidget::mouseMoveEvent (QMouseEvent *event)
+{
+    if (m_btnIsPressed)
+    {
         QPoint curPos = event->pos();
         int x_distance = curPos.x() - m_btnPressedPoint.x();
         int y_distance = curPos.y() - m_btnPressedPoint.y();
@@ -83,30 +94,37 @@ void ImagePreviewWidget::mouseMoveEvent(QMouseEvent *event) {
     }
 }
 
-void ImagePreviewWidget::setSrcImagePath(const QString &imagePath) {
-    if (m_srcImagePath == imagePath) {
+void ImagePreviewWidget::setSrcImagePath (const QString &imagePath)
+{
+    if (m_srcImagePath == imagePath)
+    {
         return;
     }
     m_srcImagePath = imagePath;
     loadSrcImage();
 }
 
-QString ImagePreviewWidget::srcImagePath() {
+QString ImagePreviewWidget::srcImagePath ()
+{
     return m_srcImagePath;
 }
 
-void ImagePreviewWidget::setDstImagePath(const QString &imagePath) {
-    if (m_dstImagePath == imagePath) {
+void ImagePreviewWidget::setDstImagePath (const QString &imagePath)
+{
+    if (m_dstImagePath == imagePath)
+    {
         return;
     }
     m_dstImagePath = imagePath;
 }
 
-QString ImagePreviewWidget::dstImagePath() {
+QString ImagePreviewWidget::dstImagePath ()
+{
     return m_dstImagePath;
 }
 
-void ImagePreviewWidget::loadSrcImage() {
+void ImagePreviewWidget::loadSrcImage ()
+{
     QPixmap pixmap(m_srcImagePath);
     QPoint pixmapLefttop;
     int diam = CUTTING_CIRCLE_RADIUS * 2;
@@ -114,7 +132,8 @@ void ImagePreviewWidget::loadSrcImage() {
     Q_ASSERT(!pixmap.isNull());
 
     //图片宽或高小于直径，等比例拉伸到至少可以填满整个圆
-    if ((pixmap.width() < diam) || (pixmap.height() < diam)) {
+    if ((pixmap.width() < diam) || (pixmap.height() < diam))
+    {
         pixmap = pixmap.scaled(diam, diam, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
     }
 
@@ -125,15 +144,18 @@ void ImagePreviewWidget::loadSrcImage() {
     update();
 }
 
-void ImagePreviewWidget::resizeEvent(QResizeEvent *event) {
-    if (!imagePositionVerification()) {
+void ImagePreviewWidget::resizeEvent (QResizeEvent *event)
+{
+    if (!imagePositionVerification())
+    {
         imageAutomaticPosition();
         update();
     }
     QWidget::resizeEvent(event);
 }
 
-bool ImagePreviewWidget::imagePositionVerification() {
+bool ImagePreviewWidget::imagePositionVerification ()
+{
     QRect circleRect((width() - CUTTING_CIRCLE_RADIUS * 2) / 2,
                      (height() - CUTTING_CIRCLE_RADIUS * 2) / 2,
                      CUTTING_CIRCLE_RADIUS * 2,
@@ -142,7 +164,8 @@ bool ImagePreviewWidget::imagePositionVerification() {
     return pixmapRect.contains(circleRect);
 }
 
-void ImagePreviewWidget::imageAutomaticPosition() {
+void ImagePreviewWidget::imageAutomaticPosition ()
+{
 
     QRect pixmapRect(m_pixmapLefttop, m_scaledPixmap.size());
 
@@ -151,34 +174,44 @@ void ImagePreviewWidget::imageAutomaticPosition() {
                      CUTTING_CIRCLE_RADIUS * 2,
                      CUTTING_CIRCLE_RADIUS * 2);
 
-    if (pixmapRect.left() > circleRect.left()) {
+    if (pixmapRect.left() > circleRect.left())
+    {
         pixmapRect.moveLeft(circleRect.left());
     }
-    if (pixmapRect.right() < circleRect.right()) {
+    if (pixmapRect.right() < circleRect.right())
+    {
         pixmapRect.moveRight(circleRect.right());
     }
-    if (pixmapRect.top() > circleRect.top()) {
+    if (pixmapRect.top() > circleRect.top())
+    {
         pixmapRect.moveTop(circleRect.top());
     }
-    if (pixmapRect.bottom() < circleRect.bottom()) {
+    if (pixmapRect.bottom() < circleRect.bottom())
+    {
         pixmapRect.moveBottom(circleRect.bottom());
     }
 
     m_pixmapLefttop = pixmapRect.topLeft();
 }
 
-void ImagePreviewWidget::wheelEvent(QWheelEvent *event) {
-    if (event->delta() > 0) {
+void ImagePreviewWidget::wheelEvent (QWheelEvent *event)
+{
+    if (event->delta() > 0)
+    {
         pixmapReduce();
-    } else {
+    }
+    else
+    {
         pixmapEnlarge();
     }
     QWidget::wheelEvent(event);
 }
 
-void ImagePreviewWidget::pixmapEnlarge() {
+void ImagePreviewWidget::pixmapEnlarge ()
+{
     double scaleFactor = m_pixmapScaleFactor + SCALE_STEP_VALUE;
-    if (scaleFactor > IMAGE_SCALE_FACTOR_MAXIMUM) {
+    if (scaleFactor > IMAGE_SCALE_FACTOR_MAXIMUM)
+    {
         return;
     }
     QSize oriSize = m_originalPixmap.size();
@@ -196,7 +229,8 @@ void ImagePreviewWidget::pixmapEnlarge() {
     update();
 }
 
-void ImagePreviewWidget::pixmapReduce() {
+void ImagePreviewWidget::pixmapReduce ()
+{
     double scaleFactor = m_pixmapScaleFactor - SCALE_STEP_VALUE;
     QSize oriSize = m_originalPixmap.size();
     QPixmap pixmap = m_originalPixmap.scaled(oriSize.width() * scaleFactor,
@@ -205,7 +239,8 @@ void ImagePreviewWidget::pixmapReduce() {
                                              Qt::SmoothTransformation);
     int circleDiam = CUTTING_CIRCLE_RADIUS * 2;
     if ((pixmap.width() < (circleDiam))
-        || (pixmap.height() < (circleDiam))) {
+        || (pixmap.height() < (circleDiam)))
+    {
         return;
     }
     QPoint lefttop(m_pixmapLefttop.x() - (pixmap.width() - m_scaledPixmap.width()) / 2,
@@ -213,31 +248,36 @@ void ImagePreviewWidget::pixmapReduce() {
     m_pixmapLefttop = lefttop;
     m_scaledPixmap = pixmap;
     m_pixmapScaleFactor = scaleFactor;
-    if (!imagePositionVerification()) {
+    if (!imagePositionVerification())
+    {
         imageAutomaticPosition();
     }
     update();
 }
 
-void ImagePreviewWidget::pixmapCentering() {
+void ImagePreviewWidget::pixmapCentering ()
+{
     m_pixmapLefttop.setX((width() - m_scaledPixmap.width()) / 2);
     m_pixmapLefttop.setY((height() - m_scaledPixmap.height()) / 2);
     update();
 }
 
-bool ImagePreviewWidget::saveAvatar() {
+bool ImagePreviewWidget::saveAvatar ()
+{
     QPixmap circleRectPixmap = generateCircleRectPixmap();
     QPixmap avatar = generateCircleAvatar(circleRectPixmap);
-    if( avatar.save(m_dstImagePath,"png",100) ){
+    if (avatar.save(m_dstImagePath, "png", 100))
+    {
         // 修改文件权限，只允许当前用户进行读写
         // 让AccountServices将用户icon_file的路径修改为文件拷贝之后的
-        QFile::setPermissions(m_dstImagePath,QFileDevice::ReadOwner|QFileDevice::WriteOwner);
+        QFile::setPermissions(m_dstImagePath, QFileDevice::ReadOwner | QFileDevice::WriteOwner);
         return true;
     }
     return false;;
 }
 
-QPixmap ImagePreviewWidget::generateCircleRectPixmap() {
+QPixmap ImagePreviewWidget::generateCircleRectPixmap ()
+{
     QPixmap pixmap(CUTTING_CIRCLE_RADIUS * 2, CUTTING_CIRCLE_RADIUS * 2);
     pixmap.fill(Qt::transparent);
 
@@ -257,7 +297,8 @@ QPixmap ImagePreviewWidget::generateCircleRectPixmap() {
     return pixmap;
 }
 
-QPixmap ImagePreviewWidget::generateCircleAvatar(const QPixmap &pixmap) {
+QPixmap ImagePreviewWidget::generateCircleAvatar (const QPixmap &pixmap)
+{
     QBitmap mask(pixmap.size());
     QPainter maskPainter(&mask);
     QPixmap temp = pixmap;

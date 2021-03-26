@@ -18,32 +18,40 @@
 #define ADD_AVATAR_OBJ_NAME    "avatar_button_add"
 #define CUSTOM_AVATAR_OBJ_NAME "avatar_button_custom"
 
-SelectAvatarPage::SelectAvatarPage(QWidget *parent) :
+SelectAvatarPage::SelectAvatarPage (QWidget *parent) :
         QWidget(parent),
-        m_mode(CHANGE_AVATAR_FOR_USER) {
+        m_mode(CHANGE_AVATAR_FOR_USER)
+{
     initUI();
 }
 
-SelectAvatarPage::~SelectAvatarPage() = default;
+SelectAvatarPage::~SelectAvatarPage () = default;
 
-QString SelectAvatarPage::currentSelectAvatar() const {
+QString SelectAvatarPage::currentSelectAvatar () const
+{
     auto button = qobject_cast<AvatarItemButton *>(m_buttonGroup->checkedButton());
-    if (button == nullptr) {
+    if (button == nullptr)
+    {
         return QString();
-    } else {
+    }
+    else
+    {
         return button->iconPath();
     }
 }
 
-void SelectAvatarPage::setMode(SelectAvatarPage::SelectAvatarMode mode) {
+void SelectAvatarPage::setMode (SelectAvatarPage::SelectAvatarMode mode)
+{
     m_mode = mode;
 }
 
-SelectAvatarPage::SelectAvatarMode SelectAvatarPage::mode() const {
+SelectAvatarPage::SelectAvatarMode SelectAvatarPage::mode () const
+{
     return m_mode;
 }
 
-void SelectAvatarPage::setCurrentAvatar(const QString &iconPath) {
+void SelectAvatarPage::setCurrentAvatar (const QString &iconPath)
+{
     QList<AvatarItemButton *> buttons = m_scrollArea->findChildren<AvatarItemButton *>(SYSTEM_AVATAR_OBJ_NAME);
     AvatarItemButton *currentAvatar = nullptr;
 
@@ -51,21 +59,29 @@ void SelectAvatarPage::setCurrentAvatar(const QString &iconPath) {
     removeUserAvatar();
 
     //是否是系统头像
-    for (AvatarItemButton *button:buttons) {
-        if (button->iconPath() == iconPath) {
+    for (AvatarItemButton *button:buttons)
+    {
+        if (button->iconPath() == iconPath)
+        {
             currentAvatar = button;
             break;
         }
     }
 
     //当前头像路径未匹配上系统头像路径,添加新的头像
-    if (currentAvatar != nullptr) {
+    if (currentAvatar != nullptr)
+    {
         currentAvatar->setChecked(true);
-    } else {
+    }
+    else
+    {
         QPixmap pixmap(iconPath);
-        if (!pixmap.isNull()) {
+        if (!pixmap.isNull())
+        {
             addAvatar(iconPath, AVATAR_USER, true);
-        } else {
+        }
+        else
+        {
             qWarning() << "load" << iconPath << "failed";
         }
     }
@@ -74,7 +90,8 @@ void SelectAvatarPage::setCurrentAvatar(const QString &iconPath) {
     moveAddButtonToEnd();
 }
 
-void SelectAvatarPage::initUI() {
+void SelectAvatarPage::initUI ()
+{
     QPushButton *btn = nullptr;
     QLayoutItem *item = nullptr;
 
@@ -113,7 +130,7 @@ void SelectAvatarPage::initUI() {
     btn->setFixedSize(252, 60);
     btn->setText(tr("Confirm"));
     m_btnLayout->addWidget(btn);
-    connect(btn, &QPushButton::clicked, [this]() {
+    connect(btn, &QPushButton::clicked, [this] () {
         sigReturnToPrevPage(m_mode, true);
     });
 
@@ -126,7 +143,7 @@ void SelectAvatarPage::initUI() {
     btn->setFixedSize(252, 60);
     btn->setText(tr("Return"));
     m_btnLayout->addWidget(btn);
-    connect(btn, &QPushButton::clicked, [this]() {
+    connect(btn, &QPushButton::clicked, [this] () {
         sigReturnToPrevPage(m_mode, false);
     });
 
@@ -135,20 +152,22 @@ void SelectAvatarPage::initUI() {
 
     loadAvatar();
     m_addButton = addAvatar(":/images/add_icon.png", AVATAR_ADD, false);
-    connect(m_addButton, &AvatarItemButton::clicked, [this]() {
+    connect(m_addButton, &AvatarItemButton::clicked, [this] () {
         //1.选择图片
         QString fileName = QFileDialog::getOpenFileName(this, tr("select picture"),
                                                         QDir::homePath(),
                                                         tr("image files(*.bmp *.jpg *.png *.tif *.gif"
                                                            " *.pcx *.tga *.exif *.fpx *.svg *.psd *.cdr *.pcd"
                                                            " *.dxf *.ufo *.eps *.ai *.raw *.WMF *.webp)"));
-        if (fileName.isEmpty()) {
+        if (fileName.isEmpty())
+        {
             return;
         }
 
         //2.弹出头像编辑
         QString dstImagePath;
-        if (AvatarEditorWrapper::exec(fileName, dstImagePath)) {
+        if (AvatarEditorWrapper::exec(fileName, dstImagePath))
+        {
             addAvatar(dstImagePath, AVATAR_CUSTOM, false);
             moveAddButtonToEnd();
         }
@@ -156,33 +175,34 @@ void SelectAvatarPage::initUI() {
 }
 
 //加载/usr/share/kiran-account-manager/account-icons/下*.face显示
-void SelectAvatarPage::loadAvatar() {
+void SelectAvatarPage::loadAvatar ()
+{
     QDir dir("/usr/share/kiran-account-manager/account-icons");
     QFileInfoList fileInfoList = dir.entryInfoList(QDir::Files);
-    for (auto &iter : fileInfoList) {
+    for (auto &iter : fileInfoList)
+    {
         addAvatar(iter.absoluteFilePath(), AVATAR_SYSTEM, false);
     }
 }
 
-AvatarItemButton *SelectAvatarPage::addAvatar(const QString &iconPath, AvatarTypeEnum type, bool isChecked) {
+AvatarItemButton *SelectAvatarPage::addAvatar (const QString &iconPath, AvatarTypeEnum type, bool isChecked)
+{
     AvatarItemButton *btn = new AvatarItemButton(m_scrollArea);
-    switch (type) {
-        case AVATAR_SYSTEM:
-            btn->setObjectName(SYSTEM_AVATAR_OBJ_NAME);
+    switch (type)
+    {
+        case AVATAR_SYSTEM:btn->setObjectName(SYSTEM_AVATAR_OBJ_NAME);
             break;
-        case AVATAR_USER:
-            btn->setObjectName(USER_AVATAR_OBJ_NAME);
+        case AVATAR_USER:btn->setObjectName(USER_AVATAR_OBJ_NAME);
             break;
-        case AVATAR_ADD:
-            btn->setObjectName(ADD_AVATAR_OBJ_NAME);
+        case AVATAR_ADD:btn->setObjectName(ADD_AVATAR_OBJ_NAME);
             break;
-        case AVATAR_CUSTOM:
-            btn->setObjectName(CUSTOM_AVATAR_OBJ_NAME);
+        case AVATAR_CUSTOM:btn->setObjectName(CUSTOM_AVATAR_OBJ_NAME);
             break;
     }
     btn->setIcon(iconPath);
     btn->setFixedSize(80, 80);
-    if (type != AVATAR_ADD) {
+    if (type != AVATAR_ADD)
+    {
         btn->setCheckable(true);
         btn->setChecked(isChecked);
         m_buttonGroup->addButton(btn);
@@ -191,7 +211,8 @@ AvatarItemButton *SelectAvatarPage::addAvatar(const QString &iconPath, AvatarTyp
     return btn;
 }
 
-void SelectAvatarPage::removeUserAvatar() {
+void SelectAvatarPage::removeUserAvatar ()
+{
     //删除非系统头像
     QList<AvatarItemButton *> userAvatars = m_scrollArea->findChildren<AvatarItemButton *>(USER_AVATAR_OBJ_NAME);
     //删除用户添加的头像
@@ -201,13 +222,15 @@ void SelectAvatarPage::removeUserAvatar() {
     deleteAvatars.append(userAvatars);
     deleteAvatars.append(customAvatars);
 
-    for (auto avatarButton : deleteAvatars) {
+    for (auto avatarButton : deleteAvatars)
+    {
         m_flowLayout->removeWidget(avatarButton);
         avatarButton->deleteLater();
     }
 }
 
-void SelectAvatarPage::moveAddButtonToEnd() {
+void SelectAvatarPage::moveAddButtonToEnd ()
+{
     m_flowLayout->removeWidget(m_addButton);
     m_flowLayout->addWidget(m_addButton);
 }

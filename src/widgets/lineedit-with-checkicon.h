@@ -4,16 +4,17 @@
 #include <QWidget>
 #include <QLineEdit>
 
-namespace Ui {
-class LineEditWithCheckIcon;
+namespace Ui
+{
+    class LineEditWithCheckIcon;
 }
 
 class LineEditWithCheckIcon : public QWidget
 {
     Q_OBJECT
-
 public:
-    enum VerificationStatusEnum{
+    enum VerificationStatusEnum
+    {
         VERIFICATION_PASSED,
         VERIFICATION_ERROR,
         VERIFICATION_NONE
@@ -21,35 +22,35 @@ public:
     Q_ENUM(VerificationStatusEnum)
 
 public:
-    explicit LineEditWithCheckIcon(QWidget *parent = nullptr);
-    ~LineEditWithCheckIcon();
+    explicit LineEditWithCheckIcon (QWidget *parent = nullptr);
+    ~LineEditWithCheckIcon ();
 
-    void setEchoMode(QLineEdit::EchoMode echoMode);
-    void setMaxLength(int length);
-    void setPlaceholderText(const QString & placeholder);
+    void setEchoMode (QLineEdit::EchoMode echoMode);
+    void setMaxLength (int length);
+    void setPlaceholderText (const QString &placeholder);
 
-    void resetVerificationStatus();
-    void setVerificationStatus(bool isPassed);
+    void resetVerificationStatus ();
+    void setVerificationStatus (bool isPassed);
 
-    QString text();
+    QString text ();
 
-    void clear();
+    void clear ();
 
 private:
-    void initUI();
+    void initUI ();
     ///@biref 设置普通字符间距
-    void setNormalLetterSpacing();
+    void setNormalLetterSpacing ();
     ///@biref 设置密码字符间距
-    void setPasswdLetterSpacing();
+    void setPasswdLetterSpacing ();
     ///@biref 设置输入密码样式
-    void setShowPasswordModeStyle(bool showPasswordModeStyle);
+    void setShowPasswordModeStyle (bool showPasswordModeStyle);
 
 signals:
-    void editTextChanged(const QString& text);
+    void editTextChanged (const QString &text);
 
 protected:
-    bool eventFilter(QObject *obj, QEvent *event) override;
-    virtual void paintEvent(QPaintEvent *event) override;
+    bool eventFilter (QObject *obj, QEvent *event) override;
+    virtual void paintEvent (QPaintEvent *event) override;
 
 private:
     Ui::LineEditWithCheckIcon *ui;

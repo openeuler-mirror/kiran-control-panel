@@ -24,65 +24,71 @@
  * Proxy class for interface com.kylinsec.Kiran.SystemDaemon.Accounts
  */
 
-class AccountsInterface: public QDBusAbstractInterface
+class AccountsInterface : public QDBusAbstractInterface
 {
     Q_OBJECT
 public:
-    static inline const char *staticInterfaceName()
+    static inline const char *staticInterfaceName ()
     { return "com.kylinsec.Kiran.SystemDaemon.Accounts"; }
 
 public:
-    AccountsInterface(const QDBusConnection &connection, QObject *parent = 0);
+    AccountsInterface (const QDBusConnection &connection, QObject *parent = 0);
 
-    ~AccountsInterface();
+    ~AccountsInterface ();
 
 public Q_SLOTS: // METHODS
-    inline QDBusPendingReply<QDBusObjectPath> CreateUser(const QString &name, const QString &realname, int account_type,qint64 uid)
+    inline QDBusPendingReply<QDBusObjectPath>
+    CreateUser (const QString &name, const QString &realname, int account_type, qint64 uid)
     {
         QList<QVariant> argumentList;
-        argumentList << QVariant::fromValue(name) << QVariant::fromValue(realname) << QVariant::fromValue(account_type) << uid;
+        argumentList << QVariant::fromValue(name) << QVariant::fromValue(realname) << QVariant::fromValue(account_type)
+                     << uid;
         return asyncCallWithArgumentList(QLatin1String("CreateUser"), argumentList);
     }
 
-    inline QDBusPendingReply<> DeleteUser(qulonglong uid, bool remove_files)
+    inline QDBusPendingReply<> DeleteUser (qulonglong uid, bool remove_files)
     {
         QList<QVariant> argumentList;
         argumentList << QVariant::fromValue(uid) << QVariant::fromValue(remove_files);
         return asyncCallWithArgumentList(QLatin1String("DeleteUser"), argumentList);
     }
 
-    inline QDBusPendingReply<QDBusObjectPath> FindUserById(qulonglong uid)
+    inline QDBusPendingReply<QDBusObjectPath> FindUserById (qulonglong uid)
     {
         QList<QVariant> argumentList;
         argumentList << QVariant::fromValue(uid);
         return asyncCallWithArgumentList(QLatin1String("FindUserById"), argumentList);
     }
 
-    inline QDBusPendingReply<QDBusObjectPath> FindUserByName(const QString &name)
+    inline QDBusPendingReply<QDBusObjectPath> FindUserByName (const QString &name)
     {
         QList<QVariant> argumentList;
         argumentList << QVariant::fromValue(name);
         return asyncCallWithArgumentList(QLatin1String("FindUserByName"), argumentList);
     }
 
-    inline QDBusPendingReply<QList<QDBusObjectPath> > GetNonSystemUsers()
+    inline QDBusPendingReply<QList<QDBusObjectPath> > GetNonSystemUsers ()
     {
         QList<QVariant> argumentList;
         return asyncCallWithArgumentList(QLatin1String("GetNonSystemUsers"), argumentList);
     }
 
 Q_SIGNALS: // SIGNALS
-    void UserAdded(const QDBusObjectPath &user);
-    void UserDeleted(const QDBusObjectPath &user);
+    void UserAdded (const QDBusObjectPath &user);
+    void UserDeleted (const QDBusObjectPath &user);
 };
 
-namespace com {
-  namespace kylinsec {
-    namespace Kiran {
-      namespace SystemDaemon {
-        typedef ::AccountsInterface AccountsInterface;
-      }
+namespace com
+{
+    namespace kylinsec
+    {
+        namespace Kiran
+        {
+            namespace SystemDaemon
+            {
+                typedef ::AccountsInterface AccountsInterface;
+            }
+        }
     }
-  }
 }
 #endif

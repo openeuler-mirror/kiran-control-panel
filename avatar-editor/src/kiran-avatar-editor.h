@@ -9,21 +9,22 @@
 #include <kiranwidgets-qt5/kiran-titlebar-window.h>
 
 class ImagePreviewWidget;
-
 class QLayout;
 class QPushButton;
-class KiranAvatarEditor : public KiranTitlebarWindow {
-Q_OBJECT
+
+class KiranAvatarEditor : public KiranTitlebarWindow
+{
+    Q_OBJECT
 public:
-    explicit KiranAvatarEditor(const QString &srcImagePath,const QString &dstImagePath);
-    ~KiranAvatarEditor();
+    explicit KiranAvatarEditor (const QString &srcImagePath, const QString &dstImagePath);
+    ~KiranAvatarEditor ();
 
 private:
-    void initUI(const QString &srcImagePath,
-                const QString &dstImagePath);
+    void initUI (const QString &srcImagePath,
+                 const QString &dstImagePath);
 
 protected:
-    virtual void closeEvent(QCloseEvent *event) Q_DECL_OVERRIDE;
+    virtual void closeEvent (QCloseEvent *event) Q_DECL_OVERRIDE;
 
 private:
     QLayout *m_layout = nullptr;

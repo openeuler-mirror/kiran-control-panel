@@ -20,67 +20,103 @@
 #include <QtCore/QVariant>
 #include <QtDBus/QtDBus>
 
-/*
- * Proxy class for interface com.kylinsec.Kiran.SystemDaemon.Biometrics
- */
-class BiometricsInterface: public QDBusAbstractInterface
+class BiometricsInterface : public QDBusAbstractInterface
 {
-    Q_OBJECT
+Q_OBJECT
 public:
-    static inline const char *staticInterfaceName()
+    static inline const char *staticInterfaceName ()
     { return "com.kylinsec.Kiran.SystemDaemon.Biometrics"; }
-    static inline const char *staticInterfacePath()
-    { return "/com/kylinsec/Kiran/SystemDaemon/Biometrics"; }
-public:
-    BiometricsInterface(const QDBusConnection &connection, QObject *parent = 0);
 
-    ~BiometricsInterface();
+    static inline const char *staticInterfacePath ()
+    { return "/com/kylinsec/Kiran/SystemDaemon/Biometrics"; }
+
+public:
+    BiometricsInterface (const QDBusConnection &connection, QObject *parent = 0);
+    ~BiometricsInterface ();
 
 public Q_SLOTS: // METHODS
-    inline QDBusPendingReply<> DeleteEnrolledFinger(const QString &id)
+    inline QDBusPendingReply<> DeleteEnrolledFace (const QString &id)
+    {
+        QList<QVariant> argumentList;
+        argumentList << QVariant::fromValue(id);
+        return asyncCallWithArgumentList(QLatin1String("DeleteEnrolledFace"), argumentList);
+    }
+
+    inline QDBusPendingReply<> DeleteEnrolledFinger (const QString &id)
     {
         QList<QVariant> argumentList;
         argumentList << QVariant::fromValue(id);
         return asyncCallWithArgumentList(QLatin1String("DeleteEnrolledFinger"), argumentList);
     }
 
-    inline QDBusPendingReply<> EnrollFprintStart()
+    inline QDBusPendingReply<QString> EnrollFaceStart ()
+    {
+        QList<QVariant> argumentList;
+        return asyncCallWithArgumentList(QLatin1String("EnrollFaceStart"), argumentList);
+    }
+
+    inline QDBusPendingReply<> EnrollFaceStop ()
+    {
+        QList<QVariant> argumentList;
+        return asyncCallWithArgumentList(QLatin1String("EnrollFaceStop"), argumentList);
+    }
+
+    inline QDBusPendingReply<> EnrollFprintStart ()
     {
         QList<QVariant> argumentList;
         return asyncCallWithArgumentList(QLatin1String("EnrollFprintStart"), argumentList);
     }
 
-    inline QDBusPendingReply<> EnrollFprintStop()
+    inline QDBusPendingReply<> EnrollFprintStop ()
     {
         QList<QVariant> argumentList;
         return asyncCallWithArgumentList(QLatin1String("EnrollFprintStop"), argumentList);
     }
 
-    inline QDBusPendingReply<> VerifyFprintStart(const QString &id)
+    inline QDBusPendingReply<> VerifyFaceStart (const QString &id)
+    {
+        QList<QVariant> argumentList;
+        argumentList << QVariant::fromValue(id);
+        return asyncCallWithArgumentList(QLatin1String("VerifyFaceStart"), argumentList);
+    }
+
+    inline QDBusPendingReply<> VerifyFaceStop ()
+    {
+        QList<QVariant> argumentList;
+        return asyncCallWithArgumentList(QLatin1String("VerifyFaceStop"), argumentList);
+    }
+
+    inline QDBusPendingReply<> VerifyFprintStart (const QString &id)
     {
         QList<QVariant> argumentList;
         argumentList << QVariant::fromValue(id);
         return asyncCallWithArgumentList(QLatin1String("VerifyFprintStart"), argumentList);
     }
 
-    inline QDBusPendingReply<> VerifyFprintStop()
+    inline QDBusPendingReply<> VerifyFprintStop ()
     {
         QList<QVariant> argumentList;
         return asyncCallWithArgumentList(QLatin1String("VerifyFprintStop"), argumentList);
     }
 
 Q_SIGNALS: // SIGNALS
-    void EnrollFprintStatus(const QString &message, const QString &id, int progress, bool done);
-    void VerifyFprintStatus(const QString &result, bool done);
+    void EnrollFaceStatus (const QString &message, const QString &id, int progress, bool done);
+    void EnrollFprintStatus (const QString &message, const QString &id, int progress, bool done);
+    void VerifyFaceStatus (const QString &result, bool done, bool match);
+    void VerifyFprintStatus (const QString &result, bool done, bool match);
 };
 
-namespace com {
-  namespace kylinsec {
-    namespace Kiran {
-      namespace SystemDaemon {
-        typedef ::BiometricsInterface BiometricsInterface;
-      }
+namespace com
+{
+    namespace kylinsec
+    {
+        namespace Kiran
+        {
+            namespace SystemDaemon
+            {
+                typedef ::BiometricsInterface BiometricsInterface;
+            }
+        }
     }
-  }
 }
 #endif

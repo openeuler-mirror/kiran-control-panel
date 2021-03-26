@@ -9,6 +9,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 find_package(PkgConfig REQUIRED)
 pkg_search_module(KIRAN_WIDGETS_QT5 REQUIRED kiranwidgets-qt5)
 pkg_search_module(KIRAN_CC_DAEMON REQUIRED kiran-cc-daemon)
+pkg_search_module(ZERO_MQ REQUIRED libzmq)
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
@@ -43,7 +44,8 @@ target_include_directories(kiran-account-manager PRIVATE
         src/widgets
         tools
         ${KIRAN_WIDGETS_QT5_INCLUDE_DIRS}
-        ${KIRAN_CC_DAEMON_INCLUDE_DIRS})
+        ${KIRAN_CC_DAEMON_INCLUDE_DIRS}
+        ${ZERO_MQ_INCLUDE_DIRS})
 
 target_link_libraries(kiran-account-manager
         Qt5::Widgets
@@ -53,7 +55,8 @@ target_link_libraries(kiran-account-manager
         crypt
         kiranwidgets-qt5
         ${KIRAN_WIDGETS_QT5_LIBRARIES}
-        ${KIRAN_CC_DAEMON_LIBRARIES})
+        ${KIRAN_CC_DAEMON_LIBRARIES}
+        ${ZERO_MQ_LIBRARIES})
 
 install(TARGETS ${PROJECT_NAME}
         DESTINATION ${CMAKE_INSTALL_PREFIX}/bin/)

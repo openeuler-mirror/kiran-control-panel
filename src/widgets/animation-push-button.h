@@ -11,22 +11,23 @@
 
 class AnimationButtonDelegate;
 
-class AnimationPushButton : public QPushButton {
-    Q_OBJECT
+class AnimationPushButton : public QPushButton
+{
+Q_OBJECT
 public:
-    explicit AnimationPushButton(QWidget *parent);
-    ~AnimationPushButton() = default;
+    explicit AnimationPushButton (QWidget *parent);
+    ~AnimationPushButton () = default;
 
-    void setBusy(bool busy);
-    bool busy();
+    void setBusy (bool busy);
+    bool busy ();
 
 public Q_SLOTS:
 
 private:
-    void initTimeLine();
+    void initTimeLine ();
 
 protected:
-    virtual void paintEvent(QPaintEvent *event) override;
+    virtual void paintEvent (QPaintEvent *event) override;
 
 private:
     bool m_isBusy = false;

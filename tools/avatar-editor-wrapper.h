@@ -7,8 +7,9 @@
 
 #include <QString>
 
-namespace AvatarEditorWrapper {
-    bool exec(const QString &srcImage,QString &dstImage);
+namespace AvatarEditorWrapper
+{
+    bool exec (const QString &srcImage, QString &dstImage);
 };
 
 #endif //KIRAN_ACCOUNT_MANAGER_AVATAR_EDITOR_WRAPPER_H

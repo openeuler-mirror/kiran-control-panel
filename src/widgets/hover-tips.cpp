@@ -11,26 +11,31 @@
 #include <QEvent>
 #include <QDebug>
 
-HoverTips::HoverTips(QWidget *parent)
-    :QWidget(parent){
+HoverTips::HoverTips (QWidget *parent)
+        : QWidget(parent)
+{
     initUI();
     setVisible(false);
     this->setFixedHeight(36);
 }
 
-HoverTips::~HoverTips() {
+HoverTips::~HoverTips ()
+{
 
 }
 
-void HoverTips::show(HoverTipsTypeEnum typeEnum,const QString& msg) {
+void HoverTips::show (HoverTipsTypeEnum typeEnum, const QString &msg)
+{
 
     auto iter = m_tipsTypeIconMap.find(typeEnum);
-    if( iter == m_tipsTypeIconMap.end() ){
+    if (iter == m_tipsTypeIconMap.end())
+    {
         qWarning() << "invalid type enum";
         return;
     }
 
-    if( isVisible() ){
+    if (isVisible())
+    {
         hide();
     }
 
@@ -43,52 +48,58 @@ void HoverTips::show(HoverTipsTypeEnum typeEnum,const QString& msg) {
     startHideTimer();
 }
 
-void HoverTips::hide() {
+void HoverTips::hide ()
+{
     QWidget::hide();
 }
 
-void HoverTips::updatePostion() {
-    if( parentWidget() == nullptr ){
+void HoverTips::updatePostion ()
+{
+    if (parentWidget() == nullptr)
+    {
         qWarning() << "hover tips parnetwidget is null";
         return;
     }
-    this->move( (parentWidget()->width()-width())/2,
-                (parentWidget()->height()-height())/2);
+    this->move((parentWidget()->width() - width()) / 2,
+               (parentWidget()->height() - height()) / 2);
 }
 
-bool HoverTips::eventFilter(QObject *watched, QEvent *event) {
-    if( watched == parentWidget() ){
-        switch (event->type()) {
-            case QEvent::Resize:
-                updatePostion();
+bool HoverTips::eventFilter (QObject *watched, QEvent *event)
+{
+    if (watched == parentWidget())
+    {
+        switch (event->type())
+        {
+            case QEvent::Resize:updatePostion();
                 break;
-            case QEvent::Move:
-                updatePostion();
+            case QEvent::Move:updatePostion();
                 break;
-            default:
-                break;
+            default:break;
         }
     }
     return QObject::eventFilter(watched, event);
 }
 
-void HoverTips::setIcon(HoverTips::HoverTipsTypeEnum typeEnum, const QString &icon) {
+void HoverTips::setIcon (HoverTips::HoverTipsTypeEnum typeEnum, const QString &icon)
+{
     QPixmap pixmap;
-    if( !pixmap.load(icon) || pixmap.isNull() ){
+    if (!pixmap.load(icon) || pixmap.isNull())
+    {
         qWarning() << "load icon failed.";
         return;
     }
     m_tipsTypeIconMap[typeEnum] = icon;
 }
 
-void HoverTips::initUI() {
+void HoverTips::initUI ()
+{
     auto *mainLayout = new QHBoxLayout(this);
     mainLayout->setSpacing(6);
-    mainLayout->setContentsMargins(12,-1,12,-1);
+    mainLayout->setContentsMargins(12, -1, 12, -1);
 
     m_iconLabel = new QLabel(this);
     m_iconLabel->setObjectName("label_icon");
-    m_iconLabel->setFixedSize(16,16);
+    m_iconLabel->setFixedSize(16, 16);
     mainLayout->addWidget(m_iconLabel);
 
     m_textLabel = new QLabel(this);
@@ -97,7 +108,8 @@ void HoverTips::initUI() {
     mainLayout->addWidget(m_textLabel);
 }
 
-void HoverTips::paintEvent(QPaintEvent *event) {
+void HoverTips::paintEvent (QPaintEvent *event)
+{
     QStyleOption styleOption;
     QPainter painter(this);
 
@@ -108,8 +120,10 @@ void HoverTips::paintEvent(QPaintEvent *event) {
                            this);
 }
 
-bool HoverTips::event(QEvent *event) {
-    switch (event->type()) {
+bool HoverTips::event (QEvent *event)
+{
+    switch (event->type())
+    {
         case QEvent::ShowToParent:
         {
             adjustSize();
@@ -118,8 +132,9 @@ bool HoverTips::event(QEvent *event) {
         }
         case QEvent::Timer:
         {
-            auto timerEvent = dynamic_cast<QTimerEvent*>(event);
-            if( timerEvent->timerId() == m_hideTimerID ){
+            auto timerEvent = dynamic_cast<QTimerEvent *>(event);
+            if (timerEvent->timerId() == m_hideTimerID)
+            {
                 QWidget::hide();
                 stopHideTimer();
             }
@@ -131,18 +146,20 @@ bool HoverTips::event(QEvent *event) {
             stopHideTimer();
             break;
         }
-        default:
-            break;
+        default:break;
     }
     return QWidget::event(event);
 }
 
-void HoverTips::setTimeout(quint32 ms) {
-    if( m_hideTimeout == ms ){
+void HoverTips::setTimeout (quint32 ms)
+{
+    if (m_hideTimeout == ms)
+    {
         return;
     }
 
-    if(ms==0){
+    if (ms == 0)
+    {
         stopHideTimer();
         return;
     }
@@ -150,16 +167,20 @@ void HoverTips::setTimeout(quint32 ms) {
     m_hideTimeout = ms;
 }
 
-void HoverTips::startHideTimer() {
-    if( m_hideTimeout == 0 ){
+void HoverTips::startHideTimer ()
+{
+    if (m_hideTimeout == 0)
+    {
         return;
     }
     stopHideTimer();
     m_hideTimerID = startTimer(m_hideTimeout);
 }
 
-void HoverTips::stopHideTimer() {
-    if( m_hideTimerID == -1){
+void HoverTips::stopHideTimer ()
+{
+    if (m_hideTimerID == -1)
+    {
         return;;
     }
     killTimer(m_hideTimerID);
