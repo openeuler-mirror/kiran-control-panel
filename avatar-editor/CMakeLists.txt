@@ -10,6 +10,9 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
 
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
+include(kam-variables)
+
 file(GLOB_RECURSE SOURCES "src/*.cpp")
 file(GLOB_RECURSE HEADERS "src/*.h")
 file(GLOB_RECURSE TOOLS_SOURCES "tools/*.cpp")
@@ -22,17 +25,11 @@ set( TS_FILES "translations/kiran-avatar-editor.zh_CN.ts" )
 include_directories("${CMAKE_BINARY_DIR}" "src")
 
 find_package(Qt5 COMPONENTS Widgets LinguistTools)
-
 qt5_create_translation( AVATAR_EDITOR_QM_FILES ${CMAKE_SOURCE_DIR}/avatar-editor ${TS_FILES} )
 
 add_executable(kiran-avatar-editor ${SOURCES} ${HEADERS} ${TOOLS_SOURCES} ${TOOLS_HEADERS} ${RESOURCES} ${AVATAR_EDITOR_QM_FILES})
-
 target_include_directories(${PROJECT_NAME} PRIVATE include tools )
-
 target_link_libraries(kiran-avatar-editor Qt5::Widgets kiranwidgets-qt5)
 
-install(TARGETS ${PROJECT_NAME}
-        DESTINATION ${CMAKE_INSTALL_PREFIX}/bin/)
-
-install(FILES ${AVATAR_EDITOR_QM_FILES}
-        DESTINATION ${SHARE_INSTALL_PREFIX}/${PROJECT_NAME}/translations/ )
+install(TARGETS ${PROJECT_NAME} DESTINATION ${KAM_AVATAR_EDITOR_DIR})
+install(FILES ${AVATAR_EDITOR_QM_FILES} DESTINATION ${KAM_TRANSLATION_DIR_PATH} )

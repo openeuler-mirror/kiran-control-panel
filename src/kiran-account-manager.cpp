@@ -8,6 +8,7 @@
 #include "listwidget-control.h"
 #include "mask-widget.h"
 #include "hard-worker.h"
+#include "config.h"
 
 #include <QIcon>
 #include <QDebug>
@@ -100,7 +101,7 @@ void KiranAccountManager::initUI ()
 {
     setObjectName("KiranAccountManager");
     setTitle(tr("User Manager"));
-    setIcon(QIcon::fromTheme("user-admin"));
+    setIcon(QIcon(DESKTOP_ICON_PATH));
 
     //遮罩
     m_maskWidget = new MaskWidget(this);

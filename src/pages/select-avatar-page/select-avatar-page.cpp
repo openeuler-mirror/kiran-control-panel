@@ -3,6 +3,7 @@
 #include "scrollarea-container.h"
 #include "avatar-item-button.h"
 #include "tools/avatar-editor-wrapper.h"
+#include "config.h"
 
 #include <QHBoxLayout>
 #include <QVBoxLayout>
@@ -177,7 +178,7 @@ void SelectAvatarPage::initUI ()
 //加载/usr/share/kiran-account-manager/account-icons/下*.face显示
 void SelectAvatarPage::loadAvatar ()
 {
-    QDir dir("/usr/share/kiran-account-manager/account-icons");
+    QDir dir(BUILDIN_AVATAR_DIR_PATH);
     QFileInfoList fileInfoList = dir.entryInfoList(QDir::Files);
     for (auto &iter : fileInfoList)
     {

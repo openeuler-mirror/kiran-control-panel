@@ -2,6 +2,7 @@
 #include "tools/log.h"
 #include "accounts-global-info.h"
 #include "tools/temporary-dir-manager.h"
+#include "config.h"
 
 #include <QApplication>
 #include <QFile>
@@ -69,12 +70,11 @@ int main (int argc, char *argv[])
 
     loadAccountInfo();
 
-    QString translationDir = QString("/usr/share/%1/translations/").arg(qAppName());
     QTranslator tsor;
     tsor.load(QLocale(),
               qAppName()/*filename*/,
               "."/*prefix*/,
-              translationDir/*dir*/,
+              TRANSLATION_DIR_PATH/*dir*/,
               ".qm"/*suffix*/);
     qApp->installTranslator(&tsor);
 

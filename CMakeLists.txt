@@ -6,7 +6,10 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-include(GNUInstallDirs)
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
+include(kam-variables)
+configure_file(${CMAKE_SOURCE_DIR}/config/config.h.in ${CMAKE_BINARY_DIR}/config.h @ONLY)
+configure_file(${CMAKE_SOURCE_DIR}/config/kiran-account-manager.desktop.in ${CMAKE_BINARY_DIR}/kiran-account-manager.desktop @ONLY )
 
 find_package(PkgConfig REQUIRED)
 pkg_search_module(KIRAN_WIDGETS_QT5 REQUIRED kiranwidgets-qt5)
@@ -60,17 +63,12 @@ target_link_libraries(kiran-account-manager
         ${KIRAN_CC_DAEMON_LIBRARIES}
         ${ZERO_MQ_LIBRARIES})
 
-install(TARGETS ${PROJECT_NAME}
-        DESTINATION ${CMAKE_INSTALL_PREFIX}/bin/)
-
-install(FILES ${QM_FILES}
-        DESTINATION ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATAROOTDIR}/${PROJECT_NAME}/translations/ )
-
-install(FILES "./config/kiran-account-manager.desktop"
-        DESTINATION ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATAROOTDIR}/applications/ )
+install(TARGETS ${PROJECT_NAME} DESTINATION ${KAM_INSTALL_DIR} )
+install(FILES ${QM_FILES} DESTINATION ${KAM_TRANSLATION_DIR_PATH} )
+install(FILES ${CMAKE_BINARY_DIR}/kiran-account-manager.desktop  DESTINATION ${KAM_DESKTOP_INSTALL_DIR} )
 
 file(GLOB BUILDIN_AVATARS "./buildin-avatar/*")
-install(FILES ${BUILDIN_AVATARS}
-        DESTINATION ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATAROOTDIR}/${PROJECT_NAME}/account-icons/ )
+install(FILES ${BUILDIN_AVATARS} DESTINATION ${KAM_BUILDIN_AVATAR_DIR_PATH} )
+install(FILES "${CMAKE_SOURCE_DIR}/resources/images/account-management.png" DESTINATION ${KAM_DATA_DIR})
 
 add_subdirectory(avatar-editor)

@@ -6,6 +6,7 @@
 #include "include/global-defines.h"
 #include "temporary-dir-manager.h"
 #include "avatar-editor/include/exit-code-defines.h"
+#include "config.h"
 
 #include <QProcess>
 #include <QDebug>

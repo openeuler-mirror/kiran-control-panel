@@ -10,6 +10,7 @@
 #include "tools/log.h"
 #include "include/exit-code-defines.h"
 #include "kiran-avatar-editor.h"
+#include "../config.h"
 
 //预览图像路径
 QString prewview_image;
@@ -103,19 +104,18 @@ void loadStylesheet ()
 int main (int argc, char *argv[])
 {
     QApplication app(argc, argv);
-    app.setQuitOnLastWindowClosed(false);
+    QApplication::setQuitOnLastWindowClosed(false);
 
     Log::instance()->init("/tmp/kiran-account-manager.log");
     qInstallMessageHandler(Log::messageHandler);
 
-    QString translationDir = QString("/usr/share/%1/translations/").arg(qAppName());
     QTranslator tsor;
     tsor.load(QLocale(),
               qAppName()/*filename*/,
               "."/*prefix*/,
-              translationDir,
+              TRANSLATION_DIR_PATH,
               ".qm"/*suffix*/);
-    app.installTranslator(&tsor);
+    QApplication::installTranslator(&tsor);
 
     handlerCommandOption(app);
 
