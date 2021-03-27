@@ -59,8 +59,6 @@ void loadAccountInfo ()
 int main (int argc, char *argv[])
 {
     QApplication app(argc, argv);
-    qInfo() << QStyleFactory::keys();
-    QApplication::setStyle(QStyleFactory::create("Fusion"));
 
     initLog();
 
@@ -81,6 +79,7 @@ int main (int argc, char *argv[])
     KiranAccountManager accountManager;
     accountManager.resize(975, 850);
     accountManager.show();
+    accountManager.setStyle(QStyleFactory::create("Fusion"));
 
-    return app.exec();
+    return QApplication::exec();
 }

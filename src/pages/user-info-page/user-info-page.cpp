@@ -136,9 +136,13 @@ void UserInfoPage::initUI ()
         ui->stackedWidget->setCurrentIndex(PAGE_USER_INFO);
     });
 
+#ifdef AUTH_MANAGER
     connect(ui->btn_authManager, &QPushButton::clicked, [this] () {
         emit sigAuthManager(m_curShowUserPath);
     });
+#else
+    ui->btn_authManager->setVisible(false);
+#endif
 }
 
 void UserInfoPage::resetPageSetPasswd ()
