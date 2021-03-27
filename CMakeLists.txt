@@ -10,12 +10,14 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 find_package(PkgConfig REQUIRED)
 pkg_search_module(KIRAN_WIDGETS_QT5 REQUIRED kiranwidgets-qt5)
+pkg_search_module(ZLOG REQUIRED zlog)
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
 set(DATA_DIR "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATAROOTDIR}")
 
+set(TARGET_NAME "kiran-system-information")
 set(TRANSLATIONS_DIR "${DATA_DIR}/${PROJECT_NAME}/translations/")
 set( TS_FILES "translations/kiran-system-information.zh_CN.ts" )
 set( INCLUDE_PATH "/usr/include/glib-2.0/" "/usr/lib64/glib-2.0/include/" "/usr/include" "/usr/include/kylin-license")
@@ -58,7 +60,8 @@ target_link_libraries(kiran-system-information
 	QZint
 	glib-2.0
         kiranwidgets-qt5
-        ${KIRAN_WIDGETS_QT5_LIBRARIES})
+        ${KIRAN_WIDGETS_QT5_LIBRARIES}
+	${ZLOG_LIBRARIES})
 
 install(TARGETS ${PROJECT_NAME}
         DESTINATION ${CMAKE_INSTALL_PREFIX}/bin/)

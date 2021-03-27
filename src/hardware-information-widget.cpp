@@ -410,7 +410,7 @@ void HardwareInformationWidget::setCpuLogo(QString cpuModel)
             return;
         }
     }
-    else if(cpuModel.contains("sw_64", Qt::CaseInsensitive))
+    else if(cpuModel.contains("sw", Qt::CaseInsensitive))
     {
         if(!imgLogo.load(":/logos/logos/sw_64.png"))
         {

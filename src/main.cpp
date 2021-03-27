@@ -6,22 +6,32 @@
 #include <QDebug>
 #include <QLoggingCategory>
 #include <QTranslator>
-#include <single-application/single-application.h>
+#include <zlog_ex.h>
+#include "single-application/single-application.h"
 #include "general-functions-class.h"
 #include "config/config.h"
-
+#include <iostream>
 #define TRANSLATION_DIR TRANSLATIONS_FILE_DIR
+
+bool init_zlog = false;
 
 int main(int argc, char *argv[])
 {
     ///注册自定义的消息处理函数
+
+    if (dzlog_init_ex(NULL, "kylinsec-session", "kiran-system-information", "kiran-system-information") < 0){
+        std::cout << "init zlog error" << std::endl;
+    }
+    else{
+        init_zlog = true;
+    }
+
     qInstallMessageHandler(GeneralFunctionsClass::customMessageHandler);
     QLoggingCategory::defaultCategory()->setEnabled(QtMsgType::QtDebugMsg,true);
-    qDebug("******New Output*********\n");
+    qInfo("******New Output*********\n");
 
     KiranSingleApplication a(argc, argv);
 
-    qInfo()<< "one process " << endl;
     ///加载qss样式表
     QFile file(":/qss/style.qss");
     if( file.open(QFile::ReadOnly))

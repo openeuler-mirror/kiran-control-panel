@@ -15,9 +15,12 @@
 #include <QMutex>
 #include <QDateTime>
 #include <iostream>
+#include <zlog_ex.h>
+#include <stddef.h>
 
 using namespace std;
-#define OUTPUTFILE "/tmp/kiran-system-information.log"
+#define EMPTY_NAME "null"
+extern bool init_zlog;
 
 GeneralFunctionsClass::GeneralFunctionsClass()
 {
@@ -35,90 +38,42 @@ void GeneralFunctionsClass::customMessageHandler(QtMsgType type, const QMessageL
     static QMutex mutex;
     mutex.lock();
     QString text;
+    int32_t priority;
     switch(type)
     {
     case QtDebugMsg:
         text = QString("Debug...............................");
+        priority = ZLOG_LEVEL_DEBUG;
         break;
     case QtInfoMsg:
         text = QString("Infomation...............................");
+        priority = ZLOG_LEVEL_INFO;
         break;
     case QtWarningMsg:
         text = QString("Warning...............................");
+        priority = ZLOG_LEVEL_WARN;
         break;
     case QtCriticalMsg:
         text = QString("Critical...............................");
+        priority = ZLOG_LEVEL_ERROR;
         break;
     case QtFatalMsg:
         text = QString("Fatal...............................");
+        priority = ZLOG_LEVEL_FATAL;
         abort();
     }
-    //消息输出位置
-    QString context_info = QString("File: %1\r\nFunc: %2\r\nLine: %3")
-            .arg(QString(context.file))
-            .arg(QString(context.function))
-            .arg(context.line);
-    //消息打印时间
-    QString current_date_time = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss ddd");
-    QString current_date = QString("Time: %1")
-            .arg(current_date_time);
-    //调试信息
-    QString mmsg = QString("%1\r\n%2\r\n%3\r\n%4")
-            .arg(text)
-            .arg(current_date)
-            .arg(context_info)
-            .arg("MSG : "+msg);
 
-
-    if(!qgetenv("OutputInfo").isNull())
-    {
-        if(qgetenv("OutputInfo")== "0")
-        {
-            char*  output;
-            QByteArray ba = mmsg.toLatin1(); // must
-            output=ba.data();
-            std::cout <<output <<std::endl;
-            mutex.unlock();
-            return ;
-        }
+    const char* file_name = context.file == NULL?EMPTY_NAME:context.file;
+    const char* function_name =  context.function == NULL?EMPTY_NAME:context.function;
+    if (init_zlog){
+    dzlog(file_name,
+          strlen(file_name),
+          function_name,
+          strlen(function_name),
+          context.line,
+          priority,
+          "%s",
+          msg.toStdString().c_str());
     }
-    QFile file(OUTPUTFILE);
-    QFileInfo fileInfo(OUTPUTFILE);
-    //调试文件没有被创建过
-    if(!fileInfo.dir().exists() && !fileInfo.dir().mkpath(fileInfo.dir().path()))
-    {
-       fprintf(stderr,"make log file failed\n");
-       goto Create;
-    }
-
-Create:
-    while(!file.open(QIODevice::WriteOnly | QIODevice::Append))
-    {
-
-        cout << "open log file " << endl;
-        QFlags<QFile::Permission> flags = QFile::ReadOwner|QFile::WriteOwner|
-                                                          QFile::ReadUser |QFile::WriteUser |
-                                                          QFile::ReadGroup|QFile::WriteGroup|
-                                                          QFile::ReadOther|QFile::WriteOther;
-        if( file.permissions() != flags ){
-            if(file.setPermissions(flags))
-            {
-                cout << "set permission ok" << endl;
-            }
-            else
-            {
-                cout << "set permission failed " << endl;
-            }
-        }
-        else
-        {
-            cout << "permission  == flag " << endl;
-        }
-    }
-    QTextStream stream(&file);
-    stream << mmsg << "\r\n";
-    file.flush();
-    file.close();
     mutex.unlock();
-
 }

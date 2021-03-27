@@ -32,8 +32,8 @@
 #define METHOD_REGISTER_ONLINE              "RegisterOnLine"
 #define METHOD_GETSERVICESTATUS             "GetServiceStatus"
 
-#define TIMEOUT_MS 10000
-#define TIMEOUT_MS_ONLINE 15000
+#define TIMEOUT_MS 5000
+#define TIMEOUT_MS_ONLINE 10000
 
 
 bool InfoDbus::SystemInfo::getSystemInfo(int infoType , QString &info)
