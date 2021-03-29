@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.5)
 
 project(kiran-account-manager)
+option(AUTH_MANAGER_VISIBLE "Is auth manager visible" OFF)
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -62,6 +63,10 @@ target_link_libraries(kiran-account-manager
         ${KIRAN_WIDGETS_QT5_LIBRARIES}
         ${KIRAN_CC_DAEMON_LIBRARIES}
         ${ZERO_MQ_LIBRARIES})
+
+if( AUTH_MANAGER_VISIBLE )
+    add_definitions(-DAUTH_MANAGER)
+endif()
 
 install(TARGETS ${PROJECT_NAME} DESTINATION ${KAM_INSTALL_DIR} )
 install(FILES ${QM_FILES} DESTINATION ${KAM_TRANSLATION_DIR_PATH} )
