@@ -1,8 +1,10 @@
 
 file(GLOB src-code
     "*"
-    "../images/*.qrc"
     )
+
+set(QRC_SOURCE_FILES ../resources/image.qrc)
+qt5_add_resources(QRC_FILES ${QRC_SOURCE_FILES})
 
 #翻译文件
 find_package(Qt5 COMPONENTS Widgets LinguistTools)
@@ -15,6 +17,7 @@ add_executable(${PROJECT_NAME}
     ${kiran-module-widget}
     ${kiran-search-lineedit}
     ${src-code}
+    ${QRC_FILES}
     ${QM_FILES}
     )
 
