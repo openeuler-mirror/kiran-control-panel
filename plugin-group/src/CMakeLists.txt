@@ -3,7 +3,7 @@ file(GLOB src-code
     "*"
     )
 
-set(QRC_SOURCE_FILES ../resources/image.qrc)
+set(QRC_SOURCE_FILES ../resources/image_control_center.qrc) #资源文件名不能与插件资源名相同，否则会导致插件中部分图片无法正常加载显示。
 qt5_add_resources(QRC_FILES ${QRC_SOURCE_FILES})
 
 #翻译文件
