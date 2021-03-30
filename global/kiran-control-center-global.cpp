@@ -33,10 +33,7 @@ QMap<int, KiranControlCenterGlobal::ModuleClass> KiranControlCenterGlobal::getMo
         moduleClass.comment = settings.value("Comment").toString();
         moduleClass.commentZh = QString::fromUtf8(settings.value("Comment[zh_CN]").toString().toLatin1().data());
         moduleClass.icon = QString(CATEGORY_DESKTOP_ICON_DIR)+QDir::separator()+settings.value("Icon").toString();
-        QVariantList keys = settings.value("Keywords").toList();
-        foreach (QVariant var, keys) {
-            moduleClass.keywords <<QString::fromUtf8(var.toString().toLatin1().data());
-        }
+        moduleClass.keywords = QString::fromUtf8(settings.value("Keywords").toString().toLatin1().data()).split(",", QString::SkipEmptyParts);
 
         moduleClass.itemMap = items.value(moduleClass.name);
         ret .insert(settings.value("Weight").toInt(), moduleClass);
