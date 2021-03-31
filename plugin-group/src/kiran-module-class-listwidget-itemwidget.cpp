@@ -7,7 +7,6 @@
 #include <QMouseEvent>
 #include <QPainter>
 #include <QBitmap>
-#include <QDebug>
 
 KiranModuleClassListWidgetItemWidget::KiranModuleClassListWidgetItemWidget(QWidget *parent) : QWidget(parent), m_statusType(QEvent::None),m_showText(false)
 {

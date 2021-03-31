@@ -8,7 +8,6 @@
 #include <QAbstractItemView>
 #include <QListView>
 #include <QStandardItemModel>
-#include <QDebug>
 
 KiranControlCenterWindow::KiranControlCenterWindow(QWidget *parent) : KiranTitlebarWindow(parent)
 {

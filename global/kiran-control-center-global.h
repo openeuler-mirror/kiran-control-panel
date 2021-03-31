@@ -3,11 +3,11 @@
 #include <dlfcn.h>
 #include "config.h"
 #include "../interface/module-interface.h"
+#include "zlog_ex.h"
 #include <QWidget>
 #include <QString>
 #include <QMap>
 #include <QHash>
-#include <QDebug>
 #include <QTranslator>
 using namespace ModuleInterface;
 
@@ -63,7 +63,7 @@ private:
         T funPtr = (T) dlsym(modulePlugin, funName.toLatin1().data());
         const char* dlsym_error = dlerror();
         if (dlsym_error) {
-            qWarning() << "Cannot load symbol create: " << dlsym_error;
+            dzlog_cerr("Cannot load symbol create: [%s]", dlsym_error);
             return nullptr;
         }
         return funPtr;

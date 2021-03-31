@@ -1,5 +1,6 @@
 #include "kiran-control-center-global.h"
 #include "kiranwidgets-qt5/kiran-message-box.h"
+#include "zlog_ex.h"
 #include <QDirIterator>
 #include <QSettings>
 #include <QPushButton>
@@ -9,7 +10,6 @@
 #include <QDir>
 #include <QApplication>
 #include <QTranslator>
-#include <QDebug>
 
 QString gLocaleName;
 /*!
@@ -174,7 +174,7 @@ void KiranControlCenterGlobal::ModuleItemStu::loadTranslator()
     QString qmFile = QString("%1.%2.qm").arg(translationPath).arg(gLocaleName);
     translator = new QTranslator();//在界面被切换之后释放。
     if(translator->load(qmFile) == false)
-        qDebug() << "load qm: " << qmFile <<  " error.";
+        dzlog_cerr("load qm: [%s] error.", qmFile);
     else
         qApp->installTranslator(translator);
 }

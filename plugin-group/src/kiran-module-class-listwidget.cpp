@@ -7,7 +7,6 @@
 #include <QEvent>
 #include <QTimer>
 #include <QButtonGroup>
-#include <QDebug>
 #include <QScrollBar>
 
 KiranModuleClassListWidget::KiranModuleClassListWidget(QWidget *parent) : QListWidget(parent), m_showText(false)

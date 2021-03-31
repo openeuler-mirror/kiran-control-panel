@@ -11,7 +11,6 @@
 #include <QListView>
 #include <QEvent>
 #include <QStandardItemModel>
-#include <QDebug>
 
 KiranSearchLineEdit::KiranSearchLineEdit(const QStringList &completerKeys, QWidget *parent) : QLineEdit(parent), m_completerKeys(completerKeys)
 {

@@ -1,10 +1,10 @@
 #include "kiran-control-center-window.h"
 #include "stdio.h"
+#include "zlog_ex.h"
 #include <kiran-application.h>
 #include <QTranslator>
 #include <QDesktopWidget>
 #include <QCommandLineParser>
-#include <QDebug>
 
 using namespace std;
 extern QString gLocaleName;
@@ -13,12 +13,17 @@ int main(int argc, char *argv[])
 {
     KiranApplication a(argc, argv);
 
+    if (dzlog_init_ex(NULL, "kiran-session-app", "kiran-control-center", "kiran-control-center") < 0)
+    {
+        return -1;
+    }
+
     QString locale = QLocale::system().name();
     gLocaleName = locale;//当前翻译类型,必须在加载模块数据之前赋值.模块的名称将根据此变量选择翻译类型.
     QString qmFile = QString("%1.%2.qm").arg(TRANSLATE_PREFIX).arg(locale);
     QTranslator translator;
     if(translator.load(qmFile) == false)
-        qDebug() << "load qm: " << qmFile <<  " error.";
+        dzlog_cerr("load qm: [%s] error.", qmFile);
     else
         a.installTranslator(&translator);
 
@@ -45,5 +50,6 @@ int main(int argc, char *argv[])
     w.move(screenRect.center()-QPoint(w.rect().width()/2, w.rect().height()/2));
     w.show();
     w.setContentWrapperMarginBottom(0);
+    zlog_fini();
     return a.exec();
 }

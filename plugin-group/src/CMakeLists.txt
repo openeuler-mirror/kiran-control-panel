@@ -25,10 +25,11 @@ target_include_directories(${PROJECT_NAME} PRIVATE
     ../../interface/
     ../../global/
     ../../widgets/
+    ${ZLOG_INCLUDE_DIRS}
     ${KIRAN_WIDGETS_QT5_INCLUDE_DIRS}
     )
 
-target_link_libraries(${PROJECT_NAME}  Qt5::Core Qt5::Gui Qt5::Svg Qt5::X11Extras Qt5::Widgets dl ${KIRAN_WIDGETS_QT5_LIBRARIES})
+target_link_libraries(${PROJECT_NAME}  Qt5::Core Qt5::Gui Qt5::Svg Qt5::X11Extras Qt5::Widgets dl pthread ${ZLOG_LIBRARIES}  ${KIRAN_WIDGETS_QT5_LIBRARIES})
 
 #安装
 install(TARGETS ${PROJECT_NAME} DESTINATION ${INSTALL_BINDIR}/)

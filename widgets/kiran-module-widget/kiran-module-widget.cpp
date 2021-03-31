@@ -10,7 +10,6 @@
 #include <QDialogButtonBox>
 #include <QMouseEvent>
 #include <QTimer>
-#include <QDebug>
 
 #define MODULE_STU_POINTER Qt::UserRole
 #define FUNCTION_NAME Qt::UserRole +1

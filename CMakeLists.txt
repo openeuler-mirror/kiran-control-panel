@@ -34,6 +34,7 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 #set(CMAKE_AUTORCC ON) #会影响到插件中的资源寻址。
 #
+pkg_search_module(ZLOG REQUIRED zlog)
 pkg_search_module(KIRAN_WIDGETS_QT5 REQUIRED kiranwidgets-qt5)
 find_package(Qt5 COMPONENTS Widgets X11Extras Svg)
 

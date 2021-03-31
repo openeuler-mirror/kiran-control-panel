@@ -8,7 +8,6 @@
 #include <QApplication>
 #include <QTextDocument>
 #include <QAbstractTextDocumentLayout>
-#include <QDebug>
 
 KiranSearchPopupDelegate::KiranSearchPopupDelegate(QObject *parent) : QStyledItemDelegate(parent)
 {
