@@ -3,7 +3,6 @@
 #include <QPainter>
 #include <QEvent>
 #include <QTimer>
-#include <QDebug>
 
 KiranDisplayConfigIdentifying::KiranDisplayConfigIdentifying(QWidget *parent) :
     QWidget(parent)

@@ -1,9 +1,9 @@
 #include "kiran-display-config-global.h"
+#include "zlog_ex.h"
 #include <QDBusMessage>
 #include <QDBusConnection>
 #include <QDBusReply>
 #include <QDBusInterface>
-#include <QDebug>
 
 QVariant KiranDisplayConfigGlobal::Display(const QString &function, const QVariantList &paras, int *flag, const bool &showErrorBox)
 {
@@ -22,7 +22,7 @@ QVariant KiranDisplayConfigGlobal::Display(const QString &function, const QVaria
     }
     else
     {
-        qDebug() << "DBus interface failed:" << function << paras << response.errorMessage();
+        dzlog_cerr("DBus interface failed: [%s, [%s], [%s]].", function, paras, response.errorMessage());
 
         if(flag) *flag = -1;
 

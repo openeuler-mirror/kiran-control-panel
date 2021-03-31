@@ -2,7 +2,6 @@
 #include <QListView>
 #include <QScrollBar>
 #include <QEvent>
-#include <QDebug>
 
 KiranComboBox::KiranComboBox(QWidget *parent) : QComboBox(parent)
 {
@@ -31,7 +30,6 @@ KiranComboBox::KiranComboBox(QWidget *parent) : QComboBox(parent)
 bool KiranComboBox::eventFilter(QObject *obj, QEvent *event)
 {
     if (event->type() == QEvent::Show) {
-        qDebug() << m_listView->mapToGlobal(QPoint(0, 0)) <<  this->mapToGlobal(this->pos());
         if(m_listView->mapToGlobal(m_listView->pos()).y() > this->mapToGlobal(this->pos()).y())
         {
             QString style = "QComboBox {border: 1px solid  rgba(255, 255, 255, 20);border-radius: 6px; padding: 0px 0px 0px 10px}"\

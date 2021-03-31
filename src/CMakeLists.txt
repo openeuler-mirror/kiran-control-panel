@@ -8,13 +8,15 @@ file(GLOB SRC
     "./*.cpp"
     "./*.h"
     "./*.ui"
-    "../resources/*.qrc"
     )
 #翻译文件
 include_directories("${CMAKE_BINARY_DIR}/src")
 file(GLOB TS_FILES "translations/*.ts")
 #config.h
 include_directories(${CMAKE_BINARY_DIR})
+
+set(QRC_SOURCE_FILES ../resources/res.qrc)
+qt5_add_resources(QRC_FILES ${QRC_SOURCE_FILES})
 
 find_package(Qt5 COMPONENTS Widgets LinguistTools)
 SET_DIRECTORY_PROPERTIES(PROPERTIES CLEAN_NO_CUSTOM TRUE)
@@ -33,13 +35,11 @@ if(DEFINED PLUGIN_DIR)
     add_library(${PROJECT_NAME} SHARED
         ${SRC}
         ${PLUGIN}
+        ${QRC_FILES}
         ${QM_FILES}
         )
     #安装
     install(TARGETS ${PROJECT_NAME} DESTINATION ${INSTALL_LIBDIR}/)
-
-    target_link_libraries(${PROJECT_NAME}
-        Qt5::Core Qt5::Gui Qt5::Svg Qt5::Widgets Qt5::X11Extras Qt5::DBus ${KIRAN_WIDGETS_QT5_LIBRARIES} X11)
 
 else()
     message("********** build app. *********")
@@ -52,15 +52,16 @@ else()
     add_executable(${PROJECT_NAME}
         ${SRC}
         ${APP}
+        ${QRC_FILES}
         ${QM_FILES}
         )
 
     #安装
     install(TARGETS ${PROJECT_NAME} DESTINATION ${INSTALL_BINDIR}/)
 
-    target_link_libraries(${PROJECT_NAME}
-        Qt5::Core Qt5::Gui Qt5::Svg Qt5::Widgets Qt5::X11Extras Qt5::DBus ${KIRAN_WIDGETS_QT5_LIBRARIES} X11)
-
 endif()
+
+target_link_libraries(${PROJECT_NAME}
+    Qt5::Core Qt5::Gui Qt5::Svg Qt5::Widgets Qt5::X11Extras Qt5::DBus pthread ${ZLOG_LIBRARIES} ${KIRAN_WIDGETS_QT5_LIBRARIES} X11)
 
 include(app_plugin_translate)

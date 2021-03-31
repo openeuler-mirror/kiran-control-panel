@@ -1,13 +1,13 @@
 #include "kiran-display-configuration-window.h"
 #include "kiran-display-config-global.h"
 #include "kiranwidgets-qt5/kiran-message-box.h"
+#include "zlog_ex.h"
 #include <kiran-application.h>
 #include <QDesktopWidget>
 #include <QTranslator>
 #include <QDBusInterface>
 #include <QPushButton>
 #include <QDialogButtonBox>
-#include <QDebug>
 
 int main(int argc, char *argv[])
 {
@@ -17,12 +17,12 @@ int main(int argc, char *argv[])
     QString qmFile = QString("%1.%2.qm").arg(APP_TRANSLATE_PATH_PREFIX).arg(locale);
     QTranslator translator;
     if(translator.load(qmFile) == false)
-        qDebug() << "load qm: " << qmFile <<  " error.";
+        dzlog_cerr("load qm: [%s] error.", qmFile);
     else
         a.installTranslator(&translator);
 
     if (!QDBusConnection::sessionBus().isConnected()) {
-        qWarning("Cannot connect to the D-Bus session bus.\n"
+        dzlog_warn("Cannot connect to the D-Bus session bus.\n"
                  "Please check your system settings and try again.\n");
         return 1;
     }

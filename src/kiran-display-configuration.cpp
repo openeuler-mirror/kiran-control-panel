@@ -4,7 +4,6 @@
 #include "widget-property-helper.h"
 #include <QTimer>
 #include <QButtonGroup>
-#include <QDebug>
 
 KiranDisplayConfiguration::KiranDisplayConfiguration(QWidget *parent) :
     QWidget(parent), m_btnGroup(nullptr), m_dbusPropertiesChangedBlock(false),
@@ -598,7 +597,7 @@ DisplayModesStu KiranDisplayConfiguration::curIntersectionMonitorMode()
 
 void KiranDisplayConfiguration::setMonitorProperty(const QString &monitorPath, const QVariantMap &map)
 {
-    qDebug() << "send data:" << monitorPath << map;
+    //qDebug() << "send data:" << monitorPath << map;
     // property enabled must be set before others
     if(map.contains("enabled")) Monitor<QVariant>(monitorPath, "Enable", QVariantList() << map.value("enabled").toBool());
 
@@ -648,7 +647,7 @@ void KiranDisplayConfiguration::initCopeMode()
     list << map;
     ui->panel->setData(list);
 
-    qDebug() << "receive data:" << list;
+    //qDebug() << "receive data:" << list;
 
     foreach (QString name, m_dbusConnectList) {
         QDBusConnection::sessionBus().disconnect(KIRAN_DBUS_SERVICE_NAME, name, KIRAN_DBUS_INTREFACE_PROPERTIES, KIRAN_DBUS_PROPERTIES_FUN,
@@ -723,7 +722,7 @@ void KiranDisplayConfiguration::initExtraMode(const bool &clearChecked)
     //    ui->pushButton_extra_primary->setToolTip(toolTipStr);
     //    ui->pushButton_enabled->setToolTip(toolTipStr);
 
-    qDebug() << "receive data:" << list;
+    //qDebug() << "receive data:" << list;
 }
 
 void KiranDisplayConfiguration::initComboBoxResolution(QComboBox *comboBox, const QMap<int, QPair<QSize, QList<int> > > &map)

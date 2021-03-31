@@ -3,7 +3,6 @@
 #include "kiran-display-config-global.h"
 #include <QButtonGroup>
 #include <QPainter>
-#include <QDebug>
 
 const int  cAbsorbOffset = 5;
 KiranDisplayConfigItemContain::KiranDisplayConfigItemContain(QWidget *parent) : QWidget(parent), m_isDrag(false), m_curCheckedItem(NULL)

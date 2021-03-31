@@ -4,7 +4,6 @@
 #include "kiran-display-config-identifying.h"
 #include<QToolTip>
 #include <QPainter>
-#include <QDebug>
 
 using namespace KiranDisplayConfigGlobal;
 

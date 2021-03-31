@@ -6,7 +6,6 @@
 #ifndef INTERFACE_H
 #define INTERFACE_H
 
-#include <QDebug>
 #include "config.h"
 #include "module-interface.h"
 #include "kiran-display-configuration.h"
@@ -22,7 +21,7 @@ extern PluginSubItemBase *gCurWidget;
 QString gName = "显示设置";
 QList<SubItem> getSubitems()
 {
-    return QList<SubItem>() << SubItem(gName, QString(PLUGIN_SUB_ITME_ICON_DIR) + "display-settings.svg", "");
+    return QList<SubItem>() << SubItem(gName, QString(PLUGIN_SUB_ITME_ICON_DIR) + "display-settings.svg", "显示 --> 显示设置");
 }
 
 QWidget *getSubitemWidget(QString name)
