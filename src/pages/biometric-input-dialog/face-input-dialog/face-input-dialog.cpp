@@ -5,33 +5,32 @@
 // You may need to build the project (run Qt uic code generator) to get "ui_face-input-dialog.h" resolved
 
 #include "face-input-dialog.h"
-#include "ui_face-input-dialog.h"
+#include <QPainter>
 #include "biometrics-interface.h"
 #include "face-enroll-worker.h"
-#include <QPainter>
+#include "ui_face-input-dialog.h"
 
 Q_DECLARE_METATYPE(QList<QRect>);
 
-#define REFRESH_DELAY_TIME_MS  100
+#define REFRESH_DELAY_TIME_MS 100
 
-FaceInputDialog::FaceInputDialog (QWidget *parent) :
-        KiranTitlebarWindow(),
-        ui(new Ui::FaceInputDialog),
-        m_interface(new BiometricsInterface(QDBusConnection::systemBus(), this)),
-        m_enrollThread(new FaceEnrollWorker(this))
+FaceInputDialog::FaceInputDialog(QWidget *parent) : KiranTitlebarWindow(),
+                                                    ui(new Ui::FaceInputDialog),
+                                                    m_interface(new BiometricsInterface(QDBusConnection::systemBus(), this)),
+                                                    m_enrollThread(new FaceEnrollWorker(this))
 {
     qRegisterMetaType<QList<QRect>>("QList<QRect>");
     ui->setupUi(getWindowContentWidget());
     init();
 }
 
-FaceInputDialog::~FaceInputDialog ()
+FaceInputDialog::~FaceInputDialog()
 {
     stopEnroll();
     delete ui;
 }
 
-void FaceInputDialog::init ()
+void FaceInputDialog::init()
 {
     initUI();
     ///处理工作线程收到新图像
@@ -40,27 +39,27 @@ void FaceInputDialog::init ()
     connect(m_enrollThread, &FaceEnrollWorker::sigFaceAxis, this, &FaceInputDialog::slotFaceAxis);
     ///连接到DBus服务获取采集状态
     connect(m_interface, &BiometricsInterface::EnrollFaceStatus, this, &FaceInputDialog::slotUpdateEnrollFaceStatus);
-    connect(ui->btn_save, &QPushButton::clicked, [this] () {
+    connect(ui->btn_save, &QPushButton::clicked, [this]() {
         m_isSave = true;
         close();
     });
-    connect(ui->btn_cancel, &QPushButton::clicked, [this] () {
+    connect(ui->btn_cancel, &QPushButton::clicked, [this]() {
         m_isSave = false;
         close();
     });
 
     m_refeshDelayTimer.setInterval(REFRESH_DELAY_TIME_MS);
-    connect(&m_refeshDelayTimer, &QTimer::timeout, [this] () {
+    connect(&m_refeshDelayTimer, &QTimer::timeout, [this]() {
         generateNewPreviewImage();
     });
 
-    setTips(TIP_TYPE_INFO,tr("initializing face collection environment..."));
+    setTips(TIP_TYPE_INFO, tr("initializing face collection environment..."));
 
     ///开始采集
     startEnroll();
 }
 
-void FaceInputDialog::initUI ()
+void FaceInputDialog::initUI()
 {
     ///设置窗口模态
     setWindowModality(Qt::ApplicationModal);
@@ -70,7 +69,7 @@ void FaceInputDialog::initUI ()
     setButtonHints(KiranTitlebarWindow::TitlebarCloseButtonHint);
 }
 
-void FaceInputDialog::closeEvent (QCloseEvent *event)
+void FaceInputDialog::closeEvent(QCloseEvent *event)
 {
     if (!m_isSave && !m_biometricID.isEmpty())
     {
@@ -89,9 +88,8 @@ void FaceInputDialog::closeEvent (QCloseEvent *event)
     QWidget::closeEvent(event);
 }
 
-bool FaceInputDialog::startEnroll ()
+bool FaceInputDialog::startEnroll()
 {
-
     auto reply = m_interface->EnrollFaceStart();
     reply.waitForFinished();
     if (reply.isError())
@@ -105,7 +103,7 @@ bool FaceInputDialog::startEnroll ()
             if (stopEnrollReply.isError())
             {
                 qWarning() << "stop enroll face error:" << stopEnrollReply.error();
-                setTips(TIP_TYPE_ERROR,tr("failed to initialize face collection environment!"));
+                setTips(TIP_TYPE_ERROR, tr("failed to initialize face collection environment!"));
                 return false;
             }
             else
@@ -116,9 +114,9 @@ bool FaceInputDialog::startEnroll ()
                 {
                     qWarning() << "enroll face start error:" << reply.error();
                     QString errMsg = QString("%1(%2)")
-                            .arg(tr("Failed to start collection"))
-                            .arg(reply.error().message());
-                    setTips(TIP_TYPE_ERROR,errMsg);
+                                         .arg(tr("Failed to start collection"))
+                                         .arg(reply.error().message());
+                    setTips(TIP_TYPE_ERROR, errMsg);
                     return false;
                 }
             }
@@ -127,9 +125,9 @@ bool FaceInputDialog::startEnroll ()
         {
             qWarning() << "enroll face start error:" << reply.error();
             QString errMsg = QString("%1(%2)")
-                    .arg(tr("Failed to start collection"))
-                    .arg(reply.error().message());
-            setTips(TIP_TYPE_ERROR,errMsg);
+                                 .arg(tr("Failed to start collection"))
+                                 .arg(reply.error().message());
+            setTips(TIP_TYPE_ERROR, errMsg);
             return false;
         }
     }
@@ -139,7 +137,7 @@ bool FaceInputDialog::startEnroll ()
     return true;
 }
 
-void FaceInputDialog::stopEnroll ()
+void FaceInputDialog::stopEnroll()
 {
     if (m_enrollThread->isRunning())
     {
@@ -148,7 +146,7 @@ void FaceInputDialog::stopEnroll ()
     }
 }
 
-void FaceInputDialog::slotHasNewImage (QImage image)
+void FaceInputDialog::slotHasNewImage(QImage image)
 {
     m_tempImage = image;
     if (!m_refeshDelayTimer.isActive())
@@ -157,7 +155,7 @@ void FaceInputDialog::slotHasNewImage (QImage image)
     }
 }
 
-void FaceInputDialog::slotFaceAxis (QList<QRect> rect)
+void FaceInputDialog::slotFaceAxis(QList<QRect> rect)
 {
     m_faces = rect;
     if (!m_refeshDelayTimer.isActive())
@@ -166,8 +164,8 @@ void FaceInputDialog::slotFaceAxis (QList<QRect> rect)
     }
 }
 
-void FaceInputDialog::slotUpdateEnrollFaceStatus (const QString &message, const QString &id,
-                                                  int progress, bool done)
+void FaceInputDialog::slotUpdateEnrollFaceStatus(const QString &message, const QString &id,
+                                                 int progress, bool done)
 {
     if (!m_enrollStarted)
     {
@@ -191,19 +189,19 @@ void FaceInputDialog::slotUpdateEnrollFaceStatus (const QString &message, const 
     if (done)
     {
         m_enrollStarted = false;
-        m_biometricID = id;
+        m_biometricID   = id;
     }
 }
 
-void FaceInputDialog::generateNewPreviewImage ()
+void FaceInputDialog::generateNewPreviewImage()
 {
-    QPixmap drawPixmap = QPixmap::fromImage(m_tempImage);
+    QPixmap  drawPixmap = QPixmap::fromImage(m_tempImage);
     QPainter painter(&drawPixmap);
-    QPen pen;
+    QPen     pen;
     pen.setColor(QColor(255, 255, 255, 255 * 0.5));
     pen.setWidthF(2);
     painter.setPen(pen);
-    for (QRect &rect:m_faces)
+    for (QRect &rect : m_faces)
     {
         painter.drawRect(rect);
     }
@@ -211,15 +209,15 @@ void FaceInputDialog::generateNewPreviewImage ()
     ui->enrollProgress->updateCenterImage(drawPixmap.scaled(previewSize));
 }
 
-void FaceInputDialog::setTips (FaceInputDialog::TipType type, const QString &tip)
+void FaceInputDialog::setTips(FaceInputDialog::TipType type, const QString &tip)
 {
     QString colorText = QString("<font color=%1>%2</font>")
-            .arg(type == TIP_TYPE_INFO ? "white" : "red")
-            .arg(tip);
+                            .arg(type == TIP_TYPE_INFO ? "white" : "red")
+                            .arg(tip);
     ui->label_msg->setText(colorText);
 }
 
-QString FaceInputDialog::getFaceDataID ()
+QString FaceInputDialog::getFaceDataID()
 {
     return m_biometricID;
 }

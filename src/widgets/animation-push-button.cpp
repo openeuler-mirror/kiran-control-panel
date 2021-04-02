@@ -2,21 +2,21 @@
 // Created by lxh on 2020/11/4.
 //
 
-#include <QPropertyAnimation>
-#include <QPainter>
-#include <QStyleOption>
 #include <QDebug>
+#include <QPainter>
+#include <QPropertyAnimation>
+#include <QStyleOption>
 
 #include "animation-push-button.h"
 
-AnimationPushButton::AnimationPushButton (QWidget *parent)
-        : QPushButton(parent),
-          m_svgRender(QString(":/images/loading.svg"), this)
+AnimationPushButton::AnimationPushButton(QWidget *parent)
+    : QPushButton(parent),
+      m_svgRender(QString(":/images/loading.svg"), this)
 {
     initTimeLine();
 }
 
-void AnimationPushButton::setBusy (bool busy)
+void AnimationPushButton::setBusy(bool busy)
 {
     if (m_isBusy == busy)
         return;
@@ -41,12 +41,12 @@ void AnimationPushButton::setBusy (bool busy)
     }
 }
 
-bool AnimationPushButton::busy ()
+bool AnimationPushButton::busy()
 {
     return m_isBusy;
 }
 
-void AnimationPushButton::paintEvent (QPaintEvent *event)
+void AnimationPushButton::paintEvent(QPaintEvent *event)
 {
     if (m_isBusy && isEnabled())
     {
@@ -61,7 +61,7 @@ void AnimationPushButton::paintEvent (QPaintEvent *event)
         {
             painter.translate(this->rect().center());
             painter.rotate(m_rotationAngle);
-            int svgDrawSize = qMin(width(), height()) - 40;
+            int   svgDrawSize = qMin(width(), height()) - 40;
             QRect renderRect((width() - svgDrawSize) / 2 - width() / 2,
                              (height() - svgDrawSize) / 2 - height() / 2,
                              svgDrawSize,
@@ -75,7 +75,7 @@ void AnimationPushButton::paintEvent (QPaintEvent *event)
     }
 }
 
-void AnimationPushButton::initTimeLine ()
+void AnimationPushButton::initTimeLine()
 {
     m_timeLine.setCurrentTime(0);
     m_timeLine.setLoopCount(0);
@@ -83,7 +83,7 @@ void AnimationPushButton::initTimeLine ()
     m_timeLine.setDuration(750);
     m_timeLine.setFrameRange(0, 360);
     m_timeLine.setCurveShape(QTimeLine::LinearCurve);
-    connect(&m_timeLine, &QTimeLine::frameChanged, [this] (int value) {
+    connect(&m_timeLine, &QTimeLine::frameChanged, [this](int value) {
         m_rotationAngle = value;
         update();
     });

@@ -5,12 +5,12 @@
 #include "fingerprint-input-worker.h"
 #include "biometrics-interface.h"
 
-FingerprintInputWorker::FingerprintInputWorker (QObject *parent)
-        : QThread(parent),
-          m_interface(new BiometricsInterface(QDBusConnection::systemBus(), this))
+FingerprintInputWorker::FingerprintInputWorker(QObject *parent)
+    : QThread(parent),
+      m_interface(new BiometricsInterface(QDBusConnection::systemBus(), this))
 {
     connect(m_interface, &BiometricsInterface::EnrollFprintStatus,
-            [this] (const QString &message, const QString &id, int progress, bool done) {
+            [this](const QString &message, const QString &id, int progress, bool done) {
                 if (!m_started)
                 {
                     return;
@@ -32,19 +32,19 @@ FingerprintInputWorker::FingerprintInputWorker (QObject *parent)
             });
 }
 
-FingerprintInputWorker::~FingerprintInputWorker ()
+FingerprintInputWorker::~FingerprintInputWorker()
 {
     stopFingerprintEnroll();
 }
 
-void FingerprintInputWorker::startFingerprintEnroll ()
+void FingerprintInputWorker::startFingerprintEnroll()
 {
     qInfo() << "start finger print enroll...";
     stopFingerprintEnroll();
     start();
 }
 
-void FingerprintInputWorker::stopFingerprintEnroll ()
+void FingerprintInputWorker::stopFingerprintEnroll()
 {
     qInfo() << "stop finger print enroll...";
     if (m_started)
@@ -59,7 +59,7 @@ void FingerprintInputWorker::stopFingerprintEnroll ()
     qInfo() << "stop finger print enroll finish...";
 }
 
-void FingerprintInputWorker::run ()
+void FingerprintInputWorker::run()
 {
     emit sigShowStatus(0, tr("initializing fingerprint collection environment..."));
     auto reply = m_interface->EnrollFprintStart();

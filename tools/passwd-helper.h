@@ -4,8 +4,8 @@
 class QString;
 namespace PasswdHelper
 {
-    bool encryptPassword (const QString &pwd, QString &encrypted);
-    bool checkUserPassword (const QString &user, const QString &pwd);
-}
+bool encryptPassword(const QString &pwd, QString &encrypted);
+bool checkUserPassword(const QString &user, const QString &pwd);
+}  // namespace PasswdHelper
 
-#endif // PASSWDHELPER_H
+#endif  // PASSWDHELPER_H

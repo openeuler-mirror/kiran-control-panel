@@ -11,23 +11,23 @@ class EnrollProgressBar : public QWidget
 {
     Q_OBJECT
 public:
-    explicit EnrollProgressBar (QWidget *parent = nullptr);
-    ~EnrollProgressBar () override;
+    explicit EnrollProgressBar(QWidget *parent = nullptr);
+    ~EnrollProgressBar() override;
 
     ///设置进度条数据 0~100
-    void setProgressValue (unsigned int value);
+    void setProgressValue(unsigned int value);
     ///设置进度条中心图片
-    void updateCenterImage (const QPixmap &centerPixmap);
+    void updateCenterImage(const QPixmap &centerPixmap);
     ///获取中心原型图片大小
-    qreal getCenterImageRadius ();
+    qreal getCenterImageRadius();
 
 private:
-    void initUI ();
-    void paintProgressBar (QPainter &painter);
-    void paintCenterPixmap (QPainter &painter, const QPixmap &pixmap);
+    void initUI();
+    void paintProgressBar(QPainter &painter);
+    void paintCenterPixmap(QPainter &painter, const QPixmap &pixmap);
 
 protected:
-    virtual void paintEvent (QPaintEvent *event) override;
+    virtual void paintEvent(QPaintEvent *event) override;
 
 private:
     /* 进度条线段长度 */
@@ -38,7 +38,7 @@ private:
     unsigned int m_progressValue = 0;
     /* 进度条线段距边框距离 */
     unsigned int m_borerMargin = 4;
-    QPixmap m_centerPixmap;
+    QPixmap      m_centerPixmap;
 };
 
-#endif //KIRAN_ACCOUNT_MANAGER_ENROLL_PROGRESSBAR_H
+#endif  //KIRAN_ACCOUNT_MANAGER_ENROLL_PROGRESSBAR_H

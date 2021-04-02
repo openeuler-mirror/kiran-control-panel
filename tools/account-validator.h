@@ -11,9 +11,8 @@ class AccountValidator : public QValidator
 {
     Q_OBJECT
 public:
-    explicit AccountValidator (QObject *parent = nullptr);
-    State validate (QString &input, int &pos) const Q_DECL_OVERRIDE;
+    explicit AccountValidator(QObject *parent = nullptr);
+    State validate(QString &input, int &pos) const Q_DECL_OVERRIDE;
 };
 
-
-#endif //KIRAN_ACCOUNT_MANAGER_ACCOUNT_VALIDATOR_H
+#endif  //KIRAN_ACCOUNT_MANAGER_ACCOUNT_VALIDATOR_H

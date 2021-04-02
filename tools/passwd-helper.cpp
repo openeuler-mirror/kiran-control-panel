@@ -1,18 +1,18 @@
 #include "passwd-helper.h"
 
-#include <QRandomGenerator>
-#include <QString>
 #include <crypt.h>
-#include <QByteArray>
 #include <errno.h>
 #include <error.h>
-#include <QDebug>
 #include <security/pam_appl.h>
+#include <QByteArray>
+#include <QDebug>
+#include <QRandomGenerator>
+#include <QString>
 
-bool PasswdHelper::encryptPassword (const QString &pwd, QString &encrypted)
+bool PasswdHelper::encryptPassword(const QString &pwd, QString &encrypted)
 {
     QByteArray byteArray = pwd.toLatin1();
-    QString saltChar = "ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvxyz./0123456789";
+    QString    saltChar  = "ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvxyz./0123456789";
 
     QString rand16SaltChar;
     for (int i = 0; i < 16; i++)
@@ -21,10 +21,10 @@ bool PasswdHelper::encryptPassword (const QString &pwd, QString &encrypted)
         rand16SaltChar.append(saltChar.at(randSaltCharIdx));
     }
 
-    QString salt = QString("$6$%1$").arg(rand16SaltChar);
+    QString    salt          = QString("$6$%1$").arg(rand16SaltChar);
     QByteArray saltByteArray = salt.toLatin1();
 
-    char *cryptedResult = nullptr;
+    char *     cryptedResult = nullptr;
     QByteArray cryptedResultBuffer(100, 0);
     forever
     {
@@ -53,16 +53,16 @@ bool PasswdHelper::encryptPassword (const QString &pwd, QString &encrypted)
     return cryptedResult != nullptr;
 }
 
-int conv_func (int num_msg, const struct pam_message **msg,
-               struct pam_response **resp, void *appdata_ptr)
+int conv_func(int num_msg, const struct pam_message **msg,
+              struct pam_response **resp, void *appdata_ptr)
 {
     struct pam_response *reply = NULL;
-    int ret;
-    int replies;
-    char *passwd = (char *) appdata_ptr;
+    int                  ret;
+    int                  replies;
+    char *               passwd = (char *)appdata_ptr;
 
     ///分配回复包
-    reply = (struct pam_response *) calloc(num_msg, sizeof(*reply));
+    reply = (struct pam_response *)calloc(num_msg, sizeof(*reply));
     if (reply == nullptr)
     {
         return PAM_CONV_ERR;
@@ -83,7 +83,7 @@ int conv_func (int num_msg, const struct pam_message **msg,
     *resp = reply;
     return PAM_SUCCESS;
 
-    failed:
+failed:
     ///释放之前分配的内存
     for (int i = 0; i < replies; i++)
     {
@@ -96,32 +96,31 @@ int conv_func (int num_msg, const struct pam_message **msg,
     return PAM_CONV_ERR;
 }
 
-void no_fail_delay (int status, unsigned int delay, void *appdata_ptr)
+void no_fail_delay(int status, unsigned int delay, void *appdata_ptr)
 {
-
 }
 
-bool PasswdHelper::checkUserPassword (const QString &user, const QString &pwd)
+bool PasswdHelper::checkUserPassword(const QString &user, const QString &pwd)
 {
-    std::string sPwd = pwd.toStdString();
+    std::string     sPwd = pwd.toStdString();
     struct pam_conv conv = {
-            &conv_func,
-            (void *) sPwd.c_str()
-    };
+        &conv_func,
+        (void *)sPwd.c_str()};
 
     pam_handle *handler;
-    int res;
+    int         res;
 
     res = pam_start("password-auth", user.toStdString().c_str(),
                     &conv,
                     &handler);
 
-    pam_set_item(handler, PAM_FAIL_DELAY, (void *) no_fail_delay);
+    pam_set_item(handler, PAM_FAIL_DELAY, (void *)no_fail_delay);
 
     res = pam_authenticate(handler, 0);
     if (res != PAM_SUCCESS)
     {
-        qInfo() << pam_strerror(handler, res) << res;;
+        qInfo() << pam_strerror(handler, res) << res;
+        ;
         return false;
     }
 

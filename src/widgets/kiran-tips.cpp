@@ -1,12 +1,12 @@
 #include "kiran-tips.h"
 #include "ui_kiran-tips.h"
 
-#include <QTimerEvent>
 #include <QDebug>
-#include <QPainter>
 #include <QGraphicsDropShadowEffect>
 #include <QGraphicsOpacityEffect>
+#include <QPainter>
 #include <QStyleOption>
+#include <QTimerEvent>
 
 ///tips离显示控件的间距
 #define TIPS_SPACING 3
@@ -20,16 +20,15 @@
 ///三角形边长
 #define TRIANGLE_SIDE_LENGTH 8
 
-KiranTips::KiranTips (QWidget *parent) :
-        QWidget(parent),
-        ui(new Ui::KiranTips),
-        m_showPostion(POSITION_RIGHT),
-        m_EnterAnimation(new QPropertyAnimation(this)),
-        m_fadeOutTimer(this),
-        m_hideOnClicked(true),
-        m_animationEnable(false),
-        m_bgColor(Qt::white),
-        m_showAroudWidget(nullptr)
+KiranTips::KiranTips(QWidget *parent) : QWidget(parent),
+                                        ui(new Ui::KiranTips),
+                                        m_showPostion(POSITION_RIGHT),
+                                        m_EnterAnimation(new QPropertyAnimation(this)),
+                                        m_fadeOutTimer(this),
+                                        m_hideOnClicked(true),
+                                        m_animationEnable(false),
+                                        m_bgColor(Qt::white),
+                                        m_showAroudWidget(nullptr)
 {
     ui->setupUi(this);
 
@@ -45,7 +44,7 @@ KiranTips::KiranTips (QWidget *parent) :
     this->layout()->setContentsMargins(MARGIN, MARGIN, MARGIN + TRIANGLE_SIDE_LENGTH, MARGIN);
 
     m_fadeOutTimer.setSingleShot(true);
-    connect(&m_fadeOutTimer, &QTimer::timeout, [this] () {
+    connect(&m_fadeOutTimer, &QTimer::timeout, [this]() {
         hideTip();
     });
 
@@ -54,7 +53,7 @@ KiranTips::KiranTips (QWidget *parent) :
     m_EnterAnimation->setStartValue(QSize(0, 0));
     m_EnterAnimation->setDuration(220);
     m_EnterAnimation->setEasingCurve(QEasingCurve::OutQuad);
-    connect(m_EnterAnimation, &QPropertyAnimation::finished, [this] () {
+    connect(m_EnterAnimation, &QPropertyAnimation::finished, [this]() {
         if (m_EnterAnimation->direction() == QPropertyAnimation::Backward)
         {
             setVisible(false);
@@ -63,12 +62,12 @@ KiranTips::KiranTips (QWidget *parent) :
     setVisible(false);
 }
 
-KiranTips::~KiranTips ()
+KiranTips::~KiranTips()
 {
     delete ui;
 }
 
-void KiranTips::setShowPosition (KiranTips::ShowPostionHint positionHint)
+void KiranTips::setShowPosition(KiranTips::ShowPostionHint positionHint)
 {
     if (m_showPostion == positionHint)
     {
@@ -78,14 +77,18 @@ void KiranTips::setShowPosition (KiranTips::ShowPostionHint positionHint)
     QMargins margins(MARGIN, MARGIN, MARGIN, MARGIN);
     switch (positionHint)
     {
-        case POSITION_LEFT:margins.setRight(MARGIN + TRIANGLE_SIDE_LENGTH);
-            break;
-        case POSITION_RIGHT:margins.setLeft(MARGIN + TRIANGLE_SIDE_LENGTH);
-            break;
-        case POSITION_TOP:margins.setBottom(MARGIN + TRIANGLE_SIDE_LENGTH);
-            break;
-        case POSITION_BOTTM:margins.setTop(MARGIN + TRIANGLE_SIDE_LENGTH);
-            break;
+    case POSITION_LEFT:
+        margins.setRight(MARGIN + TRIANGLE_SIDE_LENGTH);
+        break;
+    case POSITION_RIGHT:
+        margins.setLeft(MARGIN + TRIANGLE_SIDE_LENGTH);
+        break;
+    case POSITION_TOP:
+        margins.setBottom(MARGIN + TRIANGLE_SIDE_LENGTH);
+        break;
+    case POSITION_BOTTM:
+        margins.setTop(MARGIN + TRIANGLE_SIDE_LENGTH);
+        break;
     }
     this->layout()->setContentsMargins(margins);
 
@@ -93,12 +96,12 @@ void KiranTips::setShowPosition (KiranTips::ShowPostionHint positionHint)
     update();
 }
 
-void KiranTips::setText (const QString &text)
+void KiranTips::setText(const QString &text)
 {
     ui->label->setText(text);
 }
 
-void KiranTips::setHideTimeout (int ms)
+void KiranTips::setHideTimeout(int ms)
 {
     if (ms == 0 && m_fadeOutTimer.isActive())
     {
@@ -111,7 +114,7 @@ void KiranTips::setHideTimeout (int ms)
     }
 }
 
-void KiranTips::setHideOnClickedEnable (bool enable)
+void KiranTips::setHideOnClickedEnable(bool enable)
 {
     if (m_hideOnClicked == enable)
     {
@@ -121,7 +124,7 @@ void KiranTips::setHideOnClickedEnable (bool enable)
     m_hideOnClicked = enable;
 }
 
-void KiranTips::showTipAroundWidget (QWidget *widget)
+void KiranTips::showTipAroundWidget(QWidget *widget)
 {
     Q_ASSERT(widget != nullptr);
 
@@ -152,7 +155,7 @@ void KiranTips::showTipAroundWidget (QWidget *widget)
     }
 }
 
-void KiranTips::setAnimationEnable (bool enable)
+void KiranTips::setAnimationEnable(bool enable)
 {
     if (m_animationEnable == enable)
     {
@@ -162,7 +165,7 @@ void KiranTips::setAnimationEnable (bool enable)
     m_animationEnable = enable;
 }
 
-void KiranTips::setBackgroundColor (QColor color)
+void KiranTips::setBackgroundColor(QColor color)
 {
     if (m_bgColor == color)
     {
@@ -171,7 +174,7 @@ void KiranTips::setBackgroundColor (QColor color)
     m_bgColor = color;
 }
 
-void KiranTips::hideTip ()
+void KiranTips::hideTip()
 {
     if (m_animationEnable)
     {
@@ -184,7 +187,7 @@ void KiranTips::hideTip ()
     }
 }
 
-void KiranTips::drawUpArrowBackground (QPainter *painter)
+void KiranTips::drawUpArrowBackground(QPainter *painter)
 {
     QPainterPath trianglesPath;
     ///三角形顶点X
@@ -202,7 +205,7 @@ void KiranTips::drawUpArrowBackground (QPainter *painter)
     painter->fillPath(rectPath, m_bgColor);
 }
 
-void KiranTips::drawDownArrowBackground (QPainter *painter)
+void KiranTips::drawDownArrowBackground(QPainter *painter)
 {
     QPainterPath trianglesPath;
     ///三角形顶点X
@@ -220,7 +223,7 @@ void KiranTips::drawDownArrowBackground (QPainter *painter)
     painter->fillPath(rectPath, m_bgColor);
 }
 
-void KiranTips::drawLeftArrowBackground (QPainter *painter)
+void KiranTips::drawLeftArrowBackground(QPainter *painter)
 {
     QPainterPath trianglesPath;
     trianglesPath.moveTo(0, height() / 2);
@@ -238,7 +241,7 @@ void KiranTips::drawLeftArrowBackground (QPainter *painter)
     painter->fillPath(rectPath, m_bgColor);
 }
 
-void KiranTips::drawRightArrowBackground (QPainter *painter)
+void KiranTips::drawRightArrowBackground(QPainter *painter)
 {
     QPainterPath trianglesPath;
     trianglesPath.moveTo(width(), height() / 2);
@@ -252,11 +255,11 @@ void KiranTips::drawRightArrowBackground (QPainter *painter)
     painter->fillPath(rectPath, m_bgColor);
 }
 
-QSize KiranTips::getRightSize () const
+QSize KiranTips::getRightSize() const
 {
-    QFont font = ui->label->font();
+    QFont        font = ui->label->font();
     QFontMetrics fontMetrics(font);
-    QMargins layoutContentMargins = this->layout()->contentsMargins();
+    QMargins     layoutContentMargins = this->layout()->contentsMargins();
 
     ui->label->setFixedWidth(fontMetrics.width(ui->label->text()) + 10);
     ui->label->setFixedHeight(fontMetrics.height());
@@ -268,7 +271,7 @@ QSize KiranTips::getRightSize () const
     return size;
 }
 
-void KiranTips::paintEvent (QPaintEvent *event)
+void KiranTips::paintEvent(QPaintEvent *event)
 {
     QPainter painter(this);
     painter.setRenderHints(QPainter::HighQualityAntialiasing);
@@ -293,16 +296,15 @@ void KiranTips::paintEvent (QPaintEvent *event)
     {
         drawUpArrowBackground(&painter);
     }
-
 }
 
-void KiranTips::mousePressEvent (QMouseEvent *event)
+void KiranTips::mousePressEvent(QMouseEvent *event)
 {
     this->hideTip();
     QWidget::mousePressEvent(event);
 }
 
-void KiranTips::showEvent (QShowEvent *event)
+void KiranTips::showEvent(QShowEvent *event)
 {
     QWidget::showEvent(event);
 
@@ -312,23 +314,27 @@ void KiranTips::showEvent (QShowEvent *event)
     }
 
     QPoint widgetLeftPoint = m_showAroudWidget->mapToGlobal(QPoint(0, 0));
-    QSize widgetSize = m_showAroudWidget->size();
-    int yCenter = widgetLeftPoint.y() + widgetSize.height() / 2;
+    QSize  widgetSize      = m_showAroudWidget->size();
+    int    yCenter         = widgetLeftPoint.y() + widgetSize.height() / 2;
     QPoint tipLeftTop;
     switch (m_showPostion)
     {
-        case POSITION_LEFT:tipLeftTop.setX(widgetLeftPoint.x() - width() - TIPS_SPACING);
-            tipLeftTop.setY(yCenter - (height() / 2));
-            break;
-        case POSITION_RIGHT:tipLeftTop.setX(widgetLeftPoint.x() + widgetSize.width() + TIPS_SPACING);
-            tipLeftTop.setY(yCenter - (height() / 2));
-            break;
-        case POSITION_TOP:tipLeftTop.setX(widgetLeftPoint.x() + 5);
-            tipLeftTop.setY(widgetLeftPoint.y() - height() - TIPS_SPACING);
-            break;
-        case POSITION_BOTTM:tipLeftTop.setX(widgetLeftPoint.x() + 5);
-            tipLeftTop.setY(widgetLeftPoint.y() + widgetSize.height() + TIPS_SPACING);
-            break;
+    case POSITION_LEFT:
+        tipLeftTop.setX(widgetLeftPoint.x() - width() - TIPS_SPACING);
+        tipLeftTop.setY(yCenter - (height() / 2));
+        break;
+    case POSITION_RIGHT:
+        tipLeftTop.setX(widgetLeftPoint.x() + widgetSize.width() + TIPS_SPACING);
+        tipLeftTop.setY(yCenter - (height() / 2));
+        break;
+    case POSITION_TOP:
+        tipLeftTop.setX(widgetLeftPoint.x() + 5);
+        tipLeftTop.setY(widgetLeftPoint.y() - height() - TIPS_SPACING);
+        break;
+    case POSITION_BOTTM:
+        tipLeftTop.setX(widgetLeftPoint.x() + 5);
+        tipLeftTop.setY(widgetLeftPoint.y() + widgetSize.height() + TIPS_SPACING);
+        break;
     }
     tipLeftTop = parentWidget()->mapFromGlobal(tipLeftTop);
     this->move(tipLeftTop);

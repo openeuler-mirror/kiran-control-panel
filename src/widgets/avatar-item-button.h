@@ -1,34 +1,34 @@
 #ifndef AVATARITEMBUTTON_H
 #define AVATARITEMBUTTON_H
 
-#include <QObject>
 #include <QAbstractButton>
+#include <QObject>
 
 class AvatarItemButton : public QAbstractButton
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
-    AvatarItemButton (QWidget *parent = nullptr);
-    virtual ~AvatarItemButton ();
-    void setIcon (const QString &iconPath);
-    QString iconPath ();
+    AvatarItemButton(QWidget *parent = nullptr);
+    virtual ~AvatarItemButton();
+    void    setIcon(const QString &iconPath);
+    QString iconPath();
 
 protected:
-    void setIcon (const QIcon &icon);
-    virtual void paintEvent (QPaintEvent *event) override;
-    virtual void resizeEvent (QResizeEvent *event) override;
-    virtual void enterEvent (QEvent *event) override;
-    virtual void leaveEvent (QEvent *event) override;
-    virtual void mouseMoveEvent (QMouseEvent *event) override;
-    virtual void mousePressEvent (QMouseEvent *e) override;
+    void         setIcon(const QIcon &icon);
+    virtual void paintEvent(QPaintEvent *event) override;
+    virtual void resizeEvent(QResizeEvent *event) override;
+    virtual void enterEvent(QEvent *event) override;
+    virtual void leaveEvent(QEvent *event) override;
+    virtual void mouseMoveEvent(QMouseEvent *event) override;
+    virtual void mousePressEvent(QMouseEvent *e) override;
 
 private:
-    QRect m_realRect;
-    double m_radius;
-    bool m_mouseEnter;
-    bool m_hover;
+    QRect   m_realRect;
+    double  m_radius;
+    bool    m_mouseEnter;
+    bool    m_hover;
     QString m_iconPath;
 };
 
-#endif // AVATARITEMBUTTON_H
+#endif  // AVATARITEMBUTTON_H

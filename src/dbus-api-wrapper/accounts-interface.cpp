@@ -17,13 +17,12 @@
 
 using namespace com::kylinsec::Kiran::SystemDaemon;
 
-AccountsInterface::AccountsInterface (const QDBusConnection &connection, QObject *parent)
-        : QDBusAbstractInterface(AccountsInterface::staticInterfaceName(), "/com/kylinsec/Kiran/SystemDaemon/Accounts",
-                                 staticInterfaceName(), connection, parent)
+AccountsInterface::AccountsInterface(const QDBusConnection &connection, QObject *parent)
+    : QDBusAbstractInterface(AccountsInterface::staticInterfaceName(), "/com/kylinsec/Kiran/SystemDaemon/Accounts",
+                             staticInterfaceName(), connection, parent)
 {
 }
 
-AccountsInterface::~AccountsInterface ()
+AccountsInterface::~AccountsInterface()
 {
 }
-

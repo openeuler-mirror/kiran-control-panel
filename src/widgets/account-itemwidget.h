@@ -1,13 +1,13 @@
 #ifndef ACCOUNTITEMWIDGET_H
 #define ACCOUNTITEMWIDGET_H
 
-#include <QWidget>
-#include <QVariant>
 #include <QDBusObjectPath>
+#include <QVariant>
+#include <QWidget>
 
 namespace Ui
 {
-    class AccountItemWidget;
+class AccountItemWidget;
 }
 
 class QDBusObjectPath;
@@ -30,34 +30,34 @@ public:
     Q_ENUM(AccountStatus);
 
 public:
-    explicit AccountItemWidget (QWidget *paren = nullptr, bool isCreateAccountItem = false);
-    ~AccountItemWidget ();
+    explicit AccountItemWidget(QWidget *paren = nullptr, bool isCreateAccountItem = false);
+    ~AccountItemWidget();
 
-    bool isSelected () const;
-    bool isCreateAccountItem () const;
-    bool isLocked () const;
+    bool isSelected() const;
+    bool isCreateAccountItem() const;
+    bool isLocked() const;
 
-    void setUserDBusObjectPath (const QString &objPath);
-    QString getUserDBusObjectPath ();
+    void    setUserDBusObjectPath(const QString &objPath);
+    QString getUserDBusObjectPath();
 
-    void updateInfo ();
+    void updateInfo();
 
 public slots:
-    void setSelected (bool isSelected);
-    void setIsLocked (bool isLocked);
+    void setSelected(bool isSelected);
+    void setIsLocked(bool isLocked);
 
 signals:
-    void isSelectedChanged (bool isSelected);
+    void isSelectedChanged(bool isSelected);
 
 protected:
-    void updateStatusDesc ();
+    void updateStatusDesc();
 
 private:
     Ui::AccountItemWidget *ui;
-    bool m_isSelected;
-    bool m_isCreateAccountItem;
-    bool m_isLocked;
-    QString m_objectPath;
+    bool                   m_isSelected;
+    bool                   m_isCreateAccountItem;
+    bool                   m_isLocked;
+    QString                m_objectPath;
 };
 
-#endif // ACCOUNTITEMWIDGET_H
+#endif  // ACCOUNTITEMWIDGET_H

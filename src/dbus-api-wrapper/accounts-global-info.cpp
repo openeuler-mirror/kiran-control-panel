@@ -2,27 +2,26 @@
 #include "accounts-interface.h"
 #include "accounts-user-interface.h"
 
+#include <unistd.h>
+#include <QDBusObjectPath>
+#include <QDBusPendingCall>
 #include <QList>
 #include <QMutex>
 #include <QScopedPointer>
-#include <QDBusObjectPath>
-#include <QDBusPendingCall>
-#include <unistd.h>
 
-AccountsGlobalInfo::AccountsGlobalInfo (QObject *parent)
-        : QObject(parent),
-          m_accountsInterface(QDBusConnection::systemBus())
+AccountsGlobalInfo::AccountsGlobalInfo(QObject *parent)
+    : QObject(parent),
+      m_accountsInterface(QDBusConnection::systemBus())
 {
 }
 
-AccountsGlobalInfo::~AccountsGlobalInfo ()
+AccountsGlobalInfo::~AccountsGlobalInfo()
 {
-
 }
 
-AccountsGlobalInfo *AccountsGlobalInfo::instance ()
+AccountsGlobalInfo *AccountsGlobalInfo::instance()
 {
-    static QMutex mutex;
+    static QMutex                             mutex;
     static QScopedPointer<AccountsGlobalInfo> pInst;
 
     if (Q_UNLIKELY(!pInst))
@@ -37,20 +36,20 @@ AccountsGlobalInfo *AccountsGlobalInfo::instance ()
     return pInst.data();
 }
 
-bool AccountsGlobalInfo::init ()
+bool AccountsGlobalInfo::init()
 {
-    connect(&m_accountsInterface, &AccountsInterface::UserAdded, [this] (const QDBusObjectPath &user) {
+    connect(&m_accountsInterface, &AccountsInterface::UserAdded, [this](const QDBusObjectPath &user) {
         addUserToMap(user);
     });
-    connect(&m_accountsInterface, &AccountsInterface::UserDeleted, [this] (const QDBusObjectPath &user) {
+    connect(&m_accountsInterface, &AccountsInterface::UserDeleted, [this](const QDBusObjectPath &user) {
         deleteUserFromMap(user);
     });
 
     ///加载账户
-    QList<QDBusObjectPath> accounts;
+    QList<QDBusObjectPath>                    accounts;
     QDBusPendingReply<QList<QDBusObjectPath>> pendingReply;
-    QList<QDBusObjectPath> objList;
-    QList<QDBusObjectPath>::iterator objListIter;
+    QList<QDBusObjectPath>                    objList;
+    QList<QDBusObjectPath>::iterator          objListIter;
     pendingReply = m_accountsInterface.GetNonSystemUsers();
     pendingReply.waitForFinished();
     if (pendingReply.isError())
@@ -68,7 +67,7 @@ bool AccountsGlobalInfo::init ()
     }
 
     ///获取当前用户
-    uid_t uid = getuid();
+    uid_t                              uid = getuid();
     QDBusPendingReply<QDBusObjectPath> findUserReply;
     findUserReply = m_accountsInterface.FindUserById(uid);
     findUserReply.waitForFinished();
@@ -85,7 +84,7 @@ bool AccountsGlobalInfo::init ()
     return true;
 }
 
-QList<QString> AccountsGlobalInfo::getUserList ()
+QList<QString> AccountsGlobalInfo::getUserList()
 {
     QList<QString> userObjPathList;
     for (auto iter = m_usersList.begin();
@@ -97,11 +96,11 @@ QList<QString> AccountsGlobalInfo::getUserList ()
     return userObjPathList;
 }
 
-bool AccountsGlobalInfo::checkUserNameAvaliable (const QString &userName)
+bool AccountsGlobalInfo::checkUserNameAvaliable(const QString &userName)
 {
     bool isValid = true;
 
-    for (auto & iter : m_usersList)
+    for (auto &iter : m_usersList)
     {
         if (iter->user_name() == userName)
         {
@@ -113,13 +112,12 @@ bool AccountsGlobalInfo::checkUserNameAvaliable (const QString &userName)
     return isValid;
 }
 
-
-QString AccountsGlobalInfo::getCurrentUser ()
+QString AccountsGlobalInfo::getCurrentUser()
 {
     return m_curUserName;
 }
 
-void AccountsGlobalInfo::addUserToMap (const QDBusObjectPath &user)
+void AccountsGlobalInfo::addUserToMap(const QDBusObjectPath &user)
 {
     UserInterface *userInterface = new UserInterface(user.path(),
                                                      QDBusConnection::systemBus(),
@@ -132,7 +130,7 @@ void AccountsGlobalInfo::addUserToMap (const QDBusObjectPath &user)
     emit UserAdded(user);
 }
 
-void AccountsGlobalInfo::deleteUserFromMap (const QDBusObjectPath &user)
+void AccountsGlobalInfo::deleteUserFromMap(const QDBusObjectPath &user)
 {
     int findIdx = -1;
     for (int i = 0; i < m_usersList.size(); i++)
@@ -157,9 +155,9 @@ void AccountsGlobalInfo::deleteUserFromMap (const QDBusObjectPath &user)
 }
 
 ///NOTE:暂时不用，考虑到侧边栏改变排序
-void AccountsGlobalInfo::userListResort ()
+void AccountsGlobalInfo::userListResort()
 {
-    std::sort(m_usersList.begin(), m_usersList.end(), [] (const UserInterface *z1, const UserInterface *z2) {
+    std::sort(m_usersList.begin(), m_usersList.end(), [](const UserInterface *z1, const UserInterface *z2) {
         if (z1->locked() != z2->locked())
         {
             return !z1->locked();
@@ -171,8 +169,7 @@ void AccountsGlobalInfo::userListResort ()
     });
 }
 
-void AccountsGlobalInfo::handlerPropertyChanged (QString userPath, QString propertyName, QVariant value)
+void AccountsGlobalInfo::handlerPropertyChanged(QString userPath, QString propertyName, QVariant value)
 {
     emit UserPropertyChanged(userPath, propertyName, value);
 }
-

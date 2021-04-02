@@ -2,14 +2,12 @@
 
 #include <QDebug>
 
-
-UidValidator::UidValidator (QObject *parent)
-        : QValidator(parent)
+UidValidator::UidValidator(QObject *parent)
+    : QValidator(parent)
 {
-
 }
 
-QValidator::State UidValidator::validate (QString &input, int &pos) const
+QValidator::State UidValidator::validate(QString &input, int &pos) const
 {
     ///为空
     if (pos == 0 || input.isEmpty())
@@ -28,10 +26,9 @@ QValidator::State UidValidator::validate (QString &input, int &pos) const
         return Invalid;
     }
     ///数字大于UID_MAX
-    if (input.toULongLong() >= ((uid_t) -1))
+    if (input.toULongLong() >= ((uid_t)-1))
     {
         return Invalid;
     }
     return Acceptable;
 }
-

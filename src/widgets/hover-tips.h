@@ -5,8 +5,8 @@
 #ifndef KIRAN_ACCOUNT_MANAGER_HOVER_TIPS_H
 #define KIRAN_ACCOUNT_MANAGER_HOVER_TIPS_H
 
-#include <QWidget>
 #include <QMap>
+#include <QWidget>
 
 class QLabel;
 
@@ -24,40 +24,39 @@ public:
         HOVE_TIPS_ERR
     };
     Q_ENUMS(HoverTipsEnum);
+
 public:
-    explicit HoverTips (QWidget *parent = nullptr);
-    ~HoverTips ();
+    explicit HoverTips(QWidget *parent = nullptr);
+    ~HoverTips();
 
-    void setTimeout (quint32 ms);
+    void setTimeout(quint32 ms);
 
-    void setIcon (HoverTipsTypeEnum typeEnum, const QString &icon);
+    void setIcon(HoverTipsTypeEnum typeEnum, const QString &icon);
 
-    void show (HoverTipsTypeEnum typeEnum, const QString &msg);
-    void hide ();
+    void show(HoverTipsTypeEnum typeEnum, const QString &msg);
+    void hide();
 
 private:
-    void initUI ();
-    void updatePostion ();
-    void startHideTimer ();
-    void stopHideTimer ();
+    void initUI();
+    void updatePostion();
+    void startHideTimer();
+    void stopHideTimer();
 
 protected:
-    bool event (QEvent *event) override;
-    bool eventFilter (QObject *watched, QEvent *event);
-    void paintEvent (QPaintEvent *event) override;
+    bool event(QEvent *event) override;
+    bool eventFilter(QObject *watched, QEvent *event);
+    void paintEvent(QPaintEvent *event) override;
 
 private:
     QMap<HoverTipsTypeEnum, QString> m_tipsTypeIconMap = {
-            {HOVE_TIPS_SUC,     ":/images/suc.svg"},
-            {HOVE_TIPS_INFO,    ":/images/info.svg"},
-            {HOVE_TIPS_WARNING, ":/images/warning.svg"},
-            {HOVE_TIPS_ERR,     ":/images/err.svg"}
-    };
+        {HOVE_TIPS_SUC, ":/images/suc.svg"},
+        {HOVE_TIPS_INFO, ":/images/info.svg"},
+        {HOVE_TIPS_WARNING, ":/images/warning.svg"},
+        {HOVE_TIPS_ERR, ":/images/err.svg"}};
     QLabel *m_iconLabel;
     QLabel *m_textLabel;
     quint32 m_hideTimeout = 3000;
-    int m_hideTimerID = -1;
+    int     m_hideTimerID = -1;
 };
 
-
-#endif //KIRAN_ACCOUNT_MANAGER_HOVER_TIPS_H
+#endif  //KIRAN_ACCOUNT_MANAGER_HOVER_TIPS_H

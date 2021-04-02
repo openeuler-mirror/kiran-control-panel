@@ -1,25 +1,25 @@
 #include "user-avatar-widget.h"
 
 #include <QDebug>
-#include <QPainter>
 #include <QFile>
 #include <QMouseEvent>
+#include <QPainter>
 #include <QtMath>
 
 #define DEFAULT_USER_AVATAR "/usr/share/kiran-account-manager/account-icons/0.face"
 
-UserAvatarWidget::UserAvatarWidget (QWidget *parent)
-        : QWidget(parent),
-          m_clickedEnable(false),
-          m_isEnter(false),
-          m_isHover(false)
+UserAvatarWidget::UserAvatarWidget(QWidget *parent)
+    : QWidget(parent),
+      m_clickedEnable(false),
+      m_isEnter(false),
+      m_isHover(false)
 {
     setAttribute(Qt::WA_Hover);
     setMouseTracking(true);
     setDefaultImage();
 }
 
-void UserAvatarWidget::setImage (const QString &path)
+void UserAvatarWidget::setImage(const QString &path)
 {
     QFile file(path);
     if (!file.exists())
@@ -29,7 +29,7 @@ void UserAvatarWidget::setImage (const QString &path)
     if (m_pixmap.load(path))
     {
         m_scaledPixmap = scalePixmapAdjustSize(m_pixmap);
-        m_iconPath = path;
+        m_iconPath     = path;
     }
     else
     {
@@ -42,16 +42,16 @@ void UserAvatarWidget::setImage (const QString &path)
     update();
 }
 
-void UserAvatarWidget::paintEvent (QPaintEvent *event)
+void UserAvatarWidget::paintEvent(QPaintEvent *event)
 {
     QPainter painter(this);
-    QPen pen;
+    QPen     pen;
     if (!isVisible())
     {
         return;
     }
     painter.setRenderHints(
-            QPainter::SmoothPixmapTransform | QPainter::HighQualityAntialiasing | QPainter::Antialiasing);
+        QPainter::SmoothPixmapTransform | QPainter::HighQualityAntialiasing | QPainter::Antialiasing);
     double radius = (this->width() < this->height() ? this->width() : this->height()) / 2;
     if (!m_scaledPixmap.isNull())
     {
@@ -74,7 +74,7 @@ void UserAvatarWidget::paintEvent (QPaintEvent *event)
     QWidget::paintEvent(event);
 }
 
-void UserAvatarWidget::mousePressEvent (QMouseEvent *event)
+void UserAvatarWidget::mousePressEvent(QMouseEvent *event)
 {
     if (!m_isHover)
     {
@@ -84,35 +84,38 @@ void UserAvatarWidget::mousePressEvent (QMouseEvent *event)
     QWidget::mousePressEvent(event);
 }
 
-void UserAvatarWidget::enterEvent (QEvent *event)
+void UserAvatarWidget::enterEvent(QEvent *event)
 {
     m_isEnter = true;
 }
 
-void UserAvatarWidget::leaveEvent (QEvent *event)
+void UserAvatarWidget::leaveEvent(QEvent *event)
 {
     m_isEnter = false;
     m_isHover = false;
 }
 
 // 计算平方的函数;
-double square (const double num)
-{ return num * num; }
-
+double square(const double num)
+{
+    return num * num;
+}
 
 //
 // 计算屏幕上面两个点之间的直线距离的函数，需要与计算平方函数同时使用;
-double TwoPtDistance (const QPointF &pt1, const QPointF &pt2)
-{ return sqrt(double(square(pt2.x() - pt1.x()) + square(pt2.y() - pt1.y()))); }
+double TwoPtDistance(const QPointF &pt1, const QPointF &pt2)
+{
+    return sqrt(double(square(pt2.x() - pt1.x()) + square(pt2.y() - pt1.y())));
+}
 
-void UserAvatarWidget::mouseMoveEvent (QMouseEvent *event)
+void UserAvatarWidget::mouseMoveEvent(QMouseEvent *event)
 {
     if (m_isEnter)
     {
         QPoint center(this->width() / 2, this->height() / 2);
-        double radius = (this->width() < this->height() ? this->width() : this->height()) / 2;
-        QPoint pos = event->pos();
-        int distance = qSqrt(qPow(pos.x() - center.x(), 2) + qPow(pos.y() - center.y(), 2));
+        double radius   = (this->width() < this->height() ? this->width() : this->height()) / 2;
+        QPoint pos      = event->pos();
+        int    distance = qSqrt(qPow(pos.x() - center.x(), 2) + qPow(pos.y() - center.y(), 2));
         if ((distance <= radius) && !m_isHover)
         {
             m_isHover = true;
@@ -126,7 +129,7 @@ void UserAvatarWidget::mouseMoveEvent (QMouseEvent *event)
     }
 }
 
-void UserAvatarWidget::resizeEvent (QResizeEvent *event)
+void UserAvatarWidget::resizeEvent(QResizeEvent *event)
 {
     if ((!m_pixmap.isNull()) && (!m_scaledPixmap.isNull()) && (m_scaledPixmap.size() != this->size()))
     {
@@ -139,7 +142,7 @@ void UserAvatarWidget::resizeEvent (QResizeEvent *event)
     QWidget::resizeEvent(event);
 }
 
-QPixmap UserAvatarWidget::scalePixmapAdjustSize (const QPixmap &pixmap)
+QPixmap UserAvatarWidget::scalePixmapAdjustSize(const QPixmap &pixmap)
 {
     double radius = (this->width() < this->height() ? this->width() : this->height()) / 2;
     //NOTE:拉升保持长宽比，尽可能放大，不留白
@@ -147,17 +150,17 @@ QPixmap UserAvatarWidget::scalePixmapAdjustSize (const QPixmap &pixmap)
     return temp;
 }
 
-void UserAvatarWidget::setDefaultImage ()
+void UserAvatarWidget::setDefaultImage()
 {
     setImage(DEFAULT_USER_AVATAR);
 }
 
-void UserAvatarWidget::setClickEnable (bool enable)
+void UserAvatarWidget::setClickEnable(bool enable)
 {
     m_clickedEnable = enable;
 }
 
-bool UserAvatarWidget::setHoverImage (const QString &path)
+bool UserAvatarWidget::setHoverImage(const QString &path)
 {
     QFile file(path);
     if (!file.exists())
@@ -178,7 +181,7 @@ bool UserAvatarWidget::setHoverImage (const QString &path)
     return true;
 }
 
-QString UserAvatarWidget::iconPath ()
+QString UserAvatarWidget::iconPath()
 {
     return m_iconPath;
 }

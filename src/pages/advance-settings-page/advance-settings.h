@@ -1,20 +1,23 @@
 #ifndef ADVANCESETTINGS_H
 #define ADVANCESETTINGS_H
 
-#include <QWidget>
 #include <kiranwidgets-qt5/kiran-titlebar-window.h>
+#include <QWidget>
 
 #include "kiran-tips.h"
 
-namespace Ui {
+namespace Ui
+{
 class AdvanceSettings;
 }
 
-struct AdvanceSettingsInfo{
+struct AdvanceSettingsInfo
+{
     QString shell;
     QString uid;
     QString homeDir;
-    void clear(){
+    void    clear()
+    {
         shell.clear();
         uid.clear();
         homeDir.clear();
@@ -34,7 +37,7 @@ public:
      * @param 当前创建的账户
      * @param 创建账户中保存的用户高级设置信息
      */
-    void setInfo(QString account,AdvanceSettingsInfo& info);
+    void setInfo(QString account, AdvanceSettingsInfo &info);
 
     /**
      * @brief 从高级设置窗口取出确认的信息
@@ -64,11 +67,11 @@ protected:
 
 private:
     Ui::AdvanceSettings *ui;
-    QString m_account;
-    bool m_isConfirm;
-    KiranTips* m_editTip = nullptr;
-    KiranSwitchButton *m_specifyUserIDSwitch;
-    KiranSwitchButton *m_specifyUserHomeSwitch;
+    QString              m_account;
+    bool                 m_isConfirm;
+    KiranTips *          m_editTip = nullptr;
+    KiranSwitchButton *  m_specifyUserIDSwitch;
+    KiranSwitchButton *  m_specifyUserHomeSwitch;
 };
 
-#endif // ADVANCESETTINGS_H
+#endif  // ADVANCESETTINGS_H

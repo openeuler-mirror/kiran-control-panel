@@ -1,30 +1,29 @@
 //
 // Created by lxh on 2020/10/22.
 //
-#include <QVBoxLayout>
-#include <QPushButton>
+#include <widget-property-helper.h>
 #include <QApplication>
 #include <QMessageBox>
-#include <widget-property-helper.h>
+#include <QPushButton>
+#include <QVBoxLayout>
 
-#include "kiran-avatar-editor.h"
-#include "image-preview-widget.h"
-#include "ui-defines.h"
 #include "exit-code-defines.h"
+#include "image-preview-widget.h"
+#include "kiran-avatar-editor.h"
+#include "ui-defines.h"
 
-KiranAvatarEditor::KiranAvatarEditor (const QString &srcImagePath, const QString &dstImagePath)
-        : KiranTitlebarWindow()
+KiranAvatarEditor::KiranAvatarEditor(const QString &srcImagePath, const QString &dstImagePath)
+    : KiranTitlebarWindow()
 {
     initUI(srcImagePath, dstImagePath);
 }
 
-KiranAvatarEditor::~KiranAvatarEditor ()
+KiranAvatarEditor::~KiranAvatarEditor()
 {
-
 }
 
-void KiranAvatarEditor::initUI (const QString &srcImagePath,
-                                const QString &dstImagePath)
+void KiranAvatarEditor::initUI(const QString &srcImagePath,
+                               const QString &dstImagePath)
 {
     setTitle(tr("Avatar Editor"));
     setResizeable(false);
@@ -70,12 +69,12 @@ void KiranAvatarEditor::initUI (const QString &srcImagePath,
     buttonLayout->addItem(spacerItem_1);
 
     m_btnConfrim = new QPushButton(this);
-    Kiran::WidgetPropertyHelper::setButtonType(m_btnConfrim,Kiran::BUTTON_Default);
+    Kiran::WidgetPropertyHelper::setButtonType(m_btnConfrim, Kiran::BUTTON_Default);
     m_btnConfrim->setObjectName("btn_confirm");
     m_btnConfrim->setFixedSize(100, 50);
     m_btnConfrim->setText(tr("Confirm"));
     buttonLayout->addWidget(m_btnConfrim);
-    connect(m_btnConfrim, &QPushButton::clicked, [this] () {
+    connect(m_btnConfrim, &QPushButton::clicked, [this]() {
         if (m_imagePreview->saveAvatar())
         {
             qApp->exit(EXIT_CODE_SUCCESS);
@@ -95,7 +94,7 @@ void KiranAvatarEditor::initUI (const QString &srcImagePath,
     m_btnCancel->setObjectName("btn_cancel");
     m_btnCancel->setFixedSize(100, 50);
     m_btnCancel->setText(tr("Cancel"));
-    connect(m_btnCancel, &QPushButton::clicked, [this] () {
+    connect(m_btnCancel, &QPushButton::clicked, [this]() {
         //TODO:询问，退出不会保存
         qApp->exit(EXIT_CODE_CANCEL);
     });
@@ -108,7 +107,7 @@ void KiranAvatarEditor::initUI (const QString &srcImagePath,
     buttonLayout->addItem(spacerItem_3);
 }
 
-void KiranAvatarEditor::closeEvent (QCloseEvent *event)
+void KiranAvatarEditor::closeEvent(QCloseEvent *event)
 {
     qApp->exit(EXIT_CODE_CANCEL);
     QWidget::closeEvent(event);

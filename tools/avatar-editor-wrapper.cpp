@@ -3,24 +3,23 @@
 //
 
 #include "avatar-editor-wrapper.h"
-#include "include/global-defines.h"
-#include "temporary-dir-manager.h"
 #include "avatar-editor/include/exit-code-defines.h"
 #include "config.h"
+#include "include/global-defines.h"
+#include "temporary-dir-manager.h"
 
-#include <QProcess>
 #include <QDebug>
 #include <QMap>
+#include <QProcess>
 
-QString avatarEditorError (int exitCode)
+QString avatarEditorError(int exitCode)
 {
     static const QMap<int, QString> exitCodeMap = {
-            {EXIT_CODE_SUCCESS,          "success"},
-            {EXIT_CODE_CANCEL,           "user cancel"},
-            {EXIT_CODE_BAD_ARG,          "bad arg"},
-            {EXIT_CODE_SAVE_FAILED,      "save failed"},
-            {EXIT_CODE_MISSING_PARAMTER, "missing paramter"}
-    };
+        {EXIT_CODE_SUCCESS, "success"},
+        {EXIT_CODE_CANCEL, "user cancel"},
+        {EXIT_CODE_BAD_ARG, "bad arg"},
+        {EXIT_CODE_SAVE_FAILED, "save failed"},
+        {EXIT_CODE_MISSING_PARAMTER, "missing paramter"}};
     static QString unknowError = "unknow exit code";
 
     auto iter = exitCodeMap.find(exitCode);
@@ -34,10 +33,10 @@ QString avatarEditorError (int exitCode)
     }
 }
 
-bool AvatarEditorWrapper::exec (const QString &srcImage, QString &dstImage)
+bool AvatarEditorWrapper::exec(const QString &srcImage, QString &dstImage)
 {
     QProcess avatarEditorProcess;
-    QString tempFilePath = TemporaryDirManager::instance()->generateTempFilePath();
+    QString  tempFilePath = TemporaryDirManager::instance()->generateTempFilePath();
 
     avatarEditorProcess.start(KIRAN_AVATAR_EDITOR_PATH,
                               QStringList() << "--image" << srcImage

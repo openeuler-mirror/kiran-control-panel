@@ -6,34 +6,31 @@
 #include "accounts-interface.h"
 #include "accounts-user-interface.h"
 #include "global-defines.h"
-#include "accounts-interface.h"
 
-#include <QDebug>
 #include <QDBusConnection>
+#include <QDebug>
 
-HardWorker::HardWorker () : QObject(nullptr)
+HardWorker::HardWorker() : QObject(nullptr)
 {
-
 }
 
-HardWorker::~HardWorker ()
+HardWorker::~HardWorker()
 {
-
 }
 
 //TODO: 拼接DBus接口返回的错误信息
-void HardWorker::doCreateUser (QString account,
-                               int uid,
-                               int accountType,
-                               QString encryptedPasswd,
-                               QString homeDir,
-                               QString shell,
-                               QString iconFile)
+void HardWorker::doCreateUser(QString account,
+                              int     uid,
+                              int     accountType,
+                              QString encryptedPasswd,
+                              QString homeDir,
+                              QString shell,
+                              QString iconFile)
 {
     AccountsInterface accountsService(QDBusConnection::systemBus());
-    QString userObjPath;
-    QString errMsgPrefix = tr("Create User failed");
-    QString errMsgDetail;
+    QString           userObjPath;
+    QString           errMsgPrefix = tr("Create User failed");
+    QString           errMsgDetail;
 
     ///step1.创建用户
     QDBusPendingReply<QDBusObjectPath> createUserRep;
@@ -101,11 +98,11 @@ void HardWorker::doCreateUser (QString account,
 failed:
     if (!userObjPath.isEmpty())
     {
-        UserInterface userInterface(userObjPath,
+        UserInterface     userInterface(userObjPath,
                                     QDBusConnection::systemBus());
-        qulonglong userID = userInterface.uid();
+        qulonglong        userID = userInterface.uid();
         AccountsInterface accountsInterface(QDBusConnection::systemBus());
-        auto reply = accountsInterface.DeleteUser(userID, true);
+        auto              reply = accountsInterface.DeleteUser(userID, true);
         reply.waitForFinished();
         if (reply.isError())
         {
@@ -121,11 +118,11 @@ failed:
     emit sigCreateUserDnoe("", errMsg);
 }
 
-void HardWorker::doUpdatePasswd (QString objPath,
-                                 QString account,
-                                 QString encryptedPasswd)
+void HardWorker::doUpdatePasswd(QString objPath,
+                                QString account,
+                                QString encryptedPasswd)
 {
-    UserInterface interface(objPath, QDBusConnection::systemBus());
+    UserInterface       interface(objPath, QDBusConnection::systemBus());
     QDBusPendingReply<> reply = interface.SetPassword(encryptedPasswd, "");
     reply.waitForFinished();
     if (reply.isError())
@@ -140,15 +137,15 @@ void HardWorker::doUpdatePasswd (QString objPath,
     }
 }
 
-void HardWorker::doUpdateUserProperty (QString objPath,
-                                       QString account,
-                                       QString iconfile,
-                                       int accountType,
-                                       bool isLocked)
+void HardWorker::doUpdateUserProperty(QString objPath,
+                                      QString account,
+                                      QString iconfile,
+                                      int     accountType,
+                                      bool    isLocked)
 {
     UserInterface userInterface(objPath,
                                 QDBusConnection::systemBus());
-    QStringList updateFailedPropertys;
+    QStringList   updateFailedPropertys;
 
     if (userInterface.icon_file() != iconfile)
     {
@@ -187,8 +184,8 @@ void HardWorker::doUpdateUserProperty (QString objPath,
     if (!updateFailedPropertys.isEmpty())
     {
         QString updateFailed = updateFailedPropertys.join(",");
-        QString msg = QString(tr("Failed to update user properties(%1)"))
-                .arg(updateFailed);
+        QString msg          = QString(tr("Failed to update user properties(%1)"))
+                          .arg(updateFailed);
         qWarning() << msg;
         emit sigUpdateUserPropertyDone(msg);
     }
@@ -199,10 +196,10 @@ void HardWorker::doUpdateUserProperty (QString objPath,
     }
 }
 
-void HardWorker::doDeleteUser (int uid)
+void HardWorker::doDeleteUser(int uid)
 {
     AccountsInterface interface(QDBusConnection::systemBus());
-    auto reply = interface.DeleteUser(uid, true);
+    auto              reply = interface.DeleteUser(uid, true);
     reply.waitForFinished();
     if (reply.isError())
     {
@@ -214,4 +211,3 @@ void HardWorker::doDeleteUser (int uid)
         emit sigDeleteUserDone("");
     }
 }
-

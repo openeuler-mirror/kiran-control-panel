@@ -1,20 +1,19 @@
 #include "create-user-page.h"
-#include "ui_create-user-page.h"
-#include "src/pages/advance-settings-page/advance-settings.h"
-#include "passwd-helper.h"
+#include "account-validator.h"
 #include "accounts-global-info.h"
 #include "kiran-tips.h"
-#include "account-validator.h"
+#include "passwd-helper.h"
+#include "src/pages/advance-settings-page/advance-settings.h"
+#include "ui_create-user-page.h"
 
-#include <QListView>
-#include <QDebug>
-#include <QMessageBox>
 #include <kiranwidgets-qt5/kiran-message-box.h>
 #include <widget-property-helper.h>
+#include <QDebug>
+#include <QListView>
+#include <QMessageBox>
 
-CreateUserPage::CreateUserPage(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::CreateUserPage)
+CreateUserPage::CreateUserPage(QWidget *parent) : QWidget(parent),
+                                                  ui(new Ui::CreateUserPage)
 {
     ui->setupUi(this);
     initUI();
@@ -55,12 +54,12 @@ void CreateUserPage::initUI()
     /// 用户头像
     ui->avatar->setHoverImage(":/images/change_user_icon.png");
     ui->avatar->setClickEnable(true);
-    connect(ui->avatar,&UserAvatarWidget::pressed,[this](){
+    connect(ui->avatar, &UserAvatarWidget::pressed, [this]() {
         emit sigSetIconForNewUser(ui->avatar->iconPath());
     });
 
     /// 用户类型ComboBox
-    QListView *view =  new QListView(ui->combo_accountType);
+    QListView *view = new QListView(ui->combo_accountType);
     ui->combo_accountType->setView(view);
     ui->combo_accountType->addItem(tr("standard"));
     ui->combo_accountType->addItem(tr("administrator"));
@@ -78,58 +77,66 @@ void CreateUserPage::initUI()
     ui->editcheck_confirmPasswd->setEchoMode(QLineEdit::Password);
 
     /// 高级设置按钮
-    connect(ui->btn_advanceSetting,&QPushButton::clicked,[this](){
-        if( ui->edit_name->text().isEmpty() ){
+    connect(ui->btn_advanceSetting, &QPushButton::clicked, [this]() {
+        if (ui->edit_name->text().isEmpty())
+        {
             m_errorTip->setText(tr("Please enter account name first"));
             m_errorTip->showTipAroundWidget(ui->edit_name);
             return;
         }
         AdvanceSettings advanceSettings;
         advanceSettings.show();
-        advanceSettings.setInfo(ui->edit_name->text(),m_advanceSettingsInfo);
+        advanceSettings.setInfo(ui->edit_name->text(), m_advanceSettingsInfo);
         QEventLoop eventLoop;
-        connect(&advanceSettings,&AdvanceSettings::sigClose,&eventLoop,&QEventLoop::quit);
+        connect(&advanceSettings, &AdvanceSettings::sigClose, &eventLoop, &QEventLoop::quit);
         eventLoop.exec();
-        if(advanceSettings.isConfirm()){
+        if (advanceSettings.isConfirm())
+        {
             m_advanceSettingsInfo = advanceSettings.getInfo();
         }
     });
 
     /// 确认按钮
-    Kiran::WidgetPropertyHelper::setButtonType(ui->btn_confirm,Kiran::BUTTON_Default);
-    connect(ui->btn_confirm,&QPushButton::clicked,this,&CreateUserPage::handlerCreateNewUser);
+    Kiran::WidgetPropertyHelper::setButtonType(ui->btn_confirm, Kiran::BUTTON_Default);
+    connect(ui->btn_confirm, &QPushButton::clicked, this, &CreateUserPage::handlerCreateNewUser);
 
     /// 取消按钮
-    connect(ui->btn_cancel,&QPushButton::clicked,[this](){
+    connect(ui->btn_cancel, &QPushButton::clicked, [this]() {
         reset();
     });
 }
 
-void CreateUserPage::handlerCreateNewUser() {
+void CreateUserPage::handlerCreateNewUser()
+{
     //step1.检验账户名是否为空，是否重名
     qInfo() << "start check account name";
     QString account = ui->edit_name->text();
 
-    if( account.isEmpty() ){
+    if (account.isEmpty())
+    {
         m_errorTip->setText(tr("Please enter your account name"));
         m_errorTip->showTipAroundWidget(ui->edit_name);
         return;
     }
 
     bool isPureDigital = true;
-    for(QChar ch:account){
-        if(!ch.isNumber()){
+    for (QChar ch : account)
+    {
+        if (!ch.isNumber())
+        {
             isPureDigital = false;
             break;
         }
     }
-    if( isPureDigital ){
+    if (isPureDigital)
+    {
         m_errorTip->setText(tr("Account cannot be a pure number"));
         m_errorTip->showTipAroundWidget(ui->edit_name);
         return;
     }
 
-    if( !AccountsGlobalInfo::instance()->checkUserNameAvaliable(account) ){
+    if (!AccountsGlobalInfo::instance()->checkUserNameAvaliable(account))
+    {
         m_errorTip->setText(tr("Account already exists"));
         m_errorTip->showTipAroundWidget(ui->edit_name);
         return;
@@ -137,21 +144,24 @@ void CreateUserPage::handlerCreateNewUser() {
 
     //step2.检验密码、确认密码是否为空，是否相等
     qInfo() << "start check passwd,confirm passwd";
-    QString passwd  = ui->editcheck_passwd->text();
+    QString passwd        = ui->editcheck_passwd->text();
     QString confirmPasswd = ui->editcheck_confirmPasswd->text();
-    if( passwd.isEmpty() ){
+    if (passwd.isEmpty())
+    {
         ui->editcheck_passwd->setVerificationStatus(false);
         m_errorTip->setText(tr("Please enter your password"));
         m_errorTip->showTipAroundWidget(ui->editcheck_passwd);
         return;
     }
-    if( confirmPasswd.isEmpty() ){
+    if (confirmPasswd.isEmpty())
+    {
         ui->editcheck_confirmPasswd->setVerificationStatus(false);
         m_errorTip->setText(tr("Please enter the password again"));
         m_errorTip->showTipAroundWidget(ui->editcheck_confirmPasswd);
         return;
     }
-    if( passwd != confirmPasswd ){
+    if (passwd != confirmPasswd)
+    {
         ui->editcheck_confirmPasswd->setVerificationStatus(false);
         m_errorTip->setText(tr("The password you enter must be the same as the former one"));
         m_errorTip->showTipAroundWidget(ui->editcheck_confirmPasswd);
@@ -161,27 +171,30 @@ void CreateUserPage::handlerCreateNewUser() {
     //step3.调用crypt密码加密
     qInfo() << "start encrypted passwd";
     QString encryptedPasswd;
-    if( !PasswdHelper::encryptPassword(passwd,encryptedPasswd) ){
-        QMessageBox::warning(this,tr("Error"),tr("Password encryption failed"));
+    if (!PasswdHelper::encryptPassword(passwd, encryptedPasswd))
+    {
+        QMessageBox::warning(this, tr("Error"), tr("Password encryption failed"));
         return;
     }
 
     qint64 uid = -1;
-    if( !m_advanceSettingsInfo.uid.isEmpty() ){
+    if (!m_advanceSettingsInfo.uid.isEmpty())
+    {
         bool toNumberOk = false;
-        uid = m_advanceSettingsInfo.uid.toLongLong(&toNumberOk);
-        if( !toNumberOk ){
+        uid             = m_advanceSettingsInfo.uid.toLongLong(&toNumberOk);
+        if (!toNumberOk)
+        {
             uid = -1;
         }
     }
-    int accountType = ui->combo_accountType->currentIndex();
-    QString homeDir = m_advanceSettingsInfo.homeDir;
-    QString shell = m_advanceSettingsInfo.shell;
-    QString iconFile = ui->avatar->iconPath();
+    int     accountType = ui->combo_accountType->currentIndex();
+    QString homeDir     = m_advanceSettingsInfo.homeDir;
+    QString shell       = m_advanceSettingsInfo.shell;
+    QString iconFile    = ui->avatar->iconPath();
 
     emit sigIsBusyChanged(true);
     ui->btn_confirm->setBusy(true);
-    emit sigCreateUser(account,uid,accountType,
+    emit sigCreateUser(account, uid, accountType,
                        encryptedPasswd,
                        homeDir,
                        shell,
@@ -189,14 +202,17 @@ void CreateUserPage::handlerCreateNewUser() {
 }
 
 void CreateUserPage::handlerCreateNewUserIsDone(QString userPath,
-                                                QString errMsg) {
+                                                QString errMsg)
+{
     emit sigIsBusyChanged(false);
     ui->btn_confirm->setBusy(false);
-    if(!errMsg.isEmpty()){
-        KiranMessageBox::message(nullptr,tr("Error"),
-                                 errMsg,KiranMessageBox::Yes|KiranMessageBox::No);
+    if (!errMsg.isEmpty())
+    {
+        KiranMessageBox::message(nullptr, tr("Error"),
+                                 errMsg, KiranMessageBox::Yes | KiranMessageBox::No);
     }
-    if(!userPath.isEmpty()){
+    if (!userPath.isEmpty())
+    {
         emit sigRequestSetCurrentUser(userPath);
     }
 }

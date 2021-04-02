@@ -1,15 +1,15 @@
 #include "user-info-page.h"
-#include "ui_user-info-page.h"
-#include "accounts-user-interface.h"
 #include "accounts-global-info.h"
-#include "passwd-helper.h"
+#include "accounts-user-interface.h"
 #include "hover-tips.h"
+#include "passwd-helper.h"
+#include "ui_user-info-page.h"
 
-#include <QListView>
-#include <kiranwidgets-qt5/kiran-message-box.h>
-#include <QMessageBox>
 #include <kiran-switch-button.h>
+#include <kiranwidgets-qt5/kiran-message-box.h>
 #include <widget-property-helper.h>
+#include <QListView>
+#include <QMessageBox>
 
 enum PageEnum
 {
@@ -17,31 +17,30 @@ enum PageEnum
     PAGE_CHANGE_PASSWD
 };
 
-UserInfoPage::UserInfoPage (QWidget *parent) :
-        QWidget(parent),
-        ui(new Ui::UserInfoPage)
+UserInfoPage::UserInfoPage(QWidget *parent) : QWidget(parent),
+                                              ui(new Ui::UserInfoPage)
 {
     ui->setupUi(this);
     initUI();
 }
 
-UserInfoPage::~UserInfoPage ()
+UserInfoPage::~UserInfoPage()
 {
     delete ui;
 }
 
-void UserInfoPage::updateInfo ()
+void UserInfoPage::updateInfo()
 {
     m_errorTip->hideTip();
 
     UserInterface userInterface(m_curShowUserPath,
                                 QDBusConnection::systemBus());
 
-    QString userName = userInterface.user_name();
-    m_uid = userInterface.uid();
-    int accountType = userInterface.account_type();
-    QString iconFile = userInterface.icon_file();
-    bool locked = userInterface.locked();
+    QString userName    = userInterface.user_name();
+    m_uid               = userInterface.uid();
+    int     accountType = userInterface.account_type();
+    QString iconFile    = userInterface.icon_file();
+    bool    locked      = userInterface.locked();
 
     ui->label_name->setText(userName);
     ui->edit_userID->setText(QString::number(m_uid));
@@ -64,28 +63,28 @@ void UserInfoPage::updateInfo ()
     ui->stackedWidget->setCurrentIndex(PAGE_USER_INFO);
 }
 
-void UserInfoPage::setCurrentShowUserPath (const QString &userObj)
+void UserInfoPage::setCurrentShowUserPath(const QString &userObj)
 {
     m_curShowUserPath = userObj;
     updateInfo();
 }
 
-QString UserInfoPage::getCurrentShowUserPath ()
+QString UserInfoPage::getCurrentShowUserPath()
 {
     return m_curShowUserPath;
 }
 
-QString UserInfoPage::getCurrentShowUserName ()
+QString UserInfoPage::getCurrentShowUserName()
 {
     return m_curShowUserName;
 }
 
-void UserInfoPage::setAvatarIconPath (const QString &iconPath)
+void UserInfoPage::setAvatarIconPath(const QString &iconPath)
 {
     ui->avatar->setImage(iconPath);
 }
 
-void UserInfoPage::initUI ()
+void UserInfoPage::initUI()
 {
     m_errorTip = new KiranTips(this);
     m_errorTip->setShowPosition(KiranTips::POSITION_BOTTM);
@@ -95,17 +94,17 @@ void UserInfoPage::initUI ()
 
     /* 账户状态的开关按钮 */
     m_accountStatusSwitch = new KiranSwitchButton(this);
-    ui->layout_accountStatusSwitch->insertWidget(0,m_accountStatusSwitch);
+    ui->layout_accountStatusSwitch->insertWidget(0, m_accountStatusSwitch);
 
-    Kiran::WidgetPropertyHelper::setButtonType(ui->btn_saveProperty,Kiran::BUTTON_Default);
-    Kiran::WidgetPropertyHelper::setButtonType(ui->btn_deleteUser,Kiran::BUTTON_Warning);
-    Kiran::WidgetPropertyHelper::setButtonType(ui->btn_savePasswd,Kiran::BUTTON_Default);
+    Kiran::WidgetPropertyHelper::setButtonType(ui->btn_saveProperty, Kiran::BUTTON_Default);
+    Kiran::WidgetPropertyHelper::setButtonType(ui->btn_deleteUser, Kiran::BUTTON_Warning);
+    Kiran::WidgetPropertyHelper::setButtonType(ui->btn_savePasswd, Kiran::BUTTON_Default);
 
     /* 用户显示页面 */
     //账户头像
     ui->avatar->setHoverImage(":/images/change_user_icon.png");
     ui->avatar->setClickEnable(true);
-    connect(ui->avatar, &UserAvatarWidget::pressed, [this] () {
+    connect(ui->avatar, &UserAvatarWidget::pressed, [this]() {
         emit sigUserChangeIcon(ui->avatar->iconPath());
     });
 
@@ -114,7 +113,7 @@ void UserInfoPage::initUI ()
     ui->combo_accountType->addItem(tr("administrator"));
 
     //修改密码按钮
-    connect(ui->btn_changePasswd, &QPushButton::clicked, [this] () {
+    connect(ui->btn_changePasswd, &QPushButton::clicked, [this]() {
         resetPageSetPasswd();
         ui->stackedWidget->setCurrentIndex(PAGE_CHANGE_PASSWD);
     });
@@ -127,7 +126,6 @@ void UserInfoPage::initUI ()
     connect(ui->btn_deleteUser, &QPushButton::clicked,
             this, &UserInfoPage::handlerDeleteUser);
 
-
     /* 修改密码页面 */
     ui->editcheck_curpasswd->setEchoMode(QLineEdit::Password);
     ui->editcheck_newPasswd->setEchoMode(QLineEdit::Password);
@@ -138,13 +136,13 @@ void UserInfoPage::initUI ()
             this, &UserInfoPage::handlerUpdatePasswd);
 
     //取消按钮
-    connect(ui->btn_cancel, &QPushButton::clicked, [this] () {
+    connect(ui->btn_cancel, &QPushButton::clicked, [this]() {
         m_errorTip->hideTip();
         ui->stackedWidget->setCurrentIndex(PAGE_USER_INFO);
     });
 
 #ifdef AUTH_MANAGER
-    connect(ui->btn_authManager, &QPushButton::clicked, [this] () {
+    connect(ui->btn_authManager, &QPushButton::clicked, [this]() {
         emit sigAuthManager(m_curShowUserPath);
     });
 #else
@@ -152,14 +150,14 @@ void UserInfoPage::initUI ()
 #endif
 }
 
-void UserInfoPage::resetPageSetPasswd ()
+void UserInfoPage::resetPageSetPasswd()
 {
     ui->editcheck_curpasswd->clear();
     ui->editcheck_newPasswd->clear();
     ui->editcheck_confirmPasswd->clear();
 }
 
-void UserInfoPage::handlerUpdatePasswd ()
+void UserInfoPage::handlerUpdatePasswd()
 {
     //新密码不能为空
     QString newpasswd = ui->editcheck_newPasswd->text();
@@ -222,16 +220,16 @@ void UserInfoPage::handlerUpdatePasswd ()
                          encryptedPasswd);
 }
 
-void UserInfoPage::handlerUpdateUserProperty ()
+void UserInfoPage::handlerUpdateUserProperty()
 {
     QString account, icon;
-    int accountType;
-    bool isLocked;
+    int     accountType;
+    bool    isLocked;
 
-    account = getCurrentShowUserName();
-    icon = ui->avatar->iconPath();
+    account     = getCurrentShowUserName();
+    icon        = ui->avatar->iconPath();
     accountType = ui->combo_accountType->currentIndex();
-    isLocked = !m_accountStatusSwitch->isChecked();
+    isLocked    = !m_accountStatusSwitch->isChecked();
 
     ui->btn_saveProperty->setBusy(true);
     emit sigIsBusyChanged(true);
@@ -242,7 +240,7 @@ void UserInfoPage::handlerUpdateUserProperty ()
                                isLocked);
 }
 
-void UserInfoPage::handlerUpdateUserPropertyDone (QString errMsg)
+void UserInfoPage::handlerUpdateUserPropertyDone(QString errMsg)
 {
     ui->btn_saveProperty->setBusy(false);
     emit sigIsBusyChanged(false);
@@ -261,7 +259,7 @@ void UserInfoPage::handlerUpdateUserPropertyDone (QString errMsg)
     updateInfo();
 }
 
-void UserInfoPage::handlerUpdatePasswdDone (QString errMsg)
+void UserInfoPage::handlerUpdatePasswdDone(QString errMsg)
 {
     ui->btn_savePasswd->setBusy(false);
     emit sigIsBusyChanged(false);
@@ -278,10 +276,11 @@ void UserInfoPage::handlerUpdatePasswdDone (QString errMsg)
     }
 }
 
-void UserInfoPage::handlerDeleteUser ()
+void UserInfoPage::handlerDeleteUser()
 {
     QString tip = QString(tr("The directory and files under the user's home directory are deleted with the user."
-                             "Are you sure you want to delete the user(%1)?")).arg(m_curShowUserName);
+                             "Are you sure you want to delete the user(%1)?"))
+                      .arg(m_curShowUserName);
     KiranMessageBox::KiranStandardButton btn = KiranMessageBox::message(this, tr("Warning"),
                                                                         tip,
                                                                         KiranMessageBox::Yes | KiranMessageBox::No);
@@ -295,7 +294,7 @@ void UserInfoPage::handlerDeleteUser ()
     emit sigDeleteUser(m_uid);
 }
 
-void UserInfoPage::handlerDeleteUserDone (QString errMsg)
+void UserInfoPage::handlerDeleteUserDone(QString errMsg)
 {
     ui->btn_deleteUser->setBusy(false);
     emit sigIsBusyChanged(false);

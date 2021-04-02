@@ -3,8 +3,8 @@
 
 #include "kiranwidgets-qt5/kiran-titlebar-window.h"
 
-#include <QWidget>
 #include <QThread>
+#include <QWidget>
 
 class QStackedWidget;
 class CreateUserPage;
@@ -15,7 +15,8 @@ class MaskWidget;
 class HardWorker;
 class KiranSidebarWidget;
 class QListWidgetItem;
-class KiranAccountManager : public KiranTitlebarWindow {
+class KiranAccountManager : public KiranTitlebarWindow
+{
     Q_OBJECT
 public:
     KiranAccountManager();
@@ -38,15 +39,15 @@ private:
 
 private:
     KiranSidebarWidget *m_tabList;
-    QListWidgetItem *m_createUserItem;
-    QStackedWidget *m_stackWidget;
-    CreateUserPage *m_page_createUser;
-    UserInfoPage *m_page_userinfo;
-    SelectAvatarPage *m_page_selectAvatar;
-    AuthManagerPage *m_page_authManager;
-    MaskWidget *m_maskWidget;
-    QThread m_workThread;
-    HardWorker *m_hardworker;
+    QListWidgetItem *   m_createUserItem;
+    QStackedWidget *    m_stackWidget;
+    CreateUserPage *    m_page_createUser;
+    UserInfoPage *      m_page_userinfo;
+    SelectAvatarPage *  m_page_selectAvatar;
+    AuthManagerPage *   m_page_authManager;
+    MaskWidget *        m_maskWidget;
+    QThread             m_workThread;
+    HardWorker *        m_hardworker;
 };
 
-#endif // KIRANACCOUNTMANAGER_H
+#endif  // KIRANACCOUNTMANAGER_H

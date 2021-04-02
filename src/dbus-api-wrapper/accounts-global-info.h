@@ -4,59 +4,59 @@
 #include "accounts-interface.h"
 #include "accounts-user-interface.h"
 
-#include <QObject>
 #include <QList>
+#include <QObject>
 
 class AccountsGlobalInfo : public QObject
 {
     Q_OBJECT
 private:
-    explicit AccountsGlobalInfo (QObject *parent = nullptr);
+    explicit AccountsGlobalInfo(QObject *parent = nullptr);
 
 public:
-    ~AccountsGlobalInfo ();
+    ~AccountsGlobalInfo();
 
-    static AccountsGlobalInfo *instance ();
+    static AccountsGlobalInfo *instance();
 
     /**
      * @brief 初始化，加载账户列表
      * @return
      */
-    bool init ();
+    bool init();
 
     /**
      * @brief  获取排序之后的用户列表
      * @return QList<QString> 用户DBusObjectPath列表
      */
-    QList<QString> getUserList ();
+    QList<QString> getUserList();
 
     /**
      * @brief 检查是否存在重名账户
      * @param account 需检查的账户名
      * @return 是否可用
      */
-    bool checkUserNameAvaliable (const QString &userName);
+    bool checkUserNameAvaliable(const QString &userName);
 
-    QString getCurrentUser ();
+    QString getCurrentUser();
 
 private:
-    void addUserToMap (const QDBusObjectPath &user);
-    void deleteUserFromMap (const QDBusObjectPath &user);
-    void userListResort ();
+    void addUserToMap(const QDBusObjectPath &user);
+    void deleteUserFromMap(const QDBusObjectPath &user);
+    void userListResort();
 
 signals:
-    void UserAdded (const QDBusObjectPath &obj);
-    void UserDeleted (const QDBusObjectPath &obj);
-    void UserPropertyChanged (QString userPath,
-                              QString propertyName,
-                              QVariant value);
+    void UserAdded(const QDBusObjectPath &obj);
+    void UserDeleted(const QDBusObjectPath &obj);
+    void UserPropertyChanged(QString  userPath,
+                             QString  propertyName,
+                             QVariant value);
 private Q_SLOTS:
-    void handlerPropertyChanged (QString userPath, QString propertyName, QVariant value);
+    void handlerPropertyChanged(QString userPath, QString propertyName, QVariant value);
 
 private:
-    AccountsInterface m_accountsInterface;
+    AccountsInterface      m_accountsInterface;
     QList<UserInterface *> m_usersList;
-    QString m_curUserName;
+    QString                m_curUserName;
 };
 
-#endif // ACCOUNTSGLOBALINFO_H
+#endif  // ACCOUNTSGLOBALINFO_H

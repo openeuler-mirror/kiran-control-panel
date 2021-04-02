@@ -1,21 +1,20 @@
 #include "log.h"
 #include <QDateTime>
-#include <QDir>
 #include <QDebug>
+#include <QDir>
 #include <QMap>
-#include <QTextStream>
-#include <iostream>
 #include <QMutex>
 #include <QScopedPointer>
+#include <QTextStream>
+#include <iostream>
 
-Log::~Log ()
+Log::~Log()
 {
-
 }
 
-Log *Log::instance ()
+Log *Log::instance()
 {
-    static QMutex mutex;
+    static QMutex              mutex;
     static QScopedPointer<Log> pInst;
 
     if (Q_UNLIKELY(!pInst))
@@ -30,7 +29,7 @@ Log *Log::instance ()
     return pInst.data();
 }
 
-bool Log::init (QString filePath)
+bool Log::init(QString filePath)
 {
     if (m_initOver)
     {
@@ -39,7 +38,7 @@ bool Log::init (QString filePath)
 
     if (!filePath.isEmpty())
     {
-        QFile file(filePath);
+        QFile     file(filePath);
         QFileInfo fileInfo(filePath);
         if (!fileInfo.dir().exists() && !fileInfo.dir().mkpath(fileInfo.dir().path()))
         {
@@ -58,35 +57,34 @@ bool Log::init (QString filePath)
     return true;
 }
 
-void Log::setLogLevel (QtMsgType type)
+void Log::setLogLevel(QtMsgType type)
 {
     m_msgType = type;
 }
 
-void Log::setAppend2File (bool append)
+void Log::setAppend2File(bool append)
 {
     m_append2File = append;
 }
 
-void Log::write (QtMsgType type, const QMessageLogContext &context, const QString &msg)
+void Log::write(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
-    QMutexLocker locker(&m_mutex);
+    QMutexLocker                    locker(&m_mutex);
     static QMap<QtMsgType, QString> msgDescMap = {
-            {QtDebugMsg,    "[DEBUG]"},
-            {QtWarningMsg,  "[WARNING]"},
-            {QtCriticalMsg, "[CRITICAL]"},
-            {QtFatalMsg,    "[FATAL]"},
-            {QtInfoMsg,     "[INFO]"}
-    };
+        {QtDebugMsg, "[DEBUG]"},
+        {QtWarningMsg, "[WARNING]"},
+        {QtCriticalMsg, "[CRITICAL]"},
+        {QtFatalMsg, "[FATAL]"},
+        {QtInfoMsg, "[INFO]"}};
 
-    QString curTime = QDateTime::currentDateTime().toString("yyyy-MM-dd HH:mm:ss.z");
-    QMap<QtMsgType, QString>::Iterator it = msgDescMap.find(type);
-    QString logContent = QString("%1 %2 <%3:%4>: %5")
-            .arg(curTime)
-            .arg(it == msgDescMap.end() ? "UNKNOW" : *it, -10)
-            .arg(context.function)
-            .arg(context.line)
-            .arg(msg);
+    QString                            curTime    = QDateTime::currentDateTime().toString("yyyy-MM-dd HH:mm:ss.z");
+    QMap<QtMsgType, QString>::Iterator it         = msgDescMap.find(type);
+    QString                            logContent = QString("%1 %2 <%3:%4>: %5")
+                             .arg(curTime)
+                             .arg(it == msgDescMap.end() ? "UNKNOW" : *it, -10)
+                             .arg(context.function)
+                             .arg(context.line)
+                             .arg(msg);
     if (type > m_msgType)
     {
         if (!m_savePath.isEmpty() && m_append2File)
@@ -112,12 +110,12 @@ void Log::write (QtMsgType type, const QMessageLogContext &context, const QStrin
     }
 }
 
-bool Log::isInited ()
+bool Log::isInited()
 {
     return m_initOver;
 }
 
-void Log::messageHandler (QtMsgType type, const QMessageLogContext &context, const QString &msg)
+void Log::messageHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
     Log *log = Log::instance();
     if (!log->isInited())
@@ -129,8 +127,7 @@ void Log::messageHandler (QtMsgType type, const QMessageLogContext &context, con
     log->write(type, context, msg);
 }
 
-Log::Log ()
-        : m_savePath(""), m_msgType(QtDebugMsg), m_initOver(false), m_append2File(false)
+Log::Log()
+    : m_savePath(""), m_msgType(QtDebugMsg), m_initOver(false), m_append2File(false)
 {
-
 }

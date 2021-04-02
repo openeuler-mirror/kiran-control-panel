@@ -15,10 +15,9 @@
  * Implementation of interface class ComUnikylinKiranSystemDaemonAccountsUserInterface
  */
 
-
-UserInterface::UserInterface (const QString &path, const QDBusConnection &connection, QObject *parent)
-        : QDBusAbstractInterface("com.kylinsec.Kiran.SystemDaemon.Accounts", path, staticInterfaceName(), connection,
-                                 parent)
+UserInterface::UserInterface(const QString &path, const QDBusConnection &connection, QObject *parent)
+    : QDBusAbstractInterface("com.kylinsec.Kiran.SystemDaemon.Accounts", path, staticInterfaceName(), connection,
+                             parent)
 {
     QDBusConnection::systemBus().connect(AccountsInterface::staticInterfaceName(),
                                          path,
@@ -27,7 +26,7 @@ UserInterface::UserInterface (const QString &path, const QDBusConnection &connec
                                          SLOT(handlePropertiesChanged(QDBusMessage)));
 }
 
-UserInterface::~UserInterface ()
+UserInterface::~UserInterface()
 {
     QDBusConnection::systemBus().disconnect(AccountsInterface::staticInterfaceName(),
                                             path(),
@@ -36,7 +35,7 @@ UserInterface::~UserInterface ()
                                             SLOT(handlePropertiesChanged(QDBusMessage)));
 }
 
-void UserInterface::handlePropertiesChanged (QDBusMessage msg)
+void UserInterface::handlePropertiesChanged(QDBusMessage msg)
 {
     QList<QVariant> arguments = msg.arguments();
     if (arguments.size() < 1)
@@ -51,4 +50,3 @@ void UserInterface::handlePropertiesChanged (QDBusMessage msg)
         emit propertyChanged(path(), iter.key(), iter.value());
     }
 }
-

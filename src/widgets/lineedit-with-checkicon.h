@@ -1,15 +1,16 @@
 #ifndef LINEEDITWITHCHECKICON_H
 #define LINEEDITWITHCHECKICON_H
 
-#include <QWidget>
 #include <kiran-icon-line-edit.h>
+#include <QWidget>
 
 class LineEditWithCheckIcon : public KiranIconLineEdit
 {
     Q_OBJECT
 
 public:
-    enum VerificationStatusEnum{
+    enum VerificationStatusEnum
+    {
         VERIFICATION_PASSED,
         VERIFICATION_ERROR,
         VERIFICATION_NONE
@@ -38,7 +39,7 @@ protected:
 
 private:
     VerificationStatusEnum m_verificationStatus;
-    bool m_showPasswordModeStyle;
+    bool                   m_showPasswordModeStyle;
 };
 
-#endif // LINEEDITWITHCHECKICON_H
+#endif  // LINEEDITWITHCHECKICON_H

@@ -1,35 +1,34 @@
 #include "select-avatar-page.h"
+#include "avatar-item-button.h"
+#include "config.h"
 #include "flowlayout.h"
 #include "scrollarea-container.h"
-#include "avatar-item-button.h"
 #include "tools/avatar-editor-wrapper.h"
-#include "config.h"
 
-#include <QHBoxLayout>
-#include <QVBoxLayout>
-#include <QPushButton>
-#include <QScrollArea>
+#include <widget-property-helper.h>
 #include <QButtonGroup>
 #include <QDebug>
 #include <QDir>
 #include <QFileDialog>
-#include <widget-property-helper.h>
+#include <QHBoxLayout>
+#include <QPushButton>
+#include <QScrollArea>
+#include <QVBoxLayout>
 
 #define SYSTEM_AVATAR_OBJ_NAME "avatar_button_system"
-#define USER_AVATAR_OBJ_NAME   "avatar_button_user"
-#define ADD_AVATAR_OBJ_NAME    "avatar_button_add"
+#define USER_AVATAR_OBJ_NAME "avatar_button_user"
+#define ADD_AVATAR_OBJ_NAME "avatar_button_add"
 #define CUSTOM_AVATAR_OBJ_NAME "avatar_button_custom"
 
-SelectAvatarPage::SelectAvatarPage (QWidget *parent) :
-        QWidget(parent),
-        m_mode(CHANGE_AVATAR_FOR_USER)
+SelectAvatarPage::SelectAvatarPage(QWidget *parent) : QWidget(parent),
+                                                      m_mode(CHANGE_AVATAR_FOR_USER)
 {
     initUI();
 }
 
-SelectAvatarPage::~SelectAvatarPage () = default;
+SelectAvatarPage::~SelectAvatarPage() = default;
 
-QString SelectAvatarPage::currentSelectAvatar () const
+QString SelectAvatarPage::currentSelectAvatar() const
 {
     auto button = qobject_cast<AvatarItemButton *>(m_buttonGroup->checkedButton());
     if (button == nullptr)
@@ -42,26 +41,26 @@ QString SelectAvatarPage::currentSelectAvatar () const
     }
 }
 
-void SelectAvatarPage::setMode (SelectAvatarPage::SelectAvatarMode mode)
+void SelectAvatarPage::setMode(SelectAvatarPage::SelectAvatarMode mode)
 {
     m_mode = mode;
 }
 
-SelectAvatarPage::SelectAvatarMode SelectAvatarPage::mode () const
+SelectAvatarPage::SelectAvatarMode SelectAvatarPage::mode() const
 {
     return m_mode;
 }
 
-void SelectAvatarPage::setCurrentAvatar (const QString &iconPath)
+void SelectAvatarPage::setCurrentAvatar(const QString &iconPath)
 {
-    QList<AvatarItemButton *> buttons = m_scrollArea->findChildren<AvatarItemButton *>(SYSTEM_AVATAR_OBJ_NAME);
-    AvatarItemButton *currentAvatar = nullptr;
+    QList<AvatarItemButton *> buttons       = m_scrollArea->findChildren<AvatarItemButton *>(SYSTEM_AVATAR_OBJ_NAME);
+    AvatarItemButton *        currentAvatar = nullptr;
 
     //删除之前用户添加头像
     removeUserAvatar();
 
     //是否是系统头像
-    for (AvatarItemButton *button:buttons)
+    for (AvatarItemButton *button : buttons)
     {
         if (button->iconPath() == iconPath)
         {
@@ -92,9 +91,9 @@ void SelectAvatarPage::setCurrentAvatar (const QString &iconPath)
     moveAddButtonToEnd();
 }
 
-void SelectAvatarPage::initUI ()
+void SelectAvatarPage::initUI()
 {
-    QPushButton *btn = nullptr;
+    QPushButton *btn  = nullptr;
     QLayoutItem *item = nullptr;
 
     m_mainLayout = new QVBoxLayout(this);
@@ -131,9 +130,9 @@ void SelectAvatarPage::initUI ()
     btn->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     btn->setFixedSize(252, 60);
     btn->setText(tr("Confirm"));
-    Kiran::WidgetPropertyHelper::setButtonType(btn,Kiran::BUTTON_Default);
+    Kiran::WidgetPropertyHelper::setButtonType(btn, Kiran::BUTTON_Default);
     m_btnLayout->addWidget(btn);
-    connect(btn, &QPushButton::clicked, [this] () {
+    connect(btn, &QPushButton::clicked, [this]() {
         sigReturnToPrevPage(m_mode, true);
     });
 
@@ -146,7 +145,7 @@ void SelectAvatarPage::initUI ()
     btn->setFixedSize(252, 60);
     btn->setText(tr("Return"));
     m_btnLayout->addWidget(btn);
-    connect(btn, &QPushButton::clicked, [this] () {
+    connect(btn, &QPushButton::clicked, [this]() {
         sigReturnToPrevPage(m_mode, false);
     });
 
@@ -155,7 +154,7 @@ void SelectAvatarPage::initUI ()
 
     loadAvatar();
     m_addButton = addAvatar(":/images/add_icon.png", AVATAR_ADD, false);
-    connect(m_addButton, &AvatarItemButton::clicked, [this] () {
+    connect(m_addButton, &AvatarItemButton::clicked, [this]() {
         //1.选择图片
         QString fileName = QFileDialog::getOpenFileName(this, tr("select picture"),
                                                         QDir::homePath(),
@@ -178,9 +177,9 @@ void SelectAvatarPage::initUI ()
 }
 
 //加载/usr/share/kiran-account-manager/account-icons/下*.face显示
-void SelectAvatarPage::loadAvatar ()
+void SelectAvatarPage::loadAvatar()
 {
-    QDir dir(BUILDIN_AVATAR_DIR_PATH);
+    QDir          dir(BUILDIN_AVATAR_DIR_PATH);
     QFileInfoList fileInfoList = dir.entryInfoList(QDir::Files);
     for (auto &iter : fileInfoList)
     {
@@ -188,19 +187,23 @@ void SelectAvatarPage::loadAvatar ()
     }
 }
 
-AvatarItemButton *SelectAvatarPage::addAvatar (const QString &iconPath, AvatarTypeEnum type, bool isChecked)
+AvatarItemButton *SelectAvatarPage::addAvatar(const QString &iconPath, AvatarTypeEnum type, bool isChecked)
 {
     AvatarItemButton *btn = new AvatarItemButton(m_scrollArea);
     switch (type)
     {
-        case AVATAR_SYSTEM:btn->setObjectName(SYSTEM_AVATAR_OBJ_NAME);
-            break;
-        case AVATAR_USER:btn->setObjectName(USER_AVATAR_OBJ_NAME);
-            break;
-        case AVATAR_ADD:btn->setObjectName(ADD_AVATAR_OBJ_NAME);
-            break;
-        case AVATAR_CUSTOM:btn->setObjectName(CUSTOM_AVATAR_OBJ_NAME);
-            break;
+    case AVATAR_SYSTEM:
+        btn->setObjectName(SYSTEM_AVATAR_OBJ_NAME);
+        break;
+    case AVATAR_USER:
+        btn->setObjectName(USER_AVATAR_OBJ_NAME);
+        break;
+    case AVATAR_ADD:
+        btn->setObjectName(ADD_AVATAR_OBJ_NAME);
+        break;
+    case AVATAR_CUSTOM:
+        btn->setObjectName(CUSTOM_AVATAR_OBJ_NAME);
+        break;
     }
     btn->setIcon(iconPath);
     btn->setFixedSize(80, 80);
@@ -214,7 +217,7 @@ AvatarItemButton *SelectAvatarPage::addAvatar (const QString &iconPath, AvatarTy
     return btn;
 }
 
-void SelectAvatarPage::removeUserAvatar ()
+void SelectAvatarPage::removeUserAvatar()
 {
     //删除非系统头像
     QList<AvatarItemButton *> userAvatars = m_scrollArea->findChildren<AvatarItemButton *>(USER_AVATAR_OBJ_NAME);
@@ -232,7 +235,7 @@ void SelectAvatarPage::removeUserAvatar ()
     }
 }
 
-void SelectAvatarPage::moveAddButtonToEnd ()
+void SelectAvatarPage::moveAddButtonToEnd()
 {
     m_flowLayout->removeWidget(m_addButton);
     m_flowLayout->addWidget(m_addButton);

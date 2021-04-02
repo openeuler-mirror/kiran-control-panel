@@ -1,14 +1,15 @@
 #ifndef CREATEUSERPAGE_H
 #define CREATEUSERPAGE_H
 
-#include <QWidget>
 #include <QThread>
+#include <QWidget>
 
 #include "src/pages/advance-settings-page/advance-settings.h"
 
 class KiranTips;
 
-namespace Ui {
+namespace Ui
+{
 class CreateUserPage;
 }
 
@@ -37,8 +38,8 @@ signals:
     /// \param shell            shell路径
     /// \param iconFile         图标路径
     void sigCreateUser(QString account,
-                       int uid,
-                       int accountType,
+                       int     uid,
+                       int     accountType,
                        QString encryptedPasswd,
                        QString homeDir,
                        QString shell,
@@ -50,7 +51,7 @@ signals:
 
     /// 创建用户完成时，请求设置侧边栏当前条目,跳转到新用户信息页面
     /// \param userPath 新用户的DBus对象路径
-    void sigRequestSetCurrentUser(const QString& userPath);
+    void sigRequestSetCurrentUser(const QString &userPath);
 
     /// 当前忙碌状态改变的信号，显示/隐藏遮罩
     /// \param isBusy 是否忙碌
@@ -67,7 +68,7 @@ private Q_SLOTS:
     /// 工作线程创建完用户的槽函数回调
     /// \param userPath 新用户的DBus对象路径
     /// \param errMsg   错误信息
-    void handlerCreateNewUserIsDone(QString userPath,QString errMsg);
+    void handlerCreateNewUserIsDone(QString userPath, QString errMsg);
 
 private:
     Ui::CreateUserPage *ui;
@@ -77,4 +78,4 @@ private:
     KiranTips *m_errorTip;
 };
 
-#endif // CREATEUSERPAGE_H
+#endif  // CREATEUSERPAGE_H

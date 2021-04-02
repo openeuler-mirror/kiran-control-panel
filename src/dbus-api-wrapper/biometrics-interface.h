@@ -11,10 +11,10 @@
 #ifndef BIOMETRICS_H_1615953696
 #define BIOMETRICS_H_1615953696
 
-#include <QtCore/QObject>
 #include <QtCore/QByteArray>
 #include <QtCore/QList>
 #include <QtCore/QMap>
+#include <QtCore/QObject>
 #include <QtCore/QString>
 #include <QtCore/QStringList>
 #include <QtCore/QVariant>
@@ -22,101 +22,105 @@
 
 class BiometricsInterface : public QDBusAbstractInterface
 {
-Q_OBJECT
+    Q_OBJECT
 public:
-    static inline const char *staticInterfaceName ()
-    { return "com.kylinsec.Kiran.SystemDaemon.Biometrics"; }
+    static inline const char *staticInterfaceName()
+    {
+        return "com.kylinsec.Kiran.SystemDaemon.Biometrics";
+    }
 
-    static inline const char *staticInterfacePath ()
-    { return "/com/kylinsec/Kiran/SystemDaemon/Biometrics"; }
+    static inline const char *staticInterfacePath()
+    {
+        return "/com/kylinsec/Kiran/SystemDaemon/Biometrics";
+    }
 
 public:
-    BiometricsInterface (const QDBusConnection &connection, QObject *parent = 0);
-    ~BiometricsInterface ();
+    BiometricsInterface(const QDBusConnection &connection, QObject *parent = 0);
+    ~BiometricsInterface();
 
-public Q_SLOTS: // METHODS
-    inline QDBusPendingReply<> DeleteEnrolledFace (const QString &id)
+public Q_SLOTS:  // METHODS
+    inline QDBusPendingReply<> DeleteEnrolledFace(const QString &id)
     {
         QList<QVariant> argumentList;
         argumentList << QVariant::fromValue(id);
         return asyncCallWithArgumentList(QLatin1String("DeleteEnrolledFace"), argumentList);
     }
 
-    inline QDBusPendingReply<> DeleteEnrolledFinger (const QString &id)
+    inline QDBusPendingReply<> DeleteEnrolledFinger(const QString &id)
     {
         QList<QVariant> argumentList;
         argumentList << QVariant::fromValue(id);
         return asyncCallWithArgumentList(QLatin1String("DeleteEnrolledFinger"), argumentList);
     }
 
-    inline QDBusPendingReply<QString> EnrollFaceStart ()
+    inline QDBusPendingReply<QString> EnrollFaceStart()
     {
         QList<QVariant> argumentList;
         return asyncCallWithArgumentList(QLatin1String("EnrollFaceStart"), argumentList);
     }
 
-    inline QDBusPendingReply<> EnrollFaceStop ()
+    inline QDBusPendingReply<> EnrollFaceStop()
     {
         QList<QVariant> argumentList;
         return asyncCallWithArgumentList(QLatin1String("EnrollFaceStop"), argumentList);
     }
 
-    inline QDBusPendingReply<> EnrollFprintStart ()
+    inline QDBusPendingReply<> EnrollFprintStart()
     {
         QList<QVariant> argumentList;
         return asyncCallWithArgumentList(QLatin1String("EnrollFprintStart"), argumentList);
     }
 
-    inline QDBusPendingReply<> EnrollFprintStop ()
+    inline QDBusPendingReply<> EnrollFprintStop()
     {
         QList<QVariant> argumentList;
         return asyncCallWithArgumentList(QLatin1String("EnrollFprintStop"), argumentList);
     }
 
-    inline QDBusPendingReply<> VerifyFaceStart (const QString &id)
+    inline QDBusPendingReply<> VerifyFaceStart(const QString &id)
     {
         QList<QVariant> argumentList;
         argumentList << QVariant::fromValue(id);
         return asyncCallWithArgumentList(QLatin1String("VerifyFaceStart"), argumentList);
     }
 
-    inline QDBusPendingReply<> VerifyFaceStop ()
+    inline QDBusPendingReply<> VerifyFaceStop()
     {
         QList<QVariant> argumentList;
         return asyncCallWithArgumentList(QLatin1String("VerifyFaceStop"), argumentList);
     }
 
-    inline QDBusPendingReply<> VerifyFprintStart (const QString &id)
+    inline QDBusPendingReply<> VerifyFprintStart(const QString &id)
     {
         QList<QVariant> argumentList;
         argumentList << QVariant::fromValue(id);
         return asyncCallWithArgumentList(QLatin1String("VerifyFprintStart"), argumentList);
     }
 
-    inline QDBusPendingReply<> VerifyFprintStop ()
+    inline QDBusPendingReply<> VerifyFprintStop()
     {
         QList<QVariant> argumentList;
         return asyncCallWithArgumentList(QLatin1String("VerifyFprintStop"), argumentList);
     }
 
-Q_SIGNALS: // SIGNALS
-    void EnrollFaceStatus (const QString &message, const QString &id, int progress, bool done);
-    void EnrollFprintStatus (const QString &message, const QString &id, int progress, bool done);
-    void VerifyFaceStatus (const QString &result, bool done, bool match);
-    void VerifyFprintStatus (const QString &result, bool done, bool match);
+Q_SIGNALS:  // SIGNALS
+    void EnrollFaceStatus(const QString &message, const QString &id, int progress, bool done);
+    void EnrollFprintStatus(const QString &message, const QString &id, int progress, bool done);
+    void VerifyFaceStatus(const QString &result, bool done, bool match);
+    void VerifyFprintStatus(const QString &result, bool done, bool match);
 };
 
 namespace com
 {
-    namespace kylinsec
-    {
-        namespace Kiran
-        {
-            namespace SystemDaemon
-            {
-                typedef ::BiometricsInterface BiometricsInterface;
-            }
-        }
-    }
+namespace kylinsec
+{
+namespace Kiran
+{
+namespace SystemDaemon
+{
+typedef ::BiometricsInterface BiometricsInterface;
 }
+}  // namespace Kiran
+}  // namespace kylinsec
+}  // namespace com
 #endif

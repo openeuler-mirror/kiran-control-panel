@@ -1,28 +1,27 @@
 //
 // Created by lxh on 2020/10/26.
 //
+#include <QDebug>
+#include <QDir>
+#include <QFileInfo>
 #include <QMutex>
 #include <QScopedPointer>
-#include <QFileInfo>
-#include <QDir>
-#include <QDebug>
 #include <QUuid>
 
 #include "temporary-dir-manager.h"
 
-TemporaryDirManager::TemporaryDirManager ()
+TemporaryDirManager::TemporaryDirManager()
 {
-
 }
 
-TemporaryDirManager::~TemporaryDirManager ()
+TemporaryDirManager::~TemporaryDirManager()
 {
     remove();
 }
 
-bool TemporaryDirManager::init (const QString &dirName)
+bool TemporaryDirManager::init(const QString &dirName)
 {
-    QString temporarDirPath = QString("/tmp/%1").arg(dirName);
+    QString   temporarDirPath = QString("/tmp/%1").arg(dirName);
     QFileInfo fileInfo(temporarDirPath);
 
     if (m_initFinished)
@@ -39,7 +38,7 @@ bool TemporaryDirManager::init (const QString &dirName)
     QDir tempDir("/tmp");
     if (tempDir.mkdir(dirName))
     {
-        m_initFinished = true;
+        m_initFinished     = true;
         m_temporaryDirPath = temporarDirPath;
         qInfo() << "Temporary Dir Path:" << m_temporaryDirPath;
         return true;
@@ -48,7 +47,7 @@ bool TemporaryDirManager::init (const QString &dirName)
     return false;
 }
 
-void TemporaryDirManager::remove ()
+void TemporaryDirManager::remove()
 {
     QFileInfo fileInfo(m_temporaryDirPath);
     if (fileInfo.exists())
@@ -58,7 +57,7 @@ void TemporaryDirManager::remove ()
     }
 }
 
-QString TemporaryDirManager::generateTempFilePath ()
+QString TemporaryDirManager::generateTempFilePath()
 {
     if (!m_initFinished)
     {
@@ -69,9 +68,9 @@ QString TemporaryDirManager::generateTempFilePath ()
     return QString("%1/%2").arg(m_temporaryDirPath).arg(id.toString(QUuid::WithoutBraces));
 }
 
-TemporaryDirManager *TemporaryDirManager::instance ()
+TemporaryDirManager *TemporaryDirManager::instance()
 {
-    static QMutex mutex;
+    static QMutex                              mutex;
     static QScopedPointer<TemporaryDirManager> pInst;
 
     if (Q_UNLIKELY(!pInst))

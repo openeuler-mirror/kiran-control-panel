@@ -1,26 +1,23 @@
 #include "kiran-account-manager.h"
 #include "account-itemwidget.h"
 #include "accounts-global-info.h"
-#include "create-user-page/create-user-page.h"
-#include "user-info-page/user-info-page.h"
-#include "select-avatar-page/select-avatar-page.h"
 #include "auth-manager-page/auth-manager-page.h"
-#include "create-user-page/create-user-page.h"
-#include "user-info-page/user-info-page.h"
-#include "select-avatar-page/select-avatar-page.h"
-#include "mask-widget.h"
-#include "hard-worker.h"
 #include "config.h"
+#include "create-user-page/create-user-page.h"
+#include "hard-worker.h"
+#include "mask-widget.h"
+#include "select-avatar-page/select-avatar-page.h"
+#include "user-info-page/user-info-page.h"
 
-#include <QIcon>
-#include <QDebug>
-#include <QtWidgets/QListWidgetItem>
-#include <QHBoxLayout>
-#include <QStackedWidget>
 #include <kiran-sidebar-widget.h>
 #include <kiran-style-public-define.h>
+#include <QDebug>
+#include <QHBoxLayout>
+#include <QIcon>
+#include <QStackedWidget>
+#include <QtWidgets/QListWidgetItem>
 
-#define ITEM_USER_OBJ_PATH_ROLE Qt::UserRole+1
+#define ITEM_USER_OBJ_PATH_ROLE Qt::UserRole + 1
 
 enum StackWidgetPageEnum
 {
@@ -31,25 +28,31 @@ enum StackWidgetPageEnum
 };
 
 KiranAccountManager::KiranAccountManager()
-        : KiranTitlebarWindow(){
+    : KiranTitlebarWindow()
+{
     m_workThread.start();
     m_hardworker = new HardWorker();
     m_hardworker->moveToThread(&m_workThread);
     initUI();
 }
 
-KiranAccountManager::~KiranAccountManager(){
-    if( m_workThread.isRunning() ){
+KiranAccountManager::~KiranAccountManager()
+{
+    if (m_workThread.isRunning())
+    {
         m_workThread.quit();
         m_workThread.wait();
     }
-    delete  m_hardworker;
+    delete m_hardworker;
 };
 
-void KiranAccountManager::setCurrentUser(const QString &userPath) {
+void KiranAccountManager::setCurrentUser(const QString &userPath)
+{
     int findIdx = -1;
-    for (int i = 0; i < m_tabList->count(); i++) {
-        if (m_tabList->item(i)->data(Qt::UserRole) != userPath) {
+    for (int i = 0; i < m_tabList->count(); i++)
+    {
+        if (m_tabList->item(i)->data(Qt::UserRole) != userPath)
+        {
             continue;
         }
         findIdx = i;
@@ -59,27 +62,33 @@ void KiranAccountManager::setCurrentUser(const QString &userPath) {
     m_tabList->setCurrentRow(findIdx);
 }
 
-void KiranAccountManager::appendSiderbarItem(const QString &userPath) {
-    UserInterface interface(userPath,QDBusConnection::systemBus());
-    auto item = new QListWidgetItem(interface.user_name(),m_tabList);
+void KiranAccountManager::appendSiderbarItem(const QString &userPath)
+{
+    UserInterface interface(userPath, QDBusConnection::systemBus());
+    auto          item = new QListWidgetItem(interface.user_name(), m_tabList);
     item->setIcon(QPixmap(interface.icon_file()));
-    item->setData(Kiran::ItemStatus_Role,interface.locked()?tr("disable"):tr("enable"));
-    item->setData(Kiran::ItemStatusColor_Role,interface.locked()?QColor("#fa4949"):QColor("#43a3f2"));
-    item->setData(ITEM_USER_OBJ_PATH_ROLE,userPath);
+    item->setData(Kiran::ItemStatus_Role, interface.locked() ? tr("disable") : tr("enable"));
+    item->setData(Kiran::ItemStatusColor_Role, interface.locked() ? QColor("#fa4949") : QColor("#43a3f2"));
+    item->setData(ITEM_USER_OBJ_PATH_ROLE, userPath);
 
     m_tabList->addItem(item);
 }
 
-void KiranAccountManager::setDefaultSiderbarItem() {
+void KiranAccountManager::setDefaultSiderbarItem()
+{
     //设置默认侧边栏项
-    if (m_tabList->count() > 1) {
+    if (m_tabList->count() > 1)
+    {
         m_tabList->setCurrentRow(1);
-    } else {
+    }
+    else
+    {
         m_tabList->setCurrentRow(0);
     }
 }
 
-void KiranAccountManager::initUI() {
+void KiranAccountManager::initUI()
+{
     setObjectName("KiranAccountManager");
     setTitle(tr("User Manager"));
     setIcon(QIcon(DESKTOP_ICON_PATH));
@@ -108,7 +117,7 @@ void KiranAccountManager::initUI() {
 
     m_tabList = new KiranSidebarWidget(siderbar);
     m_tabList->setObjectName("tabList");
-    m_tabList->setIconSize(QSize(40,40));
+    m_tabList->setIconSize(QSize(40, 40));
     vLayout->addWidget(m_tabList);
     initUserList();
 
@@ -139,22 +148,27 @@ void KiranAccountManager::initUI() {
     resize(800, 600);
 }
 
-void KiranAccountManager::initUserList() {
+void KiranAccountManager::initUserList()
+{
     QListWidgetItem *item;
 
-    connect(m_tabList,&KiranSidebarWidget::itemSelectionChanged,[this](){
-        QList<QListWidgetItem*> selecteds = m_tabList->selectedItems();
-        if(selecteds.size()!=1){
+    connect(m_tabList, &KiranSidebarWidget::itemSelectionChanged, [this]() {
+        QList<QListWidgetItem *> selecteds = m_tabList->selectedItems();
+        if (selecteds.size() != 1)
+        {
             qFatal("tabList: selecteds size != 1");
             return;
         }
-        QListWidgetItem* item = selecteds.at(0);
-        if( item == m_createUserItem ){
+        QListWidgetItem *item = selecteds.at(0);
+        if (item == m_createUserItem)
+        {
             //重置创建用户页面
             m_page_createUser->reset();
             //切换到创建用户
             m_stackWidget->setCurrentIndex(PAGE_CREATE_USER);
-        }else{
+        }
+        else
+        {
             QString usrObjPath = item->data(ITEM_USER_OBJ_PATH_ROLE).toString();
             //更新用户信息页面
             m_page_userinfo->setCurrentShowUserPath(usrObjPath);
@@ -164,19 +178,21 @@ void KiranAccountManager::initUserList() {
     });
 
     ///创建用户按钮
-    m_createUserItem = new QListWidgetItem(tr("Create new account"),m_tabList);
+    m_createUserItem = new QListWidgetItem(tr("Create new account"), m_tabList);
     m_createUserItem->setIcon(QIcon(":/images/add_icon.png"));
     m_tabList->addItem(item);
 
     //加载非系统用户
     QList<QString> userObjList;
     userObjList = AccountsGlobalInfo::instance()->getUserList();
-    for (auto &iter : userObjList) {
+    for (auto &iter : userObjList)
+    {
         appendSiderbarItem(iter);
     }
 }
 
-void KiranAccountManager::initPageCreateUser() {
+void KiranAccountManager::initPageCreateUser()
+{
     //用户头像点击
     connect(m_page_createUser, &CreateUserPage::sigSetIconForNewUser, [this](QString iconPath) {
         //设置选择头像模式，为了缓存选择头像之前的页面，方便之后的返回
@@ -189,8 +205,10 @@ void KiranAccountManager::initPageCreateUser() {
         //保证在设置当前行时,新用户已在侧边栏创建节点
         QTimer::singleShot(0, this, [=]() {
             int findIdx = -1;
-            for (int i = 0; i < m_tabList->count(); i++) {
-                if (m_tabList->item(i)->data(ITEM_USER_OBJ_PATH_ROLE) != userPath) {
+            for (int i = 0; i < m_tabList->count(); i++)
+            {
+                if (m_tabList->item(i)->data(ITEM_USER_OBJ_PATH_ROLE) != userPath)
+                {
                     continue;
                 }
                 findIdx = i;
@@ -200,17 +218,18 @@ void KiranAccountManager::initPageCreateUser() {
             m_tabList->setCurrentRow(findIdx);
         });
     });
-    connect(m_page_createUser,&CreateUserPage::sigCreateUser,
-            m_hardworker,&HardWorker::doCreateUser);
+    connect(m_page_createUser, &CreateUserPage::sigCreateUser,
+            m_hardworker, &HardWorker::doCreateUser);
 
     connect(m_hardworker, &HardWorker::sigCreateUserDnoe,
-            m_page_createUser,&CreateUserPage::handlerCreateNewUserIsDone);
+            m_page_createUser, &CreateUserPage::handlerCreateNewUserIsDone);
 
-    connect(m_page_createUser,&CreateUserPage::sigIsBusyChanged,
-            this,&KiranAccountManager::setMaskVisible);
+    connect(m_page_createUser, &CreateUserPage::sigIsBusyChanged,
+            this, &KiranAccountManager::setMaskVisible);
 }
 
-void KiranAccountManager::initPageUserInfo() {
+void KiranAccountManager::initPageUserInfo()
+{
     //用户信息页面处理头像点击
     connect(m_page_userinfo, &UserInfoPage::sigUserChangeIcon, [this](const QString &iconPath) {
         m_page_selectAvatar->setMode(SelectAvatarPage::CHANGE_AVATAR_FOR_USER);
@@ -219,65 +238,69 @@ void KiranAccountManager::initPageUserInfo() {
     });
 
     //用户信息页面，认证管理点击时请求跳转至认证管理页面
-    connect(m_page_userinfo, &UserInfoPage::sigAuthManager, [this] (const QString &userObj) {
+    connect(m_page_userinfo, &UserInfoPage::sigAuthManager, [this](const QString &userObj) {
         m_page_authManager->setCurrentUser(userObj);
         m_stackWidget->setCurrentIndex(PAGE_AUTH_MANAGER);
     });
 
     /// 修改属性
-    connect(m_page_userinfo,&UserInfoPage::sigUpdateUserProperty,
-            m_hardworker,&HardWorker::doUpdateUserProperty);
+    connect(m_page_userinfo, &UserInfoPage::sigUpdateUserProperty,
+            m_hardworker, &HardWorker::doUpdateUserProperty);
 
-    connect(m_hardworker,&HardWorker::sigUpdateUserPropertyDone,
-            m_page_userinfo,&UserInfoPage::handlerUpdateUserPropertyDone);
+    connect(m_hardworker, &HardWorker::sigUpdateUserPropertyDone,
+            m_page_userinfo, &UserInfoPage::handlerUpdateUserPropertyDone);
 
     /// 修改密码
-    connect(m_page_userinfo,&UserInfoPage::sigUpdatePasswd,
-            m_hardworker,&HardWorker::doUpdatePasswd);
-    connect(m_hardworker,&HardWorker::sigUpdatePasswdDone,
-            m_page_userinfo,&UserInfoPage::handlerUpdatePasswdDone);
+    connect(m_page_userinfo, &UserInfoPage::sigUpdatePasswd,
+            m_hardworker, &HardWorker::doUpdatePasswd);
+    connect(m_hardworker, &HardWorker::sigUpdatePasswdDone,
+            m_page_userinfo, &UserInfoPage::handlerUpdatePasswdDone);
 
     /// 删除用户
-    connect(m_page_userinfo,&UserInfoPage::sigDeleteUser,
-            m_hardworker,&HardWorker::doDeleteUser);
-    connect(m_hardworker,&HardWorker::sigDeleteUserDone,
-            m_page_userinfo,&UserInfoPage::handlerDeleteUserDone);
+    connect(m_page_userinfo, &UserInfoPage::sigDeleteUser,
+            m_hardworker, &HardWorker::doDeleteUser);
+    connect(m_hardworker, &HardWorker::sigDeleteUserDone,
+            m_page_userinfo, &UserInfoPage::handlerDeleteUserDone);
 
     /// 忙碌显示/隐藏遮罩
-    connect(m_page_userinfo,&UserInfoPage::sigIsBusyChanged,
-            this,&KiranAccountManager::setMaskVisible);
+    connect(m_page_userinfo, &UserInfoPage::sigIsBusyChanged,
+            this, &KiranAccountManager::setMaskVisible);
 }
 
-void KiranAccountManager::initPageSelectAvatar() {
+void KiranAccountManager::initPageSelectAvatar()
+{
     //选择头像页面处理返回
     connect(m_page_selectAvatar, &SelectAvatarPage::sigReturnToPrevPage,
             [this](SelectAvatarPage::SelectAvatarMode mode, bool isConfirm) {
-                switch (mode) {
-                    case SelectAvatarPage::SELECT_AVATAR_FOR_NEW_USER:
-                        if (isConfirm) {
-                            m_page_createUser->setAvatarIconPath(m_page_selectAvatar->currentSelectAvatar());
-                        }
-                        m_stackWidget->setCurrentIndex(PAGE_CREATE_USER);
-                        break;
-                    case SelectAvatarPage::CHANGE_AVATAR_FOR_USER:
-                        if (isConfirm) {
-                            m_page_userinfo->setAvatarIconPath(m_page_selectAvatar->currentSelectAvatar());
-                        }
-                        m_stackWidget->setCurrentIndex(PAGE_USER_INFO);
-                        break;
+                switch (mode)
+                {
+                case SelectAvatarPage::SELECT_AVATAR_FOR_NEW_USER:
+                    if (isConfirm)
+                    {
+                        m_page_createUser->setAvatarIconPath(m_page_selectAvatar->currentSelectAvatar());
+                    }
+                    m_stackWidget->setCurrentIndex(PAGE_CREATE_USER);
+                    break;
+                case SelectAvatarPage::CHANGE_AVATAR_FOR_USER:
+                    if (isConfirm)
+                    {
+                        m_page_userinfo->setAvatarIconPath(m_page_selectAvatar->currentSelectAvatar());
+                    }
+                    m_stackWidget->setCurrentIndex(PAGE_USER_INFO);
+                    break;
                 }
             });
 }
 
-void KiranAccountManager::initPageAuthManager ()
+void KiranAccountManager::initPageAuthManager()
 {
     //TODO:init auth manager page
-    connect(m_page_authManager, &AuthManagerPage::sigReturn, [this] () {
+    connect(m_page_authManager, &AuthManagerPage::sigReturn, [this]() {
         m_stackWidget->setCurrentIndex(PAGE_USER_INFO);
     });
 }
 
-void KiranAccountManager::connectToInfoChanged ()
+void KiranAccountManager::connectToInfoChanged()
 {
     //处理用户新增、删除
     connect(AccountsGlobalInfo::instance(), &AccountsGlobalInfo::UserAdded,
@@ -292,19 +315,23 @@ void KiranAccountManager::connectToInfoChanged ()
                 int findIdx = -1;
 
                 QString userPath = obj.path();
-                for (int i = 0; i < m_tabList->count(); i++) {
-                    if (m_tabList->item(i)->data(Qt::UserRole) == userPath) {
+                for (int i = 0; i < m_tabList->count(); i++)
+                {
+                    if (m_tabList->item(i)->data(Qt::UserRole) == userPath)
+                    {
                         findIdx = i;
                         break;
                     }
                 }
-                if (findIdx == -1) {
+                if (findIdx == -1)
+                {
                     return;
                 }
-                bool needResetSidebarItem = m_tabList->item(findIdx)->isSelected();
-                QListWidgetItem* widgetItem = m_tabList->takeItem(findIdx);
-                delete  widgetItem;
-                if(needResetSidebarItem){
+                bool             needResetSidebarItem = m_tabList->item(findIdx)->isSelected();
+                QListWidgetItem *widgetItem           = m_tabList->takeItem(findIdx);
+                delete widgetItem;
+                if (needResetSidebarItem)
+                {
                     setDefaultSiderbarItem();
                 }
             });
@@ -313,37 +340,45 @@ void KiranAccountManager::connectToInfoChanged ()
     connect(AccountsGlobalInfo::instance(), &AccountsGlobalInfo::UserPropertyChanged,
             [this](QString userPath, QString propertyName, QVariant value) {
                 //侧边栏
-                if ((propertyName == "locked") || (propertyName == "icon_file")) {
-                    for (int i = 0; i < m_tabList->count(); i++) {
-                        QListWidgetItem *item = m_tabList->item(i);
-                        QString itemUserPath = item->data(Qt::UserRole).toString();
-                        if (itemUserPath != userPath) {
+                if ((propertyName == "locked") || (propertyName == "icon_file"))
+                {
+                    for (int i = 0; i < m_tabList->count(); i++)
+                    {
+                        QListWidgetItem *item         = m_tabList->item(i);
+                        QString          itemUserPath = item->data(Qt::UserRole).toString();
+                        if (itemUserPath != userPath)
+                        {
                             continue;
                         }
-                        UserInterface userInterface(itemUserPath,QDBusConnection::systemBus());
-                        QString userName = userInterface.user_name();
-                        QString iconFile = userInterface.icon_file();
-                        bool isLocked = userInterface.locked();
+                        UserInterface userInterface(itemUserPath, QDBusConnection::systemBus());
+                        QString       userName = userInterface.user_name();
+                        QString       iconFile = userInterface.icon_file();
+                        bool          isLocked = userInterface.locked();
                         item->setText(userName);
                         item->setIcon(QIcon(iconFile));
                         //TODO:写入颜色
-//                        item->setData(Kiran::ItemStatus_Role,isLocked?"disable":"enable");
+                        //                        item->setData(Kiran::ItemStatus_Role,isLocked?"disable":"enable");
                         break;
                     }
                 }
                 //用户详情页面
                 QString currentUserPath = m_page_userinfo->getCurrentShowUserPath();
-                if (userPath == currentUserPath) {
+                if (userPath == currentUserPath)
+                {
                     m_page_userinfo->updateInfo();
                 }
             });
 }
 
-void KiranAccountManager::setMaskVisible(bool visible) {
-    if( visible ){
+void KiranAccountManager::setMaskVisible(bool visible)
+{
+    if (visible)
+    {
         this->stackUnder(m_maskWidget);
         m_maskWidget->show();
-    }else{
+    }
+    else
+    {
         m_maskWidget->hide();
     }
 }

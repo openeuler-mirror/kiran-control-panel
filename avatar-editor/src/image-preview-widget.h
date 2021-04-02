@@ -5,48 +5,48 @@
 #ifndef KIRAN_AVATAR_EDITOR_IMAGE_PREVIEW_WIDGET_H
 #define KIRAN_AVATAR_EDITOR_IMAGE_PREVIEW_WIDGET_H
 
-#include <QWidget>
 #include <QPixmap>
+#include <QWidget>
 
 class ImagePreviewWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit ImagePreviewWidget (QWidget *parent = nullptr);
-    ~ImagePreviewWidget ();
+    explicit ImagePreviewWidget(QWidget *parent = nullptr);
+    ~ImagePreviewWidget();
 
-    void setSrcImagePath (const QString &imagePath);
-    QString srcImagePath ();
+    void    setSrcImagePath(const QString &imagePath);
+    QString srcImagePath();
 
-    void setDstImagePath (const QString &imagePath);
-    QString dstImagePath ();
+    void    setDstImagePath(const QString &imagePath);
+    QString dstImagePath();
 
-    bool saveAvatar ();
+    bool saveAvatar();
 
 private:
-    void loadSrcImage ();
+    void loadSrcImage();
     //图片位置校验
-    bool imagePositionVerification ();
+    bool imagePositionVerification();
     //图片位置不合法，调整位置
-    void imageAutomaticPosition ();
+    void imageAutomaticPosition();
     //图片放大
-    void pixmapEnlarge ();
+    void pixmapEnlarge();
     //图片缩小
-    void pixmapReduce ();
+    void pixmapReduce();
 
-    QPixmap generateCircleRectPixmap ();
-    QPixmap generateCircleAvatar (const QPixmap &pixmap);
+    QPixmap generateCircleRectPixmap();
+    QPixmap generateCircleAvatar(const QPixmap &pixmap);
 
 private Q_SLOTS:
-    void pixmapCentering ();
+    void pixmapCentering();
 
 protected:
-    virtual void paintEvent (QPaintEvent *event) override;
-    virtual void resizeEvent (QResizeEvent *event) override;
-    virtual void mousePressEvent (QMouseEvent *event) override;
-    virtual void mouseReleaseEvent (QMouseEvent *event) override;
-    virtual void mouseMoveEvent (QMouseEvent *event) override;
-    virtual void wheelEvent (QWheelEvent *event) override;
+    virtual void paintEvent(QPaintEvent *event) override;
+    virtual void resizeEvent(QResizeEvent *event) override;
+    virtual void mousePressEvent(QMouseEvent *event) override;
+    virtual void mouseReleaseEvent(QMouseEvent *event) override;
+    virtual void mouseMoveEvent(QMouseEvent *event) override;
+    virtual void wheelEvent(QWheelEvent *event) override;
 
 private:
     //原图像路径
@@ -61,8 +61,8 @@ private:
     double m_pixmapScaleFactor = 1.0;
     //图片的左顶点
     QPoint m_pixmapLefttop;
-    bool m_btnIsPressed;
+    bool   m_btnIsPressed;
     QPoint m_btnPressedPoint;
 };
 
-#endif //KIRAN_AVATAR_EDITOR_IMAGE_PREVIEW_WIDGET_H
+#endif  //KIRAN_AVATAR_EDITOR_IMAGE_PREVIEW_WIDGET_H

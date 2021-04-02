@@ -7,43 +7,43 @@ class UserAvatarWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit UserAvatarWidget (QWidget *parent = nullptr);
-    virtual ~UserAvatarWidget () = default;
+    explicit UserAvatarWidget(QWidget *parent = nullptr);
+    virtual ~UserAvatarWidget() = default;
 
-    void setImage (const QString &path);
-    void setDefaultImage ();
-    void setClickEnable (bool enable);
-    bool setHoverImage (const QString &path);
-    QString iconPath ();
+    void    setImage(const QString &path);
+    void    setDefaultImage();
+    void    setClickEnable(bool enable);
+    bool    setHoverImage(const QString &path);
+    QString iconPath();
 
 signals:
-    void pressed ();
+    void pressed();
 
 public slots:
 
 protected:
-    virtual void paintEvent (QPaintEvent *event) override final;
-    virtual void mousePressEvent (QMouseEvent *event) override;
-    virtual void enterEvent (QEvent *event) override;
-    virtual void leaveEvent (QEvent *event) override;
-    virtual void mouseMoveEvent (QMouseEvent *event) override;
-    virtual void resizeEvent (QResizeEvent *event) override final;
+    virtual void paintEvent(QPaintEvent *event) override final;
+    virtual void mousePressEvent(QMouseEvent *event) override;
+    virtual void enterEvent(QEvent *event) override;
+    virtual void leaveEvent(QEvent *event) override;
+    virtual void mouseMoveEvent(QMouseEvent *event) override;
+    virtual void resizeEvent(QResizeEvent *event) override final;
 
 protected:
-    QPixmap generateUserIconFitWidgetSize (const QPixmap &pixmap);
+    QPixmap generateUserIconFitWidgetSize(const QPixmap &pixmap);
 
 private:
-    QPixmap scalePixmapAdjustSize (const QPixmap &pixmap);
+    QPixmap scalePixmapAdjustSize(const QPixmap &pixmap);
 
 private:
     QPixmap m_scaledPixmap;
     QPixmap m_pixmap;
     QPixmap m_hoverPixmap;
     QPixmap m_hoverScaledPixmap;
-    bool m_clickedEnable;
-    bool m_isEnter;
-    bool m_isHover;
+    bool    m_clickedEnable;
+    bool    m_isEnter;
+    bool    m_isHover;
     QString m_iconPath;
 };
 
-#endif // USERAVATARWIDGET_H
+#endif  // USERAVATARWIDGET_H

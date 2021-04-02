@@ -5,39 +5,39 @@
 #include "face-enroll-worker.h"
 #include <zmq.h>
 #include <QDebug>
+#include <QFile>
+#include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
-#include <QFile>
 #include <QPixmap>
-#include <QJsonArray>
 
 #define IMAGE_TYPE 0x60  //图形类型
-#define AXIS_TYPE 0x61  //人脸坐标类型
+#define AXIS_TYPE 0x61   //人脸坐标类型
 
-FaceEnrollWorker::FaceEnrollWorker (const QString &zmqAddr, QObject *parent)
-        : m_zmqAddr(zmqAddr),
-          QThread(parent)
+FaceEnrollWorker::FaceEnrollWorker(const QString &zmqAddr, QObject *parent)
+    : m_zmqAddr(zmqAddr),
+      QThread(parent)
 {
     QThread::setPriority(QThread::HighPriority);
 }
 
-FaceEnrollWorker::FaceEnrollWorker (QObject *parent) : QThread(parent)
-{ }
-
-FaceEnrollWorker::~FaceEnrollWorker ()
+FaceEnrollWorker::FaceEnrollWorker(QObject *parent) : QThread(parent)
 {
-
 }
 
-void FaceEnrollWorker::setZeroMQAddr (const QString &addr)
+FaceEnrollWorker::~FaceEnrollWorker()
+{
+}
+
+void FaceEnrollWorker::setZeroMQAddr(const QString &addr)
 {
     m_zmqAddr = addr;
 }
 
-void FaceEnrollWorker::run ()
+void FaceEnrollWorker::run()
 {
-    int iRet = 0;
-    int recvtimeo = 500;
+    int   iRet      = 0;
+    int   recvtimeo = 500;
     void *context, *socket;
 
     std::string strAddr = m_zmqAddr.toStdString();
@@ -55,7 +55,7 @@ void FaceEnrollWorker::run ()
     iRet = zmq_connect(socket, strAddr.c_str());
     while (!QThread::isInterruptionRequested())
     {
-        zmq_msg_t msg;
+        zmq_msg_t       msg;
         QJsonParseError error{};
 
         zmq_msg_init(&msg);
@@ -65,11 +65,11 @@ void FaceEnrollWorker::run ()
             qDebug() << "zmq_msg_recv:" << strerror(errno);
             continue;
         }
-        void *data = zmq_msg_data(&msg);
-        QByteArray msgByteArray((char *) data, zmq_msg_size(&msg));
-        QJsonDocument doc = QJsonDocument::fromJson(msgByteArray, &error);
-        QJsonObject object = doc.object();
-        int msgType = object.value("type").toInt();
+        void *        data = zmq_msg_data(&msg);
+        QByteArray    msgByteArray((char *)data, zmq_msg_size(&msg));
+        QJsonDocument doc     = QJsonDocument::fromJson(msgByteArray, &error);
+        QJsonObject   object  = doc.object();
+        int           msgType = object.value("type").toInt();
         if (msgType == IMAGE_TYPE)
         {
             parseFaceImage(object);
@@ -84,36 +84,36 @@ void FaceEnrollWorker::run ()
     zmq_ctx_destroy(context);
 }
 
-void FaceEnrollWorker::parseFaceImage (const QJsonObject &jsonObject)
+void FaceEnrollWorker::parseFaceImage(const QJsonObject &jsonObject)
 {
-    int width = jsonObject["width"].toInt();
-    int height = jsonObject["height"].toInt();
-    QString content = jsonObject["content"].toString();
+    int        width     = jsonObject["width"].toInt();
+    int        height    = jsonObject["height"].toInt();
+    QString    content   = jsonObject["content"].toString();
     QByteArray byteArray = QByteArray::fromBase64(content.toUtf8());
-    QImage image((uchar *) byteArray.data(), width, height, QImage::Format_RGB888);
-    QImage newImgae = image.rgbSwapped();
+    QImage     image((uchar *)byteArray.data(), width, height, QImage::Format_RGB888);
+    QImage     newImgae = image.rgbSwapped();
     qInfo() << "recv image:" << width << "x" << height;
     emit sigHasNewImage(newImgae);
 }
 
-void FaceEnrollWorker::parseFaceAxis (const QJsonObject &jsonObject)
+void FaceEnrollWorker::parseFaceAxis(const QJsonObject &jsonObject)
 {
-    QList<QRect> res;
-    QJsonValue value = jsonObject["content"];
-    QString str = value.toString();
-    QJsonDocument doc = QJsonDocument::fromJson(str.toLatin1());
+    QList<QRect>  res;
+    QJsonValue    value = jsonObject["content"];
+    QString       str   = value.toString();
+    QJsonDocument doc   = QJsonDocument::fromJson(str.toLatin1());
 
     int count = 1;
     if (doc.isArray())
     {
         QJsonArray array = doc.array();
-        for (QJsonValue item:array)
+        for (QJsonValue item : array)
         {
             qInfo() << "item" << item;
             int tlX, tlY, width, height;
-            tlX = item["x"].toInt();
-            tlY = item["y"].toInt();
-            width = item["h"].toInt();
+            tlX    = item["x"].toInt();
+            tlY    = item["y"].toInt();
+            width  = item["h"].toInt();
             height = item["w"].toInt();
             QRect rect(tlX, tlY, width, height);
             res << rect;

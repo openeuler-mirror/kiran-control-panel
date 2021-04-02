@@ -5,14 +5,17 @@
 
 #include <QWidget>
 
-namespace Ui {
-    class UserInfoPage;
+namespace Ui
+{
+class UserInfoPage;
 }
 class HoverTips;
 class KiranSwitchButton;
-class UserInfoPage : public QWidget {
+class UserInfoPage : public QWidget
+{
     Q_OBJECT
     friend class KiranAccountManager;
+
 public:
     explicit UserInfoPage(QWidget *parent = nullptr);
     ~UserInfoPage();
@@ -43,7 +46,7 @@ signals:
 
     /// @brief 当用户点击认证管理时，跳转到认证管理界面
     /// @param userObj 认证管理的用户DBus对象
-    void sigAuthManager (const QString &userObj);
+    void sigAuthManager(const QString &userObj);
 
     /// 当用户点击保存按钮时,发出的保存用户属性信号，请求工作线程处理
     /// \param account      账户名
@@ -53,9 +56,8 @@ signals:
     void sigUpdateUserProperty(QString objPath,
                                QString account,
                                QString iconfile,
-                               int accountType,
-                               bool isLocked);
-
+                               int     accountType,
+                               bool    isLocked);
 
     /// 当用户点击保存新密码时,发出的更新密码信号，请求工作线程处理
     /// \param account          账户名
@@ -94,13 +96,13 @@ private Q_SLOTS:
     void handlerUpdatePasswdDone(QString errMsg);
 
 private:
-    Ui::UserInfoPage *ui;
-    QString m_curShowUserPath;
-    QString m_curShowUserName;
-    uid_t m_uid;
-    KiranTips *m_errorTip;
-    HoverTips *m_hoverTip;
+    Ui::UserInfoPage * ui;
+    QString            m_curShowUserPath;
+    QString            m_curShowUserName;
+    uid_t              m_uid;
+    KiranTips *        m_errorTip;
+    HoverTips *        m_hoverTip;
     KiranSwitchButton *m_accountStatusSwitch;
 };
 
-#endif // USERINFOPAGE_H
+#endif  // USERINFOPAGE_H
