@@ -15,6 +15,9 @@
 #include <QJsonDocument>
 #include <kiran-message-box.h>
 #include <kiran-switch-button.h>
+#include <widget-property-helper.h>
+
+using namespace Kiran;
 
 AuthManagerPage::AuthManagerPage (QWidget *parent) :
         QWidget(parent), ui(new Ui::AuthManagerPage)
@@ -49,6 +52,8 @@ void AuthManagerPage::setCurrentUser (const QString &userObj)
 
 void AuthManagerPage::initUI ()
 {
+    WidgetPropertyHelper::setButtonType(ui->btn_save,BUTTON_Default);
+
     m_fingerAuthSwitch = new KiranSwitchButton(this);
     ui->layout_fingerAuth->addWidget(m_fingerAuthSwitch);
     connect(m_fingerAuthSwitch, &KiranSwitchButton::toggled, this, &AuthManagerPage::slotCheckAuthTypes);
