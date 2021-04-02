@@ -108,75 +108,75 @@
     <name>AuthManagerPage</name>
     <message>
         <location filename="../src/pages/auth-manager-page/auth-manager-page.ui" line="14"/>
-        <location filename="../build/kiran-account-manager_autogen/include/ui_auth-manager-page.h" line="186"/>
-        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_auth-manager-page.h" line="186"/>
+        <location filename="../build/kiran-account-manager_autogen/include/ui_auth-manager-page.h" line="167"/>
+        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_auth-manager-page.h" line="167"/>
         <source>AuthManagerPage</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../src/pages/auth-manager-page/auth-manager-page.ui" line="46"/>
-        <location filename="../build/kiran-account-manager_autogen/include/ui_auth-manager-page.h" line="187"/>
-        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_auth-manager-page.h" line="187"/>
+        <location filename="../build/kiran-account-manager_autogen/include/ui_auth-manager-page.h" line="168"/>
+        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_auth-manager-page.h" line="168"/>
         <source>Fingerprint Authentication</source>
         <translation>指纹认证</translation>
     </message>
     <message>
-        <location filename="../src/pages/auth-manager-page/auth-manager-page.ui" line="93"/>
-        <location filename="../build/kiran-account-manager_autogen/include/ui_auth-manager-page.h" line="189"/>
-        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_auth-manager-page.h" line="189"/>
+        <location filename="../src/pages/auth-manager-page/auth-manager-page.ui" line="86"/>
+        <location filename="../build/kiran-account-manager_autogen/include/ui_auth-manager-page.h" line="169"/>
+        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_auth-manager-page.h" line="169"/>
         <source>Face Authentication</source>
         <translation>人脸认证</translation>
     </message>
     <message>
-        <location filename="../src/pages/auth-manager-page/auth-manager-page.ui" line="140"/>
-        <location filename="../build/kiran-account-manager_autogen/include/ui_auth-manager-page.h" line="191"/>
-        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_auth-manager-page.h" line="191"/>
+        <location filename="../src/pages/auth-manager-page/auth-manager-page.ui" line="126"/>
+        <location filename="../build/kiran-account-manager_autogen/include/ui_auth-manager-page.h" line="170"/>
+        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_auth-manager-page.h" line="170"/>
         <source>Password Authentication</source>
         <translation>密码认证</translation>
     </message>
     <message>
-        <location filename="../src/pages/auth-manager-page/auth-manager-page.ui" line="221"/>
-        <location filename="../build/kiran-account-manager_autogen/include/ui_auth-manager-page.h" line="193"/>
-        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_auth-manager-page.h" line="193"/>
+        <location filename="../src/pages/auth-manager-page/auth-manager-page.ui" line="200"/>
+        <location filename="../build/kiran-account-manager_autogen/include/ui_auth-manager-page.h" line="171"/>
+        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_auth-manager-page.h" line="171"/>
         <source>save</source>
         <translation>保存</translation>
     </message>
     <message>
-        <location filename="../src/pages/auth-manager-page/auth-manager-page.ui" line="262"/>
-        <location filename="../build/kiran-account-manager_autogen/include/ui_auth-manager-page.h" line="194"/>
-        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_auth-manager-page.h" line="194"/>
+        <location filename="../src/pages/auth-manager-page/auth-manager-page.ui" line="241"/>
+        <location filename="../build/kiran-account-manager_autogen/include/ui_auth-manager-page.h" line="172"/>
+        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_auth-manager-page.h" line="172"/>
         <source>return</source>
         <translation>返回</translation>
     </message>
     <message>
-        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="101"/>
+        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="111"/>
         <source>add fingerprint</source>
         <translation>录入指纹数据</translation>
     </message>
     <message>
-        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="114"/>
+        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="124"/>
         <source>add face</source>
         <translation>录入人脸数据</translation>
     </message>
     <message>
-        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="131"/>
-        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="234"/>
+        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="141"/>
+        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="244"/>
         <source>error</source>
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="132"/>
-        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="235"/>
+        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="142"/>
+        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="245"/>
         <source>please ensure that at least one authentication option exists</source>
         <translation>请确保至少一个认证选项打开</translation>
     </message>
     <message>
-        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="428"/>
+        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="437"/>
         <source>fingerprint_</source>
         <translation>指纹_</translation>
     </message>
     <message>
-        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="428"/>
+        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="437"/>
         <source>face_</source>
         <translation>人脸_</translation>
     </message>

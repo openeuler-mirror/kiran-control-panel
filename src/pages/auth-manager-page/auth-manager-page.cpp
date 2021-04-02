@@ -14,6 +14,7 @@
 #include <QList>
 #include <QJsonDocument>
 #include <kiran-message-box.h>
+#include <kiran-switch-button.h>
 
 AuthManagerPage::AuthManagerPage (QWidget *parent) :
         QWidget(parent), ui(new Ui::AuthManagerPage)
@@ -48,15 +49,24 @@ void AuthManagerPage::setCurrentUser (const QString &userObj)
 
 void AuthManagerPage::initUI ()
 {
+    m_fingerAuthSwitch = new KiranSwitchButton(this);
+    ui->layout_fingerAuth->addWidget(m_fingerAuthSwitch);
+    connect(m_fingerAuthSwitch, &KiranSwitchButton::toggled, this, &AuthManagerPage::slotCheckAuthTypes);
+
+    m_faceAuthSwitch = new KiranSwitchButton(this);
+    ui->layout_faceAuth->addWidget(m_faceAuthSwitch);
+    connect(m_faceAuthSwitch, &KiranSwitchButton::toggled, this, &AuthManagerPage::slotCheckAuthTypes);
+
+    m_passwdAuthSwitch = new KiranSwitchButton(this);
+    ui->layout_passwdAuth->addWidget(m_passwdAuthSwitch);
+    connect(m_passwdAuthSwitch,&KiranSwitchButton::toggled, this, &AuthManagerPage::slotCheckAuthTypes);
+
     connect(ui->btn_save, &QPushButton::clicked, [this] () {
         save();
     });
     connect(ui->btn_return, &QPushButton::clicked, [this] () {
         Q_EMIT sigReturn();
     });
-    connect(ui->check_passwdAuth, &QCheckBox::stateChanged, this, &AuthManagerPage::slotCheckAuthTypes);
-    connect(ui->check_fingerAuth, &QCheckBox::stateChanged, this, &AuthManagerPage::slotCheckAuthTypes);
-    connect(ui->check_faceAuth, &QCheckBox::stateChanged, this, &AuthManagerPage::slotCheckAuthTypes);
 }
 
 void AuthManagerPage::updateInfo ()
@@ -69,9 +79,9 @@ void AuthManagerPage::updateInfo ()
     {
         authModes = ACCOUNTS_AUTH_MODE_PASSWORD;
     }
-    ui->check_passwdAuth->setChecked((authModes & ACCOUNTS_AUTH_MODE_PASSWORD));
-    ui->check_faceAuth->setChecked((authModes & ACCOUNTS_AUTH_MODE_FACE));
-    ui->check_fingerAuth->setChecked((authModes & ACCOUNTS_AUTH_MODE_FINGERPRINT));
+    m_passwdAuthSwitch->setCheckable(authModes & ACCOUNTS_AUTH_MODE_PASSWORD);
+    m_fingerAuthSwitch->setCheckable(authModes & ACCOUNTS_AUTH_MODE_FINGERPRINT);
+    m_faceAuthSwitch->setCheckable(authModes & ACCOUNTS_AUTH_MODE_FACE);
 
     //清空之前的生物特征值
     auto cleanLayoutFunc = [] (QLayout *layout) {
@@ -121,9 +131,9 @@ void AuthManagerPage::save ()
 {
     qInfo() << "save..";
     bool uiPasswdAuth, uiFingerAuth, uiFaceAuth;
-    uiPasswdAuth = ui->check_passwdAuth->isChecked();
-    uiFingerAuth = ui->check_fingerAuth->isChecked();
-    uiFaceAuth = ui->check_faceAuth->isChecked();
+    uiPasswdAuth = m_passwdAuthSwitch->isChecked();
+    uiFingerAuth = m_fingerAuthSwitch->isChecked();
+    uiFaceAuth = m_faceAuthSwitch->isChecked();
     /* 检查验证选项至少保证一个打开 */
     if (!uiPasswdAuth && !uiFingerAuth && !uiFaceAuth)
     {
@@ -215,17 +225,17 @@ void AuthManagerPage::save ()
 }
 
 /// @brief 每个认证开关关闭时验证是否存在其他认证方式，若不存在则重新打开开关
-/// @param state
-void AuthManagerPage::slotCheckAuthTypes (int state)
+/// @param checked
+void AuthManagerPage::slotCheckAuthTypes (bool checked)
 {
-    if (state != Qt::Unchecked)
+    if (checked)
     {
         return;
     }
 
-    if (ui->check_faceAuth->isChecked() ||
-        ui->check_fingerAuth->isChecked() ||
-        ui->check_passwdAuth->isChecked())
+    if (m_faceAuthSwitch->isChecked() ||
+        m_fingerAuthSwitch->isChecked() ||
+        m_passwdAuthSwitch->isChecked())
     {
         return;
     }
@@ -234,9 +244,8 @@ void AuthManagerPage::slotCheckAuthTypes (int state)
                              tr("error"),
                              tr("please ensure that at least one authentication option exists"),
                              KiranMessageBox::Yes);
-    QCheckBox *checkbox = qobject_cast<QCheckBox *>(sender());
-
-    checkbox->setCheckState(Qt::Checked);
+    KiranSwitchButton *switchButton = qobject_cast<KiranSwitchButton *>(sender());
+    switchButton->setChecked(true);
 }
 
 BiometricList AuthManagerPage::getBiometricItemsFromUI (AccountsAuthMode mode)

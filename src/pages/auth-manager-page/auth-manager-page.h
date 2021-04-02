@@ -17,6 +17,7 @@ QT_END_NAMESPACE
 
 class UserInterface;
 class BiometricItem;
+class KiranSwitchButton;
 typedef QList<QPair<QString, QString>> BiometricList;
 
 class AuthManagerPage : public QWidget
@@ -48,7 +49,7 @@ private:
     BiometricItem *newBiometricItem (const QString &name, const QString &dataID);
 
 private slots:
-    void slotCheckAuthTypes (int state);
+    void slotCheckAuthTypes (bool checked);
     void slotItemDeleteClicked ();
     void slotAddBiometricsItem ();
 
@@ -56,6 +57,10 @@ private:
     Ui::AuthManagerPage *ui;
     QString m_userObjPath;
     UserInterface *m_userInterface = nullptr;
+
+    KiranSwitchButton *m_fingerAuthSwitch;
+    KiranSwitchButton *m_faceAuthSwitch;
+    KiranSwitchButton *m_passwdAuthSwitch;
 
     BiometricItem *m_addFingerItem = nullptr;
     BiometricItem *m_addFaceItem = nullptr;
