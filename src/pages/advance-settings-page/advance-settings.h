@@ -29,7 +29,7 @@ class AdvanceSettings : public KiranTitlebarWindow
     Q_OBJECT
 
 public:
-    explicit AdvanceSettings();
+    explicit AdvanceSettings(QWidget *parent);
     ~AdvanceSettings();
 
     /**

@@ -84,7 +84,7 @@ void CreateUserPage::initUI()
             m_errorTip->showTipAroundWidget(ui->edit_name);
             return;
         }
-        AdvanceSettings advanceSettings;
+        AdvanceSettings advanceSettings(nullptr);
         advanceSettings.show();
         advanceSettings.setInfo(ui->edit_name->text(), m_advanceSettingsInfo);
         QEventLoop eventLoop;

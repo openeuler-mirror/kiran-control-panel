@@ -14,10 +14,11 @@ Q_DECLARE_METATYPE(QList<QRect>);
 
 #define REFRESH_DELAY_TIME_MS 100
 
-FaceInputDialog::FaceInputDialog(QWidget *parent) : KiranTitlebarWindow(),
-                                                    ui(new Ui::FaceInputDialog),
-                                                    m_interface(new BiometricsInterface(QDBusConnection::systemBus(), this)),
-                                                    m_enrollThread(new FaceEnrollWorker(this))
+FaceInputDialog::FaceInputDialog(QWidget *parent)
+    : KiranTitlebarWindow(parent),
+      ui(new Ui::FaceInputDialog),
+      m_interface(new BiometricsInterface(QDBusConnection::systemBus(), this)),
+      m_enrollThread(new FaceEnrollWorker(this))
 {
     qRegisterMetaType<QList<QRect>>("QList<QRect>");
     ui->setupUi(getWindowContentWidget());

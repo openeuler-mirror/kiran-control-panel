@@ -27,8 +27,8 @@ enum StackWidgetPageEnum
     PAGE_AUTH_MANAGER
 };
 
-KiranAccountManager::KiranAccountManager()
-    : KiranTitlebarWindow()
+KiranAccountManager::KiranAccountManager(QWidget* parent)
+    : KiranTitlebarWindow(parent)
 {
     m_workThread.start();
     m_hardworker = new HardWorker();

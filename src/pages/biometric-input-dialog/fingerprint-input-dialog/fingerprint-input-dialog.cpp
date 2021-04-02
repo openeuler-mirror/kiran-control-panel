@@ -10,8 +10,9 @@
 
 #include <kiran-message-box.h>
 
-FingerprintInputDialog::FingerprintInputDialog(QWidget *parent) : KiranTitlebarWindow(),
-                                                                  ui(new Ui::FingerprintInputDialog)
+FingerprintInputDialog::FingerprintInputDialog(QWidget *parent)
+    : KiranTitlebarWindow(parent),
+      ui(new Ui::FingerprintInputDialog)
 {
     ui->setupUi(getWindowContentWidget());
     init();

@@ -16,7 +16,7 @@ class KiranAvatarEditor : public KiranTitlebarWindow
 {
     Q_OBJECT
 public:
-    explicit KiranAvatarEditor(const QString &srcImagePath, const QString &dstImagePath);
+    explicit KiranAvatarEditor(const QString &srcImagePath, const QString &dstImagePath, QWidget *parent= nullptr);
     ~KiranAvatarEditor();
 
 private:

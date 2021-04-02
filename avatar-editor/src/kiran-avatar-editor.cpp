@@ -12,8 +12,8 @@
 #include "kiran-avatar-editor.h"
 #include "ui-defines.h"
 
-KiranAvatarEditor::KiranAvatarEditor(const QString &srcImagePath, const QString &dstImagePath)
-    : KiranTitlebarWindow()
+KiranAvatarEditor::KiranAvatarEditor(const QString &srcImagePath, const QString &dstImagePath, QWidget *parent)
+    : KiranTitlebarWindow(parent)
 {
     initUI(srcImagePath, dstImagePath);
 }

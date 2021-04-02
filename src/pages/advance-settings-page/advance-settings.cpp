@@ -10,9 +10,10 @@
 #include <QFileInfo>
 #include <QIcon>
 
-AdvanceSettings::AdvanceSettings() : KiranTitlebarWindow(),
-                                     ui(new Ui::AdvanceSettings),
-                                     m_isConfirm(false)
+AdvanceSettings::AdvanceSettings(QWidget *parent)
+    : KiranTitlebarWindow(parent),
+      ui(new Ui::AdvanceSettings),
+      m_isConfirm(false)
 {
     ui->setupUi(getWindowContentWidget());
     initUI();
