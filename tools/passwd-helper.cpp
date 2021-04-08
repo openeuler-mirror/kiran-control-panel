@@ -6,7 +6,7 @@
 #include <security/pam_appl.h>
 #include <QByteArray>
 #include <QDebug>
-#include <QRandomGenerator>
+#include <random>
 #include <QString>
 
 bool PasswdHelper::encryptPassword(const QString &pwd, QString &encrypted)
@@ -15,10 +15,13 @@ bool PasswdHelper::encryptPassword(const QString &pwd, QString &encrypted)
     QString    saltChar  = "ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvxyz./0123456789";
 
     QString rand16SaltChar;
+
+    std::default_random_engine randomEngine;
+    std::uniform_int_distribution<int> uniformIntDistribution(0,saltChar.size()-1);
     for (int i = 0; i < 16; i++)
     {
-        int randSaltCharIdx = QRandomGenerator::global()->bounded(0, saltChar.count());
-        rand16SaltChar.append(saltChar.at(randSaltCharIdx));
+        char ch = saltChar.at(uniformIntDistribution(randomEngine)).toLatin1();
+        rand16SaltChar.append(ch);
     }
 
     QString    salt          = QString("$6$%1$").arg(rand16SaltChar);
@@ -26,6 +29,10 @@ bool PasswdHelper::encryptPassword(const QString &pwd, QString &encrypted)
 
     char *     cryptedResult = nullptr;
     QByteArray cryptedResultBuffer(100, 0);
+
+
+    //NOTE:兼容低版本libcrypt（不带有crypt_rn接口的版本）
+#if 0
     forever
     {
         cryptedResult = crypt_rn(byteArray.data(),
@@ -46,6 +53,12 @@ bool PasswdHelper::encryptPassword(const QString &pwd, QString &encrypted)
         }
         break;
     }
+#else
+    crypt_data cryptData{};
+    cryptedResult = crypt_r(byteArray.data(),
+            saltByteArray.data(),
+            &cryptData);
+#endif
 
     if (cryptedResult)
         encrypted = cryptedResult;

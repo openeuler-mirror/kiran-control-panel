@@ -65,7 +65,14 @@ QString TemporaryDirManager::generateTempFilePath()
         return QString("");
     }
     QUuid id = QUuid::createUuid();
+#if (QT_VERSION > QT_VERSION_CHECK(5,9,7))
     return QString("%1/%2").arg(m_temporaryDirPath).arg(id.toString(QUuid::WithoutBraces));
+#else
+    QString uuidString = id.toString();
+    uuidString.remove("{");
+    uuidString.remove("}");
+    return QString("%1/%2").arg(m_temporaryDirPath).arg(uuidString);
+#endif
 }
 
 TemporaryDirManager *TemporaryDirManager::instance()

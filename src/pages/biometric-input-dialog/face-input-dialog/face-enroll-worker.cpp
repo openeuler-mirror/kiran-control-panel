@@ -110,11 +110,12 @@ void FaceEnrollWorker::parseFaceAxis(const QJsonObject &jsonObject)
         for (QJsonValue item : array)
         {
             qInfo() << "item" << item;
+            QJsonObject itemObject = item.toObject();
             int tlX, tlY, width, height;
-            tlX    = item["x"].toInt();
-            tlY    = item["y"].toInt();
-            width  = item["h"].toInt();
-            height = item["w"].toInt();
+            tlX    = itemObject["x"].toInt();
+            tlY    = itemObject["y"].toInt();
+            width  = itemObject["h"].toInt();
+            height = itemObject["w"].toInt();
             QRect rect(tlX, tlY, width, height);
             res << rect;
             qInfo() << "face " << count++ << " -- top-left:" << rect.topLeft() << rect.width() << "x" << rect.height();
