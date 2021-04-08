@@ -157,17 +157,21 @@ void AuthManagerPage::save()
     if (uiPasswdAuth != backendPasswdAuth)
     {
         qInfo() << "update passwd auth mode: " << uiPasswdAuth;
-        m_userInterface->EnableAuthMode(ACCOUNTS_AUTH_MODE_PASSWORD, uiPasswdAuth);
+        auto reply = m_userInterface->EnableAuthMode(ACCOUNTS_AUTH_MODE_PASSWORD, uiPasswdAuth);
+        reply.waitForFinished();
     }
     if (uiFingerAuth != backendFingerAuth)
     {
         qInfo() << "update finger auth mode: " << uiFingerAuth;
-        m_userInterface->EnableAuthMode(ACCOUNTS_AUTH_MODE_FINGERPRINT, uiFingerAuth);
+        auto reply = m_userInterface->EnableAuthMode(ACCOUNTS_AUTH_MODE_FINGERPRINT, uiFingerAuth);
+        reply.waitForFinished();
+        qInfo() << reply.isError()  << reply.error();
     }
     if (uiFaceAuth != backendFaceAuth)
     {
         qInfo() << "update face auth mode: " << uiFaceAuth;
-        m_userInterface->EnableAuthMode(ACCOUNTS_AUTH_MODE_FACE, uiFaceAuth);
+        auto reply = m_userInterface->EnableAuthMode(ACCOUNTS_AUTH_MODE_FACE, uiFaceAuth);
+        reply.waitForFinished();
     }
 
     /* 从界面上获取生物识别特征值 */
@@ -206,11 +210,13 @@ void AuthManagerPage::save()
     qInfo() << "need add item:   " << addItems;
     for (auto &item : deletedItems)
     {
-        m_userInterface->DelAuthItem(ACCOUNTS_AUTH_MODE_FINGERPRINT, item.first);
+        auto reply = m_userInterface->DelAuthItem(ACCOUNTS_AUTH_MODE_FINGERPRINT, item.first);
+        reply.waitForFinished();
     }
     for (auto &item : addItems)
     {
-        m_userInterface->AddAuthItem(ACCOUNTS_AUTH_MODE_FINGERPRINT, item.first, item.second);
+        auto reply = m_userInterface->AddAuthItem(ACCOUNTS_AUTH_MODE_FINGERPRINT, item.first, item.second);
+        reply.waitForFinished();
     }
 
     funcCompareBiometricItems(uiFaceTemplates, backendFaceTemplates, deletedItems, addItems);
@@ -219,11 +225,13 @@ void AuthManagerPage::save()
     qInfo() << "need add item:   " << addItems;
     for (auto &item : deletedItems)
     {
-        m_userInterface->DelAuthItem(ACCOUNTS_AUTH_MODE_FACE, item.first);
+        auto reply = m_userInterface->DelAuthItem(ACCOUNTS_AUTH_MODE_FACE, item.first);
+        reply.waitForFinished();
     }
     for (auto &item : addItems)
     {
-        m_userInterface->AddAuthItem(ACCOUNTS_AUTH_MODE_FACE, item.first, item.second);
+        auto reply = m_userInterface->AddAuthItem(ACCOUNTS_AUTH_MODE_FACE, item.first, item.second);
+        reply.waitForFinished();
     }
 }
 
