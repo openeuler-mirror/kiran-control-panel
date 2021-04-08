@@ -83,9 +83,9 @@ void AuthManagerPage::updateInfo()
     {
         authModes = ACCOUNTS_AUTH_MODE_PASSWORD;
     }
-    m_passwdAuthSwitch->setCheckable(authModes & ACCOUNTS_AUTH_MODE_PASSWORD);
-    m_fingerAuthSwitch->setCheckable(authModes & ACCOUNTS_AUTH_MODE_FINGERPRINT);
-    m_faceAuthSwitch->setCheckable(authModes & ACCOUNTS_AUTH_MODE_FACE);
+    m_passwdAuthSwitch->setChecked(authModes & ACCOUNTS_AUTH_MODE_PASSWORD);
+    m_fingerAuthSwitch->setChecked(authModes & ACCOUNTS_AUTH_MODE_FINGERPRINT);
+    m_faceAuthSwitch->setChecked(authModes & ACCOUNTS_AUTH_MODE_FACE);
 
     //清空之前的生物特征值
     auto cleanLayoutFunc = [](QLayout *layout) {

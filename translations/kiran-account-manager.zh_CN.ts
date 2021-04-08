@@ -149,34 +149,34 @@
         <translation>返回</translation>
     </message>
     <message>
-        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="115"/>
+        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="118"/>
         <source>add fingerprint</source>
         <translation>录入指纹数据</translation>
     </message>
     <message>
-        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="128"/>
+        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="131"/>
         <source>add face</source>
         <translation>录入人脸数据</translation>
     </message>
     <message>
-        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="145"/>
-        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="247"/>
+        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="148"/>
+        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="250"/>
         <source>error</source>
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="146"/>
-        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="248"/>
+        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="149"/>
+        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="251"/>
         <source>please ensure that at least one authentication option exists</source>
         <translation>请确保至少一个认证选项打开</translation>
     </message>
     <message>
-        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="440"/>
+        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="443"/>
         <source>fingerprint_</source>
         <translation>指纹_</translation>
     </message>
     <message>
-        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="440"/>
+        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="443"/>
         <source>face_</source>
         <translation>人脸_</translation>
     </message>

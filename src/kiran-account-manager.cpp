@@ -180,7 +180,7 @@ void KiranAccountManager::initUserList()
     ///创建用户按钮
     m_createUserItem = new QListWidgetItem(tr("Create new account"), m_tabList);
     m_createUserItem->setIcon(QIcon(":/images/add_icon.png"));
-    m_tabList->addItem(item);
+    m_tabList->addItem(m_createUserItem);
 
     //加载非系统用户
     QList<QString> userObjList;
