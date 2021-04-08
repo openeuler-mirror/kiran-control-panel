@@ -51,7 +51,7 @@ void KiranAccountManager::setCurrentUser(const QString &userPath)
     int findIdx = -1;
     for (int i = 0; i < m_tabList->count(); i++)
     {
-        if (m_tabList->item(i)->data(Qt::UserRole) != userPath)
+        if (m_tabList->item(i)->data(ITEM_USER_OBJ_PATH_ROLE) != userPath)
         {
             continue;
         }
@@ -156,7 +156,6 @@ void KiranAccountManager::initUserList()
         QList<QListWidgetItem *> selecteds = m_tabList->selectedItems();
         if (selecteds.size() != 1)
         {
-            qFatal("tabList: selecteds size != 1");
             return;
         }
         QListWidgetItem *item = selecteds.at(0);
@@ -317,7 +316,7 @@ void KiranAccountManager::connectToInfoChanged()
                 QString userPath = obj.path();
                 for (int i = 0; i < m_tabList->count(); i++)
                 {
-                    if (m_tabList->item(i)->data(Qt::UserRole) == userPath)
+                    if (m_tabList->item(i)->data(ITEM_USER_OBJ_PATH_ROLE) == userPath)
                     {
                         findIdx = i;
                         break;
@@ -325,6 +324,7 @@ void KiranAccountManager::connectToInfoChanged()
                 }
                 if (findIdx == -1)
                 {
+                    qWarning() << "can't find deleted user:" << obj.path();
                     return;
                 }
                 bool             needResetSidebarItem = m_tabList->item(findIdx)->isSelected();
@@ -345,7 +345,7 @@ void KiranAccountManager::connectToInfoChanged()
                     for (int i = 0; i < m_tabList->count(); i++)
                     {
                         QListWidgetItem *item         = m_tabList->item(i);
-                        QString          itemUserPath = item->data(Qt::UserRole).toString();
+                        QString          itemUserPath = item->data(ITEM_USER_OBJ_PATH_ROLE).toString();
                         if (itemUserPath != userPath)
                         {
                             continue;
@@ -356,8 +356,8 @@ void KiranAccountManager::connectToInfoChanged()
                         bool          isLocked = userInterface.locked();
                         item->setText(userName);
                         item->setIcon(QIcon(iconFile));
-                        //TODO:写入颜色
-                        //                        item->setData(Kiran::ItemStatus_Role,isLocked?"disable":"enable");
+                        item->setData(Kiran::ItemStatus_Role, isLocked ? tr("disable") : tr("enable"));
+                        item->setData(Kiran::ItemStatusColor_Role, isLocked ? QColor("#fa4949") : QColor("#43a3f2"));
                         break;
                     }
                 }

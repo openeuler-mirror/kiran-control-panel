@@ -149,34 +149,34 @@
         <translation>返回</translation>
     </message>
     <message>
-        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="118"/>
+        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="115"/>
         <source>add fingerprint</source>
         <translation>录入指纹数据</translation>
     </message>
     <message>
-        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="131"/>
+        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="128"/>
         <source>add face</source>
         <translation>录入人脸数据</translation>
     </message>
     <message>
-        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="148"/>
-        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="250"/>
+        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="145"/>
+        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="255"/>
         <source>error</source>
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="149"/>
-        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="251"/>
+        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="146"/>
+        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="256"/>
         <source>please ensure that at least one authentication option exists</source>
         <translation>请确保至少一个认证选项打开</translation>
     </message>
     <message>
-        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="443"/>
+        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="448"/>
         <source>fingerprint_</source>
         <translation>指纹_</translation>
     </message>
     <message>
-        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="443"/>
+        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="448"/>
         <source>face_</source>
         <translation>人脸_</translation>
     </message>
@@ -477,22 +477,22 @@
 <context>
     <name>KiranAccountManager</name>
     <message>
-        <location filename="../src/kiran-account-manager.cpp" line="70"/>
+        <location filename="../src/kiran-account-manager.cpp" line="71"/>
         <source>disable</source>
         <translation type="unfinished">禁用</translation>
     </message>
     <message>
-        <location filename="../src/kiran-account-manager.cpp" line="70"/>
+        <location filename="../src/kiran-account-manager.cpp" line="71"/>
         <source>enable</source>
         <translation type="unfinished">启用</translation>
     </message>
     <message>
-        <location filename="../src/kiran-account-manager.cpp" line="93"/>
+        <location filename="../src/kiran-account-manager.cpp" line="94"/>
         <source>User Manager</source>
         <translation>账户管理工具</translation>
     </message>
     <message>
-        <location filename="../src/kiran-account-manager.cpp" line="181"/>
+        <location filename="../src/kiran-account-manager.cpp" line="182"/>
         <source>Create new account</source>
         <translation type="unfinished">创建新账户</translation>
     </message>
