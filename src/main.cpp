@@ -6,6 +6,7 @@
 
 #include <kiran-application.h>
 #include <QFile>
+#include <QDesktopWidget>
 
 #define LOG_PATH "/tmp/kiran-account-manager.log"
 #define DEFAULT_THEME ":/themes/black_theme.qss"
@@ -77,6 +78,10 @@ int main(int argc, char *argv[])
 
     KiranAccountManager accountManager;
     accountManager.resize(975, 850);
+    int screeNum = QApplication::desktop()->screenNumber(QCursor::pos());
+    QRect screenGeometry = QApplication::desktop()->screenGeometry(screeNum);
+    accountManager.move(screenGeometry.x() + (screenGeometry.width() - accountManager.width()) / 2,
+                screenGeometry.y() + (screenGeometry.height() - accountManager.height()) / 2);
     accountManager.show();
     return QApplication::exec();
 }

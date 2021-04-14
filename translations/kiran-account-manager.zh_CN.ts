@@ -477,22 +477,24 @@
 <context>
     <name>KiranAccountManager</name>
     <message>
-        <location filename="../src/kiran-account-manager.cpp" line="71"/>
+        <location filename="../src/kiran-account-manager.cpp" line="70"/>
+        <location filename="../src/kiran-account-manager.cpp" line="359"/>
         <source>disable</source>
         <translation type="unfinished">禁用</translation>
     </message>
     <message>
-        <location filename="../src/kiran-account-manager.cpp" line="71"/>
+        <location filename="../src/kiran-account-manager.cpp" line="70"/>
+        <location filename="../src/kiran-account-manager.cpp" line="359"/>
         <source>enable</source>
         <translation type="unfinished">启用</translation>
     </message>
     <message>
-        <location filename="../src/kiran-account-manager.cpp" line="94"/>
+        <location filename="../src/kiran-account-manager.cpp" line="93"/>
         <source>User Manager</source>
         <translation>账户管理工具</translation>
     </message>
     <message>
-        <location filename="../src/kiran-account-manager.cpp" line="182"/>
+        <location filename="../src/kiran-account-manager.cpp" line="180"/>
         <source>Create new account</source>
         <translation type="unfinished">创建新账户</translation>
     </message>
