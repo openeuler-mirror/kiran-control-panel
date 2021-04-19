@@ -52,7 +52,7 @@ HardwareInformationWidget::~HardwareInformationWidget()
 
 void HardwareInformationWidget::initUI(void)
 {
-
+    ui->widget_logo->hide();
 }
 
 /**
