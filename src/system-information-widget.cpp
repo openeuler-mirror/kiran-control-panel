@@ -20,7 +20,7 @@
 #include <QDesktopWidget>
 #include <QFont>
 
-#define SYSTEM_LOGO     "KylinSecOS"
+#define SYSTEM_LOGO     "KylinSec OS"
 
 #define HOST_NAME        "host_name"
 #define ARCH             "arch"
