@@ -30,14 +30,17 @@ SOURCES += \
     single-application/single-application.cpp \
     single-application/single-application_p.cpp \
     tools/log.cpp \
+    kiran-cpanel-mouse-widget.cpp
 
 HEADERS += \
         kiran-cpanel-mouse.h \
     single-application/single-application.h \
     single-application/single-application_p.h \
-    tools/log.h
+    tools/log.h \
+    kiran-cpanel-mouse-widget.h
 
-FORMS +=
+FORMS += \
+    kiran-cpanel-mouse-widget.ui
 
 LIBS  += -lkiranwidgets-qt5\
          -lzlog
