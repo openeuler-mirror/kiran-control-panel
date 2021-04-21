@@ -13,6 +13,7 @@ class KiranCPanelMouse : public KiranTitlebarWindow
 public:
     explicit KiranCPanelMouse();
     ~KiranCPanelMouse();
+    virtual QSize sizeHint() const override;
 
 private:
     KiranCPanelMouseWidget* m_cpanelMouseWidget;

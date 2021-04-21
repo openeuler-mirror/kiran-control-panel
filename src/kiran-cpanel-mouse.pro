@@ -30,17 +30,22 @@ SOURCES += \
     single-application/single-application.cpp \
     single-application/single-application_p.cpp \
     tools/log.cpp \
-    kiran-cpanel-mouse-widget.cpp
+    kiran-cpanel-mouse-widget.cpp \
+    widgets/kiran-list-widget.cpp \
+    widgets/kiran-list-tem.cpp
 
 HEADERS += \
         kiran-cpanel-mouse.h \
     single-application/single-application.h \
     single-application/single-application_p.h \
     tools/log.h \
-    kiran-cpanel-mouse-widget.h
+    kiran-cpanel-mouse-widget.h \
+    widgets/kiran-list-widget.h \
+    widgets/kiran-list-item.h
 
 FORMS += \
-    kiran-cpanel-mouse-widget.ui
+    kiran-cpanel-mouse-widget.ui \
+    widgets/kiran-list-item.ui
 
 LIBS  += -lkiranwidgets-qt5\
          -lzlog
