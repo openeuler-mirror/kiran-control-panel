@@ -2,6 +2,7 @@
 #define KIRANCPANELMOUSEWIDGET_H
 
 #include <QWidget>
+#include <QListWidgetItem>
 
 namespace Ui {
 class KiranCPanelMouseWidget;
@@ -20,6 +21,10 @@ public:
 private:
     void initUI();
     KiranListItem* createListItem(QString text);
+    void addComboBoxItem();
+
+public slots:
+    void setCurrentPageWhenItemClicked(QListWidgetItem* item);
 
 private:
     Ui::KiranCPanelMouseWidget *ui;
@@ -27,8 +32,6 @@ private:
     KiranSwitchButton* m_middleEmulationSwitch = nullptr;
     KiranListItem* m_mouseListItem;
     KiranListItem* m_touchpadListItem;
-
-
 };
 
 #endif // KIRANCPANELMOUSEWIDGET_H

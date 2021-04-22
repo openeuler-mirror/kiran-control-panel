@@ -1,0 +1,167 @@
+/*****************QWidget*********************/
+QWidget#KiranCPanelMouseWidget
+{
+    background-color:#222222;
+}
+
+QWidget#widget_list
+{
+    border-right:1px solid #2d2d2d;
+    border-left:none;
+    border-top:none;
+    border-bottom:none;
+}
+
+/*************QLabel*************************/
+#label_hand_mode,
+#label_move_speed,
+#label_natural_scroll,
+#label_middle_emulation
+{
+    color:white;
+    font-family: "Noto Sans CJK SC light";
+    font-size:12px;
+}
+#label_speed
+{
+    color:#2ca5ea;
+    font-family: "Noto Sans CJK SC light";
+    font-size:12px;
+}
+
+#label_tp_disable_touchpad,
+#label_tp_hand_mode,
+#label_tp_move_speed,
+#label_tp_click_mode,
+#label_tp_move_win_mode,
+#label_tp_natural_scroll,
+#label_disable_while_typing,
+#label_tap_to_click
+{
+    color:white;
+    font-family: "Noto Sans CJK SC light";
+    font-size:12px;
+}
+
+/*************QListWidget********************/
+QListWidget#listWidget{
+    show-decoration-selected: 0;
+    background-color:transparent;
+    margin-top:10px;
+    margin-left:12px;
+    margin-right:24px;
+}
+QListWidget#listWidget::item{
+    background-color: #2d2d2d;
+    border-radius:10px;
+/*    color:white;*/
+}
+QListWidget#listWidget::item:selected{
+    background:#2eb3ff;
+    border:none;
+}
+KiranListItem > QLabel#text{
+    color:white;
+    font-family: "Noto Sans CJK SC light";
+    font-size:12px;
+    background:transparent;
+}
+#mouseListItem > QLabel#icon
+{
+    border-image:url(:/images/mouse.svg);
+    background:transparent;
+}
+#touchpadListItem > QLabel#icon
+{
+    border-image:url(:/images/touchpad.svg);
+    background:transparent;
+}
+
+/*************QComboBox*******************/
+QComboBox#comboBox_hand_mode,
+QComboBox#comboBox_tp_hand_mode,
+QComboBox#comboBox_tp_click_mode,
+QComboBox#comboBox_tp_move_win_mode
+{
+    border: 1px solid #2d2d2d;
+    border-radius:6px;
+    background-color:transparent;
+    padding-left:10px;
+    color:white;
+    font-family: "Noto Sans CJK SC light";
+    font-size:12px;
+    combobox-popup: 0;
+}
+QComboBox#comboBox_hand_mode::drop-down,
+QComboBox#comboBox_tp_hand_mode::drop-down,
+QComboBox#comboBox_tp_click_mode::drop-down,
+QComboBox#comboBox_tp_move_win_mode::drop-down
+{
+    subcontrol-origin: padding;
+    subcontrol-position: top right;
+    width: 15px;
+    margin-right:14px;
+    border:none;
+    image: url(:/images/down-arrow.png);
+}
+QComboBox#comboBox_hand_mode QAbstractItemView,
+QComboBox#comboBox_tp_hand_mode QAbstractItemView,
+QComboBox#comboBox_tp_click_mode QAbstractItemView,
+QComboBox#comboBox_tp_move_win_mode QAbstractItemView
+{
+    border: 1px solid #21a6ff;
+    border-radius: 6px;
+    margin-top:3px;
+    background: #202020;
+    color:white;
+    padding-left:10px;
+}
+
+/*FIXME
+    set item height
+*/
+QComboBox#comboBox_hand_mode QAbstractItemView::item
+/*QComboBox#comboBox_tp_hand_mode QAbstractItemView::item,
+QComboBox#comboBox_tp_click_mode QAbstractItemView::item,
+QComboBox#comboBox_tp_move_win_mode QAbstractItemView::item*/
+{
+}
+QComboBox#comboBox_hand_mode QAbstractItemView::item:selected
+{
+}
+
+/***********************QCheckBox********************/
+QCheckBox::indicator{
+    width: 50px;
+    height: 22px;
+    border:none;
+    background-color:transparent;
+    image: url(:/images/on.png);
+}
+QCheckBox::indicator:unchecked{
+    image: url(:/images/off.png);
+}
+
+/**********************QPushButton*********************/
+#btn_cancel,#btn_save
+{
+    color:white;
+    font-family: "Noto Sans CJK SC light";
+    font-size:12px;
+    border-radius:10px;
+    border:none;
+    background:#2eb3ff;
+}
+
+#btn_cancel:hover,
+#btn_save:hover
+{
+    background:#77ceff;
+}
+#btn_cancel:pressed,
+#btn_save:pressed
+{
+    background-color:#2eb3ff;
+    border:none;
+}
+

@@ -32,7 +32,8 @@ SOURCES += \
     tools/log.cpp \
     kiran-cpanel-mouse-widget.cpp \
     widgets/kiran-list-widget.cpp \
-    widgets/kiran-list-tem.cpp
+    widgets/kiran-list-tem.cpp \
+    widgets/kiran-scroll-area.cpp
 
 HEADERS += \
         kiran-cpanel-mouse.h \
@@ -41,7 +42,8 @@ HEADERS += \
     tools/log.h \
     kiran-cpanel-mouse-widget.h \
     widgets/kiran-list-widget.h \
-    widgets/kiran-list-item.h
+    widgets/kiran-list-item.h \
+    widgets/kiran-scroll-area.h
 
 FORMS += \
     kiran-cpanel-mouse-widget.ui \

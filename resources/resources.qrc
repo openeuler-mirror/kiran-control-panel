@@ -5,5 +5,7 @@
         <file>images/down-arrow.png</file>
         <file>images/off.png</file>
         <file>images/on.png</file>
+        <file>images/mouse.svg</file>
+        <file>images/touchpad.svg</file>
     </qresource>
 </RCC>

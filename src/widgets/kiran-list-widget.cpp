@@ -17,6 +17,6 @@ KiranListWidget::KiranListWidget(QWidget *parent)
 
 QSize KiranListWidget::sizeHint() const
 {
-    QSize size = QSize(288,-1);
+    QSize size = QSize(282,-1);
     return size;
 }

@@ -17,6 +17,7 @@ public:
 
 public:
     void setText(QString text);
+    void setItemArrow(bool isSelected);
 
 private:
     Ui::KiranListItem *ui;

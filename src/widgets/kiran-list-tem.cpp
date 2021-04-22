@@ -18,3 +18,11 @@ void KiranListItem::setText(QString text)
     ui->text->setText(text);
 }
 
+void KiranListItem::setItemArrow(bool isSelected)
+{
+    if(isSelected)
+        ui->arrow->setStyleSheet("QLabel#arrow{border-image:url(:/images/arrow.svg)};");
+    else
+        ui->arrow->setStyleSheet("QLabel#arrow{border-image:none");
+}
+
