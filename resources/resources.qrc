@@ -7,5 +7,7 @@
         <file>images/on.png</file>
         <file>images/mouse.svg</file>
         <file>images/touchpad.svg</file>
+        <file>images/disable_off.png</file>
+        <file>images/disable_on.png</file>
     </qresource>
 </RCC>

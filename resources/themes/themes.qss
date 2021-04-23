@@ -22,11 +22,15 @@ QWidget#widget_list
     font-family: "Noto Sans CJK SC light";
     font-size:12px;
 }
-#label_speed
+#label_speed,#label_tp_speed
 {
     color:#2ca5ea;
     font-family: "Noto Sans CJK SC light";
     font-size:12px;
+}
+#label_tp_speed:disabled
+{
+    color:gray;
 }
 
 #label_tp_disable_touchpad,
@@ -41,6 +45,17 @@ QWidget#widget_list
     color:white;
     font-family: "Noto Sans CJK SC light";
     font-size:12px;
+}
+#label_tp_disable_touchpad:disabled,
+#label_tp_hand_mode:disabled,
+#label_tp_move_speed:disabled,
+#label_tp_click_mode:disabled,
+#label_tp_move_win_mode:disabled,
+#label_tp_natural_scroll:disabled,
+#label_disable_while_typing:disabled,
+#label_tap_to_click:disabled
+{
+    color:gray;
 }
 
 /*************QListWidget********************/
@@ -92,6 +107,13 @@ QComboBox#comboBox_tp_move_win_mode
     font-size:12px;
     combobox-popup: 0;
 }
+QComboBox#comboBox_hand_mode:disabled,
+QComboBox#comboBox_tp_hand_mode:disabled,
+QComboBox#comboBox_tp_click_mode:disabled,
+QComboBox#comboBox_tp_move_win_mode:disabled
+{
+    color:gray;
+}
 QComboBox#comboBox_hand_mode::drop-down,
 QComboBox#comboBox_tp_hand_mode::drop-down,
 QComboBox#comboBox_tp_click_mode::drop-down,
@@ -141,6 +163,10 @@ QCheckBox::indicator{
 }
 QCheckBox::indicator:unchecked{
     image: url(:/images/off.png);
+}
+QCheckBox:disabled
+{
+
 }
 
 /**********************QPushButton*********************/
