@@ -77,6 +77,8 @@ void KiranCPanelMouseWidget::initUI()
     {
        slider->setMaximum(SLIDER_MAXIMUN);
        slider->setMinimum(SLIDER_MINIMUM);
+       slider->setPageStep((SLIDER_MAXIMUN-SLIDER_MINIMUM+1)/2);
+       slider->setSingleStep((SLIDER_MAXIMUN-SLIDER_MINIMUM+1)/2);
     }
 }
 
