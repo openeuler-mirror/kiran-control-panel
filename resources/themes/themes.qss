@@ -117,14 +117,15 @@ QComboBox#comboBox_tp_move_win_mode QAbstractItemView
     padding-left:10px;
 }
 
-/*FIXME
-    set item height
-*/
+/*FIXME*/
+/*set item height*/
+
 QComboBox#comboBox_hand_mode QAbstractItemView::item
 /*QComboBox#comboBox_tp_hand_mode QAbstractItemView::item,
 QComboBox#comboBox_tp_click_mode QAbstractItemView::item,
 QComboBox#comboBox_tp_move_win_mode QAbstractItemView::item*/
 {
+    color:red;
 }
 QComboBox#comboBox_hand_mode QAbstractItemView::item:selected
 {
@@ -143,25 +144,34 @@ QCheckBox::indicator:unchecked{
 }
 
 /**********************QPushButton*********************/
-#btn_cancel,#btn_save
+#btn_save,#btn_cancel
 {
     color:white;
     font-family: "Noto Sans CJK SC light";
     font-size:12px;
     border-radius:10px;
     border:none;
+}
+#btn_save
+{
     background:#2eb3ff;
 }
-
-#btn_cancel:hover,
 #btn_save:hover
 {
     background:#77ceff;
 }
-#btn_cancel:pressed,
 #btn_save:pressed
 {
     background-color:#2eb3ff;
     border:none;
 }
+#btn_cancel
+{
+    background:#2d2d2d;
+}
+#btn_cancel:hover
+{
+    background:rgba(255,255,255,0.1);
+}
+
 

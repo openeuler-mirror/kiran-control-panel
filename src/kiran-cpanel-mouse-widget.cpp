@@ -73,7 +73,7 @@ KiranListItem* KiranCPanelMouseWidget::createListItem(QString text)
 void KiranCPanelMouseWidget::addComboBoxItem()
 {
     QStringList hand_mode;
-    hand_mode << tr("Right Mode") << tr("Left Mode") ;
+    hand_mode << tr("Right Hand Mode") << tr("Left Hand Mode") ;
     ui->comboBox_hand_mode->addItems(hand_mode);
     ui->comboBox_tp_hand_mode->addItems(hand_mode);
 
@@ -82,7 +82,7 @@ void KiranCPanelMouseWidget::addComboBoxItem()
     ui->comboBox_tp_click_mode->addItems(tpClickMode);
 
     QStringList tpScrollWinMode;
-    tpScrollWinMode << tr("One Finger") <<tr("Two Finger") << tr("Three Finger");
+    tpScrollWinMode << tr("Two Finger Scroll") <<tr("Edge Scroll");
     ui->comboBox_tp_move_win_mode->addItems(tpScrollWinMode);
 }
 
