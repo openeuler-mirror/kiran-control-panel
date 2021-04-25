@@ -3,12 +3,13 @@
 #include "widgets/kiran-list-item.h"
 
 #include <kiranwidgets-qt5/kiran-switch-button.h>
+#include <kiranwidgets-qt5/widget-property-helper.h>
 #include <iostream>
 
 #define SLIDER_MINIMUM  0
 #define SLIDER_MAXIMUN  99
 using namespace std;
-
+using namespace Kiran::WidgetPropertyHelper ;
 enum Items
 {
     ITEM_MOUSE,
@@ -35,7 +36,6 @@ KiranCPanelMouseWidget::KiranCPanelMouseWidget(QWidget *parent) :
 {
     ui->setupUi(this);
     initUI();
-    addComboBoxItem();
 
     connect(ui->btn_cancel,&QPushButton::clicked,this,&QApplication::quit);
     connect(ui->listWidget,SIGNAL(itemClicked(QListWidgetItem*)),this,SLOT(setCurrentPageWhenItemClicked(QListWidgetItem*)));
@@ -52,17 +52,14 @@ KiranCPanelMouseWidget::~KiranCPanelMouseWidget()
 
 void KiranCPanelMouseWidget::initUI()
 {
-    m_naturalScrollSwitch = new KiranSwitchButton(this);
-    m_middleEmulationSwitch = new KiranSwitchButton(this);
-    ui->hLayout_natural_scroll->addWidget(m_naturalScrollSwitch);
-    ui->hLayout_middle_emulation->addWidget(m_middleEmulationSwitch);
+    setButtonType(ui->btn_save,Kiran::BUTTON_Default);
 
     ui->listWidget->resize(sizeHint());
+    ui->listWidget->setIconSize(QSize(16,16));
 
-    m_mouseListItem = createListItem(tr("Mouse Settings"));
-    m_mouseListItem->setObjectName("mouseListItem");
-    m_touchpadListItem = createListItem(tr("TouchPad Settings"));
-    m_touchpadListItem->setObjectName("touchpadListItem");
+    addSidebarItem(tr("Mouse Settings"),":/images/mouse.svg");
+    addSidebarItem(tr("TouchPad Settings"),":/images/touchpad.svg");
+    addComboBoxItem();
 
     ui->listWidget->setCurrentRow(ITEM_MOUSE);
     ui->stackedWidget->setCurrentIndex(PAGE_MOUSE);
@@ -118,20 +115,24 @@ void KiranCPanelMouseWidget::addComboBoxItem()
     ui->comboBox_tp_move_win_mode->addItems(tpScrollWinMode);
 }
 
+void KiranCPanelMouseWidget::addSidebarItem(QString text, QString icon)
+{
+    QListWidgetItem* item = new QListWidgetItem(ui->listWidget);
+    item->setIcon(QIcon(icon));
+    item->setText(text);
+    ui->listWidget->addItem(item);
+}
+
 void KiranCPanelMouseWidget::setCurrentPageWhenItemClicked(QListWidgetItem *item)
 {
     int itemNum = ui->listWidget->row(item);
     if(itemNum == ITEM_MOUSE)
     {
         ui->stackedWidget->setCurrentWidget(ui->page_mouse);
-        m_mouseListItem->setItemArrow(true);
-        m_touchpadListItem->setItemArrow(false);
     }
     else if(itemNum == ITEM_TOUCHPAD)
     {
         ui->stackedWidget->setCurrentWidget(ui->page_touchpad);
-        m_touchpadListItem->setItemArrow(true);
-        m_mouseListItem->setItemArrow(false);
     }
 }
 
@@ -196,7 +197,7 @@ void KiranCPanelMouseWidget::onSliderReleased()
 
 void KiranCPanelMouseWidget::onDisabelTouchPadToggled(bool disabled)
 {
-    m_comboBoxList = this->findChildren<QComboBox *>();
+    m_comboBoxList = ui->page_touchpad->findChildren<QComboBox *>();
     m_checkBoxList = {ui->checkBox_tap_to_click,
                       ui->checkBox_tp_natural_scroll,
                       ui->checkBox_disable_while_typing};
@@ -218,16 +219,16 @@ void KiranCPanelMouseWidget::setDisableWidget(bool disabled)
     {
         comboBox->setDisabled(disabled);
     }
-    foreach (QCheckBox* checkBox, m_checkBoxList)
+    foreach (KiranSwitchButton* checkBox, m_checkBoxList)
     {
         checkBox->setDisabled(disabled);
     }
-    foreach (QLabel* label, m_labelList)
-    {
-        if(label == ui->label_tp_disable_touchpad)
-            continue;
-        label->setDisabled(disabled);
-    }
+//    foreach (QLabel* label, m_labelList)
+//    {
+//        if(label == ui->label_tp_disable_touchpad)
+//            continue;
+//        label->setDisabled(disabled);
+//    }
     ui->slider_tp_speed->setDisabled(disabled);
     ui->label_tp_speed->setDisabled(disabled);
 }

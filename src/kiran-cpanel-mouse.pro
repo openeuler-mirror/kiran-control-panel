@@ -22,13 +22,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # In order to do so, uncomment the following line.
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
+INCLUDEPATH += \
+    /usr/include/kiranwidgets-qt5
 
 
 SOURCES += \
         main.cpp \
         kiran-cpanel-mouse.cpp \
-    single-application/single-application.cpp \
-    single-application/single-application_p.cpp \
     tools/log.cpp \
     kiran-cpanel-mouse-widget.cpp \
     widgets/kiran-list-widget.cpp \
@@ -37,8 +37,6 @@ SOURCES += \
 
 HEADERS += \
         kiran-cpanel-mouse.h \
-    single-application/single-application.h \
-    single-application/single-application_p.h \
     tools/log.h \
     kiran-cpanel-mouse-widget.h \
     widgets/kiran-list-widget.h \

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>710</width>
+    <width>740</width>
     <height>532</height>
    </rect>
   </property>
@@ -48,7 +48,7 @@
        <number>0</number>
       </property>
       <item>
-       <widget class="KiranListWidget" name="listWidget">
+       <widget class="KiranSidebarWidget" name="listWidget">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
           <horstretch>0</horstretch>
@@ -114,8 +114,8 @@
          <property name="geometry">
           <rect>
            <x>0</x>
-           <y>-153</y>
-           <width>628</width>
+           <y>0</y>
+           <width>658</width>
            <height>551</height>
           </rect>
          </property>
@@ -316,7 +316,7 @@
                     </spacer>
                    </item>
                    <item>
-                    <widget class="QCheckBox" name="checkBox_natural_scroll">
+                    <widget class="KiranSwitchButton" name="checkBox_natural_scroll">
                      <property name="text">
                       <string/>
                      </property>
@@ -350,7 +350,7 @@
                     </spacer>
                    </item>
                    <item>
-                    <widget class="QCheckBox" name="checkBox_middle_emulation">
+                    <widget class="KiranSwitchButton" name="checkBox_middle_emulation">
                      <property name="text">
                       <string/>
                      </property>
@@ -432,7 +432,7 @@
                   </spacer>
                  </item>
                  <item>
-                  <widget class="QCheckBox" name="checkBox_tp_disable_touchpad">
+                  <widget class="KiranSwitchButton" name="checkBox_tp_disable_touchpad">
                    <property name="text">
                     <string/>
                    </property>
@@ -683,7 +683,7 @@
                   </spacer>
                  </item>
                  <item>
-                  <widget class="QCheckBox" name="checkBox_tp_natural_scroll">
+                  <widget class="KiranSwitchButton" name="checkBox_tp_natural_scroll">
                    <property name="text">
                     <string/>
                    </property>
@@ -731,7 +731,7 @@
                   </spacer>
                  </item>
                  <item>
-                  <widget class="QCheckBox" name="checkBox_disable_while_typing">
+                  <widget class="KiranSwitchButton" name="checkBox_disable_while_typing">
                    <property name="text">
                     <string/>
                    </property>
@@ -779,7 +779,7 @@
                   </spacer>
                  </item>
                  <item>
-                  <widget class="QCheckBox" name="checkBox_tap_to_click">
+                  <widget class="KiranSwitchButton" name="checkBox_tap_to_click">
                    <property name="text">
                     <string/>
                    </property>
@@ -939,15 +939,20 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>KiranListWidget</class>
-   <extends>QListWidget</extends>
-   <header>widgets/kiran-list-widget.h</header>
-  </customwidget>
-  <customwidget>
    <class>KiranScrollArea</class>
    <extends>QScrollArea</extends>
    <header location="global">widgets/kiran-scroll-area.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>KiranSwitchButton</class>
+   <extends>QCheckBox</extends>
+   <header location="global">kiranwidgets-qt5/kiran-switch-button.h</header>
+  </customwidget>
+  <customwidget>
+   <class>KiranSidebarWidget</class>
+   <extends>QListWidget</extends>
+   <header location="global">kiranwidgets-qt5/kiran-sidebar-widget.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

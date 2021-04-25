@@ -13,6 +13,7 @@ class KiranCPanelMouseWidget;
 
 class KiranSwitchButton;
 class KiranListItem;
+class KiranSwitchButton;
 class KiranCPanelMouseWidget : public QWidget
 {
     Q_OBJECT
@@ -25,6 +26,7 @@ private:
     void initUI();
     KiranListItem* createListItem(QString text);
     void addComboBoxItem();
+    void addSidebarItem(QString,QString);
     void setDisableWidget(bool);
 
 public slots:
@@ -34,14 +36,12 @@ public slots:
 
 private:
     Ui::KiranCPanelMouseWidget *ui;
-    KiranSwitchButton* m_naturalScrollSwitch = nullptr;
-    KiranSwitchButton* m_middleEmulationSwitch = nullptr;
     KiranListItem* m_mouseListItem;
     KiranListItem* m_touchpadListItem;
     int m_mouseScrollSpeed;
     int m_tpScrollSpeed;
     QList<QComboBox* > m_comboBoxList;
-    QList<QCheckBox*> m_checkBoxList;
+    QList<KiranSwitchButton*> m_checkBoxList;
     QList<QLabel*> m_labelList;
 
 };

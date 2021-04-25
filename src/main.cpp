@@ -1,5 +1,4 @@
 #include "kiran-cpanel-mouse.h"
-#include "single-application/single-application.h"
 #include "tools/log.h"
 #include <QApplication>
 #include <QLoggingCategory>
@@ -9,6 +8,8 @@
 #include <iostream>
 #include <zlog_ex.h>
 #include <kiranwidgets-qt5/kiran-message-box.h>
+#include <kiranwidgets-qt5/kiran-single-application.h>
+#include <kiranwidgets-qt5/kiran-application.h>
 
 //TODO:use config.h
 #define TRANSLATION_DIR "/usr/share/kiran-cpanel-mouse/translations/"
