@@ -3,8 +3,8 @@
     <author/>
     <comment/>
     <exportmacro/>
-    <class>KiranPowerManagerWindow</class>
-    <widget class="QWidget" name="KiranPowerManagerWindow">
+    <class>CPanelPowerWindow</class>
+    <widget class="QWidget" name="CPanelPowerWindow">
         <property name="geometry">
             <rect>
                 <x>0</x>
@@ -14,7 +14,7 @@
             </rect>
         </property>
         <property name="windowTitle">
-            <string>KiranPowerManagerWindow</string>
+            <string>CPanelPowerWindow</string>
         </property>
     </widget>
     <pixmapfunction/>

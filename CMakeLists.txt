@@ -28,7 +28,8 @@ file(GLOB_RECURSE QRC
 
 set( TS_FILES "translations/kiran-power-manager.zh_CN.ts" )
 
-include_directories(${CMAKE_BINARY_DIR}
+include_directories(
+        "${CMAKE_BINARY_DIR}"
         src
         src/pages
         src/pages/battery-settings

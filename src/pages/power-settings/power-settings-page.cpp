@@ -203,7 +203,7 @@ void PowerSettingsPage::handleIdleTimeActionCurrentIdxChanged(int idx)
                                                  POWER_SUPPLY_MODE_AC,
                                                  idleAction.idleTimeout,
                                                  idleAction.idleAction);
-    if( reply.isError() )
+    if (reply.isError())
     {
         LOG_WARNING_S() << "set idle action for computer failed" << reply.error();
     }

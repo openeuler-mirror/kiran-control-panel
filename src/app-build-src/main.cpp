@@ -6,9 +6,9 @@
 #include <zlog_ex.h>
 
 #include "config.h"
-#include "kiran-power-manager-window.h"
-#include "power.h"
+#include "cpanel-power-window.h"
 #include "log.h"
+#include "power.h"
 
 bool loadTranslator()
 {
@@ -44,7 +44,7 @@ int main(int argc, char* argv[])
         return EXIT_FAILURE;
     }
 
-    KiranPowerManagerWindow window;
+    CPanelPowerWindow window;
     int screeNum = QApplication::desktop()->screenNumber(QCursor::pos());
     QRect screenGeometry = QApplication::desktop()->screenGeometry(screeNum);
     window.move(screenGeometry.x() + (screenGeometry.width() - window.width()) / 2,

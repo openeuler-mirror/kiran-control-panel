@@ -27,15 +27,12 @@ void BatterySettingsPage::init()
 
 void BatterySettingsPage::initUI()
 {
-
 }
 
 void BatterySettingsPage::initConnection()
 {
-
 }
 
 void BatterySettingsPage::load()
 {
-
 }

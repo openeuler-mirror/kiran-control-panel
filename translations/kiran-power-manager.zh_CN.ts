@@ -25,6 +25,36 @@
     </message>
 </context>
 <context>
+    <name>CPanelPowerWidget</name>
+    <message>
+        <source>CPanelPowerWidget</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>General Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Power Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Battery Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>CPanelPowerWindow</name>
+    <message>
+        <source>CPanelPowerWindow</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Power Manager</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>GeneralSettingsPage</name>
     <message>
         <source>GeneralSettingsPage</source>
@@ -76,36 +106,6 @@
     </message>
 </context>
 <context>
-    <name>KiranPowerManagerWidget</name>
-    <message>
-        <source>KiranPowerManagerWidget</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>General Settings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Power Settings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Battery Settings</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>KiranPowerManagerWindow</name>
-    <message>
-        <source>KiranPowerManagerWindow</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Power Manager</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>PowerSettingsPage</name>
     <message>
         <source>PowerSettingsPage</source>
@@ -117,6 +117,38 @@
     </message>
     <message>
         <source>The monitor will turn off when it is idle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Display Off</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Suspend</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Shutdown</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hibernate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do nothing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1Day</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1Hour</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>never</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
