@@ -1,5 +1,0 @@
-# Hashes of file build rules.
-828500bc64bba14a4208a832d6857d34 ../translations/kiran-power-manager.zh_CN.ts
-5af252f04ec7dc42a01fd23c25898c57 CMakeFiles/kiran_power_manager_autogen
-3f62dda00efee62e409656ff286bb08a kiran-power-manager.zh_CN.qm
-2de22e2f63030327a5b60d895cbec37d kiran_power_manager_autogen/3YJK5W5UP7/qrc_resources.cpp

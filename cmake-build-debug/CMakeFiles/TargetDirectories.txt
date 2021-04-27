@@ -1,4 +1,0 @@
-/home/lxh/CLionProjects/kiran-power-manager/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/home/lxh/CLionProjects/kiran-power-manager/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/lxh/CLionProjects/kiran-power-manager/cmake-build-debug/CMakeFiles/kiran_power_manager.dir
-/home/lxh/CLionProjects/kiran-power-manager/cmake-build-debug/CMakeFiles/kiran_power_manager_autogen.dir
