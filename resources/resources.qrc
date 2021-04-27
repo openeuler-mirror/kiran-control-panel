@@ -1,0 +1,17 @@
+<RCC>
+    <!--图标-->
+    <qresource prefix="/">
+        <file>images/battery-settings.svg</file>
+        <file>images/battery-settings-active.svg</file>
+
+        <file>images/general-settings.svg</file>
+        <file>images/general-settings-active.svg</file>
+
+        <file>images/power-settings.svg</file>
+        <file>images/power-settings-active.svg</file>
+    </qresource>
+
+    <qresource prefix="/">
+        <file>themes/black.qss</file>
+    </qresource>
+</RCC>

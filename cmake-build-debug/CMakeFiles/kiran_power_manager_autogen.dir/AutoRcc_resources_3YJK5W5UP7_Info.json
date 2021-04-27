@@ -1,0 +1,28 @@
+{
+	"BUILD_DIR" : "/home/lxh/CLionProjects/kiran-power-manager/cmake-build-debug/kiran_power_manager_autogen",
+	"CMAKE_BINARY_DIR" : "/home/lxh/CLionProjects/kiran-power-manager/cmake-build-debug",
+	"CMAKE_CURRENT_BINARY_DIR" : "/home/lxh/CLionProjects/kiran-power-manager/cmake-build-debug",
+	"CMAKE_CURRENT_SOURCE_DIR" : "/home/lxh/CLionProjects/kiran-power-manager",
+	"CMAKE_SOURCE_DIR" : "/home/lxh/CLionProjects/kiran-power-manager",
+	"INCLUDE_DIR" : "/home/lxh/CLionProjects/kiran-power-manager/cmake-build-debug/kiran_power_manager_autogen/include",
+	"INPUTS" : 
+	[
+		"/home/lxh/CLionProjects/kiran-power-manager/resources/images/general-settings.svg",
+		"/home/lxh/CLionProjects/kiran-power-manager/resources/images/general-settings-active.svg",
+		"/home/lxh/CLionProjects/kiran-power-manager/resources/images/battery-settings.svg",
+		"/home/lxh/CLionProjects/kiran-power-manager/resources/images/battery-settings-active.svg",
+		"/home/lxh/CLionProjects/kiran-power-manager/resources/images/power-settings-active.svg",
+		"/home/lxh/CLionProjects/kiran-power-manager/resources/images/power-settings.svg",
+		"/home/lxh/CLionProjects/kiran-power-manager/resources/themes/black.qss"
+	],
+	"LOCK_FILE" : "/home/lxh/CLionProjects/kiran-power-manager/cmake-build-debug/CMakeFiles/kiran_power_manager_autogen.dir/AutoRcc_resources_3YJK5W5UP7_Lock.lock",
+	"MULTI_CONFIG" : false,
+	"OPTIONS" : [ "-name", "resources" ],
+	"OUTPUT_CHECKSUM" : "3YJK5W5UP7",
+	"OUTPUT_NAME" : "qrc_resources.cpp",
+	"RCC_EXECUTABLE" : "/usr/lib64/qt5/bin/rcc",
+	"RCC_LIST_OPTIONS" : [ "--list" ],
+	"SETTINGS_FILE" : "/home/lxh/CLionProjects/kiran-power-manager/cmake-build-debug/CMakeFiles/kiran_power_manager_autogen.dir/AutoRcc_resources_3YJK5W5UP7_Used.txt",
+	"SOURCE" : "/home/lxh/CLionProjects/kiran-power-manager/resources/resources.qrc",
+	"VERBOSITY" : 0
+}
