@@ -5,7 +5,8 @@
 #-------------------------------------------------
 
 QT       += core gui \
-            network
+            network \
+            dbus
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -25,6 +26,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 INCLUDEPATH += \
     /usr/include/kiranwidgets-qt5
 
+CONFIG += C++11
 
 SOURCES += \
         main.cpp \
@@ -33,7 +35,9 @@ SOURCES += \
     kiran-cpanel-mouse-widget.cpp \
     widgets/kiran-list-widget.cpp \
     widgets/kiran-list-tem.cpp \
-    widgets/kiran-scroll-area.cpp
+    widgets/kiran-scroll-area.cpp \
+    dbus-interface/mouse-interface.cpp \
+    dbus-interface/touchpad-interface.cpp
 
 HEADERS += \
         kiran-cpanel-mouse.h \
@@ -41,7 +45,9 @@ HEADERS += \
     kiran-cpanel-mouse-widget.h \
     widgets/kiran-list-widget.h \
     widgets/kiran-list-item.h \
-    widgets/kiran-scroll-area.h
+    widgets/kiran-scroll-area.h \
+    dbus-interface/mouse-interface.h \
+    dbus-interface/touchpad-interface.h
 
 FORMS += \
     kiran-cpanel-mouse-widget.ui \

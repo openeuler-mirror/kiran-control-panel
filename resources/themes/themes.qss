@@ -19,6 +19,11 @@ QWidget#widget_list
     color:#2ca5ea;
 }
 
+#label_tp_speed:disabled
+{
+    color:#696969;
+}
+
 
 /*************QListWidget********************/
 

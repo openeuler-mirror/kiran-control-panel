@@ -11,6 +11,8 @@ namespace Ui {
 class KiranCPanelMouseWidget;
 }
 
+class ComKylinsecKiranSessionDaemonMouseInterface;
+class ComKylinsecKiranSessionDaemonTouchPadInterface;
 class KiranSwitchButton;
 class KiranListItem;
 class KiranSwitchButton;
@@ -24,9 +26,10 @@ public:
 
 private:
     void initUI();
-    KiranListItem* createListItem(QString text);
+    void initPageMouseUI();
+    void initPageTouchPadUI();
     void addComboBoxItem();
-    void addSidebarItem(QString,QString);
+     QListWidgetItem* addSidebarItem(QString,QString);
     void setDisableWidget(bool);
 
 public slots:
@@ -36,14 +39,26 @@ public slots:
 
 private:
     Ui::KiranCPanelMouseWidget *ui;
+    ComKylinsecKiranSessionDaemonMouseInterface *m_mouseInterface;
+    ComKylinsecKiranSessionDaemonTouchPadInterface *m_touchPadInterface;
     KiranListItem* m_mouseListItem;
     KiranListItem* m_touchpadListItem;
-    int m_mouseScrollSpeed;
-    int m_tpScrollSpeed;
     QList<QComboBox* > m_comboBoxList;
     QList<KiranSwitchButton*> m_checkBoxList;
     QList<QLabel*> m_labelList;
+    bool m_mouseLeftHand = false;
+    bool m_mouseNaturalScroll = false;
+    bool m_middleEmulationEnabled = false;
+    double m_mouseMotionAcceleration = 0.0;
 
+    bool m_disabelWhileTyping = true;
+    bool m_touchPadLeftHand = false;
+    bool m_touchPadNaturalScroll = false;
+    bool m_tapToClick = true;
+    bool m_touchPadEnabled = true;
+    double m_touchPadMotionAcceleration = 0.0;
+    int m_clickMethod = 0;
+    int m_scrollMethod = 0;
 };
 
 #endif // KIRANCPANELMOUSEWIDGET_H

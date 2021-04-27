@@ -1,4 +1,4 @@
 src/build/
 build/
-src/*.pro.user
+src/kiran-cpanel-mouse.pro.user
 build-kiran-cpanel-mouse-qt5_11-Debug/
