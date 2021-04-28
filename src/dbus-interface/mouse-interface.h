@@ -32,7 +32,7 @@ public:
 
 public:
     ComKylinsecKiranSessionDaemonMouseInterface(const QString &service, const QString &path, const QDBusConnection &connection, QObject *parent = nullptr);
-
+    static ComKylinsecKiranSessionDaemonMouseInterface* instance();
     ~ComKylinsecKiranSessionDaemonMouseInterface();
 
     Q_PROPERTY(int double_click READ double_click WRITE setDouble_click)

@@ -10,7 +10,9 @@
  */
 
 #include "mouse-interface.h"
-
+#include <QMutex>
+#include <QScopedPointer>
+#include <QDBusConnection>
 /*
  * Implementation of interface class ComKylinsecKiranSessionDaemonMouseInterface
  */
@@ -18,6 +20,23 @@
 ComKylinsecKiranSessionDaemonMouseInterface::ComKylinsecKiranSessionDaemonMouseInterface(const QString &service, const QString &path, const QDBusConnection &connection, QObject *parent)
     : QDBusAbstractInterface(service, path, staticInterfaceName(), connection, parent)
 {
+    setTimeout(5);
+}
+
+ComKylinsecKiranSessionDaemonMouseInterface *ComKylinsecKiranSessionDaemonMouseInterface::instance()
+{
+    static QMutex mutex;
+    static QScopedPointer<ComKylinsecKiranSessionDaemonMouseInterface> pInst;
+
+    if(Q_UNLIKELY(!pInst)){
+        QMutexLocker locker(&mutex);
+        if(pInst.isNull()){
+            pInst.reset(new ComKylinsecKiranSessionDaemonMouseInterface("com.kylinsec.Kiran.SessionDaemon.Mouse",
+                                                                          "/com/kylinsec/Kiran/SessionDaemon/Mouse",
+                                                                          QDBusConnection::sessionBus()));
+        }
+    }
+    return pInst.data();
 }
 
 ComKylinsecKiranSessionDaemonMouseInterface::~ComKylinsecKiranSessionDaemonMouseInterface()

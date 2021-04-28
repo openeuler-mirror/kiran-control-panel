@@ -24,12 +24,15 @@ public:
     explicit KiranCPanelMouseWidget(QWidget *parent = 0);
     ~KiranCPanelMouseWidget();
 
+public:
+    bool initUI();
+
 private:
-    void initUI();
+    bool connectDbus();
     void initPageMouseUI();
     void initPageTouchPadUI();
     void addComboBoxItem();
-     QListWidgetItem* addSidebarItem(QString,QString);
+    void addSidebarItem(QString,QString);
     void setDisableWidget(bool);
 
 public slots:

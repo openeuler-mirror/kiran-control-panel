@@ -1,5 +1,7 @@
 #include "kiran-cpanel-mouse.h"
 #include "tools/log.h"
+#include "dbus-interface/mouse-interface.h"
+#include "dbus-interface/touchpad-interface.h"
 #include <QApplication>
 #include <QLoggingCategory>
 #include <QDebug>
@@ -58,6 +60,11 @@ int main(int argc, char *argv[])
     }
 
     KiranCPanelMouse w;
+    if(!w.m_cpanelMouseWidget->initUI())
+    {
+        KiranMessageBox::message(nullptr,"Faild","Connect Mouse and TouchPad Dbus Failed!",KiranMessageBox::Ok);
+        exit(-1);
+    }
     w.resize(w.sizeHint());
     w.show();
 

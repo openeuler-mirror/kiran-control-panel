@@ -15,7 +15,7 @@ public:
     ~KiranCPanelMouse();
     virtual QSize sizeHint() const override;
 
-private:
+public:
     KiranCPanelMouseWidget* m_cpanelMouseWidget;
 
 };

@@ -79,74 +79,77 @@
     </message>
     <message>
         <location filename="../src/kiran-cpanel-mouse-widget.ui" line="877"/>
-        <source>Cancel</source>
-        <translation>取消</translation>
+        <source>Reset</source>
+        <translation>重置</translation>
     </message>
     <message>
         <location filename="../src/kiran-cpanel-mouse-widget.ui" line="915"/>
-        <source>Save</source>
-        <translation type="unfinished">保存</translation>
+        <source>Exit</source>
+        <translation>关闭</translation>
     </message>
     <message>
-        <location filename="../src/kiran-cpanel-mouse-widget.cpp" line="56"/>
+        <source>Cancel</source>
+        <translation type="vanished">取消</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation type="obsolete">保存</translation>
+    </message>
+    <message>
+        <location filename="../src/kiran-cpanel-mouse-widget.cpp" line="136"/>
         <source>Mouse Settings</source>
         <translation>鼠标设置</translation>
     </message>
     <message>
-        <location filename="../src/kiran-cpanel-mouse-widget.cpp" line="58"/>
+        <location filename="../src/kiran-cpanel-mouse-widget.cpp" line="137"/>
         <source>TouchPad Settings</source>
         <translation>触摸板设置</translation>
     </message>
     <message>
-        <location filename="../src/kiran-cpanel-mouse-widget.cpp" line="64"/>
-        <location filename="../src/kiran-cpanel-mouse-widget.cpp" line="65"/>
-        <location filename="../src/kiran-cpanel-mouse-widget.cpp" line="149"/>
-        <location filename="../src/kiran-cpanel-mouse-widget.cpp" line="155"/>
+        <location filename="../src/kiran-cpanel-mouse-widget.cpp" line="144"/>
+        <location filename="../src/kiran-cpanel-mouse-widget.cpp" line="145"/>
+        <location filename="../src/kiran-cpanel-mouse-widget.cpp" line="350"/>
+        <location filename="../src/kiran-cpanel-mouse-widget.cpp" line="356"/>
         <source>Standard</source>
         <translation>标准</translation>
     </message>
     <message>
-        <location filename="../src/kiran-cpanel-mouse-widget.cpp" line="91"/>
+        <location filename="../src/kiran-cpanel-mouse-widget.cpp" line="284"/>
         <source>Right Hand Mode</source>
         <translation>右手模式</translation>
     </message>
     <message>
-        <location filename="../src/kiran-cpanel-mouse-widget.cpp" line="91"/>
+        <location filename="../src/kiran-cpanel-mouse-widget.cpp" line="284"/>
         <source>Left Hand Mode</source>
         <translation>左手模式</translation>
     </message>
     <message>
-        <location filename="../src/kiran-cpanel-mouse-widget.cpp" line="96"/>
-        <source>mode 0</source>
-        <translation type="unfinished"></translation>
+        <location filename="../src/kiran-cpanel-mouse-widget.cpp" line="289"/>
+        <source>Press and Tap</source>
+        <translation>按键和轻触</translation>
     </message>
     <message>
-        <location filename="../src/kiran-cpanel-mouse-widget.cpp" line="96"/>
-        <source>mode 2</source>
-        <translation type="unfinished"></translation>
+        <location filename="../src/kiran-cpanel-mouse-widget.cpp" line="289"/>
+        <source>Tap</source>
+        <translation>轻触</translation>
     </message>
     <message>
-        <location filename="../src/kiran-cpanel-mouse-widget.cpp" line="96"/>
-        <source>mode 3</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/kiran-cpanel-mouse-widget.cpp" line="100"/>
+        <location filename="../src/kiran-cpanel-mouse-widget.cpp" line="293"/>
         <source>Two Finger Scroll</source>
         <translation>两指滑动</translation>
     </message>
     <message>
-        <location filename="../src/kiran-cpanel-mouse-widget.cpp" line="100"/>
+        <location filename="../src/kiran-cpanel-mouse-widget.cpp" line="293"/>
         <source>Edge Scroll</source>
         <translation>边缘滑动</translation>
     </message>
     <message>
-        <location filename="../src/kiran-cpanel-mouse-widget.cpp" line="143"/>
+        <location filename="../src/kiran-cpanel-mouse-widget.cpp" line="344"/>
         <source>Slow</source>
         <translation>低速</translation>
     </message>
     <message>
-        <location filename="../src/kiran-cpanel-mouse-widget.cpp" line="161"/>
+        <location filename="../src/kiran-cpanel-mouse-widget.cpp" line="362"/>
         <source>Fast</source>
         <translation>快速</translation>
     </message>

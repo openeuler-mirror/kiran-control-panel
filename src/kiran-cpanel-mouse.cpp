@@ -13,6 +13,7 @@ KiranCPanelMouse::KiranCPanelMouse() :
 
     m_cpanelMouseWidget = new KiranCPanelMouseWidget(this);
     setWindowContentWidget(m_cpanelMouseWidget);
+
     connect(m_cpanelMouseWidget, &KiranCPanelMouse::destroyed, this, &KiranCPanelMouse::close);
 
 }

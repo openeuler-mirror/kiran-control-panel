@@ -32,7 +32,7 @@ public:
 
 public:
     ComKylinsecKiranSessionDaemonTouchPadInterface(const QString &service, const QString &path, const QDBusConnection &connection, QObject *parent = nullptr);
-
+    static ComKylinsecKiranSessionDaemonTouchPadInterface* instance();
     ~ComKylinsecKiranSessionDaemonTouchPadInterface();
 
     Q_PROPERTY(int click_method READ click_method WRITE setClick_method)

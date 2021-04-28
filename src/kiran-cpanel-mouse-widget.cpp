@@ -63,7 +63,6 @@ KiranCPanelMouseWidget::KiranCPanelMouseWidget(QWidget *parent) :
     ui(new Ui::KiranCPanelMouseWidget)
 {
     ui->setupUi(this);
-    initUI();
 
     connect(ui->btn_exit,&QPushButton::clicked,this,&QApplication::quit);
     connect(ui->listWidget,SIGNAL(itemClicked(QListWidgetItem*)),this,SLOT(setCurrentPageWhenItemClicked(QListWidgetItem*)));
@@ -74,8 +73,60 @@ KiranCPanelMouseWidget::~KiranCPanelMouseWidget()
     delete ui;
 }
 
-void KiranCPanelMouseWidget::initUI()
+bool KiranCPanelMouseWidget::connectDbus()
 {
+    m_mouseInterface = ComKylinsecKiranSessionDaemonMouseInterface::instance();
+    m_touchPadInterface = ComKylinsecKiranSessionDaemonTouchPadInterface::instance();
+    if(!m_mouseInterface || !m_touchPadInterface)
+    {
+        return false;
+    }
+    return  true;
+}
+
+bool KiranCPanelMouseWidget::initUI()
+{
+    bool isGetDbusConnect = connectDbus();
+    if(!isGetDbusConnect)
+    {
+        return false;
+    }
+    connect(ui->btn_reset,&QPushButton::clicked,
+            [this]{
+        int currentPage = ui->stackedWidget->currentIndex();
+        QDBusPendingReply<> reply;
+        switch (currentPage) {
+        case PAGE_MOUSE:
+            reply = m_mouseInterface->Reset();
+            reply.waitForFinished();
+            if (!reply.isFinished())
+            {
+                cout << "Reset mouse properties failed:" << reply.error().message().toStdString();
+            }
+            else
+            {
+                cout << "Reset mouse properties successful";
+                initPageMouseUI();
+            }
+            break;
+        case PAGE_TOUCHPAD:
+            reply = m_touchPadInterface->Reset();
+            reply.waitForFinished();
+            if (!reply.isFinished())
+            {
+                cout  << "Reset  touchpad properties failed:" << reply.error().message().toStdString();
+            }
+            else
+            {
+                cout << "Reset touchpad properties successful";
+                initPageTouchPadUI();
+            }
+            break;
+        default:
+            break;
+        }
+    });
+
     setButtonType(ui->btn_exit,Kiran::BUTTON_Default);
     setButtonType(ui->btn_reset,Kiran::BUTTON_Default);
 
@@ -93,7 +144,7 @@ void KiranCPanelMouseWidget::initUI()
     ui->label_speed->setText(tr("Standard"));
     ui->label_tp_speed->setText(tr("Standard"));
 
-   // ui->checkBox_tp_disable_touchpad->setChecked(false);
+    ui->widget_tp_click_mode->hide();
 
     QList<QSlider*> sliderList = this->findChildren< QSlider* >();
     foreach (QSlider* slider, sliderList)
@@ -104,16 +155,9 @@ void KiranCPanelMouseWidget::initUI()
        slider->setSingleStep((SLIDER_MAXIMUN-SLIDER_MINIMUM+1)/2);
     }
 
-    m_mouseInterface = new ComKylinsecKiranSessionDaemonMouseInterface(DBUS_MOUSE_NANE,
-                                                                       DBUS_MOUSE_PATH,
-                                                                       QDBusConnection::sessionBus());
-    m_touchPadInterface = new ComKylinsecKiranSessionDaemonTouchPadInterface(DBUS_TOUCHPAD_NAME,
-                                                                             DBUS_TOUCHPAD_PATH,
-                                                                             QDBusConnection::sessionBus());
     initPageMouseUI();
     initPageTouchPadUI();
-
-    ui->widget_tp_click_mode->hide();
+    return true;
 }
 
 void KiranCPanelMouseWidget::initPageMouseUI()
@@ -139,7 +183,8 @@ void KiranCPanelMouseWidget::initPageMouseUI()
     {
         ui->slider_speed->setValue(MOTION_FAST);
     }
-    connect(ui->slider_speed, &QSlider::sliderReleased, this, &KiranCPanelMouseWidget::onSliderReleased);
+    //connect(ui->slider_speed, &QSlider::sliderReleased, this, &KiranCPanelMouseWidget::onSliderReleased);
+    connect(ui->slider_speed, &QSlider::valueChanged, this,&KiranCPanelMouseWidget::onSliderReleased);
 
     m_mouseNaturalScroll = m_mouseInterface->natural_scroll();
     ui->checkBox_natural_scroll->setChecked(m_mouseNaturalScroll);
@@ -161,6 +206,7 @@ void KiranCPanelMouseWidget::initPageMouseUI()
 void KiranCPanelMouseWidget::initPageTouchPadUI()
 {
     m_touchPadEnabled = m_touchPadInterface->touchpad_enabled();
+    ui->checkBox_tp_disable_touchpad->setChecked(!m_touchPadEnabled);
     if(!m_touchPadEnabled)
     {
         onDisabelTouchPadToggled(false);
@@ -248,7 +294,7 @@ void KiranCPanelMouseWidget::addComboBoxItem()
     ui->comboBox_tp_move_win_mode->addItems(tpScrollWinMode);
 }
 
- QListWidgetItem* KiranCPanelMouseWidget::addSidebarItem(QString text, QString icon)
+void KiranCPanelMouseWidget::addSidebarItem(QString text, QString icon)
 {
     QListWidgetItem* item = new QListWidgetItem(ui->listWidget);
     item->setIcon(QIcon(icon));
