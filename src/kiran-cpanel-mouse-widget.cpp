@@ -127,6 +127,13 @@ bool KiranCPanelMouseWidget::initUI()
         }
     });
 
+    m_comboBoxList = ui->page_touchpad->findChildren<QComboBox *>();
+    m_checkBoxList = {ui->checkBox_tap_to_click,
+                      ui->checkBox_tp_natural_scroll,
+                      ui->checkBox_disable_while_typing};
+
+    m_labelList = ui->page_touchpad->findChildren<QLabel *>();
+
     setButtonType(ui->btn_exit,Kiran::BUTTON_Default);
     setButtonType(ui->btn_reset,Kiran::BUTTON_Default);
 
@@ -209,7 +216,7 @@ void KiranCPanelMouseWidget::initPageTouchPadUI()
     ui->checkBox_tp_disable_touchpad->setChecked(!m_touchPadEnabled);
     if(!m_touchPadEnabled)
     {
-        onDisabelTouchPadToggled(false);
+        setDisableWidget(true);
     }
     connect(ui->checkBox_tp_disable_touchpad, &QCheckBox::toggled, this,
             &KiranCPanelMouseWidget::onDisabelTouchPadToggled);
@@ -376,12 +383,6 @@ void KiranCPanelMouseWidget::onSliderReleased()
 
 void KiranCPanelMouseWidget::onDisabelTouchPadToggled(bool disabled)
 {
-    m_comboBoxList = ui->page_touchpad->findChildren<QComboBox *>();
-    m_checkBoxList = {ui->checkBox_tap_to_click,
-                      ui->checkBox_tp_natural_scroll,
-                      ui->checkBox_disable_while_typing};
-
-    m_labelList = ui->page_touchpad->findChildren<QLabel *>();
     m_touchPadEnabled = disabled;
     m_touchPadInterface->setTouchpad_enabled(disabled);
     if(disabled)
