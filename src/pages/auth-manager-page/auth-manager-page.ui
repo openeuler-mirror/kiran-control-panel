@@ -70,44 +70,48 @@
     </layout>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="layout_faceAuth">
-     <property name="spacing">
-      <number>0</number>
-     </property>
-     <property name="topMargin">
-      <number>24</number>
-     </property>
-     <property name="bottomMargin">
-      <number>10</number>
-     </property>
-     <item>
-      <widget class="QLabel" name="label_faceAuth">
-       <property name="text">
-        <string>Face Authentication</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <spacer name="horizontalSpacer_2">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-    </layout>
+    <widget class="QWidget" name="widget_faceAuth" native="true">
+     <layout class="QHBoxLayout" name="layout_faceAuth">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>24</number>
+      </property>
+      <property name="bottomMargin">
+       <number>10</number>
+      </property>
+      <item>
+       <widget class="QLabel" name="label_faceAuth">
+        <property name="text">
+         <string>Face Authentication</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer_2">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </widget>
    </item>
    <item>
-    <layout class="QVBoxLayout" name="layout_faceTemplate">
-     <property name="spacing">
-      <number>10</number>
-     </property>
-    </layout>
+    <widget class="QWidget" name="widget_faceTemplate" native="true">
+     <layout class="QVBoxLayout" name="layout_faceTemplate">
+      <property name="spacing">
+       <number>10</number>
+      </property>
+     </layout>
+    </widget>
    </item>
    <item>
     <layout class="QHBoxLayout" name="layout_passwdAuth">

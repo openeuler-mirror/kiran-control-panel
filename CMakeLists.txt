@@ -3,6 +3,8 @@ cmake_minimum_required(VERSION 3.5)
 project(kiran-account-manager)
 #账户信息页面，认证管理入口是否显示
 option(AUTH_MANAGER_VISIBLE "Is auth manager visible" OFF)
+#认证管理页面是否显示人脸认证相关
+option(FACE_AUTH_VISIBLE "face auth visible" OFF)
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -70,6 +72,10 @@ target_link_libraries(kiran-account-manager
 
 if( AUTH_MANAGER_VISIBLE )
     add_definitions(-DAUTH_MANAGER)
+endif()
+
+if( FACE_AUTH_VISIBLE )
+    add_definitions(-DFACE_AUTH)
 endif()
 
 install(TARGETS ${PROJECT_NAME} DESTINATION ${KAM_INSTALL_DIR} )

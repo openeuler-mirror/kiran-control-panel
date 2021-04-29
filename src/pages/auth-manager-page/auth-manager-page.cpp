@@ -72,6 +72,11 @@ void AuthManagerPage::initUI()
     connect(ui->btn_return, &QPushButton::clicked, [this]() {
         Q_EMIT sigReturn();
     });
+
+#ifndef FACE_AUTH
+    ui->widget_faceAuth->setVisible(false);
+    ui->widget_faceTemplate->setVisible(false);
+#endif
 }
 
 void AuthManagerPage::updateInfo()

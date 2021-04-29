@@ -109,74 +109,74 @@
     <message>
         <location filename="../src/pages/auth-manager-page/auth-manager-page.ui" line="14"/>
         <location filename="../build/kiran-account-manager_autogen/include/ui_auth-manager-page.h" line="167"/>
-        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_auth-manager-page.h" line="167"/>
+        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_auth-manager-page.h" line="173"/>
         <source>AuthManagerPage</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../src/pages/auth-manager-page/auth-manager-page.ui" line="46"/>
         <location filename="../build/kiran-account-manager_autogen/include/ui_auth-manager-page.h" line="168"/>
-        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_auth-manager-page.h" line="168"/>
+        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_auth-manager-page.h" line="174"/>
         <source>Fingerprint Authentication</source>
         <translation>指纹认证</translation>
     </message>
     <message>
-        <location filename="../src/pages/auth-manager-page/auth-manager-page.ui" line="86"/>
+        <location filename="../src/pages/auth-manager-page/auth-manager-page.ui" line="87"/>
         <location filename="../build/kiran-account-manager_autogen/include/ui_auth-manager-page.h" line="169"/>
-        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_auth-manager-page.h" line="169"/>
+        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_auth-manager-page.h" line="175"/>
         <source>Face Authentication</source>
         <translation>人脸认证</translation>
     </message>
     <message>
-        <location filename="../src/pages/auth-manager-page/auth-manager-page.ui" line="126"/>
+        <location filename="../src/pages/auth-manager-page/auth-manager-page.ui" line="130"/>
         <location filename="../build/kiran-account-manager_autogen/include/ui_auth-manager-page.h" line="170"/>
-        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_auth-manager-page.h" line="170"/>
+        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_auth-manager-page.h" line="176"/>
         <source>Password Authentication</source>
         <translation>密码认证</translation>
     </message>
     <message>
-        <location filename="../src/pages/auth-manager-page/auth-manager-page.ui" line="200"/>
+        <location filename="../src/pages/auth-manager-page/auth-manager-page.ui" line="204"/>
         <location filename="../build/kiran-account-manager_autogen/include/ui_auth-manager-page.h" line="171"/>
-        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_auth-manager-page.h" line="171"/>
+        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_auth-manager-page.h" line="177"/>
         <source>save</source>
         <translation>保存</translation>
     </message>
     <message>
-        <location filename="../src/pages/auth-manager-page/auth-manager-page.ui" line="241"/>
+        <location filename="../src/pages/auth-manager-page/auth-manager-page.ui" line="245"/>
         <location filename="../build/kiran-account-manager_autogen/include/ui_auth-manager-page.h" line="172"/>
-        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_auth-manager-page.h" line="172"/>
+        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_auth-manager-page.h" line="178"/>
         <source>return</source>
         <translation>返回</translation>
     </message>
     <message>
-        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="116"/>
+        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="121"/>
         <source>add fingerprint</source>
         <translation>录入指纹数据</translation>
     </message>
     <message>
-        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="129"/>
+        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="134"/>
         <source>add face</source>
         <translation>录入人脸数据</translation>
     </message>
     <message>
-        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="146"/>
-        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="256"/>
+        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="151"/>
+        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="261"/>
         <source>error</source>
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="147"/>
-        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="257"/>
+        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="152"/>
+        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="262"/>
         <source>please ensure that at least one authentication option exists</source>
         <translation>请确保至少一个认证选项打开</translation>
     </message>
     <message>
-        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="449"/>
+        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="454"/>
         <source>fingerprint_</source>
         <translation>指纹_</translation>
     </message>
     <message>
-        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="449"/>
+        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="454"/>
         <source>face_</source>
         <translation>人脸_</translation>
     </message>
@@ -530,22 +530,22 @@
 <context>
     <name>SelectAvatarPage</name>
     <message>
-        <location filename="../src/pages/select-avatar-page/select-avatar-page.cpp" line="132"/>
+        <location filename="../src/pages/select-avatar-page/select-avatar-page.cpp" line="133"/>
         <source>Confirm</source>
         <translation>确认</translation>
     </message>
     <message>
-        <location filename="../src/pages/select-avatar-page/select-avatar-page.cpp" line="146"/>
+        <location filename="../src/pages/select-avatar-page/select-avatar-page.cpp" line="147"/>
         <source>Return</source>
         <translation>返回</translation>
     </message>
     <message>
-        <location filename="../src/pages/select-avatar-page/select-avatar-page.cpp" line="159"/>
+        <location filename="../src/pages/select-avatar-page/select-avatar-page.cpp" line="160"/>
         <source>select picture</source>
         <translation>选择图片</translation>
     </message>
     <message>
-        <location filename="../src/pages/select-avatar-page/select-avatar-page.cpp" line="161"/>
+        <location filename="../src/pages/select-avatar-page/select-avatar-page.cpp" line="162"/>
         <source>image files(*.bmp *.jpg *.png *.tif *.gif *.pcx *.tga *.exif *.fpx *.svg *.psd *.cdr *.pcd *.dxf *.ufo *.eps *.ai *.raw *.WMF *.webp)</source>
         <translation>图片文件(*.bmp *.jpg *.png *.tif *.gif *.pcx *.tga *.exif *.fpx *.svg *.psd *.cdr *.pcd *.dxf *.ufo *.eps *.ai *.raw *.WMF *.webp)</translation>
     </message>
