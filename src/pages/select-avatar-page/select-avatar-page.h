@@ -73,12 +73,12 @@ private:
     void moveAddButtonToEnd();
 
 private:
-    QLayout *         m_mainLayout;
-    FlowLayout *      m_flowLayout;
-    QScrollArea *     m_scrollArea;
-    QLayout *         m_btnLayout;
-    QButtonGroup *    m_buttonGroup;
-    SelectAvatarMode  m_mode;
+    QLayout *m_mainLayout;
+    FlowLayout *m_flowLayout;
+    QScrollArea *m_scrollArea;
+    QLayout *m_btnLayout;
+    QButtonGroup *m_buttonGroup;
+    SelectAvatarMode m_mode;
     AvatarItemButton *m_addButton;
 };
 

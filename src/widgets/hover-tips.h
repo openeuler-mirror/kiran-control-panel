@@ -56,7 +56,7 @@ private:
     QLabel *m_iconLabel;
     QLabel *m_textLabel;
     quint32 m_hideTimeout = 3000;
-    int     m_hideTimerID = -1;
+    int m_hideTimerID = -1;
 };
 
 #endif  //KIRAN_ACCOUNT_MANAGER_HOVER_TIPS_H

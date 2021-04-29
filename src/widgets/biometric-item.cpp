@@ -9,10 +9,10 @@
 #include <QStyleOption>
 #include "ui_biometric-item.h"
 
-BiometricItem::BiometricItem(const QString &   text,
-                             const QString &   biometricID,
+BiometricItem::BiometricItem(const QString &text,
+                             const QString &biometricID,
                              BiometricItemType type,
-                             QWidget *         parent)
+                             QWidget *parent)
     : QWidget(parent),
       ui(new Ui::BiometricItem),
       m_itemType(type),

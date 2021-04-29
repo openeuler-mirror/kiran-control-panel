@@ -47,7 +47,7 @@ void AvatarItemButton::paintEvent(QPaintEvent *event)
     if (!icon().isNull())
     {
         QPainterPath painterPath;
-        QPixmap      pixmap = icon().pixmap(QSize(m_radius * 2, m_radius * 2));
+        QPixmap pixmap = icon().pixmap(QSize(m_radius * 2, m_radius * 2));
         painterPath.addEllipse((this->width() - m_radius * 2) / 2,
                                (this->height() - m_radius * 2) / 2,
                                m_radius * 2,
@@ -87,10 +87,10 @@ void AvatarItemButton::paintEvent(QPaintEvent *event)
         painter.restore();
 
         ///画勾
-        QSize        checkedIconSize(40, 40);
-        QPoint       checkedIconLeftop((this->width() - checkedIconSize.width()) / 2,
+        QSize checkedIconSize(40, 40);
+        QPoint checkedIconLeftop((this->width() - checkedIconSize.width()) / 2,
                                  (this->height() - checkedIconSize.height()) / 2);
-        QRect        checkedIconRect(checkedIconLeftop, checkedIconSize);
+        QRect checkedIconRect(checkedIconLeftop, checkedIconSize);
         QSvgRenderer svgRenderer(QString(":/images/icon_correct.svg"));
         svgRenderer.render(&painter, checkedIconRect);
     }
@@ -98,15 +98,15 @@ void AvatarItemButton::paintEvent(QPaintEvent *event)
 
 void AvatarItemButton::resizeEvent(QResizeEvent *event)
 {
-    QRect  realRect;
-    QSize  size   = event->size();
+    QRect realRect;
+    QSize size = event->size();
     double radius = ((size.width() < size.height()) ? size.width() : size.height()) / 2.0;
-    realRect      = QRect((size.width() - (radius * 2)) / 2,
+    realRect = QRect((size.width() - (radius * 2)) / 2,
                      (size.height() - (radius * 2)) / 2,
                      radius * 2,
                      radius * 2);
-    m_radius      = radius;
-    m_realRect    = realRect;
+    m_radius = radius;
+    m_realRect = realRect;
 }
 
 void AvatarItemButton::enterEvent(QEvent *event)
@@ -119,7 +119,7 @@ void AvatarItemButton::leaveEvent(QEvent *event)
 {
     Q_UNUSED(event);
     m_mouseEnter = false;
-    m_hover      = false;
+    m_hover = false;
 }
 
 void AvatarItemButton::mouseMoveEvent(QMouseEvent *event)
@@ -128,8 +128,8 @@ void AvatarItemButton::mouseMoveEvent(QMouseEvent *event)
     {
         QPoint curMousePos = event->pos();
         QPoint center(this->width() / 2, this->height() / 2);
-        double radius   = ((this->width() < this->height()) ? this->width() : this->height()) / 2.0;
-        int    distance = qSqrt(qPow(curMousePos.x() - center.x(), 2) + qPow(curMousePos.y() - center.y(), 2));
+        double radius = ((this->width() < this->height()) ? this->width() : this->height()) / 2.0;
+        int distance = qSqrt(qPow(curMousePos.x() - center.x(), 2) + qPow(curMousePos.y() - center.y(), 2));
         if ((distance <= radius) && (!m_hover))
         {
             m_hover = true;

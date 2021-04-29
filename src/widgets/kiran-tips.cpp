@@ -257,9 +257,9 @@ void KiranTips::drawRightArrowBackground(QPainter *painter)
 
 QSize KiranTips::getRightSize() const
 {
-    QFont        font = ui->label->font();
+    QFont font = ui->label->font();
     QFontMetrics fontMetrics(font);
-    QMargins     layoutContentMargins = this->layout()->contentsMargins();
+    QMargins layoutContentMargins = this->layout()->contentsMargins();
 
     ui->label->setFixedWidth(fontMetrics.width(ui->label->text()) + 10);
     ui->label->setFixedHeight(fontMetrics.height());
@@ -314,8 +314,8 @@ void KiranTips::showEvent(QShowEvent *event)
     }
 
     QPoint widgetLeftPoint = m_showAroudWidget->mapToGlobal(QPoint(0, 0));
-    QSize  widgetSize      = m_showAroudWidget->size();
-    int    yCenter         = widgetLeftPoint.y() + widgetSize.height() / 2;
+    QSize widgetSize = m_showAroudWidget->size();
+    int yCenter = widgetLeftPoint.y() + widgetSize.height() / 2;
     QPoint tipLeftTop;
     switch (m_showPostion)
     {

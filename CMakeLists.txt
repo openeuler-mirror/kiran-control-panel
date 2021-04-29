@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.5)
 
 project(kiran-account-manager)
+#账户信息页面，认证管理入口是否显示
 option(AUTH_MANAGER_VISIBLE "Is auth manager visible" OFF)
 
 set(CMAKE_CXX_STANDARD 11)
@@ -16,6 +17,7 @@ find_package(PkgConfig REQUIRED)
 pkg_search_module(KIRAN_WIDGETS_QT5 REQUIRED kiranwidgets-qt5)
 pkg_search_module(KIRAN_CC_DAEMON REQUIRED kiran-cc-daemon)
 pkg_search_module(ZERO_MQ REQUIRED libzmq)
+pkg_search_module(ZLOG REQUIRED zlog)
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
@@ -51,7 +53,8 @@ target_include_directories(kiran-account-manager PRIVATE
         tools
         ${KIRAN_WIDGETS_QT5_INCLUDE_DIRS}
         ${KIRAN_CC_DAEMON_INCLUDE_DIRS}
-        ${ZERO_MQ_INCLUDE_DIRS})
+        ${ZERO_MQ_INCLUDE_DIRS}
+        ${ZLOG_INCLUDE_DIRS})
 
 target_link_libraries(kiran-account-manager
         Qt5::Widgets
@@ -62,7 +65,8 @@ target_link_libraries(kiran-account-manager
         kiranwidgets-qt5
         ${KIRAN_WIDGETS_QT5_LIBRARIES}
         ${KIRAN_CC_DAEMON_LIBRARIES}
-        ${ZERO_MQ_LIBRARIES})
+        ${ZERO_MQ_LIBRARIES}
+        ${ZLOG_LIBRARIES})
 
 if( AUTH_MANAGER_VISIBLE )
     add_definitions(-DAUTH_MANAGER)

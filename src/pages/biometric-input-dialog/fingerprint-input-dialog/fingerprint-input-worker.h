@@ -32,7 +32,7 @@ protected:
 
 private:
     BiometricsInterface *m_interface;
-    bool                 m_started;  //标识采集是否由这次这次认证发出
+    bool m_started;  //标识采集是否由这次这次认证发出
 };
 
 #endif  //KIRAN_ACCOUNT_MANAGER_FINGERPRINT_INPUT_WORKER_H

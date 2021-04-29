@@ -10,10 +10,10 @@ public:
     explicit UserAvatarWidget(QWidget *parent = nullptr);
     virtual ~UserAvatarWidget() = default;
 
-    void    setImage(const QString &path);
-    void    setDefaultImage();
-    void    setClickEnable(bool enable);
-    bool    setHoverImage(const QString &path);
+    void setImage(const QString &path);
+    void setDefaultImage();
+    void setClickEnable(bool enable);
+    bool setHoverImage(const QString &path);
     QString iconPath();
 
 signals:
@@ -40,9 +40,9 @@ private:
     QPixmap m_pixmap;
     QPixmap m_hoverPixmap;
     QPixmap m_hoverScaledPixmap;
-    bool    m_clickedEnable;
-    bool    m_isEnter;
-    bool    m_isHover;
+    bool m_clickedEnable;
+    bool m_isEnter;
+    bool m_isHover;
     QString m_iconPath;
 };
 

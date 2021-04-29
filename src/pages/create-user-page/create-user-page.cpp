@@ -5,6 +5,7 @@
 #include "passwd-helper.h"
 #include "src/pages/advance-settings-page/advance-settings.h"
 #include "ui_create-user-page.h"
+#include "log.h"
 
 #include <kiranwidgets-qt5/kiran-message-box.h>
 #include <widget-property-helper.h>
@@ -109,7 +110,7 @@ void CreateUserPage::initUI()
 void CreateUserPage::handlerCreateNewUser()
 {
     //step1.检验账户名是否为空，是否重名
-    qInfo() << "start check account name";
+    LOG_INFO_S() << "start check account name";
     QString account = ui->edit_name->text();
 
     if (account.isEmpty())
@@ -143,8 +144,8 @@ void CreateUserPage::handlerCreateNewUser()
     }
 
     //step2.检验密码、确认密码是否为空，是否相等
-    qInfo() << "start check passwd,confirm passwd";
-    QString passwd        = ui->editcheck_passwd->text();
+    LOG_INFO_S() << "start check passwd,confirm passwd";
+    QString passwd = ui->editcheck_passwd->text();
     QString confirmPasswd = ui->editcheck_confirmPasswd->text();
     if (passwd.isEmpty())
     {
@@ -169,7 +170,7 @@ void CreateUserPage::handlerCreateNewUser()
     }
 
     //step3.调用crypt密码加密
-    qInfo() << "start encrypted passwd";
+    LOG_INFO_S() << "start encrypted passwd";
     QString encryptedPasswd;
     if (!PasswdHelper::encryptPassword(passwd, encryptedPasswd))
     {
@@ -181,16 +182,16 @@ void CreateUserPage::handlerCreateNewUser()
     if (!m_advanceSettingsInfo.uid.isEmpty())
     {
         bool toNumberOk = false;
-        uid             = m_advanceSettingsInfo.uid.toLongLong(&toNumberOk);
+        uid = m_advanceSettingsInfo.uid.toLongLong(&toNumberOk);
         if (!toNumberOk)
         {
             uid = -1;
         }
     }
-    int     accountType = ui->combo_accountType->currentIndex();
-    QString homeDir     = m_advanceSettingsInfo.homeDir;
-    QString shell       = m_advanceSettingsInfo.shell;
-    QString iconFile    = ui->avatar->iconPath();
+    int accountType = ui->combo_accountType->currentIndex();
+    QString homeDir = m_advanceSettingsInfo.homeDir;
+    QString shell = m_advanceSettingsInfo.shell;
+    QString iconFile = ui->avatar->iconPath();
 
     emit sigIsBusyChanged(true);
     ui->btn_confirm->setBusy(true);

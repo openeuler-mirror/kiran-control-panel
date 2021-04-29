@@ -44,8 +44,8 @@ void EnrollProgressBar::paintProgressBar(QPainter &painter)
     qreal rotateAngle = 0;
     for (int i = 0; i < m_progressLinesCount; i++)
     {
-        qreal percent  = rotateAngle / 360;
-        int   iPercent = percent * 100;
+        qreal percent = rotateAngle / 360;
+        int iPercent = percent * 100;
         if (iPercent < m_progressValue)
         {
             pen.setColor(activeColor);
@@ -64,8 +64,8 @@ void EnrollProgressBar::paintProgressBar(QPainter &painter)
 
 void EnrollProgressBar::paintCenterPixmap(QPainter &painter, const QPixmap &pixmap)
 {
-    QPoint       center      = this->rect().center();
-    qreal        imageRadius = getCenterImageRadius();
+    QPoint center = this->rect().center();
+    qreal imageRadius = getCenterImageRadius();
     QPainterPath painterPath;
     painterPath.addEllipse(center.x() - imageRadius, center.y() - imageRadius, imageRadius * 2, imageRadius * 2);
     painter.setClipPath(painterPath);

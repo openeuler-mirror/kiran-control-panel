@@ -177,14 +177,14 @@ public Q_SLOTS:  // METHODS
                                 qlonglong &days_after_expiration_until_lock)
     {
         QList<QVariant> argumentList;
-        QDBusMessage    reply = callWithArgumentList(QDBus::Block, QLatin1String("GetPasswordExpirationPolicy"),
+        QDBusMessage reply = callWithArgumentList(QDBus::Block, QLatin1String("GetPasswordExpirationPolicy"),
                                                   argumentList);
         if (reply.type() == QDBusMessage::ReplyMessage && reply.arguments().count() == 6)
         {
-            last_change_time                 = qdbus_cast<qlonglong>(reply.arguments().at(1));
-            min_days_between_changes         = qdbus_cast<qlonglong>(reply.arguments().at(2));
-            max_days_between_changes         = qdbus_cast<qlonglong>(reply.arguments().at(3));
-            days_to_warn                     = qdbus_cast<qlonglong>(reply.arguments().at(4));
+            last_change_time = qdbus_cast<qlonglong>(reply.arguments().at(1));
+            min_days_between_changes = qdbus_cast<qlonglong>(reply.arguments().at(2));
+            max_days_between_changes = qdbus_cast<qlonglong>(reply.arguments().at(3));
+            days_to_warn = qdbus_cast<qlonglong>(reply.arguments().at(4));
             days_after_expiration_until_lock = qdbus_cast<qlonglong>(reply.arguments().at(5));
         }
         return reply;

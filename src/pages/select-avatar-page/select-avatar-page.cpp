@@ -4,6 +4,7 @@
 #include "flowlayout.h"
 #include "scrollarea-container.h"
 #include "tools/avatar-editor-wrapper.h"
+#include "log.h"
 
 #include <widget-property-helper.h>
 #include <QButtonGroup>
@@ -53,8 +54,8 @@ SelectAvatarPage::SelectAvatarMode SelectAvatarPage::mode() const
 
 void SelectAvatarPage::setCurrentAvatar(const QString &iconPath)
 {
-    QList<AvatarItemButton *> buttons       = m_scrollArea->findChildren<AvatarItemButton *>(SYSTEM_AVATAR_OBJ_NAME);
-    AvatarItemButton *        currentAvatar = nullptr;
+    QList<AvatarItemButton *> buttons = m_scrollArea->findChildren<AvatarItemButton *>(SYSTEM_AVATAR_OBJ_NAME);
+    AvatarItemButton *currentAvatar = nullptr;
 
     //删除之前用户添加头像
     removeUserAvatar();
@@ -83,7 +84,7 @@ void SelectAvatarPage::setCurrentAvatar(const QString &iconPath)
         }
         else
         {
-            qWarning() << "load" << iconPath << "failed";
+            LOG_WARNING_S() << "load" << iconPath << "failed";
         }
     }
 
@@ -93,7 +94,7 @@ void SelectAvatarPage::setCurrentAvatar(const QString &iconPath)
 
 void SelectAvatarPage::initUI()
 {
-    QPushButton *btn  = nullptr;
+    QPushButton *btn = nullptr;
     QLayoutItem *item = nullptr;
 
     m_mainLayout = new QVBoxLayout(this);
@@ -179,7 +180,7 @@ void SelectAvatarPage::initUI()
 //加载/usr/share/kiran-account-manager/account-icons/下*.face显示
 void SelectAvatarPage::loadAvatar()
 {
-    QDir          dir(BUILDIN_AVATAR_DIR_PATH);
+    QDir dir(BUILDIN_AVATAR_DIR_PATH);
     QFileInfoList fileInfoList = dir.entryInfoList(QDir::Files);
     for (auto &iter : fileInfoList)
     {

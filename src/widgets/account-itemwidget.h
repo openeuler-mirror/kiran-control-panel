@@ -37,7 +37,7 @@ public:
     bool isCreateAccountItem() const;
     bool isLocked() const;
 
-    void    setUserDBusObjectPath(const QString &objPath);
+    void setUserDBusObjectPath(const QString &objPath);
     QString getUserDBusObjectPath();
 
     void updateInfo();
@@ -54,10 +54,10 @@ protected:
 
 private:
     Ui::AccountItemWidget *ui;
-    bool                   m_isSelected;
-    bool                   m_isCreateAccountItem;
-    bool                   m_isLocked;
-    QString                m_objectPath;
+    bool m_isSelected;
+    bool m_isCreateAccountItem;
+    bool m_isLocked;
+    QString m_objectPath;
 };
 
 #endif  // ACCOUNTITEMWIDGET_H

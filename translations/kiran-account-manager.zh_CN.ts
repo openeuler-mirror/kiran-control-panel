@@ -149,34 +149,34 @@
         <translation>返回</translation>
     </message>
     <message>
-        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="115"/>
+        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="116"/>
         <source>add fingerprint</source>
         <translation>录入指纹数据</translation>
     </message>
     <message>
-        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="128"/>
+        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="129"/>
         <source>add face</source>
         <translation>录入人脸数据</translation>
     </message>
     <message>
-        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="145"/>
-        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="255"/>
+        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="146"/>
+        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="256"/>
         <source>error</source>
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="146"/>
-        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="256"/>
+        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="147"/>
+        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="257"/>
         <source>please ensure that at least one authentication option exists</source>
         <translation>请确保至少一个认证选项打开</translation>
     </message>
     <message>
-        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="448"/>
+        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="449"/>
         <source>fingerprint_</source>
         <translation>指纹_</translation>
     </message>
     <message>
-        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="448"/>
+        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="449"/>
         <source>face_</source>
         <translation>人脸_</translation>
     </message>
@@ -222,12 +222,12 @@
         <translation>账户类型</translation>
     </message>
     <message>
-        <location filename="../src/pages/create-user-page/create-user-page.cpp" line="64"/>
+        <location filename="../src/pages/create-user-page/create-user-page.cpp" line="65"/>
         <source>standard</source>
         <translation>普通用户</translation>
     </message>
     <message>
-        <location filename="../src/pages/create-user-page/create-user-page.cpp" line="65"/>
+        <location filename="../src/pages/create-user-page/create-user-page.cpp" line="66"/>
         <source>administrator</source>
         <translation>管理员</translation>
     </message>
@@ -274,48 +274,48 @@
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="../src/pages/create-user-page/create-user-page.cpp" line="83"/>
+        <location filename="../src/pages/create-user-page/create-user-page.cpp" line="84"/>
         <source>Please enter account name first</source>
         <translation>请先输入账户名</translation>
     </message>
     <message>
-        <location filename="../src/pages/create-user-page/create-user-page.cpp" line="117"/>
+        <location filename="../src/pages/create-user-page/create-user-page.cpp" line="118"/>
         <source>Please enter your account name</source>
         <translation>请输入账户名</translation>
     </message>
     <message>
-        <location filename="../src/pages/create-user-page/create-user-page.cpp" line="133"/>
+        <location filename="../src/pages/create-user-page/create-user-page.cpp" line="134"/>
         <source>Account cannot be a pure number</source>
         <translation>账户名不能全为数字</translation>
     </message>
     <message>
-        <location filename="../src/pages/create-user-page/create-user-page.cpp" line="140"/>
+        <location filename="../src/pages/create-user-page/create-user-page.cpp" line="141"/>
         <source>Account already exists</source>
         <translation>账户名已存在</translation>
     </message>
     <message>
-        <location filename="../src/pages/create-user-page/create-user-page.cpp" line="152"/>
+        <location filename="../src/pages/create-user-page/create-user-page.cpp" line="153"/>
         <source>Please enter your password</source>
         <translation>请输出密码</translation>
     </message>
     <message>
-        <location filename="../src/pages/create-user-page/create-user-page.cpp" line="159"/>
+        <location filename="../src/pages/create-user-page/create-user-page.cpp" line="160"/>
         <source>Please enter the password again</source>
         <translation>请再次输入密码</translation>
     </message>
     <message>
-        <location filename="../src/pages/create-user-page/create-user-page.cpp" line="166"/>
+        <location filename="../src/pages/create-user-page/create-user-page.cpp" line="167"/>
         <source>The password you enter must be the same as the former one</source>
         <translation>两次密码不相同，请核对后，再次输入</translation>
     </message>
     <message>
-        <location filename="../src/pages/create-user-page/create-user-page.cpp" line="176"/>
-        <location filename="../src/pages/create-user-page/create-user-page.cpp" line="211"/>
+        <location filename="../src/pages/create-user-page/create-user-page.cpp" line="177"/>
+        <location filename="../src/pages/create-user-page/create-user-page.cpp" line="212"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../src/pages/create-user-page/create-user-page.cpp" line="176"/>
+        <location filename="../src/pages/create-user-page/create-user-page.cpp" line="177"/>
         <source>Password encryption failed</source>
         <translation>密码加密失败</translation>
     </message>
@@ -351,18 +351,18 @@
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="../src/pages/biometric-input-dialog/face-input-dialog/face-input-dialog.cpp" line="57"/>
+        <location filename="../src/pages/biometric-input-dialog/face-input-dialog/face-input-dialog.cpp" line="59"/>
         <source>initializing face collection environment...</source>
         <translation>正在初始化人脸采集环境，请稍后</translation>
     </message>
     <message>
-        <location filename="../src/pages/biometric-input-dialog/face-input-dialog/face-input-dialog.cpp" line="107"/>
+        <location filename="../src/pages/biometric-input-dialog/face-input-dialog/face-input-dialog.cpp" line="109"/>
         <source>failed to initialize face collection environment!</source>
         <translation>初始化人脸采集环境失败!</translation>
     </message>
     <message>
-        <location filename="../src/pages/biometric-input-dialog/face-input-dialog/face-input-dialog.cpp" line="118"/>
-        <location filename="../src/pages/biometric-input-dialog/face-input-dialog/face-input-dialog.cpp" line="129"/>
+        <location filename="../src/pages/biometric-input-dialog/face-input-dialog/face-input-dialog.cpp" line="120"/>
+        <location filename="../src/pages/biometric-input-dialog/face-input-dialog/face-input-dialog.cpp" line="131"/>
         <source>Failed to start collection</source>
         <translation>开始采集失败</translation>
     </message>
@@ -398,12 +398,12 @@
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="../src/pages/biometric-input-dialog/fingerprint-input-dialog/fingerprint-input-dialog.cpp" line="34"/>
+        <location filename="../src/pages/biometric-input-dialog/fingerprint-input-dialog/fingerprint-input-dialog.cpp" line="35"/>
         <source>Finger Enroll</source>
         <translation>指纹录入</translation>
     </message>
     <message>
-        <location filename="../src/pages/biometric-input-dialog/fingerprint-input-dialog/fingerprint-input-dialog.cpp" line="83"/>
+        <location filename="../src/pages/biometric-input-dialog/fingerprint-input-dialog/fingerprint-input-dialog.cpp" line="84"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>
@@ -411,7 +411,7 @@
 <context>
     <name>FingerprintInputWorker</name>
     <message>
-        <location filename="../src/pages/biometric-input-dialog/fingerprint-input-dialog/fingerprint-input-worker.cpp" line="64"/>
+        <location filename="../src/pages/biometric-input-dialog/fingerprint-input-dialog/fingerprint-input-worker.cpp" line="65"/>
         <source>initializing fingerprint collection environment...</source>
         <translation>正在初始化指纹采集环境，请稍后</translation>
     </message>
@@ -419,7 +419,7 @@
 <context>
     <name>HardWorker</name>
     <message>
-        <location filename="../src/hard-worker.cpp" line="32"/>
+        <location filename="../src/hard-worker.cpp" line="33"/>
         <source>Create User failed</source>
         <translation>创建用户失败</translation>
     </message>
@@ -444,32 +444,32 @@
         <translation type="vanished">设置用户属性失败</translation>
     </message>
     <message>
-        <location filename="../src/hard-worker.cpp" line="131"/>
+        <location filename="../src/hard-worker.cpp" line="132"/>
         <source> update password failed</source>
         <translation>更新密码失败</translation>
     </message>
     <message>
-        <location filename="../src/hard-worker.cpp" line="157"/>
+        <location filename="../src/hard-worker.cpp" line="158"/>
         <source>icon file</source>
         <translation>头像</translation>
     </message>
     <message>
-        <location filename="../src/hard-worker.cpp" line="168"/>
+        <location filename="../src/hard-worker.cpp" line="169"/>
         <source>account type</source>
         <translation>账户类型</translation>
     </message>
     <message>
-        <location filename="../src/hard-worker.cpp" line="179"/>
+        <location filename="../src/hard-worker.cpp" line="180"/>
         <source>locked</source>
         <translation>启用状态</translation>
     </message>
     <message>
-        <location filename="../src/hard-worker.cpp" line="187"/>
+        <location filename="../src/hard-worker.cpp" line="188"/>
         <source>Failed to update user properties(%1)</source>
         <translation>更新用户属性失败(%1)</translation>
     </message>
     <message>
-        <location filename="../src/hard-worker.cpp" line="207"/>
+        <location filename="../src/hard-worker.cpp" line="208"/>
         <source>Failed to delete user</source>
         <translation>删除用户失败</translation>
     </message>
@@ -477,24 +477,24 @@
 <context>
     <name>KiranAccountManager</name>
     <message>
-        <location filename="../src/kiran-account-manager.cpp" line="70"/>
-        <location filename="../src/kiran-account-manager.cpp" line="359"/>
+        <location filename="../src/kiran-account-manager.cpp" line="71"/>
+        <location filename="../src/kiran-account-manager.cpp" line="360"/>
         <source>disable</source>
         <translation type="unfinished">禁用</translation>
     </message>
     <message>
-        <location filename="../src/kiran-account-manager.cpp" line="70"/>
-        <location filename="../src/kiran-account-manager.cpp" line="359"/>
+        <location filename="../src/kiran-account-manager.cpp" line="71"/>
+        <location filename="../src/kiran-account-manager.cpp" line="360"/>
         <source>enable</source>
         <translation type="unfinished">启用</translation>
     </message>
     <message>
-        <location filename="../src/kiran-account-manager.cpp" line="93"/>
+        <location filename="../src/kiran-account-manager.cpp" line="94"/>
         <source>User Manager</source>
         <translation>账户管理工具</translation>
     </message>
     <message>
-        <location filename="../src/kiran-account-manager.cpp" line="180"/>
+        <location filename="../src/kiran-account-manager.cpp" line="181"/>
         <source>Create new account</source>
         <translation type="unfinished">创建新账户</translation>
     </message>

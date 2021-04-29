@@ -36,11 +36,11 @@ void UserInfoPage::updateInfo()
     UserInterface userInterface(m_curShowUserPath,
                                 QDBusConnection::systemBus());
 
-    QString userName    = userInterface.user_name();
-    m_uid               = userInterface.uid();
-    int     accountType = userInterface.account_type();
-    QString iconFile    = userInterface.icon_file();
-    bool    locked      = userInterface.locked();
+    QString userName = userInterface.user_name();
+    m_uid = userInterface.uid();
+    int accountType = userInterface.account_type();
+    QString iconFile = userInterface.icon_file();
+    bool locked = userInterface.locked();
 
     ui->label_name->setText(userName);
     ui->edit_userID->setText(QString::number(m_uid));
@@ -223,13 +223,13 @@ void UserInfoPage::handlerUpdatePasswd()
 void UserInfoPage::handlerUpdateUserProperty()
 {
     QString account, icon;
-    int     accountType;
-    bool    isLocked;
+    int accountType;
+    bool isLocked;
 
-    account     = getCurrentShowUserName();
-    icon        = ui->avatar->iconPath();
+    account = getCurrentShowUserName();
+    icon = ui->avatar->iconPath();
     accountType = ui->combo_accountType->currentIndex();
-    isLocked    = !m_accountStatusSwitch->isChecked();
+    isLocked = !m_accountStatusSwitch->isChecked();
 
     ui->btn_saveProperty->setBusy(true);
     emit sigIsBusyChanged(true);

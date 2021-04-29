@@ -8,6 +8,7 @@
 #include "mask-widget.h"
 #include "select-avatar-page/select-avatar-page.h"
 #include "user-info-page/user-info-page.h"
+#include "log.h"
 
 #include <kiran-sidebar-widget.h>
 #include <kiran-style-public-define.h>
@@ -27,7 +28,7 @@ enum StackWidgetPageEnum
     PAGE_AUTH_MANAGER
 };
 
-KiranAccountManager::KiranAccountManager(QWidget* parent)
+KiranAccountManager::KiranAccountManager(QWidget *parent)
     : KiranTitlebarWindow(parent)
 {
     m_workThread.start();
@@ -65,7 +66,7 @@ void KiranAccountManager::setCurrentUser(const QString &userPath)
 void KiranAccountManager::appendSiderbarItem(const QString &userPath)
 {
     UserInterface interface(userPath, QDBusConnection::systemBus());
-    auto          item = new QListWidgetItem(interface.user_name(), m_tabList);
+    auto item = new QListWidgetItem(interface.user_name(), m_tabList);
     item->setIcon(QPixmap(interface.icon_file()));
     item->setData(Kiran::ItemStatus_Role, interface.locked() ? tr("disable") : tr("enable"));
     item->setData(Kiran::ItemStatusColor_Role, interface.locked() ? QColor("#fa4949") : QColor("#43a3f2"));
@@ -304,13 +305,13 @@ void KiranAccountManager::connectToInfoChanged()
     //处理用户新增、删除
     connect(AccountsGlobalInfo::instance(), &AccountsGlobalInfo::UserAdded,
             [this](const QDBusObjectPath &obj) {
-                qInfo() << "siderbar add item:" << obj.path();
+                LOG_INFO_S() << "siderbar add item:" << obj.path();
                 appendSiderbarItem(obj.path());
             });
 
     connect(AccountsGlobalInfo::instance(), &AccountsGlobalInfo::UserDeleted,
             [this](const QDBusObjectPath &obj) {
-                qInfo() << "siderbar delete item:" << obj.path();
+                LOG_INFO_S() << "siderbar delete item:" << obj.path();
                 int findIdx = -1;
 
                 QString userPath = obj.path();
@@ -324,11 +325,11 @@ void KiranAccountManager::connectToInfoChanged()
                 }
                 if (findIdx == -1)
                 {
-                    qWarning() << "can't find deleted user:" << obj.path();
+                    LOG_WARNING_S() << "can't find deleted user:" << obj.path();
                     return;
                 }
-                bool             needResetSidebarItem = m_tabList->item(findIdx)->isSelected();
-                QListWidgetItem *widgetItem           = m_tabList->takeItem(findIdx);
+                bool needResetSidebarItem = m_tabList->item(findIdx)->isSelected();
+                QListWidgetItem *widgetItem = m_tabList->takeItem(findIdx);
                 delete widgetItem;
                 if (needResetSidebarItem)
                 {
@@ -344,16 +345,16 @@ void KiranAccountManager::connectToInfoChanged()
                 {
                     for (int i = 0; i < m_tabList->count(); i++)
                     {
-                        QListWidgetItem *item         = m_tabList->item(i);
-                        QString          itemUserPath = item->data(ITEM_USER_OBJ_PATH_ROLE).toString();
+                        QListWidgetItem *item = m_tabList->item(i);
+                        QString itemUserPath = item->data(ITEM_USER_OBJ_PATH_ROLE).toString();
                         if (itemUserPath != userPath)
                         {
                             continue;
                         }
                         UserInterface userInterface(itemUserPath, QDBusConnection::systemBus());
-                        QString       userName = userInterface.user_name();
-                        QString       iconFile = userInterface.icon_file();
-                        bool          isLocked = userInterface.locked();
+                        QString userName = userInterface.user_name();
+                        QString iconFile = userInterface.icon_file();
+                        bool isLocked = userInterface.locked();
                         item->setText(userName);
                         item->setIcon(QIcon(iconFile));
                         item->setData(Kiran::ItemStatus_Role, isLocked ? tr("disable") : tr("enable"));

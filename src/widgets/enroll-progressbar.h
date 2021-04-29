@@ -38,7 +38,7 @@ private:
     unsigned int m_progressValue = 0;
     /* 进度条线段距边框距离 */
     unsigned int m_borerMargin = 4;
-    QPixmap      m_centerPixmap;
+    QPixmap m_centerPixmap;
 };
 
 #endif  //KIRAN_ACCOUNT_MANAGER_ENROLL_PROGRESSBAR_H

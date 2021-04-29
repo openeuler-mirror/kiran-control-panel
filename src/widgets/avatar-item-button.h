@@ -11,11 +11,11 @@ class AvatarItemButton : public QAbstractButton
 public:
     AvatarItemButton(QWidget *parent = nullptr);
     virtual ~AvatarItemButton();
-    void    setIcon(const QString &iconPath);
+    void setIcon(const QString &iconPath);
     QString iconPath();
 
 protected:
-    void         setIcon(const QIcon &icon);
+    void setIcon(const QIcon &icon);
     virtual void paintEvent(QPaintEvent *event) override;
     virtual void resizeEvent(QResizeEvent *event) override;
     virtual void enterEvent(QEvent *event) override;
@@ -24,10 +24,10 @@ protected:
     virtual void mousePressEvent(QMouseEvent *e) override;
 
 private:
-    QRect   m_realRect;
-    double  m_radius;
-    bool    m_mouseEnter;
-    bool    m_hover;
+    QRect m_realRect;
+    double m_radius;
+    bool m_mouseEnter;
+    bool m_hover;
     QString m_iconPath;
 };
 

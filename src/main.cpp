@@ -7,19 +7,19 @@
 #include <kiran-application.h>
 #include <QFile>
 #include <QDesktopWidget>
+#include <zlog_ex.h>
 
-#define LOG_PATH "/tmp/kiran-account-manager.log"
 #define DEFAULT_THEME ":/themes/black_theme.qss"
-#define TRANSLATION_FILE_DIR "/usr/share/kiran-account-manager/translations/"
 
 //TODO:修改所有消息框为kiranwidgets-qt5中的消息框
 
 void initLog()
 {
-    if (!Log::instance()->init(LOG_PATH))
-    {
-        qCritical() << QString("Log init failed(%1)").arg(LOG_PATH);
-    }
+    dzlog_init_ex(nullptr,
+                  "kylinsec-session",
+                  "kiran-account-manager",
+                  qAppName().toStdString().c_str());
+    Log::instance()->init();
     qInstallMessageHandler(Log::messageHandler);
 }
 
@@ -27,7 +27,7 @@ void initTemporaryDiaManager()
 {
     if (!TemporaryDirManager::instance()->init(qAppName()))
     {
-        qCritical() << "init temporary dir failed";
+        LOG_ERROR_S() << "init temporary dir failed";
         exit(-1);
     }
 }
@@ -42,7 +42,7 @@ void loadStyleSheet()
     }
     else
     {
-        qCritical() << "can't load default theme";
+        LOG_ERROR_S() << "can't load default theme";
         exit(-1);
     }
 }
@@ -51,7 +51,7 @@ void loadAccountInfo()
 {
     if (!AccountsGlobalInfo::instance()->init())
     {
-        qCritical() << "load accounts info failed.";
+        LOG_ERROR_S() << "load accounts info failed.";
         exit(-1);
     }
 }

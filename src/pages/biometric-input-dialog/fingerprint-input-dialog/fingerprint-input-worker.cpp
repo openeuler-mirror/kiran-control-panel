@@ -4,6 +4,7 @@
 
 #include "fingerprint-input-worker.h"
 #include "biometrics-interface.h"
+#include "log.h"
 
 FingerprintInputWorker::FingerprintInputWorker(QObject *parent)
     : QThread(parent),
@@ -15,11 +16,11 @@ FingerprintInputWorker::FingerprintInputWorker(QObject *parent)
                 {
                     return;
                 }
-                qInfo() << "finger print status:";
-                qInfo() << "    id:      " << id;
-                qInfo() << "    progress:" << progress;
-                qInfo() << "    done:    " << done;
-                qInfo() << "    message: " << message;
+                LOG_INFO_S() << "finger print status:";
+                LOG_INFO_S() << "    id:      " << id;
+                LOG_INFO_S() << "    progress:" << progress;
+                LOG_INFO_S() << "    done:    " << done;
+                LOG_INFO_S() << "    message: " << message;
                 if (done)
                 {
                     emit sigEnrollComplete(progress == 100, message, id);
@@ -39,14 +40,14 @@ FingerprintInputWorker::~FingerprintInputWorker()
 
 void FingerprintInputWorker::startFingerprintEnroll()
 {
-    qInfo() << "start finger print enroll...";
+    LOG_INFO_S() << "start finger print enroll...";
     stopFingerprintEnroll();
     start();
 }
 
 void FingerprintInputWorker::stopFingerprintEnroll()
 {
-    qInfo() << "stop finger print enroll...";
+    LOG_INFO_S() << "stop finger print enroll...";
     if (m_started)
     {
         m_interface->EnrollFprintStop();
@@ -56,7 +57,7 @@ void FingerprintInputWorker::stopFingerprintEnroll()
         QThread::requestInterruption();
         QThread::wait();
     }
-    qInfo() << "stop finger print enroll finish...";
+    LOG_INFO_S() << "stop finger print enroll finish...";
 }
 
 void FingerprintInputWorker::run()
@@ -66,7 +67,7 @@ void FingerprintInputWorker::run()
     reply.waitForFinished();
     if (reply.isError())
     {
-        qInfo() << reply.error();
+        LOG_INFO_S() << reply.error();
         emit sigEnrollError(reply.error().message());
         return;
     }

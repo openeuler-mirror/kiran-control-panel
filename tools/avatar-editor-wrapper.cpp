@@ -7,6 +7,7 @@
 #include "config.h"
 #include "include/global-defines.h"
 #include "temporary-dir-manager.h"
+#include "log.h"
 
 #include <QDebug>
 #include <QMap>
@@ -36,7 +37,7 @@ QString avatarEditorError(int exitCode)
 bool AvatarEditorWrapper::exec(const QString &srcImage, QString &dstImage)
 {
     QProcess avatarEditorProcess;
-    QString  tempFilePath = TemporaryDirManager::instance()->generateTempFilePath();
+    QString tempFilePath = TemporaryDirManager::instance()->generateTempFilePath();
 
     avatarEditorProcess.start(KIRAN_AVATAR_EDITOR_PATH,
                               QStringList() << "--image" << srcImage
@@ -45,7 +46,7 @@ bool AvatarEditorWrapper::exec(const QString &srcImage, QString &dstImage)
 
     if (!avatarEditorProcess.waitForStarted(3000))
     {
-        qWarning() << "can't start" << KIRAN_AVATAR_EDITOR_PATH;
+        LOG_WARNING_S() << "can't start" << KIRAN_AVATAR_EDITOR_PATH;
         return false;
     }
 
@@ -56,6 +57,6 @@ bool AvatarEditorWrapper::exec(const QString &srcImage, QString &dstImage)
         dstImage = tempFilePath;
         return true;
     }
-    qWarning() << "kiran-avatar-editor:" << avatarEditorError(avatarEditorProcess.exitCode());
+    LOG_WARNING_S() << "kiran-avatar-editor:" << avatarEditorError(avatarEditorProcess.exitCode());
     return false;
 }

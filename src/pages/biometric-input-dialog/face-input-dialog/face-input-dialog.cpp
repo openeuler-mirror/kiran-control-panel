@@ -6,8 +6,10 @@
 
 #include "face-input-dialog.h"
 #include <QPainter>
+
 #include "biometrics-interface.h"
 #include "face-enroll-worker.h"
+#include "log.h"
 #include "ui_face-input-dialog.h"
 
 Q_DECLARE_METATYPE(QList<QRect>);
@@ -74,15 +76,15 @@ void FaceInputDialog::closeEvent(QCloseEvent *event)
 {
     if (!m_isSave && !m_biometricID.isEmpty())
     {
-        qInfo() << "start delete enrolled face...";
+        LOG_INFO_S() << "start delete enrolled face...";
         auto deleteBiometricReply = m_interface->DeleteEnrolledFace(m_biometricID);
         deleteBiometricReply.waitForFinished();
         if (deleteBiometricReply.isError())
         {
-            qWarning() << "delete biometric" << m_biometricID
-                       << "     reply error:" << deleteBiometricReply.error();
+            LOG_WARNING_S() << "delete biometric" << m_biometricID
+                            << "     reply error:" << deleteBiometricReply.error();
         }
-        qInfo() << "delete enrolled face finished...";
+        LOG_INFO_S() << "delete enrolled face finished...";
         m_biometricID.clear();
     }
     emit sigClose();
@@ -95,15 +97,15 @@ bool FaceInputDialog::startEnroll()
     reply.waitForFinished();
     if (reply.isError())
     {
-        qWarning() << "enroll face start error:" << reply.error();
+        LOG_WARNING_S() << "enroll face start error:" << reply.error();
         if (reply.error().name() == "com.kylinsec.Kiran.SystemDaemon.Biometrics.Error.DeviceBusy")
         {
-            qInfo() << "device is busy,stop enroll face fisrt...";
+            LOG_INFO_S() << "device is busy,stop enroll face fisrt...";
             auto stopEnrollReply = m_interface->EnrollFaceStop();
             stopEnrollReply.waitForFinished();
             if (stopEnrollReply.isError())
             {
-                qWarning() << "stop enroll face error:" << stopEnrollReply.error();
+                LOG_WARNING_S() << "stop enroll face error:" << stopEnrollReply.error();
                 setTips(TIP_TYPE_ERROR, tr("failed to initialize face collection environment!"));
                 return false;
             }
@@ -113,7 +115,7 @@ bool FaceInputDialog::startEnroll()
                 reply.waitForFinished();
                 if (reply.isError())
                 {
-                    qWarning() << "enroll face start error:" << reply.error();
+                    LOG_WARNING_S() << "enroll face start error:" << reply.error();
                     QString errMsg = QString("%1(%2)")
                                          .arg(tr("Failed to start collection"))
                                          .arg(reply.error().message());
@@ -124,7 +126,7 @@ bool FaceInputDialog::startEnroll()
         }
         else
         {
-            qWarning() << "enroll face start error:" << reply.error();
+            LOG_WARNING_S() << "enroll face start error:" << reply.error();
             QString errMsg = QString("%1(%2)")
                                  .arg(tr("Failed to start collection"))
                                  .arg(reply.error().message());
@@ -170,15 +172,15 @@ void FaceInputDialog::slotUpdateEnrollFaceStatus(const QString &message, const Q
 {
     if (!m_enrollStarted)
     {
-        qInfo() << "enroll start failed,ignore enroll face status.";
+        LOG_INFO_S() << "enroll start failed,ignore enroll face status.";
         return;
     }
 
-    qInfo() << "recv EnrollFaceStatus:";
-    qInfo() << "    message: " << message;
-    qInfo() << "    id:      " << id;
-    qInfo() << "    progress:" << progress;
-    qInfo() << "    done:    " << done;
+    LOG_INFO_S() << "recv EnrollFaceStatus:";
+    LOG_INFO_S() << "    message: " << message;
+    LOG_INFO_S() << "    id:      " << id;
+    LOG_INFO_S() << "    progress:" << progress;
+    LOG_INFO_S() << "    done:    " << done;
 
     if (!message.isEmpty())
     {
@@ -190,15 +192,15 @@ void FaceInputDialog::slotUpdateEnrollFaceStatus(const QString &message, const Q
     if (done)
     {
         m_enrollStarted = false;
-        m_biometricID   = id;
+        m_biometricID = id;
     }
 }
 
 void FaceInputDialog::generateNewPreviewImage()
 {
-    QPixmap  drawPixmap = QPixmap::fromImage(m_tempImage);
+    QPixmap drawPixmap = QPixmap::fromImage(m_tempImage);
     QPainter painter(&drawPixmap);
-    QPen     pen;
+    QPen pen;
     pen.setColor(QColor(255, 255, 255, 255 * 0.5));
     pen.setWidthF(2);
     painter.setPen(pen);

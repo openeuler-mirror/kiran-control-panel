@@ -25,7 +25,7 @@ private:
     void remove();
 
 private:
-    bool    m_initFinished = false;
+    bool m_initFinished = false;
     QString m_temporaryDirPath;
 };
 

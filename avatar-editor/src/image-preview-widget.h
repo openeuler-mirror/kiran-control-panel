@@ -15,10 +15,10 @@ public:
     explicit ImagePreviewWidget(QWidget *parent = nullptr);
     ~ImagePreviewWidget();
 
-    void    setSrcImagePath(const QString &imagePath);
+    void setSrcImagePath(const QString &imagePath);
     QString srcImagePath();
 
-    void    setDstImagePath(const QString &imagePath);
+    void setDstImagePath(const QString &imagePath);
     QString dstImagePath();
 
     bool saveAvatar();
@@ -61,7 +61,7 @@ private:
     double m_pixmapScaleFactor = 1.0;
     //图片的左顶点
     QPoint m_pixmapLefttop;
-    bool   m_btnIsPressed;
+    bool m_btnIsPressed;
     QPoint m_btnPressedPoint;
 };
 

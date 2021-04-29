@@ -39,7 +39,7 @@ protected:
 
 private:
     VerificationStatusEnum m_verificationStatus;
-    bool                   m_showPasswordModeStyle;
+    bool m_showPasswordModeStyle;
 };
 
 #endif  // LINEEDITWITHCHECKICON_H

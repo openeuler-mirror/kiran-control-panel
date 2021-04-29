@@ -77,10 +77,10 @@ public:
     void hideTip();
 
 private:
-    void  drawUpArrowBackground(QPainter *painter);
-    void  drawDownArrowBackground(QPainter *painter);
-    void  drawLeftArrowBackground(QPainter *painter);
-    void  drawRightArrowBackground(QPainter *painter);
+    void drawUpArrowBackground(QPainter *painter);
+    void drawDownArrowBackground(QPainter *painter);
+    void drawLeftArrowBackground(QPainter *painter);
+    void drawRightArrowBackground(QPainter *painter);
     QSize getRightSize() const;
 
 protected:
@@ -89,14 +89,14 @@ protected:
     virtual void showEvent(QShowEvent *event) Q_DECL_OVERRIDE;
 
 private:
-    Ui::KiranTips *     ui;
-    ShowPostionHint     m_showPostion;
+    Ui::KiranTips *ui;
+    ShowPostionHint m_showPostion;
     QPropertyAnimation *m_EnterAnimation;
-    QTimer              m_fadeOutTimer;
-    bool                m_hideOnClicked;
-    bool                m_animationEnable;
-    QColor              m_bgColor;
-    QWidget *           m_showAroudWidget;
+    QTimer m_fadeOutTimer;
+    bool m_hideOnClicked;
+    bool m_animationEnable;
+    QColor m_bgColor;
+    QWidget *m_showAroudWidget;
 };
 
 #endif  // KIRANEDITTIP_H

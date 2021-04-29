@@ -8,6 +8,7 @@
 #include <QStyleOption>
 
 #include "animation-push-button.h"
+#include "log.h"
 
 AnimationPushButton::AnimationPushButton(QWidget *parent)
     : QPushButton(parent),
@@ -23,7 +24,7 @@ void AnimationPushButton::setBusy(bool busy)
 
     if (busy && !m_svgRender.isValid())
     {
-        qWarning() << "AnimationPushButton: animation pixmap isNull!";
+        LOG_WARNING_S() << "AnimationPushButton: animation pixmap isNull!";
         return;
     }
     m_isBusy = busy;
@@ -61,7 +62,7 @@ void AnimationPushButton::paintEvent(QPaintEvent *event)
         {
             painter.translate(this->rect().center());
             painter.rotate(m_rotationAngle);
-            int   svgDrawSize = qMin(width(), height()) - 40;
+            int svgDrawSize = qMin(width(), height()) - 40;
             QRect renderRect((width() - svgDrawSize) / 2 - width() / 2,
                              (height() - svgDrawSize) / 2 - height() / 2,
                              svgDrawSize,

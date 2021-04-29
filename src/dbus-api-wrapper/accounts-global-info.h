@@ -47,16 +47,16 @@ private:
 signals:
     void UserAdded(const QDBusObjectPath &obj);
     void UserDeleted(const QDBusObjectPath &obj);
-    void UserPropertyChanged(QString  userPath,
-                             QString  propertyName,
+    void UserPropertyChanged(QString userPath,
+                             QString propertyName,
                              QVariant value);
 private Q_SLOTS:
     void handlerPropertyChanged(QString userPath, QString propertyName, QVariant value);
 
 private:
-    AccountsInterface      m_accountsInterface;
+    AccountsInterface m_accountsInterface;
     QList<UserInterface *> m_usersList;
-    QString                m_curUserName;
+    QString m_curUserName;
 };
 
 #endif  // ACCOUNTSGLOBALINFO_H

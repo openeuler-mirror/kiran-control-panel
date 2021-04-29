@@ -8,6 +8,7 @@
 #include <QScopedPointer>
 #include <QUuid>
 
+#include "log.h"
 #include "temporary-dir-manager.h"
 
 TemporaryDirManager::TemporaryDirManager()
@@ -32,18 +33,23 @@ bool TemporaryDirManager::init(const QString &dirName)
     if (fileInfo.exists())
     {
         QDir dir(fileInfo.absoluteFilePath());
-        qInfo() << "remove " << dir.path() << (dir.removeRecursively() ? "success" : "failed");
+        LOG_INFO_S() << "remove " << dir.path() << (dir.removeRecursively() ? "success" : "failed");
     }
 
     QDir tempDir("/tmp");
     if (tempDir.mkdir(dirName))
     {
+        QFile accountTempDir(QString("/tmp/%1").arg(dirName));
+        accountTempDir.setPermissions(QFile::ReadOwner|QFile::WriteOwner|
+                                      QFile::ReadGroup|QFile::WriteGroup|
+                                      QFile::ReadOther|QFile::WriteOther);
         m_initFinished     = true;
         m_temporaryDirPath = temporarDirPath;
-        qInfo() << "Temporary Dir Path:" << m_temporaryDirPath;
+        LOG_INFO_S() << "Temporary Dir Path:" << m_temporaryDirPath;
         return true;
     }
 
+    LOG_WARNING_S() << "create temporary dir " << m_temporaryDirPath << "failed!";
     return false;
 }
 
@@ -61,7 +67,7 @@ QString TemporaryDirManager::generateTempFilePath()
 {
     if (!m_initFinished)
     {
-        qWarning() << "not initialized,call TemporaryDirManager::init";
+        LOG_WARNING_S() << "not initialized,call TemporaryDirManager::init";
         return QString("");
     }
     QUuid id = QUuid::createUuid();

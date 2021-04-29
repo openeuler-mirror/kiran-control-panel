@@ -6,6 +6,7 @@
 #include "accounts-interface.h"
 #include "accounts-user-interface.h"
 #include "global-defines.h"
+#include "log.h"
 
 #include <QDBusConnection>
 #include <QDebug>
@@ -20,17 +21,17 @@ HardWorker::~HardWorker()
 
 //TODO: 拼接DBus接口返回的错误信息
 void HardWorker::doCreateUser(QString account,
-                              int     uid,
-                              int     accountType,
+                              int uid,
+                              int accountType,
                               QString encryptedPasswd,
                               QString homeDir,
                               QString shell,
                               QString iconFile)
 {
     AccountsInterface accountsService(QDBusConnection::systemBus());
-    QString           userObjPath;
-    QString           errMsgPrefix = tr("Create User failed");
-    QString           errMsgDetail;
+    QString userObjPath;
+    QString errMsgPrefix = tr("Create User failed");
+    QString errMsgDetail;
 
     ///step1.创建用户
     QDBusPendingReply<QDBusObjectPath> createUserRep;
@@ -41,7 +42,7 @@ void HardWorker::doCreateUser(QString account,
     createUserRep.waitForFinished();
     if (createUserRep.isError())
     {
-        qWarning() << "create user failed," << createUserRep.error();
+        LOG_WARNING_S() << "create user failed," << createUserRep.error();
         errMsgDetail = createUserRep.error().message();
         goto failed;
     }
@@ -56,7 +57,7 @@ void HardWorker::doCreateUser(QString account,
         setpwdRep.waitForFinished();
         if (setpwdRep.isError())
         {
-            qWarning() << "set passwd failed," << setpwdRep.error();
+            LOG_WARNING_S() << "set passwd failed," << setpwdRep.error();
             errMsgDetail = setpwdRep.error().message();
             goto failed;
         }
@@ -67,7 +68,7 @@ void HardWorker::doCreateUser(QString account,
             setHomeRep.waitForFinished();
             if (setHomeRep.isError())
             {
-                qWarning() << "set home directory failed," << setHomeRep.error();
+                LOG_WARNING_S() << "set home directory failed," << setHomeRep.error();
                 errMsgDetail = setHomeRep.error().message();
                 goto failed;
             }
@@ -77,7 +78,7 @@ void HardWorker::doCreateUser(QString account,
         setShellRep.waitForFinished();
         if (setShellRep.isError())
         {
-            qWarning() << "set shell failed," << setShellRep.error();
+            LOG_WARNING_S() << "set shell failed," << setShellRep.error();
             errMsgDetail = setShellRep.error().message();
             goto failed;
         }
@@ -86,27 +87,27 @@ void HardWorker::doCreateUser(QString account,
         setIconRep.waitForFinished();
         if (setIconRep.isError())
         {
-            qWarning() << "set icon failed," << setIconRep.error();
+            LOG_WARNING_S() << "set icon failed," << setIconRep.error();
             errMsgDetail = setIconRep.error().message();
             goto failed;
         }
     }
 
-    qInfo() << QString("create user(%1) is done").arg(account);
+    LOG_INFO_S() << QString("create user(%1) is done").arg(account);
     emit sigCreateUserDnoe(userObjPath, "");
     return;
 failed:
     if (!userObjPath.isEmpty())
     {
-        UserInterface     userInterface(userObjPath,
+        UserInterface userInterface(userObjPath,
                                     QDBusConnection::systemBus());
-        qulonglong        userID = userInterface.uid();
+        qulonglong userID = userInterface.uid();
         AccountsInterface accountsInterface(QDBusConnection::systemBus());
-        auto              reply = accountsInterface.DeleteUser(userID, true);
+        auto reply = accountsInterface.DeleteUser(userID, true);
         reply.waitForFinished();
         if (reply.isError())
         {
-            qWarning() << "create user failed,delete user:" << reply.error();
+            LOG_WARNING_S() << "create user failed,delete user:" << reply.error();
         }
     }
     QString errMsg = errMsgPrefix;
@@ -122,17 +123,17 @@ void HardWorker::doUpdatePasswd(QString objPath,
                                 QString account,
                                 QString encryptedPasswd)
 {
-    UserInterface       interface(objPath, QDBusConnection::systemBus());
+    UserInterface interface(objPath, QDBusConnection::systemBus());
     QDBusPendingReply<> reply = interface.SetPassword(encryptedPasswd, "");
     reply.waitForFinished();
     if (reply.isError())
     {
-        qWarning() << "set passwd failed," << reply.error();
+        LOG_WARNING_S() << "set passwd failed," << reply.error();
         emit sigUpdatePasswdDone(tr(" update password failed"));
     }
     else
     {
-        qInfo() << "update passwd is done";
+        LOG_INFO_S() << "update passwd is done";
         emit sigUpdatePasswdDone("");
     }
 }
@@ -140,12 +141,12 @@ void HardWorker::doUpdatePasswd(QString objPath,
 void HardWorker::doUpdateUserProperty(QString objPath,
                                       QString account,
                                       QString iconfile,
-                                      int     accountType,
-                                      bool    isLocked)
+                                      int accountType,
+                                      bool isLocked)
 {
     UserInterface userInterface(objPath,
                                 QDBusConnection::systemBus());
-    QStringList   updateFailedPropertys;
+    QStringList updateFailedPropertys;
 
     if (userInterface.icon_file() != iconfile)
     {
@@ -153,7 +154,7 @@ void HardWorker::doUpdateUserProperty(QString objPath,
         reply.waitForFinished();
         if (reply.isError())
         {
-            qWarning() << "update icon file failed," << reply.error();
+            LOG_WARNING_S() << "update icon file failed," << reply.error();
             updateFailedPropertys.append(tr("icon file"));
         }
     }
@@ -164,7 +165,7 @@ void HardWorker::doUpdateUserProperty(QString objPath,
         reply.waitForFinished();
         if (reply.isError())
         {
-            qWarning() << "update account type failed," << reply.error();
+            LOG_WARNING_S() << "update account type failed," << reply.error();
             updateFailedPropertys.append(tr("account type"));
         }
     }
@@ -175,7 +176,7 @@ void HardWorker::doUpdateUserProperty(QString objPath,
         reply.waitForFinished();
         if (reply.isError())
         {
-            qWarning() << "update locked failed," << reply.error();
+            LOG_WARNING_S() << "update locked failed," << reply.error();
             updateFailedPropertys.append(tr("locked"));
         }
     }
@@ -184,14 +185,14 @@ void HardWorker::doUpdateUserProperty(QString objPath,
     if (!updateFailedPropertys.isEmpty())
     {
         QString updateFailed = updateFailedPropertys.join(",");
-        QString msg          = QString(tr("Failed to update user properties(%1)"))
+        QString msg = QString(tr("Failed to update user properties(%1)"))
                           .arg(updateFailed);
-        qWarning() << msg;
+        LOG_WARNING_S() << msg;
         emit sigUpdateUserPropertyDone(msg);
     }
     else
     {
-        qInfo() << "update user property done";
+        LOG_INFO_S() << "update user property done";
         emit sigUpdateUserPropertyDone("");
     }
 }
@@ -199,11 +200,11 @@ void HardWorker::doUpdateUserProperty(QString objPath,
 void HardWorker::doDeleteUser(int uid)
 {
     AccountsInterface interface(QDBusConnection::systemBus());
-    auto              reply = interface.DeleteUser(uid, true);
+    auto reply = interface.DeleteUser(uid, true);
     reply.waitForFinished();
     if (reply.isError())
     {
-        qInfo() << "delete user" << reply.error();
+        LOG_INFO_S() << "delete user" << reply.error();
         emit sigDeleteUserDone(tr("Failed to delete user"));
     }
     else

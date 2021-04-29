@@ -3,6 +3,7 @@
 //
 
 #include "hover-tips.h"
+#include "log.h"
 
 #include <QDebug>
 #include <QEvent>
@@ -28,7 +29,7 @@ void HoverTips::show(HoverTipsTypeEnum typeEnum, const QString &msg)
     auto iter = m_tipsTypeIconMap.find(typeEnum);
     if (iter == m_tipsTypeIconMap.end())
     {
-        qWarning() << "invalid type enum";
+        LOG_WARNING_S() << "invalid type enum";
         return;
     }
 
@@ -55,7 +56,7 @@ void HoverTips::updatePostion()
 {
     if (parentWidget() == nullptr)
     {
-        qWarning() << "hover tips parnetwidget is null";
+        LOG_WARNING_S() << "hover tips parnetwidget is null";
         return;
     }
     this->move((parentWidget()->width() - width()) / 2,
@@ -86,7 +87,7 @@ void HoverTips::setIcon(HoverTips::HoverTipsTypeEnum typeEnum, const QString &ic
     QPixmap pixmap;
     if (!pixmap.load(icon) || pixmap.isNull())
     {
-        qWarning() << "load icon failed.";
+        LOG_WARNING_S() << "load icon failed.";
         return;
     }
     m_tipsTypeIconMap[typeEnum] = icon;
@@ -112,7 +113,7 @@ void HoverTips::initUI()
 void HoverTips::paintEvent(QPaintEvent *event)
 {
     QStyleOption styleOption;
-    QPainter     painter(this);
+    QPainter painter(this);
 
     styleOption.init(this);
     style()->drawPrimitive(QStyle::PE_Widget,

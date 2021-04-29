@@ -7,6 +7,7 @@
 #include <QFileInfo>
 #include <QPixmap>
 #include <QTranslator>
+#include <zlog_ex.h>
 
 #include "../config.h"
 #include "include/exit-code-defines.h"
@@ -37,7 +38,7 @@ void handlerCommandOption(const QApplication& app)
     QString tempPath;
     if (!cmdParser.isSet(previewImageOption))
     {
-        qWarning() << "missing  parameter(--image)";
+        std::cerr << "missing  parameter(--image)" << std::endl;
         exit(EXIT_CODE_MISSING_PARAMTER);
     }
     else
@@ -46,7 +47,7 @@ void handlerCommandOption(const QApplication& app)
         QPixmap pixmap;
         if (!pixmap.load(tempPath))
         {
-            qWarning() << "preview image (" << tempPath << ") is invalid";
+            std::cerr << "preview image (" << tempPath.toStdString() << ") is invalid" << std::endl;
             exit(EXIT_CODE_BAD_ARG);
         }
         else
@@ -57,35 +58,35 @@ void handlerCommandOption(const QApplication& app)
 
     if (!cmdParser.isSet(clipedImageSavePathOption))
     {
-        qWarning() << "missing parameter(--cliped-save-path)";
+        std::cerr << "missing parameter(--cliped-save-path)" << std::endl;
         exit(EXIT_CODE_MISSING_PARAMTER);
     }
     else
     {
         tempPath = cmdParser.value(clipedImageSavePathOption);
         QFileInfo fileInfo(tempPath);
-        QDir      dir = fileInfo.dir();
+        QDir dir = fileInfo.dir();
         QFileInfo dirInfo(dir.absolutePath());
 
         if (!dir.exists() && !dir.mkpath(dir.absolutePath()))
         {
-            qWarning() << QString("craete dir(%1) failed.").arg(dir.absolutePath());
+            std::cerr << QString("craete dir(%1) failed.").arg(dir.absolutePath()).toStdString() << std::endl;
             exit(EXIT_CODE_BAD_ARG);
         }
         if (!dirInfo.isWritable())
         {
-            qWarning() << QString("dir(%1) can't write.").arg(dir.absolutePath());
+            std::cerr << QString("dir(%1) can't write.").arg(dir.absolutePath()).toStdString() << std::endl;
             exit(EXIT_CODE_BAD_ARG);
         }
         if (fileInfo.exists())
         {
-            qWarning() << QString("cliped image save path(%1) is exist.").arg(tempPath);
+            std::cerr << QString("cliped image save path(%1) is exist.").arg(tempPath).toStdString() << std::endl;
             exit(EXIT_CODE_BAD_ARG);
         }
         cliped_image_save_path = tempPath;
     }
-    qInfo() << "preview image:" << prewview_image;
-    qInfo() << "cliped image save path:" << cliped_image_save_path;
+    LOG_INFO_S() << "preview image:" << prewview_image;
+    LOG_INFO_S() << "cliped image save path:" << cliped_image_save_path;
 }
 
 void loadStylesheet()
@@ -98,7 +99,7 @@ void loadStylesheet()
     }
     else
     {
-        qWarning() << "load stylesheet failed.";
+        LOG_WARNING_S() << "load stylesheet failed.";
     }
 }
 
@@ -107,7 +108,8 @@ int main(int argc, char* argv[])
     KiranApplication app(argc, argv);
     app.setQuitOnLastWindowClosed(false);
 
-    Log::instance()->init("/tmp/kiran-account-manager.log");
+    dzlog_init_ex(nullptr,"kylinsec-session","kiran-account-manager","kiran-avatar-editor");
+    Log::instance()->init();
     qInstallMessageHandler(Log::messageHandler);
 
     QTranslator tsor;

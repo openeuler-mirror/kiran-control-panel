@@ -16,7 +16,7 @@ struct AdvanceSettingsInfo
     QString shell;
     QString uid;
     QString homeDir;
-    void    clear()
+    void clear()
     {
         shell.clear();
         uid.clear();
@@ -67,11 +67,11 @@ protected:
 
 private:
     Ui::AdvanceSettings *ui;
-    QString              m_account;
-    bool                 m_isConfirm;
-    KiranTips *          m_editTip = nullptr;
-    KiranSwitchButton *  m_specifyUserIDSwitch;
-    KiranSwitchButton *  m_specifyUserHomeSwitch;
+    QString m_account;
+    bool m_isConfirm;
+    KiranTips *m_editTip = nullptr;
+    KiranSwitchButton *m_specifyUserIDSwitch;
+    KiranSwitchButton *m_specifyUserHomeSwitch;
 };
 
 #endif  // ADVANCESETTINGS_H

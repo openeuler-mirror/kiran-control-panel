@@ -10,6 +10,7 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QPixmap>
+#include "log.h"
 
 #define IMAGE_TYPE 0x60  //图形类型
 #define AXIS_TYPE 0x61   //人脸坐标类型
@@ -36,8 +37,8 @@ void FaceEnrollWorker::setZeroMQAddr(const QString &addr)
 
 void FaceEnrollWorker::run()
 {
-    int   iRet      = 0;
-    int   recvtimeo = 500;
+    int iRet = 0;
+    int recvtimeo = 500;
     void *context, *socket;
 
     std::string strAddr = m_zmqAddr.toStdString();
@@ -45,7 +46,7 @@ void FaceEnrollWorker::run()
     context = zmq_ctx_new();
     if (!context)
     {
-        qWarning() << "cmq_ctx_new failed";
+        LOG_WARNING_S() << "cmq_ctx_new failed";
         return;
     }
 
@@ -55,21 +56,21 @@ void FaceEnrollWorker::run()
     iRet = zmq_connect(socket, strAddr.c_str());
     while (!QThread::isInterruptionRequested())
     {
-        zmq_msg_t       msg;
+        zmq_msg_t msg;
         QJsonParseError error{};
 
         zmq_msg_init(&msg);
         iRet = zmq_msg_recv(&msg, socket, 0);
         if (iRet == -1)
         {
-            qDebug() << "zmq_msg_recv:" << strerror(errno);
+            LOG_DEBUG_S() << "zmq_msg_recv:" << strerror(errno);
             continue;
         }
-        void *        data = zmq_msg_data(&msg);
-        QByteArray    msgByteArray((char *)data, zmq_msg_size(&msg));
-        QJsonDocument doc     = QJsonDocument::fromJson(msgByteArray, &error);
-        QJsonObject   object  = doc.object();
-        int           msgType = object.value("type").toInt();
+        void *data = zmq_msg_data(&msg);
+        QByteArray msgByteArray((char *)data, zmq_msg_size(&msg));
+        QJsonDocument doc = QJsonDocument::fromJson(msgByteArray, &error);
+        QJsonObject object = doc.object();
+        int msgType = object.value("type").toInt();
         if (msgType == IMAGE_TYPE)
         {
             parseFaceImage(object);
@@ -86,22 +87,22 @@ void FaceEnrollWorker::run()
 
 void FaceEnrollWorker::parseFaceImage(const QJsonObject &jsonObject)
 {
-    int        width     = jsonObject["width"].toInt();
-    int        height    = jsonObject["height"].toInt();
-    QString    content   = jsonObject["content"].toString();
+    int width = jsonObject["width"].toInt();
+    int height = jsonObject["height"].toInt();
+    QString content = jsonObject["content"].toString();
     QByteArray byteArray = QByteArray::fromBase64(content.toUtf8());
-    QImage     image((uchar *)byteArray.data(), width, height, QImage::Format_RGB888);
-    QImage     newImgae = image.rgbSwapped();
-    qInfo() << "recv image:" << width << "x" << height;
+    QImage image((uchar *)byteArray.data(), width, height, QImage::Format_RGB888);
+    QImage newImgae = image.rgbSwapped();
+    LOG_DEBUG_S() << "recv image:" << width << "x" << height;
     emit sigHasNewImage(newImgae);
 }
 
 void FaceEnrollWorker::parseFaceAxis(const QJsonObject &jsonObject)
 {
-    QList<QRect>  res;
-    QJsonValue    value = jsonObject["content"];
-    QString       str   = value.toString();
-    QJsonDocument doc   = QJsonDocument::fromJson(str.toLatin1());
+    QList<QRect> res;
+    QJsonValue value = jsonObject["content"];
+    QString str = value.toString();
+    QJsonDocument doc = QJsonDocument::fromJson(str.toLatin1());
 
     int count = 1;
     if (doc.isArray())
@@ -109,16 +110,16 @@ void FaceEnrollWorker::parseFaceAxis(const QJsonObject &jsonObject)
         QJsonArray array = doc.array();
         for (QJsonValue item : array)
         {
-            qInfo() << "item" << item;
+            LOG_INFO_S() << "item" << item;
             QJsonObject itemObject = item.toObject();
             int tlX, tlY, width, height;
-            tlX    = itemObject["x"].toInt();
-            tlY    = itemObject["y"].toInt();
-            width  = itemObject["h"].toInt();
+            tlX = itemObject["x"].toInt();
+            tlY = itemObject["y"].toInt();
+            width = itemObject["h"].toInt();
             height = itemObject["w"].toInt();
             QRect rect(tlX, tlY, width, height);
             res << rect;
-            qInfo() << "face " << count++ << " -- top-left:" << rect.topLeft() << rect.width() << "x" << rect.height();
+            LOG_INFO_S() << "face " << count++ << " -- top-left:" << rect.topLeft() << rect.width() << "x" << rect.height();
         }
     }
     emit sigFaceAxis(res);

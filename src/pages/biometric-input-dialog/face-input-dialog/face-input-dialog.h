@@ -58,13 +58,13 @@ protected:
 private:
     Ui::FaceInputDialog *ui;
     BiometricsInterface *m_interface;
-    FaceEnrollWorker *   m_enrollThread;
-    QImage               m_tempImage;
-    QList<QRect>         m_faces;
-    bool                 m_enrollStarted = false;  ///标志是否已经开始采集，根据标志判断是否接受DBus发来的进度信号
-    QString              m_biometricID;
-    bool                 m_isSave = false;
-    QTimer               m_refeshDelayTimer;
+    FaceEnrollWorker *m_enrollThread;
+    QImage m_tempImage;
+    QList<QRect> m_faces;
+    bool m_enrollStarted = false;  ///标志是否已经开始采集，根据标志判断是否接受DBus发来的进度信号
+    QString m_biometricID;
+    bool m_isSave = false;
+    QTimer m_refeshDelayTimer;
 };
 
 #endif  //KIRAN_ACCOUNT_MANAGER_FACE_INPUT_DIALOG_H

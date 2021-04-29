@@ -1,6 +1,7 @@
 #include "accounts-global-info.h"
 #include "accounts-interface.h"
 #include "accounts-user-interface.h"
+#include "log.h"
 
 #include <unistd.h>
 #include <QDBusObjectPath>
@@ -21,7 +22,7 @@ AccountsGlobalInfo::~AccountsGlobalInfo()
 
 AccountsGlobalInfo *AccountsGlobalInfo::instance()
 {
-    static QMutex                             mutex;
+    static QMutex mutex;
     static QScopedPointer<AccountsGlobalInfo> pInst;
 
     if (Q_UNLIKELY(!pInst))
@@ -46,16 +47,16 @@ bool AccountsGlobalInfo::init()
     });
 
     ///加载账户
-    QList<QDBusObjectPath>                    accounts;
+    QList<QDBusObjectPath> accounts;
     QDBusPendingReply<QList<QDBusObjectPath>> pendingReply;
-    QList<QDBusObjectPath>                    objList;
-    QList<QDBusObjectPath>::iterator          objListIter;
+    QList<QDBusObjectPath> objList;
+    QList<QDBusObjectPath>::iterator objListIter;
     pendingReply = m_accountsInterface.GetNonSystemUsers();
     pendingReply.waitForFinished();
     if (pendingReply.isError())
     {
-        qWarning() << "GetNonSystemUsers Error:"
-                   << pendingReply.error();
+        LOG_WARNING_S() << "GetNonSystemUsers Error:"
+                        << pendingReply.error();
         return false;
     }
     objList = pendingReply.value();
@@ -67,13 +68,13 @@ bool AccountsGlobalInfo::init()
     }
 
     ///获取当前用户
-    uid_t                              uid = getuid();
+    uid_t uid = getuid();
     QDBusPendingReply<QDBusObjectPath> findUserReply;
     findUserReply = m_accountsInterface.FindUserById(uid);
     findUserReply.waitForFinished();
     if (findUserReply.isError())
     {
-        qWarning() << "FinduserById failed," << findUserReply.error();
+        LOG_WARNING_S() << "FinduserById failed," << findUserReply.error();
     }
     else
     {

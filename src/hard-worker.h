@@ -26,8 +26,8 @@ public slots:
     /// \param shell            shell
     /// \param iconFile         头像
     void doCreateUser(QString account,
-                      int     uid,
-                      int     accountType,
+                      int uid,
+                      int accountType,
                       QString encryptedPasswd,
                       QString homeDir,
                       QString shell,
@@ -48,8 +48,8 @@ public slots:
     void doUpdateUserProperty(QString objPath,
                               QString account,
                               QString iconfile,
-                              int     accountType,
-                              bool    isLocked);
+                              int accountType,
+                              bool isLocked);
 
     /// 通过AccountService删除用户
     /// \param uid  删除用户的UID

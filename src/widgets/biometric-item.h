@@ -31,16 +31,16 @@ public:
     /// @param biometricID  生物识别ID
     /// @param type         该条的类型
     /// @param parent       控件的父控件
-    explicit BiometricItem(const QString &   text,
-                           const QString &   biometricID,
+    explicit BiometricItem(const QString &text,
+                           const QString &biometricID,
                            BiometricItemType type,
-                           QWidget *         parent = nullptr);
+                           QWidget *parent = nullptr);
     ~BiometricItem() override;
 
-    void              setItemAddEnabled(bool enabled);
+    void setItemAddEnabled(bool enabled);
     BiometricItemType getItemType();
-    QString           getBiometricItemName();
-    QString           getBiometricItemDataID();
+    QString getBiometricItemName();
+    QString getBiometricItemDataID();
 
 Q_SIGNALS:
     void sigAddBiometricItem();
@@ -54,8 +54,8 @@ protected:
 
 private:
     Ui::BiometricItem *ui;
-    BiometricItemType  m_itemType;
-    QString            m_biometricItemDataID;
+    BiometricItemType m_itemType;
+    QString m_biometricItemDataID;
 };
 
 #endif  //KIRAN_ACCOUNT_MANAGER_BIOMETRIC_ITEM_H

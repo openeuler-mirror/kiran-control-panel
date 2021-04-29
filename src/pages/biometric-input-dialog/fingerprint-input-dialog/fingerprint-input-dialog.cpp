@@ -7,6 +7,7 @@
 #include "fingerprint-input-dialog.h"
 #include "biometrics-interface.h"
 #include "ui_fingerprint-input-dialog.h"
+#include "log.h"
 
 #include <kiran-message-box.h>
 
@@ -54,7 +55,7 @@ void FingerprintInputDialog::closeEvent(QCloseEvent *event)
 }
 
 void FingerprintInputDialog::setTips(FingerprintInputDialog::TipType type,
-                                     const QString &                 tip)
+                                     const QString &tip)
 {
     QString colorText = QString("<font color=%1>%2</font>")
                             .arg(type == TIP_TYPE_INFO ? "white" : "red")
@@ -107,7 +108,7 @@ void FingerprintInputDialog::setProgress(unsigned int value)
     struct ProgressPixmapInfo
     {
         unsigned int value;
-        const char * image;
+        const char *image;
     };
     static const ProgressPixmapInfo pixmapArray[] = {
         {100, ":/images/finger_100.svg"},
@@ -124,7 +125,7 @@ void FingerprintInputDialog::setProgress(unsigned int value)
             break;
         }
     }
-    qInfo() << "progressImage" << progressImage;
+    LOG_INFO_S() << "progressImage" << progressImage;
     ui->enrollProgress->updateCenterImage(progressImage);
 }
 
@@ -137,6 +138,6 @@ QString FingerprintInputDialog::getFingerDataID()
 
 void FingerprintInputDialog::resizeEvent(QResizeEvent *event)
 {
-    qInfo() << "fingerprint size:" << event->size();
+    LOG_INFO_S() << "fingerprint size:" << event->size();
     QWidget::resizeEvent(event);
 }

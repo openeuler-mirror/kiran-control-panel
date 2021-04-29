@@ -19,7 +19,7 @@ class KiranAccountManager : public KiranTitlebarWindow
 {
     Q_OBJECT
 public:
-    explicit KiranAccountManager(QWidget* parent = nullptr);
+    explicit KiranAccountManager(QWidget *parent = nullptr);
     ~KiranAccountManager();
 
 private Q_SLOTS:
@@ -39,15 +39,15 @@ private:
 
 private:
     KiranSidebarWidget *m_tabList{};
-    QListWidgetItem *   m_createUserItem{};
-    QStackedWidget *    m_stackWidget{};
-    CreateUserPage *    m_page_createUser{};
-    UserInfoPage *      m_page_userinfo{};
-    SelectAvatarPage *  m_page_selectAvatar{};
-    AuthManagerPage *   m_page_authManager{};
-    MaskWidget *        m_maskWidget{};
-    QThread             m_workThread;
-    HardWorker *        m_hardworker;
+    QListWidgetItem *m_createUserItem{};
+    QStackedWidget *m_stackWidget{};
+    CreateUserPage *m_page_createUser{};
+    UserInfoPage *m_page_userinfo{};
+    SelectAvatarPage *m_page_selectAvatar{};
+    AuthManagerPage *m_page_authManager{};
+    MaskWidget *m_maskWidget{};
+    QThread m_workThread;
+    HardWorker *m_hardworker;
 };
 
 #endif  // KIRANACCOUNTMANAGER_H

@@ -30,10 +30,10 @@ protected:
     virtual void paintEvent(QPaintEvent *event) override;
 
 private:
-    bool         m_isBusy = false;
-    QTimeLine    m_timeLine;
+    bool m_isBusy = false;
+    QTimeLine m_timeLine;
     QSvgRenderer m_svgRender;
-    int          m_rotationAngle = 0;
+    int m_rotationAngle = 0;
 };
 
 #endif  //KIRAN_ACCOUNT_MANAGER_ANIMATION_PUSH_BUTTON_H

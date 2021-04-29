@@ -1,4 +1,5 @@
 #include "user-avatar-widget.h"
+#include "log.h"
 
 #include <QDebug>
 #include <QFile>
@@ -24,16 +25,16 @@ void UserAvatarWidget::setImage(const QString &path)
     QFile file(path);
     if (!file.exists())
     {
-        qDebug() << "UserAvatar: file path[" << path << "] is no't exist";
+        LOG_DEBUG_S() << "UserAvatar: file path[" << path << "] is no't exist";
     }
     if (m_pixmap.load(path))
     {
         m_scaledPixmap = scalePixmapAdjustSize(m_pixmap);
-        m_iconPath     = path;
+        m_iconPath = path;
     }
     else
     {
-        qDebug() << "UserAvatar: file path[" << path << "] load failed.";
+        LOG_DEBUG_S() << "UserAvatar: file path[" << path << "] load failed.";
         if (path != DEFAULT_USER_AVATAR)
         {
             setDefaultImage();
@@ -45,7 +46,7 @@ void UserAvatarWidget::setImage(const QString &path)
 void UserAvatarWidget::paintEvent(QPaintEvent *event)
 {
     QPainter painter(this);
-    QPen     pen;
+    QPen pen;
     if (!isVisible())
     {
         return;
@@ -113,9 +114,9 @@ void UserAvatarWidget::mouseMoveEvent(QMouseEvent *event)
     if (m_isEnter)
     {
         QPoint center(this->width() / 2, this->height() / 2);
-        double radius   = (this->width() < this->height() ? this->width() : this->height()) / 2;
-        QPoint pos      = event->pos();
-        int    distance = qSqrt(qPow(pos.x() - center.x(), 2) + qPow(pos.y() - center.y(), 2));
+        double radius = (this->width() < this->height() ? this->width() : this->height()) / 2;
+        QPoint pos = event->pos();
+        int distance = qSqrt(qPow(pos.x() - center.x(), 2) + qPow(pos.y() - center.y(), 2));
         if ((distance <= radius) && !m_isHover)
         {
             m_isHover = true;
@@ -165,7 +166,7 @@ bool UserAvatarWidget::setHoverImage(const QString &path)
     QFile file(path);
     if (!file.exists())
     {
-        qWarning() << "UserAvatar: hover pixmap file path[" << path << "] is no't exist";
+        LOG_WARNING_S() << "UserAvatar: hover pixmap file path[" << path << "] is no't exist";
         return false;
     }
     if (m_hoverPixmap.load(path))
@@ -174,7 +175,7 @@ bool UserAvatarWidget::setHoverImage(const QString &path)
     }
     else
     {
-        qWarning() << "UserAvatar: hover pixmap file path[" << path << "] load failed.";
+        LOG_WARNING_S() << "UserAvatar: hover pixmap file path[" << path << "] load failed.";
         return false;
     }
     update();

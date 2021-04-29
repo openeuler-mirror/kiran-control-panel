@@ -53,8 +53,8 @@ protected:
 
 private:
     Ui::FingerprintInputDialog *ui;
-    FingerprintInputWorker      m_worker;
-    QString                     m_fingerDataID;
+    FingerprintInputWorker m_worker;
+    QString m_fingerDataID;
 };
 
 #endif  //KIRAN_ACCOUNT_MANAGER_FINGERPRINT_INPUT_DIALOG_H

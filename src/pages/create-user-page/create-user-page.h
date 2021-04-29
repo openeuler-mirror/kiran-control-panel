@@ -38,8 +38,8 @@ signals:
     /// \param shell            shell路径
     /// \param iconFile         图标路径
     void sigCreateUser(QString account,
-                       int     uid,
-                       int     accountType,
+                       int uid,
+                       int accountType,
                        QString encryptedPasswd,
                        QString homeDir,
                        QString shell,

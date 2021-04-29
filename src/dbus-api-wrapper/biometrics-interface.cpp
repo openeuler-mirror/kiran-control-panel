@@ -15,14 +15,11 @@
  * Implementation of interface class BiometricsInterface
  */
 
-BiometricsInterface::BiometricsInterface (const QDBusConnection &connection, QObject *parent) :
-        QDBusAbstractInterface(staticInterfaceName(), staticInterfacePath(), staticInterfaceName(), connection, parent)
+BiometricsInterface::BiometricsInterface(const QDBusConnection &connection, QObject *parent)
+    : QDBusAbstractInterface(staticInterfaceName(), staticInterfacePath(), staticInterfaceName(), connection, parent)
 {
-
 }
 
-BiometricsInterface::~BiometricsInterface ()
+BiometricsInterface::~BiometricsInterface()
 {
-
 }
-

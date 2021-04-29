@@ -16,7 +16,7 @@ class KiranAvatarEditor : public KiranTitlebarWindow
 {
     Q_OBJECT
 public:
-    explicit KiranAvatarEditor(const QString &srcImagePath, const QString &dstImagePath, QWidget *parent= nullptr);
+    explicit KiranAvatarEditor(const QString &srcImagePath, const QString &dstImagePath, QWidget *parent = nullptr);
     ~KiranAvatarEditor();
 
 private:
@@ -27,12 +27,12 @@ protected:
     virtual void closeEvent(QCloseEvent *event) Q_DECL_OVERRIDE;
 
 private:
-    QLayout *           m_layout       = nullptr;
+    QLayout *m_layout = nullptr;
     ImagePreviewWidget *m_imagePreview = nullptr;
-    QPushButton *       m_btnReopen    = nullptr;
-    QPushButton *       m_btnConfrim   = nullptr;
-    QPushButton *       m_btnCancel    = nullptr;
-    QWidget *           m_buttonWidget = nullptr;
+    QPushButton *m_btnReopen = nullptr;
+    QPushButton *m_btnConfrim = nullptr;
+    QPushButton *m_btnCancel = nullptr;
+    QWidget *m_buttonWidget = nullptr;
 };
 
 #endif  //KIRAN_AVATAR_EDITOR_KIRAN_AVATAR_EDITOR_H

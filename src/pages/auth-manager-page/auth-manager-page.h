@@ -42,7 +42,7 @@ private:
     /* 保存界面信息 */
     void save();
 
-    QString       generateBiometricsItemName(AccountsAuthMode mode);
+    QString generateBiometricsItemName(AccountsAuthMode mode);
     BiometricList getBiometricItemsFromUI(AccountsAuthMode mode);
     BiometricList getBiometricItemsFromBackend(AccountsAuthMode mode);
 
@@ -55,15 +55,15 @@ private slots:
 
 private:
     Ui::AuthManagerPage *ui;
-    QString              m_userObjPath;
-    UserInterface *      m_userInterface = nullptr;
+    QString m_userObjPath;
+    UserInterface *m_userInterface = nullptr;
 
     KiranSwitchButton *m_fingerAuthSwitch;
     KiranSwitchButton *m_faceAuthSwitch;
     KiranSwitchButton *m_passwdAuthSwitch;
 
     BiometricItem *m_addFingerItem = nullptr;
-    BiometricItem *m_addFaceItem   = nullptr;
+    BiometricItem *m_addFaceItem = nullptr;
 };
 
 #endif  //KIRAN_ACCOUNT_MANAGER_AUTH_MANAGER_PAGE_H
