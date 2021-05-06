@@ -66,8 +66,6 @@ KiranCPanelMouseWidget::KiranCPanelMouseWidget(QWidget *parent) :
     ui(new Ui::KiranCPanelMouseWidget)
 {
     ui->setupUi(this);
-
-    connect(ui->btn_exit,&QPushButton::clicked,this,&QApplication::quit);
     connect(ui->listWidget,SIGNAL(itemClicked(QListWidgetItem*)),this,SLOT(setCurrentPageWhenItemClicked(QListWidgetItem*)));
 }
 
@@ -102,9 +100,6 @@ bool KiranCPanelMouseWidget::initUI()
 
     m_labelList = ui->page_touchpad->findChildren<QLabel *>();
 
-    setButtonType(ui->btn_exit,Kiran::BUTTON_Default);
-    setButtonType(ui->btn_reset,Kiran::BUTTON_Default);
-
     ui->listWidget->resize(sizeHint());
     ui->listWidget->setIconSize(QSize(16,16));
 
@@ -129,42 +124,6 @@ bool KiranCPanelMouseWidget::initUI()
 
     initPageMouseUI();
     initPageTouchPadUI();
-
-    connect(ui->btn_reset,&QPushButton::clicked,
-            [this]{
-        int currentPage = ui->stackedWidget->currentIndex();
-        QDBusPendingReply<> reply;
-        switch (currentPage) {
-        case PAGE_MOUSE:
-            reply = m_mouseInterface->Reset();
-            reply.waitForFinished();
-            if (!reply.isFinished())
-            {
-                cout << "Reset mouse properties failed:" << reply.error().message().toStdString();
-            }
-            else
-            {
-                cout << "Reset mouse properties successful";
-                updatePageMouseUI();
-            }
-            break;
-        case PAGE_TOUCHPAD:
-            reply = m_touchPadInterface->Reset();
-            reply.waitForFinished();
-            if (!reply.isFinished())
-            {
-                cout  << "Reset  touchpad properties failed:" << reply.error().message().toStdString();
-            }
-            else
-            {
-                cout << "Reset touchpad properties successful";
-                updatePageTouchPadUI();
-            }
-            break;
-        default:
-            break;
-        }
-    });
     return true;
 }
 
@@ -230,7 +189,7 @@ void KiranCPanelMouseWidget::initPageTouchPadUI()
     connect(ui->comboBox_tp_hand_mode, static_cast<void (QComboBox::*)(int index)>(&QComboBox::currentIndexChanged),
             [this](int currentIntex){
         m_touchPadLeftHand = currentIntex;
-        m_mouseInterface->setLeft_handed(m_touchPadLeftHand);
+        m_touchPadInterface->setLeft_handed(m_touchPadLeftHand);
     });
 
     m_touchPadMotionAcceleration = m_touchPadInterface->motion_acceleration();
