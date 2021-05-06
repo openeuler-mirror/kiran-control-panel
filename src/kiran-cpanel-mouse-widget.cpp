@@ -10,6 +10,9 @@
 
 #define SLIDER_MINIMUM  0
 #define SLIDER_MAXIMUN  99
+#define SLOW            "Slow"
+#define STANDARD        "Standard"
+#define FAST            "Fast"
 #define DBUS_MOUSE_NANE       "com.kylinsec.Kiran.SessionDaemon.Mouse"
 #define DBUS_MOUSE_PATH       "/com/kylinsec/Kiran/SessionDaemon/Mouse"
 #define DBUS_TOUCHPAD_NAME    "com.kylinsec.Kiran.SessionDaemon.TouchPad"
@@ -91,41 +94,6 @@ bool KiranCPanelMouseWidget::initUI()
     {
         return false;
     }
-    connect(ui->btn_reset,&QPushButton::clicked,
-            [this]{
-        int currentPage = ui->stackedWidget->currentIndex();
-        QDBusPendingReply<> reply;
-        switch (currentPage) {
-        case PAGE_MOUSE:
-            reply = m_mouseInterface->Reset();
-            reply.waitForFinished();
-            if (!reply.isFinished())
-            {
-                cout << "Reset mouse properties failed:" << reply.error().message().toStdString();
-            }
-            else
-            {
-                cout << "Reset mouse properties successful";
-                initPageMouseUI();
-            }
-            break;
-        case PAGE_TOUCHPAD:
-            reply = m_touchPadInterface->Reset();
-            reply.waitForFinished();
-            if (!reply.isFinished())
-            {
-                cout  << "Reset  touchpad properties failed:" << reply.error().message().toStdString();
-            }
-            else
-            {
-                cout << "Reset touchpad properties successful";
-                initPageTouchPadUI();
-            }
-            break;
-        default:
-            break;
-        }
-    });
 
     m_comboBoxList = ui->page_touchpad->findChildren<QComboBox *>();
     m_checkBoxList = {ui->checkBox_tap_to_click,
@@ -148,9 +116,6 @@ bool KiranCPanelMouseWidget::initUI()
 
     ui->stackedWidget->setCurrentIndex(PAGE_MOUSE);
 
-    ui->label_speed->setText(tr("Standard"));
-    ui->label_tp_speed->setText(tr("Standard"));
-
     ui->widget_tp_click_mode->hide();
 
     QList<QSlider*> sliderList = this->findChildren< QSlider* >();
@@ -164,6 +129,42 @@ bool KiranCPanelMouseWidget::initUI()
 
     initPageMouseUI();
     initPageTouchPadUI();
+
+    connect(ui->btn_reset,&QPushButton::clicked,
+            [this]{
+        int currentPage = ui->stackedWidget->currentIndex();
+        QDBusPendingReply<> reply;
+        switch (currentPage) {
+        case PAGE_MOUSE:
+            reply = m_mouseInterface->Reset();
+            reply.waitForFinished();
+            if (!reply.isFinished())
+            {
+                cout << "Reset mouse properties failed:" << reply.error().message().toStdString();
+            }
+            else
+            {
+                cout << "Reset mouse properties successful";
+                updatePageMouseUI();
+            }
+            break;
+        case PAGE_TOUCHPAD:
+            reply = m_touchPadInterface->Reset();
+            reply.waitForFinished();
+            if (!reply.isFinished())
+            {
+                cout  << "Reset  touchpad properties failed:" << reply.error().message().toStdString();
+            }
+            else
+            {
+                cout << "Reset touchpad properties successful";
+                updatePageTouchPadUI();
+            }
+            break;
+        default:
+            break;
+        }
+    });
     return true;
 }
 
@@ -181,14 +182,17 @@ void KiranCPanelMouseWidget::initPageMouseUI()
     if(m_mouseMotionAcceleration == MOTION_SLOW)
     {
         ui->slider_speed->setValue(SLIDER_MINIMUM);
+        ui->label_speed->setText(SLOW);
     }
     else if(m_mouseMotionAcceleration == MOTION_STANDARD)
     {
         ui->slider_speed->setValue((SLIDER_MAXIMUN-SLIDER_MINIMUM+1)/2);
+        ui->label_speed->setText(STANDARD);
     }
     else
     {
-        ui->slider_speed->setValue(MOTION_FAST);
+        ui->slider_speed->setValue(SLIDER_MAXIMUN);
+        ui->label_speed->setText(FAST);
     }
     //connect(ui->slider_speed, &QSlider::sliderReleased, this, &KiranCPanelMouseWidget::onSliderReleased);
     connect(ui->slider_speed, &QSlider::valueChanged, this,&KiranCPanelMouseWidget::onSliderReleased);
@@ -233,14 +237,17 @@ void KiranCPanelMouseWidget::initPageTouchPadUI()
     if(m_touchPadMotionAcceleration == MOTION_SLOW)
     {
         ui->slider_tp_speed->setValue(SLIDER_MINIMUM);
+        ui->label_tp_speed->setText(SLOW);
     }
     else if(m_touchPadMotionAcceleration == MOTION_STANDARD)
     {
         ui->slider_tp_speed->setValue((SLIDER_MAXIMUN-SLIDER_MINIMUM+1)/2);
+        ui->label_tp_speed->setText(STANDARD);
     }
     else
     {
         ui->slider_tp_speed->setValue(MOTION_FAST);
+        ui->label_tp_speed->setText(FAST);
     }
     connect(ui->slider_tp_speed, &QSlider::sliderReleased, this, &KiranCPanelMouseWidget::onSliderReleased);
 
@@ -283,6 +290,111 @@ void KiranCPanelMouseWidget::initPageTouchPadUI()
        m_tapToClick  = isTapToClick;
        m_touchPadInterface->setTap_to_click(m_tapToClick);
     });
+}
+
+void KiranCPanelMouseWidget::updatePageMouseUI()
+{
+    bool mouseHand = m_mouseInterface->left_handed();
+    if(m_mouseLeftHand != mouseHand)
+    {
+        ui->comboBox_hand_mode->setCurrentIndex(mouseHand);
+    }
+
+    double mouseMotionAcceleration = m_mouseInterface->motion_acceleration();
+    if(m_mouseMotionAcceleration != mouseMotionAcceleration)
+    {
+        if(mouseMotionAcceleration == MOTION_SLOW)
+        {
+            ui->slider_speed->setValue(SLIDER_MINIMUM);
+        }
+        else if(mouseMotionAcceleration == MOTION_STANDARD)
+        {
+            ui->slider_speed->setValue((SLIDER_MAXIMUN-SLIDER_MINIMUM+1)/2);
+        }
+        else
+        {
+            ui->slider_speed->setValue(SLIDER_MAXIMUN);
+        }
+    }
+
+    bool mouseNaturalScroll = m_mouseInterface->natural_scroll();
+    if(m_mouseNaturalScroll != mouseNaturalScroll)
+    {
+        ui->checkBox_natural_scroll->setChecked(mouseNaturalScroll);
+    }
+
+    bool middleEmulationEnabled = m_mouseInterface->middle_emulation_enabled();
+    if(m_middleEmulationEnabled != middleEmulationEnabled)
+    {
+        ui->checkBox_middle_emulation->setChecked(middleEmulationEnabled);
+    }
+}
+
+void KiranCPanelMouseWidget::updatePageTouchPadUI()
+{
+    bool touchPadEnabled = m_touchPadInterface->touchpad_enabled();
+    if(touchPadEnabled != m_touchPadEnabled)
+    {
+        ui->checkBox_tp_disable_touchpad->setChecked(!touchPadEnabled);
+        // get widget status
+        setDisableWidget(!touchPadEnabled);
+    }
+
+    bool touchPadLeftHand = m_touchPadInterface->left_handed();
+    if(touchPadLeftHand != m_touchPadLeftHand)
+    {
+        ui->comboBox_tp_hand_mode->setCurrentIndex(touchPadLeftHand);
+    }
+
+    double touchPadMotionAcceleration = m_touchPadInterface->motion_acceleration();
+    if(touchPadMotionAcceleration != m_touchPadMotionAcceleration)
+    {
+        if(touchPadMotionAcceleration == MOTION_SLOW)
+        {
+            ui->slider_tp_speed->setValue(SLIDER_MINIMUM);
+            ui->label_tp_speed->setText(SLOW);
+        }
+        else if(touchPadMotionAcceleration == MOTION_STANDARD)
+        {
+            ui->slider_tp_speed->setValue((SLIDER_MAXIMUN-SLIDER_MINIMUM+1)/2);
+            ui->label_tp_speed->setText(STANDARD);
+        }
+        else
+        {
+            ui->slider_tp_speed->setValue(SLIDER_MAXIMUN);
+            ui->label_tp_speed->setText(FAST);
+        }
+    }
+
+    int clickMethod = m_touchPadInterface->click_method();
+    if(clickMethod != m_clickMethod)
+    {
+        ui->comboBox_tp_click_mode->setCurrentIndex(clickMethod);
+    }
+
+    int scrollMethod = m_touchPadInterface->scroll_method();
+    if(scrollMethod != m_scrollMethod)
+    {
+        ui->comboBox_tp_move_win_mode ->setCurrentIndex(scrollMethod);
+    }
+
+    bool touchPadNaturalScroll = m_touchPadInterface->natural_scroll();
+    if(touchPadNaturalScroll != m_touchPadNaturalScroll)
+    {
+        ui->checkBox_tp_natural_scroll->setChecked(touchPadNaturalScroll);
+    }
+
+    bool disabelWhileTyping = m_touchPadInterface->disable_while_typing();
+    if(disabelWhileTyping != m_disabelWhileTyping)
+    {
+        ui->checkBox_disable_while_typing->setChecked(disabelWhileTyping);
+    }
+
+    bool tapToClick = m_touchPadInterface->tap_to_click();
+    if(tapToClick != m_tapToClick)
+    {
+        ui->checkBox_tap_to_click->setChecked(tapToClick);
+    }
 }
 
 void KiranCPanelMouseWidget::addComboBoxItem()
@@ -348,25 +460,25 @@ void KiranCPanelMouseWidget::onSliderReleased()
     if(value >= SLIDER_MINIMUM && value < lowMiddleNum)
     {
         senderSlider->setValue(SLIDER_MINIMUM);
-        labelSpeed->setText(tr("Slow"));
+        labelSpeed->setText(tr(SLOW));
         scrollSpeed = MOTION_SLOW;
     }
     else if(value >= lowMiddleNum && value <= middleNum)
     {
         senderSlider->setValue(middleNum);
-        labelSpeed->setText(tr("Standard"));
+        labelSpeed->setText(tr(STANDARD));
         scrollSpeed = MOTION_STANDARD;
     }
     else if(value >middleNum && value<= highMiddleNum)
     {
         senderSlider->setValue(middleNum);
-        labelSpeed->setText(tr("Standard"));
+        labelSpeed->setText(tr(STANDARD));
         scrollSpeed = MOTION_STANDARD;
     }
     else
     {
         senderSlider->setValue(SLIDER_MAXIMUN);
-        labelSpeed->setText(tr("Fast"));
+        labelSpeed->setText(tr(FAST));
         scrollSpeed = MOTION_FAST;
     }
     if(ismouseSlider)
@@ -383,8 +495,8 @@ void KiranCPanelMouseWidget::onSliderReleased()
 
 void KiranCPanelMouseWidget::onDisabelTouchPadToggled(bool disabled)
 {
-    m_touchPadEnabled = disabled;
-    m_touchPadInterface->setTouchpad_enabled(disabled);
+    m_touchPadEnabled = !disabled;
+    m_touchPadInterface->setTouchpad_enabled(m_touchPadEnabled);
     if(disabled)
     {
         setDisableWidget(true);

@@ -31,6 +31,8 @@ private:
     bool connectDbus();
     void initPageMouseUI();
     void initPageTouchPadUI();
+    void updatePageMouseUI();
+    void updatePageTouchPadUI();
     void addComboBoxItem();
     void addSidebarItem(QString,QString);
     void setDisableWidget(bool);
