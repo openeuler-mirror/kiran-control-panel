@@ -7,6 +7,8 @@
 #include <kiranwidgets-qt5/kiran-switch-button.h>
 #include <kiranwidgets-qt5/widget-property-helper.h>
 #include <iostream>
+#include <QMouseEvent>
+#include <QSlider>
 
 #define SLIDER_MINIMUM  0
 #define SLIDER_MAXIMUN  99
@@ -67,6 +69,7 @@ KiranCPanelMouseWidget::KiranCPanelMouseWidget(QWidget *parent) :
 {
     ui->setupUi(this);
     connect(ui->listWidget,SIGNAL(itemClicked(QListWidgetItem*)),this,SLOT(setCurrentPageWhenItemClicked(QListWidgetItem*)));
+    connect(ui->slider_speed,SIGNAL(ValueChanged),this,SLOT(onSliderReleased()));
 }
 
 KiranCPanelMouseWidget::~KiranCPanelMouseWidget()
@@ -78,7 +81,7 @@ bool KiranCPanelMouseWidget::connectDbus()
 {
     m_mouseInterface = ComKylinsecKiranSessionDaemonMouseInterface::instance();
     m_touchPadInterface = ComKylinsecKiranSessionDaemonTouchPadInterface::instance();
-    if(!m_mouseInterface || !m_touchPadInterface)
+    if(!m_mouseInterface->isValid() || !m_touchPadInterface->isValid())
     {
         return false;
     }
@@ -92,6 +95,8 @@ bool KiranCPanelMouseWidget::initUI()
     {
         return false;
     }
+    //ui->slider_speed->installEventFilter(this);
+    //ui->slider_tp_speed->installEventFilter(this);
 
     m_comboBoxList = ui->page_touchpad->findChildren<QComboBox *>();
     m_checkBoxList = {ui->checkBox_tap_to_click,
@@ -153,8 +158,11 @@ void KiranCPanelMouseWidget::initPageMouseUI()
         ui->slider_speed->setValue(SLIDER_MAXIMUN);
         ui->label_speed->setText(FAST);
     }
-    //connect(ui->slider_speed, &QSlider::sliderReleased, this, &KiranCPanelMouseWidget::onSliderReleased);
-    connect(ui->slider_speed, &QSlider::valueChanged, this,&KiranCPanelMouseWidget::onSliderReleased);
+    connect(ui->slider_speed, &QSlider::sliderReleased, this,
+            [this]{
+        emit ValueChange();
+    });
+    connect(this,&KiranCPanelMouseWidget::ValueChange,this,&KiranCPanelMouseWidget::onSliderReleased);
 
     m_mouseNaturalScroll = m_mouseInterface->natural_scroll();
     ui->checkBox_natural_scroll->setChecked(m_mouseNaturalScroll);
@@ -208,7 +216,11 @@ void KiranCPanelMouseWidget::initPageTouchPadUI()
         ui->slider_tp_speed->setValue(MOTION_FAST);
         ui->label_tp_speed->setText(FAST);
     }
-    connect(ui->slider_tp_speed, &QSlider::sliderReleased, this, &KiranCPanelMouseWidget::onSliderReleased);
+    connect(ui->slider_tp_speed, &QSlider::sliderReleased, this,
+            [this]{
+        emit ui->slider_tp_speed->valueChanged(ui->slider_tp_speed->value());
+    });
+    connect(ui->slider_tp_speed,&QSlider::valueChanged,this, &KiranCPanelMouseWidget::onSliderReleased);
 
     m_clickMethod = m_touchPadInterface->click_method();
     ui->comboBox_tp_click_mode->setCurrentIndex(m_clickMethod);
@@ -396,9 +408,10 @@ void KiranCPanelMouseWidget::setCurrentPageWhenItemClicked(QListWidgetItem *item
 void KiranCPanelMouseWidget::onSliderReleased()
 {
     QSlider *senderSlider = static_cast<QSlider *>(sender());
-    QLabel *labelSpeed = new QLabel(this);
+    QLabel *labelSpeed = nullptr;
     bool ismouseSlider = false;
     double scrollSpeed;
+    int value;
 
     if(senderSlider == ui->slider_speed)
     {
@@ -411,35 +424,8 @@ void KiranCPanelMouseWidget::onSliderReleased()
         ismouseSlider = false;
     }
 
-    int lowMiddleNum = (SLIDER_MAXIMUN-SLIDER_MINIMUM+1)/4;
-    int middleNum = (SLIDER_MAXIMUN-SLIDER_MINIMUM+1)/2;
-    int highMiddleNum = (SLIDER_MAXIMUN-SLIDER_MINIMUM+1)/4*3;
-
-    int value = senderSlider->value();
-    if(value >= SLIDER_MINIMUM && value < lowMiddleNum)
-    {
-        senderSlider->setValue(SLIDER_MINIMUM);
-        labelSpeed->setText(tr(SLOW));
-        scrollSpeed = MOTION_SLOW;
-    }
-    else if(value >= lowMiddleNum && value <= middleNum)
-    {
-        senderSlider->setValue(middleNum);
-        labelSpeed->setText(tr(STANDARD));
-        scrollSpeed = MOTION_STANDARD;
-    }
-    else if(value >middleNum && value<= highMiddleNum)
-    {
-        senderSlider->setValue(middleNum);
-        labelSpeed->setText(tr(STANDARD));
-        scrollSpeed = MOTION_STANDARD;
-    }
-    else
-    {
-        senderSlider->setValue(SLIDER_MAXIMUN);
-        labelSpeed->setText(tr(FAST));
-        scrollSpeed = MOTION_FAST;
-    }
+    value = senderSlider->value();
+    scrollSpeed = convertValue(senderSlider,labelSpeed,value);
     if(ismouseSlider)
     {
         m_mouseMotionAcceleration = scrollSpeed;
@@ -466,6 +452,46 @@ void KiranCPanelMouseWidget::onDisabelTouchPadToggled(bool disabled)
     }
 }
 
+bool KiranCPanelMouseWidget::eventFilter(QObject *obj, QEvent *event)
+{
+//    if ((event->type() == QEvent::MouseButtonPress) &&
+//            ((obj == ui->slider_speed) || (obj == ui->slider_tp_speed)))
+//    {
+//       onSliderMouseLButtonPress(obj, event);
+//    }
+//    else if ((event->type() == QEvent::KeyPress) &&
+//             ((obj == ui->slider_speed) || (obj == ui->slider_tp_speed)))
+//    {
+//        onSliderMouseLButtonPress(obj,event);
+//    }
+//    return QWidget::eventFilter(obj, event);
+}
+
+void KiranCPanelMouseWidget::onSliderMouseLButtonPress(QObject *slider, QEvent *event)
+{
+//    QSlider* sliderCtr = static_cast<QSlider*> (slider);
+//    int value = sliderCtr->value();
+//    cout << "mouse button pressed ,value = " << value<< endl;
+//    QLabel *labelSpeed = new QLabel(this);
+//    int scrollSpeed;
+
+//    if(sliderCtr == ui->slider_speed)
+//    {
+//        labelSpeed = ui->label_speed;
+//        scrollSpeed = convertValue(sliderCtr,labelSpeed,value);
+//        m_mouseMotionAcceleration = scrollSpeed;
+//        m_mouseInterface->setMotion_acceleration(m_mouseMotionAcceleration);
+//    }
+//    else if(sliderCtr == ui->slider_tp_speed)
+//    {
+//        labelSpeed = ui->label_tp_speed;
+//        scrollSpeed = convertValue(sliderCtr,labelSpeed,value);
+//        m_touchPadMotionAcceleration = scrollSpeed;
+//        m_touchPadInterface->setMotion_acceleration(m_touchPadMotionAcceleration);
+//    }
+}
+
+
 void KiranCPanelMouseWidget::setDisableWidget(bool disabled)
 {
     foreach (QComboBox *comboBox, m_comboBoxList)
@@ -484,5 +510,40 @@ void KiranCPanelMouseWidget::setDisableWidget(bool disabled)
 //    }
     ui->slider_tp_speed->setDisabled(disabled);
     ui->label_tp_speed->setDisabled(disabled);
+}
+
+int KiranCPanelMouseWidget::convertValue(QSlider * slider,QLabel* label ,int value)
+{
+    int lowMiddleNum = (SLIDER_MAXIMUN-SLIDER_MINIMUM+1)/4;
+    int middleNum = (SLIDER_MAXIMUN-SLIDER_MINIMUM+1)/2;
+    int highMiddleNum = (SLIDER_MAXIMUN-SLIDER_MINIMUM+1)/4*3;
+
+    int scrollSpeed;
+
+    if(value >= SLIDER_MINIMUM && value < lowMiddleNum)
+    {
+        slider->setValue(SLIDER_MINIMUM);
+        label->setText(tr(SLOW));
+        scrollSpeed = MOTION_SLOW;
+    }
+    else if(value >= lowMiddleNum && value <= middleNum)
+    {
+        slider->setValue(middleNum);
+        label->setText(tr(STANDARD));
+        scrollSpeed = MOTION_STANDARD;
+    }
+    else if(value >middleNum && value<= highMiddleNum)
+    {
+        slider->setValue(middleNum);
+        label->setText(tr(STANDARD));
+        scrollSpeed = MOTION_STANDARD;
+    }
+    else
+    {
+        slider->setValue(SLIDER_MAXIMUN);
+        label->setText(tr(FAST));
+        scrollSpeed = MOTION_FAST;
+    }
+    return scrollSpeed;
 }
 

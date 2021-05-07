@@ -36,11 +36,18 @@ private:
     void addComboBoxItem();
     void addSidebarItem(QString,QString);
     void setDisableWidget(bool);
+    int  convertValue(QSlider* ,QLabel*, int);
 
 public slots:
     void setCurrentPageWhenItemClicked(QListWidgetItem* item);
     void onSliderReleased();
     void onDisabelTouchPadToggled(bool disabled);
+
+signals:
+    void ValueChange();
+protected:
+    virtual bool eventFilter(QObject * obj, QEvent * event);
+    void onSliderMouseLButtonPress(QObject * slider, QEvent * event);
 
 private:
     Ui::KiranCPanelMouseWidget *ui;
