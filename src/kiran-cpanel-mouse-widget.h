@@ -43,12 +43,6 @@ public slots:
     void onSliderReleased();
     void onDisabelTouchPadToggled(bool disabled);
 
-signals:
-    void ValueChange();
-protected:
-    virtual bool eventFilter(QObject * obj, QEvent * event);
-    void onSliderMouseLButtonPress(QObject * slider, QEvent * event);
-
 private:
     Ui::KiranCPanelMouseWidget *ui;
     ComKylinsecKiranSessionDaemonMouseInterface *m_mouseInterface;
@@ -71,6 +65,8 @@ private:
     double m_touchPadMotionAcceleration = 0.0;
     int m_clickMethod = 0;
     int m_scrollMethod = 0;
+
+    bool m_mousePressed = false;
 };
 
 #endif // KIRANCPANELMOUSEWIDGET_H

@@ -95,8 +95,6 @@ bool KiranCPanelMouseWidget::initUI()
     {
         return false;
     }
-    //ui->slider_speed->installEventFilter(this);
-    //ui->slider_tp_speed->installEventFilter(this);
 
     m_comboBoxList = ui->page_touchpad->findChildren<QComboBox *>();
     m_checkBoxList = {ui->checkBox_tap_to_click,
@@ -158,11 +156,14 @@ void KiranCPanelMouseWidget::initPageMouseUI()
         ui->slider_speed->setValue(SLIDER_MAXIMUN);
         ui->label_speed->setText(FAST);
     }
-    connect(ui->slider_speed, &QSlider::sliderReleased, this,
-            [this]{
-        emit ValueChange();
+    connect(ui->slider_speed,&QSlider::sliderPressed,[this](){
+        m_mousePressed = true;
     });
-    connect(this,&KiranCPanelMouseWidget::ValueChange,this,&KiranCPanelMouseWidget::onSliderReleased);
+    connect(ui->slider_speed,&QSlider::sliderReleased,[this](){
+        m_mousePressed = false;
+        emit ui->slider_speed->valueChanged(ui->slider_speed->value());
+    });
+    connect(ui->slider_speed, &QSlider::valueChanged, this,&KiranCPanelMouseWidget::onSliderReleased);
 
     m_mouseNaturalScroll = m_mouseInterface->natural_scroll();
     ui->checkBox_natural_scroll->setChecked(m_mouseNaturalScroll);
@@ -216,8 +217,11 @@ void KiranCPanelMouseWidget::initPageTouchPadUI()
         ui->slider_tp_speed->setValue(MOTION_FAST);
         ui->label_tp_speed->setText(FAST);
     }
-    connect(ui->slider_tp_speed, &QSlider::sliderReleased, this,
-            [this]{
+    connect(ui->slider_tp_speed,&QSlider::sliderPressed,[this](){
+        m_mousePressed = true;
+    });
+    connect(ui->slider_tp_speed,&QSlider::sliderReleased,[this](){
+        m_mousePressed = false;
         emit ui->slider_tp_speed->valueChanged(ui->slider_tp_speed->value());
     });
     connect(ui->slider_tp_speed,&QSlider::valueChanged,this, &KiranCPanelMouseWidget::onSliderReleased);
@@ -452,46 +456,6 @@ void KiranCPanelMouseWidget::onDisabelTouchPadToggled(bool disabled)
     }
 }
 
-bool KiranCPanelMouseWidget::eventFilter(QObject *obj, QEvent *event)
-{
-//    if ((event->type() == QEvent::MouseButtonPress) &&
-//            ((obj == ui->slider_speed) || (obj == ui->slider_tp_speed)))
-//    {
-//       onSliderMouseLButtonPress(obj, event);
-//    }
-//    else if ((event->type() == QEvent::KeyPress) &&
-//             ((obj == ui->slider_speed) || (obj == ui->slider_tp_speed)))
-//    {
-//        onSliderMouseLButtonPress(obj,event);
-//    }
-//    return QWidget::eventFilter(obj, event);
-}
-
-void KiranCPanelMouseWidget::onSliderMouseLButtonPress(QObject *slider, QEvent *event)
-{
-//    QSlider* sliderCtr = static_cast<QSlider*> (slider);
-//    int value = sliderCtr->value();
-//    cout << "mouse button pressed ,value = " << value<< endl;
-//    QLabel *labelSpeed = new QLabel(this);
-//    int scrollSpeed;
-
-//    if(sliderCtr == ui->slider_speed)
-//    {
-//        labelSpeed = ui->label_speed;
-//        scrollSpeed = convertValue(sliderCtr,labelSpeed,value);
-//        m_mouseMotionAcceleration = scrollSpeed;
-//        m_mouseInterface->setMotion_acceleration(m_mouseMotionAcceleration);
-//    }
-//    else if(sliderCtr == ui->slider_tp_speed)
-//    {
-//        labelSpeed = ui->label_tp_speed;
-//        scrollSpeed = convertValue(sliderCtr,labelSpeed,value);
-//        m_touchPadMotionAcceleration = scrollSpeed;
-//        m_touchPadInterface->setMotion_acceleration(m_touchPadMotionAcceleration);
-//    }
-}
-
-
 void KiranCPanelMouseWidget::setDisableWidget(bool disabled)
 {
     foreach (QComboBox *comboBox, m_comboBoxList)
@@ -502,12 +466,6 @@ void KiranCPanelMouseWidget::setDisableWidget(bool disabled)
     {
         checkBox->setDisabled(disabled);
     }
-//    foreach (QLabel* label, m_labelList)
-//    {
-//        if(label == ui->label_tp_disable_touchpad)
-//            continue;
-//        label->setDisabled(disabled);
-//    }
     ui->slider_tp_speed->setDisabled(disabled);
     ui->label_tp_speed->setDisabled(disabled);
 }
@@ -522,25 +480,37 @@ int KiranCPanelMouseWidget::convertValue(QSlider * slider,QLabel* label ,int val
 
     if(value >= SLIDER_MINIMUM && value < lowMiddleNum)
     {
-        slider->setValue(SLIDER_MINIMUM);
+        if(!m_mousePressed)
+        {
+            slider->setValue(SLIDER_MINIMUM);
+        }
         label->setText(tr(SLOW));
         scrollSpeed = MOTION_SLOW;
     }
     else if(value >= lowMiddleNum && value <= middleNum)
     {
-        slider->setValue(middleNum);
+        if(!m_mousePressed)
+        {
+            slider->setValue(middleNum);
+        }
         label->setText(tr(STANDARD));
         scrollSpeed = MOTION_STANDARD;
     }
     else if(value >middleNum && value<= highMiddleNum)
     {
-        slider->setValue(middleNum);
+        if(!m_mousePressed)
+        {
+            slider->setValue(middleNum);
+        }
         label->setText(tr(STANDARD));
         scrollSpeed = MOTION_STANDARD;
     }
     else
     {
-        slider->setValue(SLIDER_MAXIMUN);
+        if(!m_mousePressed)
+        {
+            slider->setValue(SLIDER_MAXIMUN);
+        }
         label->setText(tr(FAST));
         scrollSpeed = MOTION_FAST;
     }
