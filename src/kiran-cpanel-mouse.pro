@@ -33,25 +33,26 @@ SOURCES += \
         kiran-cpanel-mouse.cpp \
     tools/log.cpp \
     kiran-cpanel-mouse-widget.cpp \
-    widgets/kiran-list-widget.cpp \
-    widgets/kiran-list-tem.cpp \
-    widgets/kiran-scroll-area.cpp \
     dbus-interface/mouse-interface.cpp \
-    dbus-interface/touchpad-interface.cpp
+    dbus-interface/touchpad-interface.cpp \
+    pages/page-mouse/mouse-settings.cpp \
+    general-functions/general-function-class.cpp \
+    pages/page-touchpad/touchpad-settings.cpp
 
 HEADERS += \
         kiran-cpanel-mouse.h \
     tools/log.h \
     kiran-cpanel-mouse-widget.h \
-    widgets/kiran-list-widget.h \
-    widgets/kiran-list-item.h \
-    widgets/kiran-scroll-area.h \
     dbus-interface/mouse-interface.h \
-    dbus-interface/touchpad-interface.h
+    dbus-interface/touchpad-interface.h \
+    pages/page-mouse/mouse-settings.h \
+    general-functions/general-function-class.h \
+    pages/page-touchpad/touchpad-settings.h
 
 FORMS += \
     kiran-cpanel-mouse-widget.ui \
-    widgets/kiran-list-item.ui
+    pages/page-mouse/mouse-settings.ui \
+    pages/page-touchpad/touchpad-settings.ui
 
 LIBS  += -lkiranwidgets-qt5\
          -lzlog

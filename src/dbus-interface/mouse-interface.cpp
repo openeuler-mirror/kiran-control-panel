@@ -13,6 +13,7 @@
 #include <QMutex>
 #include <QScopedPointer>
 #include <QDBusConnection>
+#include <iostream>
 /*
  * Implementation of interface class ComKylinsecKiranSessionDaemonMouseInterface
  */
@@ -29,10 +30,12 @@ ComKylinsecKiranSessionDaemonMouseInterface *ComKylinsecKiranSessionDaemonMouseI
     static QScopedPointer<ComKylinsecKiranSessionDaemonMouseInterface> pInst;
 
     if(Q_UNLIKELY(!pInst)){
+        std::cout << "new interface" << endl;
         QMutexLocker locker(&mutex);
         if(pInst.isNull()){
+            std::cout << "pInst is NULL" << endl;
             pInst.reset(new ComKylinsecKiranSessionDaemonMouseInterface("com.kylinsec.Kiran.SessionDaemon.Mouse",
-                                                                          "/com/kylinsec/Kiran/SessionDaemon/Mouse",
+                                                                          "/com/kylinsec/Kiran/SessionDaemon/M",
                                                                           QDBusConnection::sessionBus()));
         }
     }
