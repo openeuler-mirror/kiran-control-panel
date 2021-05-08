@@ -1,3 +1,10 @@
+/**
+ * @file kiran-cpanel-mouse.h
+ * @brief  用于加载kiran标题栏的主界面
+ * @author yuanxing <yuanxing@kylinos.com.cn>
+ * @copyright (c) 2020 KylinSec. All rights reserved.
+ */
+
 #ifndef KIRANCPANELMOUSE_H
 #define KIRANCPANELMOUSE_H
 

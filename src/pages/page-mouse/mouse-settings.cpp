@@ -1,13 +1,15 @@
+/**
+ * @file mouse-settings.cpp
+ * @brief  初始化鼠标属性，并处理用户切换属性信号
+ * @author yuanxing <yuanxing@kylinos.com.cn>
+ * @copyright (c) 2020 KylinSec. All rights reserved.
+ */
+
 #include "mouse-settings.h"
 #include "ui_mouse-settings.h"
 #include "general-functions/general-function-class.h"
 #include "dbus-interface/mouse-interface.h"
 #include "iostream"
-//#define SLIDER_MINIMUM  0
-//#define SLIDER_MAXIMUN  99
-//#define SLOW            "Slow"
-//#define STANDARD        "Standard"
-//#define FAST            "Fast"
 
 MouseSettings::MouseSettings(QWidget *parent) :
     QWidget(parent),
@@ -26,7 +28,7 @@ bool MouseSettings::initUI()
     m_mouseInterface = ComKylinsecKiranSessionDaemonMouseInterface::instance();
     if(!m_mouseInterface->isValid())
     {
-        std::cout << "mouse interface invalid" << endl;
+        qDebug() << "mouse interface invalid" << endl;
         return false;
     }
 

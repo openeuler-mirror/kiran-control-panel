@@ -2,6 +2,13 @@
 #define MOUSESETTINGS_H
 
 #include <QWidget>
+/**
+ * @file mouse-settings.h
+ * @brief  初始化鼠标属性，并处理用户切换属性信号
+ * @author yuanxing <yuanxing@kylinos.com.cn>
+ * @copyright (c) 2020 KylinSec. All rights reserved.
+ */
+
 #include <QComboBox>
 #include <QListWidgetItem>
 

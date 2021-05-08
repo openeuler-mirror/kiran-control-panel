@@ -1,18 +1,23 @@
+/**
+ * @file kiran-cpanel-mouse-widget.cpp
+ * @brief  加载鼠标、触摸板设置页面
+ * @author yuanxing <yuanxing@kylinos.com.cn>
+ * @copyright (c) 2020 KylinSec. All rights reserved.
+ */
+
 #include "kiran-cpanel-mouse-widget.h"
 #include "ui_kiran-cpanel-mouse-widget.h"
 #include "pages/page-mouse/mouse-settings.h"
 #include "pages/page-touchpad/touchpad-settings.h"
 #include "general-functions/general-function-class.h"
 
-#include <kiranwidgets-qt5/kiran-switch-button.h>
-#include <kiranwidgets-qt5/widget-property-helper.h>
 #include <iostream>
 #include <QMouseEvent>
 #include <QSlider>
 #include <QStackedWidget>
+#include <QDebug>
 
 using namespace std;
-using namespace Kiran::WidgetPropertyHelper ;
 
 KiranCPanelMouseWidget::KiranCPanelMouseWidget(QWidget *parent) :
     QWidget(parent),
@@ -34,7 +39,7 @@ bool KiranCPanelMouseWidget::initUI()
     touchPadSettingsPage = new TouchPadSettings;
     if(!mouseSettingsPage->initUI() || !touchPadSettingsPage->initUI())
     {
-        cout << "connect faild" << endl;
+        qDebug() << "connect faild" << endl;
         return false;
     }
     ui->listWidget->resize(sizeHint());

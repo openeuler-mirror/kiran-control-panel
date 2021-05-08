@@ -1,3 +1,10 @@
+/**
+ * @file general-function-class.cpp
+ * @brief  鼠标触摸板通用函数接口
+ * @author yuanxing <yuanxing@kylinos.com.cn>
+ * @copyright (c) 2020 KylinSec. All rights reserved.
+ */
+
 #include "general-function-class.h"
 GeneralFunctionClass::GeneralFunctionClass()
 {

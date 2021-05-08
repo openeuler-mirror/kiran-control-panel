@@ -1,3 +1,10 @@
+/**
+ * @file kiran-cpanel-mouse-widget.h
+ * @brief  加载鼠标、触摸板设置页面
+ * @author yuanxing <yuanxing@kylinos.com.cn>
+ * @copyright (c) 2020 KylinSec. All rights reserved.
+ */
+
 #ifndef KIRANCPANELMOUSEWIDGET_H
 #define KIRANCPANELMOUSEWIDGET_H
 

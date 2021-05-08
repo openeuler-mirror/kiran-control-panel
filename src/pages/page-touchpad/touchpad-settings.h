@@ -1,3 +1,10 @@
+/**
+ * @file touchpad-settings.h
+ * @brief  初始化触摸板属性，并处理用户切换属性信号
+ * @author yuanxing <yuanxing@kylinos.com.cn>
+ * @copyright (c) 2020 KylinSec. All rights reserved.
+ */
+
 #ifndef TOUCHPADSETTINGS_H
 #define TOUCHPADSETTINGS_H
 

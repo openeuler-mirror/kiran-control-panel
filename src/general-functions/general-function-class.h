@@ -1,3 +1,10 @@
+/**
+ * @file general-function-class.h
+ * @brief  鼠标触摸板通用函数接口
+ * @author yuanxing <yuanxing@kylinos.com.cn>
+ * @copyright (c) 2020 KylinSec. All rights reserved.
+ */
+
 #ifndef GENERALFUNCTIONCLASS_H
 #define GENERALFUNCTIONCLASS_H
 #include <QSlider>

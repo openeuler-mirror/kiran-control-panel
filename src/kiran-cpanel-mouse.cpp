@@ -1,3 +1,10 @@
+/**
+ * @file kiran-cpanel-mouse.cpp
+ * @brief  用于加载kiran标题栏的主界面
+ * @author yuanxing <yuanxing@kylinos.com.cn>
+ * @copyright (c) 2020 KylinSec. All rights reserved.
+ */
+
 #include "kiran-cpanel-mouse.h"
 #include <QDesktopWidget>
 #include <QApplication>
@@ -13,9 +20,6 @@ KiranCPanelMouse::KiranCPanelMouse() :
 
     m_cpanelMouseWidget = new KiranCPanelMouseWidget(this);
     setWindowContentWidget(m_cpanelMouseWidget);
-
-    connect(m_cpanelMouseWidget, &KiranCPanelMouse::destroyed, this, &KiranCPanelMouse::close);
-
 }
 
 KiranCPanelMouse::~KiranCPanelMouse()

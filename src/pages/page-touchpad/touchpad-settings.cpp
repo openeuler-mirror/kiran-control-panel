@@ -1,3 +1,10 @@
+/**
+ * @file touchpad-settings.cpp
+ * @brief  初始化触摸板属性，并处理用户切换属性信号
+ * @author yuanxing <yuanxing@kylinos.com.cn>
+ * @copyright (c) 2020 KylinSec. All rights reserved.
+ */
+
 #include "touchpad-settings.h"
 #include "ui_touchpad-settings.h"
 #include "general-functions/general-function-class.h"
@@ -22,6 +29,7 @@ bool TouchPadSettings::initUI()
     m_touchPadInterface = ComKylinsecKiranSessionDaemonTouchPadInterface::instance();
     if(!m_touchPadInterface->isValid())
     {
+        qDebug() << "connect touchpad dbus faild!" << endl;
         return false;
     }
 

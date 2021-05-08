@@ -1,3 +1,9 @@
+/**
+ * @file main.cpp
+ * @brief  程序入口
+ * @author yuanxing <yuanxing@kylinos.com.cn>
+ * @copyright (c) 2020 KylinSec. All rights reserved.
+ */
 #include "kiran-cpanel-mouse.h"
 #include "tools/log.h"
 #include "dbus-interface/mouse-interface.h"
