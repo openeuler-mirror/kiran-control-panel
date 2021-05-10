@@ -17,6 +17,7 @@ KiranCPanelMouse::KiranCPanelMouse() :
 {
     setButtonHints(KiranTitlebarWindow::TitlebarMinMaxCloseHints);
     setTitle(tr("Mouse and TouchPad"));
+    setIcon(QIcon(":/images/kiran-cpanel-mouse.png"));
 
     m_cpanelMouseWidget = new KiranCPanelMouseWidget(this);
     setWindowContentWidget(m_cpanelMouseWidget);

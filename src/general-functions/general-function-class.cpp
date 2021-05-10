@@ -5,6 +5,7 @@
  * @copyright (c) 2020 KylinSec. All rights reserved.
  */
 
+#include <QObject>
 #include "general-function-class.h"
 GeneralFunctionClass::GeneralFunctionClass()
 {
@@ -25,7 +26,7 @@ int GeneralFunctionClass::convertValue(QSlider *slider , QLabel *label, bool isM
         {
             slider->setValue(SLIDER_MINIMUM);
         }
-        label->setText(QObject::tr(SLOW));
+        label->setText(QObject::tr("SLow"));
         scrollSpeed = MOTION_SLOW;
     }
     else if(value >= lowMiddleNum && value <= middleNum)
@@ -34,7 +35,7 @@ int GeneralFunctionClass::convertValue(QSlider *slider , QLabel *label, bool isM
         {
             slider->setValue(middleNum);
         }
-        label->setText(QObject::tr(STANDARD));
+        label->setText(QObject::tr("Standard"));
         scrollSpeed = MOTION_STANDARD;
     }
     else if(value >middleNum && value<= highMiddleNum)
@@ -43,7 +44,7 @@ int GeneralFunctionClass::convertValue(QSlider *slider , QLabel *label, bool isM
         {
             slider->setValue(middleNum);
         }
-        label->setText(QObject::tr(STANDARD));
+        label->setText(QObject::tr("Standard"));
         scrollSpeed = MOTION_STANDARD;
     }
     else
@@ -52,7 +53,7 @@ int GeneralFunctionClass::convertValue(QSlider *slider , QLabel *label, bool isM
         {
             slider->setValue(SLIDER_MAXIMUN);
         }
-        label->setText(QObject::tr(FAST));
+        label->setText(QObject::tr("Fast"));
         scrollSpeed = MOTION_FAST;
     }
     return scrollSpeed;

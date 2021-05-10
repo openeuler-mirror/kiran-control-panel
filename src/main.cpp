@@ -18,9 +18,10 @@
 #include <kiranwidgets-qt5/kiran-message-box.h>
 #include <kiranwidgets-qt5/kiran-single-application.h>
 #include <kiranwidgets-qt5/kiran-application.h>
+#include "config/config.h"
 
 //TODO:use config.h
-#define TRANSLATION_DIR "/usr/share/kiran-cpanel-mouse/translations/"
+#define TRANSLATION_DIR TRANSLATIONS_FILE_DIR
 #define QSS_FILE       ":/themes/themes.qss"
 
 bool init_zlog = false;

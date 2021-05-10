@@ -12,9 +12,6 @@
 
 #define SLIDER_MINIMUM  0
 #define SLIDER_MAXIMUN  99
-#define SLOW            "Slow"
-#define STANDARD        "Standard"
-#define FAST            "Fast"
 #define DBUS_MOUSE_NANE       "com.kylinsec.Kiran.SessionDaemon.Mouse"
 #define DBUS_MOUSE_PATH       "/com/kylinsec/Kiran/SessionDaemon/Mouse"
 #define DBUS_TOUCHPAD_NAME    "com.kylinsec.Kiran.SessionDaemon.TouchPad"

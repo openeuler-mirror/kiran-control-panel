@@ -59,17 +59,17 @@ void MouseSettings::initPageMouseUI()
     if(m_mouseMotionAcceleration == MOTION_SLOW)
     {
         ui->slider_speed->setValue(SLIDER_MINIMUM);
-        ui->label_speed->setText(SLOW);
+        ui->label_speed->setText(tr("Slow"));
     }
     else if(m_mouseMotionAcceleration == MOTION_STANDARD)
     {
         ui->slider_speed->setValue((SLIDER_MAXIMUN-SLIDER_MINIMUM+1)/2);
-        ui->label_speed->setText(STANDARD);
+        ui->label_speed->setText(tr("Standard"));
     }
     else
     {
         ui->slider_speed->setValue(SLIDER_MAXIMUN);
-        ui->label_speed->setText(FAST);
+        ui->label_speed->setText(tr("Fast"));
     }
     connect(ui->slider_speed,&QSlider::sliderPressed,[this](){
         m_mousePressed = true;

@@ -76,17 +76,17 @@ void TouchPadSettings::initPageTouchPadUI()
     if(m_touchPadMotionAcceleration == MOTION_SLOW)
     {
         ui->slider_tp_speed->setValue(SLIDER_MINIMUM);
-        ui->label_tp_speed->setText(SLOW);
+        ui->label_tp_speed->setText(tr("Slow"));
     }
     else if(m_touchPadMotionAcceleration == MOTION_STANDARD)
     {
         ui->slider_tp_speed->setValue((SLIDER_MAXIMUN-SLIDER_MINIMUM+1)/2);
-        ui->label_tp_speed->setText(STANDARD);
+        ui->label_tp_speed->setText(tr("Standard"));
     }
     else
     {
         ui->slider_tp_speed->setValue(MOTION_FAST);
-        ui->label_tp_speed->setText(FAST);
+        ui->label_tp_speed->setText(tr("Fast"));
     }
     connect(ui->slider_tp_speed,&QSlider::sliderPressed,[this](){
         m_mousePressed = true;

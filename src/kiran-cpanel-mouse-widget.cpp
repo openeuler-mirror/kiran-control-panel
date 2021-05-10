@@ -42,19 +42,20 @@ bool KiranCPanelMouseWidget::initUI()
         qDebug() << "connect faild" << endl;
         return false;
     }
-    ui->listWidget->resize(sizeHint());
+    ui->listWidget->resize(QSize(282,this->height()));
     ui->listWidget->setIconSize(QSize(16,16));
 
     addSidebarItem(tr("Mouse Settings"),":/images/mouse.svg");
     addSidebarItem(tr("TouchPad Settings"),":/images/touchpad.svg");
     ui->listWidget->setCurrentRow(ITEM_MOUSE);
 
-    QLayout *layout = ui->widget_stack->layout();
+    QVBoxLayout *layout = new QVBoxLayout(ui->scrollAreaWidgetContents);
     m_stackedWidget = new QStackedWidget(this);
     m_stackedWidget->addWidget(mouseSettingsPage);
     m_stackedWidget->addWidget(touchPadSettingsPage);
 
     m_stackedWidget->setCurrentIndex(PAGE_MOUSE);
+
     layout->addWidget(m_stackedWidget);
     return true;
 }

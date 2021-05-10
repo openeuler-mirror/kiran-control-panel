@@ -9,5 +9,6 @@
         <file>images/touchpad.svg</file>
         <file>images/disable_off.png</file>
         <file>images/disable_on.png</file>
+        <file>images/kiran-cpanel-mouse.png</file>
     </qresource>
 </RCC>

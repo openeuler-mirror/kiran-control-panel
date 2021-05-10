@@ -1,0 +1,15 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Encoding=UTF-8
+Name=Kiran Cpanel Mouse
+Name[zh_CN]=鼠标
+Comment=Kiran Cpanel Mouse
+Comment[zh_CN]=设置鼠标首选项
+Exec=@BIN_DIR@/kiran-cpanel-mouse
+Icon=@ICON_DIR@/kiran-cpanel-mouse.png
+Terminal=false
+Type=Application
+Categories=GTK;Settings;HardwareSettings;X-Hardware;
+StartupNotify=true
+X-KIRAN-NoDisplay=true
+
