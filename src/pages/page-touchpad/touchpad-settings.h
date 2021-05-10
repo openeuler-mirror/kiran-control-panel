@@ -55,6 +55,7 @@ private:
     int m_scrollMethod = 0;
 
     bool m_mousePressed = false;
+    QTimer *m_timer;
 
 };
 

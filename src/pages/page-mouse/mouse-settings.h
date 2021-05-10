@@ -45,6 +45,7 @@ private:
     double m_mouseMotionAcceleration = 0.0;
 
     bool m_mousePressed = false;
+    QTimer *m_timer;
 };
 
 #endif // MOUSESETTINGS_H

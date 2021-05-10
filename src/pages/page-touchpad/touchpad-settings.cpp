@@ -11,6 +11,7 @@
 #include "dbus-interface/touchpad-interface.h"
 
 #include <QCheckBox>
+#include <iostream>
 
 TouchPadSettings::TouchPadSettings(QWidget *parent) :
     QWidget(parent),
@@ -88,6 +89,21 @@ void TouchPadSettings::initPageTouchPadUI()
         ui->slider_tp_speed->setValue(MOTION_FAST);
         ui->label_tp_speed->setText(tr("Fast"));
     }
+    m_timer = new QTimer(this);
+    connect(m_timer, &QTimer::timeout,
+            [this]{
+        std::cout << "timeout" << endl;
+        double scrollSpeed;
+        int value;
+
+        value = ui->slider_tp_speed->value();
+        scrollSpeed = GeneralFunctionClass::convertValue(ui->slider_tp_speed,ui->label_tp_speed,m_mousePressed,value);
+
+        m_touchPadMotionAcceleration = scrollSpeed;
+        m_touchPadInterface->setMotion_acceleration(m_touchPadMotionAcceleration);
+        m_timer->stop();
+    });
+
     connect(ui->slider_tp_speed,&QSlider::sliderPressed,[this](){
         m_mousePressed = true;
     });
@@ -169,14 +185,7 @@ void TouchPadSettings::setDisableWidget(bool disabled)
 
 void TouchPadSettings::onSliderValueChange()
 {
-    double scrollSpeed;
-    int value;
-
-    value = ui->slider_tp_speed->value();
-    scrollSpeed = GeneralFunctionClass::convertValue(ui->slider_tp_speed,ui->label_tp_speed,m_mousePressed,value);
-
-    m_touchPadMotionAcceleration = scrollSpeed;
-    m_touchPadInterface->setMotion_acceleration(m_touchPadMotionAcceleration);
+    m_timer->start(100);
 }
 
 void TouchPadSettings::onDisabelTouchPadToggled(bool disabled)

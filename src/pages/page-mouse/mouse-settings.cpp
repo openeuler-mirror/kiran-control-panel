@@ -9,7 +9,7 @@
 #include "ui_mouse-settings.h"
 #include "general-functions/general-function-class.h"
 #include "dbus-interface/mouse-interface.h"
-#include "iostream"
+#include <iostream>
 
 MouseSettings::MouseSettings(QWidget *parent) :
     QWidget(parent),
@@ -71,6 +71,19 @@ void MouseSettings::initPageMouseUI()
         ui->slider_speed->setValue(SLIDER_MAXIMUN);
         ui->label_speed->setText(tr("Fast"));
     }
+    m_timer = new QTimer(this);
+    connect(m_timer, &QTimer::timeout,
+            [this]{
+        std::cout << "timeout" << endl;
+        int value;
+        double scrollSpeed;
+        value = ui->slider_speed->value();
+        scrollSpeed = GeneralFunctionClass::convertValue(ui->slider_speed,ui->label_speed,m_mousePressed,value);
+        m_mouseMotionAcceleration = scrollSpeed;
+        m_mouseInterface->setMotion_acceleration(m_mouseMotionAcceleration);
+        m_timer->stop();
+    });
+
     connect(ui->slider_speed,&QSlider::sliderPressed,[this](){
         m_mousePressed = true;
     });
@@ -99,12 +112,5 @@ void MouseSettings::initPageMouseUI()
 
 void MouseSettings::onSliderValueChange()
 {
-    double scrollSpeed;
-    int value;
-
-    value = ui->slider_speed->value();
-    scrollSpeed = GeneralFunctionClass::convertValue(ui->slider_speed,ui->label_speed,m_mousePressed,value);
-
-    m_mouseMotionAcceleration = scrollSpeed;
-    m_mouseInterface->setMotion_acceleration(m_mouseMotionAcceleration);
+    m_timer->start(100);
 }
