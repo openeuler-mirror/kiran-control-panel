@@ -11,7 +11,6 @@
 #include "dbus-interface/touchpad-interface.h"
 
 #include <QCheckBox>
-#include <iostream>
 
 TouchPadSettings::TouchPadSettings(QWidget *parent) :
     QWidget(parent),
@@ -104,7 +103,6 @@ void TouchPadSettings::initPageTouchPadUI()
     m_timer = new QTimer(this);
     connect(m_timer, &QTimer::timeout,
             [this]{
-        std::cout << "timeout" << endl;
         double scrollSpeed;
         int value;
 

@@ -11,7 +11,6 @@
 #include "pages/page-touchpad/touchpad-settings.h"
 #include "general-functions/general-function-class.h"
 
-#include <iostream>
 #include <QMouseEvent>
 #include <QSlider>
 #include <QStackedWidget>

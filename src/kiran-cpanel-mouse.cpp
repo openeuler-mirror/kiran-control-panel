@@ -8,7 +8,7 @@
 #include "kiran-cpanel-mouse.h"
 #include <QDesktopWidget>
 #include <QApplication>
-#include <iostream>
+#include <QDebug>
 
 using namespace std;
 
@@ -36,6 +36,8 @@ QSize KiranCPanelMouse::sizeHint() const
 {
     /*根据系统分辨率设置窗口大小*/
     QDesktopWidget *desktop = QApplication::desktop();
+    qInfo() << "desktop width = " << desktop->width() <<
+               " desktop height = " << desktop->height() << endl;
     QSize windowSize;
     if(desktop->height() >= 750 && desktop->width() >= 918 ) //能显示全
     {

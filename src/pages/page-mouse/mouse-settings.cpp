@@ -9,7 +9,6 @@
 #include "ui_mouse-settings.h"
 #include "general-functions/general-function-class.h"
 #include "dbus-interface/mouse-interface.h"
-#include <iostream>
 
 MouseSettings::MouseSettings(QWidget *parent) :
     QWidget(parent),
@@ -84,7 +83,6 @@ void MouseSettings::initPageMouseUI()
     m_timer = new QTimer(this);
     connect(m_timer, &QTimer::timeout,
             [this]{
-        std::cout << "timeout" << endl;
         int value;
         double scrollSpeed;
         value = ui->slider_speed->value();

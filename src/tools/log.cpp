@@ -14,7 +14,6 @@
 #include <QFileInfo>
 #include <QMutex>
 #include <QDateTime>
-#include <iostream>
 #include <zlog_ex.h>
 #include <stddef.h>
 

@@ -52,6 +52,15 @@ int main(int argc, char *argv[])
         qDebug("Load Translator File failed : %s\n", TRANSLATION_DIR);
     }
 
+    KiranCPanelMouse w;
+    if(!w.m_cpanelMouseWidget->initUI())
+    {
+        KiranMessageBox::message(nullptr,QObject::tr("Faild"),
+                                 QObject::tr("Connect Mouse or TouchPad Dbus Failed!"),
+                                 KiranMessageBox::Ok);
+        exit(-1);
+    }
+
     //加载qss文件
     QFile file(QSS_FILE);
     if( file.open(QFile::ReadOnly))
@@ -63,14 +72,10 @@ int main(int argc, char *argv[])
     }
     else
     {
-        KiranMessageBox::message(nullptr,"warning","Load qss file failed!",KiranMessageBox::Ok);
+        KiranMessageBox::message(nullptr,QObject::tr("warning"),
+                                 QObject::tr("Load qss file failed!"),KiranMessageBox::Ok);
     }
-    KiranCPanelMouse w;
-    if(!w.m_cpanelMouseWidget->initUI())
-    {
-        KiranMessageBox::message(nullptr,"Faild",tr("Connect Mouse or TouchPad Dbus Failed!"),KiranMessageBox::Ok);
-        exit(-1);
-    }
+
     w.resize(w.sizeHint());
     w.show();
 
