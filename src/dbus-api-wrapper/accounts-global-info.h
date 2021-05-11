@@ -57,6 +57,7 @@ private:
     AccountsInterface m_accountsInterface;
     QList<UserInterface *> m_usersList;
     QString m_curUserName;
+    bool m_showRoot =  false;
 };
 
 #endif  // ACCOUNTSGLOBALINFO_H

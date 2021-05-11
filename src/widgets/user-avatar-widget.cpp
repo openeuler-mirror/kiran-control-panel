@@ -1,5 +1,6 @@
 #include "user-avatar-widget.h"
 #include "log.h"
+#include "config.h"
 
 #include <QDebug>
 #include <QFile>
@@ -7,7 +8,6 @@
 #include <QPainter>
 #include <QtMath>
 
-#define DEFAULT_USER_AVATAR "/usr/share/kiran-account-manager/account-icons/0.face"
 
 UserAvatarWidget::UserAvatarWidget(QWidget *parent)
     : QWidget(parent),

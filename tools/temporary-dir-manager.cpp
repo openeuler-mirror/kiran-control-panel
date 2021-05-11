@@ -22,34 +22,36 @@ TemporaryDirManager::~TemporaryDirManager()
 
 bool TemporaryDirManager::init(const QString &dirName)
 {
-    QString   temporarDirPath = QString("/tmp/%1").arg(dirName);
-    QFileInfo fileInfo(temporarDirPath);
-
     if (m_initFinished)
     {
         return true;
     }
 
+    char * home = getenv("HOME");
+    if( !home )
+    {
+        LOG_ERROR_S() << "can't get $HOME!!";
+        return false;
+    }
+    QString tempDirPrefix = QString("%1/.cache").arg(home);
+    QString temporarDirPath = QString("%1/%2").arg(tempDirPrefix).arg(dirName);
+    QFileInfo fileInfo(temporarDirPath);
     if (fileInfo.exists())
     {
         QDir dir(fileInfo.absoluteFilePath());
         LOG_INFO_S() << "remove " << dir.path() << (dir.removeRecursively() ? "success" : "failed");
     }
 
-    QDir tempDir("/tmp");
+    QDir tempDir(tempDirPrefix);
     if (tempDir.mkdir(dirName))
     {
-        QFile accountTempDir(QString("/tmp/%1").arg(dirName));
-        accountTempDir.setPermissions(QFile::ReadOwner|QFile::WriteOwner|
-                                      QFile::ReadGroup|QFile::WriteGroup|
-                                      QFile::ReadOther|QFile::WriteOther);
         m_initFinished     = true;
         m_temporaryDirPath = temporarDirPath;
         LOG_INFO_S() << "Temporary Dir Path:" << m_temporaryDirPath;
         return true;
     }
 
-    LOG_WARNING_S() << "create temporary dir " << m_temporaryDirPath << "failed!";
+    LOG_WARNING_S() << "create temporary dir " << temporarDirPath << "failed!";
     return false;
 }
 

@@ -1,7 +1,9 @@
 include(GNUInstallDirs)
 
+#账户管理配置文件安装目录
+set(KAM_CONF_DIR /${CMAKE_INSTALL_SYSCONFDIR}/kiran-account-manager )
 #账户管理数据目录
-set(KAM_DATA_DIR ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATAROOTDIR}/${PROJECT_NAME} )
+set(KAM_DATA_DIR ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATAROOTDIR}/kiran-account-manager )
 #账户管理内置头像安装目录
 set(KAM_BUILDIN_AVATAR_DIR_PATH ${KAM_DATA_DIR}/account-icons )
 #账户管理Desktop文件图标和系统标题栏图标路径

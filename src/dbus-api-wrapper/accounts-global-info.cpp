@@ -2,6 +2,7 @@
 #include "accounts-interface.h"
 #include "accounts-user-interface.h"
 #include "log.h"
+#include "config.h"
 
 #include <unistd.h>
 #include <QDBusObjectPath>
@@ -46,6 +47,23 @@ bool AccountsGlobalInfo::init()
         deleteUserFromMap(user);
     });
 
+    ///判断是否显示ROOT用户
+    QSettings settings(CONFIG_FILE_PATH,QSettings::IniFormat);
+    if(settings.status()!=QSettings::NoError)
+    {
+        LOG_WARNING_S() << "parse" << CONFIG_FILE_PATH << "failed!";
+    }
+    else
+    {
+        settings.beginGroup("Common");
+        if(settings.contains("show-root"))
+        {
+            m_showRoot = settings.value("show-root").toBool();
+        }
+        settings.endGroup();
+    };
+    LOG_INFO("show root:%s",m_showRoot?"true":"false");
+
     ///加载账户
     QList<QDBusObjectPath> accounts;
     QDBusPendingReply<QList<QDBusObjectPath>> pendingReply;
@@ -60,6 +78,21 @@ bool AccountsGlobalInfo::init()
         return false;
     }
     objList = pendingReply.value();
+
+    if(m_showRoot)
+    {
+        auto getRootReply = m_accountsInterface.FindUserById(0);
+        getRootReply.waitForFinished();
+        if( !getRootReply.isError() )
+        {
+            objList.insert(0,getRootReply.value());
+        }
+        else
+        {
+            LOG_ERROR_S() << "cant find root by id:" << getRootReply.error();
+        }
+    }
+
     for (objListIter = objList.begin();
          objListIter != objList.end();
          objListIter++)

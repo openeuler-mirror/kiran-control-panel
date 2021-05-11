@@ -12,6 +12,11 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
 include(kam-variables)
+#配置文件安装路径
+set(KAM_CONFIG_PATH "${KAM_CONF_DIR}/kiran-account-manager.conf")
+#默认头像路径
+set(KAM_DEFAULT_AVATAR_PATH "${KAM_BUILDIN_AVATAR_DIR_PATH}/0.face")
+
 configure_file(${CMAKE_SOURCE_DIR}/config/config.h.in ${CMAKE_BINARY_DIR}/config.h @ONLY)
 configure_file(${CMAKE_SOURCE_DIR}/config/kiran-account-manager.desktop.in ${CMAKE_BINARY_DIR}/kiran-account-manager.desktop @ONLY )
 
@@ -81,6 +86,7 @@ endif()
 install(TARGETS ${PROJECT_NAME} DESTINATION ${KAM_INSTALL_DIR} )
 install(FILES ${QM_FILES} DESTINATION ${KAM_TRANSLATION_DIR_PATH} )
 install(FILES ${CMAKE_BINARY_DIR}/kiran-account-manager.desktop  DESTINATION ${KAM_DESKTOP_INSTALL_DIR} )
+install(FILES ./config/kiran-account-manager.conf DESTINATION ${KAM_CONF_DIR})
 
 file(GLOB BUILDIN_AVATARS "./buildin-avatar/*")
 install(FILES ${BUILDIN_AVATARS} DESTINATION ${KAM_BUILDIN_AVATAR_DIR_PATH} )
