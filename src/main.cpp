@@ -77,7 +77,7 @@ int main(int argc, char *argv[])
     qApp->installTranslator(&tsor);
 
     KiranAccountManager accountManager;
-    accountManager.resize(975, 850);
+    accountManager.resize(985, 850);
     int screeNum = QApplication::desktop()->screenNumber(QCursor::pos());
     QRect screenGeometry = QApplication::desktop()->screenGeometry(screeNum);
     accountManager.move(screenGeometry.x() + (screenGeometry.width() - accountManager.width()) / 2,

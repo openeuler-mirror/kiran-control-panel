@@ -17,6 +17,7 @@
 #include <QIcon>
 #include <QStackedWidget>
 #include <QtWidgets/QListWidgetItem>
+#include <QScrollArea>
 
 #define ITEM_USER_OBJ_PATH_ROLE Qt::UserRole + 1
 
@@ -67,7 +68,9 @@ void KiranAccountManager::appendSiderbarItem(const QString &userPath)
 {
     UserInterface interface(userPath, QDBusConnection::systemBus());
     auto item = new QListWidgetItem(interface.user_name(), m_tabList);
-    item->setIcon(QPixmap(interface.icon_file()));
+
+    QString iconFile = interface.icon_file();
+    item->setIcon(QPixmap(iconFile.isEmpty()?DEFAULT_USER_AVATAR:iconFile));
     item->setData(Kiran::ItemStatus_Role, interface.locked() ? tr("disable") : tr("enable"));
     item->setData(Kiran::ItemStatusColor_Role, interface.locked() ? QColor("#fa4949") : QColor("#43a3f2"));
     item->setData(ITEM_USER_OBJ_PATH_ROLE, userPath);
@@ -80,7 +83,12 @@ void KiranAccountManager::setDefaultSiderbarItem()
     //设置默认侧边栏项
     if (m_tabList->count() > 1)
     {
-        m_tabList->setCurrentRow(1);
+        auto items = m_tabList->findItems(AccountsGlobalInfo::instance()->getCurrentUser(),Qt::MatchCaseSensitive);
+        if(items.size()==1)
+        {
+            auto item = items.at(0);
+            m_tabList->setCurrentRow(m_tabList->row(item));
+        }
     }
     else
     {
@@ -123,9 +131,20 @@ void KiranAccountManager::initUI()
     initUserList();
 
     /* 内容区域 */
+    QScrollArea* scrollArea = new QScrollArea();
+    scrollArea->setWidgetResizable(true);
+
+    QWidget* scrollAreaContentWidget = new QWidget;
+    QHBoxLayout* scrollAreaContentLayout = new QHBoxLayout;
+    scrollAreaContentLayout->setMargin(0);
+    scrollAreaContentWidget->setLayout(scrollAreaContentLayout);
+
     m_stackWidget = new QStackedWidget(getWindowContentWidget());
-    contentLayout->addWidget(m_stackWidget);
     m_stackWidget->setObjectName("StackWidget");
+    scrollAreaContentLayout->addWidget(m_stackWidget);
+
+    scrollArea->setWidget(scrollAreaContentWidget);
+    contentLayout->addWidget(scrollArea);
 
     m_page_createUser = new CreateUserPage(m_stackWidget);
     m_stackWidget->insertWidget(PAGE_CREATE_USER, m_page_createUser);
@@ -144,9 +163,7 @@ void KiranAccountManager::initUI()
     initPageAuthManager();
 
     connectToInfoChanged();
-    setDefaultSiderbarItem();
-
-    resize(800, 600);
+    QTimer::singleShot(0,this,&KiranAccountManager::setDefaultSiderbarItem);
 }
 
 void KiranAccountManager::initUserList()
