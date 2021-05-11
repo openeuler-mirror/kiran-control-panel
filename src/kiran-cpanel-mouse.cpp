@@ -28,6 +28,10 @@ KiranCPanelMouse::~KiranCPanelMouse()
 
 }
 
+/**
+ * @brief 初始化主窗口大小
+ * @return 根据屏幕分辨率返回初始大小
+ */
 QSize KiranCPanelMouse::sizeHint() const
 {
     /*根据系统分辨率设置窗口大小*/

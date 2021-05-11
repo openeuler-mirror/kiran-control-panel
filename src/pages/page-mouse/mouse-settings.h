@@ -44,6 +44,7 @@ private:
     bool m_middleEmulationEnabled = false;
     double m_mouseMotionAcceleration = 0.0;
 
+    //鼠标是否按下的标志位
     bool m_mousePressed = false;
     QTimer *m_timer;
 };

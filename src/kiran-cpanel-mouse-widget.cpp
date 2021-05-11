@@ -33,6 +33,11 @@ KiranCPanelMouseWidget::~KiranCPanelMouseWidget()
     delete ui;
 }
 
+/**
+ * @brief 初始化主窗口，插入鼠标、触摸板设置页面
+ * @return true:连接Dbus服务成功
+ *         false:连接Dbus服务失败
+ */
 bool KiranCPanelMouseWidget::initUI()
 {
     mouseSettingsPage = new MouseSettings;

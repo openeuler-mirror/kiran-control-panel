@@ -54,6 +54,7 @@ private:
     int m_clickMethod = 0;
     int m_scrollMethod = 0;
 
+    //鼠标是否按下的标志位
     bool m_mousePressed = false;
     QTimer *m_timer;
 

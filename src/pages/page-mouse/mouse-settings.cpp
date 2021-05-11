@@ -23,6 +23,11 @@ MouseSettings::~MouseSettings()
     delete ui;
 }
 
+/**
+ * @brief 连接Dbus服务，初始化控件
+ * @return true:连接Dbus服务成功
+ *         false:连接Dbus服务失败
+ */
 bool MouseSettings::initUI()
 {
     m_mouseInterface = ComKylinsecKiranSessionDaemonMouseInterface::instance();
@@ -45,6 +50,9 @@ bool MouseSettings::initUI()
     return true;
 }
 
+/**
+ * @brief 通过Dbus获取鼠标属性值，监听用户修改属性的信号，并重新设置属性值
+ */
 void MouseSettings::initPageMouseUI()
 {
     m_mouseLeftHand = m_mouseInterface->left_handed();
@@ -71,6 +79,8 @@ void MouseSettings::initPageMouseUI()
         ui->slider_speed->setValue(SLIDER_MAXIMUN);
         ui->label_speed->setText(tr("Fast"));
     }
+
+    //创建定时器，在用户拖动滑动条时，滑动条值停止变化0.1s后才会设置新的鼠标移动速度
     m_timer = new QTimer(this);
     connect(m_timer, &QTimer::timeout,
             [this]{
@@ -84,6 +94,7 @@ void MouseSettings::initPageMouseUI()
         m_timer->stop();
     });
 
+    // 监听滑动条值变化信号，当用户拖动滑动条时，只有在鼠标松开后才会根据值范围确定滑动条值
     connect(ui->slider_speed,&QSlider::sliderPressed,[this](){
         m_mousePressed = true;
     });
@@ -112,5 +123,6 @@ void MouseSettings::initPageMouseUI()
 
 void MouseSettings::onSliderValueChange()
 {
+    //触发定时器
     m_timer->start(100);
 }

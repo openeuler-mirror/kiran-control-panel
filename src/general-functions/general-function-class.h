@@ -17,12 +17,19 @@
 #define DBUS_TOUCHPAD_NAME    "com.kylinsec.Kiran.SessionDaemon.TouchPad"
 #define DBUS_TOUCHPAD_PATH    "/com/kylinsec/Kiran/SessionDaemon/TouchPad"
 
+/**
+ * 左侧侧边栏列表项
+ */
 enum Items
 {
     ITEM_MOUSE,
     ITEM_TOUCHPAD,
     ITEM_LAST
 };
+
+/**
+ * 鼠标、触摸板页面
+ */
 enum Pages
 {
     PAGE_MOUSE,
@@ -30,6 +37,9 @@ enum Pages
     PAGE_LAST
 };
 
+/**
+ * 鼠标或触摸板移动速度
+ */
 enum MOTION_ACCELERATION
 {
     MOTION_SLOW = -1,
@@ -37,18 +47,30 @@ enum MOTION_ACCELERATION
     MOTION_FAST,
     MOTION_LAST
 };
+
+/**
+ * 手持模式
+ */
 enum HandMode
 {
     RIGHT_HAND, //false:0
     LEFT_HAND, //true:1
     HAND_LAST
 };
+
+/**
+ * 触摸板点击模式
+ */
 enum CLickMode
 {
     MODE_PRESS_AND_TAP,  //false:0
     MODE_TAP,            //true:1
     MODE_LAST
 };
+
+/**
+ * 触摸板滚动方式
+ */
 enum ScrollMothod
 {
     SCROLL_TWO_FINGER,

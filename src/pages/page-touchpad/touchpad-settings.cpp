@@ -25,6 +25,11 @@ TouchPadSettings::~TouchPadSettings()
     delete ui;
 }
 
+/**
+ * @brief 连接Dbus服务，初始化控件
+ * @return true:连接Dbus服务成功
+ *         false:连接Dbus服务失败
+ */
 bool TouchPadSettings::initUI()
 {
     m_touchPadInterface = ComKylinsecKiranSessionDaemonTouchPadInterface::instance();
@@ -48,18 +53,23 @@ bool TouchPadSettings::initUI()
     ui->slider_tp_speed->setPageStep((SLIDER_MAXIMUN-SLIDER_MINIMUM+1)/2);
     ui->slider_tp_speed->setSingleStep((SLIDER_MAXIMUN-SLIDER_MINIMUM+1)/2);
 
+    //TODO: 暂时隐藏触摸板点击方法功能
     ui->widget_tp_click_mode->hide();
 
     initPageTouchPadUI();
     return true;
 }
 
+/**
+ * @brief 通过Dbus获取触摸板属性值，监听用户修改属性的信号，并重新设置属性值
+ */
 void TouchPadSettings::initPageTouchPadUI()
 {
     m_touchPadEnabled = m_touchPadInterface->touchpad_enabled();
     ui->checkBox_tp_disable_touchpad->setChecked(!m_touchPadEnabled);
     if(!m_touchPadEnabled)
     {
+        //若禁用触摸板，则禁用触摸板相关设置控件
         setDisableWidget(true);
     }
     connect(ui->checkBox_tp_disable_touchpad, &QCheckBox::toggled, this,
@@ -89,6 +99,8 @@ void TouchPadSettings::initPageTouchPadUI()
         ui->slider_tp_speed->setValue(MOTION_FAST);
         ui->label_tp_speed->setText(tr("Fast"));
     }
+
+    //创建定时器，在用户拖动滑动条时，滑动条值停止变化0.1s后才会设置新的触摸板移动速度
     m_timer = new QTimer(this);
     connect(m_timer, &QTimer::timeout,
             [this]{
@@ -111,6 +123,7 @@ void TouchPadSettings::initPageTouchPadUI()
         m_mousePressed = false;
         emit ui->slider_tp_speed->valueChanged(ui->slider_tp_speed->value());
     });
+    // 监听滑动条值变化信号，当用户拖动滑动条时，只有在鼠标松开后才会根据值范围确定滑动条值
     connect(ui->slider_tp_speed,&QSlider::valueChanged,this, &TouchPadSettings::onSliderValueChange);
 
     m_clickMethod = m_touchPadInterface->click_method();
@@ -169,6 +182,10 @@ void TouchPadSettings::addComboBoxItem()
     ui->comboBox_tp_move_win_mode->addItems(tpScrollWinMode);
 }
 
+/**
+ * @brief 根据是否禁用触摸板来设置相关控件的状态
+ * @param[in] disabled 是否禁用触摸板
+ */
 void TouchPadSettings::setDisableWidget(bool disabled)
 {
     foreach (QComboBox *comboBox, m_comboBoxList)
@@ -185,6 +202,7 @@ void TouchPadSettings::setDisableWidget(bool disabled)
 
 void TouchPadSettings::onSliderValueChange()
 {
+    //触发定时器
     m_timer->start(100);
 }
 

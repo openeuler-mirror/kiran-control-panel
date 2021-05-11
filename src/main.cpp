@@ -65,11 +65,10 @@ int main(int argc, char *argv[])
     {
         KiranMessageBox::message(nullptr,"warning","Load qss file failed!",KiranMessageBox::Ok);
     }
-
     KiranCPanelMouse w;
     if(!w.m_cpanelMouseWidget->initUI())
     {
-        KiranMessageBox::message(nullptr,"Faild","Connect Mouse and TouchPad Dbus Failed!",KiranMessageBox::Ok);
+        KiranMessageBox::message(nullptr,"Faild",tr("Connect Mouse or TouchPad Dbus Failed!"),KiranMessageBox::Ok);
         exit(-1);
     }
     w.resize(w.sizeHint());
