@@ -101,6 +101,7 @@ void AuthManagerPage::updateInfo()
             if (childItem->widget())
             {
                 childItem->widget()->setParent(nullptr);
+                childItem->widget()->deleteLater();
             }
             delete childItem;
         }
