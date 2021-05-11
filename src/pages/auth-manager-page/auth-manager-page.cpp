@@ -308,7 +308,7 @@ BiometricList AuthManagerPage::getBiometricItemsFromBackend(AccountsAuthMode mod
     /* 解析获取生物特征列表函数 */
     auto funcParseAuthItmes = [](const QString &jsonStr, BiometricList &authItems) -> bool {
         auto errorPtr = new QSharedPointer<QJsonParseError>(new QJsonParseError);
-        QJsonDocument doc = QJsonDocument::fromJson(jsonStr.toLatin1(), errorPtr->data());
+        QJsonDocument doc = QJsonDocument::fromJson(jsonStr.toUtf8(), errorPtr->data());
         if (errorPtr->data()->error != QJsonParseError::NoError)
         {
             LOG_DEBUG_S() << "parse json doc failed," << errorPtr->data()->errorString();
