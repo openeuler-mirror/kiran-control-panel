@@ -121,8 +121,8 @@ bool AccountsGlobalInfo::init()
 QList<QString> AccountsGlobalInfo::getUserList()
 {
     QList<QString> userObjPathList;
-    for (auto iter = m_usersList.begin();
-         iter != m_usersList.end();
+    for (auto iter = m_usersMap.begin();
+         iter != m_usersMap.end();
          iter++)
     {
         userObjPathList.append((*iter)->path());
@@ -134,7 +134,7 @@ bool AccountsGlobalInfo::checkUserNameAvaliable(const QString &userName)
 {
     bool isValid = true;
 
-    for (auto &iter : m_usersList)
+    for (auto &iter : m_usersMap)
     {
         if (iter->user_name() == userName)
         {
@@ -153,6 +153,10 @@ QString AccountsGlobalInfo::getCurrentUser()
 
 void AccountsGlobalInfo::addUserToMap(const QDBusObjectPath &user)
 {
+    if(m_usersMap.find(user.path()) != m_usersMap.end() )
+    {
+        return;
+    }
     UserInterface *userInterface = new UserInterface(user.path(),
                                                      QDBusConnection::systemBus(),
                                                      this);
@@ -160,47 +164,25 @@ void AccountsGlobalInfo::addUserToMap(const QDBusObjectPath &user)
             &UserInterface::propertyChanged,
             this,
             &AccountsGlobalInfo::handlerPropertyChanged);
-    m_usersList.append(userInterface);
+    m_usersMap.insert(user.path(),userInterface);
     emit UserAdded(user);
 }
 
 void AccountsGlobalInfo::deleteUserFromMap(const QDBusObjectPath &user)
 {
-    int findIdx = -1;
-    for (int i = 0; i < m_usersList.size(); i++)
-    {
-        if (m_usersList.at(i)->path() == user.path())
-        {
-            findIdx = i;
-            break;
-        }
-    }
-    if (findIdx == -1)
+    if(m_usersMap.find(user.path()) == m_usersMap.end())
     {
         return;
     }
-    UserInterface *interface = m_usersList.takeAt(findIdx);
+
+    UserInterface *interface = m_usersMap.take(user.path());
     disconnect(interface,
                &UserInterface::propertyChanged,
                this,
                &AccountsGlobalInfo::handlerPropertyChanged);
     delete interface;
-    emit UserDeleted(user);
-}
 
-///NOTE:暂时不用，考虑到侧边栏改变排序
-void AccountsGlobalInfo::userListResort()
-{
-    std::sort(m_usersList.begin(), m_usersList.end(), [](const UserInterface *z1, const UserInterface *z2) {
-        if (z1->locked() != z2->locked())
-        {
-            return !z1->locked();
-        }
-        else
-        {
-            return z1->user_name().toLower() < z2->user_name().toLower();
-        }
-    });
+    emit UserDeleted(user);
 }
 
 void AccountsGlobalInfo::handlerPropertyChanged(QString userPath, QString propertyName, QVariant value)

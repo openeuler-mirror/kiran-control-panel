@@ -42,7 +42,6 @@ public:
 private:
     void addUserToMap(const QDBusObjectPath &user);
     void deleteUserFromMap(const QDBusObjectPath &user);
-    void userListResort();
 
 signals:
     void UserAdded(const QDBusObjectPath &obj);
@@ -50,12 +49,13 @@ signals:
     void UserPropertyChanged(QString userPath,
                              QString propertyName,
                              QVariant value);
+
 private Q_SLOTS:
     void handlerPropertyChanged(QString userPath, QString propertyName, QVariant value);
 
 private:
     AccountsInterface m_accountsInterface;
-    QList<UserInterface *> m_usersList;
+    QMap<QString,UserInterface *> m_usersMap; // QMap<DBus对象路径,用户相关接口>
     QString m_curUserName;
     bool m_showRoot =  false;
 };
