@@ -13,7 +13,7 @@
 #include <QMutex>
 #include <QScopedPointer>
 #include <QDBusConnection>
-
+#include <kiran-cc-daemon/kiran-session-daemon/touchpad_i.h>
 /*
  * Implementation of interface class ComKylinsecKiranSessionDaemonTouchPadInterface
  */
@@ -32,9 +32,9 @@ ComKylinsecKiranSessionDaemonTouchPadInterface *ComKylinsecKiranSessionDaemonTou
     if(Q_UNLIKELY(!pInst)){
         QMutexLocker locker(&mutex);
         if(pInst.isNull()){
-            pInst.reset(new ComKylinsecKiranSessionDaemonTouchPadInterface("com.kylinsec.Kiran.SessionDaemon.TouchPad",
-                                                                          "/com/kylinsec/Kiran/SessionDaemon/TouchPad",
-                                                                          QDBusConnection::sessionBus()));
+            pInst.reset(new ComKylinsecKiranSessionDaemonTouchPadInterface(TOUCHPAD_DBUS_NAME,
+                                                                           TOUCHPAD_OBJECT_PATH,
+                                                                           QDBusConnection::sessionBus()));
         }
     }
 

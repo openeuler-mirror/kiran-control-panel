@@ -13,6 +13,7 @@
 #include <QMutex>
 #include <QScopedPointer>
 #include <QDBusConnection>
+#include <kiran-cc-daemon/kiran-session-daemon/mouse_i.h>
 /*
  * Implementation of interface class ComKylinsecKiranSessionDaemonMouseInterface
  */
@@ -31,9 +32,9 @@ ComKylinsecKiranSessionDaemonMouseInterface *ComKylinsecKiranSessionDaemonMouseI
     if(Q_UNLIKELY(!pInst)){
         QMutexLocker locker(&mutex);
         if(pInst.isNull()){
-            pInst.reset(new ComKylinsecKiranSessionDaemonMouseInterface("com.kylinsec.Kiran.SessionDaemon.Mouse",
-                                                                          "/com/kylinsec/Kiran/SessionDaemon/Mouse",
-                                                                          QDBusConnection::sessionBus()));
+            pInst.reset(new ComKylinsecKiranSessionDaemonMouseInterface(MOUSE_DBUS_NAME,
+                                                                        MOUSE_OBJECT_PATH,
+                                                                        QDBusConnection::sessionBus()));
         }
     }
     return pInst.data();

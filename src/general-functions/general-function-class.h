@@ -12,10 +12,6 @@
 
 #define SLIDER_MINIMUM  0
 #define SLIDER_MAXIMUN  99
-#define DBUS_MOUSE_NANE       "com.kylinsec.Kiran.SessionDaemon.Mouse"
-#define DBUS_MOUSE_PATH       "/com/kylinsec/Kiran/SessionDaemon/Mouse"
-#define DBUS_TOUCHPAD_NAME    "com.kylinsec.Kiran.SessionDaemon.TouchPad"
-#define DBUS_TOUCHPAD_PATH    "/com/kylinsec/Kiran/SessionDaemon/TouchPad"
 
 /**
  * 左侧侧边栏列表项
@@ -56,28 +52,6 @@ enum HandMode
     RIGHT_HAND, //false:0
     LEFT_HAND, //true:1
     HAND_LAST
-};
-
-/**
- * 触摸板点击模式
- */
-enum CLickMode
-{
-    MODE_PRESS_AND_TAP,  //false:0
-    MODE_TAP,            //true:1
-    MODE_LAST
-};
-
-/**
- * 触摸板滚动方式
- */
-enum ScrollMothod
-{
-    SCROLL_TWO_FINGER,
-    SCROLL_EDGE,
-    /*暂时不设置该模式
-    SCROLL_BUTTON,*/
-    SCROLL_LAST
 };
 
 class GeneralFunctionClass
