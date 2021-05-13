@@ -398,12 +398,12 @@
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="../src/pages/biometric-input-dialog/fingerprint-input-dialog/fingerprint-input-dialog.cpp" line="35"/>
+        <location filename="../src/pages/biometric-input-dialog/fingerprint-input-dialog/fingerprint-input-dialog.cpp" line="36"/>
         <source>Finger Enroll</source>
         <translation>指纹录入</translation>
     </message>
     <message>
-        <location filename="../src/pages/biometric-input-dialog/fingerprint-input-dialog/fingerprint-input-dialog.cpp" line="84"/>
+        <location filename="../src/pages/biometric-input-dialog/fingerprint-input-dialog/fingerprint-input-dialog.cpp" line="96"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>
@@ -477,24 +477,24 @@
 <context>
     <name>KiranAccountManager</name>
     <message>
-        <location filename="../src/kiran-account-manager.cpp" line="74"/>
-        <location filename="../src/kiran-account-manager.cpp" line="377"/>
+        <location filename="../src/kiran-account-manager.cpp" line="76"/>
+        <location filename="../src/kiran-account-manager.cpp" line="379"/>
         <source>disable</source>
         <translation type="unfinished">禁用</translation>
     </message>
     <message>
-        <location filename="../src/kiran-account-manager.cpp" line="74"/>
-        <location filename="../src/kiran-account-manager.cpp" line="377"/>
+        <location filename="../src/kiran-account-manager.cpp" line="76"/>
+        <location filename="../src/kiran-account-manager.cpp" line="379"/>
         <source>enable</source>
         <translation type="unfinished">启用</translation>
     </message>
     <message>
-        <location filename="../src/kiran-account-manager.cpp" line="102"/>
+        <location filename="../src/kiran-account-manager.cpp" line="104"/>
         <source>User Manager</source>
         <translation>账户管理工具</translation>
     </message>
     <message>
-        <location filename="../src/kiran-account-manager.cpp" line="198"/>
+        <location filename="../src/kiran-account-manager.cpp" line="200"/>
         <source>Create new account</source>
         <translation type="unfinished">创建新账户</translation>
     </message>

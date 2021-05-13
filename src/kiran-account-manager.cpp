@@ -67,10 +67,12 @@ void KiranAccountManager::setCurrentUser(const QString &userPath)
 void KiranAccountManager::appendSiderbarItem(const QString &userPath)
 {
     UserInterface interface(userPath, QDBusConnection::systemBus());
-    auto item = new QListWidgetItem(interface.user_name(), m_tabList);
 
-    QString iconFile = interface.icon_file();
-    item->setIcon(QPixmap(iconFile.isEmpty()?DEFAULT_USER_AVATAR:iconFile));
+    QString iconFile = interface.icon_file().isEmpty()?DEFAULT_USER_AVATAR:interface.icon_file();
+    LOG_INFO_S() << "append siderbar item:" << interface.user_name() << iconFile;
+
+    auto item = new QListWidgetItem(interface.user_name(), m_tabList);
+    item->setIcon(QPixmap(iconFile));
     item->setData(Kiran::ItemStatus_Role, interface.locked() ? tr("disable") : tr("enable"));
     item->setData(Kiran::ItemStatusColor_Role, interface.locked() ? QColor("#fa4949") : QColor("#43a3f2"));
     item->setData(ITEM_USER_OBJ_PATH_ROLE, userPath);
@@ -370,7 +372,7 @@ void KiranAccountManager::connectToInfoChanged()
                         }
                         UserInterface userInterface(itemUserPath, QDBusConnection::systemBus());
                         QString userName = userInterface.user_name();
-                        QString iconFile = userInterface.icon_file();
+                        QString iconFile = userInterface.icon_file().isEmpty()?DEFAULT_USER_AVATAR:userInterface.icon_file();
                         bool isLocked = userInterface.locked();
                         item->setText(userName);
                         item->setIcon(QIcon(iconFile));

@@ -187,5 +187,6 @@ void AccountsGlobalInfo::deleteUserFromMap(const QDBusObjectPath &user)
 
 void AccountsGlobalInfo::handlerPropertyChanged(QString userPath, QString propertyName, QVariant value)
 {
+    LOG_INFO_S() << userPath << propertyName << value;
     emit UserPropertyChanged(userPath, propertyName, value);
 }

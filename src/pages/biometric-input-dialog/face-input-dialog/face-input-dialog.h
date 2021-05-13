@@ -42,7 +42,6 @@ private:
     void stopEnroll();
     void generateNewPreviewImage();
     void setTips(FaceInputDialog::TipType type, const QString &tip);
-    ;
 
 Q_SIGNALS:
     void sigClose();
