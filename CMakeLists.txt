@@ -11,6 +11,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 find_package(PkgConfig REQUIRED)
 pkg_search_module(KIRAN_WIDGETS_QT5 REQUIRED kiranwidgets-qt5)
 pkg_search_module(ZLOG REQUIRED zlog)
+pkg_search_module(KIRAN_CC_DAEMON REQUIRED kiran-cc-daemon)
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
@@ -19,7 +20,7 @@ set(DATA_DIR "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATAROOTDIR}")
 
 set(TRANSLATIONS_DIR "${DATA_DIR}/${PROJECT_NAME}/translations/")
 set( TS_FILES "translations/kiran-cpanel-mouse.zh_CN.ts" )
-set( INCLUDE_PATH "/usr/include/glib-2.0/" "/usr/lib64/glib-2.0/include/" "/usr/include" "/usr/include/kiranwidgets-qt5")
+set( INCLUDE_PATH "/usr/include/glib-2.0/" "/usr/lib64/glib-2.0/include/" "/usr/include" "/usr/include/kiranwidgets-qt5" "/usr/include/kiran-cc-daemon")
 
 #添加config.h.in文件
 configure_file (

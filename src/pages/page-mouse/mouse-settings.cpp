@@ -10,32 +10,30 @@
 #include "general-functions/general-function-class.h"
 #include "dbus-interface/mouse-interface.h"
 
-MouseSettings::MouseSettings(QWidget *parent) :
+MouseSettings::MouseSettings(ComKylinsecKiranSessionDaemonMouseInterface *mouseInterface, QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::MouseSettings)
+    ui(new Ui::MouseSettings),
+    m_mouseInterface(nullptr)
 {
     ui->setupUi(this);
+    m_mouseInterface = mouseInterface;
+    initUI();
 }
 
 MouseSettings::~MouseSettings()
 {
+    if(!m_mouseInterface)
+    {
+        delete m_mouseInterface;
+    }
     delete ui;
 }
 
 /**
- * @brief 连接Dbus服务，初始化控件
- * @return true:连接Dbus服务成功
- *         false:连接Dbus服务失败
+ * @brief 初始化控件
  */
-bool MouseSettings::initUI()
+void MouseSettings::initUI()
 {
-    m_mouseInterface = ComKylinsecKiranSessionDaemonMouseInterface::instance();
-    if(!m_mouseInterface->isValid())
-    {
-        qDebug() << "mouse interface invalid" << endl;
-        return false;
-    }
-
     QStringList hand_mode;
     hand_mode << tr("Right Hand Mode") << tr("Left Hand Mode") ;
     ui->comboBox_hand_mode->addItems(hand_mode);
@@ -46,7 +44,6 @@ bool MouseSettings::initUI()
     ui->slider_speed->setSingleStep((SLIDER_MAXIMUN-SLIDER_MINIMUM+1)/2);
 
     initPageMouseUI();
-    return true;
 }
 
 /**

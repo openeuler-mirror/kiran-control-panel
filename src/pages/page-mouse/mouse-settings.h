@@ -25,11 +25,11 @@ class MouseSettings : public QWidget
     Q_OBJECT
 
 public:
-    explicit MouseSettings(QWidget *parent = 0);
+    explicit MouseSettings(ComKylinsecKiranSessionDaemonMouseInterface* mouseInterface, QWidget *parent = 0);
     ~MouseSettings();
 
 public:
-    bool initUI();
+    void initUI();
     void initPageMouseUI();
 
 public slots:

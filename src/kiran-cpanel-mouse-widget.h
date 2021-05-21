@@ -47,8 +47,13 @@ private:
     Ui::KiranCPanelMouseWidget *ui;
     QStackedWidget* m_stackedWidget;
 
+    ComKylinsecKiranSessionDaemonTouchPadInterface *m_touchPadInterface;
+    ComKylinsecKiranSessionDaemonMouseInterface *m_mouseInterface;
+
     MouseSettings* mouseSettingsPage;
     TouchPadSettings *touchPadSettingsPage;
+
+    bool m_hasTouchPad = false;
 };
 
 #endif // KIRANCPANELMOUSEWIDGET_H

@@ -10,10 +10,8 @@
  */
 
 #include "touchpad-interface.h"
-#include <QMutex>
-#include <QScopedPointer>
-#include <QDBusConnection>
-#include <kiran-cc-daemon/kiran-session-daemon/touchpad_i.h>
+#include <kiran-session-daemon/touchpad_i.h>
+
 /*
  * Implementation of interface class ComKylinsecKiranSessionDaemonTouchPadInterface
  */
@@ -21,7 +19,6 @@
 ComKylinsecKiranSessionDaemonTouchPadInterface::ComKylinsecKiranSessionDaemonTouchPadInterface(const QString &service, const QString &path, const QDBusConnection &connection, QObject *parent)
     : QDBusAbstractInterface(service, path, staticInterfaceName(), connection, parent)
 {
-    setTimeout(5);
 }
 
 ComKylinsecKiranSessionDaemonTouchPadInterface *ComKylinsecKiranSessionDaemonTouchPadInterface::instance()
@@ -30,14 +27,13 @@ ComKylinsecKiranSessionDaemonTouchPadInterface *ComKylinsecKiranSessionDaemonTou
     static QScopedPointer<ComKylinsecKiranSessionDaemonTouchPadInterface> pInst;
 
     if(Q_UNLIKELY(!pInst)){
-        QMutexLocker locker(&mutex);
-        if(pInst.isNull()){
-            pInst.reset(new ComKylinsecKiranSessionDaemonTouchPadInterface(TOUCHPAD_DBUS_NAME,
-                                                                           TOUCHPAD_OBJECT_PATH,
-                                                                           QDBusConnection::sessionBus()));
-        }
+       QMutexLocker locker(&mutex);
+       if(pInst.isNull()){
+           pInst.reset(new ComKylinsecKiranSessionDaemonTouchPadInterface(TOUCHPAD_DBUS_NAME,
+                                                                       TOUCHPAD_OBJECT_PATH,
+                                                                       QDBusConnection::sessionBus()));
+       }
     }
-
     return pInst.data();
 }
 

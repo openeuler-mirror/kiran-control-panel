@@ -35,12 +35,6 @@ public:
     static ComKylinsecKiranSessionDaemonMouseInterface* instance();
     ~ComKylinsecKiranSessionDaemonMouseInterface();
 
-    Q_PROPERTY(int double_click READ double_click WRITE setDouble_click)
-    inline int double_click() const
-    { return qvariant_cast< int >(property("double_click")); }
-    inline void setDouble_click(int value)
-    { setProperty("double_click", QVariant::fromValue(value)); }
-
     Q_PROPERTY(bool left_handed READ left_handed WRITE setLeft_handed)
     inline bool left_handed() const
     { return qvariant_cast< bool >(property("left_handed")); }

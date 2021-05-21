@@ -47,6 +47,12 @@ public:
     inline void setDisable_while_typing(bool value)
     { setProperty("disable_while_typing", QVariant::fromValue(value)); }
 
+    Q_PROPERTY(bool has_touchpad READ has_touchpad WRITE setHas_touchpad)
+    inline bool has_touchpad() const
+    { return qvariant_cast< bool >(property("has_touchpad")); }
+    inline void setHas_touchpad(bool value)
+    { setProperty("has_touchpad", QVariant::fromValue(value)); }
+
     Q_PROPERTY(bool left_handed READ left_handed WRITE setLeft_handed)
     inline bool left_handed() const
     { return qvariant_cast< bool >(property("left_handed")); }

@@ -12,32 +12,28 @@
 
 #include <QCheckBox>
 
-TouchPadSettings::TouchPadSettings(QWidget *parent) :
+TouchPadSettings::TouchPadSettings(ComKylinsecKiranSessionDaemonTouchPadInterface *touchPadInterface, QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::TouchPadSettings)
+    ui(new Ui::TouchPadSettings),
+    m_touchPadInterface(nullptr)
 {
     ui->setupUi(this);
+    m_touchPadInterface = touchPadInterface;
+    initUI();
 }
 
 TouchPadSettings::~TouchPadSettings()
 {
+    if(!m_touchPadInterface)
+        delete m_touchPadInterface;
     delete ui;
 }
 
 /**
- * @brief 连接Dbus服务，初始化控件
- * @return true:连接Dbus服务成功
- *         false:连接Dbus服务失败
+ * @brief 初始化控件
  */
-bool TouchPadSettings::initUI()
+void TouchPadSettings::initUI()
 {
-    m_touchPadInterface = ComKylinsecKiranSessionDaemonTouchPadInterface::instance();
-    if(!m_touchPadInterface->isValid())
-    {
-        qDebug() << "connect touchpad dbus faild!" << endl;
-        return false;
-    }
-
     m_comboBoxList = this->findChildren<QComboBox *>();
     m_checkBoxList = {ui->checkBox_tap_to_click,
                       ui->checkBox_tp_natural_scroll,
@@ -56,7 +52,6 @@ bool TouchPadSettings::initUI()
     ui->widget_tp_click_mode->hide();
 
     initPageTouchPadUI();
-    return true;
 }
 
 /**
@@ -65,7 +60,7 @@ bool TouchPadSettings::initUI()
 void TouchPadSettings::initPageTouchPadUI()
 {
     m_touchPadEnabled = m_touchPadInterface->touchpad_enabled();
-    ui->checkBox_tp_disable_touchpad->setChecked(!m_touchPadEnabled);
+    ui->checkBox_tp_disable_touchpad->setChecked(m_touchPadEnabled);
     if(!m_touchPadEnabled)
     {
         //若禁用触摸板，则禁用触摸板相关设置控件
@@ -95,7 +90,7 @@ void TouchPadSettings::initPageTouchPadUI()
     }
     else
     {
-        ui->slider_tp_speed->setValue(MOTION_FAST);
+        ui->slider_tp_speed->setValue(SLIDER_MAXIMUN);
         ui->label_tp_speed->setText(tr("Fast"));
     }
 
@@ -206,14 +201,14 @@ void TouchPadSettings::onSliderValueChange()
 
 void TouchPadSettings::onDisabelTouchPadToggled(bool disabled)
 {
-    m_touchPadEnabled = !disabled;
+    m_touchPadEnabled = disabled;
     m_touchPadInterface->setTouchpad_enabled(m_touchPadEnabled);
     if(disabled)
     {
-        setDisableWidget(true);
+        setDisableWidget(false);
     }
     else
     {
-        setDisableWidget(false);
+        setDisableWidget(true);
     }
 }

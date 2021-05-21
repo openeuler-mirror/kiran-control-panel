@@ -23,11 +23,11 @@ class TouchPadSettings : public QWidget
     Q_OBJECT
 
 public:
-    explicit TouchPadSettings(QWidget *parent = 0);
+    explicit TouchPadSettings(ComKylinsecKiranSessionDaemonTouchPadInterface *touchPadInterface,QWidget *parent = 0);
     ~TouchPadSettings();
 
 public:
-    bool initUI();
+    void initUI();
     void initPageTouchPadUI();
 
 private:

@@ -10,6 +10,8 @@
 #include "pages/page-mouse/mouse-settings.h"
 #include "pages/page-touchpad/touchpad-settings.h"
 #include "general-functions/general-function-class.h"
+#include "dbus-interface/touchpad-interface.h"
+#include "dbus-interface/mouse-interface.h"
 
 #include <QMouseEvent>
 #include <QSlider>
@@ -20,7 +22,11 @@ using namespace std;
 
 KiranCPanelMouseWidget::KiranCPanelMouseWidget(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::KiranCPanelMouseWidget)
+    ui(new Ui::KiranCPanelMouseWidget),
+    m_mouseInterface(nullptr),
+    m_touchPadInterface(nullptr),
+    mouseSettingsPage(nullptr),
+    touchPadSettingsPage(nullptr)
 {
     ui->setupUi(this);
     connect(ui->listWidget,SIGNAL(itemClicked(QListWidgetItem*)),
@@ -39,24 +45,43 @@ KiranCPanelMouseWidget::~KiranCPanelMouseWidget()
  */
 bool KiranCPanelMouseWidget::initUI()
 {
-    mouseSettingsPage = new MouseSettings;
-    touchPadSettingsPage = new TouchPadSettings;
-    if(!mouseSettingsPage->initUI() || !touchPadSettingsPage->initUI())
+    m_mouseInterface = ComKylinsecKiranSessionDaemonMouseInterface::instance();
+    m_touchPadInterface = ComKylinsecKiranSessionDaemonTouchPadInterface::instance();
+
+    if(!m_mouseInterface->isValid() || !m_touchPadInterface->isValid())
     {
-        qDebug() << "connect faild" << endl;
+        qDebug() << "Connect Dbus Failed!" << endl;
         return false;
     }
+    else
+    {
+        mouseSettingsPage = new MouseSettings(m_mouseInterface);
+        addSidebarItem(tr("Mouse Settings"),":/images/mouse.svg");
+
+        m_hasTouchPad = m_touchPadInterface->has_touchpad();
+        if(!m_hasTouchPad)
+        {
+            addSidebarItem(tr("TouchPad Settings"),":/images/touchpad.svg");
+            touchPadSettingsPage = new TouchPadSettings(m_touchPadInterface);
+        }
+        else
+        {
+            qDebug() << "There is no TouchPad!" << endl;
+        }
+    }
+
     ui->listWidget->resize(QSize(282,this->height()));
     ui->listWidget->setIconSize(QSize(16,16));
 
-    addSidebarItem(tr("Mouse Settings"),":/images/mouse.svg");
-    addSidebarItem(tr("TouchPad Settings"),":/images/touchpad.svg");
     ui->listWidget->setCurrentRow(ITEM_MOUSE);
 
     QVBoxLayout *layout = new QVBoxLayout(ui->scrollAreaWidgetContents);
     m_stackedWidget = new QStackedWidget(this);
     m_stackedWidget->addWidget(mouseSettingsPage);
-    m_stackedWidget->addWidget(touchPadSettingsPage);
+    if(touchPadSettingsPage)
+    {
+        m_stackedWidget->addWidget(touchPadSettingsPage);
+    }
 
     m_stackedWidget->setCurrentIndex(PAGE_MOUSE);
 

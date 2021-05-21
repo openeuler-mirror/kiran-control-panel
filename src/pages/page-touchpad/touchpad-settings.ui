@@ -50,7 +50,7 @@
       <item>
        <widget class="QLabel" name="label_tp_disable_touchpad">
         <property name="text">
-         <string>Disable TouchPad</string>
+         <string>TouchPad Enabled</string>
         </property>
        </widget>
       </item>
