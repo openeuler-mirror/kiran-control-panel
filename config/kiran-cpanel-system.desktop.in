@@ -1,11 +1,11 @@
 #!/usr/bin/env xdg-open
 [Desktop Entry]
 Encoding=UTF-8
-Name=Kiran System Information
+Name=Kiran CPanel System
 Name[zh_CN]=系统信息
-Comment=Kiran System Information
+Comment=Kiran CPanel System
 Comment[zh_CN]=系统信息
-Exec=@BIN_DIR@/kiran-system-information
+Exec=@BIN_DIR@/kiran-cpanel-system
 Icon=@ICON_DIR@/kylin-system.png
 Terminal=false
 Type=Application

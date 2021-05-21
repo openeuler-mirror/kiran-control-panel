@@ -32,7 +32,7 @@ QString UserlicenseAgreement::getEulaText()
 void UserlicenseAgreement::initUI()
 {
     setTitle(UserlicenseAgreement::tr("User End License Agreement"));
-    setIcon(QIcon(":/images/data/kylin-about.png"));
+    setIcon(QIcon(":/images/kylin-about.png"));
     setResizeable(false);
     setButtonHints(TitlebarMinimizeButtonHint | TitlebarCloseButtonHint);
     setWindowModality(Qt::ApplicationModal);

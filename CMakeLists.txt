@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.0)
 
-project(kiran-system-information)
+project(kiran-cpanel-system)
 
 include(GNUInstallDirs)
 
@@ -17,9 +17,9 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
 set(DATA_DIR "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATAROOTDIR}")
 
-set(TARGET_NAME "kiran-system-information")
+set(TARGET_NAME "kiran-cpanel-system")
 set(TRANSLATIONS_DIR "${DATA_DIR}/${PROJECT_NAME}/translations/")
-set( TS_FILES "translations/kiran-system-information.zh_CN.ts" )
+set( TS_FILES "translations/kiran-cpanel-system.zh_CN.ts" )
 set( INCLUDE_PATH "/usr/include/glib-2.0/" "/usr/lib64/glib-2.0/include/" "/usr/include" "/usr/include/kylin-license")
 
 #添加config.h.in文件
@@ -43,7 +43,7 @@ find_package(Qt5 COMPONENTS Widgets Svg DBus LinguistTools Network PrintSupport)
 qt5_create_translation( QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES} )
 
 
-add_executable(kiran-system-information 
+add_executable(kiran-cpanel-system 
 			${SOURCES}
 			${HEADERS}
 			${FORMS}
@@ -51,7 +51,7 @@ add_executable(kiran-system-information
 	        	${QM_FILES}
 			${QSS})
 			
-target_link_libraries(kiran-system-information 
+target_link_libraries(kiran-cpanel-system
         Qt5::Widgets
         Qt5::DBus
         Qt5::Svg

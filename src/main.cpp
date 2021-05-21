@@ -19,7 +19,7 @@ int main(int argc, char *argv[])
 {
     ///注册自定义的消息处理函数
 
-    if (dzlog_init_ex(NULL, "kylinsec-session", "kiran-system-information", "kiran-system-information") < 0){
+    if (dzlog_init_ex(NULL, "kylinsec-session", "kiran-cpanel-system", "kiran-cpanel-system") < 0){
         std::cout << "init zlog error" << std::endl;
     }
     else{
@@ -48,7 +48,7 @@ int main(int argc, char *argv[])
 
     ///加载翻译文件
     QTranslator *qtTranslator = new QTranslator(qApp);
-    if(qtTranslator->load(QLocale(),"kiran-system-information",".",TRANSLATION_DIR,".qm")){
+    if(qtTranslator->load(QLocale(),"kiran-cpanel-system",".",TRANSLATION_DIR,".qm")){
         a.installTranslator(qtTranslator);
     }
     else
