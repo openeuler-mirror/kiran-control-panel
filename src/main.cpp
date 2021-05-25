@@ -58,8 +58,12 @@ int main(int argc, char *argv[])
 
     KiranSystemWidget w;
     w.resize(w.sizeHint());
+
+    int screenNum = QApplication::desktop()->screenNumber(QCursor::pos());
+    QRect screenGeometry = QApplication::desktop()->screenGeometry(screenNum);
+    w.move(screenGeometry.x()+(screenGeometry.width()-w.width())/2,
+           screenGeometry.y()+(screenGeometry.height()-w.height())/2);
+
     w.show();
-    QDesktopWidget *desktop = QApplication::desktop();
-    w.move((desktop->width() - w.width())/2 , (desktop->height() - w.height())/2 );
     return a.exec();
 }

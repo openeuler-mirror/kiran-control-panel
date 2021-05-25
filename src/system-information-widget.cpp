@@ -356,9 +356,12 @@ void SystemInformationWidget::onBtnStatusClicked()
         licenseInfoWidget->setMachineCode(mc_code);
         licenseInfoWidget->raise();
 
+        int screenNum = QApplication::desktop()->screenNumber(QCursor::pos());
+        QRect screenGeometry = QApplication::desktop()->screenGeometry(screenNum);
+        licenseInfoWidget->move(screenGeometry.x()+(screenGeometry.width()-licenseInfoWidget->width())/2,
+               screenGeometry.y()+(screenGeometry.height()-licenseInfoWidget->height())/2);
+
         licenseInfoWidget->show();
-        QDesktopWidget *desktop = QApplication::desktop();
-        licenseInfoWidget->move((desktop->width() - licenseInfoWidget->width())/2 , (desktop->height() - licenseInfoWidget->height())/2 );
     }
 
 }

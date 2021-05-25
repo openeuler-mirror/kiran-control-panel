@@ -21,7 +21,7 @@
 #include <math.h>
 #include<sstream>
 #include <iomanip>
-#include <kiran-cc-daemon/kiran-system-daemon/systeminfo_i.h>
+#include <kiran-system-daemon/systeminfo-i.h>
 
 #define MEMORY          "mem"
 #define TOTAL_SIZE      "total_size"

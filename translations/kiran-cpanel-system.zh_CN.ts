@@ -171,27 +171,27 @@
         <translation>未知</translation>
     </message>
     <message>
-        <location filename="../src/license/active-guide-widget.cpp" line="42"/>
+        <location filename="../src/license/active-guide-widget.cpp" line="44"/>
         <source>Activation Mode</source>
         <translation>选择激活方式</translation>
     </message>
     <message>
-        <location filename="../src/license/active-guide-widget.cpp" line="43"/>
+        <location filename="../src/license/active-guide-widget.cpp" line="45"/>
         <source>Start Actvite</source>
         <translation>开始激活</translation>
     </message>
     <message>
-        <location filename="../src/license/active-guide-widget.cpp" line="44"/>
+        <location filename="../src/license/active-guide-widget.cpp" line="46"/>
         <source>Activation Complete</source>
         <translation>激活完成</translation>
     </message>
     <message>
-        <location filename="../src/license/active-guide-widget.cpp" line="78"/>
+        <location filename="../src/license/active-guide-widget.cpp" line="80"/>
         <source>Activation Guide</source>
         <translation>激活向导</translation>
     </message>
     <message>
-        <location filename="../src/license/active-guide-widget.cpp" line="95"/>
+        <location filename="../src/license/active-guide-widget.cpp" line="97"/>
         <source>Server IP address or Domain name</source>
         <translation>服务器IP地址或域名</translation>
     </message>
@@ -243,12 +243,12 @@
         <translation>主机名</translation>
     </message>
     <message>
-        <location filename="../src/change-host-name-widget.cpp" line="51"/>
+        <location filename="../src/change-host-name-widget.cpp" line="53"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="../src/change-host-name-widget.cpp" line="52"/>
+        <location filename="../src/change-host-name-widget.cpp" line="54"/>
         <source>Change host name failed! Please check the Dbus service!</source>
         <translation>修改主机名失败！请 检查Dbus服务!</translation>
     </message>
@@ -326,28 +326,28 @@
         <translation>系统信息</translation>
     </message>
     <message>
-        <location filename="../src/kiran-system-widget.cpp" line="80"/>
+        <location filename="../src/kiran-system-widget.cpp" line="82"/>
         <source>EULA</source>
         <translation>最终用户许可协议</translation>
     </message>
     <message>
-        <location filename="../src/kiran-system-widget.cpp" line="81"/>
+        <location filename="../src/kiran-system-widget.cpp" line="83"/>
         <source>Look over EULA</source>
         <translation>点击查看最终用户许可协议</translation>
     </message>
     <message>
-        <location filename="../src/kiran-system-widget.cpp" line="82"/>
+        <location filename="../src/kiran-system-widget.cpp" line="84"/>
         <source>Export</source>
         <translation>导出</translation>
     </message>
     <message>
-        <location filename="../src/kiran-system-widget.cpp" line="83"/>
-        <location filename="../src/kiran-system-widget.cpp" line="162"/>
+        <location filename="../src/kiran-system-widget.cpp" line="85"/>
+        <location filename="../src/kiran-system-widget.cpp" line="164"/>
         <source>Export EULA</source>
         <translation>导出最终用户许可协议</translation>
     </message>
     <message>
-        <location filename="../src/kiran-system-widget.cpp" line="151"/>
+        <location filename="../src/kiran-system-widget.cpp" line="153"/>
         <source>Save</source>
         <translation>保存</translation>
     </message>
@@ -356,12 +356,12 @@
         <translation type="obsolete">保存</translation>
     </message>
     <message>
-        <location filename="../src/kiran-system-widget.cpp" line="153"/>
+        <location filename="../src/kiran-system-widget.cpp" line="155"/>
         <source>PDF(*.pdf)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/kiran-system-widget.cpp" line="162"/>
+        <location filename="../src/kiran-system-widget.cpp" line="164"/>
         <source>Export EULA failed!</source>
         <translation>导出最终用户许可协议失败!</translation>
     </message>
@@ -553,15 +553,15 @@
         <location filename="../src/system-information-widget.cpp" line="118"/>
         <location filename="../src/system-information-widget.cpp" line="119"/>
         <location filename="../src/system-information-widget.cpp" line="174"/>
-        <location filename="../src/system-information-widget.cpp" line="379"/>
-        <location filename="../src/system-information-widget.cpp" line="383"/>
-        <location filename="../src/system-information-widget.cpp" line="384"/>
+        <location filename="../src/system-information-widget.cpp" line="382"/>
+        <location filename="../src/system-information-widget.cpp" line="386"/>
+        <location filename="../src/system-information-widget.cpp" line="387"/>
         <source>Unknow</source>
         <translation>未知</translation>
     </message>
     <message>
         <location filename="../src/system-information-widget.cpp" line="115"/>
-        <location filename="../src/system-information-widget.cpp" line="380"/>
+        <location filename="../src/system-information-widget.cpp" line="383"/>
         <source>Can&apos;t get license information</source>
         <translation>无法获取授权信息</translation>
     </message>
@@ -587,17 +587,17 @@
     </message>
     <message>
         <location filename="../src/system-information-widget.cpp" line="181"/>
-        <location filename="../src/system-information-widget.cpp" line="398"/>
+        <location filename="../src/system-information-widget.cpp" line="401"/>
         <source>Official Version</source>
         <translation>正式版</translation>
     </message>
     <message>
-        <location filename="../src/system-information-widget.cpp" line="459"/>
+        <location filename="../src/system-information-widget.cpp" line="462"/>
         <source>Copyright ©</source>
         <translation>版权所有 ©</translation>
     </message>
     <message>
-        <location filename="../src/system-information-widget.cpp" line="459"/>
+        <location filename="../src/system-information-widget.cpp" line="462"/>
         <source>KylinSec. All rights reserved.</source>
         <translation>KylinSec.保留所有权利.</translation>
     </message>

@@ -3,6 +3,7 @@
 #include <QIcon>
 #include <QFile>
 #include <QDebug>
+#include <QDesktopWidget>
 
 #define EULAFILE "/usr/share/kylin-release/EULA"
 
@@ -12,6 +13,12 @@ UserlicenseAgreement::UserlicenseAgreement() :
 {
     ui->setupUi(getWindowContentWidget());
     initUI();
+
+    int screenNum = QApplication::desktop()->screenNumber(QCursor::pos());
+    QRect screenGeometry = QApplication::desktop()->screenGeometry(screenNum);
+    this->move(screenGeometry.x()+(screenGeometry.width()-this->width())/2,
+           screenGeometry.y()+(screenGeometry.height()-this->height())/2);
+
     connect(ui->btn_eula_close,&QPushButton::clicked,[this]{
             this->close();
         });

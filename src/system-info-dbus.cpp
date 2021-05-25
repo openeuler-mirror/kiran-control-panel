@@ -16,7 +16,7 @@
 #include <QtDBus/QDBusReply>
 #include <QObject>
 #include <iostream>
-#include <kiran-cc-daemon/kiran-system-daemon/systeminfo_i.h>
+#include <kiran-system-daemon/systeminfo-i.h>
 #include <kylin-license/license_i.h>
 
 #define SYSTEMINFO_DBUS_INTERFACE           "com.kylinsec.Kiran.SystemDaemon.SystemInfo"

@@ -20,7 +20,7 @@ set(DATA_DIR "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATAROOTDIR}")
 set(TARGET_NAME "kiran-cpanel-system")
 set(TRANSLATIONS_DIR "${DATA_DIR}/${PROJECT_NAME}/translations/")
 set( TS_FILES "translations/kiran-cpanel-system.zh_CN.ts" )
-set( INCLUDE_PATH "/usr/include/glib-2.0/" "/usr/lib64/glib-2.0/include/" "/usr/include" "/usr/include/kylin-license")
+set( INCLUDE_PATH "/usr/include/glib-2.0/" "/usr/lib64/glib-2.0/include/" "/usr/include" "/usr/include/kylin-license" "/usr/include/kiran-cc-daemon")
 
 #添加config.h.in文件
 configure_file (

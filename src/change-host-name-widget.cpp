@@ -38,8 +38,10 @@ void ChangeHostNameWidget::initUI()
     setResizeable(false);
     ui->btn_save->setEnabled(false);
 
-    QDesktopWidget *desktop = QApplication::desktop();
-    this->move((desktop->width() - this->width())/2 , (desktop->height() - this->height())/2 );
+    int screenNum = QApplication::desktop()->screenNumber(QCursor::pos());
+    QRect screenGeometry = QApplication::desktop()->screenGeometry(screenNum);
+    this->move(screenGeometry.x()+(screenGeometry.width()-this->width())/2,
+           screenGeometry.y()+(screenGeometry.height()-this->height())/2);
 }
 
 void ChangeHostNameWidget::setNewHostName()

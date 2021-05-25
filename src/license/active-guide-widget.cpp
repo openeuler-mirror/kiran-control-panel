@@ -36,8 +36,10 @@ ActGuideWidget::ActGuideWidget() :
         ui->label_mc_manual->setText(tr("unknow"));
         ui->label_mc_online->setText(tr("unknow"));
     }
-    QDesktopWidget *desktop = QApplication::desktop();
-    this->move((desktop->width() - this->width())/2 , (desktop->height() - this->height())/2 );
+    int screenNum = QApplication::desktop()->screenNumber(QCursor::pos());
+    QRect screenGeometry = QApplication::desktop()->screenGeometry(screenNum);
+    this->move(screenGeometry.x()+(screenGeometry.width()-this->width())/2,
+           screenGeometry.y()+(screenGeometry.height()-this->height())/2);
 
     listItemMode = createActiveItem(tr("Activation Mode"));
     listItemActive = createActiveItem(tr("Start Actvite"));

@@ -57,16 +57,18 @@ KiranSystemWidget::~KiranSystemWidget()
 QSize KiranSystemWidget::sizeHint() const
 {
     /*根据系统分辨率设置窗口大小*/
-    QDesktopWidget *desktop = QApplication::desktop();
-    qInfo() << desktop->width() << desktop->height();
+    int screenNum = QApplication::desktop()->screenNumber(QCursor::pos());
+    QRect screenGeometry = QApplication::desktop()->screenGeometry(screenNum);
+
+    qInfo() << screenGeometry.width() << screenGeometry.height();
     QSize windowSize;
-    if(desktop->height() >= 776 && desktop->width() >= 948 ) //能显示全
+    if(screenGeometry.height() >= 776 && screenGeometry.width() >= 980 ) //能显示全
     {
-        windowSize = QSize(1010,780);
+        windowSize = QSize(980,776);
     }
     else
     {
-        windowSize = QSize(desktop->width() , desktop->height());
+        windowSize = QSize(screenGeometry.width() , screenGeometry.height());
     }
 
     return windowSize;
