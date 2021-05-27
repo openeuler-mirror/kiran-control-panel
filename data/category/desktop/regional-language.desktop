@@ -1,0 +1,12 @@
+[Desktop Entry]
+Name=Regional Language
+Name[zh_CN]=区域语言
+Comment=Regional Language
+Comment[zh_CN]=区域语言
+Icon=regional-language.png
+
+[Kiran Control Panel Category]
+Category=regional-language
+Weight=5
+Keywords[zh_CN]=区域语言
+Keywords=Regional Language

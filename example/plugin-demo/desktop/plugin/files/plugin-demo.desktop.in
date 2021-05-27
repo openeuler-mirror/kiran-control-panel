@@ -1,9 +1,0 @@
-[Desktop Entry]
-Name=Plugin Demo
-Name[zh_CN]=插件demo
-Comment=plugin-demo
-Comment=插件demo
-Icon=plugin-demo.svg
-Weight=3
-Category=Individuation
-PluginFile=@INSTALL_LIBDIR@/lib@PROJECT_NAME@.so

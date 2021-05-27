@@ -1,5 +1,0 @@
-IncludeDir=@KCP_INSTALL_INCLUDE@
-Name: @PROJECT_NAME@
-Description: kiran control center
-Version: @KIRAN_CONTROL_CENTER_VERSION@
-Cflags: -I${IncludeDir}

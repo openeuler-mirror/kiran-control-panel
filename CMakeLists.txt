@@ -1,30 +1,8 @@
-####
-#kiran-control-center下的目录结构：
-#                    category                        #分类
-#                            desktop                 #
-#                            icons                   #
-#
-#                    plugins                         #插件
-#                            desktop                 #
-#                            icons                   #
-#                            subitem-icons           #功能项图标  //这一项，插件可以自己定义，不一定放在这里。
-#                            subitem-translations    #功能项翻译  //这一项，插件可以自己定义，不一定放在这里。
-#
-####
-
 cmake_minimum_required(VERSION 3.0)
-if(${SINGAL_PLUGIN})
-    message("*********** build kiran-control-center-single-plugin ***********")
-    project(kiran-control-center-single-plugin VERSION 1.0)
-    set(KIRAN_CONTROL_CENTER_VERSION     1.0.0)
 
-else()
-    message("*********** build kiran-control-center ***********")
-    project(kiran-control-center VERSION 1.0)
-    set(KIRAN_CONTROL_CENTER_VERSION     1.0.0)
-endif()
+project(kiran-control-panel VERSION 1.0)
 
-find_package(PkgConfig REQUIRED)
+set(KIRAN_CONTROL_PANEL_VERSION 1.0.0)
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -32,66 +10,78 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
-#set(CMAKE_AUTORCC ON) #会影响到插件中的资源寻址。
-#
-pkg_search_module(ZLOG REQUIRED zlog)
+set(CMAKE_AUTORCC ON)
+
+find_package(PkgConfig REQUIRED)
+find_package(Qt5 COMPONENTS Widgets X11Extras Svg LinguistTools)
+pkg_search_module(KLOG_QT5 REQUIRED klog-qt5)
 pkg_search_module(KIRAN_WIDGETS_QT5 REQUIRED kiranwidgets-qt5)
-find_package(Qt5 COMPONENTS Widgets X11Extras Svg)
+pkg_search_module(GLIB_2 REQUIRED glib-2.0)
 
-#编译参数传入
-include(GNUInstallDirs)
-set(INSTALL_BINDIR ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_BINDIR})
-set(INSTALL_LIBDIR ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR})
-set(INSTALL_DATADIR ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATADIR})
+include(install-location-define.cmake)
+configure_file(${CMAKE_SOURCE_DIR}/data/config.h.in ${CMAKE_BINARY_DIR}/config.h)
+configure_file(${CMAKE_SOURCE_DIR}/data/${PROJECT_NAME}.desktop.in ${CMAKE_BINARY_DIR}/${PROJECT_NAME}.desktop)
+configure_file(${CMAKE_SOURCE_DIR}/data/${PROJECT_NAME}.pc.in ${CMAKE_BINARY_DIR}/${PROJECT_NAME}.pc @ONLY)
 
-#######################  由于cmakelist向下继承变量，所以这里提前申明宏定义。#######################
-#-------------   需要与插件开发人员约定的路径。  -------------#
-set(KCP_INSTALL_INCLUDE ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/) #接口头文件安装路径，与pc文件中对应。
-if(${SINGAL_PLUGIN})
-    set(INSTALL_DATA_PLUGIN_DIR ${INSTALL_DATADIR}/kiran-control-center) #单独运行时，也是去kiran-control-center目录下加载插件。
-else()
-    set(INSTALL_DATA_PLUGIN_DIR ${INSTALL_DATADIR}/${PROJECT_NAME})
-endif()
+file(GLOB_RECURSE common "common/*")
+file(GLOB_RECURSE include "./include/*")
+file(GLOB CONTROL_PANEL_SRC "./src/*")
+file(GLOB TS_FILES "../translations/*.ts")
 
-#category desktop
-set(INSTALL_DATA_CATEGORY_DIR ${INSTALL_DATA_PLUGIN_DIR}/category)
-set(CATEGORY_DESKTOP_DIR ${INSTALL_DATA_CATEGORY_DIR}/desktop)
-set(CATEGORY_DESKTOP_ICON_DIR ${INSTALL_DATA_CATEGORY_DIR}/icons)
+set(RESOURCE ./resources/control-panel-resources.qrc) #资源文件名不能与插件资源名相同，否则会导致插件中部分图片无法正常加载显示。
+qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 
-#plugins desktop path
-set(INSTALL_DATA_PLUGIN_DIR ${INSTALL_DATA_PLUGIN_DIR}/plugins)
-#-------------------------------------------------#
+include_directories(
+        "${CMAKE_BINARY_DIR}"
+        "./common"
+        "./common/kiran-module-widget/"
+        "./include")
 
-#app
-###desktop
-set(SYSTEM_IMAGES_DIR ${INSTALL_DATADIR}/${PROJECT_NAME}/icons/)  #app图标安装路径。
-###翻译
-SET(INSTALL_DATA_TRANSLATE_DIR ${INSTALL_DATADIR}/${PROJECT_NAME}/translations/)  #app翻译文件安装路径。
+add_executable(${PROJECT_NAME}
+        ${common}
+        ${include}
+        ${CONTROL_PANEL_SRC}
+        ${RESOURCE}
+        ${QM_FILES})
 
-#config.h
-configure_file(${CMAKE_SOURCE_DIR}/config.h.in ${CMAKE_BINARY_DIR}/config.h)
-include_directories(${CMAKE_BINARY_DIR})
-##########################      end         #################################
+target_include_directories(${PROJECT_NAME} PRIVATE
+        ../include
+        ../common
+        ../common/widgets
+        ./src/
+        ${KLOG_QT5_INCLUDE_DIRS}
+        ${KIRAN_WIDGETS_QT5_INCLUDE_DIRS}
+        ${GLIB_2_INCLUDE_DIRS})
 
-#定义公用代码文件集
-file(GLOB global "global/*"  )
-file(GLOB interface "interface/*" )
-file(GLOB kiran-module-widget "widgets/kiran-module-widget/*" )
-file(GLOB kiran-search-lineedit "widgets/kiran-search-lineedit/*" )
+target_link_libraries(${PROJECT_NAME}
+        Qt5::Core
+        Qt5::Gui
+        Qt5::Svg
+        Qt5::X11Extras
+        Qt5::Widgets
+        dl
+        pthread
+        ${KLOG_QT5_LIBRARIES}
+        ${KIRAN_WIDGETS_QT5_LIBRARIES}
+        ${GLIB_2_LIBRARIES})
 
-if(${SINGAL_PLUGIN})
-    add_subdirectory(plugin-single)
+#安装kiran-control-panel
+install(TARGETS ${PROJECT_NAME} DESTINATION ${INSTALL_BINDIR}/)
+#安装kiran-control-panel插件开发头文件
+install(FILES ${include} DESTINATION ${KCP_INSTALL_INCLUDE}/)
+#安装kiran-control-panel.desktop
+install(FILES "${CMAKE_BINARY_DIR}/${PROJECT_NAME}.desktop" DESTINATION "${INSTALL_DATADIR}/applications/")
+#安装kiran-control-panel.pc文件
+install(FILES "${CMAKE_BINARY_DIR}/${PROJECT_NAME}.pc" DESTINATION "${INSTALL_LIBDIR}/pkgconfig/")
+#安装kiran-control-panel翻译文件
+install(FILES ${QM_FILES} DESTINATION ${TRANSLATION_INSTALL_DIR})
+#安装kiran-control-panel category desktop文件
+file(GLOB CATEGORY_DESKTOP "./data/category/desktop/*.desktop")
+install(FILES ${CATEGORY_DESKTOP} DESTINATION ${CATEGORY_DESKTOP_INSTALL_DIR})
+#安装kiran-control-panel category icon文件
+file(GLOB CATEGORY_ICONS "./data/category/images/*")
+install(FILES ${CATEGORY_ICONS} DESTINATION ${CATEGORY_ICON_INSTALL_DIR})
+#安装kiran-control-panel icon文件
+install(FILES "${CMAKE_SOURCE_DIR}/data/kiran-control-panel.svg" DESTINATION ${INSTALL_DATADIR}/icons/hicolor/)
 
-else()
-    add_subdirectory(interface) #开发插件时，需要在正常状态下编译控制中心框架。
-    add_subdirectory(data)
-    add_subdirectory(plugin-group)
-
-endif()
-
-
-
-
-
-
-
+add_subdirectory(launcher)

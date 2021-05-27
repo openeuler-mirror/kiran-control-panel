@@ -1,0 +1,12 @@
+[Desktop Entry]
+Name=Datetime
+Name[zh_CN]=日期时间
+Comment=Datetime
+Comment[zh_CN]=日期时间
+Icon=datetime.png
+
+[Kiran Control Panel Category]
+Category=datetime
+Weight=4
+Keywords[zh_CN]=日期时间
+Keywords=Datetime

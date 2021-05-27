@@ -1,5 +1,0 @@
-#define CATEGORY_DESKTOP_DIR                       "@CATEGORY_DESKTOP_DIR@"
-#define CATEGORY_DESKTOP_ICON_DIR                       "@CATEGORY_DESKTOP_ICON_DIR@"
-#define PLUGIN_DESKTOP_DIR                       "@INSTALL_DATA_PLUGIN_DIR@/desktop"
-#define APP_IMAGE_PATH                       "@SYSTEM_IMAGES_DIR@@PROJECT_NAME@.svg"
-#define TRANSLATE_PREFIX                       "@INSTALL_DATA_TRANSLATE_DIR@@PROJECT_NAME@"

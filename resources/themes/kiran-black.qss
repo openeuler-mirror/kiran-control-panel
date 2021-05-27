@@ -1,0 +1,41 @@
+CPanelSearchEdit#edit_search[searchPopupVisible=true] {
+  border: 1px solid #43a3f2;
+  color: white;
+  border-radius: 6px;
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+
+CPanelSearchEdit#edit_search[searchPopupVisible=false]{
+  border: 1px solid rgba(255, 255, 255, 20);
+  color: white;
+  border-radius: 6px;
+}
+
+CPanelSearchEdit#edit_search[searchPopupVisible=false]:focus {
+  border: 1px solid #43a3f2;
+  color: white;
+  border-radius: 6px;
+}
+
+QAbstractItemView#popup_searchEdit {
+  border: 1px solid #43a3f2;
+  border-bottom-right-radius: 6px;
+  border-bottom-left-radius: 6px;
+  background-color: #222222;
+  color: #ffffff;
+}
+
+QAbstractItemView#popup_searchEdit::item {
+  padding: 0px 16px 0px 10px;
+  height: 40px;
+  border-top: 1px solid rgba(255, 255, 255, 30);
+}
+
+QAbstractItemView#popup_searchEdit::item:hover {
+  background-color: rgba(255, 255, 255, 30);
+}
+
+QAbstractItemView#popup_searchEdit::item:selected {
+  background-color: rgba(255, 255, 255, 50);
+}
