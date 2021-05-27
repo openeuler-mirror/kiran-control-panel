@@ -8,7 +8,6 @@
 #include "mask-widget.h"
 #include "select-avatar-page/select-avatar-page.h"
 #include "user-info-page/user-info-page.h"
-#include "log.h"
 
 #include <kiran-sidebar-widget.h>
 #include <kiran-style-public-define.h>
@@ -18,6 +17,7 @@
 #include <QStackedWidget>
 #include <QtWidgets/QListWidgetItem>
 #include <QScrollArea>
+#include <qt5-log-i.h>
 
 #define ITEM_USER_OBJ_PATH_ROLE Qt::UserRole + 1
 
@@ -30,7 +30,7 @@ enum StackWidgetPageEnum
 };
 
 KiranAccountManager::KiranAccountManager(QWidget *parent)
-    : KiranTitlebarWindow(parent)
+    : QWidget(parent)
 {
     m_workThread.start();
     m_hardworker = new HardWorker();
@@ -69,7 +69,7 @@ void KiranAccountManager::appendSiderbarItem(const QString &userPath)
     UserInterface interface(userPath, QDBusConnection::systemBus());
 
     QString iconFile = interface.icon_file().isEmpty()?DEFAULT_USER_AVATAR:interface.icon_file();
-    LOG_INFO_S() << "append siderbar item:" << interface.user_name() << iconFile;
+    KLOG_INFO_S() << "append siderbar item:" << interface.user_name() << iconFile;
 
     auto item = new QListWidgetItem(interface.user_name(), m_tabList);
     item->setIcon(QPixmap(iconFile));
@@ -100,22 +100,18 @@ void KiranAccountManager::setDefaultSiderbarItem()
 
 void KiranAccountManager::initUI()
 {
-    setObjectName("KiranAccountManager");
-    setTitle(tr("User Manager"));
-    setIcon(QIcon(DESKTOP_ICON_PATH));
-
     /* 遮罩,用于繁忙时屏蔽用户操作 */
     m_maskWidget = new MaskWidget(this);
     m_maskWidget->setVisible(false);
 
     /* 初始化界面主布局 */
-    auto contentLayout = new QHBoxLayout(getWindowContentWidget());
+    auto contentLayout = new QHBoxLayout(this);
     contentLayout->setSpacing(0);
     contentLayout->setObjectName("AccountContentLayout");
     contentLayout->setContentsMargins(0, 0, 0, 0);
 
     /* 侧边栏 */
-    auto siderbar = new QWidget(getWindowContentWidget());
+    auto siderbar = new QWidget(this);
     contentLayout->addWidget(siderbar);
     siderbar->setObjectName("siderWidget");
     siderbar->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
@@ -133,15 +129,15 @@ void KiranAccountManager::initUI()
     initUserList();
 
     /* 内容区域 */
-    QScrollArea* scrollArea = new QScrollArea();
+    QScrollArea* scrollArea = new QScrollArea(this);
     scrollArea->setWidgetResizable(true);
 
-    QWidget* scrollAreaContentWidget = new QWidget;
+    QWidget* scrollAreaContentWidget = new QWidget(this);
     QHBoxLayout* scrollAreaContentLayout = new QHBoxLayout;
     scrollAreaContentLayout->setMargin(0);
     scrollAreaContentWidget->setLayout(scrollAreaContentLayout);
 
-    m_stackWidget = new QStackedWidget(getWindowContentWidget());
+    m_stackWidget = new QStackedWidget(this);
     m_stackWidget->setObjectName("StackWidget");
     scrollAreaContentLayout->addWidget(m_stackWidget);
 
@@ -198,7 +194,7 @@ void KiranAccountManager::initUserList()
 
     ///创建用户按钮
     m_createUserItem = new QListWidgetItem(tr("Create new account"), m_tabList);
-    m_createUserItem->setIcon(QIcon(":/images/add_icon.png"));
+    m_createUserItem->setIcon(QIcon(":/kcp-account-images/add_icon.png"));
     m_tabList->addItem(m_createUserItem);
 
     //加载非系统用户
@@ -324,13 +320,13 @@ void KiranAccountManager::connectToInfoChanged()
     //处理用户新增、删除
     connect(AccountsGlobalInfo::instance(), &AccountsGlobalInfo::UserAdded,
             [this](const QDBusObjectPath &obj) {
-                LOG_INFO_S() << "siderbar add item:" << obj.path();
+                KLOG_INFO_S() << "siderbar add item:" << obj.path();
                 appendSiderbarItem(obj.path());
             });
 
     connect(AccountsGlobalInfo::instance(), &AccountsGlobalInfo::UserDeleted,
             [this](const QDBusObjectPath &obj) {
-                LOG_INFO_S() << "siderbar delete item:" << obj.path();
+                KLOG_INFO_S() << "siderbar delete item:" << obj.path();
                 int findIdx = -1;
 
                 QString userPath = obj.path();
@@ -344,7 +340,7 @@ void KiranAccountManager::connectToInfoChanged()
                 }
                 if (findIdx == -1)
                 {
-                    LOG_WARNING_S() << "can't find deleted user:" << obj.path();
+                    KLOG_WARNING_S() << "can't find deleted user:" << obj.path();
                     return;
                 }
                 bool needResetSidebarItem = m_tabList->item(findIdx)->isSelected();

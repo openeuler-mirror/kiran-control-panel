@@ -1,7 +1,6 @@
 #include "accounts-global-info.h"
 #include "accounts-interface.h"
 #include "accounts-user-interface.h"
-#include "log.h"
 #include "config.h"
 
 #include <unistd.h>
@@ -10,6 +9,7 @@
 #include <QList>
 #include <QMutex>
 #include <QScopedPointer>
+#include <qt5-log-i.h>
 
 AccountsGlobalInfo::AccountsGlobalInfo(QObject *parent)
     : QObject(parent),
@@ -51,7 +51,7 @@ bool AccountsGlobalInfo::init()
     QSettings settings(CONFIG_FILE_PATH,QSettings::IniFormat);
     if(settings.status()!=QSettings::NoError)
     {
-        LOG_WARNING_S() << "parse" << CONFIG_FILE_PATH << "failed!";
+        KLOG_WARNING_S() << "parse" << CONFIG_FILE_PATH << "failed!";
     }
     else
     {
@@ -62,7 +62,7 @@ bool AccountsGlobalInfo::init()
         }
         settings.endGroup();
     };
-    LOG_INFO("show root:%s",m_showRoot?"true":"false");
+    KLOG_INFO("show root:%s",m_showRoot?"true":"false");
 
     ///加载账户
     QList<QDBusObjectPath> accounts;
@@ -73,7 +73,7 @@ bool AccountsGlobalInfo::init()
     pendingReply.waitForFinished();
     if (pendingReply.isError())
     {
-        LOG_WARNING_S() << "GetNonSystemUsers Error:"
+        KLOG_ERROR_S() << "GetNonSystemUsers Error:"
                         << pendingReply.error();
         return false;
     }
@@ -89,7 +89,7 @@ bool AccountsGlobalInfo::init()
         }
         else
         {
-            LOG_ERROR_S() << "cant find root by id:" << getRootReply.error();
+            KLOG_ERROR_S() << "cant find root by id:" << getRootReply.error();
         }
     }
 
@@ -107,7 +107,7 @@ bool AccountsGlobalInfo::init()
     findUserReply.waitForFinished();
     if (findUserReply.isError())
     {
-        LOG_WARNING_S() << "FinduserById failed," << findUserReply.error();
+        KLOG_ERROR_S() << "get current user,FinduserById" << uid << "failed," << findUserReply.error();
     }
     else
     {
@@ -187,6 +187,8 @@ void AccountsGlobalInfo::deleteUserFromMap(const QDBusObjectPath &user)
 
 void AccountsGlobalInfo::handlerPropertyChanged(QString userPath, QString propertyName, QVariant value)
 {
-    LOG_INFO_S() << userPath << propertyName << value;
+    KLOG_DEBUG_S() << "property changed:" << userPath << "\n"
+                   << "\tproperty name: " << propertyName << "\n"
+                   << "\tproperty value:" << value;
     emit UserPropertyChanged(userPath, propertyName, value);
 }

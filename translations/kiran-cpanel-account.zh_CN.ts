@@ -5,15 +5,15 @@
     <name>AccountItemWidget</name>
     <message>
         <location filename="../src/widgets/account-itemwidget.ui" line="14"/>
-        <location filename="../build/kiran-account-manager_autogen/include/ui_account-itemwidget.h" line="83"/>
-        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_account-itemwidget.h" line="83"/>
+        <location filename="../build/kiran-cpanel-account_autogen/include/ui_account-itemwidget.h" line="83"/>
+        <location filename="../cmake-build-debug/kiran-cpanel-account_autogen/include/ui_account-itemwidget.h" line="83"/>
         <source>Form</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../src/widgets/account-itemwidget.ui" line="63"/>
-        <location filename="../build/kiran-account-manager_autogen/include/ui_account-itemwidget.h" line="84"/>
-        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_account-itemwidget.h" line="84"/>
+        <location filename="../build/kiran-cpanel-account_autogen/include/ui_account-itemwidget.h" line="84"/>
+        <location filename="../cmake-build-debug/kiran-cpanel-account_autogen/include/ui_account-itemwidget.h" line="84"/>
         <source>Tom Hardy</source>
         <translation></translation>
     </message>
@@ -42,36 +42,36 @@
     </message>
     <message>
         <location filename="../src/pages/advance-settings-page/advance-settings.ui" line="14"/>
-        <location filename="../build/kiran-account-manager_autogen/include/ui_advance-settings.h" line="203"/>
-        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_advance-settings.h" line="203"/>
+        <location filename="../build/kiran-cpanel-account_autogen/include/ui_advance-settings.h" line="203"/>
+        <location filename="../cmake-build-debug/kiran-cpanel-account_autogen/include/ui_advance-settings.h" line="203"/>
         <source>Form</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../src/pages/advance-settings-page/advance-settings.ui" line="43"/>
-        <location filename="../build/kiran-account-manager_autogen/include/ui_advance-settings.h" line="204"/>
-        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_advance-settings.h" line="204"/>
+        <location filename="../build/kiran-cpanel-account_autogen/include/ui_advance-settings.h" line="204"/>
+        <location filename="../cmake-build-debug/kiran-cpanel-account_autogen/include/ui_advance-settings.h" line="204"/>
         <source>Login shell</source>
         <translation>登录Shell</translation>
     </message>
     <message>
         <location filename="../src/pages/advance-settings-page/advance-settings.ui" line="89"/>
-        <location filename="../build/kiran-account-manager_autogen/include/ui_advance-settings.h" line="205"/>
-        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_advance-settings.h" line="205"/>
+        <location filename="../build/kiran-cpanel-account_autogen/include/ui_advance-settings.h" line="205"/>
+        <location filename="../cmake-build-debug/kiran-cpanel-account_autogen/include/ui_advance-settings.h" line="205"/>
         <source>Specify user id</source>
         <translation>指定用户ID</translation>
     </message>
     <message>
         <location filename="../src/pages/advance-settings-page/advance-settings.ui" line="262"/>
-        <location filename="../build/kiran-account-manager_autogen/include/ui_advance-settings.h" line="207"/>
-        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_advance-settings.h" line="207"/>
+        <location filename="../build/kiran-cpanel-account_autogen/include/ui_advance-settings.h" line="207"/>
+        <location filename="../cmake-build-debug/kiran-cpanel-account_autogen/include/ui_advance-settings.h" line="207"/>
         <source>confirm</source>
         <translation>确认</translation>
     </message>
     <message>
         <location filename="../src/pages/advance-settings-page/advance-settings.ui" line="303"/>
-        <location filename="../build/kiran-account-manager_autogen/include/ui_advance-settings.h" line="208"/>
-        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_advance-settings.h" line="208"/>
+        <location filename="../build/kiran-cpanel-account_autogen/include/ui_advance-settings.h" line="208"/>
+        <location filename="../cmake-build-debug/kiran-cpanel-account_autogen/include/ui_advance-settings.h" line="208"/>
         <source>cancel</source>
         <translation>取消</translation>
     </message>
@@ -83,8 +83,8 @@
     </message>
     <message>
         <location filename="../src/pages/advance-settings-page/advance-settings.ui" line="159"/>
-        <location filename="../build/kiran-account-manager_autogen/include/ui_advance-settings.h" line="206"/>
-        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_advance-settings.h" line="206"/>
+        <location filename="../build/kiran-cpanel-account_autogen/include/ui_advance-settings.h" line="206"/>
+        <location filename="../cmake-build-debug/kiran-cpanel-account_autogen/include/ui_advance-settings.h" line="206"/>
         <source>Specify user home</source>
         <translation>指定用户目录</translation>
     </message>
@@ -108,43 +108,43 @@
     <name>AuthManagerPage</name>
     <message>
         <location filename="../src/pages/auth-manager-page/auth-manager-page.ui" line="14"/>
-        <location filename="../build/kiran-account-manager_autogen/include/ui_auth-manager-page.h" line="173"/>
-        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_auth-manager-page.h" line="173"/>
+        <location filename="../build/kiran-cpanel-account_autogen/include/ui_auth-manager-page.h" line="173"/>
+        <location filename="../cmake-build-debug/kiran-cpanel-account_autogen/include/ui_auth-manager-page.h" line="173"/>
         <source>AuthManagerPage</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../src/pages/auth-manager-page/auth-manager-page.ui" line="46"/>
-        <location filename="../build/kiran-account-manager_autogen/include/ui_auth-manager-page.h" line="174"/>
-        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_auth-manager-page.h" line="174"/>
+        <location filename="../build/kiran-cpanel-account_autogen/include/ui_auth-manager-page.h" line="174"/>
+        <location filename="../cmake-build-debug/kiran-cpanel-account_autogen/include/ui_auth-manager-page.h" line="174"/>
         <source>Fingerprint Authentication</source>
         <translation>指纹认证</translation>
     </message>
     <message>
         <location filename="../src/pages/auth-manager-page/auth-manager-page.ui" line="87"/>
-        <location filename="../build/kiran-account-manager_autogen/include/ui_auth-manager-page.h" line="175"/>
-        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_auth-manager-page.h" line="175"/>
+        <location filename="../build/kiran-cpanel-account_autogen/include/ui_auth-manager-page.h" line="175"/>
+        <location filename="../cmake-build-debug/kiran-cpanel-account_autogen/include/ui_auth-manager-page.h" line="175"/>
         <source>Face Authentication</source>
         <translation>人脸认证</translation>
     </message>
     <message>
         <location filename="../src/pages/auth-manager-page/auth-manager-page.ui" line="130"/>
-        <location filename="../build/kiran-account-manager_autogen/include/ui_auth-manager-page.h" line="176"/>
-        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_auth-manager-page.h" line="176"/>
+        <location filename="../build/kiran-cpanel-account_autogen/include/ui_auth-manager-page.h" line="176"/>
+        <location filename="../cmake-build-debug/kiran-cpanel-account_autogen/include/ui_auth-manager-page.h" line="176"/>
         <source>Password Authentication</source>
         <translation>密码认证</translation>
     </message>
     <message>
         <location filename="../src/pages/auth-manager-page/auth-manager-page.ui" line="204"/>
-        <location filename="../build/kiran-account-manager_autogen/include/ui_auth-manager-page.h" line="177"/>
-        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_auth-manager-page.h" line="177"/>
+        <location filename="../build/kiran-cpanel-account_autogen/include/ui_auth-manager-page.h" line="177"/>
+        <location filename="../cmake-build-debug/kiran-cpanel-account_autogen/include/ui_auth-manager-page.h" line="177"/>
         <source>save</source>
         <translation>保存</translation>
     </message>
     <message>
         <location filename="../src/pages/auth-manager-page/auth-manager-page.ui" line="245"/>
-        <location filename="../build/kiran-account-manager_autogen/include/ui_auth-manager-page.h" line="178"/>
-        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_auth-manager-page.h" line="178"/>
+        <location filename="../build/kiran-cpanel-account_autogen/include/ui_auth-manager-page.h" line="178"/>
+        <location filename="../cmake-build-debug/kiran-cpanel-account_autogen/include/ui_auth-manager-page.h" line="178"/>
         <source>return</source>
         <translation>返回</translation>
     </message>
@@ -159,24 +159,24 @@
         <translation>录入人脸数据</translation>
     </message>
     <message>
-        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="152"/>
-        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="262"/>
+        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="151"/>
+        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="286"/>
         <source>error</source>
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="153"/>
-        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="263"/>
+        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="152"/>
+        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="287"/>
         <source>please ensure that at least one authentication option exists</source>
         <translation>请确保至少一个认证选项打开</translation>
     </message>
     <message>
-        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="455"/>
+        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="479"/>
         <source>fingerprint_</source>
         <translation>指纹_</translation>
     </message>
     <message>
-        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="455"/>
+        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="479"/>
         <source>face_</source>
         <translation>人脸_</translation>
     </message>
@@ -185,22 +185,22 @@
     <name>BiometricItem</name>
     <message>
         <location filename="../src/widgets/biometric-item.ui" line="14"/>
-        <location filename="../build/kiran-account-manager_autogen/include/ui_biometric-item.h" line="77"/>
-        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_biometric-item.h" line="77"/>
+        <location filename="../build/kiran-cpanel-account_autogen/include/ui_biometric-item.h" line="77"/>
+        <location filename="../cmake-build-debug/kiran-cpanel-account_autogen/include/ui_biometric-item.h" line="77"/>
         <source>BiometricItem</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/biometric-item.ui" line="35"/>
-        <location filename="../build/kiran-account-manager_autogen/include/ui_biometric-item.h" line="78"/>
-        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_biometric-item.h" line="78"/>
+        <location filename="../build/kiran-cpanel-account_autogen/include/ui_biometric-item.h" line="78"/>
+        <location filename="../cmake-build-debug/kiran-cpanel-account_autogen/include/ui_biometric-item.h" line="78"/>
         <source>text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/biometric-item.ui" line="73"/>
-        <location filename="../build/kiran-account-manager_autogen/include/ui_biometric-item.h" line="79"/>
-        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_biometric-item.h" line="79"/>
+        <location filename="../build/kiran-cpanel-account_autogen/include/ui_biometric-item.h" line="79"/>
+        <location filename="../cmake-build-debug/kiran-cpanel-account_autogen/include/ui_biometric-item.h" line="79"/>
         <source>add</source>
         <translation>添加</translation>
     </message>
@@ -209,15 +209,15 @@
     <name>CreateUserPage</name>
     <message>
         <location filename="../src/pages/create-user-page/create-user-page.ui" line="101"/>
-        <location filename="../build/kiran-account-manager_autogen/include/ui_create-user-page.h" line="287"/>
-        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_create-user-page.h" line="287"/>
+        <location filename="../build/kiran-cpanel-account_autogen/include/ui_create-user-page.h" line="287"/>
+        <location filename="../cmake-build-debug/kiran-cpanel-account_autogen/include/ui_create-user-page.h" line="287"/>
         <source>Login name</source>
         <translation>登录名</translation>
     </message>
     <message>
         <location filename="../src/pages/create-user-page/create-user-page.ui" line="147"/>
-        <location filename="../build/kiran-account-manager_autogen/include/ui_create-user-page.h" line="288"/>
-        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_create-user-page.h" line="288"/>
+        <location filename="../build/kiran-cpanel-account_autogen/include/ui_create-user-page.h" line="288"/>
+        <location filename="../cmake-build-debug/kiran-cpanel-account_autogen/include/ui_create-user-page.h" line="288"/>
         <source>Account type</source>
         <translation>账户类型</translation>
     </message>
@@ -233,43 +233,43 @@
     </message>
     <message>
         <location filename="../src/pages/create-user-page/create-user-page.ui" line="14"/>
-        <location filename="../build/kiran-account-manager_autogen/include/ui_create-user-page.h" line="286"/>
-        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_create-user-page.h" line="286"/>
+        <location filename="../build/kiran-cpanel-account_autogen/include/ui_create-user-page.h" line="286"/>
+        <location filename="../cmake-build-debug/kiran-cpanel-account_autogen/include/ui_create-user-page.h" line="286"/>
         <source>Form</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../src/pages/create-user-page/create-user-page.ui" line="190"/>
-        <location filename="../build/kiran-account-manager_autogen/include/ui_create-user-page.h" line="289"/>
-        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_create-user-page.h" line="289"/>
+        <location filename="../build/kiran-cpanel-account_autogen/include/ui_create-user-page.h" line="289"/>
+        <location filename="../cmake-build-debug/kiran-cpanel-account_autogen/include/ui_create-user-page.h" line="289"/>
         <source>Password</source>
         <translation>账户密码</translation>
     </message>
     <message>
         <location filename="../src/pages/create-user-page/create-user-page.ui" line="239"/>
-        <location filename="../build/kiran-account-manager_autogen/include/ui_create-user-page.h" line="290"/>
-        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_create-user-page.h" line="290"/>
+        <location filename="../build/kiran-cpanel-account_autogen/include/ui_create-user-page.h" line="290"/>
+        <location filename="../cmake-build-debug/kiran-cpanel-account_autogen/include/ui_create-user-page.h" line="290"/>
         <source>Confirm password</source>
         <translation>确认密码</translation>
     </message>
     <message>
         <location filename="../src/pages/create-user-page/create-user-page.ui" line="294"/>
-        <location filename="../build/kiran-account-manager_autogen/include/ui_create-user-page.h" line="291"/>
-        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_create-user-page.h" line="291"/>
+        <location filename="../build/kiran-cpanel-account_autogen/include/ui_create-user-page.h" line="291"/>
+        <location filename="../cmake-build-debug/kiran-cpanel-account_autogen/include/ui_create-user-page.h" line="291"/>
         <source>Advance setting</source>
         <translation>高级设置</translation>
     </message>
     <message>
         <location filename="../src/pages/create-user-page/create-user-page.ui" line="389"/>
-        <location filename="../build/kiran-account-manager_autogen/include/ui_create-user-page.h" line="292"/>
-        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_create-user-page.h" line="292"/>
+        <location filename="../build/kiran-cpanel-account_autogen/include/ui_create-user-page.h" line="292"/>
+        <location filename="../cmake-build-debug/kiran-cpanel-account_autogen/include/ui_create-user-page.h" line="292"/>
         <source>Confirm</source>
         <translation>创建</translation>
     </message>
     <message>
         <location filename="../src/pages/create-user-page/create-user-page.ui" line="436"/>
-        <location filename="../build/kiran-account-manager_autogen/include/ui_create-user-page.h" line="293"/>
-        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_create-user-page.h" line="293"/>
+        <location filename="../build/kiran-cpanel-account_autogen/include/ui_create-user-page.h" line="293"/>
+        <location filename="../cmake-build-debug/kiran-cpanel-account_autogen/include/ui_create-user-page.h" line="293"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
@@ -324,29 +324,29 @@
     <name>FaceInputDialog</name>
     <message>
         <location filename="../src/pages/biometric-input-dialog/face-input-dialog/face-input-dialog.ui" line="14"/>
-        <location filename="../build/kiran-account-manager_autogen/include/ui_face-input-dialog.h" line="122"/>
-        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_face-input-dialog.h" line="122"/>
+        <location filename="../build/kiran-cpanel-account_autogen/include/ui_face-input-dialog.h" line="122"/>
+        <location filename="../cmake-build-debug/kiran-cpanel-account_autogen/include/ui_face-input-dialog.h" line="122"/>
         <source>FaceInputDialog</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../src/pages/biometric-input-dialog/face-input-dialog/face-input-dialog.ui" line="63"/>
-        <location filename="../build/kiran-account-manager_autogen/include/ui_face-input-dialog.h" line="123"/>
-        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_face-input-dialog.h" line="123"/>
+        <location filename="../build/kiran-cpanel-account_autogen/include/ui_face-input-dialog.h" line="123"/>
+        <location filename="../cmake-build-debug/kiran-cpanel-account_autogen/include/ui_face-input-dialog.h" line="123"/>
         <source>balabalalbala...</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../src/pages/biometric-input-dialog/face-input-dialog/face-input-dialog.ui" line="121"/>
-        <location filename="../build/kiran-account-manager_autogen/include/ui_face-input-dialog.h" line="124"/>
-        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_face-input-dialog.h" line="124"/>
+        <location filename="../build/kiran-cpanel-account_autogen/include/ui_face-input-dialog.h" line="124"/>
+        <location filename="../cmake-build-debug/kiran-cpanel-account_autogen/include/ui_face-input-dialog.h" line="124"/>
         <source>save</source>
         <translation>保存</translation>
     </message>
     <message>
         <location filename="../src/pages/biometric-input-dialog/face-input-dialog/face-input-dialog.ui" line="159"/>
-        <location filename="../build/kiran-account-manager_autogen/include/ui_face-input-dialog.h" line="125"/>
-        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_face-input-dialog.h" line="125"/>
+        <location filename="../build/kiran-cpanel-account_autogen/include/ui_face-input-dialog.h" line="125"/>
+        <location filename="../cmake-build-debug/kiran-cpanel-account_autogen/include/ui_face-input-dialog.h" line="125"/>
         <source>cancel</source>
         <translation>取消</translation>
     </message>
@@ -371,29 +371,29 @@
     <name>FingerprintInputDialog</name>
     <message>
         <location filename="../src/pages/biometric-input-dialog/fingerprint-input-dialog/fingerprint-input-dialog.ui" line="14"/>
-        <location filename="../build/kiran-account-manager_autogen/include/ui_fingerprint-input-dialog.h" line="131"/>
-        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_fingerprint-input-dialog.h" line="131"/>
+        <location filename="../build/kiran-cpanel-account_autogen/include/ui_fingerprint-input-dialog.h" line="131"/>
+        <location filename="../cmake-build-debug/kiran-cpanel-account_autogen/include/ui_fingerprint-input-dialog.h" line="131"/>
         <source>FingerprintInputDialog</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../src/pages/biometric-input-dialog/fingerprint-input-dialog/fingerprint-input-dialog.ui" line="70"/>
-        <location filename="../build/kiran-account-manager_autogen/include/ui_fingerprint-input-dialog.h" line="132"/>
-        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_fingerprint-input-dialog.h" line="132"/>
+        <location filename="../build/kiran-cpanel-account_autogen/include/ui_fingerprint-input-dialog.h" line="132"/>
+        <location filename="../cmake-build-debug/kiran-cpanel-account_autogen/include/ui_fingerprint-input-dialog.h" line="132"/>
         <source>balabalalbala...</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../src/pages/biometric-input-dialog/fingerprint-input-dialog/fingerprint-input-dialog.ui" line="131"/>
-        <location filename="../build/kiran-account-manager_autogen/include/ui_fingerprint-input-dialog.h" line="133"/>
-        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_fingerprint-input-dialog.h" line="133"/>
+        <location filename="../build/kiran-cpanel-account_autogen/include/ui_fingerprint-input-dialog.h" line="133"/>
+        <location filename="../cmake-build-debug/kiran-cpanel-account_autogen/include/ui_fingerprint-input-dialog.h" line="133"/>
         <source>save</source>
         <translation>保存</translation>
     </message>
     <message>
         <location filename="../src/pages/biometric-input-dialog/fingerprint-input-dialog/fingerprint-input-dialog.ui" line="169"/>
-        <location filename="../build/kiran-account-manager_autogen/include/ui_fingerprint-input-dialog.h" line="134"/>
-        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_fingerprint-input-dialog.h" line="134"/>
+        <location filename="../build/kiran-cpanel-account_autogen/include/ui_fingerprint-input-dialog.h" line="134"/>
+        <location filename="../cmake-build-debug/kiran-cpanel-account_autogen/include/ui_fingerprint-input-dialog.h" line="134"/>
         <source>cancel</source>
         <translation>取消</translation>
     </message>
@@ -411,7 +411,7 @@
 <context>
     <name>FingerprintInputWorker</name>
     <message>
-        <location filename="../src/pages/biometric-input-dialog/fingerprint-input-dialog/fingerprint-input-worker.cpp" line="65"/>
+        <location filename="../src/pages/biometric-input-dialog/fingerprint-input-dialog/fingerprint-input-worker.cpp" line="66"/>
         <source>initializing fingerprint collection environment...</source>
         <translation>正在初始化指纹采集环境，请稍后</translation>
     </message>
@@ -478,23 +478,22 @@
     <name>KiranAccountManager</name>
     <message>
         <location filename="../src/kiran-account-manager.cpp" line="76"/>
-        <location filename="../src/kiran-account-manager.cpp" line="379"/>
+        <location filename="../src/kiran-account-manager.cpp" line="375"/>
         <source>disable</source>
         <translation type="unfinished">禁用</translation>
     </message>
     <message>
         <location filename="../src/kiran-account-manager.cpp" line="76"/>
-        <location filename="../src/kiran-account-manager.cpp" line="379"/>
+        <location filename="../src/kiran-account-manager.cpp" line="375"/>
         <source>enable</source>
         <translation type="unfinished">启用</translation>
     </message>
     <message>
-        <location filename="../src/kiran-account-manager.cpp" line="104"/>
         <source>User Manager</source>
-        <translation>账户管理工具</translation>
+        <translation type="vanished">账户管理工具</translation>
     </message>
     <message>
-        <location filename="../src/kiran-account-manager.cpp" line="200"/>
+        <location filename="../src/kiran-account-manager.cpp" line="196"/>
         <source>Create new account</source>
         <translation type="unfinished">创建新账户</translation>
     </message>
@@ -521,8 +520,8 @@
     <name>KiranTips</name>
     <message>
         <location filename="../src/widgets/kiran-tips.ui" line="29"/>
-        <location filename="../build/kiran-account-manager_autogen/include/ui_kiran-tips.h" line="71"/>
-        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_kiran-tips.h" line="71"/>
+        <location filename="../build/kiran-cpanel-account_autogen/include/ui_kiran-tips.h" line="71"/>
+        <location filename="../cmake-build-debug/kiran-cpanel-account_autogen/include/ui_kiran-tips.h" line="71"/>
         <source>Form</source>
         <translation></translation>
     </message>
@@ -530,22 +529,22 @@
 <context>
     <name>SelectAvatarPage</name>
     <message>
-        <location filename="../src/pages/select-avatar-page/select-avatar-page.cpp" line="133"/>
+        <location filename="../src/pages/select-avatar-page/select-avatar-page.cpp" line="132"/>
         <source>Confirm</source>
         <translation>确认</translation>
     </message>
     <message>
-        <location filename="../src/pages/select-avatar-page/select-avatar-page.cpp" line="147"/>
+        <location filename="../src/pages/select-avatar-page/select-avatar-page.cpp" line="146"/>
         <source>Return</source>
         <translation>返回</translation>
     </message>
     <message>
-        <location filename="../src/pages/select-avatar-page/select-avatar-page.cpp" line="160"/>
+        <location filename="../src/pages/select-avatar-page/select-avatar-page.cpp" line="159"/>
         <source>select picture</source>
         <translation>选择图片</translation>
     </message>
     <message>
-        <location filename="../src/pages/select-avatar-page/select-avatar-page.cpp" line="162"/>
+        <location filename="../src/pages/select-avatar-page/select-avatar-page.cpp" line="161"/>
         <source>image files(*.bmp *.jpg *.png *.tif *.gif *.pcx *.tga *.exif *.fpx *.svg *.psd *.cdr *.pcd *.dxf *.ufo *.eps *.ai *.raw *.WMF *.webp)</source>
         <translation>图片文件(*.bmp *.jpg *.png *.tif *.gif *.pcx *.tga *.exif *.fpx *.svg *.psd *.cdr *.pcd *.dxf *.ufo *.eps *.ai *.raw *.WMF *.webp)</translation>
     </message>
@@ -554,99 +553,99 @@
     <name>UserInfoPage</name>
     <message>
         <location filename="../src/pages/user-info-page/user-info-page.ui" line="14"/>
-        <location filename="../build/kiran-account-manager_autogen/include/ui_user-info-page.h" line="501"/>
-        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_user-info-page.h" line="501"/>
+        <location filename="../build/kiran-cpanel-account_autogen/include/ui_user-info-page.h" line="501"/>
+        <location filename="../cmake-build-debug/kiran-cpanel-account_autogen/include/ui_user-info-page.h" line="501"/>
         <source>Form</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../src/pages/user-info-page/user-info-page.ui" line="157"/>
-        <location filename="../build/kiran-account-manager_autogen/include/ui_user-info-page.h" line="502"/>
-        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_user-info-page.h" line="502"/>
+        <location filename="../build/kiran-cpanel-account_autogen/include/ui_user-info-page.h" line="502"/>
+        <location filename="../cmake-build-debug/kiran-cpanel-account_autogen/include/ui_user-info-page.h" line="502"/>
         <source>Account</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../src/pages/user-info-page/user-info-page.ui" line="203"/>
-        <location filename="../build/kiran-account-manager_autogen/include/ui_user-info-page.h" line="503"/>
-        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_user-info-page.h" line="503"/>
+        <location filename="../build/kiran-cpanel-account_autogen/include/ui_user-info-page.h" line="503"/>
+        <location filename="../cmake-build-debug/kiran-cpanel-account_autogen/include/ui_user-info-page.h" line="503"/>
         <source>Change password</source>
         <translation>修改密码</translation>
     </message>
     <message>
         <location filename="../src/pages/user-info-page/user-info-page.ui" line="233"/>
-        <location filename="../build/kiran-account-manager_autogen/include/ui_user-info-page.h" line="504"/>
-        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_user-info-page.h" line="504"/>
+        <location filename="../build/kiran-cpanel-account_autogen/include/ui_user-info-page.h" line="504"/>
+        <location filename="../cmake-build-debug/kiran-cpanel-account_autogen/include/ui_user-info-page.h" line="504"/>
         <source>User id</source>
         <translation>用户ID</translation>
     </message>
     <message>
         <location filename="../src/pages/user-info-page/user-info-page.ui" line="292"/>
-        <location filename="../build/kiran-account-manager_autogen/include/ui_user-info-page.h" line="505"/>
-        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_user-info-page.h" line="505"/>
+        <location filename="../build/kiran-cpanel-account_autogen/include/ui_user-info-page.h" line="505"/>
+        <location filename="../cmake-build-debug/kiran-cpanel-account_autogen/include/ui_user-info-page.h" line="505"/>
         <source>Account type</source>
         <translation>账户类型</translation>
     </message>
     <message>
         <location filename="../src/pages/user-info-page/user-info-page.ui" line="354"/>
-        <location filename="../build/kiran-account-manager_autogen/include/ui_user-info-page.h" line="506"/>
-        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_user-info-page.h" line="506"/>
+        <location filename="../build/kiran-cpanel-account_autogen/include/ui_user-info-page.h" line="506"/>
+        <location filename="../cmake-build-debug/kiran-cpanel-account_autogen/include/ui_user-info-page.h" line="506"/>
         <source>Account status</source>
         <translation>启用账户</translation>
     </message>
     <message>
         <location filename="../src/pages/user-info-page/user-info-page.ui" line="416"/>
-        <location filename="../build/kiran-account-manager_autogen/include/ui_user-info-page.h" line="507"/>
-        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_user-info-page.h" line="507"/>
+        <location filename="../build/kiran-cpanel-account_autogen/include/ui_user-info-page.h" line="507"/>
+        <location filename="../cmake-build-debug/kiran-cpanel-account_autogen/include/ui_user-info-page.h" line="507"/>
         <source>auth manager</source>
         <translation>认证管理</translation>
     </message>
     <message>
         <location filename="../src/pages/user-info-page/user-info-page.ui" line="490"/>
-        <location filename="../build/kiran-account-manager_autogen/include/ui_user-info-page.h" line="508"/>
-        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_user-info-page.h" line="508"/>
+        <location filename="../build/kiran-cpanel-account_autogen/include/ui_user-info-page.h" line="508"/>
+        <location filename="../cmake-build-debug/kiran-cpanel-account_autogen/include/ui_user-info-page.h" line="508"/>
         <source>Confirm</source>
         <translation>保存</translation>
     </message>
     <message>
         <location filename="../src/pages/user-info-page/user-info-page.ui" line="531"/>
-        <location filename="../build/kiran-account-manager_autogen/include/ui_user-info-page.h" line="509"/>
-        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_user-info-page.h" line="509"/>
+        <location filename="../build/kiran-cpanel-account_autogen/include/ui_user-info-page.h" line="509"/>
+        <location filename="../cmake-build-debug/kiran-cpanel-account_autogen/include/ui_user-info-page.h" line="509"/>
         <source>Delete</source>
         <translation>删除用户</translation>
     </message>
     <message>
         <location filename="../src/pages/user-info-page/user-info-page.ui" line="590"/>
-        <location filename="../build/kiran-account-manager_autogen/include/ui_user-info-page.h" line="510"/>
-        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_user-info-page.h" line="510"/>
+        <location filename="../build/kiran-cpanel-account_autogen/include/ui_user-info-page.h" line="510"/>
+        <location filename="../cmake-build-debug/kiran-cpanel-account_autogen/include/ui_user-info-page.h" line="510"/>
         <source>Current password</source>
         <translation>当前密码</translation>
     </message>
     <message>
         <location filename="../src/pages/user-info-page/user-info-page.ui" line="651"/>
-        <location filename="../build/kiran-account-manager_autogen/include/ui_user-info-page.h" line="511"/>
-        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_user-info-page.h" line="511"/>
+        <location filename="../build/kiran-cpanel-account_autogen/include/ui_user-info-page.h" line="511"/>
+        <location filename="../cmake-build-debug/kiran-cpanel-account_autogen/include/ui_user-info-page.h" line="511"/>
         <source>New password</source>
         <translation>新密码</translation>
     </message>
     <message>
         <location filename="../src/pages/user-info-page/user-info-page.ui" line="700"/>
-        <location filename="../build/kiran-account-manager_autogen/include/ui_user-info-page.h" line="512"/>
-        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_user-info-page.h" line="512"/>
+        <location filename="../build/kiran-cpanel-account_autogen/include/ui_user-info-page.h" line="512"/>
+        <location filename="../cmake-build-debug/kiran-cpanel-account_autogen/include/ui_user-info-page.h" line="512"/>
         <source>Enter the new password again</source>
         <translation>再次输入新密码</translation>
     </message>
     <message>
         <location filename="../src/pages/user-info-page/user-info-page.ui" line="793"/>
-        <location filename="../build/kiran-account-manager_autogen/include/ui_user-info-page.h" line="513"/>
-        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_user-info-page.h" line="513"/>
+        <location filename="../build/kiran-cpanel-account_autogen/include/ui_user-info-page.h" line="513"/>
+        <location filename="../cmake-build-debug/kiran-cpanel-account_autogen/include/ui_user-info-page.h" line="513"/>
         <source>Save</source>
         <translation>保存</translation>
     </message>
     <message>
         <location filename="../src/pages/user-info-page/user-info-page.ui" line="834"/>
-        <location filename="../build/kiran-account-manager_autogen/include/ui_user-info-page.h" line="514"/>
-        <location filename="../cmake-build-debug/kiran-account-manager_autogen/include/ui_user-info-page.h" line="514"/>
+        <location filename="../build/kiran-cpanel-account_autogen/include/ui_user-info-page.h" line="514"/>
+        <location filename="../cmake-build-debug/kiran-cpanel-account_autogen/include/ui_user-info-page.h" line="514"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>

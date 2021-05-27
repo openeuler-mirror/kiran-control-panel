@@ -36,6 +36,8 @@ KiranTips::KiranTips(QWidget *parent) : QWidget(parent),
     setAttribute(Qt::WA_AlwaysStackOnTop);
     setWindowFlag(Qt::FramelessWindowHint);
 
+    ui->label->setAttribute(Qt::WA_TranslucentBackground);
+
     QGraphicsDropShadowEffect *shadowEffect = new QGraphicsDropShadowEffect(this);
     shadowEffect->setBlurRadius(7);
     shadowEffect->setOffset(0, 0);

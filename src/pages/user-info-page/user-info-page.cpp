@@ -102,7 +102,7 @@ void UserInfoPage::initUI()
 
     /* 用户显示页面 */
     //账户头像
-    ui->avatar->setHoverImage(":/images/change_user_icon.png");
+    ui->avatar->setHoverImage(":/kcp-account-images/change_user_icon.png");
     ui->avatar->setClickEnable(true);
     connect(ui->avatar, &UserAvatarWidget::pressed, [this]() {
         emit sigUserChangeIcon(ui->avatar->iconPath());

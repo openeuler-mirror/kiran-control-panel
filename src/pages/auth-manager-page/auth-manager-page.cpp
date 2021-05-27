@@ -10,10 +10,10 @@
 #include "biometric-input-dialog/fingerprint-input-dialog/fingerprint-input-dialog.h"
 #include "biometric-item.h"
 #include "ui_auth-manager-page.h"
-#include "log.h"
 
 #include <kiran-message-box.h>
 #include <kiran-switch-button.h>
+#include <qt5-log-i.h>
 #include <widget-property-helper.h>
 #include <QJsonDocument>
 #include <QList>
@@ -81,7 +81,7 @@ void AuthManagerPage::initUI()
 
 void AuthManagerPage::updateInfo()
 {
-    LOG_INFO_S() << "load biometrics , update ui";
+    KLOG_INFO_S() << "load biometrics , update ui";
     //获取认证类型开关
     bool fingerAuth, faceAuth, passwdAuth;
     int authModes = m_userInterface->auth_modes();
@@ -140,7 +140,6 @@ void AuthManagerPage::updateInfo()
 
 void AuthManagerPage::save()
 {
-    LOG_INFO_S() << "save..";
     bool uiPasswdAuth, uiFingerAuth, uiFaceAuth;
     uiPasswdAuth = m_passwdAuthSwitch->isChecked();
     uiFingerAuth = m_fingerAuthSwitch->isChecked();
@@ -163,20 +162,20 @@ void AuthManagerPage::save()
     /* 保存验证选项 */
     if (uiPasswdAuth != backendPasswdAuth)
     {
-        LOG_INFO_S() << "update passwd auth mode: " << uiPasswdAuth;
+        KLOG_DEBUG_S() << "set passwd auth enable: " << uiPasswdAuth;
         auto reply = m_userInterface->EnableAuthMode(ACCOUNTS_AUTH_MODE_PASSWORD, uiPasswdAuth);
         reply.waitForFinished();
     }
     if (uiFingerAuth != backendFingerAuth)
     {
-        LOG_INFO_S() << "update finger auth mode: " << uiFingerAuth;
+        KLOG_DEBUG_S() << "set finger auth enable: " << uiFingerAuth;
         auto reply = m_userInterface->EnableAuthMode(ACCOUNTS_AUTH_MODE_FINGERPRINT, uiFingerAuth);
         reply.waitForFinished();
-        LOG_INFO_S() << reply.isError() << reply.error();
+        KLOG_INFO_S() << reply.isError() << reply.error();
     }
     if (uiFaceAuth != backendFaceAuth)
     {
-        LOG_INFO_S() << "update face auth mode: " << uiFaceAuth;
+        KLOG_DEBUG_S() << "set face auth enable: " << uiFaceAuth;
         auto reply = m_userInterface->EnableAuthMode(ACCOUNTS_AUTH_MODE_FACE, uiFaceAuth);
         reply.waitForFinished();
     }
@@ -210,35 +209,60 @@ void AuthManagerPage::save()
             }
         }
     };
+
     BiometricList deletedItems, addItems;
+    ///对比ui中存储的和后端存储的指纹生物特征差异，更新
     funcCompareBiometricItems(uiFingerTemplates, backendFingerTemplates, deletedItems, addItems);
-    LOG_INFO_S() << "finger biometric items:";
-    LOG_INFO_S() << "need delete item:" << deletedItems;
-    LOG_INFO_S() << "need add item:   " << addItems;
+    if (!deletedItems.isEmpty() || !addItems.isEmpty())
+    {
+        KLOG_DEBUG_S() << "finger biometric item will update:" << "\n"
+                       << "\tneed delete item:" << deletedItems << "\n"
+                       << "\tneed add item:   " << addItems;
+    }
     for (auto &item : deletedItems)
     {
         auto reply = m_userInterface->DelAuthItem(ACCOUNTS_AUTH_MODE_FINGERPRINT, item.first);
         reply.waitForFinished();
+        if( reply.isError() )
+        {
+            KLOG_ERROR_S() << "delete finger item" << item.first << "failed," << reply.error();
+        }
     }
     for (auto &item : addItems)
     {
         auto reply = m_userInterface->AddAuthItem(ACCOUNTS_AUTH_MODE_FINGERPRINT, item.first, item.second);
         reply.waitForFinished();
+        if( reply.isError() )
+        {
+            KLOG_ERROR_S() << "add finger item" << item.first << "failed," << reply.error();
+        }
     }
 
+    ///对比ui中存储的和后端存储的人脸生物特征差异，更新
     funcCompareBiometricItems(uiFaceTemplates, backendFaceTemplates, deletedItems, addItems);
-    LOG_INFO_S() << "face biometric items:";
-    LOG_INFO_S() << "need delete item:" << deletedItems;
-    LOG_INFO_S() << "need add item:   " << addItems;
+    if (!deletedItems.isEmpty() || !addItems.isEmpty())
+    {
+        KLOG_DEBUG_S() << "face biometric item update:" << "\n"
+                       << "\tneed delete item:" << deletedItems << "\n"
+                       << "\tneed add item:   " << addItems;
+    }
     for (auto &item : deletedItems)
     {
         auto reply = m_userInterface->DelAuthItem(ACCOUNTS_AUTH_MODE_FACE, item.first);
         reply.waitForFinished();
+        if( reply.isError() )
+        {
+            KLOG_ERROR_S() << "delete face item" << item.first << "failed," << reply.error();
+        }
     }
     for (auto &item : addItems)
     {
         auto reply = m_userInterface->AddAuthItem(ACCOUNTS_AUTH_MODE_FACE, item.first, item.second);
         reply.waitForFinished();
+        if( reply.isError() )
+        {
+            KLOG_ERROR_S() << "add face item" << item.first << "failed," << reply.error();
+        }
     }
 }
 
@@ -312,12 +336,12 @@ BiometricList AuthManagerPage::getBiometricItemsFromBackend(AccountsAuthMode mod
         QJsonDocument doc = QJsonDocument::fromJson(jsonStr.toUtf8(), errorPtr->data());
         if (errorPtr->data()->error != QJsonParseError::NoError)
         {
-            LOG_DEBUG_S() << "parse json doc failed," << errorPtr->data()->errorString();
+            KLOG_DEBUG_S() << "parse json doc failed," << errorPtr->data()->errorString();
             return false;
         }
         if (!doc.isArray())
         {
-            LOG_WARNING_S() << "format error, is not json array";
+            KLOG_WARNING_S() << "format error, is not json array";
             return false;
         }
         authItems.clear();
@@ -331,11 +355,11 @@ BiometricList AuthManagerPage::getBiometricItemsFromBackend(AccountsAuthMode mod
             QJsonObject obj = iter.toObject();
             if (!obj.contains("data_id") || !obj.contains("name"))
             {
-                LOG_WARNING_S() << "format error,leak data_id/name element.";
+                KLOG_WARNING_S() << "format error,leak data_id/name element.";
                 authItems.clear();
                 return false;
             }
-            LOG_INFO_S() << obj.value("name").toString();
+            KLOG_INFO_S() << obj.value("name").toString();
             QPair<QString, QString> nameIdPair = QPair<QString, QString>(obj.value("name").toString(),
                                                                          obj.value("data_id").toString());
             authItems.append(nameIdPair);

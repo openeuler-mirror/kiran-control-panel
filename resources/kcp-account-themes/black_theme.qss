@@ -1,10 +1,11 @@
+/*显示在窗口中央的成功错误提示框*/
 HoverTips {
     background-color:#222222;
     border:1px solid rgba(255,255,255,0.1);
     border-radius:4px;
 }
-HoverTips > QLabel#label_text{
-   color:white;
+HoverTips > QLabel#label_text {
+    color: white;
 }
 
 /*侧边栏*/
@@ -12,7 +13,6 @@ QWidget#siderWidget{
     background:transparent;
     border-right:1px solid rgba(177,177,177,0.1);
 }
-
 
 QPushButton#btn_changePasswd,
 QPushButton#btn_advanceSetting{

@@ -6,13 +6,13 @@
 #include <QPainter>
 #include <QPropertyAnimation>
 #include <QStyleOption>
+#include <qt5-log-i.h>
 
 #include "animation-push-button.h"
-#include "log.h"
 
 AnimationPushButton::AnimationPushButton(QWidget *parent)
     : QPushButton(parent),
-      m_svgRender(QString(":/images/loading.svg"), this)
+      m_svgRender(QString(":/kcp-account-images/loading.svg"), this)
 {
     initTimeLine();
 }
@@ -24,7 +24,7 @@ void AnimationPushButton::setBusy(bool busy)
 
     if (busy && !m_svgRender.isValid())
     {
-        LOG_WARNING_S() << "AnimationPushButton: animation pixmap isNull!";
+        KLOG_WARNING_S() << "AnimationPushButton: animation pixmap isNull!";
         return;
     }
     m_isBusy = busy;

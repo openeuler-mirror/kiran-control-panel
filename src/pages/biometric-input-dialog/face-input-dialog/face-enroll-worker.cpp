@@ -10,7 +10,7 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QPixmap>
-#include "log.h"
+#include <qt5-log-i.h>
 
 #define IMAGE_TYPE 0x60  //图形类型
 #define AXIS_TYPE 0x61   //人脸坐标类型
@@ -46,7 +46,7 @@ void FaceEnrollWorker::run()
     context = zmq_ctx_new();
     if (!context)
     {
-        LOG_WARNING_S() << "cmq_ctx_new failed";
+        KLOG_WARNING_S() << "cmq_ctx_new failed";
         return;
     }
 
@@ -63,7 +63,7 @@ void FaceEnrollWorker::run()
         iRet = zmq_msg_recv(&msg, socket, 0);
         if (iRet == -1)
         {
-            LOG_DEBUG_S() << "zmq_msg_recv:" << strerror(errno);
+            KLOG_DEBUG_S() << "zmq_msg_recv:" << strerror(errno);
             continue;
         }
         void *data = zmq_msg_data(&msg);
@@ -93,7 +93,7 @@ void FaceEnrollWorker::parseFaceImage(const QJsonObject &jsonObject)
     QByteArray byteArray = QByteArray::fromBase64(content.toUtf8());
     QImage image((uchar *)byteArray.data(), width, height, QImage::Format_RGB888);
     QImage newImgae = image.rgbSwapped();
-    LOG_DEBUG_S() << "recv image:" << width << "x" << height;
+    KLOG_DEBUG_S() << "recv image:" << width << "x" << height;
     emit sigHasNewImage(newImgae);
 }
 
@@ -110,7 +110,7 @@ void FaceEnrollWorker::parseFaceAxis(const QJsonObject &jsonObject)
         QJsonArray array = doc.array();
         for (QJsonValue item : array)
         {
-            LOG_INFO_S() << "item" << item;
+            KLOG_INFO_S() << "item" << item;
             QJsonObject itemObject = item.toObject();
             int tlX, tlY, width, height;
             tlX = itemObject["x"].toInt();
@@ -119,7 +119,7 @@ void FaceEnrollWorker::parseFaceAxis(const QJsonObject &jsonObject)
             height = itemObject["w"].toInt();
             QRect rect(tlX, tlY, width, height);
             res << rect;
-            LOG_INFO_S() << "face " << count++ << " -- top-left:" << rect.topLeft() << rect.width() << "x" << rect.height();
+            KLOG_INFO_S() << "face " << count++ << " -- top-left:" << rect.topLeft() << rect.width() << "x" << rect.height();
         }
     }
     emit sigFaceAxis(res);

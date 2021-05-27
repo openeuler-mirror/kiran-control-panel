@@ -7,12 +7,12 @@
 #include <QFileInfo>
 #include <QPixmap>
 #include <QTranslator>
-#include <zlog_ex.h>
+#include <qt5-log-i.h>
+#include <iostream>
 
 #include "../config.h"
 #include "include/exit-code-defines.h"
 #include "kiran-avatar-editor.h"
-#include "tools/log.h"
 
 //预览图像路径
 QString prewview_image;
@@ -85,13 +85,14 @@ void handlerCommandOption(const QApplication& app)
         }
         cliped_image_save_path = tempPath;
     }
-    LOG_INFO_S() << "preview image:" << prewview_image;
-    LOG_INFO_S() << "cliped image save path:" << cliped_image_save_path;
+
+    KLOG_INFO_S() << "preview image:" << prewview_image;
+    KLOG_INFO_S() << "cliped image save path:" << cliped_image_save_path;
 }
 
 void loadStylesheet()
 {
-    QFile file(":/themes/avatar-editor_back.qss");
+    QFile file(":/kcp-account-themes/avatar-editor_back.qss");
     if (file.open(QIODevice::ReadOnly))
     {
         QString style = file.readAll();
@@ -99,7 +100,7 @@ void loadStylesheet()
     }
     else
     {
-        LOG_WARNING_S() << "load stylesheet failed.";
+        KLOG_WARNING_S() << "load stylesheet failed.";
     }
 }
 
@@ -108,9 +109,8 @@ int main(int argc, char* argv[])
     KiranApplication app(argc, argv);
     app.setQuitOnLastWindowClosed(false);
 
-    dzlog_init_ex(nullptr,"kylinsec-session","kiran-account-manager","kiran-avatar-editor");
-    Log::instance()->init();
-    qInstallMessageHandler(Log::messageHandler);
+
+    klog_qt5_init("","kylinsec-session","kiran-cpanel-account","avatar-editor");
 
     QTranslator tsor;
     tsor.load(QLocale(),

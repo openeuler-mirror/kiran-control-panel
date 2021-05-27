@@ -15,7 +15,7 @@ class MaskWidget;
 class HardWorker;
 class KiranSidebarWidget;
 class QListWidgetItem;
-class KiranAccountManager : public KiranTitlebarWindow
+class KiranAccountManager : public QWidget
 {
     Q_OBJECT
 public:

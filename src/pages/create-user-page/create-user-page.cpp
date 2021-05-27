@@ -5,13 +5,13 @@
 #include "passwd-helper.h"
 #include "src/pages/advance-settings-page/advance-settings.h"
 #include "ui_create-user-page.h"
-#include "log.h"
 
 #include <kiranwidgets-qt5/kiran-message-box.h>
 #include <widget-property-helper.h>
 #include <QDebug>
 #include <QListView>
 #include <QMessageBox>
+#include <qt5-log-i.h>
 
 CreateUserPage::CreateUserPage(QWidget *parent) : QWidget(parent),
                                                   ui(new Ui::CreateUserPage)
@@ -53,7 +53,7 @@ void CreateUserPage::initUI()
     m_errorTip->setAnimationEnable(true);
 
     /// 用户头像
-    ui->avatar->setHoverImage(":/images/change_user_icon.png");
+    ui->avatar->setHoverImage(":/kcp-account-images/change_user_icon.png");
     ui->avatar->setClickEnable(true);
     connect(ui->avatar, &UserAvatarWidget::pressed, [this]() {
         emit sigSetIconForNewUser(ui->avatar->iconPath());
@@ -110,7 +110,7 @@ void CreateUserPage::initUI()
 void CreateUserPage::handlerCreateNewUser()
 {
     //step1.检验账户名是否为空，是否重名
-    LOG_INFO_S() << "start check account name";
+    KLOG_INFO_S() << "start check account name";
     QString account = ui->edit_name->text();
 
     if (account.isEmpty())
@@ -144,7 +144,7 @@ void CreateUserPage::handlerCreateNewUser()
     }
 
     //step2.检验密码、确认密码是否为空，是否相等
-    LOG_INFO_S() << "start check passwd,confirm passwd";
+    KLOG_INFO_S() << "start check passwd,confirm passwd";
     QString passwd = ui->editcheck_passwd->text();
     QString confirmPasswd = ui->editcheck_confirmPasswd->text();
     if (passwd.isEmpty())
@@ -170,7 +170,7 @@ void CreateUserPage::handlerCreateNewUser()
     }
 
     //step3.调用crypt密码加密
-    LOG_INFO_S() << "start encrypted passwd";
+    KLOG_INFO_S() << "start encrypted passwd";
     QString encryptedPasswd;
     if (!PasswdHelper::encryptPassword(passwd, encryptedPasswd))
     {

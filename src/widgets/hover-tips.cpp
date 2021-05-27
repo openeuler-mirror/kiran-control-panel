@@ -3,7 +3,6 @@
 //
 
 #include "hover-tips.h"
-#include "log.h"
 
 #include <QDebug>
 #include <QEvent>
@@ -11,6 +10,7 @@
 #include <QLabel>
 #include <QPainter>
 #include <QStyleOption>
+#include <qt5-log-i.h>
 
 HoverTips::HoverTips(QWidget *parent)
     : QWidget(parent)
@@ -29,7 +29,7 @@ void HoverTips::show(HoverTipsTypeEnum typeEnum, const QString &msg)
     auto iter = m_tipsTypeIconMap.find(typeEnum);
     if (iter == m_tipsTypeIconMap.end())
     {
-        LOG_WARNING_S() << "invalid type enum";
+        KLOG_WARNING_S() << "invalid type enum";
         return;
     }
 
@@ -56,7 +56,7 @@ void HoverTips::updatePostion()
 {
     if (parentWidget() == nullptr)
     {
-        LOG_WARNING_S() << "hover tips parnetwidget is null";
+        KLOG_WARNING_S() << "hover tips parnetwidget is null";
         return;
     }
     this->move((parentWidget()->width() - width()) / 2,
@@ -87,7 +87,7 @@ void HoverTips::setIcon(HoverTips::HoverTipsTypeEnum typeEnum, const QString &ic
     QPixmap pixmap;
     if (!pixmap.load(icon) || pixmap.isNull())
     {
-        LOG_WARNING_S() << "load icon failed.";
+        KLOG_WARNING_S() << "load icon failed.";
         return;
     }
     m_tipsTypeIconMap[typeEnum] = icon;
@@ -114,7 +114,6 @@ void HoverTips::paintEvent(QPaintEvent *event)
 {
     QStyleOption styleOption;
     QPainter painter(this);
-
     styleOption.init(this);
     style()->drawPrimitive(QStyle::PE_Widget,
                            &styleOption,

@@ -6,10 +6,10 @@
 
 #include "fingerprint-input-dialog.h"
 #include "biometrics-interface.h"
-#include "log.h"
 #include "ui_fingerprint-input-dialog.h"
 
 #include <kiran-message-box.h>
+#include <qt5-log-i.h>
 
 FingerprintInputDialog::FingerprintInputDialog(QWidget *parent)
     : KiranTitlebarWindow(parent),
@@ -58,7 +58,7 @@ void FingerprintInputDialog::closeEvent(QCloseEvent *event)
         deleteEnrolledReply.waitForFinished();
         if(!deleteEnrolledReply.isError())
         {
-            LOG_ERROR_S() << "delete enrolled finger failed!" << deleteEnrolledReply.error();
+            KLOG_ERROR_S() << "delete enrolled finger failed!" << deleteEnrolledReply.error();
         }
         m_fingerDataID.clear();
     }
@@ -123,12 +123,12 @@ void FingerprintInputDialog::setProgress(unsigned int value)
         const char *image;
     };
     static const ProgressPixmapInfo pixmapArray[] = {
-        {100, ":/images/finger_100.svg"},
-        {75, ":/images/finger_75.svg"},
-        {50, ":/images/finger_50.svg"},
-        {25, ":/images/finger_25.svg"},
-        {0, ":/images/finger_0.svg"}};
-    QString progressImage = ":/images/finger_0.svg";
+        {100, ":/kcp-account-images/finger_100.svg"},
+        {75, ":/kcp-account-images/finger_75.svg"},
+        {50, ":/kcp-account-images/finger_50.svg"},
+        {25, ":/kcp-account-images/finger_25.svg"},
+        {0, ":/kcp-account-images/finger_0.svg"}};
+    QString progressImage = ":/kcp-account-images/finger_0.svg";
     for (auto i : pixmapArray)
     {
         if (value >= i.value)
@@ -137,7 +137,7 @@ void FingerprintInputDialog::setProgress(unsigned int value)
             break;
         }
     }
-    LOG_INFO_S() << "progressImage" << progressImage;
+    KLOG_INFO_S() << "progressImage" << progressImage;
     ui->enrollProgress->updateCenterImage(progressImage);
 }
 
@@ -150,6 +150,6 @@ QString FingerprintInputDialog::getFingerDataID()
 
 void FingerprintInputDialog::resizeEvent(QResizeEvent *event)
 {
-    LOG_INFO_S() << "fingerprint size:" << event->size();
+    KLOG_INFO_S() << "fingerprint size:" << event->size();
     QWidget::resizeEvent(event);
 }

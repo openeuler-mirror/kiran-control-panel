@@ -7,11 +7,11 @@
 #include "config.h"
 #include "include/global-defines.h"
 #include "temporary-dir-manager.h"
-#include "log.h"
 
 #include <QDebug>
 #include <QMap>
 #include <QProcess>
+#include <qt5-log-i.h>
 
 QString avatarEditorError(int exitCode)
 {
@@ -46,7 +46,7 @@ bool AvatarEditorWrapper::exec(const QString &srcImage, QString &dstImage)
 
     if (!avatarEditorProcess.waitForStarted(3000))
     {
-        LOG_WARNING_S() << "can't start" << KIRAN_AVATAR_EDITOR_PATH;
+        KLOG_WARNING_S() << "can't start" << KIRAN_AVATAR_EDITOR_PATH;
         return false;
     }
 
@@ -57,6 +57,6 @@ bool AvatarEditorWrapper::exec(const QString &srcImage, QString &dstImage)
         dstImage = tempFilePath;
         return true;
     }
-    LOG_WARNING_S() << "kiran-avatar-editor:" << avatarEditorError(avatarEditorProcess.exitCode());
+    KLOG_WARNING_S() << "kiran-avatar-editor:" << avatarEditorError(avatarEditorProcess.exitCode());
     return false;
 }

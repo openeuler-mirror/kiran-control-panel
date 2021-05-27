@@ -1,5 +1,4 @@
 #include "user-avatar-widget.h"
-#include "log.h"
 #include "config.h"
 
 #include <QDebug>
@@ -7,7 +6,7 @@
 #include <QMouseEvent>
 #include <QPainter>
 #include <QtMath>
-
+#include <qt5-log-i.h>
 
 UserAvatarWidget::UserAvatarWidget(QWidget *parent)
     : QWidget(parent),
@@ -25,7 +24,7 @@ void UserAvatarWidget::setImage(const QString &path)
     QFile file(path);
     if (!file.exists())
     {
-        LOG_DEBUG_S() << "UserAvatar: file path[" << path << "] is no't exist";
+        KLOG_DEBUG_S() << "UserAvatar: file path[" << path << "] is no't exist";
     }
     if (m_pixmap.load(path))
     {
@@ -34,7 +33,7 @@ void UserAvatarWidget::setImage(const QString &path)
     }
     else
     {
-        LOG_DEBUG_S() << "UserAvatar: file path[" << path << "] load failed.";
+        KLOG_DEBUG_S() << "UserAvatar: file path[" << path << "] load failed.";
         if (path != DEFAULT_USER_AVATAR)
         {
             setDefaultImage();
@@ -166,7 +165,7 @@ bool UserAvatarWidget::setHoverImage(const QString &path)
     QFile file(path);
     if (!file.exists())
     {
-        LOG_WARNING_S() << "UserAvatar: hover pixmap file path[" << path << "] is no't exist";
+        KLOG_WARNING_S() << "UserAvatar: hover pixmap file path[" << path << "] is no't exist";
         return false;
     }
     if (m_hoverPixmap.load(path))
@@ -175,7 +174,7 @@ bool UserAvatarWidget::setHoverImage(const QString &path)
     }
     else
     {
-        LOG_WARNING_S() << "UserAvatar: hover pixmap file path[" << path << "] load failed.";
+        KLOG_WARNING_S() << "UserAvatar: hover pixmap file path[" << path << "] load failed.";
         return false;
     }
     update();

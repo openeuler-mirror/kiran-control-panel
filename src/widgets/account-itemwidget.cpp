@@ -13,7 +13,7 @@ AccountItemWidget::AccountItemWidget(QWidget *paren, bool isCreateAccountItem) :
     ui->setupUi(this);
     if (m_isCreateAccountItem)
     {
-        ui->avatar->setImage(":/images/add_icon.png");
+        ui->avatar->setImage(":/kcp-account-images/add_icon.png");
         ui->label_account->setText(tr("Create new account"));
         ui->label_status->setVisible(false);
     }

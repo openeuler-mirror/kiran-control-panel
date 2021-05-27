@@ -4,7 +4,6 @@
 #include "flowlayout.h"
 #include "scrollarea-container.h"
 #include "tools/avatar-editor-wrapper.h"
-#include "log.h"
 
 #include <widget-property-helper.h>
 #include <QButtonGroup>
@@ -14,7 +13,7 @@
 #include <QHBoxLayout>
 #include <QPushButton>
 #include <QScrollArea>
-#include <QVBoxLayout>
+#include <qt5-log-i.h>
 
 #define SYSTEM_AVATAR_OBJ_NAME "avatar_button_system"
 #define USER_AVATAR_OBJ_NAME "avatar_button_user"
@@ -84,7 +83,7 @@ void SelectAvatarPage::setCurrentAvatar(const QString &iconPath)
         }
         else
         {
-            LOG_WARNING_S() << "load" << iconPath << "failed";
+            KLOG_WARNING_S() << "load" << iconPath << "failed";
         }
     }
 
@@ -154,7 +153,7 @@ void SelectAvatarPage::initUI()
     m_btnLayout->addItem(item);
 
     loadAvatar();
-    m_addButton = addAvatar(":/images/add_icon.png", AVATAR_ADD, false);
+    m_addButton = addAvatar(":/kcp-account-images/add_icon.png", AVATAR_ADD, false);
     connect(m_addButton, &AvatarItemButton::clicked, [this]() {
         //1.选择图片
         QString fileName = QFileDialog::getOpenFileName(this, tr("select picture"),

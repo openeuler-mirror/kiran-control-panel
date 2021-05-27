@@ -4,7 +4,8 @@
 
 #include "fingerprint-input-worker.h"
 #include "biometrics-interface.h"
-#include "log.h"
+
+#include <qt5-log-i.h>
 
 FingerprintInputWorker::FingerprintInputWorker(QObject *parent)
     : QThread(parent),
@@ -16,11 +17,11 @@ FingerprintInputWorker::FingerprintInputWorker(QObject *parent)
                 {
                     return;
                 }
-                LOG_INFO_S() << "finger print status:";
-                LOG_INFO_S() << "    id:      " << id;
-                LOG_INFO_S() << "    progress:" << progress;
-                LOG_INFO_S() << "    done:    " << done;
-                LOG_INFO_S() << "    message: " << message;
+                KLOG_INFO_S() << "finger print status:";
+                KLOG_INFO_S() << "    id:      " << id;
+                KLOG_INFO_S() << "    progress:" << progress;
+                KLOG_INFO_S() << "    done:    " << done;
+                KLOG_INFO_S() << "    message: " << message;
                 if (done)
                 {
                     emit sigEnrollComplete(progress == 100, message, id);
@@ -40,14 +41,14 @@ FingerprintInputWorker::~FingerprintInputWorker()
 
 void FingerprintInputWorker::startFingerprintEnroll()
 {
-    LOG_INFO_S() << "start finger print enroll...";
+    KLOG_INFO_S() << "start finger print enroll...";
     stopFingerprintEnroll();
     start();
 }
 
 void FingerprintInputWorker::stopFingerprintEnroll()
 {
-    LOG_INFO_S() << "stop finger print enroll...";
+    KLOG_INFO_S() << "stop finger print enroll...";
     if (m_started)
     {
         m_interface->EnrollFprintStop();
@@ -57,7 +58,7 @@ void FingerprintInputWorker::stopFingerprintEnroll()
         QThread::requestInterruption();
         QThread::wait();
     }
-    LOG_INFO_S() << "stop finger print enroll finish...";
+    KLOG_INFO_S() << "stop finger print enroll finish...";
 }
 
 void FingerprintInputWorker::run()
@@ -67,7 +68,7 @@ void FingerprintInputWorker::run()
     reply.waitForFinished();
     if (reply.isError())
     {
-        LOG_INFO_S() << reply.error();
+        KLOG_INFO_S() << reply.error();
         emit sigEnrollError(reply.error().message());
         return;
     }

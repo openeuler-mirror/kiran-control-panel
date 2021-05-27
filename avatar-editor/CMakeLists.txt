@@ -15,7 +15,7 @@ include(kam-variables)
 
 find_package(PkgConfig REQUIRED)
 pkg_search_module(KIRAN_WIDGETS_QT5 REQUIRED kiranwidgets-qt5)
-pkg_search_module(ZLOG REQUIRED zlog)
+pkg_search_module(KLOG_QT5 REQUIRED klog-qt5)
 
 file(GLOB_RECURSE SOURCES "src/*.cpp")
 file(GLOB_RECURSE HEADERS "src/*.h")
@@ -36,10 +36,10 @@ target_include_directories(${PROJECT_NAME} PRIVATE
         include
         tools
         ${KIRAN_WIDGETS_QT5_INCLUDE_DIRS}
-        ${ZLOG_INCLUDE_DIRS})
+        ${KLOG_QT5_INCLUDE_DIRS})
 target_link_libraries(kiran-avatar-editor
         Qt5::Widgets
         ${KIRAN_WIDGETS_QT5_LIBRARIES}
-        ${ZLOG_LIBRARIES})
+        ${KLOG_QT5_LIBRARIES})
 install(TARGETS ${PROJECT_NAME} DESTINATION ${KAM_AVATAR_EDITOR_DIR})
 install(FILES ${AVATAR_EDITOR_QM_FILES} DESTINATION ${KAM_TRANSLATION_DIR_PATH} )

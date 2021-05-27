@@ -8,8 +8,7 @@
 #include <QDebug>
 #include <QString>
 #include <random>
-
-#include "log.h"
+#include <qt5-log-i.h>
 
 bool PasswdHelper::encryptPassword(const QString &pwd, QString &encrypted)
 {
@@ -49,7 +48,7 @@ bool PasswdHelper::encryptPassword(const QString &pwd, QString &encrypted)
             }
             else
             {
-                LOG_WARNING_S() << "encrypt passwd failed," << strerror(errno);
+                KLOG_WARNING_S() << "encrypt passwd failed," << strerror(errno);
             }
         }
         break;
@@ -133,7 +132,7 @@ bool PasswdHelper::checkUserPassword(const QString &user, const QString &pwd)
     res = pam_authenticate(handler, 0);
     if (res != PAM_SUCCESS)
     {
-        LOG_INFO_S() << pam_strerror(handler, res) << res;
+        KLOG_INFO_S() << pam_strerror(handler, res) << res;
         return false;
     }
 
