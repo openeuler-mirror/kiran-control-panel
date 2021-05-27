@@ -51,6 +51,7 @@ bool KiranTimeZone::save()
         qInfo() << "SetTimeZone failed," << res.second;
         return false;
     }
+
     return true;
 }
 

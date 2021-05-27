@@ -37,7 +37,7 @@ KiranTimeZoneItem[isSelected="true"]{
 KiranTimeZoneItem[isSelected="true"] QLabel#icon{
     border:none;
     background:transparent;
-    border-image:url(:/images/selected.png);
+    border-image:url(:/kcp-datetime-images/selected.png);
 }
 KiranTimeZoneItem[isSelected="false"] QLabel#icon{
     border:none;
@@ -50,10 +50,10 @@ KiranTimeZoneItem QLabel{
 }
 
 #time_sep1,#time_sep2{
-    border-image:url(:/images/colon.png);
+    border-image:url(:/kcp-datetime-images/colon.png);
 }
 KiranTimeZone QLabel#label_search{
-    qproperty-pixmap: url(:/images/search.svg);
+    qproperty-pixmap: url(:/kcp-datetime-images/search.svg);
 }
 
 KiranTimeZone QScrollArea{

@@ -6,4 +6,4 @@ Comment[zh_CN]=日期时间设置
 Icon=datetime.png
 Weight=1
 Category=Datetime
-PluginFile=@KDTM_LIB_INSTALL_DIR@/lib@PROJECT_NAME@.so
+PluginFile=/usr/local/lib64/libkiran-timedate-manager.so

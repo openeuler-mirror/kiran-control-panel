@@ -1,52 +1,43 @@
 cmake_minimum_required(VERSION 3.5)
 
-project(kiran-timedate-manager)
+project(kiran-cpanel-datetime)
+
+include(GNUInstallDirs)
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
-include(kdtm-variables)
-
 find_package(PkgConfig REQUIRED)
-pkg_search_module(KIRAN_WIDGETS_QT5 REQUIRED kiranwidgets-qt5)
 find_package(Qt5 COMPONENTS Widgets Svg DBus Network LinguistTools)
+pkg_search_module(KIRAN_WIDGETS_QT5 REQUIRED kiranwidgets-qt5)
+pkg_search_module(KLOG_QT5 REQUIRED klog-qt5)
+pkg_search_module(KIRAN_CC_DAEMON REQUIRED kiran-cc-daemon)
+
+#通过kiran control panel的pkgconfig配置文件取出插件Desktop安装位置、插件共享库安装位置
+pkg_search_module(KIRAN_CONTROL_PANEL_PKG REQUIRED kiran-control-panel)
+pkg_get_variable(CPANEL_PLUGIN_DIR kiran-control-panel plugin_location)
+pkg_get_variable(CPANEL_DESKTOP_DIR kiran-control-panel plugin_desktop_location)
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
 
 file(GLOB_RECURSE SRC
-        "src/dbus-api-wrapper/*.cpp"
-        "src/dbus-api-wrapper/*.h"
-        "src/timezone/*.cpp"
-        "src/timezone/*.h"
-        "src/tools/*.cpp"
-        "src/tools/*.h"
-        "src/widgets/*.cpp"
-        "src/widgets/*.h"
-        "resources/*.qrc"
-        "libs/*.cpp"
-        "libs/*.h")
-file(GLOB SRC_TIMEDATE
         "src/*.cpp"
-        "src/*.h"
-        "src/*.ui")
-list(APPEND SRC ${SRC_TIMEDATE})
-include_directories("${CMAKE_BINARY_DIR}" "src" )
+        "src/*.h")
 
+file(GLOB_RECURSE QRC
+        "resources/*.qrc")
+
+include_directories("${CMAKE_BINARY_DIR}" "src" )
 set( TS_FILES "translations/${PROJECT_NAME}.zh_CN.ts" )
 qt5_create_translation( QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES} )
-set(TRANSLATE_INSTALL_DIR "${KDTM_DATA_INSTALL_DIR}/${PROJECT_NAME}/translations/")
 
-#若定义了插件Desktop文件目录，则编译成插件
-if( DEFINED PLUGIN_DESKTOP_DIR )
-    configure_file(./config/config.h.in ${CMAKE_BINARY_DIR}/config.h @ONLY)
-    include(plugin-build)
-else()
-    include(app-build)
-endif()
+add_library(${PROJECT_NAME} SHARED
+        ${SRC}
+        ${QRC}
+        ${QM_FILES})
 
 target_include_directories(${PROJECT_NAME} PRIVATE
         include
@@ -54,7 +45,11 @@ target_include_directories(${PROJECT_NAME} PRIVATE
         src/timezone
         src/widgets
         src/tools
-        ${KIRAN_WIDGETS_QT5_INCLUDE_DIRS})
+        src/pages
+        ${KIRAN_WIDGETS_QT5_INCLUDE_DIRS}
+        ${KLOG_QT5_INCLUDE_DIRS}
+        ${KIRAN_CONTROL_PANEL_PKG_INCLUDE_DIRS}
+        ${KIRAN_CC_DAEMON_INCLUDE_DIRS})
 
 target_link_libraries(${PROJECT_NAME}
         Qt5::Widgets
@@ -63,7 +58,20 @@ target_link_libraries(${PROJECT_NAME}
         Qt5::Network
         X11
         Xrandr
-        kiranwidgets-qt5
-        ${KIRAN_WIDGETS_QT5_LIBRARIES})
+        ${KIRAN_WIDGETS_QT5_LIBRARIES}
+        ${KLOG_QT5_LIBRARIES})
 
+#安装插件Desktop
+configure_file(config/kiran-cpanel-datetime.desktop.in ${CMAKE_BINARY_DIR}/kiran-cpanel-datetime.desktop @ONLY)
+install(FILES ${CMAKE_BINARY_DIR}/kiran-cpanel-datetime.desktop DESTINATION ${CPANEL_DESKTOP_DIR}/ )
+
+#安装插件icon
+install(FILES "data/kcp-datetime.png" DESTINATION ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATADIR}/icons/hicolor/96x96/apps )
+
+#安装插件
+install(TARGETS ${PROJECT_NAME} DESTINATION ${CPANEL_PLUGIN_DIR})
+
+#安装翻译文件
+set(TRANSLATE_INSTALL_DIR "${KDTM_DATA_INSTALL_DIR}/${PROJECT_NAME}/translations/")
+configure_file(./config/config.h.in ${CMAKE_BINARY_DIR}/config.h @ONLY)
 install(FILES ${QM_FILES} DESTINATION ${TRANSLATE_INSTALL_DIR} )
