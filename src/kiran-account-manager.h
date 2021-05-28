@@ -22,6 +22,8 @@ public:
     explicit KiranAccountManager(QWidget *parent = nullptr);
     ~KiranAccountManager();
 
+    virtual QSize sizeHint() const;
+
 private Q_SLOTS:
     void setCurrentUser(const QString &userPath);
     void setMaskVisible(bool visible);

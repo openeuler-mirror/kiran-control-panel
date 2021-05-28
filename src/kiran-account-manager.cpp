@@ -398,3 +398,8 @@ void KiranAccountManager::setMaskVisible(bool visible)
         m_maskWidget->hide();
     }
 }
+
+QSize KiranAccountManager::sizeHint() const
+{
+    return QSize(1020,746);
+}
