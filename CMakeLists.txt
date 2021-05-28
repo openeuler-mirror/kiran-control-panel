@@ -1,11 +1,61 @@
 cmake_minimum_required(VERSION 3.0)
-project(kiran-display-tools VERSION 1.0)
-set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/)
 
-include(kiran_control_center_pulgin_dir)
-include(qt)
-include(app_plugin_var_declare)
-include(app_plugin_var_define)
-#添加子目录
-add_subdirectory(desktop)
-add_subdirectory(src)
+project(kiran-cpanel-display VERSION 1.0)
+
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
+
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTOUIC ON)
+set(CMAKE_AUTORCC ON)
+
+include(GNUInstallDirs)
+
+find_package(PkgConfig REQUIRED)
+find_package(Qt5 COMPONENTS Widgets DBus X11Extras Svg LinguistTools)
+pkg_search_module(KIRAN_CC_DAEMON REQUIRED kiran-cc-daemon)
+pkg_search_module(KLOG_QT5 REQUIRED klog-qt5)
+pkg_search_module(KIRANWIDGETS_QT5 REQUIRED kiranwidgets-qt5)
+
+pkg_search_module(KIRAN_CONTROL_PANEL REQUIRED kiran-control-panel)
+pkg_get_variable(CPANEL_PLUGIN_DIR kiran-control-panel plugin_location)
+pkg_get_variable(CPANEL_DESKTOP_DIR kiran-control-panel plugin_desktop_location)
+
+file(GLOB_RECURSE SRC "src/*.cpp" "src/*.h" "src/*.ui")
+file(GLOB_RECURSE QRC "resources/*.qrc")
+
+set(TS_FILES "translations/kiran-cpanel-display.zh_CN.ts")
+qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
+
+include_directories(${CMAKE_BINARY_DIR} ${CMAKE_BINARY_DIR}/src)
+
+add_library(${PROJECT_NAME} SHARED ${SRC} ${QRC} ${QM_FILES})
+
+target_include_directories(${PROJECT_NAME} PRIVATE
+        src/
+        ${KIRAN_CC_DAEMON_INCLUDE_DIRS}
+        ${KLOG_QT5_INCLUDE_DIRS}
+        ${KIRANWIDGETS_QT5_INCLUDE_DIRS}
+        ${KIRAN_CONTROL_PANEL_INCLUDE_DIRS})
+
+target_link_libraries(${PROJECT_NAME}
+        Qt5::Widgets
+        Qt5::DBus
+        Qt5::X11Extras
+        Qt5::Svg)
+
+#安装插件到指定目录
+install(TARGETS ${PROJECT_NAME} DESTINATION ${CPANEL_PLUGIN_DIR}/)
+
+#安装插件desktop
+configure_file(data/kiran-cpanel-display.desktop.in ${CMAKE_BINARY_DIR}/kiran-cpanel-display.desktop @ONLY)
+install(FILES ${CMAKE_BINARY_DIR}/kiran-cpanel-display.desktop DESTINATION ${CPANEL_DESKTOP_DIR}/ )
+
+#安装插件图标
+install(FILES "./data/kcp-display.svg" DESTINATION ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/scalable/apps)
+
+#安装翻译文件
+set(TRANSLATION_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATAROOTDIR}/${PROJECT_NAME})
+configure_file("data/config.h.in" ${CMAKE_BINARY_DIR}/config.h)
+install(FILES ${QM_FILES} DESTINATION ${TRANSLATION_INSTALL_DIR} )

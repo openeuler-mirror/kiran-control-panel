@@ -1,3 +1,0 @@
-#define APP_ICON_PATH                       "@APP_ICON_DIR@@APP_ICON_NAME@"
-#define APP_TRANSLATE_PATH_PREFIX           "@APP_TRANSLATE_DIR@@PROJECT_NAME@"
-

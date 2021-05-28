@@ -14,22 +14,7 @@
    <string>KiranDisplayConfiguration</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">QWidget:focus{
-outline: none;
-}
-
-QWidget{
-background-color: #222222;
-color: #ffffff;
-}
-
-
-  QWidget:disabled {
-      background-color: rgba(255,255,255,5);
-	color: rgba(255,255,255,60);
-  }
-
-</string>
+   <string notr="true"/>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout" stretch="2,0,5">
    <property name="spacing">
@@ -268,7 +253,7 @@ QPushButton {
         <x>0</x>
         <y>0</y>
         <width>700</width>
-        <height>493</height>
+        <height>499</height>
        </rect>
       </property>
       <property name="sizePolicy">
@@ -331,7 +316,7 @@ QPushButton {
               </widget>
              </item>
              <item>
-              <widget class="KiranComboBox" name="comboBox_resolving">
+              <widget class="QComboBox" name="comboBox_resolving">
                <property name="minimumSize">
                 <size>
                  <width>0</width>
@@ -343,6 +328,9 @@ QPushButton {
                  <width>16777215</width>
                  <height>40</height>
                 </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QComboBox{combobox-popup:0;}</string>
                </property>
               </widget>
              </item>
@@ -361,7 +349,7 @@ QPushButton {
               </widget>
              </item>
              <item>
-              <widget class="KiranComboBox" name="comboBox_refreshRate">
+              <widget class="QComboBox" name="comboBox_refreshRate">
                <property name="minimumSize">
                 <size>
                  <width>0</width>
@@ -391,7 +379,7 @@ QPushButton {
               </widget>
              </item>
              <item>
-              <widget class="KiranComboBox" name="comboBox_windowScalingFactor">
+              <widget class="QComboBox" name="comboBox_windowScalingFactor">
                <property name="minimumSize">
                 <size>
                  <width>0</width>
@@ -475,24 +463,7 @@ QPushButton {
                 </size>
                </property>
                <property name="styleSheet">
-                <string notr="true">QPushButton {
-      border-radius:10px;
-	background-color: rgb(67, 163, 242);
-  }
-
-  QPushButton:hover {
-	background-color: rgb(121, 195, 255);
-  }
-  QPushButton:pressed {
-      background-color: rgb(21, 104, 173);
-  }
-
-  QPushButton:disabled {
-      background-color: rgba(255,255,255,5);
-	color: rgba(255,255,255,60);
-  }
-
-</string>
+                <string notr="true"/>
                </property>
                <property name="text">
                 <string>Apply</string>
@@ -514,21 +485,7 @@ QPushButton {
                 </size>
                </property>
                <property name="styleSheet">
-                <string notr="true">QPushButton {
-border-radius:10px;
-background-color: rgba(255, 255, 255, 20);
-border: 2px solid rgba(255, 255, 255, 10);
-  }
-  QPushButton:hover {
-border-radius:10px;
-background-color: rgba(255, 255, 255, 30);
-border: 2px solid rgba(67, 163, 242,10);
-  }
-  QPushButton:pressed {
-border-radius:10px;
-background-color: rgba(255, 255, 255, 10);
-border: 2px solid rgba(255, 255, 255, 20);
-  }</string>
+                <string notr="true"/>
                </property>
                <property name="text">
                 <string>Close</string>
@@ -700,7 +657,7 @@ border: 2px solid rgba(255, 255, 255, 20);
               </widget>
              </item>
              <item>
-              <widget class="KiranComboBox" name="comboBox_extra_resolving">
+              <widget class="QComboBox" name="comboBox_extra_resolving">
                <property name="minimumSize">
                 <size>
                  <width>0</width>
@@ -712,6 +669,9 @@ border: 2px solid rgba(255, 255, 255, 20);
                  <width>16777215</width>
                  <height>40</height>
                 </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QComboBox{combobox-popup:0;}</string>
                </property>
               </widget>
              </item>
@@ -730,7 +690,7 @@ border: 2px solid rgba(255, 255, 255, 20);
               </widget>
              </item>
              <item>
-              <widget class="KiranComboBox" name="comboBox_extra_refreshRate">
+              <widget class="QComboBox" name="comboBox_extra_refreshRate">
                <property name="minimumSize">
                 <size>
                  <width>0</width>
@@ -760,7 +720,7 @@ border: 2px solid rgba(255, 255, 255, 20);
               </widget>
              </item>
              <item>
-              <widget class="KiranComboBox" name="comboBox_extra_windowScalingFactor">
+              <widget class="QComboBox" name="comboBox_extra_windowScalingFactor">
                <property name="minimumSize">
                 <size>
                  <width>0</width>
@@ -841,24 +801,7 @@ border: 2px solid rgba(255, 255, 255, 20);
                 </size>
                </property>
                <property name="styleSheet">
-                <string notr="true">QPushButton {
-      border-radius:10px;
-	background-color: rgb(67, 163, 242);
-  }
-
-  QPushButton:hover {
-	background-color: rgb(121, 195, 255);
-  }
-  QPushButton:pressed {
-      background-color: rgb(21, 104, 173);
-  }
-
-  QPushButton:disabled {
-      background-color: rgba(255,255,255,5);
-	color: rgba(255,255,255,60);
-  }
-
-</string>
+                <string notr="true"/>
                </property>
                <property name="text">
                 <string>Apply</string>
@@ -880,21 +823,7 @@ border: 2px solid rgba(255, 255, 255, 20);
                 </size>
                </property>
                <property name="styleSheet">
-                <string notr="true">QPushButton {
-border-radius:10px;
-background-color: rgba(255, 255, 255, 20);
-border: 2px solid rgba(255, 255, 255, 10);
-  }
-  QPushButton:hover {
-border-radius:10px;
-background-color: rgba(255, 255, 255, 30);
-border: 2px solid rgba(67, 163, 242,10);
-  }
-  QPushButton:pressed {
-border-radius:10px;
-background-color: rgba(255, 255, 255, 10);
-border: 2px solid rgba(255, 255, 255, 20);
-  }</string>
+                <string notr="true"/>
                </property>
                <property name="text">
                 <string>Close</string>
@@ -933,11 +862,6 @@ border: 2px solid rgba(255, 255, 255, 20);
    <extends>QWidget</extends>
    <header>kiran-display-configuration-panel.h</header>
    <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>KiranComboBox</class>
-   <extends>QComboBox</extends>
-   <header>kiran-combobox.h</header>
   </customwidget>
   <customwidget>
    <class>KiranSwitchButton</class>

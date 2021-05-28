@@ -793,3 +793,8 @@ void KiranDisplayConfiguration::on_pushButton_extra_cancel_clicked()
 {
     on_pushButton_cancel_clicked();
 }
+
+QSize KiranDisplayConfiguration::sizeHint() const
+{
+    return QSize(679,790);
+}

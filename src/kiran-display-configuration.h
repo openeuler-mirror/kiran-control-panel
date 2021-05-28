@@ -22,6 +22,8 @@ public:
     ~KiranDisplayConfiguration();
     bool hasUnsavedOptions() override;
 
+    QSize sizeHint() const override;
+
 Q_SIGNALS:
     void sigClose();
 
@@ -44,6 +46,8 @@ private:
     QList<DisplayModesStu> intersectionMonitorModes();
     QMap<int, QPair<QSize, QList<int> > > getResolutionFromModes(const QList<DisplayModesStu> &modes);
     DisplayModesStu curIntersectionMonitorMode();
+
+private:
     void setMonitorProperty(const QString &monitorPath, const QVariantMap &map);
     //
     void initCopeMode();

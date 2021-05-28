@@ -1,9 +1,0 @@
-[Desktop Entry]
-Name=Display Settings
-Name[zh_CN]=显示设置
-Comment=Display settings
-Comment=显示设置
-Icon=display-settings.svg
-Weight=1
-Category=Display
-PluginFile=@INSTALL_LIBDIR@/lib@PROJECT_NAME@.so
