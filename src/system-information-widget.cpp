@@ -159,7 +159,7 @@ void SystemInformationWidget::readLicenseInfo()
                     QString dueTime  = time.toString("yyyy-MM-dd");
                     qInfo() << "due time = " <<dueTime <<endl;
 
-                    ui->lab_status->setText(QString("%1%2").arg(tr("Trial Version. Trial expire: ")).
+                    ui->lab_status->setText(QString("%1%2").arg(tr("Not activated. Trial expire: ")).
                                                             arg(dueTime));
                 }
                 default:
@@ -171,14 +171,14 @@ void SystemInformationWidget::readLicenseInfo()
                 ui->lab_status->setText(tr("get service status failed"));
                 ui->btn_status->hide();
             }
-            ui->lab_expire_date_info->setText(tr("Unknow"));
+            ui->lab_expire_date_info->setText(tr("Not yet"));
             break;
         }
         case KylinSec::LicenseStatus::LICENSE_STATUS_REGISTERD:
         {
             /*已激活*/
             ui->btn_status->show();
-            ui->lab_status->setText(tr("Official Version"));
+            ui->lab_status->setText(tr("Activated"));
             ui->lab_status->setStyleSheet("QLabel#lab_status {color:#5ab940}");
 
             QDateTime time = QDateTime::fromTime_t(expired_time);

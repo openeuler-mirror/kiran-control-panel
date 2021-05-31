@@ -99,19 +99,19 @@ LIBS += \
         -lglib-2.0\
         -lkiranwidgets-qt5
 
-TRANSLATIONS    +=  ../translations/kiran-system-information.zh_CN.ts
+TRANSLATIONS    +=  ../translations/kiran-cpanel-system.zh_CN.ts
 
 #安装选项
 target.path = $$DESTDIR/usr/bin/
 
-target_translation.files = ../translations/kiran-system-information.zh_CN.qm
+target_translation.files = ../translations/kiran-cpanel-system.zh_CN.qm
 target_translation.path = $$DESTDIR/usr/share/kiran-system-information/translations/
 
 INSTALLS = target target_translation
 
 DISTFILES += \
-    ../translations/kiran-system-information.zh_CN.ts \
-    ../translations/kiran-system-information.zh_CN.qm \
+    ../translations/kiran-cpanel-system.zh_CN.ts \
+    ../translations/kiran-cpanel-system.zh_CN.qm \
 
 DEFINES += QT_MESSAGELOGCONTEXT
 

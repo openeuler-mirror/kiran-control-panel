@@ -402,7 +402,7 @@
          <item>
           <widget class="QLabel" name="lab_install_time">
            <property name="text">
-            <string>Install Time:</string>
+            <string>Installation time:</string>
            </property>
           </widget>
          </item>
@@ -465,7 +465,7 @@
          <item>
           <widget class="QLabel" name="lab_register_status">
            <property name="text">
-            <string>Register Status:</string>
+            <string>Activation status:</string>
            </property>
           </widget>
          </item>
@@ -553,7 +553,7 @@
          <item>
           <widget class="QLabel" name="lab_expire_date">
            <property name="text">
-            <string>Expire date:</string>
+            <string>Expiry date:</string>
            </property>
           </widget>
          </item>
