@@ -59,7 +59,7 @@ bool KiranCPanelMouseWidget::initUI()
         addSidebarItem(tr("Mouse Settings"),":/images/mouse.svg");
 
         m_hasTouchPad = m_touchPadInterface->has_touchpad();
-        if(!m_hasTouchPad)
+        if(m_hasTouchPad)
         {
             addSidebarItem(tr("TouchPad Settings"),":/images/touchpad.svg");
             touchPadSettingsPage = new TouchPadSettings(m_touchPadInterface);

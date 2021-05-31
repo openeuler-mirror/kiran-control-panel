@@ -53,7 +53,7 @@ void MouseSettings::initPageMouseUI()
 {
     m_mouseLeftHand = m_mouseInterface->left_handed();
     ui->comboBox_hand_mode->setCurrentIndex(m_mouseLeftHand);
-    connect(ui->comboBox_hand_mode, static_cast<void (QComboBox::*)(int index)>(&QComboBox::currentIndexChanged),
+    connect(ui->comboBox_hand_mode, QOverload<int>::of(&QComboBox::currentIndexChanged),
             [this](int currentIntex){
         m_mouseLeftHand = currentIntex;
         m_mouseInterface->setLeft_handed(m_mouseLeftHand);

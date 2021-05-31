@@ -71,7 +71,7 @@ void TouchPadSettings::initPageTouchPadUI()
 
     m_touchPadLeftHand = m_touchPadInterface->left_handed();
     ui->comboBox_tp_hand_mode->setCurrentIndex(m_touchPadLeftHand);
-    connect(ui->comboBox_tp_hand_mode, static_cast<void (QComboBox::*)(int index)>(&QComboBox::currentIndexChanged),
+    connect(ui->comboBox_tp_hand_mode, QOverload<int>::of(&QComboBox::currentIndexChanged),
             [this](int currentIntex){
         m_touchPadLeftHand = currentIntex;
         m_touchPadInterface->setLeft_handed(m_touchPadLeftHand);
@@ -121,7 +121,7 @@ void TouchPadSettings::initPageTouchPadUI()
 
     m_clickMethod = m_touchPadInterface->click_method();
     ui->comboBox_tp_click_mode->setCurrentIndex(m_clickMethod);
-    connect(ui->comboBox_tp_click_mode, static_cast<void (QComboBox::*)(int index)>(&QComboBox::currentIndexChanged),
+    connect(ui->comboBox_tp_click_mode, QOverload<int>::of(&QComboBox::currentIndexChanged),
             [this](int currentIndex){
        m_clickMethod = currentIndex;
        m_touchPadInterface->setClick_method(m_clickMethod);
@@ -129,7 +129,7 @@ void TouchPadSettings::initPageTouchPadUI()
 
     m_scrollMethod = m_touchPadInterface->scroll_method();
     ui->comboBox_tp_move_win_mode ->setCurrentIndex(m_scrollMethod);
-    connect(ui->comboBox_tp_move_win_mode,static_cast<void (QComboBox::*)(int index)>(&QComboBox::currentIndexChanged),
+    connect(ui->comboBox_tp_move_win_mode,QOverload<int>::of(&QComboBox::currentIndexChanged),
             [this](int currentIndex){
        m_scrollMethod = currentIndex;
        m_touchPadInterface->setScroll_method(m_scrollMethod);
