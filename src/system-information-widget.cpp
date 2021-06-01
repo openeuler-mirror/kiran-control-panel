@@ -101,7 +101,7 @@ void SystemInformationWidget::readSystemInfo(int infoType)
     }
 
 }
-//7NZDN-162GJ-X97JF-T7V91-9W58B
+
 /**
  * @brief SystemInformationWidget::readLicenseInfo:读取系统授权信息
  */
@@ -159,7 +159,7 @@ void SystemInformationWidget::readLicenseInfo()
                     QString dueTime  = time.toString("yyyy-MM-dd");
                     qInfo() << "due time = " <<dueTime <<endl;
 
-                    ui->lab_status->setText(QString("%1%2").arg(tr("Not activated. Trial expire: ")).
+                    ui->lab_status->setText(QString("%1%2").arg(tr("Not activated. Trail expiration: ")).
                                                             arg(dueTime));
                 }
                 default:

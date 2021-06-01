@@ -17,7 +17,7 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
 set(DATA_DIR "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATAROOTDIR}")
 
-set(TARGET_NAME "kiran-cpanel-system")
+set(TARGET_NAME ${PROJECT_NAME})
 set(TRANSLATIONS_DIR "${DATA_DIR}/${PROJECT_NAME}/translations/")
 set( TS_FILES "translations/kiran-cpanel-system.zh_CN.ts" )
 set( INCLUDE_PATH "/usr/include/glib-2.0/" "/usr/lib64/glib-2.0/include/" "/usr/include" "/usr/include/kylin-license" "/usr/include/kiran-cc-daemon")
@@ -43,7 +43,7 @@ find_package(Qt5 COMPONENTS Widgets Svg DBus LinguistTools Network PrintSupport)
 qt5_create_translation( QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES} )
 
 
-add_executable(kiran-cpanel-system 
+add_executable(${TARGET_NAME}
 			${SOURCES}
 			${HEADERS}
 			${FORMS}
@@ -51,7 +51,7 @@ add_executable(kiran-cpanel-system
 	        	${QM_FILES}
 			${QSS})
 			
-target_link_libraries(kiran-cpanel-system
+target_link_libraries(${TARGET_NAME}
         Qt5::Widgets
         Qt5::DBus
         Qt5::Svg
