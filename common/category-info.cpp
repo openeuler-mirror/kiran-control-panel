@@ -23,7 +23,7 @@ QSharedPointer<CPanelCategoryInfo> CPanelCategoryInfo::loadCategory(const QStrin
     QSharedPointer<CPanelCategoryInfo> pSharedCategoryInfo(new CPanelCategoryInfo);
     if (!pSharedCategoryInfo->load(categoryPath))
     {
-        KLOG_ERROR_S() << "can't load category desktop <" << categoryPath << ">!";
+        KLOG_ERROR() << "can't load category desktop <" << categoryPath << ">!";
         return nullptr;
     }
     return pSharedCategoryInfo;
@@ -44,7 +44,7 @@ bool CPanelCategoryInfo::load(const QString& categoryPath)
 
     if (!QFileInfo::exists(categoryPath))
     {
-        KLOG_ERROR_S() << "category desktop file <" << categoryPath << "> isn't exist!";
+        KLOG_ERROR() << "category desktop file <" << categoryPath << "> isn't exist!";
         return false;
     }
 
@@ -52,7 +52,7 @@ bool CPanelCategoryInfo::load(const QString& categoryPath)
     desktopSettings.setIniCodec("UTF-8");
     if (desktopSettings.status() != QSettings::NoError)
     {
-        KLOG_ERROR_S() << "can't parse" << categoryPath << ",has error:" << desktopSettings.status();
+        KLOG_ERROR() << "can't parse" << categoryPath << ",has error:" << desktopSettings.status();
         return false;
     }
 
@@ -60,7 +60,7 @@ bool CPanelCategoryInfo::load(const QString& categoryPath)
     if(!parseDesktopInfo(categoryPath,
                           desktopInfo))
     {
-        KLOG_ERROR_S() << "parser desktop entry group failed!," << categoryPath;
+        KLOG_ERROR() << "parser desktop entry group failed!," << categoryPath;
         return false;
     }
 
@@ -84,7 +84,7 @@ void CPanelCategoryInfo::insertPlugin(QSharedPointer<CPanelPluginHelper> pluginH
     auto pluginDesktopInfo = pluginHelper->getPluginDesktopInfo();
     if (pluginDesktopInfo.category != m_categoryDesktopInfo.categoryName)
     {
-        KLOG_ERROR_S() << "plugin category can't match!,"
+        KLOG_ERROR() << "plugin category can't match!,"
                        << "plugin category [" << pluginDesktopInfo.category << "],"
                        << "category [" << m_categoryDesktopInfo.categoryName << "]";
         return;
@@ -131,14 +131,14 @@ bool CPanelCategoryInfo::parseDesktopInfo(const QString& desktopPath, CPanelCate
                               G_KEY_FILE_KEEP_TRANSLATIONS,
                               &error))
     {
-        KLOG_ERROR_S() << "can't parse" << desktopPath << (error?error->message:"");
+        KLOG_ERROR() << "can't parse" << desktopPath << (error?error->message:"");
         goto out;
     }
 
     name = g_key_file_get_locale_string(keyFile,GROUP_DESKTOP_ENTRY,KEY_NAME, nullptr,&error);
     if( !name )
     {
-        KLOG_ERROR_S() << "missing" << GROUP_DESKTOP_ENTRY << KEY_NAME << (error?error->message:"");
+        KLOG_ERROR() << "missing" << GROUP_DESKTOP_ENTRY << KEY_NAME << (error?error->message:"");
         goto out;
     }
     desktopInfo.name = name;
@@ -147,7 +147,7 @@ bool CPanelCategoryInfo::parseDesktopInfo(const QString& desktopPath, CPanelCate
     comment = g_key_file_get_locale_string(keyFile,GROUP_DESKTOP_ENTRY,KEY_COMMENT, nullptr,&error);
     if( !comment )
     {
-        KLOG_ERROR_S() << "missing" << GROUP_DESKTOP_ENTRY << KEY_COMMENT << (error?error->message:"");
+        KLOG_ERROR() << "missing" << GROUP_DESKTOP_ENTRY << KEY_COMMENT << (error?error->message:"");
         goto out;
     }
     desktopInfo.comment = comment;
@@ -156,7 +156,7 @@ bool CPanelCategoryInfo::parseDesktopInfo(const QString& desktopPath, CPanelCate
     icon = g_key_file_get_string(keyFile,GROUP_DESKTOP_ENTRY,KEY_ICON,&error);
     if( !icon )
     {
-        KLOG_ERROR_S() << "missing" << GROUP_DESKTOP_ENTRY << KEY_ICON << (error?error->message:"");
+        KLOG_ERROR() << "missing" << GROUP_DESKTOP_ENTRY << KEY_ICON << (error?error->message:"");
         goto out;
     }
     desktopInfo.icon = icon;
@@ -169,7 +169,7 @@ bool CPanelCategoryInfo::parseDesktopInfo(const QString& desktopPath, CPanelCate
     category = g_key_file_get_string(keyFile,GROUP_KIRAN_CONTROL_PANEL_CATEGORY,KEY_CATEGORY,&error);
     if( !category )
     {
-        KLOG_ERROR_S() << "missing" << GROUP_KIRAN_CONTROL_PANEL_CATEGORY << KEY_CATEGORY << (error?error->message:"");
+        KLOG_ERROR() << "missing" << GROUP_KIRAN_CONTROL_PANEL_CATEGORY << KEY_CATEGORY << (error?error->message:"");
         goto out;
     }
     desktopInfo.categoryName = category;
@@ -178,7 +178,7 @@ bool CPanelCategoryInfo::parseDesktopInfo(const QString& desktopPath, CPanelCate
     weight = g_key_file_get_int64(keyFile,GROUP_KIRAN_CONTROL_PANEL_CATEGORY,KEY_WEIGHT,&error);
     if( error)
     {
-        KLOG_ERROR_S() << "missing" << GROUP_KIRAN_CONTROL_PANEL_CATEGORY << KEY_WEIGHT << error->message;
+        KLOG_ERROR() << "missing" << GROUP_KIRAN_CONTROL_PANEL_CATEGORY << KEY_WEIGHT << error->message;
         g_error_free(error);
         error = nullptr;
     }
@@ -187,7 +187,7 @@ bool CPanelCategoryInfo::parseDesktopInfo(const QString& desktopPath, CPanelCate
     keywords = g_key_file_get_locale_string(keyFile,GROUP_KIRAN_CONTROL_PANEL_CATEGORY,KEY_KEYWORDS, nullptr,&error);
     if( !keywords )
     {
-        KLOG_ERROR_S() << "missing" << GROUP_KIRAN_CONTROL_PANEL_CATEGORY << KEY_KEYWORDS << (error?error->message:"");
+        KLOG_ERROR() << "missing" << GROUP_KIRAN_CONTROL_PANEL_CATEGORY << KEY_KEYWORDS << (error?error->message:"");
         goto out;
     }
     {

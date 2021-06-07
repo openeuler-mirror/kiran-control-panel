@@ -57,11 +57,11 @@ void KiranModuleWidget::setPlugins(const QList<QSharedPointer<CPanelPluginHelper
     {
         const auto &pluginHelper = plugins.at(i);
         auto pluginDesktopInfo = pluginHelper->getPluginDesktopInfo();
-        KLOG_DEBUG_S() << "plugin:" << pluginDesktopInfo.name;
+        KLOG_DEBUG() << "plugin:" << pluginDesktopInfo.name;
         auto subItems = pluginDesktopInfo.subItems;
         foreach (auto subItem, subItems)
         {
-            KLOG_DEBUG_S() << "    sub item:" << subItem.name;
+            KLOG_DEBUG() << "    sub item:" << subItem.name;
             auto *item = new QListWidgetItem();
             item->setSizeHint(QSize(item->sizeHint().width(), 60));
             item->setText(subItem.name);
@@ -75,6 +75,8 @@ void KiranModuleWidget::setPlugins(const QList<QSharedPointer<CPanelPluginHelper
     if (ui->list_subItems->count() >= 0)
     {
         ui->list_subItems->setCurrentRow(0);
+        //NOTE：为了获取一个正确的初始化大小，手动调用槽函数，将功能项第一条的窗口加入显示
+        handleSubItemChanged(ui->list_subItems->item(0), nullptr);
     }
 
     if (ui->list_subItems->count() <= 1)
@@ -138,20 +140,20 @@ void KiranModuleWidget::handleSubItemChanged(QListWidgetItem *current, QListWidg
     ///检查是否存在未保存项
     if (checkHasUnSaved())
     {
-        KLOG_DEBUG_S() << "switch sub item" << currentIdx << "reject";
+        KLOG_DEBUG() << "switch sub item" << currentIdx << "reject";
         ui->list_subItems->setCurrentItem(ui->list_subItems->item(m_currentSubItemIdx));
         return;
     }
 
     ///更新当前选择的子功能项
-    KLOG_DEBUG_S() << "update current sub item Idx" << currentIdx;
+    KLOG_DEBUG() << "update current sub item Idx" << currentIdx;
     m_currentSubItemIdx = currentIdx;
 
     ///清理之前的功能项控件
     if (m_subItemWidget)
     {
         ui->centerLayout->removeWidget(m_subItemWidget);
-        m_subItemWidget->deleteLater();
+        delete m_subItemWidget;
         m_subItemWidget = nullptr;
     }
 
@@ -179,6 +181,7 @@ void KiranModuleWidget::handleSubItemChanged(QListWidgetItem *current, QListWidg
     QWidget *widget = m_plugins.at(pluginIndex)->getSubItemWidget(subItemID);
     if (widget)
     {
+        KLOG_DEBUG() << "sub item widget sizeHint:" << widget->sizeHint();
         ui->centerLayout->addWidget(widget);
     }
     m_subItemWidget = widget;

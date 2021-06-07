@@ -47,7 +47,7 @@ void PanelWidget::handleCurrentCategoryChanged(int curCategoryIdx, int prevCateg
     {
         if( ui->module_widget->checkHasUnSaved() )
         {
-            KLOG_DEBUG_S() << "switch category reject," << prevCategoryIdx << "->" << curCategoryIdx;
+            KLOG_DEBUG() << "switch category reject," << prevCategoryIdx << "->" << curCategoryIdx;
             m_categoryWidget->setCurrentCategory(m_currentCategoryIndex);
             return;
         }
@@ -55,12 +55,12 @@ void PanelWidget::handleCurrentCategoryChanged(int curCategoryIdx, int prevCateg
 
     if( m_currentCategoryIndex!=curCategoryIdx )
     {
-        KLOG_DEBUG_S() << "update current category Idx" << curCategoryIdx;
+        KLOG_DEBUG() << "update current category Idx" << curCategoryIdx;
         m_currentCategoryIndex = curCategoryIdx;
 
         auto categorys = CPanelPluginManager::getInstance()->getCategorys();
         auto category = categorys.at(m_currentCategoryIndex);
-        KLOG_DEBUG_S() << "update module widget for category:" << (category?category->getCategoryDesktopInfo().name:"null");
+        KLOG_DEBUG() << "update module widget for category:" << (category?category->getCategoryDesktopInfo().name:"null");
         ui->module_widget->setPlugins(category?category->getPlugins():QList<QSharedPointer<CPanelPluginHelper>>());
     }
 }

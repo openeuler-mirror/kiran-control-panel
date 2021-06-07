@@ -36,7 +36,7 @@ QSharedPointer<CPanelPluginHelper> CPanelPluginHelper::loadPlugin(const QString&
     QSharedPointer<CPanelPluginHelper> pSharedPluginHelper(new CPanelPluginHelper);
     if (!pSharedPluginHelper->load(desktop))
     {
-        KLOG_ERROR_S() << "can't load plugin desktop <" << desktop << ">!";
+        KLOG_ERROR() << "can't load plugin desktop <" << desktop << ">!";
         return nullptr;
     }
     return pSharedPluginHelper;
@@ -53,7 +53,7 @@ bool CPanelPluginHelper::load(const QString& desktopFile)
 
     if (!QFileInfo::exists(desktopFile))
     {
-        KLOG_ERROR_S() << "can't parse desktop file," << desktopFile << "is not exist!";
+        KLOG_ERROR() << "can't parse desktop file," << desktopFile << "is not exist!";
         return false;
     }
 
@@ -61,13 +61,13 @@ bool CPanelPluginHelper::load(const QString& desktopFile)
     //解析插件Desktop中的信息
     if (!parseDesktopInfo(desktopFile, desktopInfo))
     {
-        KLOG_ERROR_S() << "parser desktop failed!," << desktopFile;
+        KLOG_ERROR() << "parser desktop failed!," << desktopFile;
     }
     //加载插件共享库
     KcpPluginInterface* pluginInterface = nullptr;
     if (!loadLibrary(desktopInfo.library, pluginInterface))
     {
-        KLOG_ERROR_S() << "load library failed!" << desktopInfo.library;
+        KLOG_ERROR() << "load library failed!" << desktopInfo.library;
         return false;
     }
     //通过插件接口获取应该显示的功能项和Desktop中的信息取交集
@@ -97,18 +97,18 @@ bool CPanelPluginHelper::loadLibrary(const QString& library,
     QFileInfo libraryInfo(library);
     if (!libraryInfo.exists())
     {
-        KLOG_ERROR_S() << "can't find library(" << library << ")!";
+        KLOG_ERROR() << "can't find library(" << library << ")!";
         return false;
     }
 
     m_pluginHandle.setFileName(library);
     if (!m_pluginHandle.load())
     {
-        KLOG_ERROR_S() << "can't load plugin," << m_pluginHandle.errorString();
+        KLOG_ERROR() << "can't load plugin," << m_pluginHandle.errorString();
     }
     if (!m_pluginHandle.isLoaded())
     {
-        KLOG_ERROR_S() << "can't load library,"
+        KLOG_ERROR() << "can't load library,"
                        << m_pluginHandle.errorString()
                        << "," << library;
         return false;
@@ -116,7 +116,7 @@ bool CPanelPluginHelper::loadLibrary(const QString& library,
     KcpPluginInterface* pInterface = qobject_cast<KcpPluginInterface*>(m_pluginHandle.instance());
     if (!pInterface)
     {
-        KLOG_ERROR_S() << "can't convert to plugin interface!" << m_pluginHandle.errorString();
+        KLOG_ERROR() << "can't convert to plugin interface!" << m_pluginHandle.errorString();
         m_pluginHandle.unload();
         return false;
     }
@@ -124,7 +124,7 @@ bool CPanelPluginHelper::loadLibrary(const QString& library,
     int iRet = pInterface->init();
     if (iRet != 0)
     {
-        KLOG_ERROR_S() << "plugin init failed! errCode:" << iRet << library;
+        KLOG_ERROR() << "plugin init failed! errCode:" << iRet << library;
         m_pluginHandle.unload();
         return false;
     }
@@ -170,7 +170,7 @@ QWidget* CPanelPluginHelper::getSubItemWidget(const QString& subItemName)
 {
     if (!m_pluginInterface)
     {
-        KLOG_ERROR_S() << "plugin interface is nullptr!,can't get sub item widget!";
+        KLOG_ERROR() << "plugin interface is nullptr!,can't get sub item widget!";
         return nullptr;
     }
 
@@ -181,7 +181,7 @@ bool CPanelPluginHelper::haveUnsavedOptions()
 {
     if (!m_pluginInterface)
     {
-        KLOG_WARNING_S() << "plugin interface is nullptr!";
+        KLOG_WARNING() << "plugin interface is nullptr!";
         return false;
     }
 
@@ -202,7 +202,7 @@ bool CPanelPluginHelper::parseDesktopInfo(const QString& desktopPath, PluginDesk
     gboolean loadRes = g_key_file_load_from_file(keyFile, desktopFilePath.c_str(), G_KEY_FILE_KEEP_TRANSLATIONS, &error);
     if (!loadRes)
     {
-        KLOG_ERROR_S() << "can't load" << desktopPath << (error ? error->message : "");
+        KLOG_ERROR() << "can't load" << desktopPath << (error ? error->message : "");
         goto out;
     }
 
@@ -214,7 +214,7 @@ bool CPanelPluginHelper::parseDesktopInfo(const QString& desktopPath, PluginDesk
                                         &error);
     if (!name)
     {
-        KLOG_ERROR_S() << "can't get" << GROUP_DESKTOP_ENTRY << KEY_NAME << (error ? error->message : "");
+        KLOG_ERROR() << "can't get" << GROUP_DESKTOP_ENTRY << KEY_NAME << (error ? error->message : "");
         goto out;
     }
     desktopInfo.name = name;
@@ -228,7 +228,7 @@ bool CPanelPluginHelper::parseDesktopInfo(const QString& desktopPath, PluginDesk
                                            &error);
     if (!comment)
     {
-        KLOG_ERROR_S() << "can't get" << GROUP_DESKTOP_ENTRY << KEY_COMMENT << (error ? error->message : "");
+        KLOG_ERROR() << "can't get" << GROUP_DESKTOP_ENTRY << KEY_COMMENT << (error ? error->message : "");
         goto out;
     }
     desktopInfo.comment = comment;
@@ -241,7 +241,7 @@ bool CPanelPluginHelper::parseDesktopInfo(const QString& desktopPath, PluginDesk
                                  &error);
     if (!icon)
     {
-        KLOG_ERROR_S() << "can't get" << GROUP_DESKTOP_ENTRY << KEY_ICON << (error ? error->message : "");
+        KLOG_ERROR() << "can't get" << GROUP_DESKTOP_ENTRY << KEY_ICON << (error ? error->message : "");
         goto out;
     }
     desktopInfo.Icon = icon;
@@ -251,7 +251,7 @@ bool CPanelPluginHelper::parseDesktopInfo(const QString& desktopPath, PluginDesk
     weight = g_key_file_get_int64(keyFile, GROUP_KIRAN_CONTROL_PANEL_PLUGIN, KEY_WEIGHT, &error);
     if (error)
     {
-        KLOG_ERROR_S() << GROUP_KIRAN_CONTROL_PANEL_PLUGIN << KEY_WEIGHT << (error ? error->message : "");
+        KLOG_ERROR() << GROUP_KIRAN_CONTROL_PANEL_PLUGIN << KEY_WEIGHT << (error ? error->message : "");
         g_error_free(error);
         error = nullptr;
     }
@@ -261,7 +261,7 @@ bool CPanelPluginHelper::parseDesktopInfo(const QString& desktopPath, PluginDesk
     category = g_key_file_get_string(keyFile, GROUP_KIRAN_CONTROL_PANEL_PLUGIN, KEY_CATEGORY, &error);
     if (!category)
     {
-        KLOG_ERROR_S() << GROUP_KIRAN_CONTROL_PANEL_PLUGIN << KEY_WEIGHT << (error ? error->message : "");
+        KLOG_ERROR() << GROUP_KIRAN_CONTROL_PANEL_PLUGIN << KEY_WEIGHT << (error ? error->message : "");
         goto out;
     }
     desktopInfo.category = category;
@@ -271,7 +271,7 @@ bool CPanelPluginHelper::parseDesktopInfo(const QString& desktopPath, PluginDesk
     library = g_key_file_get_string(keyFile, GROUP_KIRAN_CONTROL_PANEL_PLUGIN, KEY_LIBRARY, &error);
     if (!library)
     {
-        KLOG_ERROR_S() << GROUP_KIRAN_CONTROL_PANEL_PLUGIN << KEY_LIBRARY << (error ? error->message : "");
+        KLOG_ERROR() << GROUP_KIRAN_CONTROL_PANEL_PLUGIN << KEY_LIBRARY << (error ? error->message : "");
         goto out;
     }
     desktopInfo.library = library;
@@ -285,7 +285,7 @@ bool CPanelPluginHelper::parseDesktopInfo(const QString& desktopPath, PluginDesk
     subItems = g_key_file_get_string(keyFile, GROUP_KIRAN_CONTROL_PANEL_PLUGIN, KEY_SUBITEMS, &error);
     if (!subItems)
     {
-        KLOG_ERROR_S() << GROUP_KIRAN_CONTROL_PANEL_PLUGIN << KEY_SUBITEMS << (error ? error->message : "");
+        KLOG_ERROR() << GROUP_KIRAN_CONTROL_PANEL_PLUGIN << KEY_SUBITEMS << (error ? error->message : "");
         goto out;
     }
     {
@@ -307,7 +307,7 @@ bool CPanelPluginHelper::parseDesktopInfo(const QString& desktopPath, PluginDesk
             gchar* itemName = g_key_file_get_locale_string(keyFile, sItemName.c_str(), KEY_SUBITEM_NAME, nullptr, &error);
             if (!itemName)
             {
-                KLOG_ERROR_S() << "parse" << desktopPath << subItem << "missing" << KEY_SUBITEM_NAME << error->message;
+                KLOG_ERROR() << "parse" << desktopPath << subItem << "missing" << KEY_SUBITEM_NAME << error->message;
                 continue;
             }
             subItemInfo.name = itemName;
@@ -316,7 +316,7 @@ bool CPanelPluginHelper::parseDesktopInfo(const QString& desktopPath, PluginDesk
             gchar* subItemIcon = g_key_file_get_locale_string(keyFile, sItemName.c_str(), KEY_SUBITEM_ICON, nullptr, &error);
             if (!subItemIcon)
             {
-                KLOG_WARNING_S() << desktopPath << subItem << "missing" << KEY_SUBITEM_ICON << error->message;
+                KLOG_WARNING() << desktopPath << subItem << "missing" << KEY_SUBITEM_ICON << error->message;
             }
             else
             {
@@ -327,7 +327,7 @@ bool CPanelPluginHelper::parseDesktopInfo(const QString& desktopPath, PluginDesk
             gchar* keywords = g_key_file_get_locale_string(keyFile, sItemName.c_str(), KEY_SUBITEM_KEYWORDS, nullptr, &error);
             if (!keywords)
             {
-                KLOG_ERROR_S() << desktopPath << subItem << "missing" << KEY_SUBITEM_KEYWORDS << error->message;
+                KLOG_ERROR() << desktopPath << subItem << "missing" << KEY_SUBITEM_KEYWORDS << error->message;
                 continue;
             }
             else

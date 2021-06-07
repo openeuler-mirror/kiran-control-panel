@@ -43,8 +43,5 @@ void Launcher::setPlugin(QSharedPointer<CPanelPluginHelper> plugin)
 
 QSize Launcher::sizeHint() const
 {
-    const float fontSize = QFontDatabase::systemFont(QFontDatabase::GeneralFont).pointSizeF();
-    const QSize targetSize = QSize(qRound(100*fontSize),qRound(78*fontSize));
-    const QSize screenSize = qApp->primaryScreen()->availableSize()*0.9;
-    return targetSize.boundedTo(screenSize);
+    return KiranTitlebarWindow::sizeHint();
 }

@@ -23,7 +23,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../common/kiran-module-widget/kiran-module-widget.cpp" line="113"/>
+        <location filename="../../common/kiran-module-widget/kiran-module-widget.cpp" line="115"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>

@@ -57,7 +57,7 @@ int main(int argc, char *argv[])
     else
     {
         QString qmFile = QString("%1/%2%3%4%5").arg(TRANSLATE_PREFIX).arg(qAppName()).arg(".").arg(locale.name()).arg(".qm");
-        KLOG_ERROR_S() << "can't load translator!" << qmFile;
+        KLOG_ERROR() << "can't load translator!" << qmFile;
     }
 
     QString pluginDesktopPath = QString("%1/%2").arg(PLUGIN_DESKTOP_DIR).arg(pluginDesktopName);
@@ -79,20 +79,19 @@ int main(int argc, char *argv[])
 
     //输出调试信息
     auto pluginDesktopInfo = pluginHelper->getPluginDesktopInfo();
-    KLOG_DEBUG_S() << "plugin info: "
-                   << "\n"
-                   << "\tdesktop  :" << pluginDesktopPath << "\n"
-                   << "\tName:    " << pluginDesktopInfo.name << "\n"
-                   << "\tIcon:    " << pluginDesktopInfo.Icon << "\n"
-                   << "\tComment: " << pluginDesktopInfo.comment << "\n"
-                   << "\tCategory:" << pluginDesktopInfo.category << "\n"
-                   << "\tLibrary: " << pluginDesktopInfo.library;
+    KLOG_DEBUG() << "plugin info: "<< "\n"
+                   << "\tdesktop  :" << pluginDesktopPath          << "\n"
+                   << "\tName:    "  << pluginDesktopInfo.name     << "\n"
+                   << "\tIcon:    "  << pluginDesktopInfo.Icon     << "\n"
+                   << "\tComment: "  << pluginDesktopInfo.comment  << "\n"
+                   << "\tCategory:"  << pluginDesktopInfo.category << "\n"
+                   << "\tLibrary: "  << pluginDesktopInfo.library;
 
-    KLOG_DEBUG_S() << "subItem info:";
+    KLOG_DEBUG() << "subItem info:";
     for (int i = 0; i < pluginDesktopInfo.subItems.size(); i++)
     {
         auto subItemInfo = pluginDesktopInfo.subItems.at(i);
-        KLOG_DEBUG_S() << "item" << i << "\n"
+        KLOG_DEBUG() << "item" << i << "\n"
                        << "\tID:      " << subItemInfo.id << "\n"
                        << "\tName:    " << subItemInfo.name << "\n"
                        << "\tIcon:    " << subItemInfo.icon << "\n"
@@ -104,11 +103,11 @@ int main(int argc, char *argv[])
     QIcon titleIcon = QIcon::fromTheme(pluginDesktopInfo.Icon);
     w.setIcon(titleIcon);
     w.setPlugin(pluginHelper);
+    KLOG_DEBUG() << "sizeHint:" << w.sizeHint();
     w.resize(w.sizeHint());
 
     int screeNum = QApplication::desktop()->screenNumber(QCursor::pos());
     QRect screenGeometry = QApplication::desktop()->screenGeometry(screeNum);
-    w.resize(1060, 830);
     w.move(screenGeometry.x() + (screenGeometry.width() - w.width()) / 2,
            screenGeometry.y() + (screenGeometry.height() - w.height()) / 2);
     w.show();

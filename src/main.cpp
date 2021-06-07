@@ -22,7 +22,7 @@ bool installTranslator()
                    TRANSLATE_PREFIX /*dir*/,
                    ".qm" /*suffix*/))
     {
-        KLOG_ERROR_S() << "load translator failed!";
+        KLOG_ERROR() << "load translator failed!";
         return false;
     }
     QCoreApplication::installTranslator(&tsor);
@@ -38,7 +38,7 @@ bool loadStyleSheet()
         qApp->setStyleSheet(styleContent);
         return true;
     }
-    KLOG_ERROR_S() << "can't load style sheet!";
+    KLOG_ERROR() << "can't load style sheet!";
     return false;
 }
 

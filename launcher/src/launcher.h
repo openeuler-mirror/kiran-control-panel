@@ -24,7 +24,7 @@ public:
     void setPlugin(QSharedPointer<CPanelPluginHelper> plguins);
 
 public:
-    QSize sizeHint() const override;
+    virtual QSize sizeHint() const override;
 
 private:
     KiranModuleWidget* m_moduleWidget = nullptr;

@@ -158,7 +158,7 @@ void CategoryWidget::loadCategory()
         categoryItemWidget->setToolTip(categoryInfo.comment);
         ui->categorys->setItemWidget(categoryItem, categoryItemWidget);
 
-        KLOG_INFO_S() << "add category " << categoryInfo.categoryName << "to category listwidget";
+        KLOG_INFO() << "add category " << categoryInfo.categoryName << "to category listwidget";
     }
 }
 

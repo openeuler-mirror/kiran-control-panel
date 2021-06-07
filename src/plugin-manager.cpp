@@ -62,11 +62,11 @@ void CPanelPluginManager::loadAll()
         auto ret = CPanelCategoryInfo::loadCategory(categoryFileInfo.absoluteFilePath());
         if (ret == nullptr)
         {
-            KLOG_ERROR_S() << "can't load category desktop <" << categoryFileInfo.absoluteFilePath() << ">!"
+            KLOG_ERROR() << "can't load category desktop <" << categoryFileInfo.absoluteFilePath() << ">!"
                            << ",ignore it!";
             continue;
         }
-        KLOG_INFO_S() << "load category:" << ret->getCategoryDesktopInfo().categoryName;
+        KLOG_INFO() << "load category:" << ret->getCategoryDesktopInfo().categoryName;
         ///插入的时候就不进行排序了，后续加载完所有的分类进行排序，再形成category name和排序完的序列号的map，后续插件插入更快速
         tempCategoryList.append(ret);
     }
@@ -83,7 +83,7 @@ void CPanelPluginManager::loadAll()
     for (int i = 0; i < tempCategoryList.count(); i++)
     {
         const auto& category = tempCategoryList.at(i);
-        KLOG_INFO_S() << i << "->" << category->getCategoryDesktopInfo().categoryName;
+        KLOG_INFO() << i << "->" << category->getCategoryDesktopInfo().categoryName;
         categoryIdxMap[category->getCategoryDesktopInfo().categoryName] = i;
     }
 
@@ -95,7 +95,7 @@ void CPanelPluginManager::loadAll()
         auto ret = CPanelPluginHelper::loadPlugin(pluginFileInfo.absoluteFilePath());
         if (ret == nullptr)
         {
-            KLOG_ERROR_S() << "can't load plugin <" << pluginFileInfo.absoluteFilePath() << ">!"
+            KLOG_ERROR() << "can't load plugin <" << pluginFileInfo.absoluteFilePath() << ">!"
                            << ",ignore it!";
             continue;
         }
@@ -104,14 +104,14 @@ void CPanelPluginManager::loadAll()
         auto categoryIdxMapIter = categoryIdxMap.find(pluginDesktopInfo.category);
         if (categoryIdxMapIter == categoryIdxMap.end())
         {
-            KLOG_ERROR_S() << "plugin desktop:" << pluginFileInfo.absoluteFilePath()
+            KLOG_ERROR() << "plugin desktop:" << pluginFileInfo.absoluteFilePath()
                            << "plugin name:" << pluginDesktopInfo.name
                            << "can't find category[" << pluginDesktopInfo.category;
             continue;
         }
         int categoryIdx = categoryIdxMapIter.value();
         tempCategoryList.at(categoryIdx)->insertPlugin(ret);
-        KLOG_INFO_S() << "load plugin:" << pluginDesktopInfo.name;
+        KLOG_INFO() << "load plugin:" << pluginDesktopInfo.name;
     }
 
     m_categoryInfos.swap(tempCategoryList);
