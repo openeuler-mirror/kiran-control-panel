@@ -25,8 +25,6 @@ pkg_get_variable(CPANEL_DESKTOP_DIR kiran-control-panel plugin_desktop_location)
 
 
 set(DATA_DIR "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATADIR}")
-#set(INSTALL_BINDIR ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_BINDIR})
-#set(INSTALL_LIBDIR ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR})
 
 set(TRANSLATIONS_DIR "${DATA_DIR}/${PROJECT_NAME}/translation/")
 set( TS_FILES "translations/kiran-cpanel-mouse.zh_CN.ts" )
@@ -43,7 +41,6 @@ file(GLOB_RECURSE SOURCES "src/*.cpp")
 file(GLOB_RECURSE HEADERS "src/*.h")
 file(GLOB_RECURSE FORMS "src/*.ui")
 file(GLOB_RECURSE RESOURCES "resources/*.qrc")
-file(GLOB_RECURSE QSS "resources/themes/*.qss")
 
 
 include_directories("${CMAKE_BINARY_DIR}" "src" "${INCLUDE_PATH}" 
@@ -57,17 +54,8 @@ add_library(${PROJECT_NAME} SHARED
 				${HEADERS}
 				${FORMS}
 				${RESOURCES}
-				${QSS}
 				${QM_FILES})
-
-#add_executable(kiran-cpanel-mouse 
-#			${SOURCES}
-#			${HEADERS}
-#			${FORMS}
-#			${RESOURCES}
-#	       ${QM_FILES}
-#			${QSS})
-			
+		
 target_link_libraries(${PROJECT_NAME} 
         Qt5::Widgets
         Qt5::DBus

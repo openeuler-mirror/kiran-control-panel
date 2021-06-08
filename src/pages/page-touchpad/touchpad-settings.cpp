@@ -161,6 +161,11 @@ void TouchPadSettings::initPageTouchPadUI()
     });
 }
 
+QSize TouchPadSettings::sizeHint() const
+{
+    return QSize(918,750);
+}
+
 void TouchPadSettings::addComboBoxItem()
 {
     QStringList hand_mode;

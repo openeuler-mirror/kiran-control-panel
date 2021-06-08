@@ -2,6 +2,7 @@
 #include "pages/page-mouse/mouse-settings.h"
 #include "pages/page-touchpad/touchpad-settings.h"
 #include "dbus-interface/touchpad-interface.h"
+#include "dbus-interface/mouse-interface.h"
 #include "config/config.h"
 #include <kiran-message-box.h>
 #include <QLocale>
@@ -58,6 +59,11 @@ void PluginMouseInterface::uninit()
 
 int PluginMouseInterface::init()
 {
+    if(!ComKylinsecKiranSessionDaemonMouseInterface::instance()->isValid() ||
+       !ComKylinsecKiranSessionDaemonTouchPadInterface::instance()->isValid())
+    {
+        return -1;
+    }
     //加载翻译文件
     if (m_translator != nullptr)
     {

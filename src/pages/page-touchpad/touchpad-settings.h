@@ -29,6 +29,7 @@ public:
 public:
     void initUI();
     void initPageTouchPadUI();
+    virtual QSize sizeHint() const override;
 
 private:
     void addComboBoxItem();

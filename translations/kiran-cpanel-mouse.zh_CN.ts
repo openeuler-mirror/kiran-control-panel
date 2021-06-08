@@ -306,47 +306,47 @@
         <translation>轻击(不按下)触摸板功能是否生效</translation>
     </message>
     <message>
-        <location filename="../src/pages/page-touchpad/touchpad-settings.cpp" line="87"/>
+        <location filename="../src/pages/page-touchpad/touchpad-settings.cpp" line="85"/>
         <source>Slow</source>
         <translation>低速</translation>
     </message>
     <message>
-        <location filename="../src/pages/page-touchpad/touchpad-settings.cpp" line="92"/>
+        <location filename="../src/pages/page-touchpad/touchpad-settings.cpp" line="90"/>
         <source>Standard</source>
         <translation>标准</translation>
     </message>
     <message>
-        <location filename="../src/pages/page-touchpad/touchpad-settings.cpp" line="97"/>
+        <location filename="../src/pages/page-touchpad/touchpad-settings.cpp" line="95"/>
         <source>Fast</source>
         <translation>快速</translation>
     </message>
     <message>
-        <location filename="../src/pages/page-touchpad/touchpad-settings.cpp" line="169"/>
+        <location filename="../src/pages/page-touchpad/touchpad-settings.cpp" line="172"/>
         <source>Right Hand Mode</source>
         <translation>右手模式</translation>
     </message>
     <message>
-        <location filename="../src/pages/page-touchpad/touchpad-settings.cpp" line="169"/>
+        <location filename="../src/pages/page-touchpad/touchpad-settings.cpp" line="172"/>
         <source>Left Hand Mode</source>
         <translation>左手模式</translation>
     </message>
     <message>
-        <location filename="../src/pages/page-touchpad/touchpad-settings.cpp" line="173"/>
+        <location filename="../src/pages/page-touchpad/touchpad-settings.cpp" line="176"/>
         <source>Press and Tap</source>
         <translation>按键和轻触</translation>
     </message>
     <message>
-        <location filename="../src/pages/page-touchpad/touchpad-settings.cpp" line="173"/>
+        <location filename="../src/pages/page-touchpad/touchpad-settings.cpp" line="176"/>
         <source>Tap</source>
         <translation>轻触</translation>
     </message>
     <message>
-        <location filename="../src/pages/page-touchpad/touchpad-settings.cpp" line="177"/>
+        <location filename="../src/pages/page-touchpad/touchpad-settings.cpp" line="180"/>
         <source>Two Finger Scroll</source>
         <translation>两指滑动</translation>
     </message>
     <message>
-        <location filename="../src/pages/page-touchpad/touchpad-settings.cpp" line="177"/>
+        <location filename="../src/pages/page-touchpad/touchpad-settings.cpp" line="180"/>
         <source>Edge Scroll</source>
         <translation>边缘滑动</translation>
     </message>

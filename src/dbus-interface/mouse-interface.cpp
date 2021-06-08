@@ -10,7 +10,7 @@
  */
 
 #include "mouse-interface.h"
-#include <kiran-session-daemon/mouse_i.h>
+#include <kiran-session-daemon/mouse-i.h>
 
 /*
  * Implementation of interface class ComKylinsecKiranSessionDaemonMouseInterface
