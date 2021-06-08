@@ -48,7 +48,7 @@ bool PasswdHelper::encryptPassword(const QString &pwd, QString &encrypted)
             }
             else
             {
-                KLOG_WARNING_S() << "encrypt passwd failed," << strerror(errno);
+                KLOG_WARNING() << "encrypt passwd failed," << strerror(errno);
             }
         }
         break;
@@ -132,7 +132,7 @@ bool PasswdHelper::checkUserPassword(const QString &user, const QString &pwd)
     res = pam_authenticate(handler, 0);
     if (res != PAM_SUCCESS)
     {
-        KLOG_INFO_S() << pam_strerror(handler, res) << res;
+        KLOG_INFO() << pam_strerror(handler, res) << res;
         return false;
     }
 

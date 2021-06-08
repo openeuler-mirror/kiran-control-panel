@@ -42,7 +42,7 @@ void HardWorker::doCreateUser(QString account,
     createUserRep.waitForFinished();
     if (createUserRep.isError())
     {
-        KLOG_WARNING_S() << "create user failed," << createUserRep.error();
+        KLOG_WARNING() << "create user failed," << createUserRep.error();
         errMsgDetail = createUserRep.error().message();
         goto failed;
     }
@@ -57,7 +57,7 @@ void HardWorker::doCreateUser(QString account,
         setpwdRep.waitForFinished();
         if (setpwdRep.isError())
         {
-            KLOG_WARNING_S() << "set passwd failed," << setpwdRep.error();
+            KLOG_WARNING() << "set passwd failed," << setpwdRep.error();
             errMsgDetail = setpwdRep.error().message();
             goto failed;
         }
@@ -68,7 +68,7 @@ void HardWorker::doCreateUser(QString account,
             setHomeRep.waitForFinished();
             if (setHomeRep.isError())
             {
-                KLOG_WARNING_S() << "set home directory failed," << setHomeRep.error();
+                KLOG_WARNING() << "set home directory failed," << setHomeRep.error();
                 errMsgDetail = setHomeRep.error().message();
                 goto failed;
             }
@@ -78,7 +78,7 @@ void HardWorker::doCreateUser(QString account,
         setShellRep.waitForFinished();
         if (setShellRep.isError())
         {
-            KLOG_WARNING_S() << "set shell failed," << setShellRep.error();
+            KLOG_WARNING() << "set shell failed," << setShellRep.error();
             errMsgDetail = setShellRep.error().message();
             goto failed;
         }
@@ -87,13 +87,13 @@ void HardWorker::doCreateUser(QString account,
         setIconRep.waitForFinished();
         if (setIconRep.isError())
         {
-            KLOG_WARNING_S() << "set icon failed," << setIconRep.error();
+            KLOG_WARNING() << "set icon failed," << setIconRep.error();
             errMsgDetail = setIconRep.error().message();
             goto failed;
         }
     }
 
-    KLOG_INFO_S() << QString("create user(%1) is done").arg(account);
+    KLOG_INFO() << QString("create user(%1) is done").arg(account);
     emit sigCreateUserDnoe(userObjPath, "");
     return;
 failed:
@@ -107,7 +107,7 @@ failed:
         reply.waitForFinished();
         if (reply.isError())
         {
-            KLOG_WARNING_S() << "create user failed,delete user:" << reply.error();
+            KLOG_WARNING() << "create user failed,delete user:" << reply.error();
         }
     }
     QString errMsg = errMsgPrefix;
@@ -128,12 +128,12 @@ void HardWorker::doUpdatePasswd(QString objPath,
     reply.waitForFinished();
     if (reply.isError())
     {
-        KLOG_WARNING_S() << "set passwd failed," << reply.error();
+        KLOG_WARNING() << "set passwd failed," << reply.error();
         emit sigUpdatePasswdDone(tr(" update password failed"));
     }
     else
     {
-        KLOG_INFO_S() << "update passwd is done";
+        KLOG_INFO() << "update passwd is done";
         emit sigUpdatePasswdDone("");
     }
 }
@@ -154,7 +154,7 @@ void HardWorker::doUpdateUserProperty(QString objPath,
         reply.waitForFinished();
         if (reply.isError())
         {
-            KLOG_WARNING_S() << "update icon file failed," << reply.error();
+            KLOG_WARNING() << "update icon file failed," << reply.error();
             updateFailedPropertys.append(tr("icon file"));
         }
     }
@@ -165,7 +165,7 @@ void HardWorker::doUpdateUserProperty(QString objPath,
         reply.waitForFinished();
         if (reply.isError())
         {
-            KLOG_WARNING_S() << "update account type failed," << reply.error();
+            KLOG_WARNING() << "update account type failed," << reply.error();
             updateFailedPropertys.append(tr("account type"));
         }
     }
@@ -176,7 +176,7 @@ void HardWorker::doUpdateUserProperty(QString objPath,
         reply.waitForFinished();
         if (reply.isError())
         {
-            KLOG_WARNING_S() << "update locked failed," << reply.error();
+            KLOG_WARNING() << "update locked failed," << reply.error();
             updateFailedPropertys.append(tr("locked"));
         }
     }
@@ -187,12 +187,12 @@ void HardWorker::doUpdateUserProperty(QString objPath,
         QString updateFailed = updateFailedPropertys.join(",");
         QString msg = QString(tr("Failed to update user properties(%1)"))
                           .arg(updateFailed);
-        KLOG_WARNING_S() << msg;
+        KLOG_WARNING() << msg;
         emit sigUpdateUserPropertyDone(msg);
     }
     else
     {
-        KLOG_INFO_S() << "update user property done";
+        KLOG_INFO() << "update user property done";
         emit sigUpdateUserPropertyDone("");
     }
 }
@@ -204,7 +204,7 @@ void HardWorker::doDeleteUser(int uid)
     reply.waitForFinished();
     if (reply.isError())
     {
-        KLOG_INFO_S() << "delete user" << reply.error();
+        KLOG_INFO() << "delete user" << reply.error();
         emit sigDeleteUserDone(tr("Failed to delete user"));
     }
     else

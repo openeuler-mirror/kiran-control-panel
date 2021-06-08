@@ -51,7 +51,7 @@ bool AccountsGlobalInfo::init()
     QSettings settings(CONFIG_FILE_PATH,QSettings::IniFormat);
     if(settings.status()!=QSettings::NoError)
     {
-        KLOG_WARNING_S() << "parse" << CONFIG_FILE_PATH << "failed!";
+        KLOG_WARNING() << "parse" << CONFIG_FILE_PATH << "failed!";
     }
     else
     {
@@ -73,7 +73,7 @@ bool AccountsGlobalInfo::init()
     pendingReply.waitForFinished();
     if (pendingReply.isError())
     {
-        KLOG_ERROR_S() << "GetNonSystemUsers Error:"
+        KLOG_ERROR() << "GetNonSystemUsers Error:"
                         << pendingReply.error();
         return false;
     }
@@ -89,7 +89,7 @@ bool AccountsGlobalInfo::init()
         }
         else
         {
-            KLOG_ERROR_S() << "cant find root by id:" << getRootReply.error();
+            KLOG_ERROR() << "cant find root by id:" << getRootReply.error();
         }
     }
 
@@ -107,7 +107,7 @@ bool AccountsGlobalInfo::init()
     findUserReply.waitForFinished();
     if (findUserReply.isError())
     {
-        KLOG_ERROR_S() << "get current user,FinduserById" << uid << "failed," << findUserReply.error();
+        KLOG_ERROR() << "get current user,FinduserById" << uid << "failed," << findUserReply.error();
     }
     else
     {
@@ -187,7 +187,7 @@ void AccountsGlobalInfo::deleteUserFromMap(const QDBusObjectPath &user)
 
 void AccountsGlobalInfo::handlerPropertyChanged(QString userPath, QString propertyName, QVariant value)
 {
-    KLOG_DEBUG_S() << "property changed:" << userPath << "\n"
+    KLOG_DEBUG() << "property changed:" << userPath << "\n"
                    << "\tproperty name: " << propertyName << "\n"
                    << "\tproperty value:" << value;
     emit UserPropertyChanged(userPath, propertyName, value);

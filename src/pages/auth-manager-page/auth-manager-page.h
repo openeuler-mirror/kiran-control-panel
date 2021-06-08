@@ -5,7 +5,7 @@
 #ifndef KIRAN_ACCOUNT_MANAGER_AUTH_MANAGER_PAGE_H
 #define KIRAN_ACCOUNT_MANAGER_AUTH_MANAGER_PAGE_H
 
-#include <kiran-system-daemon/accounts_i.h>
+#include <kiran-system-daemon/accounts-i.h>
 #include <QWidget>
 
 QT_BEGIN_NAMESPACE

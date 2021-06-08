@@ -17,12 +17,12 @@ int KcpInterface::init()
 {
     if (!AccountsGlobalInfo::instance()->init())
     {
-        KLOG_ERROR_S() << "load account info failed!";
+        KLOG_ERROR() << "load account info failed!";
         return -1;
     }
     if (!TemporaryDirManager::instance()->init(qAppName()))
     {
-        KLOG_ERROR_S() << "init temporary dir manager failed!";
+        KLOG_ERROR() << "init temporary dir manager failed!";
         return -1;
     }
     m_translator = new QTranslator;
@@ -34,7 +34,7 @@ int KcpInterface::init()
     {
         m_translator->deleteLater();
         m_translator = nullptr;
-        KLOG_ERROR_S() << "load translator failed!";
+        KLOG_ERROR() << "load translator failed!";
         return -1;
     }
     qApp->installTranslator(m_translator);

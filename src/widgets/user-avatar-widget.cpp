@@ -24,7 +24,7 @@ void UserAvatarWidget::setImage(const QString &path)
     QFile file(path);
     if (!file.exists())
     {
-        KLOG_DEBUG_S() << "UserAvatar: file path[" << path << "] is no't exist";
+        KLOG_DEBUG() << "UserAvatar: file path[" << path << "] is no't exist";
     }
     if (m_pixmap.load(path))
     {
@@ -33,7 +33,7 @@ void UserAvatarWidget::setImage(const QString &path)
     }
     else
     {
-        KLOG_DEBUG_S() << "UserAvatar: file path[" << path << "] load failed.";
+        KLOG_DEBUG() << "UserAvatar: file path[" << path << "] load failed.";
         if (path != DEFAULT_USER_AVATAR)
         {
             setDefaultImage();
@@ -165,7 +165,7 @@ bool UserAvatarWidget::setHoverImage(const QString &path)
     QFile file(path);
     if (!file.exists())
     {
-        KLOG_WARNING_S() << "UserAvatar: hover pixmap file path[" << path << "] is no't exist";
+        KLOG_WARNING() << "UserAvatar: hover pixmap file path[" << path << "] is no't exist";
         return false;
     }
     if (m_hoverPixmap.load(path))
@@ -174,7 +174,7 @@ bool UserAvatarWidget::setHoverImage(const QString &path)
     }
     else
     {
-        KLOG_WARNING_S() << "UserAvatar: hover pixmap file path[" << path << "] load failed.";
+        KLOG_WARNING() << "UserAvatar: hover pixmap file path[" << path << "] load failed.";
         return false;
     }
     update();

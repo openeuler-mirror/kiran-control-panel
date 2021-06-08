@@ -110,7 +110,7 @@ void CreateUserPage::initUI()
 void CreateUserPage::handlerCreateNewUser()
 {
     //step1.检验账户名是否为空，是否重名
-    KLOG_INFO_S() << "start check account name";
+    KLOG_INFO() << "start check account name";
     QString account = ui->edit_name->text();
 
     if (account.isEmpty())
@@ -144,7 +144,7 @@ void CreateUserPage::handlerCreateNewUser()
     }
 
     //step2.检验密码、确认密码是否为空，是否相等
-    KLOG_INFO_S() << "start check passwd,confirm passwd";
+    KLOG_INFO() << "start check passwd,confirm passwd";
     QString passwd = ui->editcheck_passwd->text();
     QString confirmPasswd = ui->editcheck_confirmPasswd->text();
     if (passwd.isEmpty())
@@ -170,7 +170,7 @@ void CreateUserPage::handlerCreateNewUser()
     }
 
     //step3.调用crypt密码加密
-    KLOG_INFO_S() << "start encrypted passwd";
+    KLOG_INFO() << "start encrypted passwd";
     QString encryptedPasswd;
     if (!PasswdHelper::encryptPassword(passwd, encryptedPasswd))
     {

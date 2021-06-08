@@ -24,7 +24,7 @@ void AnimationPushButton::setBusy(bool busy)
 
     if (busy && !m_svgRender.isValid())
     {
-        KLOG_WARNING_S() << "AnimationPushButton: animation pixmap isNull!";
+        KLOG_WARNING() << "AnimationPushButton: animation pixmap isNull!";
         return;
     }
     m_isBusy = busy;

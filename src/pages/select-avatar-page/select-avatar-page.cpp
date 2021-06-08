@@ -83,7 +83,7 @@ void SelectAvatarPage::setCurrentAvatar(const QString &iconPath)
         }
         else
         {
-            KLOG_WARNING_S() << "load" << iconPath << "failed";
+            KLOG_WARNING() << "load" << iconPath << "failed";
         }
     }
 

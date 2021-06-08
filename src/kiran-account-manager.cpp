@@ -69,7 +69,7 @@ void KiranAccountManager::appendSiderbarItem(const QString &userPath)
     UserInterface interface(userPath, QDBusConnection::systemBus());
 
     QString iconFile = interface.icon_file().isEmpty()?DEFAULT_USER_AVATAR:interface.icon_file();
-    KLOG_INFO_S() << "append siderbar item:" << interface.user_name() << iconFile;
+    KLOG_INFO() << "append siderbar item:" << interface.user_name() << iconFile;
 
     auto item = new QListWidgetItem(interface.user_name(), m_tabList);
     item->setIcon(QPixmap(iconFile));
@@ -320,13 +320,13 @@ void KiranAccountManager::connectToInfoChanged()
     //处理用户新增、删除
     connect(AccountsGlobalInfo::instance(), &AccountsGlobalInfo::UserAdded,
             [this](const QDBusObjectPath &obj) {
-                KLOG_INFO_S() << "siderbar add item:" << obj.path();
+                KLOG_INFO() << "siderbar add item:" << obj.path();
                 appendSiderbarItem(obj.path());
             });
 
     connect(AccountsGlobalInfo::instance(), &AccountsGlobalInfo::UserDeleted,
             [this](const QDBusObjectPath &obj) {
-                KLOG_INFO_S() << "siderbar delete item:" << obj.path();
+                KLOG_INFO() << "siderbar delete item:" << obj.path();
                 int findIdx = -1;
 
                 QString userPath = obj.path();
@@ -340,7 +340,7 @@ void KiranAccountManager::connectToInfoChanged()
                 }
                 if (findIdx == -1)
                 {
-                    KLOG_WARNING_S() << "can't find deleted user:" << obj.path();
+                    KLOG_WARNING() << "can't find deleted user:" << obj.path();
                     return;
                 }
                 bool needResetSidebarItem = m_tabList->item(findIdx)->isSelected();

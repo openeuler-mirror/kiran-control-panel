@@ -29,7 +29,7 @@ void HoverTips::show(HoverTipsTypeEnum typeEnum, const QString &msg)
     auto iter = m_tipsTypeIconMap.find(typeEnum);
     if (iter == m_tipsTypeIconMap.end())
     {
-        KLOG_WARNING_S() << "invalid type enum";
+        KLOG_WARNING() << "invalid type enum";
         return;
     }
 
@@ -56,7 +56,7 @@ void HoverTips::updatePostion()
 {
     if (parentWidget() == nullptr)
     {
-        KLOG_WARNING_S() << "hover tips parnetwidget is null";
+        KLOG_WARNING() << "hover tips parnetwidget is null";
         return;
     }
     this->move((parentWidget()->width() - width()) / 2,
@@ -87,7 +87,7 @@ void HoverTips::setIcon(HoverTips::HoverTipsTypeEnum typeEnum, const QString &ic
     QPixmap pixmap;
     if (!pixmap.load(icon) || pixmap.isNull())
     {
-        KLOG_WARNING_S() << "load icon failed.";
+        KLOG_WARNING() << "load icon failed.";
         return;
     }
     m_tipsTypeIconMap[typeEnum] = icon;

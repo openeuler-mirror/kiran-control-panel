@@ -76,15 +76,15 @@ void FaceInputDialog::closeEvent(QCloseEvent *event)
 {
     if (!m_isSave && !m_biometricID.isEmpty())
     {
-        KLOG_INFO_S() << "start delete enrolled face...";
+        KLOG_INFO() << "start delete enrolled face...";
         auto deleteBiometricReply = m_interface->DeleteEnrolledFace(m_biometricID);
         deleteBiometricReply.waitForFinished();
         if (deleteBiometricReply.isError())
         {
-            KLOG_WARNING_S() << "delete biometric" << m_biometricID
+            KLOG_WARNING() << "delete biometric" << m_biometricID
                             << "     reply error:" << deleteBiometricReply.error();
         }
-        KLOG_INFO_S() << "delete enrolled face finished...";
+        KLOG_INFO() << "delete enrolled face finished...";
         m_biometricID.clear();
     }
     emit sigClose();
@@ -97,15 +97,15 @@ bool FaceInputDialog::startEnroll()
     reply.waitForFinished();
     if (reply.isError())
     {
-        KLOG_WARNING_S() << "enroll face start error:" << reply.error();
+        KLOG_WARNING() << "enroll face start error:" << reply.error();
         if (reply.error().name() == "com.kylinsec.Kiran.SystemDaemon.Biometrics.Error.DeviceBusy")
         {
-            KLOG_INFO_S() << "device is busy,stop enroll face fisrt...";
+            KLOG_INFO() << "device is busy,stop enroll face fisrt...";
             auto stopEnrollReply = m_interface->EnrollFaceStop();
             stopEnrollReply.waitForFinished();
             if (stopEnrollReply.isError())
             {
-                KLOG_WARNING_S() << "stop enroll face error:" << stopEnrollReply.error();
+                KLOG_WARNING() << "stop enroll face error:" << stopEnrollReply.error();
                 setTips(TIP_TYPE_ERROR, tr("failed to initialize face collection environment!"));
                 return false;
             }
@@ -115,7 +115,7 @@ bool FaceInputDialog::startEnroll()
                 reply.waitForFinished();
                 if (reply.isError())
                 {
-                    KLOG_WARNING_S() << "enroll face start error:" << reply.error();
+                    KLOG_WARNING() << "enroll face start error:" << reply.error();
                     QString errMsg = QString("%1(%2)")
                                          .arg(tr("Failed to start collection"))
                                          .arg(reply.error().message());
@@ -126,7 +126,7 @@ bool FaceInputDialog::startEnroll()
         }
         else
         {
-            KLOG_WARNING_S() << "enroll face start error:" << reply.error();
+            KLOG_WARNING() << "enroll face start error:" << reply.error();
             QString errMsg = QString("%1(%2)")
                                  .arg(tr("Failed to start collection"))
                                  .arg(reply.error().message());
@@ -172,15 +172,15 @@ void FaceInputDialog::slotUpdateEnrollFaceStatus(const QString &message, const Q
 {
     if (!m_enrollStarted)
     {
-        KLOG_INFO_S() << "enroll start failed,ignore enroll face status.";
+        KLOG_INFO() << "enroll start failed,ignore enroll face status.";
         return;
     }
 
-    KLOG_INFO_S() << "recv EnrollFaceStatus:";
-    KLOG_INFO_S() << "    message: " << message;
-    KLOG_INFO_S() << "    id:      " << id;
-    KLOG_INFO_S() << "    progress:" << progress;
-    KLOG_INFO_S() << "    done:    " << done;
+    KLOG_INFO() << "recv EnrollFaceStatus:";
+    KLOG_INFO() << "    message: " << message;
+    KLOG_INFO() << "    id:      " << id;
+    KLOG_INFO() << "    progress:" << progress;
+    KLOG_INFO() << "    done:    " << done;
 
     if (!message.isEmpty())
     {

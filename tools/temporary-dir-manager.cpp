@@ -30,7 +30,7 @@ bool TemporaryDirManager::init(const QString &dirName)
     char * home = getenv("HOME");
     if( !home )
     {
-        KLOG_ERROR_S() << "can't get $HOME!!";
+        KLOG_ERROR() << "can't get $HOME!!";
         return false;
     }
     QString tempDirPrefix = QString("%1/.cache").arg(home);
@@ -39,7 +39,7 @@ bool TemporaryDirManager::init(const QString &dirName)
     if (fileInfo.exists())
     {
         QDir dir(fileInfo.absoluteFilePath());
-        KLOG_INFO_S() << "remove " << dir.path() << (dir.removeRecursively() ? "success" : "failed");
+        KLOG_INFO() << "remove " << dir.path() << (dir.removeRecursively() ? "success" : "failed");
     }
 
     QDir tempDir(tempDirPrefix);
@@ -47,11 +47,11 @@ bool TemporaryDirManager::init(const QString &dirName)
     {
         m_initFinished     = true;
         m_temporaryDirPath = temporarDirPath;
-        KLOG_INFO_S() << "Temporary Dir Path:" << m_temporaryDirPath;
+        KLOG_INFO() << "Temporary Dir Path:" << m_temporaryDirPath;
         return true;
     }
 
-    KLOG_WARNING_S() << "create temporary dir " << temporarDirPath << "failed!";
+    KLOG_WARNING() << "create temporary dir " << temporarDirPath << "failed!";
     return false;
 }
 
@@ -69,7 +69,7 @@ QString TemporaryDirManager::generateTempFilePath()
 {
     if (!m_initFinished)
     {
-        KLOG_WARNING_S() << "not initialized,call TemporaryDirManager::init";
+        KLOG_WARNING() << "not initialized,call TemporaryDirManager::init";
         return QString("");
     }
     QUuid id = QUuid::createUuid();

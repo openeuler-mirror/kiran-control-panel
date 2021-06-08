@@ -86,8 +86,8 @@ void handlerCommandOption(const QApplication& app)
         cliped_image_save_path = tempPath;
     }
 
-    KLOG_INFO_S() << "preview image:" << prewview_image;
-    KLOG_INFO_S() << "cliped image save path:" << cliped_image_save_path;
+    KLOG_INFO() << "preview image:" << prewview_image;
+    KLOG_INFO() << "cliped image save path:" << cliped_image_save_path;
 }
 
 void loadStylesheet()
@@ -100,7 +100,7 @@ void loadStylesheet()
     }
     else
     {
-        KLOG_WARNING_S() << "load stylesheet failed.";
+        KLOG_WARNING() << "load stylesheet failed.";
     }
 }
 

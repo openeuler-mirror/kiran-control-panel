@@ -46,7 +46,7 @@ bool AvatarEditorWrapper::exec(const QString &srcImage, QString &dstImage)
 
     if (!avatarEditorProcess.waitForStarted(3000))
     {
-        KLOG_WARNING_S() << "can't start" << KIRAN_AVATAR_EDITOR_PATH;
+        KLOG_WARNING() << "can't start" << KIRAN_AVATAR_EDITOR_PATH;
         return false;
     }
 
@@ -57,6 +57,6 @@ bool AvatarEditorWrapper::exec(const QString &srcImage, QString &dstImage)
         dstImage = tempFilePath;
         return true;
     }
-    KLOG_WARNING_S() << "kiran-avatar-editor:" << avatarEditorError(avatarEditorProcess.exitCode());
+    KLOG_WARNING() << "kiran-avatar-editor:" << avatarEditorError(avatarEditorProcess.exitCode());
     return false;
 }

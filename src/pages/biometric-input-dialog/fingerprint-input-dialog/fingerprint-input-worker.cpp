@@ -17,11 +17,11 @@ FingerprintInputWorker::FingerprintInputWorker(QObject *parent)
                 {
                     return;
                 }
-                KLOG_INFO_S() << "finger print status:";
-                KLOG_INFO_S() << "    id:      " << id;
-                KLOG_INFO_S() << "    progress:" << progress;
-                KLOG_INFO_S() << "    done:    " << done;
-                KLOG_INFO_S() << "    message: " << message;
+                KLOG_INFO() << "finger print status:";
+                KLOG_INFO() << "    id:      " << id;
+                KLOG_INFO() << "    progress:" << progress;
+                KLOG_INFO() << "    done:    " << done;
+                KLOG_INFO() << "    message: " << message;
                 if (done)
                 {
                     emit sigEnrollComplete(progress == 100, message, id);
@@ -41,14 +41,14 @@ FingerprintInputWorker::~FingerprintInputWorker()
 
 void FingerprintInputWorker::startFingerprintEnroll()
 {
-    KLOG_INFO_S() << "start finger print enroll...";
+    KLOG_INFO() << "start finger print enroll...";
     stopFingerprintEnroll();
     start();
 }
 
 void FingerprintInputWorker::stopFingerprintEnroll()
 {
-    KLOG_INFO_S() << "stop finger print enroll...";
+    KLOG_INFO() << "stop finger print enroll...";
     if (m_started)
     {
         m_interface->EnrollFprintStop();
@@ -58,7 +58,7 @@ void FingerprintInputWorker::stopFingerprintEnroll()
         QThread::requestInterruption();
         QThread::wait();
     }
-    KLOG_INFO_S() << "stop finger print enroll finish...";
+    KLOG_INFO() << "stop finger print enroll finish...";
 }
 
 void FingerprintInputWorker::run()
@@ -68,7 +68,7 @@ void FingerprintInputWorker::run()
     reply.waitForFinished();
     if (reply.isError())
     {
-        KLOG_INFO_S() << reply.error();
+        KLOG_INFO() << reply.error();
         emit sigEnrollError(reply.error().message());
         return;
     }

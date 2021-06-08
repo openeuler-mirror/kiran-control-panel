@@ -58,7 +58,7 @@ void FingerprintInputDialog::closeEvent(QCloseEvent *event)
         deleteEnrolledReply.waitForFinished();
         if(!deleteEnrolledReply.isError())
         {
-            KLOG_ERROR_S() << "delete enrolled finger failed!" << deleteEnrolledReply.error();
+            KLOG_ERROR() << "delete enrolled finger failed!" << deleteEnrolledReply.error();
         }
         m_fingerDataID.clear();
     }
@@ -137,7 +137,7 @@ void FingerprintInputDialog::setProgress(unsigned int value)
             break;
         }
     }
-    KLOG_INFO_S() << "progressImage" << progressImage;
+    KLOG_INFO() << "progressImage" << progressImage;
     ui->enrollProgress->updateCenterImage(progressImage);
 }
 
@@ -150,6 +150,6 @@ QString FingerprintInputDialog::getFingerDataID()
 
 void FingerprintInputDialog::resizeEvent(QResizeEvent *event)
 {
-    KLOG_INFO_S() << "fingerprint size:" << event->size();
+    KLOG_INFO() << "fingerprint size:" << event->size();
     QWidget::resizeEvent(event);
 }

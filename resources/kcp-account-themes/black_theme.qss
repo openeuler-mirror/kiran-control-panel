@@ -55,22 +55,22 @@ BiometricItem QLabel#label_text{
 }
 
 BiometricItem QToolButton#btn_delete{
-    border-image: url(:/images/trash.svg);
+    border-image: url(:/kcp-account-images/trash.svg);
     background:transparent;
 }
 
 BiometricItem QToolButton#btn_delete:hover{
-    border-image: url(:/images/trash_hover.svg);
+    border-image: url(:/kcp-account-images/trash_hover.svg);
     background:transparent;
 }
 
 BiometricItem QToolButton#btn_delete:pressed{
-    border-image: url(:/images/trash_pressed.svg);
+    border-image: url(:/kcp-account-images/trash_pressed.svg);
     background:transparent;
 }
 
 BiometricItem QToolButton#btn_delete:pressed{
-    border-image: url(:/images/trash_pressed.svg);
+    border-image: url(:/kcp-account-images/trash_pressed.svg);
     background:transparent;
 }
 

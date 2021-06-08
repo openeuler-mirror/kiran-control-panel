@@ -46,7 +46,7 @@ void FaceEnrollWorker::run()
     context = zmq_ctx_new();
     if (!context)
     {
-        KLOG_WARNING_S() << "cmq_ctx_new failed";
+        KLOG_WARNING() << "cmq_ctx_new failed";
         return;
     }
 
@@ -63,7 +63,7 @@ void FaceEnrollWorker::run()
         iRet = zmq_msg_recv(&msg, socket, 0);
         if (iRet == -1)
         {
-            KLOG_DEBUG_S() << "zmq_msg_recv:" << strerror(errno);
+            KLOG_DEBUG() << "zmq_msg_recv:" << strerror(errno);
             continue;
         }
         void *data = zmq_msg_data(&msg);
@@ -93,7 +93,7 @@ void FaceEnrollWorker::parseFaceImage(const QJsonObject &jsonObject)
     QByteArray byteArray = QByteArray::fromBase64(content.toUtf8());
     QImage image((uchar *)byteArray.data(), width, height, QImage::Format_RGB888);
     QImage newImgae = image.rgbSwapped();
-    KLOG_DEBUG_S() << "recv image:" << width << "x" << height;
+    KLOG_DEBUG() << "recv image:" << width << "x" << height;
     emit sigHasNewImage(newImgae);
 }
 
@@ -110,7 +110,7 @@ void FaceEnrollWorker::parseFaceAxis(const QJsonObject &jsonObject)
         QJsonArray array = doc.array();
         for (QJsonValue item : array)
         {
-            KLOG_INFO_S() << "item" << item;
+            KLOG_INFO() << "item" << item;
             QJsonObject itemObject = item.toObject();
             int tlX, tlY, width, height;
             tlX = itemObject["x"].toInt();
@@ -119,7 +119,7 @@ void FaceEnrollWorker::parseFaceAxis(const QJsonObject &jsonObject)
             height = itemObject["w"].toInt();
             QRect rect(tlX, tlY, width, height);
             res << rect;
-            KLOG_INFO_S() << "face " << count++ << " -- top-left:" << rect.topLeft() << rect.width() << "x" << rect.height();
+            KLOG_INFO() << "face " << count++ << " -- top-left:" << rect.topLeft() << rect.width() << "x" << rect.height();
         }
     }
     emit sigFaceAxis(res);

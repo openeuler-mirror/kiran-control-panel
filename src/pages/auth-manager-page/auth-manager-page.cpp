@@ -81,7 +81,7 @@ void AuthManagerPage::initUI()
 
 void AuthManagerPage::updateInfo()
 {
-    KLOG_INFO_S() << "load biometrics , update ui";
+    KLOG_INFO() << "load biometrics , update ui";
     //获取认证类型开关
     bool fingerAuth, faceAuth, passwdAuth;
     int authModes = m_userInterface->auth_modes();
@@ -162,20 +162,20 @@ void AuthManagerPage::save()
     /* 保存验证选项 */
     if (uiPasswdAuth != backendPasswdAuth)
     {
-        KLOG_DEBUG_S() << "set passwd auth enable: " << uiPasswdAuth;
+        KLOG_DEBUG() << "set passwd auth enable: " << uiPasswdAuth;
         auto reply = m_userInterface->EnableAuthMode(ACCOUNTS_AUTH_MODE_PASSWORD, uiPasswdAuth);
         reply.waitForFinished();
     }
     if (uiFingerAuth != backendFingerAuth)
     {
-        KLOG_DEBUG_S() << "set finger auth enable: " << uiFingerAuth;
+        KLOG_DEBUG() << "set finger auth enable: " << uiFingerAuth;
         auto reply = m_userInterface->EnableAuthMode(ACCOUNTS_AUTH_MODE_FINGERPRINT, uiFingerAuth);
         reply.waitForFinished();
-        KLOG_INFO_S() << reply.isError() << reply.error();
+        KLOG_INFO() << reply.isError() << reply.error();
     }
     if (uiFaceAuth != backendFaceAuth)
     {
-        KLOG_DEBUG_S() << "set face auth enable: " << uiFaceAuth;
+        KLOG_DEBUG() << "set face auth enable: " << uiFaceAuth;
         auto reply = m_userInterface->EnableAuthMode(ACCOUNTS_AUTH_MODE_FACE, uiFaceAuth);
         reply.waitForFinished();
     }
@@ -215,7 +215,7 @@ void AuthManagerPage::save()
     funcCompareBiometricItems(uiFingerTemplates, backendFingerTemplates, deletedItems, addItems);
     if (!deletedItems.isEmpty() || !addItems.isEmpty())
     {
-        KLOG_DEBUG_S() << "finger biometric item will update:" << "\n"
+        KLOG_DEBUG() << "finger biometric item will update:" << "\n"
                        << "\tneed delete item:" << deletedItems << "\n"
                        << "\tneed add item:   " << addItems;
     }
@@ -225,7 +225,7 @@ void AuthManagerPage::save()
         reply.waitForFinished();
         if( reply.isError() )
         {
-            KLOG_ERROR_S() << "delete finger item" << item.first << "failed," << reply.error();
+            KLOG_ERROR() << "delete finger item" << item.first << "failed," << reply.error();
         }
     }
     for (auto &item : addItems)
@@ -234,7 +234,7 @@ void AuthManagerPage::save()
         reply.waitForFinished();
         if( reply.isError() )
         {
-            KLOG_ERROR_S() << "add finger item" << item.first << "failed," << reply.error();
+            KLOG_ERROR() << "add finger item" << item.first << "failed," << reply.error();
         }
     }
 
@@ -242,7 +242,7 @@ void AuthManagerPage::save()
     funcCompareBiometricItems(uiFaceTemplates, backendFaceTemplates, deletedItems, addItems);
     if (!deletedItems.isEmpty() || !addItems.isEmpty())
     {
-        KLOG_DEBUG_S() << "face biometric item update:" << "\n"
+        KLOG_DEBUG() << "face biometric item update:" << "\n"
                        << "\tneed delete item:" << deletedItems << "\n"
                        << "\tneed add item:   " << addItems;
     }
@@ -252,7 +252,7 @@ void AuthManagerPage::save()
         reply.waitForFinished();
         if( reply.isError() )
         {
-            KLOG_ERROR_S() << "delete face item" << item.first << "failed," << reply.error();
+            KLOG_ERROR() << "delete face item" << item.first << "failed," << reply.error();
         }
     }
     for (auto &item : addItems)
@@ -261,7 +261,7 @@ void AuthManagerPage::save()
         reply.waitForFinished();
         if( reply.isError() )
         {
-            KLOG_ERROR_S() << "add face item" << item.first << "failed," << reply.error();
+            KLOG_ERROR() << "add face item" << item.first << "failed," << reply.error();
         }
     }
 }
@@ -336,12 +336,12 @@ BiometricList AuthManagerPage::getBiometricItemsFromBackend(AccountsAuthMode mod
         QJsonDocument doc = QJsonDocument::fromJson(jsonStr.toUtf8(), errorPtr->data());
         if (errorPtr->data()->error != QJsonParseError::NoError)
         {
-            KLOG_DEBUG_S() << "parse json doc failed," << errorPtr->data()->errorString();
+            KLOG_DEBUG() << "parse json doc failed," << errorPtr->data()->errorString();
             return false;
         }
         if (!doc.isArray())
         {
-            KLOG_WARNING_S() << "format error, is not json array";
+            KLOG_WARNING() << "format error, is not json array";
             return false;
         }
         authItems.clear();
@@ -355,11 +355,11 @@ BiometricList AuthManagerPage::getBiometricItemsFromBackend(AccountsAuthMode mod
             QJsonObject obj = iter.toObject();
             if (!obj.contains("data_id") || !obj.contains("name"))
             {
-                KLOG_WARNING_S() << "format error,leak data_id/name element.";
+                KLOG_WARNING() << "format error,leak data_id/name element.";
                 authItems.clear();
                 return false;
             }
-            KLOG_INFO_S() << obj.value("name").toString();
+            KLOG_INFO() << obj.value("name").toString();
             QPair<QString, QString> nameIdPair = QPair<QString, QString>(obj.value("name").toString(),
                                                                          obj.value("data_id").toString());
             authItems.append(nameIdPair);
