@@ -102,6 +102,9 @@ install(FILES ./config/kiran-account-manager.conf DESTINATION ${KAM_CONF_DIR})
 file(GLOB BUILDIN_AVATARS "./buildin-avatar/*")
 install(FILES ${BUILDIN_AVATARS} DESTINATION ${KAM_BUILDIN_AVATAR_DIR_PATH} )
 #安装账户管理图标
-install(FILES "${CMAKE_SOURCE_DIR}/resources/kcp-account-images/kcp-account.png" DESTINATION ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/96x96/apps )
-
+set(KCP_ICON_INSTALL_PATH ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor)
+install(FILES "${CMAKE_SOURCE_DIR}/resources/kcp-account-images/kcp-account-48.png" DESTINATION ${KCP_ICON_INSTALL_PATH}/24x24/apps RENAME kcp-account.png)
+install(FILES "${CMAKE_SOURCE_DIR}/resources/kcp-account-images/kcp-account-48.png" DESTINATION ${KCP_ICON_INSTALL_PATH}/48x48/apps RENAME kcp-account.png)
+install(FILES "${CMAKE_SOURCE_DIR}/resources/kcp-account-images/kcp-account-64.png" DESTINATION ${KCP_ICON_INSTALL_PATH}/64x64/apps RENAME kcp-account.png)
+install(FILES "${CMAKE_SOURCE_DIR}/resources/kcp-account-images/kcp-account-96.png" DESTINATION ${KCP_ICON_INSTALL_PATH}/96x96/apps RENAME kcp-account.png)
 add_subdirectory(avatar-editor)
