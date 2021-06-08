@@ -12,20 +12,18 @@
 
 #include <QCheckBox>
 
-TouchPadSettings::TouchPadSettings(ComKylinsecKiranSessionDaemonTouchPadInterface *touchPadInterface, QWidget *parent) :
+TouchPadSettings::TouchPadSettings(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::TouchPadSettings),
     m_touchPadInterface(nullptr)
 {
     ui->setupUi(this);
-    m_touchPadInterface = touchPadInterface;
+    m_touchPadInterface = ComKylinsecKiranSessionDaemonTouchPadInterface::instance();
     initUI();
 }
 
 TouchPadSettings::~TouchPadSettings()
 {
-    if(!m_touchPadInterface)
-        delete m_touchPadInterface;
     delete ui;
 }
 
@@ -34,6 +32,9 @@ TouchPadSettings::~TouchPadSettings()
  */
 void TouchPadSettings::initUI()
 {
+    ui->label_tp_speed->setStyleSheet("#label_tp_speed{color:#2ca5ea;}"
+                                      "#label_tp_speed:disabled{color:#696969;}");
+
     m_comboBoxList = this->findChildren<QComboBox *>();
     m_checkBoxList = {ui->checkBox_tap_to_click,
                       ui->checkBox_tp_natural_scroll,

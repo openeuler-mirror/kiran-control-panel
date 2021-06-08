@@ -22,7 +22,6 @@
 
 //TODO:use config.h
 #define TRANSLATION_DIR TRANSLATIONS_FILE_DIR
-#define QSS_FILE       ":/themes/themes.qss"
 
 bool init_zlog = false;
 
@@ -59,21 +58,6 @@ int main(int argc, char *argv[])
                                  QObject::tr("Connect Mouse or TouchPad Dbus Failed!"),
                                  KiranMessageBox::Ok);
         exit(-1);
-    }
-
-    //加载qss文件
-    QFile file(QSS_FILE);
-    if( file.open(QFile::ReadOnly))
-    {
-        QString styleSheet = QLatin1String(file.readAll());
-
-        a.setStyleSheet(styleSheet);
-        file.close();
-    }
-    else
-    {
-        KiranMessageBox::message(nullptr,QObject::tr("warning"),
-                                 QObject::tr("Load qss file failed!"),KiranMessageBox::Ok);
     }
 
     w.resize(w.sizeHint());

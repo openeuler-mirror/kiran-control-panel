@@ -38,7 +38,8 @@ SOURCES += \
     dbus-interface/touchpad-interface.cpp \
     pages/page-mouse/mouse-settings.cpp \
     general-functions/general-function-class.cpp \
-    pages/page-touchpad/touchpad-settings.cpp
+    pages/page-touchpad/touchpad-settings.cpp \
+    plugin_build/interface.cpp
 
 HEADERS += \
         kiran-cpanel-mouse.h \
@@ -48,7 +49,8 @@ HEADERS += \
     dbus-interface/touchpad-interface.h \
     pages/page-mouse/mouse-settings.h \
     general-functions/general-function-class.h \
-    pages/page-touchpad/touchpad-settings.h
+    pages/page-touchpad/touchpad-settings.h \
+    plugin_build/interface.h
 
 FORMS += \
     kiran-cpanel-mouse-widget.ui \

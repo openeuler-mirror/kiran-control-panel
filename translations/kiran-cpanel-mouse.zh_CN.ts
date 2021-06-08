@@ -170,27 +170,27 @@
         <translation>同时按下左右键模拟中键</translation>
     </message>
     <message>
-        <location filename="../src/pages/page-mouse/mouse-settings.cpp" line="38"/>
+        <location filename="../src/pages/page-mouse/mouse-settings.cpp" line="41"/>
         <source>Right Hand Mode</source>
         <translation>右手模式</translation>
     </message>
     <message>
-        <location filename="../src/pages/page-mouse/mouse-settings.cpp" line="38"/>
+        <location filename="../src/pages/page-mouse/mouse-settings.cpp" line="41"/>
         <source>Left Hand Mode</source>
         <translation>左手模式</translation>
     </message>
     <message>
-        <location filename="../src/pages/page-mouse/mouse-settings.cpp" line="66"/>
+        <location filename="../src/pages/page-mouse/mouse-settings.cpp" line="70"/>
         <source>Slow</source>
         <translation>低速</translation>
     </message>
     <message>
-        <location filename="../src/pages/page-mouse/mouse-settings.cpp" line="71"/>
+        <location filename="../src/pages/page-mouse/mouse-settings.cpp" line="75"/>
         <source>Standard</source>
         <translation>标准</translation>
     </message>
     <message>
-        <location filename="../src/pages/page-mouse/mouse-settings.cpp" line="76"/>
+        <location filename="../src/pages/page-mouse/mouse-settings.cpp" line="80"/>
         <source>Fast</source>
         <translation>快速</translation>
     </message>
@@ -214,24 +214,22 @@
         <translation>快速</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="58"/>
+        <location filename="../src/main.cpp" line="57"/>
         <source>Faild</source>
         <translation>失败</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="59"/>
+        <location filename="../src/main.cpp" line="58"/>
         <source>Connect Mouse or TouchPad Dbus Failed!</source>
         <translation>连接鼠标或触摸板Dbus服务失败！</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="75"/>
         <source>warning</source>
-        <translation>警告</translation>
+        <translation type="vanished">警告</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="76"/>
         <source>Load qss file failed!</source>
-        <translation>加载qss文件失败!</translation>
+        <translation type="vanished">加载qss文件失败!</translation>
     </message>
 </context>
 <context>
@@ -308,47 +306,47 @@
         <translation>轻击(不按下)触摸板功能是否生效</translation>
     </message>
     <message>
-        <location filename="../src/pages/page-touchpad/touchpad-settings.cpp" line="84"/>
+        <location filename="../src/pages/page-touchpad/touchpad-settings.cpp" line="87"/>
         <source>Slow</source>
         <translation>低速</translation>
     </message>
     <message>
-        <location filename="../src/pages/page-touchpad/touchpad-settings.cpp" line="89"/>
+        <location filename="../src/pages/page-touchpad/touchpad-settings.cpp" line="92"/>
         <source>Standard</source>
         <translation>标准</translation>
     </message>
     <message>
-        <location filename="../src/pages/page-touchpad/touchpad-settings.cpp" line="94"/>
+        <location filename="../src/pages/page-touchpad/touchpad-settings.cpp" line="97"/>
         <source>Fast</source>
         <translation>快速</translation>
     </message>
     <message>
-        <location filename="../src/pages/page-touchpad/touchpad-settings.cpp" line="166"/>
+        <location filename="../src/pages/page-touchpad/touchpad-settings.cpp" line="169"/>
         <source>Right Hand Mode</source>
         <translation>右手模式</translation>
     </message>
     <message>
-        <location filename="../src/pages/page-touchpad/touchpad-settings.cpp" line="166"/>
+        <location filename="../src/pages/page-touchpad/touchpad-settings.cpp" line="169"/>
         <source>Left Hand Mode</source>
         <translation>左手模式</translation>
     </message>
     <message>
-        <location filename="../src/pages/page-touchpad/touchpad-settings.cpp" line="170"/>
+        <location filename="../src/pages/page-touchpad/touchpad-settings.cpp" line="173"/>
         <source>Press and Tap</source>
         <translation>按键和轻触</translation>
     </message>
     <message>
-        <location filename="../src/pages/page-touchpad/touchpad-settings.cpp" line="170"/>
+        <location filename="../src/pages/page-touchpad/touchpad-settings.cpp" line="173"/>
         <source>Tap</source>
         <translation>轻触</translation>
     </message>
     <message>
-        <location filename="../src/pages/page-touchpad/touchpad-settings.cpp" line="174"/>
+        <location filename="../src/pages/page-touchpad/touchpad-settings.cpp" line="177"/>
         <source>Two Finger Scroll</source>
         <translation>两指滑动</translation>
     </message>
     <message>
-        <location filename="../src/pages/page-touchpad/touchpad-settings.cpp" line="174"/>
+        <location filename="../src/pages/page-touchpad/touchpad-settings.cpp" line="177"/>
         <source>Edge Scroll</source>
         <translation>边缘滑动</translation>
     </message>

@@ -1,6 +1,5 @@
 <RCC>
     <qresource prefix="/">
-        <file>themes/themes.qss</file>
         <file>images/arrow.svg</file>
         <file>images/down-arrow.png</file>
         <file>images/off.png</file>

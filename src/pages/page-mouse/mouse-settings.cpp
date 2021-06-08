@@ -10,23 +10,24 @@
 #include "general-functions/general-function-class.h"
 #include "dbus-interface/mouse-interface.h"
 
-MouseSettings::MouseSettings(ComKylinsecKiranSessionDaemonMouseInterface *mouseInterface, QWidget *parent) :
+MouseSettings::MouseSettings(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::MouseSettings),
     m_mouseInterface(nullptr)
 {
     ui->setupUi(this);
-    m_mouseInterface = mouseInterface;
+    m_mouseInterface = ComKylinsecKiranSessionDaemonMouseInterface::instance();
     initUI();
 }
 
 MouseSettings::~MouseSettings()
 {
-    if(!m_mouseInterface)
-    {
-        delete m_mouseInterface;
-    }
     delete ui;
+}
+
+QSize MouseSettings::sizeHint() const
+{
+    return QSize(918,750);
 }
 
 /**
@@ -34,6 +35,8 @@ MouseSettings::~MouseSettings()
  */
 void MouseSettings::initUI()
 {
+    ui->label_speed->setStyleSheet("#label_speed{color:#2ca5ea;}");
+
     QStringList hand_mode;
     hand_mode << tr("Right Hand Mode") << tr("Left Hand Mode") ;
     ui->comboBox_hand_mode->addItems(hand_mode);
@@ -51,6 +54,7 @@ void MouseSettings::initUI()
  */
 void MouseSettings::initPageMouseUI()
 {
+    qInfo("@@: m_mouseInterface->");
     m_mouseLeftHand = m_mouseInterface->left_handed();
     ui->comboBox_hand_mode->setCurrentIndex(m_mouseLeftHand);
     connect(ui->comboBox_hand_mode, QOverload<int>::of(&QComboBox::currentIndexChanged),

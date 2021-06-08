@@ -11,7 +11,7 @@ configure_file (
 
 
 install(FILES "${PROJECT_BINARY_DIR}/config/kiran-cpanel-mouse.desktop"
-	DESTINATION ${DATA_DIR}/applications/ )
+	DESTINATION ${CPANEL_DESKTOP_DIR}/ )
 
 
 

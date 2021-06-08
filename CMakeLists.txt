@@ -8,17 +8,27 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTOUIC ON)
+set(CMAKE_AUTORCC ON)
+
 find_package(PkgConfig REQUIRED)
+find_package(Qt5 COMPONENTS Widgets Svg DBus LinguistTools Network)
 pkg_search_module(KIRAN_WIDGETS_QT5 REQUIRED kiranwidgets-qt5)
 pkg_search_module(ZLOG REQUIRED zlog)
 pkg_search_module(KIRAN_CC_DAEMON REQUIRED kiran-cc-daemon)
 
-set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTOUIC ON)
-set(CMAKE_AUTORCC ON)
-set(DATA_DIR "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATAROOTDIR}")
+#通过kiran control panel的pkgconfig配置文件取出插件Desktop安装位置、插件共享库安装位置
+pkg_search_module(KIRAN_CONTROL_PANEL_PKG REQUIRED kiran-control-panel)
+pkg_get_variable(CPANEL_PLUGIN_DIR kiran-control-panel plugin_location)
+pkg_get_variable(CPANEL_DESKTOP_DIR kiran-control-panel plugin_desktop_location)
 
-set(TRANSLATIONS_DIR "${DATA_DIR}/${PROJECT_NAME}/translations/")
+
+set(DATA_DIR "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATADIR}")
+#set(INSTALL_BINDIR ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_BINDIR})
+#set(INSTALL_LIBDIR ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR})
+
+set(TRANSLATIONS_DIR "${DATA_DIR}/${PROJECT_NAME}/translation/")
 set( TS_FILES "translations/kiran-cpanel-mouse.zh_CN.ts" )
 set( INCLUDE_PATH "/usr/include/glib-2.0/" "/usr/lib64/glib-2.0/include/" "/usr/include" "/usr/include/kiranwidgets-qt5" "/usr/include/kiran-cc-daemon")
 
@@ -36,32 +46,39 @@ file(GLOB_RECURSE RESOURCES "resources/*.qrc")
 file(GLOB_RECURSE QSS "resources/themes/*.qss")
 
 
-include_directories("${CMAKE_BINARY_DIR}" "src" "${INCLUDE_PATH}" )
-
-find_package(Qt5 COMPONENTS Widgets Svg DBus LinguistTools Network)
+include_directories("${CMAKE_BINARY_DIR}" "src" "${INCLUDE_PATH}" 
+						 "${KIRAN_CONTROL_PANEL_PKG_INCLUDE_DIRS}" )
 
 qt5_create_translation( QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES} )
 
 
-add_executable(kiran-cpanel-mouse 
-			${SOURCES}
-			${HEADERS}
-			${FORMS}
-			${RESOURCES}
-	       ${QM_FILES}
-			${QSS})
+add_library(${PROJECT_NAME} SHARED
+				${SOURCES}
+				${HEADERS}
+				${FORMS}
+				${RESOURCES}
+				${QSS}
+				${QM_FILES})
+
+#add_executable(kiran-cpanel-mouse 
+#			${SOURCES}
+#			${HEADERS}
+#			${FORMS}
+#			${RESOURCES}
+#	       ${QM_FILES}
+#			${QSS})
 			
-target_link_libraries(kiran-cpanel-mouse 
+target_link_libraries(${PROJECT_NAME} 
         Qt5::Widgets
         Qt5::DBus
         Qt5::Svg
 		 Qt5::Core
         kiranwidgets-qt5
-        ${KIRAN_WIDGETS_QT5_LIBRARIES}
+        ${KIRANWIDGETS_LIBRARIES}
 		 ${ZLOG_LIBRARIES})
 
 install(TARGETS ${PROJECT_NAME}
-        DESTINATION ${CMAKE_INSTALL_PREFIX}/bin/)
+        DESTINATION ${CPANEL_PLUGIN_DIR}/)
 
 install(FILES ${QM_FILES}
         DESTINATION ${TRANSLATIONS_DIR})

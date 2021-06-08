@@ -23,7 +23,7 @@ class TouchPadSettings : public QWidget
     Q_OBJECT
 
 public:
-    explicit TouchPadSettings(ComKylinsecKiranSessionDaemonTouchPadInterface *touchPadInterface,QWidget *parent = 0);
+    explicit TouchPadSettings(QWidget *parent = 0);
     ~TouchPadSettings();
 
 public:

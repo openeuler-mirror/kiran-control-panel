@@ -25,9 +25,10 @@ class MouseSettings : public QWidget
     Q_OBJECT
 
 public:
-    explicit MouseSettings(ComKylinsecKiranSessionDaemonMouseInterface* mouseInterface, QWidget *parent = 0);
+    explicit MouseSettings(QWidget *parent = 0);
     ~MouseSettings();
 
+    virtual QSize sizeHint() const override;
 public:
     void initUI();
     void initPageMouseUI();
