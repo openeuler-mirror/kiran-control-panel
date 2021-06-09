@@ -81,11 +81,11 @@ Keywords=About Systems
 
 以下为控制面板暂时提供的预安装的默认分类：
 
-- about-systems    
+- about-system    
   关于系统
 - account-management    
   账户管理
-- datetime    
+- timedate    
   日期时间
 - display    
   显示设置
@@ -282,7 +282,7 @@ public:
 
 ### 3. 通过devel包所提供的pkgconfig配置文件找到插件安装相应的位置
 
-```cma
+```cmake
 #通过kiran control panel的pkgconfig配置文件取出插件Desktop安装位置、插件共享库安装位置
 find_package(PkgConfig REQUIRED)
 pkg_search_module(KIRAN_CONTROL_PANEL_PKG REQUIRED kiran-control-panel)
