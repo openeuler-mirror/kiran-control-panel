@@ -42,7 +42,6 @@ HardwareInformationWidget::HardwareInformationWidget(QWidget *parent) :
 {
     ui->setupUi(this);
     initUI();
-    readHardwareInfo(1);
 }
 
 HardwareInformationWidget::~HardwareInformationWidget()
@@ -50,16 +49,21 @@ HardwareInformationWidget::~HardwareInformationWidget()
     delete ui;
 }
 
-void HardwareInformationWidget::initUI(void)
+bool HardwareInformationWidget::initUI(void)
 {
     ui->widget_logo->hide();
+    if(!readHardwareInfo(1))
+    {
+        return false;
+    }
+    return true;
 }
 
 /**
  * @brief HardwareInformationWidget::readHardwareInfo 调用Dbus接口，读取系统信息，并解析，显示在界面上
  * @param infoType 读取的信息类型，0：系统信息 1：硬件信息
  */
-void HardwareInformationWidget::readHardwareInfo(int infoType)
+bool HardwareInformationWidget::readHardwareInfo(int infoType)
 {
     QString systemInfo;
     QLabel *labelDisk = new QLabel();
@@ -81,7 +85,7 @@ void HardwareInformationWidget::readHardwareInfo(int infoType)
         ui->gridLayout_graphics_card->addWidget(labelGraphics,1,0,Qt::AlignRight);
         ui->gridLayout_hard_disk->addWidget(labelDisk,1,0,Qt::AlignRight);
         ui->gridLayout_network_card->addWidget(labelEths,1,0,Qt::AlignRight);
-        return;
+        return false;
     }
     else
     {
@@ -92,6 +96,7 @@ void HardwareInformationWidget::readHardwareInfo(int infoType)
 
         getJsonValueFromString(systemInfo);
         showListInfo();
+        return true;
     }
 }
 

@@ -24,12 +24,12 @@ class SystemInformationWidget : public QWidget
 public:
     explicit SystemInformationWidget(QWidget *parent = 0);
     ~SystemInformationWidget();
+    bool initUI();
 
 private:
-    void initUI();
-    void readSystemInfo(int infoType);
+    bool readSystemInfo(int infoType);
     void getJsonValueFromString(QString jsonString);
-    void readLicenseInfo();
+    bool readLicenseInfo();
 
 private slots:
     void onBtnchangeHostName(void);

@@ -11,6 +11,7 @@
 #include "license/active-guide-widget.h"
 #include "change-host-name-widget.h"
 #include <kylin-license/license_i.h>
+#include <kiranwidgets-qt5/kiran-message-box.h>
 
 #include <QDebug>
 #include <QJsonDocument>
@@ -46,8 +47,6 @@ SystemInformationWidget::SystemInformationWidget(QWidget *parent) :
 {
     ui->setupUi(this);
     initUI();
-    readSystemInfo(0);
-    readLicenseInfo();
 
     connect(ui->btn_change_name, SIGNAL(clicked()), this, SLOT(onBtnchangeHostName()));
     connect(ui->btn_status, SIGNAL(clicked()), this, SLOT(onBtnStatusClicked()));
@@ -70,18 +69,31 @@ SystemInformationWidget::~SystemInformationWidget()
     }
 }
 
-void SystemInformationWidget::initUI()
+bool SystemInformationWidget::initUI()
 {
+    if(!readSystemInfo(0))
+    {
+        return false;
+    }
+
+    if(!readLicenseInfo())
+    {
+        KiranMessageBox::message(nullptr,QObject::tr("Faild"),
+                                 QObject::tr("Connect License Dbus Failed!"),
+                                 KiranMessageBox::Ok);
+    }
+
     ui->btn_change_name->setText(tr("Change"));
     ui->btn_status->setText(tr("Active"));
     ui->lab_contact_info->setText("400-625-6606");
+    return true;
 }
 
 /**
  * @brief SystemInformationWidget::readSystemInfo:读取系统信息
  * @param infoType: 传入DBUS接口的参数，0：获取系统信息，1：获取硬件信息
  */
-void SystemInformationWidget::readSystemInfo(int infoType)
+bool SystemInformationWidget::readSystemInfo(int infoType)
 {
     QString systemInfo;
     if(!InfoDbus::SystemInfo::getSystemInfo(infoType , systemInfo))
@@ -92,20 +104,20 @@ void SystemInformationWidget::readSystemInfo(int infoType)
         ui->lab_system_arch_info->setText(tr("Unknow"));
         ui->lab_system_version_info->setText(tr("Unknow"));
         ui->btn_change_name->hide();
-        return;
+        return false;
     }
     else
     {
         qInfo() << systemInfo << endl;
         getJsonValueFromString(systemInfo);
     }
-
+    return true;
 }
 
 /**
  * @brief SystemInformationWidget::readLicenseInfo:读取系统授权信息
  */
-void SystemInformationWidget::readLicenseInfo()
+bool SystemInformationWidget::readLicenseInfo()
 {
     QString licenseInfo;
     if(!InfoDbus::KylinLicense::getLicenseJson(licenseInfo))
@@ -118,7 +130,7 @@ void SystemInformationWidget::readLicenseInfo()
         ui->lab_install_time_info->setText(tr("Unknow"));
         ui->lab_expire_date_info->setText(tr("Unknow"));
         lc_code = "NULL";
-        return;
+        return false;
     }
     else
     {
@@ -192,7 +204,7 @@ void SystemInformationWidget::readLicenseInfo()
             {
                 ui->btn_status->setText(tr("Active"));
                 isActive = false;
-                return ;
+                return true;
             }
             ui->btn_status->setFixedSize(QSize(16,16));
 
@@ -206,6 +218,7 @@ void SystemInformationWidget::readLicenseInfo()
         }
 
     }
+    return true;
 }
 
 /**

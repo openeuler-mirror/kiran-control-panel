@@ -12,7 +12,6 @@
 #include <QListWidgetItem>
 #include <QStackedWidget>
 #include "information-list-item.h"
-#include "hardware-information-widget.h"
 
 namespace Ui {
 class kiranSystemInformation;

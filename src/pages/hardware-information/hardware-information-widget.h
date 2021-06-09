@@ -23,10 +23,10 @@ class HardwareInformationWidget : public QWidget
 public:
     explicit HardwareInformationWidget(QWidget *parent = 0);
     ~HardwareInformationWidget();
+    bool initUI(void);
 
 private:
-    void initUI(void);
-    void readHardwareInfo(int infoType);
+    bool readHardwareInfo(int infoType);
     void getJsonValueFromString(QString jsonString);
     void showListInfo();
     void setCpuLogo(QString cpuModel);

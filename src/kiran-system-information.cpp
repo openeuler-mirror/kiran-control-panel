@@ -7,7 +7,6 @@
 
 #include "kiran-system-information.h"
 #include "ui_kiran-system-information.h"
-#include "system-information-widget.h"
 #include "general-functions-class.h"
 
 #include <QPainter>

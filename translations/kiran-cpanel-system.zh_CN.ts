@@ -256,55 +256,55 @@
 <context>
     <name>HardwareInformationWidget</name>
     <message>
-        <location filename="../src/hardware-information-widget.ui" line="14"/>
+        <location filename="../src/pages/hardware-information/hardware-information-widget.ui" line="14"/>
         <location filename="../build/kiran-cpanel-system_autogen/include/ui_hardware-information-widget.h" line="254"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/hardware-information-widget.ui" line="133"/>
+        <location filename="../src/pages/hardware-information/hardware-information-widget.ui" line="133"/>
         <location filename="../build/kiran-cpanel-system_autogen/include/ui_hardware-information-widget.h" line="256"/>
         <source>CPU:</source>
         <translation>CPU:</translation>
     </message>
     <message>
-        <location filename="../src/hardware-information-widget.ui" line="153"/>
-        <location filename="../src/hardware-information-widget.ui" line="213"/>
+        <location filename="../src/pages/hardware-information/hardware-information-widget.ui" line="153"/>
+        <location filename="../src/pages/hardware-information/hardware-information-widget.ui" line="213"/>
         <location filename="../build/kiran-cpanel-system_autogen/include/ui_hardware-information-widget.h" line="257"/>
         <location filename="../build/kiran-cpanel-system_autogen/include/ui_hardware-information-widget.h" line="259"/>
         <source>TextLabel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/hardware-information-widget.ui" line="193"/>
+        <location filename="../src/pages/hardware-information/hardware-information-widget.ui" line="193"/>
         <location filename="../build/kiran-cpanel-system_autogen/include/ui_hardware-information-widget.h" line="258"/>
         <source>Memory:</source>
         <translation>内存:</translation>
     </message>
     <message>
-        <location filename="../src/hardware-information-widget.ui" line="253"/>
+        <location filename="../src/pages/hardware-information/hardware-information-widget.ui" line="253"/>
         <location filename="../build/kiran-cpanel-system_autogen/include/ui_hardware-information-widget.h" line="260"/>
         <source>Hard disk:</source>
         <translation>硬盘:</translation>
     </message>
     <message>
-        <location filename="../src/hardware-information-widget.ui" line="331"/>
+        <location filename="../src/pages/hardware-information/hardware-information-widget.ui" line="331"/>
         <location filename="../build/kiran-cpanel-system_autogen/include/ui_hardware-information-widget.h" line="261"/>
         <source>Graphics card:</source>
         <translation>显卡:</translation>
     </message>
     <message>
-        <location filename="../src/hardware-information-widget.ui" line="406"/>
+        <location filename="../src/pages/hardware-information/hardware-information-widget.ui" line="406"/>
         <location filename="../build/kiran-cpanel-system_autogen/include/ui_hardware-information-widget.h" line="262"/>
         <source>Network card:</source>
         <translation>网卡:</translation>
     </message>
     <message>
-        <location filename="../src/hardware-information-widget.cpp" line="66"/>
-        <location filename="../src/hardware-information-widget.cpp" line="69"/>
-        <location filename="../src/hardware-information-widget.cpp" line="72"/>
-        <location filename="../src/hardware-information-widget.cpp" line="78"/>
-        <location filename="../src/hardware-information-widget.cpp" line="79"/>
+        <location filename="../src/pages/hardware-information/hardware-information-widget.cpp" line="66"/>
+        <location filename="../src/pages/hardware-information/hardware-information-widget.cpp" line="69"/>
+        <location filename="../src/pages/hardware-information/hardware-information-widget.cpp" line="72"/>
+        <location filename="../src/pages/hardware-information/hardware-information-widget.cpp" line="78"/>
+        <location filename="../src/pages/hardware-information/hardware-information-widget.cpp" line="79"/>
         <source>Unknow</source>
         <translation>未知</translation>
     </message>
@@ -350,6 +350,10 @@
         <location filename="../src/kiran-system-widget.cpp" line="153"/>
         <source>Save</source>
         <translation>保存</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="vanished">取消</translation>
     </message>
     <message>
         <source>保存</source>
@@ -451,26 +455,26 @@
 <context>
     <name>SystemInformationWidget</name>
     <message>
-        <location filename="../src/system-information-widget.ui" line="14"/>
+        <location filename="../src/pages/system-information/system-information-widget.ui" line="14"/>
         <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="347"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/system-information-widget.ui" line="116"/>
+        <location filename="../src/pages/system-information/system-information-widget.ui" line="116"/>
         <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="348"/>
         <source>Host Name:</source>
         <translation>主机名:</translation>
     </message>
     <message>
-        <location filename="../src/system-information-widget.ui" line="136"/>
-        <location filename="../src/system-information-widget.ui" line="224"/>
-        <location filename="../src/system-information-widget.ui" line="299"/>
-        <location filename="../src/system-information-widget.ui" line="362"/>
-        <location filename="../src/system-information-widget.ui" line="425"/>
-        <location filename="../src/system-information-widget.ui" line="488"/>
-        <location filename="../src/system-information-widget.ui" line="576"/>
-        <location filename="../src/system-information-widget.ui" line="639"/>
+        <location filename="../src/pages/system-information/system-information-widget.ui" line="136"/>
+        <location filename="../src/pages/system-information/system-information-widget.ui" line="224"/>
+        <location filename="../src/pages/system-information/system-information-widget.ui" line="299"/>
+        <location filename="../src/pages/system-information/system-information-widget.ui" line="362"/>
+        <location filename="../src/pages/system-information/system-information-widget.ui" line="425"/>
+        <location filename="../src/pages/system-information/system-information-widget.ui" line="488"/>
+        <location filename="../src/pages/system-information/system-information-widget.ui" line="576"/>
+        <location filename="../src/pages/system-information/system-information-widget.ui" line="639"/>
         <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="349"/>
         <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="352"/>
         <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="354"/>
@@ -483,45 +487,45 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/system-information-widget.ui" line="164"/>
-        <location filename="../src/system-information-widget.ui" line="516"/>
+        <location filename="../src/pages/system-information/system-information-widget.ui" line="164"/>
+        <location filename="../src/pages/system-information/system-information-widget.ui" line="516"/>
         <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="350"/>
         <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="361"/>
         <source>PushButton</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/system-information-widget.ui" line="204"/>
+        <location filename="../src/pages/system-information/system-information-widget.ui" line="204"/>
         <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="351"/>
         <source>System Version:</source>
         <translation>系统版本:</translation>
     </message>
     <message>
-        <location filename="../src/system-information-widget.ui" line="279"/>
+        <location filename="../src/pages/system-information/system-information-widget.ui" line="279"/>
         <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="353"/>
         <source>Kernel Version:</source>
         <translation>内核版本:</translation>
     </message>
     <message>
-        <location filename="../src/system-information-widget.ui" line="342"/>
+        <location filename="../src/pages/system-information/system-information-widget.ui" line="342"/>
         <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="355"/>
         <source>System Architecture:</source>
         <translation>系统架构:</translation>
     </message>
     <message>
-        <location filename="../src/system-information-widget.ui" line="405"/>
+        <location filename="../src/pages/system-information/system-information-widget.ui" line="405"/>
         <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="357"/>
         <source>Installation time:</source>
         <translation>安装时间:</translation>
     </message>
     <message>
-        <location filename="../src/system-information-widget.ui" line="468"/>
+        <location filename="../src/pages/system-information/system-information-widget.ui" line="468"/>
         <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="359"/>
         <source>Activation status:</source>
         <translation>激活状态:</translation>
     </message>
     <message>
-        <location filename="../src/system-information-widget.ui" line="556"/>
+        <location filename="../src/pages/system-information/system-information-widget.ui" line="556"/>
         <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="362"/>
         <source>Expiry date:</source>
         <translation>质保期:</translation>
@@ -539,55 +543,55 @@
         <translation type="vanished">质保期:</translation>
     </message>
     <message>
-        <location filename="../src/system-information-widget.ui" line="619"/>
+        <location filename="../src/pages/system-information/system-information-widget.ui" line="619"/>
         <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="364"/>
         <source>Contact Us:</source>
         <translation>联系我们:</translation>
     </message>
     <message>
-        <location filename="../src/system-information-widget.cpp" line="75"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="75"/>
         <source>Change</source>
         <translation>更改</translation>
     </message>
     <message>
-        <location filename="../src/system-information-widget.cpp" line="76"/>
-        <location filename="../src/system-information-widget.cpp" line="142"/>
-        <location filename="../src/system-information-widget.cpp" line="193"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="76"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="142"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="193"/>
         <source>Active</source>
         <translation>激活</translation>
     </message>
     <message>
-        <location filename="../src/system-information-widget.cpp" line="90"/>
-        <location filename="../src/system-information-widget.cpp" line="91"/>
-        <location filename="../src/system-information-widget.cpp" line="92"/>
-        <location filename="../src/system-information-widget.cpp" line="93"/>
-        <location filename="../src/system-information-widget.cpp" line="114"/>
-        <location filename="../src/system-information-widget.cpp" line="118"/>
-        <location filename="../src/system-information-widget.cpp" line="119"/>
-        <location filename="../src/system-information-widget.cpp" line="382"/>
-        <location filename="../src/system-information-widget.cpp" line="386"/>
-        <location filename="../src/system-information-widget.cpp" line="387"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="90"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="91"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="92"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="93"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="114"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="118"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="119"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="382"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="386"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="387"/>
         <source>Unknow</source>
         <translation>未知</translation>
     </message>
     <message>
-        <location filename="../src/system-information-widget.cpp" line="115"/>
-        <location filename="../src/system-information-widget.cpp" line="383"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="115"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="383"/>
         <source>Can&apos;t get license information</source>
         <translation>无法获取授权信息</translation>
     </message>
     <message>
-        <location filename="../src/system-information-widget.cpp" line="150"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="150"/>
         <source>The current time is illegal</source>
         <translation>当前时间不合法</translation>
     </message>
     <message>
-        <location filename="../src/system-information-widget.cpp" line="151"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="151"/>
         <source>Less than the installation time</source>
         <translation>小于安装时间</translation>
     </message>
     <message>
-        <location filename="../src/system-information-widget.cpp" line="162"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="162"/>
         <source>Not activated. Trail expiration: </source>
         <translation>未激活.试用到期: </translation>
     </message>
@@ -600,32 +604,32 @@
         <translation type="vanished">试用版.试用到期: </translation>
     </message>
     <message>
-        <location filename="../src/system-information-widget.cpp" line="171"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="171"/>
         <source>get service status failed</source>
         <translation>获取服务状态信息失败</translation>
     </message>
     <message>
-        <location filename="../src/system-information-widget.cpp" line="174"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="174"/>
         <source>Not yet</source>
         <translation>暂无</translation>
     </message>
     <message>
-        <location filename="../src/system-information-widget.cpp" line="181"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="181"/>
         <source>Activated</source>
         <translation>已激活</translation>
     </message>
     <message>
-        <location filename="../src/system-information-widget.cpp" line="401"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="401"/>
         <source>Official Version</source>
         <translation>正式版</translation>
     </message>
     <message>
-        <location filename="../src/system-information-widget.cpp" line="462"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="462"/>
         <source>Copyright ©</source>
         <translation>版权所有 ©</translation>
     </message>
     <message>
-        <location filename="../src/system-information-widget.cpp" line="462"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="462"/>
         <source>KylinSec. All rights reserved.</source>
         <translation>KylinSec.保留所有权利.</translation>
     </message>
@@ -679,12 +683,12 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/kiran-system-information.cpp" line="41"/>
+        <location filename="../src/kiran-system-information.cpp" line="40"/>
         <source>System Information</source>
         <translation>系统信息</translation>
     </message>
     <message>
-        <location filename="../src/kiran-system-information.cpp" line="42"/>
+        <location filename="../src/kiran-system-information.cpp" line="41"/>
         <source>Hardware Information</source>
         <translation>硬件信息</translation>
     </message>

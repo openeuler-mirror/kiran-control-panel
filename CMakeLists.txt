@@ -8,14 +8,23 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-find_package(PkgConfig REQUIRED)
-pkg_search_module(KIRAN_WIDGETS_QT5 REQUIRED kiranwidgets-qt5)
-pkg_search_module(ZLOG REQUIRED zlog)
-
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
-set(DATA_DIR "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATAROOTDIR}")
+
+find_package(PkgConfig REQUIRED)
+find_package(Qt5 COMPONENTS Widgets Svg DBus LinguistTools Network PrintSupport)
+pkg_search_module(KIRAN_WIDGETS_QT5 REQUIRED kiranwidgets-qt5)
+pkg_search_module(ZLOG REQUIRED zlog)
+pkg_search_module(KIRAN_CC_DAEMON REQUIRED kiran-cc-daemon)
+
+#通过kiran control panel的pkgconfig配置文件取出插件Desktop安装位置、插件共享库安装位置
+pkg_search_module(KIRAN_CONTROL_PANEL_PKG REQUIRED kiran-control-panel)
+pkg_get_variable(CPANEL_PLUGIN_DIR kiran-control-panel plugin_location)
+pkg_get_variable(CPANEL_DESKTOP_DIR kiran-control-panel plugin_desktop_location)
+
+
+set(DATA_DIR "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATADIR}")
 
 set(TARGET_NAME ${PROJECT_NAME})
 set(TRANSLATIONS_DIR "${DATA_DIR}/${PROJECT_NAME}/translations/")
@@ -36,35 +45,34 @@ file(GLOB_RECURSE RESOURCES "data/*.qrc")
 file(GLOB_RECURSE QSS "data/*.qss")
 
 
-include_directories("${CMAKE_BINARY_DIR}" "src" "${INCLUDE_PATH}" )
-
-find_package(Qt5 COMPONENTS Widgets Svg DBus LinguistTools Network PrintSupport)
+include_directories("${CMAKE_BINARY_DIR}" "src" "${INCLUDE_PATH}"
+						 "${KIRAN_CONTROL_PANEL_PKG_INCLUDE_DIRS}"  )
 
 qt5_create_translation( QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES} )
 
 
-add_executable(${TARGET_NAME}
+add_library(${TARGET_NAME} SHARED
 			${SOURCES}
 			${HEADERS}
 			${FORMS}
 			${RESOURCES}
-	        	${QM_FILES}
+	       ${QM_FILES}
 			${QSS})
 			
 target_link_libraries(${TARGET_NAME}
-        Qt5::Widgets
-        Qt5::DBus
-        Qt5::Svg
-	Qt5::PrintSupport
-	Qt5::Core
-	QZint
-	glib-2.0
-        kiranwidgets-qt5
-        ${KIRAN_WIDGETS_QT5_LIBRARIES}
-	${ZLOG_LIBRARIES})
+			Qt5::Widgets
+			Qt5::DBus
+			Qt5::Svg
+			Qt5::PrintSupport
+			Qt5::Core
+			QZint
+			glib-2.0
+			kiranwidgets-qt5
+			${KIRAN_WIDGETS_QT5_LIBRARIES}
+			${ZLOG_LIBRARIES})
 
 install(TARGETS ${PROJECT_NAME}
-        DESTINATION ${CMAKE_INSTALL_PREFIX}/bin/)
+        DESTINATION ${CPANEL_PLUGIN_DIR}/)
 
 install(FILES ${QM_FILES}
         DESTINATION ${TRANSLATIONS_DIR})

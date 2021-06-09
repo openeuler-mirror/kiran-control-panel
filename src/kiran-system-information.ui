@@ -210,13 +210,13 @@
   <customwidget>
    <class>SystemInformationWidget</class>
    <extends>QWidget</extends>
-   <header location="global">system-information-widget.h</header>
+   <header location="global">pages/system-information/system-information-widget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>HardwareInformationWidget</class>
    <extends>QWidget</extends>
-   <header location="global">hardware-information-widget.h</header>
+   <header location="global">pages/hardware-information/hardware-information-widget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>

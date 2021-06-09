@@ -39,7 +39,6 @@ SOURCES += \
         main.cpp \
         kiran-system-information.cpp \
     information-list-item.cpp \
-    hardware-information-widget.cpp \
     general-functions-class.cpp \
     system-info-dbus.cpp \
     system-information-widget.cpp \
@@ -55,7 +54,10 @@ SOURCES += \
     kiran-list-widget.cpp \
     change-host-name-widget.cpp \
     single-application/single-application.cpp \
-    single-application/single-application_p.cpp
+    single-application/single-application_p.cpp \
+    pages/hardware-information/hardware-information-widget.cpp \
+    pages/system-information/system-information-widget.cpp \
+    plug_interface/interface.cpp
 
 HEADERS += \
         kiran-system-information.h \
@@ -76,7 +78,10 @@ HEADERS += \
     kiran-list-widget.h \
     change-host-name-widget.h \
     single-application/single-application.h \
-    single-application/single-application_p.h
+    single-application/single-application_p.h \
+    pages/hardware-information/hardware-information-widget.h \
+    pages/system-information/system-information-widget.h \
+    plug_interface/interface.h
 
 FORMS += \
         kiran-system-information.ui \
@@ -88,7 +93,9 @@ FORMS += \
     license/active-list-item.ui \
     license/license-info-widget.ui \
     license/user-license-agreement.ui \
-    change-host-name-widget.ui
+    change-host-name-widget.ui \
+    pages/hardware-information/hardware-information-widget.ui \
+    pages/system-information/system-information-widget.ui
 
 RESOURCES += \
     ../data/res.qrc \
