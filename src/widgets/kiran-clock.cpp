@@ -36,10 +36,10 @@ void KiranClock::setUpdateTimeout(int ms)
 
 void KiranClock::loadPixmap()
 {
-    m_dialReader.load(QString(":/kcp-datetime-images/dial.svg"));
-    m_hourReader.load(QString(":/kcp-datetime-images/hour_hand.svg"));
-    m_minuteReader.load(QString(":/kcp-datetime-images/minute_hand.svg"));
-    m_secondReader.load(QString(":/kcp-datetime-images/second_hand.svg"));
+    m_dialReader.load(QString(":/kcp-timedate-images/dial.svg"));
+    m_hourReader.load(QString(":/kcp-timedate-images/hour_hand.svg"));
+    m_minuteReader.load(QString(":/kcp-timedate-images/minute_hand.svg"));
+    m_secondReader.load(QString(":/kcp-timedate-images/second_hand.svg"));
 
     update();
 }

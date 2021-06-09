@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.5)
 
-project(kiran-cpanel-datetime)
+project(kiran-cpanel-timedate)
 
 include(GNUInstallDirs)
 
@@ -31,7 +31,7 @@ file(GLOB_RECURSE QRC
         "resources/*.qrc")
 
 include_directories("${CMAKE_BINARY_DIR}" "src" )
-set( TS_FILES "translations/kiran-cpanel-datetime.zh_CN.ts" )
+set( TS_FILES "translations/kiran-cpanel-timedate.zh_CN.ts" )
 qt5_create_translation( QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES} )
 
 add_library(${PROJECT_NAME} SHARED
@@ -62,16 +62,16 @@ target_link_libraries(${PROJECT_NAME}
         ${KLOG_QT5_LIBRARIES})
 
 #安装插件Desktop
-configure_file(config/kiran-cpanel-datetime.desktop.in ${CMAKE_BINARY_DIR}/kiran-cpanel-datetime.desktop @ONLY)
+configure_file(config/kiran-cpanel-timedate.desktop.in ${CMAKE_BINARY_DIR}/kiran-cpanel-timedate.desktop @ONLY)
 install(FILES ${CMAKE_BINARY_DIR}/kiran-cpanel-datetime.desktop DESTINATION ${CPANEL_DESKTOP_DIR}/ )
 
 #安装插件icon
 set(KCP_ICON_INSTALL_PATH ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor)
-install(FILES "${CMAKE_SOURCE_DIR}/data/kcp-datetime-24.png" DESTINATION ${KCP_ICON_INSTALL_PATH}/24x24/apps RENAME kcp-datetime.png)
-install(FILES "${CMAKE_SOURCE_DIR}/data/kcp-datetime-32.png" DESTINATION ${KCP_ICON_INSTALL_PATH}/32x32/apps RENAME kcp-datetime.png)
-install(FILES "${CMAKE_SOURCE_DIR}/data/kcp-datetime-48.png" DESTINATION ${KCP_ICON_INSTALL_PATH}/48x48/apps RENAME kcp-datetime.png)
-install(FILES "${CMAKE_SOURCE_DIR}/data/kcp-datetime-64.png" DESTINATION ${KCP_ICON_INSTALL_PATH}/64x64/apps RENAME kcp-datetime.png)
-install(FILES "${CMAKE_SOURCE_DIR}/data/kcp-datetime-96.png" DESTINATION ${KCP_ICON_INSTALL_PATH}/96x96/apps RENAME kcp-datetime.png)
+install(FILES "${CMAKE_SOURCE_DIR}/data/kcp-timedate-24.png" DESTINATION ${KCP_ICON_INSTALL_PATH}/24x24/apps RENAME kcp-timedate.png)
+install(FILES "${CMAKE_SOURCE_DIR}/data/kcp-timedate-32.png" DESTINATION ${KCP_ICON_INSTALL_PATH}/32x32/apps RENAME kcp-timedate.png)
+install(FILES "${CMAKE_SOURCE_DIR}/data/kcp-timedate-48.png" DESTINATION ${KCP_ICON_INSTALL_PATH}/48x48/apps RENAME kcp-timedate.png)
+install(FILES "${CMAKE_SOURCE_DIR}/data/kcp-timedate-64.png" DESTINATION ${KCP_ICON_INSTALL_PATH}/64x64/apps RENAME kcp-timedate.png)
+install(FILES "${CMAKE_SOURCE_DIR}/data/kcp-timedate-96.png" DESTINATION ${KCP_ICON_INSTALL_PATH}/96x96/apps RENAME kcp-timedate.png)
 
 #安装插件
 install(TARGETS ${PROJECT_NAME} DESTINATION ${CPANEL_PLUGIN_DIR})

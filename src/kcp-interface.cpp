@@ -10,10 +10,10 @@
 #include <qt5-log-i.h>
 
 //日期时间功能项ID
-#define KCP_SUBITEM_DATETIME_ID "Datetime"
+#define KCP_SUBITEM_DATETIME_ID "TimeDate"
 
 //默认样式表文件
-#define DEFAULT_STYLE_SHEET_FILE ":/kcp-datetime-themes/black-theme.qss"
+#define DEFAULT_STYLE_SHEET_FILE ":/kcp-timedate-themes/black-theme.qss"
 
 KcpInterface::~KcpInterface()
 {
@@ -30,9 +30,9 @@ int KcpInterface::init()
 
     m_translator = new QTranslator;
     if (!m_translator->load(QLocale(),
-                            "kiran-cpanel-datetime",
+                            "kiran-cpanel-timedate",
                             ".",
-                            "/usr/share/kiran-cpanel-datetime/translations/",
+                            "/usr/share/kiran-cpanel-timedate/translations/",
                             ".qm"))
     {
         m_translator->deleteLater();

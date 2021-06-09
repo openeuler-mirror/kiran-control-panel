@@ -25,7 +25,7 @@ enum KiranTimeDateStackPageEnum
     PAGE_END
 };
 
-#define DEFAULT_STYLE_FILE ":/kcp-datetime-themeskcp-datetime/black-theme.qss"
+#define DEFAULT_STYLE_FILE ":/kcp-timedate-themes/black-theme.qss"
 
 KiranTimeDateWidget::KiranTimeDateWidget(QWidget* parent)
     : QWidget(parent), ui(new Ui::KiranTimeDateWidget), m_updateTimer(0), m_maskWidget(new MaskWidget(this))
@@ -126,7 +126,7 @@ void KiranTimeDateWidget::initTimeZoneSettingsPage()
 {
     auto sideBarItem = new QListWidgetItem(ui->tabList);
     sideBarItem->setText(tr("Change Time Zone"));
-    sideBarItem->setIcon(QIcon(":/kcp-datetime-images/time_zone.png"));
+    sideBarItem->setIcon(QIcon(":/kcp-timedate-images/time_zone.png"));
     ui->tabList->addItem(sideBarItem);
 
     m_zoneSettingsPage = new TimezoneSettings(this);
@@ -138,8 +138,8 @@ void KiranTimeDateWidget::initDateTimeSettingsPage()
     auto sideBarItem = new QListWidgetItem(ui->tabList);
     sideBarItem->setText(tr("Set Time Manually"));
     QIcon setTimeManualIcon;
-    setTimeManualIcon.addPixmap(QPixmap(":/kcp-datetime-images/time.png"), QIcon::Normal);
-    setTimeManualIcon.addPixmap(QPixmap(":/kcp-datetime-images/time_d.png"), QIcon::Disabled);
+    setTimeManualIcon.addPixmap(QPixmap(":/kcp-timedate-images/time.png"), QIcon::Normal);
+    setTimeManualIcon.addPixmap(QPixmap(":/kcp-timedate-images/time_d.png"), QIcon::Disabled);
     sideBarItem->setIcon(setTimeManualIcon);
     ui->tabList->addItem(sideBarItem);
 
@@ -151,7 +151,7 @@ void KiranTimeDateWidget::initDisplayFormatSettingsPage()
 {
     auto sideBarItem = new QListWidgetItem(ui->tabList);
     sideBarItem->setText(tr("Time date format setting"));
-    sideBarItem->setIcon(QIcon(":/kcp-datetime-images/time_format.svg"));
+    sideBarItem->setIcon(QIcon(":/kcp-timedate-images/time_format.svg"));
     ui->tabList->addItem(sideBarItem);
 
     m_formatSettingsPage = new DisplayFormatSettings(this);
