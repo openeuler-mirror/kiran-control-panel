@@ -1,12 +1,12 @@
 [Desktop Entry]
-Name=Datetime
+Name=TimeDate
 Name[zh_CN]=日期时间
-Comment=Datetime
+Comment=TimeDate
 Comment[zh_CN]=日期时间
-Icon=datetime.png
+Icon=timedate.png
 
 [Kiran Control Panel Category]
-Category=datetime
+Category=timedate
 Weight=4
 Keywords[zh_CN]=日期时间
-Keywords=Datetime
+Keywords=timedate
