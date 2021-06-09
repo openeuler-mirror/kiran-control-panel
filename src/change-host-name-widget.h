@@ -22,6 +22,7 @@ class ChangeHostNameWidget : public KiranTitlebarWindow
 public:
     explicit ChangeHostNameWidget();
     ~ChangeHostNameWidget();
+    bool getLineEditStatus();
 
 private:
     void initUI();

@@ -24,22 +24,8 @@ public:
     virtual QSize sizeHint() const override;
 
 private:
-    QMenu* createMenu();
-    void setMenuIntoTitlebar();
-private slots:
-    void actionEulaClicked();
-    void actionExportClicked();
-
-protected:
-    bool eventFilter(QObject *target, QEvent *event);
-
-private:
      kiranSystemInformation *centerWgt;
-     QPushButton* btnMenu;
-     QMenu* menu;
-     QAction* actionEULA ;
-     QAction* actionExport;
-     UserlicenseAgreement *userlicenseAgreement;
+
 };
 
 #endif // KIRANSYSTEMWIDGET_H

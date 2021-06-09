@@ -70,11 +70,11 @@ void KcpInterface::uninit()
 
 int KcpInterface::init()
 {
-//    if(!SystemInformationWidget::initUI() || !HardwareInformationWidget::initUI())
-//    {
-//        return -1;
-//    }
-
+    QString systemInfo;
+    if(!InfoDbus::SystemInfo::getSystemInfo(1,systemInfo) || !InfoDbus::SystemInfo::getSystemInfo(0,systemInfo))
+    {
+        return -1;
+    }
     //加载翻译文件
     if (m_translator != nullptr)
     {

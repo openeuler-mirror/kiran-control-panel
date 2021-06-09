@@ -22,6 +22,7 @@
 #include<sstream>
 #include <iomanip>
 #include <kiran-system-daemon/systeminfo-i.h>
+#include <kiranwidgets-qt5/kiran-message-box.h>
 
 #define MEMORY          "mem"
 #define TOTAL_SIZE      "total_size"
@@ -66,15 +67,15 @@ bool HardwareInformationWidget::initUI(void)
 bool HardwareInformationWidget::readHardwareInfo(int infoType)
 {
     QString systemInfo;
-    QLabel *labelDisk = new QLabel();
+    QLabel *labelDisk = new QLabel();;
     labelDisk->setText(tr("Unknow"));
-    labelDisk->setStyleSheet("QLabel{color:#7e7e7e;font-family: \"Noto Sans CJK SC regular\";font-size:12px;}");
+    labelDisk->setStyleSheet("QLabel{color:#7e7e7e;font-family: \"Noto Sans CJK SC regular\";}");
     QLabel *labelGraphics = new QLabel();
     labelGraphics->setText(tr("Unknow"));
-    labelGraphics->setStyleSheet("QLabel{color:#7e7e7e;font-family: \"Noto Sans CJK SC regular\";font-size:12px;}");
+    labelGraphics->setStyleSheet("QLabel{color:#7e7e7e;font-family: \"Noto Sans CJK SC regular\";}");
     QLabel *labelEths = new QLabel();
     labelEths->setText(tr("Unknow"));
-    labelEths->setStyleSheet("QLabel{color:#7e7e7e;font-family: \"Noto Sans CJK SC regular\";font-size:12px;}");
+    labelEths->setStyleSheet("QLabel{color:#7e7e7e;font-family: \"Noto Sans CJK SC regular\";}");
 
     if(!InfoDbus::SystemInfo::getSystemInfo(infoType , systemInfo))
     {
@@ -337,7 +338,7 @@ void HardwareInformationWidget::showListInfo()
         qInfo() << diskList.at(i);
         QLabel* labelDisk = new QLabel(diskList.at(i));
         //设置QLabel的样式
-        labelDisk->setStyleSheet("QLabel{color:#7e7e7e;font-family: \"Noto Sans CJK SC regular\";font-size:12px;}");
+        labelDisk->setStyleSheet("QLabel{color:#7e7e7e;font-family: \"Noto Sans CJK SC regular\";}");
         QFont font = labelDisk->font();
         int fontSize = font.pixelSize();
         qInfo() << "fontSize= " << fontSize;
@@ -349,7 +350,7 @@ void HardwareInformationWidget::showListInfo()
         qInfo() << graphicsList.at(i);
         QLabel* labelGraphics = new QLabel(graphicsList.at(i));
         //设置QLabel的样式
-        labelGraphics->setStyleSheet("QLabel{color:#7e7e7e;font-family: \"Noto Sans CJK SC regular\";font-size:12px;}");
+        labelGraphics->setStyleSheet("QLabel{color:#7e7e7e;font-family: \"Noto Sans CJK SC regular\";}");
         ui->gridLayout_graphics_card->addWidget(labelGraphics,i,0,Qt::AlignRight);
     }
     for(i=0; i<ethsNum; i++)
@@ -357,7 +358,7 @@ void HardwareInformationWidget::showListInfo()
         qInfo() << ethsList.at(i);
         QLabel* labelEths = new QLabel(ethsList.at(i));
         //设置QLabel的样式
-        labelEths->setStyleSheet("QLabel{color:#7e7e7e;font-family: \"Noto Sans CJK SC regular\";font-size:12px;}");
+        labelEths->setStyleSheet("QLabel{color:#7e7e7e;font-family: \"Noto Sans CJK SC regular\";}");
         ui->gridLayout_network_card->addWidget(labelEths,i,0,Qt::AlignRight);
     }
 }

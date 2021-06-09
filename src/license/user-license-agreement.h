@@ -16,6 +16,7 @@ public:
     explicit UserlicenseAgreement();
     ~UserlicenseAgreement();
     QString getEulaText();
+    void exportEULA();
 
 private:
     void initUI();

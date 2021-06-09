@@ -12,6 +12,9 @@
 #include "change-host-name-widget.h"
 #include <kylin-license/license_i.h>
 #include <kiranwidgets-qt5/kiran-message-box.h>
+#include <kiranwidgets-qt5/widget-property-helper.h>
+#include <kiranwidgets-qt5/kiran-style-public-define.h>
+#include "license/user-license-agreement.h"
 
 #include <QDebug>
 #include <QJsonDocument>
@@ -37,13 +40,15 @@
 #define REGISTER_TIME    "register_time"
 #define REGISTER_TYPE    "register_type"
 #define INSTALL_TYPE     "install_type"
+using namespace Kiran::WidgetPropertyHelper;
 
 SystemInformationWidget::SystemInformationWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::SystemInformationWidget),
     activeGuide(nullptr),
     licenseInfoWidget(nullptr),
-    hostNameWidget(nullptr)
+    hostNameWidget(nullptr),
+    userlicenseAgreement(nullptr)
 {
     ui->setupUi(this);
     initUI();
@@ -67,26 +72,47 @@ SystemInformationWidget::~SystemInformationWidget()
     {
         delete hostNameWidget;
     }
+    if(userlicenseAgreement != nullptr)
+    {
+        delete userlicenseAgreement;
+    }
 }
 
 bool SystemInformationWidget::initUI()
 {
-    if(!readSystemInfo(0))
-    {
-        return false;
-    }
-
-    if(!readLicenseInfo())
-    {
-        KiranMessageBox::message(nullptr,QObject::tr("Faild"),
-                                 QObject::tr("Connect License Dbus Failed!"),
-                                 KiranMessageBox::Ok);
-    }
+    readSystemInfo(0);
+    readLicenseInfo();
 
     ui->btn_change_name->setText(tr("Change"));
     ui->btn_status->setText(tr("Active"));
     ui->lab_contact_info->setText("400-625-6606");
+    ui->btn_EULA->setText(tr("Show"));
+
+    connect(ui->btn_EULA,&QPushButton::clicked,
+            [this]{
+        if(userlicenseAgreement == nullptr)
+        {
+            userlicenseAgreement = new UserlicenseAgreement();
+        }
+        int screenNum = QApplication::desktop()->screenNumber(QCursor::pos());
+        QRect screenGeometry = QApplication::desktop()->screenGeometry(screenNum);
+        userlicenseAgreement->move(screenGeometry.x()+(screenGeometry.width()-this->width())/2,
+               screenGeometry.y()+(screenGeometry.height()-this->height())/2);
+        userlicenseAgreement->show();
+    });
+
     return true;
+}
+
+bool SystemInformationWidget::hasUnsavedOptions()
+{
+    if((activeGuide!= nullptr && activeGuide->getLineEditStatus()) ||
+        (hostNameWidget != nullptr && hostNameWidget->getLineEditStatus()))
+    {
+        return true;
+    }
+    else
+        return false;
 }
 
 /**

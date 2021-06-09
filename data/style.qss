@@ -6,8 +6,6 @@ QLabel#lab_host_name,QLabel#lab_system_version,QLabel#lab_core_version,QLabel#la
 QLabel#label_text
 {
     color:#ffffff;
-/*    font-family: "Noto Sans CJK SC light";
-    font-size:12px;*/
 }
 QLabel#label_CPU,QLabel#label_memory,QLabel#label_hard_disk,QLabel#label_graphics_card,QLabel#label_network_card,
 QLabel#lab_host_name,QLabel#lab_system_version,QLabel#lab_core_version,QLabel#lab_system_arch,QLabel#lab_install_time,QLabel#lab_register_status,QLabel#lab_expire_date,QLabel#lab_contact
@@ -20,30 +18,21 @@ QLabel#lab_name_info,QLabel#lab_system_version_info,QLabel#lab_core_version_info
 {
     color:#7e7e7e;
     font-family: "Noto Sans CJK SC regular";
-/*    font-size:12px;*/
 }
 /*QLabel#label_hard_disk,QLabel#label_graphics_card,QLabel#label_network_card
 {
     margin-top:14px;
 }*/
 
-QLabel#lab_status
-{
-/*    font-family: "Noto Sans CJK SC light";
-    font-size:12px;*/
-}
 QLabel#lab_status,QLabel#lab_name_info
 {
     margin-right:8px;
 }
-/*QLabel#label_logo
-{
-    background-color: yellow;
-}*/
 
 /*******************QWidget**********/
 QWidget#widget_CPU,QWidget#widget_memory,QWidget#widget_hard_disk,QWidget#widget_graphics_card,QWidget#widget_network_card,
-QWidget#widget_kernel_version,QWidget#widget_host_name,QWidget#widget_system_version,QWidget#widget_system_arch,QWidget#widget_install_time,QWidget#widget_register_status,QWidget#widget_expire_date,QWidget#widget_contact
+QWidget#widget_kernel_version,QWidget#widget_host_name,QWidget#widget_system_version,QWidget#widget_system_arch,QWidget#widget_install_time,QWidget#widget_register_status,QWidget#widget_expire_date,QWidget#widget_contact,
+QWidget#widget_EULA
 {
     background-color: #2d2d2d;
     border-radius: 6px;
@@ -76,19 +65,17 @@ QScrollArea#scrollArea
     border:none;
 }
 /****************QPushButton************/
-QPushButton#btn_change_name,QPushButton#btn_status
+QPushButton#btn_change_name,QPushButton#btn_status,QPushButton#btn_EULA
 {
     background-color: #2eb3ff;
     border-radius: 4px;
     color:#ffffff;
-/*    font-family: "Noto Sans CJK SC light";
-    font-size:12px;*/
 }
-QPushButton#btn_change_name:hover,QPushButton#btn_status:hover
+QPushButton#btn_change_name:hover,QPushButton#btn_status:hover,QPushButton#btn_EULA:hover
 {
      background-color: #77ceff;
 }
-QPushButton#btn_change_name:pressed,QPushButton#btn_status:pressed
+QPushButton#btn_change_name:pressed,QPushButton#btn_status:pressed,QPushButton#btn_EULA:pressed
 {
     background-color: #2eb3ff;
 }
@@ -98,8 +85,6 @@ QPushButton#btn_save
     background-color: #2eb3ff;
     border-radius: 10px;
     color:rgba(255,255,255,0.3);
-/*    font-family: "Noto Sans CJK SC light";
-    font-size:12px;*/
 }
 QPushButton#btn_save:pressed
 {
@@ -115,8 +100,6 @@ QPushButton#btn_cancel
     background-color: #2d2d2d;
     border-radius: 10px;
     color:#ffffff;
-/*    font-family: "Noto Sans CJK SC light";
-    font-size:12px;*/
     border:1px solid #4e4e4e
 }
 QPushButton#btn_cancel:pressed
@@ -155,37 +138,7 @@ QListWidgetItem
 {
 
 }
-/****************QScrollBar*****************/
-/*
-QScrollBar:vertical
-{
-    background: transparent;
-    width:6px;
-    min-height :10px;
-}
-QScrollBar:horizontal
-{
-    background: transparent;
-    height :6px;
-}
-QScrollBar::handle:vertical,QScrollBar::handle:horizontal
-{
-      background: rgba(255,255,255,0.1);
-      min-width: 20px;
-}
-QScrollBar::handle:vertical:pressed,QScrollBar::handle:horizontal:pressed
-{
-      background: rgba(255,255,255,0.3);
-}
-QScrollBar::add-line:vertical,QScrollBar::add-line:horizontal
-{
-      background: transparent;
-}
-QScrollBar::sub-line:vertical,QScrollBar::sub-line:horizontal
-{
-      background: transparent;
-}
-*/
+
 /*************QTextEdit****************/
 QTextBrowser#text_eula
 {
@@ -208,35 +161,27 @@ QLabel#label_qrcode_text,
 QLabel#label_sys_mc,QLabel#label_sys_lc
 {
     color:#ffffff;
-/*    font-family: "Noto Sans CJK SC light";*/
-/*    font-size:12px;*/
 }
 QLabel#label_choose_text
 {
     font-size:22px;
     color:#ffffff;
-/*    font-family: "Noto Sans CJK SC light";*/
 }
 QLabel#label_mc_manual, QLabel#label_mc_online ,QLabel#label_mc_key,
 QLabel#label_lc ,QLabel#label_mc
 {
     color :rgba(255,255,255,0.3);
-/*    font-family: "Noto Sans CJK SC light";
-    font-size:12px;*/
 }
 
 QLabel#label_successful , QLabel#label_failed
 {
     font-size:16px;
     color:#ffffff;
-/*    font-family: "Noto Sans CJK SC light";*/
 }
 
 QLabel#error_text
 {
     color :#fe4935;
-/*    font-size:12px;
-    font-family: "Noto Sans CJK SC light";*/
 }
 QLabel#label_authorized_points,QLabel#authorized_points,
 QLabel#label_remaining_points,QLabel#remaining_points,
@@ -246,8 +191,6 @@ QLabel#label_industrial_points,QLabel#industrial_points,
 QLabel#label_server_points,QLabel#server_points
 {
     color :#5ab940;
-/*    font-size:12px;
-    font-family: "Noto Sans CJK SC light";*/
 }
 QLabel#label_key
 {
@@ -271,8 +214,6 @@ QRadioButton
 {
 
     color:#ffffff;
-/*    font-size:12px;
-    font-family: "Noto Sans CJK SC light";*/
     spacing:12px;
     outline: none;
 }
@@ -298,8 +239,6 @@ QPushButton#btn_next
 {
         color:#ffffff;
         background-color: #2eb3ff;
-/*        font-size:12px;
-        font-family: "Noto Sans CJK SC light";*/
         border-radius: 10px;
         outline: none;
 }
@@ -307,8 +246,6 @@ QPushButton#btn_active_manual,QPushButton#btn_active_online
 {
         color: rgba(255,255,255,0.3);
         background-color: #2eb3ff;
-/*        font-size:12px;
-        font-family: "Noto Sans CJK SC light";*/
         border-radius: 10px;
         outline: none;
 }
@@ -330,8 +267,6 @@ QPushButton#btn_next:pressed,QPushButton#btn_status:pressed
 QPushButton#btn_back_manual ,QPushButton#btn_back_key ,QPushButton#btn_back_online,QPushButton#btn_back_failed
 {
         color:#ffffff;
-/*        font-size:12px;
-        font-family: "Noto Sans CJK SC light";*/
         border-radius: 10px;
         border:1px solid #4e4e4e;
         outline: none;

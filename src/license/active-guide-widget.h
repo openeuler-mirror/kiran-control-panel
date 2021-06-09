@@ -24,6 +24,7 @@ public:
     enum {Page_Start, Page_Manual,Page_Key,Page_Online,Page_Activating,Page_Successful,Page_Failed};
     explicit ActGuideWidget();
     ~ActGuideWidget();
+    bool getLineEditStatus();
 
 private:
     void iniUI();

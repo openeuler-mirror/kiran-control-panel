@@ -17,6 +17,7 @@ namespace Ui {
 class SystemInformationWidget;
 }
 
+class UserlicenseAgreement;
 class SystemInformationWidget : public QWidget
 {
     Q_OBJECT
@@ -25,6 +26,7 @@ public:
     explicit SystemInformationWidget(QWidget *parent = 0);
     ~SystemInformationWidget();
     bool initUI();
+    bool hasUnsavedOptions();
 
 private:
     bool readSystemInfo(int infoType);
@@ -58,6 +60,7 @@ private:
     ActGuideWidget *activeGuide;
     LicenseInfoWidget *licenseInfoWidget;
     ChangeHostNameWidget* hostNameWidget;
+    UserlicenseAgreement *userlicenseAgreement;
 };
 
 #endif // SYSTEMINFORMATIONWIDGET_H

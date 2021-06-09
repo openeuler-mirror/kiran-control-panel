@@ -579,3 +579,11 @@ ActGuideWidget::~ActGuideWidget()
     delete ui;
 }
 
+bool ActGuideWidget::getLineEditStatus()
+{
+    if(ui->lineEdit_address->text() != NULL || ui->lineEdit_lc->text() != NULL)
+        return true;
+    else
+        return false;
+}
+

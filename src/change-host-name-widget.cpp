@@ -9,6 +9,8 @@
 #include "ui_change-host-name-widget.h"
 #include "system-info-dbus.h"
 #include <kiranwidgets-qt5/kiran-message-box.h>
+#include <kiranwidgets-qt5/widget-property-helper.h>
+#include <kiranwidgets-qt5/kiran-style-public-define.h>
 
 #include <QDebug>
 #include <QDesktopWidget>
@@ -29,6 +31,14 @@ ChangeHostNameWidget::~ChangeHostNameWidget()
     delete ui;
 }
 
+bool ChangeHostNameWidget::getLineEditStatus()
+{
+    if(ui->lineEdit_input_name->text() != NULL)
+        return true;
+    else
+        return false;
+}
+
 void ChangeHostNameWidget::initUI()
 {
     setTitle(tr("Host Name"));
@@ -37,6 +47,8 @@ void ChangeHostNameWidget::initUI()
     setContentWrapperMarginBottom(0);
     setResizeable(false);
     ui->btn_save->setEnabled(false);
+
+    Kiran::WidgetPropertyHelper::setButtonType(ui->btn_save,Kiran::BUTTON_Default);
 
     int screenNum = QApplication::desktop()->screenNumber(QCursor::pos());
     QRect screenGeometry = QApplication::desktop()->screenGeometry(screenNum);
