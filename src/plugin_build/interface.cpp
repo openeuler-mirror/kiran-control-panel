@@ -5,6 +5,7 @@
 #include "dbus-interface/mouse-interface.h"
 #include "config/config.h"
 #include <kiran-message-box.h>
+#include <kiran-log/qt5-log-i.h>
 #include <QLocale>
 #include <QTranslator>
 #include <QCoreApplication>
@@ -79,7 +80,7 @@ int PluginMouseInterface::init()
                              TRANSLATIONS_FILE_DIR,
                             ".qm"))
     {
-        qDebug() << "Kiran cpanel mouse load translation failed" << endl;
+        KLOG_DEBUG() << "Kiran cpanel mouse load translation failed" << endl;
         delete m_translator;
         m_translator = nullptr;
         return -1;

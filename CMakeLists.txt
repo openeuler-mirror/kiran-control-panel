@@ -15,7 +15,7 @@ set(CMAKE_AUTORCC ON)
 find_package(PkgConfig REQUIRED)
 find_package(Qt5 COMPONENTS Widgets Svg DBus LinguistTools Network)
 pkg_search_module(KIRAN_WIDGETS_QT5 REQUIRED kiranwidgets-qt5)
-pkg_search_module(ZLOG REQUIRED zlog)
+pkg_search_module(KLOG_QT5 REQUIRED klog-qt5)
 pkg_search_module(KIRAN_CC_DAEMON REQUIRED kiran-cc-daemon)
 
 #通过kiran control panel的pkgconfig配置文件取出插件Desktop安装位置、插件共享库安装位置
@@ -44,7 +44,8 @@ file(GLOB_RECURSE RESOURCES "resources/*.qrc")
 
 
 include_directories("${CMAKE_BINARY_DIR}" "src" "${INCLUDE_PATH}" 
-						 "${KIRAN_CONTROL_PANEL_PKG_INCLUDE_DIRS}" )
+						 "${KIRAN_CONTROL_PANEL_PKG_INCLUDE_DIRS}" 
+						 "${KLOG_QT5_INCLUDE_DIRS}")
 
 qt5_create_translation( QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES} )
 
@@ -60,10 +61,10 @@ target_link_libraries(${PROJECT_NAME}
         Qt5::Widgets
         Qt5::DBus
         Qt5::Svg
-		 Qt5::Core
+	Qt5::Core
         kiranwidgets-qt5
         ${KIRANWIDGETS_LIBRARIES}
-		 ${ZLOG_LIBRARIES})
+	${KLOG_QT5_LIBRARIES})
 
 install(TARGETS ${PROJECT_NAME}
         DESTINATION ${CPANEL_PLUGIN_DIR}/)

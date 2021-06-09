@@ -4,7 +4,7 @@
 <context>
     <name>KiranCPanelMouse</name>
     <message>
-        <location filename="../src/kiran-cpanel-mouse.cpp" line="19"/>
+        <location filename="../src/kiran-cpanel-mouse.cpp" line="20"/>
         <source>Mouse and TouchPad</source>
         <translation>鼠标和触摸板</translation>
     </message>
@@ -79,12 +79,12 @@
         <translation type="obsolete">保存</translation>
     </message>
     <message>
-        <location filename="../src/kiran-cpanel-mouse-widget.cpp" line="59"/>
+        <location filename="../src/kiran-cpanel-mouse-widget.cpp" line="60"/>
         <source>Mouse Settings</source>
         <translation>鼠标设置</translation>
     </message>
     <message>
-        <location filename="../src/kiran-cpanel-mouse-widget.cpp" line="64"/>
+        <location filename="../src/kiran-cpanel-mouse-widget.cpp" line="65"/>
         <source>TouchPad Settings</source>
         <translation>触摸板设置</translation>
     </message>
@@ -180,17 +180,17 @@
         <translation>左手模式</translation>
     </message>
     <message>
-        <location filename="../src/pages/page-mouse/mouse-settings.cpp" line="70"/>
+        <location filename="../src/pages/page-mouse/mouse-settings.cpp" line="69"/>
         <source>Slow</source>
         <translation>低速</translation>
     </message>
     <message>
-        <location filename="../src/pages/page-mouse/mouse-settings.cpp" line="75"/>
+        <location filename="../src/pages/page-mouse/mouse-settings.cpp" line="74"/>
         <source>Standard</source>
         <translation>标准</translation>
     </message>
     <message>
-        <location filename="../src/pages/page-mouse/mouse-settings.cpp" line="80"/>
+        <location filename="../src/pages/page-mouse/mouse-settings.cpp" line="79"/>
         <source>Fast</source>
         <translation>快速</translation>
     </message>
@@ -214,12 +214,12 @@
         <translation>快速</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="57"/>
+        <location filename="../src/main.cpp" line="54"/>
         <source>Faild</source>
         <translation>失败</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="58"/>
+        <location filename="../src/main.cpp" line="55"/>
         <source>Connect Mouse or TouchPad Dbus Failed!</source>
         <translation>连接鼠标或触摸板Dbus服务失败！</translation>
     </message>

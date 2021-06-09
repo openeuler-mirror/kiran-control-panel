@@ -10,7 +10,7 @@
  */
 
 #include "touchpad-interface.h"
-#include <kiran-session-daemon/touchpad_i.h>
+#include <kiran-session-daemon/touchpad-i.h>
 
 /*
  * Implementation of interface class ComKylinsecKiranSessionDaemonTouchPadInterface

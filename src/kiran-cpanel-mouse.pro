@@ -32,7 +32,6 @@ CONFIG += C++11
 SOURCES += \
         main.cpp \
         kiran-cpanel-mouse.cpp \
-    tools/log.cpp \
     kiran-cpanel-mouse-widget.cpp \
     dbus-interface/mouse-interface.cpp \
     dbus-interface/touchpad-interface.cpp \
@@ -43,7 +42,6 @@ SOURCES += \
 
 HEADERS += \
         kiran-cpanel-mouse.h \
-    tools/log.h \
     kiran-cpanel-mouse-widget.h \
     dbus-interface/mouse-interface.h \
     dbus-interface/touchpad-interface.h \

@@ -12,6 +12,7 @@
 #include "general-functions/general-function-class.h"
 #include "dbus-interface/touchpad-interface.h"
 #include "dbus-interface/mouse-interface.h"
+#include <kiran-log/qt5-log-i.h>
 
 #include <QMouseEvent>
 #include <QSlider>
@@ -50,7 +51,7 @@ bool KiranCPanelMouseWidget::initUI()
 
     if(!m_mouseInterface->isValid() || !m_touchPadInterface->isValid())
     {
-        qDebug() << "Connect Dbus Failed!" << endl;
+        KLOG_DEBUG() << "Connect Dbus Failed!" << endl;
         return false;
     }
     else
@@ -66,7 +67,7 @@ bool KiranCPanelMouseWidget::initUI()
         }
         else
         {
-            qDebug() << "There is no TouchPad!" << endl;
+            KLOG_DEBUG() << "There is no TouchPad!" << endl;
         }
     }
 

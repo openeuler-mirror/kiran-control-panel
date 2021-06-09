@@ -5,7 +5,6 @@
  * @copyright (c) 2020 KylinSec. All rights reserved.
  */
 #include "kiran-cpanel-mouse.h"
-#include "tools/log.h"
 #include "dbus-interface/mouse-interface.h"
 #include "dbus-interface/touchpad-interface.h"
 #include <QApplication>
@@ -14,7 +13,7 @@
 #include <QTranslator>
 #include <QFile>
 #include <iostream>
-#include <zlog_ex.h>
+#include <kiran-log/qt5-log-i.h>
 #include <kiranwidgets-qt5/kiran-message-box.h>
 #include <kiranwidgets-qt5/kiran-single-application.h>
 #include <kiranwidgets-qt5/kiran-application.h>
@@ -28,15 +27,13 @@ bool init_zlog = false;
 int main(int argc, char *argv[])
 {
     //设置日志输出
-    if (dzlog_init_ex(NULL, "kylinsec-session", "kiran-cpanel-mouse", "kiran-cpanel-mouse") < 0){
+    QLoggingCategory::defaultCategory()->setEnabled(QtMsgType::QtDebugMsg,true);
+
+    if(klog_qt5_init("","kylinsec-session","kiran-cpanel-mouse", "kiran-cpanel-mouse") <0 )
+    {
         std::cout << "init zlog error" << std::endl;
     }
-    else{
-        init_zlog = true;
-    }
-    qInstallMessageHandler(Log::customMessageHandler);
-    QLoggingCategory::defaultCategory()->setEnabled(QtMsgType::QtDebugMsg,true);
-    qInfo("******New Output*********\n");
+    KLOG_INFO("******New Output*********\n");
 
     //只允许单个程序运行
     KiranSingleApplication a(argc, argv);
