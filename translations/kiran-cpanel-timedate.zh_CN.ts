@@ -5,31 +5,36 @@
     <name>DateTimeSettings</name>
     <message>
         <location filename="../src/pages/date-time-settings/date-time-settings.ui" line="14"/>
-        <location filename="../build/kiran-cpanel-datetime_autogen/include/ui_date-time-settings.h" line="148"/>
+        <location filename="../build/kiran-cpanel-timedate_autogen/include/ui_date-time-settings.h" line="148"/>
+        <location filename="../cmake-build-debug/kiran-cpanel-timedate_autogen/include/ui_date-time-settings.h" line="148"/>
         <source>DateTimeSettings</source>
         <translation>日期时间设置</translation>
     </message>
     <message>
         <location filename="../src/pages/date-time-settings/date-time-settings.ui" line="46"/>
-        <location filename="../build/kiran-cpanel-datetime_autogen/include/ui_date-time-settings.h" line="149"/>
+        <location filename="../build/kiran-cpanel-timedate_autogen/include/ui_date-time-settings.h" line="149"/>
+        <location filename="../cmake-build-debug/kiran-cpanel-timedate_autogen/include/ui_date-time-settings.h" line="149"/>
         <source>Select Time</source>
         <translation>选择时间</translation>
     </message>
     <message>
         <location filename="../src/pages/date-time-settings/date-time-settings.ui" line="88"/>
-        <location filename="../build/kiran-cpanel-datetime_autogen/include/ui_date-time-settings.h" line="150"/>
+        <location filename="../build/kiran-cpanel-timedate_autogen/include/ui_date-time-settings.h" line="150"/>
+        <location filename="../cmake-build-debug/kiran-cpanel-timedate_autogen/include/ui_date-time-settings.h" line="150"/>
         <source>Select Date</source>
         <translation>选择日期</translation>
     </message>
     <message>
         <location filename="../src/pages/date-time-settings/date-time-settings.ui" line="152"/>
-        <location filename="../build/kiran-cpanel-datetime_autogen/include/ui_date-time-settings.h" line="151"/>
+        <location filename="../build/kiran-cpanel-timedate_autogen/include/ui_date-time-settings.h" line="151"/>
+        <location filename="../cmake-build-debug/kiran-cpanel-timedate_autogen/include/ui_date-time-settings.h" line="151"/>
         <source>save</source>
         <translation>保存</translation>
     </message>
     <message>
         <location filename="../src/pages/date-time-settings/date-time-settings.ui" line="190"/>
-        <location filename="../build/kiran-cpanel-datetime_autogen/include/ui_date-time-settings.h" line="152"/>
+        <location filename="../build/kiran-cpanel-timedate_autogen/include/ui_date-time-settings.h" line="152"/>
+        <location filename="../cmake-build-debug/kiran-cpanel-timedate_autogen/include/ui_date-time-settings.h" line="152"/>
         <source>reset</source>
         <translation>重置</translation>
     </message>
@@ -46,31 +51,36 @@
     <name>DisplayFormatSettings</name>
     <message>
         <location filename="../src/pages/display-format-settings/display-format-settings.ui" line="14"/>
-        <location filename="../build/kiran-cpanel-datetime_autogen/include/ui_display-format-settings.h" line="128"/>
+        <location filename="../build/kiran-cpanel-timedate_autogen/include/ui_display-format-settings.h" line="128"/>
+        <location filename="../cmake-build-debug/kiran-cpanel-timedate_autogen/include/ui_display-format-settings.h" line="128"/>
         <source>DisplayFormatSettings</source>
         <translation>日期时间格式设置</translation>
     </message>
     <message>
         <location filename="../src/pages/display-format-settings/display-format-settings.ui" line="46"/>
-        <location filename="../build/kiran-cpanel-datetime_autogen/include/ui_display-format-settings.h" line="129"/>
+        <location filename="../build/kiran-cpanel-timedate_autogen/include/ui_display-format-settings.h" line="129"/>
+        <location filename="../cmake-build-debug/kiran-cpanel-timedate_autogen/include/ui_display-format-settings.h" line="129"/>
         <source>Long date display format</source>
         <translation>长日期显示格式</translation>
     </message>
     <message>
         <location filename="../src/pages/display-format-settings/display-format-settings.ui" line="69"/>
-        <location filename="../build/kiran-cpanel-datetime_autogen/include/ui_display-format-settings.h" line="130"/>
+        <location filename="../build/kiran-cpanel-timedate_autogen/include/ui_display-format-settings.h" line="130"/>
+        <location filename="../cmake-build-debug/kiran-cpanel-timedate_autogen/include/ui_display-format-settings.h" line="130"/>
         <source>Short date display format</source>
         <translation>短日期显示格式</translation>
     </message>
     <message>
         <location filename="../src/pages/display-format-settings/display-format-settings.ui" line="89"/>
-        <location filename="../build/kiran-cpanel-datetime_autogen/include/ui_display-format-settings.h" line="131"/>
+        <location filename="../build/kiran-cpanel-timedate_autogen/include/ui_display-format-settings.h" line="131"/>
+        <location filename="../cmake-build-debug/kiran-cpanel-timedate_autogen/include/ui_display-format-settings.h" line="131"/>
         <source>Time format</source>
         <translation>时间格式</translation>
     </message>
     <message>
         <location filename="../src/pages/display-format-settings/display-format-settings.ui" line="112"/>
-        <location filename="../build/kiran-cpanel-datetime_autogen/include/ui_display-format-settings.h" line="132"/>
+        <location filename="../build/kiran-cpanel-timedate_autogen/include/ui_display-format-settings.h" line="132"/>
+        <location filename="../cmake-build-debug/kiran-cpanel-timedate_autogen/include/ui_display-format-settings.h" line="132"/>
         <source>Show time witch seconds</source>
         <translation>时间显示秒</translation>
     </message>
@@ -89,7 +99,8 @@
     <name>KiranDatePickerWidget</name>
     <message>
         <location filename="../src/widgets/kiran-date-picker-widget.ui" line="14"/>
-        <location filename="../build/kiran-cpanel-datetime_autogen/include/ui_kiran-date-picker-widget.h" line="103"/>
+        <location filename="../build/kiran-cpanel-timedate_autogen/include/ui_kiran-date-picker-widget.h" line="103"/>
+        <location filename="../cmake-build-debug/kiran-cpanel-timedate_autogen/include/ui_kiran-date-picker-widget.h" line="103"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
@@ -98,13 +109,15 @@
     <name>KiranTimeDateWidget</name>
     <message>
         <location filename="../src/kiran-timedate-widget.ui" line="14"/>
-        <location filename="../build/kiran-cpanel-datetime_autogen/include/ui_kiran-timedate-widget.h" line="163"/>
+        <location filename="../build/kiran-cpanel-timedate_autogen/include/ui_kiran-timedate-widget.h" line="163"/>
+        <location filename="../cmake-build-debug/kiran-cpanel-timedate_autogen/include/ui_kiran-timedate-widget.h" line="163"/>
         <source>KiranTimeDateWidget</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/kiran-timedate-widget.ui" line="155"/>
-        <location filename="../build/kiran-cpanel-datetime_autogen/include/ui_kiran-timedate-widget.h" line="166"/>
+        <location filename="../build/kiran-cpanel-timedate_autogen/include/ui_kiran-timedate-widget.h" line="166"/>
+        <location filename="../cmake-build-debug/kiran-cpanel-timedate_autogen/include/ui_kiran-timedate-widget.h" line="166"/>
         <source>Automatic synchronizetion</source>
         <translation>自动同步</translation>
     </message>
@@ -133,7 +146,8 @@
     <name>KiranTimePickerWidget</name>
     <message>
         <location filename="../src/widgets/kiran-time-picker-widget.ui" line="14"/>
-        <location filename="../build/kiran-cpanel-datetime_autogen/include/ui_kiran-time-picker-widget.h" line="135"/>
+        <location filename="../build/kiran-cpanel-timedate_autogen/include/ui_kiran-time-picker-widget.h" line="135"/>
+        <location filename="../cmake-build-debug/kiran-cpanel-timedate_autogen/include/ui_kiran-time-picker-widget.h" line="135"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
@@ -142,7 +156,8 @@
     <name>KiranTimeZone</name>
     <message>
         <location filename="../src/timezone/kiran-time-zone.ui" line="23"/>
-        <location filename="../build/kiran-cpanel-datetime_autogen/include/ui_kiran-time-zone.h" line="121"/>
+        <location filename="../build/kiran-cpanel-timedate_autogen/include/ui_kiran-time-zone.h" line="121"/>
+        <location filename="../cmake-build-debug/kiran-cpanel-timedate_autogen/include/ui_kiran-time-zone.h" line="121"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
@@ -156,7 +171,8 @@
     <name>KiranTimeZoneItem</name>
     <message>
         <location filename="../src/widgets/kiran-time-zone-item.ui" line="14"/>
-        <location filename="../build/kiran-cpanel-datetime_autogen/include/ui_kiran-time-zone-item.h" line="63"/>
+        <location filename="../build/kiran-cpanel-timedate_autogen/include/ui_kiran-time-zone-item.h" line="63"/>
+        <location filename="../cmake-build-debug/kiran-cpanel-timedate_autogen/include/ui_kiran-time-zone-item.h" line="63"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
@@ -170,7 +186,8 @@
     <name>KiranTimeZoneList</name>
     <message>
         <location filename="../src/timezone/kiran-time-zone-list.ui" line="20"/>
-        <location filename="../build/kiran-cpanel-datetime_autogen/include/ui_kiran-time-zone-list.h" line="71"/>
+        <location filename="../build/kiran-cpanel-timedate_autogen/include/ui_kiran-time-zone-list.h" line="71"/>
+        <location filename="../cmake-build-debug/kiran-cpanel-timedate_autogen/include/ui_kiran-time-zone-list.h" line="71"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
@@ -187,25 +204,29 @@
     <name>TimezoneSettings</name>
     <message>
         <location filename="../src/pages/timezone-settings/time-zone-settings.ui" line="14"/>
-        <location filename="../build/kiran-cpanel-datetime_autogen/include/ui_time-zone-settings.h" line="125"/>
+        <location filename="../build/kiran-cpanel-timedate_autogen/include/ui_time-zone-settings.h" line="125"/>
+        <location filename="../cmake-build-debug/kiran-cpanel-timedate_autogen/include/ui_time-zone-settings.h" line="125"/>
         <source>TimezoneSettings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/pages/timezone-settings/time-zone-settings.ui" line="52"/>
-        <location filename="../build/kiran-cpanel-datetime_autogen/include/ui_time-zone-settings.h" line="126"/>
+        <location filename="../build/kiran-cpanel-timedate_autogen/include/ui_time-zone-settings.h" line="126"/>
+        <location filename="../cmake-build-debug/kiran-cpanel-timedate_autogen/include/ui_time-zone-settings.h" line="126"/>
         <source>Select Time Zone</source>
         <translation>选择时区</translation>
     </message>
     <message>
         <location filename="../src/pages/timezone-settings/time-zone-settings.ui" line="116"/>
-        <location filename="../build/kiran-cpanel-datetime_autogen/include/ui_time-zone-settings.h" line="127"/>
+        <location filename="../build/kiran-cpanel-timedate_autogen/include/ui_time-zone-settings.h" line="127"/>
+        <location filename="../cmake-build-debug/kiran-cpanel-timedate_autogen/include/ui_time-zone-settings.h" line="127"/>
         <source>save</source>
         <translation>保存</translation>
     </message>
     <message>
         <location filename="../src/pages/timezone-settings/time-zone-settings.ui" line="154"/>
-        <location filename="../build/kiran-cpanel-datetime_autogen/include/ui_time-zone-settings.h" line="128"/>
+        <location filename="../build/kiran-cpanel-timedate_autogen/include/ui_time-zone-settings.h" line="128"/>
+        <location filename="../cmake-build-debug/kiran-cpanel-timedate_autogen/include/ui_time-zone-settings.h" line="128"/>
         <source>reset</source>
         <translation>重置</translation>
     </message>

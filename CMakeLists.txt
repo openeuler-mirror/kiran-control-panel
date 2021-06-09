@@ -63,7 +63,7 @@ target_link_libraries(${PROJECT_NAME}
 
 #安装插件Desktop
 configure_file(config/kiran-cpanel-timedate.desktop.in ${CMAKE_BINARY_DIR}/kiran-cpanel-timedate.desktop @ONLY)
-install(FILES ${CMAKE_BINARY_DIR}/kiran-cpanel-datetime.desktop DESTINATION ${CPANEL_DESKTOP_DIR}/ )
+install(FILES ${CMAKE_BINARY_DIR}/kiran-cpanel-timedate.desktop DESTINATION ${CPANEL_DESKTOP_DIR}/ )
 
 #安装插件icon
 set(KCP_ICON_INSTALL_PATH ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor)
