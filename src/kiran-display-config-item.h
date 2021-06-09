@@ -1,7 +1,7 @@
 #ifndef KIRANDISPLAYCONFIGITEM_H
 #define KIRANDISPLAYCONFIGITEM_H
 
-#include "kiran-session-daemon/display_i.h"
+#include "kiran-session-daemon/display-i.h"
 #include <QPushButton>
 #include <QEvent>
 

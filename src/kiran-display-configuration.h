@@ -24,9 +24,6 @@ public:
 
     QSize sizeHint() const override;
 
-Q_SIGNALS:
-    void sigClose();
-
 public Q_SLOTS:
     void on_pushButton_ok_clicked();
     void on_pushButton_extra_ok_clicked();

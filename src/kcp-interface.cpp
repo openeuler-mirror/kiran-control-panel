@@ -35,7 +35,7 @@ int KcpInterface::init()
     {
         m_translator->deleteLater();
         m_translator = nullptr;
-        KLOG_ERROR_S() << "load translator failed!";
+        KLOG_ERROR() << "load translator failed!";
         return -1;
     }
     qApp->installTranslator(m_translator);

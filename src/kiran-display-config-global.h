@@ -1,8 +1,6 @@
 #ifndef KIRANDISPLAYCONFIGGLOBAL_H
 #define KIRANDISPLAYCONFIGGLOBAL_H
 
-#include "kiranwidgets-qt5/kiran-message-box.h"
-#include "zlog_ex.h"
 #include <QPushButton>
 #include <QVariant>
 #include <QString>
@@ -10,6 +8,9 @@
 #include <QDBusMetaType>
 #include <QDBusMessage>
 #include <QDBusConnection>
+#include <kiran-message-box.h>
+#include <qt5-log-i.h>
+
 #define KIRAN_DBUS_SERVICE_NAME "com.kylinsec.Kiran.SessionDaemon.Display"
 #define KIRAN_DBUS_DISPLAY "/com/kylinsec/Kiran/SessionDaemon/Display"
 #define KIRAN_DBUS_INTREFACE_PROPERTIES "org.freedesktop.DBus.Properties"
@@ -65,7 +66,10 @@ T Monitor(const QString &dbusPath, const QString &function, const QVariantList &
     }
     else
     {
-        dzlog_cerr("DBus调用失败: [%s], [%s], [%s].", function, paras, response.errorMessage());
+        KLOG_ERROR() << "DBus调用失败: " << "\t"
+                     << "function: " << function << "\t"
+                     << "paras:    " << paras << "\t"
+                     << "response: " << response.errorMessage();
         if(showErrorBox)
         {
             KiranMessageBox box;
