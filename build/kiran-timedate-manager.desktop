@@ -1,9 +1,0 @@
-[Desktop Entry]
-Name=TimeDate
-Name[zh_CN]=日期时间设置
-Comment=Time date settings
-Comment[zh_CN]=日期时间设置
-Icon=datetime.png
-Weight=1
-Category=Datetime
-PluginFile=/usr/local/lib64/libkiran-timedate-manager.so

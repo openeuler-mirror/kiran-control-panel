@@ -69,7 +69,7 @@ void KiranTimeDateWidget::initUI()
 
     /// 自动同步
     m_autoSyncSwitch = new KiranSwitchButton(this);
-    KLOG_DEBUG_S() << "new auth sync switch:" << m_autoSyncSwitch;
+    KLOG_DEBUG() << "new auth sync switch:" << m_autoSyncSwitch;
     ui->widget_autoSync->layout()->addWidget(m_autoSyncSwitch);
 
     //自动同步开关的触发，设置"手动设置时间"标签的enable,判断当前页并切换
@@ -318,4 +318,9 @@ void KiranTimeDateWidget::handleSystemHourFormatChanged(TimedateHourFormat hourF
 {
     m_hourFormat = hourFormat;
     updateTimeLabel();
+}
+
+QSize KiranTimeDateWidget::sizeHint() const
+{
+    return QSize(931,652);
 }

@@ -3,7 +3,7 @@
 
 #include <QWidget>
 #include <QGSettings>
-#include <kiran-system-daemon/timedate_i.h>
+#include <kiran-system-daemon/timedate-i.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class KiranTimeDateWidget; }
@@ -24,6 +24,7 @@ public:
     KiranTimeDateWidget(QWidget *parent = nullptr);
     ~KiranTimeDateWidget();
 
+    QSize sizeHint() const override;
 private:
     void initUI();
     void initTimeZoneSettingsPage();

@@ -6,7 +6,7 @@
 #define KIRAN_CPANEL_DATETIME_SRC_PAGES_DISPLAY_FORMAT_DISPLAY_FORMAT_SETTINGS_H_
 
 #include <QWidget>
-#include <kiran-system-daemon/timedate_i.h>
+#include <kiran-system-daemon/timedate-i.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui

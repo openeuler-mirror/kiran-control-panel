@@ -31,7 +31,7 @@ file(GLOB_RECURSE QRC
         "resources/*.qrc")
 
 include_directories("${CMAKE_BINARY_DIR}" "src" )
-set( TS_FILES "translations/${PROJECT_NAME}.zh_CN.ts" )
+set( TS_FILES "translations/kiran-cpanel-datetime.zh_CN.ts" )
 qt5_create_translation( QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES} )
 
 add_library(${PROJECT_NAME} SHARED
@@ -66,12 +66,17 @@ configure_file(config/kiran-cpanel-datetime.desktop.in ${CMAKE_BINARY_DIR}/kiran
 install(FILES ${CMAKE_BINARY_DIR}/kiran-cpanel-datetime.desktop DESTINATION ${CPANEL_DESKTOP_DIR}/ )
 
 #安装插件icon
-install(FILES "data/kcp-datetime.png" DESTINATION ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATADIR}/icons/hicolor/96x96/apps )
+set(KCP_ICON_INSTALL_PATH ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor)
+install(FILES "${CMAKE_SOURCE_DIR}/data/kcp-datetime-24.png" DESTINATION ${KCP_ICON_INSTALL_PATH}/24x24/apps RENAME kcp-datetime.png)
+install(FILES "${CMAKE_SOURCE_DIR}/data/kcp-datetime-32.png" DESTINATION ${KCP_ICON_INSTALL_PATH}/32x32/apps RENAME kcp-datetime.png)
+install(FILES "${CMAKE_SOURCE_DIR}/data/kcp-datetime-48.png" DESTINATION ${KCP_ICON_INSTALL_PATH}/48x48/apps RENAME kcp-datetime.png)
+install(FILES "${CMAKE_SOURCE_DIR}/data/kcp-datetime-64.png" DESTINATION ${KCP_ICON_INSTALL_PATH}/64x64/apps RENAME kcp-datetime.png)
+install(FILES "${CMAKE_SOURCE_DIR}/data/kcp-datetime-96.png" DESTINATION ${KCP_ICON_INSTALL_PATH}/96x96/apps RENAME kcp-datetime.png)
 
 #安装插件
 install(TARGETS ${PROJECT_NAME} DESTINATION ${CPANEL_PLUGIN_DIR})
 
 #安装翻译文件
-set(TRANSLATE_INSTALL_DIR "${KDTM_DATA_INSTALL_DIR}/${PROJECT_NAME}/translations/")
+set(TRANSLATE_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATADIR}/${PROJECT_NAME}/translations/")
 configure_file(./config/config.h.in ${CMAKE_BINARY_DIR}/config.h @ONLY)
 install(FILES ${QM_FILES} DESTINATION ${TRANSLATE_INSTALL_DIR} )
