@@ -53,7 +53,12 @@ configure_file(data/kiran-cpanel-display.desktop.in ${CMAKE_BINARY_DIR}/kiran-cp
 install(FILES ${CMAKE_BINARY_DIR}/kiran-cpanel-display.desktop DESTINATION ${CPANEL_DESKTOP_DIR}/ )
 
 #安装插件图标
-install(FILES "./data/kcp-display.svg" DESTINATION ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/scalable/apps)
+set(KCP_ICON_INSTALL_PATH ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor)
+install(FILES "${CMAKE_SOURCE_DIR}/data/kcp-display-24.png" DESTINATION ${KCP_ICON_INSTALL_PATH}/24x24/apps RENAME kcp-display.png)
+install(FILES "${CMAKE_SOURCE_DIR}/data/kcp-display-32.png" DESTINATION ${KCP_ICON_INSTALL_PATH}/32x32/apps RENAME kcp-display.png)
+install(FILES "${CMAKE_SOURCE_DIR}/data/kcp-display-48.png" DESTINATION ${KCP_ICON_INSTALL_PATH}/48x48/apps RENAME kcp-display.png)
+install(FILES "${CMAKE_SOURCE_DIR}/data/kcp-display-64.png" DESTINATION ${KCP_ICON_INSTALL_PATH}/64x64/apps RENAME kcp-display.png)
+install(FILES "${CMAKE_SOURCE_DIR}/data/kcp-display-96.png" DESTINATION ${KCP_ICON_INSTALL_PATH}/96x96/apps RENAME kcp-display.png)
 
 #安装翻译文件
 set(TRANSLATION_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATAROOTDIR}/${PROJECT_NAME}/translations)

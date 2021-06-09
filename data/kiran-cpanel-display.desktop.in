@@ -3,11 +3,16 @@ Name=Display Settings
 Name[zh_CN]=显示设置
 Comment=Display settings
 Comment=显示设置
+Terminal=false
+Type=Application
 Icon=kcp-display
-Weight=1
-Categories=Qt;Settings;HardwareSettings;X-Hardware;X-Common-Features;
 #通过启动器单独执行 <kiran-cpanel-launcher -cpanel-plugin 插件的desktop文件名>
 Exec=kiran-cpanel-launcher --cpanel-plugin=kiran-cpanel-display
+Categories=Qt;Settings;HardwareSettings;X-Hardware;X-Common-Features;
+Keywords=mate-control-center;MATE;display
+OnlyShowIn=MATE;
+X-KIRAN-NoDisplay=true
+StartupNotify=true
 
 [Kiran Control Panel Plugin]
 #插件排序
