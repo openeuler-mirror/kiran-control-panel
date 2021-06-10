@@ -40,6 +40,13 @@ int main(int argc, char *argv[])
     }
 
     KiranSingleApplication app(argc, argv);
+    //为了保持插件使用启动器进行启动后，底部面板不堆叠，插件图标显示正常，
+    //设置ApplicationName,更新窗口WM_CLASS属性为插件desktop名称
+    if( !pluginDesktopName.isEmpty() )
+    {
+        QApplication::setApplicationName(pluginDesktopName);
+    }
+
     ///再次解析命令行参数是为了处理--help选项得到正确的输出
     parser.addHelpOption();
     parser.process(app);
@@ -66,7 +73,7 @@ int main(int argc, char *argv[])
         pluginDesktopPath.append(".desktop");
     }
 
-    if (klog_qt5_init("", "kylinsec-session", qAppName(), pluginDesktopName) != 0)
+    if (klog_qt5_init("", "kylinsec-session","kiran-cpanel-launcher", pluginDesktopName) != 0)
     {
         KLOG_CERR("kiran log init error");
     }
