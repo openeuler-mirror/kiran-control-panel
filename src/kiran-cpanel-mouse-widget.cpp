@@ -51,7 +51,7 @@ bool KiranCPanelMouseWidget::initUI()
 
     if(!m_mouseInterface->isValid() || !m_touchPadInterface->isValid())
     {
-        KLOG_DEBUG() << "Connect Dbus Failed!" << endl;
+        KLOG_DEBUG() << "Connect Dbus Failed!";
         return false;
     }
     else
@@ -67,7 +67,7 @@ bool KiranCPanelMouseWidget::initUI()
         }
         else
         {
-            KLOG_DEBUG() << "There is no TouchPad!" << endl;
+            KLOG_DEBUG() << "There is no TouchPad!";
         }
     }
 

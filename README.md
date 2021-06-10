@@ -1,4 +1,4 @@
-- kiran-cpanel-mouse
+kiran-cpanel-mouse
 - 编译
 
     安装编译依赖

@@ -38,7 +38,7 @@ QSize KiranCPanelMouse::sizeHint() const
     /*根据系统分辨率设置窗口大小*/
     QDesktopWidget *desktop = QApplication::desktop();
     KLOG_INFO() << "desktop width = " << desktop->width() <<
-               " desktop height = " << desktop->height() << endl;
+               " desktop height = " << desktop->height();
     QSize windowSize;
     if(desktop->height() >= 750 && desktop->width() >= 918 ) //能显示全
     {

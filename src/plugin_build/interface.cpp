@@ -63,6 +63,7 @@ int PluginMouseInterface::init()
     if(!ComKylinsecKiranSessionDaemonMouseInterface::instance()->isValid() ||
        !ComKylinsecKiranSessionDaemonTouchPadInterface::instance()->isValid())
     {
+        KLOG_DEBUG() << "Connect mouse or touchpad dbus service failed!";
         return -1;
     }
     //加载翻译文件
@@ -80,7 +81,7 @@ int PluginMouseInterface::init()
                              TRANSLATIONS_FILE_DIR,
                             ".qm"))
     {
-        KLOG_DEBUG() << "Kiran cpanel mouse load translation failed" << endl;
+        KLOG_DEBUG() << "Kiran cpanel mouse load translation failed";
         delete m_translator;
         m_translator = nullptr;
         return -1;
