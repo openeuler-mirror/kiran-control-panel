@@ -2,7 +2,7 @@
 #include "load-animation-widget.h"
 #include <QPainter>
 #include <QPaintEvent>
-#include <QDebug>
+#include <kiran-log/qt5-log-i.h>
 
 using namespace std;
 
@@ -45,7 +45,7 @@ void LoadAnimationWidget::paintEvent(QPaintEvent *event)
     pixmap_name = QString(":/icons/loading/loading-%1.png").arg(index, 2, 10, QChar('0'));
 
     if (!pixmap.load(pixmap_name)) {
-        qInfo()<<"Failed to load pixmap "<<pixmap_name;
+        KLOG_INFO()<<"Failed to load pixmap "<<pixmap_name;
         return;
     }
 

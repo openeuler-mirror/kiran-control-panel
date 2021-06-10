@@ -3,9 +3,9 @@
 #include <QWidgetAction>
 #include <QThread>
 #include <QTime>
-#include <QDebug>
 #include <QDesktopWidget>
 #include <QJsonDocument>
+#include <kiran-log/qt5-log-i.h>
 #include "active-guide-widget.h"
 #include "ui_active-guide-widget.h"
 #include "system-info-dbus.h"
@@ -201,10 +201,10 @@ bool ActGuideWidget::getMachineCode()
     QString machineCode;
     if(!InfoDbus::KylinLicense::getMachineCode(machineCode))
     {
-        qDebug() << "get Machine Code failed" <<endl;
+        KLOG_DEBUG() << "get Machine Code failed";
         return false;
     }
-    qDebug() << "machineCode" << machineCode <<endl;
+    KLOG_INFO() << "machineCode" << machineCode;
     mc_code = machineCode;
     ui->label_mc_key->setText(mc_code);
     ui->label_mc_manual->setText(mc_code);
@@ -220,13 +220,13 @@ void ActGuideWidget::getLicenseStatus(bool isRegister)
 {
     if(isRegister)
     {
-        qInfo("get license status: is register\n");
+        KLOG_INFO() << "get license status: is register";
         ui->stackedWidget->setCurrentIndex(Page_Successful);
         loadAnimation->stopAnimation();
     }
     else
     {
-        qInfo("get license status: not register\n");
+        KLOG_INFO() << "get license status: not register";
         ui->stackedWidget->setCurrentIndex(Page_Failed);
         loadAnimation->stopAnimation();
     }
@@ -332,7 +332,7 @@ void ActGuideWidget::getJsonValueFromString(const QString jsonString)
     QJsonParseError jsonError;
     QJsonDocument jsonDocument = QJsonDocument::fromJson(jsonString.toLocal8Bit().data(),&jsonError);
     if( jsonDocument.isNull() || jsonError.error != QJsonParseError::NoError ){
-        qDebug()<< " please check the string "<< jsonString.toLocal8Bit().data();
+        KLOG_DEBUG()<< " please check the string "<< jsonString.toLocal8Bit().data();
         return;
     }
     if(jsonDocument.isObject())
@@ -444,7 +444,7 @@ void ActGuideWidget::handleActiveButton()
         case Page_Manual:
             //get EditLine text
             inputLicenseCode= ui->lineEdit_lc->text();
-            qInfo() << "user input license :" <<inputLicenseCode;
+            KLOG_INFO() << "user input license :" <<inputLicenseCode;
 
             //active
             ui->listWidget->setCurrentRow(2);
@@ -456,13 +456,13 @@ void ActGuideWidget::handleActiveButton()
             activedFlag =InfoDbus::KylinLicense::registerByLicenseCode(inputLicenseCode,licenseRegisterError);
             if(!activedFlag)
             {
-                qDebug() <<licenseRegisterError;
+                KLOG_DEBUG() <<licenseRegisterError;
                 ui->error_text->setText(licenseRegisterError);
                 emit systemIsActived(false);
             }
             else
             {
-                qDebug("manual register successful\n");
+                KLOG_DEBUG() << "manual register successful\n";
                 emit systemIsActived(true);
             }
             break;
@@ -478,16 +478,16 @@ void ActGuideWidget::handleActiveButton()
 
             if(InfoDbus::KylinLicense::registerByUsbKey(ukey_json,keyRegisterError))
             {
-                qDebug("key register successful \n");
+                KLOG_DEBUG()<< "key register successful \n";
 
                 ///解析DBus后台传来的json字符串
-                qInfo() << ukey_json << endl;
+                KLOG_INFO() << ukey_json;
                 getJsonValueFromString(ukey_json);
                 emit systemIsActived(true);
             }
             else
             {
-                qDebug() <<keyRegisterError;
+                KLOG_DEBUG() <<keyRegisterError;
                 ui->error_text->setText(keyRegisterError);
                 emit systemIsActived(false);
             }
@@ -504,16 +504,16 @@ void ActGuideWidget::handleActiveButton()
             sleep(2);
 
             inputIp = ui->lineEdit_address->text();
-            qInfo() << "input ip is: " << inputIp ;
+            KLOG_INFO() << "input ip is: " << inputIp ;
 
             if(InfoDbus::KylinLicense::registerOnline(inputIp , onlineRegisterError))
             {
-                qDebug("OnLine register successful \n");
+                KLOG_DEBUG() << "OnLine register successful \n";
                 emit systemIsActived(true);
             }
             else
             {
-                qDebug() << onlineRegisterError;
+                KLOG_DEBUG() << onlineRegisterError;
                 ui->error_text->setText(onlineRegisterError);
                 emit systemIsActived(false);
             }

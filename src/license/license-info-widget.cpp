@@ -1,7 +1,6 @@
 #include "license-info-widget.h"
 #include "ui_license-info-widget.h"
 #include <iostream>
-#include <QDebug>
 #include <QDesktopWidget>
 
 using namespace std;

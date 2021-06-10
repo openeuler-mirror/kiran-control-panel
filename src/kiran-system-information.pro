@@ -39,7 +39,6 @@ SOURCES += \
         main.cpp \
         kiran-system-information.cpp \
     information-list-item.cpp \
-    general-functions-class.cpp \
     system-info-dbus.cpp \
     system-information-widget.cpp \
     license/active-guide-widget.cpp \
@@ -53,8 +52,6 @@ SOURCES += \
     kiran-scroll-area.cpp \
     kiran-list-widget.cpp \
     change-host-name-widget.cpp \
-    single-application/single-application.cpp \
-    single-application/single-application_p.cpp \
     pages/hardware-information/hardware-information-widget.cpp \
     pages/system-information/system-information-widget.cpp \
     plug_interface/interface.cpp
@@ -63,7 +60,6 @@ HEADERS += \
         kiran-system-information.h \
     information-list-item.h \
     hardware-information-widget.h \
-    general-functions-class.h \
     system-info-dbus.h \
     system-information-widget.h \
     license/active-guide-widget.h \
@@ -77,8 +73,6 @@ HEADERS += \
     kiran-scroll-area.h \
     kiran-list-widget.h \
     change-host-name-widget.h \
-    single-application/single-application.h \
-    single-application/single-application_p.h \
     pages/hardware-information/hardware-information-widget.h \
     pages/system-information/system-information-widget.h \
     plug_interface/interface.h

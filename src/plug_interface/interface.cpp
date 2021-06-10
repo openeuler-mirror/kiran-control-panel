@@ -4,11 +4,11 @@
 #include "system-info-dbus.h"
 #include "config/config.h"
 #include <kiranwidgets-qt5/kiran-message-box.h>
+#include <kiran-log/qt5-log-i.h>
 #include <QLocale>
 #include <QTranslator>
 #include <QCoreApplication>
 #include <QFile>
-#include <QDebug>
 #include <iostream>
 #include <QMessageBox>
 #define TRANSLATION_DIR TRANSLATIONS_FILE_DIR
@@ -73,6 +73,7 @@ int KcpInterface::init()
     QString systemInfo;
     if(!InfoDbus::SystemInfo::getSystemInfo(1,systemInfo) || !InfoDbus::SystemInfo::getSystemInfo(0,systemInfo))
     {
+        KLOG_DEBUG() << "Connect dbus service failed! ";
         return -1;
     }
     //加载翻译文件
@@ -90,7 +91,7 @@ int KcpInterface::init()
                              TRANSLATION_DIR,
                             ".qm"))
     {
-        std::cout << "Kiran cpanel system load translation failed" ;
+        KLOG_DEBUG() << "Kiran cpanel system load translation failed" ;
         delete m_translator;
         m_translator = nullptr;
         return -1;

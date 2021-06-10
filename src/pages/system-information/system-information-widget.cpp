@@ -16,7 +16,7 @@
 #include <kiranwidgets-qt5/kiran-style-public-define.h>
 #include "license/user-license-agreement.h"
 
-#include <QDebug>
+#include <kiran-log/qt5-log-i.h>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonValue>
@@ -124,7 +124,7 @@ bool SystemInformationWidget::readSystemInfo(int infoType)
     QString systemInfo;
     if(!InfoDbus::SystemInfo::getSystemInfo(infoType , systemInfo))
     {
-        qDebug() << "get system information failed"<< endl;
+        KLOG_DEBUG() << "get system information failed";
         ui->lab_name_info->setText(tr("Unknow"));
         ui->lab_core_version_info->setText(tr("Unknow"));
         ui->lab_system_arch_info->setText(tr("Unknow"));
@@ -134,7 +134,7 @@ bool SystemInformationWidget::readSystemInfo(int infoType)
     }
     else
     {
-        qInfo() << systemInfo << endl;
+        KLOG_INFO() << systemInfo;
         getJsonValueFromString(systemInfo);
     }
     return true;
@@ -148,7 +148,7 @@ bool SystemInformationWidget::readLicenseInfo()
     QString licenseInfo;
     if(!InfoDbus::KylinLicense::getLicenseJson(licenseInfo))
     {
-        qDebug() << "get license information failed"<< endl;
+        KLOG_DEBUG() << "get license information failed";
         ui->lab_expire_date_info->setText(tr("Unknow"));
         ui->lab_status->setText(tr("Can't get license information"));
         ui->lab_status->setStyleSheet("QLabel#lab_status {color:#ff3838}");
@@ -161,15 +161,15 @@ bool SystemInformationWidget::readLicenseInfo()
     else
     {
         ///解析后端传入的授权信息Json字符串
-        qInfo() << licenseInfo << endl;
+        KLOG_INFO() << licenseInfo;
         getJsonValueFromString(licenseInfo);
         ///在界面上显示安装时间
         QDateTime Starttime = QDateTime::fromTime_t(start_time);
         installTime  = Starttime.toString("yyyy-MM-dd");
-        qInfo() << "install time = " <<installTime <<endl;
+        KLOG_INFO() << "install time = " <<installTime;
         ui->lab_install_time_info->setText(installTime);
 
-        qInfo() <<"licensed = "<<license_status <<endl;
+        KLOG_INFO() <<"licensed = "<<license_status;
         ///给激活状态赋值
         isActive = license_status;
         switch (license_status) {
@@ -195,7 +195,7 @@ bool SystemInformationWidget::readLicenseInfo()
                 {
                     QDateTime time = QDateTime::fromTime_t(expired_time);
                     QString dueTime  = time.toString("yyyy-MM-dd");
-                    qInfo() << "due time = " <<dueTime <<endl;
+                    KLOG_INFO() << "due time = " <<dueTime ;
 
                     ui->lab_status->setText(QString("%1%2").arg(tr("Not activated. Trail expiration: ")).
                                                             arg(dueTime));
@@ -221,7 +221,7 @@ bool SystemInformationWidget::readLicenseInfo()
 
             QDateTime time = QDateTime::fromTime_t(expired_time);
             QString dueTime  = time.toString("yyyy-MM-dd");
-            qInfo() << "due time = " <<dueTime <<endl;
+            KLOG_INFO() << "due time = " <<dueTime;
             ui->lab_expire_date_info->setText(dueTime);
 
             QDateTime currentTime = QDateTime::currentDateTime();   //获取当前时间
@@ -256,7 +256,7 @@ void SystemInformationWidget::getJsonValueFromString(QString jsonString)
     QJsonParseError jsonError;
     QJsonDocument jsonDocument = QJsonDocument::fromJson(jsonString.toLocal8Bit().data(),&jsonError);
     if( jsonDocument.isNull() || jsonError.error != QJsonParseError::NoError ){
-        qDebug()<< " please check the license information string "<< jsonString.toLocal8Bit().data();
+        KLOG_DEBUG()<< " please check the license information string "<< jsonString.toLocal8Bit().data();
         return;
     }
     if(jsonDocument.isObject())
@@ -305,7 +305,7 @@ void SystemInformationWidget::getJsonValueFromString(QString jsonString)
            if(value.isDouble())
            {
                license_status = value.toVariant().toInt();
-               qInfo() << "license status :" <<license_status << endl;
+               KLOG_INFO() << "license status :" <<license_status;
            }
        }
        if(obj.contains(LICENSE_CODE))
@@ -314,7 +314,7 @@ void SystemInformationWidget::getJsonValueFromString(QString jsonString)
            if(value.isString())
            {
                lc_code = value.toVariant().toString();
-               qInfo() << "lc_code :" << lc_code<< endl;
+               KLOG_INFO() << "lc_code :" << lc_code;
            }
        }
        if(obj.contains(MACHINE_CODE))
@@ -323,7 +323,7 @@ void SystemInformationWidget::getJsonValueFromString(QString jsonString)
            if(value.isString())
            {
                mc_code = value.toVariant().toString();
-               qInfo() << "mc_code :" << mc_code <<endl;
+               KLOG_INFO() << "mc_code :" << mc_code;
            }
        }
        if(obj.contains(EXPIRED_TIME))
@@ -332,7 +332,7 @@ void SystemInformationWidget::getJsonValueFromString(QString jsonString)
            if(value.isDouble())
            {
                expired_time = value.toVariant().toInt();
-               qInfo() << "expired_time :" <<expired_time <<endl;
+               KLOG_INFO() << "expired_time :" <<expired_time;
            }
        }
        if(obj.contains(START_TIME))
@@ -341,7 +341,7 @@ void SystemInformationWidget::getJsonValueFromString(QString jsonString)
            if(value.isDouble())
            {
                start_time = value.toVariant().toInt();
-               qInfo() << "start time :" << start_time <<endl;
+               KLOG_INFO() << "start time :" << start_time;
            }
        }
     }
@@ -411,13 +411,13 @@ void SystemInformationWidget::onBtnStatusClicked()
  */
 void SystemInformationWidget::updateLicenseInfo(bool isregister)
 {
-    qInfo("updateLicenseInformation\n");
+    KLOG_INFO() << "updateLicenseInformation\n";
     if(isregister)
     {
         QString licenseInfo;
         if(!InfoDbus::KylinLicense::getLicenseJson(licenseInfo))
         {
-            qDebug() << "get license information failed"<< endl;
+            KLOG_DEBUG() << "get license information failed";
             ui->lab_expire_date_info->setText(tr("Unknow"));
             ui->lab_status->setText(tr("Can't get license information"));
             ui->lab_status->setStyleSheet("QLabel#lab_status {color:#ff3838}");
@@ -432,7 +432,7 @@ void SystemInformationWidget::updateLicenseInfo(bool isregister)
         {
             //解析后端传入的授权信息Json字符串
             getJsonValueFromString(licenseInfo);
-            qInfo() <<"licensed = "<<license_status <<endl;
+            KLOG_INFO() <<"licensed = "<<license_status;
 
             //给激活状态赋值
             isActive = license_status;
@@ -446,7 +446,7 @@ void SystemInformationWidget::updateLicenseInfo(bool isregister)
 
             QDateTime time = QDateTime::fromTime_t(expired_time);
             QString dueTime  = time.toString("yyyy-MM-dd");
-            qInfo() << "due time = " <<dueTime<<endl;
+            KLOG_INFO() << "due time = " <<dueTime;
             ui->lab_expire_date_info->setText(dueTime);
         }
     }
@@ -455,10 +455,9 @@ void SystemInformationWidget::updateLicenseInfo(bool isregister)
 
 void SystemInformationWidget::updateHostName(bool isChanged, QString name)
 {
-    qInfo() << "update host name!" << endl;
     if(isChanged)
     {
-        qInfo() <<"new host name is" <<  name << endl;
+        KLOG_INFO() <<"new host name is" <<  name;
         ui->lab_name_info->setText(name);
     }
     else

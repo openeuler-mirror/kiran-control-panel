@@ -3,32 +3,23 @@
 #include <QDesktopWidget>
 #include <QFile>
 #include <QMessageBox>
-#include <QDebug>
+#include <kiran-log/qt5-log-i.h>
+#include <kiranwidgets-qt5/kiran-single-application.h>
 #include <QLoggingCategory>
 #include <QTranslator>
-#include <zlog_ex.h>
-#include "single-application/single-application.h"
-#include "general-functions-class.h"
 #include "config/config.h"
 #include <iostream>
 #define TRANSLATION_DIR TRANSLATIONS_FILE_DIR
 
-bool init_zlog = false;
-
 int main(int argc, char *argv[])
 {
     ///注册自定义的消息处理函数
-
-    if (dzlog_init_ex(NULL, "kylinsec-session", "kiran-cpanel-system", "kiran-cpanel-system") < 0){
+    QLoggingCategory::defaultCategory()->setEnabled(QtMsgType::QtDebugMsg,true);
+    if (klog_qt5_init("", "kylinsec-system", "kiran-cpanel-system", "kiran-cpanel-system") < 0){
         std::cout << "init zlog error" << std::endl;
     }
-    else{
-        init_zlog = true;
-    }
 
-    qInstallMessageHandler(GeneralFunctionsClass::customMessageHandler);
-    QLoggingCategory::defaultCategory()->setEnabled(QtMsgType::QtDebugMsg,true);
-    qInfo("******New Output*********\n");
+    KLOG_INFO() <<"******New Output*********";
 
     KiranSingleApplication a(argc, argv);
 
@@ -53,7 +44,7 @@ int main(int argc, char *argv[])
     }
     else
     {
-        qDebug("Load Translator File failed : %s\n", TRANSLATION_DIR);
+        KLOG_DEBUG() << "Load Translator File failed : " << TRANSLATION_DIR;
     }
 
     KiranSystemWidget w;

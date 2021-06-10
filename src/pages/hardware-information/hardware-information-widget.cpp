@@ -10,7 +10,7 @@
 #include "system-info-dbus.h"
 
 #include <iostream>
-#include <QDebug>
+#include <kiran-log/qt5-log-i.h>
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -79,7 +79,7 @@ bool HardwareInformationWidget::readHardwareInfo(int infoType)
 
     if(!InfoDbus::SystemInfo::getSystemInfo(infoType , systemInfo))
     {
-        qDebug() << "get hardware information failed"<< endl;
+        KLOG_ERROR() << "get hardware information failed";
         ui->label_CPU_info->setText(tr("Unknow"));
         ui->label_memory_info->setText(tr("Unknow"));
 
@@ -90,7 +90,7 @@ bool HardwareInformationWidget::readHardwareInfo(int infoType)
     }
     else
     {
-        qInfo() << systemInfo << endl;
+        KLOG_INFO() << systemInfo;
         ui->gridLayout_graphics_card->removeWidget(labelGraphics);
         ui->gridLayout_hard_disk->removeWidget(labelDisk);
         ui->gridLayout_network_card->removeWidget(labelEths);
@@ -110,7 +110,7 @@ void HardwareInformationWidget::getJsonValueFromString(QString jsonString)
     QJsonParseError jsonError;
     QJsonDocument jsonDocument = QJsonDocument::fromJson(jsonString.toLocal8Bit().data(),&jsonError);
     if( jsonDocument.isNull() || jsonError.error != QJsonParseError::NoError ){
-        qDebug()<< " please check the license information string "<< jsonString.toLocal8Bit().data();
+        KLOG_DEBUG()<< " please check the license information string "<< jsonString.toLocal8Bit().data();
         return;
     }
     if(jsonDocument.isObject())
@@ -316,10 +316,8 @@ void HardwareInformationWidget::showListInfo()
 
     if(diskNum >1 )
     {
-        qInfo() << "set disk label style" << endl;
         ui->label_hard_disk->setAlignment(Qt::AlignTop);
         ui->label_hard_disk->setStyleSheet("QLabel{padding-top:10px}");
-
     }
     if(graphicsNum > 1)
     {
@@ -335,19 +333,16 @@ void HardwareInformationWidget::showListInfo()
     //依次将各个信息插入至布局
     for(i=0; i<diskNum; i++)
     {
-        qInfo() << diskList.at(i);
+        KLOG_INFO() << diskList.at(i);
         QLabel* labelDisk = new QLabel(diskList.at(i));
         //设置QLabel的样式
         labelDisk->setStyleSheet("QLabel{color:#7e7e7e;font-family: \"Noto Sans CJK SC regular\";}");
-        QFont font = labelDisk->font();
-        int fontSize = font.pixelSize();
-        qInfo() << "fontSize= " << fontSize;
         ui->gridLayout_hard_disk->addWidget(labelDisk,i,0,Qt::AlignRight);
     }
 
     for(i=0; i<graphicsNum; i++)
     {
-        qInfo() << graphicsList.at(i);
+        KLOG_INFO() << graphicsList.at(i);
         QLabel* labelGraphics = new QLabel(graphicsList.at(i));
         //设置QLabel的样式
         labelGraphics->setStyleSheet("QLabel{color:#7e7e7e;font-family: \"Noto Sans CJK SC regular\";}");
@@ -355,7 +350,7 @@ void HardwareInformationWidget::showListInfo()
     }
     for(i=0; i<ethsNum; i++)
     {
-        qInfo() << ethsList.at(i);
+        KLOG_INFO() << ethsList.at(i);
         QLabel* labelEths = new QLabel(ethsList.at(i));
         //设置QLabel的样式
         labelEths->setStyleSheet("QLabel{color:#7e7e7e;font-family: \"Noto Sans CJK SC regular\";}");
@@ -365,14 +360,13 @@ void HardwareInformationWidget::showListInfo()
 
 void HardwareInformationWidget::setCpuLogo(QString cpuModel)
 {
-    qInfo() << "set logo " << endl;
     //根据cpu 型号名添加对应logo
     QImage imgLogo ;
     if(cpuModel.contains("Intel",Qt::CaseInsensitive))
     {
         if(!imgLogo.load(":/logos/logos/intel.jpg"))
         {
-            qDebug() << "can't load logo image" << endl;
+            KLOG_DEBUG() << "can't load logo image";
             return;
         }
     }
@@ -380,7 +374,7 @@ void HardwareInformationWidget::setCpuLogo(QString cpuModel)
     {
         if(!imgLogo.load(":/logos/logos/ZHAOXIN.png"))
         {
-            qDebug() << "can't load logo image" << endl;
+            KLOG_DEBUG() << "can't load logo image";
             return;
         }
     }
@@ -388,7 +382,7 @@ void HardwareInformationWidget::setCpuLogo(QString cpuModel)
     {
         if(!imgLogo.load(":/logos/logos/HUAWEI Kunpeng.png"))
         {
-            qDebug() << "can't load logo image" << endl;
+            KLOG_DEBUG() << "can't load logo image";
             return;
         }
     }
@@ -396,7 +390,7 @@ void HardwareInformationWidget::setCpuLogo(QString cpuModel)
     {
         if(!imgLogo.load(":/logos/logos/Loongson.gif"))
         {
-            qDebug() << "can't load logo image" << endl;
+            KLOG_DEBUG() << "can't load logo image";
             return;
         }
     }
@@ -404,7 +398,7 @@ void HardwareInformationWidget::setCpuLogo(QString cpuModel)
     {
         if(!imgLogo.load(":/logos/logos/PHYTIUM.png"))
         {
-            qDebug() << "can't load logo image" << endl;
+            KLOG_DEBUG() << "can't load logo image";
             return;
         }
     }
@@ -412,7 +406,7 @@ void HardwareInformationWidget::setCpuLogo(QString cpuModel)
     {
         if(!imgLogo.load(":/logos/logos/amd.svg"))
         {
-            qDebug() << "can't load logo image" << endl;
+            KLOG_DEBUG() << "can't load logo image";
             return;
         }
     }
@@ -420,7 +414,7 @@ void HardwareInformationWidget::setCpuLogo(QString cpuModel)
     {
         if(!imgLogo.load(":/logos/logos/sw_64.png"))
         {
-            qDebug() << "can't load logo image" << endl;
+            KLOG_DEBUG() << "can't load logo image";
             return;
         }
     }

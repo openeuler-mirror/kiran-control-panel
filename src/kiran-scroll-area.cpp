@@ -9,7 +9,6 @@
 #include <QScrollBar>
 #include <QDesktopWidget>
 #include <QApplication>
-#include <QDebug>
 
 KiranScrollArea::KiranScrollArea(QWidget* parent)
     :QScrollArea(parent)

@@ -7,12 +7,10 @@
 
 #include "kiran-system-information.h"
 #include "ui_kiran-system-information.h"
-#include "general-functions-class.h"
 
 #include <QPainter>
 #include <QStackedWidget>
 #include <QDesktopWidget>
-#include <QDebug>
 #include <QBoxLayout>
 #include <QScroller>
 

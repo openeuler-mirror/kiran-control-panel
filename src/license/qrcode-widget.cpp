@@ -1,6 +1,6 @@
 #include "qrcode-widget.h"
 #include <QPaintEvent>
-#include <QDebug>
+#include <kiran-log/qt5-log-i.h>
 
 QRCodeWidget::QRCodeWidget(QWidget* parent,const QString &text) :
     QWidget(parent),
@@ -29,7 +29,7 @@ void QRCodeWidget::paintEvent(QPaintEvent *event)
     zint.setText(data);
     zint.render(painter, event->rect());
     if (zint.hasErrors()) {
-        qCritical("Faile to render qrcode: %s\n",
-                  zint.lastError().toStdString().c_str());
+        KLOG_WARNING() <<"Faile to render qrcode: %s\n",
+                  zint.lastError().toStdString().c_str();
     }
 }

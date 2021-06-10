@@ -11,8 +11,6 @@
 #include <kiranwidgets-qt5/kiran-message-box.h>
 #include <kiranwidgets-qt5/widget-property-helper.h>
 #include <kiranwidgets-qt5/kiran-style-public-define.h>
-
-#include <QDebug>
 #include <QDesktopWidget>
 
 ChangeHostNameWidget::ChangeHostNameWidget() :

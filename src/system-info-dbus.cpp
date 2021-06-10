@@ -11,7 +11,7 @@
 #include <QDBusArgument>
 #include <QDBusReply>
 #include <QDBusSignature>
-#include <QDebug>
+#include <kiran-log/qt5-log-i.h>
 #include <QtDBus/QtDBus>
 #include <QtDBus/QDBusReply>
 #include <QObject>
@@ -50,7 +50,7 @@ bool InfoDbus::SystemInfo::getSystemInfo(int infoType , QString &info)
                                                               TIMEOUT_MS);
 
 
-    qDebug() << "msgReply " << msgReply <<endl;
+    KLOG_DEBUG() << "msgReply " << msgReply;
     QString errorMsg;
     if(msgReply.type() == QDBusMessage::ReplyMessage)
     {
@@ -69,7 +69,7 @@ bool InfoDbus::SystemInfo::getSystemInfo(int infoType , QString &info)
             goto failed;
     }
 failed:
-    qWarning() << SYSTEMINFO_DBUS_NAME << METHOD_GET_SYSTEMINFO
+    KLOG_WARNING() << SYSTEMINFO_DBUS_NAME << METHOD_GET_SYSTEMINFO
                << msgReply.errorName() << msgReply.errorMessage() << errorMsg;
     return false;
 }
@@ -88,7 +88,7 @@ bool InfoDbus::SystemInfo::setHostName(QString name)
                                                               TIMEOUT_MS);
 
 
-    qDebug() << "msgReply " << msgReply <<endl;
+    KLOG_DEBUG() << "msgReply " << msgReply;
     QString errorMsg;
     if(msgReply.type() == QDBusMessage::ReplyMessage)
     {
@@ -101,7 +101,7 @@ bool InfoDbus::SystemInfo::setHostName(QString name)
     }
 
 failed:
-    qWarning() << SYSTEMINFO_DBUS_NAME << METHOD_SET_HOSTNAME
+    KLOG_WARNING() << SYSTEMINFO_DBUS_NAME << METHOD_SET_HOSTNAME
                << msgReply.errorName() << msgReply.errorMessage() << errorMsg;
     return false;
 }
@@ -115,7 +115,7 @@ bool InfoDbus::KylinLicense::getLicenseJson(QString &licenseInfo)
     QDBusMessage msgReply = QDBusConnection::systemBus().call(msgMethodCall,
                                                               QDBus::Block,
                                                               TIMEOUT_MS);
-    qDebug() << "msgReply " << msgReply <<endl;
+    KLOG_DEBUG() << "msgReply " << msgReply;
     QString errorMsg;
     if(msgReply.type() == QDBusMessage::ReplyMessage){
         QList<QVariant> args = msgReply.arguments();
@@ -129,7 +129,7 @@ bool InfoDbus::KylinLicense::getLicenseJson(QString &licenseInfo)
     }
 
 failed:
-    qWarning() << LICENSE_DBUS_NAME << METHOD_GET_LICENSE_JSON
+    KLOG_WARNING() << LICENSE_DBUS_NAME << METHOD_GET_LICENSE_JSON
                << msgReply.errorName() << msgReply.errorMessage() << errorMsg;
     return false;
 }
@@ -144,7 +144,7 @@ bool InfoDbus::KylinLicense::getMachineCode(QString &machineCode)
     QDBusMessage msgReply = QDBusConnection::systemBus().call(msgMethodCall,
                                                               QDBus::Block,
                                                               TIMEOUT_MS);
-    qDebug() << "msgReply " << msgReply <<endl;
+    KLOG_DEBUG() << "msgReply " << msgReply;
     QString errMsg;
     if(msgReply.type() == QDBusMessage::ReplyMessage){
         QList<QVariant> args = msgReply.arguments();
@@ -157,7 +157,7 @@ bool InfoDbus::KylinLicense::getMachineCode(QString &machineCode)
         return true;
     }
 failed:
-    qWarning() << LICENSE_DBUS_NAME << METHOD_GET_MACHINE_CODE
+    KLOG_WARNING() << LICENSE_DBUS_NAME << METHOD_GET_MACHINE_CODE
                << msgReply.errorName() << msgReply.errorMessage() << errMsg;
     return false;
 
@@ -176,7 +176,7 @@ bool InfoDbus::KylinLicense::registerByLicenseCode(QString licenseCode, QString 
                                                               TIMEOUT_MS);
 
 
-    qDebug() << "msgReply " << msgReply <<endl;
+    KLOG_DEBUG() << "msgReply " << msgReply;
 
     if(msgReply.type() == QDBusMessage::ErrorMessage)
     {
@@ -186,7 +186,7 @@ bool InfoDbus::KylinLicense::registerByLicenseCode(QString licenseCode, QString 
     return true;
 
 failed:
-    qWarning() << LICENSE_DBUS_NAME << METHOD_REGISTER_BY_LICENSE_CODE
+    KLOG_WARNING() << LICENSE_DBUS_NAME << METHOD_REGISTER_BY_LICENSE_CODE
                << msgReply.errorName() << msgReply.errorMessage() ;
     return false;
 }
@@ -200,7 +200,7 @@ bool InfoDbus::KylinLicense::registerByUsbKey(QString &points, QString &errorMsg
     QDBusMessage msgReply = QDBusConnection::systemBus().call(msgMethodCall,
                                                               QDBus::Block,
                                                               TIMEOUT_MS);
-    qDebug() << "msgReply " << msgReply <<endl;
+    KLOG_DEBUG() << "msgReply " << msgReply;
 
     if(msgReply.type() == QDBusMessage::ReplyMessage){
         QList<QVariant> args = msgReply.arguments();
@@ -219,7 +219,7 @@ bool InfoDbus::KylinLicense::registerByUsbKey(QString &points, QString &errorMsg
     }
 
 failed:
-    qWarning() << LICENSE_DBUS_NAME << METHOD_REGISTER_BY_USEBKEY
+    KLOG_WARNING() << LICENSE_DBUS_NAME << METHOD_REGISTER_BY_USEBKEY
                << msgReply.errorName() << msgReply.errorMessage() ;
     return false;
 
@@ -237,7 +237,7 @@ bool InfoDbus::KylinLicense::registerOnline(QString ip, QString &errorMsg)
                                                               QDBus::Block,
                                                               TIMEOUT_MS_ONLINE);
 
-    qDebug() << "msgReply " << msgReply <<endl;
+    KLOG_DEBUG() << "msgReply " << msgReply;
 
     QDBusReply<void> reply =  QDBusReply<void>(msgReply);
     if(!reply.isValid())
@@ -262,7 +262,7 @@ bool InfoDbus::KylinLicense::registerOnline(QString ip, QString &errorMsg)
     return true;
 
 failed:
-    qWarning() << LICENSE_DBUS_NAME << METHOD_REGISTER_ONLINE
+    KLOG_WARNING() << LICENSE_DBUS_NAME << METHOD_REGISTER_ONLINE
                << msgReply.errorName() << msgReply.errorMessage() ;
     return false;
 }
@@ -278,7 +278,7 @@ bool InfoDbus::KylinLicense::getServiceStatus(int &status)
     QDBusMessage msgReply = QDBusConnection::systemBus().call(msgMethodCall,
                                                               QDBus::Block,
                                                               TIMEOUT_MS);
-    qDebug() << "msgReply " << msgReply <<endl;
+    KLOG_DEBUG() << "msgReply " << msgReply;
     QString errMsg;
     if(msgReply.type() == QDBusMessage::ReplyMessage){
         QList<QVariant> args = msgReply.arguments();
@@ -291,7 +291,7 @@ bool InfoDbus::KylinLicense::getServiceStatus(int &status)
         return true;
     }
 failed:
-    qWarning() << LICENSE_DBUS_NAME << METHOD_GETSERVICESTATUS
+    KLOG_WARNING() << LICENSE_DBUS_NAME << METHOD_GETSERVICESTATUS
                << msgReply.errorName() << msgReply.errorMessage() << errMsg;
     return false;
 }

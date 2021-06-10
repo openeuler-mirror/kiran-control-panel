@@ -2,7 +2,7 @@
 #include "ui_user-license-agreement.h"
 #include <QIcon>
 #include <QFile>
-#include <QDebug>
+#include <kiran-log/qt5-log-i.h>
 #include <QDesktopWidget>
 #include <kiranwidgets-qt5/widget-property-helper.h>
 #include <kiranwidgets-qt5/kiran-style-public-define.h>
@@ -98,14 +98,14 @@ void UserlicenseAgreement::addText()
 
     if(!file.exists())
     {
-        qInfo() << "Can't find EULA file" <<endl;
+        KLOG_INFO() << "Can't find EULA file" ;
         ui->text_eula->setText(tr("None"));
         return;
     }
 
     if(!file.open(QFile::ReadOnly | QFile::Text))
     {
-        qInfo() << "Can't open EULA file" << endl;
+        KLOG_INFO() << "Can't open EULA file" ;
         ui->text_eula->setText(tr("None"));
         return ;
     }

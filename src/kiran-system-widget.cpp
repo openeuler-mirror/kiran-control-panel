@@ -9,12 +9,12 @@
 #include "kiran-system-information.h"
 #include "license/user-license-agreement.h"
 #include <kiranwidgets-qt5/kiran-message-box.h>
+#include <kiran-log/qt5-log-i.h>
 #include <QPushButton>
 #include <QMenu>
 #include <QHBoxLayout>
 #include <QAction>
 #include <QEvent>
-#include <QDebug>
 #include <QDesktopWidget>
 #include <QApplication>
 #include <QFile>
@@ -53,7 +53,7 @@ QSize KiranSystemWidget::sizeHint() const
     int screenNum = QApplication::desktop()->screenNumber(QCursor::pos());
     QRect screenGeometry = QApplication::desktop()->screenGeometry(screenNum);
 
-    qInfo() << screenGeometry.width() << screenGeometry.height();
+    KLOG_INFO() << screenGeometry.width() << screenGeometry.height();
     QSize windowSize;
     if(screenGeometry.height() >= 776 && screenGeometry.width() >= 980 ) //能显示全
     {
