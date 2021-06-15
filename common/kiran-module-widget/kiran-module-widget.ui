@@ -33,7 +33,7 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="QListWidget" name="list_subItems">
+    <widget class="KiranSidebarWidget" name="list_subItems">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
        <horstretch>0</horstretch>
@@ -53,33 +53,7 @@
       </size>
      </property>
      <property name="styleSheet">
-      <string notr="true">QListWidget{
-	border-left: 0px solid rgba(255, 255, 255, 10);
-	border-top: 0px solid rgba(255, 255, 255, 10);
-	border-right: 1px solid rgba(255, 255, 255, 10);
-	border-bottom: 0px solid rgba(255, 255, 255, 10);
-	padding-left:12px;
-	padding-right:12px;
- 	padding-top:10px;
-	padding-bottom:10px;
-}
-
-
-  QListWidget::item {
-    border: 0px solid #2eb3ff;
-	color: #ffffff;	
-	border-radius: 10px;
-	background-color: rgba(255, 255, 255, 5);
-	padding-left:14px;
-  }
-
-  QListWidget::item:hover {
-	background-color: rgba(255, 255, 255, 10);
-  }
-  QListWidget::item:selected {
-      background-color:#43a3f2;
-  }
-</string>
+      <string notr="true"/>
      </property>
     </widget>
    </item>
@@ -115,6 +89,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>KiranSidebarWidget</class>
+   <extends>QListWidget</extends>
+   <header location="global">kiran-sidebar-widget.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
