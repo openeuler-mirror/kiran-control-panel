@@ -15,6 +15,7 @@
 #include <kiran-switch-button.h>
 #include <qt5-log-i.h>
 #include <widget-property-helper.h>
+#include <QCheckBox>
 #include <QJsonDocument>
 #include <QList>
 
@@ -37,17 +38,21 @@ void AuthManagerPage::setCurrentUser(const QString &userObj)
 
     delete m_userInterface;
     m_userInterface = new UserInterface(m_userObjPath, QDBusConnection::systemBus(), this);
-    connect(m_userInterface, &UserInterface::AuthItemChanged, [this]() {
-        updateInfo();
-    });
-    connect(m_userInterface, &UserInterface::propertyChanged,
-            [this](QString path, QString propertyName, QVariant value) {
-                if (propertyName == "auth_modes")
-                {
-                    updateInfo();
-                }
-            });
+    connect(m_userInterface, &UserInterface::AuthItemChanged, this, &AuthManagerPage::slotUserAuthItemChanged);
+    connect(m_userInterface, &UserInterface::propertyChanged, this, &AuthManagerPage::slotUserPropertyChanged);
+
+    auto funcBlockCheckBoxsSignal = [this](bool block) {
+        QList<KiranSwitchButton *> authModeSwtichs = {m_fingerAuthSwitch, m_faceAuthSwitch, m_passwdAuthSwitch};
+        foreach (auto authModeSwitch,authModeSwtichs)
+        {
+            authModeSwitch->blockSignals(block);
+        }
+    };
+
+    ///NOTE:阻塞信号，忽略掉对至少存在一个认证模式的检查
+    funcBlockCheckBoxsSignal(true);
     updateInfo();
+    funcBlockCheckBoxsSignal(false);
 }
 
 void AuthManagerPage::initUI()
@@ -56,18 +61,32 @@ void AuthManagerPage::initUI()
 
     m_fingerAuthSwitch = new KiranSwitchButton(this);
     ui->layout_fingerAuth->addWidget(m_fingerAuthSwitch);
-    connect(m_fingerAuthSwitch, &KiranSwitchButton::toggled, this, &AuthManagerPage::slotCheckAuthTypes);
+    connect(m_fingerAuthSwitch, &KiranSwitchButton::toggled, this, &AuthManagerPage::slotCheckAuthTypes, Qt::DirectConnection);
 
     m_faceAuthSwitch = new KiranSwitchButton(this);
     ui->layout_faceAuth->addWidget(m_faceAuthSwitch);
-    connect(m_faceAuthSwitch, &KiranSwitchButton::toggled, this, &AuthManagerPage::slotCheckAuthTypes);
+    connect(m_faceAuthSwitch, &KiranSwitchButton::toggled, this, &AuthManagerPage::slotCheckAuthTypes, Qt::DirectConnection);
 
     m_passwdAuthSwitch = new KiranSwitchButton(this);
     ui->layout_passwdAuth->addWidget(m_passwdAuthSwitch);
-    connect(m_passwdAuthSwitch, &KiranSwitchButton::toggled, this, &AuthManagerPage::slotCheckAuthTypes);
+    connect(m_passwdAuthSwitch, &KiranSwitchButton::toggled, this, &AuthManagerPage::slotCheckAuthTypes, Qt::DirectConnection);
 
     connect(ui->btn_save, &QPushButton::clicked, [this]() {
+        if (m_userInterface)
+        {
+            disconnect(m_userInterface, &UserInterface::AuthItemChanged, this, &AuthManagerPage::slotUserAuthItemChanged);
+            disconnect(m_userInterface, &UserInterface::propertyChanged, this, &AuthManagerPage::slotUserPropertyChanged);
+        }
+
         save();
+
+        if (m_userInterface)
+        {
+            connect(m_userInterface, &UserInterface::AuthItemChanged, this, &AuthManagerPage::slotUserAuthItemChanged);
+            connect(m_userInterface, &UserInterface::propertyChanged, this, &AuthManagerPage::slotUserPropertyChanged);
+        }
+
+        updateInfo();
     });
     connect(ui->btn_return, &QPushButton::clicked, [this]() {
         Q_EMIT sigReturn();
@@ -100,6 +119,7 @@ void AuthManagerPage::updateInfo()
         {
             if (childItem->widget())
             {
+                childItem->widget()->hide();
                 childItem->widget()->setParent(nullptr);
                 childItem->widget()->deleteLater();
             }
@@ -138,6 +158,7 @@ void AuthManagerPage::updateInfo()
     connect(m_addFaceItem, &BiometricItem::sigAddBiometricItem, this, &AuthManagerPage::slotAddBiometricsItem);
 }
 
+#include <unistd.h>
 void AuthManagerPage::save()
 {
     bool uiPasswdAuth, uiFingerAuth, uiFaceAuth;
@@ -159,25 +180,38 @@ void AuthManagerPage::save()
     backendPasswdAuth = authModes & ACCOUNTS_AUTH_MODE_PASSWORD;
     backendFingerAuth = authModes & ACCOUNTS_AUTH_MODE_FINGERPRINT;
     backendFaceAuth = authModes & ACCOUNTS_AUTH_MODE_FACE;
+
     /* 保存验证选项 */
-    if (uiPasswdAuth != backendPasswdAuth)
+    //NOTE:先设置开的认证选项，不能把所有的认证方式关闭(所有的认证方式关闭时会带上密码认证选项)
+    QMap<AccountsAuthMode, bool> authModeMap = {
+        {ACCOUNTS_AUTH_MODE_PASSWORD, uiPasswdAuth},
+        {ACCOUNTS_AUTH_MODE_FINGERPRINT, uiFingerAuth},
+        {ACCOUNTS_AUTH_MODE_FACE, uiFaceAuth}};
+    for (auto iterator = authModeMap.begin(); iterator != authModeMap.end(); ++iterator)
     {
-        KLOG_DEBUG() << "set passwd auth enable: " << uiPasswdAuth;
-        auto reply = m_userInterface->EnableAuthMode(ACCOUNTS_AUTH_MODE_PASSWORD, uiPasswdAuth);
-        reply.waitForFinished();
+        if (iterator.value())
+        {
+            auto reply = m_userInterface->EnableAuthMode(iterator.key(), iterator.value());
+            reply.waitForFinished();
+            if (reply.isError())
+            {
+                KLOG_ERROR() << "set auth mode [" << iterator.key() << "]"
+                             << ":" << iterator.value() << ",failed!" << reply.error();
+            }
+        }
     }
-    if (uiFingerAuth != backendFingerAuth)
+    for (auto iterator = authModeMap.begin(); iterator != authModeMap.end(); ++iterator)
     {
-        KLOG_DEBUG() << "set finger auth enable: " << uiFingerAuth;
-        auto reply = m_userInterface->EnableAuthMode(ACCOUNTS_AUTH_MODE_FINGERPRINT, uiFingerAuth);
-        reply.waitForFinished();
-        KLOG_INFO() << reply.isError() << reply.error();
-    }
-    if (uiFaceAuth != backendFaceAuth)
-    {
-        KLOG_DEBUG() << "set face auth enable: " << uiFaceAuth;
-        auto reply = m_userInterface->EnableAuthMode(ACCOUNTS_AUTH_MODE_FACE, uiFaceAuth);
-        reply.waitForFinished();
+        if (!iterator.value())
+        {
+            auto reply = m_userInterface->EnableAuthMode(iterator.key(), iterator.value());
+            reply.waitForFinished();
+            if (reply.isError())
+            {
+                KLOG_ERROR() << "set auth mode [" << iterator.key() << "]"
+                             << ":" << iterator.value() << ",failed!" << reply.error();
+            }
+        }
     }
 
     /* 从界面上获取生物识别特征值 */
@@ -215,15 +249,16 @@ void AuthManagerPage::save()
     funcCompareBiometricItems(uiFingerTemplates, backendFingerTemplates, deletedItems, addItems);
     if (!deletedItems.isEmpty() || !addItems.isEmpty())
     {
-        KLOG_DEBUG() << "finger biometric item will update:" << "\n"
-                       << "\tneed delete item:" << deletedItems << "\n"
-                       << "\tneed add item:   " << addItems;
+        KLOG_DEBUG() << "finger biometric item will update:"
+                     << "\n"
+                     << "\tneed delete item:" << deletedItems << "\n"
+                     << "\tneed add item:   " << addItems;
     }
     for (auto &item : deletedItems)
     {
         auto reply = m_userInterface->DelAuthItem(ACCOUNTS_AUTH_MODE_FINGERPRINT, item.first);
         reply.waitForFinished();
-        if( reply.isError() )
+        if (reply.isError())
         {
             KLOG_ERROR() << "delete finger item" << item.first << "failed," << reply.error();
         }
@@ -232,7 +267,7 @@ void AuthManagerPage::save()
     {
         auto reply = m_userInterface->AddAuthItem(ACCOUNTS_AUTH_MODE_FINGERPRINT, item.first, item.second);
         reply.waitForFinished();
-        if( reply.isError() )
+        if (reply.isError())
         {
             KLOG_ERROR() << "add finger item" << item.first << "failed," << reply.error();
         }
@@ -242,15 +277,16 @@ void AuthManagerPage::save()
     funcCompareBiometricItems(uiFaceTemplates, backendFaceTemplates, deletedItems, addItems);
     if (!deletedItems.isEmpty() || !addItems.isEmpty())
     {
-        KLOG_DEBUG() << "face biometric item update:" << "\n"
-                       << "\tneed delete item:" << deletedItems << "\n"
-                       << "\tneed add item:   " << addItems;
+        KLOG_DEBUG() << "face biometric item update:"
+                     << "\n"
+                     << "\tneed delete item:" << deletedItems << "\n"
+                     << "\tneed add item:   " << addItems;
     }
     for (auto &item : deletedItems)
     {
         auto reply = m_userInterface->DelAuthItem(ACCOUNTS_AUTH_MODE_FACE, item.first);
         reply.waitForFinished();
-        if( reply.isError() )
+        if (reply.isError())
         {
             KLOG_ERROR() << "delete face item" << item.first << "failed," << reply.error();
         }
@@ -259,7 +295,7 @@ void AuthManagerPage::save()
     {
         auto reply = m_userInterface->AddAuthItem(ACCOUNTS_AUTH_MODE_FACE, item.first, item.second);
         reply.waitForFinished();
-        if( reply.isError() )
+        if (reply.isError())
         {
             KLOG_ERROR() << "add face item" << item.first << "failed," << reply.error();
         }
@@ -336,12 +372,12 @@ BiometricList AuthManagerPage::getBiometricItemsFromBackend(AccountsAuthMode mod
         QJsonDocument doc = QJsonDocument::fromJson(jsonStr.toUtf8(), errorPtr->data());
         if (errorPtr->data()->error != QJsonParseError::NoError)
         {
-            KLOG_DEBUG() << "parse json doc failed," << errorPtr->data()->errorString();
+            //            KLOG_DEBUG() << "parse json doc failed," << errorPtr->data()->errorString() << ",json doc:" << jsonStr;
             return false;
         }
         if (!doc.isArray())
         {
-            KLOG_WARNING() << "format error, is not json array";
+            //            KLOG_WARNING() << "format error, is not json array";
             return false;
         }
         authItems.clear();
@@ -479,4 +515,20 @@ QString AuthManagerPage::generateBiometricsItemName(AccountsAuthMode mode)
     QString prefix = mode == ACCOUNTS_AUTH_MODE_FINGERPRINT ? AuthManagerPage::tr("fingerprint_") : AuthManagerPage::tr("face_");
     QString res = prefix + QString::number(idx);
     return res;
+}
+
+void AuthManagerPage::slotUserPropertyChanged(QString path, QString propertyName, QVariant value)
+{
+    if (propertyName == "auth_modes")
+    {
+        KLOG_DEBUG() << "user auth_modes property changed!"
+                     << "\n"
+                     << "";
+        updateInfo();
+    }
+}
+
+void AuthManagerPage::slotUserAuthItemChanged()
+{
+    updateInfo();
 }

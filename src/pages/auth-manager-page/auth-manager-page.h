@@ -52,6 +52,8 @@ private slots:
     void slotCheckAuthTypes(bool checked);
     void slotItemDeleteClicked();
     void slotAddBiometricsItem();
+    void slotUserPropertyChanged(QString path,QString propertyName,QVariant value);
+    void slotUserAuthItemChanged();
 
 private:
     Ui::AuthManagerPage *ui;
