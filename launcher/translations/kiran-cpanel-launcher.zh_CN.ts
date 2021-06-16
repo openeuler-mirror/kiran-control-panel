@@ -5,6 +5,7 @@
     <name>CategoryWidget</name>
     <message>
         <location filename="../../src/category-widget.ui" line="14"/>
+        <location filename="../../build/kiran-control-panel_autogen/include/ui_category-widget.h" line="98"/>
         <location filename="../../cmake-build-debug/kiran-control-panel_autogen/include/ui_category-widget.h" line="98"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
@@ -14,7 +15,8 @@
     <name>KiranModuleWidget</name>
     <message>
         <location filename="../../common/kiran-module-widget/kiran-module-widget.ui" line="14"/>
-        <location filename="../../build/launcher/kiran-cpanel-launcher_autogen/include/ui_kiran-module-widget.h" line="106"/>
+        <location filename="../../build/kiran-control-panel_autogen/include/ui_kiran-module-widget.h" line="80"/>
+        <location filename="../../build/launcher/kiran-cpanel-launcher_autogen/include/ui_kiran-module-widget.h" line="80"/>
         <location filename="../../cmake-build-debug/kiran-control-panel_autogen/include/ui_kiran-module-widget.h" line="106"/>
         <location filename="../../cmake-build-debug/launcher/kiran-cpanel-launcher_autogen/include/ui_kiran-module-widget.h" line="106"/>
         <source>Form</source>
@@ -38,6 +40,7 @@
     <name>PanelWidget</name>
     <message>
         <location filename="../../src/panel-widget.ui" line="14"/>
+        <location filename="../../build/kiran-control-panel_autogen/include/ui_panel-widget.h" line="49"/>
         <location filename="../../cmake-build-debug/kiran-control-panel_autogen/include/ui_panel-widget.h" line="49"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
