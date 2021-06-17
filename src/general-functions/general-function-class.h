@@ -11,7 +11,7 @@
 #include <QLabel>
 
 #define SLIDER_MINIMUM  0
-#define SLIDER_MAXIMUN  99
+#define SLIDER_MAXIMUN  100
 
 /**
  * 左侧侧边栏列表项
@@ -34,17 +34,6 @@ enum Pages
 };
 
 /**
- * 鼠标或触摸板移动速度
- */
-enum MOTION_ACCELERATION
-{
-    MOTION_SLOW = -1,
-    MOTION_STANDARD,
-    MOTION_FAST,
-    MOTION_LAST
-};
-
-/**
  * 手持模式
  */
 enum HandMode
@@ -54,11 +43,5 @@ enum HandMode
     HAND_LAST
 };
 
-class GeneralFunctionClass
-{
-public:
-    GeneralFunctionClass();
-    static int  convertValue(QSlider* ,QLabel*, bool,int);
-};
 
 #endif // GENERALFUNCTIONCLASS_H

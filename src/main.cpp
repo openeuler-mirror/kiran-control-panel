@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
 
     if(klog_qt5_init("","kylinsec-session","kiran-cpanel-mouse", "kiran-cpanel-mouse") <0 )
     {
-        std::cout << "init zlog error" << std::endl;
+        std::cout << "init klog error" << std::endl;
     }
     KLOG_INFO("******New Output*********\n");
 

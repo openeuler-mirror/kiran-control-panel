@@ -35,16 +35,14 @@ QSize MouseSettings::sizeHint() const
  */
 void MouseSettings::initUI()
 {
-    ui->label_speed->setStyleSheet("#label_speed{color:#2ca5ea;}");
-
     QStringList hand_mode;
     hand_mode << tr("Right Hand Mode") << tr("Left Hand Mode") ;
     ui->comboBox_hand_mode->addItems(hand_mode);
 
     ui->slider_speed->setMaximum(SLIDER_MAXIMUN);
     ui->slider_speed->setMinimum(SLIDER_MINIMUM);
-    ui->slider_speed->setPageStep((SLIDER_MAXIMUN-SLIDER_MINIMUM+1)/2);
-    ui->slider_speed->setSingleStep((SLIDER_MAXIMUN-SLIDER_MINIMUM+1)/2);
+    ui->slider_speed->setPageStep((SLIDER_MAXIMUN-SLIDER_MINIMUM)/20);
+    ui->slider_speed->setSingleStep((SLIDER_MAXIMUN-SLIDER_MINIMUM)/20);
 
     initPageMouseUI();
 }
@@ -63,21 +61,8 @@ void MouseSettings::initPageMouseUI()
     });
 
     m_mouseMotionAcceleration = m_mouseInterface->motion_acceleration();
-    if(m_mouseMotionAcceleration == MOTION_SLOW)
-    {
-        ui->slider_speed->setValue(SLIDER_MINIMUM);
-        ui->label_speed->setText(tr("Slow"));
-    }
-    else if(m_mouseMotionAcceleration == MOTION_STANDARD)
-    {
-        ui->slider_speed->setValue((SLIDER_MAXIMUN-SLIDER_MINIMUM+1)/2);
-        ui->label_speed->setText(tr("Standard"));
-    }
-    else
-    {
-        ui->slider_speed->setValue(SLIDER_MAXIMUN);
-        ui->label_speed->setText(tr("Fast"));
-    }
+    int speed = m_mouseMotionAcceleration / 2.0 * SLIDER_MAXIMUN + SLIDER_MAXIMUN / 2;
+    ui->slider_speed->setValue(speed);
 
     //创建定时器，在用户拖动滑动条时，滑动条值停止变化0.1s后才会设置新的鼠标移动速度
     m_timer = new QTimer(this);
@@ -86,7 +71,7 @@ void MouseSettings::initPageMouseUI()
         int value;
         double scrollSpeed;
         value = ui->slider_speed->value();
-        scrollSpeed = GeneralFunctionClass::convertValue(ui->slider_speed,ui->label_speed,m_mousePressed,value);
+        scrollSpeed = (value / (SLIDER_MAXIMUN * 1.0)) * 2.0 - 1.0;
         m_mouseMotionAcceleration = scrollSpeed;
         m_mouseInterface->setMotion_acceleration(m_mouseMotionAcceleration);
         m_timer->stop();
