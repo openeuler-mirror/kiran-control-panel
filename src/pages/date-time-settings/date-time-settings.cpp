@@ -13,6 +13,7 @@
 DateTimeSettings::DateTimeSettings(QWidget *parent) : QWidget(parent), ui(new Ui::DateTimeSettings)
 {
     ui->setupUi(this);
+    init();
 }
 
 DateTimeSettings::~DateTimeSettings()
