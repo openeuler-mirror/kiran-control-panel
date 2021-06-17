@@ -32,9 +32,6 @@ TouchPadSettings::~TouchPadSettings()
  */
 void TouchPadSettings::initUI()
 {
-    ui->label_tp_speed->setStyleSheet("#label_tp_speed{color:#2ca5ea;}"
-                                      "#label_tp_speed:disabled{color:#696969;}");
-
     m_comboBoxList = this->findChildren<QComboBox *>();
     m_checkBoxList = {ui->checkBox_tap_to_click,
                       ui->checkBox_tp_natural_scroll,
@@ -46,8 +43,8 @@ void TouchPadSettings::initUI()
 
     ui->slider_tp_speed->setMaximum(SLIDER_MAXIMUN);
     ui->slider_tp_speed->setMinimum(SLIDER_MINIMUM);
-    ui->slider_tp_speed->setPageStep((SLIDER_MAXIMUN-SLIDER_MINIMUM+1)/2);
-    ui->slider_tp_speed->setSingleStep((SLIDER_MAXIMUN-SLIDER_MINIMUM+1)/2);
+    ui->slider_tp_speed->setPageStep((SLIDER_MAXIMUN-SLIDER_MINIMUM)/20);
+    ui->slider_tp_speed->setSingleStep((SLIDER_MAXIMUN-SLIDER_MINIMUM)/20);
 
     //TODO: 暂时隐藏触摸板点击方法功能
     ui->widget_tp_click_mode->hide();
@@ -79,21 +76,8 @@ void TouchPadSettings::initPageTouchPadUI()
     });
 
     m_touchPadMotionAcceleration = m_touchPadInterface->motion_acceleration();
-    if(m_touchPadMotionAcceleration == MOTION_SLOW)
-    {
-        ui->slider_tp_speed->setValue(SLIDER_MINIMUM);
-        ui->label_tp_speed->setText(tr("Slow"));
-    }
-    else if(m_touchPadMotionAcceleration == MOTION_STANDARD)
-    {
-        ui->slider_tp_speed->setValue((SLIDER_MAXIMUN-SLIDER_MINIMUM+1)/2);
-        ui->label_tp_speed->setText(tr("Standard"));
-    }
-    else
-    {
-        ui->slider_tp_speed->setValue(SLIDER_MAXIMUN);
-        ui->label_tp_speed->setText(tr("Fast"));
-    }
+    int speed = m_touchPadMotionAcceleration / 2.0 * SLIDER_MAXIMUN + SLIDER_MAXIMUN / 2;
+    ui->slider_tp_speed->setValue(speed);
 
     //创建定时器，在用户拖动滑动条时，滑动条值停止变化0.1s后才会设置新的触摸板移动速度
     m_timer = new QTimer(this);
@@ -103,8 +87,7 @@ void TouchPadSettings::initPageTouchPadUI()
         int value;
 
         value = ui->slider_tp_speed->value();
-        scrollSpeed = GeneralFunctionClass::convertValue(ui->slider_tp_speed,ui->label_tp_speed,m_mousePressed,value);
-
+        scrollSpeed = (value / (SLIDER_MAXIMUN * 1.0)) * 2.0 - 1.0;
         m_touchPadMotionAcceleration = scrollSpeed;
         m_touchPadInterface->setMotion_acceleration(m_touchPadMotionAcceleration);
         m_timer->stop();
@@ -196,7 +179,6 @@ void TouchPadSettings::setDisableWidget(bool disabled)
         checkBox->setDisabled(disabled);
     }
     ui->slider_tp_speed->setDisabled(disabled);
-    ui->label_tp_speed->setDisabled(disabled);
 }
 
 void TouchPadSettings::onSliderValueChange()
