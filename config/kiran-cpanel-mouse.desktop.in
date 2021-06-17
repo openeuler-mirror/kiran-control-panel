@@ -2,7 +2,7 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=Kiran Cpanel Mouse
-Name[zh_CN]=鼠标
+Name[zh_CN]=鼠标设置
 Comment=Kiran Cpanel Mouse
 Comment[zh_CN]=设置鼠标首选项
 Exec=kiran-cpanel-launcher --cpanel-plugin=kiran-cpanel-mouse
