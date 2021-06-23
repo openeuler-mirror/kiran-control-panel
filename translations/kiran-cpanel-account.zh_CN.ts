@@ -149,34 +149,34 @@
         <translation>返回</translation>
     </message>
     <message>
-        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="122"/>
+        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="142"/>
         <source>add fingerprint</source>
         <translation>录入指纹数据</translation>
     </message>
     <message>
-        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="135"/>
+        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="155"/>
         <source>add face</source>
         <translation>录入人脸数据</translation>
     </message>
     <message>
-        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="151"/>
-        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="286"/>
+        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="172"/>
+        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="322"/>
         <source>error</source>
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="152"/>
-        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="287"/>
+        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="173"/>
+        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="323"/>
         <source>please ensure that at least one authentication option exists</source>
         <translation>请确保至少一个认证选项打开</translation>
     </message>
     <message>
-        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="479"/>
+        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="515"/>
         <source>fingerprint_</source>
         <translation>指纹_</translation>
     </message>
     <message>
-        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="479"/>
+        <location filename="../src/pages/auth-manager-page/auth-manager-page.cpp" line="515"/>
         <source>face_</source>
         <translation>人脸_</translation>
     </message>
@@ -413,7 +413,7 @@
     <message>
         <location filename="../src/pages/biometric-input-dialog/fingerprint-input-dialog/fingerprint-input-worker.cpp" line="66"/>
         <source>initializing fingerprint collection environment...</source>
-        <translation>正在初始化指纹采集环境，请稍后</translation>
+        <translation>正在初始化指纹采集环境，请稍等</translation>
     </message>
 </context>
 <context>
@@ -465,13 +465,21 @@
     </message>
     <message>
         <location filename="../src/hard-worker.cpp" line="188"/>
+        <source>Failed to update user properties,%1</source>
+        <translation>更新用户属性失败，%1</translation>
+    </message>
+    <message>
         <source>Failed to update user properties(%1)</source>
-        <translation>更新用户属性失败(%1)</translation>
+        <translation type="vanished">更新用户属性失败(%1)</translation>
     </message>
     <message>
         <location filename="../src/hard-worker.cpp" line="208"/>
+        <source>Failed to delete user,%1</source>
+        <translation>删除用户失败，%1</translation>
+    </message>
+    <message>
         <source>Failed to delete user</source>
-        <translation>删除用户失败</translation>
+        <translation type="vanished">删除用户失败</translation>
     </message>
 </context>
 <context>
@@ -480,13 +488,13 @@
         <location filename="../src/kiran-account-manager.cpp" line="76"/>
         <location filename="../src/kiran-account-manager.cpp" line="375"/>
         <source>disable</source>
-        <translation type="unfinished">禁用</translation>
+        <translation>禁用</translation>
     </message>
     <message>
         <location filename="../src/kiran-account-manager.cpp" line="76"/>
         <location filename="../src/kiran-account-manager.cpp" line="375"/>
         <source>enable</source>
-        <translation type="unfinished">启用</translation>
+        <translation>启用</translation>
     </message>
     <message>
         <source>User Manager</source>
