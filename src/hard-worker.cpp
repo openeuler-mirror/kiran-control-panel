@@ -185,7 +185,7 @@ void HardWorker::doUpdateUserProperty(QString objPath,
     if (!updateFailedPropertys.isEmpty())
     {
         QString updateFailed = updateFailedPropertys.join(",");
-        QString msg = QString(tr("Failed to update user properties(%1)"))
+        QString msg = QString(tr("Failed to update user properties,%1"))
                           .arg(updateFailed);
         KLOG_WARNING() << msg;
         emit sigUpdateUserPropertyDone(msg);
@@ -205,7 +205,8 @@ void HardWorker::doDeleteUser(int uid)
     if (reply.isError())
     {
         KLOG_INFO() << "delete user" << reply.error();
-        emit sigDeleteUserDone(tr("Failed to delete user"));
+        QString errMsg = QString(tr("Failed to delete user,%1")).arg(reply.error().message());
+        emit sigDeleteUserDone(errMsg);
     }
     else
     {
