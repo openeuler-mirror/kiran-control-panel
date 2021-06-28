@@ -64,8 +64,8 @@ bool AccountsGlobalInfo::init()
     };
     KLOG_INFO("show root:%s",m_showRoot?"true":"false");
 
-    ///加载账户
-    QList<QDBusObjectPath> accounts;
+    ///加载用户
+    QList<QDBusObjectPath> users;
     QDBusPendingReply<QList<QDBusObjectPath>> pendingReply;
     QList<QDBusObjectPath> objList;
     QList<QDBusObjectPath>::iterator objListIter;

@@ -18,9 +18,13 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/widgets/account-itemwidget.cpp" line="17"/>
         <source>Create new account</source>
-        <translation>创建新账户</translation>
+        <translation type="obsolete">创建新用户</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/account-itemwidget.cpp" line="17"/>
+        <source>Create new user</source>
+        <translation>创建新用户</translation>
     </message>
     <message>
         <location filename="../src/widgets/account-itemwidget.cpp" line="89"/>
@@ -188,14 +192,14 @@
         <location filename="../build/kiran-cpanel-account_autogen/include/ui_biometric-item.h" line="77"/>
         <location filename="../cmake-build-debug/kiran-cpanel-account_autogen/include/ui_biometric-item.h" line="77"/>
         <source>BiometricItem</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/widgets/biometric-item.ui" line="35"/>
         <location filename="../build/kiran-cpanel-account_autogen/include/ui_biometric-item.h" line="78"/>
         <location filename="../cmake-build-debug/kiran-cpanel-account_autogen/include/ui_biometric-item.h" line="78"/>
         <source>text</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/widgets/biometric-item.ui" line="73"/>
@@ -215,11 +219,8 @@
         <translation>登录名</translation>
     </message>
     <message>
-        <location filename="../src/pages/create-user-page/create-user-page.ui" line="147"/>
-        <location filename="../build/kiran-cpanel-account_autogen/include/ui_create-user-page.h" line="288"/>
-        <location filename="../cmake-build-debug/kiran-cpanel-account_autogen/include/ui_create-user-page.h" line="288"/>
         <source>Account type</source>
-        <translation>账户类型</translation>
+        <translation type="vanished">账户类型</translation>
     </message>
     <message>
         <location filename="../src/pages/create-user-page/create-user-page.cpp" line="65"/>
@@ -239,11 +240,18 @@
         <translation></translation>
     </message>
     <message>
+        <location filename="../src/pages/create-user-page/create-user-page.ui" line="147"/>
+        <location filename="../build/kiran-cpanel-account_autogen/include/ui_create-user-page.h" line="288"/>
+        <location filename="../cmake-build-debug/kiran-cpanel-account_autogen/include/ui_create-user-page.h" line="288"/>
+        <source>User type</source>
+        <translation>用户类型</translation>
+    </message>
+    <message>
         <location filename="../src/pages/create-user-page/create-user-page.ui" line="190"/>
         <location filename="../build/kiran-cpanel-account_autogen/include/ui_create-user-page.h" line="289"/>
         <location filename="../cmake-build-debug/kiran-cpanel-account_autogen/include/ui_create-user-page.h" line="289"/>
         <source>Password</source>
-        <translation>账户密码</translation>
+        <translation>用户密码</translation>
     </message>
     <message>
         <location filename="../src/pages/create-user-page/create-user-page.ui" line="239"/>
@@ -274,24 +282,44 @@
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="../src/pages/create-user-page/create-user-page.cpp" line="84"/>
         <source>Please enter account name first</source>
-        <translation>请先输入账户名</translation>
+        <translation type="vanished">请先输入账户名</translation>
+    </message>
+    <message>
+        <source>Please enter your account name</source>
+        <translation type="vanished">请输入账户名</translation>
+    </message>
+    <message>
+        <source>Account cannot be a pure number</source>
+        <translation type="vanished">账户名不能全为数字</translation>
+    </message>
+    <message>
+        <source>Account already exists</source>
+        <translation type="vanished">账户名已存在</translation>
+    </message>
+    <message>
+        <source>Please enter your userName name</source>
+        <translation type="vanished">请输入用户名</translation>
+    </message>
+    <message>
+        <location filename="../src/pages/create-user-page/create-user-page.cpp" line="84"/>
+        <source>Please enter user name first</source>
+        <translation>请输入用户名</translation>
     </message>
     <message>
         <location filename="../src/pages/create-user-page/create-user-page.cpp" line="118"/>
-        <source>Please enter your account name</source>
-        <translation>请输入账户名</translation>
+        <source>Please enter your user name</source>
+        <translation>请输入用户名</translation>
     </message>
     <message>
         <location filename="../src/pages/create-user-page/create-user-page.cpp" line="134"/>
-        <source>Account cannot be a pure number</source>
-        <translation>账户名不能全为数字</translation>
+        <source>user name cannot be a pure number</source>
+        <translation>用户名不能全为数字</translation>
     </message>
     <message>
         <location filename="../src/pages/create-user-page/create-user-page.cpp" line="141"/>
-        <source>Account already exists</source>
-        <translation>账户名已存在</translation>
+        <source>user name already exists</source>
+        <translation>用户名已存在</translation>
     </message>
     <message>
         <location filename="../src/pages/create-user-page/create-user-page.cpp" line="153"/>
@@ -455,8 +483,12 @@
     </message>
     <message>
         <location filename="../src/hard-worker.cpp" line="169"/>
+        <source>userName type</source>
+        <translation>用户名</translation>
+    </message>
+    <message>
         <source>account type</source>
-        <translation>账户类型</translation>
+        <translation type="vanished">账户类型</translation>
     </message>
     <message>
         <location filename="../src/hard-worker.cpp" line="180"/>
@@ -503,7 +535,7 @@
     <message>
         <location filename="../src/kiran-account-manager.cpp" line="196"/>
         <source>Create new account</source>
-        <translation type="unfinished">创建新账户</translation>
+        <translation>创建新用户</translation>
     </message>
 </context>
 <context>
@@ -588,18 +620,26 @@
         <translation>用户ID</translation>
     </message>
     <message>
+        <source>Account type</source>
+        <translation type="vanished">账户类型</translation>
+    </message>
+    <message>
+        <source>Account status</source>
+        <translation type="vanished">启用账户</translation>
+    </message>
+    <message>
         <location filename="../src/pages/user-info-page/user-info-page.ui" line="292"/>
         <location filename="../build/kiran-cpanel-account_autogen/include/ui_user-info-page.h" line="505"/>
         <location filename="../cmake-build-debug/kiran-cpanel-account_autogen/include/ui_user-info-page.h" line="505"/>
-        <source>Account type</source>
-        <translation>账户类型</translation>
+        <source>User type</source>
+        <translation>用户类型</translation>
     </message>
     <message>
         <location filename="../src/pages/user-info-page/user-info-page.ui" line="354"/>
         <location filename="../build/kiran-cpanel-account_autogen/include/ui_user-info-page.h" line="506"/>
         <location filename="../cmake-build-debug/kiran-cpanel-account_autogen/include/ui_user-info-page.h" line="506"/>
-        <source>Account status</source>
-        <translation>启用账户</translation>
+        <source>User status</source>
+        <translation>启用用户</translation>
     </message>
     <message>
         <location filename="../src/pages/user-info-page/user-info-page.ui" line="416"/>
@@ -668,9 +708,8 @@
         <translation>管理员</translation>
     </message>
     <message>
-        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="255"/>
         <source>Account information updated successfully</source>
-        <translation>账户信息更新成功</translation>
+        <translation type="vanished">账户信息更新成功</translation>
     </message>
     <message>
         <location filename="../src/pages/user-info-page/user-info-page.cpp" line="275"/>
@@ -729,6 +768,11 @@
         <location filename="../src/pages/user-info-page/user-info-page.cpp" line="213"/>
         <source>Password encryption failed</source>
         <translation>密码加密失败</translation>
+    </message>
+    <message>
+        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="255"/>
+        <source>user information updated successfully</source>
+        <translation>用户信息更新成功</translation>
     </message>
 </context>
 </TS>

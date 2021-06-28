@@ -142,9 +142,9 @@
       <number>24</number>
      </property>
      <item>
-      <widget class="QLabel" name="label_type">
+      <widget class="QLabel" name="label_userType">
        <property name="text">
-        <string>Account type</string>
+        <string>User type</string>
        </property>
       </widget>
      </item>
@@ -159,7 +159,7 @@
       <number>10</number>
      </property>
      <item>
-      <widget class="QComboBox" name="combo_accountType">
+      <widget class="QComboBox" name="combo_userType">
        <property name="minimumSize">
         <size>
          <width>0</width>

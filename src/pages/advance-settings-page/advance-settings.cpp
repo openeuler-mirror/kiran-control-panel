@@ -25,7 +25,7 @@ AdvanceSettings::~AdvanceSettings()
 }
 
 ///更新信息
-void AdvanceSettings::setInfo(QString account, AdvanceSettingsInfo &info)
+void AdvanceSettings::setInfo(QString userName, AdvanceSettingsInfo &info)
 {
     if (!info.uid.isEmpty())
     {
@@ -46,8 +46,8 @@ void AdvanceSettings::setInfo(QString account, AdvanceSettingsInfo &info)
         ui->edit_loginShell->clear();
     }
 
-    ///缓存账户信息，当特殊用户Home目录设置关闭时，重新生成Home目录路径
-    m_account = account;
+    ///缓存账用户信息，当特殊用户Home目录设置关闭时，重新生成Home目录路径
+    m_userName = userName;
 
     if (!info.homeDir.isEmpty())
     {
@@ -57,7 +57,7 @@ void AdvanceSettings::setInfo(QString account, AdvanceSettingsInfo &info)
     else
     {
         m_specifyUserHomeSwitch->setChecked(false);
-        ui->edit_specifyUserHome->setText(QString("/home/%1/").arg(m_account));
+        ui->edit_specifyUserHome->setText(QString("/home/%1/").arg(m_userName));
     }
 }
 
@@ -139,7 +139,7 @@ void AdvanceSettings::initUI()
         else
         {
             ui->edit_specifyUserHome->setEnabled(false);
-            ui->edit_specifyUserHome->setText(QString("/home/%1/").arg(m_account));
+            ui->edit_specifyUserHome->setText(QString("/home/%1/").arg(m_userName));
         }
     });
 

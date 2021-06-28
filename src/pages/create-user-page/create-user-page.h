@@ -30,16 +30,16 @@ public:
 
 signals:
     /// 当用户点击创建用户按钮时,经过基础检查发出的创建用户信号，请求工作线程处理
-    /// \param account          账户名
+    /// \param userName         用户名
     /// \param uid              用户id
-    /// \param accountType      账户类型
+    /// \param userType         用户类型
     /// \param encryptedPasswd  密码加密
     /// \param homeDir          家目录
     /// \param shell            shell路径
     /// \param iconFile         图标路径
-    void sigCreateUser(QString account,
+    void sigCreateUser(QString userName,
                        int uid,
-                       int accountType,
+                       int userType,
                        QString encryptedPasswd,
                        QString homeDir,
                        QString shell,

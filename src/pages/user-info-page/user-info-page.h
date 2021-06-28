@@ -49,21 +49,21 @@ signals:
     void sigAuthManager(const QString &userObj);
 
     /// 当用户点击保存按钮时,发出的保存用户属性信号，请求工作线程处理
-    /// \param account      账户名
-    /// \param iconfile     头像路径
-    /// \param accountType  账户类型
+    /// \param userName     用户名
+    /// \param iconFile     头像路径
+    /// \param userType     用户类型
     /// \param isLocked     是否锁定
     void sigUpdateUserProperty(QString objPath,
-                               QString account,
-                               QString iconfile,
-                               int accountType,
+                               QString userName ,
+                               QString iconFile,
+                               int userType,
                                bool isLocked);
 
     /// 当用户点击保存新密码时,发出的更新密码信号，请求工作线程处理
-    /// \param account          账户名
+    /// \param userName         用户名
     /// \param encryptedPasswd  加密过的密码
     void sigUpdatePasswd(QString objPath,
-                         QString account,
+                         QString userName,
                          QString encryptedPasswd);
 
     /// 当用户点击删除用户时发出的删除用户信号，请求工作线程处理
@@ -102,7 +102,7 @@ private:
     uid_t m_uid;
     KiranTips *m_errorTip;
     HoverTips *m_hoverTip;
-    KiranSwitchButton *m_accountStatusSwitch;
+    KiranSwitchButton *m_userStatusSwitch;
 };
 
 #endif  // USERINFOPAGE_H

@@ -20,9 +20,9 @@ HardWorker::~HardWorker()
 }
 
 //TODO: 拼接DBus接口返回的错误信息
-void HardWorker::doCreateUser(QString account,
+void HardWorker::doCreateUser(QString userName,
                               int uid,
-                              int accountType,
+                              int userType,
                               QString encryptedPasswd,
                               QString homeDir,
                               QString shell,
@@ -35,9 +35,9 @@ void HardWorker::doCreateUser(QString account,
 
     ///step1.创建用户
     QDBusPendingReply<QDBusObjectPath> createUserRep;
-    createUserRep = accountsService.CreateUser(account,
-                                               account,
-                                               accountType,
+    createUserRep = accountsService.CreateUser(userName,
+                                               userName,
+                                               userType,
                                                uid);
     createUserRep.waitForFinished();
     if (createUserRep.isError())
@@ -93,7 +93,7 @@ void HardWorker::doCreateUser(QString account,
         }
     }
 
-    KLOG_INFO() << QString("create user(%1) is done").arg(account);
+    KLOG_INFO() << QString("create user(%1) is done").arg(userName);
     emit sigCreateUserDnoe(userObjPath, "");
     return;
 failed:
@@ -120,7 +120,7 @@ failed:
 }
 
 void HardWorker::doUpdatePasswd(QString objPath,
-                                QString account,
+                                QString userName,
                                 QString encryptedPasswd)
 {
     UserInterface interface(objPath, QDBusConnection::systemBus());
@@ -139,9 +139,9 @@ void HardWorker::doUpdatePasswd(QString objPath,
 }
 
 void HardWorker::doUpdateUserProperty(QString objPath,
-                                      QString account,
+                                      QString userName,
                                       QString iconfile,
-                                      int accountType,
+                                      int userType,
                                       bool isLocked)
 {
     UserInterface userInterface(objPath,
@@ -159,14 +159,14 @@ void HardWorker::doUpdateUserProperty(QString objPath,
         }
     }
 
-    if (userInterface.account_type() != accountType)
+    if (userInterface.account_type() != userType)
     {
-        auto reply = userInterface.SetAccountType(accountType);
+        auto reply = userInterface.SetAccountType(userType);
         reply.waitForFinished();
         if (reply.isError())
         {
-            KLOG_WARNING() << "update account type failed," << reply.error();
-            updateFailedPropertys.append(tr("account type"));
+            KLOG_WARNING() << "update userName type failed," << reply.error();
+            updateFailedPropertys.append(tr("userName type"));
         }
     }
 

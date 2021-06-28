@@ -19,7 +19,7 @@ public:
     static AccountsGlobalInfo *instance();
 
     /**
-     * @brief 初始化，加载账户列表
+     * @brief 初始化，加载用户列表
      * @return
      */
     bool init();
@@ -31,8 +31,8 @@ public:
     QList<QString> getUserList();
 
     /**
-     * @brief 检查是否存在重名账户
-     * @param account 需检查的账户名
+     * @brief 检查是否存在重名用户
+     * @param account 需检查的用户名
      * @return 是否可用
      */
     bool checkUserNameAvaliable(const QString &userName);
