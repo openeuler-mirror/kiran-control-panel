@@ -34,10 +34,10 @@ public:
 
     /**
      * @brief 更新信息进入高级设置窗口
-     * @param 当前创建的账户
-     * @param 创建账户中保存的用户高级设置信息
+     * @param 当前创建的用户
+     * @param 创建用户中保存的用户高级设置信息
      */
-    void setInfo(QString account, AdvanceSettingsInfo &info);
+    void setInfo(QString userName, AdvanceSettingsInfo &info);
 
     /**
      * @brief 从高级设置窗口取出确认的信息
@@ -67,7 +67,7 @@ protected:
 
 private:
     Ui::AdvanceSettings *ui;
-    QString m_account;
+    QString m_userName;
     bool m_isConfirm;
     KiranTips *m_editTip = nullptr;
     KiranSwitchButton *m_specifyUserIDSwitch;

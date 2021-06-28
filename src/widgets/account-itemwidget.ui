@@ -52,7 +52,7 @@
     </widget>
    </item>
    <item>
-    <widget class="QLabel" name="label_account">
+    <widget class="QLabel" name="label_userName">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
        <horstretch>0</horstretch>

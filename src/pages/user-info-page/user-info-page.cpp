@@ -38,15 +38,15 @@ void UserInfoPage::updateInfo()
 
     QString userName = userInterface.user_name();
     m_uid = userInterface.uid();
-    int accountType = userInterface.account_type();
+    int userType = userInterface.account_type();
     QString iconFile = userInterface.icon_file();
     bool locked = userInterface.locked();
 
     ui->label_name->setText(userName);
     ui->edit_userID->setText(QString::number(m_uid));
-    ui->combo_accountType->setCurrentIndex(accountType);
+    ui->combo_userType->setCurrentIndex(userType);
     ui->avatar->setImage(iconFile);
-    m_accountStatusSwitch->setChecked(!locked);
+    m_userStatusSwitch->setChecked(!locked);
     m_curShowUserName = userName;
 
     if (m_curShowUserName != AccountsGlobalInfo::instance()->getCurrentUser())
@@ -92,16 +92,16 @@ void UserInfoPage::initUI()
 
     m_hoverTip = new HoverTips(this);
 
-    /* 账户状态的开关按钮 */
-    m_accountStatusSwitch = new KiranSwitchButton(this);
-    ui->layout_accountStatusSwitch->insertWidget(0, m_accountStatusSwitch);
+    /* 用户状态的开关按钮 */
+    m_userStatusSwitch = new KiranSwitchButton(this);
+    ui->layout_userStatusSwitch->insertWidget(0, m_userStatusSwitch);
 
     Kiran::WidgetPropertyHelper::setButtonType(ui->btn_saveProperty, Kiran::BUTTON_Default);
     Kiran::WidgetPropertyHelper::setButtonType(ui->btn_deleteUser, Kiran::BUTTON_Warning);
     Kiran::WidgetPropertyHelper::setButtonType(ui->btn_savePasswd, Kiran::BUTTON_Default);
 
     /* 用户显示页面 */
-    //账户头像
+    //用户头像
     ui->avatar->setHoverImage(":/kcp-account-images/change_user_icon.png");
     ui->avatar->setClickEnable(true);
     connect(ui->avatar, &UserAvatarWidget::pressed, [this]() {
@@ -109,8 +109,8 @@ void UserInfoPage::initUI()
     });
 
     //用户类型显示
-    ui->combo_accountType->addItem(tr("standard"));
-    ui->combo_accountType->addItem(tr("administrator"));
+    ui->combo_userType->addItem(tr("standard"));
+    ui->combo_userType->addItem(tr("administrator"));
 
     //修改密码按钮
     connect(ui->btn_changePasswd, &QPushButton::clicked, [this]() {
@@ -223,20 +223,20 @@ void UserInfoPage::handlerUpdatePasswd()
 void UserInfoPage::handlerUpdateUserProperty()
 {
     QString account, icon;
-    int accountType;
+    int userType;
     bool isLocked;
 
     account = getCurrentShowUserName();
     icon = ui->avatar->iconPath();
-    accountType = ui->combo_accountType->currentIndex();
-    isLocked = !m_accountStatusSwitch->isChecked();
+    userType = ui->combo_userType->currentIndex();
+    isLocked = !m_userStatusSwitch->isChecked();
 
     ui->btn_saveProperty->setBusy(true);
     emit sigIsBusyChanged(true);
     emit sigUpdateUserProperty(getCurrentShowUserPath(),
                                account,
                                icon,
-                               accountType,
+                               userType,
                                isLocked);
 }
 
@@ -252,7 +252,7 @@ void UserInfoPage::handlerUpdateUserPropertyDone(QString errMsg)
     }
     else
     {
-        m_hoverTip->show(HoverTips::HOVE_TIPS_SUC, tr("Account information updated successfully"));
+        m_hoverTip->show(HoverTips::HOVE_TIPS_SUC, tr("user information updated successfully"));
     }
     ///NOTE: 如果属性设置成功了AccountsGlobalInfo会更新当前页面
     ///      手动更新是为了避免设置失败,界面未复位

@@ -18,37 +18,37 @@ public:
 public slots:
 
     /// 通过AccountServices创建用户
-    /// \param account          账户
+    /// \param userName         用户名
     /// \param uid              UID
-    /// \param accountType      账户类型
+    /// \param userType         用户类型
     /// \param encryptedPasswd  加密之后的密码
     /// \param homeDir          用户家目录
     /// \param shell            shell
     /// \param iconFile         头像
-    void doCreateUser(QString account,
+    void doCreateUser(QString userName,
                       int uid,
-                      int accountType,
+                      int userType,
                       QString encryptedPasswd,
                       QString homeDir,
                       QString shell,
                       QString iconFile);
 
     /// 通过AccountServices更新密码
-    /// \param account          账户名
+    /// \param userName         用户名
     /// \param encryptedPasswd  加密之后的密码
     void doUpdatePasswd(QString objPath,
-                        QString account,
+                        QString userName,
                         QString encryptedPasswd);
 
     /// 通过AccountServices更新用户属性
-    /// \param account      账户名
+    /// \param userName     用户名
     /// \param iconfile     图标
-    /// \param accountType  账户类型
+    /// \param userType     用户类型
     /// \param isLocked     是否锁定
     void doUpdateUserProperty(QString objPath,
-                              QString account,
+                              QString userName,
                               QString iconfile,
-                              int accountType,
+                              int userType,
                               bool isLocked);
 
     /// 通过AccountService删除用户

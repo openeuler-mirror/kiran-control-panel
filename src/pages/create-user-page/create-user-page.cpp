@@ -1,10 +1,10 @@
 #include "create-user-page.h"
-#include "account-validator.h"
 #include "accounts-global-info.h"
 #include "kiran-tips.h"
 #include "passwd-helper.h"
 #include "src/pages/advance-settings-page/advance-settings.h"
 #include "ui_create-user-page.h"
+#include "user-name-validator.h"
 
 #include <kiranwidgets-qt5/kiran-message-box.h>
 #include <widget-property-helper.h>
@@ -29,7 +29,7 @@ void CreateUserPage::reset()
 {
     ui->avatar->setDefaultImage();
     ui->edit_name->clear();
-    ui->combo_accountType->setCurrentIndex(0);
+    ui->combo_userType->setCurrentIndex(0);
     ui->editcheck_passwd->resetVerificationStatus();
     ui->editcheck_passwd->clear();
     ui->editcheck_confirmPasswd->resetVerificationStatus();
@@ -60,14 +60,14 @@ void CreateUserPage::initUI()
     });
 
     /// 用户类型ComboBox
-    QListView *view = new QListView(ui->combo_accountType);
-    ui->combo_accountType->setView(view);
-    ui->combo_accountType->addItem(tr("standard"));
-    ui->combo_accountType->addItem(tr("administrator"));
-    ui->combo_accountType->view()->window()->setAttribute(Qt::WA_TranslucentBackground);
+    QListView *view = new QListView(ui->combo_userType);
+    ui->combo_userType->setView(view);
+    ui->combo_userType->addItem(tr("standard"));
+    ui->combo_userType->addItem(tr("administrator"));
+    ui->combo_userType->view()->window()->setAttribute(Qt::WA_TranslucentBackground);
 
-    /// 用户账户名输入框
-    ui->edit_name->setValidator(new AccountValidator(ui->edit_name));
+    /// 用户名输入框
+    ui->edit_name->setValidator(new UserNameValidator(ui->edit_name));
     //NOTE:用户名不能超过32字符长
     ui->edit_name->setMaxLength(32);
 
@@ -81,7 +81,7 @@ void CreateUserPage::initUI()
     connect(ui->btn_advanceSetting, &QPushButton::clicked, [this]() {
         if (ui->edit_name->text().isEmpty())
         {
-            m_errorTip->setText(tr("Please enter account name first"));
+            m_errorTip->setText(tr("Please enter user name first"));
             m_errorTip->showTipAroundWidget(ui->edit_name);
             return;
         }
@@ -109,19 +109,19 @@ void CreateUserPage::initUI()
 
 void CreateUserPage::handlerCreateNewUser()
 {
-    //step1.检验账户名是否为空，是否重名
-    KLOG_INFO() << "start check account name";
-    QString account = ui->edit_name->text();
+    //step1.检验用户名是否为空，是否重名
+    KLOG_INFO() << "start check user name";
+    QString userName = ui->edit_name->text();
 
-    if (account.isEmpty())
+    if (userName.isEmpty())
     {
-        m_errorTip->setText(tr("Please enter your account name"));
+        m_errorTip->setText(tr("Please enter your user name"));
         m_errorTip->showTipAroundWidget(ui->edit_name);
         return;
     }
 
     bool isPureDigital = true;
-    for (QChar ch : account)
+    for (QChar ch : userName)
     {
         if (!ch.isNumber())
         {
@@ -131,14 +131,14 @@ void CreateUserPage::handlerCreateNewUser()
     }
     if (isPureDigital)
     {
-        m_errorTip->setText(tr("Account cannot be a pure number"));
+        m_errorTip->setText(tr("user name cannot be a pure number"));
         m_errorTip->showTipAroundWidget(ui->edit_name);
         return;
     }
 
-    if (!AccountsGlobalInfo::instance()->checkUserNameAvaliable(account))
+    if (!AccountsGlobalInfo::instance()->checkUserNameAvaliable(userName))
     {
-        m_errorTip->setText(tr("Account already exists"));
+        m_errorTip->setText(tr("user name already exists"));
         m_errorTip->showTipAroundWidget(ui->edit_name);
         return;
     }
@@ -188,14 +188,14 @@ void CreateUserPage::handlerCreateNewUser()
             uid = -1;
         }
     }
-    int accountType = ui->combo_accountType->currentIndex();
+    int accountType = ui->combo_userType->currentIndex();
     QString homeDir = m_advanceSettingsInfo.homeDir;
     QString shell = m_advanceSettingsInfo.shell;
     QString iconFile = ui->avatar->iconPath();
 
     emit sigIsBusyChanged(true);
     ui->btn_confirm->setBusy(true);
-    emit sigCreateUser(account, uid, accountType,
+    emit sigCreateUser(userName, uid, accountType,
                        encryptedPasswd,
                        homeDir,
                        shell,

@@ -287,9 +287,9 @@
           <number>24</number>
          </property>
          <item>
-          <widget class="QLabel" name="label_accountType">
+          <widget class="QLabel" name="label_userType">
            <property name="text">
-            <string>Account type</string>
+            <string>User type</string>
            </property>
           </widget>
          </item>
@@ -317,7 +317,7 @@
           <number>10</number>
          </property>
          <item>
-          <widget class="QComboBox" name="combo_accountType">
+          <widget class="QComboBox" name="combo_userType">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
              <horstretch>0</horstretch>
@@ -349,9 +349,9 @@
           <number>24</number>
          </property>
          <item>
-          <widget class="QLabel" name="label_accountStatus">
+          <widget class="QLabel" name="label_userStatus">
            <property name="text">
-            <string>Account status</string>
+            <string>User status</string>
            </property>
           </widget>
          </item>
@@ -371,7 +371,7 @@
         </layout>
        </item>
        <item>
-        <layout class="QHBoxLayout" name="layout_accountStatusSwitch">
+        <layout class="QHBoxLayout" name="layout_userStatusSwitch">
          <property name="spacing">
           <number>0</number>
          </property>

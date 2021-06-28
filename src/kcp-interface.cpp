@@ -17,7 +17,7 @@ int KcpInterface::init()
 {
     if (!AccountsGlobalInfo::instance()->init())
     {
-        KLOG_ERROR() << "load account info failed!";
+        KLOG_ERROR() << "load user info failed!";
         return -1;
     }
     if (!TemporaryDirManager::instance()->init(qAppName()))

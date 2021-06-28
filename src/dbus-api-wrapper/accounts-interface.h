@@ -40,10 +40,10 @@ public:
 
 public Q_SLOTS:  // METHODS
     inline QDBusPendingReply<QDBusObjectPath>
-    CreateUser(const QString &name, const QString &realname, int account_type, qint64 uid)
+    CreateUser(const QString &name, const QString &realname, int user_type, qint64 uid)
     {
         QList<QVariant> argumentList;
-        argumentList << QVariant::fromValue(name) << QVariant::fromValue(realname) << QVariant::fromValue(account_type)
+        argumentList << QVariant::fromValue(name) << QVariant::fromValue(realname) << QVariant::fromValue(user_type)
                      << uid;
         return asyncCallWithArgumentList(QLatin1String("CreateUser"), argumentList);
     }

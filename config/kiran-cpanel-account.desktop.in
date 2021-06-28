@@ -1,7 +1,7 @@
 [Desktop Entry]
 Name=Accounts Manager
-Name[zh_CN]=账户管理工具
-Comment[zh_CN]=管理账户
+Name[zh_CN]=用户管理工具
+Comment[zh_CN]=管理用户
 Comment=Manager Account
 Terminal=false
 Type=Application
@@ -27,4 +27,4 @@ SubItems=Account
 Name=account
 Icon=kcp-account
 #插件关键字 该值提供给控制中心形成搜索列表
-Keywords[zh_CN]=账户管理
+Keywords[zh_CN]=用户管理

@@ -14,7 +14,7 @@ AccountItemWidget::AccountItemWidget(QWidget *paren, bool isCreateAccountItem) :
     if (m_isCreateAccountItem)
     {
         ui->avatar->setImage(":/kcp-account-images/add_icon.png");
-        ui->label_account->setText(tr("Create new account"));
+        ui->label_userName->setText(tr("Create new user"));
         ui->label_status->setVisible(false);
     }
     updateStatusDesc();
@@ -54,7 +54,7 @@ QString AccountItemWidget::getUserDBusObjectPath()
 void AccountItemWidget::updateInfo()
 {
     UserInterface userInterface(m_objectPath, QDBusConnection::systemBus());
-    ui->label_account->setText(userInterface.user_name());
+    ui->label_userName->setText(userInterface.user_name());
     setIsLocked(userInterface.locked());
     ui->avatar->setImage(userInterface.icon_file());
 }
