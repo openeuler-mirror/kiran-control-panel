@@ -1,8 +1,8 @@
 [Desktop Entry]
-Name=Accounts Manager
+Name=User Manager
 Name[zh_CN]=用户管理工具
 Comment[zh_CN]=管理用户
-Comment=Manager Account
+Comment=User Manager
 Terminal=false
 Type=Application
 Exec=kiran-cpanel-launcher --cpanel-plugin=kiran-cpanel-account

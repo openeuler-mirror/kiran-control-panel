@@ -193,7 +193,7 @@ void KiranAccountManager::initUserList()
     });
 
     ///创建用户按钮
-    m_createUserItem = new QListWidgetItem(tr("Create new account"), m_tabList);
+    m_createUserItem = new QListWidgetItem(tr("Create new user"), m_tabList);
     m_createUserItem->setIcon(QIcon(":/kcp-account-images/add_icon.png"));
     m_tabList->addItem(m_createUserItem);
 
