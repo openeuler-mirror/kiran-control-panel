@@ -109,8 +109,8 @@ bool CPanelPluginHelper::loadLibrary(const QString& library,
     if (!m_pluginHandle.isLoaded())
     {
         KLOG_ERROR() << "can't load library,"
-                       << m_pluginHandle.errorString()
-                       << "," << library;
+                     << m_pluginHandle.errorString()
+                     << "," << library;
         return false;
     }
     KcpPluginInterface* pInterface = qobject_cast<KcpPluginInterface*>(m_pluginHandle.instance());
@@ -203,6 +203,7 @@ bool CPanelPluginHelper::parseDesktopInfo(const QString& desktopPath, PluginDesk
     if (!loadRes)
     {
         KLOG_ERROR() << "can't load" << desktopPath << (error ? error->message : "");
+        g_clear_error(&error);
         goto out;
     }
 
@@ -215,6 +216,7 @@ bool CPanelPluginHelper::parseDesktopInfo(const QString& desktopPath, PluginDesk
     if (!name)
     {
         KLOG_ERROR() << "can't get" << GROUP_DESKTOP_ENTRY << KEY_NAME << (error ? error->message : "");
+        g_clear_error(&error);
         goto out;
     }
     desktopInfo.name = name;
@@ -229,6 +231,7 @@ bool CPanelPluginHelper::parseDesktopInfo(const QString& desktopPath, PluginDesk
     if (!comment)
     {
         KLOG_ERROR() << "can't get" << GROUP_DESKTOP_ENTRY << KEY_COMMENT << (error ? error->message : "");
+        g_clear_error(&error);
         goto out;
     }
     desktopInfo.comment = comment;
@@ -242,6 +245,7 @@ bool CPanelPluginHelper::parseDesktopInfo(const QString& desktopPath, PluginDesk
     if (!icon)
     {
         KLOG_ERROR() << "can't get" << GROUP_DESKTOP_ENTRY << KEY_ICON << (error ? error->message : "");
+        g_clear_error(&error);
         goto out;
     }
     desktopInfo.Icon = icon;
@@ -252,8 +256,7 @@ bool CPanelPluginHelper::parseDesktopInfo(const QString& desktopPath, PluginDesk
     if (error)
     {
         KLOG_ERROR() << GROUP_KIRAN_CONTROL_PANEL_PLUGIN << KEY_WEIGHT << (error ? error->message : "");
-        g_error_free(error);
-        error = nullptr;
+        g_clear_error(&error);
     }
     desktopInfo.weight = weight;
 
@@ -262,6 +265,7 @@ bool CPanelPluginHelper::parseDesktopInfo(const QString& desktopPath, PluginDesk
     if (!category)
     {
         KLOG_ERROR() << GROUP_KIRAN_CONTROL_PANEL_PLUGIN << KEY_WEIGHT << (error ? error->message : "");
+        g_clear_error(&error);
         goto out;
     }
     desktopInfo.category = category;
@@ -272,6 +276,7 @@ bool CPanelPluginHelper::parseDesktopInfo(const QString& desktopPath, PluginDesk
     if (!library)
     {
         KLOG_ERROR() << GROUP_KIRAN_CONTROL_PANEL_PLUGIN << KEY_LIBRARY << (error ? error->message : "");
+        g_clear_error(&error);
         goto out;
     }
     desktopInfo.library = library;
@@ -280,12 +285,12 @@ bool CPanelPluginHelper::parseDesktopInfo(const QString& desktopPath, PluginDesk
     {
         desktopInfo.library.insert(0, QString(PLUGIN_LIBRARY_DIR) + "/");
     }
-
     //subItems
     subItems = g_key_file_get_string(keyFile, GROUP_KIRAN_CONTROL_PANEL_PLUGIN, KEY_SUBITEMS, &error);
     if (!subItems)
     {
         KLOG_ERROR() << GROUP_KIRAN_CONTROL_PANEL_PLUGIN << KEY_SUBITEMS << (error ? error->message : "");
+        g_clear_error(&error);
         goto out;
     }
     {
@@ -308,6 +313,7 @@ bool CPanelPluginHelper::parseDesktopInfo(const QString& desktopPath, PluginDesk
             if (!itemName)
             {
                 KLOG_ERROR() << "parse" << desktopPath << subItem << "missing" << KEY_SUBITEM_NAME << error->message;
+                g_clear_error(&error);
                 continue;
             }
             subItemInfo.name = itemName;
@@ -317,6 +323,7 @@ bool CPanelPluginHelper::parseDesktopInfo(const QString& desktopPath, PluginDesk
             if (!subItemIcon)
             {
                 KLOG_WARNING() << desktopPath << subItem << "missing" << KEY_SUBITEM_ICON << error->message;
+                g_clear_error(&error);
             }
             else
             {
@@ -328,7 +335,7 @@ bool CPanelPluginHelper::parseDesktopInfo(const QString& desktopPath, PluginDesk
             if (!keywords)
             {
                 KLOG_ERROR() << desktopPath << subItem << "missing" << KEY_SUBITEM_KEYWORDS << error->message;
-                continue;
+                g_clear_error(&error);
             }
             else
             {
