@@ -25,6 +25,7 @@ int KcpInterface::init()
         KLOG_ERROR() << "init temporary dir manager failed!";
         return -1;
     }
+
     m_translator = new QTranslator;
     if (!m_translator->load(QLocale(),
                             "kiran-cpanel-account",
@@ -35,9 +36,12 @@ int KcpInterface::init()
         m_translator->deleteLater();
         m_translator = nullptr;
         KLOG_ERROR() << "load translator failed!";
-        return -1;
     }
-    qApp->installTranslator(m_translator);
+    else
+    {
+        qApp->installTranslator(m_translator);
+    }
+
     return 0;
 }
 
