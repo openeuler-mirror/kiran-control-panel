@@ -529,13 +529,17 @@
         <translation>启用</translation>
     </message>
     <message>
+        <location filename="../src/kiran-account-manager.cpp" line="196"/>
+        <source>Create new user</source>
+        <translation type="unfinished">创建新用户</translation>
+    </message>
+    <message>
         <source>User Manager</source>
         <translation type="vanished">账户管理工具</translation>
     </message>
     <message>
-        <location filename="../src/kiran-account-manager.cpp" line="196"/>
         <source>Create new account</source>
-        <translation>创建新用户</translation>
+        <translation type="vanished">创建新用户</translation>
     </message>
 </context>
 <context>
