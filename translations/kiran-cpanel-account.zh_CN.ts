@@ -18,10 +18,6 @@
         <translation></translation>
     </message>
     <message>
-        <source>Create new account</source>
-        <translation type="obsolete">创建新用户</translation>
-    </message>
-    <message>
         <location filename="../src/widgets/account-itemwidget.cpp" line="17"/>
         <source>Create new user</source>
         <translation>创建新用户</translation>
