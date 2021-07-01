@@ -1,8 +1,8 @@
 [Desktop Entry]
-Name=User Manager
-Name[zh_CN]=用户管理工具
-Comment[zh_CN]=管理用户
-Comment=User Manager
+Name=Account Manager
+Name[zh_CN]=账户管理工具
+Comment[zh_CN]=账户管理工具
+Comment=Account Manager
 Terminal=false
 Type=Application
 Exec=kiran-cpanel-launcher --cpanel-plugin=kiran-cpanel-account
@@ -28,4 +28,4 @@ Name=account
 Icon=kcp-account
 Keywords=account,user
 #插件关键字 该值提供给控制中心形成搜索列表
-Keywords[zh_CN]=用户管理
+Keywords[zh_CN]=账户管理
