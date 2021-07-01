@@ -82,9 +82,8 @@ int PluginMouseInterface::init()
                             ".qm"))
     {
         KLOG_DEBUG() << "Kiran cpanel mouse load translation failed";
-        delete m_translator;
+        m_translator->deleteLater();
         m_translator = nullptr;
-        return -1;
     }
     else
     {
