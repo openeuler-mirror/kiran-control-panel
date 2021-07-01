@@ -5,8 +5,8 @@
 
 using namespace std;
 
-LicenseInfoWidget::LicenseInfoWidget( QString &mc_code,QString & lc_code) :
-    KiranTitlebarWindow(),
+LicenseInfoWidget::LicenseInfoWidget(QString &mc_code, QString & lc_code, QWidget *parent) :
+    KiranTitlebarWindow(parent),
     ui(new Ui::LicenseInfoWidget),
     showQRCode(nullptr)
 {

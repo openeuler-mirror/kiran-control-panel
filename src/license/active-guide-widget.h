@@ -22,7 +22,7 @@ class ActGuideWidget : public KiranTitlebarWindow
 
 public:
     enum {Page_Start, Page_Manual,Page_Key,Page_Online,Page_Activating,Page_Successful,Page_Failed};
-    explicit ActGuideWidget();
+    explicit ActGuideWidget(QWidget* parent=nullptr);
     ~ActGuideWidget();
     bool getLineEditStatus();
 

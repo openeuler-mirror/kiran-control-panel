@@ -14,7 +14,7 @@ class LicenseInfoWidget : public KiranTitlebarWindow
     Q_OBJECT
 
 public:
-    explicit LicenseInfoWidget(QString & mc_code, QString & lc_code);
+    explicit LicenseInfoWidget(QString & mc_code, QString & lc_code,QWidget *parent=nullptr);
     ~LicenseInfoWidget();
 
     void setMachineCode(QString & machine_code);

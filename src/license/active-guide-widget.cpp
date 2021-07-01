@@ -23,8 +23,8 @@ using namespace std;
 #define SERVER_AUTHORIZED_POINTS        "server_authorized_points"
 #define SERVER_REMAINING_POINTS         "server_remaining_points"
 
-ActGuideWidget::ActGuideWidget() :
-    KiranTitlebarWindow(),
+ActGuideWidget::ActGuideWidget(QWidget *parent) :
+    KiranTitlebarWindow(parent),
     ui(new Ui::ActGuideWidget),
     showQRCode(nullptr)
 {

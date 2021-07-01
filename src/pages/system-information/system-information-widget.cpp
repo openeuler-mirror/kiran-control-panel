@@ -374,7 +374,7 @@ void SystemInformationWidget::onBtnStatusClicked()
     {
         if(activeGuide==nullptr)
         {
-            activeGuide = new ActGuideWidget;
+            activeGuide = new ActGuideWidget(this);
         }
         activeGuide->setAttribute(Qt::WA_QuitOnClose,false);
         activeGuide->installEventFilter(this);
@@ -386,7 +386,7 @@ void SystemInformationWidget::onBtnStatusClicked()
     {
         if(licenseInfoWidget == nullptr)
         {
-            licenseInfoWidget = new LicenseInfoWidget(mc_code ,lc_code);
+            licenseInfoWidget = new LicenseInfoWidget(mc_code ,lc_code,this);
         }
 
         licenseInfoWidget->setAttribute(Qt::WA_QuitOnClose,false);
