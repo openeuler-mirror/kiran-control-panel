@@ -1,0 +1,17 @@
+#listWidget
+{
+    border: 1px solid transparent;
+    border-right-width: 1px;
+    border-right-style: solid;
+    border-right-color: #393939;
+}
+
+/*************************QWidget*********************/
+#themeImgWidget,#iconImgWidget,#cursorWidget,#chooseIconWidget,#chooseCursorWidget
+{
+    background-color: #2d2d2d;
+    border-radius : 6px;
+}
+
+
+
