@@ -89,7 +89,7 @@
       </property>
       <item>
        <widget class="QStackedWidget" name="stackedWidget">
-        <widget class="QWidget" name="page_background"/>
+        <widget class="QWidget" name="page_wallpaper"/>
         <widget class="Themes" name="page_theme"/>
         <widget class="Fonts" name="page_font"/>
        </widget>

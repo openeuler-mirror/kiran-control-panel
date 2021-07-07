@@ -8,7 +8,7 @@
 #include "dbus-interface/appearance-global-info.h"
 #include "icon-themes/icon-themes.h"
 #include "cursor-themes/cursor-themes.h"
-#include "common/choose-widget.h"
+#include "common/chooser-widget.h"
 #include "theme-widget.h"
 #include "theme-widget-group.h"
 #include <kiran-session-daemon/appearance-i.h>
@@ -92,14 +92,14 @@ bool Themes::initThemesUI()
 void Themes::initIconThemesUI()
 {
     //创建图标选择控件
-    m_chooseIconWidget = new ChooseWidget(tr("Choose icon theme"));
+    m_chooseIconWidget = new ChooserWidget(tr("Choose icon theme"));
     m_chooseIconWidget->setObjectName("chooseIconWidget");
     ui->verticalLayout_choose_widget->addWidget(m_chooseIconWidget);
 
     m_currIconThemes = m_appearanceInterface->icon_theme();
     m_chooseIconWidget->setName(m_currIconThemes);
 
-    connect(m_chooseIconWidget,&ChooseWidget::clicked,
+    connect(m_chooseIconWidget,&ChooserWidget::clicked,
             [=]{
         if(m_iconThemes == nullptr)
         {
@@ -131,14 +131,14 @@ void Themes::initIconThemesUI()
 void Themes::initCursorThemesUI()
 {
     //创建光标选择控件
-    m_chooseCursorWidget = new ChooseWidget(tr("Choose cursor widget"));
+    m_chooseCursorWidget = new ChooserWidget(tr("Choose cursor widget"));
     m_chooseCursorWidget->setObjectName("chooseCursorWidget");
 
     m_currCursorThemes = m_appearanceInterface->cursor_theme();
     m_chooseCursorWidget->setName(m_currCursorThemes);
     ui->verticalLayout_choose_widget->addWidget(m_chooseCursorWidget);
 
-    connect(m_chooseCursorWidget,&ChooseWidget::clicked,
+    connect(m_chooseCursorWidget,&ChooserWidget::clicked,
             [=]{
         if(m_cursorThemes == nullptr)
         {

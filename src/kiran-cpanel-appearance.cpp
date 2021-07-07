@@ -34,13 +34,13 @@ bool KiranCpanelAppearance::initUI()
     setIcon(QIcon(":/images/icon.png"));
 
     ui->listWidget->setIconSize(QSize(16,16));
-    addSidebarItem(tr("Background Setting"),":/images/background.svg");
+    addSidebarItem(tr("Wallpaper Setting"),":/images/wallpaper.svg");
     addSidebarItem(tr("Theme Setting"),":/images/themes.svg");
     addSidebarItem(tr("Font Setting"), ":/images/themes.svg");
     return true;
 }
 
-QListWidgetItem * KiranCpanelAppearance::addSidebarItem(QString text, QString icon)
+void * KiranCpanelAppearance::addSidebarItem(QString text, QString icon)
 {
     QListWidgetItem* item = new QListWidgetItem(ui->listWidget);
     item->setIcon(QIcon(icon));

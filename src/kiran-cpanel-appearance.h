@@ -34,7 +34,7 @@ public:
 
 private:
     bool initUI();
-    QListWidgetItem *addSidebarItem(QString,QString);
+    void *addSidebarItem(QString,QString);
 
 private:
     Ui::KiranCpanelAppearance *ui;

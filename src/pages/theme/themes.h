@@ -12,7 +12,7 @@ class ComKylinsecKiranSessionDaemonAppearanceInterface;
 class QButtonGroup;
 class IconThemes;
 class ThemeWidgetGroup;
-class ChooseWidget;
+class ChooserWidget;
 class CursorThemes;
 class Themes : public QWidget
 {
@@ -40,11 +40,11 @@ private:
     ComKylinsecKiranSessionDaemonAppearanceInterface *m_appearanceInterface;
 
     IconThemes *m_iconThemes;
-    ChooseWidget *m_chooseIconWidget;
+    ChooserWidget *m_chooseIconWidget;
     QString m_currIconThemes;
 
     CursorThemes *m_cursorThemes;
-    ChooseWidget *m_chooseCursorWidget;
+    ChooserWidget *m_chooseCursorWidget;
     QString m_currCursorThemes;
 
     //Gtk 主题

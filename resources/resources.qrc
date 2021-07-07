@@ -5,12 +5,12 @@
         <file>images/icon.png</file>
         <file>images/Dark.png</file>
         <file>images/Light.png</file>
-        <file>images/background.svg</file>
         <file>images/btn-delete-normal.png</file>
         <file>images/btn-delete-pre.png</file>
         <file>images/btn-delete-select.png</file>
         <file>images/font.svg</file>
         <file>images/themes.svg</file>
         <file>themes/style.qss</file>
+        <file>images/wallpaper.svg</file>
     </qresource>
 </RCC>

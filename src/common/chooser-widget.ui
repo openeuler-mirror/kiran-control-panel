@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>ChooseWidget</class>
- <widget class="QWidget" name="ChooseWidget">
+ <class>ChooserWidget</class>
+ <widget class="QWidget" name="ChooserWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
