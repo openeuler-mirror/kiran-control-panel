@@ -43,6 +43,8 @@
 
 #include "dbus-interface/appearance-global-info.h"
 #include "widget/preview-label.h"
+#include "common/chooser-widget.h"
+#include <iostream>
 
 Wallpaper::Wallpaper(QWidget *parent) :
     QWidget(parent),
@@ -50,6 +52,8 @@ Wallpaper::Wallpaper(QWidget *parent) :
 {
     ui->setupUi(this);
     initUI();
+    createPreviewLabel();
+    createChooserWidget();
 }
 
 Wallpaper::~Wallpaper()
@@ -59,19 +63,38 @@ Wallpaper::~Wallpaper()
 
 void Wallpaper::initUI()
 {
-    //TODO:后续会改接口：获取桌面壁纸和锁屏壁纸
-    m_currDesktopBgPath = AppearanceGlobalInfo::instance()->getDesktopBackground();
-    m_currLockScreenBgPath = AppearanceGlobalInfo::instance()->getLockScreenBackground();
 
-    QLayout *layout_desktop = ui->widget_desktop_preview->layout();
-    PreviewLabel *desktopPreview =  new PreviewLabel(DESKTOP,m_currDesktopBgPath,this);
-    layout_desktop->addWidget(desktopPreview);
-    layout_desktop->setAlignment(desktopPreview,Qt::AlignHCenter);
+}
+
+void Wallpaper::createPreviewLabel()
+{
+    m_currDesktopWp = AppearanceGlobalInfo::instance()->getDesktopBackground();
+    m_currLockScreenWp = AppearanceGlobalInfo::instance()->getLockScreenBackground();
+
+    QLayout *layoutDesktop = ui->widget_desktop_preview->layout();
+    PreviewLabel *desktopPreview =  new PreviewLabel(DESKTOP,m_currDesktopWp,this);
+    layoutDesktop->addWidget(desktopPreview);
+    layoutDesktop->setAlignment(desktopPreview,Qt::AlignHCenter);
 
     QLayout *layout = ui->widget_lockscreen_preview->layout();
-    PreviewLabel *lockScreenPreview = new PreviewLabel(SCREENSAVER,m_currLockScreenBgPath,this);
+    PreviewLabel *lockScreenPreview = new PreviewLabel(SCREENSAVER,m_currLockScreenWp,this);
     layout->addWidget(lockScreenPreview);
     layout->setAlignment(lockScreenPreview,Qt::AlignHCenter);
+}
+
+void Wallpaper::createChooserWidget()
+{
+    QString desktopWpName = m_currDesktopWp.split("/").last();
+    QString lockScreenWpName = m_currLockScreenWp.split("/").last();
+
+    ChooserWidget *desktopWpChooser = new ChooserWidget(tr("Set Desktop Wallpaper"));
+    desktopWpChooser->setName(desktopWpName);
+    ui->vLayout_chooser->addWidget(desktopWpChooser);
+
+    ChooserWidget *lockScreenWPChooser = new ChooserWidget(tr("Set Lock Screen Wallpaper"));
+    lockScreenWPChooser->setName(lockScreenWpName);
+    ui->vLayout_chooser->addWidget(lockScreenWPChooser);
+
 }
 
 

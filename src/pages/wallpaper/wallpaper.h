@@ -17,11 +17,14 @@ public:
 
 private:
     void initUI();
+    void createPreviewLabel();
+    void createChooserWidget();
 
 private:
     Ui::Wallpaper *ui;
-    QString m_currDesktopBgPath;
-    QString m_currLockScreenBgPath;
+    QString m_currDesktopWp;
+    QString m_currLockScreenWp;
+
 
 };
 
