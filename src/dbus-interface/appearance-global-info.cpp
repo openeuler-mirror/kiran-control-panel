@@ -66,10 +66,131 @@ bool AppearanceGlobalInfo::setTheme(int themeType, QString themeName)
     reply.waitForFinished();
     if (reply.isError() || !reply.isValid())
     {
-        cout << "Call GetThemes method failed :"
+        cout << "Call SetTheme method failed :"
              << " Error: "<< reply.error().message().toStdString() << endl;
         return false;
     }
     else
         return true;
 }
+
+QString AppearanceGlobalInfo::getTheme(int themeType)
+{
+    QDBusPendingReply<QString> reply = m_appearanceInterface->GetTheme(themeType);
+    reply.waitForFinished();
+    if (reply.isError() || !reply.isValid())
+    {
+        cout << "Call GetTheme method failed : Theme type: " << themeType
+             << " Error: "<< reply.error().message().toStdString() << endl;
+        //FIXME: return ??
+        //return false;
+    }
+    else if(reply.count() <1)
+    {
+        cout << "Don't get correct reply!" << endl;
+        //FIXME: return ??
+        //return false;
+    }
+    else
+    {
+        return  reply.argumentAt(0).toString();
+    }
+}
+
+QString AppearanceGlobalInfo::getDesktopBackground()
+{
+    return m_appearanceInterface->desktop_background();
+}
+
+bool AppearanceGlobalInfo::setDesktopBackground(QString path)
+{
+    QDBusPendingReply<> reply = m_appearanceInterface->SetDesktopBackground(path);
+    reply.waitForFinished();
+    if (reply.isError() || !reply.isValid())
+    {
+        cout << "Call set desktop background failed :"
+             << " Error: "<< reply.error().message().toStdString() << endl;
+        return false;
+    }
+    else
+        return true;
+}
+
+QString AppearanceGlobalInfo::getLockScreenBackground()
+{
+    return m_appearanceInterface->lock_screen_background();
+}
+
+bool AppearanceGlobalInfo::setLockScreenBackground(QString path)
+{
+    QDBusPendingReply<> reply = m_appearanceInterface->SetLockScreenBackground(path);
+    reply.waitForFinished();
+    if (reply.isError() || !reply.isValid())
+    {
+        cout << "Call set lock screen background failed :"
+             << " Error: "<< reply.error().message().toStdString() << endl;
+        return false;
+    }
+    else
+        return true;
+}
+
+QStringList AppearanceGlobalInfo::getFont(int type)
+{
+    QString fontInfo;
+    QStringList fontInfoList;
+    QStringList font ;
+    QString fontName;
+    QString fontSize;
+
+    QDBusPendingReply<QString> reply = m_appearanceInterface->GetFont(type);
+    reply.waitForFinished();
+    if (reply.isError() || !reply.isValid())
+    {
+        cout << "Call GetFont method failed : Font type: " << type
+             << " Error: "<< reply.error().message().toStdString() << endl;
+        //FIXME: return ??
+    }
+
+    else if(reply.count() <1)
+    {
+        cout << "Don't get correct reply!" << endl;
+        //FIXME: return ??
+    }
+    else
+    {
+        fontInfo = reply.argumentAt(0).toString();
+        cout << "Font type is: " << type
+             <<" Font info is:" << fontInfo.toStdString() << endl;
+
+        fontInfoList = fontInfo.split(" ",QString::SkipEmptyParts);
+        if(!fontInfoList.isEmpty())
+        {
+            fontSize = fontInfoList.takeLast();
+            fontName = fontInfoList.join(" ");
+            cout << fontName.toStdString() << endl;
+            cout << fontSize.toStdString() << endl;
+            font << fontName << fontSize;
+        }
+    }
+    return font;
+}
+
+bool AppearanceGlobalInfo::setFont(int fontType, QStringList fontInfoList)
+{
+    QString fontInfo;
+    fontInfo = fontInfoList.join(" ");
+    cout << "setFont : fontInfo = " << fontInfo.toStdString() << endl;
+
+    QDBusPendingReply<> reply = m_appearanceInterface->SetFont(fontType,fontInfo);
+    reply.waitForFinished();
+    if (reply.isError() || !reply.isValid())
+    {
+        cout << "Call GetFont method failed : Font type: " << fontType
+             << " Error: "<< reply.error().message().toStdString() << endl;
+        return false;
+    }
+    return true;
+}
+
+

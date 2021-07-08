@@ -89,7 +89,7 @@
       </property>
       <item>
        <widget class="QStackedWidget" name="stackedWidget">
-        <widget class="QWidget" name="page_wallpaper"/>
+        <widget class="Wallpaper" name="page_wallpaper"/>
         <widget class="Themes" name="page_theme"/>
         <widget class="Fonts" name="page_font"/>
        </widget>
@@ -116,6 +116,12 @@
    <class>Themes</class>
    <extends>QWidget</extends>
    <header>pages/theme/themes.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>Wallpaper</class>
+   <extends>QWidget</extends>
+   <header>pages/wallpaper/wallpaper.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

@@ -13,5 +13,17 @@
     border-radius : 6px;
 }
 
+#widget_desktop_preview,#widget_lockscreen_preview
+{
+    background-color: #2d2d2d;
+    border-radius : 6px;
+}
+
+#label_desktop_preview,#label_lockscreen_preview
+{
+    color: #919191;
+    font-family: "Noto Sans CJK SC regular";
+    font-size: 14px;
+}
 
 

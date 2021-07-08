@@ -48,7 +48,8 @@ SOURCES += \
     pages/theme/cursor-themes/cursor-themes.cpp \
     pages/theme/icon-themes/icon-themes.cpp \
     pages/wallpaper/wallpaper.cpp \
-    common/chooser-widget.cpp
+    common/chooser-widget.cpp \
+    pages/wallpaper/widget/preview-label.cpp
 
 HEADERS += \
         kiran-cpanel-appearance.h \
@@ -64,7 +65,8 @@ HEADERS += \
     pages/theme/cursor-themes/cursor-themes.h \
     pages/theme/icon-themes/icon-themes.h \
     pages/wallpaper/wallpaper.h \
-    common/chooser-widget.h
+    common/chooser-widget.h \
+    pages/wallpaper/widget/preview-label.h
 
 FORMS += \
         kiran-cpanel-appearance.ui \

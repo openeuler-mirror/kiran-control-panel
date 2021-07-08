@@ -7,7 +7,6 @@ namespace Ui {
 class Fonts;
 }
 
-class ComKylinsecKiranSessionDaemonAppearanceInterface;
 class Fonts : public QWidget
 {
     Q_OBJECT
@@ -25,7 +24,6 @@ private:
 
 private:
     Ui::Fonts *ui;
-    ComKylinsecKiranSessionDaemonAppearanceInterface *m_appearanceInterface;
     QStringList m_applicationFontInfo;
     QStringList m_windowTitleFontInfo;
     QStringList m_monospaceFontInfo;

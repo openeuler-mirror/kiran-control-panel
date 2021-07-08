@@ -3,7 +3,7 @@
 #include <QFontDatabase>
 #include <kiran-session-daemon/appearance-i.h>
 #include <kiran-message-box.h>
-#include "dbus-interface/Appearance.h"
+#include "dbus-interface/appearance-global-info.h"
 #include <iostream>
 #include <QDebug>
 
@@ -25,14 +25,6 @@ Fonts::~Fonts()
 
 bool Fonts::initUI()
 {
-    //连接dbus服务
-    m_appearanceInterface = ComKylinsecKiranSessionDaemonAppearanceInterface::instance();
-    if(!m_appearanceInterface->isValid())
-    {
-        qDebug() << "Connect Dbus Failed!" << endl;
-        return false;
-    }
-
     //统一QComboBox样式，并初始化可选值列表
     QList<QComboBox* > comboBoxList = this ->findChildren<QComboBox*>();
     foreach (QComboBox* comboBox, comboBoxList) {
@@ -116,57 +108,13 @@ void Fonts::getCurrentFontInfo(int fontType)
 
 QStringList Fonts::getFont(int fontType)
 {
-    QString fontInfo;
-    QStringList fontInfoList;
-    QStringList font;
-    QString fontName;
-    QString fontSize;
-
-    QDBusPendingReply<QString> reply = m_appearanceInterface->GetFont(fontType);
-    reply.waitForFinished();
-    if (reply.isError() || !reply.isValid())
-    {
-        cout << "Call GetFont method failed : Font type: " << fontType
-             << " Error: "<< reply.error().message().toStdString() << endl;
-        //FIXME: return ??
-    }
-
-    else if(reply.count() <1)
-    {
-        cout << "Don't get correct reply!" << endl;
-        //FIXME: return ??
-    }
-    else
-    {
-        fontInfo = reply.argumentAt(0).toString();
-        cout << "Font type is: " << fontType
-             <<" Font info is:" << fontInfo.toStdString() << endl;
-
-        fontInfoList = fontInfo.split(" ",QString::SkipEmptyParts);
-        if(!fontInfoList.isEmpty())
-        {
-            fontSize = fontInfoList.takeLast();
-            fontName = fontInfoList.join(" ");
-            cout << fontName.toStdString() << endl;
-            cout << fontSize.toStdString() << endl;
-            font << fontName << fontSize;
-        }
-    }
-    return font;
+    return AppearanceGlobalInfo::instance()->getFont(fontType);
 }
 
 void Fonts::setFont(int fontType, QStringList fontInfoList)
 {
-    QString fontInfo;
-    fontInfo = fontInfoList.join(" ");
-    cout << "setFont : fontInfo = " << fontInfo.toStdString() << endl;
-
-    QDBusPendingReply<> reply = m_appearanceInterface->SetFont(fontType,fontInfo);
-    reply.waitForFinished();
-    if (reply.isError() || !reply.isValid())
+    if(!AppearanceGlobalInfo::instance()->setFont(fontType,fontInfoList))
     {
-        cout << "Call GetFont method failed : Font type: " << fontType
-             << " Error: "<< reply.error().message().toStdString() << endl;
         KiranMessageBox::message(nullptr,QObject::tr("Failed"),
                                  QObject::tr("Set font  failed!"),
                                  KiranMessageBox::Ok);

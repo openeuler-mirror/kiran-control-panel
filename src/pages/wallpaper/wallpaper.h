@@ -16,7 +16,13 @@ public:
     ~Wallpaper();
 
 private:
+    void initUI();
+
+private:
     Ui::Wallpaper *ui;
+    QString m_currDesktopBgPath;
+    QString m_currLockScreenBgPath;
+
 };
 
 #endif // WALLPAPER_H

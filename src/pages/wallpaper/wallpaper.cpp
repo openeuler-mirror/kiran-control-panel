@@ -3,14 +3,15 @@
 /*
 背景设置设计思路
 一、总体：
-分两个页面：主题设置主界面、壁纸选择界面(ImageSelector)（多线程创建，参考/home/yuanxing/kiranwidgets-qt5/src/widgets/kiran-image-selector/kiran-image-load-manager.cpp代码）
+分两个页面：主题设置主界面(Wallpaper)、壁纸选择界面(ImageSelector)（多线程创建，参考/home/yuanxing/kiranwidgets-qt5/src/widgets/kiran-image-selector/kiran-image-load-manager.cpp代码）
 关联：用户点击选择壁纸widget，切换到壁纸选择界面
-            用户点击壁纸，返回主界面，并且根据选择的壁纸类型（桌面/锁屏），更新预览图中的背景
+     用户点击壁纸，返回主界面，并且根据选择的壁纸类型（桌面/锁屏），更新预览图中的背景
 
 前期工作：
 枚举定义两种壁纸类型，供参数传递
 1、创建壁纸预览控件类，分为桌面壁纸预览和锁屏壁纸预览两类，每个类包括预览图片以及预览类型名字
-2、创建壁纸选择btn，提供setIcon、getIconPath接口，以及根据按钮的鼠标选择、悬浮状态，改变样式，其中鼠标悬浮时，在自定义图片btn中添加删除btn，删除btn分三种状态：选中、悬浮、普通
+2、创建壁纸选择btn，提供setIcon、getIconPath接口，以及根据按钮的鼠标选择、悬浮状态，改变样式，
+        其中鼠标悬浮时，在自定义图片btn中添加删除btn，删除btn分三种状态：选中、悬浮、普通
 
 二、主界面
 1、获取当前的桌面壁纸path、锁屏壁纸path
@@ -40,14 +41,49 @@
 5、如果只是添加或删除壁纸，那么界面如何返回，是否要加返回按钮（直接点击左侧列表中的背景设置）
 */
 
+#include "dbus-interface/appearance-global-info.h"
+#include "widget/preview-label.h"
+
 Wallpaper::Wallpaper(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Wallpaper)
 {
     ui->setupUi(this);
+    initUI();
 }
 
 Wallpaper::~Wallpaper()
 {
     delete ui;
 }
+
+void Wallpaper::initUI()
+{
+    //TODO:后续会改接口：获取桌面壁纸和锁屏壁纸
+    m_currDesktopBgPath = AppearanceGlobalInfo::instance()->getDesktopBackground();
+    m_currLockScreenBgPath = AppearanceGlobalInfo::instance()->getLockScreenBackground();
+
+    QLayout *layout_desktop = ui->widget_desktop_preview->layout();
+    PreviewLabel *desktopPreview =  new PreviewLabel(DESKTOP,m_currDesktopBgPath,this);
+    layout_desktop->addWidget(desktopPreview);
+    layout_desktop->setAlignment(desktopPreview,Qt::AlignHCenter);
+
+    QLayout *layout = ui->widget_lockscreen_preview->layout();
+    PreviewLabel *lockScreenPreview = new PreviewLabel(SCREENSAVER,m_currLockScreenBgPath,this);
+    layout->addWidget(lockScreenPreview);
+    layout->setAlignment(lockScreenPreview,Qt::AlignHCenter);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

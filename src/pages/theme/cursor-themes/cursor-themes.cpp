@@ -25,7 +25,7 @@ bool CursorThemes::initUI()
         return false;
     }
 
-    m_currentCursorTheme = ComKylinsecKiranSessionDaemonAppearanceInterface::instance()->cursor_theme();
+    m_currentCursorTheme = AppearanceGlobalInfo::instance()->getTheme(APPEARANCE_THEME_TYPE_CURSOR);
     QVBoxLayout * mainVLayout = new QVBoxLayout(this);
     mainVLayout->setMargin(0);
     mainVLayout->setSpacing(10);

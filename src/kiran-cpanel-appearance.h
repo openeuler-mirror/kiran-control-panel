@@ -34,7 +34,7 @@ public:
 
 private:
     bool initUI();
-    void *addSidebarItem(QString,QString);
+    void addSidebarItem(QString,QString);
 
 private:
     Ui::KiranCpanelAppearance *ui;

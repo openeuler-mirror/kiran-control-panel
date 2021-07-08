@@ -40,7 +40,7 @@ IconThemes::~IconThemes()
 
 bool IconThemes::initUI()
 {
-    m_currentIconTheme = ComKylinsecKiranSessionDaemonAppearanceInterface::instance()->icon_theme();
+    m_currentIconTheme = AppearanceGlobalInfo::instance()->getTheme(APPEARANCE_THEME_TYPE_ICON);
 
     if(!getIconThemes(APPEARANCE_THEME_TYPE_ICON))
     {

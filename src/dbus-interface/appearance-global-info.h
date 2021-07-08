@@ -15,6 +15,16 @@ public:
 
     bool getAllThemes(int themeType, QString &themesJson);
     bool setTheme(int themeType, QString themeName);
+    QString getTheme(int type);
+
+    QString getDesktopBackground();
+    bool setDesktopBackground(QString);
+
+    QString getLockScreenBackground();
+    bool setLockScreenBackground(QString);
+
+    QStringList getFont(int type);
+    bool setFont(int fontType, QStringList fontInfoList);
 
 private:
     ComKylinsecKiranSessionDaemonAppearanceInterface* m_appearanceInterface;

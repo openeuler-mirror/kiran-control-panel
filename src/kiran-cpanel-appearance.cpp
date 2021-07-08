@@ -40,7 +40,7 @@ bool KiranCpanelAppearance::initUI()
     return true;
 }
 
-void * KiranCpanelAppearance::addSidebarItem(QString text, QString icon)
+void KiranCpanelAppearance::addSidebarItem(QString text, QString icon)
 {
     QListWidgetItem* item = new QListWidgetItem(ui->listWidget);
     item->setIcon(QIcon(icon));

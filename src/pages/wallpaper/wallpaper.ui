@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>455</width>
-    <height>415</height>
+    <width>699</width>
+    <height>558</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -39,8 +39,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>453</width>
-        <height>413</height>
+        <width>697</width>
+        <height>556</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -62,7 +62,7 @@
        <item>
         <widget class="QStackedWidget" name="stackedWidget">
          <widget class="QWidget" name="page_setting">
-          <layout class="QVBoxLayout" name="verticalLayout_7">
+          <layout class="QVBoxLayout" name="verticalLayout_10">
            <property name="spacing">
             <number>24</number>
            </property>
@@ -79,7 +79,7 @@
             <number>0</number>
            </property>
            <item>
-            <layout class="QVBoxLayout" name="verticalLayout_3">
+            <layout class="QVBoxLayout" name="verticalLayout_9">
              <property name="spacing">
               <number>10</number>
              </property>
@@ -91,10 +91,87 @@
               </widget>
              </item>
              <item>
-              <layout class="QHBoxLayout" name="hLayout_preview">
-               <property name="spacing">
+              <layout class="QGridLayout" name="gridLayout">
+               <property name="horizontalSpacing">
                 <number>24</number>
                </property>
+               <property name="verticalSpacing">
+                <number>10</number>
+               </property>
+               <item row="0" column="1">
+                <widget class="QWidget" name="widget_lockscreen_preview" native="true">
+                 <property name="minimumSize">
+                  <size>
+                   <width>282</width>
+                   <height>112</height>
+                  </size>
+                 </property>
+                 <layout class="QVBoxLayout" name="verticalLayout_8">
+                  <property name="spacing">
+                   <number>0</number>
+                  </property>
+                  <property name="leftMargin">
+                   <number>51</number>
+                  </property>
+                  <property name="topMargin">
+                   <number>11</number>
+                  </property>
+                  <property name="rightMargin">
+                   <number>51</number>
+                  </property>
+                  <property name="bottomMargin">
+                   <number>11</number>
+                  </property>
+                 </layout>
+                </widget>
+               </item>
+               <item row="0" column="0">
+                <widget class="QWidget" name="widget_desktop_preview" native="true">
+                 <property name="minimumSize">
+                  <size>
+                   <width>282</width>
+                   <height>112</height>
+                  </size>
+                 </property>
+                 <layout class="QVBoxLayout" name="verticalLayout_7">
+                  <property name="spacing">
+                   <number>0</number>
+                  </property>
+                  <property name="leftMargin">
+                   <number>51</number>
+                  </property>
+                  <property name="topMargin">
+                   <number>11</number>
+                  </property>
+                  <property name="rightMargin">
+                   <number>51</number>
+                  </property>
+                  <property name="bottomMargin">
+                   <number>11</number>
+                  </property>
+                 </layout>
+                </widget>
+               </item>
+               <item row="1" column="0">
+                <widget class="QLabel" name="label_desktop_preview">
+                 <property name="text">
+                  <string>Desktop Wallpaper Preview</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="1">
+                <widget class="QLabel" name="label_lockscreen_preview">
+                 <property name="text">
+                  <string>Lock Screen WallPaper Preview</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                </widget>
+               </item>
               </layout>
              </item>
             </layout>
@@ -128,7 +205,7 @@
              <property name="sizeHint" stdset="0">
               <size>
                <width>20</width>
-               <height>224</height>
+               <height>222</height>
               </size>
              </property>
             </spacer>

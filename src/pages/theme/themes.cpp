@@ -52,15 +52,6 @@ bool Themes::initUI()
 {
     ui->stackedWidget->setCurrentIndex(0);
 
-    //TODO:connect dbus 后续添加控制中interface后，可以取消连接dbus判断
-    m_appearanceInterface = ComKylinsecKiranSessionDaemonAppearanceInterface::instance();
-    if(!m_appearanceInterface->isValid())
-    {
-        cout << "Connect Appearance Interface failed!" << endl;
-        return false;
-    }
-    //TODO:监听光标选择控件点击信号
-
     initThemesUI();
     initIconThemesUI();
     initCursorThemesUI();
@@ -78,7 +69,7 @@ bool Themes::initThemesUI()
     }
 
     //get current  gtk theme
-    m_currentTheme = m_appearanceInterface->gtk_theme();
+    m_currentTheme = AppearanceGlobalInfo::instance()->getTheme(APPEARANCE_THEME_TYPE_GTK);
     cout << "Current theme is: " << m_currentTheme.toStdString() << endl;
 
     /*TODO: 待主题包完成后，替换成可供用户设置的主题名,
@@ -96,7 +87,7 @@ void Themes::initIconThemesUI()
     m_chooseIconWidget->setObjectName("chooseIconWidget");
     ui->verticalLayout_choose_widget->addWidget(m_chooseIconWidget);
 
-    m_currIconThemes = m_appearanceInterface->icon_theme();
+    m_currIconThemes = AppearanceGlobalInfo::instance()->getTheme(APPEARANCE_THEME_TYPE_ICON);
     m_chooseIconWidget->setName(m_currIconThemes);
 
     connect(m_chooseIconWidget,&ChooserWidget::clicked,
@@ -121,7 +112,7 @@ void Themes::initIconThemesUI()
                 [=](bool isSuccessful){
            if(isSuccessful)
            {
-                m_chooseIconWidget->setName(m_appearanceInterface->icon_theme());
+                m_chooseIconWidget->setName(AppearanceGlobalInfo::instance()->getTheme(APPEARANCE_THEME_TYPE_ICON));
            }
            ui->stackedWidget->setCurrentIndex(0);
         });
@@ -134,7 +125,7 @@ void Themes::initCursorThemesUI()
     m_chooseCursorWidget = new ChooserWidget(tr("Choose cursor widget"));
     m_chooseCursorWidget->setObjectName("chooseCursorWidget");
 
-    m_currCursorThemes = m_appearanceInterface->cursor_theme();
+    m_currCursorThemes = AppearanceGlobalInfo::instance()->getTheme(APPEARANCE_THEME_TYPE_CURSOR);
     m_chooseCursorWidget->setName(m_currCursorThemes);
     ui->verticalLayout_choose_widget->addWidget(m_chooseCursorWidget);
 
@@ -162,7 +153,7 @@ void Themes::initCursorThemesUI()
                 [=](bool isSuccessful){
            if(isSuccessful)
            {
-                m_chooseCursorWidget->setName(m_appearanceInterface->cursor_theme());
+                m_chooseCursorWidget->setName(AppearanceGlobalInfo::instance()->getTheme(APPEARANCE_THEME_TYPE_CURSOR));
            }
            ui->stackedWidget->setCurrentIndex(0);
         });
