@@ -148,9 +148,9 @@ bool SystemInformationWidget::readLicenseInfo()
     QString licenseInfo;
     if(!InfoDbus::KylinLicense::getLicenseJson(licenseInfo))
     {
-        KLOG_DEBUG() << "get license information failed";
+        KLOG_DEBUG() << "get activation information failed";
         ui->lab_expire_date_info->setText(tr("Unknow"));
-        ui->lab_status->setText(tr("Can't get license information"));
+        ui->lab_status->setText(tr("Can't get activation information"));
         ui->lab_status->setStyleSheet("QLabel#lab_status {color:#ff3838}");
         ui->btn_status->hide();
         ui->lab_install_time_info->setText(tr("Unknow"));
@@ -169,7 +169,7 @@ bool SystemInformationWidget::readLicenseInfo()
         KLOG_INFO() << "install time = " <<installTime;
         ui->lab_install_time_info->setText(installTime);
 
-        KLOG_INFO() <<"licensed = "<<license_status;
+        KLOG_INFO() <<"activation = "<<license_status;
         ///给激活状态赋值
         isActive = license_status;
         switch (license_status) {
@@ -256,7 +256,7 @@ void SystemInformationWidget::getJsonValueFromString(QString jsonString)
     QJsonParseError jsonError;
     QJsonDocument jsonDocument = QJsonDocument::fromJson(jsonString.toLocal8Bit().data(),&jsonError);
     if( jsonDocument.isNull() || jsonError.error != QJsonParseError::NoError ){
-        KLOG_DEBUG()<< " please check the license information string "<< jsonString.toLocal8Bit().data();
+        KLOG_DEBUG()<< " please check the activation information string "<< jsonString.toLocal8Bit().data();
         return;
     }
     if(jsonDocument.isObject())
@@ -305,7 +305,7 @@ void SystemInformationWidget::getJsonValueFromString(QString jsonString)
            if(value.isDouble())
            {
                license_status = value.toVariant().toInt();
-               KLOG_INFO() << "license status :" <<license_status;
+               KLOG_INFO() << "activation status :" <<license_status;
            }
        }
        if(obj.contains(LICENSE_CODE))
@@ -411,15 +411,15 @@ void SystemInformationWidget::onBtnStatusClicked()
  */
 void SystemInformationWidget::updateLicenseInfo(bool isregister)
 {
-    KLOG_INFO() << "updateLicenseInformation\n";
+    KLOG_INFO() << "updateActivationInformation\n";
     if(isregister)
     {
         QString licenseInfo;
         if(!InfoDbus::KylinLicense::getLicenseJson(licenseInfo))
         {
-            KLOG_DEBUG() << "get license information failed";
+            KLOG_DEBUG() << "get activation information failed";
             ui->lab_expire_date_info->setText(tr("Unknow"));
-            ui->lab_status->setText(tr("Can't get license information"));
+            ui->lab_status->setText(tr("Can't get activation information"));
             ui->lab_status->setStyleSheet("QLabel#lab_status {color:#ff3838}");
             ui->btn_status->hide();
             ui->lab_install_time_info->setText(tr("Unknow"));
@@ -432,7 +432,7 @@ void SystemInformationWidget::updateLicenseInfo(bool isregister)
         {
             //解析后端传入的授权信息Json字符串
             getJsonValueFromString(licenseInfo);
-            KLOG_INFO() <<"licensed = "<<license_status;
+            KLOG_INFO() <<"activation = "<<license_status;
 
             //给激活状态赋值
             isActive = license_status;

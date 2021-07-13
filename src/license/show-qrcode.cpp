@@ -12,7 +12,7 @@ ShowQRCode::ShowQRCode(QWidget *parent) :
 
 void ShowQRCode::iniUI()
 {
-    setWindowTitle(ShowQRCode::tr("QRcode of Machine and License Code"));
+    setWindowTitle(ShowQRCode::tr("QRcode of Machine and Activation Code"));
     setWindowIcon(QIcon(":/images/kylin-about.png"));
     this->setMaximumSize(230,230);
     this->setMinimumSize(230,230);
@@ -31,7 +31,7 @@ void ShowQRCode::setQRCode(const QString &text ,bool isMachineCode)
 
     if(!isMachineCode)
     {
-        ui->label_qrcode_text->setText(tr("Scan QR code to get license code"));
+        ui->label_qrcode_text->setText(tr("Scan QR code to get Activation code"));
     }
 
 }

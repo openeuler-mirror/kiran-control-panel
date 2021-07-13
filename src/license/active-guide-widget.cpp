@@ -220,13 +220,13 @@ void ActGuideWidget::getLicenseStatus(bool isRegister)
 {
     if(isRegister)
     {
-        KLOG_INFO() << "get license status: is register";
+        KLOG_INFO() << "get activation status: is register";
         ui->stackedWidget->setCurrentIndex(Page_Successful);
         loadAnimation->stopAnimation();
     }
     else
     {
-        KLOG_INFO() << "get license status: not register";
+        KLOG_INFO() << "get activation status: not register";
         ui->stackedWidget->setCurrentIndex(Page_Failed);
         loadAnimation->stopAnimation();
     }
@@ -444,7 +444,7 @@ void ActGuideWidget::handleActiveButton()
         case Page_Manual:
             //get EditLine text
             inputLicenseCode= ui->lineEdit_lc->text();
-            KLOG_INFO() << "user input license :" <<inputLicenseCode;
+            KLOG_INFO() << "user input activation code :" <<inputLicenseCode;
 
             //active
             ui->listWidget->setCurrentRow(2);

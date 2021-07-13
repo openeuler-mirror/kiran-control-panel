@@ -25,7 +25,7 @@ LicenseInfoWidget::LicenseInfoWidget(QString &mc_code, QString & lc_code, QWidge
 
 void LicenseInfoWidget::iniUI()
 {
-    setTitle(LicenseInfoWidget::tr("License-Information"));
+    setTitle(LicenseInfoWidget::tr("Activation Information"));
     setWindowModality(Qt::ApplicationModal);
     setButtonHints(TitlebarMinimizeButtonHint|TitlebarCloseButtonHint);
     setResizeable(false);
@@ -108,7 +108,7 @@ void LicenseInfoWidget::setLicenseCode(QString & license_code)
 {
     if(license_code == "NULL")
     {
-        ui->label_lc->setText(tr("Can't get license code"));
+        ui->label_lc->setText(tr("Can't get activation code"));
         return ;
     }
     ui->label_lc->setText(license_code);

@@ -168,7 +168,7 @@
          <number>0</number>
         </property>
         <property name="currentIndex">
-         <number>1</number>
+         <number>5</number>
         </property>
         <widget class="QWidget" name="Pg_choose_mode">
          <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -226,7 +226,7 @@
                  </sizepolicy>
                 </property>
                 <property name="text">
-                 <string>Active with  the input license code</string>
+                 <string>Active with  the input activation code</string>
                 </property>
                </widget>
               </item>
@@ -416,7 +416,7 @@
             <item>
              <widget class="QLabel" name="label_input_lc">
               <property name="text">
-               <string>Please input license code:</string>
+               <string>Please input activation code:</string>
               </property>
              </widget>
             </item>

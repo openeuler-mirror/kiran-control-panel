@@ -110,7 +110,7 @@ void HardwareInformationWidget::getJsonValueFromString(QString jsonString)
     QJsonParseError jsonError;
     QJsonDocument jsonDocument = QJsonDocument::fromJson(jsonString.toLocal8Bit().data(),&jsonError);
     if( jsonDocument.isNull() || jsonError.error != QJsonParseError::NoError ){
-        KLOG_DEBUG()<< " please check the license information string "<< jsonString.toLocal8Bit().data();
+        KLOG_DEBUG()<< " please check the activation information string "<< jsonString.toLocal8Bit().data();
         return;
     }
     if(jsonDocument.isObject())
