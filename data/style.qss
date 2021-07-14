@@ -252,14 +252,14 @@ QPushButton#btn_active_manual,QPushButton#btn_active_online
 
 QPushButton#btn_active_manual:hover,QPushButton#btn_active_key:hover,QPushButton#btn_active_online:hover,
 QPushButton#btn_close_failde:hover,QPushButton#btn_close_success:hover,QPushButton#btn_eula_close:hover,
-QPushButton#btn_next:hover,QPushButton#btn_status:hover
+QPushButton#btn_next:hover
 {
         background-color: #79c3ff;
 }
 
 QPushButton#btn_active_manual:pressed,QPushButton#btn_active_key:pressed,QPushButton#btn_active_online:pressed,
 QPushButton#btn_close_failde:pressed,QPushButton#btn_close_success:pressed, QPushButton#btn_eula_close:pressed,
-QPushButton#btn_next:pressed,QPushButton#btn_status:pressed
+QPushButton#btn_next:pressed
 {
         background-color: #2eb3ff;
 }

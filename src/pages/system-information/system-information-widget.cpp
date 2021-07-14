@@ -84,7 +84,6 @@ bool SystemInformationWidget::initUI()
     readLicenseInfo();
 
     ui->btn_change_name->setText(tr("Change"));
-    ui->btn_status->setText(tr("Active"));
     ui->lab_contact_info->setText("400-625-6606");
     ui->btn_EULA->setText(tr("Show"));
 
@@ -437,11 +436,11 @@ void SystemInformationWidget::updateLicenseInfo(bool isregister)
             //给激活状态赋值
             isActive = license_status;
 
-            ui->lab_status->setText(tr("Official Version"));
+            ui->lab_status->setText(tr("Activated"));
             ui->lab_status->setStyleSheet("QLabel#lab_status {color:#5ab940}");
             ui->btn_status->setText(NULL);
             ui->btn_status->setIcon(QIcon(":/images/license_info.svg"));
-            ui->btn_status->setStyleSheet( "QPushButton#btn_status{background: transparent;}" );
+            ui->btn_status->setStyleSheet( "QPushButton#btn_status{background: transparent;border: none}" );
             ui->btn_status->setFixedSize(QSize(16,16));
 
             QDateTime time = QDateTime::fromTime_t(expired_time);

@@ -49,7 +49,7 @@
      <item>
       <widget class="QLabel" name="label_sys_mc">
        <property name="text">
-        <string> System Machine Code:</string>
+        <string>Machine Code:</string>
        </property>
       </widget>
      </item>
@@ -145,7 +145,7 @@
      <item>
       <widget class="QLabel" name="label_sys_lc">
        <property name="text">
-        <string>System Activation Code:</string>
+        <string>Activation Code:</string>
        </property>
       </widget>
      </item>
