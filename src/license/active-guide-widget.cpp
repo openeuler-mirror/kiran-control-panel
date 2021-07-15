@@ -42,7 +42,7 @@ ActGuideWidget::ActGuideWidget(QWidget *parent) :
            screenGeometry.y()+(screenGeometry.height()-this->height())/2);
 
     listItemMode = createActiveItem(tr("Activation Mode"));
-    listItemActive = createActiveItem(tr("Start Actvite"));
+    listItemActive = createActiveItem(tr("Start Activation"));
     listItemComplete = createActiveItem(tr("Activation Complete"));
 
     ui->listWidget->setCurrentRow(0);

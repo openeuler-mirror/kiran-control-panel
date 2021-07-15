@@ -31,7 +31,7 @@ void ShowQRCode::setQRCode(const QString &text ,bool isMachineCode)
 
     if(!isMachineCode)
     {
-        ui->label_qrcode_text->setText(tr("Scan QR code to get Activation code"));
+        ui->label_qrcode_text->setText(tr("Scan QR code to get activation code"));
     }
 
 }

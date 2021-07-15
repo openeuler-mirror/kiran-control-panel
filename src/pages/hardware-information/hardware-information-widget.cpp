@@ -450,3 +450,4 @@ void HardwareInformationWidget::scaledPixmap(QImage img)
     pixmap = pixmap.scaled(newWidth,newHeight,Qt::KeepAspectRatio);
     ui->label_logo->setPixmap(pixmap);
 }
+

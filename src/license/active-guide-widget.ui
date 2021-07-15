@@ -168,7 +168,7 @@
          <number>0</number>
         </property>
         <property name="currentIndex">
-         <number>5</number>
+         <number>0</number>
         </property>
         <widget class="QWidget" name="Pg_choose_mode">
          <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -213,7 +213,7 @@
               <item row="2" column="0">
                <widget class="QRadioButton" name="rbtn_online">
                 <property name="text">
-                 <string>Active online</string>
+                 <string>Activate online</string>
                 </property>
                </widget>
               </item>
@@ -226,14 +226,14 @@
                  </sizepolicy>
                 </property>
                 <property name="text">
-                 <string>Active with  the input activation code</string>
+                 <string>Activate with  the input activation code</string>
                 </property>
                </widget>
               </item>
               <item row="1" column="0">
                <widget class="QRadioButton" name="rbtn_offline">
                 <property name="text">
-                 <string>Active with insert UsbKey</string>
+                 <string>Activate with insert UsbKey</string>
                 </property>
                </widget>
               </item>
@@ -515,7 +515,7 @@
                </size>
               </property>
               <property name="text">
-               <string>Active</string>
+               <string>Activate</string>
               </property>
              </widget>
             </item>
@@ -760,7 +760,7 @@
                </size>
               </property>
               <property name="text">
-               <string>Active</string>
+               <string>Activate</string>
               </property>
              </widget>
             </item>
@@ -882,7 +882,7 @@
             <item>
              <widget class="QLabel" name="label_input_address">
               <property name="text">
-               <string>Please enter the active server address:</string>
+               <string>Please enter the activate server address:</string>
               </property>
              </widget>
             </item>
@@ -984,7 +984,7 @@
                </size>
               </property>
               <property name="text">
-               <string>Active</string>
+               <string>Activate</string>
               </property>
              </widget>
             </item>
@@ -1039,7 +1039,7 @@
                </sizepolicy>
               </property>
               <property name="text">
-               <string>Activiting........</string>
+               <string>Activating......</string>
               </property>
              </widget>
             </item>
@@ -1140,7 +1140,7 @@
              </sizepolicy>
             </property>
             <property name="text">
-             <string>System active successful!</string>
+             <string>System activate successful!</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignCenter</set>
@@ -1432,7 +1432,7 @@
                </sizepolicy>
               </property>
               <property name="text">
-               <string>System active failed!</string>
+               <string>System activate failed!</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignCenter</set>

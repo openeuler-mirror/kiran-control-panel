@@ -80,6 +80,7 @@ SystemInformationWidget::~SystemInformationWidget()
 
 bool SystemInformationWidget::initUI()
 {
+    setMinimumWidth(400);
     readSystemInfo(0);
     readLicenseInfo();
 
@@ -176,7 +177,7 @@ bool SystemInformationWidget::readLicenseInfo()
         {
             /*未激活*/
             ui->lab_status->setStyleSheet("QLabel#lab_status {color:#ff3838}");
-            ui->btn_status->setText(tr("Active"));
+            ui->btn_status->setText(tr("Activate"));
 
             int status;
             if(InfoDbus::KylinLicense::getServiceStatus(status))
@@ -227,7 +228,7 @@ bool SystemInformationWidget::readLicenseInfo()
             uint currentTimeT = currentTime.toTime_t();   //将当前时间转为时间戳
             if(currentTimeT>expired_time)
             {
-                ui->btn_status->setText(tr("Active"));
+                ui->btn_status->setText(tr("Activate"));
                 isActive = false;
                 return true;
             }
@@ -465,6 +466,7 @@ void SystemInformationWidget::updateHostName(bool isChanged, QString name)
     }
 }
 
+#include <iostream>
 /**
  * @brief  事件监听，当收到激活向导窗口或者授权信息窗口的关闭事件时，释放窗口内存
  * @param  obj  事件对象
@@ -516,5 +518,27 @@ void SystemInformationWidget::paintEvent(QPaintEvent *painEvent)
     painter.setPen(QColor(145,145,145));
     painter.setFont(font);
     painter.drawText(drawRecCopyright,copyright);
+}
+
+QSize SystemInformationWidget::sizeHint() const
+{
+    int screenNum = QApplication::desktop()->screenNumber(QCursor::pos());
+    QRect screenGeometry = QApplication::desktop()->screenGeometry(screenNum);
+
+    QSize size;
+    if(screenGeometry.height() >= 815 && screenGeometry.width() >= 800 ) //能显示全
+    {
+        size = QSize(800,815);
+    }
+    else if (screenGeometry.height() >= this->height() && screenGeometry.width() >= this->width())
+    {
+        size = QSize(this->width(),this->height());
+    }
+    else
+    {
+        size = QSize(screenGeometry.width() , screenGeometry.height());
+    }
+
+    return size;
 }
 
