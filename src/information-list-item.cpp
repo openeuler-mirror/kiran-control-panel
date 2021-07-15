@@ -59,15 +59,15 @@ void InformationListItem::setItemText(const QString &text)
 void InformationListItem::setItemIcon(const QString &iconPath)
 {
     ui->label_icon_info->setFixedSize(16,16);
-    ui->label_icon_info->setStyleSheet(QString("QLabel#label_icon_info{border-image:url(%1)};").arg(iconPath));
+    ui->label_icon_info->setStyleSheet(QString("QLabel#label_icon_info{border-image:url(%1);}").arg(iconPath));
 }
 
 void InformationListItem::setItemArrow(bool isSelected)
 {
     if(isSelected)
-        ui->label_icon_arrow->setStyleSheet("QLabel#label_icon_arrow{border-image:url(:/images/arrow.svg)};");
+        ui->label_icon_arrow->setStyleSheet("QLabel#label_icon_arrow{border-image:url(:/images/arrow.svg);}");
     else
-        ui->label_icon_arrow->setStyleSheet("QLabel#label_icon_arrow{border-image:none");
+        ui->label_icon_arrow->setStyleSheet("QLabel#label_icon_arrow{border-image:none;}");
 }
 
 QSize InformationListItem::sizeHint() const

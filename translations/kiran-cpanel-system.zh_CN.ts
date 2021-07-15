@@ -16,18 +16,6 @@
         <translation>请选择激活方式：</translation>
     </message>
     <message>
-        <source>Active online</source>
-        <translation type="vanished">在线激活</translation>
-    </message>
-    <message>
-        <source>Active with  the input license code</source>
-        <translation type="vanished">输入激活码激活</translation>
-    </message>
-    <message>
-        <source>Active with insert UsbKey</source>
-        <translation type="vanished">插入UsbKey设备激活</translation>
-    </message>
-    <message>
         <location filename="../src/license/active-guide-widget.ui" line="283"/>
         <location filename="../build/kiran-cpanel-system_autogen/include/ui_active-guide-widget.h" line="853"/>
         <source>Next</source>
@@ -56,14 +44,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Please input license code:</source>
-        <translation type="vanished">请输入激活码:</translation>
-    </message>
-    <message>
-        <source>Active with  the input activation code</source>
-        <translation type="vanished">输入激活码激活</translation>
-    </message>
-    <message>
         <location filename="../src/license/active-guide-widget.ui" line="419"/>
         <location filename="../build/kiran-cpanel-system_autogen/include/ui_active-guide-widget.h" line="857"/>
         <source>Please input activation code:</source>
@@ -82,26 +62,10 @@
         <translation>上一步</translation>
     </message>
     <message>
-        <source>Active</source>
-        <translation type="vanished">激活</translation>
-    </message>
-    <message>
         <location filename="../src/license/active-guide-widget.ui" line="658"/>
         <location filename="../build/kiran-cpanel-system_autogen/include/ui_active-guide-widget.h" line="864"/>
         <source>Please insert the UsbKey device first!</source>
         <translation>请先插入UsbKey设备!</translation>
-    </message>
-    <message>
-        <source>Please enter the active server address:</source>
-        <translation type="vanished">请输入激活服务器地址:</translation>
-    </message>
-    <message>
-        <source>Activiting........</source>
-        <translation type="vanished">正在激活......</translation>
-    </message>
-    <message>
-        <source>System active successful!</source>
-        <translation type="vanished">系统激活成功!</translation>
     </message>
     <message>
         <location filename="../src/license/active-guide-widget.ui" line="216"/>
@@ -200,42 +164,34 @@
         <translation>系统激活失败!</translation>
     </message>
     <message>
-        <source>System active failed!</source>
-        <translation type="vanished">系统激活失败!</translation>
-    </message>
-    <message>
-        <location filename="../src/license/active-guide-widget.cpp" line="35"/>
-        <location filename="../src/license/active-guide-widget.cpp" line="36"/>
-        <location filename="../src/license/active-guide-widget.cpp" line="37"/>
+        <location filename="../src/license/active-guide-widget.cpp" line="53"/>
+        <location filename="../src/license/active-guide-widget.cpp" line="54"/>
+        <location filename="../src/license/active-guide-widget.cpp" line="55"/>
         <source>unknow</source>
         <translation>未知</translation>
     </message>
     <message>
-        <location filename="../src/license/active-guide-widget.cpp" line="44"/>
+        <location filename="../src/license/active-guide-widget.cpp" line="62"/>
         <source>Activation Mode</source>
         <translation>选择激活方式</translation>
     </message>
     <message>
-        <source>Start Actvite</source>
-        <translation type="vanished">开始激活</translation>
-    </message>
-    <message>
-        <location filename="../src/license/active-guide-widget.cpp" line="45"/>
+        <location filename="../src/license/active-guide-widget.cpp" line="63"/>
         <source>Start Activation</source>
         <translation>开始激活</translation>
     </message>
     <message>
-        <location filename="../src/license/active-guide-widget.cpp" line="46"/>
+        <location filename="../src/license/active-guide-widget.cpp" line="64"/>
         <source>Activation Complete</source>
         <translation>激活完成</translation>
     </message>
     <message>
-        <location filename="../src/license/active-guide-widget.cpp" line="80"/>
+        <location filename="../src/license/active-guide-widget.cpp" line="98"/>
         <source>Activation Guide</source>
         <translation>激活向导</translation>
     </message>
     <message>
-        <location filename="../src/license/active-guide-widget.cpp" line="97"/>
+        <location filename="../src/license/active-guide-widget.cpp" line="115"/>
         <source>Server IP address or Domain name</source>
         <translation>服务器IP地址或域名</translation>
     </message>
@@ -282,17 +238,17 @@
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="../src/change-host-name-widget.cpp" line="42"/>
+        <location filename="../src/change-host-name-widget.cpp" line="54"/>
         <source>Host Name</source>
         <translation>主机名</translation>
     </message>
     <message>
-        <location filename="../src/change-host-name-widget.cpp" line="63"/>
+        <location filename="../src/change-host-name-widget.cpp" line="75"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="../src/change-host-name-widget.cpp" line="64"/>
+        <location filename="../src/change-host-name-widget.cpp" line="76"/>
         <source>Change host name failed! Please check the Dbus service!</source>
         <translation>修改主机名失败！请 检查Dbus服务!</translation>
     </message>
@@ -344,11 +300,11 @@
         <translation>网卡:</translation>
     </message>
     <message>
-        <location filename="../src/pages/hardware-information/hardware-information-widget.cpp" line="71"/>
-        <location filename="../src/pages/hardware-information/hardware-information-widget.cpp" line="74"/>
-        <location filename="../src/pages/hardware-information/hardware-information-widget.cpp" line="77"/>
         <location filename="../src/pages/hardware-information/hardware-information-widget.cpp" line="83"/>
-        <location filename="../src/pages/hardware-information/hardware-information-widget.cpp" line="84"/>
+        <location filename="../src/pages/hardware-information/hardware-information-widget.cpp" line="86"/>
+        <location filename="../src/pages/hardware-information/hardware-information-widget.cpp" line="89"/>
+        <location filename="../src/pages/hardware-information/hardware-information-widget.cpp" line="95"/>
+        <location filename="../src/pages/hardware-information/hardware-information-widget.cpp" line="96"/>
         <source>Unknow</source>
         <translation>未知</translation>
     </message>
@@ -365,41 +321,13 @@
 <context>
     <name>KiranSystemWidget</name>
     <message>
-        <location filename="../src/kiran-system-widget.cpp" line="34"/>
+        <location filename="../src/kiran-system-widget.cpp" line="46"/>
         <source>kiran-system-imformation</source>
         <translation>系统信息</translation>
     </message>
     <message>
-        <source>EULA</source>
-        <translation type="vanished">最终用户许可协议</translation>
-    </message>
-    <message>
-        <source>Look over EULA</source>
-        <translation type="vanished">点击查看最终用户许可协议</translation>
-    </message>
-    <message>
-        <source>Export</source>
-        <translation type="vanished">导出</translation>
-    </message>
-    <message>
-        <source>Export EULA</source>
-        <translation type="vanished">导出最终用户许可协议</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="vanished">保存</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">取消</translation>
-    </message>
-    <message>
         <source>保存</source>
         <translation type="obsolete">保存</translation>
-    </message>
-    <message>
-        <source>Export EULA failed!</source>
-        <translation type="vanished">导出最终用户许可协议失败!</translation>
     </message>
 </context>
 <context>
@@ -417,18 +345,10 @@
         <translation>机器码:</translation>
     </message>
     <message>
-        <source> Machine Code:</source>
-        <translation type="vanished">机器码:</translation>
-    </message>
-    <message>
         <location filename="../src/license/license-info-widget.ui" line="148"/>
         <location filename="../build/kiran-cpanel-system_autogen/include/ui_license-info-widget.h" line="159"/>
         <source>Activation Code:</source>
         <translation>激活码:</translation>
-    </message>
-    <message>
-        <source> System Machine Code:</source>
-        <translation type="vanished">系统机器码:</translation>
     </message>
     <message>
         <location filename="../src/license/license-info-widget.ui" line="83"/>
@@ -439,46 +359,30 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>System Activation Code:</source>
-        <translation type="vanished">系统激活码:</translation>
-    </message>
-    <message>
-        <source>System License Code:</source>
-        <translation type="vanished">系统激活码:</translation>
-    </message>
-    <message>
-        <source>License-Information</source>
-        <translation type="vanished"> 授权信息</translation>
-    </message>
-    <message>
-        <location filename="../src/license/license-info-widget.cpp" line="28"/>
+        <location filename="../src/license/license-info-widget.cpp" line="46"/>
         <source>Activation Information</source>
         <translation>激活信息</translation>
     </message>
     <message>
-        <location filename="../src/license/license-info-widget.cpp" line="101"/>
+        <location filename="../src/license/license-info-widget.cpp" line="119"/>
         <source>Can&apos;t get machine code</source>
         <translation>无法获取到机器码</translation>
     </message>
     <message>
-        <location filename="../src/license/license-info-widget.cpp" line="111"/>
+        <location filename="../src/license/license-info-widget.cpp" line="129"/>
         <source>Can&apos;t get activation code</source>
         <translation>无法获取到激活码</translation>
-    </message>
-    <message>
-        <source>Can&apos;t get license code</source>
-        <translation type="vanished">无法获取到激活码</translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/system-info-dbus.cpp" line="248"/>
+        <location filename="../src/system-info-dbus.cpp" line="260"/>
         <source>Did not reply within the specified timeout</source>
         <translation>连接超时</translation>
     </message>
     <message>
-        <location filename="../src/system-info-dbus.cpp" line="253"/>
+        <location filename="../src/system-info-dbus.cpp" line="265"/>
         <source>The called service is not known</source>
         <translation>无法连接到Dbus服务</translation>
     </message>
@@ -498,26 +402,14 @@
         <translation>扫描二维码获取机器码</translation>
     </message>
     <message>
-        <source>QRcode of Machine and License Code</source>
-        <translation type="vanished">授权信息二维码</translation>
-    </message>
-    <message>
-        <source>Scan QR code to get license code</source>
-        <translation type="vanished">扫描二维码获取激活码</translation>
-    </message>
-    <message>
-        <location filename="../src/license/show-qrcode.cpp" line="15"/>
+        <location filename="../src/license/show-qrcode.cpp" line="33"/>
         <source>QRcode of Machine and Activation Code</source>
         <translation>激活信息二维码</translation>
     </message>
     <message>
-        <location filename="../src/license/show-qrcode.cpp" line="34"/>
+        <location filename="../src/license/show-qrcode.cpp" line="52"/>
         <source>Scan QR code to get activation code</source>
         <translation>扫描二维码获取激活码</translation>
-    </message>
-    <message>
-        <source>Scan QR code to get Activation code</source>
-        <translation type="vanished">扫描二维码获取激活码</translation>
     </message>
 </context>
 <context>
@@ -607,123 +499,87 @@
         <translation>最终用户许可协议:</translation>
     </message>
     <message>
-        <source>Install Time:</source>
-        <translation type="vanished">安装时间:</translation>
-    </message>
-    <message>
-        <source>Register Status:</source>
-        <translation type="vanished">注册状态:</translation>
-    </message>
-    <message>
-        <source>Expire date:</source>
-        <translation type="vanished">质保期:</translation>
-    </message>
-    <message>
         <location filename="../src/pages/system-information/system-information-widget.ui" line="655"/>
         <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="416"/>
         <source>Contact Us:</source>
         <translation>联系我们:</translation>
     </message>
     <message>
-        <location filename="../src/pages/system-information/system-information-widget.cpp" line="87"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="99"/>
         <source>Change</source>
         <translation>更改</translation>
     </message>
     <message>
-        <source>Active</source>
-        <translation type="vanished">激活</translation>
-    </message>
-    <message>
-        <location filename="../src/pages/system-information/system-information-widget.cpp" line="89"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="101"/>
         <source>Show</source>
         <translation>查看</translation>
     </message>
     <message>
-        <location filename="../src/pages/system-information/system-information-widget.cpp" line="128"/>
-        <location filename="../src/pages/system-information/system-information-widget.cpp" line="129"/>
-        <location filename="../src/pages/system-information/system-information-widget.cpp" line="130"/>
-        <location filename="../src/pages/system-information/system-information-widget.cpp" line="131"/>
-        <location filename="../src/pages/system-information/system-information-widget.cpp" line="152"/>
-        <location filename="../src/pages/system-information/system-information-widget.cpp" line="156"/>
-        <location filename="../src/pages/system-information/system-information-widget.cpp" line="157"/>
-        <location filename="../src/pages/system-information/system-information-widget.cpp" line="421"/>
-        <location filename="../src/pages/system-information/system-information-widget.cpp" line="425"/>
-        <location filename="../src/pages/system-information/system-information-widget.cpp" line="426"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="140"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="141"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="142"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="143"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="164"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="168"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="169"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="433"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="437"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="438"/>
         <source>Unknow</source>
         <translation>未知</translation>
     </message>
     <message>
-        <source>Can&apos;t get license information</source>
-        <translation type="vanished">无法获取授权信息</translation>
-    </message>
-    <message>
-        <location filename="../src/pages/system-information/system-information-widget.cpp" line="188"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="200"/>
         <source>The current time is illegal</source>
         <translation>当前时间不合法</translation>
     </message>
     <message>
-        <location filename="../src/pages/system-information/system-information-widget.cpp" line="189"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="201"/>
         <source>Less than the installation time</source>
         <translation>小于安装时间</translation>
     </message>
     <message>
-        <location filename="../src/pages/system-information/system-information-widget.cpp" line="200"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="212"/>
         <source>Not activated. Trail expiration: </source>
         <translation>未激活.试用到期: </translation>
     </message>
     <message>
-        <source>Not activated. Trial expire: </source>
-        <translation type="vanished">未激活.试用到期: </translation>
-    </message>
-    <message>
-        <source>Trial Version. Trial expire: </source>
-        <translation type="vanished">试用版.试用到期: </translation>
-    </message>
-    <message>
-        <location filename="../src/pages/system-information/system-information-widget.cpp" line="153"/>
-        <location filename="../src/pages/system-information/system-information-widget.cpp" line="422"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="165"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="434"/>
         <source>Can&apos;t get activation information</source>
         <translation>无法获取激活信息</translation>
     </message>
     <message>
-        <location filename="../src/pages/system-information/system-information-widget.cpp" line="180"/>
-        <location filename="../src/pages/system-information/system-information-widget.cpp" line="231"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="192"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="243"/>
         <source>Activate</source>
         <translation>激活</translation>
     </message>
     <message>
-        <location filename="../src/pages/system-information/system-information-widget.cpp" line="209"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="221"/>
         <source>get service status failed</source>
         <translation>获取服务状态信息失败</translation>
     </message>
     <message>
-        <location filename="../src/pages/system-information/system-information-widget.cpp" line="212"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="224"/>
         <source>Not yet</source>
         <translation>暂无</translation>
     </message>
     <message>
-        <location filename="../src/pages/system-information/system-information-widget.cpp" line="219"/>
-        <location filename="../src/pages/system-information/system-information-widget.cpp" line="440"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="231"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="452"/>
         <source>Activated</source>
         <translation>已激活</translation>
     </message>
     <message>
-        <source>Official Version</source>
-        <translation type="vanished">正式版</translation>
-    </message>
-    <message>
-        <location filename="../src/pages/system-information/system-information-widget.cpp" line="501"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="513"/>
         <source>Copyright ©</source>
         <translation>版权所有 ©</translation>
     </message>
     <message>
-        <location filename="../src/pages/system-information/system-information-widget.cpp" line="501"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="513"/>
         <source>KylinSec. All rights reserved.</source>
         <translation>KylinSec.保留所有权利.</translation>
-    </message>
-    <message>
-        <source>Copyright ©%1 KylinSec. All rights reserved. </source>
-        <translation type="vanished">版权所有 ©%1 KylinSec.保留所有权利.</translation>
     </message>
 </context>
 <context>
@@ -757,33 +613,33 @@ p, li { white-space: pre-wrap; }
         <translation>关闭</translation>
     </message>
     <message>
-        <location filename="../src/license/user-license-agreement.cpp" line="51"/>
+        <location filename="../src/license/user-license-agreement.cpp" line="69"/>
         <source>Save</source>
         <translation>保存</translation>
     </message>
     <message>
-        <location filename="../src/license/user-license-agreement.cpp" line="53"/>
+        <location filename="../src/license/user-license-agreement.cpp" line="71"/>
         <source>PDF(*.pdf)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/license/user-license-agreement.cpp" line="62"/>
+        <location filename="../src/license/user-license-agreement.cpp" line="80"/>
         <source>Export EULA</source>
         <translation>导出最终用户许可协议</translation>
     </message>
     <message>
-        <location filename="../src/license/user-license-agreement.cpp" line="62"/>
+        <location filename="../src/license/user-license-agreement.cpp" line="80"/>
         <source>Export EULA failed!</source>
         <translation>导出最终用户许可协议失败!</translation>
     </message>
     <message>
-        <location filename="../src/license/user-license-agreement.cpp" line="85"/>
+        <location filename="../src/license/user-license-agreement.cpp" line="103"/>
         <source>User End License Agreement</source>
         <translation>最终用户许可协议</translation>
     </message>
     <message>
-        <location filename="../src/license/user-license-agreement.cpp" line="102"/>
-        <location filename="../src/license/user-license-agreement.cpp" line="109"/>
+        <location filename="../src/license/user-license-agreement.cpp" line="120"/>
+        <location filename="../src/license/user-license-agreement.cpp" line="127"/>
         <source>None</source>
         <translation>暂无</translation>
     </message>
@@ -797,12 +653,12 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/kiran-system-information.cpp" line="38"/>
+        <location filename="../src/kiran-system-information.cpp" line="50"/>
         <source>System Information</source>
         <translation>系统信息</translation>
     </message>
     <message>
-        <location filename="../src/kiran-system-information.cpp" line="39"/>
+        <location filename="../src/kiran-system-information.cpp" line="51"/>
         <source>Hardware Information</source>
         <translation>硬件信息</translation>
     </message>

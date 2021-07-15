@@ -329,17 +329,17 @@ void HardwareInformationWidget::showListInfo()
     if(diskNum >1 )
     {
         ui->label_hard_disk->setAlignment(Qt::AlignTop);
-        ui->label_hard_disk->setStyleSheet("QLabel{padding-top:10px}");
+        ui->label_hard_disk->setStyleSheet("QLabel{padding-top:10px;}");
     }
     if(graphicsNum > 1)
     {
         ui->label_graphics_card->setAlignment(Qt::AlignTop);
-        ui->label_graphics_card->setStyleSheet("QLabel{padding-top:10px}");
+        ui->label_graphics_card->setStyleSheet("QLabel{padding-top:10px;}");
     }
     if(ethsNum > 1)
     {
         ui->label_network_card->setAlignment(Qt::AlignTop);
-        ui->label_network_card->setStyleSheet("QLabel{padding-top:10px}");
+        ui->label_network_card->setStyleSheet("QLabel{padding-top:10px;}");
     }
 
     //依次将各个信息插入至布局

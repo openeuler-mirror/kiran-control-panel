@@ -259,12 +259,12 @@ void ActGuideWidget::setManualLineEditStatus()
    if(ui->lineEdit_lc->text().isEmpty())
     {
         ui->btn_active_manual->setEnabled(false);
-        ui->btn_active_manual->setStyleSheet("QPushButton#btn_active_manual {color: rgba(255,255,255,0.3)}");
+        ui->btn_active_manual->setStyleSheet("QPushButton#btn_active_manual {color: rgba(255,255,255,0.3);}");
     }
    else
    {
         ui->btn_active_manual->setEnabled(true);
-        ui->btn_active_manual->setStyleSheet("QPushButton#btn_active_manual { color:#ffffff}");
+        ui->btn_active_manual->setStyleSheet("QPushButton#btn_active_manual { color:#ffffff;}");
    }
 }
 
@@ -277,13 +277,13 @@ void ActGuideWidget::setKeyLineEditStatus()
     if(ui->lineEdit_address->text().isEmpty())
     {
         ui->btn_active_online->setEnabled(false);
-        ui->btn_active_online->setStyleSheet("QPushButton#btn_active_online { color: rgba(255,255,255,0.3)}");
+        ui->btn_active_online->setStyleSheet("QPushButton#btn_active_online { color: rgba(255,255,255,0.3);}");
 
     }
     else
     {
         ui->btn_active_online->setEnabled(true);
-        ui->btn_active_online->setStyleSheet("QPushButton#btn_active_online { color:#ffffff}");
+        ui->btn_active_online->setStyleSheet("QPushButton#btn_active_online { color:#ffffff;}");
     }
 }
  

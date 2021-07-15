@@ -163,7 +163,7 @@ bool SystemInformationWidget::readLicenseInfo()
         KLOG_DEBUG() << "get activation information failed";
         ui->lab_expire_date_info->setText(tr("Unknow"));
         ui->lab_status->setText(tr("Can't get activation information"));
-        ui->lab_status->setStyleSheet("QLabel#lab_status {color:#ff3838}");
+        ui->lab_status->setStyleSheet("QLabel#lab_status {color:#ff3838;}");
         ui->btn_status->hide();
         ui->lab_install_time_info->setText(tr("Unknow"));
         ui->lab_expire_date_info->setText(tr("Unknow"));
@@ -188,7 +188,7 @@ bool SystemInformationWidget::readLicenseInfo()
         case KylinSec::LicenseStatus::LICENSE_STATUS_UNREGISTERD:
         {
             /*未激活*/
-            ui->lab_status->setStyleSheet("QLabel#lab_status {color:#ff3838}");
+            ui->lab_status->setStyleSheet("QLabel#lab_status {color:#ff3838;}");
             ui->btn_status->setText(tr("Activate"));
 
             int status;
@@ -229,7 +229,7 @@ bool SystemInformationWidget::readLicenseInfo()
             /*已激活*/
             ui->btn_status->show();
             ui->lab_status->setText(tr("Activated"));
-            ui->lab_status->setStyleSheet("QLabel#lab_status {color:#5ab940}");
+            ui->lab_status->setStyleSheet("QLabel#lab_status {color:#5ab940;}");
 
             QDateTime time = QDateTime::fromTime_t(expired_time);
             QString dueTime  = time.toString("yyyy-MM-dd");
@@ -432,7 +432,7 @@ void SystemInformationWidget::updateLicenseInfo(bool isregister)
             KLOG_DEBUG() << "get activation information failed";
             ui->lab_expire_date_info->setText(tr("Unknow"));
             ui->lab_status->setText(tr("Can't get activation information"));
-            ui->lab_status->setStyleSheet("QLabel#lab_status {color:#ff3838}");
+            ui->lab_status->setStyleSheet("QLabel#lab_status {color:#ff3838;}");
             ui->btn_status->hide();
             ui->lab_install_time_info->setText(tr("Unknow"));
             ui->lab_expire_date_info->setText(tr("Unknow"));
@@ -450,10 +450,10 @@ void SystemInformationWidget::updateLicenseInfo(bool isregister)
             isActive = license_status;
 
             ui->lab_status->setText(tr("Activated"));
-            ui->lab_status->setStyleSheet("QLabel#lab_status {color:#5ab940}");
+            ui->lab_status->setStyleSheet("QLabel#lab_status {color:#5ab940;}");
             ui->btn_status->setText(NULL);
             ui->btn_status->setIcon(QIcon(":/images/license_info.svg"));
-            ui->btn_status->setStyleSheet( "QPushButton#btn_status{background: transparent;border: none}" );
+            ui->btn_status->setStyleSheet( "QPushButton#btn_status{background: transparent;border: none;}" );
             ui->btn_status->setFixedSize(QSize(16,16));
 
             QDateTime time = QDateTime::fromTime_t(expired_time);
