@@ -8,8 +8,14 @@ configure_file (
 )
 
 install(FILES "${PROJECT_BINARY_DIR}/config/kiran-cpanel-system.desktop"
-	DESTINATION ${CPANEL_DESKTOP_DIR}/ )
+        DESTINATION ${CPANEL_DESKTOP_DIR}/ )
+
+SET(source ${CPANEL_DESKTOP_DIR}/kiran-cpanel-system.desktop)
+
+add_custom_target(kiran-cpanel-system-desktop ALL
+	          COMMAND ln -sf ${source} ${PROJECT_BINARY_DIR}/kiran-cpanel-system.desktop)
 
 
-
+install(FILES "${PROJECT_BINARY_DIR}/kiran-cpanel-system.desktop"
+	DESTINATION ${DATA_DIR}/applications/)
 

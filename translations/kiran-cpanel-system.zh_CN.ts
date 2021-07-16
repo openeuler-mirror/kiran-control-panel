@@ -416,13 +416,13 @@
     <name>SystemInformationWidget</name>
     <message>
         <location filename="../src/pages/system-information/system-information-widget.ui" line="14"/>
-        <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="399"/>
+        <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="400"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/pages/system-information/system-information-widget.ui" line="146"/>
-        <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="400"/>
+        <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="401"/>
         <source>Host Name:</source>
         <translation>主机名:</translation>
     </message>
@@ -435,14 +435,14 @@
         <location filename="../src/pages/system-information/system-information-widget.ui" line="521"/>
         <location filename="../src/pages/system-information/system-information-widget.ui" line="612"/>
         <location filename="../src/pages/system-information/system-information-widget.ui" line="675"/>
-        <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="401"/>
-        <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="404"/>
-        <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="406"/>
-        <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="408"/>
-        <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="410"/>
-        <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="412"/>
-        <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="415"/>
-        <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="417"/>
+        <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="402"/>
+        <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="405"/>
+        <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="407"/>
+        <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="409"/>
+        <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="411"/>
+        <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="413"/>
+        <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="416"/>
+        <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="418"/>
         <source>TextLabel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -450,57 +450,57 @@
         <location filename="../src/pages/system-information/system-information-widget.ui" line="197"/>
         <location filename="../src/pages/system-information/system-information-widget.ui" line="552"/>
         <location filename="../src/pages/system-information/system-information-widget.ui" line="750"/>
-        <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="402"/>
-        <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="413"/>
-        <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="419"/>
+        <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="403"/>
+        <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="414"/>
+        <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="420"/>
         <source>PushButton</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/pages/system-information/system-information-widget.ui" line="237"/>
-        <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="403"/>
+        <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="404"/>
         <source>System Version:</source>
         <translation>系统版本:</translation>
     </message>
     <message>
         <location filename="../src/pages/system-information/system-information-widget.ui" line="312"/>
-        <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="405"/>
+        <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="406"/>
         <source>Kernel Version:</source>
         <translation>内核版本:</translation>
     </message>
     <message>
         <location filename="../src/pages/system-information/system-information-widget.ui" line="375"/>
-        <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="407"/>
+        <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="408"/>
         <source>System Architecture:</source>
         <translation>系统架构:</translation>
     </message>
     <message>
         <location filename="../src/pages/system-information/system-information-widget.ui" line="438"/>
-        <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="409"/>
+        <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="410"/>
         <source>Installation time:</source>
         <translation>安装时间:</translation>
     </message>
     <message>
         <location filename="../src/pages/system-information/system-information-widget.ui" line="501"/>
-        <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="411"/>
+        <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="412"/>
         <source>Activation status:</source>
         <translation>激活状态:</translation>
     </message>
     <message>
         <location filename="../src/pages/system-information/system-information-widget.ui" line="592"/>
-        <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="414"/>
+        <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="415"/>
         <source>Expiry date:</source>
         <translation>质保期:</translation>
     </message>
     <message>
         <location filename="../src/pages/system-information/system-information-widget.ui" line="718"/>
-        <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="418"/>
+        <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="419"/>
         <source>EULA:</source>
         <translation>最终用户许可协议:</translation>
     </message>
     <message>
         <location filename="../src/pages/system-information/system-information-widget.ui" line="655"/>
-        <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="416"/>
+        <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="417"/>
         <source>Contact Us:</source>
         <translation>联系我们:</translation>
     </message>
@@ -572,12 +572,12 @@
         <translation>已激活</translation>
     </message>
     <message>
-        <location filename="../src/pages/system-information/system-information-widget.cpp" line="513"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="514"/>
         <source>Copyright ©</source>
         <translation>版权所有 ©</translation>
     </message>
     <message>
-        <location filename="../src/pages/system-information/system-information-widget.cpp" line="513"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="514"/>
         <source>KylinSec. All rights reserved.</source>
         <translation>KylinSec.保留所有权利.</translation>
     </message>

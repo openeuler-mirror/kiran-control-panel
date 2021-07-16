@@ -248,7 +248,7 @@ bool SystemInformationWidget::readLicenseInfo()
 
             ui->btn_status->setText(NULL);
             ui->btn_status->setIcon(QIcon(":/images/license_info.svg"));
-            ui->btn_status->setStyleSheet( "QPushButton#btn_status{background: transparent;}" );
+            ui->btn_status->setStyleSheet( "QToolButton#btn_status{background: transparent;}" );
             break;
         }
         default:
@@ -453,7 +453,7 @@ void SystemInformationWidget::updateLicenseInfo(bool isregister)
             ui->lab_status->setStyleSheet("QLabel#lab_status {color:#5ab940;}");
             ui->btn_status->setText(NULL);
             ui->btn_status->setIcon(QIcon(":/images/license_info.svg"));
-            ui->btn_status->setStyleSheet( "QPushButton#btn_status{background: transparent;border: none;}" );
+            ui->btn_status->setStyleSheet( "QToolButton#btn_status{background: transparent;border: none;}" );
             ui->btn_status->setFixedSize(QSize(16,16));
 
             QDateTime time = QDateTime::fromTime_t(expired_time);
