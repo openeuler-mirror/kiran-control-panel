@@ -94,6 +94,9 @@ install(TARGETS ${PROJECT_NAME} DESTINATION ${CPANEL_PLUGIN_DIR}/ )
 #安装控制中心插件desktop
 configure_file(${CMAKE_SOURCE_DIR}/config/kiran-cpanel-account.desktop.in ${CMAKE_BINARY_DIR}/kiran-cpanel-account.desktop @ONLY )
 install(FILES ${CMAKE_BINARY_DIR}/kiran-cpanel-account.desktop  DESTINATION ${CPANEL_DESKTOP_DIR}/ )
+install(CODE "execute_process( COMMAND ${CMAKE_COMMAND} -E create_symlink \
+                               ${CPANEL_DESKTOP_DIR}/kiran-cpanel-account.desktop \
+                               ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATADIR}/applications/kiran-cpanel-account.desktop )")
 #安装翻译文件
 install(FILES ${QM_FILES} DESTINATION ${KAM_TRANSLATION_DIR_PATH} )
 #安装账户管理配置文件
