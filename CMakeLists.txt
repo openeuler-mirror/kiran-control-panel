@@ -51,6 +51,9 @@ install(TARGETS ${PROJECT_NAME} DESTINATION ${CPANEL_PLUGIN_DIR}/)
 #安装插件desktop
 configure_file(data/kiran-cpanel-display.desktop.in ${CMAKE_BINARY_DIR}/kiran-cpanel-display.desktop @ONLY)
 install(FILES ${CMAKE_BINARY_DIR}/kiran-cpanel-display.desktop DESTINATION ${CPANEL_DESKTOP_DIR}/ )
+install(CODE "execute_process( COMMAND ${CMAKE_COMMAND} -E create_symlink \
+                               ${CPANEL_DESKTOP_DIR}/kiran-cpanel-display.desktop \
+                               ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATADIR}/applications/kiran-cpanel-display.desktop )")
 
 #安装插件图标
 set(KCP_ICON_INSTALL_PATH ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor)
