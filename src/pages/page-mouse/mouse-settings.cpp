@@ -27,7 +27,7 @@ MouseSettings::~MouseSettings()
 
 QSize MouseSettings::sizeHint() const
 {
-    return QSize(918,750);
+    return QSize(750,670);
 }
 
 /**
@@ -35,6 +35,7 @@ QSize MouseSettings::sizeHint() const
  */
 void MouseSettings::initUI()
 {
+    setStyleSheet("#scrollAreaWidgetContents{border-left:1px solid #2d2d2d;}");
     QStringList hand_mode;
     hand_mode << tr("Right Hand Mode") << tr("Left Hand Mode") ;
     ui->comboBox_hand_mode->addItems(hand_mode);

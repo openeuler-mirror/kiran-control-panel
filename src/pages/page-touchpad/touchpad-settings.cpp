@@ -32,6 +32,7 @@ TouchPadSettings::~TouchPadSettings()
  */
 void TouchPadSettings::initUI()
 {
+    setStyleSheet("#scrollAreaWidgetContents{border-left:1px solid #2d2d2d;}");
     m_comboBoxList = this->findChildren<QComboBox *>();
     m_checkBoxList = {ui->checkBox_tap_to_click,
                       ui->checkBox_tp_natural_scroll,
