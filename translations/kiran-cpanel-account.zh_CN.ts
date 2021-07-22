@@ -208,13 +208,6 @@
 <context>
     <name>CreateUserPage</name>
     <message>
-        <location filename="../src/pages/create-user-page/create-user-page.ui" line="101"/>
-        <location filename="../build/kiran-cpanel-account_autogen/include/ui_create-user-page.h" line="287"/>
-        <location filename="../cmake-build-debug/kiran-cpanel-account_autogen/include/ui_create-user-page.h" line="287"/>
-        <source>Login name</source>
-        <translation>登录名</translation>
-    </message>
-    <message>
         <source>Account type</source>
         <translation type="vanished">账户类型</translation>
     </message>
@@ -234,6 +227,13 @@
         <location filename="../cmake-build-debug/kiran-cpanel-account_autogen/include/ui_create-user-page.h" line="286"/>
         <source>Form</source>
         <translation></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/create-user-page/create-user-page.ui" line="101"/>
+        <location filename="../build/kiran-cpanel-account_autogen/include/ui_create-user-page.h" line="287"/>
+        <location filename="../cmake-build-debug/kiran-cpanel-account_autogen/include/ui_create-user-page.h" line="287"/>
+        <source>User name</source>
+        <translation>用户名</translation>
     </message>
     <message>
         <location filename="../src/pages/create-user-page/create-user-page.ui" line="147"/>
