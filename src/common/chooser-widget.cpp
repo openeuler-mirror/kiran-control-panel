@@ -1,19 +1,18 @@
 #include "chooser-widget.h"
 #include "ui_chooser-widget.h"
+#include "common/include.h"
 #include <QMouseEvent>
 #include <iostream>
 #include <QStyleOption>
 #include <QPainter>
-ChooserWidget::ChooserWidget(QString title, QWidget *parent) :
+
+ChooserWidget::ChooserWidget(QString title, int type, QWidget *parent):
     QWidget(parent),
     ui(new Ui::ChooserWidget)
 {
     ui->setupUi(this);
-    ui->label_text->setText(title);
-    ui->label_arrow->setFixedSize(16,16);
-    ui->label_arrow->setPixmap(QPixmap(":/images/select.svg"));
-    ui->label_name->setStyleSheet("#label_name{color: #919191;}");
-    setStyleSheet("#ChooserWidget{background-color: #2d2d2d;border-radius : 6px;}");
+    initUI(title);
+    m_wallpaperType = type;
 }
 
 ChooserWidget::~ChooserWidget()
@@ -26,9 +25,18 @@ void ChooserWidget::setName(QString name)
     ui->label_name->setText(name);
 }
 
+void ChooserWidget::initUI(QString title)
+{
+    ui->label_text->setText(title);
+    ui->label_arrow->setFixedSize(16,16);
+    ui->label_arrow->setPixmap(QPixmap(":/images/select.svg"));
+    ui->label_name->setStyleSheet("#label_name{color: #919191;}");
+    setStyleSheet("#ChooserWidget{background-color: #2d2d2d;border-radius : 6px;}");
+}
+
 void ChooserWidget::mousePressEvent(QMouseEvent *event)
 {
-    if (event->button() == Qt::LeftButton){
+    if(event->button() == Qt::LeftButton){
         emit clicked();
     }
     QWidget::mousePressEvent(event);

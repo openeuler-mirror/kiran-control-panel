@@ -12,5 +12,6 @@
         <file>images/themes.svg</file>
         <file>themes/style.qss</file>
         <file>images/wallpaper.svg</file>
+        <file>images/loading.svg</file>
     </qresource>
 </RCC>

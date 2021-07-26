@@ -12,10 +12,12 @@ class ChooserWidget : public QWidget
     Q_OBJECT
 
 public:
-    explicit ChooserWidget(QString title,QWidget *parent = 0);
+    explicit ChooserWidget(QString title, int type = -1, QWidget *parent = 0);
     ~ChooserWidget();
 
     void setName(QString name);
+private:
+    void initUI(QString title);
 
 protected:
     virtual void mousePressEvent(QMouseEvent *event);
@@ -26,6 +28,7 @@ signals:
 
 private:
     Ui::ChooserWidget *ui;
+    int m_wallpaperType = -1;
 };
 
 #endif // CHOOSERWIDGET_H

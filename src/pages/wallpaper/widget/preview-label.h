@@ -4,11 +4,6 @@
 #include <QWidget>
 #include <QLabel>
 
-enum WallpaperType{
-    DESKTOP = 0,
-    SCREENSAVER
-};
-
 class PreviewLabel : public QLabel
 {
 public:
@@ -19,8 +14,7 @@ public:
 
 private:
     void drawDesktopPreview(QPainter *painter);
-    void drawScreensaverPreview(QPainter *painter);
-
+    void drawLockScreenPreview(QPainter *painter);
 
 protected:
     void paintEvent(QPaintEvent *event);

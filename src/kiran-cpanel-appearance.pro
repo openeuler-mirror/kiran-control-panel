@@ -5,7 +5,8 @@
 #-------------------------------------------------
 
 QT       += core gui network dbus \
-            KI18n KConfigCore  x11extras
+            KI18n KConfigCore  x11extras \
+            svg xml
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -49,7 +50,13 @@ SOURCES += \
     pages/theme/icon-themes/icon-themes.cpp \
     pages/wallpaper/wallpaper.cpp \
     common/chooser-widget.cpp \
-    pages/wallpaper/widget/preview-label.cpp
+    pages/wallpaper/widget/preview-label.cpp \
+    pages/wallpaper/widget/flowlayout.cpp \
+    pages/wallpaper/widget/image-selector.cpp \
+    pages/wallpaper/widget/kiran-image-item.cpp \
+    pages/wallpaper/widget/kiran-image-load-manager.cpp \
+    pages/wallpaper/widget/xml-management/thread-object.cpp \
+    pages/wallpaper/widget/xml-management/xml-management.cpp
 
 HEADERS += \
         kiran-cpanel-appearance.h \
@@ -66,7 +73,14 @@ HEADERS += \
     pages/theme/icon-themes/icon-themes.h \
     pages/wallpaper/wallpaper.h \
     common/chooser-widget.h \
-    pages/wallpaper/widget/preview-label.h
+    pages/wallpaper/widget/preview-label.h \
+    pages/wallpaper/widget/flowlayout.h \
+    pages/wallpaper/widget/image-selector.h \
+    pages/wallpaper/widget/kiran-image-item.h \
+    pages/wallpaper/widget/kiran-image-load-manager.h \
+    pages/wallpaper/widget/xml-management/thread-object.h \
+    pages/wallpaper/widget/xml-management/xml-management.h \
+    pages/wallpaper/wallpaper-global.h
 
 FORMS += \
         kiran-cpanel-appearance.ui \

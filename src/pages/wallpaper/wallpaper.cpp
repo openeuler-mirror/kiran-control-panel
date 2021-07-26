@@ -17,19 +17,19 @@
 1、获取当前的桌面壁纸path、锁屏壁纸path
 2、创建两个预览控件，将当前的path对应的图片绘至预览控件，当做背景
 3、将预览控件添加至主界面
-4、创建壁纸选择控件，创建两个widget，监听clicked信号，（信号中传入壁纸类型）跳转至壁纸选择界面，同时根据当前的壁纸名字，设置对应的壁纸btn的 icon
+4、创建壁纸选择控件，创建两个widget，监听clicked信号，（信号中传入壁纸类型, 和对应的壁纸路径）跳转至壁纸选择界面，同时根据当前的壁纸名字，设置对应的壁纸btn的 icon
 
 三、壁纸选择界面
 1、创建一个壁纸选择控件（QWidget），放到scrollArea里面
 2、在壁纸选择控件中添加FlowLayout
 3、加载系统中的壁纸图片，获取绝对路径，加载用户目录下的.config/kylinsec/background.xml文件（先判断有没有，只有在用户添加了自己的图片进去才会有该文件，若有的话，就加载）
-4、创建自定义的btn类，设置btn的icon
+4、创建自定义的btn类，设置btn的icon(setIcon,getPath)
 5、将btn添加进btnGroup
 6、添加+btn
-7、若点击+btn，则弹出文件管理器，供用户选择，选择后，将对应的图片添加进*******路径，并创建壁纸btn，添加进btnGroup
-                               确保+btn在界面的最后
+7、若点击+btn，则弹出文件管理器，供用户选择，选择后，将对应的图片添加xml，并创建壁纸btn，添加进btnGroup
+               确保+btn在界面的最后
 8、若点击删除按钮，则弹出删除确认消息框，用户点击确认后，删除图片（删除图片文件，删除btn）,如果删除的图片刚好是当前设置的壁纸，则×××××××
-9、若选中壁纸，则获取壁纸btn的path，以及壁纸名字，发送设置是否成功信号，传入path，返回主界面
+9、若选中壁纸，则获取壁纸btn的path，以及壁纸名字，发送设置是否成功信号，传入path,壁纸类型，返回主界面
 10、主界面壁纸设置监听信号，成功后，更新选择控件的name，根据传来的path，与壁纸类型，更新对应预览控件背景
 
 
@@ -39,12 +39,25 @@
 3、添加或删除壁纸图片，要进行什么操作，比如将图片从哪里删除了，或者添加到了哪里 (只能删除用户自添加的图片，更新～/.config/kylinsec/background.xml文件)
 4、如果删除的刚好是正设置的壁纸，要默认选择哪个壁纸返回（默认default.jpg）
 5、如果只是添加或删除壁纸，那么界面如何返回，是否要加返回按钮（直接点击左侧列表中的背景设置）
+
+xml文件图片信息项:(read,set)
+    deleted: true or false
+    path
 */
 
 #include "dbus-interface/appearance-global-info.h"
 #include "widget/preview-label.h"
 #include "common/chooser-widget.h"
+#include "wallpaper-global.h"
+#include "widget/flowlayout.h"
+#include "widget/image-selector.h"
+#include "widget/kiran-image-load-manager.h"
+#include "widget/xml-management/thread-object.h"
+#include <QFileDialog>
+#include <QDir>
+#include <QThread>
 #include <iostream>
+
 
 Wallpaper::Wallpaper(QWidget *parent) :
     QWidget(parent),
@@ -53,7 +66,10 @@ Wallpaper::Wallpaper(QWidget *parent) :
     ui->setupUi(this);
     initUI();
     createPreviewLabel();
+
     createChooserWidget();
+
+    createImageSelector();
 }
 
 Wallpaper::~Wallpaper()
@@ -63,7 +79,9 @@ Wallpaper::~Wallpaper()
 
 void Wallpaper::initUI()
 {
+    ui->stackedWidget->setCurrentIndex(0);
 
+    //多线程加载壁纸图片
 }
 
 void Wallpaper::createPreviewLabel()
@@ -77,7 +95,7 @@ void Wallpaper::createPreviewLabel()
     layoutDesktop->setAlignment(desktopPreview,Qt::AlignHCenter);
 
     QLayout *layout = ui->widget_lockscreen_preview->layout();
-    PreviewLabel *lockScreenPreview = new PreviewLabel(SCREENSAVER,m_currLockScreenWp,this);
+    PreviewLabel *lockScreenPreview = new PreviewLabel(LOCK_SCREEN,m_currLockScreenWp,this);
     layout->addWidget(lockScreenPreview);
     layout->setAlignment(lockScreenPreview,Qt::AlignHCenter);
 }
@@ -87,15 +105,144 @@ void Wallpaper::createChooserWidget()
     QString desktopWpName = m_currDesktopWp.split("/").last();
     QString lockScreenWpName = m_currLockScreenWp.split("/").last();
 
-    ChooserWidget *desktopWpChooser = new ChooserWidget(tr("Set Desktop Wallpaper"));
+    ChooserWidget *desktopWpChooser = new ChooserWidget(tr("Set Desktop Wallpaper"),DESKTOP);
     desktopWpChooser->setName(desktopWpName);
     ui->vLayout_chooser->addWidget(desktopWpChooser);
+    connect(desktopWpChooser,&ChooserWidget::clicked,
+            [=]{
+        ui->stackedWidget->setCurrentIndex(1);
+    });
 
-    ChooserWidget *lockScreenWPChooser = new ChooserWidget(tr("Set Lock Screen Wallpaper"));
+    ChooserWidget *lockScreenWPChooser = new ChooserWidget(tr("Set Lock Screen Wallpaper"),LOCK_SCREEN);
     lockScreenWPChooser->setName(lockScreenWpName);
     ui->vLayout_chooser->addWidget(lockScreenWPChooser);
 
 }
+
+void Wallpaper::createImageSelector()
+{
+    QVBoxLayout *vLayout = new QVBoxLayout(ui->scrollAreaContents_wallpaper);
+    m_imageSelector = new ImageSelector(this);
+    vLayout->addWidget(m_imageSelector);
+    ui->scrollAreaContents_wallpaper->setLayout(vLayout);
+
+    loadVisibleWallpapers();
+
+    connect(m_imageSelector, &ImageSelector::selectedImageChanged,
+            [=](int type, QString imagePath, bool isAdditionImage){
+        bool flag = false;
+        if(!imagePath.isNull())
+        {
+            //set background
+
+            //jump to main ui
+        }
+        if(isAdditionImage)
+        {
+            //popup custom image select dir:/home
+            QString fileName = QFileDialog::getOpenFileName(this, tr("select picture"),
+                                                            QDir::homePath(),
+                                                            tr("image files(*.bmp *.jpg *.png *.tif *.gif"
+                                                               " *.pcx *.tga *.exif *.fpx *.svg *.psd *.cdr *.pcd"
+                                                               " *.dxf *.ufo *.eps *.ai *.raw *.WMF *.webp)"));
+            if (fileName.isEmpty()) {
+                return;
+            }
+            //select
+            //addImage
+            m_imageSelector->addImage(fileName,CUSTOM_IMAGE);
+            //move additionImage Item to end
+            m_imageSelector->moveAdditionItemToEnd();
+
+            // 将图片信息存储在xml文件中，若文件不存在则创建
+            for( QList<QMap<QString,QString>>::iterator iter=m_wallpaperMapList.begin();
+                 iter!=m_wallpaperMapList.end();
+                 iter++){
+                if((*iter).find("filename").value() == fileName)
+                {
+                    flag = true;
+                    (*iter).insert("deleted","false");
+                    break;
+                }
+            }
+            if(!flag)
+            {
+                QMap<QString, QString> newWallpaperInfo;
+                newWallpaperInfo.insert("deleted", "false");
+                newWallpaperInfo.insert("name", fileName.split("/").last());
+                newWallpaperInfo.insert("filename", fileName);
+                newWallpaperInfo.insert("artist", "(none)");
+                newWallpaperInfo.insert("options", "zoom");
+                newWallpaperInfo.insert("pcolor", "#000000");
+                newWallpaperInfo.insert("scolor", "#000000");
+                newWallpaperInfo.insert("shade_type", "vertical-gradient");
+                m_wallpaperMapList.append(newWallpaperInfo);
+            }
+            m_threadObject->updateWallpaperXml(m_wallpaperMapList);
+        }
+    });
+
+    connect(m_imageSelector,&ImageSelector::deleteImage,
+            [=](QString deletedPath){
+        for( QList<QMap<QString,QString>>::iterator iter=m_wallpaperMapList.begin();
+             iter!=m_wallpaperMapList.end();
+             iter++){
+            if((*iter).find("filename").value() == deletedPath)
+            {
+                (*iter).insert("deleted","true");
+                m_threadObject->updateWallpaperXml(m_wallpaperMapList);
+                break;
+            }
+        }
+    });
+
+}
+
+void Wallpaper::handleWallpaperInfo(QList<QMap<QString, QString> > wallpaperMapList)
+{
+    std::cout << "handleWallpaperInfo" << std::endl ;
+    if(wallpaperMapList.size()  < 1)
+    {
+        std::cout << "get wallpaperMap failed" << std::endl ;
+        return ;
+    }
+    m_wallpaperMapList = wallpaperMapList;
+    for(QMap<QString,QString> map:wallpaperMapList)
+    {
+              QString deleted = map.find("deleted").value();
+              if(deleted == "false")
+              {
+                  std::cout << "see deleted filename" << map.find("filename").value().toStdString() << std::endl ;
+                  m_visibleWallpaper.append(map.find("filename").value());
+              }
+    }
+    for(QString filename:m_visibleWallpaper)
+    {
+        if(filename.startsWith(SYSTEM_BACKGROUND_PATH))
+            m_imageSelector->addImage(filename,SYSTEM_IMAGE);
+        else
+            m_imageSelector->addImage(filename,CUSTOM_IMAGE);
+    }
+    //添加+项
+    m_imageSelector->addImage(nullptr,ADDITION_IMAGE);
+}
+
+void Wallpaper::loadVisibleWallpapers()
+{
+    m_thread = new QThread;
+    m_threadObject = new ThreadObject;
+    m_threadObject->moveToThread(m_thread);
+
+    connect(m_threadObject,SIGNAL(getWallpaperInfo(QList<QMap<QString,QString> >)),this,
+            SLOT(handleWallpaperInfo(QList<QMap<QString,QString> >)));
+     //终止线程deleteLater
+    connect(m_thread,SIGNAL(finished()),m_threadObject,SLOT(deleteLater()));
+    connect(m_thread,SIGNAL(started()),m_threadObject,SLOT(loadWallpaperInfo()));
+
+    m_thread->start();
+}
+
+
 
 
 

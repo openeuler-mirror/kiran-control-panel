@@ -37,6 +37,8 @@ bool KiranCpanelAppearance::initUI()
     addSidebarItem(tr("Wallpaper Setting"),":/images/wallpaper.svg");
     addSidebarItem(tr("Theme Setting"),":/images/themes.svg");
     addSidebarItem(tr("Font Setting"), ":/images/themes.svg");
+
+    ui->listWidget->setCurrentRow(0);
     return true;
 }
 

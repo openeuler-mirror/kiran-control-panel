@@ -1,4 +1,5 @@
 #include "preview-label.h"
+#include "../wallpaper-global.h"
 #include <QVBoxLayout>
 #include <QPainter>
 
@@ -67,7 +68,7 @@ void PreviewLabel::drawDesktopPreview(QPainter *painter)
     painter->restore();
 }
 
-void PreviewLabel::drawScreensaverPreview(QPainter *painter)
+void PreviewLabel::drawLockScreenPreview(QPainter *painter)
 {
     int width = this->rect().width();
     int height = this->rect().height();
@@ -118,7 +119,7 @@ void PreviewLabel::paintEvent(QPaintEvent *event)
     }
     else
     {
-        drawScreensaverPreview(&painter);
+        drawLockScreenPreview(&painter);
     }
     QLabel::paintEvent(event);
 }

@@ -26,4 +26,22 @@
     font-size: 14px;
 }
 
+#deleteButton
+{
+    border: none;
+    background-color: transparent;
+    background-image: url( ":/images/btn-delete-normal.png");
+}
+
+#deleteButton:pressed
+{
+    background-image: url(":/images/btn-delete-select.png");
+}
+
+#deleteButton:hover
+{
+    background-image: url(":/images/btn-delete-pre.png");
+}
+
+
 
