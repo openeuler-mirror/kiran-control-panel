@@ -53,6 +53,8 @@ xml文件图片信息项:(read,set)
 #include "widget/image-selector.h"
 #include "widget/kiran-image-load-manager.h"
 #include "widget/xml-management/thread-object.h"
+#include <kiran-message-box.h>
+#include <kiran-style-public-define.h>
 #include <QFileDialog>
 #include <QDir>
 #include <QThread>
@@ -69,7 +71,7 @@ Wallpaper::Wallpaper(QWidget *parent) :
 
     createChooserWidget();
 
-    createImageSelector();
+    handleImageSelector();
 }
 
 Wallpaper::~Wallpaper()
@@ -80,8 +82,8 @@ Wallpaper::~Wallpaper()
 void Wallpaper::initUI()
 {
     ui->stackedWidget->setCurrentIndex(0);
-
-    //多线程加载壁纸图片
+    m_imageSelector = new ImageSelector(this);
+    ui->vLayout_image_selector->addWidget(m_imageSelector);
 }
 
 void Wallpaper::createPreviewLabel()
@@ -93,11 +95,21 @@ void Wallpaper::createPreviewLabel()
     PreviewLabel *desktopPreview =  new PreviewLabel(DESKTOP,m_currDesktopWp,this);
     layoutDesktop->addWidget(desktopPreview);
     layoutDesktop->setAlignment(desktopPreview,Qt::AlignHCenter);
+    connect(this,&Wallpaper::wallpaperChanged,
+            [=](int type, QString path){
+        if(type == DESKTOP)
+            desktopPreview->updateWallpaper(DESKTOP,path);
+    });
 
     QLayout *layout = ui->widget_lockscreen_preview->layout();
     PreviewLabel *lockScreenPreview = new PreviewLabel(LOCK_SCREEN,m_currLockScreenWp,this);
     layout->addWidget(lockScreenPreview);
     layout->setAlignment(lockScreenPreview,Qt::AlignHCenter);
+    connect(this,&Wallpaper::wallpaperChanged,
+            [=](int type, QString path){
+        if(type == LOCK_SCREEN)
+            lockScreenPreview->updateWallpaper(LOCK_SCREEN,path);
+    });
 }
 
 void Wallpaper::createChooserWidget()
@@ -105,27 +117,30 @@ void Wallpaper::createChooserWidget()
     QString desktopWpName = m_currDesktopWp.split("/").last();
     QString lockScreenWpName = m_currLockScreenWp.split("/").last();
 
-    ChooserWidget *desktopWpChooser = new ChooserWidget(tr("Set Desktop Wallpaper"),DESKTOP);
-    desktopWpChooser->setName(desktopWpName);
-    ui->vLayout_chooser->addWidget(desktopWpChooser);
-    connect(desktopWpChooser,&ChooserWidget::clicked,
+    m_desktopWpChooser = new ChooserWidget(tr("Set Desktop Wallpaper"),DESKTOP);
+    m_desktopWpChooser->setName(desktopWpName);
+    ui->vLayout_chooser->addWidget(m_desktopWpChooser);
+    connect(m_desktopWpChooser,&ChooserWidget::clicked,
             [=]{
+        m_imageSelector->setSelectorType(DESKTOP);
+        m_imageSelector->setSelectedImage(m_currDesktopWp,false);
         ui->stackedWidget->setCurrentIndex(1);
     });
 
-    ChooserWidget *lockScreenWPChooser = new ChooserWidget(tr("Set Lock Screen Wallpaper"),LOCK_SCREEN);
-    lockScreenWPChooser->setName(lockScreenWpName);
-    ui->vLayout_chooser->addWidget(lockScreenWPChooser);
+    m_lockScreenWPChooser = new ChooserWidget(tr("Set Lock Screen Wallpaper"),LOCK_SCREEN);
+    m_lockScreenWPChooser->setName(lockScreenWpName);
+    ui->vLayout_chooser->addWidget(m_lockScreenWPChooser);
+    connect(m_lockScreenWPChooser,&ChooserWidget::clicked,
+            [=]{
+       m_imageSelector->setSelectorType(LOCK_SCREEN);
+       m_imageSelector->setSelectedImage(m_currLockScreenWp,false);
+       ui->stackedWidget->setCurrentIndex(1);
+    });
 
 }
 
-void Wallpaper::createImageSelector()
+void Wallpaper::handleImageSelector()
 {
-    QVBoxLayout *vLayout = new QVBoxLayout(ui->scrollAreaContents_wallpaper);
-    m_imageSelector = new ImageSelector(this);
-    vLayout->addWidget(m_imageSelector);
-    ui->scrollAreaContents_wallpaper->setLayout(vLayout);
-
     loadVisibleWallpapers();
 
     connect(m_imageSelector, &ImageSelector::selectedImageChanged,
@@ -134,8 +149,33 @@ void Wallpaper::createImageSelector()
         if(!imagePath.isNull())
         {
             //set background
+            if(type == DESKTOP)
+            {
+                if(AppearanceGlobalInfo::instance()->setDesktopBackground(imagePath))
+                {
+                    m_desktopWpChooser->setName(imagePath.split("/").last());
+                    m_currDesktopWp = imagePath;
+                    ui->stackedWidget->setCurrentIndex(0);
+                    emit wallpaperChanged(type,imagePath);;
+                }
+                else
+                    KiranMessageBox::message(nullptr,tr("set wallpaper"),tr("Set wallpaper failed!"),KiranMessageBox::Ok);
 
+            }
+            else
+            {
+                if(AppearanceGlobalInfo::instance()->setLockScreenBackground(imagePath))
+                {
+                    m_lockScreenWPChooser->setName(imagePath.split("/").last());
+                    m_currLockScreenWp = imagePath;
+                    ui->stackedWidget->setCurrentIndex(0);
+                    emit wallpaperChanged(type,imagePath);;
+                }
+                else
+                    KiranMessageBox::message(nullptr,tr("set wallpaper"),tr("Set wallpaper failed!"),KiranMessageBox::Ok);
+            }
             //jump to main ui
+
         }
         if(isAdditionImage)
         {
@@ -210,21 +250,26 @@ void Wallpaper::handleWallpaperInfo(QList<QMap<QString, QString> > wallpaperMapL
     for(QMap<QString,QString> map:wallpaperMapList)
     {
               QString deleted = map.find("deleted").value();
+              QString visibleImage;
               if(deleted == "false")
               {
+                  visibleImage = map.find("filename").value();
                   std::cout << "see deleted filename" << map.find("filename").value().toStdString() << std::endl ;
+                  if(visibleImage.startsWith(SYSTEM_BACKGROUND_PATH))
+                      m_imageSelector->addImage(visibleImage,SYSTEM_IMAGE);
+                  else
+                      m_imageSelector->addImage(visibleImage,CUSTOM_IMAGE);
+
                   m_visibleWallpaper.append(map.find("filename").value());
               }
     }
-    for(QString filename:m_visibleWallpaper)
-    {
-        if(filename.startsWith(SYSTEM_BACKGROUND_PATH))
-            m_imageSelector->addImage(filename,SYSTEM_IMAGE);
-        else
-            m_imageSelector->addImage(filename,CUSTOM_IMAGE);
-    }
     //添加+项
     m_imageSelector->addImage(nullptr,ADDITION_IMAGE);
+}
+
+QSize Wallpaper::sizeHint()
+{
+    return QSize(635,630);
 }
 
 void Wallpaper::loadVisibleWallpapers()

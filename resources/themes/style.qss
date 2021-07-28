@@ -43,5 +43,11 @@
     background-image: url(":/images/btn-delete-pre.png");
 }
 
+#ImageSelector
+{
+    border: 1px solid #393939;
+    border-radius : 6px;
+}
+
 
 

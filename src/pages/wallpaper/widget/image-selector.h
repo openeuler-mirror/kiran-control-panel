@@ -41,6 +41,8 @@ public slots:
     void handlerImageItemSelectedChanged(bool isAdditionImage);
     void handlerImageDelete(QString imagePath);
 
+protected:
+    void paintEvent(QPaintEvent *event);
 private:
     QStringList m_imageList;
     FlowLayout *m_flowLayout;

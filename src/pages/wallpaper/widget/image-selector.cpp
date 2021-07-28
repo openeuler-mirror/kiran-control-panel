@@ -5,6 +5,8 @@
 #include "../wallpaper-global.h"
 #include <kiranwidgets-qt5/kiran-message-box.h>
 #include <QScrollArea>
+#include <QStyleOption>
+#include <QPainter>
 #include <iostream>
 ImageSelector::ImageSelector(QWidget *parent):
     QWidget(parent)
@@ -18,11 +20,28 @@ ImageSelector::ImageSelector(QWidget *parent):
 
 void ImageSelector::initUI()
 {
-    //add scrol area
+    setMinimumHeight(470);
+    setObjectName("ImageSelector");
+    QVBoxLayout *vLayout = new QVBoxLayout(this);
+    vLayout->setMargin(0);
+    vLayout->setSpacing(0);
+    setLayout(vLayout);
+
+    QScrollArea *scrollArea = new QScrollArea(this);
+    scrollArea->setWidgetResizable(true);
+    scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+    scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    scrollArea->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+
+    vLayout->addWidget(scrollArea);
 
     m_flowLayout = new FlowLayout(0,10,10);
+    m_flowLayout->setContentsMargins(10,10,10,10);
+    auto container = new QWidget(scrollArea);
+    container->setMinimumWidth(610);
+    container->setLayout(m_flowLayout);
+    scrollArea->setWidget(container);
     setAttribute(Qt::WA_NoSystemBackground,true);
-    setLayout(m_flowLayout);
 }
 
 bool ImageSelector::isImageExisted(QString path)
@@ -201,4 +220,12 @@ void ImageSelector::handlerImageDelete(QString imagePath)
             m_updateTimer.start();
         }
     }
+}
+
+void ImageSelector::paintEvent(QPaintEvent *event)
+{
+    QStyleOption option;
+    option.init(this);
+    QPainter p(this);
+    style()->drawPrimitive(QStyle::PE_Widget, &option, &p, this);
 }
