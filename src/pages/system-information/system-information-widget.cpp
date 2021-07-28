@@ -233,12 +233,20 @@ bool SystemInformationWidget::readLicenseInfo()
 
             QDateTime time = QDateTime::fromTime_t(expired_time);
             QString dueTime  = time.toString("yyyy-MM-dd");
-            KLOG_INFO() << "due time = " <<dueTime;
+	    QDate expiredTime = QDate::fromString(dueTime,"yyyy-MM-dd");
+            KLOG_INFO() << "due time = " <<dueTime <<
+                           "year: " << expiredTime.year() <<
+                           "mouth: " << expiredTime.month() <<
+                           "day: " << expiredTime.day();
             ui->lab_expire_date_info->setText(dueTime);
 
-            QDateTime currentTime = QDateTime::currentDateTime();   //获取当前时间
-            uint currentTimeT = currentTime.toTime_t();   //将当前时间转为时间戳
-            if(currentTimeT>expired_time)
+	    QDate currentDate =  QDate::currentDate();
+            KLOG_INFO() << "current time = "<<
+                           "year: " << currentDate.year() <<
+                           "mouth: " << currentDate.month() <<
+                           "day: " << currentDate.day();
+
+	    if(currentDate.daysTo(expiredTime) < 0)
             {
                 ui->btn_status->setText(tr("Activate"));
                 isActive = false;
