@@ -475,7 +475,8 @@ void ActGuideWidget::handleActiveButton()
             if(!activedFlag)
             {
                 KLOG_DEBUG() <<licenseRegisterError;
-                ui->error_text->setText(licenseRegisterError);
+                QString error = QString("<p align=\"center\"> %1 </p>").arg(licenseRegisterError);
+                ui->error_text->setText(error);
                 emit systemIsActived(false);
             }
             else
@@ -506,7 +507,8 @@ void ActGuideWidget::handleActiveButton()
             else
             {
                 KLOG_DEBUG() <<keyRegisterError;
-                ui->error_text->setText(keyRegisterError);
+                QString error = QString("<p align=\"center\"> %1 </p>").arg(keyRegisterError);
+                ui->error_text->setText(error);
                 emit systemIsActived(false);
             }
             break;
@@ -532,7 +534,8 @@ void ActGuideWidget::handleActiveButton()
             else
             {
                 KLOG_DEBUG() << onlineRegisterError;
-                ui->error_text->setText(onlineRegisterError);
+                QString error = QString("<p align=\"center\"> %1 </p>").arg(onlineRegisterError);
+                ui->error_text->setText(error);
                 emit systemIsActived(false);
             }
             break;

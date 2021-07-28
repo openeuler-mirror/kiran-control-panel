@@ -522,9 +522,9 @@
         <location filename="../src/pages/system-information/system-information-widget.cpp" line="164"/>
         <location filename="../src/pages/system-information/system-information-widget.cpp" line="168"/>
         <location filename="../src/pages/system-information/system-information-widget.cpp" line="169"/>
-        <location filename="../src/pages/system-information/system-information-widget.cpp" line="433"/>
-        <location filename="../src/pages/system-information/system-information-widget.cpp" line="437"/>
-        <location filename="../src/pages/system-information/system-information-widget.cpp" line="438"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="441"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="445"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="446"/>
         <source>Unknow</source>
         <translation>未知</translation>
     </message>
@@ -545,13 +545,13 @@
     </message>
     <message>
         <location filename="../src/pages/system-information/system-information-widget.cpp" line="165"/>
-        <location filename="../src/pages/system-information/system-information-widget.cpp" line="434"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="442"/>
         <source>Can&apos;t get activation information</source>
         <translation>无法获取激活信息</translation>
     </message>
     <message>
         <location filename="../src/pages/system-information/system-information-widget.cpp" line="192"/>
-        <location filename="../src/pages/system-information/system-information-widget.cpp" line="243"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="251"/>
         <source>Activate</source>
         <translation>激活</translation>
     </message>
@@ -567,17 +567,17 @@
     </message>
     <message>
         <location filename="../src/pages/system-information/system-information-widget.cpp" line="231"/>
-        <location filename="../src/pages/system-information/system-information-widget.cpp" line="452"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="460"/>
         <source>Activated</source>
         <translation>已激活</translation>
     </message>
     <message>
-        <location filename="../src/pages/system-information/system-information-widget.cpp" line="514"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="521"/>
         <source>Copyright ©</source>
         <translation>版权所有 ©</translation>
     </message>
     <message>
-        <location filename="../src/pages/system-information/system-information-widget.cpp" line="514"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="521"/>
         <source>KylinSec. All rights reserved.</source>
         <translation>KylinSec.保留所有权利.</translation>
     </message>

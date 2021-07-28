@@ -200,9 +200,13 @@ QLabel#label_successful , QLabel#label_failed
     color:#ffffff;
 }
 
-QLabel#error_text
+QTextBrowser#error_text
 {
     color :#fe4935;
+    background-color: transparent;
+    selection-background-color: transparent;
+    selection-color:#fe4935;
+    border:none;
 }
 QLabel#label_authorized_points,QLabel#authorized_points,
 QLabel#label_remaining_points,QLabel#remaining_points,
