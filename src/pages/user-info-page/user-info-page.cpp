@@ -1,3 +1,22 @@
+ /**
+  * @Copyright (C) 2020 ~ 2021 KylinSec Co., Ltd.
+  *
+  * Author:     liuxinhao <liuxinhao@kylinos.com.cn>
+  *
+  * This program is free software; you can redistribute it and/or modify
+  * it under the terms of the GNU General Public License as published by
+  * the Free Software Foundation; either version 3 of the License, or
+  * (at your option) any later version.
+  *
+  * This program is distributed in the hope that it will be useful,
+  * but WITHOUT ANY WARRANTY; without even the implied warranty of
+  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  * GNU General Public License for more details.
+  *
+  * You should have received a copy of the GNU General Public License
+  * along with this program; If not, see <http: //www.gnu.org/licenses/>. 
+  */
+ 
 #include "user-info-page.h"
 #include "accounts-global-info.h"
 #include "accounts-user-interface.h"
@@ -51,13 +70,21 @@ void UserInfoPage::updateInfo()
 
     if (m_curShowUserName != AccountsGlobalInfo::instance()->getCurrentUser())
     {
+        ///显示用户非当前登录会话用户
+        /// 不验证当前密码，由后端验证ROOT密码
         ui->passwd_row_1->setVisible(false);
         ui->passwd_row_2->setVisible(false);
+        /// 允许删除用户
+        ui->btn_deleteUser->setEnabled(true);
     }
     else
     {
+        ///显示用户为当前登录会话用户
+        /// 验证当前密码
         ui->passwd_row_1->setVisible(true);
         ui->passwd_row_2->setVisible(true);
+        /// 禁用删除用户
+        ui->btn_deleteUser->setEnabled(false);
     }
 
     ui->stackedWidget->setCurrentIndex(PAGE_USER_INFO);
