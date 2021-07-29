@@ -698,12 +698,12 @@
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="112"/>
+        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="113"/>
         <source>standard</source>
         <translation>普通用户</translation>
     </message>
     <message>
-        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="113"/>
+        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="114"/>
         <source>administrator</source>
         <translation>管理员</translation>
     </message>
@@ -712,65 +712,65 @@
         <translation type="vanished">账户信息更新成功</translation>
     </message>
     <message>
-        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="275"/>
+        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="276"/>
         <source>Password updated successfully</source>
         <translation>密码更新成功</translation>
     </message>
     <message>
-        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="281"/>
+        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="282"/>
         <source>The directory and files under the user&apos;s home directory are deleted with the user.Are you sure you want to delete the user(%1)?</source>
         <translation>用户目录下的目录和文件会随用户一起删除，确定要删除%1用户吗？</translation>
     </message>
     <message>
-        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="284"/>
+        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="285"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="166"/>
+        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="167"/>
         <source>Please enter the new user password</source>
         <translation>请输入新密码</translation>
     </message>
     <message>
-        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="174"/>
+        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="175"/>
         <source>Please enter the password again</source>
         <translation>请再次输入密码</translation>
     </message>
     <message>
-        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="180"/>
+        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="181"/>
         <source>The password you enter must be the same as the former one</source>
         <translation>两次密码不相同，请核对后，再次输入</translation>
     </message>
     <message>
-        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="191"/>
+        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="192"/>
         <source>Please enter the current user password</source>
         <translation>请输入当前密码</translation>
     </message>
     <message>
-        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="197"/>
+        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="198"/>
         <source>The current password is incorrect</source>
         <translation>当前密码错误，请再次输入</translation>
     </message>
     <message>
-        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="204"/>
+        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="205"/>
         <source>The new password cannot be the same as the current password</source>
         <translation>新密码不能和旧密码相同，请重新输入</translation>
     </message>
     <message>
-        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="213"/>
-        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="250"/>
-        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="269"/>
-        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="303"/>
+        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="214"/>
+        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="251"/>
+        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="270"/>
+        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="304"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="213"/>
+        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="214"/>
         <source>Password encryption failed</source>
         <translation>密码加密失败</translation>
     </message>
     <message>
-        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="255"/>
+        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="256"/>
         <source>user information updated successfully</source>
         <translation>用户信息更新成功</translation>
     </message>
