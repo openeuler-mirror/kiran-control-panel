@@ -51,13 +51,21 @@ void UserInfoPage::updateInfo()
 
     if (m_curShowUserName != AccountsGlobalInfo::instance()->getCurrentUser())
     {
+        ///显示用户非当前登录会话用户
+        /// 不验证当前密码，由后端验证ROOT密码
         ui->passwd_row_1->setVisible(false);
         ui->passwd_row_2->setVisible(false);
+        /// 允许删除用户
+        ui->btn_deleteUser->setEnabled(true);
     }
     else
     {
+        ///显示用户为当前登录会话用户
+        /// 验证当前密码
         ui->passwd_row_1->setVisible(true);
         ui->passwd_row_2->setVisible(true);
+        /// 禁用删除用户
+        ui->btn_deleteUser->setEnabled(false);
     }
 
     ui->stackedWidget->setCurrentIndex(PAGE_USER_INFO);
