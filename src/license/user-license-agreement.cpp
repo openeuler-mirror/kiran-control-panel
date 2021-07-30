@@ -29,7 +29,8 @@
 #include <QtPrintSupport/QPrinter>
 #include <QTextDocument>
 #include <QStandardPaths>
-#define EULAFILE "/usr/share/kylin-release/EULA"
+#include <QLocale>
+#define EULAFILE "/usr/share/kylin-release"
 
 using namespace Kiran::WidgetPropertyHelper;
 using namespace Kiran;
@@ -112,7 +113,18 @@ void UserlicenseAgreement::initUI()
 
 void UserlicenseAgreement::addText()
 {
-    QFile file(EULAFILE);
+    QLocale locale = QLocale::system();
+    QString eulaFile;
+    if(locale.language() == QLocale::Chinese)
+    {
+        eulaFile = QString("%1/EULA-zh_CN").arg(EULAFILE);
+    }
+    else if(locale.language() == QLocale::English)
+    {
+        eulaFile = QString("%1/EULA-en_US").arg(EULAFILE);
+    }
+    KLOG_INFO() << eulaFile;
+    QFile file(eulaFile);
 
     if(!file.exists())
     {

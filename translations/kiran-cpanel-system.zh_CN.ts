@@ -5,19 +5,19 @@
     <name>ActGuideWidget</name>
     <message>
         <location filename="../src/license/active-guide-widget.ui" line="32"/>
-        <location filename="../build/kiran-cpanel-system_autogen/include/ui_active-guide-widget.h" line="848"/>
+        <location filename="../build/kiran-cpanel-system_autogen/include/ui_active-guide-widget.h" line="850"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/license/active-guide-widget.ui" line="198"/>
-        <location filename="../build/kiran-cpanel-system_autogen/include/ui_active-guide-widget.h" line="849"/>
+        <location filename="../build/kiran-cpanel-system_autogen/include/ui_active-guide-widget.h" line="851"/>
         <source>Please choose activation mode:</source>
         <translation>请选择激活方式：</translation>
     </message>
     <message>
         <location filename="../src/license/active-guide-widget.ui" line="283"/>
-        <location filename="../build/kiran-cpanel-system_autogen/include/ui_active-guide-widget.h" line="853"/>
+        <location filename="../build/kiran-cpanel-system_autogen/include/ui_active-guide-widget.h" line="855"/>
         <source>Next</source>
         <translation>下一步</translation>
     </message>
@@ -25,9 +25,9 @@
         <location filename="../src/license/active-guide-widget.ui" line="330"/>
         <location filename="../src/license/active-guide-widget.ui" line="560"/>
         <location filename="../src/license/active-guide-widget.ui" line="796"/>
-        <location filename="../build/kiran-cpanel-system_autogen/include/ui_active-guide-widget.h" line="854"/>
-        <location filename="../build/kiran-cpanel-system_autogen/include/ui_active-guide-widget.h" line="861"/>
-        <location filename="../build/kiran-cpanel-system_autogen/include/ui_active-guide-widget.h" line="868"/>
+        <location filename="../build/kiran-cpanel-system_autogen/include/ui_active-guide-widget.h" line="856"/>
+        <location filename="../build/kiran-cpanel-system_autogen/include/ui_active-guide-widget.h" line="863"/>
+        <location filename="../build/kiran-cpanel-system_autogen/include/ui_active-guide-widget.h" line="870"/>
         <source>Current machine code:</source>
         <translation>当前系统机器码:</translation>
     </message>
@@ -35,17 +35,15 @@
         <location filename="../src/license/active-guide-widget.ui" line="367"/>
         <location filename="../src/license/active-guide-widget.ui" line="597"/>
         <location filename="../src/license/active-guide-widget.ui" line="833"/>
-        <location filename="../src/license/active-guide-widget.ui" line="1445"/>
-        <location filename="../build/kiran-cpanel-system_autogen/include/ui_active-guide-widget.h" line="855"/>
-        <location filename="../build/kiran-cpanel-system_autogen/include/ui_active-guide-widget.h" line="862"/>
-        <location filename="../build/kiran-cpanel-system_autogen/include/ui_active-guide-widget.h" line="869"/>
-        <location filename="../build/kiran-cpanel-system_autogen/include/ui_active-guide-widget.h" line="893"/>
+        <location filename="../build/kiran-cpanel-system_autogen/include/ui_active-guide-widget.h" line="857"/>
+        <location filename="../build/kiran-cpanel-system_autogen/include/ui_active-guide-widget.h" line="864"/>
+        <location filename="../build/kiran-cpanel-system_autogen/include/ui_active-guide-widget.h" line="871"/>
         <source>TextLabel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/license/active-guide-widget.ui" line="419"/>
-        <location filename="../build/kiran-cpanel-system_autogen/include/ui_active-guide-widget.h" line="857"/>
+        <location filename="../build/kiran-cpanel-system_autogen/include/ui_active-guide-widget.h" line="859"/>
         <source>Please input activation code:</source>
         <translation>请输入激活码:</translation>
     </message>
@@ -53,35 +51,35 @@
         <location filename="../src/license/active-guide-widget.ui" line="499"/>
         <location filename="../src/license/active-guide-widget.ui" line="741"/>
         <location filename="../src/license/active-guide-widget.ui" line="968"/>
-        <location filename="../src/license/active-guide-widget.ui" line="1503"/>
-        <location filename="../build/kiran-cpanel-system_autogen/include/ui_active-guide-widget.h" line="859"/>
-        <location filename="../build/kiran-cpanel-system_autogen/include/ui_active-guide-widget.h" line="866"/>
-        <location filename="../build/kiran-cpanel-system_autogen/include/ui_active-guide-widget.h" line="873"/>
-        <location filename="../build/kiran-cpanel-system_autogen/include/ui_active-guide-widget.h" line="894"/>
+        <location filename="../src/license/active-guide-widget.ui" line="1510"/>
+        <location filename="../build/kiran-cpanel-system_autogen/include/ui_active-guide-widget.h" line="861"/>
+        <location filename="../build/kiran-cpanel-system_autogen/include/ui_active-guide-widget.h" line="868"/>
+        <location filename="../build/kiran-cpanel-system_autogen/include/ui_active-guide-widget.h" line="875"/>
+        <location filename="../build/kiran-cpanel-system_autogen/include/ui_active-guide-widget.h" line="900"/>
         <source>Back</source>
         <translation>上一步</translation>
     </message>
     <message>
         <location filename="../src/license/active-guide-widget.ui" line="658"/>
-        <location filename="../build/kiran-cpanel-system_autogen/include/ui_active-guide-widget.h" line="864"/>
+        <location filename="../build/kiran-cpanel-system_autogen/include/ui_active-guide-widget.h" line="866"/>
         <source>Please insert the UsbKey device first!</source>
         <translation>请先插入UsbKey设备!</translation>
     </message>
     <message>
         <location filename="../src/license/active-guide-widget.ui" line="216"/>
-        <location filename="../build/kiran-cpanel-system_autogen/include/ui_active-guide-widget.h" line="850"/>
+        <location filename="../build/kiran-cpanel-system_autogen/include/ui_active-guide-widget.h" line="852"/>
         <source>Activate online</source>
         <translation>在线激活</translation>
     </message>
     <message>
         <location filename="../src/license/active-guide-widget.ui" line="229"/>
-        <location filename="../build/kiran-cpanel-system_autogen/include/ui_active-guide-widget.h" line="851"/>
+        <location filename="../build/kiran-cpanel-system_autogen/include/ui_active-guide-widget.h" line="853"/>
         <source>Activate with  the input activation code</source>
         <translation>输入激活码激活</translation>
     </message>
     <message>
         <location filename="../src/license/active-guide-widget.ui" line="236"/>
-        <location filename="../build/kiran-cpanel-system_autogen/include/ui_active-guide-widget.h" line="852"/>
+        <location filename="../build/kiran-cpanel-system_autogen/include/ui_active-guide-widget.h" line="854"/>
         <source>Activate with insert UsbKey</source>
         <translation>插入UsbKey设备激活</translation>
     </message>
@@ -89,79 +87,89 @@
         <location filename="../src/license/active-guide-widget.ui" line="518"/>
         <location filename="../src/license/active-guide-widget.ui" line="763"/>
         <location filename="../src/license/active-guide-widget.ui" line="987"/>
-        <location filename="../build/kiran-cpanel-system_autogen/include/ui_active-guide-widget.h" line="860"/>
-        <location filename="../build/kiran-cpanel-system_autogen/include/ui_active-guide-widget.h" line="867"/>
-        <location filename="../build/kiran-cpanel-system_autogen/include/ui_active-guide-widget.h" line="874"/>
+        <location filename="../build/kiran-cpanel-system_autogen/include/ui_active-guide-widget.h" line="862"/>
+        <location filename="../build/kiran-cpanel-system_autogen/include/ui_active-guide-widget.h" line="869"/>
+        <location filename="../build/kiran-cpanel-system_autogen/include/ui_active-guide-widget.h" line="876"/>
         <source>Activate</source>
         <translation>激活</translation>
     </message>
     <message>
         <location filename="../src/license/active-guide-widget.ui" line="885"/>
-        <location filename="../build/kiran-cpanel-system_autogen/include/ui_active-guide-widget.h" line="871"/>
+        <location filename="../build/kiran-cpanel-system_autogen/include/ui_active-guide-widget.h" line="873"/>
         <source>Please enter the activate server address:</source>
         <translation>请输入激活服务器地址:</translation>
     </message>
     <message>
         <location filename="../src/license/active-guide-widget.ui" line="1042"/>
-        <location filename="../build/kiran-cpanel-system_autogen/include/ui_active-guide-widget.h" line="875"/>
+        <location filename="../build/kiran-cpanel-system_autogen/include/ui_active-guide-widget.h" line="877"/>
         <source>Activating......</source>
         <translation>正在激活......</translation>
     </message>
     <message>
         <location filename="../src/license/active-guide-widget.ui" line="1143"/>
-        <location filename="../build/kiran-cpanel-system_autogen/include/ui_active-guide-widget.h" line="877"/>
+        <location filename="../build/kiran-cpanel-system_autogen/include/ui_active-guide-widget.h" line="879"/>
         <source>System activate successful!</source>
         <translation>系统激活成功!</translation>
     </message>
     <message>
         <location filename="../src/license/active-guide-widget.ui" line="1190"/>
-        <location filename="../build/kiran-cpanel-system_autogen/include/ui_active-guide-widget.h" line="879"/>
+        <location filename="../build/kiran-cpanel-system_autogen/include/ui_active-guide-widget.h" line="881"/>
         <source>server authorized and remaining points:</source>
         <translation>服务器版激活点数和剩余点数:</translation>
     </message>
     <message>
         <location filename="../src/license/active-guide-widget.ui" line="1200"/>
-        <location filename="../build/kiran-cpanel-system_autogen/include/ui_active-guide-widget.h" line="880"/>
+        <location filename="../build/kiran-cpanel-system_autogen/include/ui_active-guide-widget.h" line="882"/>
         <source>development authorized and remaining points:</source>
         <translation>开发版激活点数和剩余点数:</translation>
     </message>
     <message>
         <location filename="../src/license/active-guide-widget.ui" line="1210"/>
-        <location filename="../build/kiran-cpanel-system_autogen/include/ui_active-guide-widget.h" line="881"/>
+        <location filename="../build/kiran-cpanel-system_autogen/include/ui_active-guide-widget.h" line="883"/>
         <source>industrial authorized and remaining points:</source>
         <translation>工控版激活点数和剩余点数:</translation>
     </message>
     <message>
         <location filename="../src/license/active-guide-widget.ui" line="1220"/>
-        <location filename="../build/kiran-cpanel-system_autogen/include/ui_active-guide-widget.h" line="882"/>
+        <location filename="../build/kiran-cpanel-system_autogen/include/ui_active-guide-widget.h" line="884"/>
         <source>desktop authorized and remaining points:</source>
         <translation>桌面版激活点数和剩余点数:</translation>
     </message>
     <message>
         <location filename="../src/license/active-guide-widget.ui" line="1250"/>
-        <location filename="../build/kiran-cpanel-system_autogen/include/ui_active-guide-widget.h" line="885"/>
+        <location filename="../build/kiran-cpanel-system_autogen/include/ui_active-guide-widget.h" line="887"/>
         <source>authorized points:</source>
         <translation>激活点数:</translation>
     </message>
     <message>
         <location filename="../src/license/active-guide-widget.ui" line="1280"/>
-        <location filename="../build/kiran-cpanel-system_autogen/include/ui_active-guide-widget.h" line="888"/>
+        <location filename="../build/kiran-cpanel-system_autogen/include/ui_active-guide-widget.h" line="890"/>
         <source>remaining points:</source>
         <translation>剩余点数:</translation>
     </message>
     <message>
         <location filename="../src/license/active-guide-widget.ui" line="1358"/>
-        <location filename="../src/license/active-guide-widget.ui" line="1522"/>
-        <location filename="../build/kiran-cpanel-system_autogen/include/ui_active-guide-widget.h" line="890"/>
-        <location filename="../build/kiran-cpanel-system_autogen/include/ui_active-guide-widget.h" line="895"/>
+        <location filename="../src/license/active-guide-widget.ui" line="1529"/>
+        <location filename="../build/kiran-cpanel-system_autogen/include/ui_active-guide-widget.h" line="892"/>
+        <location filename="../build/kiran-cpanel-system_autogen/include/ui_active-guide-widget.h" line="901"/>
         <source>Close</source>
         <translation>关闭</translation>
     </message>
     <message>
         <location filename="../src/license/active-guide-widget.ui" line="1435"/>
-        <location filename="../build/kiran-cpanel-system_autogen/include/ui_active-guide-widget.h" line="892"/>
+        <location filename="../build/kiran-cpanel-system_autogen/include/ui_active-guide-widget.h" line="894"/>
         <source>System activate failed!</source>
         <translation>系统激活失败!</translation>
+    </message>
+    <message>
+        <location filename="../src/license/active-guide-widget.ui" line="1451"/>
+        <location filename="../build/kiran-cpanel-system_autogen/include/ui_active-guide-widget.h" line="895"/>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Noto Sans CJK SC Thin&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/license/active-guide-widget.cpp" line="53"/>
@@ -314,6 +322,7 @@
     <message>
         <location filename="../src/information-list-item.ui" line="26"/>
         <location filename="../build/kiran-cpanel-system_autogen/include/ui_information-list-item.h" line="77"/>
+        <location filename="../build-kiran-system-information-qt5_11-Debug/ui_information-list-item.h" line="77"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
@@ -613,33 +622,33 @@ p, li { white-space: pre-wrap; }
         <translation>关闭</translation>
     </message>
     <message>
-        <location filename="../src/license/user-license-agreement.cpp" line="69"/>
+        <location filename="../src/license/user-license-agreement.cpp" line="70"/>
         <source>Save</source>
         <translation>保存</translation>
     </message>
     <message>
-        <location filename="../src/license/user-license-agreement.cpp" line="71"/>
+        <location filename="../src/license/user-license-agreement.cpp" line="72"/>
         <source>PDF(*.pdf)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/license/user-license-agreement.cpp" line="80"/>
+        <location filename="../src/license/user-license-agreement.cpp" line="81"/>
         <source>Export EULA</source>
         <translation>导出最终用户许可协议</translation>
     </message>
     <message>
-        <location filename="../src/license/user-license-agreement.cpp" line="80"/>
+        <location filename="../src/license/user-license-agreement.cpp" line="81"/>
         <source>Export EULA failed!</source>
         <translation>导出最终用户许可协议失败!</translation>
     </message>
     <message>
-        <location filename="../src/license/user-license-agreement.cpp" line="103"/>
+        <location filename="../src/license/user-license-agreement.cpp" line="104"/>
         <source>User End License Agreement</source>
         <translation>最终用户许可协议</translation>
     </message>
     <message>
-        <location filename="../src/license/user-license-agreement.cpp" line="120"/>
-        <location filename="../src/license/user-license-agreement.cpp" line="127"/>
+        <location filename="../src/license/user-license-agreement.cpp" line="133"/>
+        <location filename="../src/license/user-license-agreement.cpp" line="140"/>
         <source>None</source>
         <translation>暂无</translation>
     </message>
@@ -649,6 +658,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/kiran-system-information.ui" line="26"/>
         <location filename="../build/kiran-cpanel-system_autogen/include/ui_kiran-system-information.h" line="138"/>
+        <location filename="../build-kiran-system-information-qt5_11-Debug/ui_kiran-system-information.h" line="138"/>
         <source>kiranSystemInformation</source>
         <translation type="unfinished"></translation>
     </message>
