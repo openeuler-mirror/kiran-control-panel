@@ -30,8 +30,9 @@ public:
     void setIsSelected(bool selected);
 signals:
     void isSelectedChanged(bool isSelected);
-    void itemIsSelected(bool isAdditionImage);
+    void itemIsSelected();
     void deleteBtnClicked(QString path);
+    void addItemClicked();
 
 private:
     void createDeleteButton();

@@ -3,9 +3,11 @@
 
 #include <QWidget>
 #include <QTimer>
+#include <QScrollArea>
 
 class FlowLayout;
 class KiranImageItem;
+class ScrollContainer;
 class ImageSelector: public QWidget
 {
     Q_OBJECT
@@ -32,13 +34,14 @@ private:
     bool isImageExisted(QString path);
 
 signals:
-    void selectedImageChanged(int selectorType, QString path,bool isAdditionImage);
+    void selectedImageChanged(int selectorType, QString path);
     void deleteImage(QString deletedPath);
+    void addNewImage();
 
 public slots:
     /* 更新可见的Item图片 */
     void updateImageItem();
-    void handlerImageItemSelectedChanged(bool isAdditionImage);
+    void handlerImageItemSelectedChanged();
     void handlerImageDelete(QString imagePath);
 
 protected:
@@ -52,6 +55,8 @@ private:
     KiranImageItem* m_addImageItem = nullptr;
     KiranImageItem* m_customImageItem = nullptr;
     int m_selectorType = -1;
+    ScrollContainer *m_container;
+    QScrollArea *scrollArea;
 };
 
 #endif // IMAGESELECTOR_H

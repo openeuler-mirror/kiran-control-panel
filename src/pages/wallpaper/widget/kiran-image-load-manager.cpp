@@ -9,6 +9,7 @@
 #include <QDir>
 #include <QFile>
 #include <QtConcurrent/QtConcurrent>
+#include <iostream>
 
 KiranImageLoadManager::KiranImageLoadManager(QObject *parent) : QObject(parent) {
     init();
@@ -68,12 +69,11 @@ void KiranImageLoadManager::handlerNextLoadReq() {
     m_loadFutureWatcher.setFuture(future);
 }
 
-#include <iostream>
 QPixmap KiranImageLoadManager::loadPixmap(QString imagePath, QSize size) {
     QPixmap pixmap;
     pixmap.load(imagePath);
 
-    std::cout << "imagePath:" << imagePath.toStdString()<< std::endl;
+//    std::cout << "imagePath:" << imagePath.toStdString()<< std::endl;
 
     QSize pixmapSize = pixmap.size();
     qreal scaleFactor = qMax(size.width() / (double) pixmapSize.width(), size.height() / (double) pixmapSize.height());

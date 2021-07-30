@@ -144,10 +144,10 @@ void Wallpaper::handleImageSelector()
     loadVisibleWallpapers();
 
     connect(m_imageSelector, &ImageSelector::selectedImageChanged,
-            [=](int type, QString imagePath, bool isAdditionImage){
-        bool flag = false;
+            [=](int type, QString imagePath){
         if(!imagePath.isNull())
         {
+            std::cout << "image: " << imagePath.toStdString() << std::endl;
             //set background
             if(type == DESKTOP)
             {
@@ -156,7 +156,7 @@ void Wallpaper::handleImageSelector()
                     m_desktopWpChooser->setName(imagePath.split("/").last());
                     m_currDesktopWp = imagePath;
                     ui->stackedWidget->setCurrentIndex(0);
-                    emit wallpaperChanged(type,imagePath);;
+                    emit wallpaperChanged(type,imagePath);
                 }
                 else
                     KiranMessageBox::message(nullptr,tr("set wallpaper"),tr("Set wallpaper failed!"),KiranMessageBox::Ok);
@@ -175,51 +175,50 @@ void Wallpaper::handleImageSelector()
                     KiranMessageBox::message(nullptr,tr("set wallpaper"),tr("Set wallpaper failed!"),KiranMessageBox::Ok);
             }
             //jump to main ui
-
         }
-        if(isAdditionImage)
-        {
-            //popup custom image select dir:/home
-            QString fileName = QFileDialog::getOpenFileName(this, tr("select picture"),
-                                                            QDir::homePath(),
-                                                            tr("image files(*.bmp *.jpg *.png *.tif *.gif"
-                                                               " *.pcx *.tga *.exif *.fpx *.svg *.psd *.cdr *.pcd"
-                                                               " *.dxf *.ufo *.eps *.ai *.raw *.WMF *.webp)"));
-            if (fileName.isEmpty()) {
-                return;
-            }
-            //select
-            //addImage
-            m_imageSelector->addImage(fileName,CUSTOM_IMAGE);
-            //move additionImage Item to end
-            m_imageSelector->moveAdditionItemToEnd();
+    });
+    connect(m_imageSelector,&ImageSelector::addNewImage,
+            [=]{
+        bool flag = false;
+        QString fileName = QFileDialog::getOpenFileName(this, tr("select picture"),
+                                                        QDir::homePath(),
+                                                        tr("image files(*.bmp *.jpg *.png *.tif *.gif"
+                                                           " *.pcx *.tga *.exif *.fpx *.svg *.psd *.cdr *.pcd"
+                                                           " *.dxf *.ufo *.eps *.ai *.raw *.WMF *.webp)"));
+        if (fileName.isEmpty()) {
+            return;
+        }
+        //select
+        //addImage
+        m_imageSelector->addImage(fileName,CUSTOM_IMAGE);
+        //move additionImage Item to end
+        m_imageSelector->moveAdditionItemToEnd();
 
-            // 将图片信息存储在xml文件中，若文件不存在则创建
-            for( QList<QMap<QString,QString>>::iterator iter=m_wallpaperMapList.begin();
-                 iter!=m_wallpaperMapList.end();
-                 iter++){
-                if((*iter).find("filename").value() == fileName)
-                {
-                    flag = true;
-                    (*iter).insert("deleted","false");
-                    break;
-                }
-            }
-            if(!flag)
+        // 将图片信息存储在xml文件中，若文件不存在则创建
+        for( QList<QMap<QString,QString>>::iterator iter=m_wallpaperMapList.begin();
+             iter!=m_wallpaperMapList.end();
+             iter++){
+            if((*iter).find("filename").value() == fileName)
             {
-                QMap<QString, QString> newWallpaperInfo;
-                newWallpaperInfo.insert("deleted", "false");
-                newWallpaperInfo.insert("name", fileName.split("/").last());
-                newWallpaperInfo.insert("filename", fileName);
-                newWallpaperInfo.insert("artist", "(none)");
-                newWallpaperInfo.insert("options", "zoom");
-                newWallpaperInfo.insert("pcolor", "#000000");
-                newWallpaperInfo.insert("scolor", "#000000");
-                newWallpaperInfo.insert("shade_type", "vertical-gradient");
-                m_wallpaperMapList.append(newWallpaperInfo);
+                flag = true;
+                (*iter).insert("deleted","false");
+                break;
             }
-            m_threadObject->updateWallpaperXml(m_wallpaperMapList);
         }
+        if(!flag)
+        {
+            QMap<QString, QString> newWallpaperInfo;
+            newWallpaperInfo.insert("deleted", "false");
+            newWallpaperInfo.insert("name", fileName.split("/").last());
+            newWallpaperInfo.insert("filename", fileName);
+            newWallpaperInfo.insert("artist", "(none)");
+            newWallpaperInfo.insert("options", "zoom");
+            newWallpaperInfo.insert("pcolor", "#000000");
+            newWallpaperInfo.insert("scolor", "#000000");
+            newWallpaperInfo.insert("shade_type", "vertical-gradient");
+            m_wallpaperMapList.append(newWallpaperInfo);
+        }
+        m_threadObject->updateWallpaperXml(m_wallpaperMapList);
     });
 
     connect(m_imageSelector,&ImageSelector::deleteImage,

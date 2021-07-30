@@ -150,7 +150,7 @@
             </layout>
            </item>
            <item>
-            <widget class="QWidget" name="widget_3" native="true">
+            <widget class="QWidget" name="widget_effects" native="true">
              <layout class="QHBoxLayout" name="horizontalLayout">
               <property name="spacing">
                <number>0</number>

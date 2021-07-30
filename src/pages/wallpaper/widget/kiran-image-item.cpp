@@ -107,7 +107,8 @@ void KiranImageItem::paintEvent(QPaintEvent *event) {
     {
         //NOTE:ImageItem绘制过程由自己绘制不在Style中绘制的原因是由于不想再次图片在内存中再次拷贝传递给Style
         //std::cout << "size:" << geometry().size().width() << "," << geometry().size().height() << std::endl;
-        //std::cout << "m_previewPixmap.first:" << m_previewPixmap.first.width() << "," << m_previewPixmap.first.height() << std::endl;
+//        std::cout << "m_previewPixmap.first:" << m_previewPixmap.first.width() << ","
+//                  << m_previewPixmap.first.height() << std::endl;
 
         if (m_previewPixmap.first == QSize(180,100) && !m_previewPixmap.second.isNull()) {
             QRect drawTargetRect(rect().x()+3,rect().y()+3,rect().width()-6,rect().height()-6);
@@ -119,7 +120,7 @@ void KiranImageItem::paintEvent(QPaintEvent *event) {
         }
 
         if (m_isSelected) {
-            std::cout << "painevent: " <<  m_isSelected << std::endl;
+            //std::cout << "painevent: " <<  m_isSelected << std::endl;
             drawSelectedIndicator(p);
         } else {
             /* 没加载完成不绘制遮罩 */
@@ -163,7 +164,7 @@ void KiranImageItem::updatePixmap() {
 }
 
 void KiranImageItem::drawSelectedIndicator(QPainter &painter) {
-    std::cout << "drawSelectedIndicator:" << m_isSelected << std::endl;
+    //std::cout << "drawSelectedIndicator:" << m_isSelected << std::endl;
     painter.save();
 
     QPen pen(QColor("#2eb3ff"));
@@ -212,15 +213,18 @@ bool KiranImageItem::isSelected() {
 
 void KiranImageItem::setIsSelected(bool selected) {
     std::cout << "selectd = " << selected << std::endl;
-    bool isAdditionImage = property("isAdditionImage").toBool();
-    if (m_isSelected != selected || isAdditionImage) {
-        m_isSelected = selected;
+    if (m_isSelected != selected && !m_isAdditionImage) {
         std::cout << "m_isSelected = " << m_isSelected << std::endl;
+        m_isSelected = selected;
         emit isSelectedChanged(m_isSelected);
         if (m_isSelected) {
-            emit itemIsSelected(isAdditionImage);
+            emit itemIsSelected();
         }
         update();
+    }
+    if(m_isAdditionImage)
+    {
+        emit addItemClicked();
     }
 }
 

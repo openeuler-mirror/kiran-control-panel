@@ -51,6 +51,7 @@ void Themes::setPage(int index)
 bool Themes::initUI()
 {
     ui->stackedWidget->setCurrentIndex(0);
+    ui->widget_effects->hide();
 
     initThemesUI();
     initIconThemesUI();

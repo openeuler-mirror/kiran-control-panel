@@ -56,7 +56,8 @@ SOURCES += \
     pages/wallpaper/widget/kiran-image-item.cpp \
     pages/wallpaper/widget/kiran-image-load-manager.cpp \
     pages/wallpaper/widget/xml-management/thread-object.cpp \
-    pages/wallpaper/widget/xml-management/xml-management.cpp
+    pages/wallpaper/widget/xml-management/xml-management.cpp \
+    pages/wallpaper/widget/scroll-container.cpp
 
 HEADERS += \
         kiran-cpanel-appearance.h \
@@ -80,7 +81,8 @@ HEADERS += \
     pages/wallpaper/widget/kiran-image-load-manager.h \
     pages/wallpaper/widget/xml-management/thread-object.h \
     pages/wallpaper/widget/xml-management/xml-management.h \
-    pages/wallpaper/wallpaper-global.h
+    pages/wallpaper/wallpaper-global.h \
+    pages/wallpaper/widget/scroll-container.h
 
 FORMS += \
         kiran-cpanel-appearance.ui \

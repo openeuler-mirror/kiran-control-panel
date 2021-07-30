@@ -3,10 +3,12 @@
 #include "kiran-image-item.h"
 #include "kiran-image-load-manager.h"
 #include "../wallpaper-global.h"
+#include "scroll-container.h"
 #include <kiranwidgets-qt5/kiran-message-box.h>
 #include <QScrollArea>
 #include <QStyleOption>
 #include <QPainter>
+#include <QResizeEvent>
 #include <iostream>
 ImageSelector::ImageSelector(QWidget *parent):
     QWidget(parent)
@@ -20,14 +22,17 @@ ImageSelector::ImageSelector(QWidget *parent):
 
 void ImageSelector::initUI()
 {
-    setMinimumHeight(470);
+    //setMinimumHeight(470);
+    adjustSize();
+    setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Expanding);
     setObjectName("ImageSelector");
     QVBoxLayout *vLayout = new QVBoxLayout(this);
     vLayout->setMargin(0);
     vLayout->setSpacing(0);
     setLayout(vLayout);
 
-    QScrollArea *scrollArea = new QScrollArea(this);
+    scrollArea = new QScrollArea(this);
+    scrollArea->setObjectName("scrollArea");
     scrollArea->setWidgetResizable(true);
     scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
     scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -37,11 +42,23 @@ void ImageSelector::initUI()
 
     m_flowLayout = new FlowLayout(0,10,10);
     m_flowLayout->setContentsMargins(10,10,10,10);
-    auto container = new QWidget(scrollArea);
-    container->setMinimumWidth(610);
-    container->setLayout(m_flowLayout);
-    scrollArea->setWidget(container);
+    m_container = new ScrollContainer(scrollArea);
+    m_container->setObjectName("container");
+    m_container->setMinimumWidth(610);
+    m_container->setLayout(m_flowLayout);
+    scrollArea->setWidget(m_container);
+//    setLayout(m_flowLayout);
+//    setMinimumWidth(610);
     setAttribute(Qt::WA_NoSystemBackground,true);
+
+    connect(m_container,&ScrollContainer::resized,
+            [=](QSize newSize){
+        std::cout << "size = " <<
+                     newSize.width() << ","
+                  << newSize.height() << std::endl;
+        int height = m_flowLayout->heightForWidth(newSize.width());
+        resize(newSize.width(),height);
+    });
 }
 
 bool ImageSelector::isImageExisted(QString path)
@@ -91,8 +108,12 @@ void ImageSelector::addImage(const QString &imagePath, int imageType)
     m_flowLayout->addWidget(item);
     m_updateTimer.start();
 
-    connect(item,SIGNAL(itemIsSelected(bool)),this,SLOT(handlerImageItemSelectedChanged(bool)));
+    connect(item,SIGNAL(itemIsSelected()),this,SLOT(handlerImageItemSelectedChanged()));
     connect(item,SIGNAL(deleteBtnClicked(QString)),this,SLOT(handlerImageDelete(QString)));
+    connect(item,&KiranImageItem::addItemClicked,
+            [=]{
+        emit addNewImage();
+    });
 }
 
 void ImageSelector::removeImage(QString path)
@@ -132,32 +153,25 @@ void ImageSelector::setSelectorType(int type)
 void ImageSelector::updateImageItem()
 {
     KiranImageLoadManager::instance()->reset();
-    QRect imageListRect = rect();
-    for (KiranImageItem *item:m_itemList) {
-        /* 只更新显示项的图片 */
-        /* 将图片项的位置转换成在ImageList中的位置 */
-        QRect itemMappedRect(item->mapTo(this, QPoint(0, 0)), item->size());
-        if (imageListRect.intersects(itemMappedRect)) {
+    for (KiranImageItem *item:m_itemList) {     
             item->updatePixmap();
-        }
     }
-
 }
 
-void ImageSelector::handlerImageItemSelectedChanged(bool isAdditionImage)
+void ImageSelector::handlerImageItemSelectedChanged()
 {
     KiranImageItem *senderItem = qobject_cast<KiranImageItem *>(sender());
 
-    if(!isAdditionImage)
-    {
+//    if(!isAdditionImage)
+//    {
         for (KiranImageItem *item:m_itemList) {
             if (item != senderItem) {
                 item->setIsSelected(false);
             }
         }
         m_selectedImagePath = senderItem->imagePath();
-    }   
-    emit selectedImageChanged(m_selectorType ,m_selectedImagePath,isAdditionImage);
+    //}
+    emit selectedImageChanged(m_selectorType ,m_selectedImagePath);
 }
 
 void ImageSelector::handlerImageDelete(QString imagePath)
@@ -214,7 +228,7 @@ void ImageSelector::handlerImageDelete(QString imagePath)
                         m_selectedImagePath = m_itemList.at(deletePosIndex-1)->imagePath();
                     }
                     std::cout << "current m_selectedImagePath = " << m_selectedImagePath.toStdString() << std::endl;
-                    emit selectedImageChanged(m_selectorType, m_selectedImagePath,false);
+                    emit selectedImageChanged(m_selectorType, m_selectedImagePath);
                 }
             }
             m_updateTimer.start();
@@ -229,3 +243,13 @@ void ImageSelector::paintEvent(QPaintEvent *event)
     QPainter p(this);
     style()->drawPrimitive(QStyle::PE_Widget, &option, &p, this);
 }
+
+//void ImageSelector::resizeEvent(QResizeEvent *event)
+//{
+//    std::cout << "size = " <<
+//                 this->geometry().width() << ","
+//              << this->geometry().height() << std::endl;
+//    QSize size = event->size();
+//    int height = m_flowLayout->heightForWidth(size.width());
+//    resize(size.width(),height);
+//}
