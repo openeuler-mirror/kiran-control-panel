@@ -82,14 +82,12 @@ QString AppearanceGlobalInfo::getTheme(int themeType)
     {
         cout << "Call GetTheme method failed : Theme type: " << themeType
              << " Error: "<< reply.error().message().toStdString() << endl;
-        //FIXME: return ??
-        //return false;
+        return nullptr;
     }
     else if(reply.count() <1)
     {
         cout << "Don't get correct reply!" << endl;
-        //FIXME: return ??
-        //return false;
+        return nullptr;
     }
     else
     {
@@ -149,13 +147,11 @@ QStringList AppearanceGlobalInfo::getFont(int type)
     {
         cout << "Call GetFont method failed : Font type: " << type
              << " Error: "<< reply.error().message().toStdString() << endl;
-        //FIXME: return ??
     }
 
     else if(reply.count() <1)
     {
         cout << "Don't get correct reply!" << endl;
-        //FIXME: return ??
     }
     else
     {

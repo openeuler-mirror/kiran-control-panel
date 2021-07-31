@@ -84,7 +84,7 @@ bool Themes::initThemesUI()
 void Themes::initIconThemesUI()
 {
     //创建图标选择控件
-    m_chooseIconWidget = new ChooserWidget(tr("Choose icon theme"));
+    m_chooseIconWidget = new ChooserWidget(tr("Choose icon themes"));
     m_chooseIconWidget->setObjectName("chooseIconWidget");
     ui->verticalLayout_choose_widget->addWidget(m_chooseIconWidget);
 
@@ -123,7 +123,7 @@ void Themes::initIconThemesUI()
 void Themes::initCursorThemesUI()
 {
     //创建光标选择控件
-    m_chooseCursorWidget = new ChooserWidget(tr("Choose cursor widget"));
+    m_chooseCursorWidget = new ChooserWidget(tr("Choose cursor themes"));
     m_chooseCursorWidget->setObjectName("chooseCursorWidget");
 
     m_currCursorThemes = AppearanceGlobalInfo::instance()->getTheme(APPEARANCE_THEME_TYPE_CURSOR);

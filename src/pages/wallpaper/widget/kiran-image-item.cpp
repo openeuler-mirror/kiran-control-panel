@@ -37,13 +37,9 @@ KiranImageItem::KiranImageItem(QWidget *parent, const QString &path, int imageTy
     {
         createDeleteButton();
     }
-
-    setProperty("imageType", imageType);
-    setProperty("isAdditionImage",false);
     if(m_imageType == ADDITION_IMAGE)
     {
         m_isAdditionImage = true;
-        setProperty("isAdditionImage",true);
     }
 
     connect(KiranImageLoadManager::instance(), &KiranImageLoadManager::imageLoaded,
@@ -77,7 +73,6 @@ void KiranImageItem::paintEvent(QPaintEvent *event) {
     QPainter p(this);
     p.setRenderHint(QPainter::Antialiasing);
     bool imageIsLoaded = false;
-    int imageType = property("imageType").toInt();
 
     if(m_isAdditionImage)
     {
@@ -213,7 +208,7 @@ bool KiranImageItem::isSelected() {
 
 void KiranImageItem::setIsSelected(bool selected) {
     std::cout << "selectd = " << selected << std::endl;
-    if (m_isSelected != selected && !m_isAdditionImage) {
+    if (!m_isAdditionImage) {
         std::cout << "m_isSelected = " << m_isSelected << std::endl;
         m_isSelected = selected;
         emit isSelectedChanged(m_isSelected);
@@ -222,7 +217,7 @@ void KiranImageItem::setIsSelected(bool selected) {
         }
         update();
     }
-    if(m_isAdditionImage)
+    else
     {
         emit addItemClicked();
     }

@@ -46,6 +46,7 @@ public slots:
 
 protected:
     void paintEvent(QPaintEvent *event);
+    //virtual QSize sizeHint();
 private:
     QStringList m_imageList;
     FlowLayout *m_flowLayout;

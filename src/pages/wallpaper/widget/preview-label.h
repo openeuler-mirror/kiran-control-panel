@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QLabel>
+#include <QObject>
 
 class PreviewLabel : public QLabel
 {
@@ -15,12 +16,13 @@ public:
 private:
     void drawDesktopPreview(QPainter *painter);
     void drawLockScreenPreview(QPainter *painter);
+    QPixmap loadPixmap(QString imagePath);
 
 protected:
     void paintEvent(QPaintEvent *event);
 
 private:
-    QImage  m_wallpaperImg;
+    QPixmap m_wallpaperImg;
     int m_wallpaperType;
 };
 

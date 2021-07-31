@@ -19,7 +19,7 @@ KiranCpanelAppearance::KiranCpanelAppearance(QWidget *parent) :
         {
             ui->page_theme->setPage(0);
         }
-        else;
+        else{};
     });
 }
 

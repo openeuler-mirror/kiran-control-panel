@@ -151,6 +151,11 @@ void Wallpaper::handleImageSelector()
             //set background
             if(type == DESKTOP)
             {
+                if(m_currDesktopWp == imagePath)
+                {
+                    ui->stackedWidget->setCurrentIndex(0);
+                    return ;
+                }
                 if(AppearanceGlobalInfo::instance()->setDesktopBackground(imagePath))
                 {
                     m_desktopWpChooser->setName(imagePath.split("/").last());
@@ -164,6 +169,11 @@ void Wallpaper::handleImageSelector()
             }
             else
             {
+                if(m_currLockScreenWp == imagePath)
+                {
+                    ui->stackedWidget->setCurrentIndex(0);
+                    return ;
+                }
                 if(AppearanceGlobalInfo::instance()->setLockScreenBackground(imagePath))
                 {
                     m_lockScreenWPChooser->setName(imagePath.split("/").last());

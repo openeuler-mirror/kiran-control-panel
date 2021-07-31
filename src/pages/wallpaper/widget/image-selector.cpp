@@ -32,7 +32,6 @@ void ImageSelector::initUI()
     setLayout(vLayout);
 
     scrollArea = new QScrollArea(this);
-    scrollArea->setObjectName("scrollArea");
     scrollArea->setWidgetResizable(true);
     scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
     scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -43,12 +42,9 @@ void ImageSelector::initUI()
     m_flowLayout = new FlowLayout(0,10,10);
     m_flowLayout->setContentsMargins(10,10,10,10);
     m_container = new ScrollContainer(scrollArea);
-    m_container->setObjectName("container");
-    m_container->setMinimumWidth(610);
+    //this->set->setMinimumHeight(m_flowLayout->heightForWidth(size().width()));
     m_container->setLayout(m_flowLayout);
     scrollArea->setWidget(m_container);
-//    setLayout(m_flowLayout);
-//    setMinimumWidth(610);
     setAttribute(Qt::WA_NoSystemBackground,true);
 
     connect(m_container,&ScrollContainer::resized,
@@ -57,7 +53,8 @@ void ImageSelector::initUI()
                      newSize.width() << ","
                   << newSize.height() << std::endl;
         int height = m_flowLayout->heightForWidth(newSize.width());
-        resize(newSize.width(),height);
+        if(height <= size().height())
+            resize(size().width(),height);
     });
 }
 
@@ -114,11 +111,6 @@ void ImageSelector::addImage(const QString &imagePath, int imageType)
             [=]{
         emit addNewImage();
     });
-}
-
-void ImageSelector::removeImage(QString path)
-{
-
 }
 
 QString ImageSelector::selectedImage()
@@ -243,6 +235,11 @@ void ImageSelector::paintEvent(QPaintEvent *event)
     QPainter p(this);
     style()->drawPrimitive(QStyle::PE_Widget, &option, &p, this);
 }
+
+//QSize ImageSelector::sizeHint()
+//{
+//    //return QSize(width(),m_flowLayout->heightForWidth(size().width()));
+//}
 
 //void ImageSelector::resizeEvent(QResizeEvent *event)
 //{

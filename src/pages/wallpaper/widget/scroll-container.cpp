@@ -3,7 +3,7 @@
 ScrollContainer::ScrollContainer(QWidget *parent) :
     QWidget(parent)
 {
-
+    setObjectName("container");
 }
 
 void ScrollContainer::resizeEvent(QResizeEvent *e)
