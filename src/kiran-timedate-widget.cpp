@@ -95,7 +95,8 @@ void KiranTimeDateWidget::initUI()
             this,&KiranTimeDateWidget::handleSystemLongDisplayFormatChanged);
     connect(globalData,&KiranTimeDateGlobalData::secondsShowingChanged,
             this,&KiranTimeDateWidget::handleSystemSecondShowingChanged);
-
+    connect(globalData,&KiranTimeDateGlobalData::hourFormatChanged,
+            this,&KiranTimeDateWidget::handleSystemHourFormatChanged);
     ///时间显示格式设置
     m_showSeconds = globalData->secondsShowing();
     m_curTimeDateFormat = globalData->longDateFormatList().at(KiranTimeDateGlobalData::instance()->longDateFormatIndex());
