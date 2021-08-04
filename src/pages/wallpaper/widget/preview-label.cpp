@@ -9,7 +9,6 @@ PreviewLabel::PreviewLabel(int wallpaperType, QString imgPath, QWidget *parent):
 {
     setFixedSize(180,90);
     setAlignment(Qt::AlignHCenter);
-    //m_wallpaperImg.load(imgPath);
     m_wallpaperImg = loadPixmap(imgPath);
     m_wallpaperType = wallpaperType;
 }
@@ -83,8 +82,6 @@ void PreviewLabel::drawLockScreenPreview(QPainter *painter)
     {
         painter->drawPixmap(this->rect(),m_wallpaperImg);
     }
-
-    //painter->setPen(QColor(0,0,0,100));
     painter->setPen(Qt::NoPen);
     painter->setBrush(QColor(0,0,0,180));
 
@@ -116,8 +113,6 @@ QPixmap PreviewLabel::loadPixmap(QString imagePath)
     QPixmap pixmap;
     QSize size(180,90);
     pixmap.load(imagePath);
-
-//    std::cout << "imagePath:" << imagePath.toStdString()<< std::endl;
 
     QSize pixmapSize = pixmap.size();
     qreal scaleFactor = qMax(size.width() / (double) pixmapSize.width(), size.height() / (double) pixmapSize.height());

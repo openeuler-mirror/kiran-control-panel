@@ -2,7 +2,7 @@
 #include <QFile>
 #include <QXmlStreamReader>
 #include <QDir>
-#include <iostream>
+#include <kiran-log/qt5-log-i.h>
 #define LOCAL_WALLPAPER_FILE    ".config/kylinsec/wallpaper.xml"
 #define SYSTEM_WALLPAPER_FILE   "/usr/share/mate-background-properties/kiran_background.xml"
 
@@ -18,25 +18,34 @@ XmlManagement::~XmlManagement()
 
 }
 
+/**
+ * @brief XmlManagement::loadXmlFiles 加载xml文件
+ */
 void XmlManagement::loadXmlFiles()
 {
     QString localFile = QString("%1/%2").arg(QDir::homePath()).arg(LOCAL_WALLPAPER_FILE);
     QFile file(localFile);
     if(!file.exists())
     {
-        std::cout << "local xml file no exist" << std::endl;
+        KLOG_DEBUG() << "local xml file no exist";
         xmlReader(SYSTEM_WALLPAPER_FILE);
         xmlWriter();
     }
     xmlReader(localFile);
 }
 
+/**
+ * @brief XmlManagement::xmlReader 读取xml文件内容
+ * @param filePath xml文件路径
+ * @return true 读取成功
+ *         false 读取失败
+ */
 bool XmlManagement::xmlReader(QString filePath)
 {
     QFile file(filePath);
     if(!file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
-        std::cout << "open " << filePath.toStdString() << " failed!" << std::endl;
+        KLOG_DEBUG() << "open " << filePath << " failed!";
         return false;
     }
     m_wallpaperXmlHead.clear();
@@ -50,23 +59,23 @@ bool XmlManagement::xmlReader(QString filePath)
         switch (tokenType) {
         case QXmlStreamReader::StartDocument:
         {// head
-            std::cout << "********** 开始文档（XML 声明） ********** " << std::endl;
+            KLOG_INFO() << "********** 开始文档（XML 声明） ********** ";
             // XML 声明
             QString strVersion = reader.documentVersion().toString();
             QString strEncoding = reader.documentEncoding().toString();
-            std::cout << "版本：" << strVersion.toStdString() << " 编码：" << strEncoding.toStdString() << std::endl;
+            KLOG_INFO() << "版本：" << strVersion << " 编码：" << strEncoding;
             m_wallpaperXmlHead.insert("version",strVersion);
             m_wallpaperXmlHead.insert("encoding",strEncoding);
             break;
         }
         case QXmlStreamReader::DTD:
         {   // DTD
-            std::cout << "********** DTD ********** " << std::endl;
+            KLOG_INFO() << "********** DTD ********** ";
             // DTD 声明
             QString strDTDName = reader.dtdName().toString();
             QString strDTDSystemId = reader.dtdSystemId().toString();  // DTD 系统标识符
-            std::cout << "DTD 名称 : " <<strDTDName.toStdString() << std::endl;
-            std::cout << "DTD 系统标识符 : " <<strDTDSystemId.toStdString() << std::endl;
+            KLOG_INFO() << "DTD 名称 : " <<strDTDName;
+            KLOG_INFO() << "DTD 系统标识符 : " <<strDTDSystemId;
             m_wallpaperXmlHead.insert("DTD name",strDTDName);
             m_wallpaperXmlHead.insert("DTD systemId",strDTDSystemId);
             break;
@@ -75,7 +84,7 @@ bool XmlManagement::xmlReader(QString filePath)
         {
             if(reader.name() == "wallpapers")
             {
-                std::cout <<"********** 开始元素<wallpapers> ********** "<< std::endl;
+                KLOG_INFO() <<"********** 开始元素<wallpapers> ********** ";
                 // parse wallpapers
                 parseWallpapers(reader);
             }
@@ -83,7 +92,7 @@ bool XmlManagement::xmlReader(QString filePath)
         }
         case QXmlStreamReader::EndDocument:
         {  // 结束文档
-            std::cout << "********** 结束文档 ********** "<< std::endl;
+            KLOG_INFO() << "********** 结束文档 ********** ";
             break;
         }
         default:
@@ -93,20 +102,25 @@ bool XmlManagement::xmlReader(QString filePath)
     if(reader.hasError())
     {
         file.close();
-        std::cout << "error: " << reader.error() << std::endl;
+        KLOG_DEBUG() << "error: " << reader.error();
         return false;
     }
     file.close();
     return true;
 }
 
+/**
+ * @brief XmlManagement::xmlWriter 将壁纸信息写入xml文件
+ * @return true 写入成功
+ *         false 写入失败
+ */
 bool XmlManagement::xmlWriter()
 {
     QString localFile = QString("%1/%2").arg(QDir::homePath()).arg(LOCAL_WALLPAPER_FILE);
     QFile file(localFile);
     if(!file.open(QFile::WriteOnly | QFile::Text))
     {
-        std::cout << "open " <<localFile.toStdString() <<" failed!" << std::endl;
+        KLOG_DEBUG() << "open " <<localFile <<" failed!";
         return false;
     }
 
@@ -125,7 +139,7 @@ bool XmlManagement::xmlWriter()
     //write body
     writer.writeStartElement("wallpapers");
 
-    std::cout << "m_mapList size " << m_mapList.size() << std::endl;
+    KLOG_INFO() << "m_mapList size " << m_mapList.size();
     for(QMap<QString,QString> map:m_mapList)
     {
         QMap<QString, QString>::const_iterator i = map.begin();
@@ -183,18 +197,22 @@ bool XmlManagement::xmlWriter()
 }
 
 //add(one),delete
+/**
+ * @brief XmlManagement::xmlUpdate 更新xml文件内容
+ * @param updateList 更新的壁纸信息列表
+ */
 void XmlManagement::xmlUpdate(QList<QMap<QString,QString>> updateList)
 {
     QString localFile = QString("%1/%2").arg(QDir::homePath()).arg(LOCAL_WALLPAPER_FILE);
     QFile file(localFile);
     if(!file.open(QFile::WriteOnly | QFile::Text))
     {
-        std::cout << "open " <<localFile.toStdString() <<" failed!" << std::endl;
+        KLOG_DEBUG() << "open " <<localFile <<" failed!";
         return;
     }
     if(updateList.size() < 1)
     {
-        std::cout << "there has no element to update!" << std::endl;
+        KLOG_DEBUG() << "there has no element to update!";
         return;
     }
 
@@ -213,7 +231,7 @@ void XmlManagement::xmlUpdate(QList<QMap<QString,QString>> updateList)
     //write body
     writer.writeStartElement("wallpapers");
 
-    std::cout << "updateList size " << updateList.size() << std::endl;
+    KLOG_INFO() << "updateList size " << updateList.size();
     for(QMap<QString,QString> map:updateList)
     {
         QMap<QString, QString>::const_iterator i = map.begin();
@@ -254,11 +272,11 @@ void XmlManagement::parseWallpapers(QXmlStreamReader &reader)
         {
             if(reader.name() == "wallpaper")
             {
-                std::cout << "********** 开始元素<wallpaper> ********** " << std::endl;
+                KLOG_INFO() << "********** 开始元素<wallpaper> ********** " ;
                 QXmlStreamAttributes attributes = reader.attributes();
                 if (attributes.hasAttribute("deleted")) {
                     QString strDeleted = attributes.value("deleted").toString();
-                    std::cout << "属性：deleted:" << strDeleted.toStdString() << std::endl;
+                    KLOG_INFO() << "属性：deleted:" << strDeleted;
                     bodyMap.insert("deleted",strDeleted);
                 }
             }
@@ -268,13 +286,13 @@ void XmlManagement::parseWallpapers(QXmlStreamReader &reader)
                 QString name = reader.readElementText();
                 if(!attributes.hasAttribute("xml:lang"))
                 {
-                    std::cout << "wallpaper name = " << name.toStdString() << std::endl;
+                    KLOG_INFO() << "wallpaper name = " << name;
                     bodyMap.insert("name",name);
                 }
                 else
                 {
                     QString xmlLang = attributes.value("xml:lang").toString();
-                    std::cout << "语言：xml:lang:" << xmlLang.toStdString() << " 名字：" << name.toStdString()<< std::endl;
+                    KLOG_INFO() << "语言：xml:lang:" << xmlLang<< " 名字：" << name;
                     bodyMap.insert("xml:lang",xmlLang);
                     bodyMap.insert("langName",name);
                 }
@@ -282,25 +300,25 @@ void XmlManagement::parseWallpapers(QXmlStreamReader &reader)
             else if(reader.name() == "filename")
             {
                 QString fileName = reader.readElementText();
-                std::cout << "wallpaper fileName = " << fileName.toStdString() << std::endl;
+                KLOG_INFO() << "wallpaper fileName = " << fileName;
                 bodyMap.insert("filename",fileName);
             }
             else if(reader.name() == "options")
             {
                 QString options = reader.readElementText();
-                std::cout << "wallpaper options = " << options.toStdString() << std::endl;
+                KLOG_INFO() << "wallpaper options = " << options;
                 bodyMap.insert("options",options);
             }
             else
             {
-                std::cout << "wallpaper = " << reader.name().toString().toStdString() << std::endl;
+                KLOG_INFO() << "wallpaper = " << reader.name().toString();
                 bodyMap.insert(reader.name().toString(), reader.readElementText());
             }
             break;
         }
         case QXmlStreamReader::EndElement:
         {
-            std::cout << "********** 结束元素<" <<reader.name().toString().toStdString() << "> ********** " << std::endl;
+            KLOG_INFO() << "********** 结束元素<" <<reader.name().toString()<< "> ********** ";
             if(reader.name() == "wallpaper")
             {
                 m_mapList.append(bodyMap);
@@ -313,31 +331,9 @@ void XmlManagement::parseWallpapers(QXmlStreamReader &reader)
     }
     if(reader.hasError())
     {
-        std::cout << "wallpaper error" << reader.error() << std::endl;
+        KLOG_INFO() << "wallpaper error" << reader.error();
     }
-
-    //getVisibleWallpaper();
 }
-
-//void XmlManagement::getVisibleWallpaper()
-//{
-//    for(QMap<QString,QString> map:m_mapList)
-//    {
-//        QMap<QString, QString>::const_iterator i = map.constBegin();
-//          while (i != map.constEnd()) {
-//              QString deleted = map.find("deleted").value();
-//              if(deleted == "false")
-//              {
-//                  m_visibleWallpaper.append(map.find("filename").value());
-//                  break;
-//              }
-//          }
-//    }
-////    for(QString file:m_visibleWallpaper)
-////    {
-////        std::cout << "visible wallpaper :" << file.toStdString() << std::endl;
-//    //    }
-//}
 
 QList<QMap<QString, QString> > XmlManagement::getXmlBodyInfo()
 {

@@ -6,7 +6,7 @@
 #include <QScrollArea>
 
 class FlowLayout;
-class KiranImageItem;
+class ImageItem;
 class ScrollContainer;
 class ImageSelector: public QWidget
 {
@@ -50,11 +50,11 @@ protected:
 private:
     QStringList m_imageList;
     FlowLayout *m_flowLayout;
-    QList<KiranImageItem *> m_itemList;
+    QList<ImageItem *> m_itemList;
     QString m_selectedImagePath;
     QTimer m_updateTimer;
-    KiranImageItem* m_addImageItem = nullptr;
-    KiranImageItem* m_customImageItem = nullptr;
+    ImageItem* m_addImageItem = nullptr;
+    ImageItem* m_customImageItem = nullptr;
     int m_selectorType = -1;
     ScrollContainer *m_container;
     QScrollArea *scrollArea;

@@ -18,7 +18,6 @@ public:
 private:
     bool initUI();
     void getCurrentFontInfo(int fontType);
-    QStringList getFont(int fontType);
     void setFont(int fontType , QStringList fontInfoList);
     void connectSignals();
 

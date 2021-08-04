@@ -2,56 +2,55 @@
 // Created by lxh on 2021/1/15.
 //
 
-#include "kiran-image-load-manager.h"
+#include "image-load-manager.h"
 
 #include <QStandardPaths>
 #include <QApplication>
 #include <QDir>
 #include <QFile>
 #include <QtConcurrent/QtConcurrent>
-#include <iostream>
 
-KiranImageLoadManager::KiranImageLoadManager(QObject *parent) : QObject(parent) {
+ImageLoadManager::ImageLoadManager(QObject *parent) : QObject(parent) {
     init();
 }
 
-void KiranImageLoadManager::init() {
+void ImageLoadManager::init() {
     connect(&m_loadFutureWatcher, &QFutureWatcher<QPixmap>::finished,
-            this, &KiranImageLoadManager::onLoadFinished, Qt::QueuedConnection);
+            this, &ImageLoadManager::onLoadFinished, Qt::QueuedConnection);
 }
 
-KiranImageLoadManager *KiranImageLoadManager::instance() {
+ImageLoadManager *ImageLoadManager::instance() {
     static QMutex mutex;
-    static QScopedPointer<KiranImageLoadManager> pInst;
+    static QScopedPointer<ImageLoadManager> pInst;
 
     if (Q_UNLIKELY(!pInst)) {
         QMutexLocker locker(&mutex);
         if (pInst.isNull()) {
-            pInst.reset(new KiranImageLoadManager);
+            pInst.reset(new ImageLoadManager);
         }
     }
 
     return pInst.data();
 }
 
-KiranImageLoadManager::~KiranImageLoadManager() {
+ImageLoadManager::~ImageLoadManager() {
     reset();
 }
 
-void KiranImageLoadManager::load(QString imagePath, QSize size) {
+void ImageLoadManager::load(QString imagePath, QSize size) {
     m_loadReqQueue.enqueue(QPair<QString, QSize>(imagePath, size));
     if (m_loadReqQueue.size() == 1) {
         handlerNextLoadReq();
     }
 }
 
-void KiranImageLoadManager::reset() {
+void ImageLoadManager::reset() {
     m_loadReqQueue.clear();
     m_loadFutureWatcher.cancel();
     m_loadFutureWatcher.waitForFinished();
 }
 
-void KiranImageLoadManager::onLoadFinished() {
+void ImageLoadManager::onLoadFinished() {
     if (m_loadFutureWatcher.isCanceled()) {
         return;
     }
@@ -62,18 +61,16 @@ void KiranImageLoadManager::onLoadFinished() {
     }
 }
 
-void KiranImageLoadManager::handlerNextLoadReq() {
+void ImageLoadManager::handlerNextLoadReq() {
     Q_ASSERT(m_loadFutureWatcher.isFinished() || m_loadFutureWatcher.isCanceled());
     QPair<QString, QSize> req = m_loadReqQueue.front();
     QFuture<QPixmap> future = QtConcurrent::run(loadPixmap, req.first, req.second);
     m_loadFutureWatcher.setFuture(future);
 }
 
-QPixmap KiranImageLoadManager::loadPixmap(QString imagePath, QSize size) {
+QPixmap ImageLoadManager::loadPixmap(QString imagePath, QSize size) {
     QPixmap pixmap;
     pixmap.load(imagePath);
-
-//    std::cout << "imagePath:" << imagePath.toStdString()<< std::endl;
 
     QSize pixmapSize = pixmap.size();
     qreal scaleFactor = qMax(size.width() / (double) pixmapSize.width(), size.height() / (double) pixmapSize.height());

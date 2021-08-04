@@ -9,16 +9,17 @@
 #include <kiran-message-box.h>
 #include <QFile>
 #include <kiran-log/qt5-log-i.h>
+#include "config/config.h"
 
 //TODO:use config.h
-#define TRANSLATION_DIR "/usr/share/kiran-cpanel-appearance/translations/"
+#define TRANSLATION_DIR TRANSLATIONS_FILE_DIR
 
 int main(int argc, char *argv[])
 {
     //设置日志输出
     QLoggingCategory::defaultCategory()->setEnabled(QtMsgType::QtDebugMsg,true);
     if (klog_qt5_init("", "kylinsec-session", "kiran-cpanel-appearance", "kiran-cpanel-appearance") < 0){
-        std::cout << "init zlog error" << std::endl;
+        std::cout << "init klog error" << std::endl;
     }
 
     KLOG_INFO() <<"******New Output*********";

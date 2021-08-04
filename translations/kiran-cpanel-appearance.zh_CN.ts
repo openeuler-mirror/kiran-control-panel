@@ -5,6 +5,7 @@
     <name>ChooserWidget</name>
     <message>
         <location filename="../src/common/chooser-widget.ui" line="26"/>
+        <location filename="../build/kiran-cpanel-appearance_autogen/include/ui_chooser-widget.h" line="68"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
@@ -12,6 +13,9 @@
         <location filename="../src/common/chooser-widget.ui" line="47"/>
         <location filename="../src/common/chooser-widget.ui" line="67"/>
         <location filename="../src/common/chooser-widget.ui" line="74"/>
+        <location filename="../build/kiran-cpanel-appearance_autogen/include/ui_chooser-widget.h" line="69"/>
+        <location filename="../build/kiran-cpanel-appearance_autogen/include/ui_chooser-widget.h" line="70"/>
+        <location filename="../build/kiran-cpanel-appearance_autogen/include/ui_chooser-widget.h" line="71"/>
         <source>TextLabel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -24,12 +28,12 @@
         <translation>光标主题设置</translation>
     </message>
     <message>
-        <location filename="../src/pages/theme/cursor-themes/cursor-themes.cpp" line="167"/>
+        <location filename="../src/pages/theme/cursor-themes/cursor-themes.cpp" line="188"/>
         <source>Faild</source>
         <translation>失败</translation>
     </message>
     <message>
-        <location filename="../src/pages/theme/cursor-themes/cursor-themes.cpp" line="168"/>
+        <location filename="../src/pages/theme/cursor-themes/cursor-themes.cpp" line="189"/>
         <source>Set cursor themes failed!</source>
         <translation>设置光标主题失败!</translation>
     </message>
@@ -38,21 +42,25 @@
     <name>Fonts</name>
     <message>
         <location filename="../src/pages/font/fonts.ui" line="14"/>
+        <location filename="../build/kiran-cpanel-appearance_autogen/include/ui_fonts.h" line="175"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/pages/font/fonts.ui" line="53"/>
+        <location filename="../build/kiran-cpanel-appearance_autogen/include/ui_fonts.h" line="176"/>
         <source>Application Font Settings</source>
         <translation>应用程序字体设置</translation>
     </message>
     <message>
         <location filename="../src/pages/font/fonts.ui" line="129"/>
+        <location filename="../build/kiran-cpanel-appearance_autogen/include/ui_fonts.h" line="177"/>
         <source>Titlebar Font Settings</source>
         <translation>窗口标题字体设置</translation>
     </message>
     <message>
         <location filename="../src/pages/font/fonts.ui" line="199"/>
+        <location filename="../build/kiran-cpanel-appearance_autogen/include/ui_fonts.h" line="178"/>
         <source>Monospace Font Settings</source>
         <translation>等宽字体设置</translation>
     </message>
@@ -61,21 +69,23 @@
     <name>IconThemes</name>
     <message>
         <location filename="../src/pages/theme/icon-themes/icon-themes.ui" line="14"/>
+        <location filename="../build/kiran-cpanel-appearance_autogen/include/ui_icon-themes.h" line="60"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/pages/theme/icon-themes/icon-themes.ui" line="35"/>
+        <location filename="../build/kiran-cpanel-appearance_autogen/include/ui_icon-themes.h" line="61"/>
         <source>Icon Themes Setting</source>
         <translation>图标主题设置</translation>
     </message>
     <message>
-        <location filename="../src/pages/theme/icon-themes/icon-themes.cpp" line="172"/>
+        <location filename="../src/pages/theme/icon-themes/icon-themes.cpp" line="170"/>
         <source>Faild</source>
         <translation>失败</translation>
     </message>
     <message>
-        <location filename="../src/pages/theme/icon-themes/icon-themes.cpp" line="173"/>
+        <location filename="../src/pages/theme/icon-themes/icon-themes.cpp" line="171"/>
         <source>Set icon themes failed!</source>
         <translation>设置图标主题失败!</translation>
     </message>
@@ -93,20 +103,34 @@
         <translation>该壁纸已存在!</translation>
     </message>
     <message>
-        <location filename="../src/pages/wallpaper/widget/image-selector.cpp" line="186"/>
+        <location filename="../src/pages/wallpaper/widget/image-selector.cpp" line="171"/>
         <source>Delete image</source>
         <translation>删除壁纸</translation>
     </message>
     <message>
-        <location filename="../src/pages/wallpaper/widget/image-selector.cpp" line="187"/>
+        <location filename="../src/pages/wallpaper/widget/image-selector.cpp" line="172"/>
         <source>Are you sure you want to delete this picture?</source>
         <translation>您确定要删除此壁纸?</translation>
+    </message>
+</context>
+<context>
+    <name>KcpInterface</name>
+    <message>
+        <location filename="../src/interface.cpp" line="60"/>
+        <source>warning</source>
+        <translation>警告</translation>
+    </message>
+    <message>
+        <location filename="../src/interface.cpp" line="60"/>
+        <source>load qss file failed</source>
+        <translation>加载qss文件失败</translation>
     </message>
 </context>
 <context>
     <name>KiranCpanelAppearance</name>
     <message>
         <location filename="../src/kiran-cpanel-appearance.ui" line="14"/>
+        <location filename="../build/kiran-cpanel-appearance_autogen/include/ui_kiran-cpanel-appearance.h" line="107"/>
         <source>KiranCpanelAppearance</source>
         <translation>个性化设置</translation>
     </message>
@@ -133,34 +157,34 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/pages/font/fonts.cpp" line="118"/>
-        <location filename="../src/pages/theme/themes.cpp" line="102"/>
-        <location filename="../src/pages/theme/themes.cpp" line="141"/>
+        <location filename="../src/pages/font/fonts.cpp" line="117"/>
+        <location filename="../src/pages/theme/themes.cpp" line="123"/>
+        <location filename="../src/pages/theme/themes.cpp" line="177"/>
         <source>Failed</source>
         <translation>失败</translation>
     </message>
     <message>
-        <location filename="../src/pages/font/fonts.cpp" line="119"/>
+        <location filename="../src/pages/font/fonts.cpp" line="118"/>
         <source>Set font  failed!</source>
         <translation>设置字体失败!</translation>
     </message>
     <message>
-        <location filename="../src/pages/theme/themes.cpp" line="103"/>
+        <location filename="../src/pages/theme/themes.cpp" line="124"/>
         <source>Get icon themes failed!</source>
         <translation>获取图标主题失败!</translation>
     </message>
     <message>
-        <location filename="../src/pages/theme/themes.cpp" line="142"/>
+        <location filename="../src/pages/theme/themes.cpp" line="178"/>
         <source>Get cursor themes failed!</source>
         <translation>获取光标主题失败!</translation>
     </message>
     <message>
-        <location filename="../src/pages/theme/themes.cpp" line="179"/>
+        <location filename="../src/pages/theme/themes.cpp" line="221"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="../src/pages/theme/themes.cpp" line="180"/>
+        <location filename="../src/pages/theme/themes.cpp" line="222"/>
         <source>There is no theme to set!</source>
         <translation>目前没有主题可以设置!</translation>
     </message>
@@ -168,12 +192,12 @@
 <context>
     <name>ThemeWidget</name>
     <message>
-        <location filename="../src/pages/theme/theme-widget.cpp" line="107"/>
+        <location filename="../src/pages/theme/theme-widget.cpp" line="120"/>
         <source>Dark Theme</source>
         <translation>深色主题</translation>
     </message>
     <message>
-        <location filename="../src/pages/theme/theme-widget.cpp" line="112"/>
+        <location filename="../src/pages/theme/theme-widget.cpp" line="125"/>
         <source>Light Theme</source>
         <translation>浅色主题</translation>
     </message>
@@ -182,21 +206,25 @@
     <name>Themes</name>
     <message>
         <location filename="../src/pages/theme/themes.ui" line="14"/>
+        <location filename="../build/kiran-cpanel-appearance_autogen/include/ui_themes.h" line="180"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/pages/theme/themes.ui" line="111"/>
+        <location filename="../build/kiran-cpanel-appearance_autogen/include/ui_themes.h" line="181"/>
         <source>Dark and Light Theme</source>
         <translation>深浅色主题设置</translation>
     </message>
     <message>
         <location filename="../src/pages/theme/themes.ui" line="139"/>
+        <location filename="../build/kiran-cpanel-appearance_autogen/include/ui_themes.h" line="182"/>
         <source>Themes Settings</source>
         <translation>主题设置</translation>
     </message>
     <message>
         <location filename="../src/pages/theme/themes.ui" line="179"/>
+        <location filename="../build/kiran-cpanel-appearance_autogen/include/ui_themes.h" line="183"/>
         <source>Open Window Effects</source>
         <translation>打开或关闭窗口特效</translation>
     </message>
@@ -205,18 +233,18 @@
         <translation type="vanished">选择图标主题</translation>
     </message>
     <message>
-        <location filename="../src/pages/theme/themes.cpp" line="87"/>
+        <location filename="../src/pages/theme/themes.cpp" line="102"/>
         <source>Choose icon themes</source>
         <translation>选择图标主题</translation>
     </message>
     <message>
-        <location filename="../src/pages/theme/themes.cpp" line="105"/>
-        <location filename="../src/pages/theme/themes.cpp" line="144"/>
+        <location filename="../src/pages/theme/themes.cpp" line="109"/>
+        <location filename="../src/pages/theme/themes.cpp" line="164"/>
         <source>Unknown</source>
         <translation>未知</translation>
     </message>
     <message>
-        <location filename="../src/pages/theme/themes.cpp" line="126"/>
+        <location filename="../src/pages/theme/themes.cpp" line="157"/>
         <source>Choose cursor themes</source>
         <translation>选择光标主题</translation>
     </message>
@@ -229,63 +257,69 @@
     <name>Wallpaper</name>
     <message>
         <location filename="../src/pages/wallpaper/wallpaper.ui" line="14"/>
+        <location filename="../build/kiran-cpanel-appearance_autogen/include/ui_wallpaper.h" line="194"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/pages/wallpaper/wallpaper.ui" line="92"/>
+        <location filename="../build/kiran-cpanel-appearance_autogen/include/ui_wallpaper.h" line="195"/>
         <source>Set wallpaper</source>
-        <translation type="unfinished">壁纸设置</translation>
+        <translation>壁纸设置</translation>
     </message>
     <message>
         <location filename="../src/pages/wallpaper/wallpaper.ui" line="161"/>
+        <location filename="../build/kiran-cpanel-appearance_autogen/include/ui_wallpaper.h" line="196"/>
         <source>Desktop Wallpaper Preview</source>
-        <translation type="unfinished">桌面壁纸预览</translation>
+        <translation>桌面壁纸预览</translation>
     </message>
     <message>
         <location filename="../src/pages/wallpaper/wallpaper.ui" line="171"/>
+        <location filename="../build/kiran-cpanel-appearance_autogen/include/ui_wallpaper.h" line="197"/>
         <source>Lock Screen WallPaper Preview</source>
-        <translation type="unfinished">锁屏壁纸预览</translation>
+        <translation>锁屏壁纸预览</translation>
     </message>
     <message>
         <location filename="../src/pages/wallpaper/wallpaper.ui" line="190"/>
+        <location filename="../build/kiran-cpanel-appearance_autogen/include/ui_wallpaper.h" line="198"/>
         <source>Select wallpaper</source>
-        <translation type="unfinished">选择壁纸</translation>
+        <translation>选择壁纸</translation>
     </message>
     <message>
         <location filename="../src/pages/wallpaper/wallpaper.ui" line="248"/>
+        <location filename="../build/kiran-cpanel-appearance_autogen/include/ui_wallpaper.h" line="199"/>
         <source>Select Wallpaper</source>
-        <translation type="unfinished">选择壁纸</translation>
+        <translation>选择壁纸</translation>
     </message>
     <message>
-        <location filename="../src/pages/wallpaper/wallpaper.cpp" line="120"/>
+        <location filename="../src/pages/wallpaper/wallpaper.cpp" line="80"/>
         <source>Set Desktop Wallpaper</source>
-        <translation type="unfinished">选择桌面壁纸</translation>
+        <translation>选择桌面壁纸</translation>
     </message>
     <message>
-        <location filename="../src/pages/wallpaper/wallpaper.cpp" line="130"/>
+        <location filename="../src/pages/wallpaper/wallpaper.cpp" line="90"/>
         <source>Set Lock Screen Wallpaper</source>
-        <translation type="unfinished">选择锁屏壁纸</translation>
+        <translation>选择锁屏壁纸</translation>
     </message>
     <message>
-        <location filename="../src/pages/wallpaper/wallpaper.cpp" line="167"/>
-        <location filename="../src/pages/wallpaper/wallpaper.cpp" line="185"/>
+        <location filename="../src/pages/wallpaper/wallpaper.cpp" line="129"/>
+        <location filename="../src/pages/wallpaper/wallpaper.cpp" line="147"/>
         <source>set wallpaper</source>
-        <translation type="unfinished">壁纸设置</translation>
+        <translation>壁纸设置</translation>
     </message>
     <message>
-        <location filename="../src/pages/wallpaper/wallpaper.cpp" line="167"/>
-        <location filename="../src/pages/wallpaper/wallpaper.cpp" line="185"/>
+        <location filename="../src/pages/wallpaper/wallpaper.cpp" line="129"/>
+        <location filename="../src/pages/wallpaper/wallpaper.cpp" line="147"/>
         <source>Set wallpaper failed!</source>
-        <translation type="unfinished">壁纸设置失败!</translation>
+        <translation>壁纸设置失败!</translation>
     </message>
     <message>
-        <location filename="../src/pages/wallpaper/wallpaper.cpp" line="193"/>
+        <location filename="../src/pages/wallpaper/wallpaper.cpp" line="157"/>
         <source>select picture</source>
-        <translation type="unfinished">选择图片</translation>
+        <translation>选择图片</translation>
     </message>
     <message>
-        <location filename="../src/pages/wallpaper/wallpaper.cpp" line="195"/>
+        <location filename="../src/pages/wallpaper/wallpaper.cpp" line="159"/>
         <source>image files(*.bmp *.jpg *.png *.tif *.gif *.pcx *.tga *.exif *.fpx *.svg *.psd *.cdr *.pcd *.dxf *.ufo *.eps *.ai *.raw *.WMF *.webp)</source>
         <translation type="unfinished"></translation>
     </message>

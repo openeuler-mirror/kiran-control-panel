@@ -1,11 +1,6 @@
-/**
- *@file  kiran-image-selector-item.h
- *@brief 
- *@auth  liuxinhao <liuxinhao@kylinos.com.cn>
- *@copyright (c) 2021 KylinSec. All rights reserved.
- */
-#ifndef KIRANIMAGESELECTOR_KIRAN_IMAGE_ITEM_H
-#define KIRANIMAGESELECTOR_KIRAN_IMAGE_ITEM_H
+
+#ifndef IMAGE_ITEM_H
+#define IMAGE_ITEM_H
 
 #include <QWidget>
 #include <QFuture>
@@ -14,14 +9,14 @@
 #include <QtSvg/QSvgRenderer>
 #include <QToolButton>
 /**
- * @brief KiranImageSelector图片选择器中的图片项
+ * @brief ImageSelector图片选择器中的图片项
  */
-class KiranImageItem : public QWidget {
+class ImageItem : public QWidget {
 Q_OBJECT
     Q_PROPERTY(bool isSelected READ isSelected WRITE setIsSelected NOTIFY isSelectedChanged);
 public:
-    KiranImageItem(QWidget *parent, const QString &path, int imageType);
-    ~KiranImageItem();
+    ImageItem(QWidget *parent, const QString &path, int imageType);
+    ~ImageItem();
 
     QString imagePath();
     void updatePixmap();
@@ -67,4 +62,4 @@ private:
 };
 
 
-#endif //KIRANIMAGESELECTOR_KIRAN_IMAGE_ITEM_H
+#endif //IMAGE_ITEM_H

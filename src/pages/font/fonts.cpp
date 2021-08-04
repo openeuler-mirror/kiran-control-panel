@@ -3,8 +3,8 @@
 #include <QFontDatabase>
 #include <kiran-session-daemon/appearance-i.h>
 #include <kiran-message-box.h>
+#include <kiran-log/qt5-log-i.h>
 #include "dbus-interface/appearance-global-info.h"
-#include <iostream>
 #include <QDebug>
 
 
@@ -56,12 +56,16 @@ bool Fonts::initUI()
 
 }
 
+/**
+ * @brief Fonts::getCurrentFontInfo 获取当前字体信息，并设置在界面中
+ * @param fontType 字体类型
+ */
 void Fonts::getCurrentFontInfo(int fontType)
 {
     QStringList fontInfoList;
     switch (fontType) {
     case APPEARANCE_FONT_TYPE_APPLICATION:
-        fontInfoList = getFont(APPEARANCE_FONT_TYPE_APPLICATION);
+        fontInfoList = AppearanceGlobalInfo::instance()->getFont(APPEARANCE_FONT_TYPE_APPLICATION);
         if(!fontInfoList.isEmpty())
         {
             m_applicationFontInfo = fontInfoList;
@@ -75,7 +79,7 @@ void Fonts::getCurrentFontInfo(int fontType)
         }
         break;
     case APPEARANCE_FONT_TYPE_WINDOW_TITLE:
-        fontInfoList = getFont(APPEARANCE_FONT_TYPE_WINDOW_TITLE);
+        fontInfoList = AppearanceGlobalInfo::instance()->getFont(APPEARANCE_FONT_TYPE_WINDOW_TITLE);
         if(!fontInfoList.isEmpty())
         {
             m_windowTitleFontInfo = fontInfoList;
@@ -89,7 +93,7 @@ void Fonts::getCurrentFontInfo(int fontType)
         }
         break;
     case APPEARANCE_FONT_TYPE_MONOSPACE:
-        fontInfoList = getFont(APPEARANCE_FONT_TYPE_MONOSPACE);
+        fontInfoList = AppearanceGlobalInfo::instance()->getFont(APPEARANCE_FONT_TYPE_MONOSPACE);
         if(!fontInfoList.isEmpty())
         {
             m_monospaceFontInfo = fontInfoList;
@@ -106,11 +110,6 @@ void Fonts::getCurrentFontInfo(int fontType)
     }
 }
 
-QStringList Fonts::getFont(int fontType)
-{
-    return AppearanceGlobalInfo::instance()->getFont(fontType);
-}
-
 void Fonts::setFont(int fontType, QStringList fontInfoList)
 {
     if(!AppearanceGlobalInfo::instance()->setFont(fontType,fontInfoList))
@@ -125,50 +124,38 @@ void Fonts::connectSignals()
 {
     connect(ui->cbox_application_font_name, &QComboBox::currentTextChanged, [=](QString text){
         m_applicationFontInfo.replace(0,text);
-        QString temp0 = m_applicationFontInfo.at(0);
-        QString temp1 = m_applicationFontInfo.at(1);
-        cout << "m_applicationFontInfo.at(0) = " << temp0.toStdString() << endl;
-        cout << "m_applicationFontInfo.at(1) = " << temp1.toStdString() << endl;
+        KLOG_INFO() << "select applicationFont name = " << m_applicationFontInfo.at(0);
+        KLOG_INFO() << "select applicationFont size = " << m_applicationFontInfo.at(1);
         setFont(APPEARANCE_FONT_TYPE_APPLICATION,m_applicationFontInfo);
     });
     connect(ui->cbox_application_font_size, &QComboBox::currentTextChanged, [=](QString text){
         m_applicationFontInfo.replace(1,text);
-        QString temp0 = m_applicationFontInfo.at(0);
-        QString temp1 = m_applicationFontInfo.at(1);
-        cout << "m_applicationFontInfo.at(0) = " << temp0.toStdString() << endl;
-        cout << "m_applicationFontInfo.at(1) = " << temp1.toStdString() << endl;
+        KLOG_INFO() << "select applicationFont name = " << m_applicationFontInfo.at(0);
+        KLOG_INFO() << "select applicationFont size = " << m_applicationFontInfo.at(1);
         setFont(APPEARANCE_FONT_TYPE_APPLICATION,m_applicationFontInfo);
     });
     connect(ui->cbox_monospace_font_name, &QComboBox::currentTextChanged, [=](QString text){
         m_monospaceFontInfo.replace(0,text);
-        QString temp0 = m_monospaceFontInfo.at(0);
-        QString temp1 = m_monospaceFontInfo.at(1);
-        cout << "m_monospaceFontInfo.at(0) = " << temp0.toStdString() << endl;
-        cout << "m_monospaceFontInfo.at(1) = " << temp1.toStdString() << endl;
+        KLOG_INFO() << "monospaceFontInfo name = " << m_monospaceFontInfo.at(0);
+        KLOG_INFO() << "monospaceFontInfo size = " << m_monospaceFontInfo.at(1);
         setFont(APPEARANCE_FONT_TYPE_MONOSPACE,m_monospaceFontInfo);
     });
     connect(ui->cbox_monospace_font_size, &QComboBox::currentTextChanged, [=](QString text){
         m_monospaceFontInfo.replace(1,text);
-        QString temp0 = m_monospaceFontInfo.at(0);
-        QString temp1 = m_monospaceFontInfo.at(1);
-        cout << "m_monospaceFontInfo.at(0) = " << temp0.toStdString() << endl;
-        cout << "m_monospaceFontInfo.at(1) = " << temp1.toStdString() << endl;
+        KLOG_INFO() << "monospaceFontInfo name = " << m_monospaceFontInfo.at(0);
+        KLOG_INFO() << "monospaceFontInfo size = " << m_monospaceFontInfo.at(1);
         setFont(APPEARANCE_FONT_TYPE_MONOSPACE,m_monospaceFontInfo);
     });
     connect(ui->cbox_titlebar_font_name, &QComboBox::currentTextChanged, [=](QString text){
         m_windowTitleFontInfo.replace(0,text);
-        QString temp0 = m_windowTitleFontInfo.at(0);
-        QString temp1 = m_windowTitleFontInfo.at(1);
-        cout << "m_windowTitleFontInfo.at(0) = " << temp0.toStdString() << endl;
-        cout << "m_windowTitleFontInfo.at(1) = " << temp1.toStdString() << endl;
+        KLOG_INFO() << "windowTitleFontInfo name = " << m_windowTitleFontInfo.at(0);
+        KLOG_INFO() << "windowTitleFontInfo size = " << m_windowTitleFontInfo.at(1);
         setFont(APPEARANCE_FONT_TYPE_WINDOW_TITLE,m_windowTitleFontInfo);
     });
     connect(ui->cbox_titlebar_font_size, &QComboBox::currentTextChanged, [=](QString text){
         m_windowTitleFontInfo.replace(1,text);
-        QString temp0 = m_windowTitleFontInfo.at(0);
-        QString temp1 = m_windowTitleFontInfo.at(1);
-        cout << "m_windowTitleFontInfo.at(0) = " << temp0.toStdString() << endl;
-        cout << "m_windowTitleFontInfo.at(1) = " << temp1.toStdString() << endl;
+        KLOG_INFO() << "windowTitleFont name = " <<  m_windowTitleFontInfo.at(0);
+        KLOG_INFO() << "windowTitleFont size = " <<  m_windowTitleFontInfo.at(1);
         setFont(APPEARANCE_FONT_TYPE_WINDOW_TITLE,m_windowTitleFontInfo);
     });
 }

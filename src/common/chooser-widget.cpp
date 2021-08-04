@@ -2,7 +2,6 @@
 #include "ui_chooser-widget.h"
 #include "common/include.h"
 #include <QMouseEvent>
-#include <iostream>
 #include <QStyleOption>
 #include <QPainter>
 
@@ -20,6 +19,10 @@ ChooserWidget::~ChooserWidget()
     delete ui;
 }
 
+/**
+ * @brief ChooserWidget::setName 设置选择控件名字
+ * @param name 名字
+ */
 void ChooserWidget::setName(QString name)
 {
     ui->label_name->setText(name);

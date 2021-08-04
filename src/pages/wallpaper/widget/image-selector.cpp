@@ -1,15 +1,15 @@
 #include "image-selector.h"
 #include "flowlayout.h"
-#include "kiran-image-item.h"
-#include "kiran-image-load-manager.h"
+#include "image-item.h"
+#include "image-load-manager.h"
 #include "../wallpaper-global.h"
 #include "scroll-container.h"
 #include <kiranwidgets-qt5/kiran-message-box.h>
+#include <kiran-log/qt5-log-i.h>
 #include <QScrollArea>
 #include <QStyleOption>
 #include <QPainter>
 #include <QResizeEvent>
-#include <iostream>
 ImageSelector::ImageSelector(QWidget *parent):
     QWidget(parent)
 {
@@ -42,16 +42,16 @@ void ImageSelector::initUI()
     m_flowLayout = new FlowLayout(0,10,10);
     m_flowLayout->setContentsMargins(10,10,10,10);
     m_container = new ScrollContainer(scrollArea);
-    //this->set->setMinimumHeight(m_flowLayout->heightForWidth(size().width()));
+
     m_container->setLayout(m_flowLayout);
     scrollArea->setWidget(m_container);
     setAttribute(Qt::WA_NoSystemBackground,true);
 
     connect(m_container,&ScrollContainer::resized,
             [=](QSize newSize){
-        std::cout << "size = " <<
-                     newSize.width() << ","
-                  << newSize.height() << std::endl;
+        KLOG_INFO() << "size = "
+                    << newSize.width() << ","
+                    << newSize.height();
         int height = m_flowLayout->heightForWidth(newSize.width());
         if(height <= size().height())
             resize(size().width(),height);
@@ -60,7 +60,7 @@ void ImageSelector::initUI()
 
 bool ImageSelector::isImageExisted(QString path)
 {
-    for(KiranImageItem *item:m_itemList)
+    for(ImageItem *item:m_itemList)
     {
         if(item->imagePath() == path)
         {
@@ -89,7 +89,7 @@ void ImageSelector::addImage(const QString &imagePath, int imageType)
         m_imageList.append(imagePath);
     }
 
-    KiranImageItem * item = new KiranImageItem(this,imagePath,imageType);
+    ImageItem * item = new ImageItem(this,imagePath,imageType);
     item->setFixedSize(186,106);
     item->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 
@@ -107,7 +107,7 @@ void ImageSelector::addImage(const QString &imagePath, int imageType)
 
     connect(item,SIGNAL(itemIsSelected()),this,SLOT(handlerImageItemSelectedChanged()));
     connect(item,SIGNAL(deleteBtnClicked(QString)),this,SLOT(handlerImageDelete(QString)));
-    connect(item,&KiranImageItem::addItemClicked,
+    connect(item,&ImageItem::addItemClicked,
             [=]{
         emit addNewImage();
     });
@@ -120,7 +120,7 @@ QString ImageSelector::selectedImage()
 
 void ImageSelector::setSelectedImage(QString path, bool)
 {
-    for(KiranImageItem *item:m_itemList)
+    for(ImageItem *item:m_itemList)
     {
         if(item->imagePath() == path)
         {
@@ -144,38 +144,28 @@ void ImageSelector::setSelectorType(int type)
 
 void ImageSelector::updateImageItem()
 {
-    KiranImageLoadManager::instance()->reset();
-    for (KiranImageItem *item:m_itemList) {     
+    ImageLoadManager::instance()->reset();
+    for (ImageItem *item:m_itemList) {
             item->updatePixmap();
     }
 }
 
 void ImageSelector::handlerImageItemSelectedChanged()
 {
-    KiranImageItem *senderItem = qobject_cast<KiranImageItem *>(sender());
+    ImageItem *senderItem = qobject_cast<ImageItem *>(sender());
 
-//    if(!isAdditionImage)
-//    {
-        for (KiranImageItem *item:m_itemList) {
-            if (item != senderItem) {
-                item->setIsSelected(false);
-            }
+    for (ImageItem *item:m_itemList) {
+        if (item != senderItem) {
+            item->setIsSelected(false);
         }
-        m_selectedImagePath = senderItem->imagePath();
-    //}
+    }
+    m_selectedImagePath = senderItem->imagePath();
+
     emit selectedImageChanged(m_selectorType ,m_selectedImagePath);
 }
 
 void ImageSelector::handlerImageDelete(QString imagePath)
 {
-//    for(KiranImageItem *item : m_itemList)
-//        std::cout << "pre itemList: size:" << m_itemList.size() << "image:"<< item->imagePath().toStdString() << std::endl;
-
-//    for(QString path:m_imageList)
-//        std::cout << "pre imageList: size:" << m_imageList.size() << "image:" <<path.toStdString() << std::endl;
-
-//    std::cout << "imagePath = " << imagePath.toStdString() << std::endl;
-
     if(!imagePath.isNull())
     {
         KiranMessageBox::KiranStandardButton button = KiranMessageBox::message(nullptr,tr("Delete image"),
@@ -185,23 +175,20 @@ void ImageSelector::handlerImageDelete(QString imagePath)
         {
             auto deletePos = m_itemList.end();
             int deletePosIndex = 0;
-            for( QList<KiranImageItem*>::iterator iter=m_itemList.begin();
+            for( QList<ImageItem*>::iterator iter=m_itemList.begin();
                  iter!=m_itemList.end();
                  iter++){
                 if( (*iter)->imagePath() == imagePath ){
                     deletePos = iter;
                     deletePosIndex = m_itemList.indexOf((*deletePos));
-                    std::cout << "deletePos index = " << deletePosIndex << std::endl;
+                    KLOG_INFO() << "deletePos index = " << deletePosIndex;
                     break;
                 }
             }
 
             if( deletePos != m_itemList.end() ){
                 (*deletePos)->deleteLater();
-                QList<KiranImageItem *>::iterator iterNext = m_itemList.erase(deletePos);
-//                std::cout <<  "iterNext path = " << (*iterNext)->imagePath().toStdString() << std::endl;
-//                std::cout << "m_selectedImagePath = " << m_selectedImagePath.toStdString() << std::endl;
-//                std::cout << "(*deletePos)->imagePath = "  << (*deletePos)->imagePath().toStdString() << std::endl;
+                QList<ImageItem *>::iterator iterNext = m_itemList.erase(deletePos);
 
                 emit deleteImage(imagePath);
                 ///删除已选中的图片,更新选中的图片项
@@ -209,17 +196,17 @@ void ImageSelector::handlerImageDelete(QString imagePath)
                     //若不是最后一个，则设置为后一个
                     if(iterNext != m_itemList.end())
                     {
-                        std::cout << "not last one" << std::endl;
+                        KLOG_INFO() << "not last one";
                         (*iterNext)->setIsSelected(true);
                         m_selectedImagePath = (*iterNext)->imagePath();
                     }
                     else //若是最后一个，则设置为前一个
                     {
-                        std::cout << "is last one" << std::endl;
+                        KLOG_INFO() << "is last one";
                         m_itemList.at(deletePosIndex-1)->setIsSelected(true);
                         m_selectedImagePath = m_itemList.at(deletePosIndex-1)->imagePath();
                     }
-                    std::cout << "current m_selectedImagePath = " << m_selectedImagePath.toStdString() << std::endl;
+                    KLOG_INFO() << "current m_selectedImagePath = " << m_selectedImagePath;
                     emit selectedImageChanged(m_selectorType, m_selectedImagePath);
                 }
             }

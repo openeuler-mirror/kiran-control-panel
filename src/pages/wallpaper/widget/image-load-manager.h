@@ -1,11 +1,6 @@
-/**
- *@file  kiran-image-load-manager.h
- *@brief 图片选择器的加载和缩放管理
- *@auth  liuxinhao <liuxinhao@kylinos.com.cn>
- *@copyright (c) 2021 KylinSec. All rights reserved.
- */
-#ifndef KIRANIMAGESELECTOR_KIRAN_IMAGE_LOAD_MANAGER_H
-#define KIRANIMAGESELECTOR_KIRAN_IMAGE_LOAD_MANAGER_H
+
+#ifndef IMAGE_LOAD_MANAGER_H
+#define IMAGE_LOAD_MANAGER_H
 
 #include <QObject>
 #include <QQueue>
@@ -13,15 +8,15 @@
 #include <QSize>
 #include <QPixmap>
 
-class KiranImageLoadManager : public QObject {
+class ImageLoadManager : public QObject {
 Q_OBJECT
 private:
-    KiranImageLoadManager(QObject *parent = nullptr);
+    ImageLoadManager(QObject *parent = nullptr);
     void init();
 
 public:
-    static KiranImageLoadManager *instance();
-    ~KiranImageLoadManager();
+    static ImageLoadManager *instance();
+    ~ImageLoadManager();
 
     /* 加载指定路径图片，转换成指定大小,生成任务加入队列 */
     void load(QString imagePath, QSize size);
@@ -57,4 +52,4 @@ private:
     QFutureWatcher<QPixmap> m_loadFutureWatcher;
 };
 
-#endif //KIRANIMAGESELECTOR_KIRAN_IMAGE_LOAD_MANAGER_H
+#endif //IMAGE_LOAD_MANAGER_H

@@ -2,9 +2,11 @@
 #include "ui_themes.h"
 #include <QButtonGroup>
 #include <QPushButton>
-#include <iostream>
 #include <QMouseEvent>
-#include "dbus-interface/Appearance.h"
+#include <QJsonParseError>
+#include <QJsonDocument>
+#include <QJsonArray>
+#include <QJsonObject>
 #include "dbus-interface/appearance-global-info.h"
 #include "icon-themes/icon-themes.h"
 #include "cursor-themes/cursor-themes.h"
@@ -13,6 +15,7 @@
 #include "theme-widget-group.h"
 #include <kiran-session-daemon/appearance-i.h>
 #include <kiranwidgets-qt5/kiran-message-box.h>
+#include <kiran-log/qt5-log-i.h>
 
 #define DARK_THEME      "KiranM-dark"
 #define LIGHT_THEME     "KiranM"
@@ -43,23 +46,27 @@ void Themes::setPage(int index)
     ui->stackedWidget->setCurrentIndex(index);
 }
 
-// 一、深浅色主题设计思路
-//1、获取深浅色主题名字 、个数 ，并根据个数创建主题button，放入QButtonGroup中
-//2、根据主题名字创建对应的主题选择按钮,加入到QButtonGroup中(传入主题名、对应主题图片名)
-//3、监听QButtonGroup鼠标点击信号，判断当前点击的主题按钮是哪一个， 并通过DBus进行主题设置
-
+/**
+ * @brief Themes::initUI: 初始化主题设置界面
+ * @return true: 通过dbus获取主题信息成功
+ *         false: 通过dbus获取主题信息失败
+ */
 bool Themes::initUI()
 {
     ui->stackedWidget->setCurrentIndex(0);
     ui->widget_effects->hide();
 
-    initThemesUI();
-    initIconThemesUI();
-    initCursorThemesUI();
+    if(!initThemesUI() || !initIconThemesUI() || !initCursorThemesUI())
+        return false;
 
     return true;
 }
 
+/**
+ * @brief Themes::initThemesUI:获取主题信息,并创建主题选择控件
+ * @return true: 通过dbus获取主题信息成功
+ *         false: 通过dbus获取主题信息失败
+ */
 bool Themes::initThemesUI()
 {
     bool isGetThemes = getThemes(APPEARANCE_THEME_TYPE_GTK);
@@ -70,8 +77,11 @@ bool Themes::initThemesUI()
     }
 
     //get current  gtk theme
-    m_currentTheme = AppearanceGlobalInfo::instance()->getTheme(APPEARANCE_THEME_TYPE_GTK);
-    cout << "Current theme is: " << m_currentTheme.toStdString() << endl;
+    if(!AppearanceGlobalInfo::instance()->getTheme(APPEARANCE_THEME_TYPE_GTK,m_currentTheme))
+    {
+        return false;
+    }
+    KLOG_INFO() << "Current theme is: " << m_currentTheme;
 
     /*TODO: 待主题包完成后，替换成可供用户设置的主题名,
      *后续根据用户可设置的主题名命名规则，确定是否要根据命名(如kiran*)来检索可设置的主题名*/
@@ -81,14 +91,25 @@ bool Themes::initThemesUI()
     return true;
 }
 
-void Themes::initIconThemesUI()
+/**
+ * @brief Themes::initIconThemesUI: 获取图标主题信息，创建图标选择页面
+ * @return true: 通过dbus获取主题信息成功
+ *         false:通过dbus获取主题信息失败
+ */
+bool Themes::initIconThemesUI()
 {
     //创建图标选择控件
     m_chooseIconWidget = new ChooserWidget(tr("Choose icon themes"));
     m_chooseIconWidget->setObjectName("chooseIconWidget");
     ui->verticalLayout_choose_widget->addWidget(m_chooseIconWidget);
 
-    m_currIconThemes = AppearanceGlobalInfo::instance()->getTheme(APPEARANCE_THEME_TYPE_ICON);
+    if(!AppearanceGlobalInfo::instance()->getTheme(APPEARANCE_THEME_TYPE_ICON,m_currIconThemes))
+    {
+        KLOG_DEBUG() << "get current icon theme failed" ;
+        m_chooseIconWidget->setName(tr("Unknown"));
+        return false;
+    }
+
     m_chooseIconWidget->setName(m_currIconThemes);
 
     connect(m_chooseIconWidget,&ChooserWidget::clicked,
@@ -102,33 +123,48 @@ void Themes::initIconThemesUI()
                 KiranMessageBox::message(nullptr,QObject::tr("Failed"),
                                          QObject::tr("Get icon themes failed!"),
                                          KiranMessageBox::Ok);
-                m_chooseIconWidget->setName(tr("Unknown"));
                 return ;
             }
             else
+            {
                ui->stackedWidget->addWidget(m_iconThemes);
+               ui->stackedWidget->setCurrentWidget(m_iconThemes);
+            }
         }
-        ui->stackedWidget->setCurrentWidget(m_iconThemes);
+
         connect(m_iconThemes,&IconThemes::sigSetIconTheme,
                 [=](bool isSuccessful){
            if(isSuccessful)
            {
-                m_chooseIconWidget->setName(AppearanceGlobalInfo::instance()->getTheme(APPEARANCE_THEME_TYPE_ICON));
+               AppearanceGlobalInfo::instance()->getTheme(APPEARANCE_THEME_TYPE_ICON,m_currIconThemes);
+               m_chooseIconWidget->setName(m_currIconThemes);
            }
            ui->stackedWidget->setCurrentIndex(0);
         });
     });
+
+    return true;
 }
 
-void Themes::initCursorThemesUI()
+/**
+ * @brief Themes::initCursorThemesUI:获取光标主题信息，创建图标选择页面
+ * @return true: 通过dbus获取主题信息成功
+ *         false:通过dbus获取主题信息失败
+ */
+bool Themes::initCursorThemesUI()
 {
     //创建光标选择控件
     m_chooseCursorWidget = new ChooserWidget(tr("Choose cursor themes"));
     m_chooseCursorWidget->setObjectName("chooseCursorWidget");
-
-    m_currCursorThemes = AppearanceGlobalInfo::instance()->getTheme(APPEARANCE_THEME_TYPE_CURSOR);
-    m_chooseCursorWidget->setName(m_currCursorThemes);
     ui->verticalLayout_choose_widget->addWidget(m_chooseCursorWidget);
+
+    if(!AppearanceGlobalInfo::instance()->getTheme(APPEARANCE_THEME_TYPE_CURSOR,m_currCursorThemes))
+    {
+        KLOG_DEBUG() << "get current cursor theme failed" ;
+        m_chooseCursorWidget->setName(tr("Unknown"));
+        return false;
+    }
+    m_chooseCursorWidget->setName(m_currCursorThemes);
 
     connect(m_chooseCursorWidget,&ChooserWidget::clicked,
             [=]{
@@ -141,28 +177,34 @@ void Themes::initCursorThemesUI()
                 KiranMessageBox::message(nullptr,QObject::tr("Failed"),
                                          QObject::tr("Get cursor themes failed!"),
                                          KiranMessageBox::Ok);
-                m_chooseCursorWidget->setName(tr("Unknown"));
                 return;
             }
             else
             {
                 ui->stackedWidget->addWidget(m_cursorThemes);
+                ui->stackedWidget->setCurrentWidget(m_cursorThemes);
             }
         }
-        ui->stackedWidget->setCurrentWidget(m_cursorThemes);
+
         connect(m_cursorThemes,&CursorThemes::sigSetCursorTheme,
                 [=](bool isSuccessful){
            if(isSuccessful)
            {
-                m_chooseCursorWidget->setName(AppearanceGlobalInfo::instance()->getTheme(APPEARANCE_THEME_TYPE_CURSOR));
+               AppearanceGlobalInfo::instance()->getTheme(APPEARANCE_THEME_TYPE_CURSOR,m_currCursorThemes);
+               m_chooseCursorWidget->setName(m_currCursorThemes);
            }
            ui->stackedWidget->setCurrentIndex(0);
         });
     });
-
-
+    return true;
 }
 
+/**
+ * @brief Themes::getThemes: 获取指定主题类型的主题信息，包括主题名及路径
+ * @param themeType: 主题类型
+ * @return true: 成功
+ *         false:失败
+ */
 bool Themes::getThemes(int themeType)
 {
     QString themesJson=nullptr;
@@ -175,36 +217,28 @@ bool Themes::getThemes(int themeType)
     themesNum= getJsonValueFromString(themesJson,&m_allThemesName,&m_allThemesPath);
     if(themesNum<1)
     {
-        cout << "There is no theme to set" << endl;
+        KLOG_DEBUG() << "There is no theme to set" ;
         KiranMessageBox::message(nullptr,QObject::tr("Warning"),
                                  QObject::tr("There is no theme to set!"),
                                  KiranMessageBox::Ok);
         return false;
     }
-    else
-    {
-        cout << "Theme number is:" << themesNum << endl;
-        cout << "themes name = ";
-        foreach (QString name, m_allThemesName) {
-            cout << name.toStdString() << ","  ;
-        }
-        cout << endl;
-        cout << "theme path = ";
-        foreach (QString path, m_allThemesPath) {
-            cout << path.toStdString() << ",";
-        }
-        cout << endl;
-    }
     return true;
 }
 
-
+/**
+ * @brief Themes::getJsonValueFromString:将通过dbus传来的Json格式信息存储到QStringList中
+ * @param jsonString:Json格式信息
+ * @param themeName:所有主题名字
+ * @param themePath:所有主题路径
+ * @return:主题个数
+ */
 int Themes::getJsonValueFromString(QString jsonString, QStringList *themeName, QStringList *themePath)
 {
     QJsonParseError jsonError;
     QJsonDocument jsonDocument = QJsonDocument::fromJson(jsonString.toLocal8Bit().data(),&jsonError);
     if( jsonDocument.isNull() || jsonError.error != QJsonParseError::NoError ){
-        cout << " please check the string "<< jsonString.toLocal8Bit().data();
+        KLOG_DEBUG() << " please check the string "<< jsonString.toLocal8Bit().data();
         return -1;
     }
     if(jsonDocument.isArray())
@@ -243,6 +277,9 @@ int Themes::getJsonValueFromString(QString jsonString, QStringList *themeName, Q
     return themeName->size();
 }
 
+/**
+ * @brief Themes::createThemeWidget: 创建主题选择控件
+ */
 void Themes::createThemeWidget()
 {   
     m_themeWidgetGroup = new ThemeWidgetGroup(this);
@@ -278,13 +315,12 @@ void Themes::createThemeWidget()
                 return;
             if(!AppearanceGlobalInfo::instance()->setTheme(APPEARANCE_THEME_TYPE_GTK, theme))
             {
-                cout << "setTheme failed!"
-                     << " theme type is: " << APPEARANCE_THEME_TYPE_GTK
-                     << " theme name is: " << theme.toStdString()
-                     << endl;
+                KLOG_DEBUG() << "setTheme failed!"
+                             << " theme type is: " << APPEARANCE_THEME_TYPE_GTK
+                             << " theme name is: " << theme;
                 return ;
             }
-            cout << "set themes successful:" << theme.toStdString() <<endl;
+            KLOG_INFO() << "set themes successful:" << theme;
             m_currentTheme = theme;
         });
     }

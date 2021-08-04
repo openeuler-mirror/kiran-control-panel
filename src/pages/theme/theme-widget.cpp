@@ -3,11 +3,18 @@
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QMouseEvent>
-#include <iostream>
 
 #define DARK_THEME      "KiranM-dark"
 #define LIGHT_THEME     "KiranM"
 
+/**
+ * @brief ThemeWidget::ThemeWidget :创建单个图标主题控件
+ * @param iconSize:显示的图标大小
+ * @param currentIconTheme:当前图标主题
+ * @param iconThemeName:图标主题名字
+ * @param iconStringList:要显示的图标名字列表
+ * @param parent
+ */
 ThemeWidget::ThemeWidget(QSize iconSize, QString currentIconTheme,
                          QString iconThemeName, QStringList iconStringList, QWidget *parent) :
     QWidget(parent)
@@ -62,6 +69,12 @@ ThemeWidget::ThemeWidget(QSize iconSize, QString currentIconTheme,
     }
 }
 
+/**
+ * @brief ThemeWidget::ThemeWidget:创建单个主题控件
+ * @param name: 主题名字
+ * @param currentTheme:当前主题
+ * @param parent
+ */
 ThemeWidget::ThemeWidget(QString name,QString currentTheme, QWidget *parent):
     QWidget(parent)
 {
@@ -122,11 +135,18 @@ ThemeWidget::ThemeWidget(QString name,QString currentTheme, QWidget *parent):
 
     if(name == currentTheme)
     {
-        std::cout << name.toStdString() << std::endl;
         setSelectStatus(true,APPEARANCE_THEME_TYPE_GTK);
     }
 }
 
+/**
+ * @brief ThemeWidget::ThemeWidget 创建单个光标主题控件
+ * @param cursorSize 显示的光标大小
+ * @param currentCursorTheme 当前光标主题
+ * @param cursorThemeName 光标主题名字
+ * @param cursorListMap 要显示的光标图片
+ * @param parent
+ */
 ThemeWidget::ThemeWidget(QSize cursorSize, QString currentCursorTheme,
                          QString cursorThemeName, const QList<QPixmap> &cursorListMap, QWidget *parent):
     QWidget(parent)
@@ -191,6 +211,11 @@ ThemeWidget::~ThemeWidget()
 
 }
 
+/**
+ * @brief ThemeWidget::setSelectStatus: 设置主题控件选中状态
+ * @param selected 是否选中
+ * @param themeType 主题类型
+ */
 void ThemeWidget::setSelectStatus(bool selected, int themeType)
 {
     if(selected)
@@ -255,7 +280,6 @@ bool ThemeWidget::eventFilter(QObject *watched, QEvent *event)
     }
     if(watched ==  m_cursorWidget && event->type() == QEvent::MouseButtonPress)
     {
-        std::cout << "m_curorWidget clicked" << std::endl;
         emit clicked();
     }
     return false;

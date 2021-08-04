@@ -15,7 +15,7 @@ public:
 
     bool getAllThemes(int themeType, QString &themesJson);
     bool setTheme(int themeType, QString themeName);
-    QString getTheme(int type);
+    bool getTheme(int type,QString &theme);
 
     QString getDesktopBackground();
     bool setDesktopBackground(QString);

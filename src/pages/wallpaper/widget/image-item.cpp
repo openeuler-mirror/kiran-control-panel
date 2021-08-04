@@ -2,9 +2,10 @@
 // Created by lxh on 2021/1/15.
 //
 
-#include "kiran-image-item.h"
-#include "kiran-image-load-manager.h"
+#include "image-item.h"
+#include "image-load-manager.h"
 #include "../wallpaper-global.h"
+#include <kiran-log/qt5-log-i.h>
 
 #include <QStyleOption>
 #include <QPainter>
@@ -12,20 +13,15 @@
 #include <QtConcurrent/QtConcurrent>
 #include <utility>
 #include <QMouseEvent>
-
-//#include "style.h"
 #include <QStyleOption>
 #include <QPainter>
 #include <QHBoxLayout>
 #include <QToolButton>
 
-
-#include <iostream>
-
 #define IMAGE_ITEM_DEFAULT_WIDTH    180.0
 #define IMAGE_ITEM_DEFAULT_HEIGHT   100.0
 
-KiranImageItem::KiranImageItem(QWidget *parent, const QString &path, int imageType)
+ImageItem::ImageItem(QWidget *parent, const QString &path, int imageType)
         : QWidget(parent),
           m_imagePath(path),
           m_imageType(imageType)
@@ -42,16 +38,17 @@ KiranImageItem::KiranImageItem(QWidget *parent, const QString &path, int imageTy
         m_isAdditionImage = true;
     }
 
-    connect(KiranImageLoadManager::instance(), &KiranImageLoadManager::imageLoaded,
-            this, &KiranImageItem::loadPixmapFinished, Qt::QueuedConnection);
+    connect(ImageLoadManager::instance(), &ImageLoadManager::imageLoaded,
+            this, &ImageItem::loadPixmapFinished, Qt::QueuedConnection);
 }
 
-KiranImageItem::~KiranImageItem() {
+ImageItem::~ImageItem() {
 
 }
 
-void KiranImageItem::createDeleteButton()
+void ImageItem::createDeleteButton()
 {
+    KLOG_INFO() << "createDeleteButton";
     QHBoxLayout *hLayout = new QHBoxLayout(this);
     hLayout->setMargin(0);
     hLayout->setSpacing(0);
@@ -69,7 +66,7 @@ void KiranImageItem::createDeleteButton()
     });
 }
 
-void KiranImageItem::paintEvent(QPaintEvent *event) {
+void ImageItem::paintEvent(QPaintEvent *event) {
     QPainter p(this);
     p.setRenderHint(QPainter::Antialiasing);
     bool imageIsLoaded = false;
@@ -101,9 +98,6 @@ void KiranImageItem::paintEvent(QPaintEvent *event) {
     else
     {
         //NOTE:ImageItem绘制过程由自己绘制不在Style中绘制的原因是由于不想再次图片在内存中再次拷贝传递给Style
-        //std::cout << "size:" << geometry().size().width() << "," << geometry().size().height() << std::endl;
-//        std::cout << "m_previewPixmap.first:" << m_previewPixmap.first.width() << ","
-//                  << m_previewPixmap.first.height() << std::endl;
 
         if (m_previewPixmap.first == QSize(180,100) && !m_previewPixmap.second.isNull()) {
             QRect drawTargetRect(rect().x()+3,rect().y()+3,rect().width()-6,rect().height()-6);
@@ -115,7 +109,6 @@ void KiranImageItem::paintEvent(QPaintEvent *event) {
         }
 
         if (m_isSelected) {
-            //std::cout << "painevent: " <<  m_isSelected << std::endl;
             drawSelectedIndicator(p);
         } else {
             /* 没加载完成不绘制遮罩 */
@@ -129,16 +122,16 @@ void KiranImageItem::paintEvent(QPaintEvent *event) {
     }
 }
 
-void KiranImageItem::mousePressEvent(QMouseEvent *event) {
+void ImageItem::mousePressEvent(QMouseEvent *event) {
     m_isDown = true;
     event->accept();
 }
 
-QSize KiranImageItem::sizeHint() const {
+QSize ImageItem::sizeHint() const {
     return QSize(212, 148);
 }
 
-void KiranImageItem::loadPixmapFinished(QString imagePath, QSize imageSize, QPixmap pixmap) {
+void ImageItem::loadPixmapFinished(QString imagePath, QSize imageSize, QPixmap pixmap) {
     if (imagePath == m_imagePath) {
         m_previewPixmap.first = imageSize;
         m_previewPixmap.second = std::move(pixmap);
@@ -146,20 +139,19 @@ void KiranImageItem::loadPixmapFinished(QString imagePath, QSize imageSize, QPix
     }
 }
 
-void KiranImageItem::updatePixmap() {
+void ImageItem::updatePixmap() {
     if (m_previewPixmap.first == QSize(180,100) && !m_previewPixmap.first.isNull()) {
         return;
     }
     if(m_imagePath.isNull())
     {
-        std::cout  << "m_imagepath is null" << std::endl;
+        KLOG_INFO()  << "m_imagepath is null";
         return ;
     }
-    KiranImageLoadManager::instance()->load(m_imagePath, QSize(180,100));
+    ImageLoadManager::instance()->load(m_imagePath, QSize(180,100));
 }
 
-void KiranImageItem::drawSelectedIndicator(QPainter &painter) {
-    //std::cout << "drawSelectedIndicator:" << m_isSelected << std::endl;
+void ImageItem::drawSelectedIndicator(QPainter &painter) {
     painter.save();
 
     QPen pen(QColor("#2eb3ff"));
@@ -169,7 +161,7 @@ void KiranImageItem::drawSelectedIndicator(QPainter &painter) {
     painter.restore();
 }
 
-void KiranImageItem::drawHoverIndicator(QPainter &painter) {
+void ImageItem::drawHoverIndicator(QPainter &painter) {
     painter.save();
     QPen pen(QColor(255,255,255,0.3*255));
     pen.setWidth(1);
@@ -178,7 +170,7 @@ void KiranImageItem::drawHoverIndicator(QPainter &painter) {
     painter.restore();
 }
 
-void KiranImageItem::drawMask(QPainter &painter) {
+void ImageItem::drawMask(QPainter &painter) {
     painter.save();
     QBrush brush(QColor(0, 0, 0, 0.5 * 255));
     QRect  rect_image(rect().x()+3,rect().y()+3,rect().width()-6,rect().height()-6);
@@ -186,11 +178,11 @@ void KiranImageItem::drawMask(QPainter &painter) {
     painter.restore();
 }
 
-QString KiranImageItem::imagePath() {
+QString ImageItem::imagePath() {
     return m_imagePath;
 }
 
-void KiranImageItem::mouseReleaseEvent(QMouseEvent *event) {
+void ImageItem::mouseReleaseEvent(QMouseEvent *event) {
     if (event->button() != Qt::LeftButton) {
         event->ignore();
         return;
@@ -202,14 +194,14 @@ void KiranImageItem::mouseReleaseEvent(QMouseEvent *event) {
     m_isDown = false;
 }
 
-bool KiranImageItem::isSelected() {
+bool ImageItem::isSelected() {
     return m_isSelected;
 }
 
-void KiranImageItem::setIsSelected(bool selected) {
-    std::cout << "selectd = " << selected << std::endl;
+void ImageItem::setIsSelected(bool selected) {
+    KLOG_DEBUG() << "selectd = " << selected;
     if (!m_isAdditionImage) {
-        std::cout << "m_isSelected = " << m_isSelected << std::endl;
+        KLOG_DEBUG() << "m_isSelected = " << m_isSelected ;
         m_isSelected = selected;
         emit isSelectedChanged(m_isSelected);
         if (m_isSelected) {
@@ -223,7 +215,7 @@ void KiranImageItem::setIsSelected(bool selected) {
     }
 }
 
-void KiranImageItem::drawLoadingImage(QPainter &painter) {
+void ImageItem::drawLoadingImage(QPainter &painter) {
     static QSvgRenderer loadingRender(QString(":/images/loading.svg"));
     QRect widgetRect = rect();
     qreal widgetScaledFactor = widgetRect.width() / IMAGE_ITEM_DEFAULT_WIDTH;
@@ -234,14 +226,14 @@ void KiranImageItem::drawLoadingImage(QPainter &painter) {
     loadingRender.render(&painter, loadingRect);
 }
 
-void KiranImageItem::enterEvent(QEvent *event) {
+void ImageItem::enterEvent(QEvent *event) {
     m_isHover = true;
     if(m_imageType == CUSTOM_IMAGE)
         m_deleteBtn->show();
     QWidget::enterEvent(event);
 }
 
-void KiranImageItem::leaveEvent(QEvent *event) {
+void ImageItem::leaveEvent(QEvent *event) {
     m_isHover = false;
     if(m_imageType == CUSTOM_IMAGE)
     {

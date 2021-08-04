@@ -17,6 +17,7 @@ private:
     bool getCursorThemes(int Type);
     int  getJsonValueFromString(QString jsonString);
     QWidget *createCursorWidget();
+    QImage convertToNomalImage(const QImage &cursorImage);
 
 signals:
     void sigSetCursorTheme(bool);

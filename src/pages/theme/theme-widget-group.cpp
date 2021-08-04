@@ -12,6 +12,10 @@ ThemeWidgetGroup::~ThemeWidgetGroup()
 
 }
 
+/**
+ * @brief ThemeWidgetGroup::addWidget 添加控件
+ * @param widget 控件
+ */
 void ThemeWidgetGroup::addWidget(ThemeWidget *widget)
 {
     connect(widget, &ThemeWidget::clicked, [=]{

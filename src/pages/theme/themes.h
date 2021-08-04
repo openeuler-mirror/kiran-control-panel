@@ -26,8 +26,8 @@ public:
 private:
     bool initUI();
     bool initThemesUI();
-    void initIconThemesUI();
-    void initCursorThemesUI();
+    bool initIconThemesUI();
+    bool initCursorThemesUI();
     bool getThemes(int themeType);
     int  getJsonValueFromString(QString jsonString, QStringList *themeName, QStringList *themePath);
     void createThemeWidget();

@@ -6,8 +6,7 @@
 #include "../theme-widget-group.h"
 #include <kiran-session-daemon/appearance-i.h>
 #include <kiranwidgets-qt5/kiran-message-box.h>
-
-#include <iostream>
+#include <kiran-log/qt5-log-i.h>
 #include <QVBoxLayout>
 #include <QIcon>
 
@@ -18,13 +17,6 @@ static QStringList icons {"firefox.svg",
                           "geeqie.svg",
                           "apparmor_view_profile.svg",
                           "awf.svg"};
-/**
-1、获取Kiran图标  themes：getAllThemes
-2、搜索对应图标的路径下，找到指定的七个图标，保存至列表
-3、创建图标类型ThemesWidget，并设置好对应的样式。将七个图标+选择状态图标 添加进该控件
-4、给该ThemesWidget控件添加点击信号，若点击，切换选择状态图标，设置图标
-5、主题设置主页面监听到设置图标信号，将当前设置页面设置为设置图标主页面
- */
 
 IconThemes::IconThemes(QWidget *parent) :
     QWidget(parent),
@@ -40,28 +32,31 @@ IconThemes::~IconThemes()
 
 bool IconThemes::initUI()
 {
-    m_currentIconTheme = AppearanceGlobalInfo::instance()->getTheme(APPEARANCE_THEME_TYPE_ICON);
-
     if(!getIconThemes(APPEARANCE_THEME_TYPE_ICON))
     {
         return false;
     }
-
+    AppearanceGlobalInfo::instance()->getTheme(APPEARANCE_THEME_TYPE_ICON,m_currentIconTheme);
     createIconWidgets();
     return true;
 }
 
+/**
+ * @brief IconThemes::getIconThemes 获取图标主题信息，包括名字和路径
+ * @param themeType 主题类型
+ * @return true 成功
+ *         false 失败
+ */
 bool IconThemes::getIconThemes(int themeType)
 {
     QString iconThemesJson = nullptr;
     if(!AppearanceGlobalInfo::instance()->getAllThemes(themeType,iconThemesJson))
     {
-        std::cout << "Get icon themes failed!" << std::endl;
         return false;
     }
     if(getJsonValueFromString(iconThemesJson)<=0)
     {
-        std::cout << "Can't convert json string or there is no icon themes!" << std::endl;
+        KLOG_DEBUG() << "Can't convert json string or there is no icon themes!";
         return false;
     }
     return true;
@@ -72,7 +67,7 @@ int IconThemes::getJsonValueFromString(QString jsonString)
     QJsonParseError jsonError;
     QJsonDocument jsonDocument = QJsonDocument::fromJson(jsonString.toLocal8Bit().data(),&jsonError);
     if( jsonDocument.isNull() || jsonError.error != QJsonParseError::NoError ){
-        std::cout << " please check the string "<< jsonString.toLocal8Bit().data();
+        KLOG_DEBUG() << " please check the string "<< jsonString.toLocal8Bit().data();
         return -1;
     }
     if(jsonDocument.isArray())
@@ -111,6 +106,9 @@ int IconThemes::getJsonValueFromString(QString jsonString)
     return m_iconThemes.size();
 }
 
+/**
+ * @brief IconThemes::createIconWidgets 创建图标控件
+ */
 void IconThemes::createIconWidgets()
 {
     m_iconThemeWidgetGroup = new ThemeWidgetGroup(this);
@@ -163,7 +161,7 @@ void IconThemes::createIconWidgets()
         if(AppearanceGlobalInfo::instance()->setTheme(APPEARANCE_THEME_TYPE_ICON,
                                                   currWidget->getTheme()))
         {
-           std::cout << "set icon theme successful" << std::endl;
+           KLOG_INFO() << "set icon theme successful";
            emit sigSetIconTheme(true);
         }
         else

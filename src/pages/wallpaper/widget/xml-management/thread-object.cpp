@@ -1,6 +1,5 @@
 #include "thread-object.h"
 #include "xml-management.h"
-#include <iostream>
 ThreadObject::ThreadObject(QObject *parent):
     QObject(parent)
 {
@@ -20,8 +19,6 @@ void ThreadObject::updateWallpaperXml(QList<QMap<QString, QString> > mapList)
 
 void ThreadObject::loadWallpaperInfo()
 {
-    std::cout << "loadWallpaperInfo" << std::endl;
-
     m_listMap = m_xmlManagement->getXmlBodyInfo();
 
     emit getWallpaperInfo(m_listMap);
