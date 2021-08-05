@@ -40,7 +40,7 @@ void ShowQRCode::iniUI()
 
 void ShowQRCode::setQRCode(const QString &text ,bool isMachineCode)
 {
-    qrcode = new QRCodeWidget(this,text);
+    qrcode = new QRCodeWidget(this,text,160,160);
     qrcode->setMinimumSize(160,160);
     qrcode->setMaximumSize(160,160);
     ui->qrcode_layout->addWidget(qrcode,Qt::AlignHCenter);

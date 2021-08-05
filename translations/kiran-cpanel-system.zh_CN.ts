@@ -322,7 +322,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/information-list-item.ui" line="26"/>
         <location filename="../build/kiran-cpanel-system_autogen/include/ui_information-list-item.h" line="77"/>
-        <location filename="../build-kiran-system-information-qt5_11-Debug/ui_information-list-item.h" line="77"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
@@ -514,79 +513,79 @@ p, li { white-space: pre-wrap; }
         <translation>联系我们:</translation>
     </message>
     <message>
-        <location filename="../src/pages/system-information/system-information-widget.cpp" line="99"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="100"/>
         <source>Change</source>
         <translation>更改</translation>
     </message>
     <message>
-        <location filename="../src/pages/system-information/system-information-widget.cpp" line="101"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="102"/>
         <source>Show</source>
         <translation>查看</translation>
     </message>
     <message>
-        <location filename="../src/pages/system-information/system-information-widget.cpp" line="140"/>
         <location filename="../src/pages/system-information/system-information-widget.cpp" line="141"/>
         <location filename="../src/pages/system-information/system-information-widget.cpp" line="142"/>
         <location filename="../src/pages/system-information/system-information-widget.cpp" line="143"/>
-        <location filename="../src/pages/system-information/system-information-widget.cpp" line="164"/>
-        <location filename="../src/pages/system-information/system-information-widget.cpp" line="168"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="144"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="165"/>
         <location filename="../src/pages/system-information/system-information-widget.cpp" line="169"/>
-        <location filename="../src/pages/system-information/system-information-widget.cpp" line="441"/>
-        <location filename="../src/pages/system-information/system-information-widget.cpp" line="445"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="170"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="442"/>
         <location filename="../src/pages/system-information/system-information-widget.cpp" line="446"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="447"/>
         <source>Unknow</source>
         <translation>未知</translation>
     </message>
     <message>
-        <location filename="../src/pages/system-information/system-information-widget.cpp" line="200"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="201"/>
         <source>The current time is illegal</source>
         <translation>当前时间不合法</translation>
     </message>
     <message>
-        <location filename="../src/pages/system-information/system-information-widget.cpp" line="201"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="202"/>
         <source>Less than the installation time</source>
         <translation>小于安装时间</translation>
     </message>
     <message>
-        <location filename="../src/pages/system-information/system-information-widget.cpp" line="212"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="213"/>
         <source>Not activated. Trail expiration: </source>
         <translation>未激活.试用到期: </translation>
     </message>
     <message>
-        <location filename="../src/pages/system-information/system-information-widget.cpp" line="165"/>
-        <location filename="../src/pages/system-information/system-information-widget.cpp" line="442"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="166"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="443"/>
         <source>Can&apos;t get activation information</source>
         <translation>无法获取激活信息</translation>
     </message>
     <message>
-        <location filename="../src/pages/system-information/system-information-widget.cpp" line="192"/>
-        <location filename="../src/pages/system-information/system-information-widget.cpp" line="251"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="193"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="252"/>
         <source>Activate</source>
         <translation>激活</translation>
     </message>
     <message>
-        <location filename="../src/pages/system-information/system-information-widget.cpp" line="221"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="222"/>
         <source>get service status failed</source>
         <translation>获取服务状态信息失败</translation>
     </message>
     <message>
-        <location filename="../src/pages/system-information/system-information-widget.cpp" line="224"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="225"/>
         <source>Not yet</source>
         <translation>暂无</translation>
     </message>
     <message>
-        <location filename="../src/pages/system-information/system-information-widget.cpp" line="231"/>
-        <location filename="../src/pages/system-information/system-information-widget.cpp" line="460"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="232"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="461"/>
         <source>Activated</source>
         <translation>已激活</translation>
     </message>
     <message>
-        <location filename="../src/pages/system-information/system-information-widget.cpp" line="521"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="522"/>
         <source>Copyright ©</source>
         <translation>版权所有 ©</translation>
     </message>
     <message>
-        <location filename="../src/pages/system-information/system-information-widget.cpp" line="521"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="522"/>
         <source>KylinSec. All rights reserved.</source>
         <translation>KylinSec.保留所有权利.</translation>
     </message>
@@ -647,8 +646,8 @@ p, li { white-space: pre-wrap; }
         <translation>最终用户许可协议</translation>
     </message>
     <message>
-        <location filename="../src/license/user-license-agreement.cpp" line="133"/>
-        <location filename="../src/license/user-license-agreement.cpp" line="140"/>
+        <location filename="../src/license/user-license-agreement.cpp" line="132"/>
+        <location filename="../src/license/user-license-agreement.cpp" line="139"/>
         <source>None</source>
         <translation>暂无</translation>
     </message>
@@ -658,7 +657,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/kiran-system-information.ui" line="26"/>
         <location filename="../build/kiran-cpanel-system_autogen/include/ui_kiran-system-information.h" line="138"/>
-        <location filename="../build-kiran-system-information-qt5_11-Debug/ui_kiran-system-information.h" line="138"/>
         <source>kiranSystemInformation</source>
         <translation type="unfinished"></translation>
     </message>

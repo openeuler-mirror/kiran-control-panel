@@ -18,36 +18,65 @@
  */
 #include "qrcode-widget.h"
 #include <QPaintEvent>
+#include <QPainter>
 #include <kiran-log/qt5-log-i.h>
 
-QRCodeWidget::QRCodeWidget(QWidget* parent,const QString &text) :
-    QWidget(parent),
-    data(text)
+QRCodeWidget::QRCodeWidget(QWidget* parent, const QString &text, int width, int height) :
+    QLabel(parent),
+    m_data(text)
 {
-    zint.setSymbol(BARCODE_QRCODE);
-    zint.setBorderWidth(2);
+    createQRcode(width,height);
+}
+
+QRCodeWidget::~QRCodeWidget()
+{
+    if(m_qrcode)
+    {
+        QRcode_free(m_qrcode);
+    }
 }
 
 const QString &QRCodeWidget::getData()
 {
-    return data;
+    return m_data;
 }
 
 void QRCodeWidget::setData(const QString &data_)
 {
-    data = data_;
+    m_data = data_;
 }
 
-void QRCodeWidget::paintEvent(QPaintEvent *event)
+void QRCodeWidget::createQRcode(int width, int height)
 {
-    QPainter painter(this);
+    QPixmap QRPixmap;
+    m_qrcode = QRcode_encodeString(m_data.toStdString().c_str(),2,QR_ECLEVEL_Q,QR_MODE_8,1);
 
-    QWidget::paintEvent(event);
+    int qrcodeWidth = m_qrcode->width >0 ? m_qrcode->width : 1;
+    double scaledWidth= (double)width / (double)qrcodeWidth;
+    double scaledHeight =(double) height /(double) qrcodeWidth;
+    QImage image = QImage(width, height, QImage::Format_ARGB32);
 
-    zint.setText(data);
-    zint.render(painter, event->rect());
-    if (zint.hasErrors()) {
-        KLOG_WARNING() <<"Faile to render qrcode: %s\n",
-                  zint.lastError().toStdString().c_str();
+    QPainter painter(&image);
+    QColor background(Qt::white);
+    painter.setBrush(background);
+    painter.setPen(Qt::NoPen);
+    painter.drawRect(0, 0, width, height);
+    QColor foreground(Qt::black);
+    painter.setBrush(foreground);
+
+    for( qint32 y = 0; y < qrcodeWidth; y ++)
+    {
+       for(qint32 x = 0; x < qrcodeWidth; x++)
+       {
+           unsigned char b = m_qrcode->data[y * qrcodeWidth + x];
+           if(b & 0x01)
+           {
+               QRectF r(x * scaledWidth, y * scaledHeight, scaledWidth, scaledHeight);
+               painter.drawRects(&r, 1);
+           }
+       }
     }
+
+    QRPixmap = QPixmap::fromImage(image);
+    setPixmap(QRPixmap);
 }

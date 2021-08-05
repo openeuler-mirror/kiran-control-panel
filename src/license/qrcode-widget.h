@@ -21,27 +21,25 @@
 
 #include <QWidget>
 #include <QPaintEvent>
-#include <qzint.h>
+#include <QLabel>
+#include <qrencode.h>
 
-using namespace Zint;
-
-class QRCodeWidget : public QWidget
+class QRCodeWidget : public QLabel
 {
     Q_OBJECT
 
 public:
-    explicit QRCodeWidget(QWidget* parent,const QString &text);
-    ~QRCodeWidget() override = default;
+    explicit QRCodeWidget(QWidget* parent,const QString &text,int width , int height);
+    ~QRCodeWidget();
 
     const QString &getData();
     void setData(const QString &data_);
 
-protected:
-    virtual void paintEvent(QPaintEvent *event) override;
+    void createQRcode(int width , int height);
 
 private:
-    QZint zint;
-    QString data;
+    QString m_data;
+    QRcode *m_qrcode;
 };
 
 #endif // MAINWINDOW_H

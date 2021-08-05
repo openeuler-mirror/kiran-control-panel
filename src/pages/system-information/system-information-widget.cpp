@@ -35,6 +35,7 @@
 #include <QDateTime>
 #include <QDesktopWidget>
 #include <QFont>
+#include <QPainter>
 
 #define SYSTEM_LOGO     "KylinSec OS"
 

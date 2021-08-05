@@ -17,6 +17,7 @@ find_package(Qt5 COMPONENTS Widgets Svg DBus LinguistTools Network PrintSupport)
 pkg_search_module(KIRAN_WIDGETS_QT5 REQUIRED kiranwidgets-qt5)
 pkg_search_module(KLOG_QT5 REQUIRED klog-qt5)
 pkg_search_module(KIRAN_CC_DAEMON REQUIRED kiran-cc-daemon)
+pkg_search_module(LIBQRENCODE REQUIRED libqrencode)
 
 #通过kiran control panel的pkgconfig配置文件取出插件Desktop安装位置、插件共享库安装位置
 pkg_search_module(KIRAN_CONTROL_PANEL_PKG REQUIRED kiran-control-panel)
@@ -66,7 +67,7 @@ target_link_libraries(${TARGET_NAME}
 			Qt5::Svg
 			Qt5::PrintSupport
 			Qt5::Core
-			QZint
+			qrencode
 			glib-2.0
 			kiranwidgets-qt5
 			${KIRAN_WIDGETS_QT5_LIBRARIES}
