@@ -93,22 +93,22 @@
 <context>
     <name>ImageSelector</name>
     <message>
-        <location filename="../src/pages/wallpaper/widget/image-selector.cpp" line="85"/>
+        <location filename="../src/pages/wallpaper/widget/image-selector.cpp" line="95"/>
         <source>Add Image Failed</source>
         <translation>添加壁纸失败</translation>
     </message>
     <message>
-        <location filename="../src/pages/wallpaper/widget/image-selector.cpp" line="86"/>
+        <location filename="../src/pages/wallpaper/widget/image-selector.cpp" line="96"/>
         <source>The image already exists!</source>
         <translation>该壁纸已存在!</translation>
     </message>
     <message>
-        <location filename="../src/pages/wallpaper/widget/image-selector.cpp" line="171"/>
+        <location filename="../src/pages/wallpaper/widget/image-selector.cpp" line="186"/>
         <source>Delete image</source>
         <translation>删除壁纸</translation>
     </message>
     <message>
-        <location filename="../src/pages/wallpaper/widget/image-selector.cpp" line="172"/>
+        <location filename="../src/pages/wallpaper/widget/image-selector.cpp" line="187"/>
         <source>Are you sure you want to delete this picture?</source>
         <translation>您确定要删除此壁纸?</translation>
     </message>
@@ -159,7 +159,7 @@
     <message>
         <location filename="../src/pages/font/fonts.cpp" line="117"/>
         <location filename="../src/pages/theme/themes.cpp" line="123"/>
-        <location filename="../src/pages/theme/themes.cpp" line="177"/>
+        <location filename="../src/pages/theme/themes.cpp" line="179"/>
         <source>Failed</source>
         <translation>失败</translation>
     </message>
@@ -174,17 +174,17 @@
         <translation>获取图标主题失败!</translation>
     </message>
     <message>
-        <location filename="../src/pages/theme/themes.cpp" line="178"/>
+        <location filename="../src/pages/theme/themes.cpp" line="180"/>
         <source>Get cursor themes failed!</source>
         <translation>获取光标主题失败!</translation>
     </message>
     <message>
-        <location filename="../src/pages/theme/themes.cpp" line="221"/>
+        <location filename="../src/pages/theme/themes.cpp" line="225"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="../src/pages/theme/themes.cpp" line="222"/>
+        <location filename="../src/pages/theme/themes.cpp" line="226"/>
         <source>There is no theme to set!</source>
         <translation>目前没有主题可以设置!</translation>
     </message>
@@ -239,12 +239,12 @@
     </message>
     <message>
         <location filename="../src/pages/theme/themes.cpp" line="109"/>
-        <location filename="../src/pages/theme/themes.cpp" line="164"/>
+        <location filename="../src/pages/theme/themes.cpp" line="166"/>
         <source>Unknown</source>
         <translation>未知</translation>
     </message>
     <message>
-        <location filename="../src/pages/theme/themes.cpp" line="157"/>
+        <location filename="../src/pages/theme/themes.cpp" line="159"/>
         <source>Choose cursor themes</source>
         <translation>选择光标主题</translation>
     </message>
@@ -292,34 +292,34 @@
         <translation>选择壁纸</translation>
     </message>
     <message>
-        <location filename="../src/pages/wallpaper/wallpaper.cpp" line="80"/>
+        <location filename="../src/pages/wallpaper/wallpaper.cpp" line="82"/>
         <source>Set Desktop Wallpaper</source>
         <translation>选择桌面壁纸</translation>
     </message>
     <message>
-        <location filename="../src/pages/wallpaper/wallpaper.cpp" line="90"/>
+        <location filename="../src/pages/wallpaper/wallpaper.cpp" line="92"/>
         <source>Set Lock Screen Wallpaper</source>
         <translation>选择锁屏壁纸</translation>
     </message>
     <message>
-        <location filename="../src/pages/wallpaper/wallpaper.cpp" line="129"/>
-        <location filename="../src/pages/wallpaper/wallpaper.cpp" line="147"/>
+        <location filename="../src/pages/wallpaper/wallpaper.cpp" line="131"/>
+        <location filename="../src/pages/wallpaper/wallpaper.cpp" line="149"/>
         <source>set wallpaper</source>
         <translation>壁纸设置</translation>
     </message>
     <message>
-        <location filename="../src/pages/wallpaper/wallpaper.cpp" line="129"/>
-        <location filename="../src/pages/wallpaper/wallpaper.cpp" line="147"/>
+        <location filename="../src/pages/wallpaper/wallpaper.cpp" line="131"/>
+        <location filename="../src/pages/wallpaper/wallpaper.cpp" line="149"/>
         <source>Set wallpaper failed!</source>
         <translation>壁纸设置失败!</translation>
     </message>
     <message>
-        <location filename="../src/pages/wallpaper/wallpaper.cpp" line="157"/>
+        <location filename="../src/pages/wallpaper/wallpaper.cpp" line="159"/>
         <source>select picture</source>
         <translation>选择图片</translation>
     </message>
     <message>
-        <location filename="../src/pages/wallpaper/wallpaper.cpp" line="159"/>
+        <location filename="../src/pages/wallpaper/wallpaper.cpp" line="161"/>
         <source>image files(*.bmp *.jpg *.png *.tif *.gif *.pcx *.tga *.exif *.fpx *.svg *.psd *.cdr *.pcd *.dxf *.ufo *.eps *.ai *.raw *.WMF *.webp)</source>
         <translation type="unfinished"></translation>
     </message>

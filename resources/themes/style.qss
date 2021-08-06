@@ -43,17 +43,24 @@
     background-image: url(":/images/btn-delete-pre.png");
 }
 
-#ImageSelector
+/*#ImageSelector
+{
+    border: 1px solid #393939;
+    border-radius : 6px;
+}*/
+
+QWidget #containerWidget
 {
     border: 1px solid #393939;
     border-radius : 6px;
 }
 
-#container
+#stackedWidget_Wallpaper,#scrollAreaWidgetContents,#widget_fonts
 {
-    border: 1px solid red;
-    border-radius : 6px;
+    border:none;
+    border-left:1px solid #2d2d2d;
+    border-bottom:none;
+    border-right:none;
 }
-
 
 

@@ -10,6 +10,7 @@
 #include <QStyleOption>
 #include <QPainter>
 #include <QResizeEvent>
+#include <iostream>
 ImageSelector::ImageSelector(QWidget *parent):
     QWidget(parent)
 {
@@ -22,14 +23,20 @@ ImageSelector::ImageSelector(QWidget *parent):
 
 void ImageSelector::initUI()
 {
-    //setMinimumHeight(470);
     adjustSize();
     setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Expanding);
     setObjectName("ImageSelector");
-    QVBoxLayout *vLayout = new QVBoxLayout(this);
+    QVBoxLayout *mainLayout = new QVBoxLayout(this);
+    mainLayout->setMargin(0);
+    mainLayout->setSpacing(0);
+    setLayout(mainLayout);
+    QWidget *widget = new QWidget(this);
+    widget->setObjectName("containerWidget");
+    mainLayout->addWidget(widget);
+
+    QVBoxLayout *vLayout = new QVBoxLayout(widget);
     vLayout->setMargin(0);
     vLayout->setSpacing(0);
-    setLayout(vLayout);
 
     scrollArea = new QScrollArea(this);
     scrollArea->setWidgetResizable(true);
@@ -42,19 +49,16 @@ void ImageSelector::initUI()
     m_flowLayout = new FlowLayout(0,10,10);
     m_flowLayout->setContentsMargins(10,10,10,10);
     m_container = new ScrollContainer(scrollArea);
-
+    m_container->setObjectName("container");
     m_container->setLayout(m_flowLayout);
     scrollArea->setWidget(m_container);
     setAttribute(Qt::WA_NoSystemBackground,true);
 
     connect(m_container,&ScrollContainer::resized,
             [=](QSize newSize){
-        KLOG_INFO() << "size = "
-                    << newSize.width() << ","
-                    << newSize.height();
         int height = m_flowLayout->heightForWidth(newSize.width());
-        if(height <= size().height())
-            resize(size().width(),height);
+        if(height <= this->height())
+            widget->resize(size().width(),height);
     });
 }
 
@@ -223,17 +227,3 @@ void ImageSelector::paintEvent(QPaintEvent *event)
     style()->drawPrimitive(QStyle::PE_Widget, &option, &p, this);
 }
 
-//QSize ImageSelector::sizeHint()
-//{
-//    //return QSize(width(),m_flowLayout->heightForWidth(size().width()));
-//}
-
-//void ImageSelector::resizeEvent(QResizeEvent *event)
-//{
-//    std::cout << "size = " <<
-//                 this->geometry().width() << ","
-//              << this->geometry().height() << std::endl;
-//    QSize size = event->size();
-//    int height = m_flowLayout->heightForWidth(size.width());
-//    resize(size.width(),height);
-//}

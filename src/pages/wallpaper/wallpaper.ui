@@ -13,24 +13,27 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">#Wallpaper{border-left:1px solid #2d2d2d;}</string>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
     <number>0</number>
    </property>
    <property name="leftMargin">
-    <number>24</number>
+    <number>0</number>
    </property>
    <property name="topMargin">
-    <number>24</number>
+    <number>0</number>
    </property>
    <property name="rightMargin">
-    <number>24</number>
+    <number>0</number>
    </property>
    <property name="bottomMargin">
-    <number>40</number>
+    <number>0</number>
    </property>
    <item>
-    <widget class="QStackedWidget" name="stackedWidget">
+    <widget class="QStackedWidget" name="stackedWidget_Wallpaper">
      <property name="currentIndex">
       <number>0</number>
      </property>
@@ -40,23 +43,23 @@
         <number>24</number>
        </property>
        <property name="leftMargin">
-        <number>0</number>
+        <number>24</number>
        </property>
        <property name="topMargin">
-        <number>0</number>
+        <number>24</number>
        </property>
        <property name="rightMargin">
-        <number>0</number>
+        <number>24</number>
        </property>
        <property name="bottomMargin">
-        <number>0</number>
+        <number>40</number>
        </property>
        <item>
         <widget class="QScrollArea" name="scrollArea">
          <property name="widgetResizable">
           <bool>true</bool>
          </property>
-         <widget class="QWidget" name="scrollAreaWidgetContents">
+         <widget class="QWidget" name="scrollAreaWidgetContents_wp">
           <property name="geometry">
            <rect>
             <x>0</x>
@@ -225,13 +228,13 @@
         <number>10</number>
        </property>
        <property name="leftMargin">
-        <number>0</number>
+        <number>24</number>
        </property>
        <property name="topMargin">
-        <number>0</number>
+        <number>24</number>
        </property>
        <property name="rightMargin">
-        <number>0</number>
+        <number>24</number>
        </property>
        <property name="bottomMargin">
         <number>40</number>

@@ -31,17 +31,19 @@ Wallpaper::Wallpaper(QWidget *parent) :
 Wallpaper::~Wallpaper()
 {
     delete ui;
+    m_thread->quit();
+    m_thread->wait();
 }
 
 void Wallpaper::initUI()
 {
-    ui->stackedWidget->setCurrentIndex(0);
+    ui->stackedWidget_Wallpaper->setCurrentIndex(0);
     m_imageSelector = new ImageSelector(this);
     ui->vLayout_image_selector->addWidget(m_imageSelector);
 }
 
 /**
- * @brief Wallpaper::createPreviewLabel 创建壁预览控件
+ * @brief Wallpaper::createPreviewLabel 创建壁纸预览控件
  */
 void Wallpaper::createPreviewLabel()
 {
@@ -84,7 +86,7 @@ void Wallpaper::createChooserWidget()
             [=]{
         m_imageSelector->setSelectorType(DESKTOP);
         m_imageSelector->setSelectedImage(m_currDesktopWp,false);
-        ui->stackedWidget->setCurrentIndex(1);
+        ui->stackedWidget_Wallpaper->setCurrentIndex(1);
     });
 
     m_lockScreenWPChooser = new ChooserWidget(tr("Set Lock Screen Wallpaper"),LOCK_SCREEN);
@@ -94,7 +96,7 @@ void Wallpaper::createChooserWidget()
             [=]{
        m_imageSelector->setSelectorType(LOCK_SCREEN);
        m_imageSelector->setSelectedImage(m_currLockScreenWp,false);
-       ui->stackedWidget->setCurrentIndex(1);
+       ui->stackedWidget_Wallpaper->setCurrentIndex(1);
     });
 
 }
@@ -115,14 +117,14 @@ void Wallpaper::handleImageSelector()
             {
                 if(m_currDesktopWp == imagePath)
                 {
-                    ui->stackedWidget->setCurrentIndex(0);
+                    ui->stackedWidget_Wallpaper->setCurrentIndex(0);
                     return ;
                 }
                 if(AppearanceGlobalInfo::instance()->setDesktopBackground(imagePath))
                 {
                     m_desktopWpChooser->setName(imagePath.split("/").last());
                     m_currDesktopWp = imagePath;
-                    ui->stackedWidget->setCurrentIndex(0);
+                    ui->stackedWidget_Wallpaper->setCurrentIndex(0);
                     emit wallpaperChanged(type,imagePath);
                 }
                 else
@@ -133,14 +135,14 @@ void Wallpaper::handleImageSelector()
             {
                 if(m_currLockScreenWp == imagePath)
                 {
-                    ui->stackedWidget->setCurrentIndex(0);
+                    ui->stackedWidget_Wallpaper->setCurrentIndex(0);
                     return ;
                 }
                 if(AppearanceGlobalInfo::instance()->setLockScreenBackground(imagePath))
                 {
                     m_lockScreenWPChooser->setName(imagePath.split("/").last());
                     m_currLockScreenWp = imagePath;
-                    ui->stackedWidget->setCurrentIndex(0);
+                    ui->stackedWidget_Wallpaper->setCurrentIndex(0);
                     emit wallpaperChanged(type,imagePath);;
                 }
                 else
@@ -244,9 +246,9 @@ void Wallpaper::handleWallpaperInfo(QList<QMap<QString, QString> > wallpaperMapL
     m_imageSelector->addImage(nullptr,ADDITION_IMAGE);
 }
 
-QSize Wallpaper::sizeHint()
+QSize Wallpaper::sizeHint() const
 {
-    return QSize(635,800);
+    return QSize(670,730);
 }
 
 /**

@@ -127,10 +127,6 @@ void ImageItem::mousePressEvent(QMouseEvent *event) {
     event->accept();
 }
 
-QSize ImageItem::sizeHint() const {
-    return QSize(212, 148);
-}
-
 void ImageItem::loadPixmapFinished(QString imagePath, QSize imageSize, QPixmap pixmap) {
     if (imagePath == m_imagePath) {
         m_previewPixmap.first = imageSize;

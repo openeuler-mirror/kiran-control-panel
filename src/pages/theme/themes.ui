@@ -31,6 +31,9 @@
    </property>
    <item>
     <widget class="QScrollArea" name="scrollArea">
+     <property name="lineWidth">
+      <number>0</number>
+     </property>
      <property name="widgetResizable">
       <bool>true</bool>
      </property>
@@ -62,7 +65,7 @@
        <item>
         <widget class="QStackedWidget" name="stackedWidget">
          <property name="currentIndex">
-          <number>2</number>
+          <number>1</number>
          </property>
          <widget class="QWidget" name="page_theme">
           <layout class="QVBoxLayout" name="verticalLayout_2">

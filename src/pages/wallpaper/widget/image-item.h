@@ -31,7 +31,6 @@ signals:
 
 private:
     void createDeleteButton();
-    virtual QSize sizeHint() const;
 
     void drawSelectedIndicator(QPainter &painter);
     void drawHoverIndicator(QPainter &painter);

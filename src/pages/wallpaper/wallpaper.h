@@ -18,6 +18,7 @@ public:
     explicit Wallpaper(QWidget *parent = 0);
     ~Wallpaper();
 
+    virtual QSize sizeHint() const override;
 private:
     void initUI();
     void createPreviewLabel();
@@ -32,8 +33,6 @@ signals:
     //void updateWallpaper(QList<QMap<QString,QString>> wallpaperMapList);
     void wallpaperChanged(int type, QString path);
 
-protected:
-    virtual QSize sizeHint() ;
 private:
     Ui::Wallpaper *ui;
     QString m_currDesktopWp;

@@ -13,6 +13,7 @@ signals:
     void resized(QSize size);
 protected:
     virtual void resizeEvent(QResizeEvent *e);
+    void paintEvent(QPaintEvent *event);
 };
 
 #endif // SCROLLCONTAINER_H

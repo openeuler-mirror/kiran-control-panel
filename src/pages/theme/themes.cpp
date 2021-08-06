@@ -131,6 +131,8 @@ bool Themes::initIconThemesUI()
                ui->stackedWidget->setCurrentWidget(m_iconThemes);
             }
         }
+        else
+            ui->stackedWidget->setCurrentWidget(m_iconThemes);
 
         connect(m_iconThemes,&IconThemes::sigSetIconTheme,
                 [=](bool isSuccessful){
@@ -185,6 +187,8 @@ bool Themes::initCursorThemesUI()
                 ui->stackedWidget->setCurrentWidget(m_cursorThemes);
             }
         }
+        else
+            ui->stackedWidget->setCurrentWidget(m_cursorThemes);
 
         connect(m_cursorThemes,&CursorThemes::sigSetCursorTheme,
                 [=](bool isSuccessful){

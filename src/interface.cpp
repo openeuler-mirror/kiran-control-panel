@@ -45,7 +45,6 @@ QWidget *KcpInterface::getSubItemWidget(QString id)
         widget = new Themes();
     }
     m_currentWidget = widget;
-
     ///加载qss样式表
     QFile file(":/themes/style.qss");
     if( file.open(QFile::ReadOnly))
@@ -59,6 +58,7 @@ QWidget *KcpInterface::getSubItemWidget(QString id)
     {
         KiranMessageBox::message(nullptr, tr("warning"), tr("load qss file failed"), KiranMessageBox::Ok);
     }
+
     return m_currentWidget;
 }
 
