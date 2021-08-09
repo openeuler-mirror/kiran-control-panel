@@ -114,31 +114,31 @@
     <message>
         <location filename="../src/license/active-guide-widget.ui" line="1190"/>
         <location filename="../build/kiran-cpanel-system_autogen/include/ui_active-guide-widget.h" line="881"/>
-        <source>server authorized and remaining points:</source>
+        <source>server activation and remaining points:</source>
         <translation>服务器版激活点数和剩余点数:</translation>
     </message>
     <message>
         <location filename="../src/license/active-guide-widget.ui" line="1200"/>
         <location filename="../build/kiran-cpanel-system_autogen/include/ui_active-guide-widget.h" line="882"/>
-        <source>development authorized and remaining points:</source>
+        <source>development activation and remaining points:</source>
         <translation>开发版激活点数和剩余点数:</translation>
     </message>
     <message>
         <location filename="../src/license/active-guide-widget.ui" line="1210"/>
         <location filename="../build/kiran-cpanel-system_autogen/include/ui_active-guide-widget.h" line="883"/>
-        <source>industrial authorized and remaining points:</source>
+        <source>industrial activation and remaining points:</source>
         <translation>工控版激活点数和剩余点数:</translation>
     </message>
     <message>
         <location filename="../src/license/active-guide-widget.ui" line="1220"/>
         <location filename="../build/kiran-cpanel-system_autogen/include/ui_active-guide-widget.h" line="884"/>
-        <source>desktop authorized and remaining points:</source>
+        <source>desktop activation and remaining points:</source>
         <translation>桌面版激活点数和剩余点数:</translation>
     </message>
     <message>
         <location filename="../src/license/active-guide-widget.ui" line="1250"/>
         <location filename="../build/kiran-cpanel-system_autogen/include/ui_active-guide-widget.h" line="887"/>
-        <source>authorized points:</source>
+        <source>activation points:</source>
         <translation>激活点数:</translation>
     </message>
     <message>

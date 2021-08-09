@@ -1187,7 +1187,7 @@
             <item row="5" column="1">
              <widget class="QLabel" name="label_server_points">
               <property name="text">
-               <string>server authorized and remaining points:</string>
+               <string>server activation and remaining points:</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -1197,7 +1197,7 @@
             <item row="3" column="1">
              <widget class="QLabel" name="label_development_points">
               <property name="text">
-               <string>development authorized and remaining points:</string>
+               <string>development activation and remaining points:</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -1207,7 +1207,7 @@
             <item row="4" column="1">
              <widget class="QLabel" name="label_industrial_points">
               <property name="text">
-               <string>industrial authorized and remaining points:</string>
+               <string>industrial activation and remaining points:</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -1217,7 +1217,7 @@
             <item row="2" column="1">
              <widget class="QLabel" name="label_desktop_points">
               <property name="text">
-               <string>desktop authorized and remaining points:</string>
+               <string>desktop activation and remaining points:</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -1247,7 +1247,7 @@
             <item row="0" column="1">
              <widget class="QLabel" name="label_authorized_points">
               <property name="text">
-               <string>authorized points:</string>
+               <string>activation points:</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
