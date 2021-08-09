@@ -1,4 +1,4 @@
- /**
+/**
   * @Copyright (C) 2020 ~ 2021 KylinSec Co., Ltd. 
   *
   * Author:     liuxinhao <liuxinhao@kylinos.com.cn>
@@ -16,7 +16,7 @@
   * You should have received a copy of the GNU General Public License
   * along with this program; If not, see <http: //www.gnu.org/licenses/>. 
   */
- 
+
 #include "kiran-account-manager.h"
 #include "account-itemwidget.h"
 #include "accounts-global-info.h"
@@ -27,16 +27,17 @@
 #include "mask-widget.h"
 #include "select-avatar-page/select-avatar-page.h"
 #include "user-info-page/user-info-page.h"
+#include "passwd-expiration-policy/password-expiration-policy-page.h"
 
 #include <kiran-sidebar-widget.h>
 #include <kiran-style-public-define.h>
+#include <qt5-log-i.h>
 #include <QDebug>
 #include <QHBoxLayout>
 #include <QIcon>
+#include <QScrollArea>
 #include <QStackedWidget>
 #include <QtWidgets/QListWidgetItem>
-#include <QScrollArea>
-#include <qt5-log-i.h>
 
 #define ITEM_USER_OBJ_PATH_ROLE Qt::UserRole + 1
 
@@ -45,7 +46,8 @@ enum StackWidgetPageEnum
     PAGE_CREATE_USER,
     PAGE_USER_INFO,
     PAGE_SELECT_AVATAR,
-    PAGE_AUTH_MANAGER
+    PAGE_AUTH_MANAGER,
+    PAGE_PASSWD_EXPIRATION_POLICY
 };
 
 KiranAccountManager::KiranAccountManager(QWidget *parent)
@@ -87,7 +89,7 @@ void KiranAccountManager::appendSiderbarItem(const QString &userPath)
 {
     UserInterface interface(userPath, QDBusConnection::systemBus());
 
-    QString iconFile = interface.icon_file().isEmpty()?DEFAULT_USER_AVATAR:interface.icon_file();
+    QString iconFile = interface.icon_file().isEmpty() ? DEFAULT_USER_AVATAR : interface.icon_file();
     KLOG_INFO() << "append siderbar item:" << interface.user_name() << iconFile;
 
     auto item = new QListWidgetItem(interface.user_name(), m_tabList);
@@ -104,8 +106,8 @@ void KiranAccountManager::setDefaultSiderbarItem()
     //设置默认侧边栏项
     if (m_tabList->count() > 1)
     {
-        auto items = m_tabList->findItems(AccountsGlobalInfo::instance()->getCurrentUser(),Qt::MatchCaseSensitive);
-        if(items.size()==1)
+        auto items = m_tabList->findItems(AccountsGlobalInfo::instance()->getCurrentUser(), Qt::MatchCaseSensitive);
+        if (items.size() == 1)
         {
             auto item = items.at(0);
             m_tabList->setCurrentRow(m_tabList->row(item));
@@ -148,11 +150,11 @@ void KiranAccountManager::initUI()
     initUserList();
 
     /* 内容区域 */
-    QScrollArea* scrollArea = new QScrollArea(this);
+    QScrollArea *scrollArea = new QScrollArea(this);
     scrollArea->setWidgetResizable(true);
 
-    QWidget* scrollAreaContentWidget = new QWidget(this);
-    QHBoxLayout* scrollAreaContentLayout = new QHBoxLayout;
+    QWidget *scrollAreaContentWidget = new QWidget(this);
+    QHBoxLayout *scrollAreaContentLayout = new QHBoxLayout;
     scrollAreaContentLayout->setMargin(0);
     scrollAreaContentWidget->setLayout(scrollAreaContentLayout);
 
@@ -179,8 +181,12 @@ void KiranAccountManager::initUI()
     m_stackWidget->insertWidget(PAGE_AUTH_MANAGER, m_page_authManager);
     initPageAuthManager();
 
+    m_page_passwdExpirationPolicy = new PasswordExpirationPolicyPage(m_stackWidget);
+    m_stackWidget->insertWidget(PAGE_PASSWD_EXPIRATION_POLICY,m_page_passwdExpirationPolicy);
+    initPagePasswdExpirationPolicy();
+
     connectToInfoChanged();
-    QTimer::singleShot(0,this,&KiranAccountManager::setDefaultSiderbarItem);
+    QTimer::singleShot(0, this, &KiranAccountManager::setDefaultSiderbarItem);
 }
 
 void KiranAccountManager::initUserList()
@@ -275,6 +281,12 @@ void KiranAccountManager::initPageUserInfo()
     connect(m_page_userinfo, &UserInfoPage::sigAuthManager, [this](const QString &userObj) {
         m_page_authManager->setCurrentUser(userObj);
         m_stackWidget->setCurrentIndex(PAGE_AUTH_MANAGER);
+    });
+
+    //用户信息页面，密码过期策略点击时请求跳转至密码过期策略页面
+    connect(m_page_userinfo,&UserInfoPage::sigPasswordExpirationPolicy,[this](const QString &userObj){
+        m_page_passwdExpirationPolicy->setCurrentUser(userObj);
+        m_stackWidget->setCurrentIndex(PAGE_PASSWD_EXPIRATION_POLICY);
     });
 
     /// 修改属性
@@ -387,7 +399,7 @@ void KiranAccountManager::connectToInfoChanged()
                         }
                         UserInterface userInterface(itemUserPath, QDBusConnection::systemBus());
                         QString userName = userInterface.user_name();
-                        QString iconFile = userInterface.icon_file().isEmpty()?DEFAULT_USER_AVATAR:userInterface.icon_file();
+                        QString iconFile = userInterface.icon_file().isEmpty() ? DEFAULT_USER_AVATAR : userInterface.icon_file();
                         bool isLocked = userInterface.locked();
                         item->setText(userName);
                         item->setIcon(QIcon(iconFile));
@@ -420,5 +432,12 @@ void KiranAccountManager::setMaskVisible(bool visible)
 
 QSize KiranAccountManager::sizeHint() const
 {
-    return QSize(1020,746);
+    return QSize(1020, 746);
+}
+
+void KiranAccountManager::initPagePasswdExpirationPolicy()
+{
+    connect(m_page_passwdExpirationPolicy, &PasswordExpirationPolicyPage::sigReturn, [this]() {
+      m_stackWidget->setCurrentIndex(PAGE_USER_INFO);
+    });
 }

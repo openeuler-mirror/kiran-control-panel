@@ -67,6 +67,10 @@ signals:
     /// @param userObj 认证管理的用户DBus对象
     void sigAuthManager(const QString &userObj);
 
+    /// @brief 当用户点击密码过期策略时，跳转到密码过期策略界面
+    /// @param userObj 密码过期策略的DBus对象
+    void sigPasswordExpirationPolicy(const QString &userObj);
+
     /// 当用户点击保存按钮时,发出的保存用户属性信号，请求工作线程处理
     /// \param userName     用户名
     /// \param iconFile     头像路径

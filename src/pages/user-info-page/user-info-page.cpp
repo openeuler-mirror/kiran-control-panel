@@ -1,4 +1,4 @@
- /**
+/**
   * @Copyright (C) 2020 ~ 2021 KylinSec Co., Ltd.
   *
   * Author:     liuxinhao <liuxinhao@kylinos.com.cn>
@@ -16,7 +16,7 @@
   * You should have received a copy of the GNU General Public License
   * along with this program; If not, see <http: //www.gnu.org/licenses/>. 
   */
- 
+
 #include "user-info-page.h"
 #include "accounts-global-info.h"
 #include "accounts-user-interface.h"
@@ -175,6 +175,15 @@ void UserInfoPage::initUI()
 #else
     ui->btn_authManager->setVisible(false);
 #endif
+
+#ifdef PASSWD_EXPIRATION_POLICY
+    connect(ui->btn_passwdExpirationPolicy,&QPushButton::clicked,[this](){
+        emit sigPasswordExpirationPolicy(m_curShowUserPath);
+    });
+#else
+    ui->btn_passwdExpirationPolicy->setVisible(false);
+#endif
+
 }
 
 void UserInfoPage::resetPageSetPasswd()

@@ -38,156 +38,146 @@ public:
     virtual ~UserInterface();
 
     Q_PROPERTY(int account_type READ account_type)
-
     inline int account_type() const
     {
         return qvariant_cast<int>(property("account_type"));
     }
 
-    Q_PROPERTY(bool automatic_login READ automatic_login)
+    Q_PROPERTY(int auth_modes READ auth_modes)
+    inline int auth_modes() const
+    {
+        return qvariant_cast<int>(property("auth_modes"));
+    }
 
+    Q_PROPERTY(bool automatic_login READ automatic_login)
     inline bool automatic_login() const
     {
         return qvariant_cast<bool>(property("automatic_login"));
     }
 
     Q_PROPERTY(QString email READ email)
-
     inline QString email() const
     {
         return qvariant_cast<QString>(property("email"));
     }
 
     Q_PROPERTY(QString home_directory READ home_directory)
-
     inline QString home_directory() const
     {
         return qvariant_cast<QString>(property("home_directory"));
     }
 
     Q_PROPERTY(QString icon_file READ icon_file)
-
     inline QString icon_file() const
     {
         return qvariant_cast<QString>(property("icon_file"));
     }
 
     Q_PROPERTY(QString language READ language)
-
     inline QString language() const
     {
         return qvariant_cast<QString>(property("language"));
     }
 
     Q_PROPERTY(bool locked READ locked)
-
     inline bool locked() const
     {
         return qvariant_cast<bool>(property("locked"));
     }
 
-    Q_PROPERTY(QString password_hint READ password_hint)
+    Q_PROPERTY(QString password_expiration_policy READ password_expiration_policy)
+    inline QString password_expiration_policy() const
+    {
+        return qvariant_cast<QString>(property("password_expiration_policy"));
+    }
 
+    Q_PROPERTY(QString password_hint READ password_hint)
     inline QString password_hint() const
     {
         return qvariant_cast<QString>(property("password_hint"));
     }
 
     Q_PROPERTY(int password_mode READ password_mode)
-
     inline int password_mode() const
     {
         return qvariant_cast<int>(property("password_mode"));
     }
 
     Q_PROPERTY(QString real_name READ real_name)
-
     inline QString real_name() const
     {
         return qvariant_cast<QString>(property("real_name"));
     }
 
     Q_PROPERTY(QString session READ session)
-
     inline QString session() const
     {
         return qvariant_cast<QString>(property("session"));
     }
 
     Q_PROPERTY(QString session_type READ session_type)
-
     inline QString session_type() const
     {
         return qvariant_cast<QString>(property("session_type"));
     }
 
     Q_PROPERTY(QString shell READ shell)
-
     inline QString shell() const
     {
         return qvariant_cast<QString>(property("shell"));
     }
 
     Q_PROPERTY(bool system_account READ system_account)
-
     inline bool system_account() const
     {
         return qvariant_cast<bool>(property("system_account"));
     }
 
     Q_PROPERTY(qulonglong uid READ uid)
-
     inline qulonglong uid() const
     {
         return qvariant_cast<qulonglong>(property("uid"));
     }
 
     Q_PROPERTY(QString user_name READ user_name)
-
     inline QString user_name() const
     {
         return qvariant_cast<QString>(property("user_name"));
     }
 
     Q_PROPERTY(QString x_session READ x_session)
-
     inline QString x_session() const
     {
         return qvariant_cast<QString>(property("x_session"));
     }
 
-    Q_PROPERTY(int auth_modes READ auth_modes)
-
-    inline int auth_modes() const
-    {
-        return qvariant_cast<int>(property("auth_modes"));
-    }
-
 public Q_SLOTS:  // METHODS
-    inline QDBusPendingReply<qlonglong, qlonglong, qlonglong, qlonglong, qlonglong, qlonglong>
-    GetPasswordExpirationPolicy()
+    inline QDBusPendingReply<> AddAuthItem(int mode, const QString &name, const QString &data_id)
     {
         QList<QVariant> argumentList;
-        return asyncCallWithArgumentList(QLatin1String("GetPasswordExpirationPolicy"), argumentList);
+        argumentList << QVariant::fromValue(mode) << QVariant::fromValue(name) << QVariant::fromValue(data_id);
+        return asyncCallWithArgumentList(QLatin1String("AddAuthItem"), argumentList);
     }
 
-    inline QDBusReply<qlonglong>
-    GetPasswordExpirationPolicy(qlonglong &last_change_time, qlonglong &min_days_between_changes,
-                                qlonglong &max_days_between_changes, qlonglong &days_to_warn,
-                                qlonglong &days_after_expiration_until_lock)
+    inline QDBusPendingReply<> DelAuthItem(int mode, const QString &name)
     {
         QList<QVariant> argumentList;
-        QDBusMessage reply = callWithArgumentList(QDBus::Block, QLatin1String("GetPasswordExpirationPolicy"),
-                                                  argumentList);
-        if (reply.type() == QDBusMessage::ReplyMessage && reply.arguments().count() == 6)
-        {
-            last_change_time = qdbus_cast<qlonglong>(reply.arguments().at(1));
-            min_days_between_changes = qdbus_cast<qlonglong>(reply.arguments().at(2));
-            max_days_between_changes = qdbus_cast<qlonglong>(reply.arguments().at(3));
-            days_to_warn = qdbus_cast<qlonglong>(reply.arguments().at(4));
-            days_after_expiration_until_lock = qdbus_cast<qlonglong>(reply.arguments().at(5));
-        }
-        return reply;
+        argumentList << QVariant::fromValue(mode) << QVariant::fromValue(name);
+        return asyncCallWithArgumentList(QLatin1String("DelAuthItem"), argumentList);
+    }
+
+    inline QDBusPendingReply<> EnableAuthMode(int mode, bool enabled)
+    {
+        QList<QVariant> argumentList;
+        argumentList << QVariant::fromValue(mode) << QVariant::fromValue(enabled);
+        return asyncCallWithArgumentList(QLatin1String("EnableAuthMode"), argumentList);
+    }
+
+    inline QDBusPendingReply<QString> GetAuthItems(int mode)
+    {
+        QList<QVariant> argumentList;
+        argumentList << QVariant::fromValue(mode);
+        return asyncCallWithArgumentList(QLatin1String("GetAuthItems"), argumentList);
     }
 
     inline QDBusPendingReply<> SetAccountType(int account_type)
@@ -246,6 +236,13 @@ public Q_SLOTS:  // METHODS
         return asyncCallWithArgumentList(QLatin1String("SetPassword"), argumentList);
     }
 
+    inline QDBusPendingReply<> SetPasswordExpirationPolicy(const QString &options)
+    {
+        QList<QVariant> argumentList;
+        argumentList << QVariant::fromValue(options);
+        return asyncCallWithArgumentList(QLatin1String("SetPasswordExpirationPolicy"), argumentList);
+    }
+
     inline QDBusPendingReply<> SetPasswordHint(const QString &hint)
     {
         QList<QVariant> argumentList;
@@ -300,34 +297,6 @@ public Q_SLOTS:  // METHODS
         QList<QVariant> argumentList;
         argumentList << QVariant::fromValue(x_session);
         return asyncCallWithArgumentList(QLatin1String("SetXSession"), argumentList);
-    }
-
-    inline QDBusPendingReply<> AddAuthItem(int mode, const QString &name, const QString &data_id)
-    {
-        QList<QVariant> argumentList;
-        argumentList << QVariant::fromValue(mode) << QVariant::fromValue(name) << QVariant::fromValue(data_id);
-        return asyncCallWithArgumentList(QLatin1String("AddAuthItem"), argumentList);
-    }
-
-    inline QDBusPendingReply<> DelAuthItem(int mode, const QString &name)
-    {
-        QList<QVariant> argumentList;
-        argumentList << QVariant::fromValue(mode) << QVariant::fromValue(name);
-        return asyncCallWithArgumentList(QLatin1String("DelAuthItem"), argumentList);
-    }
-
-    inline QDBusPendingReply<QString> GetAuthItems(int mode)
-    {
-        QList<QVariant> argumentList;
-        argumentList << QVariant::fromValue(mode);
-        return asyncCallWithArgumentList(QLatin1String("GetAuthItems"), argumentList);
-    }
-
-    inline QDBusPendingReply<> EnableAuthMode(int mode, bool enabled)
-    {
-        QList<QVariant> argumentList;
-        argumentList << QVariant::fromValue(mode) << QVariant::fromValue(enabled);
-        return asyncCallWithArgumentList(QLatin1String("EnableAuthMode"), argumentList);
     }
 
 private Q_SLOTS:

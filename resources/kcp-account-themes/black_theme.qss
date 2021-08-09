@@ -22,7 +22,7 @@ QPushButton#btn_advanceSetting{
     border:none;
 }
 
-QPushButton#btn_authManager{
+QPushButton#btn_authManager,#btn_passwdExpirationPolicy{
     background:transparent;
     text-decoration:underline;
     color:white;

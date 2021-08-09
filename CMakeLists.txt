@@ -4,6 +4,8 @@ project(kiran-cpanel-account)
 
 #账户信息页面，认证管理入口是否显示
 option(AUTH_MANAGER_VISIBLE "Is auth manager visible" OFF)
+#账户信息页面，密码过期策略是否显示
+option(PASSWD_EXPIRATION_POLICY_VISIBLE "Is password expiration policy visible" OFF)
 #认证管理页面是否显示人脸认证相关
 option(FACE_AUTH_VISIBLE "face auth visible" OFF)
 
@@ -87,6 +89,10 @@ endif()
 
 if( FACE_AUTH_VISIBLE )
     add_definitions(-DFACE_AUTH)
+endif()
+
+if( PASSWD_EXPIRATION_POLICY_VISIBLE )
+    add_definitions(-DPASSWD_EXPIRATION_POLICY)
 endif()
 
 #安装控制中心插件

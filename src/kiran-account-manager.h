@@ -30,6 +30,7 @@ class CreateUserPage;
 class UserInfoPage;
 class SelectAvatarPage;
 class AuthManagerPage;
+class PasswordExpirationPolicyPage;
 class MaskWidget;
 class HardWorker;
 class KiranSidebarWidget;
@@ -54,6 +55,7 @@ private:
     void initPageUserInfo();
     void initPageSelectAvatar();
     void initPageAuthManager();
+    void initPagePasswdExpirationPolicy();
     void connectToInfoChanged();
     void appendSiderbarItem(const QString &userPath);
     void setDefaultSiderbarItem();
@@ -66,6 +68,7 @@ private:
     UserInfoPage *m_page_userinfo{};
     SelectAvatarPage *m_page_selectAvatar{};
     AuthManagerPage *m_page_authManager{};
+    PasswordExpirationPolicyPage *m_page_passwdExpirationPolicy{};
     MaskWidget *m_maskWidget{};
     QThread m_workThread;
     HardWorker *m_hardworker;
