@@ -322,6 +322,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/information-list-item.ui" line="26"/>
         <location filename="../build/kiran-cpanel-system_autogen/include/ui_information-list-item.h" line="77"/>
+        <location filename="../build-kiran-system-information-qt5_11-Debug/ui_information-list-item.h" line="77"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
@@ -336,6 +337,83 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>保存</source>
         <translation type="obsolete">保存</translation>
+    </message>
+</context>
+<context>
+    <name>LicenseAgreement</name>
+    <message>
+        <location filename="../src/license/license-agreement.ui" line="32"/>
+        <location filename="../build/kiran-cpanel-system_autogen/include/ui_license-agreement.h" line="100"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/license/license-agreement.ui" line="76"/>
+        <location filename="../build/kiran-cpanel-system_autogen/include/ui_license-agreement.h" line="101"/>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Noto Sans CJK SC&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/license/license-agreement.ui" line="110"/>
+        <location filename="../build/kiran-cpanel-system_autogen/include/ui_license-agreement.h" line="106"/>
+        <source>Export</source>
+        <translation>导出</translation>
+    </message>
+    <message>
+        <location filename="../src/license/license-agreement.ui" line="148"/>
+        <location filename="../build/kiran-cpanel-system_autogen/include/ui_license-agreement.h" line="107"/>
+        <source>Close</source>
+        <translation>关闭</translation>
+    </message>
+    <message>
+        <location filename="../src/license/license-agreement.cpp" line="79"/>
+        <source>Save</source>
+        <translation>保存</translation>
+    </message>
+    <message>
+        <location filename="../src/license/license-agreement.cpp" line="81"/>
+        <source>PDF(*.pdf)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export EULA</source>
+        <translation type="obsolete">导出最终用户许可协议</translation>
+    </message>
+    <message>
+        <source>Export EULA failed!</source>
+        <translation type="obsolete">导出最终用户许可协议失败!</translation>
+    </message>
+    <message>
+        <location filename="../src/license/license-agreement.cpp" line="90"/>
+        <source>Export License</source>
+        <translation>导出协议</translation>
+    </message>
+    <message>
+        <location filename="../src/license/license-agreement.cpp" line="91"/>
+        <source>Export License failed!</source>
+        <translation>导出协议失败!</translation>
+    </message>
+    <message>
+        <location filename="../src/license/license-agreement.cpp" line="142"/>
+        <source>User End License Agreement</source>
+        <translation>最终用户许可协议</translation>
+    </message>
+    <message>
+        <location filename="../src/license/license-agreement.cpp" line="160"/>
+        <location filename="../src/license/license-agreement.cpp" line="173"/>
+        <location filename="../src/license/license-agreement.cpp" line="211"/>
+        <location filename="../src/license/license-agreement.cpp" line="221"/>
+        <source>None</source>
+        <translation>暂无</translation>
+    </message>
+    <message>
+        <location filename="../src/license/license-agreement.cpp" line="188"/>
+        <source>Version License</source>
+        <translation>版本协议</translation>
     </message>
 </context>
 <context>
@@ -424,13 +502,13 @@ p, li { white-space: pre-wrap; }
     <name>SystemInformationWidget</name>
     <message>
         <location filename="../src/pages/system-information/system-information-widget.ui" line="14"/>
-        <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="400"/>
+        <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="432"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/pages/system-information/system-information-widget.ui" line="146"/>
-        <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="401"/>
+        <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="433"/>
         <source>Host Name:</source>
         <translation>主机名:</translation>
     </message>
@@ -443,14 +521,14 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/pages/system-information/system-information-widget.ui" line="521"/>
         <location filename="../src/pages/system-information/system-information-widget.ui" line="612"/>
         <location filename="../src/pages/system-information/system-information-widget.ui" line="675"/>
-        <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="402"/>
-        <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="405"/>
-        <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="407"/>
-        <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="409"/>
-        <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="411"/>
-        <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="413"/>
-        <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="416"/>
-        <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="418"/>
+        <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="434"/>
+        <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="437"/>
+        <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="439"/>
+        <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="441"/>
+        <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="443"/>
+        <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="445"/>
+        <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="448"/>
+        <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="450"/>
         <source>TextLabel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -458,57 +536,65 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/pages/system-information/system-information-widget.ui" line="197"/>
         <location filename="../src/pages/system-information/system-information-widget.ui" line="552"/>
         <location filename="../src/pages/system-information/system-information-widget.ui" line="750"/>
-        <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="403"/>
-        <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="414"/>
-        <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="420"/>
+        <location filename="../src/pages/system-information/system-information-widget.ui" line="822"/>
+        <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="435"/>
+        <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="446"/>
+        <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="452"/>
+        <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="454"/>
         <source>PushButton</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/pages/system-information/system-information-widget.ui" line="237"/>
-        <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="404"/>
+        <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="436"/>
         <source>System Version:</source>
         <translation>系统版本:</translation>
     </message>
     <message>
         <location filename="../src/pages/system-information/system-information-widget.ui" line="312"/>
-        <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="406"/>
+        <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="438"/>
         <source>Kernel Version:</source>
         <translation>内核版本:</translation>
     </message>
     <message>
         <location filename="../src/pages/system-information/system-information-widget.ui" line="375"/>
-        <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="408"/>
+        <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="440"/>
         <source>System Architecture:</source>
         <translation>系统架构:</translation>
     </message>
     <message>
         <location filename="../src/pages/system-information/system-information-widget.ui" line="438"/>
-        <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="410"/>
+        <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="442"/>
         <source>Installation time:</source>
         <translation>安装时间:</translation>
     </message>
     <message>
         <location filename="../src/pages/system-information/system-information-widget.ui" line="501"/>
-        <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="412"/>
+        <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="444"/>
         <source>Activation status:</source>
         <translation>激活状态:</translation>
     </message>
     <message>
         <location filename="../src/pages/system-information/system-information-widget.ui" line="592"/>
-        <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="415"/>
+        <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="447"/>
         <source>Expiry date:</source>
         <translation>质保期:</translation>
     </message>
     <message>
         <location filename="../src/pages/system-information/system-information-widget.ui" line="718"/>
-        <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="419"/>
+        <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="451"/>
         <source>EULA:</source>
         <translation>最终用户许可协议:</translation>
     </message>
     <message>
+        <location filename="../src/pages/system-information/system-information-widget.ui" line="790"/>
+        <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="453"/>
+        <source>Version License:</source>
+        <translation>版本协议:</translation>
+    </message>
+    <message>
         <location filename="../src/pages/system-information/system-information-widget.ui" line="655"/>
-        <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="417"/>
+        <location filename="../build/kiran-cpanel-system_autogen/include/ui_system-information-widget.h" line="449"/>
         <source>Contact Us:</source>
         <translation>联系我们:</translation>
     </message>
@@ -519,73 +605,74 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/pages/system-information/system-information-widget.cpp" line="102"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="103"/>
         <source>Show</source>
         <translation>查看</translation>
     </message>
     <message>
-        <location filename="../src/pages/system-information/system-information-widget.cpp" line="141"/>
-        <location filename="../src/pages/system-information/system-information-widget.cpp" line="142"/>
-        <location filename="../src/pages/system-information/system-information-widget.cpp" line="143"/>
-        <location filename="../src/pages/system-information/system-information-widget.cpp" line="144"/>
-        <location filename="../src/pages/system-information/system-information-widget.cpp" line="165"/>
-        <location filename="../src/pages/system-information/system-information-widget.cpp" line="169"/>
-        <location filename="../src/pages/system-information/system-information-widget.cpp" line="170"/>
-        <location filename="../src/pages/system-information/system-information-widget.cpp" line="442"/>
-        <location filename="../src/pages/system-information/system-information-widget.cpp" line="446"/>
-        <location filename="../src/pages/system-information/system-information-widget.cpp" line="447"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="157"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="158"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="159"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="160"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="181"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="185"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="186"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="458"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="462"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="463"/>
         <source>Unknow</source>
         <translation>未知</translation>
     </message>
     <message>
-        <location filename="../src/pages/system-information/system-information-widget.cpp" line="201"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="217"/>
         <source>The current time is illegal</source>
         <translation>当前时间不合法</translation>
     </message>
     <message>
-        <location filename="../src/pages/system-information/system-information-widget.cpp" line="202"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="218"/>
         <source>Less than the installation time</source>
         <translation>小于安装时间</translation>
     </message>
     <message>
-        <location filename="../src/pages/system-information/system-information-widget.cpp" line="213"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="229"/>
         <source>Not activated. Trail expiration: </source>
         <translation>未激活.试用到期: </translation>
     </message>
     <message>
-        <location filename="../src/pages/system-information/system-information-widget.cpp" line="166"/>
-        <location filename="../src/pages/system-information/system-information-widget.cpp" line="443"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="182"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="459"/>
         <source>Can&apos;t get activation information</source>
         <translation>无法获取激活信息</translation>
     </message>
     <message>
-        <location filename="../src/pages/system-information/system-information-widget.cpp" line="193"/>
-        <location filename="../src/pages/system-information/system-information-widget.cpp" line="252"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="209"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="268"/>
         <source>Activate</source>
         <translation>激活</translation>
     </message>
     <message>
-        <location filename="../src/pages/system-information/system-information-widget.cpp" line="222"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="238"/>
         <source>get service status failed</source>
         <translation>获取服务状态信息失败</translation>
     </message>
     <message>
-        <location filename="../src/pages/system-information/system-information-widget.cpp" line="225"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="241"/>
         <source>Not yet</source>
         <translation>暂无</translation>
     </message>
     <message>
-        <location filename="../src/pages/system-information/system-information-widget.cpp" line="232"/>
-        <location filename="../src/pages/system-information/system-information-widget.cpp" line="461"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="248"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="477"/>
         <source>Activated</source>
         <translation>已激活</translation>
     </message>
     <message>
-        <location filename="../src/pages/system-information/system-information-widget.cpp" line="522"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="538"/>
         <source>Copyright ©</source>
         <translation>版权所有 ©</translation>
     </message>
     <message>
-        <location filename="../src/pages/system-information/system-information-widget.cpp" line="522"/>
+        <location filename="../src/pages/system-information/system-information-widget.cpp" line="538"/>
         <source>KylinSec. All rights reserved.</source>
         <translation>KylinSec.保留所有权利.</translation>
     </message>
@@ -593,63 +680,32 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>UserlicenseAgreement</name>
     <message>
-        <location filename="../src/license/user-license-agreement.ui" line="32"/>
-        <location filename="../build/kiran-cpanel-system_autogen/include/ui_user-license-agreement.h" line="100"/>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/license/user-license-agreement.ui" line="76"/>
-        <location filename="../build/kiran-cpanel-system_autogen/include/ui_user-license-agreement.h" line="101"/>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Noto Sans CJK SC&apos;; font-size:12pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/license/user-license-agreement.ui" line="110"/>
-        <location filename="../build/kiran-cpanel-system_autogen/include/ui_user-license-agreement.h" line="106"/>
         <source>Export</source>
-        <translation>导出</translation>
+        <translation type="vanished">导出</translation>
     </message>
     <message>
-        <location filename="../src/license/user-license-agreement.ui" line="148"/>
-        <location filename="../build/kiran-cpanel-system_autogen/include/ui_user-license-agreement.h" line="107"/>
         <source>Close</source>
-        <translation>关闭</translation>
+        <translation type="vanished">关闭</translation>
     </message>
     <message>
-        <location filename="../src/license/user-license-agreement.cpp" line="70"/>
         <source>Save</source>
-        <translation>保存</translation>
+        <translation type="vanished">保存</translation>
     </message>
     <message>
-        <location filename="../src/license/user-license-agreement.cpp" line="72"/>
-        <source>PDF(*.pdf)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/license/user-license-agreement.cpp" line="81"/>
         <source>Export EULA</source>
-        <translation>导出最终用户许可协议</translation>
+        <translation type="vanished">导出最终用户许可协议</translation>
     </message>
     <message>
-        <location filename="../src/license/user-license-agreement.cpp" line="81"/>
         <source>Export EULA failed!</source>
-        <translation>导出最终用户许可协议失败!</translation>
+        <translation type="vanished">导出最终用户许可协议失败!</translation>
     </message>
     <message>
-        <location filename="../src/license/user-license-agreement.cpp" line="104"/>
         <source>User End License Agreement</source>
-        <translation>最终用户许可协议</translation>
+        <translation type="vanished">最终用户许可协议</translation>
     </message>
     <message>
-        <location filename="../src/license/user-license-agreement.cpp" line="132"/>
-        <location filename="../src/license/user-license-agreement.cpp" line="139"/>
         <source>None</source>
-        <translation>暂无</translation>
+        <translation type="vanished">暂无</translation>
     </message>
 </context>
 <context>
@@ -657,6 +713,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/kiran-system-information.ui" line="26"/>
         <location filename="../build/kiran-cpanel-system_autogen/include/ui_kiran-system-information.h" line="138"/>
+        <location filename="../build-kiran-system-information-qt5_11-Debug/ui_kiran-system-information.h" line="138"/>
         <source>kiranSystemInformation</source>
         <translation type="unfinished"></translation>
     </message>

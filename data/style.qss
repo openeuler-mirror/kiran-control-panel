@@ -50,7 +50,7 @@ QLabel#lab_status,QLabel#lab_name_info
 /*******************QWidget**********/
 QWidget#widget_CPU,QWidget#widget_memory,QWidget#widget_hard_disk,QWidget#widget_graphics_card,QWidget#widget_network_card,
 QWidget#widget_kernel_version,QWidget#widget_host_name,QWidget#widget_system_version,QWidget#widget_system_arch,QWidget#widget_install_time,QWidget#widget_register_status,QWidget#widget_expire_date,QWidget#widget_contact,
-QWidget#widget_EULA
+QWidget#widget_EULA,QWidget#widget_version_license
 {
     background-color: #2d2d2d;
     border-radius: 6px;
@@ -86,7 +86,7 @@ QScrollArea#scrollArea
     border-right:none;
 }
 /****************QPushButton************/
-QPushButton#btn_change_name,QToolButton#btn_status,QPushButton#btn_EULA
+QPushButton#btn_change_name,QToolButton#btn_status,QPushButton#btn_EULA,QPushButton#btn_version_license
 {
     background-color: #2eb3ff;
     border-radius: 4px;
@@ -229,7 +229,7 @@ QWidget#widget_mc,QWidget#widget_lc
     border-radius: 6px;
     background-color: rgba(255,255,255,0.05);
 }
-QWidget#ActGuideWidget , QWidget#LicenseInfoWidget, QWidget#ShowQRCode , QWidget#UserlicenseAgreement
+QWidget#ActGuideWidget , QWidget#LicenseInfoWidget, QWidget#ShowQRCode , QWidget#LicenseAgreement
 {
         background-color: #222222;
         border:none;

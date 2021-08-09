@@ -1,0 +1,241 @@
+/**
+ * @Copyright (C) 2020 ~ 2021 KylinSec Co., Ltd.
+ *
+ * Author:     yuanxing <yuanxing@kylinos.com.cn>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; If not, see <http: //www.gnu.org/licenses/>.
+ */
+#include "license-agreement.h"
+#include "ui_license-agreement.h"
+#include <QIcon>
+#include <QFile>
+#include <kiran-log/qt5-log-i.h>
+#include <QDesktopWidget>
+#include <kiranwidgets-qt5/widget-property-helper.h>
+#include <kiranwidgets-qt5/kiran-style-public-define.h>
+#include <kiranwidgets-qt5/kiran-message-box.h>
+#include <QFileDialog>
+#include <QtPrintSupport/QPrinter>
+#include <QTextDocument>
+#include <QStandardPaths>
+#include <QLocale>
+#define EULAFILE "/usr/share/kylin-release"
+
+enum LicenseType
+{
+    EULA_LICENSE = 0,
+    VERSION_LICENSE
+};
+
+using namespace Kiran::WidgetPropertyHelper;
+using namespace Kiran;
+
+LicenseAgreement::LicenseAgreement() :
+    KiranTitlebarWindow(),
+    ui(new Ui::LicenseAgreement)
+{
+    ui->setupUi(getWindowContentWidget());
+    initUI();
+    connect(ui->btn_license_close,&QPushButton::clicked,
+            [this]{
+        this->close();
+    });
+
+    connect(ui->btn_license_export,&QPushButton::clicked,this ,&LicenseAgreement::exportLicense);
+}
+
+LicenseAgreement::~LicenseAgreement()
+{
+    delete ui;
+}
+
+QString LicenseAgreement::getEulaText()
+{
+    QString text = ui->text_license->toPlainText();
+    return text;
+}
+
+void LicenseAgreement::exportLicense()
+{
+    QString eulaText = ui->text_license->toPlainText();
+    QString currentHomePath;
+    if(m_licenseType == EULA_LICENSE)
+        currentHomePath = "/" + QStandardPaths::writableLocation(QStandardPaths::HomeLocation) +"/EULA.pdf" ;
+    else
+        currentHomePath = "/" + QStandardPaths::writableLocation(QStandardPaths::HomeLocation) +"/Version-License.pdf" ;
+
+    QString fileName = QFileDialog::getSaveFileName(this,
+                                                    tr("Save"),
+                                                    currentHomePath,
+                                                    tr("PDF(*.pdf)"));
+    if(fileName.isNull())
+    {
+        return;
+    }
+    QFile file(fileName);
+
+    if (!file.open(QIODevice::WriteOnly|QIODevice::Text))
+    {
+        KiranMessageBox::KiranStandardButton button = KiranMessageBox::message(nullptr,QString(tr("Export License")),
+                                                                               QString(tr("Export License failed!")),
+                                                                               KiranMessageBox::Ok);
+        if(button == KiranMessageBox::Ok)
+        {
+            return;
+        }
+    }
+    else
+    {
+        //将EULA文字转化为PDF
+        QPrinter printer(QPrinter::PrinterResolution);
+        printer.setOutputFormat(QPrinter::PdfFormat);
+        printer.setPaperSize(QPrinter::A4);
+        printer.setOutputFileName(fileName);
+
+        QTextDocument doc;
+        doc.setPlainText(eulaText); /* 可替换为文档内容 */
+        doc.setPageSize(printer.pageRect().size());
+        doc.print(&printer);
+        file.close();
+    }
+}
+
+void LicenseAgreement::initUI()
+{
+    setIcon(QIcon(":/images/kylin-about.png"));
+    setResizeable(false);
+    setButtonHints(TitlebarMinimizeButtonHint | TitlebarCloseButtonHint);
+    setWindowModality(Qt::ApplicationModal);
+
+    setButtonType(ui->btn_license_close,BUTTON_Default);
+    setButtonType(ui->btn_license_export,BUTTON_Normal);
+}
+
+QString LicenseAgreement::getLocaleLang()
+{
+    QLocale locale = QLocale::system();
+    QString lang;
+    if(locale.language() == QLocale::Chinese)
+        lang = "zh_CN";
+    else if(locale.language() == QLocale::English)
+        lang = "en_US";
+    else
+        return QString("");
+    return lang;
+}
+
+void LicenseAgreement::setEULA()
+{
+    m_licenseType = EULA_LICENSE;
+    ui->text_license->clear();
+    setTitle(LicenseAgreement::tr("User End License Agreement"));
+    QString lang = getLocaleLang();
+    QString licenseFile;
+
+    if(!lang.isEmpty())
+        licenseFile = QString("%1/EULA-%2").arg(EULAFILE).arg(lang);
+    else
+        licenseFile = QString("%1/EULA-en_US").arg(EULAFILE);
+
+    KLOG_INFO() << licenseFile;
+    QFile file(licenseFile);
+    QTextStream textStream;
+
+    if(file.exists())
+    {
+        if(!file.open(QFile::ReadOnly | QFile::Text))
+        {
+            KLOG_INFO() << "Can't open " << licenseFile ;
+            ui->text_license->setText(tr("None"));
+            file.close();
+            return ;
+        }
+        textStream.setDevice(&file);
+    }
+    else
+    {
+        KLOG_INFO()<< licenseFile << " is not exists ";
+        file.setFileName(QString("%1/EULA").arg(EULAFILE));
+        if(!file.open(QFile::ReadOnly | QFile::Text))
+        {
+            KLOG_INFO() << "Can't open " << file.fileName() ;
+            ui->text_license->setText(tr("None"));
+            file.close();
+            return ;
+        }
+        textStream.setDevice(&file);
+    }
+    ui->text_license->setText(textStream.readAll());
+    file.close();
+}
+
+
+void LicenseAgreement::setVersionLicnese()
+{
+    m_licenseType = VERSION_LICENSE;
+    ui->text_license->clear();
+    setTitle(LicenseAgreement::tr("Version License"));
+    QString lang = getLocaleLang();
+    QString body ;
+    QString title ;
+    if(!lang.isEmpty())
+    {
+        body = QString(":/version-license/version-license/gpl-3.0-%1-body.txt").arg(lang);
+        title = QString(":/version-license/version-license/gpl-3.0-%1-title.txt").arg(lang);
+    }
+    else
+    {
+        body = QString(":/version-license/version-license/gpl-3.0-en_US-body.txt");
+        title = QString(":/version-license/version-license/gpl-3.0-en_US-title.txt");
+    }
+
+    KLOG_INFO() << body;
+    KLOG_INFO() << title;
+
+    QFile fileTitle(title);
+    QFile fileBody(body);
+    if(!fileTitle.exists() || !fileBody.exists() )
+    {
+        KLOG_INFO() << "Version License don't exists";
+        ui->text_license->setText(tr("None"));
+        fileTitle.close();
+        fileBody.close();
+        return ;
+    }
+
+    if(!fileTitle.open(QIODevice::ReadOnly | QIODevice::Text) ||
+            !fileBody.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        KLOG_INFO() << "can't open Version License";
+        ui->text_license->setText(tr("None"));
+        fileTitle.close();
+        fileBody.close();
+        return ;
+    }
+   QTextStream textStreamTitle(&fileTitle);
+   QTextStream textStreamBody(&fileBody);
+
+   ui->text_license->setAlignment(Qt::AlignHCenter);
+   while (!textStreamTitle.atEnd()) {
+       QString line = textStreamTitle.readLine();
+       ui->text_license->append(line);
+   }
+   ui->text_license->setAlignment(Qt::AlignLeft);
+   ui->text_license->append(textStreamBody.readAll());
+   ui->text_license->moveCursor(QTextCursor::Start);
+   fileBody.close();
+   fileTitle.close();
+}
+
+

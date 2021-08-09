@@ -26,7 +26,7 @@
 #include <kiranwidgets-qt5/kiran-message-box.h>
 #include <kiranwidgets-qt5/widget-property-helper.h>
 #include <kiranwidgets-qt5/kiran-style-public-define.h>
-#include "license/user-license-agreement.h"
+#include "license/license-agreement.h"
 
 #include <kiran-log/qt5-log-i.h>
 #include <QJsonDocument>
@@ -61,7 +61,7 @@ SystemInformationWidget::SystemInformationWidget(QWidget *parent) :
     activeGuide(nullptr),
     licenseInfoWidget(nullptr),
     hostNameWidget(nullptr),
-    userlicenseAgreement(nullptr)
+    licenseAgreement(nullptr)
 {
     ui->setupUi(this);
     initUI();
@@ -85,9 +85,9 @@ SystemInformationWidget::~SystemInformationWidget()
     {
         delete hostNameWidget;
     }
-    if(userlicenseAgreement != nullptr)
+    if(licenseAgreement != nullptr)
     {
-        delete userlicenseAgreement;
+        delete licenseAgreement;
     }
 }
 
@@ -100,18 +100,34 @@ bool SystemInformationWidget::initUI()
     ui->btn_change_name->setText(tr("Change"));
     ui->lab_contact_info->setText("400-625-6606");
     ui->btn_EULA->setText(tr("Show"));
+    ui->btn_version_license->setText(tr("Show"));
 
     connect(ui->btn_EULA,&QPushButton::clicked,
             [this]{
-        if(userlicenseAgreement == nullptr)
+        if(licenseAgreement == nullptr)
         {
-            userlicenseAgreement = new UserlicenseAgreement();
+            licenseAgreement = new LicenseAgreement();
         }
+        licenseAgreement->setEULA();
         int screenNum = QApplication::desktop()->screenNumber(QCursor::pos());
         QRect screenGeometry = QApplication::desktop()->screenGeometry(screenNum);
-        userlicenseAgreement->move(screenGeometry.x()+(screenGeometry.width()-this->width())/2,
+        licenseAgreement->move(screenGeometry.x()+(screenGeometry.width()-this->width())/2,
                screenGeometry.y()+(screenGeometry.height()-this->height())/2);
-        userlicenseAgreement->show();
+        licenseAgreement->show();
+    });
+
+    connect(ui->btn_version_license,&QPushButton::clicked,
+            [this]{
+        if(licenseAgreement == nullptr)
+        {
+            licenseAgreement = new LicenseAgreement();
+        }
+        licenseAgreement->setVersionLicnese();
+        int screenNum = QApplication::desktop()->screenNumber(QCursor::pos());
+        QRect screenGeometry = QApplication::desktop()->screenGeometry(screenNum);
+        licenseAgreement->move(screenGeometry.x()+(screenGeometry.width()-this->width())/2,
+               screenGeometry.y()+(screenGeometry.height()-this->height())/2);
+        licenseAgreement->show();
     });
 
     return true;

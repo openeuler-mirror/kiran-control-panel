@@ -47,14 +47,14 @@ SOURCES += \
     license/active-list-item.cpp \
     license/load-animation-widget.cpp \
     license/license-info-widget.cpp \
-    license/user-license-agreement.cpp \
     kiran-system-widget.cpp \
     kiran-scroll-area.cpp \
     kiran-list-widget.cpp \
     change-host-name-widget.cpp \
     pages/hardware-information/hardware-information-widget.cpp \
     pages/system-information/system-information-widget.cpp \
-    plug_interface/interface.cpp
+    plug_interface/interface.cpp \
+    license/license-agreement.cpp
 
 HEADERS += \
         kiran-system-information.h \
@@ -68,14 +68,14 @@ HEADERS += \
     license/active-list-item.h \
     license/load-animation-widget.h \
     license/license-info-widget.h \
-    license/user-license-agreement.h \
     kiran-system-widget.h \
     kiran-scroll-area.h \
     kiran-list-widget.h \
     change-host-name-widget.h \
     pages/hardware-information/hardware-information-widget.h \
     pages/system-information/system-information-widget.h \
-    plug_interface/interface.h
+    plug_interface/interface.h \
+    license/license-agreement.h
 
 FORMS += \
         kiran-system-information.ui \
@@ -86,10 +86,10 @@ FORMS += \
     license/show-qrcode.ui \
     license/active-list-item.ui \
     license/license-info-widget.ui \
-    license/user-license-agreement.ui \
     change-host-name-widget.ui \
     pages/hardware-information/hardware-information-widget.ui \
-    pages/system-information/system-information-widget.ui
+    pages/system-information/system-information-widget.ui \
+    license/license-agreement.ui
 
 RESOURCES += \
     ../data/res.qrc \

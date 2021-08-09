@@ -19,7 +19,6 @@
 
 #include "kiran-system-widget.h"
 #include "kiran-system-information.h"
-#include "license/user-license-agreement.h"
 #include <kiranwidgets-qt5/kiran-message-box.h>
 #include <kiran-log/qt5-log-i.h>
 #include <QPushButton>
@@ -36,8 +35,6 @@
 #include <QTextDocument>
 #include <QStandardPaths>
 #include <QTimer>
-
-#define EULAFILE "/usr/share/kylin-release/EULA"
 
 KiranSystemWidget::KiranSystemWidget():
     KiranTitlebarWindow()

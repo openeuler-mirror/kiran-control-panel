@@ -16,32 +16,38 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; If not, see <http: //www.gnu.org/licenses/>.
  */
-#ifndef USERLICENSEAGREEMENT_H
-#define USERLICENSEAGREEMENT_H
+#ifndef LICENSEAGREEMENT_H
+#define LICENSEAGREEMENT_H
 
 #include <QWidget>
 #include <kiranwidgets-qt5/kiran-titlebar-window.h>
 
 namespace Ui {
-class UserlicenseAgreement;
+class LicenseAgreement;
 }
 
-class UserlicenseAgreement : public KiranTitlebarWindow
+class LicenseAgreement : public KiranTitlebarWindow
 {
     Q_OBJECT
 
 public:
-    explicit UserlicenseAgreement();
-    ~UserlicenseAgreement();
+    explicit LicenseAgreement();
+    ~LicenseAgreement();
     QString getEulaText();
-    void exportEULA();
+    void setEULA();
+    void setVersionLicnese();
+    //void setLicenseType(int type);
+
+public slots:
+    void exportLicense();
 
 private:
     void initUI();
-    void addText();
+    QString getLocaleLang();
 
 private:
-    Ui::UserlicenseAgreement *ui;
+    Ui::LicenseAgreement *ui;
+    int m_licenseType;
 };
 
-#endif // USERLICENSEAGREEMENT_H
+#endif // LICENSEAGREEMENT_H

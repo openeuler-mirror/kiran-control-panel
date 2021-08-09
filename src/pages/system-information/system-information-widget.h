@@ -29,7 +29,7 @@ namespace Ui {
 class SystemInformationWidget;
 }
 
-class UserlicenseAgreement;
+class LicenseAgreement;
 class SystemInformationWidget : public QWidget
 {
     Q_OBJECT
@@ -73,7 +73,7 @@ private:
     ActGuideWidget *activeGuide;
     LicenseInfoWidget *licenseInfoWidget;
     ChangeHostNameWidget* hostNameWidget;
-    UserlicenseAgreement *userlicenseAgreement;
+    LicenseAgreement *licenseAgreement;
 };
 
 #endif // SYSTEMINFORMATIONWIDGET_H

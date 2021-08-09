@@ -22,7 +22,6 @@
 
 #include <kiranwidgets-qt5/kiran-titlebar-window.h>
 #include "kiran-system-information.h"
-#include "license/user-license-agreement.h"
 
 #include <QPushButton>
 #include <QMenu>
