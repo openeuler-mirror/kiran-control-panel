@@ -92,11 +92,11 @@ QPushButton#btn_change_name,QToolButton#btn_status,QPushButton#btn_EULA,QPushBut
     border-radius: 4px;
     color:#ffffff;
 }
-QPushButton#btn_change_name:hover,QToolButton#btn_status:hover,QPushButton#btn_EULA:hover
+QPushButton#btn_change_name:hover,QToolButton#btn_status:hover,QPushButton#btn_EULA:hover,QPushButton#btn_version_license:hover
 {
      background-color: #77ceff;
 }
-QPushButton#btn_change_name:pressed,QToolButton#btn_status:pressed,QPushButton#btn_EULA:pressed
+QPushButton#btn_change_name:pressed,QToolButton#btn_status:pressed,QPushButton#btn_EULA:pressed,QPushButton#btn_version_license:pressed
 {
     background-color: #2eb3ff;
 }
