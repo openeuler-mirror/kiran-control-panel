@@ -1,4 +1,4 @@
-版权所有 © 2007 自由软件基金会 <http://fsf.org/>
+版权所有 © 2007 自由软件基金会 <https://fsf.org/>
 任何人皆可复制和发布本协议的完整副本，但不得修改
 【译者声明】
 　　This is an unofficial translation of the GNU General Public License into Chinese. It was not published by the Free Software Foundation, and does not legally state the distribution terms for software that uses the GNU GPL--only the original English text of the GNU GPL does that. However, we hope that this translation will help Chinese speakers understand the GNU GPL better.
@@ -155,7 +155,7 @@ You may publish this translation, modified or unmodified, only under the terms a
 　　版权所有（C）<年份> <作者姓名>
 　　本程序为自由软件，在自由软件联盟发布的GNU通用公共许可协议的约束下，你可以对其进行再发布及修改。协议版本为第三版或（随你）更新的版本。
 　　我们希望发布的这款程序有用，但不保证，甚至不保证它有经济价值和适合特定用途。详情参见GNU通用公共许可协议。
-　　你理当已收到一份GNU通用公共许可协议的副本，如果没有，请查阅<http://www.gnu.org/licenses/>
+　　你理当已收到一份GNU通用公共许可协议的副本，如果没有，请查阅<https://www.gnu.org/licenses/>
 
 　　同时提供你的电子邮件地址或传统的邮件联系方式。
 
@@ -166,6 +166,6 @@ You may publish this translation, modified or unmodified, only under the terms a
 
 　　例子中的命令'show w'和'show c'应用于显示GNU通用公共许可协议相应的部分。当然你也可以因地制宜地选用别的方式，对图形界面程序可以用“关于”菜单。
 
-　　如果你之上存在雇主（你是码农）或校方，你还应当让他们在必要时为此程序签署放弃版权声明。详情参见<http://www.gnu.org/licenses/>。
+　　如果你之上存在雇主（你是码农）或校方，你还应当让他们在必要时为此程序签署放弃版权声明。详情参见<https://www.gnu.org/licenses/>。
 
-　　本GNU通用公共许可协议不允许把你的程序并入私有程序。如果你的程序是某种库，且你想允许它被私有程序链接而使之更有用，请使用GNU较宽松通用公共许可协议。决定前请先查阅<http://www.gnu.org/philosophy/why-not-lgpl.html>。
+　　本GNU通用公共许可协议不允许把你的程序并入私有程序。如果你的程序是某种库，且你想允许它被私有程序链接而使之更有用，请使用GNU较宽松通用公共许可协议。决定前请先查阅<https://www.gnu.org/licenses/why-not-lgpl.html>。
