@@ -27,6 +27,7 @@ void ShowQRCode::iniUI()
 {
     setWindowTitle(ShowQRCode::tr("QRcode of Machine and Activation Code"));
     setWindowIcon(QIcon(":/images/kylin-about.png"));
+    setAttribute(Qt::WA_TransparentForMouseEvents);
     this->setMaximumSize(230,230);
     this->setMinimumSize(230,230);
     ui->qrcode_layout->setMargin(10);

@@ -13,8 +13,10 @@
  */
 #include "license-info-widget.h"
 #include "ui_license-info-widget.h"
+#include <kiran-log/qt5-log-i.h>
 #include <iostream>
 #include <QDesktopWidget>
+#include <QEnterEvent>
 
 using namespace std;
 
@@ -55,19 +57,20 @@ void LicenseInfoWidget::popupQRCode(QPoint oPoint ,QObject *target)
     if(showQRCode == nullptr)
     {
         showQRCode = new ShowQRCode;
+        showQRCode->setWindowFlag(Qt::X11BypassWindowManagerHint);
     }
-    showQRCode->setWindowFlag(Qt::X11BypassWindowManagerHint);
     if(target == ui->btn_qrcode_lc)
     {
         showQRCode->setQRCode(license_code , false);
-
     }
     else if(target ==  ui->btn_qrcode_mc)
     {
         showQRCode->setQRCode(machine_code ,true);
     }
+
     showQRCode->move(oPoint);
     showQRCode->show();
+
 }
 
 /**
@@ -83,14 +86,15 @@ bool LicenseInfoWidget::eventFilter(QObject *target, QEvent *e)
     {
         if(e->type()==QEvent::Enter)
         {
+            QEnterEvent *enterEvent = static_cast<QEnterEvent *>(e);
             if(target == ui->btn_qrcode_mc)
             {
-                QPoint oPoint = this->mapToGlobal(QPoint(395,20));
+                QPoint oPoint = QPoint(enterEvent->globalX()+16,enterEvent->globalY()-36);
                 emit sig_showQRCodeWgt(oPoint,target);
             }
             else
             {
-                QPoint oPoint = this->mapToGlobal(QPoint(395,90));
+                QPoint oPoint = QPoint(enterEvent->globalX()+16,enterEvent->globalY()-36);
                 emit sig_showQRCodeWgt(oPoint,target);
             }
         }
@@ -99,11 +103,9 @@ bool LicenseInfoWidget::eventFilter(QObject *target, QEvent *e)
             showQRCode->hide();
             delete showQRCode;
             showQRCode = nullptr;
-
         }
-
     }
-    return false;
+    return QWidget::eventFilter(target,e);
 }
 
 
@@ -131,4 +133,9 @@ void LicenseInfoWidget::setLicenseCode(QString & license_code)
 LicenseInfoWidget::~LicenseInfoWidget()
 {
     delete ui;
+    if(showQRCode)
+    {
+        delete showQRCode;
+        showQRCode = nullptr;
+    }
 }
