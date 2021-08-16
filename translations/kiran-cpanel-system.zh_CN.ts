@@ -445,17 +445,17 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/license/license-info-widget.cpp" line="41"/>
+        <location filename="../src/license/license-info-widget.cpp" line="43"/>
         <source>Activation Information</source>
         <translation>激活信息</translation>
     </message>
     <message>
-        <location filename="../src/license/license-info-widget.cpp" line="114"/>
+        <location filename="../src/license/license-info-widget.cpp" line="124"/>
         <source>Can&apos;t get machine code</source>
         <translation>无法获取到机器码</translation>
     </message>
     <message>
-        <location filename="../src/license/license-info-widget.cpp" line="124"/>
+        <location filename="../src/license/license-info-widget.cpp" line="134"/>
         <source>Can&apos;t get activation code</source>
         <translation>无法获取到激活码</translation>
     </message>
@@ -493,7 +493,7 @@ p, li { white-space: pre-wrap; }
         <translation>激活信息二维码</translation>
     </message>
     <message>
-        <location filename="../src/license/show-qrcode.cpp" line="47"/>
+        <location filename="../src/license/show-qrcode.cpp" line="48"/>
         <source>Scan QR code to get activation code</source>
         <translation>扫描二维码获取激活码</translation>
     </message>
