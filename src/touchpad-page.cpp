@@ -5,33 +5,65 @@
  * @copyright (c) 2020 KylinSec. All rights reserved.
  */
 
-#include "touchpad-settings.h"
-#include "ui_touchpad-settings.h"
-#include "general-functions/general-function-class.h"
-#include "dbus-interface/touchpad-interface.h"
-
+#include "touchpad-page.h"
+#include "ui_touchpad-page.h"
+#include "KSMTouchPadProxy.h"
+#include <kcm-manager.h>
 #include <QCheckBox>
+#include <QDBusConnection>
+#include <kiran-session-daemon/touchpad-i.h>
 
-TouchPadSettings::TouchPadSettings(QWidget *parent) :
+#define TIMEOUT                 100
+#define SLIDER_MINIMUM          0
+#define SLIDER_MAXIMUN          100
+#define PAGE_BASE_SIZE_WIDTH    700
+#define PAGE_BASE_SIZE_HEIGHT   670
+
+TouchPadPage::TouchPadPage(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::TouchPadSettings),
+    ui(new Ui::TouchPadPage),
     m_touchPadInterface(nullptr)
 {
     ui->setupUi(this);
-    m_touchPadInterface = ComKylinsecKiranSessionDaemonTouchPadInterface::instance();
+
+    //创建定时器，在用户拖动滑动条时，滑动条值停止变化0.1s后才会设置新的触摸板移动速度
+    m_timer = new QTimer(this);
+    connect(m_timer, &QTimer::timeout,
+            [this]{
+        int value = ui->slider_tp_speed->value();
+        auto scrollSpeed = (value / (SLIDER_MAXIMUN * 1.0)) * 2.0 - 1.0;
+        m_touchPadMotionAcceleration = scrollSpeed;
+        m_touchPadInterface->setMotion_acceleration(m_touchPadMotionAcceleration);
+        m_timer->stop();
+    });
+
     initUI();
 }
 
-TouchPadSettings::~TouchPadSettings()
+TouchPadPage::~TouchPadPage()
 {
     delete ui;
+    if(m_timer)
+    {
+        delete m_timer;
+        m_timer = nullptr;
+    }
+    if(m_touchPadInterface)
+        m_touchPadInterface.clear();
 }
 
 /**
  * @brief 初始化控件
  */
-void TouchPadSettings::initUI()
+void TouchPadPage::initUI()
 {
+    KCMManager *kcmManager = new KCMManager;
+
+    m_touchPadInterface = kcmManager->getTouchPadInterface();
+
+    delete kcmManager;
+    kcmManager = nullptr;
+
     setStyleSheet("#scrollAreaWidgetContents{border-left:1px solid #2d2d2d;}");
     m_comboBoxList = this->findChildren<QComboBox *>();
     m_checkBoxList = {ui->checkBox_tap_to_click,
@@ -50,13 +82,13 @@ void TouchPadSettings::initUI()
     //TODO: 暂时隐藏触摸板点击方法功能
     ui->widget_tp_click_mode->hide();
 
-    initPageTouchPadUI();
+    initComponent();
 }
 
 /**
  * @brief 通过Dbus获取触摸板属性值，监听用户修改属性的信号，并重新设置属性值
  */
-void TouchPadSettings::initPageTouchPadUI()
+void TouchPadPage::initComponent()
 {
     m_touchPadEnabled = m_touchPadInterface->touchpad_enabled();
     ui->checkBox_tp_disable_touchpad->setChecked(m_touchPadEnabled);
@@ -66,7 +98,7 @@ void TouchPadSettings::initPageTouchPadUI()
         setDisableWidget(true);
     }
     connect(ui->checkBox_tp_disable_touchpad, &QCheckBox::toggled, this,
-            &TouchPadSettings::onDisabelTouchPadToggled);
+            &TouchPadPage::onDisabelTouchPadToggled);
 
     m_touchPadLeftHand = m_touchPadInterface->left_handed();
     ui->comboBox_tp_hand_mode->setCurrentIndex(m_touchPadLeftHand);
@@ -80,20 +112,6 @@ void TouchPadSettings::initPageTouchPadUI()
     int speed = m_touchPadMotionAcceleration / 2.0 * SLIDER_MAXIMUN + SLIDER_MAXIMUN / 2;
     ui->slider_tp_speed->setValue(speed);
 
-    //创建定时器，在用户拖动滑动条时，滑动条值停止变化0.1s后才会设置新的触摸板移动速度
-    m_timer = new QTimer(this);
-    connect(m_timer, &QTimer::timeout,
-            [this]{
-        double scrollSpeed;
-        int value;
-
-        value = ui->slider_tp_speed->value();
-        scrollSpeed = (value / (SLIDER_MAXIMUN * 1.0)) * 2.0 - 1.0;
-        m_touchPadMotionAcceleration = scrollSpeed;
-        m_touchPadInterface->setMotion_acceleration(m_touchPadMotionAcceleration);
-        m_timer->stop();
-    });
-
     connect(ui->slider_tp_speed,&QSlider::sliderPressed,[this](){
         m_mousePressed = true;
     });
@@ -102,7 +120,7 @@ void TouchPadSettings::initPageTouchPadUI()
         emit ui->slider_tp_speed->valueChanged(ui->slider_tp_speed->value());
     });
     // 监听滑动条值变化信号，当用户拖动滑动条时，只有在鼠标松开后才会根据值范围确定滑动条值
-    connect(ui->slider_tp_speed,&QSlider::valueChanged,this, &TouchPadSettings::onSliderValueChange);
+    connect(ui->slider_tp_speed,&QSlider::valueChanged,this, &TouchPadPage::onSliderValueChange);
 
     m_clickMethod = m_touchPadInterface->click_method();
     ui->comboBox_tp_click_mode->setCurrentIndex(m_clickMethod);
@@ -145,12 +163,12 @@ void TouchPadSettings::initPageTouchPadUI()
     });
 }
 
-QSize TouchPadSettings::sizeHint() const
+QSize TouchPadPage::sizeHint() const
 {
-    return QSize(918,750);
+    return QSize(PAGE_BASE_SIZE_WIDTH,PAGE_BASE_SIZE_HEIGHT);
 }
 
-void TouchPadSettings::addComboBoxItem()
+void TouchPadPage::addComboBoxItem()
 {
     QStringList hand_mode;
     hand_mode << tr("Right Hand Mode") << tr("Left Hand Mode") ;
@@ -169,7 +187,7 @@ void TouchPadSettings::addComboBoxItem()
  * @brief 根据是否禁用触摸板来设置相关控件的状态
  * @param[in] disabled 是否禁用触摸板
  */
-void TouchPadSettings::setDisableWidget(bool disabled)
+void TouchPadPage::setDisableWidget(bool disabled)
 {
     foreach (QComboBox *comboBox, m_comboBoxList)
     {
@@ -182,13 +200,13 @@ void TouchPadSettings::setDisableWidget(bool disabled)
     ui->slider_tp_speed->setDisabled(disabled);
 }
 
-void TouchPadSettings::onSliderValueChange()
+void TouchPadPage::onSliderValueChange()
 {
     //触发定时器
-    m_timer->start(100);
+    m_timer->start(TIMEOUT);
 }
 
-void TouchPadSettings::onDisabelTouchPadToggled(bool disabled)
+void TouchPadPage::onDisabelTouchPadToggled(bool disabled)
 {
     m_touchPadEnabled = disabled;
     m_touchPadInterface->setTouchpad_enabled(m_touchPadEnabled);

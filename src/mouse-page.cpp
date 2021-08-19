@@ -1,40 +1,74 @@
 /**
- * @file mouse-settings.cpp
+ * @file mouse-page.cpp
  * @brief  初始化鼠标属性，并处理用户切换属性信号
  * @author yuanxing <yuanxing@kylinos.com.cn>
  * @copyright (c) 2020 KylinSec. All rights reserved.
  */
 
-#include "mouse-settings.h"
-#include "ui_mouse-settings.h"
-#include "general-functions/general-function-class.h"
-#include "dbus-interface/mouse-interface.h"
+#include "mouse-page.h"
+#include "ui_mouse-page.h"
+#include "KSMMouseProxy.h"
+#include "kcm-manager.h"
+#include <kiran-log/qt5-log-i.h>
+#include <kiran-session-daemon/mouse-i.h>
+#include <QDBusConnection>
 
-MouseSettings::MouseSettings(QWidget *parent) :
+#define TIMEOUT                 100
+#define SLIDER_MINIMUM          0
+#define SLIDER_MAXIMUN          100
+#define PAGE_BASE_SIZE_WIDTH    700
+#define PAGE_BASE_SIZE_HEIGHT   670
+
+MousePage::MousePage(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::MouseSettings),
+    ui(new Ui::MousePage),
     m_mouseInterface(nullptr)
 {
     ui->setupUi(this);
-    m_mouseInterface = ComKylinsecKiranSessionDaemonMouseInterface::instance();
+
+    //创建定时器，在用户拖动滑动条时，滑动条值停止变化0.1s后才会设置新的鼠标移动速度
+    m_timer = new QTimer(this);
+    connect(m_timer, &QTimer::timeout,
+            [this]{
+        int value = ui->slider_speed->value();
+        auto scrollSpeed = (value / (SLIDER_MAXIMUN * 1.0)) * 2.0 - 1.0;
+        m_mouseMotionAcceleration = scrollSpeed;
+        m_mouseInterface->setMotion_acceleration(m_mouseMotionAcceleration);
+        m_timer->stop();
+    });
+
     initUI();
 }
 
-MouseSettings::~MouseSettings()
+MousePage::~MousePage()
 {
     delete ui;
+    if(m_timer)
+    {
+        delete m_timer;
+        m_timer = nullptr;
+    }
+    if(m_mouseInterface)
+        m_mouseInterface.clear();
 }
 
-QSize MouseSettings::sizeHint() const
+QSize MousePage::sizeHint() const
 {
-    return QSize(750,670);
+    return QSize(PAGE_BASE_SIZE_WIDTH,PAGE_BASE_SIZE_HEIGHT);
 }
 
 /**
  * @brief 初始化控件
  */
-void MouseSettings::initUI()
+void MousePage::initUI()
 {
+    KCMManager *kcmManager = new KCMManager;
+
+    m_mouseInterface =  kcmManager->getMouseInterface();
+
+    delete kcmManager;
+    kcmManager = nullptr;
+
     setStyleSheet("#scrollAreaWidgetContents{border-left:1px solid #2d2d2d;}");
     QStringList hand_mode;
     hand_mode << tr("Right Hand Mode") << tr("Left Hand Mode") ;
@@ -45,13 +79,14 @@ void MouseSettings::initUI()
     ui->slider_speed->setPageStep((SLIDER_MAXIMUN-SLIDER_MINIMUM)/20);
     ui->slider_speed->setSingleStep((SLIDER_MAXIMUN-SLIDER_MINIMUM)/20);
 
-    initPageMouseUI();
+    initComponent();
+
 }
 
 /**
  * @brief 通过Dbus获取鼠标属性值，监听用户修改属性的信号，并重新设置属性值
  */
-void MouseSettings::initPageMouseUI()
+void MousePage::initComponent()
 {
     m_mouseLeftHand = m_mouseInterface->left_handed();
     ui->comboBox_hand_mode->setCurrentIndex(m_mouseLeftHand);
@@ -65,19 +100,6 @@ void MouseSettings::initPageMouseUI()
     int speed = m_mouseMotionAcceleration / 2.0 * SLIDER_MAXIMUN + SLIDER_MAXIMUN / 2;
     ui->slider_speed->setValue(speed);
 
-    //创建定时器，在用户拖动滑动条时，滑动条值停止变化0.1s后才会设置新的鼠标移动速度
-    m_timer = new QTimer(this);
-    connect(m_timer, &QTimer::timeout,
-            [this]{
-        int value;
-        double scrollSpeed;
-        value = ui->slider_speed->value();
-        scrollSpeed = (value / (SLIDER_MAXIMUN * 1.0)) * 2.0 - 1.0;
-        m_mouseMotionAcceleration = scrollSpeed;
-        m_mouseInterface->setMotion_acceleration(m_mouseMotionAcceleration);
-        m_timer->stop();
-    });
-
     // 监听滑动条值变化信号，当用户拖动滑动条时，只有在鼠标松开后才会根据值范围确定滑动条值
     connect(ui->slider_speed,&QSlider::sliderPressed,[this](){
         m_mousePressed = true;
@@ -86,7 +108,7 @@ void MouseSettings::initPageMouseUI()
         m_mousePressed = false;
         emit ui->slider_speed->valueChanged(ui->slider_speed->value());
     });
-    connect(ui->slider_speed, &QSlider::valueChanged, this,&MouseSettings::onSliderValueChange);
+    connect(ui->slider_speed, &QSlider::valueChanged, this,&MousePage::onSliderValueChange);
 
     m_mouseNaturalScroll = m_mouseInterface->natural_scroll();
     ui->checkBox_natural_scroll->setChecked(m_mouseNaturalScroll);
@@ -105,8 +127,8 @@ void MouseSettings::initPageMouseUI()
     });
 }
 
-void MouseSettings::onSliderValueChange()
+void MousePage::onSliderValueChange()
 {
     //触发定时器
-    m_timer->start(100);
+    m_timer->start(TIMEOUT);
 }

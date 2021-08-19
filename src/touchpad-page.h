@@ -5,43 +5,44 @@
  * @copyright (c) 2020 KylinSec. All rights reserved.
  */
 
-#ifndef TOUCHPADSETTINGS_H
-#define TOUCHPADSETTINGS_H
+#ifndef TOUCHPAD_PAGE_H
+#define TOUCHPAD_PAGE_H
 
 #include <QWidget>
 #include <QComboBox>
 #include <QLabel>
 
 namespace Ui {
-class TouchPadSettings;
+class TouchPadPage;
 }
 
 class KiranSwitchButton;
-class ComKylinsecKiranSessionDaemonTouchPadInterface;
-class TouchPadSettings : public QWidget
+class KSMTouchPadProxy;
+class TouchPadPage : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit TouchPadSettings(QWidget *parent = 0);
-    ~TouchPadSettings();
+    explicit TouchPadPage(QWidget *parent = 0);
+    ~TouchPadPage();
 
 public:
     void initUI();
-    void initPageTouchPadUI();
+
     virtual QSize sizeHint() const override;
 
 private:
     void addComboBoxItem();
     void setDisableWidget(bool);
+    void initComponent();
 
 public slots:
     void onSliderValueChange();
     void onDisabelTouchPadToggled(bool disabled);
 
 private:
-    Ui::TouchPadSettings *ui;
-    ComKylinsecKiranSessionDaemonTouchPadInterface *m_touchPadInterface;
+    Ui::TouchPadPage *ui;
+    QSharedPointer<KSMTouchPadProxy> m_touchPadInterface;
     QList<QComboBox* > m_comboBoxList;
     QList<KiranSwitchButton*> m_checkBoxList;
     QList<QLabel*> m_labelList;
@@ -57,8 +58,8 @@ private:
 
     //鼠标是否按下的标志位
     bool m_mousePressed = false;
-    QTimer *m_timer;
+    QTimer *m_timer = nullptr;
 
 };
 
-#endif // TOUCHPADSETTINGS_H
+#endif // TOUCHPAD_PAGE_H

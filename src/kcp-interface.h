@@ -1,18 +1,18 @@
-#ifndef INTERFACE_H
-#define INTERFACE_H
+#ifndef KCP_INTERFACE_H
+#define KCP_INTERFACE_H
 #include <kiran-control-panel/kcp-plugin-interface.h>
 
 class QTranslator;
-class ComKylinsecKiranSessionDaemonTouchPadInterface;
-class PluginMouseInterface: public QObject,public KcpPluginInterface
+class KCMManager;
+class KcpInterface: public QObject,public KcpPluginInterface
 {
     Q_OBJECT
     Q_PLUGIN_METADATA(IID KcpPluginInterface_iid)
     Q_INTERFACES(KcpPluginInterface)
 
 public:
-    PluginMouseInterface();
-    ~PluginMouseInterface(){};
+    KcpInterface();
+    ~KcpInterface(){};
 
 public:
     /**
@@ -44,8 +44,8 @@ public:
 private:
     QWidget* m_currentWidget = nullptr;
     QTranslator* m_translator = nullptr;
-    ComKylinsecKiranSessionDaemonTouchPadInterface *m_touchPadInterface;
+    KCMManager *m_kcmManager = nullptr;
     bool m_hasTouchPad = false;
 };
 
-#endif // INTERFACE_H
+#endif // KCP_INTERFACE_H

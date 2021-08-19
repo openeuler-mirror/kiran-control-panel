@@ -1,8 +1,8 @@
-install(FILES "kiran-cpanel-mouse.png"
+install(FILES "kcp-mouse.png"
 	DESTINATION ${DATA_DIR}/${PROJECT_NAME}/icons/ )
 
-install(FILES "mouse.svg"
+install(FILES "kcm-page-mouse.svg"
 	DESTINATION ${DATA_DIR}/${PROJECT_NAME}/icons/ )
 
-install(FILES "touchpad.svg"
+install(FILES "kcm-page-touchpad.svg"
 	DESTINATION ${DATA_DIR}/${PROJECT_NAME}/icons/ )

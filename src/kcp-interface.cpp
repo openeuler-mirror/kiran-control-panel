@@ -1,8 +1,7 @@
-#include "interface.h"
-#include "pages/page-mouse/mouse-settings.h"
-#include "pages/page-touchpad/touchpad-settings.h"
-#include "dbus-interface/touchpad-interface.h"
-#include "dbus-interface/mouse-interface.h"
+#include "kcp-interface.h"
+#include "mouse-page.h"
+#include "touchpad-page.h"
+#include "kcm-manager.h"
 #include "config/config.h"
 #include <kiran-message-box.h>
 #include <kiran-log/qt5-log-i.h>
@@ -11,21 +10,21 @@
 #include <QCoreApplication>
 #include <QFile>
 
-PluginMouseInterface::PluginMouseInterface()
+KcpInterface::KcpInterface()
 {
-    m_touchPadInterface = ComKylinsecKiranSessionDaemonTouchPadInterface::instance();
+
 }
 
-bool PluginMouseInterface::haveUnsavedOptions()
+bool KcpInterface::haveUnsavedOptions()
 {
     return false;
 }
 
-QStringList PluginMouseInterface::visibleSubItems()
+QStringList KcpInterface::visibleSubItems()
 {
     QStringList subItems;
     subItems << "MouseSettings";
-    if(m_touchPadInterface->has_touchpad())
+    if(m_hasTouchPad)
     {
         subItems << "TouchPadSettings";
     }
@@ -33,22 +32,22 @@ QStringList PluginMouseInterface::visibleSubItems()
     return subItems;
 }
 
-QWidget *PluginMouseInterface::getSubItemWidget(QString id)
+QWidget *KcpInterface::getSubItemWidget(QString id)
 {
     QWidget* widget = nullptr;
     if (id == "MouseSettings")
     {
-        widget = new MouseSettings();
+        widget = new MousePage();
     }
     else if (id == "TouchPadSettings")
     {
-        widget = new TouchPadSettings();
+        widget = new TouchPadPage();
     }
     m_currentWidget = widget;
     return m_currentWidget;
 }
 
-void PluginMouseInterface::uninit()
+void KcpInterface::uninit()
 {
     if( m_translator )
     {
@@ -56,16 +55,22 @@ void PluginMouseInterface::uninit()
         delete m_translator;
         m_translator = nullptr;
     }
+    if(m_kcmManager)
+    {
+        delete m_kcmManager;
+        m_kcmManager = nullptr;
+    }
 }
 
-int PluginMouseInterface::init()
+int KcpInterface::init()
 {
-    if(!ComKylinsecKiranSessionDaemonMouseInterface::instance()->isValid() ||
-       !ComKylinsecKiranSessionDaemonTouchPadInterface::instance()->isValid())
+    m_kcmManager = new KCMManager;
+    if(!m_kcmManager->isValidConnect())
     {
         KLOG_DEBUG() << "Connect mouse or touchpad dbus service failed!";
         return -1;
     }
+    m_hasTouchPad = m_kcmManager->hasTouchPad();
     //加载翻译文件
     if (m_translator != nullptr)
     {

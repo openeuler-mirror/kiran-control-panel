@@ -1,7 +1,3 @@
-#ifndef MOUSESETTINGS_H
-#define MOUSESETTINGS_H
-
-#include <QWidget>
 /**
  * @file mouse-settings.h
  * @brief  初始化鼠标属性，并处理用户切换属性信号
@@ -9,36 +5,40 @@
  * @copyright (c) 2020 KylinSec. All rights reserved.
  */
 
+#ifndef MOUSE_PAGE_H
+#define MOUSE_PAGE_H
+
+#include <QWidget>
 #include <QComboBox>
 #include <QListWidgetItem>
+#include <QSharedPointer>
 
-class ComKylinsecKiranSessionDaemonMouseInterface;
+class KSMMouseProxy;
 class KiranSwitchButton;
 class KiranListItem;
 class KiranSwitchButton;
 namespace Ui {
-class MouseSettings;
+class MousePage;
 }
 
-class MouseSettings : public QWidget
+class MousePage : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit MouseSettings(QWidget *parent = 0);
-    ~MouseSettings();
-
+    explicit MousePage(QWidget *parent = 0);
+    ~MousePage();
+    void initUI();
     virtual QSize sizeHint() const override;
 public:
-    void initUI();
-    void initPageMouseUI();
+    void initComponent();
 
 public slots:
     void onSliderValueChange();
 
 private:
-    Ui::MouseSettings *ui;
-    ComKylinsecKiranSessionDaemonMouseInterface *m_mouseInterface;
+    Ui::MousePage *ui;
+    QSharedPointer<KSMMouseProxy> m_mouseInterface;
 
     bool m_mouseLeftHand = false;
     bool m_mouseNaturalScroll = false;
@@ -47,7 +47,7 @@ private:
 
     //鼠标是否按下的标志位
     bool m_mousePressed = false;
-    QTimer *m_timer;
+    QTimer *m_timer = nullptr;
 };
 
-#endif // MOUSESETTINGS_H
+#endif // MOUSE_PAGE_H

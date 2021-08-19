@@ -30,29 +30,20 @@ INCLUDEPATH += \
 CONFIG += C++11
 
 SOURCES += \
-        main.cpp \
-        kiran-cpanel-mouse.cpp \
-    kiran-cpanel-mouse-widget.cpp \
-    dbus-interface/mouse-interface.cpp \
-    dbus-interface/touchpad-interface.cpp \
-    pages/page-mouse/mouse-settings.cpp \
-    pages/page-touchpad/touchpad-settings.cpp \
-    plugin_build/interface.cpp
+    kcp-interface.cpp \
+    kcm-manager.cpp \
+    mouse-page.cpp \
+    touchpad-page.cpp
 
 HEADERS += \
-        kiran-cpanel-mouse.h \
-    kiran-cpanel-mouse-widget.h \
-    dbus-interface/mouse-interface.h \
-    dbus-interface/touchpad-interface.h \
-    pages/page-mouse/mouse-settings.h \
-    pages/page-touchpad/touchpad-settings.h \
-    plugin_build/interface.h \
-    general-functions/general-function-class.h
+    kcp-interface.h \
+    kcm-manager.h \
+    mouse-page.h \
+    touchpad-page.h
 
 FORMS += \
-    kiran-cpanel-mouse-widget.ui \
-    pages/page-mouse/mouse-settings.ui \
-    pages/page-touchpad/touchpad-settings.ui
+    mouse-page.ui \
+    touchpad-page.ui
 
 LIBS  += -lkiranwidgets-qt5\
          -lzlog
@@ -69,4 +60,7 @@ INSTALLS = target target_translation
 
 RESOURCES += \
     ../resources/resources.qrc
+
+DISTFILES += \
+    CMakeLists.txt
 
