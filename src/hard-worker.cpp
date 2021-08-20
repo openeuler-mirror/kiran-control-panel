@@ -12,15 +12,15 @@
  * Author:     liuxinhao <liuxinhao@kylinos.com.cn>
  */
 
- 
 #include "hard-worker.h"
-#include "accounts-interface.h"
-#include "accounts-user-interface.h"
 #include "global-defines.h"
+#include "ksd_accounts_proxy.h"
+#include "ksd_accounts_user_proxy.h"
 
+#include <kiran-system-daemon/accounts-i.h>
+#include <qt5-log-i.h>
 #include <QDBusConnection>
 #include <QDebug>
-#include <qt5-log-i.h>
 
 HardWorker::HardWorker() : QObject(nullptr)
 {
@@ -39,7 +39,9 @@ void HardWorker::doCreateUser(QString userName,
                               QString shell,
                               QString iconFile)
 {
-    AccountsInterface accountsService(QDBusConnection::systemBus());
+    KSDAccountsProxy accountsService(ACCOUNTS_DBUS_NAME,
+                                     ACCOUNTS_OBJECT_PATH,
+                                     QDBusConnection::systemBus());
     QString userObjPath;
     QString errMsgPrefix = tr("Create User failed");
     QString errMsgDetail;
@@ -61,8 +63,9 @@ void HardWorker::doCreateUser(QString userName,
     userObjPath = createUserRep.value().path();
 
     {
-        UserInterface userInterface(userObjPath,
-                                    QDBusConnection::systemBus());
+        KSDAccountsUserProxy userInterface(ACCOUNTS_DBUS_NAME,
+                                           userObjPath,
+                                           QDBusConnection::systemBus());
         ///step2. 设置密码
         QDBusPendingReply<> setpwdRep = userInterface.SetPassword(encryptedPasswd, "");
         setpwdRep.waitForFinished();
@@ -110,10 +113,11 @@ void HardWorker::doCreateUser(QString userName,
 failed:
     if (!userObjPath.isEmpty())
     {
-        UserInterface userInterface(userObjPath,
-                                    QDBusConnection::systemBus());
+        KSDAccountsUserProxy userInterface(ACCOUNTS_DBUS_NAME,
+                                           userObjPath,
+                                           QDBusConnection::systemBus());
         qulonglong userID = userInterface.uid();
-        AccountsInterface accountsInterface(QDBusConnection::systemBus());
+        KSDAccountsProxy accountsInterface(ACCOUNTS_DBUS_NAME, ACCOUNTS_OBJECT_PATH, QDBusConnection::systemBus());
         auto reply = accountsInterface.DeleteUser(userID, true);
         reply.waitForFinished();
         if (reply.isError())
@@ -134,8 +138,8 @@ void HardWorker::doUpdatePasswd(QString objPath,
                                 QString userName,
                                 QString encryptedPasswd)
 {
-    UserInterface interface(objPath, QDBusConnection::systemBus());
-    QDBusPendingReply<> reply = interface.SetPassword(encryptedPasswd, "");
+    KSDAccountsUserProxy userProxy(ACCOUNTS_DBUS_NAME, objPath, QDBusConnection::systemBus());
+    QDBusPendingReply<> reply = userProxy.SetPassword(encryptedPasswd, "");
     reply.waitForFinished();
     if (reply.isError())
     {
@@ -155,13 +159,13 @@ void HardWorker::doUpdateUserProperty(QString objPath,
                                       int userType,
                                       bool isLocked)
 {
-    UserInterface userInterface(objPath,
-                                QDBusConnection::systemBus());
+    KSDAccountsUserProxy userProxy(ACCOUNTS_DBUS_NAME, objPath,
+                                   QDBusConnection::systemBus());
     QStringList updateFailedPropertys;
 
-    if (userInterface.icon_file() != iconfile)
+    if (userProxy.icon_file() != iconfile)
     {
-        auto reply = userInterface.SetIconFile(iconfile);
+        auto reply = userProxy.SetIconFile(iconfile);
         reply.waitForFinished();
         if (reply.isError())
         {
@@ -170,9 +174,9 @@ void HardWorker::doUpdateUserProperty(QString objPath,
         }
     }
 
-    if (userInterface.account_type() != userType)
+    if (userProxy.account_type() != userType)
     {
-        auto reply = userInterface.SetAccountType(userType);
+        auto reply = userProxy.SetAccountType(userType);
         reply.waitForFinished();
         if (reply.isError())
         {
@@ -181,9 +185,9 @@ void HardWorker::doUpdateUserProperty(QString objPath,
         }
     }
 
-    if (userInterface.locked() != isLocked)
+    if (userProxy.locked() != isLocked)
     {
-        auto reply = userInterface.SetLocked(isLocked);
+        auto reply = userProxy.SetLocked(isLocked);
         reply.waitForFinished();
         if (reply.isError())
         {
@@ -210,8 +214,10 @@ void HardWorker::doUpdateUserProperty(QString objPath,
 
 void HardWorker::doDeleteUser(int uid)
 {
-    AccountsInterface interface(QDBusConnection::systemBus());
-    auto reply = interface.DeleteUser(uid, true);
+    KSDAccountsProxy accountsProxy(ACCOUNTS_DBUS_NAME,
+                                   ACCOUNTS_OBJECT_PATH,
+                                   QDBusConnection::systemBus());
+    auto reply = accountsProxy.DeleteUser(uid, true);
     reply.waitForFinished();
     if (reply.isError())
     {

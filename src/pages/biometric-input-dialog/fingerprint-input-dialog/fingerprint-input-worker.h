@@ -18,8 +18,7 @@
 
 #include <QThread>
 
-class BiometricsInterface;
-
+class KSDBiometricsProxy;
 class FingerprintInputWorker : public QThread
 {
     Q_OBJECT
@@ -40,7 +39,7 @@ protected:
     void run() override;
 
 private:
-    BiometricsInterface *m_interface;
+    KSDBiometricsProxy *m_interface;
     bool m_started;  //标识采集是否由这次这次认证发出
 };
 

@@ -18,9 +18,9 @@
   */
  
 #include "account-itemwidget.h"
-#include "accounts-user-interface.h"
+#include "ksd_accounts_user_proxy.h"
 #include "ui_account-itemwidget.h"
-
+#include <kiran-system-daemon/accounts-i.h>
 #include <QStyle>
 
 AccountItemWidget::AccountItemWidget(QWidget *paren, bool isCreateAccountItem) : QWidget(paren),
@@ -72,10 +72,10 @@ QString AccountItemWidget::getUserDBusObjectPath()
 
 void AccountItemWidget::updateInfo()
 {
-    UserInterface userInterface(m_objectPath, QDBusConnection::systemBus());
-    ui->label_userName->setText(userInterface.user_name());
-    setIsLocked(userInterface.locked());
-    ui->avatar->setImage(userInterface.icon_file());
+    KSDAccountsUserProxy userProxy(ACCOUNTS_DBUS_NAME,m_objectPath, QDBusConnection::systemBus());
+    ui->label_userName->setText(userProxy.user_name());
+    setIsLocked(userProxy.locked());
+    ui->avatar->setImage(userProxy.icon_file());
 }
 
 void AccountItemWidget::setSelected(bool isSelected)

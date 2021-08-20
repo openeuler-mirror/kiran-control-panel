@@ -29,6 +29,7 @@ class FingerprintInputDialog;
 }
 QT_END_NAMESPACE
 
+class KSDBiometricsProxy;
 class FingerprintInputDialog : public KiranTitlebarWindow
 {
     Q_OBJECT
@@ -66,7 +67,7 @@ protected:
 private:
     Ui::FingerprintInputDialog *ui;
     FingerprintInputWorker m_worker;
-    BiometricsInterface *m_interface;
+    KSDBiometricsProxy *m_interface;
     QString m_fingerDataID;
     bool m_isSave = false;
 };

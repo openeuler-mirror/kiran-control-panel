@@ -14,15 +14,17 @@
 
  
 #include "fingerprint-input-worker.h"
-#include "biometrics-interface.h"
+#include "ksd_biometrics_proxy.h"
 
 #include <qt5-log-i.h>
 
 FingerprintInputWorker::FingerprintInputWorker(QObject *parent)
     : QThread(parent),
-      m_interface(new BiometricsInterface(QDBusConnection::systemBus(), this))
+      m_interface(new KSDBiometricsProxy("com.kylinsec.Kiran.SystemDaemon.Biometrics",
+                                         "/com/kylinsec/Kiran/SystemDaemon/Biometrics",
+                                         QDBusConnection::systemBus(), this))
 {
-    connect(m_interface, &BiometricsInterface::EnrollFprintStatus,
+    connect(m_interface, &KSDBiometricsProxy::EnrollFprintStatus,
             [this](const QString &message, const QString &id, int progress, bool done) {
                 if (!m_started)
                 {

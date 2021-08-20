@@ -28,7 +28,7 @@ class FaceInputDialog;
 }
 QT_END_NAMESPACE
 
-class BiometricsInterface;
+class KSDBiometricsProxy;
 class FaceEnrollWorker;
 
 class FaceInputDialog : public KiranTitlebarWindow
@@ -67,7 +67,7 @@ protected:
 
 private:
     Ui::FaceInputDialog *ui;
-    BiometricsInterface *m_interface;
+    KSDBiometricsProxy *m_interface;
     FaceEnrollWorker *m_enrollThread;
     QImage m_tempImage;
     QList<QRect> m_faces;

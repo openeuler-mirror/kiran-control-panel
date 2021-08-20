@@ -12,24 +12,25 @@
  * Author:     liuxinhao <liuxinhao@kylinos.com.cn>
  */
 
- 
 #include "accounts-global-info.h"
-#include "accounts-interface.h"
-#include "accounts-user-interface.h"
 #include "config.h"
+#include "ksd_accounts_proxy.h"
+#include "ksd_accounts_user_proxy.h"
 
+#include <kiran-system-daemon/accounts-i.h>
+#include <qt5-log-i.h>
 #include <unistd.h>
 #include <QDBusObjectPath>
 #include <QDBusPendingCall>
 #include <QList>
 #include <QMutex>
 #include <QScopedPointer>
-#include <qt5-log-i.h>
 
 AccountsGlobalInfo::AccountsGlobalInfo(QObject *parent)
     : QObject(parent),
-      m_accountsInterface(QDBusConnection::systemBus())
+      m_accountsInterface(ACCOUNTS_DBUS_NAME, ACCOUNTS_OBJECT_PATH, QDBusConnection::systemBus())
 {
+
 }
 
 AccountsGlobalInfo::~AccountsGlobalInfo()
@@ -55,29 +56,29 @@ AccountsGlobalInfo *AccountsGlobalInfo::instance()
 
 bool AccountsGlobalInfo::init()
 {
-    connect(&m_accountsInterface, &AccountsInterface::UserAdded, [this](const QDBusObjectPath &user) {
+    connect(&m_accountsInterface, &KSDAccountsProxy::UserAdded, [this](const QDBusObjectPath &user) {
         addUserToMap(user);
     });
-    connect(&m_accountsInterface, &AccountsInterface::UserDeleted, [this](const QDBusObjectPath &user) {
+    connect(&m_accountsInterface, &KSDAccountsProxy::UserDeleted, [this](const QDBusObjectPath &user) {
         deleteUserFromMap(user);
     });
 
     ///判断是否显示ROOT用户
-    QSettings settings(CONFIG_FILE_PATH,QSettings::IniFormat);
-    if(settings.status()!=QSettings::NoError)
+    QSettings settings(CONFIG_FILE_PATH, QSettings::IniFormat);
+    if (settings.status() != QSettings::NoError)
     {
         KLOG_WARNING() << "parse" << CONFIG_FILE_PATH << "failed!";
     }
     else
     {
         settings.beginGroup("Common");
-        if(settings.contains("show-root"))
+        if (settings.contains("show-root"))
         {
             m_showRoot = settings.value("show-root").toBool();
         }
         settings.endGroup();
     };
-    KLOG_INFO("show root:%s",m_showRoot?"true":"false");
+    KLOG_INFO("show root:%s", m_showRoot ? "true" : "false");
 
     ///加载用户
     QList<QDBusObjectPath> users;
@@ -89,18 +90,18 @@ bool AccountsGlobalInfo::init()
     if (pendingReply.isError())
     {
         KLOG_ERROR() << "GetNonSystemUsers Error:"
-                        << pendingReply.error();
+                     << pendingReply.error();
         return false;
     }
     objList = pendingReply.value();
 
-    if(m_showRoot)
+    if (m_showRoot)
     {
         auto getRootReply = m_accountsInterface.FindUserById(0);
         getRootReply.waitForFinished();
-        if( !getRootReply.isError() )
+        if (!getRootReply.isError())
         {
-            objList.insert(0,getRootReply.value());
+            objList.insert(0, getRootReply.value());
         }
         else
         {
@@ -126,7 +127,7 @@ bool AccountsGlobalInfo::init()
     }
     else
     {
-        UserInterface userInterface(findUserReply.value().path(), QDBusConnection::systemBus());
+        KSDAccountsUserProxy userInterface(ACCOUNTS_DBUS_NAME, findUserReply.value().path(), QDBusConnection::systemBus());
         m_curUserName = userInterface.user_name();
     }
 
@@ -168,42 +169,49 @@ QString AccountsGlobalInfo::getCurrentUser()
 
 void AccountsGlobalInfo::addUserToMap(const QDBusObjectPath &user)
 {
-    if(m_usersMap.find(user.path()) != m_usersMap.end() )
+    if (m_usersMap.find(user.path()) != m_usersMap.end())
     {
         return;
     }
-    UserInterface *userInterface = new UserInterface(user.path(),
-                                                     QDBusConnection::systemBus(),
-                                                     this);
-    connect(userInterface,
-            &UserInterface::propertyChanged,
+
+    auto userProxy = new KSDAccountsUserProxy(ACCOUNTS_DBUS_NAME,
+                                              user.path(),
+                                              QDBusConnection::systemBus(),
+                                              this);
+
+    connect(userProxy,
+            &KSDAccountsUserProxy::dbusPropertyChanged,
             this,
             &AccountsGlobalInfo::handlerPropertyChanged);
-    m_usersMap.insert(user.path(),userInterface);
+
+    m_usersMap.insert(user.path(), userProxy);
     emit UserAdded(user);
 }
 
 void AccountsGlobalInfo::deleteUserFromMap(const QDBusObjectPath &user)
 {
-    if(m_usersMap.find(user.path()) == m_usersMap.end())
+    if (m_usersMap.find(user.path()) == m_usersMap.end())
     {
         return;
     }
 
-    UserInterface *interface = m_usersMap.take(user.path());
-    disconnect(interface,
-               &UserInterface::propertyChanged,
+    auto userProxy = m_usersMap.take(user.path());
+    disconnect(userProxy,
+               &KSDAccountsUserProxy::dbusPropertyChanged,
                this,
                &AccountsGlobalInfo::handlerPropertyChanged);
-    delete interface;
+    delete userProxy;
 
     emit UserDeleted(user);
 }
 
-void AccountsGlobalInfo::handlerPropertyChanged(QString userPath, QString propertyName, QVariant value)
+void AccountsGlobalInfo::handlerPropertyChanged(const QString &propertyName, const QVariant &value)
 {
-    KLOG_DEBUG() << "property changed:" << userPath << "\n"
-                   << "\tproperty name: " << propertyName << "\n"
-                   << "\tproperty value:" << value;
-    emit UserPropertyChanged(userPath, propertyName, value);
+    auto userProxy = qobject_cast<KSDAccountsUserProxy*>(sender());
+
+    KLOG_DEBUG() << "property changed:" << userProxy->path();
+    KLOG_DEBUG() << "\tname: " << propertyName;
+    KLOG_DEBUG() << "\tvalue:" << value;
+
+    emit UserPropertyChanged(userProxy->path(), propertyName, value);
 }

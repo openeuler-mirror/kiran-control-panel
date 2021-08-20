@@ -12,9 +12,8 @@
  * Author:     liuxinhao <liuxinhao@kylinos.com.cn>
  */
 
- 
 #include "fingerprint-input-dialog.h"
-#include "biometrics-interface.h"
+#include "ksd_biometrics_proxy.h"
 #include "ui_fingerprint-input-dialog.h"
 
 #include <kiran-message-box.h>
@@ -23,7 +22,9 @@
 FingerprintInputDialog::FingerprintInputDialog(QWidget *parent)
     : KiranTitlebarWindow(parent),
       ui(new Ui::FingerprintInputDialog),
-      m_interface(new BiometricsInterface(QDBusConnection::systemBus(), this))
+      m_interface(new KSDBiometricsProxy("com.kylinsec.Kiran.SystemDaemon.Biometrics",
+                                         "/com/kylinsec/Kiran/SystemDaemon/Biometrics",
+                                         QDBusConnection::systemBus(), this))
 {
     ui->setupUi(getWindowContentWidget());
     init();
@@ -65,7 +66,7 @@ void FingerprintInputDialog::closeEvent(QCloseEvent *event)
     {
         auto deleteEnrolledReply = m_interface->DeleteEnrolledFinger(m_fingerDataID);
         deleteEnrolledReply.waitForFinished();
-        if(!deleteEnrolledReply.isError())
+        if (!deleteEnrolledReply.isError())
         {
             KLOG_ERROR() << "delete enrolled finger failed!" << deleteEnrolledReply.error();
         }

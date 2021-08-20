@@ -25,7 +25,7 @@ class PasswordExpirationPolicyPage;
 QT_END_NAMESPACE
 
 class KiranSwitchButton;
-class UserInterface;
+class KSDAccountsUserProxy;
 class PasswordExpirationPolicyPage : public QWidget
 {
     Q_OBJECT
@@ -46,7 +46,7 @@ signals:
     void sigReturn();
 
 private slots:
-    void slotUserPropertyChanged(QString path,QString propertyName,QVariant value);
+    void slotUserPropertyChanged(QString propertyName, QVariant value);
 
     void handleUserExpireSwitchToggled(bool checked);
     void handlePasswdMaxVaildDaysSwitchToggled(bool checked);
@@ -55,7 +55,7 @@ private slots:
 
 private:
     Ui::PasswordExpirationPolicyPage *ui;
-    UserInterface *m_userInterface = nullptr;
+    KSDAccountsUserProxy* m_userProxy = nullptr;
     KiranSwitchButton* m_userExpiresSwitch = nullptr;
     KiranSwitchButton* m_passwdMaxVaildDaysSwtich = nullptr;
     KiranSwitchButton* m_promptBeforePasswdExpirationSwitch = nullptr;

@@ -16,8 +16,8 @@
 #ifndef ACCOUNTSGLOBALINFO_H
 #define ACCOUNTSGLOBALINFO_H
 
-#include "accounts-interface.h"
-#include "accounts-user-interface.h"
+#include "ksd_accounts_proxy.h"
+#include "ksd_accounts_user_proxy.h"
 
 #include <QList>
 #include <QObject>
@@ -66,11 +66,11 @@ signals:
                              QVariant value);
 
 private Q_SLOTS:
-    void handlerPropertyChanged(QString userPath, QString propertyName, QVariant value);
+    void handlerPropertyChanged(const QString &propertyName, const QVariant &value);
 
 private:
-    AccountsInterface m_accountsInterface;
-    QMap<QString,UserInterface *> m_usersMap; // QMap<DBus对象路径,用户相关接口>
+    KSDAccountsProxy m_accountsInterface;
+    QMap<QString,KSDAccountsUserProxy*> m_usersMap; // QMap<DBus对象路径,用户相关接口>
     QString m_curUserName;
     bool m_showRoot =  false;
 };

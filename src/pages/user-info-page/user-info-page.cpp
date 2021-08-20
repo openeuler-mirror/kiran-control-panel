@@ -12,11 +12,10 @@
  * Author:     liuxinhao <liuxinhao@kylinos.com.cn>
  */
 
- 
 #include "user-info-page.h"
 #include "accounts-global-info.h"
-#include "accounts-user-interface.h"
 #include "hover-tips.h"
+#include "ksd_accounts_user_proxy.h"
 #include "passwd-helper.h"
 #include "ui_user-info-page.h"
 
@@ -25,6 +24,7 @@
 #include <widget-property-helper.h>
 #include <QListView>
 #include <QMessageBox>
+#include <kiran-system-daemon/accounts-i.h>
 
 enum PageEnum
 {
@@ -48,14 +48,15 @@ void UserInfoPage::updateInfo()
 {
     m_errorTip->hideTip();
 
-    UserInterface userInterface(m_curShowUserPath,
-                                QDBusConnection::systemBus());
+    KSDAccountsUserProxy userProxy(ACCOUNTS_DBUS_NAME,
+                                   m_curShowUserPath,
+                                   QDBusConnection::systemBus());
 
-    QString userName = userInterface.user_name();
-    m_uid = userInterface.uid();
-    int userType = userInterface.account_type();
-    QString iconFile = userInterface.icon_file();
-    bool locked = userInterface.locked();
+    QString userName = userProxy.user_name();
+    m_uid = userProxy.uid();
+    int userType = userProxy.account_type();
+    QString iconFile = userProxy.icon_file();
+    bool locked = userProxy.locked();
 
     ui->label_name->setText(userName);
     ui->edit_userID->setText(QString::number(m_uid));
@@ -173,13 +174,12 @@ void UserInfoPage::initUI()
 #endif
 
 #ifdef PASSWD_EXPIRATION_POLICY
-    connect(ui->btn_passwdExpirationPolicy,&QPushButton::clicked,[this](){
+    connect(ui->btn_passwdExpirationPolicy, &QPushButton::clicked, [this]() {
         emit sigPasswordExpirationPolicy(m_curShowUserPath);
     });
 #else
     ui->btn_passwdExpirationPolicy->setVisible(false);
 #endif
-
 }
 
 void UserInfoPage::resetPageSetPasswd()

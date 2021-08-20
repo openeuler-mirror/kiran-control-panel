@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE node PUBLIC
+"-//freedesktop//DTD D-BUS Object Introspection 1.0//EN"
+"http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd" [
+<!ENTITY ERROR_NOT_FOUND_DEVICE "com.kylinsec.Kiran.SystemDaemon.Biometrics.Error.NotFundDevice">
+<!ENTITY ERROR_DEVICE_BUSY "com.kylinsec.Kiran.SystemDaemon.Biometrics.Error.DeviceBusy">
+<!ENTITY ERROR_INTERNAL "com.kylinsec.Kiran.SystemDaemon.Biometrics.Error.Internal">
+<!ENTITY ERROR_PERMISSION_DENIED "com.kylinsec.Kiran.SystemDaemon.Biometrics.Error.PermissionDenied">
+<!ENTITY ERROR_NO_ENROLLED_PRINTS "com.kylinsec.Kiran.SystemDaemon.Biometrics.Error.NoEnrolledPrints">
+<!ENTITY ERROR_NO_ACTION_IN_PROGRESS "com.kylinsec.Kiran.SystemDaemon.Biometrics.Error.NoActionInProgress">
+]>
+<node>
+  <interface name="com.kylinsec.Kiran.SystemDaemon.Biometrics">
+    <annotation name="org.freedesktop.DBus.GLib.CSymbol"
+      value="kiran_biometrics" />
+    <method name="EnrollFprintStart">
+       <annotation name="org.freedesktop.DBus.GLib.Async" value="" />
+    </method>
+
+    <signal name="EnrollFprintStatus">
+      <arg type="s" name="message">
+      </arg>
+
+      <arg type="s" name="id">
+      </arg>
+
+      <arg type="int" name="progress">
+      </arg>
+
+      <arg type="b" name="done">
+      </arg>
+    </signal>
+
+    <method name="EnrollFprintStop">
+      <annotation name="org.freedesktop.DBus.GLib.Async" value="" />
+    </method>
+
+    <method name="VerifyFprintStart">
+       <annotation name="org.freedesktop.DBus.GLib.Async" value="" />
+    </method>
+
+    <signal name="VerifyFprintStatus">
+      <arg type="s" name="result">
+      </arg>
+
+      <arg type="b" name="done">
+      </arg>
+
+      <arg type="b" name="found">
+      </arg>
+
+      <arg type="s" name="id">
+      </arg>
+    </signal>
+
+     <method name="VerifyFprintStop">
+       <annotation name="org.freedesktop.DBus.GLib.Async" value="" />
+     </method>
+
+     <method name="DeleteEnrolledFinger">
+       <arg type="s" name="id" direction="in">
+       </arg>
+       <annotation name="org.freedesktop.DBus.GLib.Async" value="" />
+    </method>
+
+    <method name="EnrollFaceStart">
+      <arg type="s" name="zmq_addr" direction="out">
+      </arg>
+      <annotation name="org.freedesktop.DBus.GLib.Async" value="" />
+    </method>
+
+    <signal name="EnrollFaceStatus">
+      <arg type="s" name="message">
+      </arg>
+
+      <arg type="s" name="id">
+      </arg>
+
+      <arg type="int" name="progress">
+      </arg>
+
+      <arg type="b" name="done">
+      </arg>
+    </signal>
+
+    <method name="EnrollFaceStop">
+      <annotation name="org.freedesktop.DBus.GLib.Async" value="" />
+    </method>
+
+    <method name="VerifyFaceStart">
+       <arg type="s" name="id" direction="in">
+       </arg>
+       <annotation name="org.freedesktop.DBus.GLib.Async" value="" />
+    </method>
+
+    <signal name="VerifyFaceStatus">
+      <arg type="s" name="result">
+      </arg>
+
+      <arg type="b" name="done">
+      </arg>
+      <arg type="b" name="match">
+      </arg>
+    </signal>
+
+     <method name="VerifyFaceStop">
+       <annotation name="org.freedesktop.DBus.GLib.Async" value="" />
+     </method>
+
+     <method name="DeleteEnrolledFace">
+       <arg type="s" name="id" direction="in">
+       </arg>
+       <annotation name="org.freedesktop.DBus.GLib.Async" value="" />
+     </method>
+
+  </interface>
+</node>

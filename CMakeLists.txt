@@ -23,6 +23,7 @@ set(KAM_DEFAULT_AVATAR_PATH "${KAM_BUILDIN_AVATAR_DIR_PATH}/0.face")
 configure_file(${CMAKE_SOURCE_DIR}/config/config.h.in ${CMAKE_BINARY_DIR}/config.h @ONLY)
 
 find_package(PkgConfig REQUIRED)
+find_package(KiranDBusGenerate REQUIRED)
 find_package(Qt5 COMPONENTS Widgets Svg DBus LinguistTools)
 pkg_search_module(KIRAN_WIDGETS_QT5 REQUIRED kiranwidgets-qt5)
 pkg_search_module(KIRAN_CC_DAEMON REQUIRED kiran-cc-daemon)
@@ -38,18 +39,45 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
 
+#翻译文件
+set( TS_FILES "translations/kiran-cpanel-account.zh_CN.ts" )
+qt5_create_translation( QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES} )
+
+#源文件
 file(GLOB_RECURSE SOURCES "src/*.cpp")
 file(GLOB_RECURSE HEADERS "src/*.h")
 file(GLOB_RECURSE FORMS "src/*.ui")
 file(GLOB_RECURSE TOOLS_SOURCES "tools/*.cpp")
 file(GLOB_RECURSE TOOLS_HEADERS "tools/*.h")
 file(GLOB_RECURSE RESOURCES "resources/*.qrc")
-set( TS_FILES "translations/kiran-cpanel-account.zh_CN.ts" )
 
-include_directories("${CMAKE_BINARY_DIR}" "src" "src/pages/" "src/widgets" )
 
-qt5_create_translation( QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES} )
-
+#DBus代理代码生成
+set(DBUS_SRC_LIST "")
+##kiran accounts service
+set(KSD_ACCOUNTS_XML data/com.kylinsec.Kiran.SystemDaemon.Accounts.xml)
+set_source_files_properties(${KSD_ACCOUNTS_XML}
+        PROPERTIES
+        CLASSNAME KSDAccountsProxy
+        NO_NAMESPACE true)
+kiran_qt5_add_dbus_interface(KSD_ACCOUNTS_SRC ${KSD_ACCOUNTS_XML} ksd_accounts_proxy)
+list(APPEND DBUS_SRC_LIST ${KSD_ACCOUNTS_SRC})
+##kiran accounts user
+set(KSD_ACCOUNTS_USER_XML data/com.kylinsec.Kiran.SystemDaemon.Accounts.User.xml)
+set_source_files_properties(${KSD_ACCOUNTS_USER_XML}
+        PROPERTIES
+        CLASSNAME KSDAccountsUserProxy
+        NO_NAMESPACE true)
+kiran_qt5_add_dbus_interface(KSD_ACCOUNTS_USER_SRC ${KSD_ACCOUNTS_USER_XML} ksd_accounts_user_proxy)
+list(APPEND DBUS_SRC_LIST ${KSD_ACCOUNTS_USER_SRC})
+##kiran biometrics
+set(KSD_BIOMETRICS_XML data/com.kylinsec.Kiran.SystemDaemon.Biometrics.xml)
+set_source_files_properties(${KSD_BIOMETRICS_XML}
+        PROPERTIES
+        CLASSNAME KSDBiometricsProxy
+        NO_NAMESPACE true)
+kiran_qt5_add_dbus_interface(KSD_BIOMETRICS_SRC ${KSD_BIOMETRICS_XML} ksd_biometrics_proxy)
+list(APPEND DBUS_SRC_LIST ${KSD_BIOMETRICS_SRC})
 
 add_library(${PROJECT_NAME} SHARED
         ${SOURCES}
@@ -57,10 +85,13 @@ add_library(${PROJECT_NAME} SHARED
         ${TOOLS_SOURCES}
         ${TOOLS_HEADERS}
         ${RESOURCES}
-        ${QM_FILES})
+        ${QM_FILES}
+        ${DBUS_SRC_LIST})
 
 target_include_directories(${PROJECT_NAME} PRIVATE
+        ${CMAKE_BINARY_DIR}
         include
+        src
         src/dbus-api-wrapper
         src/pages
         src/widgets

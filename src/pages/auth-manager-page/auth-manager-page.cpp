@@ -14,7 +14,7 @@
 
  
 #include "auth-manager-page.h"
-#include "accounts-user-interface.h"
+#include "ksd_accounts_user_proxy.h"
 #include "biometric-input-dialog/face-input-dialog/face-input-dialog.h"
 #include "biometric-input-dialog/fingerprint-input-dialog/fingerprint-input-dialog.h"
 #include "biometric-item.h"
@@ -45,10 +45,10 @@ void AuthManagerPage::setCurrentUser(const QString &userObj)
 {
     m_userObjPath = userObj;
 
-    delete m_userInterface;
-    m_userInterface = new UserInterface(m_userObjPath, QDBusConnection::systemBus(), this);
-    connect(m_userInterface, &UserInterface::AuthItemChanged, this, &AuthManagerPage::slotUserAuthItemChanged);
-    connect(m_userInterface, &UserInterface::propertyChanged, this, &AuthManagerPage::slotUserPropertyChanged);
+    delete m_userProxy;
+    m_userProxy = new KSDAccountsUserProxy(ACCOUNTS_DBUS_NAME,m_userObjPath,QDBusConnection::systemBus(),this);
+    connect(m_userProxy, &KSDAccountsUserProxy::AuthItemChanged, this, &AuthManagerPage::slotUserAuthItemChanged);
+    connect(m_userProxy, &KSDAccountsUserProxy::dbusPropertyChanged, this, &AuthManagerPage::slotUserPropertyChanged);
 
     auto funcBlockCheckBoxsSignal = [this](bool block) {
         QList<KiranSwitchButton *> authModeSwtichs = {m_fingerAuthSwitch, m_faceAuthSwitch, m_passwdAuthSwitch};
@@ -81,18 +81,18 @@ void AuthManagerPage::initUI()
     connect(m_passwdAuthSwitch, &KiranSwitchButton::toggled, this, &AuthManagerPage::slotCheckAuthTypes, Qt::DirectConnection);
 
     connect(ui->btn_save, &QPushButton::clicked, [this]() {
-        if (m_userInterface)
+        if (m_userProxy)
         {
-            disconnect(m_userInterface, &UserInterface::AuthItemChanged, this, &AuthManagerPage::slotUserAuthItemChanged);
-            disconnect(m_userInterface, &UserInterface::propertyChanged, this, &AuthManagerPage::slotUserPropertyChanged);
+            disconnect(m_userProxy, &KSDAccountsUserProxy::AuthItemChanged, this, &AuthManagerPage::slotUserAuthItemChanged);
+            disconnect(m_userProxy, &KSDAccountsUserProxy::dbusPropertyChanged, this, &AuthManagerPage::slotUserPropertyChanged);
         }
 
         save();
 
-        if (m_userInterface)
+        if (m_userProxy)
         {
-            connect(m_userInterface, &UserInterface::AuthItemChanged, this, &AuthManagerPage::slotUserAuthItemChanged);
-            connect(m_userInterface, &UserInterface::propertyChanged, this, &AuthManagerPage::slotUserPropertyChanged);
+            connect(m_userProxy, &KSDAccountsUserProxy::AuthItemChanged, this, &AuthManagerPage::slotUserAuthItemChanged);
+            connect(m_userProxy, &KSDAccountsUserProxy::dbusPropertyChanged, this, &AuthManagerPage::slotUserPropertyChanged);
         }
 
         updateInfo();
@@ -112,7 +112,7 @@ void AuthManagerPage::updateInfo()
     KLOG_INFO() << "load biometrics , update ui";
     //获取认证类型开关
     bool fingerAuth, faceAuth, passwdAuth;
-    int authModes = m_userInterface->auth_modes();
+    int authModes = m_userProxy->auth_modes();
     if (authModes == 0)
     {
         authModes = ACCOUNTS_AUTH_MODE_PASSWORD;
@@ -185,7 +185,7 @@ void AuthManagerPage::save()
     }
 
     bool backendPasswdAuth, backendFingerAuth, backendFaceAuth;
-    int authModes = m_userInterface->auth_modes();
+    int authModes = m_userProxy->auth_modes();
     backendPasswdAuth = authModes & ACCOUNTS_AUTH_MODE_PASSWORD;
     backendFingerAuth = authModes & ACCOUNTS_AUTH_MODE_FINGERPRINT;
     backendFaceAuth = authModes & ACCOUNTS_AUTH_MODE_FACE;
@@ -200,7 +200,7 @@ void AuthManagerPage::save()
     {
         if (iterator.value())
         {
-            auto reply = m_userInterface->EnableAuthMode(iterator.key(), iterator.value());
+            auto reply = m_userProxy->EnableAuthMode(iterator.key(), iterator.value());
             reply.waitForFinished();
             if (reply.isError())
             {
@@ -213,7 +213,7 @@ void AuthManagerPage::save()
     {
         if (!iterator.value())
         {
-            auto reply = m_userInterface->EnableAuthMode(iterator.key(), iterator.value());
+            auto reply = m_userProxy->EnableAuthMode(iterator.key(), iterator.value());
             reply.waitForFinished();
             if (reply.isError())
             {
@@ -265,7 +265,7 @@ void AuthManagerPage::save()
     }
     for (auto &item : deletedItems)
     {
-        auto reply = m_userInterface->DelAuthItem(ACCOUNTS_AUTH_MODE_FINGERPRINT, item.first);
+        auto reply = m_userProxy->DelAuthItem(ACCOUNTS_AUTH_MODE_FINGERPRINT, item.first);
         reply.waitForFinished();
         if (reply.isError())
         {
@@ -274,7 +274,7 @@ void AuthManagerPage::save()
     }
     for (auto &item : addItems)
     {
-        auto reply = m_userInterface->AddAuthItem(ACCOUNTS_AUTH_MODE_FINGERPRINT, item.first, item.second);
+        auto reply = m_userProxy->AddAuthItem(ACCOUNTS_AUTH_MODE_FINGERPRINT, item.first, item.second);
         reply.waitForFinished();
         if (reply.isError())
         {
@@ -293,7 +293,7 @@ void AuthManagerPage::save()
     }
     for (auto &item : deletedItems)
     {
-        auto reply = m_userInterface->DelAuthItem(ACCOUNTS_AUTH_MODE_FACE, item.first);
+        auto reply = m_userProxy->DelAuthItem(ACCOUNTS_AUTH_MODE_FACE, item.first);
         reply.waitForFinished();
         if (reply.isError())
         {
@@ -302,7 +302,7 @@ void AuthManagerPage::save()
     }
     for (auto &item : addItems)
     {
-        auto reply = m_userInterface->AddAuthItem(ACCOUNTS_AUTH_MODE_FACE, item.first, item.second);
+        auto reply = m_userProxy->AddAuthItem(ACCOUNTS_AUTH_MODE_FACE, item.first, item.second);
         reply.waitForFinished();
         if (reply.isError())
         {
@@ -412,7 +412,7 @@ BiometricList AuthManagerPage::getBiometricItemsFromBackend(AccountsAuthMode mod
         return true;
     };
     BiometricList res;
-    QDBusPendingReply<QString> reply = m_userInterface->GetAuthItems(mode);
+    QDBusPendingReply<QString> reply = m_userProxy->GetAuthItems(mode);
     reply.waitForFinished();
     funcParseAuthItmes(reply.value(), res);
     return res;
@@ -526,7 +526,7 @@ QString AuthManagerPage::generateBiometricsItemName(AccountsAuthMode mode)
     return res;
 }
 
-void AuthManagerPage::slotUserPropertyChanged(QString path, QString propertyName, QVariant value)
+void AuthManagerPage::slotUserPropertyChanged(QString propertyName, QVariant value)
 {
     if (propertyName == "auth_modes")
     {

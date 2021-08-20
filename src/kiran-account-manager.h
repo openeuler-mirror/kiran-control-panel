@@ -57,17 +57,17 @@ private:
     void setDefaultSiderbarItem();
 
 private:
-    KiranSidebarWidget *m_tabList{};
-    QListWidgetItem *m_createUserItem{};
-    QStackedWidget *m_stackWidget{};
-    CreateUserPage *m_page_createUser{};
-    UserInfoPage *m_page_userinfo{};
-    SelectAvatarPage *m_page_selectAvatar{};
-    AuthManagerPage *m_page_authManager{};
-    PasswordExpirationPolicyPage *m_page_passwdExpirationPolicy{};
-    MaskWidget *m_maskWidget{};
+    KiranSidebarWidget *m_tabList = nullptr;
+    QListWidgetItem *m_createUserItem = nullptr;
+    QStackedWidget *m_stackWidget = nullptr;
+    CreateUserPage *m_page_createUser = nullptr;
+    UserInfoPage *m_page_userinfo = nullptr;
+    SelectAvatarPage *m_page_selectAvatar = nullptr;
+    AuthManagerPage *m_page_authManager = nullptr;
+    PasswordExpirationPolicyPage *m_page_passwdExpirationPolicy = nullptr;
+    MaskWidget *m_maskWidget = nullptr;
     QThread m_workThread;
-    HardWorker *m_hardworker;
+    HardWorker *m_hardworker = nullptr;
 };
 
 #endif  // KIRANACCOUNTMANAGER_H

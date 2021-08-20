@@ -15,11 +15,12 @@
 #include "password-expiration-policy-page.h"
 #include <kiran-switch-button.h>
 #include <kiran-system-daemon/accounts-i.h>
-#include <widget-property-helper.h>
-#include <QJsonDocument>
 #include <qt5-log-i.h>
+#include <widget-property-helper.h>
 #include <QDBusPendingReply>
-#include "accounts-user-interface.h"
+#include <QJsonDocument>
+
+#include "ksd_accounts_user_proxy.h"
 #include "ui_password-expiration-policy-page.h"
 
 using namespace Kiran;
@@ -37,11 +38,11 @@ PasswordExpirationPolicyPage::~PasswordExpirationPolicyPage()
 
 void PasswordExpirationPolicyPage::setCurrentUser(const QString &userObj)
 {
-    delete m_userInterface;
-    m_userInterface = nullptr;
+    delete m_userProxy;
+    m_userProxy = nullptr;
 
-    m_userInterface = new UserInterface(userObj, QDBusConnection::systemBus(), this);
-    connect(m_userInterface, &UserInterface::propertyChanged, this, &PasswordExpirationPolicyPage::slotUserPropertyChanged);
+    m_userProxy = new KSDAccountsUserProxy(ACCOUNTS_DBUS_NAME,userObj,QDBusConnection::systemBus(),this);
+    connect(m_userProxy, &KSDAccountsUserProxy::dbusPropertyChanged, this, &PasswordExpirationPolicyPage::slotUserPropertyChanged);
 
     updateInfo();
 }
@@ -63,7 +64,7 @@ void PasswordExpirationPolicyPage::initUI()
     m_passwdMaxVaildDaysSwtich = new KiranSwitchButton(this);
     ui->layout_PwdMaximumVaildDays->addWidget(m_passwdMaxVaildDaysSwtich);
     ui->spinBox_passwdMaxVaildDays->setSuffix(tr("day"));
-    ui->spinBox_passwdMaxVaildDays->setMaximum(99998);///99999被认为是无限期
+    ui->spinBox_passwdMaxVaildDays->setMaximum(99998);  ///99999被认为是无限期
     connect(m_passwdMaxVaildDaysSwtich, &QAbstractButton::toggled, this, &PasswordExpirationPolicyPage::handlePasswdMaxVaildDaysSwitchToggled);
 
     ///密码过期之前多少天提醒
@@ -85,19 +86,19 @@ void PasswordExpirationPolicyPage::initUI()
     connect(ui->btn_return, &QPushButton::clicked, [this]() {
         emit sigReturn();
     });
-    connect(ui->btn_save,&QPushButton::clicked,[this](){
+    connect(ui->btn_save, &QPushButton::clicked, [this]() {
         save();
     });
 }
 
-void PasswordExpirationPolicyPage::slotUserPropertyChanged(QString path, QString propertyName, QVariant value)
+void PasswordExpirationPolicyPage::slotUserPropertyChanged(QString propertyName, QVariant value)
 {
     //TODO:监控密码过期策略变化
 }
 
 void PasswordExpirationPolicyPage::updateInfo()
 {
-    QString policy = m_userInterface->password_expiration_policy();
+    QString policy = m_userProxy->password_expiration_policy();
     QJsonDocument jsonDoc = QJsonDocument::fromJson(policy.toUtf8());
     QJsonObject jsonObject = jsonDoc.object();
 
@@ -127,7 +128,7 @@ void PasswordExpirationPolicyPage::updateInfo()
     KLOG_DEBUG() << "promptDays" << promptDays;
     KLOG_DEBUG() << "inactiveDays" << inactiveDays;
 
-    if(userExpirationTime==-1)
+    if (userExpirationTime == -1)
     {
         m_userExpiresSwitch->setChecked(false);
         ui->dateEdit_userExpires->setVisible(false);
@@ -139,16 +140,16 @@ void PasswordExpirationPolicyPage::updateInfo()
     {
         m_userExpiresSwitch->setChecked(true);
         ui->dateEdit_userExpires->setVisible(true);
-        QDate tempDate(1970,01,01);
+        QDate tempDate(1970, 01, 01);
         tempDate = tempDate.addDays(userExpirationTime);
         ui->dateEdit_userExpires->setDate(tempDate);
     }
 
-    QDate changePasswdDate(1970,01,01);
+    QDate changePasswdDate(1970, 01, 01);
     changePasswdDate = changePasswdDate.addDays(lastChangedTime);
     ui->label_lastPasswdChange->setText(changePasswdDate.toString("yyyy-MM-dd"));
 
-    if(maxVaildDays==99999)
+    if (maxVaildDays == 99999)
     {
         m_passwdMaxVaildDaysSwtich->setChecked(false);
         ui->spinBox_passwdMaxVaildDays->setVisible(false);
@@ -161,7 +162,7 @@ void PasswordExpirationPolicyPage::updateInfo()
         ui->spinBox_passwdMaxVaildDays->setValue(maxVaildDays);
     }
 
-    if(promptDays==0)
+    if (promptDays == 0)
     {
         m_promptBeforePasswdExpirationSwitch->setChecked(false);
         ui->spinBox_promptTime->setVisible(false);
@@ -173,8 +174,8 @@ void PasswordExpirationPolicyPage::updateInfo()
         ui->spinBox_promptTime->setVisible(true);
         ui->spinBox_promptTime->setValue(promptDays);
     }
-    
-    if(inactiveDays==-1)
+
+    if (inactiveDays == -1)
     {
         m_passwdInactiveSwitch->setChecked(false);
         ui->spinBox_inactiveDays->setVisible(false);
@@ -191,7 +192,6 @@ void PasswordExpirationPolicyPage::updateInfo()
 void PasswordExpirationPolicyPage::handleUserExpireSwitchToggled(bool checked)
 {
     ui->dateEdit_userExpires->setVisible(checked);
-    
 }
 void PasswordExpirationPolicyPage::handlePasswdMaxVaildDaysSwitchToggled(bool checked)
 {
@@ -213,10 +213,10 @@ void PasswordExpirationPolicyPage::save()
     QJsonObject jsonObject;
 
     //用户过期时间
-    if(m_userExpiresSwitch->isChecked())
+    if (m_userExpiresSwitch->isChecked())
     {
         QDate date = ui->dateEdit_userExpires->date();
-        QDate tempDate(1970,01,01);
+        QDate tempDate(1970, 01, 01);
         qint64 days = tempDate.daysTo(date);
         jsonObject[ACCOUNTS_PEP_EXPIRATION_TIME] = days;
     }
@@ -224,10 +224,9 @@ void PasswordExpirationPolicyPage::save()
     {
         jsonObject[ACCOUNTS_PEP_EXPIRATION_TIME] = -1;
     }
-    
 
     //密码有效天数限制
-    if(m_passwdMaxVaildDaysSwtich->isChecked())
+    if (m_passwdMaxVaildDaysSwtich->isChecked())
     {
         int maxValidDays = ui->spinBox_passwdMaxVaildDays->value();
         jsonObject[ACCOUNTS_PEP_MAX_DAYS] = maxValidDays;
@@ -238,7 +237,7 @@ void PasswordExpirationPolicyPage::save()
     }
 
     //提示账户过期时间
-    if(m_promptBeforePasswdExpirationSwitch->isChecked())
+    if (m_promptBeforePasswdExpirationSwitch->isChecked())
     {
         int promptDay = ui->spinBox_promptTime->value();
         jsonObject[ACCOUNTS_PEP_DAYS_TO_WARN] = promptDay;
@@ -247,9 +246,9 @@ void PasswordExpirationPolicyPage::save()
     {
         jsonObject[ACCOUNTS_PEP_DAYS_TO_WARN] = 0;
     }
-    
+
     //密码失效开关
-    if(m_passwdInactiveSwitch->isChecked())
+    if (m_passwdInactiveSwitch->isChecked())
     {
         int inactiveDays = ui->spinBox_inactiveDays->value();
         jsonObject[ACCOUNTS_PEP_INACTIVE_DAYS] = inactiveDays;
@@ -261,9 +260,9 @@ void PasswordExpirationPolicyPage::save()
 
     QJsonDocument jsonDoc(jsonObject);
 
-    QDBusPendingReply<> reply = m_userInterface->SetPasswordExpirationPolicy(jsonDoc.toJson(QJsonDocument::Compact));
+    QDBusPendingReply<> reply = m_userProxy->SetPasswordExpirationPolicy(jsonDoc.toJson(QJsonDocument::Compact));
     reply.waitForFinished();
-    if(reply.isError())
+    if (reply.isError())
     {
         KLOG_ERROR() << "set password expiration policy failed," << reply.error();
     }
@@ -271,5 +270,4 @@ void PasswordExpirationPolicyPage::save()
     {
         KLOG_DEBUG() << "update password expiration policy success:" << jsonDoc;
     }
-    
 }

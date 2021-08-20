@@ -16,12 +16,13 @@
 #include "kiran-account-manager.h"
 #include "account-itemwidget.h"
 #include "accounts-global-info.h"
-#include "auth-manager-page/auth-manager-page.h"
 #include "config.h"
-#include "create-user-page/create-user-page.h"
 #include "hard-worker.h"
+
 #include "mask-widget.h"
 #include "select-avatar-page/select-avatar-page.h"
+#include "auth-manager-page/auth-manager-page.h"
+#include "create-user-page/create-user-page.h"
 #include "user-info-page/user-info-page.h"
 #include "passwd-expiration-policy/password-expiration-policy-page.h"
 
@@ -83,7 +84,7 @@ void KiranAccountManager::setCurrentUser(const QString &userPath)
 
 void KiranAccountManager::appendSiderbarItem(const QString &userPath)
 {
-    UserInterface interface(userPath, QDBusConnection::systemBus());
+    KSDAccountsUserProxy interface(ACCOUNTS_DBUS_NAME,userPath, QDBusConnection::systemBus());
 
     QString iconFile = interface.icon_file().isEmpty() ? DEFAULT_USER_AVATAR : interface.icon_file();
     KLOG_INFO() << "append siderbar item:" << interface.user_name() << iconFile;
@@ -393,7 +394,7 @@ void KiranAccountManager::connectToInfoChanged()
                         {
                             continue;
                         }
-                        UserInterface userInterface(itemUserPath, QDBusConnection::systemBus());
+                        KSDAccountsUserProxy userInterface(ACCOUNTS_DBUS_NAME,itemUserPath, QDBusConnection::systemBus());
                         QString userName = userInterface.user_name();
                         QString iconFile = userInterface.icon_file().isEmpty() ? DEFAULT_USER_AVATAR : userInterface.icon_file();
                         bool isLocked = userInterface.locked();

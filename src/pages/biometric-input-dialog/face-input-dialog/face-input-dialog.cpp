@@ -15,7 +15,7 @@
  
 
 #include "face-input-dialog.h"
-#include "biometrics-interface.h"
+#include "ksd_biometrics_proxy.h"
 #include "face-enroll-worker.h"
 #include "ui_face-input-dialog.h"
 
@@ -29,7 +29,9 @@ Q_DECLARE_METATYPE(QList<QRect>);
 FaceInputDialog::FaceInputDialog(QWidget *parent)
     : KiranTitlebarWindow(parent),
       ui(new Ui::FaceInputDialog),
-      m_interface(new BiometricsInterface(QDBusConnection::systemBus(), this)),
+      m_interface(new KSDBiometricsProxy("com.kylinsec.Kiran.SystemDaemon.Biometrics",
+                                         "/com/kylinsec/Kiran/SystemDaemon/Biometrics",
+                                         QDBusConnection::systemBus(), this)),
       m_enrollThread(new FaceEnrollWorker(this))
 {
     qRegisterMetaType<QList<QRect>>("QList<QRect>");
@@ -51,7 +53,7 @@ void FaceInputDialog::init()
     ///处理工作线程收到新的人脸坐标
     connect(m_enrollThread, &FaceEnrollWorker::sigFaceAxis, this, &FaceInputDialog::slotFaceAxis);
     ///连接到DBus服务获取采集状态
-    connect(m_interface, &BiometricsInterface::EnrollFaceStatus, this, &FaceInputDialog::slotUpdateEnrollFaceStatus);
+    connect(m_interface, &KSDBiometricsProxy::EnrollFaceStatus, this, &FaceInputDialog::slotUpdateEnrollFaceStatus);
     connect(ui->btn_save, &QPushButton::clicked, [this]() {
         m_isSave = true;
         close();
