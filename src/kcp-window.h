@@ -3,6 +3,12 @@
 
 #include <kiranwidgets-qt5/kiran-titlebar-window.h>
 #include <QWidget>
+enum
+{
+    KCP_LIST_ITEM_GENERAL,
+    KCP_LIST_ITEM_LAYOUT
+};
+
 namespace Ui
 {
 class KCPWindow;

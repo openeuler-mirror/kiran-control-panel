@@ -60,7 +60,7 @@
       <item>
        <widget class="QStackedWidget" name="stackedWidget">
         <widget class="GeneralPage" name="page_general"/>
-        <widget class="QWidget" name="page_layout"/>
+        <widget class="LayoutPage" name="page_layout"/>
        </widget>
       </item>
      </layout>
@@ -79,6 +79,12 @@
    <class>GeneralPage</class>
    <extends>QWidget</extends>
    <header>general-page.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>LayoutPage</class>
+   <extends>QWidget</extends>
+   <header>layout-page.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

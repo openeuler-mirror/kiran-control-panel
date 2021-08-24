@@ -123,7 +123,7 @@
        <item>
         <widget class="QLabel" name="label_2">
          <property name="text">
-          <string>Slow</string>
+          <string>Short</string>
          </property>
         </widget>
        </item>
@@ -143,7 +143,7 @@
        <item>
         <widget class="QLabel" name="label">
          <property name="text">
-          <string>Fast</string>
+          <string>Long</string>
          </property>
         </widget>
        </item>

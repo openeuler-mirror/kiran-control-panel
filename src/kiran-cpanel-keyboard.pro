@@ -34,19 +34,22 @@ SOURCES += \
     general-page.cpp \
     layout-page.cpp \
     dbus-wrapper/KSKKeyboardProxy.cpp \
-    dbus-wrapper/dbus-wrapper.cpp
+    dbus-wrapper/dbus-wrapper.cpp \
+    widgets/choose-item.cpp
 
 HEADERS += \
         kcp-window.h \
     general-page.h \
     layout-page.h \
     dbus-wrapper/KSKKeyboardProxy.h \
-    dbus-wrapper/dbus-wrapper.h
+    dbus-wrapper/dbus-wrapper.h \
+    widgets/choose-item.h
 
 FORMS += \
         kcp-window.ui \
     general-page.ui \
-    layout-page.ui
+    layout-page.ui \
+    widgets/choose-item.ui
 
 TRANSLATIONS    +=  ../translation/kiran-cpanel-keyboard.zh_CN.ts
 

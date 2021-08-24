@@ -13,8 +13,10 @@
 */
 
 #include <kiran-log/qt5-log-i.h>
-#include <kiranwidgets-qt5/kiran-single-application.h>
+#include <kiran-message-box.h>
+#include <kiran-single-application.h>
 #include <QApplication>
+#include <QFile>
 #include <QTranslator>
 #include <iostream>
 #include "kcp-window.h"
@@ -31,6 +33,19 @@ int main(int argc, char *argv[])
 
     //只允许单个程序运行
     KiranSingleApplication a(argc, argv);
+
+    QFile file(":/style/style.qss");
+    if (file.open(QFile::ReadOnly))
+    {
+        QString styleSheet = QLatin1String(file.readAll());
+
+        a.setStyleSheet(styleSheet);
+        file.close();
+    }
+    else
+    {
+        KiranMessageBox::message(nullptr, "warning", "Open failed", KiranMessageBox::Ok);
+    }
 
     //加载翻译文件
     QTranslator *qtTranslator = new QTranslator(qApp);

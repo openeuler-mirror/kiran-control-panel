@@ -8,5 +8,6 @@
         <file>images/search.svg</file>
         <file>images/selected.svg</file>
         <file>images/selected-w.svg</file>
+        <file>style/style.qss</file>
     </qresource>
 </RCC>

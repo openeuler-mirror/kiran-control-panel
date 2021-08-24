@@ -101,7 +101,7 @@
         </layout>
        </item>
        <item>
-        <layout class="QVBoxLayout" name="verticalLayout_2"/>
+        <layout class="QHBoxLayout" name="hLayout_keyLayout"/>
        </item>
        <item>
         <widget class="QToolButton" name="btn_add">

@@ -17,7 +17,7 @@ GeneralPage::GeneralPage(QWidget *parent) : QWidget(parent),
 
     DbusWrapper *dbusWrapper = new DbusWrapper;
     m_keyboardInterface = dbusWrapper->getKeyboardInterface();
-    delete dbusWrapper;
+    dbusWrapper->deleteLater();
     dbusWrapper = nullptr;
 
     m_timer = new QTimer(this);

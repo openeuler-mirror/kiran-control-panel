@@ -1,0 +1,33 @@
+
+#btn_edit,#btn_add
+{
+    background-color:#2eb3ff;
+    border-radius : 3px;
+}
+
+#btn_add
+{
+    background-image: url(":/images/addition.svg");
+    background-position : center center;
+    background-repeat: no-repeat;
+}
+
+#btn_edit:hover,#btn_add:hover
+{
+    background-color:#77ceff
+}
+
+#btn_edit:pressed,#btn_add:pressed
+{
+    background-color:#2eb3ff;
+}
+
+#btn_delete
+{
+    background-image: url(":/images/delete.svg");
+}
+
+#label_selected
+{
+    background-image: url(":/images/selected.svg")
+}
