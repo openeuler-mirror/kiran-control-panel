@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui dbus
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -25,20 +25,28 @@ LIBS += \
     -lkiranwidgets-qt5\
     -lklog-qt5
 
-INCLUDEPATH += /usr/include/kiranwidgets-qt5/
+INCLUDEPATH += /usr/include/kiranwidgets-qt5/ \
+               /usr/include/kiran-cc-daemon
 
 SOURCES += \
         main.cpp \
         kcp-window.cpp \
-    general-page.cpp
+    general-page.cpp \
+    layout-page.cpp \
+    dbus-wrapper/KSKKeyboardProxy.cpp \
+    dbus-wrapper/dbus-wrapper.cpp
 
 HEADERS += \
         kcp-window.h \
-    general-page.h
+    general-page.h \
+    layout-page.h \
+    dbus-wrapper/KSKKeyboardProxy.h \
+    dbus-wrapper/dbus-wrapper.h
 
 FORMS += \
         kcp-window.ui \
-    general-page.ui
+    general-page.ui \
+    layout-page.ui
 
 TRANSLATIONS    +=  ../translation/kiran-cpanel-keyboard.zh_CN.ts
 

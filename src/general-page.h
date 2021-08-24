@@ -1,6 +1,7 @@
 #ifndef GENERALPAGE_H
 #define GENERALPAGE_H
 
+#include <QTimer>
 #include <QWidget>
 
 namespace Ui
@@ -8,6 +9,7 @@ namespace Ui
 class GeneralPage;
 }
 
+class KSKKeyboardProxy;
 class GeneralPage : public QWidget
 {
     Q_OBJECT
@@ -19,9 +21,16 @@ public:
 
 private:
     void initUI();
+    void initComponentValue();
+    void setWidgetsStatus(bool status);
+    QSharedPointer<KSKKeyboardProxy> m_keyboardInterface;
 
 private:
     Ui::GeneralPage *ui;
+    QTimer *m_timer = nullptr;
+    bool m_repeateEnabled = false;
+    qint32 m_delay;
+    qint32 m_interval;
 };
 
 #endif  // GENERALPAGE_H
