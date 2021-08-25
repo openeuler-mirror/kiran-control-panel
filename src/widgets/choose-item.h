@@ -13,13 +13,15 @@ class ChooseItem : public QWidget
     Q_OBJECT
 
 public:
-    explicit ChooseItem(QString countryName, QWidget *parent = 0);
+    explicit ChooseItem(QWidget *parent = 0);
     ~ChooseItem();
     void setSelected(bool isSelected);
-    void setDeleteMode(bool isDeleteMode);
+    void setEditMode(bool isEditMode);
+    QString getLayoutName();
+    void setNames(QString countryName, QString layoutName);
 
 signals:
-    void deleteLayout();
+    void sigDelete(QString layoutName);
     void clicked();
 
 private:
@@ -27,10 +29,15 @@ private:
 
 protected:
     void mousePressEvent(QMouseEvent *event) override;
+    virtual void paintEvent(QPaintEvent *event) override;
+
+public slots:
+    void seletedLayoutChanged(QString selectLayout);
 
 private:
     Ui::ChooseItem *ui;
-    QString m_countryName;
+    QString m_layoutName;
+    bool m_hover = false;
 };
 
 #endif  // CHOOSEITEM_H

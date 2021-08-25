@@ -2,12 +2,14 @@
 #define LAYOUTPAGE_H
 
 #include <QMap>
+#include <QVBoxLayout>
 #include <QWidget>
 namespace Ui
 {
 class LayoutPage;
 }
 
+class ChooseItem;
 class KSKKeyboardProxy;
 class LayoutPage : public QWidget
 {
@@ -22,12 +24,25 @@ private:
     void getValidLayout();
     int getJsonValueFromString(QString jsonString);
     void createLayoutItem();
+    void updateLayout(QStringList layoutList);
+    void addLayout(QString layoutName);
+
+signals:
+    void layoutSelectChanged(QString layoutName);
+
+public slots:
+    void deleteLayout(QString deletedLayout);
+    void setEditMode();
 
 private:
     Ui::LayoutPage *ui;
     QSharedPointer<KSKKeyboardProxy> m_keyboardInterface;
     QMap<QString, QString> m_layoutMap;
+    QList<ChooseItem *> m_itemList;
     QStringList m_layoutList;
+    ChooseItem *m_firstItem;
+    QVBoxLayout *m_vLayout;
+    bool m_editFlag = false;
 };
 
 #endif  // LAYOUTPAGE_H

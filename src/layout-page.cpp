@@ -20,8 +20,8 @@ LayoutPage::LayoutPage(QWidget *parent) : QWidget(parent),
     dbusWrapper = nullptr;
 
     initUI();
+    getValidLayout();
     createLayoutItem();
-    //getValidLayout();
 }
 
 LayoutPage::~LayoutPage()
@@ -31,10 +31,13 @@ LayoutPage::~LayoutPage()
 
 void LayoutPage::initUI()
 {
-    QWidget *layoutsWidget = new QWidget(this);
-    ui->hLayout_keyLayout->addWidget(layoutsWidget);
-    QScrollBar *scrollBar = new QScrollBar(Qt::Vertical, this);
-    ui->hLayout_keyLayout->addWidget(scrollBar);
+    m_vLayout = new QVBoxLayout();
+    m_vLayout->setMargin(0);
+    m_vLayout->setContentsMargins(0, 0, 0, 0);
+    m_vLayout->setSpacing(10);
+    ui->scroll_layout_selector->setLayout(m_vLayout);
+
+    connect(ui->btn_edit, &QPushButton::clicked, this, &LayoutPage::setEditMode);
 }
 
 void LayoutPage::getValidLayout()
@@ -83,7 +86,7 @@ int LayoutPage::getJsonValueFromString(QString jsonString)
                     if (value.isString())
                     {
                         countryName = value.toVariant().toString();
-                        KLOG_INFO() << countryName;
+                        //                        KLOG_INFO() << countryName;
                     }
                 }
                 if (obj.contains("layout_name"))
@@ -92,10 +95,10 @@ int LayoutPage::getJsonValueFromString(QString jsonString)
                     if (value.isString())
                     {
                         layoutName = value.toVariant().toString();
-                        KLOG_INFO() << layoutName;
+                        //                        KLOG_INFO() << layoutName;
                     }
                 }
-                m_layoutMap.insert(countryName, layoutName);
+                m_layoutMap.insert(layoutName, countryName);
             }
         }
     }
@@ -104,8 +107,138 @@ int LayoutPage::getJsonValueFromString(QString jsonString)
 
 void LayoutPage::createLayoutItem()
 {
+    //addLayout("vn");
+    //addLayout("tr alt");
     m_layoutList = m_keyboardInterface->layouts();
-    foreach (QString layoutName, m_layoutList)
+
+    for (int i = 0; i < m_layoutList.size(); i++)
     {
+        QString layoutName = m_layoutList.at(i);
+        QString countryName = m_layoutMap.value(layoutName);
+        KLOG_INFO() << countryName;
+        ChooseItem *chooseItem = new ChooseItem(this);
+        chooseItem->setNames(countryName, layoutName);
+        m_vLayout->addWidget(chooseItem);
+        m_itemList.append(chooseItem);
+
+        if (i == 0)
+        {
+            m_firstItem = chooseItem;
+            m_firstItem->setSelected(true);
+        }
+
+        connect(chooseItem, &ChooseItem::clicked,
+                [=] {
+                    QString selectedLayoutName = chooseItem->getLayoutName();
+                    if (m_firstItem->getLayoutName() != selectedLayoutName)
+                    {
+                        QDBusPendingReply<> reply = m_keyboardInterface->ApplyLayout(selectedLayoutName);
+                        reply.waitForFinished();
+                        if (reply.isError() || !reply.isValid())
+                        {
+                            KLOG_DEBUG() << "Call ApplyLayout method failed "
+                                         << " Error: " << reply.error().message();
+                            return;
+                        }
+                        else
+                        {
+                            m_layoutList = m_keyboardInterface->layouts();
+                        }
+                        updateLayout(m_layoutList);
+                    }
+                });
+        connect(this, &LayoutPage::layoutSelectChanged, chooseItem, &ChooseItem::seletedLayoutChanged);
+
+        connect(chooseItem, &ChooseItem::sigDelete, this, &LayoutPage::deleteLayout);
+    }
+}
+
+void LayoutPage::updateLayout(QStringList layoutList)
+{
+    if (!layoutList.isEmpty())
+    {
+        QString countryName;
+        if (layoutList.size() > m_itemList.size())  // add
+        {
+            for (i = 0; i < (m_layoutList.size() - m_itemList.size()); i++)
+            {
+                ChooseItem *item = new ChooseItem(this);
+                m_vLayout->addWidget(item);
+                m_itemList.append(item);
+            }
+        }
+        else if (layoutList.size() < m_itemList.size())  //delete
+        {
+            for (i = 0; i < (m_itemList.size() - layoutList.size()); i++)
+            {
+                m_itemList.removeLast();
+            }
+        }
+
+        for (int i = 0; i < layoutList.size(); i++)
+        {
+            countryName = m_layoutMap.value(layoutList.at(i));
+            m_itemList.at(i)->setNames(countryName, layoutList.at(i));
+        }
+    }
+    else
+        m_itemList.rem
+
+    //move
+}
+
+void LayoutPage::addLayout(QString layoutName)
+{
+    QDBusPendingReply<> reply = m_keyboardInterface->AddLayout(layoutName);
+    reply.waitForFinished();
+    if (reply.isError() || !reply.isValid())
+    {
+        KLOG_DEBUG() << "Call AddLayout method failed "
+                     << " Error: " << reply.error().message();
+        return;
+    }
+    else
+    {
+        ChooseItem *item = new ChooseItem(m_layoutMap.value(layoutName),
+                                          layoutName,
+                                          this);
+        m_vLayout->addWidget(item);
+        m_itemList.append(item);
+        m_layoutList.append(layoutName);
+    }
+}
+
+void LayoutPage::deleteLayout(QString deletedLayout)
+{
+    ChooseItem *item = dynamic_cast<ChooseItem *>(sender());
+    //界面上删除选择项
+    m_itemList.removeOne(item);
+    delete item;
+    item = nullptr;
+
+    if (m_itemList.isEmpty())
+        ui->scrollArea_layout->hide();
+    //后端删除该布局
+}
+
+void LayoutPage::setEditMode()
+{
+    if (!m_editFlag)
+    {
+        foreach (ChooseItem *item, m_itemList)
+        {
+            item->setEditMode(true);
+            m_editFlag = true;
+        }
+        ui->btn_edit->setText(tr("Finish"));
+    }
+    else
+    {
+        foreach (ChooseItem *item, m_itemList)
+        {
+            item->setEditMode(false);
+            m_editFlag = false;
+        }
+        ui->btn_edit->setText(tr("Edit"));
     }
 }

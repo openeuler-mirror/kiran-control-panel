@@ -24,10 +24,25 @@
 
 #btn_delete
 {
-    background-image: url(":/images/delete.svg");
+    background: transparent;
+    border:none;
 }
 
 #label_selected
 {
     background-image: url(":/images/selected.svg")
 }
+
+#ChooseItem
+{
+    border-radius:6px;
+    background-color:#2D2D2D;
+}
+#ChooseItem:hover
+{
+    background-color:#393939;
+}
+/*
+#scroll_layout_selector{
+    background-color:#2D2D2D;
+}*/
