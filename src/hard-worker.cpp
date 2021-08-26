@@ -217,6 +217,7 @@ void HardWorker::doDeleteUser(int uid)
     KSDAccountsProxy accountsProxy(ACCOUNTS_DBUS_NAME,
                                    ACCOUNTS_OBJECT_PATH,
                                    QDBusConnection::systemBus());
+    // 删除用户
     auto reply = accountsProxy.DeleteUser(uid, true);
     reply.waitForFinished();
     if (reply.isError())

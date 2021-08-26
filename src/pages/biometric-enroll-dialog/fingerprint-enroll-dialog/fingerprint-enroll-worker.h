@@ -12,34 +12,34 @@
  * Author:     liuxinhao <liuxinhao@kylinos.com.cn>
  */
 
- 
-
-#ifndef KIRAN_ACCOUNT_MANAGER_FACEENROLLWORKER_H
-#define KIRAN_ACCOUNT_MANAGER_FACEENROLLWORKER_H
+#ifndef KIRAN_ACCOUNT_MANAGER_FINGERPRINT_INPUT_WORKER_H
+#define KIRAN_ACCOUNT_MANAGER_FINGERPRINT_INPUT_WORKER_H
 
 #include <QThread>
 
-class FaceEnrollWorker : public QThread
+class KSDBiometricsProxy;
+class FingerprintInputWorker : public QThread
 {
     Q_OBJECT
 public:
-    explicit FaceEnrollWorker(const QString &zmqAddr, QObject *parent = nullptr);
-    explicit FaceEnrollWorker(QObject *parent = nullptr);
-    ~FaceEnrollWorker();
+    FingerprintInputWorker(QObject *parent = nullptr);
+    ~FingerprintInputWorker();
 
-    void setZeroMQAddr(const QString &addr);
+public:
+    void startFingerprintEnroll();
+    void stopFingerprintEnroll();
 
 signals:
-    void sigHasNewImage(QImage image);
-    void sigFaceAxis(QList<QRect> faceRects);
+    void sigShowStatus(unsigned int progress, const QString &msg);
+    void sigEnrollComplete(bool isSuccess, const QString &msg, const QString &id);
+    void sigEnrollError(const QString &errMsg);
 
 protected:
-    void parseFaceImage(const QJsonObject &jsonObject);
-    void parseFaceAxis(const QJsonObject &jsonObject);
     void run() override;
 
 private:
-    QString m_zmqAddr;
+    KSDBiometricsProxy *m_interface;
+    bool m_started;  //标识采集是否由这次这次认证发出
 };
 
-#endif  //KIRAN_ACCOUNT_MANAGER_FACEENROLLWORKER_H
+#endif  //KIRAN_ACCOUNT_MANAGER_FINGERPRINT_INPUT_WORKER_H

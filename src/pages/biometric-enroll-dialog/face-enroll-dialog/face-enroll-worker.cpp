@@ -12,9 +12,8 @@
  * Author:     liuxinhao <liuxinhao@kylinos.com.cn>
  */
 
- 
-
 #include "face-enroll-worker.h"
+#include <qt5-log-i.h>
 #include <zmq.h>
 #include <QDebug>
 #include <QFile>
@@ -22,7 +21,6 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QPixmap>
-#include <qt5-log-i.h>
 
 #define IMAGE_TYPE 0x60  //图形类型
 #define AXIS_TYPE 0x61   //人脸坐标类型

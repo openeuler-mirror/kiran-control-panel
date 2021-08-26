@@ -12,7 +12,6 @@
  * Author:     liuxinhao <liuxinhao@kylinos.com.cn>
  */
 
- 
 #ifndef KIRAN_ACCOUNT_MANAGER_FACE_INPUT_DIALOG_H
 #define KIRAN_ACCOUNT_MANAGER_FACE_INPUT_DIALOG_H
 
@@ -24,14 +23,14 @@
 QT_BEGIN_NAMESPACE
 namespace Ui
 {
-class FaceInputDialog;
+class FaceEnrollDialog;
 }
 QT_END_NAMESPACE
 
 class KSDBiometricsProxy;
 class FaceEnrollWorker;
 
-class FaceInputDialog : public KiranTitlebarWindow
+class FaceEnrollDialog : public KiranTitlebarWindow
 {
     Q_OBJECT
     enum TipType
@@ -41,8 +40,8 @@ class FaceInputDialog : public KiranTitlebarWindow
     };
 
 public:
-    explicit FaceInputDialog(QWidget *parent = nullptr);
-    ~FaceInputDialog() override;
+    explicit FaceEnrollDialog(QWidget *parent = nullptr);
+    ~FaceEnrollDialog() override;
 
     QString getFaceDataID();
 
@@ -52,7 +51,7 @@ private:
     bool startEnroll();
     void stopEnroll();
     void generateNewPreviewImage();
-    void setTips(FaceInputDialog::TipType type, const QString &tip);
+    void setTips(FaceEnrollDialog::TipType type, const QString &tip);
 
 Q_SIGNALS:
     void sigClose();
@@ -66,7 +65,7 @@ protected:
     virtual void closeEvent(QCloseEvent *event) override;
 
 private:
-    Ui::FaceInputDialog *ui;
+    Ui::FaceEnrollDialog *ui;
     KSDBiometricsProxy *m_interface;
     FaceEnrollWorker *m_enrollThread;
     QImage m_tempImage;

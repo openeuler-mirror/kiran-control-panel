@@ -12,30 +12,28 @@
  * Author:     liuxinhao <liuxinhao@kylinos.com.cn>
  */
 
- 
-
 #ifndef KIRAN_ACCOUNT_MANAGER_FINGERPRINT_INPUT_DIALOG_H
 #define KIRAN_ACCOUNT_MANAGER_FINGERPRINT_INPUT_DIALOG_H
 
 #include <kiran-titlebar-window.h>
 #include <QThread>
 #include <QWidget>
-#include "fingerprint-input-worker.h"
+#include "fingerprint-enroll-worker.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui
 {
-class FingerprintInputDialog;
+class FingerprintEnrollDialog;
 }
 QT_END_NAMESPACE
 
 class KSDBiometricsProxy;
-class FingerprintInputDialog : public KiranTitlebarWindow
+class FingerprintEnrollDialog : public KiranTitlebarWindow
 {
     Q_OBJECT
 public:
-    explicit FingerprintInputDialog(QWidget *parent = nullptr);
-    ~FingerprintInputDialog() override;
+    explicit FingerprintEnrollDialog(QWidget *parent = nullptr);
+    ~FingerprintEnrollDialog() override;
 
     QString getFingerDataID();
 
@@ -61,11 +59,10 @@ private:
 
 protected:
     virtual void closeEvent(QCloseEvent *event) override;
-
     void resizeEvent(QResizeEvent *event) override;
 
 private:
-    Ui::FingerprintInputDialog *ui;
+    Ui::FingerprintEnrollDialog *ui;
     FingerprintInputWorker m_worker;
     KSDBiometricsProxy *m_interface;
     QString m_fingerDataID;

@@ -12,8 +12,7 @@
  * Author:     liuxinhao <liuxinhao@kylinos.com.cn>
  */
 
- 
-#include "fingerprint-input-worker.h"
+#include "fingerprint-enroll-worker.h"
 #include "ksd_biometrics_proxy.h"
 
 #include <qt5-log-i.h>

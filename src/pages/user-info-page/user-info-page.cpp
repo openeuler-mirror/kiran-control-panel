@@ -165,13 +165,20 @@ void UserInfoPage::initUI()
         ui->stackedWidget->setCurrentIndex(PAGE_USER_INFO);
     });
 
-#ifdef AUTH_MANAGER
-    connect(ui->btn_authManager, &QPushButton::clicked, [this]() {
-        emit sigAuthManager(m_curShowUserPath);
-    });
-#else
-    ui->btn_authManager->setVisible(false);
-#endif
+    QSettings biometricsSettings("/etc/kiran-biometrics/settings.conf", QSettings::IniFormat);
+    bool supportFinger = biometricsSettings.value("SupportFinger", QVariant(false)).toBool();
+    bool supportFace = biometricsSettings.value("SupportFace", QVariant(false)).toBool();
+
+    if (supportFace || supportFinger)
+    {
+        connect(ui->btn_authManager, &QPushButton::clicked, [this]() {
+            emit sigAuthManager(m_curShowUserPath);
+        });
+    }
+    else
+    {
+        ui->btn_authManager->setVisible(false);
+    }
 
 #ifdef PASSWD_EXPIRATION_POLICY
     connect(ui->btn_passwdExpirationPolicy, &QPushButton::clicked, [this]() {

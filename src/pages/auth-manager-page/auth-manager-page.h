@@ -19,6 +19,7 @@
 
 #include <kiran-system-daemon/accounts-i.h>
 #include <QWidget>
+#include "json-parser.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui
@@ -30,7 +31,6 @@ QT_END_NAMESPACE
 class KSDAccountsUserProxy;
 class BiometricItem;
 class KiranSwitchButton;
-typedef QList<QPair<QString, QString>> BiometricList;
 class AuthManagerPage : public QWidget
 {
     Q_OBJECT
@@ -54,8 +54,8 @@ private:
     void save();
 
     QString generateBiometricsItemName(AccountsAuthMode mode);
-    BiometricList getBiometricItemsFromUI(AccountsAuthMode mode);
-    BiometricList getBiometricItemsFromBackend(AccountsAuthMode mode);
+    BiometricInfos getBiometricInfoFromUI(AccountsAuthMode mode);
+    BiometricInfos getBiometricInfoFromBackend(AccountsAuthMode mode);
 
     BiometricItem *newBiometricItem(const QString &name, const QString &dataID);
 
@@ -63,7 +63,7 @@ private slots:
     void slotCheckAuthTypes(bool checked);
     void slotItemDeleteClicked();
     void slotAddBiometricsItem();
-    void slotUserPropertyChanged(QString propertyName,QVariant value);
+    void slotUserPropertyChanged(QString propertyName, QVariant value);
     void slotUserAuthItemChanged();
 
 private:

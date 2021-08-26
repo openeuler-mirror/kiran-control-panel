@@ -1,4 +1,4 @@
- /**
+/**
  * Copyright (c) 2020 ~ 2021 KylinSec Co., Ltd. 
  * kiran-cpanel-account is licensed under Mulan PSL v2.
  * You can use this software according to the terms and conditions of the Mulan PSL v2. 
@@ -12,23 +12,21 @@
  * Author:     liuxinhao <liuxinhao@kylinos.com.cn>
  */
 
- 
-
-#include "face-input-dialog.h"
-#include "ksd_biometrics_proxy.h"
+#include "face-enroll-dialog.h"
 #include "face-enroll-worker.h"
-#include "ui_face-input-dialog.h"
+#include "ksd_biometrics_proxy.h"
+#include "ui_face-enroll-dialog.h"
 
-#include <QPainter>
 #include <qt5-log-i.h>
+#include <QPainter>
 
 Q_DECLARE_METATYPE(QList<QRect>);
 
 #define REFRESH_DELAY_TIME_MS 100
 
-FaceInputDialog::FaceInputDialog(QWidget *parent)
+FaceEnrollDialog::FaceEnrollDialog(QWidget *parent)
     : KiranTitlebarWindow(parent),
-      ui(new Ui::FaceInputDialog),
+      ui(new Ui::FaceEnrollDialog),
       m_interface(new KSDBiometricsProxy("com.kylinsec.Kiran.SystemDaemon.Biometrics",
                                          "/com/kylinsec/Kiran/SystemDaemon/Biometrics",
                                          QDBusConnection::systemBus(), this)),
@@ -39,21 +37,21 @@ FaceInputDialog::FaceInputDialog(QWidget *parent)
     init();
 }
 
-FaceInputDialog::~FaceInputDialog()
+FaceEnrollDialog::~FaceEnrollDialog()
 {
     stopEnroll();
     delete ui;
 }
 
-void FaceInputDialog::init()
+void FaceEnrollDialog::init()
 {
     initUI();
     ///处理工作线程收到新图像
-    connect(m_enrollThread, &FaceEnrollWorker::sigHasNewImage, this, &FaceInputDialog::slotHasNewImage);
+    connect(m_enrollThread, &FaceEnrollWorker::sigHasNewImage, this, &FaceEnrollDialog::slotHasNewImage);
     ///处理工作线程收到新的人脸坐标
-    connect(m_enrollThread, &FaceEnrollWorker::sigFaceAxis, this, &FaceInputDialog::slotFaceAxis);
+    connect(m_enrollThread, &FaceEnrollWorker::sigFaceAxis, this, &FaceEnrollDialog::slotFaceAxis);
     ///连接到DBus服务获取采集状态
-    connect(m_interface, &KSDBiometricsProxy::EnrollFaceStatus, this, &FaceInputDialog::slotUpdateEnrollFaceStatus);
+    connect(m_interface, &KSDBiometricsProxy::EnrollFaceStatus, this, &FaceEnrollDialog::slotUpdateEnrollFaceStatus);
     connect(ui->btn_save, &QPushButton::clicked, [this]() {
         m_isSave = true;
         close();
@@ -74,7 +72,7 @@ void FaceInputDialog::init()
     startEnroll();
 }
 
-void FaceInputDialog::initUI()
+void FaceEnrollDialog::initUI()
 {
     ///设置窗口模态
     setWindowModality(Qt::ApplicationModal);
@@ -84,7 +82,7 @@ void FaceInputDialog::initUI()
     setButtonHints(KiranTitlebarWindow::TitlebarCloseButtonHint);
 }
 
-void FaceInputDialog::closeEvent(QCloseEvent *event)
+void FaceEnrollDialog::closeEvent(QCloseEvent *event)
 {
     if (!m_isSave && !m_biometricID.isEmpty())
     {
@@ -94,7 +92,7 @@ void FaceInputDialog::closeEvent(QCloseEvent *event)
         if (deleteBiometricReply.isError())
         {
             KLOG_WARNING() << "delete biometric" << m_biometricID
-                            << "     reply error:" << deleteBiometricReply.error();
+                           << "     reply error:" << deleteBiometricReply.error();
         }
         KLOG_INFO() << "delete enrolled face finished...";
         m_biometricID.clear();
@@ -103,7 +101,7 @@ void FaceInputDialog::closeEvent(QCloseEvent *event)
     QWidget::closeEvent(event);
 }
 
-bool FaceInputDialog::startEnroll()
+bool FaceEnrollDialog::startEnroll()
 {
     auto reply = m_interface->EnrollFaceStart();
     reply.waitForFinished();
@@ -152,7 +150,7 @@ bool FaceInputDialog::startEnroll()
     return true;
 }
 
-void FaceInputDialog::stopEnroll()
+void FaceEnrollDialog::stopEnroll()
 {
     if (m_enrollThread->isRunning())
     {
@@ -161,7 +159,7 @@ void FaceInputDialog::stopEnroll()
     }
 }
 
-void FaceInputDialog::slotHasNewImage(QImage image)
+void FaceEnrollDialog::slotHasNewImage(QImage image)
 {
     m_tempImage = image;
     if (!m_refeshDelayTimer.isActive())
@@ -170,7 +168,7 @@ void FaceInputDialog::slotHasNewImage(QImage image)
     }
 }
 
-void FaceInputDialog::slotFaceAxis(QList<QRect> rect)
+void FaceEnrollDialog::slotFaceAxis(QList<QRect> rect)
 {
     m_faces = rect;
     if (!m_refeshDelayTimer.isActive())
@@ -179,8 +177,8 @@ void FaceInputDialog::slotFaceAxis(QList<QRect> rect)
     }
 }
 
-void FaceInputDialog::slotUpdateEnrollFaceStatus(const QString &message, const QString &id,
-                                                 int progress, bool done)
+void FaceEnrollDialog::slotUpdateEnrollFaceStatus(const QString &message, const QString &id,
+                                                  int progress, bool done)
 {
     if (!m_enrollStarted)
     {
@@ -208,7 +206,7 @@ void FaceInputDialog::slotUpdateEnrollFaceStatus(const QString &message, const Q
     }
 }
 
-void FaceInputDialog::generateNewPreviewImage()
+void FaceEnrollDialog::generateNewPreviewImage()
 {
     QPixmap drawPixmap = QPixmap::fromImage(m_tempImage);
     QPainter painter(&drawPixmap);
@@ -224,7 +222,7 @@ void FaceInputDialog::generateNewPreviewImage()
     ui->enrollProgress->updateCenterImage(drawPixmap.scaled(previewSize));
 }
 
-void FaceInputDialog::setTips(FaceInputDialog::TipType type, const QString &tip)
+void FaceEnrollDialog::setTips(FaceEnrollDialog::TipType type, const QString &tip)
 {
     QString colorText = QString("<font color=%1>%2</font>")
                             .arg(type == TIP_TYPE_INFO ? "white" : "red")
@@ -232,7 +230,7 @@ void FaceInputDialog::setTips(FaceInputDialog::TipType type, const QString &tip)
     ui->label_msg->setText(colorText);
 }
 
-QString FaceInputDialog::getFaceDataID()
+QString FaceEnrollDialog::getFaceDataID()
 {
     return m_biometricID;
 }

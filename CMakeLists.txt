@@ -2,12 +2,8 @@ cmake_minimum_required(VERSION 3.5)
 
 project(kiran-cpanel-account)
 
-#账户信息页面，认证管理入口是否显示
-option(AUTH_MANAGER_VISIBLE "Is auth manager visible" OFF)
 #账户信息页面，密码过期策略是否显示
 option(PASSWD_EXPIRATION_POLICY_VISIBLE "Is password expiration policy visible" OFF)
-#认证管理页面是否显示人脸认证相关
-option(FACE_AUTH_VISIBLE "face auth visible" OFF)
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -50,7 +46,6 @@ file(GLOB_RECURSE FORMS "src/*.ui")
 file(GLOB_RECURSE TOOLS_SOURCES "tools/*.cpp")
 file(GLOB_RECURSE TOOLS_HEADERS "tools/*.h")
 file(GLOB_RECURSE RESOURCES "resources/*.qrc")
-
 
 #DBus代理代码生成
 set(DBUS_SRC_LIST "")
@@ -113,14 +108,6 @@ target_link_libraries(${PROJECT_NAME}
         ${KIRAN_CC_DAEMON_LIBRARIES}
         ${ZERO_MQ_LIBRARIES}
         ${KLOG_QT5_LIBRARIES})
-
-if( AUTH_MANAGER_VISIBLE )
-    add_definitions(-DAUTH_MANAGER)
-endif()
-
-if( FACE_AUTH_VISIBLE )
-    add_definitions(-DFACE_AUTH)
-endif()
 
 if( PASSWD_EXPIRATION_POLICY_VISIBLE )
     add_definitions(-DPASSWD_EXPIRATION_POLICY)
