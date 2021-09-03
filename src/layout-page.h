@@ -40,7 +40,8 @@ private:
     QMap<QString, QString> m_layoutMap;
     QList<ChooseItem *> m_itemList;
     QStringList m_layoutList;
-    ChooseItem *m_firstItem;
+    QString m_layout;
+    //    ChooseItem *m_firstItem;
     QVBoxLayout *m_vLayout;
     bool m_editFlag = false;
 };

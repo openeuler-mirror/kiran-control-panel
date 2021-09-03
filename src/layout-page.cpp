@@ -1,5 +1,7 @@
 #include "layout-page.h"
 #include <kiran-log/qt5-log-i.h>
+#include <kiran-message-box.h>
+#include <widget-property-helper.h>
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -9,6 +11,7 @@
 #include "dbus-wrapper/dbus-wrapper.h"
 #include "ui_layout-page.h"
 #include "widgets/choose-item.h"
+#include "widgets/layout-list.h"
 LayoutPage::LayoutPage(QWidget *parent) : QWidget(parent),
                                           ui(new Ui::LayoutPage)
 {
@@ -36,8 +39,14 @@ void LayoutPage::initUI()
     m_vLayout->setContentsMargins(0, 0, 0, 0);
     m_vLayout->setSpacing(10);
     ui->scroll_layout_selector->setLayout(m_vLayout);
+    ui->stackedWidget->setCurrentWidget(ui->page_layoutList);
+    Kiran::WidgetPropertyHelper::setButtonType(ui->btn_page_add, Kiran::BUTTON_Default);
 
     connect(ui->btn_edit, &QPushButton::clicked, this, &LayoutPage::setEditMode);
+    connect(ui->btn_add, &QToolButton::clicked,
+            [this] {
+                ui->stackedWidget->setCurrentWidget(ui->page_layoutAddition);
+            });
 }
 
 void LayoutPage::getValidLayout()
@@ -53,7 +62,17 @@ void LayoutPage::getValidLayout()
     else
     {
         QString json = reply.argumentAt(0).toString();
-        getJsonValueFromString(json);
+        if (0 < getJsonValueFromString(json))
+        {
+            QStringList validLayoutCountry;
+            QMap<QString, QString>::const_iterator i = m_layoutMap.begin();
+            while (i != m_layoutMap.end())
+            {
+                validLayoutCountry.append(i.value());
+                ++i;
+            }
+            ui->widget_layout_list->setCountryList(validLayoutCountry);
+        }
     }
 }
 
@@ -110,7 +129,7 @@ void LayoutPage::createLayoutItem()
     //addLayout("vn");
     //addLayout("tr alt");
     m_layoutList = m_keyboardInterface->layouts();
-
+    m_layout = m_layoutList.first();
     for (int i = 0; i < m_layoutList.size(); i++)
     {
         QString layoutName = m_layoutList.at(i);
@@ -123,14 +142,13 @@ void LayoutPage::createLayoutItem()
 
         if (i == 0)
         {
-            m_firstItem = chooseItem;
-            m_firstItem->setSelected(true);
+            chooseItem->setSelected(true);
         }
 
         connect(chooseItem, &ChooseItem::clicked,
                 [=] {
                     QString selectedLayoutName = chooseItem->getLayoutName();
-                    if (m_firstItem->getLayoutName() != selectedLayoutName)
+                    if (m_layout != selectedLayoutName)
                     {
                         QDBusPendingReply<> reply = m_keyboardInterface->ApplyLayout(selectedLayoutName);
                         reply.waitForFinished();
@@ -142,9 +160,13 @@ void LayoutPage::createLayoutItem()
                         }
                         else
                         {
+                            m_layoutList.clear();
+                            ///TODO:是否需要自己更新layoutList而不是通过dbus获取
                             m_layoutList = m_keyboardInterface->layouts();
+                            m_layout = m_layoutList.first();
+                            //emit layoutSelectChanged(selectedLayoutName);
+                            updateLayout(m_layoutList);
                         }
-                        updateLayout(m_layoutList);
                     }
                 });
         connect(this, &LayoutPage::layoutSelectChanged, chooseItem, &ChooseItem::seletedLayoutChanged);
@@ -153,6 +175,7 @@ void LayoutPage::createLayoutItem()
     }
 }
 
+/* 属性变化后更新布局*/
 void LayoutPage::updateLayout(QStringList layoutList)
 {
     if (!layoutList.isEmpty())
@@ -160,7 +183,7 @@ void LayoutPage::updateLayout(QStringList layoutList)
         QString countryName;
         if (layoutList.size() > m_itemList.size())  // add
         {
-            for (i = 0; i < (m_layoutList.size() - m_itemList.size()); i++)
+            for (int i = 0; i < (m_layoutList.size() - m_itemList.size()); i++)
             {
                 ChooseItem *item = new ChooseItem(this);
                 m_vLayout->addWidget(item);
@@ -169,7 +192,7 @@ void LayoutPage::updateLayout(QStringList layoutList)
         }
         else if (layoutList.size() < m_itemList.size())  //delete
         {
-            for (i = 0; i < (m_itemList.size() - layoutList.size()); i++)
+            for (int i = 0; i < (m_itemList.size() - layoutList.size()); i++)
             {
                 m_itemList.removeLast();
             }
@@ -180,11 +203,19 @@ void LayoutPage::updateLayout(QStringList layoutList)
             countryName = m_layoutMap.value(layoutList.at(i));
             m_itemList.at(i)->setNames(countryName, layoutList.at(i));
         }
+        m_itemList.first()->setSelected(true);
     }
     else
-        m_itemList.rem
-
-    //move
+    {
+        foreach (ChooseItem *item, m_itemList)
+        {
+            m_itemList.removeOne(item);
+            delete item;
+            item = nullptr;
+        }
+        m_itemList.clear();
+        ui->widget_layout_list->hide();
+    }
 }
 
 void LayoutPage::addLayout(QString layoutName)
@@ -195,13 +226,15 @@ void LayoutPage::addLayout(QString layoutName)
     {
         KLOG_DEBUG() << "Call AddLayout method failed "
                      << " Error: " << reply.error().message();
+        KiranMessageBox::message(nullptr, tr("Add Layout"),
+                                 QString(tr("Add Layout failed: %1").arg(reply.error().message())),
+                                 KiranMessageBox::Ok);
         return;
     }
     else
     {
-        ChooseItem *item = new ChooseItem(m_layoutMap.value(layoutName),
-                                          layoutName,
-                                          this);
+        ChooseItem *item = new ChooseItem(this);
+        item->setNames(m_layoutMap.value(layoutName), layoutName);
         m_vLayout->addWidget(item);
         m_itemList.append(item);
         m_layoutList.append(layoutName);
@@ -210,15 +243,28 @@ void LayoutPage::addLayout(QString layoutName)
 
 void LayoutPage::deleteLayout(QString deletedLayout)
 {
-    ChooseItem *item = dynamic_cast<ChooseItem *>(sender());
-    //界面上删除选择项
-    m_itemList.removeOne(item);
-    delete item;
-    item = nullptr;
-
-    if (m_itemList.isEmpty())
-        ui->scrollArea_layout->hide();
-    //后端删除该布局
+    QDBusPendingReply<> reply = m_keyboardInterface->DelLayout(deletedLayout);
+    reply.waitForFinished();
+    if (reply.isError() || !reply.isValid())
+    {
+        KLOG_DEBUG() << "Call DelLayout method failed "
+                     << " Error: " << reply.error().message();
+        KiranMessageBox::message(nullptr, tr("Delete Layout"),
+                                 QString(tr("Delete Layout failed: %1").arg(reply.error().message())),
+                                 KiranMessageBox::Ok);
+        return;
+    }
+    else
+    {
+        ChooseItem *item = dynamic_cast<ChooseItem *>(sender());
+        ///TODO:是否需要自己更新layoutList而不是通过dbus获取
+        m_layoutList = m_keyboardInterface->layouts();
+        //界面上删除选择项
+        m_itemList.removeOne(item);
+        delete item;
+        item = nullptr;
+        updateLayout(m_layoutList);
+    }
 }
 
 void LayoutPage::setEditMode()

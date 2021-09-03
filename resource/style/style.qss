@@ -30,7 +30,11 @@
 
 #label_selected
 {
-    background-image: url(":/images/selected.svg")
+    background-image: url(":/images/selected.svg");
+}
+#label_search
+{
+    background-image: url(":/images/search.svg");
 }
 
 #ChooseItem
@@ -42,7 +46,56 @@
 {
     background-color:#393939;
 }
-/*
-#scroll_layout_selector{
-    background-color:#2D2D2D;
-}*/
+
+#lineEdit_search
+{
+    border:none;
+}
+
+#listWidget_list::item
+{
+    outline:none;
+    border:none;
+}
+#listWidget_list::item:hover
+{
+    background-color:transparent;
+}
+#listWidget_list::item:selected
+{
+    background-color:transparent;
+}
+
+LayoutItem
+{
+    background-color:transparent;
+    border-top:1px solid #393939;
+}
+LayoutItem[isPressed="true"]
+{
+    background-color:#2eb3ff;
+}
+LayoutItem[isPressed="false"]
+{
+    background-color:transparent;
+}
+
+LayoutItem[isPressed="true"] QLabel#icon
+{
+    background-image: url(":/images/selected-w.svg");
+    background-repeat: no-repeat;
+    background-position : center center;
+}
+LayoutItem[isPressed="false"] QLabel#icon
+{
+    background-image:none;
+}
+
+
+LayoutList
+{
+    border: 1px solid #393939;
+    border-radius:6px;
+}
+
+
