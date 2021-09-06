@@ -15,7 +15,7 @@
 #ifndef KIRAN_CPANEL_ACCOUNT_SRC_KCP_INTERFACE_H_
 #define KIRAN_CPANEL_ACCOUNT_SRC_KCP_INTERFACE_H_
 
-#include <kiran-control-panel/kcp-plugin-interface.h>
+#include <kcp-plugin-interface.h>
 
 class QTranslator;
 class KcpInterface : public QObject,public KcpPluginInterface
@@ -25,7 +25,7 @@ class KcpInterface : public QObject,public KcpPluginInterface
     Q_INTERFACES(KcpPluginInterface)
 
 public:
-    ~KcpInterface()= default;;
+    ~KcpInterface()= default;
     int init() override;
     void uninit() override;
 
