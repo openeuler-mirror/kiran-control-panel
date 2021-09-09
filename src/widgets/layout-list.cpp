@@ -1,6 +1,7 @@
 #include "layout-list.h"
 #include <kiran-log/qt5-log-i.h>
 #include <QPainter>
+#include <QScrollBar>
 #include "layout-item.h"
 #include "ui_layout-list.h"
 #define TIMEOUT 150
@@ -11,6 +12,8 @@ LayoutList::LayoutList(QWidget* parent) : QWidget(parent),
     ui->setupUi(this);
     m_timer = new QTimer(this);
     ui->stackedWidget->setCurrentWidget(ui->page_list);
+    QScrollBar* vb = ui->listWidget_list->verticalScrollBar();
+    KLOG_INFO() << "pageStep" << vb->pageStep();
 
     connect(m_timer, &QTimer::timeout,
             [this] {
@@ -67,6 +70,14 @@ QString LayoutList::getSelectedCountry()
     return m_countryName;
 }
 
+QSize LayoutList::sizeHint() const
+{
+    QSize hint;
+    hint.setWidth(QWidget::sizeHint().width());
+    hint.setHeight(this->maximumHeight());
+    return hint;
+}
+
 void LayoutList::itemClicked()
 {
     LayoutItem* item = dynamic_cast<LayoutItem*>(sender());
@@ -85,7 +96,7 @@ void LayoutList::search()
 
     foreach (QString list, m_lists)
     {
-        if (!QString::compare(list, text, Qt::CaseInsensitive))
+        if (list.contains(text))
         {
             LayoutItem* item = addItems(ui->listWidget_filter, list);
             m_filterList.append(list);
@@ -96,7 +107,7 @@ void LayoutList::search()
     if (m_filterList.isEmpty())
     {
         QString tips = QObject::tr("No search results, please search again...");
-        LayoutItem* item = addItems(ui->listWidget_filter, tips);
+        addItems(ui->listWidget_filter, tips);
         m_filterList.append(tips);
     }
     adjustSize();
@@ -136,15 +147,16 @@ void LayoutList::adjustSize()
     if (ui->stackedWidget->currentWidget() == ui->page_list)
     {
         height = m_lists.size() * 40;
-        KLOG_INFO() << this->height() << "," << ui->lineEdit_search->height();
+        KLOG_INFO() << this->sizeHint().height() << "," << ui->lineEdit_search->height();
         KLOG_INFO() << height;
-        ui->listWidget_list->setFixedHeight(height);
+        ui->stackedWidget->setFixedHeight(height);
         emit heightChanged(height + ui->lineEdit_search->height());
     }
     else
     {
         height = m_filterList.size() * 40;
-        ui->listWidget_list->setFixedHeight(height);
+        KLOG_INFO() << "filterList height:" << height;
+        ui->stackedWidget->setFixedHeight(height);
         emit heightChanged(height + ui->lineEdit_search->height());
     }
 }

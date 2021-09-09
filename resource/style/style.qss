@@ -52,16 +52,16 @@
     border:none;
 }
 
-#listWidget_list::item
+#listWidget_list::item,#listWidget_filter::item
 {
     outline:none;
     border:none;
 }
-#listWidget_list::item:hover
+#listWidget_list::item:hover,#listWidget_filter::item:hover
 {
     background-color:transparent;
 }
-#listWidget_list::item:selected
+#listWidget_list::item:selected,#listWidget_filter::item:selected
 {
     background-color:transparent;
 }

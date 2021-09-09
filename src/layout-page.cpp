@@ -38,14 +38,48 @@ void LayoutPage::initUI()
     m_vLayout->setMargin(0);
     m_vLayout->setContentsMargins(0, 0, 0, 0);
     m_vLayout->setSpacing(10);
-    ui->scroll_layout_selector->setLayout(m_vLayout);
+    ui->layout_selector->setLayout(m_vLayout);
     ui->stackedWidget->setCurrentWidget(ui->page_layoutList);
     Kiran::WidgetPropertyHelper::setButtonType(ui->btn_page_add, Kiran::BUTTON_Default);
+    ui->btn_page_add->setDisabled(true);
 
     connect(ui->btn_edit, &QPushButton::clicked, this, &LayoutPage::setEditMode);
     connect(ui->btn_add, &QToolButton::clicked,
             [this] {
                 ui->stackedWidget->setCurrentWidget(ui->page_layoutAddition);
+            });
+    connect(ui->btn_page_add, &QPushButton::clicked,
+            [this] {
+                QString additionLayout;
+                QString countryName = ui->widget_layout_list->getSelectedCountry();
+                QMap<QString, QString>::const_iterator i = m_layoutMap.begin();
+                while (i != m_layoutMap.end())
+                {
+                    if (i.value() == countryName)
+                    {
+                        additionLayout = i.key();
+                        break;
+                    }
+                    ++i;
+                }
+                if (!m_layoutList.contains(additionLayout))
+                {
+                    if (addLayout(additionLayout))
+                        ui->stackedWidget->setCurrentWidget(ui->page_layoutList);
+                }
+                else
+                    KiranMessageBox::message(nullptr,
+                                             tr("Failed"),
+                                             tr("You have added this keyboard layout!"),
+                                             KiranMessageBox::Ok);
+            });
+    connect(ui->widget_layout_list, &LayoutList::itemChanged,
+            [this](QString countryName) {
+                ui->btn_page_add->setDisabled(false);
+            });
+    connect(ui->btn_return, &QPushButton::clicked,
+            [this] {
+                ui->stackedWidget->setCurrentWidget(ui->page_layoutList);
             });
 }
 
@@ -145,31 +179,8 @@ void LayoutPage::createLayoutItem()
             chooseItem->setSelected(true);
         }
 
-        connect(chooseItem, &ChooseItem::clicked,
-                [=] {
-                    QString selectedLayoutName = chooseItem->getLayoutName();
-                    if (m_layout != selectedLayoutName)
-                    {
-                        QDBusPendingReply<> reply = m_keyboardInterface->ApplyLayout(selectedLayoutName);
-                        reply.waitForFinished();
-                        if (reply.isError() || !reply.isValid())
-                        {
-                            KLOG_DEBUG() << "Call ApplyLayout method failed "
-                                         << " Error: " << reply.error().message();
-                            return;
-                        }
-                        else
-                        {
-                            m_layoutList.clear();
-                            ///TODO:是否需要自己更新layoutList而不是通过dbus获取
-                            m_layoutList = m_keyboardInterface->layouts();
-                            m_layout = m_layoutList.first();
-                            //emit layoutSelectChanged(selectedLayoutName);
-                            updateLayout(m_layoutList);
-                        }
-                    }
-                });
-        connect(this, &LayoutPage::layoutSelectChanged, chooseItem, &ChooseItem::seletedLayoutChanged);
+        connect(chooseItem, &ChooseItem::clicked, this, &LayoutPage::chooseItemClicked);
+        //connect(this, &LayoutPage::layoutSelectChanged, chooseItem, &ChooseItem::seletedLayoutChanged);
 
         connect(chooseItem, &ChooseItem::sigDelete, this, &LayoutPage::deleteLayout);
     }
@@ -218,52 +229,117 @@ void LayoutPage::updateLayout(QStringList layoutList)
     }
 }
 
-void LayoutPage::addLayout(QString layoutName)
+bool LayoutPage::addLayout(QString layoutName)
 {
-    QDBusPendingReply<> reply = m_keyboardInterface->AddLayout(layoutName);
-    reply.waitForFinished();
-    if (reply.isError() || !reply.isValid())
+    if (m_layoutMap.contains(layoutName))
     {
-        KLOG_DEBUG() << "Call AddLayout method failed "
-                     << " Error: " << reply.error().message();
-        KiranMessageBox::message(nullptr, tr("Add Layout"),
-                                 QString(tr("Add Layout failed: %1").arg(reply.error().message())),
-                                 KiranMessageBox::Ok);
-        return;
+        QDBusPendingReply<> reply = m_keyboardInterface->AddLayout(layoutName);
+        reply.waitForFinished();
+        if (reply.isError() || !reply.isValid())
+        {
+            KLOG_DEBUG() << "Call AddLayout method failed "
+                         << " Error: " << reply.error().message();
+            KiranMessageBox::message(nullptr, tr("Add Layout"),
+                                     reply.error().message(),
+                                     KiranMessageBox::Ok);
+            return false;
+        }
+        else
+        {
+            ChooseItem *item = new ChooseItem(this);
+            item->setNames(m_layoutMap.value(layoutName), layoutName);
+            connect(item, &ChooseItem::clicked, this, &LayoutPage::chooseItemClicked);
+            //connect(this, &LayoutPage::layoutSelectChanged, chooseItem, &ChooseItem::seletedLayoutChanged);
+
+            connect(item, &ChooseItem::sigDelete, this, &LayoutPage::deleteLayout);
+
+            m_vLayout->addWidget(item);
+            m_itemList.append(item);
+            m_layoutList.append(layoutName);
+            if (m_editFlag)
+                item->setEditMode(true);
+        }
     }
     else
     {
-        ChooseItem *item = new ChooseItem(this);
-        item->setNames(m_layoutMap.value(layoutName), layoutName);
-        m_vLayout->addWidget(item);
-        m_itemList.append(item);
-        m_layoutList.append(layoutName);
+        KiranMessageBox::message(nullptr,
+                                 tr("Failed"),
+                                 QString(tr("The %1 keyboard layout does not exist!")).arg(layoutName),
+                                 KiranMessageBox::Ok);
+        return false;
+    }
+    return true;
+}
+
+void LayoutPage::chooseItemClicked()
+{
+    ChooseItem *item = dynamic_cast<ChooseItem *>(sender());
+
+    QString selectedLayoutName = item->getLayoutName();
+    if (m_layout != selectedLayoutName)
+    {
+        QDBusPendingReply<> reply = m_keyboardInterface->ApplyLayout(selectedLayoutName);
+        reply.waitForFinished();
+        if (reply.isError() || !reply.isValid())
+        {
+            KLOG_DEBUG() << "Call ApplyLayout method failed "
+                         << " Error: " << reply.error().message();
+            return;
+        }
+        else
+        {
+            m_layoutList.clear();
+            m_layout = selectedLayoutName;
+            ///TODO:是否需要自己更新layoutList而不是通过dbus获取
+            m_layoutList = m_keyboardInterface->layouts();
+            //emit layoutSelectChanged(selectedLayoutName);
+            updateLayout(m_layoutList);
+        }
     }
 }
 
 void LayoutPage::deleteLayout(QString deletedLayout)
 {
-    QDBusPendingReply<> reply = m_keyboardInterface->DelLayout(deletedLayout);
-    reply.waitForFinished();
-    if (reply.isError() || !reply.isValid())
+    if (m_layout == deletedLayout)
     {
-        KLOG_DEBUG() << "Call DelLayout method failed "
-                     << " Error: " << reply.error().message();
-        KiranMessageBox::message(nullptr, tr("Delete Layout"),
-                                 QString(tr("Delete Layout failed: %1").arg(reply.error().message())),
+        KiranMessageBox::message(nullptr,
+                                 tr("Failed"),
+                                 tr("The keyboard layout is currently in use and cannot be deleted!"),
                                  KiranMessageBox::Ok);
         return;
     }
+    if (m_layoutList.contains(deletedLayout))
+    {
+        QDBusPendingReply<> reply = m_keyboardInterface->DelLayout(deletedLayout);
+        reply.waitForFinished();
+        if (reply.isError() || !reply.isValid())
+        {
+            KLOG_DEBUG() << "Call DelLayout method failed "
+                         << " Error: " << reply.error().message();
+            KiranMessageBox::message(nullptr, tr("Delete Layout"),
+                                     reply.error().message(),
+                                     KiranMessageBox::Ok);
+            return;
+        }
+        else
+        {
+            m_layoutList.clear();
+            ChooseItem *item = dynamic_cast<ChooseItem *>(sender());
+            ///TODO:是否需要自己更新layoutList而不是通过dbus获取
+            m_layoutList = m_keyboardInterface->layouts();
+            //界面上删除选择项
+            m_itemList.removeOne(item);
+            delete item;
+            item = nullptr;
+            //updateLayout(m_layoutList);
+        }
+    }
     else
     {
-        ChooseItem *item = dynamic_cast<ChooseItem *>(sender());
-        ///TODO:是否需要自己更新layoutList而不是通过dbus获取
-        m_layoutList = m_keyboardInterface->layouts();
-        //界面上删除选择项
-        m_itemList.removeOne(item);
-        delete item;
-        item = nullptr;
-        updateLayout(m_layoutList);
+        KiranMessageBox::message(nullptr,
+                                 tr("Failed"),
+                                 QString(tr("You do not appear to have added %1 keyboard layout!")).arg(deletedLayout),
+                                 KiranMessageBox::Ok);
     }
 }
 

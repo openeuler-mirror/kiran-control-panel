@@ -19,6 +19,7 @@ public:
     ~LayoutList();
     void setCountryList(QStringList layoutList);
     QString getSelectedCountry();
+    virtual QSize sizeHint() const override;
 
 public slots:
     void itemClicked();
@@ -41,7 +42,7 @@ private:
     QTimer *m_timer = nullptr;
     QStringList m_filterList;
     QStringList m_lists;
-    QString m_countryName;
+    QString m_countryName = nullptr;
 };
 
 #endif  // LAYOUTLIST_H

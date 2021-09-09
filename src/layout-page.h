@@ -25,7 +25,6 @@ private:
     int getJsonValueFromString(QString jsonString);
     void createLayoutItem();
     void updateLayout(QStringList layoutList);
-    void addLayout(QString layoutName);
 
 signals:
     void layoutSelectChanged(QString layoutName);
@@ -33,6 +32,8 @@ signals:
 public slots:
     void deleteLayout(QString deletedLayout);
     void setEditMode();
+    bool addLayout(QString layoutName);
+    void chooseItemClicked();
 
 private:
     Ui::LayoutPage *ui;
@@ -41,6 +42,7 @@ private:
     QList<ChooseItem *> m_itemList;
     QStringList m_layoutList;
     QString m_layout;
+
     //    ChooseItem *m_firstItem;
     QVBoxLayout *m_vLayout;
     bool m_editFlag = false;

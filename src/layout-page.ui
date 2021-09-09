@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>520</width>
+    <width>592</width>
     <height>477</height>
    </rect>
   </property>
@@ -32,7 +32,7 @@
    <item>
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="page_layoutList">
       <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -64,7 +64,7 @@
            <item>
             <widget class="QLabel" name="label">
              <property name="text">
-              <string>Kayboard Layout</string>
+              <string>Select Kayboard Layout</string>
              </property>
             </widget>
            </item>
@@ -108,39 +108,10 @@
            </item>
           </layout>
          </item>
-         <item>
-          <widget class="QScrollArea" name="scrollArea_layout">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="horizontalScrollBarPolicy">
-            <enum>Qt::ScrollBarAlwaysOff</enum>
-           </property>
-           <property name="widgetResizable">
-            <bool>true</bool>
-           </property>
-           <widget class="QWidget" name="scroll_layout_selector">
-            <property name="geometry">
-             <rect>
-              <x>0</x>
-              <y>0</y>
-              <width>468</width>
-              <height>68</height>
-             </rect>
-            </property>
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-           </widget>
-          </widget>
-         </item>
         </layout>
+       </item>
+       <item>
+        <widget class="QWidget" name="layout_selector" native="true"/>
        </item>
        <item>
         <widget class="QToolButton" name="btn_add">
@@ -200,9 +171,9 @@
         <number>40</number>
        </property>
        <item>
-        <widget class="QWidget" name="widget" native="true">
+        <widget class="QWidget" name="widget_search" native="true">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
@@ -239,7 +210,7 @@
           <item>
            <widget class="LayoutList" name="widget_layout_list" native="true">
             <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
@@ -248,6 +219,19 @@
              <string notr="true"/>
             </property>
            </widget>
+          </item>
+          <item>
+           <spacer name="verticalSpacer_2">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>290</height>
+             </size>
+            </property>
+           </spacer>
           </item>
          </layout>
         </widget>
