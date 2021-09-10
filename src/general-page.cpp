@@ -2,7 +2,7 @@
 #include <kiran-log/qt5-log-i.h>
 #include <QSharedPointer>
 #include <iostream>
-#include "dbus-wrapper/KSKKeyboardProxy.h"
+#include "dbus-wrapper/KeyboardBackEndProxy.h"
 #include "dbus-wrapper/dbus-wrapper.h"
 #include "ui_general-page.h"
 
@@ -30,11 +30,13 @@ GeneralPage::GeneralPage(QWidget *parent) : QWidget(parent),
                 if (m_delay != delay)
                 {
                     m_delay = delay;
+                    KLOG_INFO() << "setRepeat_delay";
                     m_keyboardInterface->setRepeat_delay(m_delay);
                 }
                 if (m_interval != interval)
                 {
                     m_interval = interval;
+                    KLOG_INFO() << "setRepeat_interval";
                     m_keyboardInterface->setRepeat_interval(m_interval);
                 }
                 m_timer->stop();
@@ -71,8 +73,18 @@ void GeneralPage::initComponentValue()
     connect(ui->checkBox, &KiranSwitchButton::toggled,
             [this](bool status) {
                 setWidgetsStatus(status);
-                m_repeateEnabled = status;
-                m_keyboardInterface->setRepeat_enabled(status);
+                if (m_repeateEnabled != status)
+                {
+                    m_repeateEnabled = status;
+                    m_keyboardInterface->setRepeat_enabled(status);
+                }
+            });
+    connect(m_keyboardInterface.data(), &KeyboardBackEndProxy::repeat_enabledChanged,
+            [this](bool isEnabled) {
+                //更新界面
+                m_repeateEnabled = isEnabled;
+                ui->checkBox->setChecked(isEnabled);
+                KLOG_INFO() << "get repeat_enabledChanged signal:  " << isEnabled;
             });
 
     //延时
@@ -83,6 +95,16 @@ void GeneralPage::initComponentValue()
             [this] {
                 m_timer->start(TIMEOUT);
             });
+    connect(m_keyboardInterface.data(), &KeyboardBackEndProxy::repeat_delayChanged,
+            [this](int value) {
+                //更新界面
+                if (m_delay != value)
+                {
+                    m_delay = value;
+                    ui->hslider_delay->setValue(value);
+                }
+                KLOG_INFO() << "get repeat_delayChanged signal: " << value;
+            });
 
     //速度
     m_interval = m_keyboardInterface->repeat_interval();
@@ -91,6 +113,16 @@ void GeneralPage::initComponentValue()
     connect(ui->hslider_interval, &QSlider::valueChanged,
             [this] {
                 m_timer->start(TIMEOUT);
+            });
+    connect(m_keyboardInterface.data(), &KeyboardBackEndProxy::repeat_intervalChanged,
+            [this](int value) {
+                //更新界面
+                if (m_interval != value)
+                {
+                    m_interval = value;
+                    ui->hslider_interval->setValue(value);
+                }
+                KLOG_INFO() << "get repeat_intervalChanged signal: " << value;
             });
 }
 

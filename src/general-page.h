@@ -9,7 +9,7 @@ namespace Ui
 class GeneralPage;
 }
 
-class KSKKeyboardProxy;
+class KeyboardBackEndProxy;
 class GeneralPage : public QWidget
 {
     Q_OBJECT
@@ -23,7 +23,7 @@ private:
     void initUI();
     void initComponentValue();
     void setWidgetsStatus(bool status);
-    QSharedPointer<KSKKeyboardProxy> m_keyboardInterface;
+    QSharedPointer<KeyboardBackEndProxy> m_keyboardInterface;
 
 private:
     Ui::GeneralPage *ui;

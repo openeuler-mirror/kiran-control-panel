@@ -10,7 +10,7 @@ class LayoutPage;
 }
 
 class ChooseItem;
-class KSKKeyboardProxy;
+class KeyboardBackEndProxy;
 class LayoutPage : public QWidget
 {
     Q_OBJECT
@@ -24,7 +24,7 @@ private:
     void getValidLayout();
     int getJsonValueFromString(QString jsonString);
     void createLayoutItem();
-    void updateLayout(QStringList layoutList);
+    void updateLayout();
 
 signals:
     void layoutSelectChanged(QString layoutName);
@@ -37,7 +37,7 @@ public slots:
 
 private:
     Ui::LayoutPage *ui;
-    QSharedPointer<KSKKeyboardProxy> m_keyboardInterface;
+    QSharedPointer<KeyboardBackEndProxy> m_keyboardInterface;
     QMap<QString, QString> m_layoutMap;
     QList<ChooseItem *> m_itemList;
     QStringList m_layoutList;

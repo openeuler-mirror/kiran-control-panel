@@ -33,21 +33,21 @@ SOURCES += \
         kcp-window.cpp \
     general-page.cpp \
     layout-page.cpp \
-    dbus-wrapper/KSKKeyboardProxy.cpp \
     dbus-wrapper/dbus-wrapper.cpp \
     widgets/choose-item.cpp \
     widgets/layout-item.cpp \
-    widgets/layout-list.cpp
+    widgets/layout-list.cpp \
+    dbus-wrapper/KeyboardBackEndProxy.cpp
 
 HEADERS += \
         kcp-window.h \
     general-page.h \
     layout-page.h \
-    dbus-wrapper/KSKKeyboardProxy.h \
     dbus-wrapper/dbus-wrapper.h \
     widgets/choose-item.h \
     widgets/layout-item.h \
-    widgets/layout-list.h
+    widgets/layout-list.h \
+    dbus-wrapper/KeyboardBackEndProxy.h
 
 FORMS += \
         kcp-window.ui \

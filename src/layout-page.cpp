@@ -7,7 +7,7 @@
 #include <QJsonObject>
 #include <QJsonParseError>
 #include <QScrollBar>
-#include "dbus-wrapper/KSKKeyboardProxy.h"
+#include "dbus-wrapper/KeyboardBackEndProxy.h"
 #include "dbus-wrapper/dbus-wrapper.h"
 #include "ui_layout-page.h"
 #include "widgets/choose-item.h"
@@ -21,6 +21,13 @@ LayoutPage::LayoutPage(QWidget *parent) : QWidget(parent),
     m_keyboardInterface = dbusWrapper->getKeyboardInterface();
     dbusWrapper->deleteLater();
     dbusWrapper = nullptr;
+    connect(m_keyboardInterface.data(), &KeyboardBackEndProxy::layoutsChanged,
+            [this](QStringList layoutList) {
+                KLOG_INFO() << "get layoutsChanged signal: " << layoutList;
+                m_layoutList = layoutList;
+                //更新界面
+                updateLayout();
+            });
 
     initUI();
     getValidLayout();
@@ -167,6 +174,10 @@ void LayoutPage::createLayoutItem()
     for (int i = 0; i < m_layoutList.size(); i++)
     {
         QString layoutName = m_layoutList.at(i);
+        if (!m_layoutMap.contains(layoutName))
+        {
+            continue;
+        }
         QString countryName = m_layoutMap.value(layoutName);
         KLOG_INFO() << countryName;
         ChooseItem *chooseItem = new ChooseItem(this);
@@ -180,39 +191,46 @@ void LayoutPage::createLayoutItem()
         }
 
         connect(chooseItem, &ChooseItem::clicked, this, &LayoutPage::chooseItemClicked);
-        //connect(this, &LayoutPage::layoutSelectChanged, chooseItem, &ChooseItem::seletedLayoutChanged);
-
         connect(chooseItem, &ChooseItem::sigDelete, this, &LayoutPage::deleteLayout);
     }
 }
 
 /* 属性变化后更新布局*/
-void LayoutPage::updateLayout(QStringList layoutList)
+void LayoutPage::updateLayout()
 {
-    if (!layoutList.isEmpty())
+    if (!m_layoutList.isEmpty())
     {
         QString countryName;
-        if (layoutList.size() > m_itemList.size())  // add
+        if (m_layoutList.size() > m_itemList.size())  // add
         {
+            KLOG_INFO() << "add";
             for (int i = 0; i < (m_layoutList.size() - m_itemList.size()); i++)
             {
+                //添加缺少的选择项
                 ChooseItem *item = new ChooseItem(this);
+                connect(item, &ChooseItem::clicked, this, &LayoutPage::chooseItemClicked);
+                connect(item, &ChooseItem::sigDelete, this, &LayoutPage::deleteLayout);
+
                 m_vLayout->addWidget(item);
                 m_itemList.append(item);
             }
         }
-        else if (layoutList.size() < m_itemList.size())  //delete
+        else if (m_layoutList.size() < m_itemList.size())  //delete
         {
-            for (int i = 0; i < (m_itemList.size() - layoutList.size()); i++)
+            KLOG_INFO() << "delete";
+            for (int i = 0; i < (m_itemList.size() - m_layoutList.size()); i++)
             {
-                m_itemList.removeLast();
+                //删除多余的选择项
+                ChooseItem *item = m_itemList.takeLast();
+                delete item;
+                item = nullptr;
             }
         }
 
-        for (int i = 0; i < layoutList.size(); i++)
+        for (int i = 0; i < m_layoutList.size(); i++)
         {
-            countryName = m_layoutMap.value(layoutList.at(i));
-            m_itemList.at(i)->setNames(countryName, layoutList.at(i));
+            countryName = m_layoutMap.value(m_layoutList.at(i));
+            m_itemList.at(i)->setNames(countryName, m_layoutList.at(i));
         }
         m_itemList.first()->setSelected(true);
     }
@@ -293,7 +311,7 @@ void LayoutPage::chooseItemClicked()
             ///TODO:是否需要自己更新layoutList而不是通过dbus获取
             m_layoutList = m_keyboardInterface->layouts();
             //emit layoutSelectChanged(selectedLayoutName);
-            updateLayout(m_layoutList);
+            updateLayout();
         }
     }
 }
@@ -331,7 +349,6 @@ void LayoutPage::deleteLayout(QString deletedLayout)
             m_itemList.removeOne(item);
             delete item;
             item = nullptr;
-            //updateLayout(m_layoutList);
         }
     }
     else
