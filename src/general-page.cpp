@@ -2,8 +2,8 @@
 #include <kiran-log/qt5-log-i.h>
 #include <QSharedPointer>
 #include <iostream>
-#include "dbus-wrapper/KeyboardBackEndProxy.h"
 #include "dbus-wrapper/dbus-wrapper.h"
+#include "keyboard-backEnd-proxy.h"
 #include "ui_general-page.h"
 
 #define TIMEOUT 100

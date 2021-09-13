@@ -30,32 +30,32 @@ INCLUDEPATH += /usr/include/kiranwidgets-qt5/ \
 
 SOURCES += \
         main.cpp \
-        kcp-window.cpp \
     general-page.cpp \
     layout-page.cpp \
     dbus-wrapper/dbus-wrapper.cpp \
     widgets/choose-item.cpp \
     widgets/layout-item.cpp \
     widgets/layout-list.cpp \
-    dbus-wrapper/KeyboardBackEndProxy.cpp
+    main-window.cpp \
+    kcp-interface.cpp
 
 HEADERS += \
-        kcp-window.h \
     general-page.h \
     layout-page.h \
     dbus-wrapper/dbus-wrapper.h \
     widgets/choose-item.h \
     widgets/layout-item.h \
     widgets/layout-list.h \
-    dbus-wrapper/KeyboardBackEndProxy.h
+    main-window.h \
+    kcp-interface.h
 
 FORMS += \
-        kcp-window.ui \
     general-page.ui \
     layout-page.ui \
     widgets/choose-item.ui \
     widgets/layout-item.ui \
-    widgets/layout-list.ui
+    widgets/layout-list.ui \
+    main-window.ui
 
 TRANSLATIONS    +=  ../translation/kiran-cpanel-keyboard.zh_CN.ts
 

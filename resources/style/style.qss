@@ -91,11 +91,11 @@ LayoutItem[isPressed="false"] QLabel#icon
     background-image:none;
 }
 
-
 LayoutList
 {
     border: 1px solid #393939;
     border-radius:6px;
 }
+
 
 

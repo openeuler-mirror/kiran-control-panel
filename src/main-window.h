@@ -1,5 +1,5 @@
-#ifndef KCPWINDOW_H
-#define KCPWINDOW_H
+#ifndef MAINWINDOW_H
+#define MAINWINDOW_H
 
 #include <kiranwidgets-qt5/kiran-titlebar-window.h>
 #include <QWidget>
@@ -11,22 +11,22 @@ enum
 
 namespace Ui
 {
-class KCPWindow;
+class MainWindow;
 }
 
-class KCPWindow : public KiranTitlebarWindow
+class MainWindow : public KiranTitlebarWindow
 {
     Q_OBJECT
 
 public:
-    explicit KCPWindow(QWidget *parent = 0);
-    ~KCPWindow();
+    explicit MainWindow(QWidget *parent = 0);
+    ~MainWindow();
 
 private:
     void addSidebarItem(QString text, QString icon);
 
 private:
-    Ui::KCPWindow *ui;
+    Ui::MainWindow *ui;
 };
 
-#endif  // KCPWINDOW_H
+#endif  // MAINWINDOW_H

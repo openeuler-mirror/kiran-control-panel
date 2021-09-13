@@ -1,9 +1,9 @@
-#include "kcp-window.h"
+#include "main-window.h"
 #include <QListWidgetItem>
-#include "ui_kcp-window.h"
+#include "ui_main-window.h"
 
-KCPWindow::KCPWindow(QWidget* parent) : KiranTitlebarWindow(parent),
-                                        ui(new Ui::KCPWindow)
+MainWindow::MainWindow(QWidget* parent) : KiranTitlebarWindow(parent),
+                                          ui(new Ui::MainWindow)
 {
     ui->setupUi(getWindowContentWidget());
     addSidebarItem(tr("General Option"), ":/images/kck-page-generation.svg");
@@ -18,12 +18,12 @@ KCPWindow::KCPWindow(QWidget* parent) : KiranTitlebarWindow(parent),
             });
 }
 
-KCPWindow::~KCPWindow()
+MainWindow::~MainWindow()
 {
     delete ui;
 }
 
-void KCPWindow::addSidebarItem(QString text, QString icon)
+void MainWindow::addSidebarItem(QString text, QString icon)
 {
     QListWidgetItem* item = new QListWidgetItem(ui->listWidget);
     item->setIcon(QIcon(icon));

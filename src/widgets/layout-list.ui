@@ -86,7 +86,7 @@
    <item>
     <widget class="QScrollArea" name="scrollArea">
      <property name="verticalScrollBarPolicy">
-      <enum>Qt::ScrollBarAlwaysOff</enum>
+      <enum>Qt::ScrollBarAlwaysOn</enum>
      </property>
      <property name="horizontalScrollBarPolicy">
       <enum>Qt::ScrollBarAlwaysOff</enum>
@@ -99,7 +99,7 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>398</width>
+        <width>384</width>
         <height>256</height>
        </rect>
       </property>
@@ -150,7 +150,7 @@
               <string notr="true"/>
              </property>
              <property name="verticalScrollBarPolicy">
-              <enum>Qt::ScrollBarAsNeeded</enum>
+              <enum>Qt::ScrollBarAlwaysOff</enum>
              </property>
              <property name="horizontalScrollBarPolicy">
               <enum>Qt::ScrollBarAlwaysOff</enum>
@@ -185,7 +185,7 @@
               <enum>Qt::NoFocus</enum>
              </property>
              <property name="verticalScrollBarPolicy">
-              <enum>Qt::ScrollBarAsNeeded</enum>
+              <enum>Qt::ScrollBarAlwaysOff</enum>
              </property>
              <property name="horizontalScrollBarPolicy">
               <enum>Qt::ScrollBarAlwaysOff</enum>

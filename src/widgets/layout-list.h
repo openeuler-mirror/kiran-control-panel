@@ -43,6 +43,7 @@ private:
     QStringList m_filterList;
     QStringList m_lists;
     QString m_countryName = nullptr;
+    QScrollBar *m_vb;
 };
 
 #endif  // LAYOUTLIST_H

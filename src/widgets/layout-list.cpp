@@ -12,8 +12,6 @@ LayoutList::LayoutList(QWidget* parent) : QWidget(parent),
     ui->setupUi(this);
     m_timer = new QTimer(this);
     ui->stackedWidget->setCurrentWidget(ui->page_list);
-    QScrollBar* vb = ui->listWidget_list->verticalScrollBar();
-    KLOG_INFO() << "pageStep" << vb->pageStep();
 
     connect(m_timer, &QTimer::timeout,
             [this] {
@@ -147,15 +145,12 @@ void LayoutList::adjustSize()
     if (ui->stackedWidget->currentWidget() == ui->page_list)
     {
         height = m_lists.size() * 40;
-        KLOG_INFO() << this->sizeHint().height() << "," << ui->lineEdit_search->height();
-        KLOG_INFO() << height;
         ui->stackedWidget->setFixedHeight(height);
         emit heightChanged(height + ui->lineEdit_search->height());
     }
     else
     {
         height = m_filterList.size() * 40;
-        KLOG_INFO() << "filterList height:" << height;
         ui->stackedWidget->setFixedHeight(height);
         emit heightChanged(height + ui->lineEdit_search->height());
     }

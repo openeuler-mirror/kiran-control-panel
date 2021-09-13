@@ -1,6 +1,6 @@
 #include "dbus-wrapper.h"
 #include <kiran-session-daemon/keyboard-i.h>
-#include "KeyboardBackEndProxy.h"
+#include "keyboard-backEnd-proxy.h"
 //#include <kiran-session-daemon/>
 DbusWrapper::DbusWrapper(QObject *parent)
 {

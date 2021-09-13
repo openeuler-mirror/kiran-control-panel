@@ -19,7 +19,7 @@
 #include <QFile>
 #include <QTranslator>
 #include <iostream>
-#include "kcp-window.h"
+#include "main-window.h"
 #define TRANSLATION_DIR "/usr/share/kiran-cpanel-keyboard/translation/"
 
 int main(int argc, char *argv[])
@@ -58,7 +58,7 @@ int main(int argc, char *argv[])
         qDebug("Load Translator File failed : %s\n", TRANSLATION_DIR);
     }
 
-    KCPWindow w;
+    MainWindow w;
     w.show();
 
     return a.exec();

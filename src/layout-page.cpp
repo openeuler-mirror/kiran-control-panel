@@ -7,8 +7,8 @@
 #include <QJsonObject>
 #include <QJsonParseError>
 #include <QScrollBar>
-#include "dbus-wrapper/KeyboardBackEndProxy.h"
 #include "dbus-wrapper/dbus-wrapper.h"
+#include "keyboard-backEnd-proxy.h"
 #include "ui_layout-page.h"
 #include "widgets/choose-item.h"
 #include "widgets/layout-list.h"
