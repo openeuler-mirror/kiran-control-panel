@@ -6,7 +6,7 @@ Name[zh_CN]=键盘语言设置
 Comment=Kiran Cpanel Mouse
 Comment[zh_CN]=键盘语言设置
 Exec=kiran-cpanel-launcher --cpanel-plugin=kiran-cpanel-keyboard
-Icon=@ICON_DIR@/kiran-cpanel-keyboard.png
+Icon=@ICON_DIR@/kcp-keyboard.png
 Terminal=false
 Type=Application
 X-KIRAN-NoDisplay=true
@@ -18,7 +18,7 @@ StartupNotify=true
 #插件排序
 Weight=1
 #插件分类
-Category=hardware
+Category=regional-language
 #插件共享库位置，若以'/'开头则为绝对路径，也可支持通过共享库名去插件安装目录去查找
 Library=@CPANEL_PLUGIN_DIR@/lib@PROJECT_NAME@.so
 SubItems=GeneralOptions,KeyboardLayout
