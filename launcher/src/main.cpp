@@ -27,6 +27,7 @@
 #include <QLoggingCategory>
 #include <QTranslator>
 #include <iostream>
+#include <locale.h>
 
 int main(int argc, char *argv[])
 {
@@ -50,6 +51,21 @@ int main(int argc, char *argv[])
     }
 
     KiranSingleApplication app(argc, argv);
+
+    ///NOTE: 由于strftime获取系统locale进行格式化，Qt使用UTF8,若编码设置不为UTF8中文环境下会导致乱码
+    ///所以LANG后面的编码若不为UTF-8,修改成UTF-8,使获取时间都为UTF-8格式
+    QString lang = qgetenv("LANG");
+    if(lang.contains("."))
+    {
+        QStringList splitRes = lang.split(".",QString::SkipEmptyParts);
+        if(splitRes.size() == 2 && splitRes.at(1)!="UTF-8" )
+        {
+            splitRes.replace(1,"UTF-8");
+            QString newLocale = splitRes.join(".");
+            setlocale(LC_TIME,newLocale.toStdString().c_str());
+        }
+    }
+
     //为了保持插件使用启动器进行启动后，底部面板不堆叠，插件图标显示正常，
     //设置ApplicationName,更新窗口WM_CLASS属性为插件desktop名称
     if( !pluginDesktopName.isEmpty() )
