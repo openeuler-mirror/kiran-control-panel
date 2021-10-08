@@ -4,6 +4,7 @@
 #include <QString>
 struct ShortcutInfo
 {
+    int type;
     QString kind;
     QString uid;
     QString name;

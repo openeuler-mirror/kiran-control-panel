@@ -34,14 +34,18 @@ SOURCES += \
         main-window.cpp \
     shortcut.cpp \
     shortcut-item.cpp \
-    custom-line-edit.cpp
+    custom-line-edit.cpp \
+    thread-object.cpp \
+    dbus-wrapper/keybinding-backEnd-proxy.cpp
 
 HEADERS += \
         main-window.h \
     shortcut.h \
     shortcut-item.h \
     keybinding_def.h \
-    custom-line-edit.h
+    custom-line-edit.h \
+    thread-object.h \
+    dbus-wrapper/keybinding-backEnd-proxy.h
 
 FORMS += \
         main-window.ui \

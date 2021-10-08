@@ -13,6 +13,7 @@ class Shortcut;
 
 Q_DECLARE_METATYPE(ShortcutInfo *)
 
+class ThreadObject;
 class ShortcutItem;
 class Shortcut : public QWidget
 {
@@ -25,23 +26,25 @@ public:
 
 private:
     void initUI();
-    void createShortcutItem(QVBoxLayout *parent, ShortcutInfo *shortcutInfo);
+    void createShortcutItem(QVBoxLayout *parent, ShortcutInfo *shortcutInfo, int type);
     void getAllSystemShortcut();
     void getAllCustomShortcut();
-    void getJsonValueFromString(QString jsonString, int type);
 
 public slots:
     void deleteShortcut(QString uid);
     void editShortcut(QString uid, QString name, QString keyCombination, QString action = nullptr);
     void addShortcut();
+    void handleShortcutInfo(QList<ShortcutInfo *> shortcutInfoList);
 
 private:
     Ui::Shortcut *ui;
-    QList<ShortcutInfo *> m_systemShortcuts;
-    QList<ShortcutInfo *> m_customShortcuts;
+    QList<ShortcutInfo *> m_shortcuts;
+    //    QList<ShortcutInfo *> m_customShortcuts;
     QList<ShortcutItem *> m_shortcutItem;
     QToolButton *m_btnModifyApp;
     QToolButton *m_btnCustomApp;
+    QThread *m_thread;
+    ThreadObject *m_threadObject;
 
     bool m_isEditMode = false;
 };

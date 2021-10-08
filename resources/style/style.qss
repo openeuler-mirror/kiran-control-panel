@@ -27,6 +27,13 @@ QLineEdit#lineEdit_search
     border:none;
 }
 
+QLineEdit#lineEdit_modify_name:disabled
+{
+    border-radius:6px;
+    background-color:#2d2d2d;
+    border:none;
+}
+
 QToolButton#btn_edit,QToolButton#btn_modify_app,QToolButton#btn_custom_app
 {
     border-radius:3px;

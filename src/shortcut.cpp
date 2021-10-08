@@ -3,6 +3,7 @@
 #include <kiranwidgets-qt5/widget-property-helper.h>
 #include "custom-line-edit.h"
 #include "shortcut-item.h"
+#include "thread-object.h"
 #include "ui_shortcut.h"
 
 Shortcut::Shortcut(QWidget *parent) : QWidget(parent),
@@ -15,6 +16,8 @@ Shortcut::Shortcut(QWidget *parent) : QWidget(parent),
 Shortcut::~Shortcut()
 {
     delete ui;
+    m_thread->quit();
+    m_thread->wait();
 }
 
 QSize Shortcut::sizeHint() const
@@ -60,6 +63,7 @@ void Shortcut::initUI()
                 connect(ui->btn_page_add, &QPushButton::clicked,
                         [=] {
                             //dbus ->AddCustomShortcut
+                            //successful ->ui->widget_custom->show();
                         });
             });
 
@@ -88,12 +92,9 @@ void Shortcut::initUI()
     getAllCustomShortcut();
 }
 
-void Shortcut::createShortcutItem(QVBoxLayout *parent, ShortcutInfo *shortcutInfo)
+void Shortcut::createShortcutItem(QVBoxLayout *parent, ShortcutInfo *shortcutInfo, int type)
 {
-    shortcutInfo->name = "screen";
-    shortcutInfo->keyCombination = "Alt+A";
-
-    ShortcutItem *item = new ShortcutItem(SHORTCUT_TYPE_CUSTOM, shortcutInfo);
+    ShortcutItem *item = new ShortcutItem(type, shortcutInfo);
     parent->addWidget(item);
     m_shortcutItem.append(item);
 
@@ -102,11 +103,19 @@ void Shortcut::createShortcutItem(QVBoxLayout *parent, ShortcutInfo *shortcutInf
                 ui->stackedWidget->setCurrentWidget(ui->page_modify);
                 if (type == SHORTCUT_TYPE_SYSTEM)
                 {
+                    ui->widget_modify_app->hide();
+                    ui->lineEdit_modify_name->setText(name);
+                    ui->lineEdit_modify_name->setDisabled(true);
                 }
                 connect(ui->btn_save, &QPushButton::clicked,
                         [=] {
                             //dbus -> ModifyCustomShortcut/ModifySystemShortcut
                         });
+            });
+    connect(item, &ShortcutItem::sigDelete,
+            [=](QString uid) {
+                //dbus -> delete
+                //if(m_shortcutItem.size == 0)  ---->ui->widget_custom->hide();
             });
 }
 
@@ -116,14 +125,18 @@ void Shortcut::getAllSystemShortcut()
 
 void Shortcut::getAllCustomShortcut()
 {
-    ShortcutInfo *shortcutInfo = new ShortcutInfo;
-    shortcutInfo->name = "screen";
-    shortcutInfo->keyCombination = "Alt+A";
-    createShortcutItem(ui->vlayout_custom, shortcutInfo);
-}
+    m_thread = new QThread;
+    m_threadObject = new ThreadObject;
 
-void Shortcut::getJsonValueFromString(QString jsonString, int type)
-{
+    m_threadObject->moveToThread(m_thread);
+
+    connect(m_threadObject, SIGNAL(getShortcutInfo(QList<ShortcutInfo *>)), this,
+            SLOT(handleShortcutInfo(QList<ShortcutInfo *>)));
+    //终止线程deleteLater
+    connect(m_thread, SIGNAL(finished()), m_threadObject, SLOT(deleteLater()));
+    connect(m_thread, SIGNAL(started()), m_threadObject, SLOT(loadShortcutInfo()));
+
+    m_thread->start();
 }
 
 void Shortcut::deleteShortcut(QString uid)
@@ -136,4 +149,37 @@ void Shortcut::editShortcut(QString uid, QString name, QString keyCombination, Q
 
 void Shortcut::addShortcut()
 {
+}
+
+void Shortcut::handleShortcutInfo(QList<ShortcutInfo *> shortcutInfoList)
+{
+    int customCount = 0;
+    m_shortcuts = shortcutInfoList;
+
+    foreach (ShortcutInfo *shortcutInfo, shortcutInfoList)
+    {
+        if (shortcutInfo->type == SHORTCUT_TYPE_SYSTEM)
+        {
+            if (shortcutInfo->kind == "Sound")
+                createShortcutItem(ui->vlayout_sound, shortcutInfo, shortcutInfo->type);
+            else if (shortcutInfo->kind == "窗口管理")
+                createShortcutItem(ui->vlayout_marco, shortcutInfo, shortcutInfo->type);
+            else if (shortcutInfo->kind == "System")
+                createShortcutItem(ui->vlayout_system, shortcutInfo, shortcutInfo->type);
+            else if (shortcutInfo->kind == "Accessibility")
+                createShortcutItem(ui->vlayout_accessibility, shortcutInfo, shortcutInfo->type);
+            else if (shortcutInfo->kind == "桌面")
+                createShortcutItem(ui->vlayout_desktop, shortcutInfo, shortcutInfo->type);
+        }
+        else
+        {
+            createShortcutItem(ui->vlayout_custom, shortcutInfo, shortcutInfo->type);
+            customCount++;
+        }
+    }
+
+    if (customCount == 0)
+    {
+        ui->widget_custom->hide();
+    }
 }

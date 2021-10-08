@@ -17,8 +17,6 @@ class ShortcutItem : public QWidget
 public:
     explicit ShortcutItem(int type, ShortcutInfo *shortcutInfo, QWidget *parent = 0);
     ~ShortcutItem();
-    //void selectedItemChanged(QString name);
-    //void setisPressed(bool pressed);
     void setname(QString);
     void setKeyBinding(QString);
     void setEditMode(bool isEditMode);
@@ -30,11 +28,9 @@ protected:
 private:
     QString getName();
     void initUI();
-    //bool isPressed() const;
 
 signals:
     void sigDelete(QString uid);
-    //void sigClicked(int type, QString uid, QString name, QString key_combination);
     void sigClicked(int type, QString uid, QString name, QString key_combination, QString action);
 
 private:
