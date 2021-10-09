@@ -37,7 +37,7 @@ void ShortcutItem::initUI()
     m_keyCombination = m_keyCombination.replace("<", "");
     m_keyCombination = m_keyCombination.replace(">", "-");
     m_keyCombination = m_keyCombination.replace("Control", "Ctrl");
-    QStringList list = m_keyCombination.split("-");
+    QStringList list = m_keyCombination.split("-", QString::SkipEmptyParts);
     QString keyCombination = list.join("+");
     ui->label_keybination->setText(keyCombination);
 
@@ -88,4 +88,9 @@ void ShortcutItem::mousePressEvent(QMouseEvent *event)
 QString ShortcutItem::getName()
 {
     return m_name;
+}
+
+QString ShortcutItem::getUid()
+{
+    return m_uid;
 }

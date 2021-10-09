@@ -32,7 +32,7 @@
    <item>
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="page_shortcut">
       <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -553,7 +553,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="lineEdit_add_key">
+          <widget class="CustomLineEdit" name="lineEdit_add_key">
            <property name="minimumSize">
             <size>
              <width>0</width>
@@ -770,7 +770,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="lineEdit_modify_key">
+          <widget class="CustomLineEdit" name="lineEdit_modify_key">
            <property name="minimumSize">
             <size>
              <width>0</width>
@@ -887,6 +887,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>CustomLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>custom-line-edit.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

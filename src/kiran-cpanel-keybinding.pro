@@ -50,8 +50,7 @@ HEADERS += \
 FORMS += \
         main-window.ui \
     shortcut.ui \
-    shortcut-item.ui \
-    custom-line-edit.ui
+    shortcut-item.ui
 
 RESOURCES += \
     ../resources/resources.qrc

@@ -4,11 +4,6 @@
 #include <QLineEdit>
 #include <QWidget>
 
-namespace Ui
-{
-class CustomLineEdit;
-}
-
 class CustomLineEdit : public QLineEdit
 {
     Q_OBJECT
@@ -16,23 +11,18 @@ class CustomLineEdit : public QLineEdit
 public:
     explicit CustomLineEdit(QWidget *parent = 0);
     ~CustomLineEdit();
-    void setIcon(QString icon);
-    void hideIcon();
-    void hideButton();
-    void setPlaceholderText(QString text);
 
 protected:
     virtual void paintEvent(QPaintEvent *event) override;
-    virtual void mousePressEvent(QMouseEvent *event);
-    virtual void keyPressEvent(QKeyEvent *event);
+    virtual void keyReleaseEvent(QKeyEvent *event);
 
-    virtual void inputMethodEvent(QInputMethodEvent *event);
+signals:
+    void inputKeyCodes(QList<int> keycodes);
 
 private:
     void initUI();
 
 private:
-    Ui::CustomLineEdit *ui;
 };
 
 #endif  // CUSTOMLINEEDIT_H

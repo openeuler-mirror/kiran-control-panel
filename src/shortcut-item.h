@@ -20,13 +20,14 @@ public:
     void setname(QString);
     void setKeyBinding(QString);
     void setEditMode(bool isEditMode);
+    QString getName();
+    QString getUid();
 
 protected:
     virtual void paintEvent(QPaintEvent *event) override;
     void mousePressEvent(QMouseEvent *event) override;
 
 private:
-    QString getName();
     void initUI();
 
 signals:

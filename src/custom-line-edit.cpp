@@ -2,39 +2,19 @@
 #include <QInputMethodEvent>
 #include <QPainter>
 #include <QStyleOption>
-#include "ui_custom-line-edit.h"
-CustomLineEdit::CustomLineEdit(QWidget *parent) : QLineEdit(parent),
-                                                  ui(new Ui::CustomLineEdit)
+
+CustomLineEdit::CustomLineEdit(QWidget *parent) : QLineEdit(parent)
 {
-    ui->setupUi(this);
     initUI();
 }
 
 CustomLineEdit::~CustomLineEdit()
 {
-    delete ui;
 }
 
-void CustomLineEdit::setIcon(QString icon)
+void CustomLineEdit::initUI()
 {
-    ui->icon->setStyleSheet(QString("QLabel#icon{background-image: url(%1);}").arg(icon));
-    QLayout *layout = this->layout();
-    layout->setSpacing(10);
-}
-
-void CustomLineEdit::hideIcon()
-{
-    ui->icon->hide();
-}
-
-void CustomLineEdit::hideButton()
-{
-    ui->button->hide();
-}
-
-void CustomLineEdit::setPlaceholderText(QString text)
-{
-    ui->lineEdit->setPlaceholderText(text);
+    //    this->setFocusPolicy(Qt::StrongFocus);
 }
 
 void CustomLineEdit::paintEvent(QPaintEvent *event)
@@ -48,26 +28,59 @@ void CustomLineEdit::paintEvent(QPaintEvent *event)
     QWidget::paintEvent(event);
 }
 
-void CustomLineEdit::mousePressEvent(QMouseEvent *event)
+void CustomLineEdit::keyReleaseEvent(QKeyEvent *event)
 {
-    this->setFocus();
-    QWidget::mousePressEvent(event);
-}
-
-void CustomLineEdit::keyPressEvent(QKeyEvent *event)
-{
-    //if(event->)
-}
-
-void CustomLineEdit::inputMethodEvent(QInputMethodEvent *event)
-{
-    // ui->lineEdit->setText(event->commitString());
-}
-
-void CustomLineEdit::initUI()
-{
-    this->setFocusPolicy(Qt::StrongFocus);
-    this->setFocusProxy(ui->lineEdit);
-    this->setAttribute(Qt::WA_InputMethodEnabled, true);
-    //ui->lineEdit->setFocusPolicy(Qt::NoFocus);
+    QList<int> keycodes;
+    // NoModifier
+    if (event->key() != 0 && event->modifiers() == Qt::NoModifier)
+    {
+        keycodes.append(event->key());
+    }
+    // one modifier
+    else if (event->key() != 0 && event->modifiers() == Qt::ShiftModifier)
+    {
+        keycodes.append(Qt::Key_Shift);
+        keycodes.append(event->key());
+    }
+    else if (event->key() != 0 && event->modifiers() == Qt::ControlModifier)
+    {
+        keycodes.append(Qt::Key_Control);
+        keycodes.append(event->key());
+    }
+    else if (event->key() != 0 && event->modifiers() == Qt::AltModifier)
+    {
+        keycodes.append(Qt::Key_Alt);
+        keycodes.append(event->key());
+    }
+    // two modifier
+    else if (event->key() != 0 && event->modifiers() == (Qt::ControlModifier | Qt::ShiftModifier))
+    {
+        keycodes.append(Qt::Key_Control);
+        keycodes.append(Qt::Key_Shift);
+        keycodes.append(event->key());
+    }
+    else if (event->key() != 0 && event->modifiers() == (Qt::ControlModifier | Qt::AltModifier))
+    {
+        keycodes.append(Qt::Key_Control);
+        keycodes.append(Qt::Key_Alt);
+        keycodes.append(event->key());
+    }
+    else if (event->key() != 0 && event->modifiers() == (Qt::ShiftModifier | Qt::AltModifier))
+    {
+        keycodes.append(Qt::ShiftModifier);
+        keycodes.append(Qt::Key_Alt);
+        keycodes.append(event->key());
+    }
+    //three modifier
+    else if (event->key() != 0 && event->modifiers() == (Qt::ShiftModifier | Qt::AltModifier | Qt::ControlModifier))
+    {
+        keycodes.append(Qt::Key_Control);
+        keycodes.append(Qt::Key_Alt);
+        keycodes.append(Qt::ShiftModifier);
+        keycodes.append(event->key());
+    }
+    if (keycodes.size() > 0)
+    {
+        emit inputKeyCodes(keycodes);
+    }
 }
