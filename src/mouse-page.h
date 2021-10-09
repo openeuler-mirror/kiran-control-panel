@@ -1,23 +1,31 @@
 /**
- * @file mouse-settings.h
- * @brief  初始化鼠标属性，并处理用户切换属性信号
- * @author yuanxing <yuanxing@kylinos.com.cn>
- * @copyright (c) 2020 KylinSec. All rights reserved.
+ * Copyright (c) 2020 ~ 2021 KylinSec Co., Ltd.
+ * kiran-cpanel-mouse is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *          http://license.coscl.org.cn/MulanPSL2
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ *
+ * Author:     yuanxing <yuanxing@kylinos.com.cn>
  */
 
 #ifndef MOUSE_PAGE_H
 #define MOUSE_PAGE_H
 
-#include <QWidget>
 #include <QComboBox>
 #include <QListWidgetItem>
 #include <QSharedPointer>
+#include <QWidget>
 
 class KSMMouseProxy;
 class KiranSwitchButton;
 class KiranListItem;
 class KiranSwitchButton;
-namespace Ui {
+namespace Ui
+{
 class MousePage;
 }
 
@@ -30,6 +38,7 @@ public:
     ~MousePage();
     void initUI();
     virtual QSize sizeHint() const override;
+
 public:
     void initComponent();
 
@@ -50,4 +59,4 @@ private:
     QTimer *m_timer = nullptr;
 };
 
-#endif // MOUSE_PAGE_H
+#endif  // MOUSE_PAGE_H

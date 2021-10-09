@@ -1,18 +1,26 @@
 /**
- * @file touchpad-settings.h
- * @brief  初始化触摸板属性，并处理用户切换属性信号
- * @author yuanxing <yuanxing@kylinos.com.cn>
- * @copyright (c) 2020 KylinSec. All rights reserved.
+ * Copyright (c) 2020 ~ 2021 KylinSec Co., Ltd.
+ * kiran-cpanel-mouse is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *          http://license.coscl.org.cn/MulanPSL2
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ *
+ * Author:     yuanxing <yuanxing@kylinos.com.cn>
  */
 
 #ifndef TOUCHPAD_PAGE_H
 #define TOUCHPAD_PAGE_H
 
-#include <QWidget>
 #include <QComboBox>
 #include <QLabel>
+#include <QWidget>
 
-namespace Ui {
+namespace Ui
+{
 class TouchPadPage;
 }
 
@@ -43,9 +51,9 @@ public slots:
 private:
     Ui::TouchPadPage *ui;
     QSharedPointer<KSMTouchPadProxy> m_touchPadInterface;
-    QList<QComboBox* > m_comboBoxList;
-    QList<KiranSwitchButton*> m_checkBoxList;
-    QList<QLabel*> m_labelList;
+    QList<QComboBox *> m_comboBoxList;
+    QList<KiranSwitchButton *> m_checkBoxList;
+    QList<QLabel *> m_labelList;
 
     bool m_disabelWhileTyping = true;
     bool m_touchPadLeftHand = false;
@@ -59,7 +67,6 @@ private:
     //鼠标是否按下的标志位
     bool m_mousePressed = false;
     QTimer *m_timer = nullptr;
-
 };
 
-#endif // TOUCHPAD_PAGE_H
+#endif  // TOUCHPAD_PAGE_H

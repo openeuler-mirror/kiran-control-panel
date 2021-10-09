@@ -1,10 +1,24 @@
+/**
+ * Copyright (c) 2020 ~ 2021 KylinSec Co., Ltd.
+ * kiran-cpanel-mouse is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *          http://license.coscl.org.cn/MulanPSL2
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ *
+ * Author:     yuanxing <yuanxing@kylinos.com.cn>
+ */
+
 #ifndef KCP_INTERFACE_H
 #define KCP_INTERFACE_H
 #include <kiran-control-panel/kcp-plugin-interface.h>
 
 class QTranslator;
 class KCMManager;
-class KcpInterface: public QObject,public KcpPluginInterface
+class KcpInterface : public QObject, public KcpPluginInterface
 {
     Q_OBJECT
     Q_PLUGIN_METADATA(IID KcpPluginInterface_iid)
@@ -37,15 +51,15 @@ public:
      * 插件实现该方法用于判断是否存在未保存的设置项,用于提供切换页面时做检查
      * \return 是否存在未保存项
      */
-    virtual bool haveUnsavedOptions()  override;
+    virtual bool haveUnsavedOptions() override;
 
     QStringList visibleSubItems() override;
 
 private:
     QWidget* m_currentWidget = nullptr;
     QTranslator* m_translator = nullptr;
-    KCMManager *m_kcmManager = nullptr;
+    KCMManager* m_kcmManager = nullptr;
     bool m_hasTouchPad = false;
 };
 
-#endif // KCP_INTERFACE_H
+#endif  // KCP_INTERFACE_H

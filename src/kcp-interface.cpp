@@ -1,18 +1,31 @@
+/**
+ * Copyright (c) 2020 ~ 2021 KylinSec Co., Ltd.
+ * kiran-cpanel-mouse is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *          http://license.coscl.org.cn/MulanPSL2
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ *
+ * Author:     yuanxing <yuanxing@kylinos.com.cn>
+ */
+
 #include "kcp-interface.h"
-#include "mouse-page.h"
-#include "touchpad-page.h"
-#include "kcm-manager.h"
-#include "config/config.h"
-#include <kiran-message-box.h>
 #include <kiran-log/qt5-log-i.h>
-#include <QLocale>
-#include <QTranslator>
+#include <kiran-message-box.h>
 #include <QCoreApplication>
 #include <QFile>
+#include <QLocale>
+#include <QTranslator>
+#include "config/config.h"
+#include "kcm-manager.h"
+#include "mouse-page.h"
+#include "touchpad-page.h"
 
 KcpInterface::KcpInterface()
 {
-
 }
 
 bool KcpInterface::haveUnsavedOptions()
@@ -24,7 +37,7 @@ QStringList KcpInterface::visibleSubItems()
 {
     QStringList subItems;
     subItems << "MouseSettings";
-    if(m_hasTouchPad)
+    if (m_hasTouchPad)
     {
         subItems << "TouchPadSettings";
     }
@@ -32,7 +45,7 @@ QStringList KcpInterface::visibleSubItems()
     return subItems;
 }
 
-QWidget *KcpInterface::getSubItemWidget(QString id)
+QWidget* KcpInterface::getSubItemWidget(QString id)
 {
     QWidget* widget = nullptr;
     if (id == "MouseSettings")
@@ -49,13 +62,13 @@ QWidget *KcpInterface::getSubItemWidget(QString id)
 
 void KcpInterface::uninit()
 {
-    if( m_translator )
+    if (m_translator)
     {
         QCoreApplication::removeTranslator(m_translator);
         delete m_translator;
         m_translator = nullptr;
     }
-    if(m_kcmManager)
+    if (m_kcmManager)
     {
         delete m_kcmManager;
         m_kcmManager = nullptr;
@@ -65,7 +78,7 @@ void KcpInterface::uninit()
 int KcpInterface::init()
 {
     m_kcmManager = new KCMManager;
-    if(!m_kcmManager->isValidConnect())
+    if (!m_kcmManager->isValidConnect())
     {
         KLOG_DEBUG() << "Connect mouse or touchpad dbus service failed!";
         return -1;
@@ -83,7 +96,7 @@ int KcpInterface::init()
     if (!m_translator->load(QLocale(),
                             "kiran-cpanel-mouse",
                             ".",
-                             TRANSLATIONS_FILE_DIR,
+                            TRANSLATIONS_FILE_DIR,
                             ".qm"))
     {
         KLOG_DEBUG() << "Kiran cpanel mouse load translation failed";
@@ -96,4 +109,3 @@ int KcpInterface::init()
     }
     return 0;
 }
-
