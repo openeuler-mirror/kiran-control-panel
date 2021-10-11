@@ -6,9 +6,12 @@
 
 #include "power-settings-page.h"
 #include <kiran-session-daemon/power_i.h>
-#include "log.h"
+#include <qt5-log-i.h>
 #include "power.h"
+#include "common.h"
 #include "ui_power-settings-page.h"
+
+using namespace Common;
 
 PowerSettingsPage::PowerSettingsPage(QWidget* parent)
     : QWidget(parent),
@@ -22,6 +25,11 @@ PowerSettingsPage::PowerSettingsPage(QWidget* parent)
 PowerSettingsPage::~PowerSettingsPage()
 {
     delete ui;
+}
+
+QSize PowerSettingsPage::sizeHint() const
+{
+    return QSize(518,585);
 }
 
 void PowerSettingsPage::init()
@@ -80,7 +88,7 @@ void PowerSettingsPage::load()
         getComputerIdleTimeoutReply.waitForFinished();
         if (getComputerIdleTimeoutReply.isError())
         {
-            LOG_WARNING_S() << "can't get computer idle timeout!," << getComputerIdleTimeoutReply.error();
+            KLOG_WARNING() << "can't get computer idle timeout!," << getComputerIdleTimeoutReply.error();
         }
         else
         {
@@ -88,7 +96,7 @@ void PowerSettingsPage::load()
             findComboIdx = ui->combo_idleTime->findData(action.idleTimeout);
             if (findComboIdx == -1)
             {
-                LOG_WARNING_S("can't find computer timeout(%d),append it to combobox!", action.idleTimeout);
+                KLOG_WARNING("can't find computer timeout(%d),append it to combobox!", action.idleTimeout);
                 ui->combo_idleTime->addItem(getTimeDescription(action.idleTimeout), action.idleTimeout);
                 findComboIdx = ui->combo_idleTime->findData(action.idleTimeout);
             }
@@ -99,7 +107,7 @@ void PowerSettingsPage::load()
             findComboIdx = ui->combo_idleAction->findData(action.idleAction);
             if (findComboIdx == -1)
             {
-                LOG_WARNING_S("can't find computer idle action(%d),append it to combobox!", action.idleAction);
+                KLOG_WARNING("can't find computer idle action(%d),append it to combobox!", action.idleAction);
                 ui->combo_idleAction->addItem(QString::number(action.idleAction), action.idleAction);
                 findComboIdx = ui->combo_idleAction->findData(action.idleAction);
             }
@@ -116,7 +124,7 @@ void PowerSettingsPage::load()
         getMonitorIdleTimeoutReply.waitForFinished();
         if (getMonitorIdleTimeoutReply.isError())
         {
-            LOG_WARNING_S() << "can't get monitor idle timeout!," << getMonitorIdleTimeoutReply.error();
+            KLOG_WARNING() << "can't get monitor idle timeout!," << getMonitorIdleTimeoutReply.error();
         }
         else
         {
@@ -124,7 +132,7 @@ void PowerSettingsPage::load()
             findComboIdx = ui->combo_displayOffTime->findData(action.idleTimeout);
             if (findComboIdx == -1)
             {
-                LOG_WARNING_S("can't find monitor idle timeout(%d),append it to combobox!", action.idleTimeout);
+                KLOG_WARNING("can't find monitor idle timeout(%d),append it to combobox!", action.idleTimeout);
                 ui->combo_displayOffTime->addItem(getTimeDescription(action.idleTimeout), action.idleTimeout);
                 findComboIdx = ui->combo_displayOffTime->findData(action.idleTimeout);
             }
@@ -135,36 +143,6 @@ void PowerSettingsPage::load()
     }
 }
 
-QString PowerSettingsPage::getTimeDescription(int seconds)
-{
-    static const int minute_unit = 60;
-    static const int hour_unit = minute_unit * 60;
-    static const int day_unit = hour_unit * 24;
-
-    int day = seconds / day_unit;
-    int hour = (seconds - (day * day_unit)) / hour_unit;
-    int minute = (seconds - (day * day_unit) - (hour * hour_unit)) / minute_unit;
-
-    QString formatTime;
-    if (day != 0)
-    {
-        formatTime.append(QString(tr("%1Day")).arg(day));
-    }
-    if (hour != 0)
-    {
-        formatTime.append(QString(tr("%1Hour")).arg(hour));
-    }
-    if (minute != 0)
-    {
-        formatTime.append(QString("%1Minute").arg(minute));
-    }
-    if (formatTime.isEmpty())
-    {
-        formatTime.append(tr("never"));
-    }
-    return formatTime;
-}
-
 bool PowerSettingsPage::getCurrentIdleAction(IdleAction& idleAction)
 {
     bool toIntOk = false;
@@ -172,7 +150,7 @@ bool PowerSettingsPage::getCurrentIdleAction(IdleAction& idleAction)
     int timeout = ui->combo_idleTime->currentData().toInt(&toIntOk);
     if (!toIntOk)
     {
-        LOG_WARNING_S() << "combobox " << ui->combo_idleTime->objectName()
+        KLOG_WARNING() << "combobox " << ui->combo_idleTime->objectName()
                         << "item data can't convert to int," << ui->combo_idleTime->currentData();
         return false;
     }
@@ -180,7 +158,7 @@ bool PowerSettingsPage::getCurrentIdleAction(IdleAction& idleAction)
     int action = (PowerAction)ui->combo_idleAction->currentData().toInt(&toIntOk);
     if (!toIntOk)
     {
-        LOG_WARNING_S() << "combobox " << ui->combo_idleAction->objectName()
+        KLOG_WARNING() << "combobox " << ui->combo_idleAction->objectName()
                         << "imet data can't convert to int," << ui->combo_idleAction->currentData();
         return false;
     }
@@ -205,7 +183,7 @@ void PowerSettingsPage::handleIdleTimeActionCurrentIdxChanged(int idx)
                                                  idleAction.idleAction);
     if (reply.isError())
     {
-        LOG_WARNING_S() << "set idle action for computer failed" << reply.error();
+        KLOG_WARNING() << "set idle action for computer failed" << reply.error();
     }
 }
 
@@ -220,6 +198,6 @@ void PowerSettingsPage::handleMonitorOffTimeoutCurrentIdxChanged(int idx)
     reply.waitForFinished();
     if (reply.isError())
     {
-        LOG_WARNING_S() << "set idle action for monitor failed," << reply.error();
+        KLOG_WARNING() << "set idle action for monitor failed," << reply.error();
     }
 }

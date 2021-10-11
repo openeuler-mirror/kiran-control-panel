@@ -23,13 +23,13 @@ class PowerSettingsPage : public QWidget
 public:
     explicit PowerSettingsPage(QWidget *parent = nullptr);
     ~PowerSettingsPage() override;
+    virtual QSize sizeHint() const override;
 
 private:
     void init();
     void initUI();
     void initConnection();
     void load();
-    QString getTimeDescription(int seconds);
     bool getCurrentIdleAction(IdleAction& idleAction);
 
 private slots:

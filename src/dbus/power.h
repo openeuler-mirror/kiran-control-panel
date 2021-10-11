@@ -11,10 +11,10 @@
 #ifndef POWER_H
 #define POWER_H
 
-#include <QtCore/QObject>
 #include <QtCore/QByteArray>
 #include <QtCore/QList>
 #include <QtCore/QMap>
+#include <QtCore/QObject>
 #include <QtCore/QString>
 #include <QtCore/QStringList>
 #include <QtCore/QVariant>
@@ -51,25 +51,36 @@ class PowerInterface : public QDBusAbstractInterface
     Q_OBJECT
 public:
     static inline const char *staticInterfaceName()
-    { return "com.kylinsec.Kiran.SessionDaemon.Power"; }
-
-    static PowerInterface* instance();
+    {
+        return "com.kylinsec.Kiran.SessionDaemon.Power";
+    }
 
 private:
     PowerInterface(const QDBusConnection &connection, QObject *parent = nullptr);
 
 public:
+    static PowerInterface *instance();
     ~PowerInterface();
+
+    Q_PROPERTY(int idle_dimmed_scale READ idle_dimmed_scale)
+    inline int idle_dimmed_scale() const
+    {
+        return qvariant_cast<int>(property("idle_dimmed_scale"));
+    }
 
     Q_PROPERTY(bool lid_is_present READ lid_is_present)
     inline bool lid_is_present() const
-    { return qvariant_cast< bool >(property("lid_is_present")); }
+    {
+        return qvariant_cast<bool>(property("lid_is_present"));
+    }
 
     Q_PROPERTY(bool on_battery READ on_battery)
     inline bool on_battery() const
-    { return qvariant_cast< bool >(property("on_battery")); }
+    {
+        return qvariant_cast<bool>(property("on_battery"));
+    }
 
-public Q_SLOTS: // METHODS
+public Q_SLOTS:  // METHODS
     inline QDBusPendingReply<int> GetBrightness(int device)
     {
         QList<QVariant> argumentList;
@@ -112,19 +123,30 @@ public Q_SLOTS: // METHODS
         return asyncCallWithArgumentList(QStringLiteral("SetIdleAction"), argumentList);
     }
 
-Q_SIGNALS: // SIGNALS
+    inline QDBusPendingReply<> SetIdleDimmed(int scale)
+    {
+        QList<QVariant> argumentList;
+        argumentList << QVariant::fromValue(scale);
+        return asyncCallWithArgumentList(QStringLiteral("SetIdleDimmed"), argumentList);
+    }
+
+Q_SIGNALS:  // SIGNALS
     void BrightnessChanged(int device);
     void EventActionChanged(int event);
     void IdleActionChanged(int device, int supply);
 };
 
-namespace com {
-  namespace kylinsec {
-    namespace Kiran {
-      namespace SessionDaemon {
-        typedef ::PowerInterface Power;
-      }
-    }
-  }
+namespace com
+{
+namespace kylinsec
+{
+namespace Kiran
+{
+namespace SessionDaemon
+{
+typedef ::PowerInterface Power;
 }
+}  // namespace Kiran
+}  // namespace kylinsec
+}  // namespace com
 #endif

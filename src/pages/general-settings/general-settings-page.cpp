@@ -3,14 +3,24 @@
 //
 
 // You may need to build the project (run Qt uic code generator) to get "ui_general-settings-page.h" resolved
+#include <kiran-switch-button.h>
+#include <qt5-log-i.h>
+#include <QGSettings/QGSettings>
+#include <QListView>
+#include <QSignalBlocker>
 
 #include "general-settings-page.h"
-#include <tuple>
 #include "kiran-message-box.h"
 #include "kiran-session-daemon/power_i.h"
-#include "log.h"
 #include "power.h"
 #include "ui_general-settings-page.h"
+
+#define MAX_IDLE_TIME 120
+
+#define MATE_SESSION_SCHEMA_ID "org.mate.session"
+#define KIRAN_SESSION_SCHEMA_ID "com.kylinsec.kiran.session-manager"
+#define KEY_IDLE_DELAY "idle-delay"
+#define DEFAULT_IDLE_DELAY 5
 
 GeneralSettingsPage::GeneralSettingsPage(QWidget* parent)
     : QWidget(parent),
@@ -28,12 +38,43 @@ GeneralSettingsPage::~GeneralSettingsPage()
 
 void GeneralSettingsPage::init()
 {
+    initSessionSetting();
     initUI();
     initConnection();
     load();
 }
 
-#include <QListView>
+void GeneralSettingsPage::initSessionSetting()
+{
+    if (QGSettings::isSchemaInstalled(KIRAN_SESSION_SCHEMA_ID))
+    {
+        m_sessionSettings = new QGSettings(KIRAN_SESSION_SCHEMA_ID);
+    }
+    else if (QGSettings::isSchemaInstalled(MATE_SESSION_SCHEMA_ID))
+    {
+        m_sessionSettings = new QGSettings(MATE_SESSION_SCHEMA_ID);
+    }
+
+    if (m_sessionSettings != nullptr)
+    {
+        connect(m_sessionSettings, &QGSettings::changed, [this](const QString& key) {
+            if (key != KEY_IDLE_DELAY)
+            {
+                return;
+            }
+
+            int value = m_sessionSettings->get(key).toInt();
+            if (value == ui->slider_idleTime->value())
+            {
+                return;
+            }
+
+            QSignalBlocker blocker(ui->slider_idleTime);
+            ui->slider_idleTime->setValue(m_sessionSettings->get(key).toInt());
+        });
+    }
+}
+
 void GeneralSettingsPage::initUI()
 {
     ///填充选项
@@ -68,11 +109,17 @@ void GeneralSettingsPage::initUI()
             comboBox->addItem(actionIter.first, actionIter.second);
         }
     }
+
     ///初始化QSlider,和延迟设置的Timer
     ui->slider_brightness->setMaximum(100);
     ui->slider_brightness->setMinimum(0);
     m_brightnessTimer.setInterval(300);
     m_brightnessTimer.setSingleShot(true);
+
+    ui->slider_idleTime->setMaximum(MAX_IDLE_TIME);
+    ui->slider_idleTime->setMinimum(1);
+    m_idleTimeTimer.setInterval(300);
+    m_idleTimeTimer.setSingleShot(true);
 
     ///初始化特殊选项
     //关闭盖子选项
@@ -81,6 +128,14 @@ void GeneralSettingsPage::initUI()
     ui->widget_lidLabel->setVisible(lidIsPresent);
     ui->widget_lidCombo->setVisible(lidIsPresent);
 #endif
+
+    //空闲时是否锁定屏幕及屏保
+    m_btn_lockScreen = new KiranSwitchButton(this);
+    ui->layout_sliderLabel->addWidget(m_btn_lockScreen);
+
+    QFont font = ui->label_idleTime->font();
+    font.setPointSize(font.pointSize()-2);
+    ui->label_idleTime->setFont(font);
 }
 
 void GeneralSettingsPage::initConnection()
@@ -100,9 +155,35 @@ void GeneralSettingsPage::initConnection()
             qWarning() << reply.error();
         }
     });
-    connect(ui->slider_brightness, &QSlider::valueChanged, [&](int value) {
+    connect(ui->slider_brightness, &QSlider::valueChanged, [this](int value) {
         setBrightnessPercent(value);
         m_brightnessTimer.start();
+    });
+    connect(ui->slider_idleTime, &QSlider::valueChanged, [this](int value) {
+        updateIdleTimeLabel(value);
+        m_idleTimeTimer.start();
+    });
+    connect(&m_idleTimeTimer, &QTimer::timeout, [this]() {
+        if (m_sessionSettings)
+        {
+            int value = ui->slider_idleTime->value();
+            m_sessionSettings->set(KEY_IDLE_DELAY, value);
+        }
+    });
+    connect(m_btn_lockScreen,&QAbstractButton::toggled,[this](bool checked){
+        if(checked)
+        {
+            ui->widget_idleTimeSlider->setEnabled(true);
+            ui->slider_idleTime->setValue(DEFAULT_IDLE_DELAY);
+        }
+        else
+        {
+            if(m_sessionSettings)
+            {
+                m_sessionSettings->set(KEY_IDLE_DELAY,0);
+            }
+            ui->widget_idleTimeSlider->setEnabled(false);
+        }
     });
 }
 
@@ -119,7 +200,7 @@ void GeneralSettingsPage::load()
         if (getEventActionReply.isError())
         {
             QString errMsg = getEventActionReply.error().message();
-            LOG_WARNING("get event(%d) action failed,%s", event, errMsg.toStdString().c_str());
+            KLOG_WARNING("get event(%d) action failed,%s", event, errMsg.toStdString().c_str());
             return -1;
         }
 
@@ -127,7 +208,7 @@ void GeneralSettingsPage::load()
         comboBoxIdx = comboBox->findData(action);
         if (comboBoxIdx == -1)
         {
-            LOG_WARNING_S() << "combobox(" << comboBox->objectName() << ") can't find this action(" << action << ")!";
+            KLOG_WARNING() << "combobox(" << comboBox->objectName() << ") can't find this action(" << action << ")!";
             return -1;
         }
 
@@ -136,12 +217,12 @@ void GeneralSettingsPage::load()
 
     /// press poweroff button action
     comboBoxIdx = getEventComboBoxIdxFunc(ui->combo_powerButton, POWER_EVENT_PRESSED_POWEROFF);
-    LOG_INFO_S() << "power off:" << comboBoxIdx;
+    KLOG_INFO() << "power off:" << comboBoxIdx;
     ui->combo_powerButton->setCurrentIndex(comboBoxIdx == -1 ? 0 : comboBoxIdx);
 
     /// press suspend button action
     comboBoxIdx = getEventComboBoxIdxFunc(ui->combo_suspendButton, POWER_EVENT_PRESSED_SUSPEND);
-    LOG_INFO_S() << "suspend:" << comboBoxIdx;
+    KLOG_INFO() << "suspend:" << comboBoxIdx;
     ui->combo_suspendButton->setCurrentIndex(comboBoxIdx == -1 ? 0 : comboBoxIdx);
 
     /// close lid action
@@ -153,28 +234,41 @@ void GeneralSettingsPage::load()
     monitorBrightnessReply.waitForFinished();
     if (monitorBrightnessReply.isError())
     {
-        LOG_WARNING_S() << "can't get monitor brightness!" << monitorBrightnessReply.error();
+        KLOG_WARNING() << "can't get monitor brightness!" << monitorBrightnessReply.error();
     }
     else
     {
+        //NOTE:亮度为-1表示亮度调整不可用
         monitorBrightnessPercent = monitorBrightnessReply.value();
-        if (monitorBrightnessPercent == -1)
-        {
-            //NOTE:亮度为-1表示亮度调整不可用
-            monitorBrightnessPercent = 0;
-#ifndef TEST
-            ui->slider_brightness->setEnabled(false);
-#endif
-        }
-        else if (monitorBrightnessPercent > 100 || monitorBrightnessPercent < -1)
-        {
-            LOG_WARNING_S() << "invalid monitor brightness" << monitorBrightnessPercent;
-            monitorBrightnessPercent = 0;
-        }
     }
-    ui->slider_brightness->blockSignals(true);
+    QSignalBlocker signalBlocker(ui->slider_brightness);
     setBrightnessPercent(monitorBrightnessPercent);
-    ui->slider_brightness->blockSignals(false);
+
+    /// idle time
+    if (m_sessionSettings)
+    {
+        QSignalBlocker idleTimeSignalBlocker(ui->slider_idleTime);
+        QSignalBlocker idleTimerSwitchBlocker(m_btn_lockScreen);
+        int idleTime = m_sessionSettings->get(KEY_IDLE_DELAY).toInt();
+        if(idleTime<=0)
+        {
+            m_btn_lockScreen->setChecked(false);
+            ui->widget_idleTimeSlider->setEnabled(false);
+            ui->slider_idleTime->setValue(0);
+        }
+        else
+        {
+            m_btn_lockScreen->setChecked(true);
+            ui->widget_idleTimeSlider->setEnabled(true);
+            ui->slider_idleTime->setValue(idleTime);
+        }
+        updateIdleTimeLabel(idleTime);
+    }
+    else
+    {
+        m_btn_lockScreen->setChecked(false);
+        m_btn_lockScreen->setEnabled(false);
+    }
 }
 
 void GeneralSettingsPage::handleComboBoxCurrentIdxChanged(int idx)
@@ -206,21 +300,50 @@ void GeneralSettingsPage::handleComboBoxCurrentIdxChanged(int idx)
     reply.waitForFinished();
     if (reply.isError())
     {
-        LOG_WARNING_S() << "can't set event action,"
-                        << reply.error()
-                        << "event:" << event
-                        << "action:" << action;
+        KLOG_WARNING() << "can't set event action,"
+                       << reply.error()
+                       << "event:" << event
+                       << "action:" << action;
     }
 }
 
-void GeneralSettingsPage::setBrightnessPercent(quint16 percent)
+void GeneralSettingsPage::setBrightnessPercent(int percent)
 {
-    setBrightnessPercentLabel(percent);
-    ui->slider_brightness->setValue(percent);
+    if(percent < 0)
+    {
+        ui->slider_brightness->setEnabled(false);
+        ui->slider_brightness->setValue(0);
+        ui->label_brightnessPercent->setText(tr("brightness adjustment not available"));
+    }
+    else
+    {
+        ui->slider_brightness->setEnabled(true);
+        ui->slider_brightness->setValue(percent);
+        ui->label_brightness->setText(QString("%1%").arg(percent));
+    }
 }
 
-void GeneralSettingsPage::setBrightnessPercentLabel(quint16 percent)
+QSize GeneralSettingsPage::sizeHint() const
 {
-    m_brightnessValue = percent;
-    ui->label_brightnessPercent->setText(QString::number(percent) + "%");
+    return QSize(518, 585);
+}
+
+void GeneralSettingsPage::updateIdleTimeLabel(int min)
+{
+    QString idleTime;
+
+    int hour = min / 60;
+    int minute = min % 60;
+    QStringList temp;
+    if (hour)
+    {
+        temp.append(tr("%1hour").arg(hour));
+    }
+    if (minute)
+    {
+        temp.append(tr("%1minute").arg(minute));
+    }
+    idleTime = temp.join(" ");
+
+    ui->label_idleTime->setText(idleTime);
 }

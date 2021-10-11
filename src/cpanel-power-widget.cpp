@@ -53,7 +53,7 @@ void CPanelPowerWidget::initUI()
 
     ///通用设置
     QIcon generalSettingsIcon;
-    generalSettingsIcon.addFile(":/images/general-settings.svg", QSize(16, 16), QIcon::Normal);
+    generalSettingsIcon.addFile(":/images/kcp-power-general-settings.svg", QSize(16, 16), QIcon::Normal);
     siderBarItem = new QListWidgetItem(generalSettingsIcon, tr("General Settings"));
     siderBarItem->setData(Qt::UserRole, PAGE_GENERAL_SETTINGS);
     ui->sidbar->insertItem(PAGE_GENERAL_SETTINGS, siderBarItem);
@@ -63,7 +63,7 @@ void CPanelPowerWidget::initUI()
 
     ///电源设置
     QIcon powerSettingsIcon;
-    powerSettingsIcon.addPixmap(QPixmap(":/images/power-settings.svg"), QIcon::Normal);
+    powerSettingsIcon.addPixmap(QPixmap(":/images/kcp-power-power-settings.svg"), QIcon::Normal);
     powerSettingsIcon.addPixmap(QPixmap(":/images/power-settings-active.svg"), QIcon::Active);
     siderBarItem = new QListWidgetItem(powerSettingsIcon, tr("Power Settings"));
     siderBarItem->setData(Qt::UserRole, PAGE_POWER_SETTINGS);
@@ -72,13 +72,12 @@ void CPanelPowerWidget::initUI()
     m_powerSettings = new PowerSettingsPage(this);
     ui->stackedWidget->insertWidget(PAGE_POWER_SETTINGS, m_powerSettings);
 
-    ///NOTE:暂时屏蔽做开发
-    //    if(m_powerInterface->on_battery())
+#ifndef TEST
+    if(m_powerInterface->on_battery())
+#endif
     {
         ///电池设置
-        QIcon batterySettingsIcon;
-        batterySettingsIcon.addPixmap(QPixmap(":/images/battery-settings.svg"), QIcon::Normal);
-        batterySettingsIcon.addPixmap(QPixmap(":/images/battery-settings-active.svg"), QIcon::Active);
+        QIcon batterySettingsIcon(":/images/kcp-power-battery-settings.svg");
         siderBarItem = new QListWidgetItem(batterySettingsIcon, tr("Battery Settings"), ui->sidbar);
         siderBarItem->setData(Qt::UserRole, PAGE_BATTERY_SETTINGS);
         ui->sidbar->insertItem(PAGE_BATTERY_SETTINGS, siderBarItem);
