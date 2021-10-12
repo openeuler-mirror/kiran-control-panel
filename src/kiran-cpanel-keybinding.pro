@@ -36,7 +36,8 @@ SOURCES += \
     shortcut-item.cpp \
     custom-line-edit.cpp \
     thread-object.cpp \
-    dbus-wrapper/keybinding-backEnd-proxy.cpp
+    dbus-wrapper/keybinding-backEnd-proxy.cpp \
+    key-map.cpp
 
 HEADERS += \
         main-window.h \
@@ -45,7 +46,8 @@ HEADERS += \
     keybinding_def.h \
     custom-line-edit.h \
     thread-object.h \
-    dbus-wrapper/keybinding-backEnd-proxy.h
+    dbus-wrapper/keybinding-backEnd-proxy.h \
+    key-map.h
 
 FORMS += \
         main-window.ui \

@@ -2,14 +2,32 @@
 #include <kiran-log/qt5-log-i.h>
 #include <kiranwidgets-qt5/widget-property-helper.h>
 #include "custom-line-edit.h"
+#include "key-map.h"
 #include "shortcut-item.h"
 #include "thread-object.h"
 #include "ui_shortcut.h"
+
+QStringList ignoreKeys = {
+    "Tab",
+    "Return",
+    "Enter",
+    "Return"
+    "Space",
+    "Esc"
+    "Home",
+    "End",
+    "PgUp"
+    "PgDown"
+    "Up",
+    "Down",
+    "Left",
+    "Right"};
 
 Shortcut::Shortcut(QWidget *parent) : QWidget(parent),
                                       ui(new Ui::Shortcut)
 {
     ui->setupUi(this);
+    m_keyMap = new KeyMap;
     initUI();
 }
 
@@ -89,7 +107,9 @@ void Shortcut::initUI()
                 ui->stackedWidget->setCurrentWidget(ui->page_shortcut);
             });
 
-    getAllCustomShortcut();
+    getAllShortcuts();
+
+    connect(ui->lineEdit_add_key, &CustomLineEdit::inputKeyCodes, this, &Shortcut::handleInputKeycode);
 }
 
 void Shortcut::createShortcutItem(QVBoxLayout *parent, ShortcutInfo *shortcutInfo, int type)
@@ -119,11 +139,7 @@ void Shortcut::createShortcutItem(QVBoxLayout *parent, ShortcutInfo *shortcutInf
             });
 }
 
-void Shortcut::getAllSystemShortcut()
-{
-}
-
-void Shortcut::getAllCustomShortcut()
+void Shortcut::getAllShortcuts()
 {
     m_thread = new QThread;
     m_threadObject = new ThreadObject;
@@ -137,6 +153,25 @@ void Shortcut::getAllCustomShortcut()
     connect(m_thread, SIGNAL(started()), m_threadObject, SLOT(loadShortcutInfo()));
 
     m_thread->start();
+}
+
+bool Shortcut::isIgnoreKey()
+{
+}
+
+QString Shortcut::convertToString(QList<int> keyCode)
+{
+    QStringList keyStr;
+    foreach (int keycode, keyCode)
+    {
+        if (keycode >= 0x30 && keycode <= 0x39)
+        {
+            keyStr.append(m_keyMap->keycodeToString(keycode).split("Key_").at(1));
+        }
+        else
+            keyStr.append(m_keyMap->keycodeToString(keycode));
+    }
+    return keyStr.join("+");
 }
 
 void Shortcut::deleteShortcut(QString uid)
@@ -182,4 +217,14 @@ void Shortcut::handleShortcutInfo(QList<ShortcutInfo *> shortcutInfoList)
     {
         ui->widget_custom->hide();
     }
+}
+
+void Shortcut::handleInputKeycode(QList<int> keycodes)
+{
+    //转化成字符串列表
+    QString keyStr = convertToString(keycodes);
+    KLOG_INFO() << keyStr;
+    //判断单个key是否在ignoreKey中
+    //转化成字符串（+拼接）
+    //显示在输入框中
 }

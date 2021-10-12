@@ -15,6 +15,7 @@ Q_DECLARE_METATYPE(ShortcutInfo *)
 
 class ThreadObject;
 class ShortcutItem;
+class KeyMap;
 class Shortcut : public QWidget
 {
     Q_OBJECT
@@ -27,14 +28,16 @@ public:
 private:
     void initUI();
     void createShortcutItem(QVBoxLayout *parent, ShortcutInfo *shortcutInfo, int type);
-    void getAllSystemShortcut();
-    void getAllCustomShortcut();
+    void getAllShortcuts();
+    bool isIgnoreKey();
+    QString convertToString(QList<int> keyCode);
 
 public slots:
     void deleteShortcut(QString uid);
     void editShortcut(QString uid, QString name, QString keyCombination, QString action = nullptr);
     void addShortcut();
     void handleShortcutInfo(QList<ShortcutInfo *> shortcutInfoList);
+    void handleInputKeycode(QList<int> keycodes);
 
 private:
     Ui::Shortcut *ui;
@@ -45,7 +48,7 @@ private:
     QToolButton *m_btnCustomApp;
     QThread *m_thread;
     ThreadObject *m_threadObject;
-
+    KeyMap *m_keyMap;
     bool m_isEditMode = false;
 };
 
