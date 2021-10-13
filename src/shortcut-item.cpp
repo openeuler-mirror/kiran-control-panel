@@ -27,19 +27,9 @@ void ShortcutItem::initUI()
     ui->btn_delete->hide();
     ui->btn_delete->setIcon(QIcon(":/images/delete.svg"));
 
-    if (m_name == "disable")
-    {
-        ui->label_name->setText(tr("disable"));
-    }
-    else
-        ui->label_name->setText(m_name);
+    ui->label_name->setText(m_name);
 
-    m_keyCombination = m_keyCombination.replace("<", "");
-    m_keyCombination = m_keyCombination.replace(">", "-");
-    m_keyCombination = m_keyCombination.replace("Control", "Ctrl");
-    QStringList list = m_keyCombination.split("-", QString::SkipEmptyParts);
-    QString keyCombination = list.join("+");
-    ui->label_keybination->setText(keyCombination);
+    ui->label_keybination->setText(m_keyCombination);
 
     connect(ui->btn_delete, &QToolButton::clicked,
             [this] {

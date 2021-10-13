@@ -72,8 +72,32 @@ void ThreadObject::convetToValue(QJsonObject obj, QString key)
                         QJsonValue val = valueObj.value(KEYBINDING_SHORTCUT_JK_KEY_COMBINATION);
                         if (val.isString())
                         {
-                            QString keyCombination = val.toString();
-                            shortcutInfo->keyCombination = keyCombination;
+                            QString tmp = val.toString();
+                            if (tmp.isEmpty())
+                            {
+                                shortcutInfo->keyCombination = QString(tr("None"));
+                            }
+                            else if (tmp.contains("disable", Qt::CaseInsensitive))
+                            {
+                                shortcutInfo->keyCombination = QString(tr("disabled"));
+                            }
+                            else
+                            {
+                                tmp = tmp.replace("<", "");
+                                tmp = tmp.replace(">", "-");
+                                QStringList list = tmp.split("-", QString::SkipEmptyParts);
+                                //handle speciel key
+                                for (int i = 0; i < list.size(); i++)
+                                {
+                                    if (SpecialKeyMap.contains(list.at(i).toLower()))
+                                    {
+                                        list.replace(i, SpecialKeyMap.value(list.at(i).toLower()));
+                                    }
+                                }
+
+                                QString keyCombination = list.join("+");
+                                shortcutInfo->keyCombination = keyCombination;
+                            }
                         }
                     }
                     if (valueObj.contains(KEYBINDING_SHORTCUT_JK_NAME))

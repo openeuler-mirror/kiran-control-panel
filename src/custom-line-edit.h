@@ -13,7 +13,6 @@ public:
     ~CustomLineEdit();
 
 protected:
-    virtual void paintEvent(QPaintEvent *event) override;
     virtual void keyReleaseEvent(QKeyEvent *event);
 
 signals:

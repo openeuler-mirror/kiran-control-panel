@@ -1,27 +1,12 @@
 #include "shortcut.h"
 #include <kiran-log/qt5-log-i.h>
+#include <kiran-message-box.h>
 #include <kiranwidgets-qt5/widget-property-helper.h>
 #include "custom-line-edit.h"
 #include "key-map.h"
 #include "shortcut-item.h"
 #include "thread-object.h"
 #include "ui_shortcut.h"
-
-QStringList ignoreKeys = {
-    "Tab",
-    "Return",
-    "Enter",
-    "Return"
-    "Space",
-    "Esc"
-    "Home",
-    "End",
-    "PgUp"
-    "PgDown"
-    "Up",
-    "Down",
-    "Left",
-    "Right"};
 
 Shortcut::Shortcut(QWidget *parent) : QWidget(parent),
                                       ui(new Ui::Shortcut)
@@ -61,6 +46,7 @@ void Shortcut::initUI()
     m_btnCustomApp->setObjectName("btn_custom_app");
     m_btnCustomApp->setText("Add");
     m_btnCustomApp->setFixedSize(56, 30);
+    m_btnCustomApp->setCursor(Qt::PointingHandCursor);
     hLayoutCustomApp->addStretch();
     hLayoutCustomApp->addWidget(m_btnCustomApp);
     ui->lineEdit_custom_app->setTextMargins(0, 0, m_btnCustomApp->width(), 0);
@@ -70,9 +56,14 @@ void Shortcut::initUI()
     m_btnModifyApp->setObjectName("btn_modify_app");
     m_btnModifyApp->setText("Add");
     m_btnModifyApp->setFixedSize(56, 30);
+    m_btnModifyApp->setCursor(Qt::PointingHandCursor);
     hLayoutModifyApp->addStretch();
     hLayoutModifyApp->addWidget(m_btnModifyApp);
     ui->lineEdit_modify_app->setTextMargins(0, 0, m_btnModifyApp->width(), 0);
+
+    m_lECustomKey = new CustomLineEdit;
+    ui->vlayout_CSKey->addWidget(m_lECustomKey);
+    connect(m_lECustomKey, &CustomLineEdit::inputKeyCodes, this, &Shortcut::handleInputKeycode);
 
     connect(ui->btn_shortcut_add, &QPushButton::clicked,
             [this] {
@@ -108,8 +99,6 @@ void Shortcut::initUI()
             });
 
     getAllShortcuts();
-
-    connect(ui->lineEdit_add_key, &CustomLineEdit::inputKeyCodes, this, &Shortcut::handleInputKeycode);
 }
 
 void Shortcut::createShortcutItem(QVBoxLayout *parent, ShortcutInfo *shortcutInfo, int type)
@@ -155,18 +144,31 @@ void Shortcut::getAllShortcuts()
     m_thread->start();
 }
 
-bool Shortcut::isIgnoreKey()
+bool Shortcut::isConflict(QString keyStr)
 {
+    foreach (ShortcutInfo *shortcut, m_shortcuts)
+    {
+        if (!QString::compare(shortcut->keyCombination, keyStr, Qt::CaseInsensitive))
+            return true;
+    }
+    return false;
 }
 
 QString Shortcut::convertToString(QList<int> keyCode)
 {
     QStringList keyStr;
+    QString str;
     foreach (int keycode, keyCode)
     {
-        if (keycode >= 0x30 && keycode <= 0x39)
+        str = m_keyMap->keycodeToString(keycode);
+        KLOG_INFO() << str.toLower();
+        if (keycode >= 0x30 && keycode <= 0x39)  //数字转化
         {
-            keyStr.append(m_keyMap->keycodeToString(keycode).split("Key_").at(1));
+            keyStr.append(str.split("Key_").at(1));
+        }
+        else if (keyCode.size() > 1 && SpecialKeyMap.contains(str.toLower()))  //特殊字符转化
+        {
+            keyStr.append(SpecialKeyMap.value(str.toLower()));
         }
         else
             keyStr.append(m_keyMap->keycodeToString(keycode));
@@ -195,15 +197,15 @@ void Shortcut::handleShortcutInfo(QList<ShortcutInfo *> shortcutInfoList)
     {
         if (shortcutInfo->type == SHORTCUT_TYPE_SYSTEM)
         {
-            if (shortcutInfo->kind == "Sound")
+            if (shortcutInfo->kind == SHORTCUT_KIND_SOUND)
                 createShortcutItem(ui->vlayout_sound, shortcutInfo, shortcutInfo->type);
-            else if (shortcutInfo->kind == "窗口管理")
+            else if (shortcutInfo->kind == SHORTCUT_KIND_WINDOW_MANAGE)
                 createShortcutItem(ui->vlayout_marco, shortcutInfo, shortcutInfo->type);
-            else if (shortcutInfo->kind == "System")
+            else if (shortcutInfo->kind == SHORTCUT_KIND_SYSTEM)
                 createShortcutItem(ui->vlayout_system, shortcutInfo, shortcutInfo->type);
-            else if (shortcutInfo->kind == "Accessibility")
+            else if (shortcutInfo->kind == SHORTCUT_KIND_ACCESSIBILITY)
                 createShortcutItem(ui->vlayout_accessibility, shortcutInfo, shortcutInfo->type);
-            else if (shortcutInfo->kind == "桌面")
+            else if (shortcutInfo->kind == SHORTCUT_KIND_DESKTOP)
                 createShortcutItem(ui->vlayout_desktop, shortcutInfo, shortcutInfo->type);
         }
         else
@@ -223,8 +225,41 @@ void Shortcut::handleInputKeycode(QList<int> keycodes)
 {
     //转化成字符串列表
     QString keyStr = convertToString(keycodes);
-    KLOG_INFO() << keyStr;
+
     //判断单个key是否在ignoreKey中
-    //转化成字符串（+拼接）
+    if (keycodes.size() == 1)
+    {
+        KLOG_INFO() << keyStr;
+        if (ignoreKeys.contains(keyStr, Qt::CaseInsensitive) ||
+            keyStr.contains(QRegExp("[A-Z]")) ||
+            keyStr.contains(QRegExp("[0-9]")))
+        {
+            KiranMessageBox::message(nullptr,
+                                     tr("Failed"),
+                                     QString(tr("Cannot use shortcut \"%1\", Because you cannot enter with this key."
+                                                "Please try again using Ctrl, alt, or shift at the same time."))
+                                         .arg(m_lECustomKey->text().isEmpty() ? keyStr : m_lECustomKey->text()),
+                                     KiranMessageBox::Ok);
+            m_lECustomKey->clear();
+            return;
+        }
+    }
+
+    //    //判断是否重复
+    //    if (isConflict(keyStr))
+    //    {
+    //        //        KiranMessageBox::message(nullptr,
+    //        //                                 QString(tr("Shortcut keys %1 are already used in %2,")).arg(),
+    //        //                                 QString(tr("If you reassign shortcut keys to %1, %2 Shortcut keys for will be disabled.")))
+    //        KLOG_INFO() << "isConflict";
+    //        m_lECustomKey->clear();
+    //        return;
+    //    }
+    //
+    //解决输入Ctrl+v会显示剪切板中的内容
+    KLOG_INFO() << "ok: " << keyStr;
+    m_lECustomKey->setText(keyStr);
+
     //显示在输入框中
+    m_lECustomKey->clearFocus();
 }

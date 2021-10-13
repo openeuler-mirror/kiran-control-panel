@@ -65,34 +65,5 @@ ShortcutItem:hover
     background-color:#393939;
 }
 
-CustomLineEdit
-{
-    border:1px solid #393939;
-    border-radius:6px;
-}
-
-CustomLineEdit:focus
-{
-    border:1px solid #2eb3ff;
-}
-
-CustomLineEdit QLineEdit#lineEdit
-{
-    border:none;
-}
-
-CustomLineEdit QToolButton#button
-{
-    border-radius:3px;
-    background-color:#2eb3ff;
-}
-CustomLineEdit QToolButton#button:hover
-{
-    background-color:#77ceff;
-}
-CustomLineEdit QToolButton#button:pressed
-{
-    background-color:#2eb3ff;
-}
 
 

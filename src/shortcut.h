@@ -16,6 +16,7 @@ Q_DECLARE_METATYPE(ShortcutInfo *)
 class ThreadObject;
 class ShortcutItem;
 class KeyMap;
+class CustomLineEdit;
 class Shortcut : public QWidget
 {
     Q_OBJECT
@@ -29,7 +30,7 @@ private:
     void initUI();
     void createShortcutItem(QVBoxLayout *parent, ShortcutInfo *shortcutInfo, int type);
     void getAllShortcuts();
-    bool isIgnoreKey();
+    bool isConflict(QString keyStr);
     QString convertToString(QList<int> keyCode);
 
 public slots:
@@ -46,6 +47,7 @@ private:
     QList<ShortcutItem *> m_shortcutItem;
     QToolButton *m_btnModifyApp;
     QToolButton *m_btnCustomApp;
+    CustomLineEdit *m_lECustomKey;
     QThread *m_thread;
     ThreadObject *m_threadObject;
     KeyMap *m_keyMap;

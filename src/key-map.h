@@ -62,21 +62,21 @@ public:
         Direction_R = 0x01000060,
         Space = 0x20,
         Any = Space,
-        Exclam = 0x21,
-        QuoteDbl = 0x22,
-        NumberSign = 0x23,
-        Dollar = 0x24,
+        Exclam = 0x21,      //!
+        QuoteDbl = 0x22,    //
+        NumberSign = 0x23,  //#
+        Dollar = 0x24,      //$
         Percent = 0x25,
-        Ampersand = 0x26,
+        Ampersand = 0x26,  //&
         Apostrophe = 0x27,
         ParenLeft = 0x28,
         ParenRight = 0x29,
-        Asterisk = 0x2a,
+        Asterisk = 0x2a,  //*
         Plus = 0x2b,
-        Comma = 0x2c,
+        Comma = 0x2c,  // ,
         Minus = 0x2d,
-        Period = 0x2e,
-        Slash = 0x2f,
+        Period = 0x2e,  //.
+        Slash = 0x2f,   // /
         Key_0 = 0x30,
         Key_1 = 0x31,
         Key_2 = 0x32,
@@ -119,7 +119,17 @@ public:
         W = 0x57,
         X = 0x58,
         Y = 0x59,
-        Z = 0x5a
+        Z = 0x5a,
+        BracketLeft = 0x5b,  // [
+        Backslash = 0x5c,
+        BracketRight = 0x5d,  // ]
+        AsciiCircum = 0x5e,
+        Underscore = 0x5f,
+        QuoteLeft = 0x60,
+        BraceLeft = 0x7b,   //{
+        Bar = 0x7c,         //|
+        BraceRight = 0x7d,  //}
+        AsciiTilde = 0x7e   //~
     };
     Q_ENUM(Keys)
 
