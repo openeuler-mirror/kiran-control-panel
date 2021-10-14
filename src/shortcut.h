@@ -41,6 +41,9 @@ public slots:
     void handleInputKeycode(QList<int> keycodes);
 
 private:
+    virtual bool eventFilter(QObject *target, QEvent *event);
+
+private:
     Ui::Shortcut *ui;
     QList<ShortcutInfo *> m_shortcuts;
     //    QList<ShortcutInfo *> m_customShortcuts;
@@ -48,6 +51,7 @@ private:
     QToolButton *m_btnModifyApp;
     QToolButton *m_btnCustomApp;
     CustomLineEdit *m_lECustomKey;
+    CustomLineEdit *m_lEModifyKey;
     QThread *m_thread;
     ThreadObject *m_threadObject;
     KeyMap *m_keyMap;

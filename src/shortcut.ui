@@ -32,7 +32,7 @@
    <item>
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="page_shortcut">
       <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -145,8 +145,8 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>633</width>
-                <height>429</height>
+                <width>105</width>
+                <height>328</height>
                </rect>
               </property>
               <property name="sizePolicy">
@@ -541,7 +541,7 @@
         </layout>
        </item>
        <item>
-        <layout class="QVBoxLayout" name="vlayout_CSKey">
+        <layout class="QVBoxLayout" name="vlayout_custom_key">
          <property name="spacing">
           <number>10</number>
          </property>
@@ -742,7 +742,7 @@
         </widget>
        </item>
        <item>
-        <layout class="QVBoxLayout" name="verticalLayout_16">
+        <layout class="QVBoxLayout" name="vlayout_modify_key">
          <property name="spacing">
           <number>10</number>
          </property>
@@ -750,22 +750,6 @@
           <widget class="QLabel" name="label_12">
            <property name="text">
             <string>Shortcut key</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="CustomLineEdit" name="lineEdit_modify_key">
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>40</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>40</height>
-            </size>
            </property>
           </widget>
          </item>
@@ -871,13 +855,6 @@
    </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>CustomLineEdit</class>
-   <extends>QLineEdit</extends>
-   <header>custom-line-edit.h</header>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>

@@ -2,12 +2,13 @@
 #include <kiran-log/qt5-log-i.h>
 #include <kiran-message-box.h>
 #include <kiranwidgets-qt5/widget-property-helper.h>
+#include <QClipboard>
+#include <QKeyEvent>
 #include "custom-line-edit.h"
 #include "key-map.h"
 #include "shortcut-item.h"
 #include "thread-object.h"
 #include "ui_shortcut.h"
-
 Shortcut::Shortcut(QWidget *parent) : QWidget(parent),
                                       ui(new Ui::Shortcut)
 {
@@ -62,8 +63,16 @@ void Shortcut::initUI()
     ui->lineEdit_modify_app->setTextMargins(0, 0, m_btnModifyApp->width(), 0);
 
     m_lECustomKey = new CustomLineEdit;
-    ui->vlayout_CSKey->addWidget(m_lECustomKey);
+    m_lECustomKey->setPlaceholderText(tr("Please press the new shortcut key"));
+    m_lECustomKey->installEventFilter(this);
+    ui->vlayout_custom_key->addWidget(m_lECustomKey);
     connect(m_lECustomKey, &CustomLineEdit::inputKeyCodes, this, &Shortcut::handleInputKeycode);
+
+    m_lEModifyKey = new CustomLineEdit;
+    m_lEModifyKey->setPlaceholderText(tr("Please press the new shortcut key"));
+    m_lEModifyKey->installEventFilter(this);
+    ui->vlayout_modify_key->addWidget(m_lEModifyKey);
+    connect(m_lEModifyKey, &CustomLineEdit::inputKeyCodes, this, &Shortcut::handleInputKeycode);
 
     connect(ui->btn_shortcut_add, &QPushButton::clicked,
             [this] {
@@ -223,6 +232,7 @@ void Shortcut::handleShortcutInfo(QList<ShortcutInfo *> shortcutInfoList)
 
 void Shortcut::handleInputKeycode(QList<int> keycodes)
 {
+    CustomLineEdit *senderLineEdit = qobject_cast<CustomLineEdit *>(sender());
     //转化成字符串列表
     QString keyStr = convertToString(keycodes);
 
@@ -238,13 +248,13 @@ void Shortcut::handleInputKeycode(QList<int> keycodes)
                                      tr("Failed"),
                                      QString(tr("Cannot use shortcut \"%1\", Because you cannot enter with this key."
                                                 "Please try again using Ctrl, alt, or shift at the same time."))
-                                         .arg(m_lECustomKey->text().isEmpty() ? keyStr : m_lECustomKey->text()),
+                                         .arg(keyStr),
                                      KiranMessageBox::Ok);
-            m_lECustomKey->clear();
+            senderLineEdit->clear();
+            senderLineEdit->clearFocus();
             return;
         }
     }
-
     //    //判断是否重复
     //    if (isConflict(keyStr))
     //    {
@@ -256,10 +266,27 @@ void Shortcut::handleInputKeycode(QList<int> keycodes)
     //        return;
     //    }
     //
-    //解决输入Ctrl+v会显示剪切板中的内容
     KLOG_INFO() << "ok: " << keyStr;
-    m_lECustomKey->setText(keyStr);
+    senderLineEdit->setText(keyStr);
 
     //显示在输入框中
-    m_lECustomKey->clearFocus();
+    senderLineEdit->clearFocus();
+}
+
+//解决输入Ctrl+v会显示剪切板中的内容
+bool Shortcut::eventFilter(QObject *target, QEvent *event)
+{
+    if (target == m_lECustomKey || target == m_lEModifyKey)
+    {
+        if (event->type() == QEvent::KeyPress)
+        {
+            QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
+            if (keyEvent->matches(QKeySequence::Paste))
+            {
+                KLOG_INFO() << "Ctrl + V";
+                return true;
+            }
+        }
+    }
+    return QWidget::eventFilter(target, event);
 }
