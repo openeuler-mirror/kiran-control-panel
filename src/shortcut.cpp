@@ -163,6 +163,19 @@ bool Shortcut::isConflict(QString keyStr)
     return false;
 }
 
+bool Shortcut::isValid(QList<int> keycodes)
+{
+    int count = 0;
+    foreach (int keycode, keycodes)
+    {
+        if (keycode == Qt::Key_Shift || keycode == Qt::Key_Control || keycode == Qt::Key_Alt)
+            count++;
+    }
+    if (count == keycodes.size())
+        return false;
+    return true;
+}
+
 QString Shortcut::convertToString(QList<int> keyCode)
 {
     QStringList keyStr;
@@ -255,6 +268,9 @@ void Shortcut::handleInputKeycode(QList<int> keycodes)
             return;
         }
     }
+    //判断快捷键输入是否合法（排除都是修饰键的情况）
+    if (!isValid(keycodes))
+        return;
     //    //判断是否重复
     //    if (isConflict(keyStr))
     //    {

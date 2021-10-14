@@ -31,6 +31,7 @@ private:
     void createShortcutItem(QVBoxLayout *parent, ShortcutInfo *shortcutInfo, int type);
     void getAllShortcuts();
     bool isConflict(QString keyStr);
+    bool isValid(QList<int> keycodes);
     QString convertToString(QList<int> keyCode);
 
 public slots:
