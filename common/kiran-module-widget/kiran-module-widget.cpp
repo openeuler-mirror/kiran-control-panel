@@ -31,6 +31,7 @@ KiranModuleWidget::KiranModuleWidget(QWidget *parent)
 {
     ui->setupUi(this);
     init();
+    ui->widget_siderbar->setStyleSheet("QWidget#widget_siderbar{border-right:1px solid rgba(177,177,177,0.1)};");
 }
 
 KiranModuleWidget::~KiranModuleWidget()
