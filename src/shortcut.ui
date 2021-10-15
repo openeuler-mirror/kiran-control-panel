@@ -32,7 +32,7 @@
    <item>
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>2</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="page_shortcut">
       <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -145,8 +145,8 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>105</width>
-                <height>328</height>
+                <width>633</width>
+                <height>429</height>
                </rect>
               </property>
               <property name="sizePolicy">
@@ -493,7 +493,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="lineEdit_add_name">
+          <widget class="QLineEdit" name="lineEdit_custom_name">
            <property name="minimumSize">
             <size>
              <width>0</width>

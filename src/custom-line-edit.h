@@ -14,12 +14,15 @@ public:
 
 protected:
     virtual void keyReleaseEvent(QKeyEvent *event);
+    virtual void focusInEvent(QFocusEvent *e);
+    virtual void focusOutEvent(QFocusEvent *e);
 
 signals:
     void inputKeyCodes(QList<int> keycodes);
 
 private:
     void initUI();
+    bool m_flag = false;
 
 private:
 };

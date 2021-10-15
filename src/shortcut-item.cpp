@@ -8,12 +8,8 @@ ShortcutItem::ShortcutItem(int type, ShortcutInfo *shortcutInfo, QWidget *parent
 
 {
     ui->setupUi(this);
+    m_shortcutInfo = shortcutInfo;
     m_type = type;
-    m_name = shortcutInfo->name;
-    m_keyCombination = shortcutInfo->keyCombination;
-    m_uid = shortcutInfo->uid;
-    m_action = shortcutInfo->action;
-
     initUI();
 }
 
@@ -27,26 +23,56 @@ void ShortcutItem::initUI()
     ui->btn_delete->hide();
     ui->btn_delete->setIcon(QIcon(":/images/delete.svg"));
 
-    ui->label_name->setText(m_name);
+    ui->label_name->setText(m_shortcutInfo->name);
 
-    ui->label_keybination->setText(m_keyCombination);
+    ui->label_keybination->setText(handleKeyCombination(m_shortcutInfo->keyCombination));
 
     connect(ui->btn_delete, &QToolButton::clicked,
             [this] {
-                sigDelete(m_uid);
+                sigDelete(m_shortcutInfo->uid);
             });
+}
+
+QString ShortcutItem::handleKeyCombination(QString origStr)
+{
+    QString keyCombination;
+    if (origStr.isEmpty())
+    {
+        keyCombination = QString(tr("None"));
+    }
+    else if (origStr.contains("disable", Qt::CaseInsensitive))
+    {
+        keyCombination = QString(tr("disabled"));
+    }
+    else
+    {
+        origStr = origStr.replace("<", "");
+        origStr = origStr.replace(">", "-");
+        QStringList list = origStr.split("-", QString::SkipEmptyParts);
+        //handle speciel key
+        for (int i = 0; i < list.size(); i++)
+        {
+            if (SpecialKeyMap.contains(list.at(i).toLower()))
+            {
+                list.replace(i, SpecialKeyMap.value(list.at(i).toLower()));
+            }
+        }
+
+        keyCombination = list.join("+");
+    }
+    return keyCombination;
 }
 
 void ShortcutItem::setname(QString name)
 {
-    m_name = name;
-    ui->label_name->setText(m_name);
+    m_shortcutInfo->name = name;
+    ui->label_name->setText(name);
 }
 
 void ShortcutItem::setKeyBinding(QString keyCombination)
 {
-    m_keyCombination = keyCombination;
-    ui->label_keybination->setText(m_keyCombination);
+    m_shortcutInfo->keyCombination = keyCombination;
+    ui->label_keybination->setText(keyCombination);
 }
 
 void ShortcutItem::setEditMode(bool isEditMode)
@@ -70,17 +96,22 @@ void ShortcutItem::mousePressEvent(QMouseEvent *event)
 {
     if (event->button() == Qt::LeftButton)
     {
-        emit sigClicked(m_type, m_uid, m_name, m_keyCombination, m_action);
+        emit sigClicked(m_type, m_shortcutInfo->uid, m_shortcutInfo->name, m_shortcutInfo->keyCombination, m_shortcutInfo->action);
     }
     QWidget::mousePressEvent(event);
 }
 
 QString ShortcutItem::getName()
 {
-    return m_name;
+    return m_shortcutInfo->name;
 }
 
 QString ShortcutItem::getUid()
 {
-    return m_uid;
+    return m_shortcutInfo->uid;
+}
+
+ShortcutInfo *ShortcutItem::getShortcut()
+{
+    return m_shortcutInfo;
 }

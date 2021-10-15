@@ -1,19 +1,28 @@
 #include "shortcut.h"
 #include <kiran-log/qt5-log-i.h>
 #include <kiran-message-box.h>
+#include <kiran-session-daemon/keybinding-i.h>
 #include <kiranwidgets-qt5/widget-property-helper.h>
 #include <QClipboard>
+#include <QFileDialog>
 #include <QKeyEvent>
 #include "custom-line-edit.h"
+#include "dbus-wrapper/keybinding-backEnd-proxy.h"
 #include "key-map.h"
 #include "shortcut-item.h"
 #include "thread-object.h"
 #include "ui_shortcut.h"
+
+#define APPLICATION_DIR "/usr/share/applications"
+
 Shortcut::Shortcut(QWidget *parent) : QWidget(parent),
                                       ui(new Ui::Shortcut)
 {
     ui->setupUi(this);
     m_keyMap = new KeyMap;
+    m_keybindingInterface = new KeybindingBackEndProxy(KEYBINDING_DBUS_NAME,
+                                                       KEYBINDING_OBJECT_PATH,
+                                                       QDBusConnection::sessionBus());
     initUI();
 }
 
@@ -22,6 +31,10 @@ Shortcut::~Shortcut()
     delete ui;
     m_thread->quit();
     m_thread->wait();
+    if (m_keyMap)
+        delete m_keyMap;
+    if (m_keybindingInterface)
+        delete m_keybindingInterface;
 }
 
 QSize Shortcut::sizeHint() const
@@ -32,7 +45,11 @@ QSize Shortcut::sizeHint() const
 void Shortcut::initUI()
 {
     ui->lineEdit_search->setPlaceholderText(tr("Please enter a search keyword..."));
+
     Kiran::WidgetPropertyHelper::setButtonType(ui->btn_shortcut_add, Kiran::BUTTON_Default);
+    Kiran::WidgetPropertyHelper::setButtonType(ui->btn_page_add, Kiran::BUTTON_Default);
+    Kiran::WidgetPropertyHelper::setButtonType(ui->btn_save, Kiran::BUTTON_Default);
+
     ui->stackedWidget->setCurrentWidget(ui->page_shortcut);
     ui->stackedWidget_search->setCurrentWidget(ui->page_shortcut_list);
 
@@ -65,25 +82,18 @@ void Shortcut::initUI()
     m_lECustomKey = new CustomLineEdit;
     m_lECustomKey->setPlaceholderText(tr("Please press the new shortcut key"));
     m_lECustomKey->installEventFilter(this);
+    m_lECustomKey->setReadOnly(true);
     ui->vlayout_custom_key->addWidget(m_lECustomKey);
     connect(m_lECustomKey, &CustomLineEdit::inputKeyCodes, this, &Shortcut::handleInputKeycode);
 
     m_lEModifyKey = new CustomLineEdit;
     m_lEModifyKey->setPlaceholderText(tr("Please press the new shortcut key"));
     m_lEModifyKey->installEventFilter(this);
+    m_lEModifyKey->setReadOnly(true);
     ui->vlayout_modify_key->addWidget(m_lEModifyKey);
     connect(m_lEModifyKey, &CustomLineEdit::inputKeyCodes, this, &Shortcut::handleInputKeycode);
 
-    connect(ui->btn_shortcut_add, &QPushButton::clicked,
-            [this] {
-                KLOG_INFO() << "btn_shortcut_add clicked!";
-                ui->stackedWidget->setCurrentWidget(ui->page_add);
-                connect(ui->btn_page_add, &QPushButton::clicked,
-                        [=] {
-                            //dbus ->AddCustomShortcut
-                            //successful ->ui->widget_custom->show();
-                        });
-            });
+    connect(ui->btn_shortcut_add, &QPushButton::clicked, this, &Shortcut::handleAddNewShortcut);
 
     connect(ui->btn_edit, &QToolButton::clicked,
             [this] {
@@ -119,6 +129,8 @@ void Shortcut::createShortcutItem(QVBoxLayout *parent, ShortcutInfo *shortcutInf
     connect(item, &ShortcutItem::sigClicked,
             [=](int type, QString uid, QString name, QString keyCombination, QString action) {
                 ui->stackedWidget->setCurrentWidget(ui->page_modify);
+                ui->lineEdit_modify_name->setText(name);
+                ui->lineEdit_modify_app->setText(action);
                 if (type == SHORTCUT_TYPE_SYSTEM)
                 {
                     ui->widget_modify_app->hide();
@@ -130,11 +142,7 @@ void Shortcut::createShortcutItem(QVBoxLayout *parent, ShortcutInfo *shortcutInf
                             //dbus -> ModifyCustomShortcut/ModifySystemShortcut
                         });
             });
-    connect(item, &ShortcutItem::sigDelete,
-            [=](QString uid) {
-                //dbus -> delete
-                //if(m_shortcutItem.size == 0)  ---->ui->widget_custom->hide();
-            });
+    connect(item, &ShortcutItem::sigDelete, this, &Shortcut::deleteShortcut);
 }
 
 void Shortcut::getAllShortcuts()
@@ -153,12 +161,15 @@ void Shortcut::getAllShortcuts()
     m_thread->start();
 }
 
-bool Shortcut::isConflict(QString keyStr)
+bool Shortcut::isConflict(QString &originName)
 {
     foreach (ShortcutInfo *shortcut, m_shortcuts)
     {
-        if (!QString::compare(shortcut->keyCombination, keyStr, Qt::CaseInsensitive))
+        if (!QString::compare(shortcut->keyCombination, m_newKey, Qt::CaseInsensitive))
+        {
+            originName = shortcut->name;
             return true;
+        }
     }
     return false;
 }
@@ -195,11 +206,59 @@ QString Shortcut::convertToString(QList<int> keyCode)
         else
             keyStr.append(m_keyMap->keycodeToString(keycode));
     }
-    return keyStr.join("+");
+    return keyStr.join("+");  //用于显示
+}
+
+QString Shortcut::convertToBackendStr(QString keyStr)
+{
+    QStringList tmp = keyStr.split("+");
+    for (int i = 0; i < tmp.size(); i++)
+    {
+        if (!tmp.at(i).compare("Alt", Qt::CaseInsensitive) ||
+            !tmp.at(i).compare("Shift", Qt::CaseInsensitive) ||
+            !tmp.at(i).compare("Ctrl", Qt::CaseInsensitive))
+        {
+            QString str = "<" + tmp.at(i) + ">";
+            tmp.replace(i, str);
+        }
+    }
+    return tmp.join("");
+}
+
+void Shortcut::openFileSys()
+{
+    QToolButton *senderbtn = qobject_cast<QToolButton *>(sender());
+    QLineEdit *lineEdit = qobject_cast<QLineEdit *>(senderbtn->parent());
+
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),
+                                                    APPLICATION_DIR);
+    if (fileName.isNull())
+        return;
+    lineEdit->setText(fileName);
 }
 
 void Shortcut::deleteShortcut(QString uid)
 {
+    KLOG_INFO() << "deleteShortcut";
+    ShortcutItem *item = qobject_cast<ShortcutItem *>(sender());
+    QDBusPendingReply<> reply = m_keybindingInterface->DeleteCustomShortcut(uid);
+    reply.waitForFinished();
+    if (reply.isError() || !reply.isValid())
+    {
+        KLOG_DEBUG() << "Call DeleteCustomShortcut method failed "
+                     << " Error: " << reply.error().message();
+        return;
+    }
+    else
+    {
+        m_shortcutItem.removeOne(item);
+        ShortcutInfo *shortcut = item->getShortcut();
+        m_shortcuts.removeOne(shortcut);
+        item->deleteLater();
+        m_customShortcutCount--;
+        if (m_customShortcutCount == 0)
+            ui->widget_custom->hide();
+    }
 }
 
 void Shortcut::editShortcut(QString uid, QString name, QString keyCombination, QString action)
@@ -212,7 +271,6 @@ void Shortcut::addShortcut()
 
 void Shortcut::handleShortcutInfo(QList<ShortcutInfo *> shortcutInfoList)
 {
-    int customCount = 0;
     m_shortcuts = shortcutInfoList;
 
     foreach (ShortcutInfo *shortcutInfo, shortcutInfoList)
@@ -233,11 +291,11 @@ void Shortcut::handleShortcutInfo(QList<ShortcutInfo *> shortcutInfoList)
         else
         {
             createShortcutItem(ui->vlayout_custom, shortcutInfo, shortcutInfo->type);
-            customCount++;
+            m_customShortcutCount++;
         }
     }
 
-    if (customCount == 0)
+    if (m_customShortcutCount == 0)
     {
         ui->widget_custom->hide();
     }
@@ -247,7 +305,7 @@ void Shortcut::handleInputKeycode(QList<int> keycodes)
 {
     CustomLineEdit *senderLineEdit = qobject_cast<CustomLineEdit *>(sender());
     //转化成字符串列表
-    QString keyStr = convertToString(keycodes);
+    QString keyStr = convertToString(keycodes);  //用于显示
 
     //判断单个key是否在ignoreKey中
     if (keycodes.size() == 1)
@@ -263,30 +321,93 @@ void Shortcut::handleInputKeycode(QList<int> keycodes)
                                                 "Please try again using Ctrl, alt, or shift at the same time."))
                                          .arg(keyStr),
                                      KiranMessageBox::Ok);
-            senderLineEdit->clear();
-            senderLineEdit->clearFocus();
             return;
         }
     }
     //判断快捷键输入是否合法（排除都是修饰键的情况）
     if (!isValid(keycodes))
         return;
-    //    //判断是否重复
-    //    if (isConflict(keyStr))
-    //    {
-    //        //        KiranMessageBox::message(nullptr,
-    //        //                                 QString(tr("Shortcut keys %1 are already used in %2,")).arg(),
-    //        //                                 QString(tr("If you reassign shortcut keys to %1, %2 Shortcut keys for will be disabled.")))
-    //        KLOG_INFO() << "isConflict";
-    //        m_lECustomKey->clear();
-    //        return;
-    //    }
-    //
+
+    m_newKey = convertToBackendStr(keyStr);
+    //判断是否重复
+    QString originName;
+    if (isConflict(originName))
+    {
+        KiranMessageBox::message(nullptr,
+                                 QString(tr("Failed")),
+                                 QString(tr("Shortcut keys %1 are already used in %2,If you reassign the shortcut keys, %2 Shortcut keys for will be disabled.")).arg(keyStr).arg(originName),
+                                 KiranMessageBox::Cancel | KiranMessageBox::Ok);
+        KLOG_INFO() << "isConflict";
+        m_lECustomKey->clear();
+        return;
+    }
+
     KLOG_INFO() << "ok: " << keyStr;
     senderLineEdit->setText(keyStr);
 
     //显示在输入框中
     senderLineEdit->clearFocus();
+}
+
+void Shortcut::handleAddNewShortcut()
+{
+    ui->stackedWidget->setCurrentWidget(ui->page_add);
+    connect(m_btnCustomApp, &QToolButton::clicked, this, &Shortcut::openFileSys);
+
+    connect(ui->btn_page_add, &QPushButton::clicked,
+            [=] {
+                KLOG_INFO() << "handleAddNewShortcut";
+                QString newName = ui->lineEdit_custom_name->text();
+                QString newApp = ui->lineEdit_custom_app->text();
+                QString newKey = m_lECustomKey->text();
+                if (newName.isEmpty() || newApp.isEmpty() || newKey.isEmpty())
+                {
+                    KiranMessageBox::message(nullptr,
+                                             tr("Warning"),
+                                             tr("Please complete the shortcut information!"),
+                                             KiranMessageBox::Ok);
+                }
+
+                //判断用户手动输入的路径是否存在
+                QFile file(newApp);
+                if (!file.exists())
+                {
+                    KiranMessageBox::message(nullptr,
+                                             tr("Failed"),
+                                             tr("The application you entered does not exist!"),
+                                             KiranMessageBox::Ok);
+                    file.close();
+                    return;
+                }
+                file.close();
+
+                //dbus ->AddCustomShortcut
+                QDBusPendingReply<QString> reply = m_keybindingInterface->AddCustomShortcut(newName, newApp, m_newKey);
+                reply.waitForFinished();
+                if (reply.isError() || !reply.isValid())
+                {
+                    KLOG_DEBUG() << "Call AddCustomShortcut method failed "
+                                 << " Error: " << reply.error().message();
+                    return;
+                }
+                else
+                {
+                    QString uid = reply.argumentAt(0).toString();
+                    ShortcutInfo *shortcut = new ShortcutInfo;
+                    shortcut->name = newName;
+                    shortcut->action = newApp;
+                    shortcut->keyCombination = m_newKey;
+                    shortcut->type = SHORTCUT_TYPE_CUSTOM;
+                    shortcut->uid = uid;
+                    m_shortcuts.append(shortcut);
+
+                    ui->widget_custom->show();
+                    createShortcutItem(ui->vlayout_custom, shortcut, SHORTCUT_TYPE_CUSTOM);
+                    ui->stackedWidget->setCurrentWidget(ui->page_shortcut);
+                    m_customShortcutCount++;
+                }
+                //successful ->ui->widget_custom->show();
+            });
 }
 
 //解决输入Ctrl+v会显示剪切板中的内容

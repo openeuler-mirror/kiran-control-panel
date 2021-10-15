@@ -22,6 +22,7 @@ public:
     void setEditMode(bool isEditMode);
     QString getName();
     QString getUid();
+    ShortcutInfo *getShortcut();
 
 protected:
     virtual void paintEvent(QPaintEvent *event) override;
@@ -29,6 +30,7 @@ protected:
 
 private:
     void initUI();
+    QString handleKeyCombination(QString origStr);
 
 signals:
     void sigDelete(QString uid);
@@ -37,10 +39,7 @@ signals:
 private:
     Ui::ShortcutItem *ui;
     int m_type;
-    QString m_uid;
-    QString m_name;
-    QString m_keyCombination;
-    QString m_action;
+    ShortcutInfo *m_shortcutInfo;
     bool m_isPressed = false;
 };
 

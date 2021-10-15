@@ -2,6 +2,7 @@
 #define SHORTCUT_H
 
 #include <keybinding_def.h>
+#include <QLineEdit>
 #include <QToolButton>
 #include <QVBoxLayout>
 #include <QWidget>
@@ -17,6 +18,7 @@ class ThreadObject;
 class ShortcutItem;
 class KeyMap;
 class CustomLineEdit;
+class KeybindingBackEndProxy;
 class Shortcut : public QWidget
 {
     Q_OBJECT
@@ -30,9 +32,10 @@ private:
     void initUI();
     void createShortcutItem(QVBoxLayout *parent, ShortcutInfo *shortcutInfo, int type);
     void getAllShortcuts();
-    bool isConflict(QString keyStr);
+    bool isConflict(QString &originName);
     bool isValid(QList<int> keycodes);
     QString convertToString(QList<int> keyCode);
+    QString convertToBackendStr(QString keyStr);
 
 public slots:
     void deleteShortcut(QString uid);
@@ -40,6 +43,8 @@ public slots:
     void addShortcut();
     void handleShortcutInfo(QList<ShortcutInfo *> shortcutInfoList);
     void handleInputKeycode(QList<int> keycodes);
+    void handleAddNewShortcut();
+    void openFileSys();
 
 private:
     virtual bool eventFilter(QObject *target, QEvent *event);
@@ -56,7 +61,10 @@ private:
     QThread *m_thread;
     ThreadObject *m_threadObject;
     KeyMap *m_keyMap;
+    KeybindingBackEndProxy *m_keybindingInterface;
     bool m_isEditMode = false;
+    QString m_newKey;
+    int m_customShortcutCount = 0;
 };
 
 #endif  // SHORTCUT_H
