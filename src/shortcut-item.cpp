@@ -71,8 +71,17 @@ void ShortcutItem::setname(QString name)
 
 void ShortcutItem::setKeyBinding(QString keyCombination)
 {
+    keyCombination = keyCombination.replace("<", "");
+    keyCombination = keyCombination.replace(">", "-");
+    QStringList list = keyCombination.split("-", QString::SkipEmptyParts);
+
     m_shortcutInfo->keyCombination = keyCombination;
-    ui->label_keybination->setText(keyCombination);
+    ui->label_keybination->setText(list.join("+"));
+}
+
+void ShortcutItem::setAction(QString action)
+{
+    m_shortcutInfo->action = action;
 }
 
 void ShortcutItem::setEditMode(bool isEditMode)
@@ -104,6 +113,11 @@ void ShortcutItem::mousePressEvent(QMouseEvent *event)
 QString ShortcutItem::getName()
 {
     return m_shortcutInfo->name;
+}
+
+int ShortcutItem::getType()
+{
+    return m_shortcutInfo->type;
 }
 
 QString ShortcutItem::getUid()

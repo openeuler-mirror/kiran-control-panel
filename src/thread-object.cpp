@@ -98,6 +98,7 @@ void ThreadObject::convetToValue(QJsonObject obj, QString key)
                         shortcutInfo->type = SHORTCUT_TYPE_SYSTEM;
                     else
                         shortcutInfo->type = SHORTCUT_TYPE_CUSTOM;
+
                     m_shortcutsList.append(shortcutInfo);
                 }
             }

@@ -19,8 +19,10 @@ public:
     ~ShortcutItem();
     void setname(QString);
     void setKeyBinding(QString);
+    void setAction(QString action);
     void setEditMode(bool isEditMode);
     QString getName();
+    int getType();
     QString getUid();
     ShortcutInfo *getShortcut();
 
