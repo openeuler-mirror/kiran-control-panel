@@ -34,24 +34,26 @@ private:
     void initUI();
     ShortcutItem *createShortcutItem(QVBoxLayout *parent, ShortcutInfo *shortcutInfo, int type);
     void getAllShortcuts();
+    ShortcutInfo *getShortcut(QString uid, QString kind);
     bool isConflict(QString &originName, QString newKeyCombination);
     bool isValidKeycode(QList<int> keycodes);
     QString convertToString(QList<int> keyCode);
     QString convertToBackendStr(QString keyStr);
     bool getExecFromDesktop(QString fileName, QString &exec);
-    void updateShorcut(QString uid, QString name, QString action, QString keyCombination);
-    void updateShorcut(QString uid, QString keyCombination);
+    void updateShorcut(ShortcutInfo *newShortcut);
+    void insertShortcut(ShortcutInfo *shortcutInfo);
     void clearFilterItems();
-    void connectDbusSignal();
+    int getJsonValue(QString result, QMap<QString, QString> &info);
 
 public slots:
-    void addShortcut();
+    void addShortcut(QString result);
+    void deleteShortcut(QString result);
+    void editShortcut(QString result);
     void handleShortcutInfo(QList<ShortcutInfo *> shortcutInfoList);
     void handleInputKeycode(QList<int> keycodes);
     void handleAddNewShortcut();
     void handleDeleteShortcut(QString uid);
     void handleEditShortcut(int type, QString uid, QString name, QString keyCombination, QString action = nullptr);
-    void handleDbusChanges(QString result);
     void openFileSys();
     void search();
 
@@ -64,7 +66,6 @@ signals:
 private:
     Ui::Shortcut *ui;
     QList<ShortcutInfo *> m_shortcuts;
-    //    QList<ShortcutInfo *> m_customShortcuts;
     QList<ShortcutItem *> m_shortcutItem;
     QList<ShortcutItem *> m_filterItem;
     QToolButton *m_btnModifyApp;

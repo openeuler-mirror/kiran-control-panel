@@ -56,6 +56,10 @@ QString ShortcutItem::handleKeyCombination(QString origStr)
             {
                 list.replace(i, SpecialKeyMap.value(list.at(i).toLower()));
             }
+            if (MediaKeyMap.contains(list.at(i).toLower()))
+            {
+                list.replace(i, MediaKeyMap.value(list.at(i)));
+            }
         }
 
         keyCombination = list.join("+");

@@ -24,6 +24,11 @@ Shortcut::Shortcut(QWidget *parent) : QWidget(parent),
     m_keybindingInterface = new KeybindingBackEndProxy(KEYBINDING_DBUS_NAME,
                                                        KEYBINDING_OBJECT_PATH,
                                                        QDBusConnection::sessionBus());
+
+    connect(m_keybindingInterface, &KeybindingBackEndProxy::Added, this, &Shortcut::addShortcut);
+    connect(m_keybindingInterface, &KeybindingBackEndProxy::Deleted, this, &Shortcut::deleteShortcut);
+    connect(m_keybindingInterface, &KeybindingBackEndProxy::Changed, this, &Shortcut::editShortcut);
+
     initUI();
 
     m_timer = new QTimer(this);
@@ -110,18 +115,16 @@ void Shortcut::initUI()
     connect(m_btnModifyApp, &QToolButton::clicked, this, &Shortcut::openFileSys);
 
     m_lECustomKey = new CustomLineEdit;
-    m_lECustomKey->setPlaceholderText(tr("Please press the new shortcut key"));
     m_lECustomKey->installEventFilter(this);
-    m_lECustomKey->setReadOnly(true);
     ui->vlayout_custom_key->addWidget(m_lECustomKey);
     connect(m_lECustomKey, &CustomLineEdit::inputKeyCodes, this, &Shortcut::handleInputKeycode);
 
     m_lEModifyKey = new CustomLineEdit;
-    m_lEModifyKey->setPlaceholderText(tr("Please press the new shortcut key"));
     m_lEModifyKey->installEventFilter(this);
-    m_lEModifyKey->setReadOnly(true);
     ui->vlayout_modify_key->addWidget(m_lEModifyKey);
     connect(m_lEModifyKey, &CustomLineEdit::inputKeyCodes, this, &Shortcut::handleInputKeycode);
+
+    getAllShortcuts();
 
     connect(ui->btn_shortcut_add, &QPushButton::clicked, this, &Shortcut::handleAddNewShortcut);
 
@@ -157,8 +160,6 @@ void Shortcut::initUI()
                     ui->stackedWidget_search->setCurrentWidget(ui->page_shortcut_list);
                 }
             });
-
-    getAllShortcuts();
 }
 
 void Shortcut::getAllShortcuts()
@@ -175,6 +176,43 @@ void Shortcut::getAllShortcuts()
     connect(m_thread, SIGNAL(started()), m_threadObject, SLOT(loadShortcutInfo()));
 
     m_thread->start();
+}
+
+ShortcutInfo *Shortcut::getShortcut(QString uid, QString kind)
+{
+    ShortcutInfo *shortcut = new ShortcutInfo;
+    QDBusPendingReply<QString> reply;
+    int type;
+    if (kind == SHORTCUT_KIND_CUSTOM)
+    {
+        reply = m_keybindingInterface->GetCustomShortcut(uid);
+        type = SHORTCUT_TYPE_CUSTOM;
+    }
+    else
+    {
+        reply = m_keybindingInterface->GetSystemShortcut(uid);
+        type = SHORTCUT_TYPE_SYSTEM;
+    }
+
+    reply.waitForFinished();
+    if (reply.isError() || !reply.isValid())
+    {
+        KLOG_DEBUG() << "Call GetShortcut method failed "
+                     << " Error: " << reply.error().message();
+        return nullptr;
+    }
+    else
+    {
+        QMap<QString, QString> info;
+        getJsonValue(reply.argumentAt(0).toString(), info);
+        shortcut->uid = info.value(KEYBINDING_SHORTCUT_JK_UID);
+        shortcut->action = info.value(KEYBINDING_SHORTCUT_JK_ACTION);
+        shortcut->name = info.value(KEYBINDING_SHORTCUT_JK_NAME);
+        shortcut->keyCombination = info.value(KEYBINDING_SHORTCUT_JK_KEY_COMBINATION);
+        shortcut->kind = info.value(KEYBINDING_SHORTCUT_JK_KIND);
+        shortcut->type = type;
+    }
+    return shortcut;
 }
 
 ShortcutItem *Shortcut::createShortcutItem(QVBoxLayout *parent, ShortcutInfo *shortcutInfo, int type)
@@ -299,7 +337,6 @@ void Shortcut::search()
         {
             ui->stackedWidget_search->setCurrentWidget(ui->page_filter_list);
 
-            //            ShortcutItem *filterItem = new ShortcutItem(item->getType(), item->getShortcut());
             ShortcutItem *filterItem = createShortcutItem(ui->vlayout_filter, item->getShortcut(), item->getType());
             m_filterItem.append(filterItem);
         }
@@ -307,70 +344,40 @@ void Shortcut::search()
 }
 
 //custom
-void Shortcut::updateShorcut(QString uid, QString name, QString action, QString keyCombination)
+void Shortcut::updateShorcut(ShortcutInfo *newShortcut)
 {
     //更新快捷键列表
     foreach (ShortcutInfo *shortcut, m_shortcuts)
     {
-        if (shortcut->uid == uid)
+        if (shortcut->uid == newShortcut->uid)
         {
             //update
-            shortcut->name = name;
-            shortcut->action = action;
-            shortcut->keyCombination = keyCombination;
+            shortcut->name = newShortcut->name;
+            shortcut->action = newShortcut->action;
+            shortcut->keyCombination = newShortcut->keyCombination;
             break;
         }
     }
     //更新快捷键项
     foreach (ShortcutItem *item, m_shortcutItem)
     {
-        if (item->getUid() == uid)
+        if (item->getUid() == newShortcut->uid)
         {
-            item->setname(name);
-            item->setKeyBinding(keyCombination);
-            item->setAction(action);
-        }
-    }
-    //更新过滤后的快捷键项
-    foreach (ShortcutItem *item, m_filterItem)
-    {
-        if (item->getUid() == uid)
-        {
-            item->setname(name);
-            item->setKeyBinding(keyCombination);
-            item->setAction(action);
-        }
-    }
-}
-
-//system
-void Shortcut::updateShorcut(QString uid, QString keyCombination)
-{
-    //更新快捷键列表
-    foreach (ShortcutInfo *shortcut, m_shortcuts)
-    {
-        if (shortcut->uid == uid)
-        {
-            //update
-            shortcut->keyCombination = keyCombination;
-            break;
-        }
-    }
-    //更新快捷键项
-    foreach (ShortcutItem *item, m_shortcutItem)
-    {
-        if (item->getUid() == uid)
-        {
-            item->setKeyBinding(keyCombination);
+            item->setname(newShortcut->name);
+            item->setKeyBinding(newShortcut->keyCombination);
+            item->setAction(newShortcut->action);
             break;
         }
     }
     //更新过滤后的快捷键项
     foreach (ShortcutItem *item, m_filterItem)
     {
-        if (item->getUid() == uid)
+        if (item->getUid() == newShortcut->uid)
         {
-            item->setKeyBinding(keyCombination);
+            item->setname(newShortcut->name);
+            item->setKeyBinding(newShortcut->keyCombination);
+            item->setAction(newShortcut->action);
+            break;
         }
     }
 }
@@ -389,55 +396,163 @@ void Shortcut::clearFilterItems()
     }
 }
 
-void Shortcut::connectDbusSignal()
+void Shortcut::insertShortcut(ShortcutInfo *shortcutInfo)
 {
-    connect(m_keybindingInterface, &KeybindingBackEndProxy::Added, this, &Shortcut::handleDbusChanges);
+    ShortcutItem *item;
+    if (shortcutInfo->type == SHORTCUT_TYPE_SYSTEM)
+    {
+        if (shortcutInfo->kind == SHORTCUT_KIND_SOUND)
+            item = createShortcutItem(ui->vlayout_sound, shortcutInfo, shortcutInfo->type);
+        else if (shortcutInfo->kind == SHORTCUT_KIND_WINDOW_MANAGE)
+            item = createShortcutItem(ui->vlayout_window_manage, shortcutInfo, shortcutInfo->type);
+        else if (shortcutInfo->kind == SHORTCUT_KIND_SYSTEM)
+            item = createShortcutItem(ui->vlayout_system, shortcutInfo, shortcutInfo->type);
+        else if (shortcutInfo->kind == SHORTCUT_KIND_ACCESSIBILITY)
+            item = createShortcutItem(ui->vlayout_accessibility, shortcutInfo, shortcutInfo->type);
+        else if (shortcutInfo->kind == SHORTCUT_KIND_DESKTOP)
+            item = createShortcutItem(ui->vlayout_desktop, shortcutInfo, shortcutInfo->type);
+    }
+    else
+    {
+        item = createShortcutItem(ui->vlayout_custom, shortcutInfo, shortcutInfo->type);
+        m_customShortcutCount++;
+    }
+    m_shortcutItem.append(item);
+    m_shortcuts.append(shortcutInfo);
+    if (m_customShortcutCount == 0)
+        ui->widget_custom->hide();
+    else
+        ui->widget_custom->show();
 }
 
-void Shortcut::addShortcut()
+void Shortcut::addShortcut(QString result)
 {
+    KLOG_INFO() << "get Added signal from dbus";
+    QMap<QString, QString> info;
+    getJsonValue(result, info);  //uid,kind
+
+    QString uid = info.value(KEYBINDING_SHORTCUT_JK_UID);
+    QString kind = info.value(KEYBINDING_SHORTCUT_JK_KIND);
+    KLOG_INFO() << uid << "," << kind;
+
+    ShortcutInfo *shortcut = getShortcut(uid, kind);
+    insertShortcut(shortcut);
+}
+
+void Shortcut::deleteShortcut(QString result)
+{
+    KLOG_INFO() << "get Delete signal from dbus";
+    QMap<QString, QString> info;
+    getJsonValue(result, info);  //uid,kind
+
+    QString uid = info.value(KEYBINDING_SHORTCUT_JK_UID);
+    QString kind = info.value(KEYBINDING_SHORTCUT_JK_KIND);
+    KLOG_INFO() << uid << "," << kind;
+
+    foreach (ShortcutItem *item, m_shortcutItem)
+    {
+        if (item->getUid() == uid)
+        {
+            m_shortcutItem.removeOne(item);
+            ShortcutInfo *shortcut = item->getShortcut();
+            m_shortcuts.removeOne(shortcut);
+            if (shortcut->type == SHORTCUT_TYPE_CUSTOM)
+            {
+                m_customShortcutCount--;
+                if (m_customShortcutCount == 0)
+                {
+                    ui->widget_custom->hide();
+                    ui->btn_edit->setText(tr("Edit"));
+                }
+            }
+            delete item;
+            item = nullptr;
+            break;
+        }
+    }
+}
+
+void Shortcut::editShortcut(QString result)
+{
+    KLOG_INFO() << "get Change signal from dbus";
+    QMap<QString, QString> info;
+    getJsonValue(result, info);  //uid,kind
+
+    QString uid = info.value(KEYBINDING_SHORTCUT_JK_UID);
+    QString kind = info.value(KEYBINDING_SHORTCUT_JK_KIND);
+    KLOG_INFO() << uid << "," << kind;
+
+    ShortcutInfo *shortcut = getShortcut(uid, kind);
+    updateShorcut(shortcut);
+}
+
+int Shortcut::getJsonValue(QString result, QMap<QString, QString> &info)
+{
+    QString uid;
+    QString kind;
+    QString action;
+    QString keyCombination;
+    QString name;
+    QJsonParseError jsonError;
+    QJsonDocument jsonDocument = QJsonDocument::fromJson(result.toLocal8Bit().data(), &jsonError);
+    if (jsonDocument.isNull() || jsonError.error != QJsonParseError::NoError)
+    {
+        KLOG_DEBUG() << " please check the string " << result.toLocal8Bit().data();
+        return 0;
+    }
+    if (jsonDocument.isObject())
+    {
+        QJsonObject obj = jsonDocument.object();
+        QJsonValue val;
+        if (obj.contains(KEYBINDING_SHORTCUT_JK_UID))
+        {
+            val = obj.value(KEYBINDING_SHORTCUT_JK_UID);
+            uid = val.toString();
+            info.insert(KEYBINDING_SHORTCUT_JK_UID, uid);
+        }
+        if (obj.contains(KEYBINDING_SHORTCUT_JK_KIND))
+        {
+            val = obj.value(KEYBINDING_SHORTCUT_JK_KIND);
+            kind = val.toString();
+            info.insert(KEYBINDING_SHORTCUT_JK_KIND, kind);
+        }
+        if (obj.contains(KEYBINDING_SHORTCUT_JK_NAME))
+        {
+            val = obj.value(KEYBINDING_SHORTCUT_JK_NAME);
+            name = val.toString();
+            info.insert(KEYBINDING_SHORTCUT_JK_NAME, name);
+        }
+        if (obj.contains(KEYBINDING_SHORTCUT_JK_ACTION))
+        {
+            val = obj.value(KEYBINDING_SHORTCUT_JK_ACTION);
+            action = val.toString();
+            info.insert(KEYBINDING_SHORTCUT_JK_ACTION, action);
+        }
+        if (obj.contains(KEYBINDING_SHORTCUT_JK_KEY_COMBINATION))
+        {
+            val = obj.value(KEYBINDING_SHORTCUT_JK_KEY_COMBINATION);
+            keyCombination = val.toString();
+            info.insert(KEYBINDING_SHORTCUT_JK_KEY_COMBINATION, keyCombination);
+        }
+    }
+    return info.size();
 }
 
 void Shortcut::handleShortcutInfo(QList<ShortcutInfo *> shortcutInfoList)
 {
-    m_shortcuts = shortcutInfoList;
-
-    ShortcutItem *item;
     foreach (ShortcutInfo *shortcutInfo, shortcutInfoList)
     {
-        if (shortcutInfo->type == SHORTCUT_TYPE_SYSTEM)
-        {
-            if (shortcutInfo->kind == SHORTCUT_KIND_SOUND)
-                item = createShortcutItem(ui->vlayout_sound, shortcutInfo, shortcutInfo->type);
-            else if (shortcutInfo->kind == SHORTCUT_KIND_WINDOW_MANAGE)
-                item = createShortcutItem(ui->vlayout_window_manage, shortcutInfo, shortcutInfo->type);
-            else if (shortcutInfo->kind == SHORTCUT_KIND_SYSTEM)
-                item = createShortcutItem(ui->vlayout_system, shortcutInfo, shortcutInfo->type);
-            else if (shortcutInfo->kind == SHORTCUT_KIND_ACCESSIBILITY)
-                item = createShortcutItem(ui->vlayout_accessibility, shortcutInfo, shortcutInfo->type);
-            else if (shortcutInfo->kind == SHORTCUT_KIND_DESKTOP)
-                item = createShortcutItem(ui->vlayout_desktop, shortcutInfo, shortcutInfo->type);
-        }
-        else
-        {
-            item = createShortcutItem(ui->vlayout_custom, shortcutInfo, shortcutInfo->type);
-            m_customShortcutCount++;
-        }
-        m_shortcutItem.append(item);
-    }
-
-    if (m_customShortcutCount == 0)
-    {
-        ui->widget_custom->hide();
+        insertShortcut(shortcutInfo);
     }
 }
 
 void Shortcut::handleEditShortcut(int type, QString uid, QString name, QString keyCombination, QString action)
 {
-    ShortcutItem *item = qobject_cast<ShortcutItem *>(sender());
+    Q_UNUSED(keyCombination)
     ui->stackedWidget->setCurrentWidget(ui->page_modify);
     m_lEModifyKey->clear();
     ui->lineEdit_modify_name->setText(name);
+    ui->lineEdit_modify_app->setText(action);
 
     if (type == SHORTCUT_TYPE_SYSTEM)
     {
@@ -447,12 +562,23 @@ void Shortcut::handleEditShortcut(int type, QString uid, QString name, QString k
     else
     {
         ui->widget_modify_app->show();
-        ui->lineEdit_modify_app->setText(action);
         ui->lineEdit_modify_name->setDisabled(false);
     }
     connect(ui->btn_save, &QPushButton::clicked,
             [=] {
+                if (ui->lineEdit_modify_name->text().isEmpty() ||
+                    ui->lineEdit_modify_app->text().isEmpty() ||
+                    m_lEModifyKey->text().isEmpty())
+                {
+                    KiranMessageBox::message(nullptr,
+                                             tr("Warning"),
+                                             tr("Please complete the shortcut information!"),
+                                             KiranMessageBox::Ok);
+                    return;
+                }
+
                 QString newKeyCombination = convertToBackendStr(m_lEModifyKey->text());
+
                 if (type == SHORTCUT_TYPE_SYSTEM)
                 {
                     QDBusPendingReply<> reply = m_keybindingInterface->ModifySystemShortcut(uid, newKeyCombination);
@@ -464,10 +590,7 @@ void Shortcut::handleEditShortcut(int type, QString uid, QString name, QString k
                         return;
                     }
                     else
-                    {
                         ui->stackedWidget->setCurrentWidget(ui->page_shortcut);
-                        updateShorcut(uid, newKeyCombination);
-                    }
                 }
                 else
                 {
@@ -482,40 +605,13 @@ void Shortcut::handleEditShortcut(int type, QString uid, QString name, QString k
                         return;
                     }
                     else
-                    {
                         ui->stackedWidget->setCurrentWidget(ui->page_shortcut);
-                        updateShorcut(uid, newName, newAction, newKeyCombination);
-                    }
                 }
             });
 }
 
-void Shortcut::handleDbusChanges(QString result)
-{
-    QString uid;
-    QString kind;
-    QJsonParseError jsonError;
-    QJsonDocument jsonDocument = QJsonDocument::fromJson(result.toLocal8Bit().data(), &jsonError);
-    if (jsonDocument.isNull() || jsonError.error != QJsonParseError::NoError)
-    {
-        KLOG_DEBUG() << " please check the string " << result.toLocal8Bit().data();
-        return;
-    }
-    if (jsonDocument.isObject())
-    {
-        QJsonObject obj = jsonDocument.object();
-        QJsonValue val;
-        val = obj.value(KEYBINDING_SHORTCUT_JK_UID);
-        uid = val.toString();
-        val = obj.value(KEYBINDING_SHORTCUT_JK_KIND);
-        kind = val.toString();
-    }
-}
-
 void Shortcut::handleDeleteShortcut(QString uid)
 {
-    KLOG_INFO() << "deleteShortcut";
-    ShortcutItem *item = qobject_cast<ShortcutItem *>(sender());
     QDBusPendingReply<> reply = m_keybindingInterface->DeleteCustomShortcut(uid);
     reply.waitForFinished();
     if (reply.isError() || !reply.isValid())
@@ -523,19 +619,6 @@ void Shortcut::handleDeleteShortcut(QString uid)
         KLOG_DEBUG() << "Call DeleteCustomShortcut method failed "
                      << " Error: " << reply.error().message();
         return;
-    }
-    else
-    {
-        m_shortcutItem.removeOne(item);
-        ShortcutInfo *shortcut = item->getShortcut();
-        m_shortcuts.removeOne(shortcut);
-        item->deleteLater();
-        m_customShortcutCount--;
-        if (m_customShortcutCount == 0)
-        {
-            ui->widget_custom->hide();
-            ui->btn_edit->setText(tr("Edit"));
-        }
     }
 }
 
@@ -575,11 +658,9 @@ void Shortcut::handleInputKeycode(QList<int> keycodes)
                                  QString(tr("Failed")),
                                  QString(tr("Shortcut keys %1 are already used in %2,If you reassign the shortcut keys, %2 Shortcut keys for will be disabled.")).arg(keyStr).arg(originName),
                                  KiranMessageBox::Cancel | KiranMessageBox::Ok);
-        KLOG_INFO() << "isConflict";
         m_lECustomKey->clear();
         return;
     }
-    KLOG_INFO() << "ok: " << keyStr;
 
     //显示在输入框中
     senderLineEdit->setText(keyStr);
@@ -595,7 +676,6 @@ void Shortcut::handleAddNewShortcut()
 
     connect(ui->btn_page_add, &QPushButton::clicked,
             [=] {
-                KLOG_INFO() << "handleAddNewShortcut";
                 QString newName = ui->lineEdit_custom_name->text();
                 QString newAction = ui->lineEdit_custom_app->text();
                 QString newKey = m_lECustomKey->text();
@@ -605,6 +685,7 @@ void Shortcut::handleAddNewShortcut()
                                              tr("Warning"),
                                              tr("Please complete the shortcut information!"),
                                              KiranMessageBox::Ok);
+                    return;
                 }
 
                 //dbus ->AddCustomShortcut
@@ -618,22 +699,7 @@ void Shortcut::handleAddNewShortcut()
                     return;
                 }
                 else
-                {
-                    QString uid = reply.argumentAt(0).toString();
-                    ShortcutInfo *shortcut = new ShortcutInfo;
-                    shortcut->name = newName;
-                    shortcut->action = newAction;
-                    shortcut->keyCombination = keyCombination;
-                    shortcut->type = SHORTCUT_TYPE_CUSTOM;
-                    shortcut->uid = uid;
-                    m_shortcuts.append(shortcut);
-
-                    ui->widget_custom->show();
-                    ShortcutItem *item = createShortcutItem(ui->vlayout_custom, shortcut, SHORTCUT_TYPE_CUSTOM);
-                    m_shortcutItem.append(item);
                     ui->stackedWidget->setCurrentWidget(ui->page_shortcut);
-                    m_customShortcutCount++;
-                }
             });
 }
 
