@@ -128,6 +128,8 @@ void Shortcut::initUI()
     getAllShortcuts();
 
     connect(ui->btn_shortcut_add, &QPushButton::clicked, this, &Shortcut::handleAddNewShortcut);
+    connect(ui->btn_save, &QPushButton::clicked, this, &Shortcut::handleSave);
+    connect(ui->btn_page_add, &QPushButton::clicked, this, &Shortcut::handleAdd);
 
     connect(ui->btn_edit, &QToolButton::clicked,
             [this] {
@@ -282,7 +284,6 @@ QString Shortcut::convertToString(QList<int> keyCode)
 QString Shortcut::convertToBackendStr(QString keyStr)
 {
     QStringList tmp = keyStr.split("+");
-    KLOG_INFO() << tmp;
     for (int i = 0; i < tmp.size(); i++)
     {
         //modifier
@@ -312,34 +313,6 @@ QString Shortcut::convertToBackendStr(QString keyStr)
     }
     return tmp.join("");
 }
-
-//QString Shortcut::convertToBackendStr(QList<int> keyCode)
-//{
-//    QStringList keyStr;
-//    QString str;
-//    foreach (int keycode, keyCode)
-//    {
-//        str = m_keyMap->keycodeToString(keycode);
-//        KLOG_INFO() << str.toLower();
-//        if (keycode >= 0x30 && keycode <= 0x39)  //数字转化
-//        {
-//            keyStr.append(str.split("Key_").at(1));
-//        }
-//        else if (keycode >= 0x01000070 && keycode <= 0x01000113)
-//        {
-//            keyStr.append(QString("XF86XK_%1").arg(str.split("_").join("")));
-//        }
-//        else if (!str.compare("Alt", Qt::CaseInsensitive) ||
-//                 !str.compare("Shift", Qt::CaseInsensitive) ||
-//                 !str.compare("Ctrl", Qt::CaseInsensitive))
-//        {
-//            keyStr.append(QString("<" + str + ">"));
-//        }
-//        else
-//            keyStr.append(m_keyMap->keycodeToString(keycode));
-//    }
-//    return keyStr.join("+");  //用于显示
-//}
 
 bool Shortcut::getExecFromDesktop(QString fileName, QString &exec)
 {
@@ -602,6 +575,8 @@ void Shortcut::handleEditShortcut(int type, QString uid, QString name, QString k
     Q_UNUSED(keyCombination)
     ui->stackedWidget->setCurrentWidget(ui->page_modify);
     m_lEModifyKey->clear();
+    m_editUid = uid;
+
     ui->lineEdit_modify_name->setText(name);
     ui->lineEdit_modify_app->setText(action);
 
@@ -615,50 +590,6 @@ void Shortcut::handleEditShortcut(int type, QString uid, QString name, QString k
         ui->widget_modify_app->show();
         ui->lineEdit_modify_name->setDisabled(false);
     }
-    connect(ui->btn_save, &QPushButton::clicked,
-            [=] {
-                if (ui->lineEdit_modify_name->text().isEmpty() ||
-                    ui->lineEdit_modify_app->text().isEmpty() ||
-                    m_lEModifyKey->text().isEmpty())
-                {
-                    KiranMessageBox::message(nullptr,
-                                             tr("Warning"),
-                                             tr("Please complete the shortcut information!"),
-                                             KiranMessageBox::Ok);
-                    return;
-                }
-
-                QString newKeyCombination = convertToBackendStr(m_lEModifyKey->text());
-
-                if (type == SHORTCUT_TYPE_SYSTEM)
-                {
-                    QDBusPendingReply<> reply = m_keybindingInterface->ModifySystemShortcut(uid, newKeyCombination);
-                    reply.waitForFinished();
-                    if (reply.isError() || !reply.isValid())
-                    {
-                        KLOG_DEBUG() << "Call ModifySystemShortcut method failed "
-                                     << " Error: " << reply.error().message();
-                        return;
-                    }
-                    else
-                        ui->stackedWidget->setCurrentWidget(ui->page_shortcut);
-                }
-                else
-                {
-                    QString newName = ui->lineEdit_modify_name->text();
-                    QString newAction = ui->lineEdit_modify_app->text();
-                    QDBusPendingReply<> reply = m_keybindingInterface->ModifyCustomShortcut(uid, newName, newAction, newKeyCombination);
-                    reply.waitForFinished();
-                    if (reply.isError() || !reply.isValid())
-                    {
-                        KLOG_DEBUG() << "Call ModifyCustomShortcut method failed "
-                                     << " Error: " << reply.error().message();
-                        return;
-                    }
-                    else
-                        ui->stackedWidget->setCurrentWidget(ui->page_shortcut);
-                }
-            });
 }
 
 void Shortcut::handleDeleteShortcut(QString uid)
@@ -671,6 +602,80 @@ void Shortcut::handleDeleteShortcut(QString uid)
                      << " Error: " << reply.error().message();
         return;
     }
+}
+
+void Shortcut::handleSave()
+{
+    int type = ui->lineEdit_modify_app->isVisible() ? SHORTCUT_TYPE_CUSTOM : SHORTCUT_TYPE_SYSTEM;
+    if (ui->lineEdit_modify_name->text().isEmpty() ||
+        (ui->lineEdit_modify_app->text().isEmpty() && type == SHORTCUT_TYPE_CUSTOM) ||
+        m_lEModifyKey->text().isEmpty())
+    {
+        KiranMessageBox::message(nullptr,
+                                 tr("Warning"),
+                                 tr("Please complete the shortcut information!"),
+                                 KiranMessageBox::Ok);
+        return;
+    }
+
+    QString newKeyCombination = convertToBackendStr(m_lEModifyKey->text());
+
+    if (type == SHORTCUT_TYPE_SYSTEM)
+    {
+        QDBusPendingReply<> reply = m_keybindingInterface->ModifySystemShortcut(m_editUid, newKeyCombination);
+        reply.waitForFinished();
+        if (reply.isError() || !reply.isValid())
+        {
+            KLOG_DEBUG() << "Call ModifySystemShortcut method failed "
+                         << " Error: " << reply.error().message();
+            return;
+        }
+        else
+            ui->stackedWidget->setCurrentWidget(ui->page_shortcut);
+    }
+    else
+    {
+        QString newName = ui->lineEdit_modify_name->text();
+        QString newAction = ui->lineEdit_modify_app->text();
+        QDBusPendingReply<> reply = m_keybindingInterface->ModifyCustomShortcut(m_editUid, newName, newAction, newKeyCombination);
+        reply.waitForFinished();
+        if (reply.isError() || !reply.isValid())
+        {
+            KLOG_DEBUG() << "Call ModifyCustomShortcut method failed "
+                         << " Error: " << reply.error().message();
+            return;
+        }
+        else
+            ui->stackedWidget->setCurrentWidget(ui->page_shortcut);
+    }
+}
+
+void Shortcut::handleAdd()
+{
+    QString newName = ui->lineEdit_custom_name->text();
+    QString newAction = ui->lineEdit_custom_app->text();
+    QString newKey = m_lECustomKey->text();
+    if (newName.isEmpty() || newAction.isEmpty() || newKey.isEmpty())
+    {
+        KiranMessageBox::message(nullptr,
+                                 tr("Warning"),
+                                 tr("Please complete the shortcut information!"),
+                                 KiranMessageBox::Ok);
+        return;
+    }
+
+    //dbus ->AddCustomShortcut
+    QString keyCombination = convertToBackendStr(newKey);
+    QDBusPendingReply<QString> reply = m_keybindingInterface->AddCustomShortcut(newName, newAction, keyCombination);
+    reply.waitForFinished();
+    if (reply.isError() || !reply.isValid())
+    {
+        KLOG_DEBUG() << "Call AddCustomShortcut method failed "
+                     << " Error: " << reply.error().message();
+        return;
+    }
+    else
+        ui->stackedWidget->setCurrentWidget(ui->page_shortcut);
 }
 
 void Shortcut::handleInputKeycode(QList<int> keycodes)
@@ -724,34 +729,6 @@ void Shortcut::handleAddNewShortcut()
     ui->lineEdit_custom_app->clear();
     ui->lineEdit_custom_name->clear();
     m_lECustomKey->clear();
-
-    connect(ui->btn_page_add, &QPushButton::clicked,
-            [=] {
-                QString newName = ui->lineEdit_custom_name->text();
-                QString newAction = ui->lineEdit_custom_app->text();
-                QString newKey = m_lECustomKey->text();
-                if (newName.isEmpty() || newAction.isEmpty() || newKey.isEmpty())
-                {
-                    KiranMessageBox::message(nullptr,
-                                             tr("Warning"),
-                                             tr("Please complete the shortcut information!"),
-                                             KiranMessageBox::Ok);
-                    return;
-                }
-
-                //dbus ->AddCustomShortcut
-                QString keyCombination = convertToBackendStr(newKey);
-                QDBusPendingReply<QString> reply = m_keybindingInterface->AddCustomShortcut(newName, newAction, keyCombination);
-                reply.waitForFinished();
-                if (reply.isError() || !reply.isValid())
-                {
-                    KLOG_DEBUG() << "Call AddCustomShortcut method failed "
-                                 << " Error: " << reply.error().message();
-                    return;
-                }
-                else
-                    ui->stackedWidget->setCurrentWidget(ui->page_shortcut);
-            });
 }
 
 //解决输入Ctrl+v会显示剪切板中的内容

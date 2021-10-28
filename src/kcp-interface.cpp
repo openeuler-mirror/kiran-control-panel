@@ -15,14 +15,14 @@
 #include "kcp-interface.h"
 #include <kiran-log/qt5-log-i.h>
 #include <kiran-message-box.h>
+#include <kiran-session-daemon/keybinding-i.h>
 #include <QCoreApplication>
+#include <QDBusConnection>
 #include <QFile>
 #include <QLocale>
 #include <QTranslator>
 #include "config/config.h"
-//#include "dbus-wrapper/dbus-wrapper.h"
-//#include "general-page.h"
-//#include "layout-page.h"
+#include "keybinding-backEnd-proxy.h"
 #include "shortcut.h"
 
 KcpInterface::KcpInterface()
@@ -79,12 +79,14 @@ void KcpInterface::uninit()
 
 int KcpInterface::init()
 {
-    //    m_dbusWrapper = new DbusWrapper;
-    //    if (!m_dbusWrapper->isValidConnect())
-    //    {
-    //        KLOG_DEBUG() << "Connect keybinding dbus service failed!";
-    //        return -1;
-    //    }
+    //    KeybindingBackEndProxy* keybindingInterface = new KeybindingBackEndProxy(KEYBINDING_DBUS_NAME,
+    //                                                                             KEYBINDING_OBJECT_PATH,
+    //                                                                             QDBusConnection::sessionBus());
+    if (!QDBusConnection::sessionBus().interface()->isServiceRegistered(KEYBINDING_DBUS_NAME).value())
+    {
+        KLOG_INFO() << "Connect keybinding dbus service failed!";
+        return -1;
+    }
     //加载翻译文件
     if (m_translator != nullptr)
     {

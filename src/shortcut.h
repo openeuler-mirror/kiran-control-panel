@@ -54,6 +54,8 @@ public slots:
     void handleInputKeycode(QList<int> keycodes);
     void handleAddNewShortcut();
     void handleDeleteShortcut(QString uid);
+    void handleSave();
+    void handleAdd();
     void handleEditShortcut(int type, QString uid, QString name, QString keyCombination, QString action = nullptr);
     void openFileSys();
     void search();
@@ -80,6 +82,7 @@ private:
     QTimer *m_timer;
     bool m_isEditMode = false;
     int m_customShortcutCount = 0;
+    QString m_editUid;
 };
 
 #endif  // SHORTCUT_H

@@ -77,13 +77,9 @@ void ShortcutItem::setname(QString name)
 
 void ShortcutItem::setKeyBinding(QString keyCombination)
 {
-    //    keyCombination = keyCombination.replace("<", "");
-    //    keyCombination = keyCombination.replace(">", "-");
-    //    QStringList list = keyCombination.split("-", QString::SkipEmptyParts);
-
-    keyCombination = handleKeyCombination(keyCombination);
+    QString showkeyCombination = handleKeyCombination(keyCombination);
     m_shortcutInfo->keyCombination = keyCombination;
-    ui->label_keybination->setText(keyCombination);
+    ui->label_keybination->setText(showkeyCombination);
 }
 
 void ShortcutItem::setAction(QString action)
