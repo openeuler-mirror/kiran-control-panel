@@ -39,6 +39,7 @@ private:
     bool isValidKeycode(QList<int> keycodes);
     QString convertToString(QList<int> keyCode);
     QString convertToBackendStr(QString keyStr);
+    QString convertToBackendStr(QList<int> keyCode);
     bool getExecFromDesktop(QString fileName, QString &exec);
     void updateShorcut(ShortcutInfo *newShortcut);
     void insertShortcut(ShortcutInfo *shortcutInfo);

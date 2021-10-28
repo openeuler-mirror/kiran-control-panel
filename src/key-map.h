@@ -129,7 +129,32 @@ public:
         BraceLeft = 0x7b,   //{
         Bar = 0x7c,         //|
         BraceRight = 0x7d,  //}
-        AsciiTilde = 0x7e   //~
+        AsciiTilde = 0x7e,  //~
+        //media
+        Audio_Lower_Volume = 0x01000070,
+        Audio_Mute = 0x01000071,
+        Audio_Raise_Volume = 0x01000072,
+        Audio_Play = 0x01000080,
+        Audio_Stop = 0x01000081,
+        Audio_Prev = 0x01000082,
+        Audio_Next = 0x01000083,
+        Audio_Record = 0x01000084,
+        Audio_Pause = 0x1000085,
+        Media_TogglePlay_Pause = 0x1000086,
+        Home_Page = 0x01000090,
+        Favorites = 0x01000091,
+        Search = 0x01000092,
+        Standby = 0x01000093,
+        OpenUrl = 0x01000094,
+        Mail = 0x010000a0,
+        Audio_Media = 0x010000a1,
+        My_Computer = 0x010000a2,  // My Computer
+        Calculator = 0x010000a3,   // Calculator
+        Eject = 0x010000b9,
+        WWW = 0x010000bb,
+        Explorer = 0x010000d5,
+        Tools = 0x010000f1,
+        Audio_Mic_Mute = 0x01000113,
     };
     Q_ENUM(Keys)
 

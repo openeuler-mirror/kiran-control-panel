@@ -7,8 +7,8 @@
 #include <QFileDialog>
 #include <QKeyEvent>
 #include "custom-line-edit.h"
-#include "dbus-wrapper/keybinding-backEnd-proxy.h"
 #include "key-map.h"
+#include "keybinding-backEnd-proxy.h"
 #include "shortcut-item.h"
 #include "thread-object.h"
 #include "ui_shortcut.h"
@@ -72,7 +72,7 @@ Shortcut::~Shortcut()
 
 QSize Shortcut::sizeHint() const
 {
-    return QSize(650, 730);
+    return QSize(700, 730);
 }
 
 void Shortcut::initUI()
@@ -82,6 +82,7 @@ void Shortcut::initUI()
     Kiran::WidgetPropertyHelper::setButtonType(ui->btn_shortcut_add, Kiran::BUTTON_Default);
     Kiran::WidgetPropertyHelper::setButtonType(ui->btn_page_add, Kiran::BUTTON_Default);
     Kiran::WidgetPropertyHelper::setButtonType(ui->btn_save, Kiran::BUTTON_Default);
+    ui->btn_reset->setDisabled(true);
 
     ui->stackedWidget->setCurrentWidget(ui->page_shortcut);
     ui->stackedWidget_search->setCurrentWidget(ui->page_shortcut_list);
@@ -95,7 +96,7 @@ void Shortcut::initUI()
     QHBoxLayout *hLayoutCustomApp = new QHBoxLayout(ui->lineEdit_custom_app);
     m_btnCustomApp = new QToolButton;
     m_btnCustomApp->setObjectName("btn_custom_app");
-    m_btnCustomApp->setText("Add");
+    m_btnCustomApp->setText(tr("Add"));
     m_btnCustomApp->setFixedSize(56, 30);
     m_btnCustomApp->setCursor(Qt::PointingHandCursor);
     hLayoutCustomApp->addStretch();
@@ -106,7 +107,7 @@ void Shortcut::initUI()
     QHBoxLayout *hLayoutModifyApp = new QHBoxLayout(ui->lineEdit_modify_app);
     m_btnModifyApp = new QToolButton;
     m_btnModifyApp->setObjectName("btn_modify_app");
-    m_btnModifyApp->setText("Add");
+    m_btnModifyApp->setText(tr("Add"));
     m_btnModifyApp->setFixedSize(56, 30);
     m_btnModifyApp->setCursor(Qt::PointingHandCursor);
     hLayoutModifyApp->addStretch();
@@ -268,6 +269,10 @@ QString Shortcut::convertToString(QList<int> keyCode)
         {
             keyStr.append(SpecialKeyMap.value(str.toLower()));
         }
+        else if (keycode >= 0x01000070 && keycode <= 0x01000113)
+        {
+            keyStr.append(str.split("_").join(" "));
+        }
         else
             keyStr.append(m_keyMap->keycodeToString(keycode));
     }
@@ -277,18 +282,64 @@ QString Shortcut::convertToString(QList<int> keyCode)
 QString Shortcut::convertToBackendStr(QString keyStr)
 {
     QStringList tmp = keyStr.split("+");
+    KLOG_INFO() << tmp;
     for (int i = 0; i < tmp.size(); i++)
     {
+        //modifier
         if (!tmp.at(i).compare("Alt", Qt::CaseInsensitive) ||
             !tmp.at(i).compare("Shift", Qt::CaseInsensitive) ||
             !tmp.at(i).compare("Ctrl", Qt::CaseInsensitive))
         {
             QString str = "<" + tmp.at(i) + ">";
+            KLOG_INFO() << "modifier:" << str;
             tmp.replace(i, str);
+        }
+        //media key
+        else if (tmp.at(i).contains(" "))
+        {
+            KLOG_INFO() << "media key:" << tmp.at(i);
+            QString str = QString("XF86%1").arg(tmp.at(i).split(" ").join(""));
+            tmp.replace(i, str);
+        }
+        //special key
+        else if (!tmp.at(i).contains(QRegExp("[A-Z]")) &&
+                 !tmp.at(i).contains(QRegExp("[a-z]")) &&
+                 !tmp.at(i).contains(QRegExp("[0-9]")))
+        {
+            KLOG_INFO() << "special key:" << tmp.at(i);
+            tmp.replace(i, SpecialKeyMap.key(tmp.at(i)));
         }
     }
     return tmp.join("");
 }
+
+//QString Shortcut::convertToBackendStr(QList<int> keyCode)
+//{
+//    QStringList keyStr;
+//    QString str;
+//    foreach (int keycode, keyCode)
+//    {
+//        str = m_keyMap->keycodeToString(keycode);
+//        KLOG_INFO() << str.toLower();
+//        if (keycode >= 0x30 && keycode <= 0x39)  //数字转化
+//        {
+//            keyStr.append(str.split("Key_").at(1));
+//        }
+//        else if (keycode >= 0x01000070 && keycode <= 0x01000113)
+//        {
+//            keyStr.append(QString("XF86XK_%1").arg(str.split("_").join("")));
+//        }
+//        else if (!str.compare("Alt", Qt::CaseInsensitive) ||
+//                 !str.compare("Shift", Qt::CaseInsensitive) ||
+//                 !str.compare("Ctrl", Qt::CaseInsensitive))
+//        {
+//            keyStr.append(QString("<" + str + ">"));
+//        }
+//        else
+//            keyStr.append(m_keyMap->keycodeToString(keycode));
+//    }
+//    return keyStr.join("+");  //用于显示
+//}
 
 bool Shortcut::getExecFromDesktop(QString fileName, QString &exec)
 {
@@ -639,7 +690,7 @@ void Shortcut::handleInputKeycode(QList<int> keycodes)
             KiranMessageBox::message(nullptr,
                                      tr("Failed"),
                                      QString(tr("Cannot use shortcut \"%1\", Because you cannot enter with this key."
-                                                "Please try again using Ctrl, alt, or shift at the same time."))
+                                                "Please try again using Ctrl, Alt, or Shift at the same time."))
                                          .arg(keyStr),
                                      KiranMessageBox::Ok);
             return;
@@ -656,8 +707,8 @@ void Shortcut::handleInputKeycode(QList<int> keycodes)
     {
         KiranMessageBox::message(nullptr,
                                  QString(tr("Failed")),
-                                 QString(tr("Shortcut keys %1 are already used in %2,If you reassign the shortcut keys, %2 Shortcut keys for will be disabled.")).arg(keyStr).arg(originName),
-                                 KiranMessageBox::Cancel | KiranMessageBox::Ok);
+                                 QString(tr("Shortcut keys %1 are already used in %2,Please try again!")).arg(keyStr).arg(originName),
+                                 KiranMessageBox::Ok);
         m_lECustomKey->clear();
         return;
     }

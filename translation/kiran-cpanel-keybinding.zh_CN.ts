@@ -2,180 +2,214 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="zh_CN">
 <context>
-    <name>ChooseItem</name>
+    <name>Audio Play</name>
     <message>
-        <location filename="../src/widgets/choose-item.ui" line="35"/>
+        <source>音频播放</source>
+        <translation type="obsolete">音频播放</translation>
+    </message>
+</context>
+<context>
+    <name>CustomLineEdit</name>
+    <message>
+        <location filename="../src/custom-line-edit.cpp" line="20"/>
+        <source>Please press the new shortcut key</source>
+        <translation>请输入新快捷键</translation>
+    </message>
+</context>
+<context>
+    <name>MainWindow</name>
+    <message>
+        <location filename="../src/main-window.ui" line="14"/>
+        <source>MainWindow</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Shortcut</name>
+    <message>
+        <location filename="../src/shortcut.ui" line="14"/>
         <source>Form</source>
-        <translation></translation>
-    </message>
-</context>
-<context>
-    <name>GeneralPage</name>
-    <message>
-        <location filename="../src/general-page.ui" line="14"/>
-        <source>Form</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/general-page.ui" line="40"/>
-        <source>Repeat Key</source>
-        <translation>重复键</translation>
+        <location filename="../src/shortcut.ui" line="182"/>
+        <source>Sound</source>
+        <translation>声音</translation>
     </message>
     <message>
-        <location filename="../src/general-page.ui" line="47"/>
-        <source>(Repeat a key while holding it down)</source>
-        <translation>按住某一键时重复该键</translation>
+        <location filename="../src/shortcut.ui" line="203"/>
+        <source>System</source>
+        <translation>系统</translation>
     </message>
     <message>
-        <location filename="../src/general-page.ui" line="83"/>
-        <source>Delay</source>
-        <translation>延时</translation>
+        <location filename="../src/shortcut.ui" line="224"/>
+        <source>Accessibility</source>
+        <translation>辅助</translation>
     </message>
     <message>
-        <location filename="../src/general-page.ui" line="126"/>
-        <source>Short</source>
-        <translation>短</translation>
+        <location filename="../src/shortcut.ui" line="245"/>
+        <source>Desktop</source>
+        <translation>桌面</translation>
     </message>
     <message>
-        <location filename="../src/general-page.ui" line="146"/>
-        <source>Long</source>
-        <translation>长</translation>
+        <location filename="../src/shortcut.ui" line="266"/>
+        <source>Window Manage</source>
+        <translation>窗口管理</translation>
     </message>
     <message>
-        <location filename="../src/general-page.ui" line="164"/>
-        <source>Interval</source>
-        <translation>速度</translation>
+        <location filename="../src/shortcut.ui" line="305"/>
+        <source>Custom</source>
+        <translation>自定义</translation>
     </message>
     <message>
-        <location filename="../src/general-page.ui" line="207"/>
-        <source>Slow</source>
-        <translation>慢</translation>
-    </message>
-    <message>
-        <location filename="../src/general-page.ui" line="227"/>
-        <source>Fast</source>
-        <translation>快</translation>
-    </message>
-    <message>
-        <location filename="../src/general-page.ui" line="243"/>
-        <location filename="../src/general-page.cpp" line="58"/>
-        <source>Enter characters to test the settings</source>
-        <translation>输入字符来测试设置</translation>
-    </message>
-</context>
-<context>
-    <name>KCPWindow</name>
-    <message>
-        <location filename="../src/kcp-window.ui" line="14"/>
-        <source>KCPWindow</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../src/kcp-window.cpp" line="9"/>
-        <source>General Option</source>
-        <translation>通用选项</translation>
-    </message>
-    <message>
-        <location filename="../src/kcp-window.cpp" line="10"/>
-        <source>Keyboard Layout</source>
-        <translation>键盘布局</translation>
-    </message>
-</context>
-<context>
-    <name>LayoutItem</name>
-    <message>
-        <location filename="../src/widgets/layout-item.ui" line="14"/>
-        <source>Form</source>
-        <translation></translation>
-    </message>
-</context>
-<context>
-    <name>LayoutList</name>
-    <message>
-        <location filename="../src/widgets/layout-list.ui" line="20"/>
-        <source>LayoutList</source>
-        <translation></translation>
-    </message>
-</context>
-<context>
-    <name>LayoutPage</name>
-    <message>
-        <location filename="../src/layout-page.ui" line="14"/>
-        <source>Form</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../src/layout-page.ui" line="67"/>
-        <source>Select Kayboard Layout</source>
-        <translation>选择布局</translation>
-    </message>
-    <message>
-        <location filename="../src/layout-page.ui" line="105"/>
-        <location filename="../src/layout-page.cpp" line="364"/>
+        <location filename="../src/shortcut.ui" line="337"/>
+        <location filename="../src/shortcut.cpp" line="137"/>
+        <location filename="../src/shortcut.cpp" line="515"/>
         <source>Edit</source>
         <translation>编辑</translation>
     </message>
     <message>
-        <location filename="../src/layout-page.ui" line="206"/>
-        <location filename="../src/layout-page.cpp" line="242"/>
-        <source>Add Layout</source>
-        <translation>添加布局</translation>
-    </message>
-    <message>
-        <location filename="../src/layout-page.ui" line="297"/>
-        <source>Addition</source>
+        <location filename="../src/shortcut.ui" line="464"/>
+        <location filename="../src/shortcut.ui" line="651"/>
+        <location filename="../src/shortcut.cpp" line="98"/>
+        <location filename="../src/shortcut.cpp" line="109"/>
+        <source>Add</source>
         <translation>添加</translation>
     </message>
     <message>
-        <location filename="../src/layout-page.ui" line="335"/>
-        <source>Return</source>
+        <location filename="../src/shortcut.ui" line="496"/>
+        <source>Reset</source>
+        <translation>重置</translation>
+    </message>
+    <message>
+        <location filename="../src/shortcut.ui" line="542"/>
+        <source>Custom Shortcut Name</source>
+        <translation>自定义快捷键名称</translation>
+    </message>
+    <message>
+        <location filename="../src/shortcut.ui" line="572"/>
+        <source>Custom Shortcut application</source>
+        <translation>自定义快捷键应用程序</translation>
+    </message>
+    <message>
+        <location filename="../src/shortcut.ui" line="602"/>
+        <source>Custom Shortcut Key</source>
+        <translation>自定义快捷键</translation>
+    </message>
+    <message>
+        <location filename="../src/shortcut.ui" line="683"/>
+        <source>Cancel</source>
+        <translation>取消</translation>
+    </message>
+    <message>
+        <location filename="../src/shortcut.ui" line="729"/>
+        <source>Shortcut Name</source>
+        <translation>快捷键名称</translation>
+    </message>
+    <message>
+        <location filename="../src/shortcut.ui" line="772"/>
+        <source>Shortcut application</source>
+        <translation>快捷键应用程序</translation>
+    </message>
+    <message>
+        <location filename="../src/shortcut.ui" line="803"/>
+        <source>Shortcut key</source>
+        <translation>快捷键</translation>
+    </message>
+    <message>
+        <location filename="../src/shortcut.ui" line="852"/>
+        <source>Save</source>
+        <translation>保存</translation>
+    </message>
+    <message>
+        <location filename="../src/shortcut.ui" line="884"/>
+        <source>return</source>
         <translation>返回</translation>
     </message>
     <message>
-        <location filename="../src/layout-page.cpp" line="72"/>
-        <location filename="../src/layout-page.cpp" line="266"/>
-        <location filename="../src/layout-page.cpp" line="306"/>
-        <location filename="../src/layout-page.cpp" line="340"/>
+        <location filename="../src/shortcut.cpp" line="80"/>
+        <source>Please enter a search keyword...</source>
+        <translation>请输入搜索关键字...</translation>
+    </message>
+    <message>
+        <location filename="../src/shortcut.cpp" line="92"/>
+        <source>Required</source>
+        <translation>必填</translation>
+    </message>
+    <message>
+        <location filename="../src/shortcut.cpp" line="135"/>
+        <source>Finished</source>
+        <translation>完成</translation>
+    </message>
+    <message>
+        <location filename="../src/shortcut.cpp" line="359"/>
+        <source>Open File</source>
+        <translation>打开文件</translation>
+    </message>
+    <message>
+        <location filename="../src/shortcut.cpp" line="624"/>
+        <location filename="../src/shortcut.cpp" line="735"/>
+        <source>Warning</source>
+        <translation>警告</translation>
+    </message>
+    <message>
+        <location filename="../src/shortcut.cpp" line="625"/>
+        <location filename="../src/shortcut.cpp" line="736"/>
+        <source>Please complete the shortcut information!</source>
+        <translation>请完善快捷键信息！</translation>
+    </message>
+    <message>
+        <location filename="../src/shortcut.cpp" line="690"/>
+        <location filename="../src/shortcut.cpp" line="708"/>
         <source>Failed</source>
         <translation>失败</translation>
     </message>
     <message>
-        <location filename="../src/layout-page.cpp" line="73"/>
-        <source>You have added this keyboard layout!</source>
-        <translation>您已经添加过该布局!</translation>
+        <location filename="../src/shortcut.cpp" line="691"/>
+        <source>Cannot use shortcut &quot;%1&quot;, Because you cannot enter with this key.Please try again using Ctrl, Alt, or Shift at the same time.</source>
+        <translation>无法使用快捷键&quot;%1&quot;,因为使用此键将无法输入，请同时使用Ctrl，Alt，Shift再试一次。</translation>
     </message>
     <message>
-        <location filename="../src/layout-page.cpp" line="267"/>
-        <source>The %1 keyboard layout does not exist!</source>
-        <translation>该 %1 键盘布局不存在!</translation>
+        <location filename="../src/shortcut.cpp" line="709"/>
+        <source>Shortcut keys %1 are already used in %2,Please try again!</source>
+        <translation>快捷键%1已用于%2，请再试一次！</translation>
     </message>
     <message>
-        <location filename="../src/layout-page.cpp" line="307"/>
-        <source>The keyboard layout is currently in use and cannot be deleted!</source>
-        <translation>该布局目前正在使用，无法删除!</translation>
+        <source>Cannot use shortcut &quot;%1&quot;, Because you cannot enter with this key.Please try again using Ctrl, alt, or shift at the same time.</source>
+        <translation type="obsolete">无法使用快捷键&quot;%1&quot;,因为使用此键将无法输入，请同时使用Ctrl，Alt，Shift再试一次。</translation>
     </message>
     <message>
-        <location filename="../src/layout-page.cpp" line="341"/>
-        <source>You do not appear to have added %1 keyboard layout!</source>
-        <translation>您似乎没有添加 %1 键盘布局！</translation>
-    </message>
-    <message>
-        <location filename="../src/layout-page.cpp" line="319"/>
-        <source>Delete Layout</source>
-        <translation>删除布局</translation>
-    </message>
-    <message>
-        <location filename="../src/layout-page.cpp" line="355"/>
-        <source>Finish</source>
-        <translation>完成</translation>
+        <source>Shortcut keys %1 are already used in %2,If you reassign the shortcut keys, %2 Shortcut keys for will be disabled.</source>
+        <translation type="obsolete">快捷键%1已用于%2，</translation>
     </message>
 </context>
 <context>
-    <name>QObject</name>
+    <name>ShortcutItem</name>
     <message>
-        <location filename="../src/widgets/layout-list.cpp" line="109"/>
-        <source>No search results, please search again...</source>
-        <translation>无搜索结果，请重新搜索...</translation>
+        <location filename="../src/shortcut-item.ui" line="32"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/shortcut-item.ui" line="53"/>
+        <location filename="../src/shortcut-item.ui" line="73"/>
+        <source>TextLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/shortcut-item.cpp" line="42"/>
+        <source>None</source>
+        <translation>暂无</translation>
+    </message>
+    <message>
+        <location filename="../src/shortcut-item.cpp" line="46"/>
+        <source>disabled</source>
+        <translation>禁用</translation>
+    </message>
+    <message>
+        <location filename="../src/shortcut-item.cpp" line="62"/>
+        <source>%1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

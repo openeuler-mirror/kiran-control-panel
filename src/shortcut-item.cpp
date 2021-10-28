@@ -1,4 +1,5 @@
 #include "shortcut-item.h"
+#include <kiran-log/qt5-log-i.h>
 #include <QMouseEvent>
 #include <QPainter>
 #include <QStyleOption>
@@ -56,9 +57,10 @@ QString ShortcutItem::handleKeyCombination(QString origStr)
             {
                 list.replace(i, SpecialKeyMap.value(list.at(i).toLower()));
             }
-            if (MediaKeyMap.contains(list.at(i).toLower()))
+            if (MediaKeyMap.contains(list.at(i)))
             {
-                list.replace(i, MediaKeyMap.value(list.at(i)));
+                QString media = QString(tr("%1")).arg(MediaKeyMap.value(list.at(i)));
+                list.replace(i, media);
             }
         }
 
@@ -75,12 +77,13 @@ void ShortcutItem::setname(QString name)
 
 void ShortcutItem::setKeyBinding(QString keyCombination)
 {
-    keyCombination = keyCombination.replace("<", "");
-    keyCombination = keyCombination.replace(">", "-");
-    QStringList list = keyCombination.split("-", QString::SkipEmptyParts);
+    //    keyCombination = keyCombination.replace("<", "");
+    //    keyCombination = keyCombination.replace(">", "-");
+    //    QStringList list = keyCombination.split("-", QString::SkipEmptyParts);
 
+    keyCombination = handleKeyCombination(keyCombination);
     m_shortcutInfo->keyCombination = keyCombination;
-    ui->label_keybination->setText(list.join("+"));
+    ui->label_keybination->setText(keyCombination);
 }
 
 void ShortcutItem::setAction(QString action)

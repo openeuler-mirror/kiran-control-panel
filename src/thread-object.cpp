@@ -100,7 +100,6 @@ void ThreadObject::convetToValue(QJsonObject obj, QString key)
                         shortcutInfo->type = SHORTCUT_TYPE_CUSTOM;
 
                     m_shortcutsList.append(shortcutInfo);
-                    KLOG_INFO() << shortcutInfo->keyCombination;
                 }
             }
         }

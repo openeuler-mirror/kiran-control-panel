@@ -1,7 +1,7 @@
 #ifndef THREADOBJECT_H
 #define THREADOBJECT_H
 #include <QObject>
-#include "dbus-wrapper/keybinding-backEnd-proxy.h"
+#include "keybinding-backEnd-proxy.h"
 #include "keybinding_def.h"
 
 class ThreadObject : public QObject

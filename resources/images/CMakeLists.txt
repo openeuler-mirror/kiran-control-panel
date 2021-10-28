@@ -1,8 +1,5 @@
-install(FILES "kcp-keyboard.png"
+install(FILES "kcp-keybinding.png"
 	DESTINATION ${DATA_DIR}/${PROJECT_NAME}/icons/ )
 
-install(FILES "kck-page-generation.svg"
-	DESTINATION ${DATA_DIR}/${PROJECT_NAME}/icons/ )
-
-install(FILES "kck-page-layout.png"
+install(FILES "kck-page-keybinding.svg"
 	DESTINATION ${DATA_DIR}/${PROJECT_NAME}/icons/ )

@@ -37,7 +37,8 @@ SOURCES += \
     custom-line-edit.cpp \
     thread-object.cpp \
     dbus-wrapper/keybinding-backEnd-proxy.cpp \
-    key-map.cpp
+    key-map.cpp \
+    kcp-interface.cpp
 
 HEADERS += \
         main-window.h \
@@ -47,7 +48,8 @@ HEADERS += \
     custom-line-edit.h \
     thread-object.h \
     dbus-wrapper/keybinding-backEnd-proxy.h \
-    key-map.h
+    key-map.h \
+    kcp-interface.h
 
 FORMS += \
         main-window.ui \
