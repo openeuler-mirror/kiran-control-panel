@@ -6,12 +6,12 @@ kiran-cpanel-Keyboard
 	源码根目录下创建build目录mkdir build 
 	进行build目录,执行cmake -DCMAKE_INSTALL_PREFIX=/usr .. 生成Makefile 
 	执行make进行编译
-	生成添加进控制中心的库文件: libkiran-cpanel-keyboard.so
+	生成添加进控制中心的库文件: libkiran-cpanel-keybinding.so
 
   - 安装 在build目录下执行sudo make install
 
   - 卸载 在build目录下执行sudo make uninstall
 
-  - 运行 编译安装运行后执行: kiran-cpanel-launcher --cpanel-plugin kiran-cpanel-keyboard
+  - 运行 编译安装运行后执行: kiran-cpanel-launcher --cpanel-plugin kiran-cpanel-keybinding
 
 
