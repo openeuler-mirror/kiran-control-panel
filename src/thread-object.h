@@ -15,7 +15,7 @@
 #ifndef THREADOBJECT_H
 #define THREADOBJECT_H
 #include <QObject>
-#include "keybinding-backEnd-proxy.h"
+#include "keybinding_backEnd_proxy.h"
 #include "keybinding_def.h"
 
 class ThreadObject : public QObject

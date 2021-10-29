@@ -73,7 +73,7 @@ QString ShortcutItem::handleKeyCombination(QString origStr)
             }
             if (MediaKeyMap.contains(list.at(i)))
             {
-                QString media = QString(tr("%1")).arg(MediaKeyMap.value(list.at(i)));
+                QString media = QString(qApp->translate("Media Key", "%1")).arg(MediaKeyMap.value(list.at(i)));
                 list.replace(i, media);
             }
         }

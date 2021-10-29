@@ -35,7 +35,7 @@ int ThreadObject::getJsonValueFromString(QString jsonString)
     QJsonDocument jsonDocument = QJsonDocument::fromJson(jsonString.toLocal8Bit().data(), &jsonError);
     if (jsonDocument.isNull() || jsonError.error != QJsonParseError::NoError)
     {
-        KLOG_DEBUG() << " please check the string " << jsonString.toLocal8Bit().data();
+        KLOG_ERROR() << " please check the string " << jsonString.toLocal8Bit().data();
         return -1;
     }
     if (jsonDocument.isObject())
@@ -126,7 +126,7 @@ void ThreadObject::loadShortcutInfo()
     reply.waitForFinished();
     if (reply.isError() || !reply.isValid())
     {
-        KLOG_DEBUG() << "Call ListShortcuts method failed "
+        KLOG_ERROR() << "Call ListShortcuts method failed "
                      << " Error: " << reply.error().message();
         return;
     }

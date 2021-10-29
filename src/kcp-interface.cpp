@@ -22,7 +22,7 @@
 #include <QLocale>
 #include <QTranslator>
 #include "config/config.h"
-#include "keybinding-backEnd-proxy.h"
+#include "keybinding_backEnd_proxy.h"
 #include "shortcut.h"
 
 KcpInterface::KcpInterface()
@@ -62,7 +62,7 @@ QWidget* KcpInterface::getSubItemWidget(QString id)
     }
     else
     {
-        KiranMessageBox::message(nullptr, "warning", "Open failed", KiranMessageBox::Ok);
+        KiranMessageBox::message(nullptr, tr("Warning"), tr("Load qss failed"), KiranMessageBox::Ok);
     }
     return m_currentWidget;
 }

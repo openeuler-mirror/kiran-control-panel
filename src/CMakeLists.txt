@@ -16,7 +16,7 @@ set_source_files_properties(${KEYBINDING_DBUS_XML} PROPERTIES
 	NO_NAMESPACE true
 )
 
-kiran_qt5_add_dbus_interface(KEYBINDING_PROXY ${KEYBINDING_DBUS_XML} keybinding-backEnd-proxy)
+kiran_qt5_add_dbus_interface(KEYBINDING_PROXY ${KEYBINDING_DBUS_XML} keybinding_backEnd_proxy)
 
 add_library(${PROJECT_NAME} SHARED
 	${SOURCES}

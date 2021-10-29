@@ -22,13 +22,13 @@
 #include <QKeyEvent>
 #include "custom-line-edit.h"
 #include "key-map.h"
-#include "keybinding-backEnd-proxy.h"
+#include "keybinding_backEnd_proxy.h"
 #include "shortcut-item.h"
 #include "thread-object.h"
 #include "ui_shortcut.h"
 
 #define APPLICATION_DIR "/usr/share/applications"
-#define TIMEOUT 2000
+#define TIMEOUT 200
 
 Shortcut::Shortcut(QWidget *parent) : QWidget(parent),
                                       ui(new Ui::Shortcut)
@@ -177,7 +177,7 @@ void Shortcut::initUI()
     connect(ui->lineEdit_search, &QLineEdit::textChanged,
             [this](QString text) {
                 if (!text.isEmpty())
-                    m_timer->start();
+                    m_timer->start(TIMEOUT);
                 else
                 {
                     m_timer->stop();
@@ -221,7 +221,7 @@ ShortcutInfo *Shortcut::getShortcut(QString uid, QString kind)
     reply.waitForFinished();
     if (reply.isError() || !reply.isValid())
     {
-        KLOG_DEBUG() << "Call GetShortcut method failed "
+        KLOG_ERROR() << "Call GetShortcut method failed "
                      << " Error: " << reply.error().message();
         return nullptr;
     }
@@ -382,12 +382,11 @@ void Shortcut::search()
     {
         if (item->getName().contains(text, Qt::CaseInsensitive))
         {
-            ui->stackedWidget_search->setCurrentWidget(ui->page_filter_list);
-
             ShortcutItem *filterItem = createShortcutItem(ui->vlayout_filter, item->getShortcut(), item->getType());
             m_filterItem.append(filterItem);
         }
     }
+    ui->stackedWidget_search->setCurrentWidget(ui->page_filter_list);
 }
 
 //custom
@@ -544,7 +543,7 @@ int Shortcut::getJsonValue(QString result, QMap<QString, QString> &info)
     QJsonDocument jsonDocument = QJsonDocument::fromJson(result.toLocal8Bit().data(), &jsonError);
     if (jsonDocument.isNull() || jsonError.error != QJsonParseError::NoError)
     {
-        KLOG_DEBUG() << " please check the string " << result.toLocal8Bit().data();
+        KLOG_ERROR() << " please check the string " << result.toLocal8Bit().data();
         return 0;
     }
     if (jsonDocument.isObject())
@@ -621,7 +620,7 @@ void Shortcut::onDeleteShortcut(QString uid)
     reply.waitForFinished();
     if (reply.isError() || !reply.isValid())
     {
-        KLOG_DEBUG() << "Call DeleteCustomShortcut method failed "
+        KLOG_ERROR() << "Call DeleteCustomShortcut method failed "
                      << " Error: " << reply.error().message();
         return;
     }
@@ -660,7 +659,7 @@ void Shortcut::onSave()
         reply.waitForFinished();
         if (reply.isError() || !reply.isValid())
         {
-            KLOG_DEBUG() << "Call ModifySystemShortcut method failed "
+            KLOG_ERROR() << "Call ModifySystemShortcut method failed "
                          << " Error: " << reply.error().message();
             return;
         }
@@ -675,7 +674,7 @@ void Shortcut::onSave()
         reply.waitForFinished();
         if (reply.isError() || !reply.isValid())
         {
-            KLOG_DEBUG() << "Call ModifyCustomShortcut method failed "
+            KLOG_ERROR() << "Call ModifyCustomShortcut method failed "
                          << " Error: " << reply.error().message();
             return;
         }
@@ -704,7 +703,7 @@ void Shortcut::onAdd()
     reply.waitForFinished();
     if (reply.isError() || !reply.isValid())
     {
-        KLOG_DEBUG() << "Call AddCustomShortcut method failed "
+        KLOG_ERROR() << "Call AddCustomShortcut method failed "
                      << " Error: " << reply.error().message();
         return;
     }

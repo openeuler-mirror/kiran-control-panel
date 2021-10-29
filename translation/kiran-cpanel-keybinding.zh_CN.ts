@@ -11,9 +11,22 @@
 <context>
     <name>CustomLineEdit</name>
     <message>
-        <location filename="../src/custom-line-edit.cpp" line="20"/>
+        <location filename="../src/custom-line-edit.cpp" line="34"/>
         <source>Please press the new shortcut key</source>
         <translation>请输入新快捷键</translation>
+    </message>
+</context>
+<context>
+    <name>KcpInterface</name>
+    <message>
+        <location filename="../src/kcp-interface.cpp" line="65"/>
+        <source>Warning</source>
+        <translation type="unfinished">警告</translation>
+    </message>
+    <message>
+        <location filename="../src/kcp-interface.cpp" line="65"/>
+        <source>Load qss failed</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -21,6 +34,99 @@
     <message>
         <location filename="../src/main-window.ui" line="14"/>
         <source>MainWindow</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Media Key</name>
+    <message>
+        <location filename="../src/keybinding_def.h" line="54"/>
+        <source>Audio Play</source>
+        <translation>音频播放</translation>
+    </message>
+    <message>
+        <location filename="../src/keybinding_def.h" line="55"/>
+        <source>Search</source>
+        <translation>搜索</translation>
+    </message>
+    <message>
+        <location filename="../src/keybinding_def.h" line="56"/>
+        <source>WWW</source>
+        <translation>万维网</translation>
+    </message>
+    <message>
+        <location filename="../src/keybinding_def.h" line="57"/>
+        <source>Audio Lower Volume</source>
+        <translation>减小音量</translation>
+    </message>
+    <message>
+        <location filename="../src/keybinding_def.h" line="58"/>
+        <source>Audio Raise Volume</source>
+        <translation>增大音量</translation>
+    </message>
+    <message>
+        <location filename="../src/keybinding_def.h" line="59"/>
+        <source>Mic Mute</source>
+        <translation>输入静音</translation>
+    </message>
+    <message>
+        <location filename="../src/keybinding_def.h" line="60"/>
+        <source>Audio Stop</source>
+        <translation>音频停止</translation>
+    </message>
+    <message>
+        <location filename="../src/keybinding_def.h" line="61"/>
+        <source>Explorer</source>
+        <translation>浏览</translation>
+    </message>
+    <message>
+        <location filename="../src/keybinding_def.h" line="62"/>
+        <source>Calculator</source>
+        <translation>计算器</translation>
+    </message>
+    <message>
+        <location filename="../src/keybinding_def.h" line="63"/>
+        <source>Audio Mute</source>
+        <translation>音频静音</translation>
+    </message>
+    <message>
+        <location filename="../src/keybinding_def.h" line="64"/>
+        <source>Audio Pause</source>
+        <translation>音频暂停</translation>
+    </message>
+    <message>
+        <location filename="../src/keybinding_def.h" line="65"/>
+        <source>Audio Prev</source>
+        <translation>音频上一个</translation>
+    </message>
+    <message>
+        <location filename="../src/keybinding_def.h" line="66"/>
+        <source>Audio Media</source>
+        <translation>音频媒体</translation>
+    </message>
+    <message>
+        <location filename="../src/keybinding_def.h" line="67"/>
+        <source>Audio Next</source>
+        <translation>音频下一个</translation>
+    </message>
+    <message>
+        <location filename="../src/keybinding_def.h" line="68"/>
+        <source>Mail</source>
+        <translation>邮件</translation>
+    </message>
+    <message>
+        <location filename="../src/keybinding_def.h" line="69"/>
+        <source>Tools</source>
+        <translation>工具</translation>
+    </message>
+    <message>
+        <location filename="../src/keybinding_def.h" line="70"/>
+        <source>Eject</source>
+        <translation>弹出</translation>
+    </message>
+    <message>
+        <location filename="../src/shortcut-item.cpp" line="76"/>
+        <source>%1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -63,16 +169,16 @@
     </message>
     <message>
         <location filename="../src/shortcut.ui" line="337"/>
-        <location filename="../src/shortcut.cpp" line="137"/>
-        <location filename="../src/shortcut.cpp" line="515"/>
+        <location filename="../src/shortcut.cpp" line="161"/>
+        <location filename="../src/shortcut.cpp" line="512"/>
         <source>Edit</source>
         <translation>编辑</translation>
     </message>
     <message>
         <location filename="../src/shortcut.ui" line="464"/>
         <location filename="../src/shortcut.ui" line="651"/>
-        <location filename="../src/shortcut.cpp" line="98"/>
-        <location filename="../src/shortcut.cpp" line="109"/>
+        <location filename="../src/shortcut.cpp" line="113"/>
+        <location filename="../src/shortcut.cpp" line="124"/>
         <source>Add</source>
         <translation>添加</translation>
     </message>
@@ -127,50 +233,50 @@
         <translation>返回</translation>
     </message>
     <message>
-        <location filename="../src/shortcut.cpp" line="80"/>
+        <location filename="../src/shortcut.cpp" line="94"/>
         <source>Please enter a search keyword...</source>
         <translation>请输入搜索关键字...</translation>
     </message>
     <message>
-        <location filename="../src/shortcut.cpp" line="92"/>
+        <location filename="../src/shortcut.cpp" line="107"/>
         <source>Required</source>
         <translation>必填</translation>
     </message>
     <message>
-        <location filename="../src/shortcut.cpp" line="135"/>
+        <location filename="../src/shortcut.cpp" line="159"/>
         <source>Finished</source>
         <translation>完成</translation>
     </message>
     <message>
-        <location filename="../src/shortcut.cpp" line="359"/>
+        <location filename="../src/shortcut.cpp" line="356"/>
         <source>Open File</source>
         <translation>打开文件</translation>
     </message>
     <message>
-        <location filename="../src/shortcut.cpp" line="624"/>
-        <location filename="../src/shortcut.cpp" line="735"/>
+        <location filename="../src/shortcut.cpp" line="638"/>
+        <location filename="../src/shortcut.cpp" line="695"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="../src/shortcut.cpp" line="625"/>
-        <location filename="../src/shortcut.cpp" line="736"/>
+        <location filename="../src/shortcut.cpp" line="639"/>
+        <location filename="../src/shortcut.cpp" line="696"/>
         <source>Please complete the shortcut information!</source>
         <translation>请完善快捷键信息！</translation>
     </message>
     <message>
-        <location filename="../src/shortcut.cpp" line="690"/>
-        <location filename="../src/shortcut.cpp" line="708"/>
+        <location filename="../src/shortcut.cpp" line="730"/>
+        <location filename="../src/shortcut.cpp" line="748"/>
         <source>Failed</source>
         <translation>失败</translation>
     </message>
     <message>
-        <location filename="../src/shortcut.cpp" line="691"/>
+        <location filename="../src/shortcut.cpp" line="731"/>
         <source>Cannot use shortcut &quot;%1&quot;, Because you cannot enter with this key.Please try again using Ctrl, Alt, or Shift at the same time.</source>
         <translation>无法使用快捷键&quot;%1&quot;,因为使用此键将无法输入，请同时使用Ctrl，Alt，Shift再试一次。</translation>
     </message>
     <message>
-        <location filename="../src/shortcut.cpp" line="709"/>
+        <location filename="../src/shortcut.cpp" line="749"/>
         <source>Shortcut keys %1 are already used in %2,Please try again!</source>
         <translation>快捷键%1已用于%2，请再试一次！</translation>
     </message>
@@ -197,19 +303,14 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/shortcut-item.cpp" line="42"/>
+        <location filename="../src/shortcut-item.cpp" line="56"/>
         <source>None</source>
         <translation>暂无</translation>
     </message>
     <message>
-        <location filename="../src/shortcut-item.cpp" line="46"/>
+        <location filename="../src/shortcut-item.cpp" line="60"/>
         <source>disabled</source>
         <translation>禁用</translation>
-    </message>
-    <message>
-        <location filename="../src/shortcut-item.cpp" line="62"/>
-        <source>%1</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
