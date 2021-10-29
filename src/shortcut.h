@@ -1,3 +1,17 @@
+/**
+ * Copyright (c) 2020 ~ 2021 KylinSec Co., Ltd.
+ * kiran-cpanel-keybinding is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *          http://license.coscl.org.cn/MulanPSL2
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ *
+ * Author:     yuanxing <yuanxing@kylinos.com.cn>
+ */
+
 #ifndef SHORTCUT_H
 #define SHORTCUT_H
 
@@ -39,7 +53,6 @@ private:
     bool isValidKeycode(QList<int> keycodes);
     QString convertToString(QList<int> keyCode);
     QString convertToBackendStr(QString keyStr);
-    QString convertToBackendStr(QList<int> keyCode);
     bool getExecFromDesktop(QString fileName, QString &exec);
     void updateShorcut(ShortcutInfo *newShortcut);
     void insertShortcut(ShortcutInfo *shortcutInfo);
@@ -52,11 +65,10 @@ public slots:
     void editShortcut(QString result);
     void handleShortcutInfo(QList<ShortcutInfo *> shortcutInfoList);
     void handleInputKeycode(QList<int> keycodes);
-    void handleAddNewShortcut();
-    void handleDeleteShortcut(QString uid);
-    void handleSave();
-    void handleAdd();
-    void handleEditShortcut(int type, QString uid, QString name, QString keyCombination, QString action = nullptr);
+    void onDeleteShortcut(QString uid);
+    void onEditShortcut(int type, QString uid, QString name, QString keyCombination, QString action = nullptr);
+    void onSave();
+    void onAdd();
     void openFileSys();
     void search();
 

@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2020 ~ 2021 KylinSec Co., Ltd.
- * kiran-cpanel-system is licensed under Mulan PSL v2.
+ * kiran-cpanel-keybinding is licensed under Mulan PSL v2.
  * You can use this software according to the terms and conditions of the Mulan PSL v2.
  * You may obtain a copy of Mulan PSL v2 at:
  *          http://license.coscl.org.cn/MulanPSL2
@@ -79,9 +79,6 @@ void KcpInterface::uninit()
 
 int KcpInterface::init()
 {
-    //    KeybindingBackEndProxy* keybindingInterface = new KeybindingBackEndProxy(KEYBINDING_DBUS_NAME,
-    //                                                                             KEYBINDING_OBJECT_PATH,
-    //                                                                             QDBusConnection::sessionBus());
     if (!QDBusConnection::sessionBus().interface()->isServiceRegistered(KEYBINDING_DBUS_NAME).value())
     {
         KLOG_INFO() << "Connect keybinding dbus service failed!";

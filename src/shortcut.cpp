@@ -1,3 +1,17 @@
+/**
+ * Copyright (c) 2020 ~ 2021 KylinSec Co., Ltd.
+ * kiran-cpanel-keybinding is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *          http://license.coscl.org.cn/MulanPSL2
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ *
+ * Author:     yuanxing <yuanxing@kylinos.com.cn>
+ */
+
 #include "shortcut.h"
 #include <kiran-log/qt5-log-i.h>
 #include <kiran-message-box.h>
@@ -127,9 +141,16 @@ void Shortcut::initUI()
 
     getAllShortcuts();
 
-    connect(ui->btn_shortcut_add, &QPushButton::clicked, this, &Shortcut::handleAddNewShortcut);
-    connect(ui->btn_save, &QPushButton::clicked, this, &Shortcut::handleSave);
-    connect(ui->btn_page_add, &QPushButton::clicked, this, &Shortcut::handleAdd);
+    connect(ui->btn_shortcut_add, &QPushButton::clicked,
+            [this] {
+                ui->stackedWidget->setCurrentWidget(ui->page_add);
+                ui->lineEdit_custom_app->clear();
+                ui->lineEdit_custom_name->clear();
+                m_lECustomKey->clear();
+            });
+
+    connect(ui->btn_save, &QPushButton::clicked, this, &Shortcut::onSave);
+    connect(ui->btn_page_add, &QPushButton::clicked, this, &Shortcut::onAdd);
 
     connect(ui->btn_edit, &QToolButton::clicked,
             [this] {
@@ -223,18 +244,20 @@ ShortcutItem *Shortcut::createShortcutItem(QVBoxLayout *parent, ShortcutInfo *sh
     ShortcutItem *item = new ShortcutItem(type, shortcutInfo);
     parent->addWidget(item);
 
-    connect(item, &ShortcutItem::sigClicked, this, &Shortcut::handleEditShortcut);
-    connect(item, &ShortcutItem::sigDelete, this, &Shortcut::handleDeleteShortcut);
+    connect(item, &ShortcutItem::sigClicked, this, &Shortcut::onEditShortcut);
+    connect(item, &ShortcutItem::sigDelete, this, &Shortcut::onDeleteShortcut);
 
     return item;
 }
 
 bool Shortcut::isConflict(QString &originName, QString newKeyCombination)
 {
+    KLOG_INFO() << "isConflict:" << newKeyCombination;
     foreach (ShortcutInfo *shortcut, m_shortcuts)
     {
         if (!QString::compare(shortcut->keyCombination, newKeyCombination, Qt::CaseInsensitive))
         {
+            KLOG_INFO() << "yes";
             originName = shortcut->name;
             return true;
         }
@@ -570,7 +593,7 @@ void Shortcut::handleShortcutInfo(QList<ShortcutInfo *> shortcutInfoList)
     }
 }
 
-void Shortcut::handleEditShortcut(int type, QString uid, QString name, QString keyCombination, QString action)
+void Shortcut::onEditShortcut(int type, QString uid, QString name, QString keyCombination, QString action)
 {
     Q_UNUSED(keyCombination)
     ui->stackedWidget->setCurrentWidget(ui->page_modify);
@@ -592,7 +615,7 @@ void Shortcut::handleEditShortcut(int type, QString uid, QString name, QString k
     }
 }
 
-void Shortcut::handleDeleteShortcut(QString uid)
+void Shortcut::onDeleteShortcut(QString uid)
 {
     QDBusPendingReply<> reply = m_keybindingInterface->DeleteCustomShortcut(uid);
     reply.waitForFinished();
@@ -604,7 +627,7 @@ void Shortcut::handleDeleteShortcut(QString uid)
     }
 }
 
-void Shortcut::handleSave()
+void Shortcut::onSave()
 {
     int type = ui->lineEdit_modify_app->isVisible() ? SHORTCUT_TYPE_CUSTOM : SHORTCUT_TYPE_SYSTEM;
     if (ui->lineEdit_modify_name->text().isEmpty() ||
@@ -619,6 +642,17 @@ void Shortcut::handleSave()
     }
 
     QString newKeyCombination = convertToBackendStr(m_lEModifyKey->text());
+    //    //判断是否重复
+    //    QString originName;
+    //    if (isConflict(originName, newKeyCombination))
+    //    {
+    //        KiranMessageBox::message(nullptr,
+    //                                 QString(tr("Failed")),
+    //                                 QString(tr("Shortcut keys %1 are already used in %2,Please try again!")).arg(m_lEModifyKey->text()).arg(originName),
+    //                                 KiranMessageBox::Ok);
+    //        m_lECustomKey->clear();
+    //        return;
+    //    }
 
     if (type == SHORTCUT_TYPE_SYSTEM)
     {
@@ -650,7 +684,7 @@ void Shortcut::handleSave()
     }
 }
 
-void Shortcut::handleAdd()
+void Shortcut::onAdd()
 {
     QString newName = ui->lineEdit_custom_name->text();
     QString newAction = ui->lineEdit_custom_app->text();
@@ -721,14 +755,6 @@ void Shortcut::handleInputKeycode(QList<int> keycodes)
     //显示在输入框中
     senderLineEdit->setText(keyStr);
     senderLineEdit->clearFocus();
-}
-
-void Shortcut::handleAddNewShortcut()
-{
-    ui->stackedWidget->setCurrentWidget(ui->page_add);
-    ui->lineEdit_custom_app->clear();
-    ui->lineEdit_custom_name->clear();
-    m_lECustomKey->clear();
 }
 
 //解决输入Ctrl+v会显示剪切板中的内容
