@@ -68,4 +68,4 @@ target_translation.path = $$DESTDIR/usr/share/kiran-cpanel-keyboard/translation/
 INSTALLS = target target_translation
 
 RESOURCES += \
-    ../resource/resources.qrc
+    ../resources/resources.qrc

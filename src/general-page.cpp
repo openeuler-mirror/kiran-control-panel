@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2020 ~ 2021 KylinSec Co., Ltd.
- * kiran-cpanel-system is licensed under Mulan PSL v2.
+ * kiran-cpanel-keyboard is licensed under Mulan PSL v2.
  * You can use this software according to the terms and conditions of the Mulan PSL v2.
  * You may obtain a copy of Mulan PSL v2 at:
  *          http://license.coscl.org.cn/MulanPSL2
@@ -44,13 +44,11 @@ GeneralPage::GeneralPage(QWidget *parent) : QWidget(parent),
                 if (m_delay != delay)
                 {
                     m_delay = delay;
-                    KLOG_INFO() << "setRepeat_delay";
                     m_keyboardInterface->setRepeat_delay(m_delay);
                 }
                 if (m_interval != interval)
                 {
                     m_interval = interval;
-                    KLOG_INFO() << "setRepeat_interval";
                     m_keyboardInterface->setRepeat_interval(m_interval);
                 }
                 m_timer->stop();

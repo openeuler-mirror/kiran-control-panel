@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2020 ~ 2021 KylinSec Co., Ltd.
- * kiran-cpanel-system is licensed under Mulan PSL v2.
+ * kiran-cpanel-keyboard is licensed under Mulan PSL v2.
  * You can use this software according to the terms and conditions of the Mulan PSL v2.
  * You may obtain a copy of Mulan PSL v2 at:
  *          http://license.coscl.org.cn/MulanPSL2
@@ -15,7 +15,10 @@
 #include "kcp-interface.h"
 #include <kiran-log/qt5-log-i.h>
 #include <kiran-message-box.h>
+#include <kiran-session-daemon/keyboard-i.h>
 #include <QCoreApplication>
+#include <QDBusConnection>
+#include <QDBusConnectionInterface>
 #include <QFile>
 #include <QLocale>
 #include <QTranslator>
@@ -89,9 +92,9 @@ void KcpInterface::uninit()
 int KcpInterface::init()
 {
     m_dbusWrapper = new DbusWrapper;
-    if (!m_dbusWrapper->isValidConnect())
+    if (!QDBusConnection::sessionBus().interface()->isServiceRegistered(KEYBOARD_DBUS_NAME).value())
     {
-        KLOG_DEBUG() << "Connect keyboard dbus service failed!";
+        KLOG_INFO() << "Connect keyboard dbus service failed!";
         return -1;
     }
     //加载翻译文件
