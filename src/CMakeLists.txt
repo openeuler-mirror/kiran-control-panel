@@ -9,7 +9,7 @@ file(GLOB_RECURSE HEADERS "*.h")
 file(GLOB_RECURSE FORMS "*.ui")
 file(GLOB_RECURSE RESOURCES "${PROJECT_SOURCE_DIR}/resources/*.qrc")
 
-qt5_create_translation( QM_FILES  ${TS_FILES} )
+qt5_create_translation( QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES} )
 
 set_source_files_properties(${KEYBINDING_DBUS_XML} PROPERTIES
 	CLASSNAME "KeybindingBackEndProxy"
