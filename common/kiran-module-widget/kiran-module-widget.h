@@ -37,7 +37,7 @@ public:
     bool checkHasUnSaved();
 
 private slots:
-    void handleSubItemChanged(QListWidgetItem* current,QListWidgetItem* prev);
+    void handleSubItemChanged();
 
 private:
     void init();

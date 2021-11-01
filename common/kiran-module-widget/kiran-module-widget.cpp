@@ -84,9 +84,9 @@ void KiranModuleWidget::setPlugins(const QList<QSharedPointer<CPanelPluginHelper
 
     if (ui->list_subItems->count() >= 0)
     {
-        ui->list_subItems->setCurrentRow(0);
+        ui->list_subItems->setItemSelected(ui->list_subItems->item(0),true);
         //NOTE：为了获取一个正确的初始化大小，手动调用槽函数，将功能项第一条的窗口加入显示
-        handleSubItemChanged(ui->list_subItems->item(0), nullptr);
+        handleSubItemChanged();
     }
 
     if (ui->list_subItems->count() <= 1)
@@ -105,7 +105,8 @@ void KiranModuleWidget::init()
     ui->list_subItems->setGridSize(QSize(296, 84));
     ui->list_subItems->setIconSize(QSize(15, 15));
 
-    connect(ui->list_subItems, &QListWidget::currentItemChanged,
+    ui->list_subItems->setSelectionMode(QListWidget::SingleSelection);
+    connect(ui->list_subItems, &QListWidget::itemSelectionChanged,
             this, &KiranModuleWidget::handleSubItemChanged, Qt::QueuedConnection);
 }
 
@@ -137,27 +138,36 @@ bool KiranModuleWidget::checkHasUnSaved()
 }
 
 ///NOTE:此处最好不拿prev参数作为调用QListWidget的参数，可能存在prev item已从列表中删除
-void KiranModuleWidget::handleSubItemChanged(QListWidgetItem *current, QListWidgetItem *prev)
+void KiranModuleWidget::handleSubItemChanged()
 {
-    int currentIdx = current ? ui->list_subItems->row(current) : -1;
+    auto selectedItems = ui->list_subItems->selectedItems();
+    if(selectedItems.size() != 1)
+    {
+        KLOG_ERROR() << "sider bar size != 1";
+        return;
+    }
+
+    auto selectedItem = selectedItems.at(0);
+    int row = ui->list_subItems->row(selectedItem);
 
     ///当前子功能项未改变
-    if (m_currentSubItemIdx == currentIdx)
+    if (m_currentSubItemIdx == row)
     {
+        KLOG_DEBUG() << "sub item index not changed!";
         return;
     }
 
     ///检查是否存在未保存项
     if (checkHasUnSaved())
     {
-        KLOG_DEBUG() << "switch sub item" << currentIdx << "reject";
-        ui->list_subItems->setCurrentItem(ui->list_subItems->item(m_currentSubItemIdx));
+        KLOG_DEBUG() << "switch sub item" << row << "reject";
+        ui->list_subItems->setItemSelected(ui->list_subItems->item(m_currentSubItemIdx),true);
         return;
     }
 
     ///更新当前选择的子功能项
-    KLOG_DEBUG() << "update current sub item Idx" << currentIdx;
-    m_currentSubItemIdx = currentIdx;
+    KLOG_DEBUG() << "update current sub item Idx" << row;
+    m_currentSubItemIdx = row;
 
     ///清理之前的功能项控件
     if (m_subItemWidget)
@@ -167,14 +177,14 @@ void KiranModuleWidget::handleSubItemChanged(QListWidgetItem *current, QListWidg
         m_subItemWidget = nullptr;
     }
 
-    if (!current)
+    if (!selectedItem)
     {
         return;
     }
 
     ///调用接口获取新的功能项控件
-    QVariant varPluginIndex = current->data(ROLE_PLUGIN_HELPER_INDEX);
-    QVariant varSubItemID = current->data(ROLE_SUBITEM_ID);
+    QVariant varPluginIndex = selectedItem->data(ROLE_PLUGIN_HELPER_INDEX);
+    QVariant varSubItemID = selectedItem->data(ROLE_SUBITEM_ID);
     if (!varPluginIndex.isValid() || !varSubItemID.isValid())
     {
         KLOG_FATAL("plugin subitem data error!");
@@ -194,5 +204,10 @@ void KiranModuleWidget::handleSubItemChanged(QListWidgetItem *current, QListWidg
         KLOG_DEBUG() << "sub item widget sizeHint:" << widget->sizeHint();
         ui->centerLayout->addWidget(widget);
     }
+    else
+    {
+        KLOG_ERROR() << "can't get subitem widget" << subItemID;
+    }
+
     m_subItemWidget = widget;
 }
