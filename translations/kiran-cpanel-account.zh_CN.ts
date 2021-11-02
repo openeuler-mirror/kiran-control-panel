@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="zh_CN">
+<TS version="2.1" language="zh_CN">
 <context>
     <name>AccountItemWidget</name>
     <message>
@@ -209,15 +209,15 @@
     <name>CreateUserPage</name>
     <message>
         <source>Account type</source>
-        <translation>账户类型</translation>
+        <translation type="vanished">账户类型</translation>
     </message>
     <message>
-        <location filename="../src/pages/create-user-page/create-user-page.cpp" line="80"/>
+        <location filename="../src/pages/create-user-page/create-user-page.cpp" line="82"/>
         <source>standard</source>
         <translation>普通用户</translation>
     </message>
     <message>
-        <location filename="../src/pages/create-user-page/create-user-page.cpp" line="81"/>
+        <location filename="../src/pages/create-user-page/create-user-page.cpp" line="83"/>
         <source>administrator</source>
         <translation>管理员</translation>
     </message>
@@ -279,67 +279,67 @@
     </message>
     <message>
         <source>Please enter account name first</source>
-        <translation>请先输入账户名</translation>
+        <translation type="vanished">请先输入账户名</translation>
     </message>
     <message>
         <source>Please enter your account name</source>
-        <translation>请输入账户名</translation>
+        <translation type="vanished">请输入账户名</translation>
     </message>
     <message>
         <source>Account cannot be a pure number</source>
-        <translation>账户名不能全为数字</translation>
+        <translation type="vanished">账户名不能全为数字</translation>
     </message>
     <message>
         <source>Account already exists</source>
-        <translation>账户名已存在</translation>
+        <translation type="vanished">账户名已存在</translation>
     </message>
     <message>
         <source>Please enter your userName name</source>
-        <translation>请输入用户名</translation>
+        <translation type="vanished">请输入用户名</translation>
     </message>
     <message>
-        <location filename="../src/pages/create-user-page/create-user-page.cpp" line="99"/>
+        <location filename="../src/pages/create-user-page/create-user-page.cpp" line="106"/>
         <source>Please enter user name first</source>
         <translation>请输入用户名</translation>
     </message>
     <message>
-        <location filename="../src/pages/create-user-page/create-user-page.cpp" line="133"/>
+        <location filename="../src/pages/create-user-page/create-user-page.cpp" line="140"/>
         <source>Please enter your user name</source>
         <translation>请输入用户名</translation>
     </message>
     <message>
-        <location filename="../src/pages/create-user-page/create-user-page.cpp" line="149"/>
+        <location filename="../src/pages/create-user-page/create-user-page.cpp" line="156"/>
         <source>user name cannot be a pure number</source>
         <translation>用户名不能全为数字</translation>
     </message>
     <message>
-        <location filename="../src/pages/create-user-page/create-user-page.cpp" line="156"/>
+        <location filename="../src/pages/create-user-page/create-user-page.cpp" line="163"/>
         <source>user name already exists</source>
         <translation>用户名已存在</translation>
     </message>
     <message>
-        <location filename="../src/pages/create-user-page/create-user-page.cpp" line="168"/>
+        <location filename="../src/pages/create-user-page/create-user-page.cpp" line="175"/>
         <source>Please enter your password</source>
         <translation>请输出密码</translation>
     </message>
     <message>
-        <location filename="../src/pages/create-user-page/create-user-page.cpp" line="175"/>
+        <location filename="../src/pages/create-user-page/create-user-page.cpp" line="182"/>
         <source>Please enter the password again</source>
         <translation>请再次输入密码</translation>
     </message>
     <message>
-        <location filename="../src/pages/create-user-page/create-user-page.cpp" line="182"/>
+        <location filename="../src/pages/create-user-page/create-user-page.cpp" line="189"/>
         <source>The password you enter must be the same as the former one</source>
         <translation>两次密码不相同，请核对后，再次输入</translation>
     </message>
     <message>
-        <location filename="../src/pages/create-user-page/create-user-page.cpp" line="192"/>
-        <location filename="../src/pages/create-user-page/create-user-page.cpp" line="227"/>
+        <location filename="../src/pages/create-user-page/create-user-page.cpp" line="199"/>
+        <location filename="../src/pages/create-user-page/create-user-page.cpp" line="234"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../src/pages/create-user-page/create-user-page.cpp" line="192"/>
+        <location filename="../src/pages/create-user-page/create-user-page.cpp" line="199"/>
         <source>Password encryption failed</source>
         <translation>密码加密失败</translation>
     </message>
@@ -395,23 +395,23 @@
     <name>FaceInputDialog</name>
     <message>
         <source>save</source>
-        <translation>保存</translation>
+        <translation type="vanished">保存</translation>
     </message>
     <message>
         <source>cancel</source>
-        <translation>取消</translation>
+        <translation type="vanished">取消</translation>
     </message>
     <message>
         <source>initializing face collection environment...</source>
-        <translation>正在初始化人脸采集环境，请稍后</translation>
+        <translation type="vanished">正在初始化人脸采集环境，请稍后</translation>
     </message>
     <message>
         <source>failed to initialize face collection environment!</source>
-        <translation>初始化人脸采集环境失败!</translation>
+        <translation type="vanished">初始化人脸采集环境失败!</translation>
     </message>
     <message>
         <source>Failed to start collection</source>
-        <translation>开始采集失败</translation>
+        <translation type="vanished">开始采集失败</translation>
     </message>
 </context>
 <context>
@@ -469,19 +469,19 @@
     <name>FingerprintInputDialog</name>
     <message>
         <source>save</source>
-        <translation>保存</translation>
+        <translation type="vanished">保存</translation>
     </message>
     <message>
         <source>cancel</source>
-        <translation>取消</translation>
+        <translation type="vanished">取消</translation>
     </message>
     <message>
         <source>Finger Enroll</source>
-        <translation>指纹录入</translation>
+        <translation type="vanished">指纹录入</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation>错误</translation>
+        <translation type="vanished">错误</translation>
     </message>
 </context>
 <context>
@@ -501,23 +501,23 @@
     </message>
     <message>
         <source>password</source>
-        <translation>密码</translation>
+        <translation type="vanished">密码</translation>
     </message>
     <message>
         <source>home directory</source>
-        <translation>用户目录</translation>
+        <translation type="vanished">用户目录</translation>
     </message>
     <message>
         <source>shell</source>
-        <translation>shell</translation>
+        <translation type="vanished">shell</translation>
     </message>
     <message>
         <source>icon</source>
-        <translation>头像</translation>
+        <translation type="vanished">头像</translation>
     </message>
     <message>
         <source>Failed to set user attributes</source>
-        <translation>设置用户属性失败</translation>
+        <translation type="vanished">设置用户属性失败</translation>
     </message>
     <message>
         <location filename="../src/hard-worker.cpp" line="147"/>
@@ -536,7 +536,7 @@
     </message>
     <message>
         <source>account type</source>
-        <translation>账户类型</translation>
+        <translation type="vanished">账户类型</translation>
     </message>
     <message>
         <location filename="../src/hard-worker.cpp" line="195"/>
@@ -550,7 +550,7 @@
     </message>
     <message>
         <source>Failed to update user properties(%1)</source>
-        <translation>更新用户属性失败(%1)</translation>
+        <translation type="vanished">更新用户属性失败(%1)</translation>
     </message>
     <message>
         <location filename="../src/hard-worker.cpp" line="226"/>
@@ -559,7 +559,7 @@
     </message>
     <message>
         <source>Failed to delete user</source>
-        <translation>删除用户失败</translation>
+        <translation type="vanished">删除用户失败</translation>
     </message>
 </context>
 <context>
@@ -583,11 +583,11 @@
     </message>
     <message>
         <source>User Manager</source>
-        <translation>账户管理工具</translation>
+        <translation type="vanished">账户管理工具</translation>
     </message>
     <message>
         <source>Create new account</source>
-        <translation>创建新用户</translation>
+        <translation type="vanished">创建新用户</translation>
     </message>
 </context>
 <context>
@@ -760,11 +760,11 @@
     </message>
     <message>
         <source>Account type</source>
-        <translation>账户类型</translation>
+        <translation type="vanished">账户类型</translation>
     </message>
     <message>
         <source>Account status</source>
-        <translation>启用账户</translation>
+        <translation type="vanished">启用账户</translation>
     </message>
     <message>
         <location filename="../src/pages/user-info-page/user-info-page.ui" line="292"/>
@@ -837,79 +837,79 @@
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="136"/>
+        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="141"/>
         <source>standard</source>
         <translation>普通用户</translation>
     </message>
     <message>
-        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="137"/>
+        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="142"/>
         <source>administrator</source>
         <translation>管理员</translation>
     </message>
     <message>
         <source>Account information updated successfully</source>
-        <translation>账户信息更新成功</translation>
+        <translation type="vanished">账户信息更新成功</translation>
     </message>
     <message>
-        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="314"/>
+        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="326"/>
         <source>Password updated successfully</source>
         <translation>密码更新成功</translation>
     </message>
     <message>
-        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="320"/>
+        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="332"/>
         <source>The directory and files under the user&apos;s home directory are deleted with the user.Are you sure you want to delete the user(%1)?</source>
         <translation>用户目录下的目录和文件会随用户一起删除，确定要删除%1用户吗？</translation>
     </message>
     <message>
-        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="323"/>
+        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="335"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="205"/>
+        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="217"/>
         <source>Please enter the new user password</source>
         <translation>请输入新密码</translation>
     </message>
     <message>
-        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="213"/>
+        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="225"/>
         <source>Please enter the password again</source>
         <translation>请再次输入密码</translation>
     </message>
     <message>
-        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="219"/>
+        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="231"/>
         <source>The password you enter must be the same as the former one</source>
         <translation>两次密码不相同，请核对后，再次输入</translation>
     </message>
     <message>
-        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="230"/>
+        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="242"/>
         <source>Please enter the current user password</source>
         <translation>请输入当前密码</translation>
     </message>
     <message>
-        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="236"/>
+        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="248"/>
         <source>The current password is incorrect</source>
         <translation>当前密码错误，请再次输入</translation>
     </message>
     <message>
-        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="243"/>
+        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="255"/>
         <source>The new password cannot be the same as the current password</source>
         <translation>新密码不能和旧密码相同，请重新输入</translation>
     </message>
     <message>
-        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="252"/>
-        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="289"/>
-        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="308"/>
-        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="342"/>
+        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="264"/>
+        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="301"/>
+        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="320"/>
+        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="354"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="252"/>
+        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="264"/>
         <source>Password encryption failed</source>
         <translation>密码加密失败</translation>
     </message>
     <message>
-        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="294"/>
+        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="306"/>
         <source>user information updated successfully</source>
         <translation>用户信息更新成功</translation>
     </message>

@@ -12,7 +12,6 @@
  * Author:     liuxinhao <liuxinhao@kylinos.com.cn>
  */
 
- 
 #include "create-user-page.h"
 #include "accounts-global-info.h"
 #include "kiran-tips.h"
@@ -22,11 +21,14 @@
 #include "user-name-validator.h"
 
 #include <kiranwidgets-qt5/kiran-message-box.h>
+#include <qt5-log-i.h>
 #include <widget-property-helper.h>
 #include <QDebug>
+#include <QEvent>
+#include <QKeyEvent>
 #include <QListView>
 #include <QMessageBox>
-#include <qt5-log-i.h>
+#include <QMouseEvent>
 
 CreateUserPage::CreateUserPage(QWidget *parent) : QWidget(parent),
                                                   ui(new Ui::CreateUserPage)
@@ -89,8 +91,13 @@ void CreateUserPage::initUI()
     /// 密码输入框
     ui->editcheck_passwd->setMaxLength(24);
     ui->editcheck_passwd->setEchoMode(QLineEdit::Password);
+    ui->editcheck_passwd->setAttribute(Qt::WA_InputMethodEnabled, false);
+    ui->editcheck_passwd->installEventFilter(this);
+
     ui->editcheck_confirmPasswd->setMaxLength(24);
     ui->editcheck_confirmPasswd->setEchoMode(QLineEdit::Password);
+    ui->editcheck_confirmPasswd->setAttribute(Qt::WA_InputMethodEnabled, false);
+    ui->editcheck_confirmPasswd->installEventFilter(this);
 
     /// 高级设置按钮
     connect(ui->btn_advanceSetting, &QPushButton::clicked, [this]() {
@@ -231,4 +238,30 @@ void CreateUserPage::handlerCreateNewUserIsDone(QString userPath,
     {
         emit sigRequestSetCurrentUser(userPath);
     }
+}
+
+bool CreateUserPage::eventFilter(QObject *watched, QEvent *event)
+{
+    if (watched == ui->editcheck_passwd || watched == ui->editcheck_confirmPasswd)
+    {
+        if (event->type() == QEvent::KeyPress)
+        {
+            auto keyEvent = dynamic_cast<QKeyEvent *>(event);
+            if (keyEvent->matches(QKeySequence::Paste))
+            {
+                KLOG_DEBUG() << "event filter QKeySequence::Paster for passwd lineedit!";
+                return true;
+            }
+        }
+        else if (event->type() == QEvent::MouseButtonPress)
+        {
+            auto mouseEvent = dynamic_cast<QMouseEvent *>(event);
+            if (mouseEvent->buttons() & Qt::MidButton)
+            {
+                KLOG_DEBUG() << "event filter Qt::MidButton for passwd lineedit!";
+                return true;
+            }
+        }
+    }
+    return QWidget::eventFilter(watched, event);
 }

@@ -34,6 +34,8 @@ public:
     explicit UserInfoPage(QWidget *parent = nullptr);
     ~UserInfoPage();
 
+    bool eventFilter(QObject *watched, QEvent *event) override;
+
     ///　从Accounts服务中重新加载用户信息
     void updateInfo();
 

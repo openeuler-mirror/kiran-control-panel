@@ -35,6 +35,8 @@ public:
     explicit CreateUserPage(QWidget *parent = nullptr);
     ~CreateUserPage();
 
+    bool eventFilter(QObject *watched, QEvent *event) override;
+
     /// 重置界面信息，每次切换到创建用户界面时需重置信息
     void reset();
 

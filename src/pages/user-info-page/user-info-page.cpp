@@ -22,9 +22,14 @@
 #include <kiran-switch-button.h>
 #include <kiranwidgets-qt5/kiran-message-box.h>
 #include <widget-property-helper.h>
+#include <kiran-system-daemon/accounts-i.h>
+#include <qt5-log-i.h>
+
 #include <QListView>
 #include <QMessageBox>
-#include <kiran-system-daemon/accounts-i.h>
+#include <QEvent>
+#include <QKeyEvent>
+#include <QMouseEvent>
 
 enum PageEnum
 {
@@ -152,8 +157,15 @@ void UserInfoPage::initUI()
 
     /* 修改密码页面 */
     ui->editcheck_curpasswd->setEchoMode(QLineEdit::Password);
+    ui->editcheck_curpasswd->setAttribute(Qt::WA_InputMethodEnabled,false);
+
     ui->editcheck_newPasswd->setEchoMode(QLineEdit::Password);
+    ui->editcheck_newPasswd->setAttribute(Qt::WA_InputMethodEnabled,false);
+    ui->editcheck_newPasswd->installEventFilter(this);
+
     ui->editcheck_confirmPasswd->setEchoMode(QLineEdit::Password);
+    ui->editcheck_confirmPasswd->setAttribute(Qt::WA_InputMethodEnabled,false);
+    ui->editcheck_confirmPasswd->installEventFilter(this);
 
     //保存按钮
     connect(ui->btn_savePasswd, &QPushButton::clicked,
@@ -341,4 +353,30 @@ void UserInfoPage::handlerDeleteUserDone(QString errMsg)
     {
         KiranMessageBox::message(this, tr("Error"), errMsg, KiranMessageBox::Yes | KiranMessageBox::No);
     }
+}
+
+bool UserInfoPage::eventFilter(QObject *watched, QEvent *event)
+{
+    if (watched == ui->editcheck_newPasswd || watched == ui->editcheck_confirmPasswd)
+    {
+        if (event->type() == QEvent::KeyPress)
+        {
+            auto keyEvent = dynamic_cast<QKeyEvent *>(event);
+            if (keyEvent->matches(QKeySequence::Paste))
+            {
+                KLOG_DEBUG() << "event filter QKeySequence::Paster for passwd lineedit!";
+                return true;
+            }
+        }
+        else if (event->type() == QEvent::MouseButtonPress)
+        {
+            auto mouseEvent = dynamic_cast<QMouseEvent *>(event);
+            if (mouseEvent->buttons() & Qt::MidButton)
+            {
+                KLOG_DEBUG() << "event filter Qt::MidButton for passwd lineedit!";
+                return true;
+            }
+        }
+    }
+    return QWidget::eventFilter(watched, event);
 }
