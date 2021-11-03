@@ -1,10 +1,25 @@
+/**
+ * Copyright (c) 2020 ~ 2021 KylinSec Co., Ltd.
+ * kiran-cpanel-appearance is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *          http://license.coscl.org.cn/MulanPSL2
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ *
+ * Author:     yuanxing <yuanxing@kylinos.com.cn>
+ */
+
 #ifndef THEMES_H
 #define THEMES_H
 
-#include <QWidget>
 #include <QPushButton>
+#include <QWidget>
 
-namespace Ui {
+namespace Ui
+{
 class Themes;
 }
 
@@ -29,7 +44,7 @@ private:
     bool initIconThemesUI();
     bool initCursorThemesUI();
     bool getThemes(int themeType);
-    int  getJsonValueFromString(QString jsonString, QStringList *themeName, QStringList *themePath);
+    int getJsonValueFromString(QString jsonString, QStringList *themeName, QStringList *themePath);
     void createThemeWidget();
 
 signals:
@@ -56,4 +71,4 @@ private:
     ThemeWidgetGroup *m_themeWidgetGroup;
 };
 
-#endif // THEMES_H
+#endif  // THEMES_H

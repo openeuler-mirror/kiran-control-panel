@@ -1,9 +1,23 @@
+/**
+ * Copyright (c) 2020 ~ 2021 KylinSec Co., Ltd.
+ * kiran-cpanel-appearance is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *          http://license.coscl.org.cn/MulanPSL2
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ *
+ * Author:     yuanxing <yuanxing@kylinos.com.cn>
+ */
+
 #ifndef PREVIEWLABEL_H
 #define PREVIEWLABEL_H
 
-#include <QWidget>
 #include <QLabel>
 #include <QObject>
+#include <QWidget>
 
 class PreviewLabel : public QLabel
 {
@@ -11,12 +25,12 @@ public:
     explicit PreviewLabel(int wallpaperType, QString imgPath, QWidget *parent = 0);
     void setWallpaperPath(QString path);
     void setWallpaperType(int type);
-    void updateWallpaper(int type,QString path);
+    void updateWallpaper(int type, QString path);
 
 private:
     void drawDesktopPreview(QPainter *painter);
     void drawLockScreenPreview(QPainter *painter);
-    QPixmap loadPixmap(QString imagePath);
+    bool loadPixmap(QString imagePath);
 
 protected:
     void paintEvent(QPaintEvent *event);
@@ -26,4 +40,4 @@ private:
     int m_wallpaperType;
 };
 
-#endif // PREVIEWLABEL_H
+#endif  // PREVIEWLABEL_H

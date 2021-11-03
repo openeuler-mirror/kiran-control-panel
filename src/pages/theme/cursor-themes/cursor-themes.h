@@ -1,5 +1,20 @@
+/**
+ * Copyright (c) 2020 ~ 2021 KylinSec Co., Ltd.
+ * kiran-cpanel-appearance is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *          http://license.coscl.org.cn/MulanPSL2
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ *
+ * Author:     yuanxing <yuanxing@kylinos.com.cn>
+ */
+
 #ifndef CURSORTHEMES_H
 #define CURSORTHEMES_H
+
 
 #include <QObject>
 #include <QWidget>
@@ -15,7 +30,7 @@ public:
 
 private:
     bool getCursorThemes(int Type);
-    int  getJsonValueFromString(QString jsonString);
+    int getJsonValueFromString(QString jsonString);
     QWidget *createCursorWidget();
     QImage convertToNomalImage(const QImage &cursorImage);
 
@@ -28,7 +43,6 @@ private:
 
     QStringList m_cursorThemesName;
     QStringList m_cursorThemesPath;
-
 };
 
-#endif // CURSORTHEMES_H
+#endif  // CURSORTHEMES_H

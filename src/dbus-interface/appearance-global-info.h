@@ -1,3 +1,17 @@
+/**
+ * Copyright (c) 2020 ~ 2021 KylinSec Co., Ltd.
+ * kiran-cpanel-appearance is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *          http://license.coscl.org.cn/MulanPSL2
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ *
+ * Author:     yuanxing <yuanxing@kylinos.com.cn>
+ */
+
 #ifndef APPEARANCEGLOBALINFO_H
 #define APPEARANCEGLOBALINFO_H
 
@@ -15,7 +29,7 @@ public:
 
     bool getAllThemes(int themeType, QString &themesJson);
     bool setTheme(int themeType, QString themeName);
-    bool getTheme(int type,QString &theme);
+    bool getTheme(int type, QString &theme);
 
     QString getDesktopBackground();
     bool setDesktopBackground(QString);
@@ -27,7 +41,7 @@ public:
     bool setFont(int fontType, QStringList fontInfoList);
 
 private:
-    ComKylinsecKiranSessionDaemonAppearanceInterface* m_appearanceInterface;
+    ComKylinsecKiranSessionDaemonAppearanceInterface *m_appearanceInterface;
 };
 
-#endif // APPEARANCEGLOBALINFO_H
+#endif  // APPEARANCEGLOBALINFO_H

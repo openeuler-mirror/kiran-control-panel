@@ -1,29 +1,43 @@
+/**
+ * Copyright (c) 2020 ~ 2021 KylinSec Co., Ltd.
+ * kiran-cpanel-appearance is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *          http://license.coscl.org.cn/MulanPSL2
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ *
+ * Author:     yuanxing <yuanxing@kylinos.com.cn>
+ */
+
 #ifndef IMAGESELECTOR_H
 #define IMAGESELECTOR_H
 
-#include <QWidget>
-#include <QTimer>
 #include <QScrollArea>
+#include <QTimer>
+#include <QWidget>
 
 class FlowLayout;
 class ImageItem;
 class ScrollContainer;
-class ImageSelector: public QWidget
+class ImageSelector : public QWidget
 {
     Q_OBJECT
-public:    
-    explicit ImageSelector(QWidget *parent= nullptr);
+public:
+    explicit ImageSelector(QWidget *parent = nullptr);
 
     QStringList imageList();
 
-    void addImage(const QString &imagePath,int imageType);
+    void addImage(const QString &imagePath, int imageType);
     void addAdditionImage(bool isAdditionImage);
 
     void removeImage(QString path);
 
     QString selectedImage();
 
-    void setSelectedImage(QString path,bool);
+    void setSelectedImage(QString path, bool);
 
     void moveAdditionItemToEnd();
 
@@ -53,11 +67,11 @@ private:
     QList<ImageItem *> m_itemList;
     QString m_selectedImagePath;
     QTimer m_updateTimer;
-    ImageItem* m_addImageItem = nullptr;
-    ImageItem* m_customImageItem = nullptr;
+    ImageItem *m_addImageItem = nullptr;
+    ImageItem *m_customImageItem = nullptr;
     int m_selectorType = -1;
     ScrollContainer *m_container;
     QScrollArea *scrollArea;
 };
 
-#endif // IMAGESELECTOR_H
+#endif  // IMAGESELECTOR_H
