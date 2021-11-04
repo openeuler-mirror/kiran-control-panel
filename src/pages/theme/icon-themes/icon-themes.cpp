@@ -16,11 +16,15 @@
 #include <kiran-log/qt5-log-i.h>
 #include <kiran-session-daemon/appearance-i.h>
 #include <kiranwidgets-qt5/kiran-message-box.h>
+#include <QDir>
 #include <QIcon>
+#include <QJsonArray>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonParseError>
 #include <QVBoxLayout>
 #include "../theme-widget-group.h"
 #include "../theme-widget.h"
-#include "dbus-interface/Appearance.h"
 #include "dbus-interface/appearance-global-info.h"
 #include "ui_icon-themes.h"
 
@@ -51,7 +55,27 @@ bool IconThemes::initUI()
     }
     AppearanceGlobalInfo::instance()->getTheme(APPEARANCE_THEME_TYPE_ICON, m_currentIconTheme);
     createIconWidgets();
+
     return true;
+}
+
+void IconThemes::updateIconTheme(QString newIconTheme)
+{
+    QList<ThemeWidget *> widgets = m_iconThemeWidgetGroup->getThemeWidgetList();
+    foreach (ThemeWidget *widget, widgets)
+    {
+        if (widget->getTheme() == newIconTheme)
+        {
+            widget->setSelectStatus(true, APPEARANCE_THEME_TYPE_ICON);
+            emit sigSetIconTheme(true, newIconTheme);
+        }
+        else
+        {
+            widget->setSelectStatus(false, APPEARANCE_THEME_TYPE_ICON);
+            emit sigSetIconTheme(false, newIconTheme);
+        }
+    }
+    m_currentIconTheme = newIconTheme;
 }
 
 /**
@@ -69,7 +93,7 @@ bool IconThemes::getIconThemes(int themeType)
     }
     if (getJsonValueFromString(iconThemesJson) <= 0)
     {
-        KLOG_DEBUG() << "Can't convert json string or there is no icon themes!";
+        KLOG_ERROR() << "Can't convert json string or there is no icon themes!";
         return false;
     }
     return true;
@@ -81,7 +105,7 @@ int IconThemes::getJsonValueFromString(QString jsonString)
     QJsonDocument jsonDocument = QJsonDocument::fromJson(jsonString.toLocal8Bit().data(), &jsonError);
     if (jsonDocument.isNull() || jsonError.error != QJsonParseError::NoError)
     {
-        KLOG_DEBUG() << " please check the string " << jsonString.toLocal8Bit().data();
+        KLOG_ERROR() << " please check the string " << jsonString.toLocal8Bit().data();
         return -1;
     }
     if (jsonDocument.isArray())
@@ -128,7 +152,7 @@ void IconThemes::createIconWidgets()
     m_iconThemeWidgetGroup = new ThemeWidgetGroup(this);
     QVBoxLayout *vLayout = new QVBoxLayout(ui->widget_icon);
     vLayout->setMargin(0);
-    vLayout->setSpacing(20);
+    vLayout->setSpacing(4);
     for (int i = 0; i < m_iconThemes.size(); i++)
     {
         if (m_iconThemes.at(i).startsWith("Kiran", Qt::CaseInsensitive))
@@ -158,7 +182,6 @@ void IconThemes::createIconWidgets()
         else if (m_iconThemes.at(i).startsWith("Adwaita", Qt::CaseInsensitive))
         {
             QString path = m_iconThemesPath.at(i) + "/48x48/apps/";
-            KLOG_INFO() << path;
             QDir appsDir = QDir(path);
             QStringList showIconsList;
             if (appsDir.exists())
@@ -181,26 +204,18 @@ void IconThemes::createIconWidgets()
                 continue;
         }
     }
-    vLayout->addStretch();
-
     connect(m_iconThemeWidgetGroup, &ThemeWidgetGroup::themeWidgetChange,
             [=](ThemeWidget *preWidget, ThemeWidget *currWidget) {
-                if (preWidget)
+                if (currWidget->getTheme() == m_currentIconTheme)
                 {
-                    if (preWidget == currWidget)
-                    {
-                        emit sigSetIconTheme(false);
-                        return;
-                    }
-                    preWidget->setSelectStatus(false, APPEARANCE_THEME_TYPE_ICON);
+                    emit sigSetIconTheme(false, m_currentIconTheme);
+                    return;
                 }
-
-                currWidget->setSelectStatus(true, APPEARANCE_THEME_TYPE_ICON);
                 if (AppearanceGlobalInfo::instance()->setTheme(APPEARANCE_THEME_TYPE_ICON,
                                                                currWidget->getTheme()))
                 {
                     KLOG_INFO() << "set icon theme successful";
-                    emit sigSetIconTheme(true);
+                    emit sigSetIconTheme(true, currWidget->getTheme());
                 }
                 else
                 {
@@ -208,7 +223,7 @@ void IconThemes::createIconWidgets()
                                              tr("Faild"),
                                              tr("Set icon themes failed!"),
                                              KiranMessageBox::Ok);
-                    emit sigSetIconTheme(false);
+                    emit sigSetIconTheme(false, m_currentIconTheme);
                 }
             });
 }

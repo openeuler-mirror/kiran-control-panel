@@ -16,10 +16,11 @@
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QMouseEvent>
+#include "kiran-log/qt5-log-i.h"
 #include "kiran-session-daemon/appearance-i.h"
 
-#define DARK_THEME "KiranM-dark"
-#define LIGHT_THEME "KiranM"
+#define DARK_THEME "Kiran-dark"
+#define LIGHT_THEME "Kiran"
 
 /**
  * @brief ThemeWidget::ThemeWidget :创建单个图标主题控件

@@ -17,7 +17,7 @@
 
 #include <QObject>
 
-class ComKylinsecKiranSessionDaemonAppearanceInterface;
+class AppearanceBackEndProxy;
 class AppearanceGlobalInfo : public QObject
 {
     Q_OBJECT
@@ -40,8 +40,13 @@ public:
     QStringList getFont(int type);
     bool setFont(int fontType, QStringList fontInfoList);
 
+signals:
+    void themeChanged(int type, const QString &theme_name);
+    void desktopBackgroundChanged(const QString &value) const;
+    void lockScreenBackgroundChanged(const QString &value) const;
+
 private:
-    ComKylinsecKiranSessionDaemonAppearanceInterface *m_appearanceInterface;
+    AppearanceBackEndProxy *m_appearanceInterface;
 };
 
 #endif  // APPEARANCEGLOBALINFO_H

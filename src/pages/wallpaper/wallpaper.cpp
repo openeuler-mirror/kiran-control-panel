@@ -33,12 +33,31 @@ Wallpaper::Wallpaper(QWidget *parent) : QWidget(parent),
                                         ui(new Ui::Wallpaper)
 {
     ui->setupUi(this);
+
+    m_cacheDirName = QString("%1/%2").arg(QDir::homePath()).arg(CACHE_IMAGE_DIR);
+    QDir dstDir(m_cacheDirName);
+    if (!dstDir.exists())
+        dstDir.mkdir(m_cacheDirName);
+
     initUI();
     createPreviewLabel();
 
     createChooserWidget();
 
     handleImageSelector();
+
+    connect(AppearanceGlobalInfo::instance(), &AppearanceGlobalInfo::desktopBackgroundChanged,
+            [this](const QString &value) {
+                m_desktopPreview->updateWallpaper(DESKTOP, value);
+                m_desktopWpChooser->setName(value.split("/").last());
+                m_currDesktopWp = value;
+            });
+    connect(AppearanceGlobalInfo::instance(), &AppearanceGlobalInfo::lockScreenBackgroundChanged,
+            [this](const QString &value) {
+                m_lockScreenPreview->updateWallpaper(LOCK_SCREEN, value);
+                m_lockScreenWPChooser->setName(value.split("/").last());
+                m_currLockScreenWp = value;
+            });
 }
 
 Wallpaper::~Wallpaper()
@@ -63,25 +82,17 @@ void Wallpaper::createPreviewLabel()
     m_currDesktopWp = AppearanceGlobalInfo::instance()->getDesktopBackground();
     m_currLockScreenWp = AppearanceGlobalInfo::instance()->getLockScreenBackground();
 
+    QString drawDesktopImg = getDrawImgName(m_currDesktopWp);
     QLayout *layoutDesktop = ui->widget_desktop_preview->layout();
-    PreviewLabel *desktopPreview = new PreviewLabel(DESKTOP, m_currDesktopWp, this);
-    layoutDesktop->addWidget(desktopPreview);
-    layoutDesktop->setAlignment(desktopPreview, Qt::AlignHCenter);
-    connect(this, &Wallpaper::wallpaperChanged,
-            [=](int type, QString path) {
-                if (type == DESKTOP)
-                    desktopPreview->updateWallpaper(DESKTOP, path);
-            });
+    m_desktopPreview = new PreviewLabel(DESKTOP, drawDesktopImg, this);
+    layoutDesktop->addWidget(m_desktopPreview);
+    layoutDesktop->setAlignment(m_desktopPreview, Qt::AlignHCenter);
 
+    QString drawLockScreenImg = getDrawImgName(m_currLockScreenWp);
     QLayout *layout = ui->widget_lockscreen_preview->layout();
-    PreviewLabel *lockScreenPreview = new PreviewLabel(LOCK_SCREEN, m_currLockScreenWp, this);
-    layout->addWidget(lockScreenPreview);
-    layout->setAlignment(lockScreenPreview, Qt::AlignHCenter);
-    connect(this, &Wallpaper::wallpaperChanged,
-            [=](int type, QString path) {
-                if (type == LOCK_SCREEN)
-                    lockScreenPreview->updateWallpaper(LOCK_SCREEN, path);
-            });
+    m_lockScreenPreview = new PreviewLabel(LOCK_SCREEN, drawLockScreenImg, this);
+    layout->addWidget(m_lockScreenPreview);
+    layout->setAlignment(m_lockScreenPreview, Qt::AlignHCenter);
 }
 
 /**
@@ -143,12 +154,7 @@ void Wallpaper::handleImageSelector()
                             return;
                         }
                         if (AppearanceGlobalInfo::instance()->setDesktopBackground(imagePath))
-                        {
-                            m_desktopWpChooser->setName(imagePath.split("/").last());
-                            m_currDesktopWp = imagePath;
                             ui->stackedWidget_Wallpaper->setCurrentIndex(0);
-                            emit wallpaperChanged(type, imagePath);
-                        }
                         else
                             KiranMessageBox::message(nullptr, tr("set wallpaper"), tr("Set wallpaper failed!"), KiranMessageBox::Ok);
                     }
@@ -160,12 +166,7 @@ void Wallpaper::handleImageSelector()
                             return;
                         }
                         if (AppearanceGlobalInfo::instance()->setLockScreenBackground(imagePath))
-                        {
-                            m_lockScreenWPChooser->setName(imagePath.split("/").last());
-                            m_currLockScreenWp = imagePath;
                             ui->stackedWidget_Wallpaper->setCurrentIndex(0);
-                            emit wallpaperChanged(type, imagePath);
-                        }
                         else
                             KiranMessageBox::message(nullptr, tr("set wallpaper"), tr("Set wallpaper failed!"), KiranMessageBox::Ok);
                     }
@@ -186,17 +187,10 @@ void Wallpaper::handleImageSelector()
                 {
                     return;
                 }
-
                 //copy
                 QFile file(fileName);
-                QString dirName = QString("%1/%2").arg(QDir::homePath()).arg(CACHE_IMAGE_DIR);
-                QDir dstDir(dirName);
-                if (!dstDir.exists())
-                    dstDir.mkdir(dirName);
-
                 QString dstName = convertImgName(fileName);
-
-                file.copy(QString("%1%2").arg(dirName).arg(dstName));
+                file.copy(QString("%1%2").arg(m_cacheDirName).arg(dstName));
 
                 //addImage
                 m_imageSelector->addImage(fileName, CUSTOM_IMAGE);
@@ -280,12 +274,24 @@ void Wallpaper::handleWallpaperInfo(QList<QMap<QString, QString>> wallpaperMapLi
             else
             {
                 if (file.exists())
+                {
                     m_imageSelector->addImage(visibleImage, CUSTOM_IMAGE);
+
+                    QString imgName = convertImgName(visibleImage);
+                    QString cacheImg(QString("%1%2").arg(m_cacheDirName).arg(imgName));
+                    file.setFileName(cacheImg);
+                    if (!file.exists())
+                    {
+                        //copy
+                        KLOG_INFO() << "copy: " << cacheImg;
+                        file.copy(visibleImage, cacheImg);
+                    }
+                }
                 else
                 {
                     KLOG_INFO() << " search from cache dir";
                     QString imgName = convertImgName(visibleImage);
-                    QString cacheImg(QString("%1/%2%3").arg(QDir::homePath()).arg(CACHE_IMAGE_DIR).arg(imgName));
+                    QString cacheImg(QString("%1%2").arg(m_cacheDirName).arg(imgName));
                     file.setFileName(cacheImg);
                     if (file.exists())
                         m_imageSelector->addImage(cacheImg, CUSTOM_IMAGE);
@@ -322,7 +328,27 @@ void Wallpaper::loadVisibleWallpapers()
 
 QString Wallpaper::convertImgName(QString originName)
 {
+    //设置文件名,遍历文件夹中的文件
     QStringList imgPathList = originName.split("/", QString::SkipEmptyParts);
     QString dstName = imgPathList.join("_");
     return dstName;
+}
+
+QString Wallpaper::getDrawImgName(QString originName)
+{
+    QString drawImg;
+    QFile file;
+    file.setFileName(originName);
+    if (!file.exists())
+    {
+        QString cacheImg = convertImgName(originName);
+        file.setFileName(m_cacheDirName + cacheImg);
+        if (file.exists())
+            drawImg = m_cacheDirName + cacheImg;
+        else
+            return nullptr;
+    }
+    else
+        drawImg = originName;
+    return drawImg;
 }

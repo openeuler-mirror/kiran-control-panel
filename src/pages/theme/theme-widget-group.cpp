@@ -29,6 +29,7 @@ ThemeWidgetGroup::~ThemeWidgetGroup()
  */
 void ThemeWidgetGroup::addWidget(ThemeWidget *widget)
 {
+    m_themeWidgets.append(widget);
     connect(widget, &ThemeWidget::clicked, [=] {
         m_preThemeWidget = m_currThemeWidget;
         m_currThemeWidget = widget;
@@ -40,4 +41,14 @@ void ThemeWidgetGroup::addWidget(ThemeWidget *widget)
 void ThemeWidgetGroup::setCurrentWidget(ThemeWidget *widget)
 {
     m_currThemeWidget = widget;
+}
+
+ThemeWidget *ThemeWidgetGroup::getCurrentWidget()
+{
+    return m_currThemeWidget;
+}
+
+QList<ThemeWidget *> ThemeWidgetGroup::getThemeWidgetList()
+{
+    return m_themeWidgets;
 }

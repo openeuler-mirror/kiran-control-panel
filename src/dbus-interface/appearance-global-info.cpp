@@ -16,7 +16,7 @@
 #include <kiran-log/qt5-log-i.h>
 #include <QMutex>
 #include <QScopedPointer>
-#include "Appearance.h"
+#include "appearance_backEnd_proxy.h"
 #include "kiran-session-daemon/appearance-i.h"
 
 using namespace std;
@@ -24,7 +24,21 @@ AppearanceGlobalInfo::AppearanceGlobalInfo(QObject *parent)
     : QObject(parent),
       m_appearanceInterface(nullptr)
 {
-    m_appearanceInterface = ComKylinsecKiranSessionDaemonAppearanceInterface::instance();
+    m_appearanceInterface = new AppearanceBackEndProxy(APPEARANCE_DBUS_NAME,
+                                                       APPEARANCE_OBJECT_PATH,
+                                                       QDBusConnection::sessionBus());
+    connect(m_appearanceInterface, &AppearanceBackEndProxy::ThemeChanged,
+            [this](int type, const QString &themeName) {
+                emit themeChanged(type, themeName);
+            });
+    connect(m_appearanceInterface, &AppearanceBackEndProxy::desktop_backgroundChanged,
+            [this](const QString &value) {
+                emit desktopBackgroundChanged(value);
+            });
+    connect(m_appearanceInterface, &AppearanceBackEndProxy::lock_screen_backgroundChanged,
+            [this](const QString &value) {
+                emit lockScreenBackgroundChanged(value);
+            });
 }
 
 AppearanceGlobalInfo::~AppearanceGlobalInfo()
@@ -193,7 +207,7 @@ bool AppearanceGlobalInfo::setFont(int fontType, QStringList fontInfoList)
     reply.waitForFinished();
     if (reply.isError() || !reply.isValid())
     {
-        KLOG_DEBUG() << "Call GetFont method failed : Font type: " << fontType
+        KLOG_DEBUG() << "Call SetFont method failed : Font type: " << fontType
                      << " Error: " << reply.error().message();
         return false;
     }

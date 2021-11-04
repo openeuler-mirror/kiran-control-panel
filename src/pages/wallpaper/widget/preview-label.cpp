@@ -13,6 +13,7 @@
  */
 
 #include "preview-label.h"
+#include <kiran-log/qt5-log-i.h>
 #include <math.h>
 #include <QPainter>
 #include <QVBoxLayout>
@@ -39,9 +40,12 @@ void PreviewLabel::setWallpaperType(int type)
 
 void PreviewLabel::updateWallpaper(int type, QString path)
 {
-    loadPixmap(path);
-    m_wallpaperType = type;
-    update();
+    KLOG_INFO() << "updateWallpaper: " << type << path;
+    if (loadPixmap(path))
+    {
+        m_wallpaperType = type;
+        update();
+    }
 }
 
 void PreviewLabel::drawDesktopPreview(QPainter *painter)

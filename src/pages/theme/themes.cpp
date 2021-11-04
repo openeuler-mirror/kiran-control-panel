@@ -31,8 +31,8 @@
 #include "theme-widget.h"
 #include "ui_themes.h"
 
-#define DARK_THEME "KiranM-dark"
-#define LIGHT_THEME "KiranM"
+#define DARK_THEME "Kiran-dark"
+#define LIGHT_THEME "Kiran"
 
 #define SETTING_THEME_NUM 2
 #define SETTING_THEME_PATH "/usr/share/themes/"
@@ -45,6 +45,8 @@ Themes::Themes(QWidget *parent) : QWidget(parent),
 {
     ui->setupUi(this);
     initUI();
+
+    connect(AppearanceGlobalInfo::instance(), &AppearanceGlobalInfo::themeChanged, this, &Themes::handleThemeChange);
 }
 
 Themes::~Themes()
@@ -52,6 +54,8 @@ Themes::~Themes()
     delete ui;
     if (m_iconThemes != nullptr)
         delete m_iconThemes;
+    if (m_cursorThemes != nullptr)
+        delete m_cursorThemes;
 }
 
 void Themes::setPage(int index)
@@ -118,44 +122,33 @@ bool Themes::initIconThemesUI()
 
     if (!AppearanceGlobalInfo::instance()->getTheme(APPEARANCE_THEME_TYPE_ICON, m_currIconThemes))
     {
-        KLOG_DEBUG() << "get current icon theme failed";
         m_chooseIconWidget->setName(tr("Unknown"));
         return false;
     }
 
     m_chooseIconWidget->setName(m_currIconThemes);
 
+    m_iconThemes = new IconThemes(ui->stackedWidget);
+    m_iconThemes->installEventFilter(this);
+    if (!m_iconThemes->initUI())
+    {
+        KiranMessageBox::message(nullptr, QObject::tr("Failed"),
+                                 QObject::tr("Get icon themes failed!"),
+                                 KiranMessageBox::Ok);
+        return false;
+    }
+    else
+        ui->stackedWidget->addWidget(m_iconThemes);
+
     connect(m_chooseIconWidget, &ChooserWidget::clicked,
             [=] {
-                if (m_iconThemes == nullptr)
-                {
-                    m_iconThemes = new IconThemes(ui->stackedWidget);
-                    m_iconThemes->installEventFilter(this);
-                    if (!m_iconThemes->initUI())
-                    {
-                        KiranMessageBox::message(nullptr, QObject::tr("Failed"),
-                                                 QObject::tr("Get icon themes failed!"),
-                                                 KiranMessageBox::Ok);
-                        return;
-                    }
-                    else
-                    {
-                        ui->stackedWidget->addWidget(m_iconThemes);
-                        ui->stackedWidget->setCurrentWidget(m_iconThemes);
-                    }
-                }
-                else
-                    ui->stackedWidget->setCurrentWidget(m_iconThemes);
+                ui->stackedWidget->setCurrentWidget(m_iconThemes);
+            });
 
-                connect(m_iconThemes, &IconThemes::sigSetIconTheme,
-                        [=](bool isSuccessful) {
-                            if (isSuccessful)
-                            {
-                                AppearanceGlobalInfo::instance()->getTheme(APPEARANCE_THEME_TYPE_ICON, m_currIconThemes);
-                                m_chooseIconWidget->setName(m_currIconThemes);
-                            }
-                            ui->stackedWidget->setCurrentIndex(0);
-                        });
+    connect(m_iconThemes, &IconThemes::sigSetIconTheme,
+            [=](bool isSuccessful, QString newIconName) {
+                m_chooseIconWidget->setName(newIconName);
+                ui->stackedWidget->setCurrentIndex(0);
             });
 
     return true;
@@ -175,44 +168,34 @@ bool Themes::initCursorThemesUI()
 
     if (!AppearanceGlobalInfo::instance()->getTheme(APPEARANCE_THEME_TYPE_CURSOR, m_currCursorThemes))
     {
-        KLOG_DEBUG() << "get current cursor theme failed";
         m_chooseCursorWidget->setName(tr("Unknown"));
         return false;
     }
     m_chooseCursorWidget->setName(m_currCursorThemes);
 
+    m_cursorThemes = new CursorThemes(ui->stackedWidget);
+    m_cursorThemes->installEventFilter(this);
+    if (!m_cursorThemes->initUI())
+    {
+        KiranMessageBox::message(nullptr, QObject::tr("Failed"),
+                                 QObject::tr("Get cursor themes failed!"),
+                                 KiranMessageBox::Ok);
+        return false;
+    }
+    else
+        ui->stackedWidget->addWidget(m_cursorThemes);
+
     connect(m_chooseCursorWidget, &ChooserWidget::clicked,
             [=] {
-                if (m_cursorThemes == nullptr)
-                {
-                    m_cursorThemes = new CursorThemes(ui->stackedWidget);
-                    m_cursorThemes->installEventFilter(this);
-                    if (!m_cursorThemes->initUI())
-                    {
-                        KiranMessageBox::message(nullptr, QObject::tr("Failed"),
-                                                 QObject::tr("Get cursor themes failed!"),
-                                                 KiranMessageBox::Ok);
-                        return;
-                    }
-                    else
-                    {
-                        ui->stackedWidget->addWidget(m_cursorThemes);
-                        ui->stackedWidget->setCurrentWidget(m_cursorThemes);
-                    }
-                }
-                else
-                    ui->stackedWidget->setCurrentWidget(m_cursorThemes);
-
-                connect(m_cursorThemes, &CursorThemes::sigSetCursorTheme,
-                        [=](bool isSuccessful) {
-                            if (isSuccessful)
-                            {
-                                AppearanceGlobalInfo::instance()->getTheme(APPEARANCE_THEME_TYPE_CURSOR, m_currCursorThemes);
-                                m_chooseCursorWidget->setName(m_currCursorThemes);
-                            }
-                            ui->stackedWidget->setCurrentIndex(0);
-                        });
+                ui->stackedWidget->setCurrentWidget(m_cursorThemes);
             });
+
+    connect(m_cursorThemes, &CursorThemes::sigSetCursorTheme,
+            [=](bool isSuccessful, QString newThemeName) {
+                m_chooseCursorWidget->setName(newThemeName);
+                ui->stackedWidget->setCurrentIndex(0);
+            });
+
     return true;
 }
 
@@ -256,7 +239,7 @@ int Themes::getJsonValueFromString(QString jsonString, QStringList *themeName, Q
     QJsonDocument jsonDocument = QJsonDocument::fromJson(jsonString.toLocal8Bit().data(), &jsonError);
     if (jsonDocument.isNull() || jsonError.error != QJsonParseError::NoError)
     {
-        KLOG_DEBUG() << " please check the string " << jsonString.toLocal8Bit().data();
+        KLOG_ERROR() << " please check the string " << jsonString.toLocal8Bit().data();
         return -1;
     }
     if (jsonDocument.isArray())
@@ -322,24 +305,48 @@ void Themes::createThemeWidget()
 
         connect(m_themeWidgetGroup, &ThemeWidgetGroup::themeWidgetChange,
                 [=](ThemeWidget *preWidget, ThemeWidget *currWidget) {
-                    if (preWidget)
-                    {
-                        preWidget->setSelectStatus(false, APPEARANCE_THEME_TYPE_GTK);
-                    }
-                    currWidget->setSelectStatus(true, APPEARANCE_THEME_TYPE_GTK);
-
+                    Q_UNUSED(preWidget);
                     QString theme = currWidget->getTheme();
                     if (!QString::compare(m_currentTheme, theme))
                         return;
                     if (!AppearanceGlobalInfo::instance()->setTheme(APPEARANCE_THEME_TYPE_GTK, theme))
-                    {
-                        KLOG_DEBUG() << "setTheme failed!"
-                                     << " theme type is: " << APPEARANCE_THEME_TYPE_GTK
-                                     << " theme name is: " << theme;
                         return;
-                    }
                     KLOG_INFO() << "set themes successful:" << theme;
-                    m_currentTheme = theme;
                 });
+    }
+}
+
+void Themes::handleThemeChange(int type, QString themeName)
+{
+    KLOG_INFO() << "handleThemeChange" << type << themeName;
+    switch (type)
+    {
+    case APPEARANCE_THEME_TYPE_GTK:
+    {
+        QList<ThemeWidget *> widgets = m_themeWidgetGroup->getThemeWidgetList();
+        foreach (ThemeWidget *widget, widgets)
+        {
+            if (widget->getTheme() == themeName)
+            {
+                widget->setSelectStatus(true, type);
+                m_currentTheme = themeName;
+            }
+            else
+                widget->setSelectStatus(false, type);
+        }
+        break;
+    }
+    case APPEARANCE_THEME_TYPE_CURSOR:
+    {
+        m_cursorThemes->updateCursorTheme(themeName);
+        break;
+    }
+    case APPEARANCE_THEME_TYPE_ICON:
+    {
+        m_iconThemes->updateIconTheme(themeName);
+        break;
+    }
+    default:
+        break;
     }
 }

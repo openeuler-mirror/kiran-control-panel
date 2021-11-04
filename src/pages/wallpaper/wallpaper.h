@@ -25,6 +25,7 @@ class Wallpaper;
 class ImageSelector;
 class ThreadObject;
 class ChooserWidget;
+class PreviewLabel;
 class Wallpaper : public QWidget
 {
     Q_OBJECT
@@ -42,6 +43,7 @@ private:
     void handleImageSelector();
     void loadVisibleWallpapers();
     QString convertImgName(QString originName);
+    QString getDrawImgName(QString originName);
 
 public slots:
     void handleWallpaperInfo(QList<QMap<QString, QString>> wallpaperMapList);
@@ -52,10 +54,13 @@ signals:
 
 private:
     Ui::Wallpaper *ui;
+    QString m_cacheDirName;
     QString m_currDesktopWp;
     QString m_currLockScreenWp;
     ChooserWidget *m_desktopWpChooser;
     ChooserWidget *m_lockScreenWPChooser;
+    PreviewLabel *m_desktopPreview;
+    PreviewLabel *m_lockScreenPreview;
 
     ImageSelector *m_imageSelector;
     QStringList m_customWallpaper;

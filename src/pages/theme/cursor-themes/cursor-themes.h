@@ -15,18 +15,17 @@
 #ifndef CURSORTHEMES_H
 #define CURSORTHEMES_H
 
-
 #include <QObject>
 #include <QWidget>
 
 class ThemeWidgetGroup;
-class ComKylinsecKiranSessionDaemonAppearanceInterface;
 class CursorThemes : public QWidget
 {
     Q_OBJECT
 public:
     explicit CursorThemes(QWidget *parent = 0);
     bool initUI();
+    void updateCursorTheme(QString newCursorTheme);
 
 private:
     bool getCursorThemes(int Type);
@@ -35,14 +34,14 @@ private:
     QImage convertToNomalImage(const QImage &cursorImage);
 
 signals:
-    void sigSetCursorTheme(bool);
+    void sigSetCursorTheme(bool, QString themeName);
 
 private:
-    ComKylinsecKiranSessionDaemonAppearanceInterface *m_appearanceInterface;
     QString m_currentCursorTheme;
 
     QStringList m_cursorThemesName;
     QStringList m_cursorThemesPath;
+    ThemeWidgetGroup *m_themeWidgetGroup;
 };
 
 #endif  // CURSORTHEMES_H

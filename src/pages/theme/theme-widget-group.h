@@ -26,6 +26,8 @@ public:
 
     void addWidget(ThemeWidget* widget);
     void setCurrentWidget(ThemeWidget*);
+    ThemeWidget* getCurrentWidget();
+    QList<ThemeWidget*> getThemeWidgetList();
 
 signals:
     void themeWidgetChange(ThemeWidget*, ThemeWidget*);
@@ -33,6 +35,7 @@ signals:
 private:
     ThemeWidget* m_currThemeWidget = nullptr;
     ThemeWidget* m_preThemeWidget = nullptr;
+    QList<ThemeWidget*> m_themeWidgets;
 };
 
 #endif  // THEMEWIDGETGROUP_H

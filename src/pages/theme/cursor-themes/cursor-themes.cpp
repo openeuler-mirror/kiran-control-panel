@@ -13,21 +13,25 @@
  */
 
 // clang-format off
-#include <kiran-message-box.h>
-#include <kiran-session-daemon/appearance-i.h>
 #include <QIcon>
 #include <QLabel>
 #include <QVBoxLayout>
+#include <QJsonParseError>
+#include <QJsonDocument>
+#include <QJsonArray>
+#include <QDir>
+#include <QJsonObject>
 #include "../theme-widget-group.h"
 #include "../theme-widget.h"
 #include "cursor-themes.h"
-#include "dbus-interface/Appearance.h"
 #include "dbus-interface/appearance-global-info.h"
-#include <X11/Xcursor/Xcursor.h>
 #include <kiran-log/qt5-log-i.h>
+#include <X11/Xcursor/Xcursor.h>
+#include <kiran-message-box.h>
+#include <kiran-session-daemon/appearance-i.h>
 // clang-format on
 
-static QStringList cursors{"arrow", "size_bdiag", "size_fdiag", "size_ver", "size_hor", "pointer"};
+static QStringList cursors{"arrow", "size_bdiag", "size_fdiag", "size_ver", "tcross", "pointer"};
 
 CursorThemes::CursorThemes(QWidget *parent) : QWidget(parent)
 {
@@ -57,6 +61,22 @@ bool CursorThemes::initUI()
     return true;
 }
 
+void CursorThemes::updateCursorTheme(QString newCursorTheme)
+{
+    QList<ThemeWidget *> widgets = m_themeWidgetGroup->getThemeWidgetList();
+    foreach (ThemeWidget *widget, widgets)
+    {
+        if (widget->getTheme() == newCursorTheme)
+        {
+            widget->setSelectStatus(true, APPEARANCE_THEME_TYPE_CURSOR);
+            m_currentCursorTheme = newCursorTheme;
+            emit sigSetCursorTheme(true, newCursorTheme);
+        }
+        else
+            widget->setSelectStatus(false, APPEARANCE_THEME_TYPE_CURSOR);
+    }
+}
+
 /**
  * @brief CursorThemes::getCursorThemes 获取光标主题信息，包括名字和路径
  * @param Type 主题类型
@@ -68,12 +88,11 @@ bool CursorThemes::getCursorThemes(int Type)
     QString themeJson = nullptr;
     if (!AppearanceGlobalInfo::instance()->getAllThemes(Type, themeJson))
     {
-        KLOG_DEBUG() << "get cursor themes failed";
         return false;
     }
     if (getJsonValueFromString(themeJson) <= 0)
     {
-        KLOG_DEBUG() << "Can't convert json string or there is no cursor themes!";
+        KLOG_ERROR() << "Can't convert json string or there is no cursor themes!";
         return false;
     }
     return true;
@@ -85,7 +104,7 @@ int CursorThemes::getJsonValueFromString(QString jsonString)
     QJsonDocument jsonDocument = QJsonDocument::fromJson(jsonString.toLocal8Bit().data(), &jsonError);
     if (jsonDocument.isNull() || jsonError.error != QJsonParseError::NoError)
     {
-        KLOG_DEBUG() << " please check the string " << jsonString.toLocal8Bit().data();
+        KLOG_ERROR() << " please check the string " << jsonString.toLocal8Bit().data();
         return -1;
     }
     if (jsonDocument.isArray())
@@ -130,7 +149,7 @@ int CursorThemes::getJsonValueFromString(QString jsonString)
  */
 QWidget *CursorThemes::createCursorWidget()
 {
-    ThemeWidgetGroup *themeWidgetGroup = new ThemeWidgetGroup(this);
+    m_themeWidgetGroup = new ThemeWidgetGroup(this);
 
     QWidget *cursorWidget = new QWidget(this);
     QVBoxLayout *mainVLayout = new QVBoxLayout(cursorWidget);
@@ -140,8 +159,6 @@ QWidget *CursorThemes::createCursorWidget()
 
     for (int i = 0; i < m_cursorThemesName.size(); i++)
     {
-        //        if (m_cursorThemesName.at(i).startsWith("Kiran", Qt::CaseInsensitive))
-        //        {
         QList<QPixmap> cursorMap;
         QDir cursorThemesDir(m_cursorThemesPath.at(i));
 
@@ -153,13 +170,12 @@ QWidget *CursorThemes::createCursorWidget()
             std::string cursorTheme = cursorThemesDir.dirName().toStdString();
             XcursorImage *xCursorImage = XcursorLibraryLoadImage(cursorName.c_str(), cursorTheme.c_str(), size);
 
-            QImage cursorImg((uchar *)xCursorImage->pixels,
-                             xCursorImage->width, xCursorImage->height,
-                             QImage::Format_ARGB32_Premultiplied);
+            QImage img((uchar *)xCursorImage->pixels,
+                       xCursorImage->width, xCursorImage->height,
+                       QImage::Format_ARGB32_Premultiplied);
 
+            QImage cursorImg = convertToNomalImage(img);
             XcursorImageDestroy(xCursorImage);
-
-            cursorImg = convertToNomalImage(cursorImg);
 
             cursorMap.append(QPixmap::fromImage(cursorImg));
         }
@@ -167,36 +183,30 @@ QWidget *CursorThemes::createCursorWidget()
         ThemeWidget *themeWidget = new ThemeWidget(QSize(18, 18), m_currentCursorTheme,
                                                    m_cursorThemesName.at(i), cursorMap);
         mainVLayout->addWidget(themeWidget);
-        themeWidgetGroup->addWidget(themeWidget);
+        m_themeWidgetGroup->addWidget(themeWidget);
 
         if (m_currentCursorTheme == m_cursorThemesName.at(i))
         {
-            themeWidgetGroup->setCurrentWidget(themeWidget);
+            m_themeWidgetGroup->setCurrentWidget(themeWidget);
         }
         themeWidget->setTheme(m_cursorThemesName.at(i));
-        //}
     }
     mainVLayout->addStretch();
 
-    connect(themeWidgetGroup, &ThemeWidgetGroup::themeWidgetChange,
+    connect(m_themeWidgetGroup, &ThemeWidgetGroup::themeWidgetChange,
             [=](ThemeWidget *preWidget, ThemeWidget *currWidget) {
                 if (preWidget)
                 {
                     if (preWidget == currWidget)
                     {
-                        emit sigSetCursorTheme(false);
+                        emit sigSetCursorTheme(false, m_currentCursorTheme);
                         return;
                     }
-                    preWidget->setSelectStatus(false, APPEARANCE_THEME_TYPE_CURSOR);
                 }
-
-                currWidget->setSelectStatus(true, APPEARANCE_THEME_TYPE_CURSOR);
                 if (AppearanceGlobalInfo::instance()->setTheme(APPEARANCE_THEME_TYPE_CURSOR,
                                                                currWidget->getTheme()))
                 {
                     KLOG_INFO() << "set cursor theme successful";
-                    m_currentCursorTheme = currWidget->getTheme();
-                    emit sigSetCursorTheme(true);
                 }
                 else
                 {
@@ -204,7 +214,7 @@ QWidget *CursorThemes::createCursorWidget()
                                              tr("Faild"),
                                              tr("Set cursor themes failed!"),
                                              KiranMessageBox::Ok);
-                    emit sigSetCursorTheme(false);
+                    emit sigSetCursorTheme(false, m_currentCursorTheme);
                 }
             });
     return cursorWidget;
@@ -218,7 +228,7 @@ QWidget *CursorThemes::createCursorWidget()
 QImage CursorThemes::convertToNomalImage(const QImage &cursorImage)
 {
     QRect rect(cursorImage.rect().bottomRight(), cursorImage.rect().topLeft());
-    const quint32 *pixelData = reinterpret_cast<const quint32 *>(cursorImage.scanLine(0));
+    const quint32 *pixelData = reinterpret_cast<const quint32 *>(cursorImage.bits());
     for (int i = 0; i < cursorImage.height(); i++)
     {
         for (int j = 0; j < cursorImage.width(); j++)

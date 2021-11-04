@@ -56,7 +56,6 @@ ImageItem::~ImageItem()
 
 void ImageItem::createDeleteButton()
 {
-    KLOG_INFO() << "createDeleteButton";
     QHBoxLayout *hLayout = new QHBoxLayout(this);
     hLayout->setMargin(0);
     hLayout->setSpacing(0);
@@ -226,10 +225,8 @@ bool ImageItem::isSelected()
 
 void ImageItem::setIsSelected(bool selected)
 {
-    KLOG_DEBUG() << "selectd = " << selected;
     if (!m_isAdditionImage)
     {
-        KLOG_DEBUG() << "m_isSelected = " << m_isSelected;
         m_isSelected = selected;
         emit isSelectedChanged(m_isSelected);
         if (m_isSelected)

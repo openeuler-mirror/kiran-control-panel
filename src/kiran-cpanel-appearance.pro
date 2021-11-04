@@ -32,14 +32,12 @@ LIBS  += \
         -lkiranwidgets-qt5 \
         -lklog-qt5 \
         -lX11 \
-        -lXfixes \
         -lXcursor
 
 SOURCES += \
         main.cpp \
         kiran-cpanel-appearance.cpp \
     pages/font/fonts.cpp \
-    dbus-interface/Appearance.cpp \
     dbus-interface/appearance-global-info.cpp \
     pages/theme/themes.cpp \
     pages/theme/theme-widget.cpp \
@@ -56,12 +54,12 @@ SOURCES += \
     pages/wallpaper/widget/scroll-container.cpp \
     interface.cpp \
     pages/wallpaper/widget/image-item.cpp \
-    pages/wallpaper/widget/image-load-manager.cpp
+    pages/wallpaper/widget/image-load-manager.cpp \
+    dbus-interface/appearance_backEnd_proxy.cpp
 
 HEADERS += \
         kiran-cpanel-appearance.h \
     pages/font/fonts.h \
-    dbus-interface/Appearance.h \
     dbus-interface/appearance-global-info.h \
     pages/theme/themes.h \
     pages/theme/theme-widget.h \
@@ -80,7 +78,8 @@ HEADERS += \
     pages/wallpaper/widget/scroll-container.h \
     interface.h \
     pages/wallpaper/widget/image-item.h \
-    pages/wallpaper/widget/image-load-manager.h
+    pages/wallpaper/widget/image-load-manager.h \
+    dbus-interface/appearance_backEnd_proxy.h
 
 FORMS += \
         kiran-cpanel-appearance.ui \

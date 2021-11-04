@@ -23,7 +23,6 @@ namespace Ui
 class Themes;
 }
 
-class ComKylinsecKiranSessionDaemonAppearanceInterface;
 class QButtonGroup;
 class IconThemes;
 class ThemeWidgetGroup;
@@ -47,12 +46,14 @@ private:
     int getJsonValueFromString(QString jsonString, QStringList *themeName, QStringList *themePath);
     void createThemeWidget();
 
+public slots:
+    void handleThemeChange(int type, QString themeName);
+
 signals:
     void clicked();
 
 private:
     Ui::Themes *ui;
-    ComKylinsecKiranSessionDaemonAppearanceInterface *m_appearanceInterface;
 
     IconThemes *m_iconThemes;
     ChooserWidget *m_chooseIconWidget;
