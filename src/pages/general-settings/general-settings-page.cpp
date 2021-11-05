@@ -11,7 +11,7 @@
 
 #include "general-settings-page.h"
 #include "kiran-message-box.h"
-#include "kiran-session-daemon/power_i.h"
+#include "kiran-session-daemon/power-i.h"
 #include "power.h"
 #include "ui_general-settings-page.h"
 

@@ -5,7 +5,7 @@
 // You may need to build the project (run Qt uic code generator) to get "ui_power-settings-page.h" resolved
 
 #include "power-settings-page.h"
-#include <kiran-session-daemon/power_i.h>
+#include <kiran-session-daemon/power-i.h>
 #include <qt5-log-i.h>
 #include "power.h"
 #include "common.h"

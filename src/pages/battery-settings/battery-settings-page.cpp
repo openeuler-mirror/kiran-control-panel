@@ -10,7 +10,7 @@
 #include "ui_battery-settings-page.h"
 
 #include <qt5-log-i.h>
-#include <kiran-session-daemon/power_i.h>
+#include <kiran-session-daemon/power-i.h>
 #include <kiran-switch-button.h>
 
 #define LOW_POWER_REDUCE_BRIGHTNESS_SCALE 50

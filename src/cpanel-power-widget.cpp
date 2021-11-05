@@ -7,7 +7,7 @@
 #include "cpanel-power-widget.h"
 #include "battery-settings-page.h"
 #include "general-settings-page.h"
-#include "kiran-session-daemon/power_i.h"
+#include "kiran-session-daemon/power-i.h"
 #include "power-settings-page.h"
 #include "power.h"
 #include "ui_cpanel-power-widget.h"

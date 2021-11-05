@@ -10,7 +10,7 @@
  */
 
 #include "power.h"
-#include <kiran-session-daemon/power_i.h>
+#include <kiran-session-daemon/power-i.h>
 /*
  * Implementation of interface class PowerInterface
  */
