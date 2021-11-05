@@ -6,7 +6,7 @@ Name[zh_CN]=快捷键设置
 Comment=Kiran Cpanel Keybinding
 Comment[zh_CN]=快捷键设置
 Exec=kiran-cpanel-launcher --cpanel-plugin=kiran-cpanel-keybinding
-Icon=@ICON_DIR@/kcp-keybinding.png
+Icon=kcp-keybinding
 Terminal=false
 Type=Application
 X-KIRAN-NoDisplay=true
