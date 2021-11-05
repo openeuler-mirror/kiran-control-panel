@@ -17,7 +17,7 @@
 #include <QSharedPointer>
 #include <iostream>
 #include "dbus-wrapper/dbus-wrapper.h"
-#include "keyboard-backEnd-proxy.h"
+#include "keyboard_backEnd_proxy.h"
 #include "ui_general-page.h"
 
 #define TIMEOUT 100

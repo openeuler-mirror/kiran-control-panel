@@ -22,7 +22,7 @@
 #include <QJsonParseError>
 #include <QScrollBar>
 #include "dbus-wrapper/dbus-wrapper.h"
-#include "keyboard-backEnd-proxy.h"
+#include "keyboard_backEnd_proxy.h"
 #include "ui_layout-page.h"
 #include "widgets/choose-item.h"
 #include "widgets/layout-list.h"

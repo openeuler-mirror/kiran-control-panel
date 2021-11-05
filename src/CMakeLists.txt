@@ -9,19 +9,14 @@ file(GLOB_RECURSE HEADERS "*.h")
 file(GLOB_RECURSE FORMS "*.ui")
 file(GLOB_RECURSE RESOURCES "${PROJECT_SOURCE_DIR}/resources/*.qrc")
 
-qt5_create_translation( QM_FILES  ${TS_FILES} )
+qt5_create_translation( QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES} )
 
 set_source_files_properties(${KEYBOARD_DBUS_XML} PROPERTIES
 	CLASSNAME "KeyboardBackEndProxy"
 	NO_NAMESPACE true
 )
 
-#kiran_qt5_add_dbus_interface(KEYBOARD_PROXY
-#	${KEYBOARD_DBUS_XML}
-#	keyboard_backEnd_proxy
-#	)
-
-kiran_qt5_add_dbus_interface(KEYBOARD_PROXY ${KEYBOARD_DBUS_XML} keyboard-backEnd-proxy)
+kiran_qt5_add_dbus_interface(KEYBOARD_PROXY ${KEYBOARD_DBUS_XML} keyboard_backEnd_proxy)
 
 add_library(${PROJECT_NAME} SHARED
 	${SOURCES}

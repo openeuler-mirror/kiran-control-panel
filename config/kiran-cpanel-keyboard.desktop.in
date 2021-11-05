@@ -6,7 +6,7 @@ Name[zh_CN]=键盘语言设置
 Comment=Kiran Cpanel Mouse
 Comment[zh_CN]=键盘语言设置
 Exec=kiran-cpanel-launcher --cpanel-plugin=kiran-cpanel-keyboard
-Icon=@ICON_DIR@/kcp-keyboard.png
+Icon=kcp-keyboard
 Terminal=false
 Type=Application
 X-KIRAN-NoDisplay=true
