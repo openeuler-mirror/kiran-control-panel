@@ -1,0 +1,101 @@
+
+#btn_edit,#btn_add
+{
+    background-color:#2eb3ff;
+    border-radius : 3px;
+}
+
+#btn_add
+{
+    background-image: url(":/images/addition.svg");
+    background-position : center center;
+    background-repeat: no-repeat;
+}
+
+#btn_edit:hover,#btn_add:hover
+{
+    background-color:#77ceff
+}
+
+#btn_edit:pressed,#btn_add:pressed
+{
+    background-color:#2eb3ff;
+}
+
+#btn_delete
+{
+    background: transparent;
+    border:none;
+}
+
+#label_selected
+{
+    background-image: url(":/images/selected.svg");
+}
+#label_search
+{
+    background-image: url(":/images/search.svg");
+}
+
+#ChooseItem
+{
+    border-radius:6px;
+    background-color:#2D2D2D;
+}
+#ChooseItem:hover
+{
+    background-color:#393939;
+}
+
+#lineEdit_search
+{
+    border:none;
+}
+
+#listWidget_list::item,#listWidget_filter::item
+{
+    outline:none;
+    border:none;
+}
+#listWidget_list::item:hover,#listWidget_filter::item:hover
+{
+    background-color:transparent;
+}
+#listWidget_list::item:selected,#listWidget_filter::item:selected
+{
+    background-color:transparent;
+}
+
+LayoutItem
+{
+    background-color:transparent;
+    border-top:1px solid #393939;
+}
+LayoutItem[isPressed="true"]
+{
+    background-color:#2eb3ff;
+}
+LayoutItem[isPressed="false"]
+{
+    background-color:transparent;
+}
+
+LayoutItem[isPressed="true"] QLabel#icon
+{
+    background-image: url(":/images/selected-w.svg");
+    background-repeat: no-repeat;
+    background-position : center center;
+}
+LayoutItem[isPressed="false"] QLabel#icon
+{
+    background-image:none;
+}
+
+LayoutList
+{
+    border: 1px solid #393939;
+    border-radius:6px;
+}
+
+
+
