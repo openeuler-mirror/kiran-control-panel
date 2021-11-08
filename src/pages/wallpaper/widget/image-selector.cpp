@@ -20,7 +20,7 @@
 #include <QScrollArea>
 #include <QStyleOption>
 #include <iostream>
-#include "../wallpaper-global.h"
+#include "../wallpaper-def.h"
 #include "flowlayout.h"
 #include "image-item.h"
 #include "image-load-manager.h"
@@ -230,7 +230,7 @@ void ImageSelector::handlerImageDelete(QString imagePath)
                         m_itemList.at(deletePosIndex - 1)->setIsSelected(true);
                         m_selectedImagePath = m_itemList.at(deletePosIndex - 1)->imagePath();
                     }
-                    KLOG_INFO() << "current m_selectedImagePath = " << m_selectedImagePath;
+                    KLOG_INFO() << "changed selected ImagePath = " << m_selectedImagePath;
                     emit selectedImageChanged(m_selectorType, m_selectedImagePath);
                 }
             }

@@ -14,7 +14,7 @@
 
 #include "image-item.h"
 #include <kiran-log/qt5-log-i.h>
-#include "../wallpaper-global.h"
+#include "../wallpaper-def.h"
 #include "image-load-manager.h"
 
 #include <QDebug>
@@ -35,7 +35,7 @@ ImageItem::ImageItem(QWidget *parent, const QString &path, int imageType)
       m_imageType(imageType)
 {
     setAttribute(Qt::WA_Hover, true);
-    setToolTip(path);
+    setToolTip(path.split("/").last());
 
     if (m_imageType == CUSTOM_IMAGE)
     {

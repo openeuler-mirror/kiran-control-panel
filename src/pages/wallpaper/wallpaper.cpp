@@ -15,20 +15,20 @@
 #include "wallpaper.h"
 #include <kiran-log/qt5-log-i.h>
 #include <kiran-message-box.h>
+#include <QCryptographicHash>
 #include <QDir>
 #include <QFileDialog>
 #include <QThread>
 #include "common/chooser-widget.h"
 #include "dbus-interface/appearance-global-info.h"
 #include "ui_wallpaper.h"
-#include "wallpaper-global.h"
+#include "wallpaper-def.h"
 #include "widget/flowlayout.h"
 #include "widget/image-load-manager.h"
 #include "widget/image-selector.h"
 #include "widget/preview-label.h"
 #include "widget/xml-management/thread-object.h"
 
-#define CACHE_IMAGE_DIR ".config/kylinsec/kiran-cpanel-appearance/"
 Wallpaper::Wallpaper(QWidget *parent) : QWidget(parent),
                                         ui(new Ui::Wallpaper)
 {
@@ -82,15 +82,13 @@ void Wallpaper::createPreviewLabel()
     m_currDesktopWp = AppearanceGlobalInfo::instance()->getDesktopBackground();
     m_currLockScreenWp = AppearanceGlobalInfo::instance()->getLockScreenBackground();
 
-    QString drawDesktopImg = getDrawImgName(m_currDesktopWp);
     QLayout *layoutDesktop = ui->widget_desktop_preview->layout();
-    m_desktopPreview = new PreviewLabel(DESKTOP, drawDesktopImg, this);
+    m_desktopPreview = new PreviewLabel(DESKTOP, m_currDesktopWp, this);
     layoutDesktop->addWidget(m_desktopPreview);
     layoutDesktop->setAlignment(m_desktopPreview, Qt::AlignHCenter);
 
-    QString drawLockScreenImg = getDrawImgName(m_currLockScreenWp);
     QLayout *layout = ui->widget_lockscreen_preview->layout();
-    m_lockScreenPreview = new PreviewLabel(LOCK_SCREEN, drawLockScreenImg, this);
+    m_lockScreenPreview = new PreviewLabel(LOCK_SCREEN, m_currLockScreenWp, this);
     layout->addWidget(m_lockScreenPreview);
     layout->setAlignment(m_lockScreenPreview, Qt::AlignHCenter);
 }
@@ -178,6 +176,7 @@ void Wallpaper::handleImageSelector()
     connect(m_imageSelector, &ImageSelector::addNewImage,
             [=] {
                 bool flag = false;
+                QString storedName;
                 QString fileName = QFileDialog::getOpenFileName(this, tr("select picture"),
                                                                 QDir::homePath(),
                                                                 tr("image files(*.bmp *.jpg *.png *.tif *.gif"
@@ -187,13 +186,44 @@ void Wallpaper::handleImageSelector()
                 {
                     return;
                 }
-                //copy
+
+                //get md5
                 QFile file(fileName);
-                QString dstName = convertImgName(fileName);
-                file.copy(QString("%1%2").arg(m_cacheDirName).arg(dstName));
+                if (file.open(QIODevice::ReadOnly))
+                {
+                    //判断.config中是否存在相同MD5值图片
+                    QByteArray md5 = QCryptographicHash::hash(file.readAll(), QCryptographicHash::Md5);
+                    QString sMd5 = QString(md5.toHex()).toUpper();
+
+                    QList<QString> md5Values = m_md5Map.values();
+                    if (md5Values.contains(sMd5))
+                    {
+                        //add failed;
+                        KiranMessageBox::message(nullptr, tr("Add Image Failed"),
+                                                 tr("The image already exists!"), KiranMessageBox::Ok);
+                        file.close();
+                        return;
+                    }
+                    else
+                    {
+                        //get cache img name
+                        QString dstName = convertImgName(fileName);
+                        //copy
+                        storedName = m_cacheDirName + dstName;
+                        KLOG_INFO() << storedName;
+                        if (file.copy(storedName))
+                            m_md5Map.insert(dstName, sMd5);
+                        else
+                        {
+                            file.close();
+                            return;
+                        }
+                    }
+                    file.close();
+                }
 
                 //addImage
-                m_imageSelector->addImage(fileName, CUSTOM_IMAGE);
+                m_imageSelector->addImage(storedName, CUSTOM_IMAGE);
 
                 //move additionImage Item to ends
                 m_imageSelector->moveAdditionItemToEnd();
@@ -203,24 +233,24 @@ void Wallpaper::handleImageSelector()
                      iter != m_wallpaperMapList.end();
                      iter++)
                 {
-                    if ((*iter).find("filename").value() == fileName)
+                    if ((*iter).value(FILENAME) == storedName)
                     {
                         flag = true;
-                        (*iter).insert("deleted", "false");
+                        (*iter).insert(DELETED, "false");
                         break;
                     }
                 }
                 if (!flag)
                 {
                     QMap<QString, QString> newWallpaperInfo;
-                    newWallpaperInfo.insert("deleted", "false");
-                    newWallpaperInfo.insert("name", fileName.split("/").last());
-                    newWallpaperInfo.insert("filename", fileName);
-                    newWallpaperInfo.insert("artist", "(none)");
-                    newWallpaperInfo.insert("options", "zoom");
-                    newWallpaperInfo.insert("pcolor", "#000000");
-                    newWallpaperInfo.insert("scolor", "#000000");
-                    newWallpaperInfo.insert("shade_type", "vertical-gradient");
+                    newWallpaperInfo.insert(DELETED, "false");
+                    newWallpaperInfo.insert(NAME, storedName.split("/").last());
+                    newWallpaperInfo.insert(FILENAME, storedName);
+                    newWallpaperInfo.insert(ARTIST, "(none)");
+                    newWallpaperInfo.insert(OPTIONS, "zoom");
+                    newWallpaperInfo.insert(PCOLOR, "#000000");
+                    newWallpaperInfo.insert(SCOLOR, "#000000");
+                    newWallpaperInfo.insert(SHADE_TYPE, "vertical-gradient");
                     m_wallpaperMapList.append(newWallpaperInfo);
                 }
                 m_threadObject->updateWallpaperXml(m_wallpaperMapList);
@@ -233,10 +263,16 @@ void Wallpaper::handleImageSelector()
                      iter != m_wallpaperMapList.end();
                      iter++)
                 {
-                    if ((*iter).find("filename").value() == deletedPath)
+                    if ((*iter).value(FILENAME) == deletedPath)
                     {
-                        (*iter).insert("deleted", "true");
+                        (*iter).insert(DELETED, "true");
                         m_threadObject->updateWallpaperXml(m_wallpaperMapList);
+
+                        //delete cache file
+                        QFile file((*iter).value(FILENAME));
+                        file.remove();
+                        //delete m_md5Map key
+                        m_md5Map.remove((*iter).value(NAME));
                         break;
                     }
                 }
@@ -257,44 +293,37 @@ void Wallpaper::handleWallpaperInfo(QList<QMap<QString, QString>> wallpaperMapLi
     m_wallpaperMapList = wallpaperMapList;
     for (QMap<QString, QString> map : wallpaperMapList)
     {
-        QString deleted = map.find("deleted").value();
-        QString visibleImage;
-        if (deleted == "false")
+        QString deleted = map.value(DELETED);
+        QString visibleImage = map.value(FILENAME);
+        //判断是否为自定义图片
+        if (visibleImage.startsWith(SYSTEM_BACKGROUND_PATH))
         {
-            visibleImage = map.find("filename").value();
-            KLOG_INFO() << "visible filename: " << map.find("filename").value();
-            //判断背景图片是否存在
-            QFile file(visibleImage);
-
-            if (visibleImage.startsWith(SYSTEM_BACKGROUND_PATH))
+            if (deleted == "false")
             {
+                KLOG_INFO() << "system background: " << visibleImage;
+                //判断背景图片是否存在
+                QFile file(visibleImage);
                 if (file.exists())
                     m_imageSelector->addImage(visibleImage, SYSTEM_IMAGE);
             }
-            else
+        }
+        else
+        {
+            //QString cacheImg(QString("%1%2").arg(m_cacheDirName).arg(visibleImage));
+            QFile file(visibleImage);
+            if (file.exists())
             {
-                if (file.exists())
+                if (file.open(QIODevice::ReadOnly))
                 {
-                    m_imageSelector->addImage(visibleImage, CUSTOM_IMAGE);
+                    QByteArray md5 = QCryptographicHash::hash(file.readAll(), QCryptographicHash::Md5);
+                    QString sMd5 = QString(md5.toHex()).toUpper();
+                    m_md5Map.insert(visibleImage.split("/").last(), sMd5);
 
-                    QString imgName = convertImgName(visibleImage);
-                    QString cacheImg(QString("%1%2").arg(m_cacheDirName).arg(imgName));
-                    file.setFileName(cacheImg);
-                    if (!file.exists())
+                    if (deleted == "false")
                     {
-                        //copy
-                        KLOG_INFO() << "copy: " << cacheImg;
-                        file.copy(visibleImage, cacheImg);
+                        m_imageSelector->addImage(visibleImage, CUSTOM_IMAGE);
                     }
-                }
-                else
-                {
-                    KLOG_INFO() << " search from cache dir";
-                    QString imgName = convertImgName(visibleImage);
-                    QString cacheImg(QString("%1%2").arg(m_cacheDirName).arg(imgName));
-                    file.setFileName(cacheImg);
-                    if (file.exists())
-                        m_imageSelector->addImage(cacheImg, CUSTOM_IMAGE);
+                    file.close();
                 }
             }
         }
@@ -328,27 +357,22 @@ void Wallpaper::loadVisibleWallpapers()
 
 QString Wallpaper::convertImgName(QString originName)
 {
+    QString baseName = originName.split("/").last();
+    QString format = baseName.split(".").last();
     //设置文件名,遍历文件夹中的文件
-    QStringList imgPathList = originName.split("/", QString::SkipEmptyParts);
-    QString dstName = imgPathList.join("_");
-    return dstName;
-}
+    QDir dir(m_cacheDirName);
+    QFileInfoList files = dir.entryInfoList(QDir::Files | QDir::NoDotAndDotDot);
+    if (files.isEmpty())
+        return QString("%1.%2").arg(QString::number(1)).arg(format);
 
-QString Wallpaper::getDrawImgName(QString originName)
-{
-    QString drawImg;
-    QFile file;
-    file.setFileName(originName);
-    if (!file.exists())
+    QStringList prefixList;
+    foreach (QFileInfo file, files)
     {
-        QString cacheImg = convertImgName(originName);
-        file.setFileName(m_cacheDirName + cacheImg);
-        if (file.exists())
-            drawImg = m_cacheDirName + cacheImg;
-        else
-            return nullptr;
+        prefixList.append(file.baseName());
     }
-    else
-        drawImg = originName;
-    return drawImg;
+    for (int i = 1;; i++)
+    {
+        if (!prefixList.contains(QString::number(i)))
+            return QString("%1.%2").arg(QString::number(i)).arg(format);
+    }
 }

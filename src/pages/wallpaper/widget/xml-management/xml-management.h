@@ -30,7 +30,6 @@ public:
     bool xmlReader(QString filePath);
     bool xmlWriter();
     void xmlUpdate(QList<QMap<QString, QString>> updateList);
-    //    void getVisibleWallpaper();
     QList<QMap<QString, QString>> getXmlBodyInfo();
 
 private:

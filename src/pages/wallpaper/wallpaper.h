@@ -43,13 +43,11 @@ private:
     void handleImageSelector();
     void loadVisibleWallpapers();
     QString convertImgName(QString originName);
-    QString getDrawImgName(QString originName);
 
 public slots:
     void handleWallpaperInfo(QList<QMap<QString, QString>> wallpaperMapList);
 
 signals:
-    //void updateWallpaper(QList<QMap<QString,QString>> wallpaperMapList);
     void wallpaperChanged(int type, QString path);
 
 private:
@@ -67,6 +65,7 @@ private:
     QThread *m_thread;
     ThreadObject *m_threadObject;
     QList<QMap<QString, QString>> m_wallpaperMapList;
+    QMap<QString, QString> m_md5Map;
 };
 
 #endif  // WALLPAPER_H

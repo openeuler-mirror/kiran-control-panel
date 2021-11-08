@@ -28,6 +28,7 @@ INCLUDEPATH += \
     /usr/include/kiranwidgets-qt5 \
     /usr/include/kiran-cc-daemon
 
+
 LIBS  += \
         -lkiranwidgets-qt5 \
         -lklog-qt5 \
@@ -74,12 +75,12 @@ HEADERS += \
     pages/wallpaper/widget/image-selector.h \
     pages/wallpaper/widget/xml-management/thread-object.h \
     pages/wallpaper/widget/xml-management/xml-management.h \
-    pages/wallpaper/wallpaper-global.h \
     pages/wallpaper/widget/scroll-container.h \
     interface.h \
     pages/wallpaper/widget/image-item.h \
     pages/wallpaper/widget/image-load-manager.h \
-    dbus-interface/appearance_backEnd_proxy.h
+    dbus-interface/appearance_backEnd_proxy.h \
+    pages/wallpaper/wallpaper-def.h
 
 FORMS += \
         kiran-cpanel-appearance.ui \

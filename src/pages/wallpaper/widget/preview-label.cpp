@@ -17,7 +17,7 @@
 #include <math.h>
 #include <QPainter>
 #include <QVBoxLayout>
-#include "../wallpaper-global.h"
+#include "../wallpaper-def.h"
 
 PreviewLabel::PreviewLabel(int wallpaperType, QString imgPath, QWidget *parent) : QLabel(parent)
 {

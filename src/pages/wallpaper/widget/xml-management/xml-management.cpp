@@ -17,8 +17,7 @@
 #include <QDir>
 #include <QFile>
 #include <QXmlStreamReader>
-#define LOCAL_WALLPAPER_FILE ".config/kylinsec/kiran-cpanel-appearance/wallpaper.xml"
-#define SYSTEM_WALLPAPER_FILE "/usr/share/mate-background-properties/kiran_background.xml"
+#include "pages/wallpaper/wallpaper-def.h"
 
 XmlManagement::XmlManagement(QWidget *parent) : QWidget(parent)
 {
@@ -149,17 +148,17 @@ bool XmlManagement::xmlWriter()
     {
         QMap<QString, QString>::const_iterator i = map.begin();
         writer.writeStartElement("wallpaper");
-        if (map.contains("deleted"))
-            writer.writeAttribute("deleted", map.find("deleted").value());
+        if (map.contains(DELETED))
+            writer.writeAttribute(DELETED, map.value(DELETED));
         else
-            writer.writeAttribute("deleted", "false");
-        if (map.contains("name"))
+            writer.writeAttribute(DELETED, "false");
+        if (map.contains(NAME))
         {
-            writer.writeTextElement("name", map.find("name").value());
+            writer.writeTextElement(NAME, map.value(NAME));
         }
         while (i != map.end())
         {
-            if (i.key() == "deleted" || i.key() == "xml:lang" || i.key() == "langName" || i.key() == "name")
+            if (i.key() == DELETED || i.key() == "xml:lang" || i.key() == "langName" || i.key() == NAME)
             {
                 i++;
                 continue;
@@ -168,30 +167,30 @@ bool XmlManagement::xmlWriter()
             i++;
         }
 
-        if (map.contains("artist"))
+        if (map.contains(ARTIST))
         {
-            writer.writeTextElement("artist", map.find("artist").value());
+            writer.writeTextElement(ARTIST, map.value(ARTIST));
         }
         else
-            writer.writeTextElement("artist", "(none)");
-        if (map.contains("pcolor"))
+            writer.writeTextElement(ARTIST, "(none)");
+        if (map.contains(PCOLOR))
         {
-            writer.writeTextElement("pcolor", map.find("pcolor").value());
+            writer.writeTextElement(PCOLOR, map.value(PCOLOR));
         }
         else
-            writer.writeTextElement("pcolor", "#000000");
-        if (map.contains("scolor"))
+            writer.writeTextElement(PCOLOR, "#000000");
+        if (map.contains(SCOLOR))
         {
-            writer.writeTextElement("scolor", map.find("scolor").value());
+            writer.writeTextElement(SCOLOR, map.value(SCOLOR));
         }
         else
-            writer.writeTextElement("scolor", "#000000");
-        if (map.contains("shade_type"))
+            writer.writeTextElement(SCOLOR, "#000000");
+        if (map.contains(SHADE_TYPE))
         {
-            writer.writeTextElement("shade_type", map.find("shade_type").value());
+            writer.writeTextElement(SHADE_TYPE, map.value(SHADE_TYPE));
         }
         else
-            writer.writeTextElement("shade_type", "vertical-gradient");
+            writer.writeTextElement(SHADE_TYPE, "vertical-gradient");
         writer.writeEndElement();
     }
 
@@ -239,15 +238,15 @@ void XmlManagement::xmlUpdate(QList<QMap<QString, QString>> updateList)
     {
         QMap<QString, QString>::const_iterator i = map.begin();
         writer.writeStartElement("wallpaper");
-        if (map.contains("deleted"))
-            writer.writeAttribute("deleted", map.find("deleted").value());
-        if (map.contains("name"))
+        if (map.contains(DELETED))
+            writer.writeAttribute(DELETED, map.value(DELETED));
+        if (map.contains(NAME))
         {
-            writer.writeTextElement("name", map.find("name").value());
+            writer.writeTextElement(NAME, map.value(NAME));
         }
         while (i != map.end())
         {
-            if (i.key() == "deleted" || i.key() == "xml:lang" || i.key() == "langName" || i.key() == "name")
+            if (i.key() == DELETED || i.key() == "xml:lang" || i.key() == "langName" || i.key() == NAME)
             {
                 i++;
                 continue;
@@ -278,19 +277,19 @@ void XmlManagement::parseWallpapers(QXmlStreamReader &reader)
             if (reader.name() == "wallpaper")
             {
                 QXmlStreamAttributes attributes = reader.attributes();
-                if (attributes.hasAttribute("deleted"))
+                if (attributes.hasAttribute(DELETED))
                 {
-                    QString strDeleted = attributes.value("deleted").toString();
-                    bodyMap.insert("deleted", strDeleted);
+                    QString strDeleted = attributes.value(DELETED).toString();
+                    bodyMap.insert(DELETED, strDeleted);
                 }
             }
-            else if (reader.name() == "name")
+            else if (reader.name() == NAME)
             {
                 QXmlStreamAttributes attributes = reader.attributes();
                 QString name = reader.readElementText();
                 if (!attributes.hasAttribute("xml:lang"))
                 {
-                    bodyMap.insert("name", name);
+                    bodyMap.insert(NAME, name);
                 }
                 else
                 {
@@ -299,15 +298,15 @@ void XmlManagement::parseWallpapers(QXmlStreamReader &reader)
                     bodyMap.insert("langName", name);
                 }
             }
-            else if (reader.name() == "filename")
+            else if (reader.name() == FILENAME)
             {
                 QString fileName = reader.readElementText();
-                bodyMap.insert("filename", fileName);
+                bodyMap.insert(FILENAME, fileName);
             }
-            else if (reader.name() == "options")
+            else if (reader.name() == OPTIONS)
             {
                 QString options = reader.readElementText();
-                bodyMap.insert("options", options);
+                bodyMap.insert(OPTIONS, options);
             }
             else
             {
