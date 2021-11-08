@@ -63,6 +63,11 @@ void Themes::setPage(int index)
     ui->stackedWidget->setCurrentIndex(index);
 }
 
+QSize Themes::sizeHint() const
+{
+    return QSize(670, 730);
+}
+
 /**
  * @brief Themes::initUI: 初始化主题设置界面
  * @return true: 通过dbus获取主题信息成功

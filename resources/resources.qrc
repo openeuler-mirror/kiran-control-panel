@@ -8,10 +8,10 @@
         <file>images/btn-delete-normal.png</file>
         <file>images/btn-delete-pre.png</file>
         <file>images/btn-delete-select.png</file>
-        <file>images/font.svg</file>
-        <file>images/themes.svg</file>
         <file>themes/style.qss</file>
-        <file>images/wallpaper.svg</file>
         <file>images/loading.svg</file>
+        <file>images/kcp-page-font.svg</file>
+        <file>images/kcp-page-themes.svg</file>
+        <file>images/kcp-page-wallpaper.svg</file>
     </qresource>
 </RCC>

@@ -131,12 +131,12 @@
 <context>
     <name>KcpInterface</name>
     <message>
-        <location filename="../src/interface.cpp" line="77"/>
+        <location filename="../src/interface.cpp" line="78"/>
         <source>warning</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="../src/interface.cpp" line="77"/>
+        <location filename="../src/interface.cpp" line="78"/>
         <source>load qss file failed</source>
         <translation>加载qss文件失败</translation>
     </message>

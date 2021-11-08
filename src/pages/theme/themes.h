@@ -36,6 +36,7 @@ public:
     explicit Themes(QWidget *parent = 0);
     ~Themes();
     void setPage(int index);
+    virtual QSize sizeHint() const override;
 
 private:
     bool initUI();

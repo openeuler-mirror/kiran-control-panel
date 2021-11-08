@@ -41,9 +41,10 @@ bool KcpInterface::haveUnsavedOptions()
 QStringList KcpInterface::visibleSubItems()
 {
     QStringList subItems;
-    subItems << "Wallpaper"
-             << "Themes"
-             << "Fonts";
+    subItems
+        << "Themes"
+        << "Fonts"
+        << "Wallpaper";
     return subItems;
 }
 
@@ -92,13 +93,6 @@ void KcpInterface::uninit()
 
 int KcpInterface::init()
 {
-    //QString themesInfo;
-    //    if (!AppearanceGlobalInfo::instance()->getAllThemes(APPEARANCE_THEME_TYPE_GTK, themesInfo) ||
-    //        AppearanceGlobalInfo::instance()->getFont(APPEARANCE_FONT_TYPE_APPLICATION).isEmpty())
-    //    {
-    //        KLOG_DEBUG() << "Connect dbus service failed! ";
-    //        return -1;
-    //    }
     if (!QDBusConnection::sessionBus().interface()->isServiceRegistered(APPEARANCE_DBUS_NAME).value())
     {
         KLOG_INFO() << "Connect appearance dbus service failed!";
