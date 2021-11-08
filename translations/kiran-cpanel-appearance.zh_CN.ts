@@ -75,7 +75,7 @@
     <message>
         <location filename="../src/pages/font/fonts.cpp" line="62"/>
         <source>None</source>
-        <translation type="unfinished"></translation>
+        <translation>暂无</translation>
     </message>
 </context>
 <context>
@@ -352,12 +352,12 @@
     <message>
         <location filename="../src/pages/wallpaper/wallpaper.cpp" line="202"/>
         <source>Add Image Failed</source>
-        <translation type="unfinished">添加壁纸失败</translation>
+        <translation>添加壁纸失败</translation>
     </message>
     <message>
         <location filename="../src/pages/wallpaper/wallpaper.cpp" line="203"/>
         <source>The image already exists!</source>
-        <translation type="unfinished">该壁纸已存在!</translation>
+        <translation>该壁纸已存在!</translation>
     </message>
 </context>
 </TS>
