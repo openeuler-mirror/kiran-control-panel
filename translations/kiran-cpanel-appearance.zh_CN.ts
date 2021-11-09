@@ -174,8 +174,8 @@
     <name>QObject</name>
     <message>
         <location filename="../src/pages/font/fonts.cpp" line="154"/>
-        <location filename="../src/pages/theme/themes.cpp" line="135"/>
-        <location filename="../src/pages/theme/themes.cpp" line="180"/>
+        <location filename="../src/pages/theme/themes.cpp" line="140"/>
+        <location filename="../src/pages/theme/themes.cpp" line="185"/>
         <source>Failed</source>
         <translation>失败</translation>
     </message>
@@ -185,22 +185,22 @@
         <translation>设置字体失败!</translation>
     </message>
     <message>
-        <location filename="../src/pages/theme/themes.cpp" line="136"/>
+        <location filename="../src/pages/theme/themes.cpp" line="141"/>
         <source>Get icon themes failed!</source>
         <translation>获取图标主题失败!</translation>
     </message>
     <message>
-        <location filename="../src/pages/theme/themes.cpp" line="181"/>
+        <location filename="../src/pages/theme/themes.cpp" line="186"/>
         <source>Get cursor themes failed!</source>
         <translation>获取光标主题失败!</translation>
     </message>
     <message>
-        <location filename="../src/pages/theme/themes.cpp" line="221"/>
+        <location filename="../src/pages/theme/themes.cpp" line="226"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="../src/pages/theme/themes.cpp" line="222"/>
+        <location filename="../src/pages/theme/themes.cpp" line="227"/>
         <source>There is no theme to set!</source>
         <translation>目前没有主题可以设置!</translation>
     </message>
@@ -253,18 +253,18 @@
         <translation type="vanished">选择图标主题</translation>
     </message>
     <message>
-        <location filename="../src/pages/theme/themes.cpp" line="119"/>
+        <location filename="../src/pages/theme/themes.cpp" line="124"/>
         <source>Choose icon themes</source>
         <translation>选择图标主题</translation>
     </message>
     <message>
-        <location filename="../src/pages/theme/themes.cpp" line="125"/>
-        <location filename="../src/pages/theme/themes.cpp" line="171"/>
+        <location filename="../src/pages/theme/themes.cpp" line="130"/>
+        <location filename="../src/pages/theme/themes.cpp" line="176"/>
         <source>Unknown</source>
         <translation>未知</translation>
     </message>
     <message>
-        <location filename="../src/pages/theme/themes.cpp" line="165"/>
+        <location filename="../src/pages/theme/themes.cpp" line="170"/>
         <source>Choose cursor themes</source>
         <translation>选择光标主题</translation>
     </message>
@@ -277,42 +277,42 @@
     <name>Wallpaper</name>
     <message>
         <location filename="../src/pages/wallpaper/wallpaper.ui" line="14"/>
-        <location filename="../build/src/kiran-cpanel-appearance_autogen/include/ui_wallpaper.h" line="195"/>
+        <location filename="../build/src/kiran-cpanel-appearance_autogen/include/ui_wallpaper.h" line="200"/>
         <location filename="../build-kiran-cpanel-appearance-qt5_11-Debug/ui_wallpaper.h" line="195"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/pages/wallpaper/wallpaper.ui" line="95"/>
-        <location filename="../build/src/kiran-cpanel-appearance_autogen/include/ui_wallpaper.h" line="196"/>
+        <location filename="../build/src/kiran-cpanel-appearance_autogen/include/ui_wallpaper.h" line="201"/>
         <location filename="../build-kiran-cpanel-appearance-qt5_11-Debug/ui_wallpaper.h" line="196"/>
         <source>Set wallpaper</source>
         <translation>壁纸设置</translation>
     </message>
     <message>
         <location filename="../src/pages/wallpaper/wallpaper.ui" line="164"/>
-        <location filename="../build/src/kiran-cpanel-appearance_autogen/include/ui_wallpaper.h" line="197"/>
+        <location filename="../build/src/kiran-cpanel-appearance_autogen/include/ui_wallpaper.h" line="202"/>
         <location filename="../build-kiran-cpanel-appearance-qt5_11-Debug/ui_wallpaper.h" line="197"/>
         <source>Desktop Wallpaper Preview</source>
         <translation>桌面壁纸预览</translation>
     </message>
     <message>
         <location filename="../src/pages/wallpaper/wallpaper.ui" line="174"/>
-        <location filename="../build/src/kiran-cpanel-appearance_autogen/include/ui_wallpaper.h" line="198"/>
+        <location filename="../build/src/kiran-cpanel-appearance_autogen/include/ui_wallpaper.h" line="203"/>
         <location filename="../build-kiran-cpanel-appearance-qt5_11-Debug/ui_wallpaper.h" line="198"/>
         <source>Lock Screen WallPaper Preview</source>
         <translation>锁屏壁纸预览</translation>
     </message>
     <message>
         <location filename="../src/pages/wallpaper/wallpaper.ui" line="193"/>
-        <location filename="../build/src/kiran-cpanel-appearance_autogen/include/ui_wallpaper.h" line="199"/>
+        <location filename="../build/src/kiran-cpanel-appearance_autogen/include/ui_wallpaper.h" line="204"/>
         <location filename="../build-kiran-cpanel-appearance-qt5_11-Debug/ui_wallpaper.h" line="199"/>
         <source>Select wallpaper</source>
         <translation>选择壁纸</translation>
     </message>
     <message>
         <location filename="../src/pages/wallpaper/wallpaper.ui" line="251"/>
-        <location filename="../build/src/kiran-cpanel-appearance_autogen/include/ui_wallpaper.h" line="200"/>
+        <location filename="../build/src/kiran-cpanel-appearance_autogen/include/ui_wallpaper.h" line="205"/>
         <location filename="../build-kiran-cpanel-appearance-qt5_11-Debug/ui_wallpaper.h" line="200"/>
         <source>Select Wallpaper</source>
         <translation>选择壁纸</translation>

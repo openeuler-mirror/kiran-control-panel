@@ -46,18 +46,22 @@ Wallpaper::Wallpaper(QWidget *parent) : QWidget(parent),
 
     handleImageSelector();
 
-    connect(AppearanceGlobalInfo::instance(), &AppearanceGlobalInfo::desktopBackgroundChanged,
-            [this](const QString &value) {
-                m_desktopPreview->updateWallpaper(DESKTOP, value);
-                m_desktopWpChooser->setName(value.split("/").last());
-                m_currDesktopWp = value;
-            });
-    connect(AppearanceGlobalInfo::instance(), &AppearanceGlobalInfo::lockScreenBackgroundChanged,
-            [this](const QString &value) {
-                m_lockScreenPreview->updateWallpaper(LOCK_SCREEN, value);
-                m_lockScreenWPChooser->setName(value.split("/").last());
-                m_currLockScreenWp = value;
-            });
+    connect(
+        AppearanceGlobalInfo::instance(), &AppearanceGlobalInfo::desktopBackgroundChanged, this,
+        [this](const QString &value) {
+            m_desktopPreview->updateWallpaper(DESKTOP, value);
+            m_desktopWpChooser->setName(value.split("/").last());
+            m_currDesktopWp = value;
+        },
+        Qt::QueuedConnection);
+    connect(
+        AppearanceGlobalInfo::instance(), &AppearanceGlobalInfo::lockScreenBackgroundChanged, this,
+        [this](const QString &value) {
+            m_lockScreenPreview->updateWallpaper(LOCK_SCREEN, value);
+            m_lockScreenWPChooser->setName(value.split("/").last());
+            m_currLockScreenWp = value;
+        },
+        Qt::QueuedConnection);
 }
 
 Wallpaper::~Wallpaper()

@@ -27,8 +27,6 @@ AppearanceGlobalInfo::AppearanceGlobalInfo(QObject *parent)
     m_appearanceInterface = new AppearanceBackEndProxy(APPEARANCE_DBUS_NAME,
                                                        APPEARANCE_OBJECT_PATH,
                                                        QDBusConnection::sessionBus());
-
-    KLOG_INFO() << "new AppearanceBackEndProxy";
     connect(m_appearanceInterface, &AppearanceBackEndProxy::ThemeChanged,
             [this](int type, const QString &themeName) {
                 emit themeChanged(type, themeName);
