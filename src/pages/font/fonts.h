@@ -15,6 +15,7 @@
 #ifndef FONTS_H
 #define FONTS_H
 
+#include <QComboBox>
 #include <QWidget>
 
 namespace Ui
@@ -35,6 +36,7 @@ private:
     void getCurrentFontInfo(int fontType);
     void setFont(int fontType, QStringList fontInfoList);
     void connectSignals();
+    void showFontInfo(QComboBox *nameParent, QComboBox *sizeParent, QString name, QString size);
 
 public slots:
     void handleFontChanged(int type, QString fontInfo);
@@ -44,9 +46,7 @@ private:
     QStringList m_applicationFontInfo;
     QStringList m_windowTitleFontInfo;
     QStringList m_monospaceFontInfo;
-    QStringList m_appFamilies;
-    QStringList m_windowTitleFamilies;
-    QStringList m_monospaceFamilies;
+    QStringList m_fontFamilies;
 };
 
 #endif  // FONTS_H

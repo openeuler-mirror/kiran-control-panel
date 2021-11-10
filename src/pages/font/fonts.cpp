@@ -22,6 +22,8 @@
 #include "ui_fonts.h"
 
 using namespace std;
+QStringList sizes = {"7", "8", "9", "10", "11", "12", "13", "14"};
+
 Fonts::Fonts(QWidget* parent) : QWidget(parent),
                                 ui(new Ui::Fonts)
 {
@@ -43,35 +45,17 @@ bool Fonts::initUI()
         comboBox->setStyleSheet("QComboBox {combobox-popup: 0;}");
     }
 
-    QStringList sizes;
-    sizes << "7"
-          << "8"
-          << "9"
-          << "10"
-          << "11"
-          << "12"
-          << "13"
-          << "14";
-
     ui->cbox_application_font_size->addItems(sizes);
     ui->cbox_monospace_font_size->addItems(sizes);
     ui->cbox_titlebar_font_size->addItems(sizes);
 
     QFontDatabase database;
-    m_appFamilies = database.families();
-    m_windowTitleFamilies = m_appFamilies;
-    m_monospaceFamilies = m_appFamilies;
+    m_fontFamilies = database.families();
 
-    foreach (const QString& family, m_appFamilies)
+    foreach (const QString& family, m_fontFamilies)
     {
         ui->cbox_application_font_name->addItem(family);
-    }
-    foreach (const QString& family, m_windowTitleFamilies)
-    {
         ui->cbox_titlebar_font_name->addItem(family);
-    }
-    foreach (const QString& family, m_monospaceFamilies)
-    {
         ui->cbox_monospace_font_name->addItem(family);
     }
 
@@ -95,83 +79,56 @@ void Fonts::getCurrentFontInfo(int fontType)
     switch (fontType)
     {
     case APPEARANCE_FONT_TYPE_APPLICATION:
-        fontInfoList = AppearanceGlobalInfo::instance()->getFont(APPEARANCE_FONT_TYPE_APPLICATION);
-        if (!fontInfoList.isEmpty())
+        if (AppearanceGlobalInfo::instance()->getFont(APPEARANCE_FONT_TYPE_APPLICATION, fontInfoList))
         {
-            m_applicationFontInfo = fontInfoList;
-
-            ui->cbox_application_font_name->blockSignals(true);
-            ui->cbox_application_font_size->blockSignals(true);
-            foreach (QString fontFamily, m_appFamilies)
+            if (!fontInfoList.isEmpty())
             {
-                //if (!QString::compare(fontInfoList.at(0), fontFamily))
-                if (fontFamily == fontInfoList.at(0))
-                {
-                    KLOG_INFO() << fontFamily << "==" << fontInfoList.at(0);
-                    ui->cbox_application_font_name->setCurrentText(fontInfoList.at(0));
-                    break;
-                }
-            }
-            if (ui->cbox_application_font_name->currentText() != fontInfoList.at(0))
-            {
-                ui->cbox_application_font_name->insertItem(ui->cbox_application_font_name->count(), fontInfoList.at(0));
-                ui->cbox_application_font_name->setCurrentText(fontInfoList.at(0));
-            }
+                m_applicationFontInfo = fontInfoList;
 
-            ui->cbox_application_font_size->setCurrentText(fontInfoList.at(1));
-            ui->cbox_application_font_name->blockSignals(false);
-            ui->cbox_application_font_size->blockSignals(false);
+                ui->cbox_application_font_name->blockSignals(true);
+                ui->cbox_application_font_size->blockSignals(true);
+
+                showFontInfo(ui->cbox_application_font_name, ui->cbox_application_font_size,
+                             fontInfoList.at(0), fontInfoList.at(1));
+
+                ui->cbox_application_font_name->blockSignals(false);
+                ui->cbox_application_font_size->blockSignals(false);
+            }
         }
         break;
     case APPEARANCE_FONT_TYPE_WINDOW_TITLE:
-        fontInfoList = AppearanceGlobalInfo::instance()->getFont(APPEARANCE_FONT_TYPE_WINDOW_TITLE);
-        if (!fontInfoList.isEmpty())
+        if (AppearanceGlobalInfo::instance()->getFont(APPEARANCE_FONT_TYPE_WINDOW_TITLE, fontInfoList))
         {
-            m_windowTitleFontInfo = fontInfoList;
+            if (!fontInfoList.isEmpty())
+            {
+                m_windowTitleFontInfo = fontInfoList;
 
-            ui->cbox_titlebar_font_name->blockSignals(true);
-            ui->cbox_titlebar_font_size->blockSignals(true);
-            foreach (QString fontFamily, m_windowTitleFamilies)
-            {
-                if (fontFamily == fontInfoList.at(0))
-                {
-                    ui->cbox_titlebar_font_name->setCurrentText(fontInfoList.at(0));
-                    break;
-                }
+                ui->cbox_titlebar_font_name->blockSignals(true);
+                ui->cbox_titlebar_font_size->blockSignals(true);
+
+                showFontInfo(ui->cbox_titlebar_font_name, ui->cbox_titlebar_font_size,
+                             fontInfoList.at(0), fontInfoList.at(1));
+
+                ui->cbox_titlebar_font_name->blockSignals(false);
+                ui->cbox_titlebar_font_size->blockSignals(false);
             }
-            if (ui->cbox_titlebar_font_name->currentText() != fontInfoList.at(0))
-            {
-                ui->cbox_titlebar_font_name->insertItem(-1, fontInfoList.at(0));
-                ui->cbox_titlebar_font_name->setCurrentText(fontInfoList.at(0));
-            }
-            ui->cbox_titlebar_font_size->setCurrentText(fontInfoList.at(1));
-            ui->cbox_titlebar_font_name->blockSignals(false);
-            ui->cbox_titlebar_font_size->blockSignals(false);
         }
         break;
     case APPEARANCE_FONT_TYPE_MONOSPACE:
-        fontInfoList = AppearanceGlobalInfo::instance()->getFont(APPEARANCE_FONT_TYPE_MONOSPACE);
-        if (!fontInfoList.isEmpty())
+        if (AppearanceGlobalInfo::instance()->getFont(APPEARANCE_FONT_TYPE_MONOSPACE, fontInfoList))
         {
-            m_monospaceFontInfo = fontInfoList;
-            ui->cbox_monospace_font_name->blockSignals(true);
-            ui->cbox_monospace_font_size->blockSignals(true);
-            foreach (QString fontFamily, m_monospaceFamilies)
+            if (!fontInfoList.isEmpty())
             {
-                if (fontFamily == fontInfoList.at(0))
-                {
-                    ui->cbox_monospace_font_name->setCurrentText(fontInfoList.at(0));
-                    break;
-                }
+                m_monospaceFontInfo = fontInfoList;
+                ui->cbox_monospace_font_name->blockSignals(true);
+                ui->cbox_monospace_font_size->blockSignals(true);
+
+                showFontInfo(ui->cbox_monospace_font_name, ui->cbox_monospace_font_size,
+                             fontInfoList.at(0), fontInfoList.at(1));
+
+                ui->cbox_monospace_font_name->blockSignals(false);
+                ui->cbox_monospace_font_size->blockSignals(false);
             }
-            if (ui->cbox_monospace_font_name->currentText() != fontInfoList.at(0))
-            {
-                ui->cbox_monospace_font_name->insertItem(-1, fontInfoList.at(0));
-                ui->cbox_monospace_font_name->setCurrentText(fontInfoList.at(0));
-            }
-            ui->cbox_monospace_font_size->setCurrentText(fontInfoList.at(1));
-            ui->cbox_monospace_font_name->blockSignals(false);
-            ui->cbox_monospace_font_size->blockSignals(false);
         }
         break;
     default:
@@ -192,42 +149,75 @@ void Fonts::setFont(int fontType, QStringList fontInfoList)
 void Fonts::connectSignals()
 {
     connect(AppearanceGlobalInfo::instance(), &AppearanceGlobalInfo::fontChanged, this, &Fonts::handleFontChanged);
-    connect(ui->cbox_application_font_name, &QComboBox::currentTextChanged, [=](QString text) {
+
+    connect(ui->cbox_application_font_name, QOverload<const QString&>::of(&QComboBox::activated), [=](QString text) {
         m_applicationFontInfo.replace(0, text);
         KLOG_INFO() << "select applicationFont name = " << m_applicationFontInfo.at(0);
         KLOG_INFO() << "select applicationFont size = " << m_applicationFontInfo.at(1);
         setFont(APPEARANCE_FONT_TYPE_APPLICATION, m_applicationFontInfo);
     });
-    connect(ui->cbox_application_font_size, &QComboBox::currentTextChanged, [=](QString text) {
+    connect(ui->cbox_application_font_size, QOverload<const QString&>::of(&QComboBox::activated), [=](QString text) {
         m_applicationFontInfo.replace(1, text);
         KLOG_INFO() << "select applicationFont name = " << m_applicationFontInfo.at(0);
         KLOG_INFO() << "select applicationFont size = " << m_applicationFontInfo.at(1);
         setFont(APPEARANCE_FONT_TYPE_APPLICATION, m_applicationFontInfo);
     });
-    connect(ui->cbox_monospace_font_name, &QComboBox::currentTextChanged, [=](QString text) {
+    connect(ui->cbox_monospace_font_name, QOverload<const QString&>::of(&QComboBox::activated), [=](QString text) {
         m_monospaceFontInfo.replace(0, text);
         KLOG_INFO() << "monospaceFontInfo name = " << m_monospaceFontInfo.at(0);
         KLOG_INFO() << "monospaceFontInfo size = " << m_monospaceFontInfo.at(1);
         setFont(APPEARANCE_FONT_TYPE_MONOSPACE, m_monospaceFontInfo);
     });
-    connect(ui->cbox_monospace_font_size, &QComboBox::currentTextChanged, [=](QString text) {
+    connect(ui->cbox_monospace_font_size, QOverload<const QString&>::of(&QComboBox::activated), [=](QString text) {
         m_monospaceFontInfo.replace(1, text);
         KLOG_INFO() << "monospaceFontInfo name = " << m_monospaceFontInfo.at(0);
         KLOG_INFO() << "monospaceFontInfo size = " << m_monospaceFontInfo.at(1);
         setFont(APPEARANCE_FONT_TYPE_MONOSPACE, m_monospaceFontInfo);
     });
-    connect(ui->cbox_titlebar_font_name, &QComboBox::currentTextChanged, [=](QString text) {
+    connect(ui->cbox_titlebar_font_name, QOverload<const QString&>::of(&QComboBox::activated), [=](QString text) {
         m_windowTitleFontInfo.replace(0, text);
         KLOG_INFO() << "windowTitleFontInfo name = " << m_windowTitleFontInfo.at(0);
         KLOG_INFO() << "windowTitleFontInfo size = " << m_windowTitleFontInfo.at(1);
         setFont(APPEARANCE_FONT_TYPE_WINDOW_TITLE, m_windowTitleFontInfo);
     });
-    connect(ui->cbox_titlebar_font_size, &QComboBox::currentTextChanged, [=](QString text) {
+    connect(ui->cbox_titlebar_font_size, QOverload<const QString&>::of(&QComboBox::activated), [=](QString text) {
         m_windowTitleFontInfo.replace(1, text);
         KLOG_INFO() << "windowTitleFont name = " << m_windowTitleFontInfo.at(0);
         KLOG_INFO() << "windowTitleFont size = " << m_windowTitleFontInfo.at(1);
         setFont(APPEARANCE_FONT_TYPE_WINDOW_TITLE, m_windowTitleFontInfo);
     });
+}
+
+void Fonts::showFontInfo(QComboBox* nameParent, QComboBox* sizeParent, QString name, QString size)
+{
+    KLOG_INFO() << "current text = " << nameParent->currentText() << ",current size = :" << sizeParent->currentText();
+    int itemCount = nameParent->count();
+
+    if (nameParent->currentText() != name)
+    {
+        foreach (QString fontFamily, m_fontFamilies)
+        {
+            if (fontFamily == name)
+            {
+                nameParent->setCurrentText(name);
+                break;
+            }
+        }
+        if (nameParent->currentText() != name)
+        {
+            if (itemCount == m_fontFamilies.size())
+                nameParent->insertItem(nameParent->count(), name);
+            else if (itemCount > m_fontFamilies.size())
+                nameParent->setItemText(itemCount - 1, name);
+
+            nameParent->setCurrentText(name);
+        }
+    }
+    if (sizeParent->currentText() != size)
+    {
+        QString newSize = size.toInt() < sizes.first().toInt() ? sizes.first() : (size.toInt() > sizes.last().toInt() ? sizes.last() : size);
+        sizeParent->setCurrentText(newSize);
+    }
 }
 
 void Fonts::handleFontChanged(int type, QString fontInfo)
@@ -236,31 +226,39 @@ void Fonts::handleFontChanged(int type, QString fontInfo)
     QString fontSize = fontInfoList.takeLast();
     QString fontName = fontInfoList.join(" ");
     KLOG_INFO() << "font changed : " << type << ",name: " << fontName << ",size: " << fontSize;
-
     switch (type)
     {
     case APPEARANCE_FONT_TYPE_APPLICATION:
-        //        if (ui->cbox_application_font_name->currentText() != fontName)
-        //        {
-        //            foreach (QString fontFamily, m_appFamilies)
-        //            {
-        //                if (fontFamily == fontName)
-        //                {
-        //                    ui->cbox_application_font_name->setCurrentText(fontInfoList.at(0));
-        //                    break;
-        //                }
-        //            }
-        //            if (ui->cbox_application_font_name->currentText() != fontInfoList.at(0))
-        //            {
-        //                ui->cbox_application_font_name->removeItem(ui->cbox_application_font_name->count() - 1);
-        //                ui->cbox_application_font_name->addItem(-1, fontInfoList.at(0));
-        //                ui->cbox_application_font_name->setCurrentText(fontInfoList.at(0));
-        //            }
-        //        }
+        m_applicationFontInfo.replace(0, fontName);
+        m_applicationFontInfo.replace(1, fontSize);
+        ui->cbox_application_font_name->blockSignals(true);
+        ui->cbox_application_font_size->blockSignals(true);
+        showFontInfo(ui->cbox_application_font_name, ui->cbox_application_font_size,
+                     fontName, fontSize);
+        ui->cbox_application_font_name->blockSignals(false);
+        ui->cbox_application_font_size->blockSignals(false);
         break;
+
     case APPEARANCE_FONT_TYPE_WINDOW_TITLE:
+        m_windowTitleFontInfo.replace(0, fontName);
+        m_windowTitleFontInfo.replace(1, fontSize);
+        ui->cbox_titlebar_font_name->blockSignals(true);
+        ui->cbox_titlebar_font_size->blockSignals(true);
+        showFontInfo(ui->cbox_titlebar_font_name, ui->cbox_titlebar_font_size,
+                     fontName, fontSize);
+        ui->cbox_titlebar_font_name->blockSignals(false);
+        ui->cbox_titlebar_font_size->blockSignals(false);
         break;
+
     case APPEARANCE_FONT_TYPE_MONOSPACE:
+        m_monospaceFontInfo.replace(0, fontName);
+        m_monospaceFontInfo.replace(1, fontSize);
+        ui->cbox_monospace_font_name->blockSignals(true);
+        ui->cbox_monospace_font_size->blockSignals(true);
+        showFontInfo(ui->cbox_monospace_font_name, ui->cbox_monospace_font_size,
+                     fontName, fontSize);
+        ui->cbox_monospace_font_name->blockSignals(false);
+        ui->cbox_monospace_font_size->blockSignals(false);
         break;
     default:
         break;

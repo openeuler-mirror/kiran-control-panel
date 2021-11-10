@@ -37,7 +37,7 @@ public:
     QString getLockScreenBackground();
     bool setLockScreenBackground(QString);
 
-    QStringList getFont(int type);
+    bool getFont(int type, QStringList &fontList);
     bool setFont(int fontType, QStringList fontInfoList);
 
 signals:

@@ -165,11 +165,10 @@ bool AppearanceGlobalInfo::setLockScreenBackground(QString path)
         return true;
 }
 
-QStringList AppearanceGlobalInfo::getFont(int type)
+bool AppearanceGlobalInfo::getFont(int type, QStringList &fontList)
 {
     QString fontInfo;
     QStringList fontInfoList;
-    QStringList font;
     QString fontName;
     QString fontSize;
 
@@ -179,11 +178,13 @@ QStringList AppearanceGlobalInfo::getFont(int type)
     {
         KLOG_DEBUG() << "Call GetFont method failed : Font type: " << type
                      << " Error: " << reply.error().message();
+        return false;
     }
 
     else if (reply.count() < 1)
     {
         KLOG_DEBUG() << "Don't get correct reply!";
+        return false;
     }
     else
     {
@@ -196,10 +197,10 @@ QStringList AppearanceGlobalInfo::getFont(int type)
         {
             fontSize = fontInfoList.takeLast();
             fontName = fontInfoList.join(" ");
-            font << fontName << fontSize;
+            fontList << fontName << fontSize;
         }
     }
-    return font;
+    return true;
 }
 
 bool AppearanceGlobalInfo::setFont(int fontType, QStringList fontInfoList)
