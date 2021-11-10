@@ -58,13 +58,21 @@ bool Fonts::initUI()
     ui->cbox_titlebar_font_size->addItems(sizes);
 
     QFontDatabase database;
-    m_fontFamilies = database.families();
-    m_fontFamilies.append(tr("None"));
-    foreach (const QString& family, m_fontFamilies)
+    m_appFamilies = database.families();
+    m_windowTitleFamilies = m_appFamilies;
+    m_monospaceFamilies = m_appFamilies;
+
+    foreach (const QString& family, m_appFamilies)
     {
         ui->cbox_application_font_name->addItem(family);
-        ui->cbox_monospace_font_name->addItem(family);
+    }
+    foreach (const QString& family, m_windowTitleFamilies)
+    {
         ui->cbox_titlebar_font_name->addItem(family);
+    }
+    foreach (const QString& family, m_monospaceFamilies)
+    {
+        ui->cbox_monospace_font_name->addItem(family);
     }
 
     // 获取各个类型的字体值
@@ -94,12 +102,22 @@ void Fonts::getCurrentFontInfo(int fontType)
 
             ui->cbox_application_font_name->blockSignals(true);
             ui->cbox_application_font_size->blockSignals(true);
-            if (m_fontFamilies.contains(fontInfoList.at(0)))
+            foreach (QString fontFamily, m_appFamilies)
             {
+                //if (!QString::compare(fontInfoList.at(0), fontFamily))
+                if (fontFamily == fontInfoList.at(0))
+                {
+                    KLOG_INFO() << fontFamily << "==" << fontInfoList.at(0);
+                    ui->cbox_application_font_name->setCurrentText(fontInfoList.at(0));
+                    break;
+                }
+            }
+            if (ui->cbox_application_font_name->currentText() != fontInfoList.at(0))
+            {
+                ui->cbox_application_font_name->insertItem(ui->cbox_application_font_name->count(), fontInfoList.at(0));
                 ui->cbox_application_font_name->setCurrentText(fontInfoList.at(0));
             }
-            else
-                ui->cbox_application_font_name->setCurrentText("None");
+
             ui->cbox_application_font_size->setCurrentText(fontInfoList.at(1));
             ui->cbox_application_font_name->blockSignals(false);
             ui->cbox_application_font_size->blockSignals(false);
@@ -113,12 +131,19 @@ void Fonts::getCurrentFontInfo(int fontType)
 
             ui->cbox_titlebar_font_name->blockSignals(true);
             ui->cbox_titlebar_font_size->blockSignals(true);
-            if (m_fontFamilies.contains(fontInfoList.at(0)))
+            foreach (QString fontFamily, m_windowTitleFamilies)
             {
+                if (fontFamily == fontInfoList.at(0))
+                {
+                    ui->cbox_titlebar_font_name->setCurrentText(fontInfoList.at(0));
+                    break;
+                }
+            }
+            if (ui->cbox_titlebar_font_name->currentText() != fontInfoList.at(0))
+            {
+                ui->cbox_titlebar_font_name->insertItem(-1, fontInfoList.at(0));
                 ui->cbox_titlebar_font_name->setCurrentText(fontInfoList.at(0));
             }
-            else
-                ui->cbox_titlebar_font_name->setCurrentText("None");
             ui->cbox_titlebar_font_size->setCurrentText(fontInfoList.at(1));
             ui->cbox_titlebar_font_name->blockSignals(false);
             ui->cbox_titlebar_font_size->blockSignals(false);
@@ -130,16 +155,23 @@ void Fonts::getCurrentFontInfo(int fontType)
         {
             m_monospaceFontInfo = fontInfoList;
             ui->cbox_monospace_font_name->blockSignals(true);
-            ui->cbox_titlebar_font_size->blockSignals(true);
-            if (m_fontFamilies.contains(fontInfoList.at(0)))
+            ui->cbox_monospace_font_size->blockSignals(true);
+            foreach (QString fontFamily, m_monospaceFamilies)
             {
+                if (fontFamily == fontInfoList.at(0))
+                {
+                    ui->cbox_monospace_font_name->setCurrentText(fontInfoList.at(0));
+                    break;
+                }
+            }
+            if (ui->cbox_monospace_font_name->currentText() != fontInfoList.at(0))
+            {
+                ui->cbox_monospace_font_name->insertItem(-1, fontInfoList.at(0));
                 ui->cbox_monospace_font_name->setCurrentText(fontInfoList.at(0));
             }
-            else
-                ui->cbox_monospace_font_name->setCurrentText("None");
             ui->cbox_monospace_font_size->setCurrentText(fontInfoList.at(1));
             ui->cbox_monospace_font_name->blockSignals(false);
-            ui->cbox_titlebar_font_size->blockSignals(false);
+            ui->cbox_monospace_font_size->blockSignals(false);
         }
         break;
     default:
@@ -159,6 +191,7 @@ void Fonts::setFont(int fontType, QStringList fontInfoList)
 
 void Fonts::connectSignals()
 {
+    connect(AppearanceGlobalInfo::instance(), &AppearanceGlobalInfo::fontChanged, this, &Fonts::handleFontChanged);
     connect(ui->cbox_application_font_name, &QComboBox::currentTextChanged, [=](QString text) {
         m_applicationFontInfo.replace(0, text);
         KLOG_INFO() << "select applicationFont name = " << m_applicationFontInfo.at(0);
@@ -195,4 +228,41 @@ void Fonts::connectSignals()
         KLOG_INFO() << "windowTitleFont size = " << m_windowTitleFontInfo.at(1);
         setFont(APPEARANCE_FONT_TYPE_WINDOW_TITLE, m_windowTitleFontInfo);
     });
+}
+
+void Fonts::handleFontChanged(int type, QString fontInfo)
+{
+    QStringList fontInfoList = fontInfo.split(" ", QString::SkipEmptyParts);
+    QString fontSize = fontInfoList.takeLast();
+    QString fontName = fontInfoList.join(" ");
+    KLOG_INFO() << "font changed : " << type << ",name: " << fontName << ",size: " << fontSize;
+
+    switch (type)
+    {
+    case APPEARANCE_FONT_TYPE_APPLICATION:
+        //        if (ui->cbox_application_font_name->currentText() != fontName)
+        //        {
+        //            foreach (QString fontFamily, m_appFamilies)
+        //            {
+        //                if (fontFamily == fontName)
+        //                {
+        //                    ui->cbox_application_font_name->setCurrentText(fontInfoList.at(0));
+        //                    break;
+        //                }
+        //            }
+        //            if (ui->cbox_application_font_name->currentText() != fontInfoList.at(0))
+        //            {
+        //                ui->cbox_application_font_name->removeItem(ui->cbox_application_font_name->count() - 1);
+        //                ui->cbox_application_font_name->addItem(-1, fontInfoList.at(0));
+        //                ui->cbox_application_font_name->setCurrentText(fontInfoList.at(0));
+        //            }
+        //        }
+        break;
+    case APPEARANCE_FONT_TYPE_WINDOW_TITLE:
+        break;
+    case APPEARANCE_FONT_TYPE_MONOSPACE:
+        break;
+    default:
+        break;
+    }
 }

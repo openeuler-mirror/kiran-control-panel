@@ -36,12 +36,17 @@ private:
     void setFont(int fontType, QStringList fontInfoList);
     void connectSignals();
 
+public slots:
+    void handleFontChanged(int type, QString fontInfo);
+
 private:
     Ui::Fonts *ui;
     QStringList m_applicationFontInfo;
     QStringList m_windowTitleFontInfo;
     QStringList m_monospaceFontInfo;
-    QStringList m_fontFamilies;
+    QStringList m_appFamilies;
+    QStringList m_windowTitleFamilies;
+    QStringList m_monospaceFamilies;
 };
 
 #endif  // FONTS_H

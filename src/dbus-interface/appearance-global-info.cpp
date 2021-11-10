@@ -39,6 +39,11 @@ AppearanceGlobalInfo::AppearanceGlobalInfo(QObject *parent)
             [this](const QString &value) {
                 emit lockScreenBackgroundChanged(value);
             });
+    connect(m_appearanceInterface, &AppearanceBackEndProxy::FontChanged,
+            [this](int type, const QString &fontInfo) {
+                KLOG_INFO() << "get FontChanged: " << type << "," << fontInfo;
+                emit fontChanged(type, fontInfo);
+            });
 }
 
 AppearanceGlobalInfo::~AppearanceGlobalInfo()

@@ -42,6 +42,7 @@ public:
 
 signals:
     void themeChanged(int type, const QString &theme_name);
+    void fontChanged(int type, const QString &fontInfo);
     void desktopBackgroundChanged(const QString &value) const;
     void lockScreenBackgroundChanged(const QString &value) const;
 

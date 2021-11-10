@@ -46,29 +46,29 @@
     <name>Fonts</name>
     <message>
         <location filename="../src/pages/font/fonts.ui" line="14"/>
-        <location filename="../build/src/kiran-cpanel-appearance_autogen/include/ui_fonts.h" line="192"/>
-        <location filename="../build-kiran-cpanel-appearance-qt5_11-Debug/ui_fonts.h" line="192"/>
+        <location filename="../build/src/kiran-cpanel-appearance_autogen/include/ui_fonts.h" line="193"/>
+        <location filename="../build-kiran-cpanel-appearance-qt5_11-Debug/ui_fonts.h" line="193"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/pages/font/fonts.ui" line="73"/>
-        <location filename="../build/src/kiran-cpanel-appearance_autogen/include/ui_fonts.h" line="193"/>
-        <location filename="../build-kiran-cpanel-appearance-qt5_11-Debug/ui_fonts.h" line="193"/>
+        <location filename="../src/pages/font/fonts.ui" line="76"/>
+        <location filename="../build/src/kiran-cpanel-appearance_autogen/include/ui_fonts.h" line="194"/>
+        <location filename="../build-kiran-cpanel-appearance-qt5_11-Debug/ui_fonts.h" line="194"/>
         <source>Application Font Settings</source>
         <translation>应用程序字体设置</translation>
     </message>
     <message>
-        <location filename="../src/pages/font/fonts.ui" line="149"/>
-        <location filename="../build/src/kiran-cpanel-appearance_autogen/include/ui_fonts.h" line="194"/>
-        <location filename="../build-kiran-cpanel-appearance-qt5_11-Debug/ui_fonts.h" line="194"/>
+        <location filename="../src/pages/font/fonts.ui" line="152"/>
+        <location filename="../build/src/kiran-cpanel-appearance_autogen/include/ui_fonts.h" line="195"/>
+        <location filename="../build-kiran-cpanel-appearance-qt5_11-Debug/ui_fonts.h" line="195"/>
         <source>Titlebar Font Settings</source>
         <translation>窗口标题字体设置</translation>
     </message>
     <message>
-        <location filename="../src/pages/font/fonts.ui" line="219"/>
-        <location filename="../build/src/kiran-cpanel-appearance_autogen/include/ui_fonts.h" line="195"/>
-        <location filename="../build-kiran-cpanel-appearance-qt5_11-Debug/ui_fonts.h" line="195"/>
+        <location filename="../src/pages/font/fonts.ui" line="222"/>
+        <location filename="../build/src/kiran-cpanel-appearance_autogen/include/ui_fonts.h" line="196"/>
+        <location filename="../build-kiran-cpanel-appearance-qt5_11-Debug/ui_fonts.h" line="196"/>
         <source>Monospace Font Settings</source>
         <translation>等宽字体设置</translation>
     </message>
@@ -222,29 +222,29 @@
     <name>Themes</name>
     <message>
         <location filename="../src/pages/theme/themes.ui" line="14"/>
-        <location filename="../build/src/kiran-cpanel-appearance_autogen/include/ui_themes.h" line="181"/>
-        <location filename="../build-kiran-cpanel-appearance-qt5_11-Debug/ui_themes.h" line="181"/>
+        <location filename="../build/src/kiran-cpanel-appearance_autogen/include/ui_themes.h" line="167"/>
+        <location filename="../build-kiran-cpanel-appearance-qt5_11-Debug/ui_themes.h" line="167"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/pages/theme/themes.ui" line="114"/>
-        <location filename="../build/src/kiran-cpanel-appearance_autogen/include/ui_themes.h" line="182"/>
-        <location filename="../build-kiran-cpanel-appearance-qt5_11-Debug/ui_themes.h" line="182"/>
+        <location filename="../src/pages/theme/themes.ui" line="81"/>
+        <location filename="../build/src/kiran-cpanel-appearance_autogen/include/ui_themes.h" line="168"/>
+        <location filename="../build-kiran-cpanel-appearance-qt5_11-Debug/ui_themes.h" line="168"/>
         <source>Dark and Light Theme</source>
         <translation>深浅色主题设置</translation>
     </message>
     <message>
-        <location filename="../src/pages/theme/themes.ui" line="142"/>
-        <location filename="../build/src/kiran-cpanel-appearance_autogen/include/ui_themes.h" line="183"/>
-        <location filename="../build-kiran-cpanel-appearance-qt5_11-Debug/ui_themes.h" line="183"/>
+        <location filename="../src/pages/theme/themes.ui" line="109"/>
+        <location filename="../build/src/kiran-cpanel-appearance_autogen/include/ui_themes.h" line="169"/>
+        <location filename="../build-kiran-cpanel-appearance-qt5_11-Debug/ui_themes.h" line="169"/>
         <source>Themes Settings</source>
         <translation>主题设置</translation>
     </message>
     <message>
-        <location filename="../src/pages/theme/themes.ui" line="182"/>
-        <location filename="../build/src/kiran-cpanel-appearance_autogen/include/ui_themes.h" line="184"/>
-        <location filename="../build-kiran-cpanel-appearance-qt5_11-Debug/ui_themes.h" line="184"/>
+        <location filename="../src/pages/theme/themes.ui" line="149"/>
+        <location filename="../build/src/kiran-cpanel-appearance_autogen/include/ui_themes.h" line="170"/>
+        <location filename="../build-kiran-cpanel-appearance-qt5_11-Debug/ui_themes.h" line="170"/>
         <source>Open Window Effects</source>
         <translation>打开或关闭窗口特效</translation>
     </message>
@@ -277,85 +277,85 @@
     <name>Wallpaper</name>
     <message>
         <location filename="../src/pages/wallpaper/wallpaper.ui" line="14"/>
-        <location filename="../build/src/kiran-cpanel-appearance_autogen/include/ui_wallpaper.h" line="200"/>
-        <location filename="../build-kiran-cpanel-appearance-qt5_11-Debug/ui_wallpaper.h" line="195"/>
+        <location filename="../build/src/kiran-cpanel-appearance_autogen/include/ui_wallpaper.h" line="178"/>
+        <location filename="../build-kiran-cpanel-appearance-qt5_11-Debug/ui_wallpaper.h" line="178"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/pages/wallpaper/wallpaper.ui" line="95"/>
-        <location filename="../build/src/kiran-cpanel-appearance_autogen/include/ui_wallpaper.h" line="201"/>
-        <location filename="../build-kiran-cpanel-appearance-qt5_11-Debug/ui_wallpaper.h" line="196"/>
+        <location filename="../src/pages/wallpaper/wallpaper.ui" line="68"/>
+        <location filename="../build/src/kiran-cpanel-appearance_autogen/include/ui_wallpaper.h" line="179"/>
+        <location filename="../build-kiran-cpanel-appearance-qt5_11-Debug/ui_wallpaper.h" line="179"/>
         <source>Set wallpaper</source>
         <translation>壁纸设置</translation>
     </message>
     <message>
-        <location filename="../src/pages/wallpaper/wallpaper.ui" line="164"/>
-        <location filename="../build/src/kiran-cpanel-appearance_autogen/include/ui_wallpaper.h" line="202"/>
-        <location filename="../build-kiran-cpanel-appearance-qt5_11-Debug/ui_wallpaper.h" line="197"/>
+        <location filename="../src/pages/wallpaper/wallpaper.ui" line="137"/>
+        <location filename="../build/src/kiran-cpanel-appearance_autogen/include/ui_wallpaper.h" line="180"/>
+        <location filename="../build-kiran-cpanel-appearance-qt5_11-Debug/ui_wallpaper.h" line="180"/>
         <source>Desktop Wallpaper Preview</source>
         <translation>桌面壁纸预览</translation>
     </message>
     <message>
-        <location filename="../src/pages/wallpaper/wallpaper.ui" line="174"/>
-        <location filename="../build/src/kiran-cpanel-appearance_autogen/include/ui_wallpaper.h" line="203"/>
-        <location filename="../build-kiran-cpanel-appearance-qt5_11-Debug/ui_wallpaper.h" line="198"/>
+        <location filename="../src/pages/wallpaper/wallpaper.ui" line="147"/>
+        <location filename="../build/src/kiran-cpanel-appearance_autogen/include/ui_wallpaper.h" line="181"/>
+        <location filename="../build-kiran-cpanel-appearance-qt5_11-Debug/ui_wallpaper.h" line="181"/>
         <source>Lock Screen WallPaper Preview</source>
         <translation>锁屏壁纸预览</translation>
     </message>
     <message>
-        <location filename="../src/pages/wallpaper/wallpaper.ui" line="193"/>
-        <location filename="../build/src/kiran-cpanel-appearance_autogen/include/ui_wallpaper.h" line="204"/>
-        <location filename="../build-kiran-cpanel-appearance-qt5_11-Debug/ui_wallpaper.h" line="199"/>
+        <location filename="../src/pages/wallpaper/wallpaper.ui" line="166"/>
+        <location filename="../build/src/kiran-cpanel-appearance_autogen/include/ui_wallpaper.h" line="182"/>
+        <location filename="../build-kiran-cpanel-appearance-qt5_11-Debug/ui_wallpaper.h" line="182"/>
         <source>Select wallpaper</source>
         <translation>选择壁纸</translation>
     </message>
     <message>
-        <location filename="../src/pages/wallpaper/wallpaper.ui" line="251"/>
-        <location filename="../build/src/kiran-cpanel-appearance_autogen/include/ui_wallpaper.h" line="205"/>
-        <location filename="../build-kiran-cpanel-appearance-qt5_11-Debug/ui_wallpaper.h" line="200"/>
+        <location filename="../src/pages/wallpaper/wallpaper.ui" line="220"/>
+        <location filename="../build/src/kiran-cpanel-appearance_autogen/include/ui_wallpaper.h" line="183"/>
+        <location filename="../build-kiran-cpanel-appearance-qt5_11-Debug/ui_wallpaper.h" line="183"/>
         <source>Select Wallpaper</source>
         <translation>选择壁纸</translation>
     </message>
     <message>
-        <location filename="../src/pages/wallpaper/wallpaper.cpp" line="101"/>
+        <location filename="../src/pages/wallpaper/wallpaper.cpp" line="105"/>
         <source>Set Desktop Wallpaper</source>
         <translation>选择桌面壁纸</translation>
     </message>
     <message>
-        <location filename="../src/pages/wallpaper/wallpaper.cpp" line="117"/>
+        <location filename="../src/pages/wallpaper/wallpaper.cpp" line="121"/>
         <source>Set Lock Screen Wallpaper</source>
         <translation>选择锁屏壁纸</translation>
     </message>
     <message>
-        <location filename="../src/pages/wallpaper/wallpaper.cpp" line="157"/>
-        <location filename="../src/pages/wallpaper/wallpaper.cpp" line="169"/>
+        <location filename="../src/pages/wallpaper/wallpaper.cpp" line="161"/>
+        <location filename="../src/pages/wallpaper/wallpaper.cpp" line="173"/>
         <source>set wallpaper</source>
         <translation>壁纸设置</translation>
     </message>
     <message>
-        <location filename="../src/pages/wallpaper/wallpaper.cpp" line="157"/>
-        <location filename="../src/pages/wallpaper/wallpaper.cpp" line="169"/>
+        <location filename="../src/pages/wallpaper/wallpaper.cpp" line="161"/>
+        <location filename="../src/pages/wallpaper/wallpaper.cpp" line="173"/>
         <source>Set wallpaper failed!</source>
         <translation>壁纸设置失败!</translation>
     </message>
     <message>
-        <location filename="../src/pages/wallpaper/wallpaper.cpp" line="180"/>
+        <location filename="../src/pages/wallpaper/wallpaper.cpp" line="184"/>
         <source>select picture</source>
         <translation>选择图片</translation>
     </message>
     <message>
-        <location filename="../src/pages/wallpaper/wallpaper.cpp" line="182"/>
+        <location filename="../src/pages/wallpaper/wallpaper.cpp" line="186"/>
         <source>image files(*.bmp *.jpg *.png *.tif *.gif *.pcx *.tga *.exif *.fpx *.svg *.psd *.cdr *.pcd *.dxf *.ufo *.eps *.ai *.raw *.WMF *.webp)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/pages/wallpaper/wallpaper.cpp" line="202"/>
+        <location filename="../src/pages/wallpaper/wallpaper.cpp" line="206"/>
         <source>Add Image Failed</source>
         <translation>添加壁纸失败</translation>
     </message>
     <message>
-        <location filename="../src/pages/wallpaper/wallpaper.cpp" line="203"/>
+        <location filename="../src/pages/wallpaper/wallpaper.cpp" line="207"/>
         <source>The image already exists!</source>
         <translation>该壁纸已存在!</translation>
     </message>
