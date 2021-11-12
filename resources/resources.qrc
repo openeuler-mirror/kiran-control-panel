@@ -4,10 +4,10 @@
         <file>images/down-arrow.png</file>
         <file>images/off.png</file>
         <file>images/on.png</file>
-        <file>images/mouse.svg</file>
-        <file>images/touchpad.svg</file>
         <file>images/disable_off.png</file>
         <file>images/disable_on.png</file>
-        <file>images/kiran-cpanel-mouse.png</file>
+        <file>images/kcm-page-mouse.svg</file>
+        <file>images/kcm-page-touchpad.svg</file>
+        <file>images/kcp-mouse-24.png</file>
     </qresource>
 </RCC>
