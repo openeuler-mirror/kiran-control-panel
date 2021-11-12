@@ -16,8 +16,8 @@
 #include <kiran-log/qt5-log-i.h>
 #include <kiran-session-daemon/mouse-i.h>
 #include <QDBusConnection>
-#include "KSMMouseProxy.h"
 #include "kcm-manager.h"
+#include "mouse_backEnd_proxy.h"
 #include "ui_mouse-page.h"
 
 #define TIMEOUT 100
@@ -75,7 +75,6 @@ void MousePage::initUI()
     delete kcmManager;
     kcmManager = nullptr;
 
-    setStyleSheet("#scrollAreaWidgetContents{border-left:1px solid #2d2d2d;}");
     QStringList hand_mode;
     hand_mode << tr("Right Hand Mode") << tr("Left Hand Mode");
     ui->comboBox_hand_mode->addItems(hand_mode);
@@ -100,20 +99,38 @@ void MousePage::initComponent()
                 m_mouseLeftHand = currentIntex;
                 m_mouseInterface->setLeft_handed(m_mouseLeftHand);
             });
+    connect(
+        m_mouseInterface.data(), &MouseBackEndProxy::left_handedChanged, this,
+        [this](bool value) {
+            if (m_mouseLeftHand != value)
+            {
+                m_mouseLeftHand = value;
+                ui->comboBox_hand_mode->blockSignals(true);
+                ui->comboBox_hand_mode->setCurrentIndex(m_mouseLeftHand);
+                ui->comboBox_hand_mode->blockSignals(false);
+            }
+        },
+        Qt::QueuedConnection);
 
     m_mouseMotionAcceleration = m_mouseInterface->motion_acceleration();
     int speed = m_mouseMotionAcceleration / 2.0 * SLIDER_MAXIMUN + SLIDER_MAXIMUN / 2;
     ui->slider_speed->setValue(speed);
 
-    // 监听滑动条值变化信号，当用户拖动滑动条时，只有在鼠标松开后才会根据值范围确定滑动条值
-    connect(ui->slider_speed, &QSlider::sliderPressed, [this]() {
-        m_mousePressed = true;
-    });
-    connect(ui->slider_speed, &QSlider::sliderReleased, [this]() {
-        m_mousePressed = false;
-        emit ui->slider_speed->valueChanged(ui->slider_speed->value());
-    });
     connect(ui->slider_speed, &QSlider::valueChanged, this, &MousePage::onSliderValueChange);
+
+    connect(
+        m_mouseInterface.data(), &MouseBackEndProxy::motion_accelerationChanged, this,
+        [this](double value) {
+            if (m_mouseMotionAcceleration != value)
+            {
+                m_mouseMotionAcceleration = value;
+                int speed = value / 2.0 * SLIDER_MAXIMUN + SLIDER_MAXIMUN / 2;
+                ui->slider_speed->blockSignals(true);
+                ui->slider_speed->setValue(speed);
+                ui->slider_speed->blockSignals(false);
+            }
+        },
+        Qt::QueuedConnection);
 
     m_mouseNaturalScroll = m_mouseInterface->natural_scroll();
     ui->checkBox_natural_scroll->setChecked(m_mouseNaturalScroll);
@@ -122,6 +139,18 @@ void MousePage::initComponent()
                 m_mouseNaturalScroll = ischecked;
                 m_mouseInterface->setNatural_scroll(ischecked);
             });
+    connect(
+        m_mouseInterface.data(), &MouseBackEndProxy::natural_scrollChanged, this,
+        [this](bool value) {
+            if (m_mouseNaturalScroll != value)
+            {
+                m_mouseNaturalScroll = value;
+                ui->checkBox_natural_scroll->blockSignals(true);
+                ui->checkBox_natural_scroll->setChecked(value);
+                ui->checkBox_natural_scroll->blockSignals(false);
+            }
+        },
+        Qt::QueuedConnection);
 
     m_middleEmulationEnabled = m_mouseInterface->middle_emulation_enabled();
     ui->checkBox_middle_emulation->setChecked(m_middleEmulationEnabled);
@@ -130,6 +159,18 @@ void MousePage::initComponent()
                 m_middleEmulationEnabled = ischecked;
                 m_mouseInterface->setMiddle_emulation_enabled(ischecked);
             });
+    connect(
+        m_mouseInterface.data(), &MouseBackEndProxy::middle_emulation_enabledChanged, this,
+        [this](bool value) {
+            if (m_middleEmulationEnabled != value)
+            {
+                m_middleEmulationEnabled = value;
+                ui->checkBox_middle_emulation->blockSignals(true);
+                ui->checkBox_middle_emulation->setChecked(value);
+                ui->checkBox_middle_emulation->blockSignals(false);
+            }
+        },
+        Qt::QueuedConnection);
 }
 
 void MousePage::onSliderValueChange()

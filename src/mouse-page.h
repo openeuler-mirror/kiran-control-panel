@@ -20,7 +20,7 @@
 #include <QSharedPointer>
 #include <QWidget>
 
-class KSMMouseProxy;
+class MouseBackEndProxy;
 class KiranSwitchButton;
 class KiranListItem;
 class KiranSwitchButton;
@@ -47,15 +47,13 @@ public slots:
 
 private:
     Ui::MousePage *ui;
-    QSharedPointer<KSMMouseProxy> m_mouseInterface;
+    QSharedPointer<MouseBackEndProxy> m_mouseInterface;
 
     bool m_mouseLeftHand = false;
     bool m_mouseNaturalScroll = false;
     bool m_middleEmulationEnabled = false;
     double m_mouseMotionAcceleration = 0.0;
 
-    //鼠标是否按下的标志位
-    bool m_mousePressed = false;
     QTimer *m_timer = nullptr;
 };
 

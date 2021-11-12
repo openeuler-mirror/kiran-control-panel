@@ -18,8 +18,8 @@
 #include <QObject>
 #include <QSharedPointer>
 
-class KSMMouseProxy;
-class KSMTouchPadProxy;
+class MouseBackEndProxy;
+class TouchPadBackEndProxy;
 class KCMManager : public QObject
 {
     Q_OBJECT
@@ -28,13 +28,13 @@ public:
     ~KCMManager();
 
     bool isValidConnect();
-    QSharedPointer<KSMMouseProxy> getMouseInterface();
-    QSharedPointer<KSMTouchPadProxy> getTouchPadInterface();
+    QSharedPointer<MouseBackEndProxy> getMouseInterface();
+    QSharedPointer<TouchPadBackEndProxy> getTouchPadInterface();
     bool hasTouchPad();
 
 private:
-    QSharedPointer<KSMMouseProxy> m_mouseInterface;
-    QSharedPointer<KSMTouchPadProxy> m_touchPadInterface;
+    QSharedPointer<MouseBackEndProxy> m_mouseInterface;
+    QSharedPointer<TouchPadBackEndProxy> m_touchPadInterface;
 };
 
 #endif  // KCMMANAGER_H

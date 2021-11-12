@@ -14,13 +14,14 @@
 
 #include "touchpad-page.h"
 #include <kcm-manager.h>
+#include <kiran-log/qt5-log-i.h>
 #include <kiran-session-daemon/touchpad-i.h>
 #include <QCheckBox>
 #include <QDBusConnection>
-#include "KSMTouchPadProxy.h"
+#include "touchPad_backEnd_proxy.h"
 #include "ui_touchpad-page.h"
 
-#define TIMEOUT 100
+#define TIMEOUT 2000
 #define SLIDER_MINIMUM 0
 #define SLIDER_MAXIMUN 100
 #define PAGE_BASE_SIZE_WIDTH 700
@@ -70,7 +71,6 @@ void TouchPadPage::initUI()
     delete kcmManager;
     kcmManager = nullptr;
 
-    setStyleSheet("#scrollAreaWidgetContents{border-left:1px solid #2d2d2d;}");
     m_comboBoxList = this->findChildren<QComboBox *>();
     m_checkBoxList = {ui->checkBox_tap_to_click,
                       ui->checkBox_tp_natural_scroll,
@@ -85,7 +85,7 @@ void TouchPadPage::initUI()
     ui->slider_tp_speed->setPageStep((SLIDER_MAXIMUN - SLIDER_MINIMUM) / 20);
     ui->slider_tp_speed->setSingleStep((SLIDER_MAXIMUN - SLIDER_MINIMUM) / 20);
 
-    //TODO: 暂时隐藏触摸板点击方法功能
+    ///TODO: 暂时隐藏触摸板点击方法功能
     ui->widget_tp_click_mode->hide();
 
     initComponent();
@@ -96,16 +96,29 @@ void TouchPadPage::initUI()
  */
 void TouchPadPage::initComponent()
 {
+    //触摸板是否开启
     m_touchPadEnabled = m_touchPadInterface->touchpad_enabled();
     ui->checkBox_tp_disable_touchpad->setChecked(m_touchPadEnabled);
     if (!m_touchPadEnabled)
-    {
-        //若禁用触摸板，则禁用触摸板相关设置控件
-        setDisableWidget(true);
-    }
+        setDisableWidget(true);  //若禁用触摸板，则禁用触摸板相关设置控件
+
     connect(ui->checkBox_tp_disable_touchpad, &QCheckBox::toggled, this,
             &TouchPadPage::onDisabelTouchPadToggled);
+    connect(
+        m_touchPadInterface.data(), &TouchPadBackEndProxy::touchpad_enabledChanged, this,
+        [this](bool value) {
+            if (m_touchPadEnabled != value)
+            {
+                m_touchPadEnabled = value;
+                ui->checkBox_tp_disable_touchpad->blockSignals(true);
+                ui->checkBox_tp_disable_touchpad->setChecked(value);
+                ui->checkBox_tp_disable_touchpad->blockSignals(false);
+                setDisableWidget(!value);
+            }
+        },
+        Qt::QueuedConnection);
 
+    //选择触摸板使用模式
     m_touchPadLeftHand = m_touchPadInterface->left_handed();
     ui->comboBox_tp_hand_mode->setCurrentIndex(m_touchPadLeftHand);
     connect(ui->comboBox_tp_hand_mode, QOverload<int>::of(&QComboBox::currentIndexChanged),
@@ -113,21 +126,40 @@ void TouchPadPage::initComponent()
                 m_touchPadLeftHand = currentIntex;
                 m_touchPadInterface->setLeft_handed(m_touchPadLeftHand);
             });
+    connect(
+        m_touchPadInterface.data(), &TouchPadBackEndProxy::left_handedChanged, this,
+        [this](bool value) {
+            if (m_touchPadLeftHand != value)
+            {
+                m_touchPadLeftHand = value;
+                ui->comboBox_tp_hand_mode->blockSignals(true);
+                ui->comboBox_tp_hand_mode->setCurrentIndex(value);
+                ui->comboBox_tp_hand_mode->blockSignals(false);
+            }
+        },
+        Qt::QueuedConnection);
 
+    //触摸板移动加速
     m_touchPadMotionAcceleration = m_touchPadInterface->motion_acceleration();
     int speed = m_touchPadMotionAcceleration / 2.0 * SLIDER_MAXIMUN + SLIDER_MAXIMUN / 2;
     ui->slider_tp_speed->setValue(speed);
 
-    connect(ui->slider_tp_speed, &QSlider::sliderPressed, [this]() {
-        m_mousePressed = true;
-    });
-    connect(ui->slider_tp_speed, &QSlider::sliderReleased, [this]() {
-        m_mousePressed = false;
-        emit ui->slider_tp_speed->valueChanged(ui->slider_tp_speed->value());
-    });
-    // 监听滑动条值变化信号，当用户拖动滑动条时，只有在鼠标松开后才会根据值范围确定滑动条值
     connect(ui->slider_tp_speed, &QSlider::valueChanged, this, &TouchPadPage::onSliderValueChange);
+    connect(
+        m_touchPadInterface.data(), &TouchPadBackEndProxy::motion_accelerationChanged, this,
+        [this](double value) {
+            if (m_touchPadMotionAcceleration != value)
+            {
+                m_touchPadMotionAcceleration = value;
+                int speed = value / 2.0 * SLIDER_MAXIMUN + SLIDER_MAXIMUN / 2;
+                ui->slider_tp_speed->blockSignals(true);
+                ui->slider_tp_speed->setValue(speed);
+                ui->slider_tp_speed->blockSignals(false);
+            }
+        },
+        Qt::QueuedConnection);
 
+    //点击模式
     m_clickMethod = m_touchPadInterface->click_method();
     ui->comboBox_tp_click_mode->setCurrentIndex(m_clickMethod);
     connect(ui->comboBox_tp_click_mode, QOverload<int>::of(&QComboBox::currentIndexChanged),
@@ -135,7 +167,14 @@ void TouchPadPage::initComponent()
                 m_clickMethod = currentIndex;
                 m_touchPadInterface->setClick_method(m_clickMethod);
             });
+    connect(
+        m_touchPadInterface.data(), &TouchPadBackEndProxy::click_methodChanged, this,
+        [this](int value) {
+            setValue(ui->comboBox_tp_click_mode, m_clickMethod, value);
+        },
+        Qt::QueuedConnection);
 
+    //滚动方式
     m_scrollMethod = m_touchPadInterface->scroll_method();
     ui->comboBox_tp_move_win_mode->setCurrentIndex(m_scrollMethod);
     connect(ui->comboBox_tp_move_win_mode, QOverload<int>::of(&QComboBox::currentIndexChanged),
@@ -143,7 +182,14 @@ void TouchPadPage::initComponent()
                 m_scrollMethod = currentIndex;
                 m_touchPadInterface->setScroll_method(m_scrollMethod);
             });
+    connect(
+        m_touchPadInterface.data(), &TouchPadBackEndProxy::scroll_methodChanged, this,
+        [this](int value) {
+            setValue(ui->comboBox_tp_move_win_mode, m_scrollMethod, value);
+        },
+        Qt::QueuedConnection);
 
+    //是否为自然滚动
     m_touchPadNaturalScroll = m_touchPadInterface->natural_scroll();
     ui->checkBox_tp_natural_scroll->setChecked(m_touchPadNaturalScroll);
     connect(ui->checkBox_tp_natural_scroll, &KiranSwitchButton::toggled,
@@ -151,7 +197,14 @@ void TouchPadPage::initComponent()
                 m_touchPadNaturalScroll = isNaturalScroll;
                 m_touchPadInterface->setNatural_scroll(m_touchPadNaturalScroll);
             });
+    connect(
+        m_touchPadInterface.data(), &TouchPadBackEndProxy::natural_scrollChanged, this,
+        [this](bool value) {
+            setValue(ui->checkBox_tp_natural_scroll, m_touchPadNaturalScroll, value);
+        },
+        Qt::QueuedConnection);
 
+    //打字时触摸板禁用
     m_disabelWhileTyping = m_touchPadInterface->disable_while_typing();
     ui->checkBox_disable_while_typing->setChecked(m_disabelWhileTyping);
     connect(ui->checkBox_disable_while_typing, &KiranSwitchButton::toggled,
@@ -159,7 +212,14 @@ void TouchPadPage::initComponent()
                 m_disabelWhileTyping = disabelWhileTyping;
                 m_touchPadInterface->setDisable_while_typing(m_disabelWhileTyping);
             });
+    connect(
+        m_touchPadInterface.data(), &TouchPadBackEndProxy::disable_while_typingChanged, this,
+        [this](bool value) {
+            setValue(ui->checkBox_disable_while_typing, m_disabelWhileTyping, value);
+        },
+        Qt::QueuedConnection);
 
+    //轻击(不按下)触摸板功能是否生效
     m_tapToClick = m_touchPadInterface->tap_to_click();
     ui->checkBox_tap_to_click->setChecked(m_tapToClick);
     connect(ui->checkBox_tap_to_click, &KiranSwitchButton::toggled,
@@ -167,6 +227,34 @@ void TouchPadPage::initComponent()
                 m_tapToClick = isTapToClick;
                 m_touchPadInterface->setTap_to_click(m_tapToClick);
             });
+    connect(
+        m_touchPadInterface.data(), &TouchPadBackEndProxy::tap_to_clickChanged, this,
+        [this](bool value) {
+            setValue(ui->checkBox_tap_to_click, m_tapToClick, value);
+        },
+        Qt::QueuedConnection);
+}
+
+void TouchPadPage::setValue(KiranSwitchButton *receiveWidget, bool &origVal, bool newVal)
+{
+    if (origVal != newVal)
+    {
+        origVal = newVal;
+        receiveWidget->blockSignals(true);
+        receiveWidget->setChecked(newVal);
+        receiveWidget->blockSignals(false);
+    }
+}
+
+void TouchPadPage::setValue(QComboBox *receiveWidget, int &origVal, int newVal)
+{
+    if (origVal != newVal)
+    {
+        origVal = newVal;
+        receiveWidget->blockSignals(true);
+        receiveWidget->setCurrentIndex(newVal);
+        receiveWidget->blockSignals(false);
+    }
 }
 
 QSize TouchPadPage::sizeHint() const
@@ -216,12 +304,5 @@ void TouchPadPage::onDisabelTouchPadToggled(bool disabled)
 {
     m_touchPadEnabled = disabled;
     m_touchPadInterface->setTouchpad_enabled(m_touchPadEnabled);
-    if (disabled)
-    {
-        setDisableWidget(false);
-    }
-    else
-    {
-        setDisableWidget(true);
-    }
+    setDisableWidget(!disabled);
 }

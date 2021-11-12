@@ -15,13 +15,18 @@
 #include "kcp-interface.h"
 #include <kiran-log/qt5-log-i.h>
 #include <kiran-message-box.h>
+#include <kiran-session-daemon/mouse-i.h>
+#include <kiran-session-daemon/touchpad-i.h>
 #include <QCoreApplication>
+#include <QDBusConnection>
+#include <QDBusConnectionInterface>
 #include <QFile>
 #include <QLocale>
 #include <QTranslator>
 #include "config/config.h"
 #include "kcm-manager.h"
 #include "mouse-page.h"
+#include "touchPad_backEnd_proxy.h"
 #include "touchpad-page.h"
 
 KcpInterface::KcpInterface()
@@ -78,12 +83,19 @@ void KcpInterface::uninit()
 int KcpInterface::init()
 {
     m_kcmManager = new KCMManager;
-    if (!m_kcmManager->isValidConnect())
+    if (!QDBusConnection::sessionBus().interface()->isServiceRegistered(MOUSE_DBUS_NAME).value() &&
+        !QDBusConnection::sessionBus().interface()->isServiceRegistered(TOUCHPAD_DBUS_NAME).value())
     {
-        KLOG_DEBUG() << "Connect mouse or touchpad dbus service failed!";
+        KLOG_INFO() << "Connect mouse or touchpad dbus service failed!";
         return -1;
     }
-    m_hasTouchPad = m_kcmManager->hasTouchPad();
+
+    QSharedPointer<TouchPadBackEndProxy> touchPadInterface = m_kcmManager->getTouchPadInterface();
+    m_hasTouchPad = touchPadInterface->has_touchpad();
+    touchPadInterface.clear();
+
+    if (!m_hasTouchPad)
+        KLOG_INFO() << "system don't have touchPad";
     //加载翻译文件
     if (m_translator != nullptr)
     {

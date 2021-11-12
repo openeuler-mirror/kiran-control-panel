@@ -8,6 +8,6 @@
         <file>images/disable_on.png</file>
         <file>images/kcm-page-mouse.svg</file>
         <file>images/kcm-page-touchpad.svg</file>
-        <file>images/kcp-mouse.png</file>
+        <file>images/kcp-mouse-24.png</file>
     </qresource>
 </RCC>

@@ -10,23 +10,25 @@ file(GLOB_RECURSE HEADERS "*.h")
 file(GLOB_RECURSE FORMS "*.ui")
 file(GLOB_RECURSE RESOURCES "${PROJECT_SOURCE_DIR}/resources/*.qrc")
 
-qt5_create_translation( QM_FILES  ${TS_FILES} )
+qt5_create_translation( QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES} )
 
 set_source_files_properties(${MOUSE_DBUS} PROPERTIES
-	CLASSNAME "KSMMouseProxy"
+	CLASSNAME "MouseBackEndProxy"
+	NO_NAMESPACE true
 )
 set_source_files_properties(${TOUCHPAD_DBUS} PROPERTIES
-	CLASSNAME "KSMTouchPadProxy"
+	CLASSNAME "TouchPadBackEndProxy"
+	NO_NAMESPACE true
 )
 
-qt5_add_dbus_interface(MOUSE_PROXY
+kiran_qt5_add_dbus_interface(MOUSE_PROXY
 	${MOUSE_DBUS}
-	KSMMouseProxy
+	mouse_backEnd_proxy
 )
 
-qt5_add_dbus_interface(TOUCHPAD_PROXY
+kiran_qt5_add_dbus_interface(TOUCHPAD_PROXY
 	${TOUCHPAD_DBUS}
-	KSMTouchPadProxy
+	touchPad_backEnd_proxy
 )
 
 add_library(${PROJECT_NAME} SHARED

@@ -25,7 +25,7 @@ class TouchPadPage;
 }
 
 class KiranSwitchButton;
-class KSMTouchPadProxy;
+class TouchPadBackEndProxy;
 class TouchPadPage : public QWidget
 {
     Q_OBJECT
@@ -36,13 +36,14 @@ public:
 
 public:
     void initUI();
-
     virtual QSize sizeHint() const override;
 
 private:
     void addComboBoxItem();
     void setDisableWidget(bool);
     void initComponent();
+    void setValue(KiranSwitchButton *receiveWidget, bool &origVal, bool newVal);
+    void setValue(QComboBox *receiveWidget, int &origVal, int newVal);
 
 public slots:
     void onSliderValueChange();
@@ -50,7 +51,7 @@ public slots:
 
 private:
     Ui::TouchPadPage *ui;
-    QSharedPointer<KSMTouchPadProxy> m_touchPadInterface;
+    QSharedPointer<TouchPadBackEndProxy> m_touchPadInterface;
     QList<QComboBox *> m_comboBoxList;
     QList<KiranSwitchButton *> m_checkBoxList;
     QList<QLabel *> m_labelList;
@@ -64,8 +65,6 @@ private:
     int m_clickMethod = 0;
     int m_scrollMethod = 0;
 
-    //鼠标是否按下的标志位
-    bool m_mousePressed = false;
     QTimer *m_timer = nullptr;
 };
 

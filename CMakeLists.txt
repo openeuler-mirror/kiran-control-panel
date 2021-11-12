@@ -14,6 +14,7 @@ set(CMAKE_AUTORCC ON)
 
 find_package(PkgConfig REQUIRED)
 find_package(Qt5 COMPONENTS Widgets Svg DBus LinguistTools Network)
+find_package(KiranDBusGenerate REQUIRED)
 pkg_search_module(KIRAN_WIDGETS_QT5 REQUIRED kiranwidgets-qt5)
 pkg_search_module(KLOG_QT5 REQUIRED klog-qt5)
 pkg_search_module(KIRAN_CC_DAEMON REQUIRED kiran-cc-daemon)
@@ -24,7 +25,7 @@ pkg_get_variable(CPANEL_PLUGIN_DIR kiran-control-panel plugin_location)
 pkg_get_variable(CPANEL_DESKTOP_DIR kiran-control-panel plugin_desktop_location)
 
 set(DATA_DIR "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATADIR}")
-set(TRANSLATIONS_DIR "${DATA_DIR}/${PROJECT_NAME}/translation/")
+set(TRANSLATIONS_DIR "${DATA_DIR}/${PROJECT_NAME}/translations/")
 set(TS_FILES "${PROJECT_SOURCE_DIR}/translations/kiran-cpanel-mouse.zh_CN.ts" )
 
 #添加config.h.in文件

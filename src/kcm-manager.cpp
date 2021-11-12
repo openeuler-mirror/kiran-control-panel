@@ -16,17 +16,10 @@
 #include <kiran-session-daemon/mouse-i.h>
 #include <kiran-session-daemon/touchpad-i.h>
 #include <QDBusConnection>
-#include "KSMMouseProxy.h"
-#include "KSMTouchPadProxy.h"
+#include "mouse_backEnd_proxy.h"
+#include "touchPad_backEnd_proxy.h"
 KCMManager::KCMManager(QObject *parent) : QObject(parent)
 {
-    m_mouseInterface = QSharedPointer<KSMMouseProxy>(new KSMMouseProxy(MOUSE_DBUS_NAME,
-                                                                       MOUSE_OBJECT_PATH,
-                                                                       QDBusConnection::sessionBus()));
-
-    m_touchPadInterface = QSharedPointer<KSMTouchPadProxy>(new KSMTouchPadProxy(TOUCHPAD_DBUS_NAME,
-                                                                                TOUCHPAD_OBJECT_PATH,
-                                                                                QDBusConnection::sessionBus()));
 }
 
 KCMManager::~KCMManager()
@@ -40,13 +33,20 @@ bool KCMManager::isValidConnect()
     return true;
 }
 
-QSharedPointer<KSMMouseProxy> KCMManager::getMouseInterface()
+QSharedPointer<MouseBackEndProxy> KCMManager::getMouseInterface()
 {
+    m_mouseInterface = QSharedPointer<MouseBackEndProxy>(new MouseBackEndProxy(MOUSE_DBUS_NAME,
+                                                                               MOUSE_OBJECT_PATH,
+                                                                               QDBusConnection::sessionBus()));
+
     return m_mouseInterface;
 }
 
-QSharedPointer<KSMTouchPadProxy> KCMManager::getTouchPadInterface()
+QSharedPointer<TouchPadBackEndProxy> KCMManager::getTouchPadInterface()
 {
+    m_touchPadInterface = QSharedPointer<TouchPadBackEndProxy>(new TouchPadBackEndProxy(TOUCHPAD_DBUS_NAME,
+                                                                                        TOUCHPAD_OBJECT_PATH,
+                                                                                        QDBusConnection::sessionBus()));
     return m_touchPadInterface;
 }
 
