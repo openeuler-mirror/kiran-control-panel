@@ -59,11 +59,10 @@ QWidget* KcpInterface::getSubItemWidget(QString id)
     m_currentWidget = widget;
 
     //加载样式表
-    QFile file(":/style/style.qss");
+    QFile file(":/keyboard/style/style.qss");
     if (file.open(QFile::ReadOnly))
     {
         QString styleSheet = QLatin1String(file.readAll());
-
         m_currentWidget->setStyleSheet(styleSheet);
         file.close();
     }

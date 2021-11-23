@@ -20,8 +20,8 @@ MainWindow::MainWindow(QWidget* parent) : KiranTitlebarWindow(parent),
                                           ui(new Ui::MainWindow)
 {
     ui->setupUi(getWindowContentWidget());
-    addSidebarItem(tr("General Option"), ":/images/kck-page-generation.svg");
-    addSidebarItem(tr("Keyboard Layout"), ":/images/kck-page-layout.png");
+    addSidebarItem(tr("General Option"), ":/keyboard/images/kck-page-generation.svg");
+    addSidebarItem(tr("Keyboard Layout"), ":/keyboard/images/kck-page-layout.png");
 
     connect(ui->listWidget, &KiranSidebarWidget::currentRowChanged,
             [this](int currentRow) {

@@ -8,7 +8,7 @@ file(GLOB_RECURSE SOURCES "*.cpp")
 file(GLOB_RECURSE HEADERS "*.h")
 file(GLOB_RECURSE FORMS "*.ui")
 file(GLOB_RECURSE RESOURCES "${PROJECT_SOURCE_DIR}/resources/*.qrc")
-
+file(GLOB_RECURSE QSS "${PROJECT_SOURCE_DIR}/resources/style/*.qss")
 qt5_create_translation( QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES} )
 
 set_source_files_properties(${KEYBOARD_DBUS_XML} PROPERTIES
@@ -24,7 +24,8 @@ add_library(${PROJECT_NAME} SHARED
 	${FORMS}
 	${KEYBOARD_PROXY}
 	${RESOURCES}
-	${QM_FILES})
+	${QM_FILES}
+	${QSS})
 
 target_include_directories(${PROJECT_NAME} PRIVATE
 	${CMAKE_BINARY_DIR}
