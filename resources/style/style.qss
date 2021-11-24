@@ -7,7 +7,7 @@
 
 #btn_add
 {
-    background-image: url(":/images/addition.svg");
+    background-image: url(":/keyboard/images/addition.svg");
     background-position : center center;
     background-repeat: no-repeat;
 }
@@ -30,11 +30,11 @@
 
 #label_selected
 {
-    background-image: url(":/images/selected.svg");
+    background-image: url(":/keyboard/images/selected.svg");
 }
 #label_search
 {
-    background-image: url(":/images/search.svg");
+    background-image: url(":/keyboard/images/search.svg");
 }
 
 #ChooseItem
@@ -82,7 +82,7 @@ LayoutItem[isPressed="false"]
 
 LayoutItem[isPressed="true"] QLabel#icon
 {
-    background-image: url(":/images/selected-w.svg");
+    background-image: url(":/keyboard/images/selected-w.svg");
     background-repeat: no-repeat;
     background-position : center center;
 }

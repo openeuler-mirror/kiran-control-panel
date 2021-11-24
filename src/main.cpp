@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
     //只允许单个程序运行
     KiranSingleApplication a(argc, argv);
 
-    QFile file(":/style/style.qss");
+    QFile file(":/keyboard/style/style.qss");
     if (file.open(QFile::ReadOnly))
     {
         QString styleSheet = QLatin1String(file.readAll());

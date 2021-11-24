@@ -14,61 +14,61 @@
     <name>GeneralPage</name>
     <message>
         <location filename="../src/general-page.ui" line="14"/>
-        <location filename="../build/src/kiran-cpanel-keyboard_autogen/include/ui_general-page.h" line="217"/>
+        <location filename="../build/src/kiran-cpanel-keyboard_autogen/include/ui_general-page.h" line="219"/>
         <source>Form</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../src/general-page.ui" line="40"/>
-        <location filename="../build/src/kiran-cpanel-keyboard_autogen/include/ui_general-page.h" line="218"/>
+        <location filename="../build/src/kiran-cpanel-keyboard_autogen/include/ui_general-page.h" line="220"/>
         <source>Repeat Key</source>
         <translation>重复键</translation>
     </message>
     <message>
         <location filename="../src/general-page.ui" line="47"/>
-        <location filename="../build/src/kiran-cpanel-keyboard_autogen/include/ui_general-page.h" line="219"/>
+        <location filename="../build/src/kiran-cpanel-keyboard_autogen/include/ui_general-page.h" line="221"/>
         <source>(Repeat a key while holding it down)</source>
         <translation>按住某一键时重复该键</translation>
     </message>
     <message>
         <location filename="../src/general-page.ui" line="83"/>
-        <location filename="../build/src/kiran-cpanel-keyboard_autogen/include/ui_general-page.h" line="221"/>
+        <location filename="../build/src/kiran-cpanel-keyboard_autogen/include/ui_general-page.h" line="223"/>
         <source>Delay</source>
         <translation>延时</translation>
     </message>
     <message>
         <location filename="../src/general-page.ui" line="126"/>
-        <location filename="../build/src/kiran-cpanel-keyboard_autogen/include/ui_general-page.h" line="222"/>
+        <location filename="../build/src/kiran-cpanel-keyboard_autogen/include/ui_general-page.h" line="224"/>
         <source>Short</source>
         <translation>短</translation>
     </message>
     <message>
         <location filename="../src/general-page.ui" line="146"/>
-        <location filename="../build/src/kiran-cpanel-keyboard_autogen/include/ui_general-page.h" line="223"/>
+        <location filename="../build/src/kiran-cpanel-keyboard_autogen/include/ui_general-page.h" line="225"/>
         <source>Long</source>
         <translation>长</translation>
     </message>
     <message>
         <location filename="../src/general-page.ui" line="164"/>
-        <location filename="../build/src/kiran-cpanel-keyboard_autogen/include/ui_general-page.h" line="224"/>
+        <location filename="../build/src/kiran-cpanel-keyboard_autogen/include/ui_general-page.h" line="226"/>
         <source>Interval</source>
         <translation>速度</translation>
     </message>
     <message>
         <location filename="../src/general-page.ui" line="207"/>
-        <location filename="../build/src/kiran-cpanel-keyboard_autogen/include/ui_general-page.h" line="225"/>
+        <location filename="../build/src/kiran-cpanel-keyboard_autogen/include/ui_general-page.h" line="227"/>
         <source>Slow</source>
         <translation>慢</translation>
     </message>
     <message>
         <location filename="../src/general-page.ui" line="227"/>
-        <location filename="../build/src/kiran-cpanel-keyboard_autogen/include/ui_general-page.h" line="226"/>
+        <location filename="../build/src/kiran-cpanel-keyboard_autogen/include/ui_general-page.h" line="228"/>
         <source>Fast</source>
         <translation>快</translation>
     </message>
     <message>
         <location filename="../src/general-page.ui" line="243"/>
-        <location filename="../build/src/kiran-cpanel-keyboard_autogen/include/ui_general-page.h" line="227"/>
+        <location filename="../build/src/kiran-cpanel-keyboard_autogen/include/ui_general-page.h" line="229"/>
         <location filename="../src/general-page.cpp" line="72"/>
         <source>Enter characters to test the settings</source>
         <translation>输入字符来测试设置</translation>

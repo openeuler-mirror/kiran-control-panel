@@ -57,7 +57,7 @@ void ChooseItem::setNames(QString countryName, QString layoutName)
 
 void ChooseItem::initUI()
 {
-    ui->btn_delete->setIcon(QIcon(":/images/delete.svg"));
+    ui->btn_delete->setIcon(QIcon(":/keyboard/images/delete.svg"));
     ui->btn_delete->hide();
     ui->label_selected->hide();
 }
