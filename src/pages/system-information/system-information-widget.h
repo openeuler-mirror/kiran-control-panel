@@ -15,12 +15,13 @@
 #ifndef SYSTEMINFORMATIONWIDGET_H
 #define SYSTEMINFORMATIONWIDGET_H
 
-#include <QWidget>
 #include <QPaintEvent>
+#include <QWidget>
+#include "change-host-name-widget.h"
 #include "license/active-guide-widget.h"
 #include "license/license-info-widget.h"
-#include "change-host-name-widget.h"
-namespace Ui {
+namespace Ui
+{
 class SystemInformationWidget;
 }
 
@@ -44,12 +45,12 @@ private slots:
     void onBtnchangeHostName(void);
     void onBtnStatusClicked();
     void updateLicenseInfo(bool isregister);
-    void updateHostName(bool isChanged,QString name);
+    void updateHostName(bool isChanged, QString name);
 
 protected:
     bool eventFilter(QObject *obj, QEvent *event);
-    void paintEvent(QPaintEvent* painEvent);
-    virtual QSize sizeHint () const ;
+    void paintEvent(QPaintEvent *painEvent);
+    virtual QSize sizeHint() const;
 
 private:
     Ui::SystemInformationWidget *ui;
@@ -60,15 +61,15 @@ private:
     // 授权状态
     quint16 license_status = 0;
     // 过期时间
-    quint32 expired_time;
+    qlonglong expired_time;
     // 安装时间
-    quint32 start_time;
+    qlonglong start_time;
     QString installTime;
 
     ActGuideWidget *activeGuide;
     LicenseInfoWidget *licenseInfoWidget;
-    ChangeHostNameWidget* hostNameWidget;
+    ChangeHostNameWidget *hostNameWidget;
     LicenseAgreement *licenseAgreement;
 };
 
-#endif // SYSTEMINFORMATIONWIDGET_H
+#endif  // SYSTEMINFORMATIONWIDGET_H
