@@ -316,6 +316,8 @@ void Themes::createThemeWidget()
                         return;
                     if (!AppearanceGlobalInfo::instance()->setTheme(APPEARANCE_THEME_TYPE_GTK, theme))
                         return;
+                    if (!AppearanceGlobalInfo::instance()->setTheme(APPEARANCE_THEME_TYPE_METACITY, theme))
+                        return;
                     KLOG_INFO() << "set themes successful:" << theme;
                 });
     }

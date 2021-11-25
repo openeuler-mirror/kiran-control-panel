@@ -73,9 +73,8 @@
         <translation>等宽字体设置</translation>
     </message>
     <message>
-        <location filename="../src/pages/font/fonts.cpp" line="62"/>
         <source>None</source>
-        <translation>暂无</translation>
+        <translation type="vanished">暂无</translation>
     </message>
 </context>
 <context>
@@ -173,14 +172,14 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/pages/font/fonts.cpp" line="154"/>
+        <location filename="../src/pages/font/fonts.cpp" line="143"/>
         <location filename="../src/pages/theme/themes.cpp" line="140"/>
         <location filename="../src/pages/theme/themes.cpp" line="185"/>
         <source>Failed</source>
         <translation>失败</translation>
     </message>
     <message>
-        <location filename="../src/pages/font/fonts.cpp" line="155"/>
+        <location filename="../src/pages/font/fonts.cpp" line="144"/>
         <source>Set font  failed!</source>
         <translation>设置字体失败!</translation>
     </message>
