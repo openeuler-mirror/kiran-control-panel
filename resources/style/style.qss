@@ -1,15 +1,6 @@
-QLabel#label_search
-{
-    background-image: url(":/images/search.svg");
-}
 
-QWidget#widget_search
-{
-    border:1px solid #393939;
-    border-radius:6px;
-}
-
-QLineEdit
+QLineEdit#lineEdit_custom_name,QLineEdit#lineEdit_custom_app,
+QLineEdit#lineEdit_modify_name,QLineEdit#lineEdit_modify_app
 {
     border:1px solid #393939;
     border-radius:6px;
@@ -17,14 +8,12 @@ QLineEdit
     padding-right:10px;
 }
 
-QLineEdit:focus
+QLineEdit#lineEdit_custom_name:focus,
+QLineEdit#lineEdit_custom_app:focus,
+QLineEdit#lineEdit_modify_name:focus,
+QLineEdit#lineEdit_modify_app:focus
 {
     border:1px solid #2eb3ff;
-}
-
-QLineEdit#lineEdit_search
-{
-    border:none;
 }
 
 QLineEdit#lineEdit_modify_name:disabled

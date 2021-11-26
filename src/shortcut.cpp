@@ -130,6 +130,7 @@ void Shortcut::initUI()
     connect(m_btnModifyApp, &QToolButton::clicked, this, &Shortcut::openFileSys);
 
     m_lECustomKey = new CustomLineEdit;
+    m_lECustomKey->setPlaceholderText(tr("Please press the new shortcut key"));
     m_lECustomKey->installEventFilter(this);
     ui->vlayout_custom_key->addWidget(m_lECustomKey);
     connect(m_lECustomKey, &CustomLineEdit::inputKeyCodes, this, &Shortcut::handleInputKeycode);
@@ -146,6 +147,7 @@ void Shortcut::initUI()
                 ui->stackedWidget->setCurrentWidget(ui->page_add);
                 ui->lineEdit_custom_app->clear();
                 ui->lineEdit_custom_name->clear();
+                ui->lineEdit_custom_name->setFocus();
                 m_lECustomKey->clear();
             });
 
@@ -597,6 +599,7 @@ void Shortcut::onEditShortcut(int type, QString uid, QString name, QString keyCo
     ShortcutItem *senderItem = qobject_cast<ShortcutItem *>(sender());
     ui->stackedWidget->setCurrentWidget(ui->page_modify);
     m_lEModifyKey->clear();
+    m_lEModifyKey->setFocus();
     m_editUid = uid;
 
     ui->lineEdit_modify_name->setText(name);
@@ -631,8 +634,7 @@ void Shortcut::onSave()
 {
     int type = ui->lineEdit_modify_app->isVisible() ? SHORTCUT_TYPE_CUSTOM : SHORTCUT_TYPE_SYSTEM;
     if (ui->lineEdit_modify_name->text().isEmpty() ||
-        (ui->lineEdit_modify_app->text().isEmpty() && type == SHORTCUT_TYPE_CUSTOM) ||
-        m_lEModifyKey->text().isEmpty())
+        (ui->lineEdit_modify_app->text().isEmpty() && type == SHORTCUT_TYPE_CUSTOM))
     {
         KiranMessageBox::message(nullptr,
                                  tr("Warning"),
@@ -641,7 +643,7 @@ void Shortcut::onSave()
         return;
     }
 
-    QString newKeyCombination = convertToBackendStr(m_lEModifyKey->text());
+    QString newKeyCombination = m_lEModifyKey->text().isEmpty() ? "disabled" : convertToBackendStr(m_lEModifyKey->text());
 
     if (type == SHORTCUT_TYPE_SYSTEM)
     {
@@ -678,7 +680,7 @@ void Shortcut::onAdd()
     QString newName = ui->lineEdit_custom_name->text();
     QString newAction = ui->lineEdit_custom_app->text();
     QString newKey = m_lECustomKey->text();
-    if (newName.isEmpty() || newAction.isEmpty() || newKey.isEmpty())
+    if (newName.isEmpty() || newAction.isEmpty())
     {
         KiranMessageBox::message(nullptr,
                                  tr("Warning"),
@@ -688,7 +690,8 @@ void Shortcut::onAdd()
     }
 
     //dbus ->AddCustomShortcut
-    QString keyCombination = convertToBackendStr(newKey);
+    QString keyCombination = newKey.isEmpty() ? "disabled" : convertToBackendStr(newKey);
+
     QDBusPendingReply<QString> reply = m_keybindingInterface->AddCustomShortcut(newName, newAction, keyCombination);
     reply.waitForFinished();
     if (reply.isError() || !reply.isValid())
