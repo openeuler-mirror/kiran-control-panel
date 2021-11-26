@@ -38,6 +38,7 @@ public:
     QString getName();
     int getType();
     QString getUid();
+    QString getShowKeybinding();
     ShortcutInfo *getShortcut();
 
 protected:

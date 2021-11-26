@@ -11,9 +11,8 @@
 <context>
     <name>CustomLineEdit</name>
     <message>
-        <location filename="../src/custom-line-edit.cpp" line="34"/>
         <source>Please press the new shortcut key</source>
-        <translation>请输入新快捷键</translation>
+        <translation type="vanished">请输入新快捷键</translation>
     </message>
 </context>
 <context>
@@ -269,30 +268,30 @@
         <translation>打开文件</translation>
     </message>
     <message>
-        <location filename="../src/shortcut.cpp" line="637"/>
-        <location filename="../src/shortcut.cpp" line="694"/>
+        <location filename="../src/shortcut.cpp" line="638"/>
+        <location filename="../src/shortcut.cpp" line="695"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="../src/shortcut.cpp" line="638"/>
-        <location filename="../src/shortcut.cpp" line="695"/>
+        <location filename="../src/shortcut.cpp" line="639"/>
+        <location filename="../src/shortcut.cpp" line="696"/>
         <source>Please complete the shortcut information!</source>
         <translation>请完善快捷键信息！</translation>
     </message>
     <message>
-        <location filename="../src/shortcut.cpp" line="729"/>
-        <location filename="../src/shortcut.cpp" line="747"/>
+        <location filename="../src/shortcut.cpp" line="730"/>
+        <location filename="../src/shortcut.cpp" line="748"/>
         <source>Failed</source>
         <translation>失败</translation>
     </message>
     <message>
-        <location filename="../src/shortcut.cpp" line="730"/>
+        <location filename="../src/shortcut.cpp" line="731"/>
         <source>Cannot use shortcut &quot;%1&quot;, Because you cannot enter with this key.Please try again using Ctrl, Alt, or Shift at the same time.</source>
         <translation>无法使用快捷键&quot;%1&quot;,因为使用此键将无法输入，请同时使用Ctrl，Alt，Shift再试一次。</translation>
     </message>
     <message>
-        <location filename="../src/shortcut.cpp" line="748"/>
+        <location filename="../src/shortcut.cpp" line="749"/>
         <source>Shortcut keys %1 are already used in %2,Please try again!</source>
         <translation>快捷键%1已用于%2，请再试一次！</translation>
     </message>

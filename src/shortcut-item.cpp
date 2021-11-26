@@ -142,6 +142,11 @@ QString ShortcutItem::getUid()
     return m_shortcutInfo->uid;
 }
 
+QString ShortcutItem::getShowKeybinding()
+{
+    return ui->label_keybination->text();
+}
+
 ShortcutInfo *ShortcutItem::getShortcut()
 {
     return m_shortcutInfo;

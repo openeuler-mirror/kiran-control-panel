@@ -31,7 +31,6 @@ void CustomLineEdit::initUI()
 {
     setFixedHeight(40);
     setFocusPolicy(Qt::ClickFocus);
-    setPlaceholderText(tr("Please press the new shortcut key"));
     setReadOnly(true);
 }
 

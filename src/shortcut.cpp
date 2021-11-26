@@ -252,12 +252,11 @@ ShortcutItem *Shortcut::createShortcutItem(QVBoxLayout *parent, ShortcutInfo *sh
 
 bool Shortcut::isConflict(QString &originName, QString newKeyCombination)
 {
-    KLOG_INFO() << "isConflict:" << newKeyCombination;
     foreach (ShortcutInfo *shortcut, m_shortcuts)
     {
         if (!QString::compare(shortcut->keyCombination, newKeyCombination, Qt::CaseInsensitive))
         {
-            KLOG_INFO() << "yes";
+            KLOG_INFO() << newKeyCombination << "is Conflict";
             originName = shortcut->name;
             return true;
         }
@@ -595,6 +594,7 @@ void Shortcut::handleShortcutInfo(QList<ShortcutInfo *> shortcutInfoList)
 void Shortcut::onEditShortcut(int type, QString uid, QString name, QString keyCombination, QString action)
 {
     Q_UNUSED(keyCombination)
+    ShortcutItem *senderItem = qobject_cast<ShortcutItem *>(sender());
     ui->stackedWidget->setCurrentWidget(ui->page_modify);
     m_lEModifyKey->clear();
     m_editUid = uid;
@@ -612,6 +612,7 @@ void Shortcut::onEditShortcut(int type, QString uid, QString name, QString keyCo
         ui->widget_modify_app->show();
         ui->lineEdit_modify_name->setDisabled(false);
     }
+    m_lEModifyKey->setPlaceholderText(senderItem->getShowKeybinding());
 }
 
 void Shortcut::onDeleteShortcut(QString uid)
@@ -641,17 +642,6 @@ void Shortcut::onSave()
     }
 
     QString newKeyCombination = convertToBackendStr(m_lEModifyKey->text());
-    //    //判断是否重复
-    //    QString originName;
-    //    if (isConflict(originName, newKeyCombination))
-    //    {
-    //        KiranMessageBox::message(nullptr,
-    //                                 QString(tr("Failed")),
-    //                                 QString(tr("Shortcut keys %1 are already used in %2,Please try again!")).arg(m_lEModifyKey->text()).arg(originName),
-    //                                 KiranMessageBox::Ok);
-    //        m_lECustomKey->clear();
-    //        return;
-    //    }
 
     if (type == SHORTCUT_TYPE_SYSTEM)
     {
