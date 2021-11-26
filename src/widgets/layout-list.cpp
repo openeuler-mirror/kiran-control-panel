@@ -21,11 +21,13 @@
 #define TIMEOUT 150
 
 LayoutList::LayoutList(QWidget* parent) : QWidget(parent),
+                                          m_editHasFocus(false),
                                           ui(new Ui::LayoutList)
 {
     ui->setupUi(this);
     m_timer = new QTimer(this);
     ui->stackedWidget->setCurrentWidget(ui->page_list);
+    ui->lineEdit_search->installEventFilter(this);
 
     connect(m_timer, &QTimer::timeout,
             [this] {
@@ -82,6 +84,11 @@ QString LayoutList::getSelectedCountry()
     return m_countryName;
 }
 
+bool LayoutList::editHasFocus() const
+{
+    return m_editHasFocus;
+}
+
 QSize LayoutList::sizeHint() const
 {
     QSize hint;
@@ -98,6 +105,15 @@ void LayoutList::itemClicked()
 
     m_countryName = countryName;
     emit itemChanged(countryName);
+}
+
+void LayoutList::setEditHasFocus(bool editHasFocus)
+{
+    m_editHasFocus = editHasFocus;
+    emit editHasFocusChanged(m_editHasFocus);
+    style()->polish(this);
+    ///NOTE:如果不重绘，聚焦边框样式不会更新
+    update();
 }
 
 void LayoutList::search()
@@ -179,4 +195,27 @@ void LayoutList::paintEvent(QPaintEvent* event)
     style()->drawPrimitive(QStyle::PE_Widget, &opt, &p, this);
 
     QWidget::paintEvent(event);
+}
+
+bool LayoutList::eventFilter(QObject* obj, QEvent* event)
+{
+    ///NOTE: 通过event filter来获取输入框聚焦事件,修改样式为聚焦样式
+    if (obj == ui->lineEdit_search)
+    {
+        switch (event->type())
+        {
+        case QEvent::FocusIn:
+            setEditHasFocus(true);
+            break;
+        case QEvent::FocusOut:
+            setEditHasFocus(false);
+            break;
+        case QEvent::FocusAboutToChange:
+            break;
+        default:
+            break;
+        }
+    }
+
+    return QWidget::eventFilter(obj, event);
 }

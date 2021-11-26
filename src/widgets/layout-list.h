@@ -27,20 +27,23 @@ class LayoutItem;
 class LayoutList : public QWidget
 {
     Q_OBJECT
-
+    Q_PROPERTY(bool editHasFocus READ editHasFocus WRITE setEditHasFocus NOTIFY editHasFocusChanged)
 public:
     explicit LayoutList(QWidget *parent = 0);
     ~LayoutList();
     void setCountryList(QStringList layoutList);
     QString getSelectedCountry();
+    bool editHasFocus() const;
     virtual QSize sizeHint() const override;
 
 public slots:
     void itemClicked();
+    void setEditHasFocus(bool editHasFocus);
 
 signals:
     void itemChanged(QString countryName);
     void heightChanged(int height);
+    void editHasFocusChanged(bool editHasFocus);
 
 private:
     void search();
@@ -50,6 +53,7 @@ private:
 
 protected:
     virtual void paintEvent(QPaintEvent *event) override;
+    bool eventFilter(QObject *obj, QEvent *event) override;
 
 private:
     Ui::LayoutList *ui;
@@ -58,6 +62,7 @@ private:
     QStringList m_lists;
     QString m_countryName = nullptr;
     QScrollBar *m_vb;
+    bool m_editHasFocus;
 };
 
 #endif  // LAYOUTLIST_H

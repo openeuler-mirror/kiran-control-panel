@@ -71,16 +71,16 @@ LayoutItem
     background-color:transparent;
     border-top:1px solid #393939;
 }
+
+LayoutItem:hover{
+    background:rgba(255,255,255,0.05);
+}
 LayoutItem[isPressed="true"]
 {
     background-color:#2eb3ff;
 }
-LayoutItem[isPressed="false"]
-{
-    background-color:transparent;
-}
 
-LayoutItem[isPressed="true"] QLabel#icon
+/*LayoutItem[isPressed="true"] QLabel#icon
 {
     background-image: url(":/keyboard/images/selected-w.svg");
     background-repeat: no-repeat;
@@ -89,11 +89,25 @@ LayoutItem[isPressed="true"] QLabel#icon
 LayoutItem[isPressed="false"] QLabel#icon
 {
     background-image:none;
+}*/
+LayoutItem QLabel#icon
+{
+    color:white;
+    background:transparent;
 }
+
 
 LayoutList
 {
     border: 1px solid #393939;
+    border-radius:6px;
+}
+LayoutList[editHasFocus="false"]{
+    border:1px solid rgb(255,255,255,25);
+    border-radius:6px;
+}
+LayoutList[editHasFocus="true"] {
+    border:1px solid rgb(67,163,242);
     border-radius:6px;
 }
 
