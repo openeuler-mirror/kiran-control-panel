@@ -32,7 +32,6 @@
     <name>MainWindow</name>
     <message>
         <location filename="../src/main-window.ui" line="14"/>
-        <location filename="../build/src/kiran-cpanel-keybinding_autogen/include/ui_main-window.h" line="57"/>
         <source>MainWindow</source>
         <translation type="unfinished"></translation>
     </message>
@@ -129,121 +128,101 @@
     <name>Shortcut</name>
     <message>
         <location filename="../src/shortcut.ui" line="14"/>
-        <location filename="../build/src/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="569"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/shortcut.ui" line="182"/>
-        <location filename="../build/src/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="571"/>
+        <location filename="../src/shortcut.ui" line="154"/>
         <source>Sound</source>
         <translation>声音</translation>
     </message>
     <message>
-        <location filename="../src/shortcut.ui" line="203"/>
-        <location filename="../build/src/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="572"/>
+        <location filename="../src/shortcut.ui" line="175"/>
         <source>System</source>
         <translation>系统</translation>
     </message>
     <message>
-        <location filename="../src/shortcut.ui" line="224"/>
-        <location filename="../build/src/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="573"/>
+        <location filename="../src/shortcut.ui" line="196"/>
         <source>Accessibility</source>
         <translation>辅助</translation>
     </message>
     <message>
-        <location filename="../src/shortcut.ui" line="245"/>
-        <location filename="../build/src/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="574"/>
+        <location filename="../src/shortcut.ui" line="217"/>
         <source>Desktop</source>
         <translation>桌面</translation>
     </message>
     <message>
-        <location filename="../src/shortcut.ui" line="266"/>
-        <location filename="../build/src/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="575"/>
+        <location filename="../src/shortcut.ui" line="238"/>
         <source>Window Manage</source>
         <translation>窗口管理</translation>
     </message>
     <message>
-        <location filename="../src/shortcut.ui" line="305"/>
-        <location filename="../build/src/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="576"/>
+        <location filename="../src/shortcut.ui" line="277"/>
         <source>Custom</source>
         <translation>自定义</translation>
     </message>
     <message>
-        <location filename="../src/shortcut.ui" line="337"/>
-        <location filename="../build/src/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="577"/>
-        <location filename="../src/shortcut.cpp" line="161"/>
-        <location filename="../src/shortcut.cpp" line="511"/>
+        <location filename="../src/shortcut.ui" line="309"/>
+        <location filename="../src/shortcut.cpp" line="163"/>
+        <location filename="../src/shortcut.cpp" line="512"/>
         <source>Edit</source>
         <translation>编辑</translation>
     </message>
     <message>
-        <location filename="../src/shortcut.ui" line="464"/>
-        <location filename="../src/shortcut.ui" line="651"/>
-        <location filename="../build/src/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="578"/>
-        <location filename="../build/src/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="583"/>
+        <location filename="../src/shortcut.ui" line="439"/>
+        <location filename="../src/shortcut.ui" line="629"/>
         <location filename="../src/shortcut.cpp" line="113"/>
         <location filename="../src/shortcut.cpp" line="124"/>
         <source>Add</source>
         <translation>添加</translation>
     </message>
     <message>
-        <location filename="../src/shortcut.ui" line="496"/>
-        <location filename="../build/src/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="579"/>
+        <location filename="../src/shortcut.ui" line="471"/>
         <source>Reset</source>
         <translation>重置</translation>
     </message>
     <message>
-        <location filename="../src/shortcut.ui" line="542"/>
-        <location filename="../build/src/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="580"/>
+        <location filename="../src/shortcut.ui" line="517"/>
         <source>Custom Shortcut Name</source>
         <translation>自定义快捷键名称</translation>
     </message>
     <message>
-        <location filename="../src/shortcut.ui" line="572"/>
-        <location filename="../build/src/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="581"/>
+        <location filename="../src/shortcut.ui" line="547"/>
         <source>Custom Shortcut application</source>
         <translation>自定义快捷键应用程序</translation>
     </message>
     <message>
-        <location filename="../src/shortcut.ui" line="602"/>
-        <location filename="../build/src/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="582"/>
+        <location filename="../src/shortcut.ui" line="577"/>
         <source>Custom Shortcut Key</source>
         <translation>自定义快捷键</translation>
     </message>
     <message>
-        <location filename="../src/shortcut.ui" line="683"/>
-        <location filename="../build/src/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="584"/>
+        <location filename="../src/shortcut.ui" line="661"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="../src/shortcut.ui" line="729"/>
-        <location filename="../build/src/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="585"/>
+        <location filename="../src/shortcut.ui" line="707"/>
         <source>Shortcut Name</source>
         <translation>快捷键名称</translation>
     </message>
     <message>
-        <location filename="../src/shortcut.ui" line="772"/>
-        <location filename="../build/src/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="586"/>
+        <location filename="../src/shortcut.ui" line="750"/>
         <source>Shortcut application</source>
         <translation>快捷键应用程序</translation>
     </message>
     <message>
-        <location filename="../src/shortcut.ui" line="803"/>
-        <location filename="../build/src/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="587"/>
+        <location filename="../src/shortcut.ui" line="781"/>
         <source>Shortcut key</source>
         <translation>快捷键</translation>
     </message>
     <message>
-        <location filename="../src/shortcut.ui" line="852"/>
-        <location filename="../build/src/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="588"/>
+        <location filename="../src/shortcut.ui" line="833"/>
         <source>Save</source>
         <translation>保存</translation>
     </message>
     <message>
-        <location filename="../src/shortcut.ui" line="884"/>
-        <location filename="../build/src/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="589"/>
+        <location filename="../src/shortcut.ui" line="865"/>
         <source>return</source>
         <translation>返回</translation>
     </message>
@@ -258,40 +237,45 @@
         <translation>必填</translation>
     </message>
     <message>
-        <location filename="../src/shortcut.cpp" line="159"/>
+        <location filename="../src/shortcut.cpp" line="133"/>
+        <source>Please press the new shortcut key</source>
+        <translation>请输入新快捷键</translation>
+    </message>
+    <message>
+        <location filename="../src/shortcut.cpp" line="161"/>
         <source>Finished</source>
         <translation>完成</translation>
     </message>
     <message>
-        <location filename="../src/shortcut.cpp" line="356"/>
+        <location filename="../src/shortcut.cpp" line="357"/>
         <source>Open File</source>
         <translation>打开文件</translation>
     </message>
     <message>
-        <location filename="../src/shortcut.cpp" line="638"/>
-        <location filename="../src/shortcut.cpp" line="695"/>
+        <location filename="../src/shortcut.cpp" line="640"/>
+        <location filename="../src/shortcut.cpp" line="686"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="../src/shortcut.cpp" line="639"/>
-        <location filename="../src/shortcut.cpp" line="696"/>
+        <location filename="../src/shortcut.cpp" line="641"/>
+        <location filename="../src/shortcut.cpp" line="687"/>
         <source>Please complete the shortcut information!</source>
         <translation>请完善快捷键信息！</translation>
     </message>
     <message>
-        <location filename="../src/shortcut.cpp" line="730"/>
-        <location filename="../src/shortcut.cpp" line="748"/>
+        <location filename="../src/shortcut.cpp" line="722"/>
+        <location filename="../src/shortcut.cpp" line="740"/>
         <source>Failed</source>
         <translation>失败</translation>
     </message>
     <message>
-        <location filename="../src/shortcut.cpp" line="731"/>
+        <location filename="../src/shortcut.cpp" line="723"/>
         <source>Cannot use shortcut &quot;%1&quot;, Because you cannot enter with this key.Please try again using Ctrl, Alt, or Shift at the same time.</source>
         <translation>无法使用快捷键&quot;%1&quot;,因为使用此键将无法输入，请同时使用Ctrl，Alt，Shift再试一次。</translation>
     </message>
     <message>
-        <location filename="../src/shortcut.cpp" line="749"/>
+        <location filename="../src/shortcut.cpp" line="741"/>
         <source>Shortcut keys %1 are already used in %2,Please try again!</source>
         <translation>快捷键%1已用于%2，请再试一次！</translation>
     </message>
@@ -308,25 +292,22 @@
     <name>ShortcutItem</name>
     <message>
         <location filename="../src/shortcut-item.ui" line="32"/>
-        <location filename="../build/src/kiran-cpanel-keybinding_autogen/include/ui_shortcut-item.h" line="76"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/shortcut-item.ui" line="53"/>
         <location filename="../src/shortcut-item.ui" line="73"/>
-        <location filename="../build/src/kiran-cpanel-keybinding_autogen/include/ui_shortcut-item.h" line="77"/>
-        <location filename="../build/src/kiran-cpanel-keybinding_autogen/include/ui_shortcut-item.h" line="78"/>
         <source>TextLabel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/shortcut-item.cpp" line="56"/>
+        <location filename="../src/shortcut-item.cpp" line="58"/>
         <source>None</source>
         <translation>暂无</translation>
     </message>
     <message>
-        <location filename="../src/shortcut-item.cpp" line="60"/>
+        <location filename="../src/shortcut-item.cpp" line="62"/>
         <source>disabled</source>
         <translation>禁用</translation>
     </message>
