@@ -76,8 +76,8 @@ void LayoutItem::setisPressed(bool pressed)
         return;
     m_isPressed = pressed;
 
-    this->style()->polish(this);
     this->style()->polish(ui->icon);
+    this->style()->polish(this);
 }
 
 bool LayoutItem::isPressed() const
