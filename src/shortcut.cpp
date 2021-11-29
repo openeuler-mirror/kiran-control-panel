@@ -130,6 +130,7 @@ void Shortcut::initUI()
     connect(m_btnModifyApp, &QToolButton::clicked, this, &Shortcut::openFileSys);
 
     m_lECustomKey = new CustomLineEdit;
+    m_lECustomKey->setPlaceholderText(tr("Please press the new shortcut key"));
     m_lECustomKey->installEventFilter(this);
     ui->vlayout_custom_key->addWidget(m_lECustomKey);
     connect(m_lECustomKey, &CustomLineEdit::inputKeyCodes, this, &Shortcut::handleInputKeycode);
@@ -146,6 +147,7 @@ void Shortcut::initUI()
                 ui->stackedWidget->setCurrentWidget(ui->page_add);
                 ui->lineEdit_custom_app->clear();
                 ui->lineEdit_custom_name->clear();
+                ui->lineEdit_custom_name->setFocus();
                 m_lECustomKey->clear();
             });
 
@@ -252,12 +254,11 @@ ShortcutItem *Shortcut::createShortcutItem(QVBoxLayout *parent, ShortcutInfo *sh
 
 bool Shortcut::isConflict(QString &originName, QString newKeyCombination)
 {
-    KLOG_INFO() << "isConflict:" << newKeyCombination;
     foreach (ShortcutInfo *shortcut, m_shortcuts)
     {
         if (!QString::compare(shortcut->keyCombination, newKeyCombination, Qt::CaseInsensitive))
         {
-            KLOG_INFO() << "yes";
+            KLOG_INFO() << newKeyCombination << "is Conflict";
             originName = shortcut->name;
             return true;
         }
@@ -595,8 +596,10 @@ void Shortcut::handleShortcutInfo(QList<ShortcutInfo *> shortcutInfoList)
 void Shortcut::onEditShortcut(int type, QString uid, QString name, QString keyCombination, QString action)
 {
     Q_UNUSED(keyCombination)
+    ShortcutItem *senderItem = qobject_cast<ShortcutItem *>(sender());
     ui->stackedWidget->setCurrentWidget(ui->page_modify);
     m_lEModifyKey->clear();
+    m_lEModifyKey->setFocus();
     m_editUid = uid;
 
     ui->lineEdit_modify_name->setText(name);
@@ -612,6 +615,7 @@ void Shortcut::onEditShortcut(int type, QString uid, QString name, QString keyCo
         ui->widget_modify_app->show();
         ui->lineEdit_modify_name->setDisabled(false);
     }
+    m_lEModifyKey->setPlaceholderText(senderItem->getShowKeybinding());
 }
 
 void Shortcut::onDeleteShortcut(QString uid)
@@ -630,8 +634,7 @@ void Shortcut::onSave()
 {
     int type = ui->lineEdit_modify_app->isVisible() ? SHORTCUT_TYPE_CUSTOM : SHORTCUT_TYPE_SYSTEM;
     if (ui->lineEdit_modify_name->text().isEmpty() ||
-        (ui->lineEdit_modify_app->text().isEmpty() && type == SHORTCUT_TYPE_CUSTOM) ||
-        m_lEModifyKey->text().isEmpty())
+        (ui->lineEdit_modify_app->text().isEmpty() && type == SHORTCUT_TYPE_CUSTOM))
     {
         KiranMessageBox::message(nullptr,
                                  tr("Warning"),
@@ -640,18 +643,7 @@ void Shortcut::onSave()
         return;
     }
 
-    QString newKeyCombination = convertToBackendStr(m_lEModifyKey->text());
-    //    //判断是否重复
-    //    QString originName;
-    //    if (isConflict(originName, newKeyCombination))
-    //    {
-    //        KiranMessageBox::message(nullptr,
-    //                                 QString(tr("Failed")),
-    //                                 QString(tr("Shortcut keys %1 are already used in %2,Please try again!")).arg(m_lEModifyKey->text()).arg(originName),
-    //                                 KiranMessageBox::Ok);
-    //        m_lECustomKey->clear();
-    //        return;
-    //    }
+    QString newKeyCombination = m_lEModifyKey->text().isEmpty() ? "disabled" : convertToBackendStr(m_lEModifyKey->text());
 
     if (type == SHORTCUT_TYPE_SYSTEM)
     {
@@ -688,7 +680,7 @@ void Shortcut::onAdd()
     QString newName = ui->lineEdit_custom_name->text();
     QString newAction = ui->lineEdit_custom_app->text();
     QString newKey = m_lECustomKey->text();
-    if (newName.isEmpty() || newAction.isEmpty() || newKey.isEmpty())
+    if (newName.isEmpty() || newAction.isEmpty())
     {
         KiranMessageBox::message(nullptr,
                                  tr("Warning"),
@@ -698,7 +690,8 @@ void Shortcut::onAdd()
     }
 
     //dbus ->AddCustomShortcut
-    QString keyCombination = convertToBackendStr(newKey);
+    QString keyCombination = newKey.isEmpty() ? "disabled" : convertToBackendStr(newKey);
+
     QDBusPendingReply<QString> reply = m_keybindingInterface->AddCustomShortcut(newName, newAction, keyCombination);
     reply.waitForFinished();
     if (reply.isError() || !reply.isValid())

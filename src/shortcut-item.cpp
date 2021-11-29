@@ -38,6 +38,8 @@ void ShortcutItem::initUI()
     ui->btn_delete->hide();
     ui->btn_delete->setIcon(QIcon(":/images/delete.svg"));
 
+    ui->label_keybination->setStyleSheet("QLabel#label_keybination{color:#919191}");
+
     ui->label_name->setText(m_shortcutInfo->name);
 
     ui->label_keybination->setText(handleKeyCombination(m_shortcutInfo->keyCombination));
@@ -140,6 +142,11 @@ int ShortcutItem::getType()
 QString ShortcutItem::getUid()
 {
     return m_shortcutInfo->uid;
+}
+
+QString ShortcutItem::getShowKeybinding()
+{
+    return ui->label_keybination->text();
 }
 
 ShortcutInfo *ShortcutItem::getShortcut()
