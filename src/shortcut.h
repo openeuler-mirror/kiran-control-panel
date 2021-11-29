@@ -95,6 +95,7 @@ private:
     bool m_isEditMode = false;
     int m_customShortcutCount = 0;
     QString m_editUid;
+    QString m_editKeybination;
 };
 
 #endif  // SHORTCUT_H

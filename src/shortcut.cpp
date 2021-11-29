@@ -136,6 +136,7 @@ void Shortcut::initUI()
     connect(m_lECustomKey, &CustomLineEdit::inputKeyCodes, this, &Shortcut::handleInputKeycode);
 
     m_lEModifyKey = new CustomLineEdit;
+    m_lEModifyKey->setPlaceholderText(tr("Please press the new shortcut key"));
     m_lEModifyKey->installEventFilter(this);
     ui->vlayout_modify_key->addWidget(m_lEModifyKey);
     connect(m_lEModifyKey, &CustomLineEdit::inputKeyCodes, this, &Shortcut::handleInputKeycode);
@@ -615,7 +616,8 @@ void Shortcut::onEditShortcut(int type, QString uid, QString name, QString keyCo
         ui->widget_modify_app->show();
         ui->lineEdit_modify_name->setDisabled(false);
     }
-    m_lEModifyKey->setPlaceholderText(senderItem->getShowKeybinding());
+    m_lEModifyKey->setText(senderItem->getShowKeybinding());
+    m_editKeybination = senderItem->getShowKeybinding();
 }
 
 void Shortcut::onDeleteShortcut(QString uid)
@@ -643,7 +645,25 @@ void Shortcut::onSave()
         return;
     }
 
-    QString newKeyCombination = m_lEModifyKey->text().isEmpty() ? "disabled" : convertToBackendStr(m_lEModifyKey->text());
+    QString newKeyCombination;
+    if (m_lEModifyKey->text().isEmpty())
+    {
+        auto reply = KiranMessageBox::message(nullptr,
+                                              tr("Set shortcut"),
+                                              tr("Are you sure you want to disable this shortcut?"),
+                                              KiranMessageBox::Yes | KiranMessageBox::No);
+        if (reply == KiranMessageBox::Yes)
+            newKeyCombination = "disabled";
+        else
+            return;
+    }
+    else if (m_lEModifyKey->text() == m_editKeybination)
+    {
+        ui->stackedWidget->setCurrentWidget(ui->page_shortcut);
+        return;
+    }
+    else
+        newKeyCombination = convertToBackendStr(m_lEModifyKey->text());
 
     if (type == SHORTCUT_TYPE_SYSTEM)
     {
