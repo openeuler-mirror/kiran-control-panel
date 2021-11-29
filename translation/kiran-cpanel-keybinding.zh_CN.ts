@@ -163,8 +163,8 @@
     </message>
     <message>
         <location filename="../src/shortcut.ui" line="309"/>
-        <location filename="../src/shortcut.cpp" line="163"/>
-        <location filename="../src/shortcut.cpp" line="512"/>
+        <location filename="../src/shortcut.cpp" line="164"/>
+        <location filename="../src/shortcut.cpp" line="513"/>
         <source>Edit</source>
         <translation>编辑</translation>
     </message>
@@ -238,44 +238,55 @@
     </message>
     <message>
         <location filename="../src/shortcut.cpp" line="133"/>
+        <location filename="../src/shortcut.cpp" line="139"/>
         <source>Please press the new shortcut key</source>
         <translation>请输入新快捷键</translation>
     </message>
     <message>
-        <location filename="../src/shortcut.cpp" line="161"/>
+        <location filename="../src/shortcut.cpp" line="162"/>
         <source>Finished</source>
         <translation>完成</translation>
     </message>
     <message>
-        <location filename="../src/shortcut.cpp" line="357"/>
+        <location filename="../src/shortcut.cpp" line="358"/>
         <source>Open File</source>
         <translation>打开文件</translation>
     </message>
     <message>
-        <location filename="../src/shortcut.cpp" line="640"/>
-        <location filename="../src/shortcut.cpp" line="686"/>
+        <location filename="../src/shortcut.cpp" line="642"/>
+        <location filename="../src/shortcut.cpp" line="706"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="../src/shortcut.cpp" line="641"/>
-        <location filename="../src/shortcut.cpp" line="687"/>
+        <location filename="../src/shortcut.cpp" line="643"/>
+        <location filename="../src/shortcut.cpp" line="707"/>
         <source>Please complete the shortcut information!</source>
         <translation>请完善快捷键信息！</translation>
     </message>
     <message>
-        <location filename="../src/shortcut.cpp" line="722"/>
-        <location filename="../src/shortcut.cpp" line="740"/>
+        <location filename="../src/shortcut.cpp" line="652"/>
+        <source>Set shortcut</source>
+        <translation>设置快捷键</translation>
+    </message>
+    <message>
+        <location filename="../src/shortcut.cpp" line="653"/>
+        <source>Are you sure you want to disable this shortcut?</source>
+        <translation>是否确定要禁用此快捷键？</translation>
+    </message>
+    <message>
+        <location filename="../src/shortcut.cpp" line="742"/>
+        <location filename="../src/shortcut.cpp" line="760"/>
         <source>Failed</source>
         <translation>失败</translation>
     </message>
     <message>
-        <location filename="../src/shortcut.cpp" line="723"/>
+        <location filename="../src/shortcut.cpp" line="743"/>
         <source>Cannot use shortcut &quot;%1&quot;, Because you cannot enter with this key.Please try again using Ctrl, Alt, or Shift at the same time.</source>
         <translation>无法使用快捷键&quot;%1&quot;,因为使用此键将无法输入，请同时使用Ctrl，Alt，Shift再试一次。</translation>
     </message>
     <message>
-        <location filename="../src/shortcut.cpp" line="741"/>
+        <location filename="../src/shortcut.cpp" line="761"/>
         <source>Shortcut keys %1 are already used in %2,Please try again!</source>
         <translation>快捷键%1已用于%2，请再试一次！</translation>
     </message>

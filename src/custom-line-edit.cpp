@@ -32,6 +32,9 @@ void CustomLineEdit::initUI()
     setFixedHeight(40);
     setFocusPolicy(Qt::ClickFocus);
     setReadOnly(true);
+    setObjectName("CustomLineEdit");
+    setStyleSheet("#CustomLineEdit{border:1px solid #393939;border-radius:6px;padding-left:10px;padding-right:10px;}"
+                  "#CustomLineEdit:focus{border:1px solid #2eb3ff;}");
 }
 
 void CustomLineEdit::keyReleaseEvent(QKeyEvent *event)
@@ -102,11 +105,20 @@ void CustomLineEdit::keyReleaseEvent(QKeyEvent *event)
     }
 }
 
+void CustomLineEdit::mousePressEvent(QMouseEvent *event)
+{
+    if (event->button() == Qt::LeftButton)
+    {
+        update();
+        clear();
+    }
+    QWidget::mousePressEvent(event);
+}
+
 void CustomLineEdit::focusInEvent(QFocusEvent *e)
 {
     Q_UNUSED(e);
     update();
-    clear();
     grabKeyboard();
     m_flag = true;
 }
