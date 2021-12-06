@@ -94,29 +94,33 @@ void KiranDisplayConfiguration::on_pushButton_extra_ok_clicked()
     //添加/更新当前编辑界面的数据
     curExtraData2Cache();
 
-    //往屏幕数据中添加剩余的其它数据。
-    QVariantMap map = ui->panel->getData();
-    QMapIterator<QString, QVariant> i(map);
-    while (i.hasNext()) {
-        i.next();
-        QVariantMap d = i.value().toMap();
-        if(m_extraData.contains(i.key()))//两个map的key值匹配上。
-        {
-            QVariantMap extraMap =  m_extraData.value(i.key());
-            //添加
-            d.insert("primary", m_primaryMonitorName==d.value("name").toString());
-            d.insert("enabled", extraMap.value("enabled"));
-            d.insert("resolving", extraMap.value("resolving"));
-            d.insert("refreshRate", extraMap.value("refreshRate"));
+    ///FIXME:此处保存两次只是为了暂时解决修改分辨率时由于未进行屏幕排列导致的内容重叠以及屏幕之中存在间隔
+    ///后续重构应该更改为下方参数修改时上方预览应同步修改，以及动态调整屏幕位置
+    for( int i=0;i<2;i++ )
+    {
+        //往屏幕数据中添加剩余的其它数据。
+        QVariantMap map = ui->panel->getData();
+        QMapIterator<QString, QVariant> iter(map);
+        while (iter.hasNext()) {
+            iter.next();
+            QVariantMap d = iter.value().toMap();
+            if(m_extraData.contains(iter.key()))//两个map的key值匹配上。
+            {
+                QVariantMap extraMap =  m_extraData.value(iter.key());
+                //添加
+                d.insert("primary", m_primaryMonitorName==d.value("name").toString());
+                d.insert("enabled", extraMap.value("enabled"));
+                d.insert("resolving", extraMap.value("resolving"));
+                d.insert("refreshRate", extraMap.value("refreshRate"));
+            }
+            setMonitorProperty(iter.key(), d);
         }
-
-        setMonitorProperty(i.key(), d);
+        //缩放率所有屏幕都是通用的。
+        Display("SetWindowScalingFactor", QVariantList() << ui->comboBox_extra_windowScalingFactor->currentIndex());
+        Display("ApplyChanges");
+        //可能设置失败，界面根据设置实际情况再刷新。
+        refreshWidget();
     }
-    //缩放率所有屏幕都是通用的。
-    Display("SetWindowScalingFactor", QVariantList() << ui->comboBox_extra_windowScalingFactor->currentIndex());
-    Display("ApplyChanges");
-    //可能设置失败，界面根据设置实际情况再刷新。
-    refreshWidget();
 
     showMessageBox();
     m_dbusPropertiesChangedBlock = false;
@@ -611,6 +615,9 @@ void KiranDisplayConfiguration::setMonitorProperty(const QString &monitorPath, c
     if(map.contains("enabled")) Monitor<QVariant>(monitorPath, "Enable", QVariantList() << map.value("enabled").toBool());
 
     if(map.contains("x") && map.contains("y")) Monitor<QVariant>(monitorPath, "SetPosition", QVariantList() << (int32_t)map.value("x").toInt() << (int32_t)map.value("y").toInt());
+    if(map.contains("x") && map.contains("y")){
+    	qInfo() << "set position:" << (int32_t)map.value("x").toInt() << (int32_t)map.value("y").toInt(); 
+    } 
     if(map.contains("rotation")){
         QVariant var;
         var.setValue(QDBusArgument() << (ushort)map.value("rotation").toUInt());
