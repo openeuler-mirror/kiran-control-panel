@@ -12,20 +12,21 @@
  * Author:     yuanxing <yuanxing@kylinos.com.cn>
  */
 #include "license-agreement.h"
-#include "ui_license-agreement.h"
-#include <QIcon>
-#include <QFile>
 #include <kiran-log/qt5-log-i.h>
-#include <QDesktopWidget>
-#include <kiranwidgets-qt5/widget-property-helper.h>
-#include <kiranwidgets-qt5/kiran-style-public-define.h>
 #include <kiranwidgets-qt5/kiran-message-box.h>
+#include <kiranwidgets-qt5/kiran-style-public-define.h>
+#include <kiranwidgets-qt5/widget-property-helper.h>
+#include <QDesktopWidget>
+#include <QFile>
 #include <QFileDialog>
-#include <QtPrintSupport/QPrinter>
-#include <QTextDocument>
-#include <QStandardPaths>
+#include <QIcon>
 #include <QLocale>
+#include <QStandardPaths>
+#include <QTextDocument>
+#include <QtPrintSupport/QPrinter>
+#include "ui_license-agreement.h"
 #define EULAFILE "/usr/share/kylin-release"
+#define LICENSEFILE "/usr/share/doc/kylin-release/LICENSE"
 
 enum LicenseType
 {
@@ -36,18 +37,17 @@ enum LicenseType
 using namespace Kiran::WidgetPropertyHelper;
 using namespace Kiran;
 
-LicenseAgreement::LicenseAgreement() :
-    KiranTitlebarWindow(),
-    ui(new Ui::LicenseAgreement)
+LicenseAgreement::LicenseAgreement() : KiranTitlebarWindow(),
+                                       ui(new Ui::LicenseAgreement)
 {
     ui->setupUi(getWindowContentWidget());
     initUI();
-    connect(ui->btn_license_close,&QPushButton::clicked,
-            [this]{
-        this->close();
-    });
+    connect(ui->btn_license_close, &QPushButton::clicked,
+            [this] {
+                this->close();
+            });
 
-    connect(ui->btn_license_export,&QPushButton::clicked,this ,&LicenseAgreement::exportLicense);
+    connect(ui->btn_license_export, &QPushButton::clicked, this, &LicenseAgreement::exportLicense);
 }
 
 LicenseAgreement::~LicenseAgreement()
@@ -65,27 +65,27 @@ void LicenseAgreement::exportLicense()
 {
     QString eulaText = ui->text_license->toPlainText();
     QString currentHomePath;
-    if(m_licenseType == EULA_LICENSE)
-        currentHomePath = "/" + QStandardPaths::writableLocation(QStandardPaths::HomeLocation) +"/EULA.pdf" ;
+    if (m_licenseType == EULA_LICENSE)
+        currentHomePath = "/" + QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + "/EULA.pdf";
     else
-        currentHomePath = "/" + QStandardPaths::writableLocation(QStandardPaths::HomeLocation) +"/Version-License.pdf" ;
+        currentHomePath = "/" + QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + "/Version-License.pdf";
 
     QString fileName = QFileDialog::getSaveFileName(this,
                                                     tr("Save"),
                                                     currentHomePath,
                                                     tr("PDF(*.pdf)"));
-    if(fileName.isNull())
+    if (fileName.isNull())
     {
         return;
     }
     QFile file(fileName);
 
-    if (!file.open(QIODevice::WriteOnly|QIODevice::Text))
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
     {
-        KiranMessageBox::KiranStandardButton button = KiranMessageBox::message(nullptr,QString(tr("Export License")),
+        KiranMessageBox::KiranStandardButton button = KiranMessageBox::message(nullptr, QString(tr("Export License")),
                                                                                QString(tr("Export License failed!")),
                                                                                KiranMessageBox::Ok);
-        if(button == KiranMessageBox::Ok)
+        if (button == KiranMessageBox::Ok)
         {
             return;
         }
@@ -113,17 +113,17 @@ void LicenseAgreement::initUI()
     setButtonHints(TitlebarMinimizeButtonHint | TitlebarCloseButtonHint);
     setWindowModality(Qt::ApplicationModal);
 
-    setButtonType(ui->btn_license_close,BUTTON_Default);
-    setButtonType(ui->btn_license_export,BUTTON_Normal);
+    setButtonType(ui->btn_license_close, BUTTON_Default);
+    setButtonType(ui->btn_license_export, BUTTON_Normal);
 }
 
 QString LicenseAgreement::getLocaleLang()
 {
     QLocale locale = QLocale::system();
     QString lang;
-    if(locale.language() == QLocale::Chinese)
+    if (locale.language() == QLocale::Chinese)
         lang = "zh_CN";
-    else if(locale.language() == QLocale::English)
+    else if (locale.language() == QLocale::English)
         lang = "en_US";
     else
         return QString("");
@@ -138,7 +138,7 @@ void LicenseAgreement::setEULA()
     QString lang = getLocaleLang();
     QString licenseFile;
 
-    if(!lang.isEmpty())
+    if (!lang.isEmpty())
         licenseFile = QString("%1/EULA-%2").arg(EULAFILE).arg(lang);
     else
         licenseFile = QString("%1/EULA-en_US").arg(EULAFILE);
@@ -147,27 +147,27 @@ void LicenseAgreement::setEULA()
     QFile file(licenseFile);
     QTextStream textStream;
 
-    if(file.exists())
+    if (file.exists())
     {
-        if(!file.open(QFile::ReadOnly | QFile::Text))
+        if (!file.open(QFile::ReadOnly | QFile::Text))
         {
-            KLOG_INFO() << "Can't open " << licenseFile ;
+            KLOG_INFO() << "Can't open " << licenseFile;
             ui->text_license->setText(tr("None"));
             file.close();
-            return ;
+            return;
         }
         textStream.setDevice(&file);
     }
     else
     {
-        KLOG_INFO()<< licenseFile << " is not exists ";
+        KLOG_INFO() << licenseFile << " is not exists ";
         file.setFileName(QString("%1/EULA").arg(EULAFILE));
-        if(!file.open(QFile::ReadOnly | QFile::Text))
+        if (!file.open(QFile::ReadOnly | QFile::Text))
         {
-            KLOG_INFO() << "Can't open " << file.fileName() ;
+            KLOG_INFO() << "Can't open " << file.fileName();
             ui->text_license->setText(tr("None"));
             file.close();
-            return ;
+            return;
         }
         textStream.setDevice(&file);
     }
@@ -175,62 +175,31 @@ void LicenseAgreement::setEULA()
     file.close();
 }
 
-
 void LicenseAgreement::setVersionLicnese()
 {
     m_licenseType = VERSION_LICENSE;
     ui->text_license->clear();
     setTitle(LicenseAgreement::tr("Version License"));
-    QString lang = getLocaleLang();
-    QString body ;
-    QString title ;
-    if(!lang.isEmpty())
+
+    QFile file(LICENSEFILE);
+    QTextStream textStream;
+
+    if (file.exists())
     {
-        body = QString(":/version-license/version-license/gpl-3.0-%1-body.txt").arg(lang);
-        title = QString(":/version-license/version-license/gpl-3.0-%1-title.txt").arg(lang);
+        if (!file.open(QFile::ReadOnly | QFile::Text))
+        {
+            KLOG_INFO() << "Can't open " << LICENSEFILE;
+            ui->text_license->setText(tr("None"));
+            file.close();
+            return;
+        }
+        textStream.setDevice(&file);
     }
     else
     {
-        body = QString(":/version-license/version-license/gpl-3.0-en_US-body.txt");
-        title = QString(":/version-license/version-license/gpl-3.0-en_US-title.txt");
+        KLOG_INFO() << LICENSEFILE << " is not exists ";
+        return;
     }
-
-    KLOG_INFO() << body;
-    KLOG_INFO() << title;
-
-    QFile fileTitle(title);
-    QFile fileBody(body);
-    if(!fileTitle.exists() || !fileBody.exists() )
-    {
-        KLOG_INFO() << "Version License don't exists";
-        ui->text_license->setText(tr("None"));
-        fileTitle.close();
-        fileBody.close();
-        return ;
-    }
-
-    if(!fileTitle.open(QIODevice::ReadOnly | QIODevice::Text) ||
-            !fileBody.open(QIODevice::ReadOnly | QIODevice::Text))
-    {
-        KLOG_INFO() << "can't open Version License";
-        ui->text_license->setText(tr("None"));
-        fileTitle.close();
-        fileBody.close();
-        return ;
-    }
-   QTextStream textStreamTitle(&fileTitle);
-   QTextStream textStreamBody(&fileBody);
-
-   ui->text_license->setAlignment(Qt::AlignHCenter);
-   while (!textStreamTitle.atEnd()) {
-       QString line = textStreamTitle.readLine();
-       ui->text_license->append(line);
-   }
-   ui->text_license->setAlignment(Qt::AlignLeft);
-   ui->text_license->append(textStreamBody.readAll());
-   ui->text_license->moveCursor(QTextCursor::Start);
-   fileBody.close();
-   fileTitle.close();
+    ui->text_license->setText(textStream.readAll());
+    file.close();
 }
-
-
