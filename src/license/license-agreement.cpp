@@ -189,17 +189,63 @@ void LicenseAgreement::setVersionLicnese()
         if (!file.open(QFile::ReadOnly | QFile::Text))
         {
             KLOG_INFO() << "Can't open " << LICENSEFILE;
-            ui->text_license->setText(tr("None"));
-            file.close();
-            return;
+            goto LOAD_VERSION_LICENSE_FROM_RES;
         }
         textStream.setDevice(&file);
+        ui->text_license->setText(textStream.readAll());
+        file.close();
+        return;
     }
     else
     {
         KLOG_INFO() << LICENSEFILE << " is not exists ";
+        goto LOAD_VERSION_LICENSE_FROM_RES;
+    }
+
+LOAD_VERSION_LICENSE_FROM_RES:
+    KLOG_INFO() << "LOAD_VERSION_LICENSE_FROM_RES";
+    QString lang = getLocaleLang();
+    QString body;
+    QString title;
+    if (!lang.isEmpty())
+    {
+        body = QString(":/version-license/version-license/gpl-3.0-%1-body.txt").arg(lang);
+        title = QString(":/version-license/version-license/gpl-3.0-%1-title.txt").arg(lang);
+    }
+    else
+    {
+        body = QString(":/version-license/version-license/gpl-3.0-en_US-body.txt");
+        title = QString(":/version-license/version-license/gpl-3.0-en_US-title.txt");
+    }
+
+    QFile fileTitle(title);
+    QFile fileBody(body);
+    if (!fileTitle.exists() || !fileBody.exists())
+    {
+        KLOG_INFO() << "Version License don't exists";
+        ui->text_license->setText(tr("None"));
         return;
     }
-    ui->text_license->setText(textStream.readAll());
-    file.close();
+
+    if (!fileTitle.open(QIODevice::ReadOnly | QIODevice::Text) ||
+        !fileBody.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        KLOG_INFO() << "can't open Version License";
+        ui->text_license->setText(tr("None"));
+        return;
+    }
+    QTextStream textStreamTitle(&fileTitle);
+    QTextStream textStreamBody(&fileBody);
+
+    ui->text_license->setAlignment(Qt::AlignHCenter);
+    while (!textStreamTitle.atEnd())
+    {
+        QString line = textStreamTitle.readLine();
+        ui->text_license->append(line);
+    }
+    ui->text_license->setAlignment(Qt::AlignLeft);
+    ui->text_license->append(textStreamBody.readAll());
+    ui->text_license->moveCursor(QTextCursor::Start);
+    fileBody.close();
+    fileTitle.close();
 }
