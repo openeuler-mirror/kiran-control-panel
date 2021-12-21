@@ -19,6 +19,7 @@ pkg_search_module(KIRAN_WIDGETS_QT5 REQUIRED kiranwidgets-qt5)
 pkg_search_module(KIRAN_CC_DAEMON REQUIRED kiran-cc-daemon)
 pkg_search_module(KLOG_QT5 REQUIRED klog-qt5)
 pkg_search_module(QGSETTINGS REQUIRED gsettings-qt)
+pkg_search_module(UPOWER_GLIB REQUIRED upower-glib)
 
 #通过kiran control panel的pkgconfig配置文件取出插件Desktop安装位置、插件共享库安装位置
 pkg_search_module(KIRAN_CONTROL_PANEL_PKG REQUIRED kiran-control-panel)
@@ -65,7 +66,8 @@ target_include_directories(${PROJECT_NAME} PRIVATE
         ${KIRAN_CC_DAEMON_INCLUDE_DIRS}
         ${KLOG_QT5_INCLUDE_DIRS}
         ${KIRAN_CONTROL_PANEL_PKG_INCLUDE_DIRS}
-        ${QGSETTINGS_INCLUDE_DIRS})
+        ${QGSETTINGS_INCLUDE_DIRS}
+        ${UPOWER_GLIB_INCLUDE_DIRS})
 
 target_link_libraries(${PROJECT_NAME}
         Qt5::Widgets
@@ -73,7 +75,8 @@ target_link_libraries(${PROJECT_NAME}
         ${KIRAN_WIDGETS_QT5_LIBRARIES}
         ${KIRAN_CC_DAEMON_LIBRARIES}
         ${KLOG_QT5_LIBRARIES}
-        ${QGSETTINGS_LIBRARIES})
+        ${QGSETTINGS_LIBRARIES}
+        ${UPOWER_GLIB_LIBRARIES})
 
 include(GNUInstallDirs)
 # 安装插件翻译

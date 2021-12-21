@@ -7,6 +7,7 @@
 #include "config.h"
 #include "general-settings-page.h"
 #include "power-settings-page.h"
+#include "upower-interface.h"
 
 #include <qt5-log-i.h>
 
@@ -71,5 +72,12 @@ bool KcpPowerInterface::haveUnsavedOptions()
 
 QStringList KcpPowerInterface::visibleSubItems()
 {
-    return QStringList() << "GeneralSettings" << "PowerSettings" << "BatterySettings";
+    QStringList subItem({{"GeneralSettings"},{"PowerSettings"}});
+
+    if( UPowerInterface::haveBattery() )
+    {
+        subItem << "BatterySettings";
+    }
+
+    return subItem;
 }
