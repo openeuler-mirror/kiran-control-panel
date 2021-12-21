@@ -22,6 +22,9 @@
 #define KEY_IDLE_DELAY "idle-delay"
 #define DEFAULT_IDLE_DELAY 5
 
+#define SCHEMA_KIRAN_SCREENSAVER        "com.kylinsec.kiran.screensaver"
+#define KEY_IDLE_ACTIVATION_LOCK        "idleActivationLock"
+
 GeneralSettingsPage::GeneralSettingsPage(QWidget* parent)
     : QWidget(parent),
       ui(new Ui::GeneralSettingsPage),
@@ -48,14 +51,19 @@ void GeneralSettingsPage::initSessionSetting()
 {
     if (QGSettings::isSchemaInstalled(KIRAN_SESSION_SCHEMA_ID))
     {
-        m_sessionSettings = new QGSettings(KIRAN_SESSION_SCHEMA_ID);
+        m_sessionSettings = new QGSettings(KIRAN_SESSION_SCHEMA_ID,QByteArray(),this);
     }
     else if (QGSettings::isSchemaInstalled(MATE_SESSION_SCHEMA_ID))
     {
-        m_sessionSettings = new QGSettings(MATE_SESSION_SCHEMA_ID);
+        m_sessionSettings = new QGSettings(MATE_SESSION_SCHEMA_ID,QByteArray(),this);
     }
 
-    if (m_sessionSettings != nullptr)
+    if( QGSettings::isSchemaInstalled(SCHEMA_KIRAN_SCREENSAVER) )
+    {
+        m_screensaverSettings = new QGSettings(SCHEMA_KIRAN_SCREENSAVER,QByteArray(),this);
+    }
+
+    if (m_sessionSettings)
     {
         connect(m_sessionSettings, &QGSettings::changed, [this](const QString& key) {
             if (key != KEY_IDLE_DELAY)
@@ -71,6 +79,19 @@ void GeneralSettingsPage::initSessionSetting()
 
             QSignalBlocker blocker(ui->slider_idleTime);
             ui->slider_idleTime->setValue(m_sessionSettings->get(key).toInt());
+        });
+    }
+
+    if(m_screensaverSettings)
+    {
+        connect(m_screensaverSettings,&QGSettings::changed,[this](const QString& key){
+            if(key != KEY_IDLE_ACTIVATION_LOCK)
+            {
+                return ;
+            }
+
+            bool value = m_screensaverSettings->get(KEY_IDLE_ACTIVATION_LOCK).toBool();
+            m_btn_lockScreen->setChecked(value);
         });
     }
 }
@@ -132,10 +153,6 @@ void GeneralSettingsPage::initUI()
     //空闲时是否锁定屏幕及屏保
     m_btn_lockScreen = new KiranSwitchButton(this);
     ui->layout_sliderLabel->addWidget(m_btn_lockScreen);
-
-    QFont font = ui->label_idleTime->font();
-    font.setPointSize(font.pointSize()-2);
-    ui->label_idleTime->setFont(font);
 }
 
 void GeneralSettingsPage::initConnection()
@@ -170,20 +187,8 @@ void GeneralSettingsPage::initConnection()
             m_sessionSettings->set(KEY_IDLE_DELAY, value);
         }
     });
-    connect(m_btn_lockScreen,&QAbstractButton::toggled,[this](bool checked){
-        if(checked)
-        {
-            ui->widget_idleTimeSlider->setEnabled(true);
-            ui->slider_idleTime->setValue(DEFAULT_IDLE_DELAY);
-        }
-        else
-        {
-            if(m_sessionSettings)
-            {
-                m_sessionSettings->set(KEY_IDLE_DELAY,0);
-            }
-            ui->widget_idleTimeSlider->setEnabled(false);
-        }
+    connect(m_btn_lockScreen, &QAbstractButton::toggled, [this](bool checked) {
+        m_screensaverSettings->set(KEY_IDLE_ACTIVATION_LOCK,checked);
     });
 }
 
@@ -250,18 +255,6 @@ void GeneralSettingsPage::load()
         QSignalBlocker idleTimeSignalBlocker(ui->slider_idleTime);
         QSignalBlocker idleTimerSwitchBlocker(m_btn_lockScreen);
         int idleTime = m_sessionSettings->get(KEY_IDLE_DELAY).toInt();
-        if(idleTime<=0)
-        {
-            m_btn_lockScreen->setChecked(false);
-            ui->widget_idleTimeSlider->setEnabled(false);
-            ui->slider_idleTime->setValue(0);
-        }
-        else
-        {
-            m_btn_lockScreen->setChecked(true);
-            ui->widget_idleTimeSlider->setEnabled(true);
-            ui->slider_idleTime->setValue(idleTime);
-        }
         updateIdleTimeLabel(idleTime);
     }
     else
@@ -269,6 +262,18 @@ void GeneralSettingsPage::load()
         m_btn_lockScreen->setChecked(false);
         m_btn_lockScreen->setEnabled(false);
     }
+
+    if(m_screensaverSettings)
+    {
+        QSignalBlocker qSignalBlocker(m_btn_lockScreen);
+        bool value = m_screensaverSettings->get(KEY_IDLE_ACTIVATION_LOCK).toBool();
+        m_btn_lockScreen->setChecked(value);
+    }
+    else
+    {
+        m_btn_lockScreen->setChecked(false);
+    }
+
 }
 
 void GeneralSettingsPage::handleComboBoxCurrentIdxChanged(int idx)
@@ -309,7 +314,7 @@ void GeneralSettingsPage::handleComboBoxCurrentIdxChanged(int idx)
 
 void GeneralSettingsPage::setBrightnessPercent(int percent)
 {
-    if(percent < 0)
+    if (percent < 0)
     {
         ui->slider_brightness->setEnabled(false);
         ui->slider_brightness->setValue(0);

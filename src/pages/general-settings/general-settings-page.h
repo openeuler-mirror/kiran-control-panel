@@ -48,6 +48,7 @@ private:
     QTimer m_idleTimeTimer;
     int m_brightnessValue;
     QGSettings* m_sessionSettings = nullptr;
+    QGSettings* m_screensaverSettings = nullptr;
     KiranSwitchButton* m_btn_lockScreen = nullptr;
 };
 

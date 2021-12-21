@@ -112,103 +112,114 @@
     <name>GeneralSettingsPage</name>
     <message>
         <location filename="../src/pages/general-settings/general-settings-page.ui" line="14"/>
-        <location filename="../build/kiran-cpanel-power_autogen/include/ui_general-settings-page.h" line="226"/>
-        <location filename="../cmake-build-debug/kiran-cpanel-power_autogen/include/ui_general-settings-page.h" line="226"/>
+        <location filename="../build/kiran-cpanel-power_autogen/include/ui_general-settings-page.h" line="241"/>
+        <location filename="../cmake-build-debug/kiran-cpanel-power_autogen/include/ui_general-settings-page.h" line="241"/>
         <source>GeneralSettingsPage</source>
         <translation>通用设置页面</translation>
     </message>
     <message>
         <location filename="../src/pages/general-settings/general-settings-page.ui" line="40"/>
-        <location filename="../build/kiran-cpanel-power_autogen/include/ui_general-settings-page.h" line="227"/>
-        <location filename="../cmake-build-debug/kiran-cpanel-power_autogen/include/ui_general-settings-page.h" line="227"/>
+        <location filename="../build/kiran-cpanel-power_autogen/include/ui_general-settings-page.h" line="242"/>
+        <location filename="../cmake-build-debug/kiran-cpanel-power_autogen/include/ui_general-settings-page.h" line="242"/>
         <source>When the power button is pressed</source>
         <translation>按下电源按钮时</translation>
     </message>
     <message>
         <location filename="../src/pages/general-settings/general-settings-page.ui" line="64"/>
-        <location filename="../build/kiran-cpanel-power_autogen/include/ui_general-settings-page.h" line="228"/>
-        <location filename="../cmake-build-debug/kiran-cpanel-power_autogen/include/ui_general-settings-page.h" line="228"/>
+        <location filename="../build/kiran-cpanel-power_autogen/include/ui_general-settings-page.h" line="243"/>
+        <location filename="../cmake-build-debug/kiran-cpanel-power_autogen/include/ui_general-settings-page.h" line="243"/>
         <source>When the suspend button is pressed</source>
         <translation>按下挂起按钮时</translation>
     </message>
     <message>
         <location filename="../src/pages/general-settings/general-settings-page.ui" line="92"/>
-        <location filename="../build/kiran-cpanel-power_autogen/include/ui_general-settings-page.h" line="229"/>
-        <location filename="../cmake-build-debug/kiran-cpanel-power_autogen/include/ui_general-settings-page.h" line="229"/>
+        <location filename="../build/kiran-cpanel-power_autogen/include/ui_general-settings-page.h" line="244"/>
+        <location filename="../cmake-build-debug/kiran-cpanel-power_autogen/include/ui_general-settings-page.h" line="244"/>
         <source>When closing the lid</source>
         <translation>合上盖子操作</translation>
     </message>
     <message>
         <location filename="../src/pages/general-settings/general-settings-page.ui" line="153"/>
-        <location filename="../build/kiran-cpanel-power_autogen/include/ui_general-settings-page.h" line="230"/>
-        <location filename="../cmake-build-debug/kiran-cpanel-power_autogen/include/ui_general-settings-page.h" line="230"/>
+        <location filename="../build/kiran-cpanel-power_autogen/include/ui_general-settings-page.h" line="245"/>
+        <location filename="../cmake-build-debug/kiran-cpanel-power_autogen/include/ui_general-settings-page.h" line="245"/>
         <source>Display brightness setting</source>
         <translation>显示亮度设置</translation>
     </message>
     <message>
         <location filename="../src/pages/general-settings/general-settings-page.ui" line="173"/>
-        <location filename="../build/kiran-cpanel-power_autogen/include/ui_general-settings-page.h" line="231"/>
-        <location filename="../cmake-build-debug/kiran-cpanel-power_autogen/include/ui_general-settings-page.h" line="231"/>
+        <location filename="../build/kiran-cpanel-power_autogen/include/ui_general-settings-page.h" line="246"/>
+        <location filename="../cmake-build-debug/kiran-cpanel-power_autogen/include/ui_general-settings-page.h" line="246"/>
         <source>0%</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/pages/general-settings/general-settings-page.ui" line="204"/>
-        <location filename="../build/kiran-cpanel-power_autogen/include/ui_general-settings-page.h" line="232"/>
-        <location filename="../cmake-build-debug/kiran-cpanel-power_autogen/include/ui_general-settings-page.h" line="232"/>
-        <source>After idle the following time to lock the screen </source>
-        <translation>空闲如下时间锁定屏幕</translation>
+        <location filename="../src/pages/general-settings/general-settings-page.ui" line="201"/>
+        <location filename="../build/kiran-cpanel-power_autogen/include/ui_general-settings-page.h" line="247"/>
+        <location filename="../cmake-build-debug/kiran-cpanel-power_autogen/include/ui_general-settings-page.h" line="247"/>
+        <source>Regard computer as idle after</source>
+        <translation>于此时间后视计算机为空闲</translation>
     </message>
     <message>
-        <location filename="../src/pages/general-settings/general-settings-page.cpp" line="85"/>
-        <location filename="../src/pages/general-settings/general-settings-page.cpp" line="98"/>
+        <location filename="../src/pages/general-settings/general-settings-page.ui" line="264"/>
+        <location filename="../build/kiran-cpanel-power_autogen/include/ui_general-settings-page.h" line="249"/>
+        <location filename="../cmake-build-debug/kiran-cpanel-power_autogen/include/ui_general-settings-page.h" line="249"/>
+        <source>Lock screen when idle</source>
+        <translation>计算机空闲时锁定屏幕</translation>
+    </message>
+    <message>
+        <source>After idle the following time to lock the screen </source>
+        <translation type="vanished">空闲如下时间锁定屏幕</translation>
+    </message>
+    <message>
+        <location filename="../src/pages/general-settings/general-settings-page.cpp" line="106"/>
+        <location filename="../src/pages/general-settings/general-settings-page.cpp" line="119"/>
         <source>shutdown</source>
         <translation>关机</translation>
     </message>
     <message>
-        <location filename="../src/pages/general-settings/general-settings-page.cpp" line="86"/>
-        <location filename="../src/pages/general-settings/general-settings-page.cpp" line="92"/>
-        <location filename="../src/pages/general-settings/general-settings-page.cpp" line="97"/>
+        <location filename="../src/pages/general-settings/general-settings-page.cpp" line="107"/>
+        <location filename="../src/pages/general-settings/general-settings-page.cpp" line="113"/>
+        <location filename="../src/pages/general-settings/general-settings-page.cpp" line="118"/>
         <source>hibernate</source>
         <translation>休眠</translation>
     </message>
     <message>
-        <location filename="../src/pages/general-settings/general-settings-page.cpp" line="87"/>
-        <location filename="../src/pages/general-settings/general-settings-page.cpp" line="91"/>
-        <location filename="../src/pages/general-settings/general-settings-page.cpp" line="96"/>
+        <location filename="../src/pages/general-settings/general-settings-page.cpp" line="108"/>
+        <location filename="../src/pages/general-settings/general-settings-page.cpp" line="112"/>
+        <location filename="../src/pages/general-settings/general-settings-page.cpp" line="117"/>
         <source>suspend</source>
         <translation>挂起</translation>
     </message>
     <message>
-        <location filename="../src/pages/general-settings/general-settings-page.cpp" line="88"/>
-        <location filename="../src/pages/general-settings/general-settings-page.cpp" line="93"/>
+        <location filename="../src/pages/general-settings/general-settings-page.cpp" line="109"/>
+        <location filename="../src/pages/general-settings/general-settings-page.cpp" line="114"/>
         <source>display off</source>
         <translation>关闭显示器</translation>
     </message>
     <message>
-        <location filename="../src/pages/general-settings/general-settings-page.cpp" line="89"/>
-        <location filename="../src/pages/general-settings/general-settings-page.cpp" line="94"/>
-        <location filename="../src/pages/general-settings/general-settings-page.cpp" line="99"/>
+        <location filename="../src/pages/general-settings/general-settings-page.cpp" line="110"/>
+        <location filename="../src/pages/general-settings/general-settings-page.cpp" line="115"/>
+        <location filename="../src/pages/general-settings/general-settings-page.cpp" line="120"/>
         <source>do nothing</source>
         <translation>不执行操作</translation>
     </message>
     <message>
-        <location filename="../src/pages/general-settings/general-settings-page.cpp" line="154"/>
+        <location filename="../src/pages/general-settings/general-settings-page.cpp" line="171"/>
         <source>ERROR</source>
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../src/pages/general-settings/general-settings-page.cpp" line="316"/>
+        <location filename="../src/pages/general-settings/general-settings-page.cpp" line="335"/>
         <source>brightness adjustment not available</source>
         <translation>亮度调整不可用</translation>
     </message>
     <message>
-        <location filename="../src/pages/general-settings/general-settings-page.cpp" line="340"/>
+        <location filename="../src/pages/general-settings/general-settings-page.cpp" line="359"/>
         <source>%1hour</source>
         <translation>%1小时</translation>
     </message>
     <message>
-        <location filename="../src/pages/general-settings/general-settings-page.cpp" line="344"/>
+        <location filename="../src/pages/general-settings/general-settings-page.cpp" line="363"/>
         <source>%1minute</source>
         <translation>%1分钟</translation>
     </message>
