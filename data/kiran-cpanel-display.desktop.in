@@ -9,8 +9,7 @@ Icon=kcp-display
 #通过启动器单独执行 <kiran-cpanel-launcher -cpanel-plugin 插件的desktop文件名>
 Exec=kiran-cpanel-launcher --cpanel-plugin=kiran-cpanel-display
 Categories=Qt;Settings;HardwareSettings;X-Hardware;X-Common-Features;
-Keywords=mate-control-center;MATE;display
-OnlyShowIn=MATE;
+Keywords=display
 X-KIRAN-NoDisplay=true
 StartupNotify=true
 
