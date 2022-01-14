@@ -153,6 +153,13 @@ void GeneralSettingsPage::initUI()
     //空闲时是否锁定屏幕及屏保
     m_btn_lockScreen = new KiranSwitchButton(this);
     ui->layout_sliderLabel->addWidget(m_btn_lockScreen);
+
+    //NOTE: 根据#48515缺陷单所做修改,隐藏挂起按钮相关配置项，后续若有需要再进行打开
+    ui->layout_suspendlabel->setMargin(0);
+    ui->label_suspend->setVisible(false);
+
+    ui->layout_suspend->setMargin(0);
+    ui->combo_suspendButton->setVisible(false);
 }
 
 void GeneralSettingsPage::initConnection()

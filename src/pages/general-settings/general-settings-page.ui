@@ -54,12 +54,12 @@
     </layout>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_3">
+    <layout class="QHBoxLayout" name="layout_suspendlabel">
      <property name="topMargin">
       <number>24</number>
      </property>
      <item>
-      <widget class="QLabel" name="label_2">
+      <widget class="QLabel" name="label_suspend">
        <property name="text">
         <string>When the suspend button is pressed</string>
        </property>
@@ -68,7 +68,7 @@
     </layout>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_4">
+    <layout class="QHBoxLayout" name="layout_suspend">
      <property name="topMargin">
       <number>10</number>
      </property>
