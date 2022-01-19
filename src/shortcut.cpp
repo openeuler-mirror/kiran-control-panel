@@ -96,7 +96,6 @@ void Shortcut::initUI()
     Kiran::WidgetPropertyHelper::setButtonType(ui->btn_shortcut_add, Kiran::BUTTON_Default);
     Kiran::WidgetPropertyHelper::setButtonType(ui->btn_page_add, Kiran::BUTTON_Default);
     Kiran::WidgetPropertyHelper::setButtonType(ui->btn_save, Kiran::BUTTON_Default);
-    ui->btn_reset->setDisabled(true);
 
     ui->stackedWidget->setCurrentWidget(ui->page_shortcut);
     ui->stackedWidget_search->setCurrentWidget(ui->page_shortcut_list);
@@ -187,6 +186,7 @@ void Shortcut::initUI()
                     ui->stackedWidget_search->setCurrentWidget(ui->page_shortcut_list);
                 }
             });
+    connect(ui->btn_reset, &QPushButton::clicked, this, &Shortcut::onReset);
 }
 
 void Shortcut::getAllShortcuts()
@@ -722,6 +722,19 @@ void Shortcut::onAdd()
     }
     else
         ui->stackedWidget->setCurrentWidget(ui->page_shortcut);
+}
+
+void Shortcut::onReset()
+{
+    KLOG_INFO() << "reset";
+    QDBusPendingReply<> reply = m_keybindingInterface->ResetShortcuts();
+    reply.waitForFinished();
+    if (reply.isError() || !reply.isValid())
+    {
+        KLOG_ERROR() << "Call ResetShortcuts method failed "
+                     << " Error: " << reply.error().message();
+        return;
+    }
 }
 
 void Shortcut::handleInputKeycode(QList<int> keycodes)
