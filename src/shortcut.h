@@ -97,6 +97,7 @@ private:
     int m_customShortcutCount = 0;
     QString m_editUid;
     QString m_editKeybination;
+    QMap<QString, QVBoxLayout *> m_keybindingKinds;
 };
 
 #endif  // SHORTCUT_H

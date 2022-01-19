@@ -449,20 +449,13 @@ void Shortcut::insertShortcut(ShortcutInfo *shortcutInfo)
     ShortcutItem *item;
     if (shortcutInfo->type == SHORTCUT_TYPE_SYSTEM)
     {
-        if (shortcutInfo->kind == SHORTCUT_KIND_SOUND)
-            item = createShortcutItem(ui->vlayout_sound, shortcutInfo, shortcutInfo->type);
-        else if (shortcutInfo->kind == SHORTCUT_KIND_WINDOW_MANAGE)
-            item = createShortcutItem(ui->vlayout_window_manage, shortcutInfo, shortcutInfo->type);
-        else if (shortcutInfo->kind == SHORTCUT_KIND_SYSTEM)
-            item = createShortcutItem(ui->vlayout_system, shortcutInfo, shortcutInfo->type);
-        else if (shortcutInfo->kind == SHORTCUT_KIND_ACCESSIBILITY)
-            item = createShortcutItem(ui->vlayout_accessibility, shortcutInfo, shortcutInfo->type);
-        else if (shortcutInfo->kind == SHORTCUT_KIND_DESKTOP)
-            item = createShortcutItem(ui->vlayout_desktop, shortcutInfo, shortcutInfo->type);
+        item = createShortcutItem(m_keybindingKinds.value(shortcutInfo->kind), shortcutInfo, shortcutInfo->type);
     }
     else
     {
-        item = createShortcutItem(ui->vlayout_custom, shortcutInfo, shortcutInfo->type);
+        item = createShortcutItem(ui->vlayout_custom,
+                                  shortcutInfo,
+                                  shortcutInfo->type);
         m_customShortcutCount++;
     }
     m_shortcutItem.append(item);
@@ -590,6 +583,27 @@ void Shortcut::handleShortcutInfo(QList<ShortcutInfo *> shortcutInfoList)
 {
     foreach (ShortcutInfo *shortcutInfo, shortcutInfoList)
     {
+        QLayout *layout = ui->scrollAreaCont_all->layout();
+        auto iter = m_keybindingKinds.find(shortcutInfo->kind);
+        if (iter == m_keybindingKinds.end())
+        {
+            QWidget *widget = new QWidget();
+            QVBoxLayout *vLayout = new QVBoxLayout(widget);
+            vLayout->setMargin(0);
+            vLayout->setSpacing(10);
+            QLabel *labKind = new QLabel(widget);
+            if (shortcutInfo->kind == SHORTCUT_KIND_SYSTEM)
+                labKind->setText(tr("System"));
+            else if (shortcutInfo->kind == SHORTCUT_KIND_SOUND)
+                labKind->setText(tr("Sound"));
+            else
+                labKind->setText(shortcutInfo->kind);
+            vLayout->addWidget(labKind);
+            m_keybindingKinds.insert(shortcutInfo->kind, vLayout);
+
+            layout->addWidget(widget);
+        }
+
         insertShortcut(shortcutInfo);
     }
 }
