@@ -2,9 +2,9 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=Kiran Cpanel Keyboard
-Name[zh_CN]=键盘语言设置
+Name[zh_CN]=键盘布局设置
 Comment=Kiran Cpanel Mouse
-Comment[zh_CN]=键盘语言设置
+Comment[zh_CN]=键盘布局设置
 Exec=kiran-cpanel-launcher --cpanel-plugin=kiran-cpanel-keyboard
 Icon=kcp-keyboard
 Terminal=false

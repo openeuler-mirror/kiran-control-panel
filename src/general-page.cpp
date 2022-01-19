@@ -49,7 +49,8 @@ GeneralPage::GeneralPage(QWidget *parent) : QWidget(parent),
                 if (m_interval != interval)
                 {
                     m_interval = interval;
-                    m_keyboardInterface->setRepeat_interval(m_interval);
+                    auto value = ui->hslider_interval->maximum() - interval + 10;
+                    m_keyboardInterface->setRepeat_interval(value);
                 }
                 m_timer->stop();
             });
@@ -119,7 +120,8 @@ void GeneralPage::initComponentValue()
             });
 
     //速度
-    m_interval = m_keyboardInterface->repeat_interval();
+    qint32 value = m_keyboardInterface->repeat_interval();
+    m_interval = ui->hslider_interval->maximum() - value + 10;
     KLOG_INFO() << m_interval;
     ui->hslider_interval->setValue(m_interval);
     connect(ui->hslider_interval, &QSlider::valueChanged,
@@ -127,12 +129,12 @@ void GeneralPage::initComponentValue()
                 m_timer->start(TIMEOUT);
             });
     connect(m_keyboardInterface.data(), &KeyboardBackEndProxy::repeat_intervalChanged,
-            [this](int value) {
+            [this](qint32 value) {
                 //更新界面
-                if (m_interval != value)
+                if (m_interval != (ui->hslider_interval->maximum() - value + 10))
                 {
-                    m_interval = value;
-                    ui->hslider_interval->setValue(value);
+                    m_interval = ui->hslider_interval->maximum() - value + 10;
+                    ui->hslider_interval->setValue(m_interval);
                 }
                 KLOG_INFO() << "get repeat_intervalChanged signal: " << value;
             });

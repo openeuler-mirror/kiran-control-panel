@@ -204,7 +204,7 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/widgets/layout-list.cpp" line="121"/>
+        <location filename="../src/widgets/layout-list.cpp" line="137"/>
         <source>No search results, please search again...</source>
         <translation>无搜索结果，请重新搜索...</translation>
     </message>
