@@ -133,7 +133,7 @@ void GeneralSettingsPage::initUI()
 
     ///初始化QSlider,和延迟设置的Timer
     ui->slider_brightness->setMaximum(100);
-    ui->slider_brightness->setMinimum(0);
+    ui->slider_brightness->setMinimum(20);
     m_brightnessTimer.setInterval(300);
     m_brightnessTimer.setSingleShot(true);
 
@@ -254,7 +254,15 @@ void GeneralSettingsPage::load()
         monitorBrightnessPercent = monitorBrightnessReply.value();
     }
     QSignalBlocker signalBlocker(ui->slider_brightness);
-    setBrightnessPercent(monitorBrightnessPercent);
+    if( monitorBrightnessPercent == -1 )
+    {
+        ui->slider_brightness->setMaximum(ui->slider_brightness->maximum());
+        ui->slider_brightness->setEnabled(false);
+    }
+    else
+    {
+        setBrightnessPercent(monitorBrightnessPercent);
+    }
 
     /// idle time
     if (m_sessionSettings)
@@ -321,20 +329,14 @@ void GeneralSettingsPage::handleComboBoxCurrentIdxChanged(int idx)
 
 void GeneralSettingsPage::setBrightnessPercent(int percent)
 {
-    if (percent < 0)
+    if (percent < ui->slider_brightness->minimum())
     {
-        ui->slider_brightness->setEnabled(false);
-        m_brightnessValue = 0;
-        ui->slider_brightness->setValue(0);
-        ui->label_brightnessPercent->setText(tr("brightness adjustment not available"));
+        percent = ui->slider_brightness->minimum();
     }
-    else
-    {
-        ui->slider_brightness->setEnabled(true);
-        ui->slider_brightness->setValue(percent);
-        m_brightnessValue = percent;
-        ui->label_brightnessPercent->setText(QString("%1%").arg(percent));
-    }
+
+    ui->slider_brightness->setValue(percent);
+    m_brightnessValue = percent;
+    ui->label_brightnessPercent->setText(QString("%1%").arg(percent));
 }
 
 QSize GeneralSettingsPage::sizeHint() const
