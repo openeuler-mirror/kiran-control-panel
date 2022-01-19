@@ -112,7 +112,7 @@
              <property name="widgetResizable">
               <bool>true</bool>
              </property>
-             <widget class="QWidget" name="scrollAreaWidgetContents">
+             <widget class="QWidget" name="scrollAreaCont_all">
               <property name="geometry">
                <rect>
                 <x>0</x>
@@ -143,111 +143,6 @@
                <property name="bottomMargin">
                 <number>0</number>
                </property>
-               <item>
-                <layout class="QVBoxLayout" name="verticalLayout">
-                 <property name="spacing">
-                  <number>10</number>
-                 </property>
-                 <item>
-                  <widget class="QLabel" name="label_2">
-                   <property name="text">
-                    <string>Sound</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <layout class="QVBoxLayout" name="vlayout_sound">
-                   <property name="spacing">
-                    <number>10</number>
-                   </property>
-                  </layout>
-                 </item>
-                </layout>
-               </item>
-               <item>
-                <layout class="QVBoxLayout" name="verticalLayout_2">
-                 <property name="spacing">
-                  <number>10</number>
-                 </property>
-                 <item>
-                  <widget class="QLabel" name="label_3">
-                   <property name="text">
-                    <string>System</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <layout class="QVBoxLayout" name="vlayout_system">
-                   <property name="spacing">
-                    <number>10</number>
-                   </property>
-                  </layout>
-                 </item>
-                </layout>
-               </item>
-               <item>
-                <layout class="QVBoxLayout" name="verticalLayout_3">
-                 <property name="spacing">
-                  <number>10</number>
-                 </property>
-                 <item>
-                  <widget class="QLabel" name="label_4">
-                   <property name="text">
-                    <string>Accessibility</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <layout class="QVBoxLayout" name="vlayout_accessibility">
-                   <property name="spacing">
-                    <number>10</number>
-                   </property>
-                  </layout>
-                 </item>
-                </layout>
-               </item>
-               <item>
-                <layout class="QVBoxLayout" name="verticalLayout_5">
-                 <property name="spacing">
-                  <number>10</number>
-                 </property>
-                 <item>
-                  <widget class="QLabel" name="label_5">
-                   <property name="text">
-                    <string>Desktop</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <layout class="QVBoxLayout" name="vlayout_desktop">
-                   <property name="spacing">
-                    <number>10</number>
-                   </property>
-                  </layout>
-                 </item>
-                </layout>
-               </item>
-               <item>
-                <layout class="QVBoxLayout" name="verticalLayout_6">
-                 <property name="spacing">
-                  <number>10</number>
-                 </property>
-                 <item>
-                  <widget class="QLabel" name="label_6">
-                   <property name="text">
-                    <string>Window Manage</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <layout class="QVBoxLayout" name="vlayout_window_manage">
-                   <property name="spacing">
-                    <number>10</number>
-                   </property>
-                  </layout>
-                 </item>
-                </layout>
-               </item>
                <item>
                 <widget class="QWidget" name="widget_custom" native="true">
                  <layout class="QVBoxLayout" name="verticalLayout_20">
@@ -356,7 +251,7 @@
                 <x>0</x>
                 <y>0</y>
                 <width>633</width>
-                <height>429</height>
+                <height>409</height>
                </rect>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_9">

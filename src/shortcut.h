@@ -69,6 +69,7 @@ public slots:
     void onEditShortcut(int type, QString uid, QString name, QString keyCombination, QString action = nullptr);
     void onSave();
     void onAdd();
+    void onReset();
     void openFileSys();
     void search();
 
@@ -96,6 +97,7 @@ private:
     int m_customShortcutCount = 0;
     QString m_editUid;
     QString m_editKeybination;
+    QMap<QString, QVBoxLayout *> m_keybindingKinds;
 };
 
 #endif  // SHORTCUT_H
