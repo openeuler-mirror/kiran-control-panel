@@ -209,17 +209,17 @@
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../src/pages/general-settings/general-settings-page.cpp" line="328"/>
+        <location filename="../src/pages/general-settings/general-settings-page.cpp" line="329"/>
         <source>brightness adjustment not available</source>
         <translation>亮度调整不可用</translation>
     </message>
     <message>
-        <location filename="../src/pages/general-settings/general-settings-page.cpp" line="352"/>
+        <location filename="../src/pages/general-settings/general-settings-page.cpp" line="353"/>
         <source>%1hour</source>
         <translation>%1小时</translation>
     </message>
     <message>
-        <location filename="../src/pages/general-settings/general-settings-page.cpp" line="356"/>
+        <location filename="../src/pages/general-settings/general-settings-page.cpp" line="357"/>
         <source>%1minute</source>
         <translation>%1分钟</translation>
     </message>

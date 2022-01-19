@@ -331,8 +331,9 @@ void GeneralSettingsPage::setBrightnessPercent(int percent)
     else
     {
         ui->slider_brightness->setEnabled(true);
+        ui->slider_brightness->setValue(percent);
         m_brightnessValue = percent;
-        ui->label_brightness->setText(QString("%1%").arg(percent));
+        ui->label_brightnessPercent->setText(QString("%1%").arg(percent));
     }
 }
 
