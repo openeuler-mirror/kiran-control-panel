@@ -183,13 +183,16 @@
      <item>
       <widget class="QSlider" name="hslider_interval">
        <property name="minimum">
-        <number>10</number>
+        <number>0</number>
        </property>
        <property name="maximum">
-        <number>110</number>
+        <number>260</number>
        </property>
        <property name="singleStep">
-        <number>1</number>
+        <number>10</number>
+       </property>
+       <property name="pageStep">
+        <number>20</number>
        </property>
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
