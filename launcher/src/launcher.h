@@ -34,6 +34,9 @@ public:
 public:
     virtual QSize sizeHint() const override;
 
+private slots:
+    void handleActivateSlot();
+
 private:
     KiranModuleWidget* m_moduleWidget = nullptr;
 };

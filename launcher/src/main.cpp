@@ -50,7 +50,8 @@ int main(int argc, char *argv[])
         KiranSingleApplication::addApplicationIDUserData(pluginDesktopName);
     }
 
-    KiranSingleApplication app(argc, argv);
+    KiranSingleApplication app(argc, argv,false,
+                               KiranSingleApplication::Mode::User|KiranSingleApplication::Mode::SecondaryNotification);
 
     ///NOTE: 由于strftime获取系统locale进行格式化，Qt使用UTF8,若编码设置不为UTF8中文环境下会导致乱码
     ///所以LANG后面的编码若不为UTF-8,修改成UTF-8,使获取时间都为UTF-8格式
@@ -144,6 +145,5 @@ int main(int argc, char *argv[])
     w.move(screenGeometry.x() + (screenGeometry.width() - w.width()) / 2,
            screenGeometry.y() + (screenGeometry.height() - w.height()) / 2);
     w.show();
-
     return KiranApplication::exec();
 }

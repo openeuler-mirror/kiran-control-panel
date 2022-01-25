@@ -15,6 +15,7 @@
 
 #include "launcher.h"
 #include "kiran-module-widget/kiran-module-widget.h"
+#include "kiran-single-application.h"
 
 #include <qt5-log-i.h>
 #include <QApplication>
@@ -23,6 +24,12 @@
 #include <QHBoxLayout>
 #include <QIcon>
 #include <QScreen>
+#include <QX11Info>
+
+#ifdef qApp
+#undef qApp
+#endif
+#define qApp (static_cast<KiranSingleApplication*>(QCoreApplication::instance()))
 
 Launcher::Launcher(QWidget *parent) :
     KiranTitlebarWindow(parent)
@@ -31,7 +38,7 @@ Launcher::Launcher(QWidget *parent) :
     m_moduleWidget = new KiranModuleWidget(this);
 
     setWindowContentWidget(m_moduleWidget);
-    installEventFilter(this);
+    connect(qApp,&KiranSingleApplication::instanceStarted,this,&Launcher::handleActivateSlot);
 }
 
 Launcher::~Launcher()
@@ -53,4 +60,23 @@ void Launcher::setPlugin(QSharedPointer<CPanelPluginHelper> plugin)
 QSize Launcher::sizeHint() const
 {
     return KiranTitlebarWindow::sizeHint();
+}
+
+void Launcher::handleActivateSlot()
+{
+    /*
+     *由于QXcbWindow::requestActivateWindow
+     *之中对root窗口发送_NET_ACTIVE_WINDOW的事件之中的时间戳未更新,
+     *导致窗口管理器接收时事件戳较为落后，未被正确处理
+     *暂时处理办法，手动更新下X11时间，避免事件戳落后
+     */
+
+    if( windowState() & Qt::WindowMinimized )
+    {
+        setWindowState(windowState()&~Qt::WindowMinimized);
+    }
+
+    QX11Info::setAppTime(QX11Info::getTimestamp());
+    raise();
+    activateWindow();
 }
