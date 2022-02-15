@@ -22,6 +22,7 @@
 #include <QPainter>
 #include <QPropertyAnimation>
 #include <QtMath>
+#include <QPainterPath>
 
 #define ROLE_CATEGORY_INDEX Qt::UserRole
 
