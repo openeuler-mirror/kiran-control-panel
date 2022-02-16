@@ -14,6 +14,7 @@
 
 #include "thread-object.h"
 #include <kiran-log/qt5-log-i.h>
+#include <kiran-message-box.h>
 #include <kiran-session-daemon/keybinding-i.h>
 #include <QJsonDocument>
 #include <QJsonParseError>
@@ -128,6 +129,11 @@ void ThreadObject::loadShortcutInfo()
     {
         KLOG_ERROR() << "Call ListShortcuts method failed "
                      << " Error: " << reply.error().message();
+
+        KiranMessageBox::message(nullptr,
+                                 tr("Failed"),
+                                 QString("%1 %2").arg(tr("List shortcut failed,error:")).arg(reply.error().message()),
+                                 KiranMessageBox::Ok);
         return;
     }
     else
