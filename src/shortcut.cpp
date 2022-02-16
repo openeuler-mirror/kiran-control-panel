@@ -226,6 +226,11 @@ ShortcutInfo *Shortcut::getShortcut(QString uid, QString kind)
     {
         KLOG_ERROR() << "Call GetShortcut method failed "
                      << " Error: " << reply.error().message();
+
+        KiranMessageBox::message(nullptr,
+                                 tr("Failed"),
+                                 QString("%1 %2").arg(tr("Get shortcut failed,error:")).arg(reply.error().message()),
+                                 KiranMessageBox::Ok);
         return nullptr;
     }
     else
@@ -642,6 +647,11 @@ void Shortcut::onDeleteShortcut(QString uid)
     {
         KLOG_ERROR() << "Call DeleteCustomShortcut method failed "
                      << " Error: " << reply.error().message();
+
+        KiranMessageBox::message(nullptr,
+                                 tr("Failed"),
+                                 QString("%1 %2").arg(tr("Delete shortcut failed,error:")).arg(reply.error().message()),
+                                 KiranMessageBox::Ok);
         return;
     }
 }
@@ -687,6 +697,12 @@ void Shortcut::onSave()
         {
             KLOG_ERROR() << "Call ModifySystemShortcut method failed "
                          << " Error: " << reply.error().message();
+
+            KiranMessageBox::message(nullptr,
+                                     tr("Failed"),
+                                     QString("%1 %2").arg(tr("Modify system shortcut failed,error:")).arg(reply.error().message()),
+                                     KiranMessageBox::Ok);
+
             return;
         }
         else
@@ -702,6 +718,11 @@ void Shortcut::onSave()
         {
             KLOG_ERROR() << "Call ModifyCustomShortcut method failed "
                          << " Error: " << reply.error().message();
+
+            KiranMessageBox::message(nullptr,
+                                     tr("Failed"),
+                                     QString("%1 %2").arg(tr("Modify custom shortcut failed,error:")).arg(reply.error().message()),
+                                     KiranMessageBox::Ok);
             return;
         }
         else
@@ -732,6 +753,11 @@ void Shortcut::onAdd()
     {
         KLOG_ERROR() << "Call AddCustomShortcut method failed "
                      << " Error: " << reply.error().message();
+
+        KiranMessageBox::message(nullptr,
+                                 tr("Failed"),
+                                 QString("%1 %2").arg(tr("Add custom shortcut failed,error:")).arg(reply.error().message()),
+                                 KiranMessageBox::Ok);
         return;
     }
     else
@@ -747,6 +773,12 @@ void Shortcut::onReset()
     {
         KLOG_ERROR() << "Call ResetShortcuts method failed "
                      << " Error: " << reply.error().message();
+
+        KiranMessageBox::message(nullptr,
+                                 tr("Failed"),
+                                 QString("%1 %2").arg(tr("Reset shortcut failed,error:")).arg(reply.error().message()),
+                                 KiranMessageBox::Ok);
+
         return;
     }
 }

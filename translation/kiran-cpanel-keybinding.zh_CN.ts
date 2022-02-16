@@ -132,12 +132,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/shortcut.cpp" line="598"/>
+        <location filename="../src/shortcut.cpp" line="603"/>
         <source>Sound</source>
         <translation>声音</translation>
     </message>
     <message>
-        <location filename="../src/shortcut.cpp" line="596"/>
+        <location filename="../src/shortcut.cpp" line="601"/>
         <source>System</source>
         <translation>系统</translation>
     </message>
@@ -161,7 +161,7 @@
     <message>
         <location filename="../src/shortcut.ui" line="204"/>
         <location filename="../src/shortcut.cpp" line="163"/>
-        <location filename="../src/shortcut.cpp" line="506"/>
+        <location filename="../src/shortcut.cpp" line="511"/>
         <source>Edit</source>
         <translation>编辑</translation>
     </message>
@@ -245,45 +245,81 @@
         <translation>完成</translation>
     </message>
     <message>
-        <location filename="../src/shortcut.cpp" line="358"/>
+        <location filename="../src/shortcut.cpp" line="232"/>
+        <source>Get shortcut failed,error:</source>
+        <translation>获取快捷键失败，错误：</translation>
+    </message>
+    <message>
+        <location filename="../src/shortcut.cpp" line="363"/>
         <source>Open File</source>
         <translation>打开文件</translation>
     </message>
     <message>
-        <location filename="../src/shortcut.cpp" line="656"/>
-        <location filename="../src/shortcut.cpp" line="720"/>
+        <location filename="../src/shortcut.cpp" line="653"/>
+        <source>Delete shortcut failed,error:</source>
+        <translation>删除快捷键失败，错误：</translation>
+    </message>
+    <message>
+        <location filename="../src/shortcut.cpp" line="666"/>
+        <location filename="../src/shortcut.cpp" line="741"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="../src/shortcut.cpp" line="657"/>
-        <location filename="../src/shortcut.cpp" line="721"/>
+        <location filename="../src/shortcut.cpp" line="667"/>
+        <location filename="../src/shortcut.cpp" line="742"/>
         <source>Please complete the shortcut information!</source>
         <translation>请完善快捷键信息！</translation>
     </message>
     <message>
-        <location filename="../src/shortcut.cpp" line="666"/>
+        <location filename="../src/shortcut.cpp" line="676"/>
         <source>Set shortcut</source>
         <translation>设置快捷键</translation>
     </message>
     <message>
-        <location filename="../src/shortcut.cpp" line="667"/>
+        <location filename="../src/shortcut.cpp" line="677"/>
         <source>Are you sure you want to disable this shortcut?</source>
         <translation>是否确定要禁用此快捷键？</translation>
     </message>
     <message>
-        <location filename="../src/shortcut.cpp" line="769"/>
-        <location filename="../src/shortcut.cpp" line="787"/>
+        <location filename="../src/shortcut.cpp" line="231"/>
+        <location filename="../src/shortcut.cpp" line="652"/>
+        <location filename="../src/shortcut.cpp" line="702"/>
+        <location filename="../src/shortcut.cpp" line="723"/>
+        <location filename="../src/shortcut.cpp" line="758"/>
+        <location filename="../src/shortcut.cpp" line="778"/>
+        <location filename="../src/shortcut.cpp" line="801"/>
+        <location filename="../src/shortcut.cpp" line="819"/>
         <source>Failed</source>
         <translation>失败</translation>
     </message>
     <message>
-        <location filename="../src/shortcut.cpp" line="770"/>
+        <location filename="../src/shortcut.cpp" line="703"/>
+        <source>Modify system shortcut failed,error:</source>
+        <translation>修改系统快捷键失败，错误：</translation>
+    </message>
+    <message>
+        <location filename="../src/shortcut.cpp" line="724"/>
+        <source>Modify custom shortcut failed,error:</source>
+        <translation>修改自定义快捷键失败，错误：</translation>
+    </message>
+    <message>
+        <location filename="../src/shortcut.cpp" line="759"/>
+        <source>Add custom shortcut failed,error:</source>
+        <translation>添加自定义快捷键失败，错误：</translation>
+    </message>
+    <message>
+        <location filename="../src/shortcut.cpp" line="779"/>
+        <source>Reset shortcut failed,error:</source>
+        <translation>重置快捷键失败，错误：</translation>
+    </message>
+    <message>
+        <location filename="../src/shortcut.cpp" line="802"/>
         <source>Cannot use shortcut &quot;%1&quot;, Because you cannot enter with this key.Please try again using Ctrl, Alt, or Shift at the same time.</source>
         <translation>无法使用快捷键&quot;%1&quot;,因为使用此键将无法输入，请同时使用Ctrl，Alt，Shift再试一次。</translation>
     </message>
     <message>
-        <location filename="../src/shortcut.cpp" line="788"/>
+        <location filename="../src/shortcut.cpp" line="820"/>
         <source>Shortcut keys %1 are already used in %2,Please try again!</source>
         <translation>快捷键%1已用于%2，请再试一次！</translation>
     </message>
@@ -318,6 +354,19 @@
         <location filename="../src/shortcut-item.cpp" line="62"/>
         <source>disabled</source>
         <translation>禁用</translation>
+    </message>
+</context>
+<context>
+    <name>ThreadObject</name>
+    <message>
+        <location filename="../src/thread-object.cpp" line="134"/>
+        <source>Failed</source>
+        <translation>失败</translation>
+    </message>
+    <message>
+        <location filename="../src/thread-object.cpp" line="135"/>
+        <source>List shortcut failed,error:</source>
+        <translation>列出快捷键失败，错误：</translation>
     </message>
 </context>
 </TS>
