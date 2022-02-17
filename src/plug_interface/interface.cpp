@@ -12,18 +12,19 @@
  * Author:     yuanxing <yuanxing@kylinos.com.cn>
  */
 #include "interface.h"
-#include "pages/hardware-information/hardware-information-widget.h"
-#include "pages/system-information/system-information-widget.h"
-#include "system-info-dbus.h"
-#include "config/config.h"
-#include <kiranwidgets-qt5/kiran-message-box.h>
 #include <kiran-log/qt5-log-i.h>
-#include <QLocale>
-#include <QTranslator>
+#include <kiranwidgets-qt5/kiran-message-box.h>
+#include <pages/license-information/license-information.h>
 #include <QCoreApplication>
 #include <QFile>
-#include <iostream>
+#include <QLocale>
 #include <QMessageBox>
+#include <QTranslator>
+#include <iostream>
+#include "config/config.h"
+#include "pages/hardware-information/hardware-information.h"
+#include "pages/system-information/system-information.h"
+#include "system-info-dbus.h"
 #define TRANSLATION_DIR TRANSLATIONS_FILE_DIR
 
 KcpInterface::KcpInterface()
@@ -38,26 +39,39 @@ bool KcpInterface::haveUnsavedOptions()
 QStringList KcpInterface::visibleSubItems()
 {
     QStringList subItems;
-    subItems << "SystemInformationWidget" << "HardwareInformationWidget" ;
+
+#ifdef ENABLE_LICENSE
+    subItems << "SystemInformation"
+             << "HardwareInformation";
+#else
+    subItems << "SystemInformation"
+             << "HardwareInformation"
+             << "LicenseInformation";
+#endif
+
     return subItems;
 }
 
-QWidget *KcpInterface::getSubItemWidget(QString id)
+QWidget* KcpInterface::getSubItemWidget(QString id)
 {
     QWidget* widget = nullptr;
-    if (id == "SystemInformationWidget")
+    if (id == "SystemInformation")
     {
-        widget = new SystemInformationWidget();
+        widget = new SystemInformation();
     }
-    else if (id == "HardwareInformationWidget")
+    else if (id == "HardwareInformation")
     {
-        widget = new HardwareInformationWidget();
+        widget = new HardwareInformation();
+    }
+    else if (id == "LicenseInformation")
+    {
+        widget = new LicenseInformation();
     }
     m_currentWidget = widget;
 
     ///加载qss样式表
     QFile file(":/qss/style.qss");
-    if( file.open(QFile::ReadOnly))
+    if (file.open(QFile::ReadOnly))
     {
         QString styleSheet = QLatin1String(file.readAll());
 
@@ -73,7 +87,7 @@ QWidget *KcpInterface::getSubItemWidget(QString id)
 
 void KcpInterface::uninit()
 {
-    if( m_translator )
+    if (m_translator)
     {
         QCoreApplication::removeTranslator(m_translator);
         delete m_translator;
@@ -84,7 +98,7 @@ void KcpInterface::uninit()
 int KcpInterface::init()
 {
     QString systemInfo;
-    if(!InfoDbus::SystemInfo::getSystemInfo(1,systemInfo) || !InfoDbus::SystemInfo::getSystemInfo(0,systemInfo))
+    if (!InfoDbus::SystemInfo::getSystemInfo(1, systemInfo) || !InfoDbus::SystemInfo::getSystemInfo(0, systemInfo))
     {
         KLOG_DEBUG() << "Connect dbus service failed! ";
         return -1;
@@ -101,10 +115,10 @@ int KcpInterface::init()
     if (!m_translator->load(QLocale(),
                             "kiran-cpanel-system",
                             ".",
-                             TRANSLATION_DIR,
+                            TRANSLATION_DIR,
                             ".qm"))
     {
-        KLOG_DEBUG() << "Kiran cpanel system load translation failed" ;
+        KLOG_DEBUG() << "Kiran cpanel system load translation failed";
         m_translator->deleteLater();
         m_translator = nullptr;
     }
@@ -114,4 +128,3 @@ int KcpInterface::init()
     }
     return 0;
 }
-

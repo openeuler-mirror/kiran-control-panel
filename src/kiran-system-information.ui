@@ -190,8 +190,8 @@
             </property>
             <item>
              <widget class="QStackedWidget" name="stackedWidget">
-              <widget class="SystemInformationWidget" name="page_system_info"/>
-              <widget class="HardwareInformationWidget" name="page_hardware_info"/>
+              <widget class="SystemInformation" name="page_system_info"/>
+              <widget class="HardwareInformation" name="page_hardware_info"/>
              </widget>
             </item>
            </layout>
@@ -208,15 +208,15 @@
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
   <customwidget>
-   <class>SystemInformationWidget</class>
+   <class>SystemInformation</class>
    <extends>QWidget</extends>
-   <header location="global">pages/system-information/system-information-widget.h</header>
+   <header location="global">pages/system-information/system-information.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>HardwareInformationWidget</class>
+   <class>HardwareInformation</class>
    <extends>QWidget</extends>
-   <header location="global">pages/hardware-information/hardware-information-widget.h</header>
+   <header location="global">pages/hardware-information/hardware-information.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>

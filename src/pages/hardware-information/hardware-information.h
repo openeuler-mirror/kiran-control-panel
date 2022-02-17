@@ -12,24 +12,25 @@
  * Author:     yuanxing <yuanxing@kylinos.com.cn>
  */
 
-#ifndef HARDWAREINFORMATIONWIDGET_H
-#define HARDWAREINFORMATIONWIDGET_H
+#ifndef HARDWAREINFORMATION_H
+#define HARDWAREINFORMATION_H
 
-#include <QWidget>
-#include <QStringList>
 #include <QImage>
+#include <QStringList>
+#include <QWidget>
 
-namespace Ui {
-class HardwareInformationWidget;
+namespace Ui
+{
+class HardwareInformation;
 }
 
-class HardwareInformationWidget : public QWidget
+class HardwareInformation : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit HardwareInformationWidget(QWidget *parent = 0);
-    ~HardwareInformationWidget();
+    explicit HardwareInformation(QWidget *parent = 0);
+    ~HardwareInformation();
     bool initUI(void);
 
 private:
@@ -40,10 +41,10 @@ private:
     void scaledPixmap(QImage img);
 
 private:
-    Ui::HardwareInformationWidget *ui;
+    Ui::HardwareInformation *ui;
     QStringList diskList;
     QStringList graphicsList;
     QStringList ethsList;
 };
 
-#endif // HARDWAREINFORMATIONWIDGET_H
+#endif  // HARDWAREINFORMATION_H
