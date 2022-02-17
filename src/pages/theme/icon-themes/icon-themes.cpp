@@ -159,22 +159,39 @@ void IconThemes::createIconWidgets()
         {
             QString path = m_iconThemesPath.at(i) + "/apps/scalable/";
             QDir appsDir = QDir(path);
+            QStringList iconList = appsDir.entryList(QDir::Files);
             QStringList showIconsList;
             if (appsDir.exists())
             {
                 for (int i = 0; i < icons.size(); i++)
                 {
-                    showIconsList.append(path + icons.at(i) + ".svg");
+                    if (iconList.contains(icons.at(i) + ".svg"))
+                        showIconsList.append(path + icons.at(i) + ".svg");
+                    else
+                    {
+                        KLOG_INFO() << "not contain " << icons.at(i);
+                        foreach (QString icon, iconList)
+                        {
+                            if (icon.startsWith(icons.at(i)))
+                            {
+                                showIconsList.append(path + icon);
+                                break;
+                            }
+                        }
+                    }
                 }
-                //new theme-widget
-                ThemeWidget *themeWidget = new ThemeWidget(QSize(48, 48), m_currentIconTheme,
-                                                           m_iconThemes.at(i), showIconsList);
-                vLayout->addWidget(themeWidget, Qt::AlignRight);
+                if (!showIconsList.isEmpty())
+                {
+                    //new theme-widget
+                    ThemeWidget *themeWidget = new ThemeWidget(QSize(48, 48), m_currentIconTheme,
+                                                               m_iconThemes.at(i), showIconsList);
+                    vLayout->addWidget(themeWidget, Qt::AlignRight);
 
-                if (m_iconThemes.at(i) == m_currentIconTheme)
-                    m_iconThemeWidgetGroup->setCurrentWidget(themeWidget);
-                m_iconThemeWidgetGroup->addWidget(themeWidget);
-                themeWidget->setTheme(m_iconThemes.at(i));
+                    if (m_iconThemes.at(i) == m_currentIconTheme)
+                        m_iconThemeWidgetGroup->setCurrentWidget(themeWidget);
+                    m_iconThemeWidgetGroup->addWidget(themeWidget);
+                    themeWidget->setTheme(m_iconThemes.at(i));
+                }
             }
             else
                 continue;
@@ -183,22 +200,39 @@ void IconThemes::createIconWidgets()
         {
             QString path = m_iconThemesPath.at(i) + "/48x48/apps/";
             QDir appsDir = QDir(path);
+            QStringList iconList = appsDir.entryList(QDir::Files);
             QStringList showIconsList;
             if (appsDir.exists())
             {
                 for (int i = 0; i < icons.size(); i++)
                 {
-                    showIconsList.append(path + icons.at(i) + ".png");
+                    if (iconList.contains(icons.at(i) + ".png"))
+                        showIconsList.append(path + icons.at(i) + ".png");
+                    else
+                    {
+                        KLOG_INFO() << "not contain " << icons.at(i) << ".png";
+                        foreach (QString icon, iconList)
+                        {
+                            if (icon.startsWith(icons.at(i)))
+                            {
+                                showIconsList.append(path + icon);
+                                break;
+                            }
+                        }
+                    }
                 }
                 //new theme-widget
-                ThemeWidget *themeWidget = new ThemeWidget(QSize(48, 48), m_currentIconTheme,
-                                                           m_iconThemes.at(i), showIconsList);
-                vLayout->addWidget(themeWidget, Qt::AlignRight);
+                if (!showIconsList.isEmpty())
+                {
+                    ThemeWidget *themeWidget = new ThemeWidget(QSize(48, 48), m_currentIconTheme,
+                                                               m_iconThemes.at(i), showIconsList);
+                    vLayout->addWidget(themeWidget, Qt::AlignRight);
 
-                if (m_iconThemes.at(i) == m_currentIconTheme)
-                    m_iconThemeWidgetGroup->setCurrentWidget(themeWidget);
-                m_iconThemeWidgetGroup->addWidget(themeWidget);
-                themeWidget->setTheme(m_iconThemes.at(i));
+                    if (m_iconThemes.at(i) == m_currentIconTheme)
+                        m_iconThemeWidgetGroup->setCurrentWidget(themeWidget);
+                    m_iconThemeWidgetGroup->addWidget(themeWidget);
+                    themeWidget->setTheme(m_iconThemes.at(i));
+                }
             }
             else
                 continue;

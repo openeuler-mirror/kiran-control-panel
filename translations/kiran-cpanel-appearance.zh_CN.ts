@@ -94,12 +94,12 @@
         <translation>图标主题设置</translation>
     </message>
     <message>
-        <location filename="../src/pages/theme/icon-themes/icon-themes.cpp" line="223"/>
+        <location filename="../src/pages/theme/icon-themes/icon-themes.cpp" line="227"/>
         <source>Faild</source>
         <translation>失败</translation>
     </message>
     <message>
-        <location filename="../src/pages/theme/icon-themes/icon-themes.cpp" line="224"/>
+        <location filename="../src/pages/theme/icon-themes/icon-themes.cpp" line="228"/>
         <source>Set icon themes failed!</source>
         <translation>设置图标主题失败!</translation>
     </message>
