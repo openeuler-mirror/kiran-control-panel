@@ -28,7 +28,8 @@
 
 #define MATE_SESSION_SCHEMA_ID "org.mate.session"
 #define KIRAN_SESSION_SCHEMA_ID "com.kylinsec.kiran.session-manager"
-#define KEY_IDLE_DELAY "idle-delay"
+//#define KEY_IDLE_DELAY "idle-delay"
+#define KEY_IDLE_DELAY "idleDelay"
 #define DEFAULT_IDLE_DELAY 5
 
 #define SCHEMA_KIRAN_SCREENSAVER        "com.kylinsec.kiran.screensaver"
@@ -280,6 +281,7 @@ void GeneralSettingsPage::load()
         QSignalBlocker idleTimerSwitchBlocker(m_btn_lockScreen);
         int idleTime = m_sessionSettings->get(KEY_IDLE_DELAY).toInt();
         updateIdleTimeLabel(idleTime);
+        ui->slider_idleTime->setValue(idleTime);
     }
     else
     {
