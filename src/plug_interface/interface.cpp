@@ -21,10 +21,10 @@
 #include <QMessageBox>
 #include <QTranslator>
 #include <iostream>
+#include "../dbus-wrapper/system-info-dbus.h"
 #include "config/config.h"
 #include "pages/hardware-information/hardware-information.h"
 #include "pages/system-information/system-information.h"
-#include "system-info-dbus.h"
 #define TRANSLATION_DIR TRANSLATIONS_FILE_DIR
 
 KcpInterface::KcpInterface()
@@ -40,7 +40,9 @@ QStringList KcpInterface::visibleSubItems()
 {
     QStringList subItems;
 
-#ifdef ENABLE_LICENSE
+#ifdef DISABLE_SYSTEM_INFO
+    subItems << "LicenseInformation";
+#elif DISABLE_LICENSE
     subItems << "SystemInformation"
              << "HardwareInformation";
 #else
@@ -48,7 +50,6 @@ QStringList KcpInterface::visibleSubItems()
              << "HardwareInformation"
              << "LicenseInformation";
 #endif
-
     return subItems;
 }
 

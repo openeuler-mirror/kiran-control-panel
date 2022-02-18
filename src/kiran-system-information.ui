@@ -222,13 +222,13 @@
   <customwidget>
    <class>KiranScrollArea</class>
    <extends>QScrollArea</extends>
-   <header location="global">kiran-scroll-area.h</header>
+   <header location="global">custom-widgets/kiran-scroll-area.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>KiranListWidget</class>
    <extends>QListWidget</extends>
-   <header>kiran-list-widget.h</header>
+   <header>custom-widgets/kiran-list-widget.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

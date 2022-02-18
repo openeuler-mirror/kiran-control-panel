@@ -15,12 +15,13 @@
 #ifndef KIRANSYSTEMINFORMATION_H
 #define KIRANSYSTEMINFORMATION_H
 
-#include <QWidget>
 #include <QListWidgetItem>
 #include <QStackedWidget>
-#include "information-list-item.h"
+#include <QWidget>
+#include "custom-widgets/information-list-item.h"
 
-namespace Ui {
+namespace Ui
+{
 class kiranSystemInformation;
 }
 
@@ -29,12 +30,12 @@ class kiranSystemInformation : public QWidget
     Q_OBJECT
 
 public:
-    explicit kiranSystemInformation(QWidget *parent = 0);
+    explicit kiranSystemInformation(QWidget* parent = 0);
     ~kiranSystemInformation();
 
 private:
     void initUI();
-    InformationListItem *createInformationItem(const QString text , const QString iconPath);
+    InformationListItem* createInformationItem(const QString text, const QString iconPath);
     QWidget* createSystemInfoPage(void);
     QWidget* createHardwareInfoPage(void);
 
@@ -45,17 +46,24 @@ public slots:
     void changeWidgetWhenItemClicked(QListWidgetItem* currentItem);
 
 private:
-    enum {pageSystemInfo, PageHardwareInfo};
-    enum {itemSystemInfo, itemHardwareInfo};
-    Ui::kiranSystemInformation *ui;
-    QStackedWidget *stackedWidget;
+    enum
+    {
+        pageSystemInfo,
+        PageHardwareInfo
+    };
+    enum
+    {
+        itemSystemInfo,
+        itemHardwareInfo
+    };
+    Ui::kiranSystemInformation* ui;
+    QStackedWidget* stackedWidget;
 
     InformationListItem* systemInfomationItem;
     InformationListItem* hardwareInformationItem;
 
     QWidget* systemInfoWidget;
     QWidget* hardwareInfoWidget;
-
 };
 
-#endif // KIRANSYSTEMINFORMATION_H
+#endif  // KIRANSYSTEMINFORMATION_H

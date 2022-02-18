@@ -33,12 +33,13 @@ public:
     ~HardwareInformation();
     bool initUI(void);
 
+protected:
+    void paintEvent(QPaintEvent *painEvent);
+
 private:
     bool readHardwareInfo(int infoType);
     void getJsonValueFromString(QString jsonString);
     void showListInfo();
-    void setCpuLogo(QString cpuModel);
-    void scaledPixmap(QImage img);
 
 private:
     Ui::HardwareInformation *ui;

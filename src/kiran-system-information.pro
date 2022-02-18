@@ -36,14 +36,17 @@ INCLUDEPATH += \
     /usr/lib64/glib-2.0/include/
 
 SOURCES += \
+    custom-widgets/information-list-item.cpp \
+    custom-widgets/kiran-list-widget.cpp \
+    custom-widgets/kiran-scroll-area.cpp \
+    dbus-wrapper/license-dbus.cpp \
+    dbus-wrapper/system-info-dbus.cpp \
         main.cpp \
         kiran-system-information.cpp \
-    information-list-item.cpp \
     pages/hardware-information/hardware-information.cpp \
     pages/license-information/license-information.cpp \
+    pages/system-information/change-host-name-widget.cpp \
     pages/system-information/system-information.cpp \
-    system-info-dbus.cpp \
-    system-information-widget.cpp \
     license/active-guide-widget.cpp \
     license/show-qrcode.cpp \
     license/qrcode-widget.cpp \
@@ -51,49 +54,44 @@ SOURCES += \
     license/load-animation-widget.cpp \
     license/license-info-widget.cpp \
     kiran-system-widget.cpp \
-    kiran-scroll-area.cpp \
-    kiran-list-widget.cpp \
-    change-host-name-widget.cpp \
     pages/hardware-information/hardware-information-widget.cpp \
     pages/system-information/system-information.cpp \
     plug_interface/interface.cpp \
     license/license-agreement.cpp
 
 HEADERS += \
+    custom-widgets/information-list-item.h \
+    custom-widgets/kiran-list-widget.h \
+    custom-widgets/kiran-scroll-area.h \
+    dbus-wrapper/license-dbus.h \
+    dbus-wrapper/system-info-dbus.h \
         kiran-system-information.h \
-    information-list-item.h \
     hardware-information-widget.h \
+    kiran-system-widget.h \
     pages/hardware-information/hardware-information.h \
     pages/license-information/license-information.h \
+    pages/system-information/change-host-name-widget.h \
     pages/system-information/system-information.h \
-    system-info-dbus.h \
-    system-information-widget.h \
     license/active-guide-widget.h \
     license/show-qrcode.h \
     license/qrcode-widget.h \
     license/active-list-item.h \
     license/load-animation-widget.h \
     license/license-info-widget.h \
-    kiran-system-widget.h \
-    kiran-scroll-area.h \
-    kiran-list-widget.h \
-    change-host-name-widget.h \
     plug_interface/interface.h \
     license/license-agreement.h
 
 FORMS += \
+    custom-widgets/information-list-item.ui \
         kiran-system-information.ui \
-    information-list-item.ui \
     hardware-information-widget.ui \
     pages/hardware-information/hardware-information.ui \
     pages/license-information/license-information.ui \
+    pages/system-information/change-host-name-widget.ui \
     pages/system-information/system-information.ui \
-    system-information-widget.ui \
     license/active-guide-widget.ui \
     license/show-qrcode.ui \
-    license/active-list-item.ui \
     license/license-info-widget.ui \
-    change-host-name-widget.ui \
     pages/hardware-information/hardware-information-widget.ui \
     pages/system-information/system-information.ui \
     license/license-agreement.ui

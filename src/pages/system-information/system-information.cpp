@@ -17,9 +17,8 @@
 #include <kiranwidgets-qt5/kiran-style-public-define.h>
 #include <kiranwidgets-qt5/widget-property-helper.h>
 #include <kylin-license/license_i.h>
-#include "change-host-name-widget.h"
+#include "dbus-wrapper/system-info-dbus.h"
 #include "license/license-agreement.h"
-#include "system-info-dbus.h"
 #include "ui_system-information.h"
 
 #include <kiran-log/qt5-log-i.h>

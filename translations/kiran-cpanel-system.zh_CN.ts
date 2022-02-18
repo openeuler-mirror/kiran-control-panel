@@ -172,34 +172,34 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../src/license/active-guide-widget.cpp" line="47"/>
         <location filename="../src/license/active-guide-widget.cpp" line="48"/>
         <location filename="../src/license/active-guide-widget.cpp" line="49"/>
-        <location filename="../src/license/active-guide-widget.cpp" line="50"/>
         <source>unknow</source>
         <translation>未知</translation>
     </message>
     <message>
-        <location filename="../src/license/active-guide-widget.cpp" line="57"/>
+        <location filename="../src/license/active-guide-widget.cpp" line="56"/>
         <source>Activation Mode</source>
         <translation>选择激活方式</translation>
     </message>
     <message>
-        <location filename="../src/license/active-guide-widget.cpp" line="58"/>
+        <location filename="../src/license/active-guide-widget.cpp" line="57"/>
         <source>Start Activation</source>
         <translation>开始激活</translation>
     </message>
     <message>
-        <location filename="../src/license/active-guide-widget.cpp" line="59"/>
+        <location filename="../src/license/active-guide-widget.cpp" line="58"/>
         <source>Activation Complete</source>
         <translation>激活完成</translation>
     </message>
     <message>
-        <location filename="../src/license/active-guide-widget.cpp" line="93"/>
+        <location filename="../src/license/active-guide-widget.cpp" line="92"/>
         <source>Activation Guide</source>
         <translation>激活向导</translation>
     </message>
     <message>
-        <location filename="../src/license/active-guide-widget.cpp" line="110"/>
+        <location filename="../src/license/active-guide-widget.cpp" line="109"/>
         <source>Server IP address or Domain name</source>
         <translation>服务器IP地址或域名</translation>
     </message>
@@ -222,41 +222,37 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>ChangeHostNameWidget</name>
     <message>
-        <location filename="../src/change-host-name-widget.ui" line="32"/>
-        <location filename="../build/src/kiran-cpanel-system_autogen/include/ui_change-host-name-widget.h" line="117"/>
+        <location filename="../src/pages/system-information/change-host-name-widget.ui" line="32"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/change-host-name-widget.ui" line="92"/>
-        <location filename="../build/src/kiran-cpanel-system_autogen/include/ui_change-host-name-widget.h" line="118"/>
+        <location filename="../src/pages/system-information/change-host-name-widget.ui" line="92"/>
         <source>Host Name:</source>
         <translation>主机名:</translation>
     </message>
     <message>
-        <location filename="../src/change-host-name-widget.ui" line="154"/>
-        <location filename="../build/src/kiran-cpanel-system_autogen/include/ui_change-host-name-widget.h" line="119"/>
+        <location filename="../src/pages/system-information/change-host-name-widget.ui" line="154"/>
         <source>Save</source>
         <translation>保存</translation>
     </message>
     <message>
-        <location filename="../src/change-host-name-widget.ui" line="173"/>
-        <location filename="../build/src/kiran-cpanel-system_autogen/include/ui_change-host-name-widget.h" line="120"/>
+        <location filename="../src/pages/system-information/change-host-name-widget.ui" line="173"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="../src/change-host-name-widget.cpp" line="49"/>
+        <location filename="../src/pages/system-information/change-host-name-widget.cpp" line="48"/>
         <source>Host Name</source>
         <translation>主机名</translation>
     </message>
     <message>
-        <location filename="../src/change-host-name-widget.cpp" line="70"/>
+        <location filename="../src/pages/system-information/change-host-name-widget.cpp" line="69"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="../src/change-host-name-widget.cpp" line="71"/>
+        <location filename="../src/pages/system-information/change-host-name-widget.cpp" line="70"/>
         <source>Change host name failed! Please check the Dbus service!</source>
         <translation>修改主机名失败！请 检查Dbus服务!</translation>
     </message>
@@ -265,54 +261,56 @@ p, li { white-space: pre-wrap; }
     <name>HardwareInformation</name>
     <message>
         <location filename="../src/pages/hardware-information/hardware-information.ui" line="14"/>
-        <location filename="../build/src/kiran-cpanel-system_autogen/include/ui_hardware-information.h" line="272"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/pages/hardware-information/hardware-information.ui" line="163"/>
-        <location filename="../build/src/kiran-cpanel-system_autogen/include/ui_hardware-information.h" line="274"/>
+        <location filename="../src/pages/hardware-information/hardware-information.ui" line="126"/>
         <source>CPU:</source>
         <translation type="unfinished">CPU:</translation>
     </message>
     <message>
-        <location filename="../src/pages/hardware-information/hardware-information.ui" line="183"/>
-        <location filename="../src/pages/hardware-information/hardware-information.ui" line="243"/>
-        <location filename="../build/src/kiran-cpanel-system_autogen/include/ui_hardware-information.h" line="275"/>
-        <location filename="../build/src/kiran-cpanel-system_autogen/include/ui_hardware-information.h" line="277"/>
+        <location filename="../src/pages/hardware-information/hardware-information.ui" line="146"/>
+        <location filename="../src/pages/hardware-information/hardware-information.ui" line="206"/>
         <source>TextLabel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/pages/hardware-information/hardware-information.ui" line="223"/>
-        <location filename="../build/src/kiran-cpanel-system_autogen/include/ui_hardware-information.h" line="276"/>
+        <location filename="../src/pages/hardware-information/hardware-information.ui" line="186"/>
         <source>Memory:</source>
         <translation type="unfinished">内存:</translation>
     </message>
     <message>
-        <location filename="../src/pages/hardware-information/hardware-information.ui" line="283"/>
-        <location filename="../build/src/kiran-cpanel-system_autogen/include/ui_hardware-information.h" line="278"/>
+        <location filename="../src/pages/hardware-information/hardware-information.ui" line="246"/>
         <source>Hard disk:</source>
         <translation type="unfinished">硬盘:</translation>
     </message>
     <message>
-        <location filename="../src/pages/hardware-information/hardware-information.ui" line="361"/>
-        <location filename="../build/src/kiran-cpanel-system_autogen/include/ui_hardware-information.h" line="279"/>
+        <location filename="../src/pages/hardware-information/hardware-information.ui" line="324"/>
         <source>Graphics card:</source>
         <translation type="unfinished">显卡:</translation>
     </message>
     <message>
-        <location filename="../src/pages/hardware-information/hardware-information.ui" line="436"/>
-        <location filename="../build/src/kiran-cpanel-system_autogen/include/ui_hardware-information.h" line="280"/>
+        <location filename="../src/pages/hardware-information/hardware-information.ui" line="399"/>
         <source>Network card:</source>
         <translation type="unfinished">网卡:</translation>
     </message>
     <message>
-        <location filename="../src/pages/hardware-information/hardware-information.cpp" line="78"/>
-        <location filename="../src/pages/hardware-information/hardware-information.cpp" line="81"/>
-        <location filename="../src/pages/hardware-information/hardware-information.cpp" line="84"/>
-        <location filename="../src/pages/hardware-information/hardware-information.cpp" line="90"/>
-        <location filename="../src/pages/hardware-information/hardware-information.cpp" line="91"/>
+        <location filename="../src/pages/hardware-information/hardware-information.cpp" line="77"/>
+        <source>Copyright ©</source>
+        <translation type="unfinished">版权所有 ©</translation>
+    </message>
+    <message>
+        <location filename="../src/pages/hardware-information/hardware-information.cpp" line="77"/>
+        <source>KylinSec. All rights reserved.</source>
+        <translation type="unfinished">KylinSec.保留所有权利.</translation>
+    </message>
+    <message>
+        <location filename="../src/pages/hardware-information/hardware-information.cpp" line="108"/>
+        <location filename="../src/pages/hardware-information/hardware-information.cpp" line="111"/>
+        <location filename="../src/pages/hardware-information/hardware-information.cpp" line="114"/>
+        <location filename="../src/pages/hardware-information/hardware-information.cpp" line="120"/>
+        <location filename="../src/pages/hardware-information/hardware-information.cpp" line="121"/>
         <source>Unknow</source>
         <translation type="unfinished">未知</translation>
     </message>
@@ -347,7 +345,7 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>InformationListItem</name>
     <message>
-        <location filename="../src/information-list-item.ui" line="26"/>
+        <location filename="../src/custom-widgets/information-list-item.ui" line="26"/>
         <location filename="../build/src/kiran-cpanel-system_autogen/include/ui_information-list-item.h" line="77"/>
         <location filename="../build-kiran-system-information-Qt_5_11_1_qt5_0d2831-Debug/ui_information-list-item.h" line="77"/>
         <source>Form</source>
@@ -491,121 +489,131 @@ p, li { white-space: pre-wrap; }
     <name>LicenseInformation</name>
     <message>
         <location filename="../src/pages/license-information/license-information.ui" line="14"/>
-        <location filename="../build/src/kiran-cpanel-system_autogen/include/ui_license-information.h" line="178"/>
+        <location filename="../build/src/kiran-cpanel-system_autogen/include/ui_license-information.h" line="197"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/pages/license-information/license-information.ui" line="65"/>
-        <location filename="../build/src/kiran-cpanel-system_autogen/include/ui_license-information.h" line="179"/>
+        <location filename="../src/pages/license-information/license-information.ui" line="99"/>
+        <location filename="../build/src/kiran-cpanel-system_autogen/include/ui_license-information.h" line="198"/>
         <source>Installation time:</source>
         <translation type="unfinished">安装时间:</translation>
     </message>
     <message>
-        <location filename="../src/pages/license-information/license-information.ui" line="85"/>
-        <location filename="../src/pages/license-information/license-information.ui" line="145"/>
-        <location filename="../src/pages/license-information/license-information.ui" line="224"/>
-        <location filename="../src/pages/license-information/license-information.ui" line="284"/>
-        <location filename="../build/src/kiran-cpanel-system_autogen/include/ui_license-information.h" line="180"/>
-        <location filename="../build/src/kiran-cpanel-system_autogen/include/ui_license-information.h" line="182"/>
-        <location filename="../build/src/kiran-cpanel-system_autogen/include/ui_license-information.h" line="185"/>
-        <location filename="../build/src/kiran-cpanel-system_autogen/include/ui_license-information.h" line="187"/>
+        <location filename="../src/pages/license-information/license-information.ui" line="119"/>
+        <location filename="../src/pages/license-information/license-information.ui" line="179"/>
+        <location filename="../src/pages/license-information/license-information.ui" line="258"/>
+        <location filename="../src/pages/license-information/license-information.ui" line="318"/>
+        <location filename="../build/src/kiran-cpanel-system_autogen/include/ui_license-information.h" line="199"/>
+        <location filename="../build/src/kiran-cpanel-system_autogen/include/ui_license-information.h" line="201"/>
+        <location filename="../build/src/kiran-cpanel-system_autogen/include/ui_license-information.h" line="204"/>
+        <location filename="../build/src/kiran-cpanel-system_autogen/include/ui_license-information.h" line="206"/>
         <source>TextLabel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/pages/license-information/license-information.ui" line="125"/>
-        <location filename="../build/src/kiran-cpanel-system_autogen/include/ui_license-information.h" line="181"/>
+        <location filename="../src/pages/license-information/license-information.ui" line="159"/>
+        <location filename="../build/src/kiran-cpanel-system_autogen/include/ui_license-information.h" line="200"/>
         <source>Activation status:</source>
         <translation type="unfinished">激活状态:</translation>
     </message>
     <message>
-        <location filename="../src/pages/license-information/license-information.ui" line="164"/>
-        <location filename="../build/src/kiran-cpanel-system_autogen/include/ui_license-information.h" line="183"/>
+        <location filename="../src/pages/license-information/license-information.ui" line="198"/>
+        <location filename="../build/src/kiran-cpanel-system_autogen/include/ui_license-information.h" line="202"/>
         <source>...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/pages/license-information/license-information.ui" line="204"/>
-        <location filename="../build/src/kiran-cpanel-system_autogen/include/ui_license-information.h" line="184"/>
+        <location filename="../src/pages/license-information/license-information.ui" line="238"/>
+        <location filename="../build/src/kiran-cpanel-system_autogen/include/ui_license-information.h" line="203"/>
         <source>Expiry date:</source>
         <translation type="unfinished">质保期:</translation>
     </message>
     <message>
-        <location filename="../src/pages/license-information/license-information.ui" line="264"/>
-        <location filename="../build/src/kiran-cpanel-system_autogen/include/ui_license-information.h" line="186"/>
+        <location filename="../src/pages/license-information/license-information.ui" line="298"/>
+        <location filename="../build/src/kiran-cpanel-system_autogen/include/ui_license-information.h" line="205"/>
         <source>Contact Us:</source>
         <translation type="unfinished">联系我们:</translation>
     </message>
     <message>
-        <location filename="../src/pages/license-information/license-information.cpp" line="50"/>
-        <location filename="../src/pages/license-information/license-information.cpp" line="54"/>
-        <location filename="../src/pages/license-information/license-information.cpp" line="55"/>
-        <location filename="../src/pages/license-information/license-information.cpp" line="268"/>
-        <location filename="../src/pages/license-information/license-information.cpp" line="272"/>
-        <location filename="../src/pages/license-information/license-information.cpp" line="273"/>
+        <location filename="../src/pages/license-information/license-information.cpp" line="53"/>
+        <location filename="../src/pages/license-information/license-information.cpp" line="57"/>
+        <location filename="../src/pages/license-information/license-information.cpp" line="58"/>
+        <location filename="../src/pages/license-information/license-information.cpp" line="271"/>
+        <location filename="../src/pages/license-information/license-information.cpp" line="275"/>
+        <location filename="../src/pages/license-information/license-information.cpp" line="276"/>
         <source>Unknow</source>
         <translation type="unfinished">未知</translation>
     </message>
     <message>
-        <location filename="../src/pages/license-information/license-information.cpp" line="51"/>
-        <location filename="../src/pages/license-information/license-information.cpp" line="269"/>
+        <location filename="../src/pages/license-information/license-information.cpp" line="54"/>
+        <location filename="../src/pages/license-information/license-information.cpp" line="272"/>
         <source>Can&apos;t get activation information</source>
         <translation type="unfinished">无法获取激活信息</translation>
     </message>
     <message>
-        <location filename="../src/pages/license-information/license-information.cpp" line="79"/>
-        <location filename="../src/pages/license-information/license-information.cpp" line="132"/>
+        <location filename="../src/pages/license-information/license-information.cpp" line="82"/>
+        <location filename="../src/pages/license-information/license-information.cpp" line="135"/>
         <source>Activate</source>
         <translation type="unfinished">激活</translation>
     </message>
     <message>
-        <location filename="../src/pages/license-information/license-information.cpp" line="88"/>
+        <location filename="../src/pages/license-information/license-information.cpp" line="91"/>
         <source>The current time is illegal</source>
         <translation type="unfinished">当前时间不合法</translation>
     </message>
     <message>
-        <location filename="../src/pages/license-information/license-information.cpp" line="88"/>
+        <location filename="../src/pages/license-information/license-information.cpp" line="91"/>
         <source>Less than the installation time</source>
         <translation type="unfinished">小于安装时间</translation>
     </message>
     <message>
-        <location filename="../src/pages/license-information/license-information.cpp" line="98"/>
+        <location filename="../src/pages/license-information/license-information.cpp" line="101"/>
         <source>Not activated. Trail expiration: </source>
         <translation type="unfinished">未激活.试用到期: </translation>
     </message>
     <message>
-        <location filename="../src/pages/license-information/license-information.cpp" line="106"/>
+        <location filename="../src/pages/license-information/license-information.cpp" line="109"/>
         <source>get service status failed</source>
         <translation type="unfinished">获取服务状态信息失败</translation>
     </message>
     <message>
-        <location filename="../src/pages/license-information/license-information.cpp" line="109"/>
+        <location filename="../src/pages/license-information/license-information.cpp" line="112"/>
         <source>Not yet</source>
         <translation type="unfinished">暂无</translation>
     </message>
     <message>
-        <location filename="../src/pages/license-information/license-information.cpp" line="116"/>
-        <location filename="../src/pages/license-information/license-information.cpp" line="287"/>
+        <location filename="../src/pages/license-information/license-information.cpp" line="119"/>
+        <location filename="../src/pages/license-information/license-information.cpp" line="290"/>
         <source>Activated</source>
         <translation type="unfinished">已激活</translation>
     </message>
     <message>
-        <location filename="../src/pages/license-information/license-information.cpp" line="138"/>
-        <location filename="../src/pages/license-information/license-information.cpp" line="300"/>
+        <location filename="../src/pages/license-information/license-information.cpp" line="141"/>
+        <location filename="../src/pages/license-information/license-information.cpp" line="303"/>
         <source>Forever</source>
         <translation type="unfinished">永久授权</translation>
+    </message>
+    <message>
+        <location filename="../src/pages/license-information/license-information.cpp" line="330"/>
+        <source>Copyright ©</source>
+        <translation type="unfinished">版权所有 ©</translation>
+    </message>
+    <message>
+        <location filename="../src/pages/license-information/license-information.cpp" line="330"/>
+        <source>KylinSec. All rights reserved.</source>
+        <translation type="unfinished">KylinSec.保留所有权利.</translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/system-info-dbus.cpp" line="255"/>
+        <location filename="../src/dbus-wrapper/license-dbus.cpp" line="168"/>
         <source>Did not reply within the specified timeout</source>
         <translation>连接超时</translation>
     </message>
     <message>
-        <location filename="../src/system-info-dbus.cpp" line="260"/>
+        <location filename="../src/dbus-wrapper/license-dbus.cpp" line="173"/>
         <source>The called service is not known</source>
         <translation>无法连接到Dbus服务</translation>
     </message>
@@ -639,13 +647,11 @@ p, li { white-space: pre-wrap; }
     <name>SystemInformation</name>
     <message>
         <location filename="../src/pages/system-information/system-information.ui" line="14"/>
-        <location filename="../build/src/kiran-cpanel-system_autogen/include/ui_system-information.h" line="296"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/pages/system-information/system-information.ui" line="146"/>
-        <location filename="../build/src/kiran-cpanel-system_autogen/include/ui_system-information.h" line="297"/>
         <source>Host Name:</source>
         <translation type="unfinished">主机名:</translation>
     </message>
@@ -654,10 +660,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/pages/system-information/system-information.ui" line="257"/>
         <location filename="../src/pages/system-information/system-information.ui" line="332"/>
         <location filename="../src/pages/system-information/system-information.ui" line="395"/>
-        <location filename="../build/src/kiran-cpanel-system_autogen/include/ui_system-information.h" line="298"/>
-        <location filename="../build/src/kiran-cpanel-system_autogen/include/ui_system-information.h" line="301"/>
-        <location filename="../build/src/kiran-cpanel-system_autogen/include/ui_system-information.h" line="303"/>
-        <location filename="../build/src/kiran-cpanel-system_autogen/include/ui_system-information.h" line="305"/>
         <source>TextLabel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -665,68 +667,60 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/pages/system-information/system-information.ui" line="197"/>
         <location filename="../src/pages/system-information/system-information.ui" line="470"/>
         <location filename="../src/pages/system-information/system-information.ui" line="542"/>
-        <location filename="../build/src/kiran-cpanel-system_autogen/include/ui_system-information.h" line="299"/>
-        <location filename="../build/src/kiran-cpanel-system_autogen/include/ui_system-information.h" line="307"/>
-        <location filename="../build/src/kiran-cpanel-system_autogen/include/ui_system-information.h" line="309"/>
         <source>PushButton</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/pages/system-information/system-information.ui" line="237"/>
-        <location filename="../build/src/kiran-cpanel-system_autogen/include/ui_system-information.h" line="300"/>
         <source>System Version:</source>
         <translation type="unfinished">系统版本:</translation>
     </message>
     <message>
         <location filename="../src/pages/system-information/system-information.ui" line="312"/>
-        <location filename="../build/src/kiran-cpanel-system_autogen/include/ui_system-information.h" line="302"/>
         <source>Kernel Version:</source>
         <translation type="unfinished">内核版本:</translation>
     </message>
     <message>
         <location filename="../src/pages/system-information/system-information.ui" line="375"/>
-        <location filename="../build/src/kiran-cpanel-system_autogen/include/ui_system-information.h" line="304"/>
         <source>System Architecture:</source>
         <translation type="unfinished">系统架构:</translation>
     </message>
     <message>
         <location filename="../src/pages/system-information/system-information.ui" line="438"/>
-        <location filename="../build/src/kiran-cpanel-system_autogen/include/ui_system-information.h" line="306"/>
         <source>EULA:</source>
         <translation type="unfinished">最终用户许可协议:</translation>
     </message>
     <message>
         <location filename="../src/pages/system-information/system-information.ui" line="510"/>
-        <location filename="../build/src/kiran-cpanel-system_autogen/include/ui_system-information.h" line="308"/>
         <source>Version License:</source>
         <translation type="unfinished">版本协议:</translation>
     </message>
     <message>
-        <location filename="../src/pages/system-information/system-information.cpp" line="74"/>
+        <location filename="../src/pages/system-information/system-information.cpp" line="73"/>
         <source>Change</source>
         <translation type="unfinished">更改</translation>
     </message>
     <message>
+        <location filename="../src/pages/system-information/system-information.cpp" line="74"/>
         <location filename="../src/pages/system-information/system-information.cpp" line="75"/>
-        <location filename="../src/pages/system-information/system-information.cpp" line="76"/>
         <source>Show</source>
         <translation type="unfinished">查看</translation>
     </message>
     <message>
+        <location filename="../src/pages/system-information/system-information.cpp" line="128"/>
         <location filename="../src/pages/system-information/system-information.cpp" line="129"/>
         <location filename="../src/pages/system-information/system-information.cpp" line="130"/>
         <location filename="../src/pages/system-information/system-information.cpp" line="131"/>
-        <location filename="../src/pages/system-information/system-information.cpp" line="132"/>
         <source>Unknow</source>
         <translation type="unfinished">未知</translation>
     </message>
     <message>
-        <location filename="../src/pages/system-information/system-information.cpp" line="250"/>
+        <location filename="../src/pages/system-information/system-information.cpp" line="249"/>
         <source>Copyright ©</source>
         <translation type="unfinished">版权所有 ©</translation>
     </message>
     <message>
-        <location filename="../src/pages/system-information/system-information.cpp" line="250"/>
+        <location filename="../src/pages/system-information/system-information.cpp" line="249"/>
         <source>KylinSec. All rights reserved.</source>
         <translation type="unfinished">KylinSec.保留所有权利.</translation>
     </message>

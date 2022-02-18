@@ -28,6 +28,8 @@ public slots:
 
 protected:
     bool eventFilter(QObject *obj, QEvent *event);
+    void paintEvent(QPaintEvent *painEvent);
+    virtual QSize sizeHint() const;
 
 private:
     Ui::LicenseInformation *ui;

@@ -3,12 +3,15 @@
 #include <kylin-license/license_i.h>
 #include <QDateTime>
 #include <QDesktopWidget>
+#include <QFontMetrics>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonValue>
-#include "system-info-dbus.h"
+#include <QPainter>
+#include "dbus-wrapper/license-dbus.h"
 #include "ui_license-information.h"
 
+#define SYSTEM_LOGO "KylinSec OS"
 #define EXPIRED_TIME "expired_time"
 #define START_TIME "start_time"
 #define LICENSE_STATUS "license_status"
@@ -317,4 +320,36 @@ bool LicenseInformation::eventFilter(QObject *obj, QEvent *event)
         m_licenseInfoWidget = nullptr;
     }
     return false;
+}
+
+void LicenseInformation::paintEvent(QPaintEvent *painEvent)
+{
+    QDate currentDate = QDate::currentDate();
+    QString date = currentDate.toString("yyyy-MM-dd");
+    QString year = date.left(4);
+    QString copyright = QString(tr("Copyright ©")) + QString("%1 ").arg(year) + QString(tr("KylinSec. All rights reserved."));
+
+    QPainter painter(this);
+    QFont font = QFont("Noto Sans CJK SC regular", 46);
+    QRect drawRecLogo = QRect(this->geometry().x() + 24, this->geometry().y() + 16, this->width(), ui->widget_logo->height() - 16);
+
+    painter.setPen(QColor(46, 179, 255));  //#2eb3FF
+    painter.setFont(font);
+    painter.drawText(drawRecLogo, SYSTEM_LOGO);
+
+    QFontMetrics fm = painter.fontMetrics();
+    int heightText = fm.height();
+
+    int offsetHeight = heightText + 5 + 16;
+    QRect drawRecCopyright = QRect(24, this->geometry().y() + offsetHeight, this->width(), ui->widget_logo->height() - offsetHeight);
+    font.setPointSize(10);
+    font.setWeight(QFont::Normal);
+    painter.setPen(QColor(145, 145, 145));
+    painter.setFont(font);
+    painter.drawText(drawRecCopyright, copyright);
+}
+
+QSize LicenseInformation::sizeHint() const
+{
+    return QSize(600, 600);
 }

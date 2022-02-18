@@ -13,24 +13,28 @@
  */
 
 #include "hardware-information.h"
-#include "system-info-dbus.h"
+#include "dbus-wrapper/system-info-dbus.h"
 #include "ui_hardware-information.h"
 
 #include <kiran-log/qt5-log-i.h>
 #include <kiran-system-daemon/systeminfo-i.h>
 #include <kiranwidgets-qt5/kiran-message-box.h>
 #include <math.h>
+#include <QDate>
+#include <QFontMetrics>
 #include <QImage>
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QLabel>
+#include <QPainter>
 #include <QPixmap>
 #include <Qt>
 #include <iomanip>
 #include <iostream>
 #include <sstream>
 
+#define SYSTEM_LOGO "KylinSec OS"
 #define MEMORY "mem"
 #define TOTAL_SIZE "total_size"
 #define CPU "cpu"
@@ -58,12 +62,38 @@ HardwareInformation::~HardwareInformation()
 
 bool HardwareInformation::initUI(void)
 {
-    ui->widget_logo->hide();
     if (!readHardwareInfo(1))
     {
         return false;
     }
     return true;
+}
+
+void HardwareInformation::paintEvent(QPaintEvent *painEvent)
+{
+    QDate currentDate = QDate::currentDate();
+    QString date = currentDate.toString("yyyy-MM-dd");
+    QString year = date.left(4);
+    QString copyright = QString(tr("Copyright ©")) + QString("%1 ").arg(year) + QString(tr("KylinSec. All rights reserved."));
+
+    QPainter painter(this);
+    QFont font = QFont("Noto Sans CJK SC regular", 46);
+    QRect drawRecLogo = QRect(this->geometry().x() + 24, this->geometry().y() + 16, this->width(), ui->widget_logo->height() - 16);
+
+    painter.setPen(QColor(46, 179, 255));  //#2eb3FF
+    painter.setFont(font);
+    painter.drawText(drawRecLogo, SYSTEM_LOGO);
+
+    QFontMetrics fm = painter.fontMetrics();
+    int heightText = fm.height();
+
+    int offsetHeight = heightText + 5 + 16;
+    QRect drawRecCopyright = QRect(24, this->geometry().y() + offsetHeight, this->width(), ui->widget_logo->height() - offsetHeight);
+    font.setPointSize(10);
+    font.setWeight(QFont::Normal);
+    painter.setPen(QColor(145, 145, 145));
+    painter.setFont(font);
+    painter.drawText(drawRecCopyright, copyright);
 }
 
 /**
@@ -173,7 +203,6 @@ void HardwareInformation::getJsonValueFromString(QString jsonString)
                 }
                 QString cpuInfo = QString("%1 X %2").arg(model).arg(coresNumber);
                 ui->label_CPU_info->setText(cpuInfo);
-                setCpuLogo(model);
             }
         }
         if (obj.contains(DISKS))
@@ -363,97 +392,4 @@ void HardwareInformation::showListInfo()
         labelEths->setStyleSheet("QLabel{color:#7e7e7e;font-family: \"Noto Sans CJK SC regular\";}");
         ui->gridLayout_network_card->addWidget(labelEths, i, 0, Qt::AlignRight);
     }
-}
-
-void HardwareInformation::setCpuLogo(QString cpuModel)
-{
-    //根据cpu 型号名添加对应logo
-    QImage imgLogo;
-    if (cpuModel.contains("Intel", Qt::CaseInsensitive))
-    {
-        if (!imgLogo.load(":/logos/logos/intel.jpg"))
-        {
-            KLOG_DEBUG() << "can't load logo image";
-            return;
-        }
-    }
-    else if (cpuModel.contains("ZHAOXIN", Qt::CaseInsensitive))
-    {
-        if (!imgLogo.load(":/logos/logos/ZHAOXIN.png"))
-        {
-            KLOG_DEBUG() << "can't load logo image";
-            return;
-        }
-    }
-    else if (cpuModel.contains("HUAWEI Kunpeng", Qt::CaseInsensitive))
-    {
-        if (!imgLogo.load(":/logos/logos/HUAWEI Kunpeng.png"))
-        {
-            KLOG_DEBUG() << "can't load logo image";
-            return;
-        }
-    }
-    else if (cpuModel.contains("LOONGSON", Qt::CaseInsensitive))
-    {
-        if (!imgLogo.load(":/logos/logos/Loongson.gif"))
-        {
-            KLOG_DEBUG() << "can't load logo image";
-            return;
-        }
-    }
-    else if (cpuModel.contains("PHYTIUM", Qt::CaseInsensitive))
-    {
-        if (!imgLogo.load(":/logos/logos/PHYTIUM.png"))
-        {
-            KLOG_DEBUG() << "can't load logo image";
-            return;
-        }
-    }
-    else if (cpuModel.contains("AMD", Qt::CaseInsensitive))
-    {
-        if (!imgLogo.load(":/logos/logos/amd.svg"))
-        {
-            KLOG_DEBUG() << "can't load logo image";
-            return;
-        }
-    }
-    else if (cpuModel.contains("sw", Qt::CaseInsensitive))
-    {
-        if (!imgLogo.load(":/logos/logos/sw_64.png"))
-        {
-            KLOG_DEBUG() << "can't load logo image";
-            return;
-        }
-    }
-    scaledPixmap(imgLogo);
-}
-
-void HardwareInformation::scaledPixmap(QImage img)
-{
-    float labelLogoWidth = this->width();
-    float labelLogoHeight = ui->widget_logo->height() - 80;
-    float newWidth, newHeight;  //新的宽和高
-
-    QPixmap pixmap;
-    pixmap = QPixmap::fromImage(img);
-    float scaledWidth = labelLogoWidth / pixmap.width();
-    float scaledHeight = labelLogoHeight / pixmap.height();
-
-    if (pixmap.width() < labelLogoWidth && pixmap.height() < labelLogoHeight)
-    {
-        ui->label_logo->setPixmap(pixmap);
-        return;
-    }
-    else if (scaledHeight < scaledWidth)
-    {
-        newWidth = pixmap.width() * scaledHeight;
-        newHeight = pixmap.height() * scaledHeight;
-    }
-    else if (scaledHeight >= scaledWidth)
-    {
-        newWidth = pixmap.width() * scaledWidth;
-        newHeight = pixmap.height() * scaledWidth;
-    }
-    pixmap = pixmap.scaled(newWidth, newHeight, Qt::KeepAspectRatio);
-    ui->label_logo->setPixmap(pixmap);
 }
