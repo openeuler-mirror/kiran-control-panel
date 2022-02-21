@@ -46,6 +46,7 @@ if(DISABLE_LICENSE)
 endif()
 if(DISABLE_SYSTEM_INFO)
 	add_definitions(-DDISABLE_SYSTEM_INFO)
+        add_definitions(-DDISABLE_KIRANWIDGETS)
 endif()
 
 

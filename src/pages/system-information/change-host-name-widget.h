@@ -16,13 +16,18 @@
 #define CHANGEHOSTNAMEWIDGET_H
 
 #include <QWidget>
-#include <kiranwidgets-qt5/kiran-titlebar-window.h>
 
-namespace Ui {
+namespace Ui
+{
 class ChangeHostNameWidget;
 }
 
+#ifdef DISABLE_KIRANWIDGETS
+class ChangeHostNameWidget : public QWidget
+#else
+#include <kiranwidgets-qt5/kiran-titlebar-window.h>
 class ChangeHostNameWidget : public KiranTitlebarWindow
+#endif
 {
     Q_OBJECT
 
@@ -45,4 +50,4 @@ private:
     Ui::ChangeHostNameWidget *ui;
 };
 
-#endif // CHANGEHOSTNAMEWIDGET_H
+#endif  // CHANGEHOSTNAMEWIDGET_H

@@ -13,22 +13,21 @@
  */
 
 #include "kiran-system-information.h"
+#include <kiran-log/qt5-log-i.h>
+#include <QBoxLayout>
+#include <QDesktopWidget>
+#include <QPainter>
+#include <QScroller>
+#include <QStackedWidget>
 #include "ui_kiran-system-information.h"
 
-#include <QPainter>
-#include <QStackedWidget>
-#include <QDesktopWidget>
-#include <QBoxLayout>
-#include <QScroller>
-
-kiranSystemInformation::kiranSystemInformation(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::kiranSystemInformation)
+kiranSystemInformation::kiranSystemInformation(QWidget* parent) : QWidget(parent),
+                                                                  ui(new Ui::kiranSystemInformation)
 {
     ui->setupUi(this);
     initUI();
 
-    connect(ui->infoListWidget, SIGNAL(itemClicked(QListWidgetItem*)),this,SLOT(changeWidgetWhenItemClicked(QListWidgetItem*)));
+    //connect(ui->infoListWidget, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(changeWidgetWhenItemClicked(QListWidgetItem*)));
 }
 
 kiranSystemInformation::~kiranSystemInformation()
@@ -36,24 +35,40 @@ kiranSystemInformation::~kiranSystemInformation()
     delete ui;
 }
 
-void kiranSystemInformation::initUI()
+QSize kiranSystemInformation::sizeHint() const
 {
-    setWindowFlags(Qt::FramelessWindowHint);
-    /*创建左侧列表*/
-    QString systemInfomationIcon = ":/images/system-information.svg";
-    QString hardwareInformationIcon = ":/images/hardware-information.svg";
-    systemInfomationItem = createInformationItem(QString(tr("System Information")) , systemInfomationIcon);
-    hardwareInformationItem = createInformationItem(QString(tr("Hardware Information")) , hardwareInformationIcon);
-    ui->infoListWidget->setCurrentRow(0);
+    /*根据系统分辨率设置窗口大小*/
+    int screenNum = QApplication::desktop()->screenNumber(QCursor::pos());
+    QRect screenGeometry = QApplication::desktop()->screenGeometry(screenNum);
+
+    KLOG_INFO() << screenGeometry.width() << screenGeometry.height();
+    QSize windowSize;
+    if (screenGeometry.height() >= 776 && screenGeometry.width() >= 980)  //能显示全
+    {
+        windowSize = QSize(980, 776);
+    }
+    else
+    {
+        windowSize = QSize(screenGeometry.width(), screenGeometry.height());
+    }
+
+    return windowSize;
 }
 
+void kiranSystemInformation::initUI()
+{
+    /*创建左侧列表*/
+    QString licenseInfomationIcon = ":/images/system-information.svg";
+    licenseInfoWidget = createInformationItem(QString(tr("License Information")), licenseInfomationIcon);
+    ui->infoListWidget->setCurrentRow(0);
+}
 
 /**
  * @brief  创建左侧自定义信息列表项
  * @param  text 列表项的名字
  * @return InfomationListItem 返回设计好的信息列表项
  */
-InformationListItem *kiranSystemInformation::createInformationItem(const QString text , const QString iconPath)
+InformationListItem* kiranSystemInformation::createInformationItem(const QString text, const QString iconPath)
 {
     QListWidgetItem* newItem = nullptr;
     InformationListItem* customItem = nullptr;
@@ -61,33 +76,31 @@ InformationListItem *kiranSystemInformation::createInformationItem(const QString
     newItem = new QListWidgetItem(ui->infoListWidget);
     customItem = new InformationListItem(ui->infoListWidget);
 
-    newItem->setSizeHint(QSize(246,60));
+    newItem->setSizeHint(QSize(246, 60));
     newItem->setTextAlignment(Qt::AlignVCenter);
 
     customItem->setItemText(text);
     customItem->setItemIcon(iconPath);
     ui->infoListWidget->addItem(newItem);
-    ui->infoListWidget->setItemWidget(newItem , customItem);
+    ui->infoListWidget->setItemWidget(newItem, customItem);
 
-    ui->infoListWidget->setGridSize(QSize(246,84));
+    ui->infoListWidget->setGridSize(QSize(246, 84));
     return customItem;
 }
 
-void kiranSystemInformation::changeWidgetWhenItemClicked(QListWidgetItem * currentItem)
+void kiranSystemInformation::changeWidgetWhenItemClicked(QListWidgetItem* currentItem)
 {
-    int itemNum = ui->infoListWidget->row(currentItem);
-    if(itemNum == itemSystemInfo)
-    {
-        ui->stackedWidget->setCurrentWidget(ui->page_system_info);
-        systemInfomationItem->setItemArrow(true);
-        hardwareInformationItem->setItemArrow(false);
-    }
-    else if(itemNum == itemHardwareInfo)
-    {
-        ui->stackedWidget->setCurrentWidget(ui->page_hardware_info);
-        hardwareInformationItem->setItemArrow(true);
-        systemInfomationItem->setItemArrow(false);
-    }
-
-
+    //    int itemNum = ui->infoListWidget->row(currentItem);
+    //    if (itemNum == itemSystemInfo)
+    //    {
+    //        ui->stackedWidget->setCurrentWidget(ui->page_system_info);
+    //        systemInfomationItem->setItemArrow(true);
+    //        hardwareInformationItem->setItemArrow(false);
+    //    }
+    //    else if (itemNum == itemHardwareInfo)
+    //    {
+    //        ui->stackedWidget->setCurrentWidget(ui->page_hardware_info);
+    //        hardwareInformationItem->setItemArrow(true);
+    //        systemInfomationItem->setItemArrow(false);
+    //    }
 }

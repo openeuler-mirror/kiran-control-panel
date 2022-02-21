@@ -15,13 +15,17 @@
 #ifndef KIRANSYSTEMWIDGET_H
 #define KIRANSYSTEMWIDGET_H
 
-#include <kiranwidgets-qt5/kiran-titlebar-window.h>
 #include "kiran-system-information.h"
 
-#include <QPushButton>
 #include <QMenu>
+#include <QPushButton>
 
+#ifdef DISABLE_KIRANWIDGETS
+class KiranSystemWidget : public QWidget
+#else
+#include <kiranwidgets-qt5/kiran-titlebar-window.h>
 class KiranSystemWidget : public KiranTitlebarWindow
+#endif
 {
     Q_OBJECT
 public:
@@ -30,8 +34,7 @@ public:
     virtual QSize sizeHint() const override;
 
 private:
-     kiranSystemInformation *centerWgt;
-
+    kiranSystemInformation *centerWgt;
 };
 
-#endif // KIRANSYSTEMWIDGET_H
+#endif  // KIRANSYSTEMWIDGET_H

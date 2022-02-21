@@ -13,17 +13,29 @@
  */
 
 #include "change-host-name-widget.h"
-#include <kiranwidgets-qt5/kiran-message-box.h>
-#include <kiranwidgets-qt5/kiran-style-public-define.h>
-#include <kiranwidgets-qt5/widget-property-helper.h>
 #include <QDesktopWidget>
+#include <QMessageBox>
 #include "dbus-wrapper/system-info-dbus.h"
 #include "ui_change-host-name-widget.h"
 
+#ifdef DISABLE_KIRANWIDGETS
+ChangeHostNameWidget::ChangeHostNameWidget() : QWidget(),
+                                               ui(new Ui::ChangeHostNameWidget)
+{
+    ui->setupUi(this);
+#else
+#include <kiranwidgets-qt5/kiran-message-box.h>
+#include <kiranwidgets-qt5/kiran-style-public-define.h>
+#include <kiranwidgets-qt5/widget-property-helper.h>
 ChangeHostNameWidget::ChangeHostNameWidget() : KiranTitlebarWindow(),
                                                ui(new Ui::ChangeHostNameWidget)
 {
     ui->setupUi(getWindowContentWidget());
+    setButtonHints(TitlebarMinimizeButtonHint | TitlebarCloseButtonHint);
+    setContentWrapperMarginBottom(0);
+    setResizeable(false);
+    Kiran::WidgetPropertyHelper::setButtonType(ui->btn_save, Kiran::BUTTON_Default);
+#endif
     initUI();
     connect(ui->btn_cancel, SIGNAL(clicked()), this, SLOT(close()));
     connect(ui->btn_save, SIGNAL(clicked()), this, SLOT(setNewHostName()));
@@ -47,12 +59,8 @@ void ChangeHostNameWidget::initUI()
 {
     setTitle(tr("Host Name"));
     setIcon(QIcon(":/images/kylin-about.png"));
-    setButtonHints(TitlebarMinimizeButtonHint | TitlebarCloseButtonHint);
-    setContentWrapperMarginBottom(0);
-    setResizeable(false);
-    ui->btn_save->setEnabled(false);
 
-    Kiran::WidgetPropertyHelper::setButtonType(ui->btn_save, Kiran::BUTTON_Default);
+    ui->btn_save->setEnabled(false);
 
     int screenNum = QApplication::desktop()->screenNumber(QCursor::pos());
     QRect screenGeometry = QApplication::desktop()->screenGeometry(screenNum);
@@ -68,11 +76,17 @@ void ChangeHostNameWidget::setNewHostName()
         emit sigChangeNameSuccessful(false, newName);
         QString boxTitle = QString(tr("Warning"));
         QString boxText = QString(tr("Change host name failed! Please check the Dbus service!"));
+
+#ifdef DISABLE_KIRANWIDGETS
+        QMessageBox::information(nullptr, boxTitle, boxText, QMessageBox::Ok);
+        return;
+#else
         KiranMessageBox::KiranStandardButton button = KiranMessageBox::message(nullptr, boxTitle, boxText, KiranMessageBox::Ok);
         if (button == KiranMessageBox::Ok)
         {
             return;
         }
+#endif
     }
     else
     {

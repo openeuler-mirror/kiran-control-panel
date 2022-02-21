@@ -51,7 +51,7 @@
      </property>
      <property name="minimumSize">
       <size>
-       <width>0</width>
+       <width>288</width>
        <height>0</height>
       </size>
      </property>
@@ -157,7 +157,7 @@
           <property name="widgetResizable">
            <bool>true</bool>
           </property>
-          <widget class="QWidget" name="scrollAreaWidgetContents">
+          <widget class="LicenseInformation" name="page_license">
            <property name="geometry">
             <rect>
              <x>0</x>
@@ -188,12 +188,6 @@
             <property name="bottomMargin">
              <number>0</number>
             </property>
-            <item>
-             <widget class="QStackedWidget" name="stackedWidget">
-              <widget class="SystemInformation" name="page_system_info"/>
-              <widget class="HardwareInformation" name="page_hardware_info"/>
-             </widget>
-            </item>
            </layout>
           </widget>
          </widget>
@@ -208,18 +202,6 @@
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
   <customwidget>
-   <class>SystemInformation</class>
-   <extends>QWidget</extends>
-   <header location="global">pages/system-information/system-information.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>HardwareInformation</class>
-   <extends>QWidget</extends>
-   <header location="global">pages/hardware-information/hardware-information.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>KiranScrollArea</class>
    <extends>QScrollArea</extends>
    <header location="global">custom-widgets/kiran-scroll-area.h</header>
@@ -229,6 +211,12 @@
    <class>KiranListWidget</class>
    <extends>QListWidget</extends>
    <header>custom-widgets/kiran-list-widget.h</header>
+  </customwidget>
+  <customwidget>
+   <class>LicenseInformation</class>
+   <extends>QWidget</extends>
+   <header>pages/license-information/license-information.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>

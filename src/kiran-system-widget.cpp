@@ -13,41 +13,46 @@
  */
 
 #include "kiran-system-widget.h"
-#include "kiran-system-information.h"
-#include <kiranwidgets-qt5/kiran-message-box.h>
 #include <kiran-log/qt5-log-i.h>
-#include <QPushButton>
-#include <QMenu>
-#include <QHBoxLayout>
+#include <kiranwidgets-qt5/kiran-message-box.h>
 #include <QAction>
-#include <QEvent>
-#include <QDesktopWidget>
 #include <QApplication>
+#include <QDesktopWidget>
+#include <QEvent>
 #include <QFile>
 #include <QFileDialog>
+#include <QHBoxLayout>
+#include <QMenu>
 #include <QMessageBox>
-#include <QtPrintSupport/QPrinter>
-#include <QTextDocument>
+#include <QPushButton>
 #include <QStandardPaths>
+#include <QTextDocument>
 #include <QTimer>
+#include <QtPrintSupport/QPrinter>
+#include "kiran-system-information.h"
 
-KiranSystemWidget::KiranSystemWidget():
-    KiranTitlebarWindow()
+#ifdef DISABLE_KIRANWIDGETS
+KiranSystemWidget::KiranSystemWidget() : QWidget(), centerWgt(nullptr)
+{
+    setWindowFlag(Qt::WindowMinMaxButtonsHint | Qt::WindowCloseButtonHint);
+#else
+KiranSystemWidget::KiranSystemWidget() : KiranTitlebarWindow(), centerWgt(nullptr)
 {
     setButtonHints(KiranTitlebarWindow::TitlebarMinMaxCloseHints);
-    setTitle(tr("kiran-system-imformation"));
-    setIcon(QIcon(":/images/kylin-about.png"));
-
-    centerWgt = new kiranSystemInformation;
+    centerWgt = new kiranSystemInformation(this);
     setWindowContentWidget(centerWgt);
     connect(centerWgt, &kiranSystemInformation::destroyed, this, &KiranSystemWidget::close);
+#endif
+
+    setTitle(tr("kiran-system-imformation"));
+    setIcon(QIcon(":/images/kylin-about.png"));
 }
 
 KiranSystemWidget::~KiranSystemWidget()
 {
-    if(centerWgt != nullptr)
+    if (centerWgt != nullptr)
     {
-       delete centerWgt;
+        delete centerWgt;
     }
 }
 
@@ -59,19 +64,14 @@ QSize KiranSystemWidget::sizeHint() const
 
     KLOG_INFO() << screenGeometry.width() << screenGeometry.height();
     QSize windowSize;
-    if(screenGeometry.height() >= 776 && screenGeometry.width() >= 980 ) //能显示全
+    if (screenGeometry.height() >= 776 && screenGeometry.width() >= 980)  //能显示全
     {
-        windowSize = QSize(980,776);
+        windowSize = QSize(980, 776);
     }
     else
     {
-        windowSize = QSize(screenGeometry.width() , screenGeometry.height());
+        windowSize = QSize(screenGeometry.width(), screenGeometry.height());
     }
 
     return windowSize;
 }
-
-
-
-
-

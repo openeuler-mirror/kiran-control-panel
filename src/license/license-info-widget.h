@@ -16,31 +16,33 @@
 
 #include <QWidget>
 #include "show-qrcode.h"
-#include <kiranwidgets-qt5/kiran-titlebar-window.h>
 
-namespace Ui {
+namespace Ui
+{
 class LicenseInfoWidget;
 }
 
+#ifdef DISABLE_KIRANWIDGETS
+class LicenseInfoWidget : public QWidget
+#else
+#include <kiranwidgets-qt5/kiran-titlebar-window.h>
 class LicenseInfoWidget : public KiranTitlebarWindow
+#endif
 {
     Q_OBJECT
 
 public:
-    explicit LicenseInfoWidget(QString & mc_code, QString & lc_code,QWidget *parent=nullptr);
+    explicit LicenseInfoWidget(QString &mc_code, QString &lc_code, QWidget *parent = nullptr);
     ~LicenseInfoWidget();
 
-    void setMachineCode(QString & machine_code);
-    void setLicenseCode(QString & license_code);
-
-private:
-     void iniUI();
+    void setMachineCode(QString &machine_code);
+    void setLicenseCode(QString &license_code);
 
 private slots:
-    void popupQRCode(QPoint oPoint,QObject *target);
+    void popupQRCode(QPoint oPoint, QObject *target);
 
 signals:
-    void sig_showQRCodeWgt(QPoint oPoint,QObject *target);
+    void sig_showQRCodeWgt(QPoint oPoint, QObject *target);
 
 protected:
     bool eventFilter(QObject *target, QEvent *e);
@@ -52,4 +54,4 @@ private:
     QString license_code;
 };
 
-#endif // LICENSEINFOWIDGET_H
+#endif  // LICENSEINFOWIDGET_H

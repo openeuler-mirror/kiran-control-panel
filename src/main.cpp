@@ -12,7 +12,6 @@
  * Author:     yuanxing <yuanxing@kylinos.com.cn>
  */
 #include <kiran-log/qt5-log-i.h>
-#include <kiranwidgets-qt5/kiran-single-application.h>
 #include <QApplication>
 #include <QDesktopWidget>
 #include <QFile>
@@ -36,7 +35,7 @@ int main(int argc, char *argv[])
 
     KLOG_INFO() << "******New Output*********";
 
-    KiranSingleApplication a(argc, argv);
+    QApplication a(argc, argv);
 
     ///加载qss样式表
     QFile file(":/qss/style.qss");
@@ -63,7 +62,6 @@ int main(int argc, char *argv[])
         KLOG_DEBUG() << "Load Translator File failed : " << TRANSLATION_DIR;
     }
 
-    //KiranSystemWidget w;
     kiranSystemInformation w;
     w.resize(w.sizeHint());
 

@@ -13,14 +13,12 @@
  */
 #include "license-agreement.h"
 #include <kiran-log/qt5-log-i.h>
-#include <kiranwidgets-qt5/kiran-message-box.h>
-#include <kiranwidgets-qt5/kiran-style-public-define.h>
-#include <kiranwidgets-qt5/widget-property-helper.h>
 #include <QDesktopWidget>
 #include <QFile>
 #include <QFileDialog>
 #include <QIcon>
 #include <QLocale>
+#include <QMessageBox>
 #include <QStandardPaths>
 #include <QTextDocument>
 #include <QtPrintSupport/QPrinter>
@@ -34,14 +32,30 @@ enum LicenseType
     VERSION_LICENSE
 };
 
+#ifdef DISABLE_KIRANWIDGETS
+LicenseAgreement::LicenseAgreement() : QWidget(),
+                                       ui(new Ui::LicenseAgreement)
+{
+    ui->setupUi(this);
+    setWindowIcon(QIcon(":/images/kylin-about.png"));
+#else
+#include <kiranwidgets-qt5/kiran-message-box.h>
+#include <kiranwidgets-qt5/kiran-style-public-define.h>
+#include <kiranwidgets-qt5/widget-property-helper.h>
 using namespace Kiran::WidgetPropertyHelper;
 using namespace Kiran;
-
 LicenseAgreement::LicenseAgreement() : KiranTitlebarWindow(),
                                        ui(new Ui::LicenseAgreement)
 {
     ui->setupUi(getWindowContentWidget());
-    initUI();
+    setIcon(QIcon(":/images/kylin-about.png"));
+    setButtonHints(TitlebarMinimizeButtonHint | TitlebarCloseButtonHint);
+    setResizeable(false);
+    setButtonType(ui->btn_license_close, BUTTON_Default);
+    setButtonType(ui->btn_license_export, BUTTON_Normal);
+
+#endif
+    setWindowModality(Qt::ApplicationModal);
     connect(ui->btn_license_close, &QPushButton::clicked,
             [this] {
                 this->close();
@@ -82,6 +96,10 @@ void LicenseAgreement::exportLicense()
 
     if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
     {
+#ifdef DISABLE_KIRANWIDGETS
+        QMessageBox::information(nullptr, QString(tr("Export License")), QString(tr("Export License failed!")), QMessageBox::Ok);
+        return;
+#else
         KiranMessageBox::KiranStandardButton button = KiranMessageBox::message(nullptr, QString(tr("Export License")),
                                                                                QString(tr("Export License failed!")),
                                                                                KiranMessageBox::Ok);
@@ -89,6 +107,7 @@ void LicenseAgreement::exportLicense()
         {
             return;
         }
+#endif
     }
     else
     {
@@ -104,17 +123,6 @@ void LicenseAgreement::exportLicense()
         doc.print(&printer);
         file.close();
     }
-}
-
-void LicenseAgreement::initUI()
-{
-    setIcon(QIcon(":/images/kylin-about.png"));
-    setResizeable(false);
-    setButtonHints(TitlebarMinimizeButtonHint | TitlebarCloseButtonHint);
-    setWindowModality(Qt::ApplicationModal);
-
-    setButtonType(ui->btn_license_close, BUTTON_Default);
-    setButtonType(ui->btn_license_export, BUTTON_Normal);
 }
 
 QString LicenseAgreement::getLocaleLang()
@@ -134,7 +142,11 @@ void LicenseAgreement::setEULA()
 {
     m_licenseType = EULA_LICENSE;
     ui->text_license->clear();
+#ifdef DISABLE_KIRANWIDGETS
+    setWindowTitle(LicenseAgreement::tr("User End License Agreement"));
+#else
     setTitle(LicenseAgreement::tr("User End License Agreement"));
+#endif
     QString lang = getLocaleLang();
     QString licenseFile;
 
@@ -179,7 +191,12 @@ void LicenseAgreement::setVersionLicnese()
 {
     m_licenseType = VERSION_LICENSE;
     ui->text_license->clear();
+
+#ifdef DISABLE_KIRANWIDGETS
+    setWindowTitle(LicenseAgreement::tr("Version License"));
+#else
     setTitle(LicenseAgreement::tr("Version License"));
+#endif
 
     QFile file(LICENSEFILE);
     QTextStream textStream;

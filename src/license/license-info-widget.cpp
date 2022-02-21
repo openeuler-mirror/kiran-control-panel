@@ -12,39 +12,42 @@
  * Author:     yuanxing <yuanxing@kylinos.com.cn>
  */
 #include "license-info-widget.h"
-#include "ui_license-info-widget.h"
 #include <kiran-log/qt5-log-i.h>
-#include <iostream>
 #include <QDesktopWidget>
 #include <QEnterEvent>
+#include <iostream>
+#include "ui_license-info-widget.h"
 
 using namespace std;
 
-LicenseInfoWidget::LicenseInfoWidget(QString &mc_code, QString & lc_code, QWidget *parent) :
-    KiranTitlebarWindow(parent),
-    ui(new Ui::LicenseInfoWidget),
-    showQRCode(nullptr)
+#ifdef DISABLE_KIRANWIDGETS
+LicenseInfoWidget::LicenseInfoWidget(QString &mc_code, QString &lc_code, QWidget *parent) : QWidget(parent),
+                                                                                            ui(new Ui::LicenseInfoWidget),
+                                                                                            showQRCode(nullptr)
+{
+    ui->setupUi(this);
+    setWindowTitle(tr("Activation Information"));
+    setWindowIcon(QIcon(":/images/kylin-about.png"));
+#else
+LicenseInfoWidget::LicenseInfoWidget(QString &mc_code, QString &lc_code, QWidget *parent) : KiranTitlebarWindow(parent),
+                                                                                            ui(new Ui::LicenseInfoWidget),
+                                                                                            showQRCode(nullptr)
 {
     ui->setupUi(getWindowContentWidget());
-    iniUI();
+    setButtonHints(TitlebarMinimizeButtonHint | TitlebarCloseButtonHint);
+    setResizeable(false);
+    setTitle(LicenseInfoWidget::tr("Activation Information"));
+    setIcon(QIcon(":/images/kylin-about.png"));
+#endif
+    setWindowModality(Qt::ApplicationModal);
 
-    machine_code = mc_code ;
+    machine_code = mc_code;
     license_code = lc_code;
 
     ui->btn_qrcode_lc->installEventFilter(this);
     ui->btn_qrcode_mc->installEventFilter(this);
 
-    connect(this ,SIGNAL(sig_showQRCodeWgt(QPoint,QObject*)),this ,SLOT(popupQRCode(QPoint,QObject*)));
-
-}
-
-void LicenseInfoWidget::iniUI()
-{
-    setTitle(LicenseInfoWidget::tr("Activation Information"));
-    setWindowModality(Qt::ApplicationModal);
-    setButtonHints(TitlebarMinimizeButtonHint|TitlebarCloseButtonHint);
-    setResizeable(false);
-    setIcon(QIcon(":/images/kylin-about.png"));
+    connect(this, SIGNAL(sig_showQRCodeWgt(QPoint, QObject *)), this, SLOT(popupQRCode(QPoint, QObject *)));
 }
 
 /**
@@ -52,25 +55,24 @@ void LicenseInfoWidget::iniUI()
  * @param  oPoint  二维码显示的位置
  * @param  target  事件对象，用来决定显示机器码还是二维码
  */
-void LicenseInfoWidget::popupQRCode(QPoint oPoint ,QObject *target)
+void LicenseInfoWidget::popupQRCode(QPoint oPoint, QObject *target)
 {
-    if(showQRCode == nullptr)
+    if (showQRCode == nullptr)
     {
         showQRCode = new ShowQRCode;
         showQRCode->setWindowFlag(Qt::X11BypassWindowManagerHint);
     }
-    if(target == ui->btn_qrcode_lc)
+    if (target == ui->btn_qrcode_lc)
     {
-        showQRCode->setQRCode(license_code , false);
+        showQRCode->setQRCode(license_code, false);
     }
-    else if(target ==  ui->btn_qrcode_mc)
+    else if (target == ui->btn_qrcode_mc)
     {
-        showQRCode->setQRCode(machine_code ,true);
+        showQRCode->setQRCode(machine_code, true);
     }
 
     showQRCode->move(oPoint);
     showQRCode->show();
-
 }
 
 /**
@@ -82,36 +84,35 @@ void LicenseInfoWidget::popupQRCode(QPoint oPoint ,QObject *target)
  */
 bool LicenseInfoWidget::eventFilter(QObject *target, QEvent *e)
 {
-    if(target == ui->btn_qrcode_lc || target == ui->btn_qrcode_mc)
+    if (target == ui->btn_qrcode_lc || target == ui->btn_qrcode_mc)
     {
-        if(e->type()==QEvent::Enter)
+        if (e->type() == QEvent::Enter)
         {
             QEnterEvent *enterEvent = static_cast<QEnterEvent *>(e);
-            if(target == ui->btn_qrcode_mc)
+            if (target == ui->btn_qrcode_mc)
             {
-                QPoint oPoint = QPoint(enterEvent->globalX()+16,enterEvent->globalY()-36);
-                emit sig_showQRCodeWgt(oPoint,target);
+                QPoint oPoint = QPoint(enterEvent->globalX() + 16, enterEvent->globalY() - 36);
+                emit sig_showQRCodeWgt(oPoint, target);
             }
             else
             {
-                QPoint oPoint = QPoint(enterEvent->globalX()+16,enterEvent->globalY()-36);
-                emit sig_showQRCodeWgt(oPoint,target);
+                QPoint oPoint = QPoint(enterEvent->globalX() + 16, enterEvent->globalY() - 36);
+                emit sig_showQRCodeWgt(oPoint, target);
             }
         }
-        else if (e->type()==QEvent::Leave)
+        else if (e->type() == QEvent::Leave)
         {
             showQRCode->hide();
             delete showQRCode;
             showQRCode = nullptr;
         }
     }
-    return QWidget::eventFilter(target,e);
+    return QWidget::eventFilter(target, e);
 }
 
-
-void LicenseInfoWidget::setMachineCode(QString & machine_code)
+void LicenseInfoWidget::setMachineCode(QString &machine_code)
 {
-    if(machine_code =="NULL")
+    if (machine_code == "NULL")
     {
         ui->label_mc->setText(tr("Can't get machine code"));
         return;
@@ -119,21 +120,20 @@ void LicenseInfoWidget::setMachineCode(QString & machine_code)
     ui->label_mc->setText(machine_code);
 }
 
-void LicenseInfoWidget::setLicenseCode(QString & license_code)
+void LicenseInfoWidget::setLicenseCode(QString &license_code)
 {
-    if(license_code == "NULL")
+    if (license_code == "NULL")
     {
         ui->label_lc->setText(tr("Can't get activation code"));
-        return ;
+        return;
     }
     ui->label_lc->setText(license_code);
 }
 
-
 LicenseInfoWidget::~LicenseInfoWidget()
 {
     delete ui;
-    if(showQRCode)
+    if (showQRCode)
     {
         delete showQRCode;
         showQRCode = nullptr;

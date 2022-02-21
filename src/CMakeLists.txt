@@ -17,8 +17,8 @@ file(GLOB_RECURSE SYSTEM_INFO_H "pages/hardware-information/*.h" "pages/system-i
 file(GLOB_RECURSE SYSTEM_INFO_FORMS "pages/hardware-information/*.ui" "pages/system-information/*.ui")
 
 #公共源码
-file(GLOB_RECURSE PUBLIC_CPP "custom-widgets/*.cpp" "kiran-system-information.cpp" "kiran-system-widget.cpp" "main.cpp")
-file(GLOB_RECURSE PUBLIC_H "custom-widgets/*.h" "kiran-system-information.h" "kiran-system-widget.h")
+file(GLOB_RECURSE PUBLIC_CPP "custom-widgets/*.cpp" "kiran-system-information.cpp" "main.cpp")
+file(GLOB_RECURSE PUBLIC_H "custom-widgets/*.h" "kiran-system-information.h")
 file(GLOB_RECURSE PUBLIC_FORMS "custom-widgets/*.ui" "kiran-system-information.ui")
 
 #插件接口源码
@@ -52,6 +52,7 @@ if(DISABLE_SYSTEM_INFO)
 		Qt5::DBus
 		Qt5::Svg
 		Qt5::Core
+                Qt5::PrintSupport
 		qrencode
 		glib-2.0
 		${KLOG_QT5_LIBRARIES})

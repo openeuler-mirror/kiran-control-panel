@@ -36,11 +36,26 @@ using namespace std;
 #define SERVER_AUTHORIZED_POINTS "server_authorized_points"
 #define SERVER_REMAINING_POINTS "server_remaining_points"
 
+#ifdef DISABLE_KIRANWIDGETS
+ActGuideWidget::ActGuideWidget(QWidget *parent) : QWidget(parent),
+                                                  ui(new Ui::ActGuideWidget),
+                                                  showQRCode(nullptr)
+{
+    ui->setupUi(this);
+    setWindowTitle(tr("Activation Guide"));
+    setWindowIcon(QIcon(":/images/kylin-about.png"));
+    setWindowFlags(Qt::Window | Qt::WindowMinimizeButtonHint | Qt::WindowCloseButtonHint);
+#else
 ActGuideWidget::ActGuideWidget(QWidget *parent) : KiranTitlebarWindow(parent),
                                                   ui(new Ui::ActGuideWidget),
                                                   showQRCode(nullptr)
 {
     ui->setupUi(getWindowContentWidget());
+    setButtonHints(TitlebarMinimizeButtonHint | TitlebarCloseButtonHint);
+    setTitle(tr("Activation Guide"));
+    setIcon(QIcon(":/images/kylin-about.png"));
+    setResizeable(false);
+#endif
     iniUI();
     if (!getMachineCode())
     {
@@ -89,11 +104,7 @@ ActGuideWidget::ActGuideWidget(QWidget *parent) : KiranTitlebarWindow(parent),
 
 void ActGuideWidget::iniUI()
 {
-    setTitle(tr("Activation Guide"));
-    setIcon(QIcon(":/images/kylin-about.png"));
     setWindowModality(Qt::ApplicationModal);
-    setButtonHints(TitlebarMinimizeButtonHint | TitlebarCloseButtonHint);
-    setResizeable(false);
     hideLabelPointsDefault();
 
     ui->listWidget->setFocusPolicy(Qt::NoFocus);
