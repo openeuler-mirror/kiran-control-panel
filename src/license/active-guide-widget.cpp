@@ -39,7 +39,7 @@ using namespace std;
 #ifdef DISABLE_KIRANWIDGETS
 ActGuideWidget::ActGuideWidget(QWidget *parent) : QWidget(parent),
                                                   ui(new Ui::ActGuideWidget),
-                                                  showQRCode(nullptr)
+                                                  showQRCode(NULL)
 {
     ui->setupUi(this);
     setWindowTitle(tr("Activation Guide"));
@@ -48,7 +48,7 @@ ActGuideWidget::ActGuideWidget(QWidget *parent) : QWidget(parent),
 #else
 ActGuideWidget::ActGuideWidget(QWidget *parent) : KiranTitlebarWindow(parent),
                                                   ui(new Ui::ActGuideWidget),
-                                                  showQRCode(nullptr)
+                                                  showQRCode(NULL)
 {
     ui->setupUi(getWindowContentWidget());
     setButtonHints(TitlebarMinimizeButtonHint | TitlebarCloseButtonHint);
@@ -156,7 +156,7 @@ void ActGuideWidget::setLabelPointsVisible(bool almightyPointsVisible)
  */
 void ActGuideWidget::popupQRCode(QPoint oPoint)
 {
-    if (showQRCode == nullptr)
+    if (showQRCode == NULL)
     {
         showQRCode = new ShowQRCode;
     }
@@ -187,7 +187,7 @@ bool ActGuideWidget::eventFilter(QObject *target, QEvent *e)
         {
             showQRCode->hide();
             delete showQRCode;
-            showQRCode = nullptr;
+            showQRCode = NULL;
         }
     }
     return false;
@@ -200,8 +200,8 @@ bool ActGuideWidget::eventFilter(QObject *target, QEvent *e)
  */
 ActListItem *ActGuideWidget::createActiveItem(const QString &text)
 {
-    QListWidgetItem *newItem = nullptr;
-    ActListItem *customItem = nullptr;
+    QListWidgetItem *newItem = NULL;
+    ActListItem *customItem = NULL;
 
     newItem = new QListWidgetItem(ui->listWidget);
     customItem = new ActListItem(ui->listWidget);
@@ -591,7 +591,7 @@ void ActGuideWidget::handleCloseButton()
 
 ActGuideWidget::~ActGuideWidget()
 {
-    if (showQRCode != nullptr)
+    if (showQRCode != NULL)
     {
         delete showQRCode;
     }

@@ -19,6 +19,7 @@
 #include <QPushButton>
 #include <QWidget>
 #include "active-list-item.h"
+#include "config/config.h"
 #include "load-animation-widget.h"
 #include "show-qrcode.h"
 namespace Ui
@@ -49,7 +50,7 @@ public:
         Page_Successful,
         Page_Failed
     };
-    explicit ActGuideWidget(QWidget* parent = nullptr);
+    explicit ActGuideWidget(QWidget* parent = NULL);
     ~ActGuideWidget();
     bool getLineEditStatus();
 

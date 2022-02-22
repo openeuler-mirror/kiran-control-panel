@@ -17,7 +17,8 @@
 
 #include <QWidget>
 
-namespace Ui {
+namespace Ui
+{
 class InformationListItem;
 }
 
@@ -30,16 +31,16 @@ public:
     ~InformationListItem();
 
 protected:
-    void paintEvent(QPaintEvent*event);
+    void paintEvent(QPaintEvent *event);
 
 public:
     void setItemText(const QString &text);
     void setItemIcon(const QString &iconPath);
     void setItemArrow(bool isSelected);
-    virtual QSize sizeHint() const override;
+    virtual QSize sizeHint() const;
 
 private:
     Ui::InformationListItem *ui;
 };
 
-#endif // InformationListItem_H
+#endif  // InformationListItem_H

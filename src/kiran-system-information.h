@@ -25,21 +25,26 @@ namespace Ui
 class kiranSystemInformation;
 }
 
+#ifdef DISABLE_KIRANWIDGETS
 class kiranSystemInformation : public QWidget
+#else
+#include <kiran-titlebar-window.h>
+class kiranSystemInformation : public KiranTitlebarWindow
+#endif
 {
     Q_OBJECT
 
 public:
     explicit kiranSystemInformation(QWidget* parent = 0);
     ~kiranSystemInformation();
-    virtual QSize sizeHint() const override;
+    virtual QSize sizeHint() const;
 
 private:
-    void initUI();
-    InformationListItem* createInformationItem(const QString text, const QString iconPath);
+    //void initUI();
+    //InformationListItem* createInformationItem(const QString text, const QString iconPath);
 
 public slots:
-    void changeWidgetWhenItemClicked(QListWidgetItem* currentItem);
+    // void changeWidgetWhenItemClicked(QListWidgetItem* currentItem);
 
 private:
     Ui::kiranSystemInformation* ui;

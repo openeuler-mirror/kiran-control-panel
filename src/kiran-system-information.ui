@@ -42,64 +42,6 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="KiranListWidget" name="infoListWidget">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>288</width>
-       <height>0</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>288</width>
-       <height>16777215</height>
-      </size>
-     </property>
-     <property name="baseSize">
-      <size>
-       <width>0</width>
-       <height>0</height>
-      </size>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Sunken</enum>
-     </property>
-     <property name="lineWidth">
-      <number>0</number>
-     </property>
-     <property name="verticalScrollBarPolicy">
-      <enum>Qt::ScrollBarAsNeeded</enum>
-     </property>
-     <property name="horizontalScrollBarPolicy">
-      <enum>Qt::ScrollBarAsNeeded</enum>
-     </property>
-     <property name="sizeAdjustPolicy">
-      <enum>QAbstractScrollArea::AdjustToContents</enum>
-     </property>
-     <property name="autoScroll">
-      <bool>true</bool>
-     </property>
-     <property name="autoScrollMargin">
-      <number>0</number>
-     </property>
-     <property name="resizeMode">
-      <enum>QListView::Adjust</enum>
-     </property>
-     <property name="layoutMode">
-      <enum>QListView::SinglePass</enum>
-     </property>
-     <property name="spacing">
-      <number>0</number>
-     </property>
-    </widget>
-   </item>
-   <item>
     <widget class="QWidget" name="widget_page" native="true">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -162,7 +104,7 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>632</width>
+             <width>920</width>
              <height>671</height>
             </rect>
            </property>
@@ -206,11 +148,6 @@
    <extends>QScrollArea</extends>
    <header location="global">custom-widgets/kiran-scroll-area.h</header>
    <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>KiranListWidget</class>
-   <extends>QListWidget</extends>
-   <header>custom-widgets/kiran-list-widget.h</header>
   </customwidget>
   <customwidget>
    <class>LicenseInformation</class>

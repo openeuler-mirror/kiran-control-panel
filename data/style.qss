@@ -62,6 +62,11 @@ QWidget#kiranSystemInformation
     background-color: #222222;
     border:none;
 }
+QWidget#LicenseInformation
+{
+    background-color: #222222;
+    border:none;
+}
 QWidget#ChangeHostNameWidget
 {
     background-color: #222222;

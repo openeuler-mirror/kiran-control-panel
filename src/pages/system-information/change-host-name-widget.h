@@ -16,6 +16,7 @@
 #define CHANGEHOSTNAMEWIDGET_H
 
 #include <QWidget>
+#include "config/config.h"
 
 namespace Ui
 {

@@ -15,6 +15,7 @@
 #define LICENSEINFOWIDGET_H
 
 #include <QWidget>
+#include "config/config.h"
 #include "show-qrcode.h"
 
 namespace Ui
@@ -32,7 +33,7 @@ class LicenseInfoWidget : public KiranTitlebarWindow
     Q_OBJECT
 
 public:
-    explicit LicenseInfoWidget(QString &mc_code, QString &lc_code, QWidget *parent = nullptr);
+    explicit LicenseInfoWidget(QString &mc_code, QString &lc_code, QWidget *parent = NULL);
     ~LicenseInfoWidget();
 
     void setMachineCode(QString &machine_code);

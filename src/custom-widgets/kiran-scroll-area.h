@@ -19,10 +19,10 @@
 class KiranScrollArea : public QScrollArea
 {
 public:
-    KiranScrollArea(QWidget* parent=nullptr);
-    ~KiranScrollArea()=default;
+    KiranScrollArea(QWidget* parent = NULL);
+    ~KiranScrollArea() = default;
 
-    virtual QSize sizeHint() const override;
+    virtual QSize sizeHint() const;
 };
 
-#endif // KIRANSCROLLAREA_H
+#endif  // KIRANSCROLLAREA_H

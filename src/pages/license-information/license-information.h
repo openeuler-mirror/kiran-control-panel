@@ -17,6 +17,7 @@ class LicenseInformation : public QWidget
 public:
     explicit LicenseInformation(QWidget *parent = 0);
     ~LicenseInformation();
+    virtual QSize sizeHint() const;
 
 private:
     bool readLicenseInfo();
@@ -29,7 +30,6 @@ public slots:
 protected:
     bool eventFilter(QObject *obj, QEvent *event);
     void paintEvent(QPaintEvent *painEvent);
-    virtual QSize sizeHint() const;
 
 private:
     Ui::LicenseInformation *ui;
@@ -37,7 +37,7 @@ private:
     QString m_mcCode;
     QString m_lcCode;
     // 授权状态
-    quint16 m_licenseStatus = 0;
+    quint16 m_licenseStatus;
     // 过期时间
     qlonglong m_expiredTime;
     // 安装时间

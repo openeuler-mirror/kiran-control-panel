@@ -97,10 +97,10 @@ void LicenseAgreement::exportLicense()
     if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
     {
 #ifdef DISABLE_KIRANWIDGETS
-        QMessageBox::information(nullptr, QString(tr("Export License")), QString(tr("Export License failed!")), QMessageBox::Ok);
+        QMessageBox::information(NULL, QString(tr("Export License")), QString(tr("Export License failed!")), QMessageBox::Ok);
         return;
 #else
-        KiranMessageBox::KiranStandardButton button = KiranMessageBox::message(nullptr, QString(tr("Export License")),
+        KiranMessageBox::KiranStandardButton button = KiranMessageBox::message(NULL, QString(tr("Export License")),
                                                                                QString(tr("Export License failed!")),
                                                                                KiranMessageBox::Ok);
         if (button == KiranMessageBox::Ok)

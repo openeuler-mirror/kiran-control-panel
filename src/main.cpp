@@ -21,7 +21,7 @@
 #include <iostream>
 #include "config/config.h"
 #include "kiran-system-information.h"
-#include "kiran-system-widget.h"
+#include "pages/license-information/license-information.h"
 #define TRANSLATION_DIR TRANSLATIONS_FILE_DIR
 
 int main(int argc, char *argv[])

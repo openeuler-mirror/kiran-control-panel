@@ -4,6 +4,7 @@ project(kiran-cpanel-system)
 
 option(DISABLE_LICENSE "Disable to license system " OFF)
 option(DISABLE_SYSTEM_INFO "Don't show system and hardware information" OFF)
+option(DISABLE_KIRANWIDGETS "Don't use kiran widgets" OFF)
 
 include(GNUInstallDirs)
 
@@ -20,8 +21,11 @@ find_package(Qt5 COMPONENTS Widgets Svg DBus LinguistTools Network PrintSupport)
 pkg_search_module(KLOG_QT5 REQUIRED klog-qt5)
 pkg_search_module(LIBQRENCODE REQUIRED libqrencode)
 
-if(NOT DISABLE_SYSTEM_INFO)
+if(NOT DISABLE_KIRANWIDGETS)
 	pkg_search_module(KIRAN_WIDGETS_QT5 REQUIRED kiranwidgets-qt5)
+endif()
+
+if(NOT DISABLE_SYSTEM_INFO)
 	pkg_search_module(KIRAN_CC_DAEMON REQUIRED kiran-cc-daemon)
 	#通过kiran control panel的pkgconfig配置文件取出插件Desktop安装位置、插件共享库安装位置
 	pkg_search_module(KIRAN_CONTROL_PANEL_PKG REQUIRED kiran-control-panel)
@@ -40,15 +44,6 @@ configure_file (
 "${PROJECT_SOURCE_DIR}/config/config.h.in"
 "${PROJECT_BINARY_DIR}/config/config.h"
 )
-
-if(DISABLE_LICENSE)
-	add_definitions(-DDISABLE_LICENSE)
-endif()
-if(DISABLE_SYSTEM_INFO)
-	add_definitions(-DDISABLE_SYSTEM_INFO)
-        add_definitions(-DDISABLE_KIRANWIDGETS)
-endif()
-
 
 add_subdirectory(src)
 add_subdirectory(data)

@@ -23,7 +23,7 @@ using namespace std;
 #ifdef DISABLE_KIRANWIDGETS
 LicenseInfoWidget::LicenseInfoWidget(QString &mc_code, QString &lc_code, QWidget *parent) : QWidget(parent),
                                                                                             ui(new Ui::LicenseInfoWidget),
-                                                                                            showQRCode(nullptr)
+                                                                                            showQRCode(NULL)
 {
     ui->setupUi(this);
     setWindowTitle(tr("Activation Information"));
@@ -31,7 +31,7 @@ LicenseInfoWidget::LicenseInfoWidget(QString &mc_code, QString &lc_code, QWidget
 #else
 LicenseInfoWidget::LicenseInfoWidget(QString &mc_code, QString &lc_code, QWidget *parent) : KiranTitlebarWindow(parent),
                                                                                             ui(new Ui::LicenseInfoWidget),
-                                                                                            showQRCode(nullptr)
+                                                                                            showQRCode(NULL)
 {
     ui->setupUi(getWindowContentWidget());
     setButtonHints(TitlebarMinimizeButtonHint | TitlebarCloseButtonHint);
@@ -57,7 +57,7 @@ LicenseInfoWidget::LicenseInfoWidget(QString &mc_code, QString &lc_code, QWidget
  */
 void LicenseInfoWidget::popupQRCode(QPoint oPoint, QObject *target)
 {
-    if (showQRCode == nullptr)
+    if (showQRCode == NULL)
     {
         showQRCode = new ShowQRCode;
         showQRCode->setWindowFlag(Qt::X11BypassWindowManagerHint);
@@ -104,7 +104,7 @@ bool LicenseInfoWidget::eventFilter(QObject *target, QEvent *e)
         {
             showQRCode->hide();
             delete showQRCode;
-            showQRCode = nullptr;
+            showQRCode = NULL;
         }
     }
     return QWidget::eventFilter(target, e);
@@ -136,6 +136,6 @@ LicenseInfoWidget::~LicenseInfoWidget()
     if (showQRCode)
     {
         delete showQRCode;
-        showQRCode = nullptr;
+        showQRCode = NULL;
     }
 }

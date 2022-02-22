@@ -17,13 +17,13 @@
 
 #include <QListWidget>
 
-class KiranListWidget :public QListWidget
+class KiranListWidget : public QListWidget
 {
 public:
-    KiranListWidget(QWidget* parent=nullptr);
+    KiranListWidget(QWidget* parent = NULL);
     ~KiranListWidget() = default;
 
-    virtual QSize sizeHint() const override;
+    virtual QSize sizeHint() const;
 };
 
-#endif // KIRANLISTWIDGET_H
+#endif  // KIRANLISTWIDGET_H

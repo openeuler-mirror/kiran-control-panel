@@ -8,8 +8,11 @@
 #include <QJsonObject>
 #include <QJsonValue>
 #include <QPainter>
+#include <iostream>
 #include "dbus-wrapper/license-dbus.h"
 #include "ui_license-information.h"
+
+using namespace KylinSec;
 
 #define SYSTEM_LOGO "KylinSec OS"
 #define EXPIRED_TIME "expired_time"
@@ -22,8 +25,8 @@
 #define INSTALL_TYPE "install_type"
 
 LicenseInformation::LicenseInformation(QWidget *parent) : QWidget(parent),
-                                                          m_activeGuide(nullptr),
-                                                          m_licenseInfoWidget(nullptr),
+                                                          m_activeGuide(NULL),
+                                                          m_licenseInfoWidget(NULL),
                                                           ui(new Ui::LicenseInformation)
 {
     ui->setupUi(this);
@@ -35,9 +38,9 @@ LicenseInformation::LicenseInformation(QWidget *parent) : QWidget(parent),
 LicenseInformation::~LicenseInformation()
 {
     delete ui;
-    if (m_activeGuide != nullptr)
+    if (m_activeGuide != NULL)
         delete m_activeGuide;
-    if (m_licenseInfoWidget != nullptr)
+    if (m_licenseInfoWidget != NULL)
         delete m_licenseInfoWidget;
 }
 
@@ -75,7 +78,7 @@ bool LicenseInformation::readLicenseInfo()
         m_isActive = m_licenseStatus;
         switch (m_licenseStatus)
         {
-        case KylinSec::LicenseStatus::LICENSE_STATUS_UNREGISTERD:
+        case LicenseStatus::LICENSE_STATUS_UNREGISTERD:
         {
             /*未激活*/
             ui->lab_status->setStyleSheet("QLabel#lab_status {color:#ff3838;}");
@@ -86,13 +89,13 @@ bool LicenseInformation::readLicenseInfo()
             {
                 switch (status)
                 {
-                case KylinSec::LicenseServiceStatus::LICENSE_SERVICE_STATUS_INVALID:
+                case LicenseServiceStatus::LICENSE_SERVICE_STATUS_INVALID:
                 {
                     ui->lab_status->setText((QString("%1 (%2: %3)")).arg(tr("The current time is illegal")).arg(tr("Less than the installation time")).arg(m_installTime));
                     break;
                 }
-                case KylinSec::LicenseServiceStatus::LICENSE_SERVICE_STATUS_EXPIRED:
-                case KylinSec::LicenseServiceStatus::LICENSE_SERVICE_STATUS_UNEXPIRED:
+                case LicenseServiceStatus::LICENSE_SERVICE_STATUS_EXPIRED:
+                case LicenseServiceStatus::LICENSE_SERVICE_STATUS_UNEXPIRED:
                 {
                     QDateTime time = QDateTime::fromSecsSinceEpoch(m_expiredTime);
                     QString dueTime = time.toString("yyyy-MM-dd");
@@ -112,7 +115,7 @@ bool LicenseInformation::readLicenseInfo()
             ui->lab_expire_date_info->setText(tr("Not yet"));
             break;
         }
-        case KylinSec::LicenseStatus::LICENSE_STATUS_REGISTERD:
+        case LicenseStatus::LICENSE_STATUS_REGISTERD:
         {
             /*已激活*/
             ui->btn_status->show();
@@ -223,7 +226,7 @@ void LicenseInformation::onBtnStatusClicked()
 {
     if (!m_isActive)  //popup Active Guide
     {
-        if (m_activeGuide == nullptr)
+        if (m_activeGuide == NULL)
         {
             m_activeGuide = new ActGuideWidget(this);
         }
@@ -235,7 +238,7 @@ void LicenseInformation::onBtnStatusClicked()
     }
     else  //popup informations
     {
-        if (m_licenseInfoWidget == nullptr)
+        if (m_licenseInfoWidget == NULL)
         {
             m_licenseInfoWidget = new LicenseInfoWidget(m_mcCode, m_lcCode, this);
         }
@@ -312,12 +315,12 @@ bool LicenseInformation::eventFilter(QObject *obj, QEvent *event)
     if (obj == m_activeGuide && event->type() == QEvent::Close)
     {
         m_activeGuide->deleteLater();
-        m_activeGuide = nullptr;
+        m_activeGuide = NULL;
     }
     else if (obj == m_licenseInfoWidget && event->type() == QEvent::Close)
     {
         m_licenseInfoWidget->deleteLater();
-        m_licenseInfoWidget = nullptr;
+        m_licenseInfoWidget = NULL;
     }
     return false;
 }

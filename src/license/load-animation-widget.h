@@ -14,21 +14,19 @@
 #ifndef LOADANIMATIONWIDGET_H
 #define LOADANIMATIONWIDGET_H
 
-#include <QWidget>
 #include <QTimer>
+#include <QWidget>
 
 class LoadAnimationWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit LoadAnimationWidget(QWidget *parent = nullptr);
+    explicit LoadAnimationWidget(QWidget *parent = NULL);
     ~LoadAnimationWidget() override = default;
 
-
 protected:
-    virtual void paintEvent(QPaintEvent *event) override;
-    virtual QSize sizeHint() const override;
-
+    virtual void paintEvent(QPaintEvent *event);
+    virtual QSize sizeHint() const;
 
 public slots:
     /* restart Animation */
@@ -42,9 +40,10 @@ public slots:
 
 private slots:
     void renderNextFrame();
+
 private:
     QTimer timer;
     int index;
 };
 
-#endif // LOADANIMATIONWIDGET_H
+#endif  // LOADANIMATIONWIDGET_H

@@ -31,31 +31,50 @@ file(GLOB_RECURSE QSS "${PROJECT_SOURCE_DIR}/data/*.qss")
 qt5_create_translation( QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES} )
 
 if(DISABLE_SYSTEM_INFO)
-	add_executable(${PROJECT_NAME}
-		${LICENSE_CPP}
-		${LICENSE_H}
-		${LICENSE_FORMS}
-		${PUBLIC_CPP}
-		${PUBLIC_H}
-		${PUBLIC_FORMS}
-		${RESOURCES}
-		${QM_FILES}
-		)
+        add_executable(${PROJECT_NAME}
+                ${LICENSE_CPP}
+                ${LICENSE_H}
+                ${LICENSE_FORMS}
+                ${PUBLIC_CPP}
+                ${PUBLIC_H}
+                ${PUBLIC_FORMS}
+                ${RESOURCES}
+                ${QM_FILES})
 
-	target_include_directories(${PROJECT_NAME} PRIVATE
-		${CMAKE_BINARY_DIR}
-		"/usr/include/kylin-license"
-		${KLOG_QT5_INCLUDE_DIRS})
+        if(DISABLE_KIRANWIDGETS)
+                target_include_directories(${PROJECT_NAME} PRIVATE
+                        ${CMAKE_BINARY_DIR}
+                        "/usr/include/kylin-license"
+                        ${KLOG_QT5_INCLUDE_DIRS})
 
-	target_link_libraries(${PROJECT_NAME} 
-		Qt5::Widgets
-		Qt5::DBus
-		Qt5::Svg
-		Qt5::Core
-                Qt5::PrintSupport
-		qrencode
-		glib-2.0
-		${KLOG_QT5_LIBRARIES})
+                target_link_libraries(${PROJECT_NAME}
+                        Qt5::Widgets
+                        Qt5::DBus
+                        Qt5::Svg
+                        Qt5::Core
+                        Qt5::PrintSupport
+                        qrencode
+                        glib-2.0
+                        ${KLOG_QT5_LIBRARIES})
+        else()
+
+                target_include_directories(${PROJECT_NAME} PRIVATE
+                        ${CMAKE_BINARY_DIR}
+                        "/usr/include/kylin-license"
+                        ${KLOG_QT5_INCLUDE_DIRS}
+                        ${KIRAN_WIDGETS_QT5_INCLUDE_DIRS})
+
+		target_link_libraries(${PROJECT_NAME}
+			Qt5::Widgets
+			Qt5::DBus
+			Qt5::Svg
+			Qt5::Core
+			Qt5::PrintSupport
+			qrencode
+			glib-2.0
+                        ${KLOG_QT5_LIBRARIES}
+                        ${KIRAN_WIDGETS_QT5_LIBRARIES})
+       endif()
 
 	install(TARGETS ${PROJECT_NAME}
 		DESTINATION ${BIN_DIR}/)
@@ -85,7 +104,7 @@ else()
 		Qt5::PrintSupport
 		qrencode
 		glib-2.0
-		${KIRANWIDGETS_QT5_LIBRARIES}
+                ${KIRAN_WIDGETS_QT5_LIBRARIES}
 		${KLOG_QT5_LIBRARIES})
 
 	install(TARGETS ${PROJECT_NAME}
