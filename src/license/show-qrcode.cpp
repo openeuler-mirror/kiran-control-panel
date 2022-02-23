@@ -11,13 +11,12 @@
  *
  * Author:     yuanxing <yuanxing@kylinos.com.cn>
  */
-#include <QIcon>
 #include "show-qrcode.h"
+#include <QIcon>
 #include "ui_show-qrcode.h"
 
-ShowQRCode::ShowQRCode(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::ShowQRCode)
+ShowQRCode::ShowQRCode(QWidget *parent) : QWidget(parent),
+                                          ui(new Ui::ShowQRCode)
 {
     ui->setupUi(this);
     iniUI();
@@ -25,29 +24,28 @@ ShowQRCode::ShowQRCode(QWidget *parent) :
 
 void ShowQRCode::iniUI()
 {
+    setWindowFlags(Qt::X11BypassWindowManagerHint);
     setWindowTitle(ShowQRCode::tr("QRcode of Machine and Activation Code"));
     setWindowIcon(QIcon(":/images/kylin-about.png"));
     setAttribute(Qt::WA_TransparentForMouseEvents);
-    this->setMaximumSize(230,230);
-    this->setMinimumSize(230,230);
+    this->setMaximumSize(230, 230);
+    this->setMinimumSize(230, 230);
     ui->qrcode_layout->setMargin(10);
 }
 
-
-void ShowQRCode::setQRCode(const QString &text ,bool isMachineCode)
+void ShowQRCode::setQRCode(const QString &text, bool isMachineCode)
 {
-    qrcode = new QRCodeWidget(this,text,160,160);
-    qrcode->setMinimumSize(160,160);
-    qrcode->setMaximumSize(160,160);
-    ui->qrcode_layout->addWidget(qrcode,Qt::AlignHCenter);
-    ui->qrcode_layout->setAlignment(qrcode ,Qt::AlignHCenter );
-    ui->qrcode_layout->setAlignment(qrcode ,Qt::AlignVCenter );
+    qrcode = new QRCodeWidget(this, text, 160, 160);
+    qrcode->setMinimumSize(160, 160);
+    qrcode->setMaximumSize(160, 160);
+    ui->qrcode_layout->addWidget(qrcode, Qt::AlignHCenter);
+    ui->qrcode_layout->setAlignment(qrcode, Qt::AlignHCenter);
+    ui->qrcode_layout->setAlignment(qrcode, Qt::AlignVCenter);
 
-    if(!isMachineCode)
+    if (!isMachineCode)
     {
         ui->label_qrcode_text->setText(tr("Scan QR code to get activation code"));
     }
-
 }
 
 ShowQRCode::~ShowQRCode()

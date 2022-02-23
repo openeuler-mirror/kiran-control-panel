@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 2.8)
 
 project(kiran-cpanel-system)
 
@@ -13,8 +13,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTOUIC ON)
-set(CMAKE_AUTORCC ON)
 
 find_package(PkgConfig REQUIRED)
 find_package(Qt5 COMPONENTS Widgets Svg DBus LinguistTools Network PrintSupport)

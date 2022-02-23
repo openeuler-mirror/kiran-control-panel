@@ -19,6 +19,7 @@
 #include <QPainter>
 #include <QScroller>
 #include <QStackedWidget>
+#include "pages/license-information/license-information.h"
 #include "ui_kiran-system-information.h"
 
 #ifdef DISABLE_KIRANWIDGETS
@@ -32,10 +33,10 @@ kiranSystemInformation::kiranSystemInformation(QWidget* parent) : QWidget(parent
 kiranSystemInformation::kiranSystemInformation(QWidget* parent) : KiranTitlebarWindow(parent),
                                                                   ui(new Ui::kiranSystemInformation)
 {
-#endif
     ui->setupUi(getWindowContentWidget());
     setTitle(tr("kiran-system-imformation"));
     setIcon(QIcon(":/images/kylin-about.png"));
+#endif
 }
 
 kiranSystemInformation::~kiranSystemInformation()
@@ -47,4 +48,15 @@ QSize kiranSystemInformation::sizeHint() const
 {
     /*根据系统分辨率设置窗口大小*/
     return QSize(670, 730);
+}
+
+void kiranSystemInformation::paintEvent(QPaintEvent* painEvent)
+{
+    QStyleOption opt;
+
+    opt.init(this);
+    QPainter p(this);
+    style()->drawPrimitive(QStyle::PE_Widget, &opt, &p, this);
+
+    QWidget::paintEvent(painEvent);
 }

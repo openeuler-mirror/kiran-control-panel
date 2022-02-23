@@ -60,7 +60,6 @@ void LicenseInfoWidget::popupQRCode(QPoint oPoint, QObject *target)
     if (showQRCode == NULL)
     {
         showQRCode = new ShowQRCode;
-        showQRCode->setWindowFlag(Qt::X11BypassWindowManagerHint);
     }
     if (target == ui->btn_qrcode_lc)
     {

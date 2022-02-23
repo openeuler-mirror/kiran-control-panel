@@ -22,7 +22,7 @@ class LoadAnimationWidget : public QWidget
     Q_OBJECT
 public:
     explicit LoadAnimationWidget(QWidget *parent = NULL);
-    ~LoadAnimationWidget() override = default;
+    ~LoadAnimationWidget();
 
 protected:
     virtual void paintEvent(QPaintEvent *event);

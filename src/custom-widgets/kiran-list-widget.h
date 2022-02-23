@@ -21,7 +21,7 @@ class KiranListWidget : public QListWidget
 {
 public:
     KiranListWidget(QWidget* parent = NULL);
-    ~KiranListWidget() = default;
+    ~KiranListWidget();
 
     virtual QSize sizeHint() const;
 };

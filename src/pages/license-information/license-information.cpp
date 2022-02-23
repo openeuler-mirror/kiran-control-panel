@@ -68,7 +68,7 @@ bool LicenseInformation::readLicenseInfo()
         KLOG_INFO() << licenseInfo;
         getJsonValueFromString(licenseInfo);
         ///在界面上显示安装时间
-        QDateTime Starttime = QDateTime::fromSecsSinceEpoch(m_startTime);
+        QDateTime Starttime = QDateTime::fromMSecsSinceEpoch(m_startTime * 1000);
         m_installTime = Starttime.toString("yyyy-MM-dd");
         KLOG_INFO() << "install time = " << m_installTime;
         ui->lab_install_time_info->setText(m_installTime);
@@ -78,7 +78,7 @@ bool LicenseInformation::readLicenseInfo()
         m_isActive = m_licenseStatus;
         switch (m_licenseStatus)
         {
-        case LicenseStatus::LICENSE_STATUS_UNREGISTERD:
+        case LICENSE_STATUS_UNREGISTERD:
         {
             /*未激活*/
             ui->lab_status->setStyleSheet("QLabel#lab_status {color:#ff3838;}");
@@ -89,15 +89,15 @@ bool LicenseInformation::readLicenseInfo()
             {
                 switch (status)
                 {
-                case LicenseServiceStatus::LICENSE_SERVICE_STATUS_INVALID:
+                case LICENSE_SERVICE_STATUS_INVALID:
                 {
                     ui->lab_status->setText((QString("%1 (%2: %3)")).arg(tr("The current time is illegal")).arg(tr("Less than the installation time")).arg(m_installTime));
                     break;
                 }
-                case LicenseServiceStatus::LICENSE_SERVICE_STATUS_EXPIRED:
-                case LicenseServiceStatus::LICENSE_SERVICE_STATUS_UNEXPIRED:
+                case LICENSE_SERVICE_STATUS_EXPIRED:
+                case LICENSE_SERVICE_STATUS_UNEXPIRED:
                 {
-                    QDateTime time = QDateTime::fromSecsSinceEpoch(m_expiredTime);
+                    QDateTime time = QDateTime::fromMSecsSinceEpoch(m_expiredTime * 1000);
                     QString dueTime = time.toString("yyyy-MM-dd");
                     KLOG_INFO() << "due time = " << dueTime;
 
@@ -115,14 +115,14 @@ bool LicenseInformation::readLicenseInfo()
             ui->lab_expire_date_info->setText(tr("Not yet"));
             break;
         }
-        case LicenseStatus::LICENSE_STATUS_REGISTERD:
+        case LICENSE_STATUS_REGISTERD:
         {
             /*已激活*/
             ui->btn_status->show();
             ui->lab_status->setText(tr("Activated"));
             ui->lab_status->setStyleSheet("QLabel#lab_status {color:#5ab940;}");
 
-            QDateTime time = QDateTime::fromSecsSinceEpoch(m_expiredTime);
+            QDateTime time = QDateTime::fromMSecsSinceEpoch(m_expiredTime * 1000);
             QString dueTime = time.toString("yyyy-MM-dd");
             QDate expiredTime = QDate::fromString(dueTime, "yyyy-MM-dd");
             KLOG_INFO() << "due time = " << dueTime << "year: " << expiredTime.year() << "mouth: " << expiredTime.month() << "day: " << expiredTime.day();
@@ -297,7 +297,7 @@ void LicenseInformation::updateLicenseInfo(bool isregister)
             ui->btn_status->setStyleSheet("QToolButton#btn_status{background: transparent;border: none;}");
             ui->btn_status->setFixedSize(QSize(16, 16));
 
-            QDateTime time = QDateTime::fromSecsSinceEpoch(m_expiredTime);
+            QDateTime time = QDateTime::fromMSecsSinceEpoch(m_expiredTime * 1000);
             QString dueTime = time.toString("yyyy-MM-dd");
             KLOG_INFO() << "due time = " << dueTime;
 

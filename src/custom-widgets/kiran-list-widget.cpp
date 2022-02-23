@@ -14,16 +14,17 @@
 
 #include "kiran-list-widget.h"
 
-
 KiranListWidget::KiranListWidget(QWidget *parent)
-    :QListWidget(parent)
+    : QListWidget(parent)
 {
-
 }
 
+KiranListWidget::~KiranListWidget()
+{
+}
 
 QSize KiranListWidget::sizeHint() const
 {
-    QSize size = QSize(288,-1);
+    QSize size = QSize(288, -1);
     return size;
 }

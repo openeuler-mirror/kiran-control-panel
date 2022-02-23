@@ -18,8 +18,8 @@
 #include <QListWidgetItem>
 #include <QStackedWidget>
 #include <QWidget>
+#include "config/config.h"
 #include "custom-widgets/information-list-item.h"
-
 namespace Ui
 {
 class kiranSystemInformation;
@@ -38,6 +38,9 @@ public:
     explicit kiranSystemInformation(QWidget* parent = 0);
     ~kiranSystemInformation();
     virtual QSize sizeHint() const;
+
+protected:
+    void paintEvent(QPaintEvent* painEvent);
 
 private:
     //void initUI();

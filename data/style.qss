@@ -57,12 +57,12 @@ QWidget#widget_EULA,QWidget#widget_version_license
     border:none;
 }
 
-QWidget#kiranSystemInformation
+#kiranSystemInformation
 {
     background-color: #222222;
     border:none;
 }
-QWidget#LicenseInformation
+#LicenseInformation
 {
     background-color: #222222;
     border:none;
@@ -76,9 +76,7 @@ QWidget#ChangeHostNameWidget
 QWidget#widget_logo
 {
     background-color: transparent;
-    border-left:1px solid #2d2d2d;
-    border-bottom:none;
-    border-right:none;
+    border:none;
 }
 
 /****************QScrollArea************/
@@ -86,9 +84,6 @@ QScrollArea#scrollArea
 {
     background-color: #222222;
     border:none;
-    border-left:1px solid #2d2d2d;
-    border-bottom:none;
-    border-right:none;
 }
 /****************QPushButton************/
 QPushButton#btn_change_name,QToolButton#btn_status,QPushButton#btn_EULA,QPushButton#btn_version_license

@@ -22,20 +22,29 @@
 #include "config/config.h"
 #include "kiran-system-information.h"
 #include "pages/license-information/license-information.h"
+
+#ifndef DISABLE_KIRANWIDGETS
+#include <kiran-single-application.h>
+#endif
+
 #define TRANSLATION_DIR TRANSLATIONS_FILE_DIR
 
 int main(int argc, char *argv[])
 {
+#ifdef DISABLE_KIRANWIDGETS
+    QApplication a(argc, argv);
+#else
+    KiranSingleApplication a(argc, argv);
+#endif
+
     ///注册自定义的消息处理函数
-    QLoggingCategory::defaultCategory()->setEnabled(QtMsgType::QtDebugMsg, true);
+    QLoggingCategory::defaultCategory()->setEnabled(QtDebugMsg, true);
     if (klog_qt5_init("", "kylinsec-system", "kiran-cpanel-system", "kiran-cpanel-system") < 0)
     {
         std::cout << "init zlog error" << std::endl;
     }
 
-    KLOG_INFO() << "******New Output*********";
-
-    QApplication a(argc, argv);
+    KLOG_DEBUG() << "******New Output*********";
 
     ///加载qss样式表
     QFile file(":/qss/style.qss");
@@ -48,7 +57,7 @@ int main(int argc, char *argv[])
     }
     else
     {
-        QMessageBox::warning(NULL, "warning", "Open failed", QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+        QMessageBox::warning(NULL, "warning", "Open qss file failed", QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
     }
 
     ///加载翻译文件

@@ -12,24 +12,28 @@
  * Author:     yuanxing <yuanxing@kylinos.com.cn>
  */
 #include "kiran-scroll-area.h"
-#include <QScrollBar>
-#include <QDesktopWidget>
 #include <QApplication>
+#include <QDesktopWidget>
+#include <QScrollBar>
 
 KiranScrollArea::KiranScrollArea(QWidget* parent)
-    :QScrollArea(parent)
+    : QScrollArea(parent)
 {
+}
 
+KiranScrollArea::~KiranScrollArea()
+{
 }
 
 QSize KiranScrollArea::sizeHint() const
 {
-    if(!widget()){
+    if (!widget())
+    {
         return QScrollArea::sizeHint();
     }
 
-    QSize areaSizeHint = QSize(636,690);
-    areaSizeHint+=QSize(verticalScrollBar()->width(),horizontalScrollBar()->height());
+    QSize areaSizeHint = QSize(636, 690);
+    areaSizeHint += QSize(verticalScrollBar()->width(), horizontalScrollBar()->height());
 
     return areaSizeHint;
 }

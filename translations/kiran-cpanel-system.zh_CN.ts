@@ -435,12 +435,12 @@ p, li { white-space: pre-wrap; }
         <translation>关闭</translation>
     </message>
     <message>
-        <location filename="../src/license/license-agreement.cpp" line="88"/>
+        <location filename="../src/license/license-agreement.cpp" line="85"/>
         <source>Save</source>
         <translation>保存</translation>
     </message>
     <message>
-        <location filename="../src/license/license-agreement.cpp" line="90"/>
+        <location filename="../src/license/license-agreement.cpp" line="87"/>
         <source>PDF(*.pdf)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -453,34 +453,34 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">导出最终用户许可协议失败!</translation>
     </message>
     <message>
+        <location filename="../src/license/license-agreement.cpp" line="97"/>
         <location filename="../src/license/license-agreement.cpp" line="100"/>
-        <location filename="../src/license/license-agreement.cpp" line="103"/>
         <source>Export License</source>
         <translation>导出协议</translation>
     </message>
     <message>
-        <location filename="../src/license/license-agreement.cpp" line="100"/>
-        <location filename="../src/license/license-agreement.cpp" line="104"/>
+        <location filename="../src/license/license-agreement.cpp" line="97"/>
+        <location filename="../src/license/license-agreement.cpp" line="101"/>
         <source>Export License failed!</source>
         <translation>导出协议失败!</translation>
     </message>
     <message>
-        <location filename="../src/license/license-agreement.cpp" line="146"/>
-        <location filename="../src/license/license-agreement.cpp" line="148"/>
+        <location filename="../src/license/license-agreement.cpp" line="143"/>
+        <location filename="../src/license/license-agreement.cpp" line="145"/>
         <source>User End License Agreement</source>
         <translation>最终用户许可协议</translation>
     </message>
     <message>
-        <location filename="../src/license/license-agreement.cpp" line="167"/>
-        <location filename="../src/license/license-agreement.cpp" line="180"/>
-        <location filename="../src/license/license-agreement.cpp" line="243"/>
-        <location filename="../src/license/license-agreement.cpp" line="251"/>
+        <location filename="../src/license/license-agreement.cpp" line="164"/>
+        <location filename="../src/license/license-agreement.cpp" line="177"/>
+        <location filename="../src/license/license-agreement.cpp" line="240"/>
+        <location filename="../src/license/license-agreement.cpp" line="248"/>
         <source>None</source>
         <translation>暂无</translation>
     </message>
     <message>
-        <location filename="../src/license/license-agreement.cpp" line="196"/>
-        <location filename="../src/license/license-agreement.cpp" line="198"/>
+        <location filename="../src/license/license-agreement.cpp" line="193"/>
+        <location filename="../src/license/license-agreement.cpp" line="195"/>
         <source>Version License</source>
         <translation>版本协议</translation>
     </message>
@@ -525,12 +525,12 @@ p, li { white-space: pre-wrap; }
         <translation>激活信息</translation>
     </message>
     <message>
-        <location filename="../src/license/license-info-widget.cpp" line="117"/>
+        <location filename="../src/license/license-info-widget.cpp" line="116"/>
         <source>Can&apos;t get machine code</source>
         <translation>无法获取到机器码</translation>
     </message>
     <message>
-        <location filename="../src/license/license-info-widget.cpp" line="127"/>
+        <location filename="../src/license/license-info-widget.cpp" line="126"/>
         <source>Can&apos;t get activation code</source>
         <translation>无法获取到激活码</translation>
     </message>
@@ -700,7 +700,7 @@ p, li { white-space: pre-wrap; }
         <translation>激活信息二维码</translation>
     </message>
     <message>
-        <location filename="../src/license/show-qrcode.cpp" line="48"/>
+        <location filename="../src/license/show-qrcode.cpp" line="47"/>
         <source>Scan QR code to get activation code</source>
         <translation>扫描二维码获取激活码</translation>
     </message>
@@ -921,7 +921,7 @@ p, li { white-space: pre-wrap; }
     <name>kiranSystemInformation</name>
     <message>
         <location filename="../src/kiran-system-information.ui" line="26"/>
-        <location filename="../build/src/kiran-cpanel-system_autogen/include/ui_kiran-system-information.h" line="100"/>
+        <location filename="../build/src/kiran-cpanel-system_autogen/include/ui_kiran-system-information.h" line="74"/>
         <location filename="../build-kiran-system-information-Qt_5_11_1_qt5_0d2831-Debug/ui_kiran-system-information.h" line="100"/>
         <source>kiranSystemInformation</source>
         <translation type="unfinished"></translation>
@@ -935,7 +935,7 @@ p, li { white-space: pre-wrap; }
         <translation type="vanished">硬件信息</translation>
     </message>
     <message>
-        <location filename="../src/kiran-system-information.cpp" line="29"/>
+        <location filename="../src/kiran-system-information.cpp" line="30"/>
         <location filename="../src/kiran-system-information.cpp" line="37"/>
         <source>kiran-system-imformation</source>
         <translation>系统信息</translation>

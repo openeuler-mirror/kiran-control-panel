@@ -160,7 +160,6 @@ void ActGuideWidget::popupQRCode(QPoint oPoint)
     {
         showQRCode = new ShowQRCode;
     }
-    showQRCode->setWindowFlag(Qt::X11BypassWindowManagerHint);
     showQRCode->setQRCode(mc_code, true);
     showQRCode->move(oPoint);
     showQRCode->raise();

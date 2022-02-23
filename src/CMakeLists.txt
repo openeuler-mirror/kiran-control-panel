@@ -1,11 +1,22 @@
-set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTOUIC ON)
+if(${CMAKE_VERSION} VERSION_LESS 3.0)
+    file(GLOB_RECURSE QT5_UI_FILES ${PROJECT_SOURCE_DIR}/src/*.ui)
+    qt5_wrap_ui(FORMS_UI ${QT5_UI_FILES})
+    add_custom_target(uic_file ALL DEPENDS ${FORMS_UI})
+
+    file(GLOB_RECURSE RESOURCES_FILES "${PROJECT_SOURCE_DIR}/data/*.qrc")
+    qt5_add_resources(RESOURCES ${RESOURCES_FILES})
+
+else()
+    set(CMAKE_AUTOUIC ON)
+    set(CMAKE_AUTORCC ON)
+    file(GLOB_RECURSE RESOURCES "${PROJECT_SOURCE_DIR}/data/*.qrc")
+
+endif()
 
 #定义源文件和头文件
 file(GLOB_RECURSE SOURCES "*.cpp")
 file(GLOB_RECURSE HEADERS "*.h")
 file(GLOB_RECURSE FORMS "*.ui")
-
 #授权源码
 file(GLOB_RECURSE LICENSE_CPP "pages/license-information/*.cpp" "license/*.cpp" "dbus-wrapper/license-dbus.cpp" )
 file(GLOB_RECURSE LICENSE_H "pages/license-information/*.h" "license/*.h"  "dbus-wrapper/license-dbus.h")
@@ -25,7 +36,6 @@ file(GLOB_RECURSE PUBLIC_FORMS "custom-widgets/*.ui" "kiran-system-information.u
 file(GLOB_RECURSE PLUGIN_INTERFACE_CPP "plug_interface/*.cpp")
 file(GLOB_RECURSE PLUGIN_INTERFACE_H "plug_interface/*.h")
 
-file(GLOB_RECURSE RESOURCES "${PROJECT_SOURCE_DIR}/data/*.qrc")
 file(GLOB_RECURSE QSS "${PROJECT_SOURCE_DIR}/data/*.qss")
 
 qt5_create_translation( QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES} )
@@ -38,7 +48,9 @@ if(DISABLE_SYSTEM_INFO)
                 ${PUBLIC_CPP}
                 ${PUBLIC_H}
                 ${PUBLIC_FORMS}
+                ${FORMS_UI}
                 ${RESOURCES}
+                ${QSS}
                 ${QM_FILES})
 
         if(DISABLE_KIRANWIDGETS)

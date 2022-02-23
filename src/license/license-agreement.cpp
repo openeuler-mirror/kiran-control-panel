@@ -56,10 +56,7 @@ LicenseAgreement::LicenseAgreement() : KiranTitlebarWindow(),
 
 #endif
     setWindowModality(Qt::ApplicationModal);
-    connect(ui->btn_license_close, &QPushButton::clicked,
-            [this] {
-                this->close();
-            });
+    connect(ui->btn_license_close, &QPushButton::clicked, this, &LicenseAgreement::close);
 
     connect(ui->btn_license_export, &QPushButton::clicked, this, &LicenseAgreement::exportLicense);
 }
