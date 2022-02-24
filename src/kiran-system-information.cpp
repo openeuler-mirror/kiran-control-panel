@@ -16,8 +16,6 @@
 #include <kiran-log/qt5-log-i.h>
 #include <QDesktopWidget>
 #include <QPainter>
-#include <QScroller>
-#include <QStackedWidget>
 #include <QVBoxLayout>
 #include "pages/license-information/license-information.h"
 #include "ui_kiran-system-information.h"

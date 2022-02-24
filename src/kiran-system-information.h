@@ -47,7 +47,6 @@ private:
 
 private:
     Ui::kiranSystemInformation* ui;
-    QWidget* licenseInfoWidget;
 };
 
 #endif  // KIRANSYSTEMINFORMATION_H

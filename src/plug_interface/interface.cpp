@@ -42,7 +42,7 @@ QStringList KcpInterface::visibleSubItems()
 
 #ifdef DISABLE_SYSTEM_INFO
     subItems << "LicenseInformation";
-#elif DISABLE_LICENSE
+#elif defined DISABLE_LICENSE
     subItems << "SystemInformation"
              << "HardwareInformation";
 #else
