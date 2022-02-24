@@ -30,11 +30,10 @@
 <defs>
     <style>
       .cls-1 {
-        fill: none;
-        stroke: #2094fc;
-        stroke-width: 1px;
+        fill: #2eb3ff;
+        fill-rule: evenodd;
       }
     </style>
   </defs>
-  <circle id="框-未选中" class="cls-1" cx="7" cy="7" r="6.5"/>
+  <path id="框-未选中_拷贝_2" data-name="框-未选中 拷贝 2" class="cls-1" d="M1198,357a7,7,0,1,1,7-7A7,7,0,0,1,1198,357Zm0-13a6,6,0,1,0,6,6A6,6,0,0,0,1198,344Z" transform="translate(-1191 -343)"/>
 </svg>

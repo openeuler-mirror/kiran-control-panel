@@ -11,7 +11,7 @@ QT       += core gui \
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = kiran-system-information
+TARGET = kiran-cpanel-system
 TEMPLATE = app
 
 # The following define makes your compiler emit warnings if you use
@@ -35,78 +35,67 @@ INCLUDEPATH += \
     /usr/include/glib-2.0/ \
     /usr/lib64/glib-2.0/include/
 
-SOURCES += \
-        main.cpp \
-        kiran-system-information.cpp \
-    information-list-item.cpp \
-    system-info-dbus.cpp \
-    system-information-widget.cpp \
+SOURCES += \ \
+    custom-widgets/information-list-item.cpp \
+    custom-widgets/kiran-list-widget.cpp \
+    custom-widgets/kiran-scroll-area.cpp \
+    dbus-wrapper/license-dbus.cpp \
+    kiran-system-information.cpp \
     license/active-guide-widget.cpp \
-    license/show-qrcode.cpp \
-    license/qrcode-widget.cpp \
     license/active-list-item.cpp \
-    license/load-animation-widget.cpp \
+    license/license-agreement.cpp \
     license/license-info-widget.cpp \
-    kiran-system-widget.cpp \
-    kiran-scroll-area.cpp \
-    kiran-list-widget.cpp \
-    change-host-name-widget.cpp \
-    pages/hardware-information/hardware-information-widget.cpp \
-    pages/system-information/system-information-widget.cpp \
-    plug_interface/interface.cpp \
-    license/license-agreement.cpp
+    license/load-animation-widget.cpp \
+    license/qrcode-widget.cpp \
+    license/show-qrcode.cpp \
+    main.cpp \
+    pages/license-information/license-information.cpp
 
-HEADERS += \
-        kiran-system-information.h \
-    information-list-item.h \
-    hardware-information-widget.h \
-    system-info-dbus.h \
-    system-information-widget.h \
+
+HEADERS += \ \
+    custom-widgets/information-list-item.h \
+    custom-widgets/kiran-list-widget.h \
+    custom-widgets/kiran-scroll-area.h \
+    dbus-wrapper/license-dbus.h \
+    kiran-system-information.h \
     license/active-guide-widget.h \
-    license/show-qrcode.h \
-    license/qrcode-widget.h \
     license/active-list-item.h \
-    license/load-animation-widget.h \
+    license/license-agreement.h \
     license/license-info-widget.h \
-    kiran-system-widget.h \
-    kiran-scroll-area.h \
-    kiran-list-widget.h \
-    change-host-name-widget.h \
-    pages/hardware-information/hardware-information-widget.h \
-    pages/system-information/system-information-widget.h \
-    plug_interface/interface.h \
-    license/license-agreement.h
+    license/load-animation-widget.h \
+    license/qrcode-widget.h \
+    license/show-qrcode.h \
+    pages/license-information/license-information.h
+
 
 FORMS += \
-        kiran-system-information.ui \
-    information-list-item.ui \
-    hardware-information-widget.ui \
-    system-information-widget.ui \
+    custom-widgets/information-list-item.ui \
+    kiran-system-information.ui \
     license/active-guide-widget.ui \
-    license/show-qrcode.ui \
     license/active-list-item.ui \
+    license/license-agreement.ui \
     license/license-info-widget.ui \
-    change-host-name-widget.ui \
-    pages/hardware-information/hardware-information-widget.ui \
-    pages/system-information/system-information-widget.ui \
-    license/license-agreement.ui
+    license/show-qrcode.ui \
+    pages/license-information/license-information.ui
+
 
 RESOURCES += \
     ../data/res.qrc \
     ../data/loading-data.qrc
 
 LIBS += \
-        -lQZint \
+        -lqrencode \
         -lglib-2.0\
-        -lkiranwidgets-qt5
+        -lklog-qt5
 
 TRANSLATIONS    +=  ../translations/kiran-cpanel-system.zh_CN.ts
 
 #安装选项
+message($$DESTDIR)
 target.path = $$DESTDIR/usr/bin/
 
 target_translation.files = ../translations/kiran-cpanel-system.zh_CN.qm
-target_translation.path = $$DESTDIR/usr/share/kiran-system-information/translations/
+target_translation.path = $$DESTDIR/usr/share/kiran-cpanel-system/translations/
 
 INSTALLS = target target_translation
 

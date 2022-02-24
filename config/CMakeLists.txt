@@ -7,15 +7,27 @@ configure_file (
 "${PROJECT_BINARY_DIR}/config/kiran-cpanel-system.desktop"
 )
 
-install(FILES "${PROJECT_BINARY_DIR}/config/kiran-cpanel-system.desktop"
-        DESTINATION ${CPANEL_DESKTOP_DIR}/ )
+#添加kiran-cpanel-system-license.desktop.in文件
+configure_file (
+"${PROJECT_SOURCE_DIR}/config/kiran-cpanel-system-license.desktop.in"
+"${PROJECT_BINARY_DIR}/config/kiran-cpanel-system-license.desktop"
+)
 
-SET(source ${CPANEL_DESKTOP_DIR}/kiran-cpanel-system.desktop)
+if(DISABLE_SYSTEM_INFO)
+	install(FILES "${PROJECT_BINARY_DIR}/config/kiran-cpanel-system-license.desktop"
+		DESTINATION ${DATA_DIR}/applications/ )
 
-add_custom_target(kiran-cpanel-system-desktop ALL
-	          COMMAND ln -sf ${source} ${PROJECT_BINARY_DIR}/kiran-cpanel-system.desktop)
+else()
+	install(FILES "${PROJECT_BINARY_DIR}/config/kiran-cpanel-system.desktop"
+		DESTINATION ${CPANEL_DESKTOP_DIR}/ )
 
+	SET(source ${CPANEL_DESKTOP_DIR}/kiran-cpanel-system.desktop)
 
-install(FILES "${PROJECT_BINARY_DIR}/kiran-cpanel-system.desktop"
-	DESTINATION ${DATA_DIR}/applications/)
+	add_custom_target(kiran-cpanel-system-desktop ALL
+		COMMAND ln -sf ${source} ${PROJECT_BINARY_DIR}/kiran-cpanel-system.desktop)
+
+	install(FILES "${PROJECT_BINARY_DIR}/kiran-cpanel-system.desktop"
+		DESTINATION ${DATA_DIR}/applications/)
+
+endif()
 

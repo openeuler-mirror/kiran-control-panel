@@ -15,47 +15,38 @@
 #ifndef KIRANSYSTEMINFORMATION_H
 #define KIRANSYSTEMINFORMATION_H
 
-#include <QWidget>
 #include <QListWidgetItem>
 #include <QStackedWidget>
-#include "information-list-item.h"
-
-namespace Ui {
+#include <QWidget>
+#include "config/config.h"
+#include "custom-widgets/information-list-item.h"
+namespace Ui
+{
 class kiranSystemInformation;
 }
 
+#ifdef DISABLE_KIRANWIDGETS
 class kiranSystemInformation : public QWidget
+#else
+#include <kiran-titlebar-window.h>
+class kiranSystemInformation : public KiranTitlebarWindow
+#endif
 {
     Q_OBJECT
 
 public:
-    explicit kiranSystemInformation(QWidget *parent = 0);
+    explicit kiranSystemInformation(QWidget* parent = 0);
     ~kiranSystemInformation();
+    virtual QSize sizeHint() const;
+
+protected:
+    void paintEvent(QPaintEvent* painEvent);
 
 private:
     void initUI();
-    InformationListItem *createInformationItem(const QString text , const QString iconPath);
-    QWidget* createSystemInfoPage(void);
-    QWidget* createHardwareInfoPage(void);
-
-signals:
-    void sigClose();
-
-public slots:
-    void changeWidgetWhenItemClicked(QListWidgetItem* currentItem);
 
 private:
-    enum {pageSystemInfo, PageHardwareInfo};
-    enum {itemSystemInfo, itemHardwareInfo};
-    Ui::kiranSystemInformation *ui;
-    QStackedWidget *stackedWidget;
-
-    InformationListItem* systemInfomationItem;
-    InformationListItem* hardwareInformationItem;
-
-    QWidget* systemInfoWidget;
-    QWidget* hardwareInfoWidget;
-
+    Ui::kiranSystemInformation* ui;
 };
 
-#endif // KIRANSYSTEMINFORMATION_H
+#endif  // KIRANSYSTEMINFORMATION_H

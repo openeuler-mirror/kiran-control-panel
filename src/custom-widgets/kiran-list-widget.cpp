@@ -12,18 +12,19 @@
  * Author:     yuanxing <yuanxing@kylinos.com.cn>
  */
 
-#ifndef KIRANLISTWIDGET_H
-#define KIRANLISTWIDGET_H
+#include "kiran-list-widget.h"
 
-#include <QListWidget>
-
-class KiranListWidget :public QListWidget
+KiranListWidget::KiranListWidget(QWidget *parent)
+    : QListWidget(parent)
 {
-public:
-    KiranListWidget(QWidget* parent=nullptr);
-    ~KiranListWidget() = default;
+}
 
-    virtual QSize sizeHint() const override;
-};
+KiranListWidget::~KiranListWidget()
+{
+}
 
-#endif // KIRANLISTWIDGET_H
+QSize KiranListWidget::sizeHint() const
+{
+    QSize size = QSize(288, -1);
+    return size;
+}

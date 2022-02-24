@@ -11,34 +11,44 @@
  *
  * Author:     yuanxing <yuanxing@kylinos.com.cn>
  */
-#include "kiran-system-widget.h"
+#include <kiran-log/qt5-log-i.h>
 #include <QApplication>
 #include <QDesktopWidget>
 #include <QFile>
-#include <QMessageBox>
-#include <kiran-log/qt5-log-i.h>
-#include <kiranwidgets-qt5/kiran-single-application.h>
 #include <QLoggingCategory>
+#include <QMessageBox>
 #include <QTranslator>
-#include "config/config.h"
 #include <iostream>
+#include "config/config.h"
+#include "kiran-system-information.h"
+#include "pages/license-information/license-information.h"
+
+#ifndef DISABLE_KIRANWIDGETS
+#include <kiran-single-application.h>
+#endif
+
 #define TRANSLATION_DIR TRANSLATIONS_FILE_DIR
 
 int main(int argc, char *argv[])
 {
+#ifdef DISABLE_KIRANWIDGETS
+    QApplication a(argc, argv);
+#else
+    KiranSingleApplication a(argc, argv);
+#endif
+
     ///注册自定义的消息处理函数
-    QLoggingCategory::defaultCategory()->setEnabled(QtMsgType::QtDebugMsg,true);
-    if (klog_qt5_init("", "kylinsec-system", "kiran-cpanel-system", "kiran-cpanel-system") < 0){
+    QLoggingCategory::defaultCategory()->setEnabled(QtDebugMsg, true);
+    if (klog_qt5_init("", "kylinsec-session", "kiran-cpanel-system", "kiran-cpanel-system") < 0)
+    {
         std::cout << "init zlog error" << std::endl;
     }
 
-    KLOG_INFO() <<"******New Output*********";
-
-    KiranSingleApplication a(argc, argv);
+    KLOG_DEBUG() << "******New Output*********";
 
     ///加载qss样式表
     QFile file(":/qss/style.qss");
-    if( file.open(QFile::ReadOnly))
+    if (file.open(QFile::ReadOnly))
     {
         QString styleSheet = QLatin1String(file.readAll());
 
@@ -47,12 +57,13 @@ int main(int argc, char *argv[])
     }
     else
     {
-        QMessageBox::warning(NULL, "warning", "Open failed", QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+        QMessageBox::warning(NULL, QObject::tr("warning"), QObject::tr("Open qss file failed"), QMessageBox::Ok);
     }
 
     ///加载翻译文件
     QTranslator *qtTranslator = new QTranslator(qApp);
-    if(qtTranslator->load(QLocale(),"kiran-cpanel-system",".",TRANSLATION_DIR,".qm")){
+    if (qtTranslator->load(QLocale(), "kiran-cpanel-system", ".", TRANSLATION_DIR, ".qm"))
+    {
         a.installTranslator(qtTranslator);
     }
     else
@@ -60,13 +71,13 @@ int main(int argc, char *argv[])
         KLOG_DEBUG() << "Load Translator File failed : " << TRANSLATION_DIR;
     }
 
-    KiranSystemWidget w;
+    kiranSystemInformation w;
     w.resize(w.sizeHint());
 
     int screenNum = QApplication::desktop()->screenNumber(QCursor::pos());
     QRect screenGeometry = QApplication::desktop()->screenGeometry(screenNum);
-    w.move(screenGeometry.x()+(screenGeometry.width()-w.width())/2,
-           screenGeometry.y()+(screenGeometry.height()-w.height())/2);
+    w.move(screenGeometry.x() + (screenGeometry.width() - w.width()) / 2,
+           screenGeometry.y() + (screenGeometry.height() - w.height()) / 2);
 
     w.show();
     return a.exec();

@@ -12,37 +12,35 @@
  * Author:     yuanxing <yuanxing@kylinos.com.cn>
  */
 
-#ifndef CHANGEHOSTNAMEWIDGET_H
-#define CHANGEHOSTNAMEWIDGET_H
+#ifndef INFORMATIONLISTITEM_H
+#define INFORMATIONLISTITEM_H
 
 #include <QWidget>
-#include <kiranwidgets-qt5/kiran-titlebar-window.h>
 
-namespace Ui {
-class ChangeHostNameWidget;
+namespace Ui
+{
+class InformationListItem;
 }
 
-class ChangeHostNameWidget : public KiranTitlebarWindow
+class InformationListItem : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit ChangeHostNameWidget();
-    ~ChangeHostNameWidget();
-    bool getLineEditStatus();
+    explicit InformationListItem(QWidget *parent = 0);
+    ~InformationListItem();
+
+protected:
+    void paintEvent(QPaintEvent *event);
+
+public:
+    void setItemText(const QString &text);
+    void setItemIcon(const QString &iconPath);
+    void setItemArrow(bool isSelected);
+    virtual QSize sizeHint() const;
 
 private:
-    void initUI();
-
-signals:
-    void sigChangeNameSuccessful(bool isChanged, QString name);
-
-private slots:
-    void setNewHostName();
-    void setInputEditStatus();
-
-private:
-    Ui::ChangeHostNameWidget *ui;
+    Ui::InformationListItem *ui;
 };
 
-#endif // CHANGEHOSTNAMEWIDGET_H
+#endif  // InformationListItem_H

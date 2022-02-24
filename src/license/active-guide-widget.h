@@ -14,34 +14,49 @@
 #ifndef ACTIVEGUIDEWIDGET_H
 #define ACTIVEGUIDEWIDGET_H
 
-#include <QWidget>
+#include <QJsonObject>
 #include <QLineEdit>
 #include <QPushButton>
-#include <QJsonObject>
-#include "show-qrcode.h"
+#include <QWidget>
 #include "active-list-item.h"
-#include <kiranwidgets-qt5/kiran-titlebar-window.h>
+#include "config/config.h"
 #include "load-animation-widget.h"
-namespace Ui {
+#include "show-qrcode.h"
+namespace Ui
+{
 class ActGuideWidget;
 }
 
 /**
  * @brief  ActGuideWidget 激活向导窗口
  */
+#ifdef DISABLE_KIRANWIDGETS
+class ActGuideWidget : public QWidget
+#else
+#include <kiranwidgets-qt5/kiran-titlebar-window.h>
 class ActGuideWidget : public KiranTitlebarWindow
+#endif
 {
     Q_OBJECT
 
 public:
-    enum {Page_Start, Page_Manual,Page_Key,Page_Online,Page_Activating,Page_Successful,Page_Failed};
-    explicit ActGuideWidget(QWidget* parent=nullptr);
+    enum
+    {
+        Page_Start,
+        Page_Manual,
+        Page_Key,
+        Page_Online,
+        Page_Activating,
+        Page_Successful,
+        Page_Failed
+    };
+    explicit ActGuideWidget(QWidget* parent = NULL);
     ~ActGuideWidget();
     bool getLineEditStatus();
 
 private:
     void iniUI();
-    ActListItem* createActiveItem(const QString &text);
+    ActListItem* createActiveItem(const QString& text);
     bool getMachineCode();
     void sleep(int);
     void hideLabelPointsDefault();
@@ -64,12 +79,12 @@ public slots:
     void setKeyLineEditStatus();
 
 protected:
-    bool eventFilter(QObject *target, QEvent *e);
+    bool eventFilter(QObject* target, QEvent* e);
 
 private:
-    Ui::ActGuideWidget *ui;
-    ShowQRCode * showQRCode;
-    LoadAnimationWidget *loadAnimation;
+    Ui::ActGuideWidget* ui;
+    ShowQRCode* showQRCode;
+    LoadAnimationWidget* loadAnimation;
     ActListItem* listItemMode;
     ActListItem* listItemActive;
     ActListItem* listItemComplete;
@@ -80,4 +95,4 @@ private:
     bool byOnline;
 };
 
-#endif // ACTIVEGUIDEWIDGET_H
+#endif  // ACTIVEGUIDEWIDGET_H
