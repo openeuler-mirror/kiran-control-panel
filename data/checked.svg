@@ -29,17 +29,15 @@
 <?xpacket end="w"?></metadata>
 <defs>
     <style>
-      .cls-1 {
-        fill: none;
-        stroke: #2094fc;
-        stroke-width: 1px;
+      .cls-1, .cls-2 {
+        fill: #2eb3ff;
       }
 
-      .cls-2 {
-        fill: #2094fc;
+      .cls-1 {
+        fill-rule: evenodd;
       }
     </style>
   </defs>
-  <circle id="_1" data-name="1" class="cls-1" cx="7" cy="7" r="6.5"/>
-  <circle id="_2" data-name="2" class="cls-2" cx="7" cy="7" r="3.72"/>
+  <path id="框-未选中_拷贝_3" data-name="框-未选中 拷贝 3" class="cls-1" d="M1198,320a7,7,0,1,1,7-7A7,7,0,0,1,1198,320Zm0-13a6,6,0,1,0,6,6A6,6,0,0,0,1198,307Z" transform="translate(-1191 -306)"/>
+  <circle id="_2" data-name="2" class="cls-2" cx="7" cy="7" r="4"/>
 </svg>

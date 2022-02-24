@@ -13,22 +13,33 @@
  */
 
 #include "change-host-name-widget.h"
-#include "ui_change-host-name-widget.h"
-#include "system-info-dbus.h"
-#include <kiranwidgets-qt5/kiran-message-box.h>
-#include <kiranwidgets-qt5/widget-property-helper.h>
-#include <kiranwidgets-qt5/kiran-style-public-define.h>
 #include <QDesktopWidget>
+#include <QMessageBox>
+#include "dbus-wrapper/system-info-dbus.h"
+#include "ui_change-host-name-widget.h"
 
-ChangeHostNameWidget::ChangeHostNameWidget() :
-    KiranTitlebarWindow(),
-    ui(new Ui::ChangeHostNameWidget)
+#ifdef DISABLE_KIRANWIDGETS
+ChangeHostNameWidget::ChangeHostNameWidget() : QWidget(),
+                                               ui(new Ui::ChangeHostNameWidget)
+{
+    ui->setupUi(this);
+#else
+#include <kiranwidgets-qt5/kiran-message-box.h>
+#include <kiranwidgets-qt5/kiran-style-public-define.h>
+#include <kiranwidgets-qt5/widget-property-helper.h>
+ChangeHostNameWidget::ChangeHostNameWidget() : KiranTitlebarWindow(),
+                                               ui(new Ui::ChangeHostNameWidget)
 {
     ui->setupUi(getWindowContentWidget());
+    setButtonHints(TitlebarMinimizeButtonHint | TitlebarCloseButtonHint);
+    setContentWrapperMarginBottom(0);
+    setResizeable(false);
+    Kiran::WidgetPropertyHelper::setButtonType(ui->btn_save, Kiran::BUTTON_Default);
+#endif
     initUI();
     connect(ui->btn_cancel, SIGNAL(clicked()), this, SLOT(close()));
     connect(ui->btn_save, SIGNAL(clicked()), this, SLOT(setNewHostName()));
-    connect(ui->lineEdit_input_name , SIGNAL(textChanged(QString)), SLOT(setInputEditStatus()));
+    connect(ui->lineEdit_input_name, SIGNAL(textChanged(QString)), SLOT(setInputEditStatus()));
 }
 
 ChangeHostNameWidget::~ChangeHostNameWidget()
@@ -38,7 +49,7 @@ ChangeHostNameWidget::~ChangeHostNameWidget()
 
 bool ChangeHostNameWidget::getLineEditStatus()
 {
-    if(ui->lineEdit_input_name->text() != NULL)
+    if (ui->lineEdit_input_name->text() != NULL)
         return true;
     else
         return false;
@@ -48,47 +59,48 @@ void ChangeHostNameWidget::initUI()
 {
     setTitle(tr("Host Name"));
     setIcon(QIcon(":/images/kylin-about.png"));
-    setButtonHints(TitlebarMinimizeButtonHint|TitlebarCloseButtonHint);
-    setContentWrapperMarginBottom(0);
-    setResizeable(false);
-    ui->btn_save->setEnabled(false);
 
-    Kiran::WidgetPropertyHelper::setButtonType(ui->btn_save,Kiran::BUTTON_Default);
+    ui->btn_save->setEnabled(false);
 
     int screenNum = QApplication::desktop()->screenNumber(QCursor::pos());
     QRect screenGeometry = QApplication::desktop()->screenGeometry(screenNum);
-    this->move(screenGeometry.x()+(screenGeometry.width()-this->width())/2,
-           screenGeometry.y()+(screenGeometry.height()-this->height())/2);
+    this->move(screenGeometry.x() + (screenGeometry.width() - this->width()) / 2,
+               screenGeometry.y() + (screenGeometry.height() - this->height()) / 2);
 }
 
 void ChangeHostNameWidget::setNewHostName()
 {
     QString newName = ui->lineEdit_input_name->text();
-    if(!InfoDbus::SystemInfo::setHostName(newName)) // 调用Dbus接口不成功，弹出警告窗口
+    if (!InfoDbus::SystemInfo::setHostName(newName))  // 调用Dbus接口不成功，弹出警告窗口
     {
-        emit sigChangeNameSuccessful(false,newName);
+        emit sigChangeNameSuccessful(false, newName);
         QString boxTitle = QString(tr("Warning"));
         QString boxText = QString(tr("Change host name failed! Please check the Dbus service!"));
-        KiranMessageBox::KiranStandardButton button = KiranMessageBox::message(nullptr,boxTitle,boxText,KiranMessageBox::Ok);
-        if(button == KiranMessageBox::Ok)
+
+#ifdef DISABLE_KIRANWIDGETS
+        QMessageBox::information(nullptr, boxTitle, boxText, QMessageBox::Ok);
+        return;
+#else
+        KiranMessageBox::KiranStandardButton button = KiranMessageBox::message(nullptr, boxTitle, boxText, KiranMessageBox::Ok);
+        if (button == KiranMessageBox::Ok)
         {
             return;
         }
+#endif
     }
     else
     {
-        emit sigChangeNameSuccessful(true,newName);
+        emit sigChangeNameSuccessful(true, newName);
         this->close();
     }
 }
 
 void ChangeHostNameWidget::setInputEditStatus()
 {
-    if(ui->lineEdit_input_name->text().isEmpty())
+    if (ui->lineEdit_input_name->text().isEmpty())
     {
         ui->btn_save->setEnabled(false);
         ui->btn_save->setStyleSheet("QPushButton#btn_save { color: rgba(255,255,255,0.3);}");
-
     }
     else
     {

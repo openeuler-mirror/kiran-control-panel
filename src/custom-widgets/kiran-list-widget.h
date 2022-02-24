@@ -11,18 +11,19 @@
  *
  * Author:     yuanxing <yuanxing@kylinos.com.cn>
  */
-#ifndef KIRANSCROLLAREA_H
-#define KIRANSCROLLAREA_H
 
-#include <QScrollArea>
+#ifndef KIRANLISTWIDGET_H
+#define KIRANLISTWIDGET_H
 
-class KiranScrollArea : public QScrollArea
+#include <QListWidget>
+
+class KiranListWidget : public QListWidget
 {
 public:
-    KiranScrollArea(QWidget* parent=nullptr);
-    ~KiranScrollArea()=default;
+    KiranListWidget(QWidget* parent = NULL);
+    ~KiranListWidget();
 
-    virtual QSize sizeHint() const override;
+    virtual QSize sizeHint() const;
 };
 
-#endif // KIRANSCROLLAREA_H
+#endif  // KIRANLISTWIDGET_H

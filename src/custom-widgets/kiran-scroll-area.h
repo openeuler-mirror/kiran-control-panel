@@ -11,27 +11,21 @@
  *
  * Author:     yuanxing <yuanxing@kylinos.com.cn>
  */
+#ifndef KIRANSCROLLAREA_H
+#define KIRANSCROLLAREA_H
 
-#ifndef KIRANSYSTEMWIDGET_H
-#define KIRANSYSTEMWIDGET_H
+#include <QScrollArea>
 
-#include <kiranwidgets-qt5/kiran-titlebar-window.h>
-#include "kiran-system-information.h"
-
-#include <QPushButton>
-#include <QMenu>
-
-class KiranSystemWidget : public KiranTitlebarWindow
+class KiranScrollArea : public QScrollArea
 {
-    Q_OBJECT
 public:
-    explicit KiranSystemWidget();
-    ~KiranSystemWidget();
-    virtual QSize sizeHint() const override;
+    KiranScrollArea(QWidget* parent = NULL);
+    ~KiranScrollArea();
 
-private:
-     kiranSystemInformation *centerWgt;
+    virtual QSize sizeHint() const;
 
+protected:
+    void paintEvent(QPaintEvent* painEvent);
 };
 
-#endif // KIRANSYSTEMWIDGET_H
+#endif  // KIRANSCROLLAREA_H

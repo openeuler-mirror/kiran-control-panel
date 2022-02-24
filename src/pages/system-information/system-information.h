@@ -12,39 +12,34 @@
  * Author:     yuanxing <yuanxing@kylinos.com.cn>
  */
 
-#ifndef SYSTEMINFORMATIONWIDGET_H
-#define SYSTEMINFORMATIONWIDGET_H
+#ifndef SYSTEMINFORMATION_H
+#define SYSTEMINFORMATION_H
 
 #include <QPaintEvent>
 #include <QWidget>
 #include "change-host-name-widget.h"
-#include "license/active-guide-widget.h"
-#include "license/license-info-widget.h"
 namespace Ui
 {
-class SystemInformationWidget;
+class SystemInformation;
 }
 
 class LicenseAgreement;
-class SystemInformationWidget : public QWidget
+class SystemInformation : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit SystemInformationWidget(QWidget *parent = 0);
-    ~SystemInformationWidget();
+    explicit SystemInformation(QWidget *parent = 0);
+    ~SystemInformation();
     bool initUI();
     bool hasUnsavedOptions();
 
 private:
     bool readSystemInfo(int infoType);
     void getJsonValueFromString(QString jsonString);
-    bool readLicenseInfo();
 
 private slots:
     void onBtnchangeHostName(void);
-    void onBtnStatusClicked();
-    void updateLicenseInfo(bool isregister);
     void updateHostName(bool isChanged, QString name);
 
 protected:
@@ -53,23 +48,10 @@ protected:
     virtual QSize sizeHint() const;
 
 private:
-    Ui::SystemInformationWidget *ui;
+    Ui::SystemInformation *ui;
 
-    bool isActive;
-    QString mc_code;
-    QString lc_code;
-    // 授权状态
-    quint16 license_status = 0;
-    // 过期时间
-    qlonglong expired_time;
-    // 安装时间
-    qlonglong start_time;
-    QString installTime;
-
-    ActGuideWidget *activeGuide;
-    LicenseInfoWidget *licenseInfoWidget;
     ChangeHostNameWidget *hostNameWidget;
     LicenseAgreement *licenseAgreement;
 };
 
-#endif  // SYSTEMINFORMATIONWIDGET_H
+#endif  // SYSTEMINFORMATION_H

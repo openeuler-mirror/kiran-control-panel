@@ -15,13 +15,19 @@
 #define LICENSEAGREEMENT_H
 
 #include <QWidget>
-#include <kiranwidgets-qt5/kiran-titlebar-window.h>
+#include "config/config.h"
 
-namespace Ui {
+namespace Ui
+{
 class LicenseAgreement;
 }
 
+#ifdef DISABLE_KIRANWIDGETS
+class LicenseAgreement : public QWidget
+#else
+#include <kiranwidgets-qt5/kiran-titlebar-window.h>
 class LicenseAgreement : public KiranTitlebarWindow
+#endif
 {
     Q_OBJECT
 
@@ -37,7 +43,6 @@ public slots:
     void exportLicense();
 
 private:
-    void initUI();
     QString getLocaleLang();
 
 private:
@@ -45,4 +50,4 @@ private:
     int m_licenseType;
 };
 
-#endif // LICENSEAGREEMENT_H
+#endif  // LICENSEAGREEMENT_H

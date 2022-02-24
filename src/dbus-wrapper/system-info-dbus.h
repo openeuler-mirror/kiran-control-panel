@@ -17,20 +17,13 @@
 
 #include <QString>
 
-namespace InfoDbus {
-    namespace SystemInfo {
-        bool getSystemInfo(int infoType , QString &info);
-        bool setHostName(QString name);
-    }
-    namespace KylinLicense {
-        bool getLicenseJson(QString &licenseInfo);
-        bool getMachineCode(QString& machineCode);
-        bool registerByLicenseCode(QString licenseCode , QString &errorMsg);
-        bool registerByUsbKey(QString &points, QString &errorMsg);
-        bool registerOnline(QString ip ,QString &errorMsg);
-        bool getServiceStatus(int &status);
-    }
-}
+namespace InfoDbus
+{
+namespace SystemInfo
+{
+bool getSystemInfo(int infoType, QString &info);
+bool setHostName(QString name);
+}  // namespace SystemInfo
+}  // namespace InfoDbus
 
-
-#endif // SYSTEMINFODBUS_H
+#endif  // SYSTEMINFODBUS_H
