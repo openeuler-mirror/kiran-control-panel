@@ -23,6 +23,9 @@ public:
     ~KiranScrollArea();
 
     virtual QSize sizeHint() const;
+
+protected:
+    void paintEvent(QPaintEvent* painEvent);
 };
 
 #endif  // KIRANSCROLLAREA_H

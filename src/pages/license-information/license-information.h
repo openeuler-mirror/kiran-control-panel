@@ -29,7 +29,7 @@ public slots:
 
 protected:
     bool eventFilter(QObject *obj, QEvent *event);
-    void paintEvent(QPaintEvent *painEvent);
+    void paintEvent(QPaintEvent *);
 
 private:
     Ui::LicenseInformation *ui;

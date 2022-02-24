@@ -8,10 +8,13 @@
 #include <QJsonObject>
 #include <QJsonValue>
 #include <QPainter>
+#include <QStyleOption>
 #include <iostream>
 #include "dbus-wrapper/license-dbus.h"
 #include "ui_license-information.h"
-
+namespace KylinSec
+{
+};
 using namespace KylinSec;
 
 #define SYSTEM_LOGO "KylinSec OS"
@@ -327,12 +330,18 @@ bool LicenseInformation::eventFilter(QObject *obj, QEvent *event)
 
 void LicenseInformation::paintEvent(QPaintEvent *painEvent)
 {
+    QStyleOption opt;
+
+    opt.init(this);
+    QPainter painter(this);
+    style()->drawPrimitive(QStyle::PE_Widget, &opt, &painter, this);
+    QWidget::paintEvent(painEvent);
+
     QDate currentDate = QDate::currentDate();
     QString date = currentDate.toString("yyyy-MM-dd");
     QString year = date.left(4);
     QString copyright = QString(tr("Copyright ©")) + QString("%1 ").arg(year) + QString(tr("KylinSec. All rights reserved."));
 
-    QPainter painter(this);
     QFont font = QFont("Noto Sans CJK SC regular", 46);
     QRect drawRecLogo = QRect(this->geometry().x() + 24, this->geometry().y() + 16, this->width(), ui->widget_logo->height() - 16);
 

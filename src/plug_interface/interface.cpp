@@ -81,7 +81,7 @@ QWidget* KcpInterface::getSubItemWidget(QString id)
     }
     else
     {
-        QMessageBox::warning(NULL, "warning", "load qss file failed", QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+        KiranMessageBox::message(NULL, tr("Warning"), tr("load qss file failed"), KiranMessageBox::Ok);
     }
     return m_currentWidget;
 }

@@ -25,6 +25,9 @@
   <property name="windowTitle">
    <string>kiranSystemInformation</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
     <number>0</number>
@@ -43,28 +46,10 @@
    </property>
    <item>
     <widget class="KiranScrollArea" name="scrollArea">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Ignored">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>0</width>
-       <height>0</height>
-      </size>
-     </property>
-     <property name="horizontalScrollBarPolicy">
-      <enum>Qt::ScrollBarAsNeeded</enum>
-     </property>
-     <property name="sizeAdjustPolicy">
-      <enum>QAbstractScrollArea::AdjustToContents</enum>
-     </property>
      <property name="widgetResizable">
       <bool>true</bool>
      </property>
-     <widget class="LicenseInformation" name="page_license">
+     <widget class="QWidget" name="scrollAreaWidgetContents">
       <property name="geometry">
        <rect>
         <x>0</x>
@@ -73,29 +58,6 @@
         <height>673</height>
        </rect>
       </property>
-      <property name="minimumSize">
-       <size>
-        <width>0</width>
-        <height>600</height>
-       </size>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout_3">
-       <property name="spacing">
-        <number>0</number>
-       </property>
-       <property name="leftMargin">
-        <number>0</number>
-       </property>
-       <property name="topMargin">
-        <number>0</number>
-       </property>
-       <property name="rightMargin">
-        <number>0</number>
-       </property>
-       <property name="bottomMargin">
-        <number>0</number>
-       </property>
-      </layout>
      </widget>
     </widget>
    </item>
@@ -107,12 +69,6 @@
    <class>KiranScrollArea</class>
    <extends>QScrollArea</extends>
    <header location="global">custom-widgets/kiran-scroll-area.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>LicenseInformation</class>
-   <extends>QWidget</extends>
-   <header>pages/license-information/license-information.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

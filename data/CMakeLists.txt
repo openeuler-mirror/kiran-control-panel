@@ -16,3 +16,6 @@ install(FILES "hardware-information.svg"
 
 install(FILES "system-information.svg"
 	DESTINATION ${DATA_DIR}/${PROJECT_NAME}/icons/ )
+
+install(FILES "license-information.svg"
+	DESTINATION ${DATA_DIR}/${PROJECT_NAME}/icons/ )

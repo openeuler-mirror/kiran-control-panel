@@ -28,6 +28,7 @@ LicenseInfoWidget::LicenseInfoWidget(QString &mc_code, QString &lc_code, QWidget
     ui->setupUi(this);
     setWindowTitle(tr("Activation Information"));
     setWindowIcon(QIcon(":/images/kylin-about.png"));
+    setWindowFlags(Qt::Window | Qt::WindowMinimizeButtonHint | Qt::WindowCloseButtonHint);
 #else
 LicenseInfoWidget::LicenseInfoWidget(QString &mc_code, QString &lc_code, QWidget *parent) : KiranTitlebarWindow(parent),
                                                                                             ui(new Ui::LicenseInfoWidget),

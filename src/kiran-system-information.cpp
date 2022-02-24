@@ -14,11 +14,11 @@
 
 #include "kiran-system-information.h"
 #include <kiran-log/qt5-log-i.h>
-#include <QBoxLayout>
 #include <QDesktopWidget>
 #include <QPainter>
 #include <QScroller>
 #include <QStackedWidget>
+#include <QVBoxLayout>
 #include "pages/license-information/license-information.h"
 #include "ui_kiran-system-information.h"
 
@@ -37,6 +37,7 @@ kiranSystemInformation::kiranSystemInformation(QWidget* parent) : KiranTitlebarW
     setTitle(tr("kiran-system-imformation"));
     setIcon(QIcon(":/images/kylin-about.png"));
 #endif
+    initUI();
 }
 
 kiranSystemInformation::~kiranSystemInformation()
@@ -59,4 +60,14 @@ void kiranSystemInformation::paintEvent(QPaintEvent* painEvent)
     style()->drawPrimitive(QStyle::PE_Widget, &opt, &p, this);
 
     QWidget::paintEvent(painEvent);
+}
+
+void kiranSystemInformation::initUI()
+{
+    QVBoxLayout* mainLayout = new QVBoxLayout;
+    mainLayout->setMargin(0);
+    ui->scrollAreaWidgetContents->setLayout(mainLayout);
+
+    LicenseInformation* licenseInformation = new LicenseInformation(this);
+    mainLayout->addWidget(licenseInformation);
 }

@@ -48,7 +48,7 @@ Keywords=hardware,information
 Name=License Information
 Name[zh_CN]=授权信息
 #插件Icon
-Icon=@ICON_DIR@/hardware-information.svg
+Icon=@ICON_DIR@/license-information.svg
 #插件关键字 该值提供给控制中心形成搜索列表
 Keywords[zh_CN]=授权信息
 Keywords=license,information

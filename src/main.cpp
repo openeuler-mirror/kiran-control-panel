@@ -39,7 +39,7 @@ int main(int argc, char *argv[])
 
     ///注册自定义的消息处理函数
     QLoggingCategory::defaultCategory()->setEnabled(QtDebugMsg, true);
-    if (klog_qt5_init("", "kylinsec-system", "kiran-cpanel-system", "kiran-cpanel-system") < 0)
+    if (klog_qt5_init("", "kylinsec-session", "kiran-cpanel-system", "kiran-cpanel-system") < 0)
     {
         std::cout << "init zlog error" << std::endl;
     }
@@ -57,7 +57,7 @@ int main(int argc, char *argv[])
     }
     else
     {
-        QMessageBox::warning(NULL, "warning", "Open qss file failed", QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+        QMessageBox::warning(NULL, QObject::tr("warning"), QObject::tr("Open qss file failed"), QMessageBox::Ok);
     }
 
     ///加载翻译文件

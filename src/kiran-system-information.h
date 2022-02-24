@@ -43,11 +43,7 @@ protected:
     void paintEvent(QPaintEvent* painEvent);
 
 private:
-    //void initUI();
-    //InformationListItem* createInformationItem(const QString text, const QString iconPath);
-
-public slots:
-    // void changeWidgetWhenItemClicked(QListWidgetItem* currentItem);
+    void initUI();
 
 private:
     Ui::kiranSystemInformation* ui;

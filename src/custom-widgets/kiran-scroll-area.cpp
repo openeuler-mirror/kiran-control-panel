@@ -14,7 +14,9 @@
 #include "kiran-scroll-area.h"
 #include <QApplication>
 #include <QDesktopWidget>
+#include <QPainter>
 #include <QScrollBar>
+#include <QStyleOption>
 
 KiranScrollArea::KiranScrollArea(QWidget* parent)
     : QScrollArea(parent)
@@ -36,4 +38,15 @@ QSize KiranScrollArea::sizeHint() const
     areaSizeHint += QSize(verticalScrollBar()->width(), horizontalScrollBar()->height());
 
     return areaSizeHint;
+}
+
+void KiranScrollArea::paintEvent(QPaintEvent* painEvent)
+{
+    QStyleOption opt;
+
+    opt.init(this);
+    QPainter p(this->viewport());
+    style()->drawPrimitive(QStyle::PE_Widget, &opt, &p, this);
+
+    QWidget::paintEvent(painEvent);
 }
