@@ -14,7 +14,7 @@
 
 #ifndef KCP_INTERFACE_H
 #define KCP_INTERFACE_H
-#include <kiran-control-panel/kcp-plugin-interface.h>
+#include <kcp-plugin-interface.h>
 
 class QTranslator;
 class KCMManager;
