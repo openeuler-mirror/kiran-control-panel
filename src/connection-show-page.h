@@ -12,37 +12,48 @@
  * Author:     luoqing <luoqing@kylinos.com.cn>
  */
 
-#ifndef KIRAN_CPANEL_NETWORK_CONNECTION_EDIT_PAGE_H
-#define KIRAN_CPANEL_NETWORK_CONNECTION_EDIT_PAGE_H
+#ifndef KIRAN_CPANEL_NETWORK_CONNECTION_SHOW_PAGE_H
+#define KIRAN_CPANEL_NETWORK_CONNECTION_SHOW_PAGE_H
 
 #include <QWidget>
-
+#include <QLabel>
+#include <QHBoxLayout>
+#include <QPushButton>
+#include <NetworkManagerQt/Connection>
 QT_BEGIN_NAMESPACE
 namespace Ui
 {
-class ConnectionEditPage;
+class ConnectionShowPage;
 }
 QT_END_NAMESPACE
+using namespace NetworkManager;
 class KiranSwitchButton;
-class ConnectionEditPage : public QWidget
+
+class ConnectionShowPage : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit ConnectionEditPage(QWidget *parent = nullptr);
-    ~ConnectionEditPage() override;
+    explicit ConnectionShowPage(QWidget *parent = nullptr);
+    ~ConnectionShowPage() override;
     void initUI();
 
     void setTitle(QString title);
     void setSwitchButtonVisible(bool visible);
 
+    void addConnectionToLists(Connection::Ptr ptr);
+
+public slots:
+    void handleEditButtonClicked();
+    void clearConnectionLists();
 
 signals:
     void requestCreatConnection();
+    void requestEditConnection(QString uuid, QString activeConnectionPath);
 
 private:
-    Ui::ConnectionEditPage *ui;
+    Ui::ConnectionShowPage *ui;
     KiranSwitchButton *m_switchButton;
 };
 
-#endif  //KIRAN_CPANEL_NETWORK_CONNECTION_EDIT_PAGE_H
+#endif  //KIRAN_CPANEL_NETWORK_CONNECTION_SHOW_PAGE_H

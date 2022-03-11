@@ -16,11 +16,11 @@
 #define KIRAN_CPANEL_NETWORK_WIRED_SETTING_PAGE_H
 
 #include <QWidget>
-#include <NetworkManagerQt/Connection>
-#include <NetworkManagerQt/ConnectionSettings>
 
 #include <NetworkManagerQt/WiredDevice>
 #include <NetworkManagerQt/WiredSetting>
+#include "comm-setting-widget.h"
+#include "setting-page.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui
@@ -28,8 +28,9 @@ namespace Ui
 class WiredSettingPage;
 }
 QT_END_NAMESPACE
+class KiranSwitchButton;
 
-class WiredSettingPage : public QWidget
+class WiredSettingPage : public SettingPage
 {
     Q_OBJECT
 
@@ -37,15 +38,28 @@ public:
     explicit WiredSettingPage(QWidget *parent = nullptr);
     ~WiredSettingPage() override;
 
+    void init();
     void initConnecton();
-    void initSettings();
+    void initUI();
+
+    void configureConnection();
+
+public slots:
+    void handleSaveButtonClicked();
+    void refreshSettingPage(QString activeConnectionPath="");
+
 signals:
-    void returnWiredEditPage();
 
 private:
     Ui::WiredSettingPage *ui;
 
+    NetworkManager::WiredSetting::Ptr m_wiredSetting;
+    NetworkManager::WiredDevice::Ptr m_wiredDevice;
 
+    KiranSwitchButton *m_autoConnection;
+    KiranSwitchButton *m_security;
+
+    CommConfigInfo m_wiredCommConfig;
 };
 
 #endif  //KIRAN_CPANEL_NETWORK_WIRED_SETTING_PAGE_H

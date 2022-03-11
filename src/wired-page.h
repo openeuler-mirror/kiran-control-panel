@@ -15,8 +15,11 @@
 #ifndef KIRAN_CPANEL_NETWORK_WIRED_PAGE_H
 #define KIRAN_CPANEL_NETWORK_WIRED_PAGE_H
 
+#include <NetworkManagerQt/Connection>
+#include <NetworkManagerQt/ActiveConnection>
 #include <QWidget>
 
+using namespace NetworkManager;
 QT_BEGIN_NAMESPACE
 namespace Ui
 {
@@ -30,14 +33,22 @@ class WiredPage : public QWidget
 
 public:
     explicit WiredPage(QWidget *parent = nullptr);
-
     ~WiredPage() override;
 
-    void init();
+    void initUI();
     void initConnecton();
+
+public slots:
+    void showWiredConnections();
 
 private:
     Ui::WiredPage *ui;
+    QList<QSharedPointer<Connection>> m_listConnection;
+    //XXX:待修改
+    NetworkManager::ActiveConnection::Ptr m_activeConnection;
+    QString  m_activeConnectionUuid;
+    QString m_activeConnectionPath;
+
 };
 
 #endif  //KIRAN_CPANEL_NETWORK_WIRED_PAGE_H

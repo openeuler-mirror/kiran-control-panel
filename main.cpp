@@ -24,7 +24,7 @@ int main(int argc, char *argv[]) {
     CPanelNetworkWidget networkWidget;
     networkWidget.show();
 
-    ConnectionEdit connectionEditPage;
+//    ConnectionEdit connectionEditPage;
 
     return QApplication::exec();
 }

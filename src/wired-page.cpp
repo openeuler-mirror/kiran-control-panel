@@ -14,7 +14,9 @@
 #include "wired-page.h"
 #include "ui_wired-page.h"
 
-#include <NetworkManagerQt/Connection>
+#include <qt5-log-i.h>
+#include <NetworkManagerQt/Manager>
+#include <NetworkManagerQt/Settings>
 
 enum WiredEditPages
 {
@@ -25,7 +27,7 @@ enum WiredEditPages
 WiredPage::WiredPage(QWidget *parent) : QWidget(parent), ui(new Ui::WiredPage)
 {
     ui->setupUi(this);
-    init();
+    initUI();
     initConnecton();
 }
 
@@ -34,20 +36,84 @@ WiredPage::~WiredPage()
     delete ui;
 }
 
-void WiredPage::init()
+void WiredPage::initUI()
 {
-    ui->connectionEditPage->setTitle(tr("Wired Network Adapter"));
-    ui->connectionEditPage->setSwitchButtonVisible(true);
+    ui->connectionShowPage->setTitle(tr("Wired Network Adapter"));
+    ui->connectionShowPage->setSwitchButtonVisible(true);
+    showWiredConnections();
+}
+
+void WiredPage::showWiredConnections()
+{
+    const Connection::List connectionList = NetworkManager::listConnections();
+    for (Connection::Ptr conn : connectionList)
+    {
+        if (conn->settings()->connectionType() == ConnectionSettings::ConnectionType::Wired)
+        {
+            KLOG_DEBUG() << "conn->uuid():" << conn->uuid();
+            KLOG_DEBUG() << "conn->name():" << conn->name();
+            KLOG_DEBUG() << "conn->path():" << conn->path();
+            KLOG_DEBUG() << "----------------";
+            ui->connectionShowPage->addConnectionToLists(conn);
+        }
+    }
+
+//    QStringList activePaths = NetworkManager::activeConnectionsPaths();
+//    for (QString path : activePaths)
+//    {
+//        ActiveConnection::Ptr activeConnection = findActiveConnection(path);
+//        KLOG_DEBUG() << "activeConnection->state(): " << activeConnection->state();
+//        KLOG_DEBUG() << "activeConnection->type(): " << activeConnection->type();
+//        KLOG_DEBUG() << "activeConnection->path(): " << activeConnection->path();
+//        KLOG_DEBUG() << "activeConnection->id(): " << activeConnection->id();
+//        KLOG_DEBUG() << "activeConnection->uuid(): " << activeConnection->uuid();
+//        if (activeConnection->type() == ConnectionSettings::ConnectionType::Wired)
+//        {
+//            m_activeConnectionUuid = activeConnection->uuid();
+//            m_activeConnectionPath = activeConnection->path();
+//            m_activeConnection = activeConnection;
+//        }
+//    }
+
+
+
 }
 
 void WiredPage::initConnecton()
 {
-    connect(ui->connectionEditPage,&ConnectionEditPage::requestCreatConnection,[=](){
-      ui->stackedWidget->setCurrentIndex(PAGE_WIRED_SETTING);
+    connect(ui->connectionShowPage, &ConnectionShowPage::requestCreatConnection, [=]() {
+        ui->stackedWidget->setCurrentIndex(PAGE_WIRED_SETTING);
+        ui->wiredSettingPage->refreshSettingPage();
     });
 
-    connect(ui->wiredSettingPage,&WiredSettingPage::returnWiredEditPage,[=](){
-       ui->stackedWidget->setCurrentIndex(PAGE_WIRED);
+    connect(ui->connectionShowPage, &ConnectionShowPage::requestEditConnection, [=](QString uuid,QString activeConnectionPath) {
+        ui->stackedWidget->setCurrentIndex(PAGE_WIRED_SETTING);
+        ui->wiredSettingPage->initConnectionSettings(ConnectionSettings::ConnectionType::Wired, uuid);
+        ui->wiredSettingPage->refreshSettingPage(activeConnectionPath);
     });
 
+    connect(ui->wiredSettingPage, &WiredSettingPage::returnPreviousPage, [=]() {
+        ui->stackedWidget->setCurrentIndex(PAGE_WIRED);
+        ui->wiredSettingPage->clearPtr();
+    });
+
+    connect(ui->wiredSettingPage, &WiredSettingPage::settingChanged, [=]() {
+        ui->wiredSettingPage->clearPtr();
+        ui->connectionShowPage->clearConnectionLists();
+        //保存设置生效后，刷新列表时，NetworkManager::listConnections()接口返回的数据还未更新，故延时等待
+        //测试等待20msec后能够得到更新的数据
+        QTimer::singleShot(30, this, SLOT(showWiredConnections()));
+        ui->stackedWidget->setCurrentIndex(PAGE_WIRED);
+    });
+
+    connect(settingsNotifier(),&SettingsNotifier::connectionAdded,[=](const QString &path){
+        KLOG_DEBUG() << "connectionAdded path:" << path;
+        //并不知道增加的连接类型，需要另外判断
+//        QSharedPointer<Connection>
+//        findConnection(path);
+
+    });
+
+
+//    SettingsNotifier::connectionAddComplete()
 }
