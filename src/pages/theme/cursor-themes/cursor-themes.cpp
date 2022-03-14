@@ -31,7 +31,7 @@
 #include <kiran-session-daemon/appearance-i.h>
 // clang-format on
 
-static QStringList cursors{"arrow", "size_bdiag", "size_fdiag", "size_ver", "tcross", "pointer"};
+static QStringList cursors{"left_ptr", "right_ptr", "top_left_corner", "top_right_corner", "size_hor", "pointer"};
 
 CursorThemes::CursorThemes(QWidget *parent) : QWidget(parent)
 {
@@ -155,7 +155,7 @@ QWidget *CursorThemes::createCursorWidget()
     QVBoxLayout *mainVLayout = new QVBoxLayout(cursorWidget);
     mainVLayout->setSpacing(4);
     mainVLayout->setMargin(0);
-    int size = 18;
+    int size = 22;
 
     for (int i = 0; i < m_cursorThemesName.size(); i++)
     {
@@ -180,7 +180,7 @@ QWidget *CursorThemes::createCursorWidget()
             cursorMap.append(QPixmap::fromImage(cursorImg));
         }
 
-        ThemeWidget *themeWidget = new ThemeWidget(QSize(18, 18), m_currentCursorTheme,
+        ThemeWidget *themeWidget = new ThemeWidget(QSize(size, size), m_currentCursorTheme,
                                                    m_cursorThemesName.at(i), cursorMap);
         mainVLayout->addWidget(themeWidget);
         m_themeWidgetGroup->addWidget(themeWidget);
