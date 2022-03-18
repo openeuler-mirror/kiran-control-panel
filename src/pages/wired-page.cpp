@@ -15,8 +15,10 @@
 #include "ui_wired-page.h"
 
 #include <qt5-log-i.h>
+#include <NetworkManagerQt/ActiveConnection>
 #include <NetworkManagerQt/Manager>
 #include <NetworkManagerQt/Settings>
+#include <QListWidget>
 
 enum WiredEditPages
 {
@@ -29,6 +31,24 @@ WiredPage::WiredPage(QWidget *parent) : QWidget(parent), ui(new Ui::WiredPage)
     ui->setupUi(this);
     initUI();
     initConnecton();
+
+    //XXX:获取wired device接口
+    const Device::List deviceList = networkInterfaces();
+    KLOG_DEBUG() << "deviceList:" << deviceList;
+    for (Device::Ptr dev : deviceList)
+    {
+        KLOG_DEBUG() << "dev->type():" << dev->type();
+        if (dev->type() == Device::Ethernet)
+        {
+            m_wiredDevice = qobject_cast<WiredDevice *>(dev);
+            break;
+        }
+    }
+
+    if (!m_wiredDevice)
+    {
+        KLOG_DEBUG() << "Wired device not found";
+    }
 }
 
 WiredPage::~WiredPage()
@@ -50,6 +70,7 @@ void WiredPage::showWiredConnections()
     {
         if (conn->settings()->connectionType() == ConnectionSettings::ConnectionType::Wired)
         {
+            KLOG_DEBUG() << "________________";
             KLOG_DEBUG() << "conn->uuid():" << conn->uuid();
             KLOG_DEBUG() << "conn->name():" << conn->name();
             KLOG_DEBUG() << "conn->path():" << conn->path();
@@ -57,44 +78,24 @@ void WiredPage::showWiredConnections()
             ui->connectionShowPage->addConnectionToLists(conn);
         }
     }
-
-//    QStringList activePaths = NetworkManager::activeConnectionsPaths();
-//    for (QString path : activePaths)
-//    {
-//        ActiveConnection::Ptr activeConnection = findActiveConnection(path);
-//        KLOG_DEBUG() << "activeConnection->state(): " << activeConnection->state();
-//        KLOG_DEBUG() << "activeConnection->type(): " << activeConnection->type();
-//        KLOG_DEBUG() << "activeConnection->path(): " << activeConnection->path();
-//        KLOG_DEBUG() << "activeConnection->id(): " << activeConnection->id();
-//        KLOG_DEBUG() << "activeConnection->uuid(): " << activeConnection->uuid();
-//        if (activeConnection->type() == ConnectionSettings::ConnectionType::Wired)
-//        {
-//            m_activeConnectionUuid = activeConnection->uuid();
-//            m_activeConnectionPath = activeConnection->path();
-//            m_activeConnection = activeConnection;
-//        }
-//    }
-
-
-
 }
 
 void WiredPage::initConnecton()
 {
     connect(ui->connectionShowPage, &ConnectionShowPage::requestCreatConnection, [=]() {
-        ui->stackedWidget->setCurrentIndex(PAGE_WIRED_SETTING);
         ui->wiredSettingPage->refreshSettingPage();
+        ui->stackedWidget->setCurrentIndex(PAGE_WIRED_SETTING);
     });
 
-    connect(ui->connectionShowPage, &ConnectionShowPage::requestEditConnection, [=](QString uuid,QString activeConnectionPath) {
-        ui->stackedWidget->setCurrentIndex(PAGE_WIRED_SETTING);
+    connect(ui->connectionShowPage, &ConnectionShowPage::requestEditConnection, [=](QString uuid, QString activeConnectionPath) {
         ui->wiredSettingPage->initConnectionSettings(ConnectionSettings::ConnectionType::Wired, uuid);
         ui->wiredSettingPage->refreshSettingPage(activeConnectionPath);
+        ui->stackedWidget->setCurrentIndex(PAGE_WIRED_SETTING);
     });
 
     connect(ui->wiredSettingPage, &WiredSettingPage::returnPreviousPage, [=]() {
-        ui->stackedWidget->setCurrentIndex(PAGE_WIRED);
         ui->wiredSettingPage->clearPtr();
+        ui->stackedWidget->setCurrentIndex(PAGE_WIRED);
     });
 
     connect(ui->wiredSettingPage, &WiredSettingPage::settingChanged, [=]() {
@@ -106,14 +107,32 @@ void WiredPage::initConnecton()
         ui->stackedWidget->setCurrentIndex(PAGE_WIRED);
     });
 
-    connect(settingsNotifier(),&SettingsNotifier::connectionAdded,[=](const QString &path){
-        KLOG_DEBUG() << "connectionAdded path:" << path;
-        //并不知道增加的连接类型，需要另外判断
-//        QSharedPointer<Connection>
-//        findConnection(path);
+    connect(ui->connectionShowPage, &ConnectionShowPage::activateCurrentItemConnection, this, &WiredPage::handleActivateConnection);
 
+    connect(settingsNotifier(), &SettingsNotifier::connectionAdded, [=](const QString &path) {
     });
 
+    //    SettingsNotifier::connectionAddComplete()
+}
 
-//    SettingsNotifier::connectionAddComplete()
+void WiredPage::handleActivateConnection(QString connectionPath)
+{
+    QDBusPendingReply<QDBusObjectPath> reply =
+        NetworkManager::activateConnection(connectionPath, m_wiredDevice->uni(), "");
+
+    reply.waitForFinished();
+    if (reply.isError())
+    {
+        KLOG_DEBUG() << "activate connection failed" << reply.error();
+    }
+    else
+    {
+        KLOG_DEBUG() << "reply.value().path():" << reply.value().path();
+        QString activatedPath = reply.value().path();
+        ActiveConnection::Ptr activatedConnectionObject = findActiveConnection(activatedPath);
+
+        ui->connectionShowPage->updateActivatedConnectionInfo(activatedPath);
+        ui->connectionShowPage->update();
+        KLOG_DEBUG() << "activate Connection successed";
+    }
 }

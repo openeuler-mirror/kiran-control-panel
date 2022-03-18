@@ -18,9 +18,11 @@
 #include <NetworkManagerQt/Connection>
 #include <NetworkManagerQt/ConnectionSettings>
 #include <NetworkManagerQt/Ipv4Setting>
+#include <NetworkManagerQt/Ipv6Setting>
+#include <NetworkManagerQt/WiredSetting>
 #include <QObject>
 #include <QWidget>
-
+#include "comm-setting-widget.h"
 using namespace NetworkManager;
 
 class SettingPage : public QWidget
@@ -30,14 +32,19 @@ public:
     SettingPage(QWidget *parent = nullptr);
     ~SettingPage();
 
-    void init();
     void initConnectionSettings(ConnectionSettings::ConnectionType connectionType,
-                                                              const QString& connectionUuid = "");
+                                const QString &connectionUuid = "");
 
     void createConnectionSettings();
     void clearPtr();
+    int connectionSuffixNum(QString &connName, ConnectionSettings::ConnectionType connType);
 
-    int connectionSuffixNum(QString &connName,ConnectionSettings::ConnectionType connType);
+    void setIpv4Settings(CommConfigInfo &configInfo);
+    void setWiredSettings(CommConfigInfo &configInfo);
+
+public slots:
+    void handleDeleteConnection();
+
 signals:
     void returnPreviousPage();
     void settingChanged();
@@ -46,12 +53,13 @@ protected:
     NetworkManager::Connection::Ptr m_connection = nullptr;
     NetworkManager::ConnectionSettings::Ptr m_connectionSettings = nullptr;
     NetworkManager::Ipv4Setting::Ptr m_ipv4Setting = nullptr;
+    NetworkManager::Ipv6Setting::Ptr m_ipv6Setting = nullptr;
+    NetworkManager::WiredSetting::Ptr m_wiredSetting = nullptr;
+    NetworkManager::ConnectionSettings::ConnectionType m_connectionType;
     QString m_connectionUuid;
-    QString m_activeConnectionPath;
+    QString m_activeConnectionPath = "";
 
 private:
-    NetworkManager::ConnectionSettings::ConnectionType m_connectionType;
-
     bool m_isNewConnection;
 };
 

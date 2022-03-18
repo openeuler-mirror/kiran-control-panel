@@ -15,8 +15,7 @@
 #ifndef KIRAN_CPANEL_NETWORK_WIRED_PAGE_H
 #define KIRAN_CPANEL_NETWORK_WIRED_PAGE_H
 
-#include <NetworkManagerQt/Connection>
-#include <NetworkManagerQt/ActiveConnection>
+#include <NetworkManagerQt/WiredDevice>
 #include <QWidget>
 
 using namespace NetworkManager;
@@ -40,15 +39,11 @@ public:
 
 public slots:
     void showWiredConnections();
+    void handleActivateConnection(QString connectionPath);
 
 private:
     Ui::WiredPage *ui;
-    QList<QSharedPointer<Connection>> m_listConnection;
-    //XXX:待修改
-    NetworkManager::ActiveConnection::Ptr m_activeConnection;
-    QString  m_activeConnectionUuid;
-    QString m_activeConnectionPath;
-
+    WiredDevice::Ptr m_wiredDevice;
 };
 
 #endif  //KIRAN_CPANEL_NETWORK_WIRED_PAGE_H

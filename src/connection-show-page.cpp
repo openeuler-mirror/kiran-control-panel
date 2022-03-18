@@ -21,17 +21,11 @@
 #include <QLabel>
 #include "ui_connection-show-page.h"
 
-#define PROPERTY_CONNECTION_UUID "ConnectionUuid"
-#define PROPERTY_ACTIVE_CONNECTION_PATH "ActiveConnectionPath"
-
 ConnectionShowPage::ConnectionShowPage(QWidget* parent) : QWidget(parent), ui(new Ui::ConnectionShowPage)
 {
     ui->setupUi(this);
     initUI();
-
-    connect(ui->createConnectionButton, &QPushButton::clicked, [=]() {
-        emit requestCreatConnection();
-    });
+    initConnect();
 }
 
 ConnectionShowPage::~ConnectionShowPage()
@@ -50,6 +44,38 @@ void ConnectionShowPage::initUI()
     ui->titleLayout->addWidget(m_switchButton);
 }
 
+void ConnectionShowPage::initConnect()
+{
+    connect(ui->createConnectionButton, &QPushButton::clicked, [=]() { emit requestCreatConnection(); });
+    connect(ui->connectionLists, &QListWidget::currentItemChanged, this, &ConnectionShowPage::handleSwitchConnection);
+}
+
+void ConnectionShowPage::handleSwitchConnection(QListWidgetItem* current, QListWidgetItem* previous)
+{
+    QWidget* widget = nullptr;
+    ConnectionInfo connectionInfo;
+    if (previous != nullptr)
+    {
+        //更新connection信息
+        updateItemActivatedPath(previous);
+        widget = ui->connectionLists->itemWidget(previous);
+    }
+    else
+    {
+        updateItemActivatedPath(m_activatedItem);
+        widget = ui->connectionLists->itemWidget(m_activatedItem);
+    }
+    ItemWidget* itemWidget = qobject_cast<ItemWidget*>(widget);
+    itemWidget->deactivateLabel();
+
+    if (current != nullptr)
+    {
+        QString connectionPath = current->data(Qt::UserRole).value<ConnectionInfo>().connectionPath;
+        KLOG_DEBUG() << "emit activateCurrentItemConnection(connectionPath)";
+        emit activateCurrentItemConnection(connectionPath);
+    }
+}
+
 void ConnectionShowPage::setSwitchButtonVisible(bool visible)
 {
     m_switchButton->setVisible(visible);
@@ -57,59 +83,48 @@ void ConnectionShowPage::setSwitchButtonVisible(bool visible)
 
 void ConnectionShowPage::addConnectionToLists(Connection::Ptr ptr)
 {
-    //XXX:待优化
-    QWidget* connectionShow = new QWidget();
-    QLabel* connectionName = new QLabel(ptr->name(), connectionShow);
-    QHBoxLayout* horizonLayout = new QHBoxLayout(connectionShow);
-    QPushButton* editConnection = new QPushButton(connectionShow);
-    editConnection->setProperty(PROPERTY_CONNECTION_UUID, ptr->uuid());
+    ItemWidget* itemWidget = new ItemWidget();
+    itemWidget->setName(ptr->name());
 
-    horizonLayout->addWidget(connectionName);
-    horizonLayout->addStretch();
+    QListWidgetItem* item = new QListWidgetItem();
+    item->setSizeHint(QSize(200, 50));
 
-    //TODO:插入已激活连接的标签
+    ConnectionInfo connectionInfo;
+    connectionInfo.uuid = ptr->uuid();
+    connectionInfo.connectionPath = ptr->path();
+
     QStringList activePaths = NetworkManager::activeConnectionsPaths();
     for (QString path : activePaths)
     {
         ActiveConnection::Ptr activeConnection = findActiveConnection(path);
         if (activeConnection->uuid() == ptr->uuid())
         {
-            editConnection->setProperty(PROPERTY_ACTIVE_CONNECTION_PATH, activeConnection->path());
-            QLabel* activatedLabel = new QLabel("Activated",connectionShow);
-            horizonLayout->addWidget(activatedLabel);
+            connectionInfo.activeConnectionPath = activeConnection->path();
+            itemWidget->activatedLabel();
+            m_activatedItem = item;
         }
     }
 
+    QVariant var;
+    var.setValue(connectionInfo);
+    //item中保存connection的相关信息
+    item->setData(Qt::UserRole, var);
 
-    horizonLayout->addWidget(editConnection);
-    connectionShow->setLayout(horizonLayout);
-
-    QListWidgetItem* item = new QListWidgetItem();
-    item->setSizeHint(QSize(200, 50));
-
-    //通过connectionLists->clear()释放所有的Item项
-    //但插入Item中的Widget并不会一起释放，需要另外释放
     ui->connectionLists->addItem(item);
-    ui->connectionLists->setItemWidget(item, connectionShow);
-    connect(editConnection, &QPushButton::clicked, this, &ConnectionShowPage::handleEditButtonClicked);
+    ui->connectionLists->setItemWidget(item, itemWidget);
+    connect(itemWidget, &ItemWidget::editConnectionClicked, [=]() {
+        QString uuid = item->data(Qt::UserRole).value<ConnectionInfo>().uuid;
+        QString activeConnectionPath = item->data(Qt::UserRole).value<ConnectionInfo>().activeConnectionPath;
+        KLOG_DEBUG() << "uuid:" << uuid;
+        KLOG_DEBUG() << "activeConnectionPath:" << activeConnectionPath;
+        emit requestEditConnection(uuid, activeConnectionPath);
+    });
 }
 
-void ConnectionShowPage::handleEditButtonClicked()
-{
-    QVariant UuidVar = sender()->property(PROPERTY_CONNECTION_UUID);
-    QVariant pathVar = sender()->property(PROPERTY_ACTIVE_CONNECTION_PATH);
-
-    QString Uuid = UuidVar.toString();
-    QString activeConnectionPath = "";
-    if(!pathVar.isNull())
-    {
-        activeConnectionPath =  pathVar.toString();
-        KLOG_DEBUG() << "activeConnectionPath:"<< activeConnectionPath;
-    }
-    KLOG_DEBUG() << "Uuid:" << Uuid;
-    emit requestEditConnection(Uuid,activeConnectionPath);
-}
-
+/**
+  通过connectionLists->clear()释放所有的Item项
+  但插入Item中的Widget并不会一起释放，需要另外释放
+*/
 void ConnectionShowPage::clearConnectionLists()
 {
     KLOG_DEBUG() << "clearConnectionLists()";
@@ -120,6 +135,58 @@ void ConnectionShowPage::clearConnectionLists()
         QWidget* itemWidget = ui->connectionLists->itemWidget(item);
         itemWidget->deleteLater();
     }
-
     ui->connectionLists->clear();
+    m_activatedItem = nullptr;
+}
+
+void ConnectionShowPage::updateActivatedConnectionInfo(QString activatedPath)
+{
+    auto currentItem = ui->connectionLists->currentItem();
+    QWidget* widget = ui->connectionLists->itemWidget(currentItem);
+    ItemWidget* itemWidget = qobject_cast<ItemWidget*>(widget);
+    itemWidget->activatedLabel();
+    updateItemActivatedPath(currentItem, activatedPath);
+}
+
+void ConnectionShowPage::updateItemActivatedPath(QListWidgetItem* item, QString activatedPath)
+{
+    ConnectionInfo connectionInfo;
+    connectionInfo = item->data(Qt::UserRole).value<ConnectionInfo>();
+    connectionInfo.activeConnectionPath = activatedPath;
+    QVariant var;
+    var.setValue(connectionInfo);
+    item->setData(Qt::UserRole, var);
+}
+
+//使用默认析够函数，父对象被释放时，会释放子对象
+ItemWidget::ItemWidget(QWidget* parent) : QWidget(parent)
+{
+    m_connectionName = new QLabel(this);
+    m_horizonLayout = new QHBoxLayout(this);
+    m_editConnection = new QPushButton(this);
+    m_activatedLabel = new QLabel("Activated", this);
+    m_activatedLabel->setVisible(false);
+
+    m_horizonLayout->addWidget(m_connectionName);
+    m_horizonLayout->addStretch();
+    m_horizonLayout->addWidget(m_activatedLabel);
+    m_horizonLayout->addWidget(m_editConnection);
+
+    this->setLayout(m_horizonLayout);
+    connect(m_editConnection, &QPushButton::clicked, this, &ItemWidget::editConnectionClicked);
+}
+
+void ItemWidget::setName(const QString& name)
+{
+    m_connectionName->setText(name);
+}
+
+void ItemWidget::activatedLabel()
+{
+    m_activatedLabel->setVisible(true);
+}
+
+void ItemWidget::deactivateLabel()
+{
+    m_activatedLabel->setVisible(false);
 }

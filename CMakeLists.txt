@@ -30,6 +30,9 @@ pkg_search_module(KLOG_QT5 REQUIRED klog-qt5)
 
 target_include_directories(${PROJECT_NAME} PRIVATE
         src
+        src/pages
+        src/settings
+        src/widgets
         ${KIRAN_WIDGETS_QT5_INCLUDE_DIRS}
         ${KLOG_QT5_INCLUDE_DIRS}
         )

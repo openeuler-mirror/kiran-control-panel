@@ -16,11 +16,8 @@
 #define KIRAN_CPANEL_NETWORK_WIRED_SETTING_PAGE_H
 
 #include <QWidget>
-
-#include <NetworkManagerQt/WiredDevice>
-#include <NetworkManagerQt/WiredSetting>
-#include "comm-setting-widget.h"
 #include "setting-page.h"
+#include "widgets/comm-setting-widget.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui
@@ -43,23 +40,19 @@ public:
     void initUI();
 
     void configureConnection();
+    void setIpv6Settings(CommConfigInfo &configInfo);
 
 public slots:
     void handleSaveButtonClicked();
-    void refreshSettingPage(QString activeConnectionPath="");
+    void refreshSettingPage(QString activeConnectionPath = "");
 
 signals:
 
 private:
     Ui::WiredSettingPage *ui;
 
-    NetworkManager::WiredSetting::Ptr m_wiredSetting;
-    NetworkManager::WiredDevice::Ptr m_wiredDevice;
-
     KiranSwitchButton *m_autoConnection;
     KiranSwitchButton *m_security;
-
-    CommConfigInfo m_wiredCommConfig;
 };
 
 #endif  //KIRAN_CPANEL_NETWORK_WIRED_SETTING_PAGE_H

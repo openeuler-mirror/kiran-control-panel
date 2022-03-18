@@ -15,11 +15,12 @@
 #ifndef KIRAN_CPANEL_NETWORK_CONNECTION_SHOW_PAGE_H
 #define KIRAN_CPANEL_NETWORK_CONNECTION_SHOW_PAGE_H
 
-#include <QWidget>
-#include <QLabel>
-#include <QHBoxLayout>
-#include <QPushButton>
 #include <NetworkManagerQt/Connection>
+#include <QHBoxLayout>
+#include <QLabel>
+#include <QPushButton>
+#include <QWidget>
+#include <QListWidgetItem>
 QT_BEGIN_NAMESPACE
 namespace Ui
 {
@@ -29,6 +30,14 @@ QT_END_NAMESPACE
 using namespace NetworkManager;
 class KiranSwitchButton;
 
+struct ConnectionInfo{
+    QString uuid;
+    QString connectionPath;
+    QString activeConnectionPath;
+};
+
+Q_DECLARE_METATYPE(ConnectionInfo);
+
 class ConnectionShowPage : public QWidget
 {
     Q_OBJECT
@@ -37,23 +46,50 @@ public:
     explicit ConnectionShowPage(QWidget *parent = nullptr);
     ~ConnectionShowPage() override;
     void initUI();
+    void initConnect();
 
     void setTitle(QString title);
     void setSwitchButtonVisible(bool visible);
 
     void addConnectionToLists(Connection::Ptr ptr);
+    void updateItemActivatedPath(QListWidgetItem* item,QString activatedPath="");
 
 public slots:
-    void handleEditButtonClicked();
     void clearConnectionLists();
+    void handleSwitchConnection(QListWidgetItem* current, QListWidgetItem* previous);
+    void updateActivatedConnectionInfo(QString activatedPath);
 
 signals:
     void requestCreatConnection();
     void requestEditConnection(QString uuid, QString activeConnectionPath);
+    void activateCurrentItemConnection(const QString &connectionPath);
 
 private:
     Ui::ConnectionShowPage *ui;
     KiranSwitchButton *m_switchButton;
+    QListWidgetItem* m_activatedItem;
+
+};
+
+class ItemWidget : public QWidget
+{
+    Q_OBJECT
+public:
+    explicit ItemWidget( QWidget *parent = nullptr);
+
+public:
+    void setName(const QString &name);
+    void activatedLabel();
+    void deactivateLabel();
+
+signals:
+    void editConnectionClicked();
+
+private:
+    QLabel *m_connectionName;
+    QHBoxLayout *m_horizonLayout;
+    QPushButton *m_editConnection;
+    QLabel *m_activatedLabel;
 };
 
 #endif  //KIRAN_CPANEL_NETWORK_CONNECTION_SHOW_PAGE_H

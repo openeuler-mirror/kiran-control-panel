@@ -11,17 +11,34 @@
  *
  * Author:     luoqing <luoqing@kylinos.com.cn>
  */
-#include <kiran-application.h>
-#include <qt5-log-i.h>
-#include <QApplication>
-#include "pages/wired-page.h"
-#include "src/cpanel-network-widget.h"
 
-int main(int argc, char *argv[]) {
-    KiranApplication a(argc, argv);
-    klog_qt5_init("", "kylinsec-session", "kiran-cpanel-network", "kiran-cpanel-network");
-    CPanelNetworkWidget networkWidget;
-    networkWidget.show();
+#ifndef KIRAN_CPANEL_NETWORK_DSL_SETTING_PAGE_H
+#define KIRAN_CPANEL_NETWORK_DSL_SETTING_PAGE_H
 
-    return QApplication::exec();
+#include <QWidget>
+#include "setting-page.h"
+#include "widgets/comm-setting-widget.h"
+QT_BEGIN_NAMESPACE
+namespace Ui
+{
+class DslSettingPage;
 }
+QT_END_NAMESPACE
+
+class DslSettingPage : public SettingPage
+{
+    Q_OBJECT
+
+public:
+    explicit DslSettingPage(QWidget *parent = nullptr);
+    ~DslSettingPage() override;
+
+    void initUI();
+    void initConnection();
+
+private:
+    Ui::DslSettingPage *ui;
+    KiranSwitchButton *m_autoConnection;
+};
+
+#endif  //KIRAN_CPANEL_NETWORK_DSL_SETTING_PAGE_H

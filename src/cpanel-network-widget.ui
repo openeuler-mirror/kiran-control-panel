@@ -72,7 +72,7 @@
      <item>
       <widget class="QStackedWidget" name="stackedWidget">
        <property name="currentIndex">
-        <number>0</number>
+        <number>1</number>
        </property>
        <widget class="QWidget" name="page">
         <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -118,7 +118,7 @@
           <number>0</number>
          </property>
          <item>
-          <widget class="QWidget" name="widget_2" native="true"/>
+          <widget class="DslPage" name="dslPage" native="true"/>
          </item>
         </layout>
        </widget>
@@ -138,6 +138,12 @@
    <class>WiredPage</class>
    <extends>QWidget</extends>
    <header location="global">wired-page.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>DslPage</class>
+   <extends>QWidget</extends>
+   <header location="global">dsl-page.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
