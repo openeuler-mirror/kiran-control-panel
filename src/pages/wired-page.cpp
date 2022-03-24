@@ -12,43 +12,19 @@
  * Author:     luoqing <luoqing@kylinos.com.cn>
  */
 #include "wired-page.h"
-#include "ui_wired-page.h"
-
 #include <qt5-log-i.h>
 #include <NetworkManagerQt/ActiveConnection>
 #include <NetworkManagerQt/Manager>
 #include <NetworkManagerQt/Settings>
 #include <QListWidget>
+#include "ui_wired-page.h"
 
-enum WiredEditPages
-{
-    PAGE_WIRED,
-    PAGE_WIRED_SETTING
-};
-
-WiredPage::WiredPage(QWidget *parent) : QWidget(parent), ui(new Ui::WiredPage)
+WiredPage::WiredPage(QWidget *parent) : Page(parent), ui(new Ui::WiredPage)
 {
     ui->setupUi(this);
     initUI();
+    getDeviceInfo();
     initConnecton();
-
-    //XXX:获取wired device接口
-    const Device::List deviceList = networkInterfaces();
-    KLOG_DEBUG() << "deviceList:" << deviceList;
-    for (Device::Ptr dev : deviceList)
-    {
-        KLOG_DEBUG() << "dev->type():" << dev->type();
-        if (dev->type() == Device::Ethernet)
-        {
-            m_wiredDevice = qobject_cast<WiredDevice *>(dev);
-            break;
-        }
-    }
-
-    if (!m_wiredDevice)
-    {
-        KLOG_DEBUG() << "Wired device not found";
-    }
 }
 
 WiredPage::~WiredPage()
@@ -61,6 +37,30 @@ void WiredPage::initUI()
     ui->connectionShowPage->setTitle(tr("Wired Network Adapter"));
     ui->connectionShowPage->setSwitchButtonVisible(true);
     showWiredConnections();
+}
+
+void WiredPage::getDeviceInfo()
+{
+    const Device::List deviceList = networkInterfaces();
+    KLOG_DEBUG() << "deviceList:" << deviceList;
+    for (Device::Ptr dev : deviceList)
+    {
+        if (dev->type() == Device::Ethernet)
+        {
+            m_wiredDevice = qobject_cast<WiredDevice *>(dev);
+            KLOG_DEBUG() << "m_wiredDevice->ipInterfaceName():" << m_wiredDevice->ipInterfaceName();
+            KLOG_DEBUG() << "m_wiredDevice->interfaceName():" << m_wiredDevice->interfaceName();
+            KLOG_DEBUG() << "m_wiredDevice->uni():" << m_wiredDevice->uni();
+            KLOG_DEBUG() << "m_wiredDevice->udi():" << m_wiredDevice->udi();
+
+            m_deviceMap.insert(m_wiredDevice->permanentHardwareAddress(), m_wiredDevice->uni());
+        }
+    }
+    KLOG_DEBUG() << "m_deviceMap:" << m_deviceMap;
+    if (m_deviceMap.isEmpty())
+    {
+        KLOG_DEBUG() << "Wired device not found";
+    }
 }
 
 void WiredPage::showWiredConnections()
@@ -83,54 +83,87 @@ void WiredPage::showWiredConnections()
 void WiredPage::initConnecton()
 {
     connect(ui->connectionShowPage, &ConnectionShowPage::requestCreatConnection, [=]() {
-        ui->wiredSettingPage->refreshSettingPage();
-        ui->stackedWidget->setCurrentIndex(PAGE_WIRED_SETTING);
+        ui->wiredSettingPage->showSettingPage();
+        ui->stackedWidget->setCurrentIndex(PAGE_SETTING);
     });
 
-    connect(ui->connectionShowPage, &ConnectionShowPage::requestEditConnection, [=](QString uuid, QString activeConnectionPath) {
+    connect(ui->connectionShowPage, &ConnectionShowPage::requestEditConnection, [=](const QString &uuid, QString activeConnectionPath) {
         ui->wiredSettingPage->initConnectionSettings(ConnectionSettings::ConnectionType::Wired, uuid);
-        ui->wiredSettingPage->refreshSettingPage(activeConnectionPath);
-        ui->stackedWidget->setCurrentIndex(PAGE_WIRED_SETTING);
+        ui->wiredSettingPage->initSettingPage();
+        ui->wiredSettingPage->showSettingPage(activeConnectionPath);
+        ui->stackedWidget->setCurrentIndex(PAGE_SETTING);
     });
 
     connect(ui->wiredSettingPage, &WiredSettingPage::returnPreviousPage, [=]() {
         ui->wiredSettingPage->clearPtr();
-        ui->stackedWidget->setCurrentIndex(PAGE_WIRED);
+        ui->stackedWidget->setCurrentIndex(PAGE_SHOW);
     });
 
-    connect(ui->wiredSettingPage, &WiredSettingPage::settingChanged, [=]() {
-        ui->wiredSettingPage->clearPtr();
-        ui->connectionShowPage->clearConnectionLists();
-        //保存设置生效后，刷新列表时，NetworkManager::listConnections()接口返回的数据还未更新，故延时等待
-        //测试等待20msec后能够得到更新的数据
-        QTimer::singleShot(30, this, SLOT(showWiredConnections()));
-        ui->stackedWidget->setCurrentIndex(PAGE_WIRED);
+    connect(ui->wiredSettingPage, &WiredSettingPage::settingUpdated, this, &WiredPage::refreshConnectionShow);
+
+    connect(notifier(), &Notifier::activeConnectionAdded, [=](const QString &path) {
+        KLOG_DEBUG() << "activeConnectionAdded:" << path;
     });
 
-    connect(ui->connectionShowPage, &ConnectionShowPage::activateCurrentItemConnection, this, &WiredPage::handleActivateConnection);
+    connect(notifier(), &Notifier::activeConnectionRemoved, [=](const QString &path) {
+        KLOG_DEBUG() << "activeConnectionRemoved:" << path;
+        refreshConnectionShow();
+    });
+
+    connect(settingsNotifier(), &SettingsNotifier::connectionRemoved, [=](const QString &path) {
+        KLOG_DEBUG() << "SettingsNotifier::connectionRemoved:" << path;
+        refreshConnectionShow();
+    });
 
     connect(settingsNotifier(), &SettingsNotifier::connectionAdded, [=](const QString &path) {
+        refreshConnectionShow();
     });
 
-    //    SettingsNotifier::connectionAddComplete()
+    connect(ui->connectionShowPage, &ConnectionShowPage::requestActivateCurrentItemConnection,
+            this, &WiredPage::handleActivateConnection);
+
+    //检测到新设备时，刷新
+    connect(notifier(), &Notifier::deviceAdded, [=](const QString &uni) {
+        getDeviceInfo();
+    });
+
+    connect(notifier(), &Notifier::deviceRemoved, [=](const QString &uni) {
+        getDeviceInfo();
+    });
+}
+
+void WiredPage::refreshConnectionShow()
+{
+    ui->wiredSettingPage->clearPtr();
+    ui->connectionShowPage->clearConnectionLists();
+    showWiredConnections();
+    ui->stackedWidget->setCurrentIndex(PAGE_SHOW);
 }
 
 void WiredPage::handleActivateConnection(QString connectionPath)
 {
+    Connection::Ptr connection = findConnection(connectionPath);
+    ConnectionSettings::Ptr settings = connection->settings();
+    WiredSetting::Ptr wiredSetting = settings->setting(Setting::SettingType::Wired).dynamicCast<WiredSetting>();
+
+    //根据connectionSettings中设置的设备MAC地址，查找对应的设备路径，以便激活连接
+    QString macAddress = wiredSetting->macAddress().toHex(':').toUpper();
+    QString devicePath = m_deviceMap.value(macAddress);
+    KLOG_DEBUG() << "devicePath:" << devicePath;
+
     QDBusPendingReply<QDBusObjectPath> reply =
-        NetworkManager::activateConnection(connectionPath, m_wiredDevice->uni(), "");
+        NetworkManager::activateConnection(connectionPath, devicePath, "");
 
     reply.waitForFinished();
     if (reply.isError())
     {
         KLOG_DEBUG() << "activate connection failed" << reply.error();
+        //TODO:连接失败的处理
     }
     else
     {
-        KLOG_DEBUG() << "reply.value().path():" << reply.value().path();
         QString activatedPath = reply.value().path();
         ActiveConnection::Ptr activatedConnectionObject = findActiveConnection(activatedPath);
-
         ui->connectionShowPage->updateActivatedConnectionInfo(activatedPath);
         ui->connectionShowPage->update();
         KLOG_DEBUG() << "activate Connection successed";

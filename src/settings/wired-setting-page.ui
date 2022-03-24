@@ -6,14 +6,26 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>761</width>
-    <height>603</height>
+    <width>663</width>
+    <height>817</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>WiredSettingPage</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_4">
+  <layout class="QVBoxLayout" name="verticalLayout_2">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
    <item>
     <widget class="QScrollArea" name="scrollArea">
      <property name="widgetResizable">
@@ -24,14 +36,11 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>741</width>
-        <height>549</height>
+        <width>661</width>
+        <height>781</height>
        </rect>
       </property>
-      <layout class="QVBoxLayout" name="verticalLayout_3">
-       <property name="spacing">
-        <number>0</number>
-       </property>
+      <layout class="QVBoxLayout" name="verticalLayout">
        <property name="leftMargin">
         <number>0</number>
        </property>
@@ -45,115 +54,28 @@
         <number>0</number>
        </property>
        <item>
-        <layout class="QVBoxLayout" name="verticalLayout_2">
-         <property name="spacing">
-          <number>0</number>
-         </property>
-         <property name="bottomMargin">
-          <number>0</number>
-         </property>
-         <item>
-          <widget class="QWidget" name="widget" native="true">
-           <layout class="QVBoxLayout" name="verticalLayout">
-            <property name="leftMargin">
-             <number>0</number>
-            </property>
-            <property name="topMargin">
-             <number>0</number>
-            </property>
-            <property name="rightMargin">
-             <number>0</number>
-            </property>
-            <property name="bottomMargin">
-             <number>0</number>
-            </property>
-            <item>
-             <layout class="QVBoxLayout" name="verticalLayout_17">
-              <item>
-               <widget class="QLabel" name="label_21">
-                <property name="text">
-                 <string>Network name</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLineEdit" name="networkName"/>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <layout class="QHBoxLayout" name="autoConnectionLayout">
-              <item>
-               <widget class="QLabel" name="label_24">
-                <property name="text">
-                 <string>Auto connection</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <spacer name="horizontalSpacer_6">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>40</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <layout class="QHBoxLayout" name="securityLayout">
-              <item>
-               <widget class="QLabel" name="label_13">
-                <property name="text">
-                 <string>Security</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <spacer name="horizontalSpacer_4">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>40</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <widget class="CommSettingWidget" name="commSetting" native="true"/>
-            </item>
-           </layout>
-          </widget>
-         </item>
-        </layout>
+        <widget class="GeneralWidget" name="generalWidget" native="true"/>
+       </item>
+       <item>
+        <widget class="Ipv4Widget" name="ipv4Widget" native="true"/>
+       </item>
+       <item>
+        <widget class="Ipv6Widget" name="ipv6Widget" native="true"/>
+       </item>
+       <item>
+        <widget class="EthernetWidget" name="ethernetWidget" native="true"/>
+       </item>
+       <item>
+        <widget class="GeneralButton" name="generalButton" native="true"/>
        </item>
       </layout>
      </widget>
     </widget>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_7">
-     <property name="spacing">
-      <number>0</number>
-     </property>
-     <property name="leftMargin">
-      <number>0</number>
-     </property>
-     <property name="rightMargin">
-      <number>0</number>
-     </property>
+    <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <spacer name="horizontalSpacer_3">
+      <spacer name="horizontalSpacer">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
@@ -173,7 +95,7 @@
       </widget>
      </item>
      <item>
-      <spacer name="horizontalSpacer">
+      <spacer name="horizontalSpacer_2">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
@@ -193,7 +115,7 @@
       </widget>
      </item>
      <item>
-      <spacer name="horizontalSpacer_2">
+      <spacer name="horizontalSpacer_3">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
@@ -211,9 +133,33 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>CommSettingWidget</class>
+   <class>GeneralWidget</class>
    <extends>QWidget</extends>
-   <header location="global">comm-setting-widget.h</header>
+   <header location="global">general-widget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>Ipv4Widget</class>
+   <extends>QWidget</extends>
+   <header location="global">ipv4-widget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>Ipv6Widget</class>
+   <extends>QWidget</extends>
+   <header location="global">ipv6-widget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>EthernetWidget</class>
+   <extends>QWidget</extends>
+   <header location="global">ethernet-widget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>GeneralButton</class>
+   <extends>QWidget</extends>
+   <header location="global">general-button.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

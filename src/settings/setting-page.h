@@ -22,7 +22,7 @@
 #include <NetworkManagerQt/WiredSetting>
 #include <QObject>
 #include <QWidget>
-#include "comm-setting-widget.h"
+
 using namespace NetworkManager;
 
 class SettingPage : public QWidget
@@ -35,19 +35,17 @@ public:
     void initConnectionSettings(ConnectionSettings::ConnectionType connectionType,
                                 const QString &connectionUuid = "");
 
+    virtual void initSpecificSettings() = 0;
     void createConnectionSettings();
-    void clearPtr();
-    int connectionSuffixNum(QString &connName, ConnectionSettings::ConnectionType connType);
+    virtual void clearPtr();
 
-    void setIpv4Settings(CommConfigInfo &configInfo);
-    void setWiredSettings(CommConfigInfo &configInfo);
 
 public slots:
-    void handleDeleteConnection();
 
 signals:
     void returnPreviousPage();
     void settingChanged();
+    void settingUpdated();
 
 protected:
     NetworkManager::Connection::Ptr m_connection = nullptr;

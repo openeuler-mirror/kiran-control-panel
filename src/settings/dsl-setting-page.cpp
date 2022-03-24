@@ -30,12 +30,15 @@ DslSettingPage::~DslSettingPage()
 
 void DslSettingPage::initUI()
 {
-    ui->commSetting->setIpv6WidgetVisible(false);
-    m_autoConnection = new KiranSwitchButton(this);
-    ui->autoConnectionLayout->addWidget(m_autoConnection);
+
 }
 
 void DslSettingPage::initConnection()
 {
     connect(ui->returnButton, &QPushButton::clicked, this, &DslSettingPage::returnPreviousPage);
+}
+
+void DslSettingPage::initSpecificSettings()
+{
+
 }

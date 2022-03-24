@@ -15,7 +15,6 @@
 #include "connection-show-page.h"
 #include <kiran-switch-button.h>
 #include <qt5-log-i.h>
-#include <NetworkManagerQt/Manager>
 #include <NetworkManagerQt/Settings>
 #include <QHBoxLayout>
 #include <QLabel>
@@ -33,6 +32,7 @@ ConnectionShowPage::~ConnectionShowPage()
     KLOG_DEBUG() << "ConnectionShowPage::~ConnectionShowPage()";
     delete ui;
 }
+
 void ConnectionShowPage::setTitle(QString title)
 {
     ui->title->setText(title);
@@ -47,32 +47,34 @@ void ConnectionShowPage::initUI()
 void ConnectionShowPage::initConnect()
 {
     connect(ui->createConnectionButton, &QPushButton::clicked, [=]() { emit requestCreatConnection(); });
-    connect(ui->connectionLists, &QListWidget::currentItemChanged, this, &ConnectionShowPage::handleSwitchConnection);
+    connect(ui->connectionLists, &QListWidget::itemClicked, this, &ConnectionShowPage::handleConnectionItemClicked);
 }
 
-void ConnectionShowPage::handleSwitchConnection(QListWidgetItem* current, QListWidgetItem* previous)
+void ConnectionShowPage::handleConnectionItemClicked(QListWidgetItem* item)
 {
-    QWidget* widget = nullptr;
-    ConnectionInfo connectionInfo;
-    if (previous != nullptr)
+    //判断是否已激活
+    if (item != m_previousActivatedItem)
     {
-        //更新connection信息
-        updateItemActivatedPath(previous);
-        widget = ui->connectionLists->itemWidget(previous);
+//        if (m_previousActivatedItem != nullptr)
+//        {
+//            //断开当前激活的连接
+//            QString previousActivatedPath =
+//                m_previousActivatedItem->data(Qt::UserRole).value<ConnectionInfo>().activeConnectionPath;
+//            deactivateConnection(previousActivatedPath);
+//
+//            //更新item所带信息，清空已激活路径
+//            updateItemActivatedPath(m_previousActivatedItem);
+//            QWidget* widget = ui->connectionLists->itemWidget(m_previousActivatedItem);
+//            ItemWidget* itemWidget = qobject_cast<ItemWidget*>(widget);
+//            itemWidget->deactivateLabel();
+//        }
+        QString connectionPath = item->data(Qt::UserRole).value<ConnectionInfo>().connectionPath;
+        KLOG_DEBUG() << "emit activateCurrentItemConnection(connectionPath)";
+        emit requestActivateCurrentItemConnection(connectionPath);
     }
     else
     {
-        updateItemActivatedPath(m_activatedItem);
-        widget = ui->connectionLists->itemWidget(m_activatedItem);
-    }
-    ItemWidget* itemWidget = qobject_cast<ItemWidget*>(widget);
-    itemWidget->deactivateLabel();
-
-    if (current != nullptr)
-    {
-        QString connectionPath = current->data(Qt::UserRole).value<ConnectionInfo>().connectionPath;
-        KLOG_DEBUG() << "emit activateCurrentItemConnection(connectionPath)";
-        emit activateCurrentItemConnection(connectionPath);
+        KLOG_DEBUG() << "this connection is activated";
     }
 }
 
@@ -101,7 +103,7 @@ void ConnectionShowPage::addConnectionToLists(Connection::Ptr ptr)
         {
             connectionInfo.activeConnectionPath = activeConnection->path();
             itemWidget->activatedLabel();
-            m_activatedItem = item;
+            m_previousActivatedItem = item;
         }
     }
 
@@ -136,12 +138,13 @@ void ConnectionShowPage::clearConnectionLists()
         itemWidget->deleteLater();
     }
     ui->connectionLists->clear();
-    m_activatedItem = nullptr;
+    m_previousActivatedItem = nullptr;
 }
 
 void ConnectionShowPage::updateActivatedConnectionInfo(QString activatedPath)
 {
-    auto currentItem = ui->connectionLists->currentItem();
+    QListWidgetItem* currentItem = ui->connectionLists->currentItem();
+    m_previousActivatedItem = currentItem;
     QWidget* widget = ui->connectionLists->itemWidget(currentItem);
     ItemWidget* itemWidget = qobject_cast<ItemWidget*>(widget);
     itemWidget->activatedLabel();

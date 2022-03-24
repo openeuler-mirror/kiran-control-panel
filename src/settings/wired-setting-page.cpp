@@ -19,12 +19,12 @@
 #include <NetworkManagerQt/Ipv4Setting>
 #include <NetworkManagerQt/Manager>
 #include <NetworkManagerQt/Settings>
+#include <QScrollBar>
 #include "ui_wired-setting-page.h"
-
 WiredSettingPage::WiredSettingPage(QWidget *parent) : SettingPage(parent), ui(new Ui::WiredSettingPage)
 {
     ui->setupUi(this);
-    init();
+    initConnecton();
     KLOG_DEBUG() << "WiredSettingPage::WiredSettingPage(QWidget *parent)";
 }
 
@@ -34,144 +34,79 @@ WiredSettingPage::~WiredSettingPage()
     delete ui;
 }
 
-void WiredSettingPage::init()
+void WiredSettingPage::initSettingPage()
 {
-    initUI();
-    initConnecton();
-}
-
-void WiredSettingPage::initUI()
-{
-    m_autoConnection = new KiranSwitchButton(this);
-    m_security = new KiranSwitchButton(this);
-    ui->autoConnectionLayout->addWidget(m_autoConnection);
-    ui->securityLayout->addWidget(m_security);
+    initSpecificSettings();
+    initWidgets();
 }
 
 void WiredSettingPage::initConnecton()
 {
     connect(ui->returnButton, &QPushButton::clicked, [=]() { emit returnPreviousPage(); });
     connect(ui->saveButton, &QPushButton::clicked, this, &WiredSettingPage::handleSaveButtonClicked);
-    connect(m_security, &QAbstractButton::toggled, [this](bool checked) {});
 
-    connect(ui->commSetting, &CommSettingWidget::disconnect, [=]() {
-        NetworkManager::deactivateConnection(m_activeConnectionPath);
-    });
-
-    connect(ui->commSetting, &CommSettingWidget::deleteConnetion, this, &WiredSettingPage::handleDeleteConnection);
 }
 
-//XXX:有待优化流程
-void WiredSettingPage::refreshSettingPage(QString activeConnectionPath)
+void WiredSettingPage::initSpecificSettings()
 {
+    m_ipv4Setting = m_connectionSettings->setting(Setting::SettingType::Ipv4).dynamicCast<Ipv4Setting>();
+    m_ipv6Setting = m_connectionSettings->setting(Setting::SettingType::Ipv6).dynamicCast<Ipv6Setting>();
+    m_wiredSetting = m_connectionSettings->setting(Setting::SettingType::Wired).dynamicCast<WiredSetting>();
+}
+
+void WiredSettingPage::initWidgets()
+{
+    ui->generalWidget->setConnectionSettings(m_connectionSettings);
+    ui->ipv4Widget->setIpv4Setting(m_ipv4Setting);
+    ui->ipv6Widget->setIpv6Setting(m_ipv6Setting);
+    ui->ethernetWidget->setWiredSetting(m_wiredSetting);
+    ui->generalButton->setConnectionPtr(m_connection);
+}
+
+void WiredSettingPage::showSettingPage(QString activeConnectionPath)
+{
+    ui->generalWidget->setNameLabel(tr("Network name"));
+    ui->generalWidget->showSettings(ConnectionSettings::ConnectionType::Wired);
+    ui->ipv4Widget->showSettings();
+    ui->ipv6Widget->showSettings();
+    ui->ethernetWidget->showSettings();
+
     if (m_connectionSettings.isNull())
     {
-        //生成名称数字后缀
-        QString connectionName = tr("Wired Connection %1");
-        ui->networkName->setText(connectionName.arg(connectionSuffixNum(connectionName, ConnectionSettings::ConnectionType::Wired)));
-        m_autoConnection->setChecked(true);
-        m_security->setChecked(false);
-        //XXX:默认设置的初始化可以改进
-        CommConfigInfo defaultCommConfig;
-        ui->commSetting->initCommConfig(defaultCommConfig);
-        ui->commSetting->initDisconnectAndDeleteButton(SETTING_CONNECTION_STATUS_NEW);
+        ui->generalButton->initButton(SETTING_CONNECTION_STATUS_NEW);
     }
     else
     {
-        KLOG_DEBUG() << "m_connectionSettings->id():" << m_connectionSettings->id();
-        KLOG_DEBUG() << "m_connectionSettings->interfaceName():" << m_connectionSettings->interfaceName();
-
         //通过将激活路径传入SettingPage,判断该连接是否激活，也可通过uuid判断
         if (activeConnectionPath.isEmpty())
-        {
-            ui->commSetting->initDisconnectAndDeleteButton(SETTING_CONNECTION_STATUS_DEACTIVATED);
-        }
+            ui->generalButton->initButton(SETTING_CONNECTION_STATUS_DEACTIVATED);
         else
-        {
-            m_activeConnectionPath = activeConnectionPath;
-            ui->commSetting->initDisconnectAndDeleteButton(SETTING_CONNECTION_STATUS_ACTIVATED);
-        }
-
-        ui->networkName->setText(m_connectionSettings->id());
-        m_autoConnection->setChecked(m_connectionSettings->autoconnect());
-        m_security->setChecked(false);
-
-        CommConfigInfo wiredCommConfig;
-
-        //XXX:分类设置有待优化
-        //Ipv4 Address
-        wiredCommConfig.ipv4Method = m_ipv4Setting->method();
-        if (!m_ipv4Setting->addresses().isEmpty())
-        {
-            //xxx:取addresses的方式有待改进
-            IpAddress ipv4Address = m_ipv4Setting->addresses().at(0);
-            wiredCommConfig.ipv4Address = ipv4Address.ip().toString();
-            wiredCommConfig.ipv4Netmask = ipv4Address.netmask().toString();
-            wiredCommConfig.ipv4Gateway = ipv4Address.gateway().toString();
-        }
-
-        if (!m_ipv4Setting->dns().isEmpty())
-        {
-            wiredCommConfig.ipv4PreferredDNS = m_ipv4Setting->dns().at(0).toString();
-            if (m_ipv4Setting->dns().count() >= 2)
-            {
-                wiredCommConfig.ipv4AlternateDNS = m_ipv4Setting->dns().at(1).toString();
-            }
-        }
-
-        //Ipv6
-        wiredCommConfig.ipv6Method = m_ipv6Setting->method();
-        if (!m_ipv6Setting->addresses().isEmpty())
-        {
-            IpAddress ipv6Address = m_ipv6Setting->addresses().at(0);
-            wiredCommConfig.ipv6Address = ipv6Address.ip().toString();
-            wiredCommConfig.ipv6Prefix = ipv6Address.prefixLength();
-            wiredCommConfig.ipv6Gateway = ipv6Address.gateway().toString();
-        }
-        if (!m_ipv6Setting->dns().isEmpty())
-        {
-            wiredCommConfig.ipv6PreferredDNS = m_ipv6Setting->dns().at(0).toString();
-            if (m_ipv6Setting->dns().count() >= 2)
-            {
-                wiredCommConfig.ipv6AlternateDNS = m_ipv6Setting->dns().at(1).toString();
-            }
-        }
-
-        m_wiredSetting = m_connectionSettings->setting(Setting::SettingType::Wired).dynamicCast<WiredSetting>();
-
-        KLOG_DEBUG() << "m_wiredSetting->macAddress().toHex(':').toUpper():"
-                     << m_wiredSetting->macAddress().toHex(':').toUpper();
-        KLOG_DEBUG() << "m_wiredSetting->clonedMacAddress().toHex(':').toUpper():"
-                     << m_wiredSetting->clonedMacAddress().toHex(':').toUpper();
-        wiredCommConfig.ethernetDeviceMac = m_wiredSetting->macAddress().toHex(':').toUpper();
-        wiredCommConfig.ethernetCloneDeviceMac = m_wiredSetting->clonedMacAddress().toHex(':').toUpper();
-
-        wiredCommConfig.mtu = m_wiredSetting->mtu();
-
-        ui->commSetting->initCommConfig(wiredCommConfig);
+            ui->generalButton->initButton(SETTING_CONNECTION_STATUS_ACTIVATED,activeConnectionPath);
     }
+    QPointer<QScrollBar> scrollBar = ui->scrollArea->verticalScrollBar();
+    scrollBar->setValue(0);
 }
 
-//xxx:放到父类中去
+Q_DECLARE_METATYPE(NetworkManager::Connection::Ptr)
 void WiredSettingPage::handleSaveButtonClicked()
 {
-    if (m_connectionSettings.isNull())
+    if(m_connectionSettings == nullptr)
     {
         initConnectionSettings(ConnectionSettings::ConnectionType::Wired);
-        m_wiredSetting = m_connectionSettings->setting(Setting::SettingType::Wired).dynamicCast<WiredSetting>();
-        configureConnection();
-
-        KLOG_DEBUG() << "add new connection";
+        initSettingPage();
+        saveSettingPage();
         QDBusPendingReply<QDBusObjectPath> replyAdd = NetworkManager::addConnection(m_connectionSettings->toMap());
         replyAdd.waitForFinished();
         if (replyAdd.isError())
         {
             KLOG_DEBUG() << "add connection failed," << replyAdd.error();
         }
+        KLOG_DEBUG() << "add new connection";
     }
     else
     {
-        configureConnection();
+        saveSettingPage();
+        connect(m_connection.data(),&NetworkManager::Connection::updated,this,&WiredSettingPage::settingUpdated);
         QDBusPendingReply<> replyUpdate = m_connection->update(m_connectionSettings->toMap());
         replyUpdate.waitForFinished();
         if (replyUpdate.isError())
@@ -180,49 +115,29 @@ void WiredSettingPage::handleSaveButtonClicked()
         }
     }
 
-    emit settingChanged();
 }
+
+void WiredSettingPage::saveSettingPage()
+{
+    ui->generalWidget->saveSettings();
+    ui->ipv4Widget->saveSettings();
+    ui->ipv6Widget->saveSettings();
+    ui->ethernetWidget->saveSettings();
+}
+
+void WiredSettingPage::clearPtr()
+{
+    m_ipv4Setting.clear();
+    m_ipv6Setting.clear();
+    m_wiredSetting.clear();
+    SettingPage::clearPtr();
+
+    ui->generalWidget->clearPtr();
+    ui->generalButton->clearPtr();
+    ui->ipv4Widget->clearPtr();
+    ui->ipv6Widget->clearPtr();
+    ui->ethernetWidget->clearPtr();
+}
+
 
 //TODO:判断输入格式合法性
-void WiredSettingPage::configureConnection()
-{
-    m_connectionSettings->setId(ui->networkName->text());
-    m_connectionSettings->setAutoconnect(m_autoConnection->isChecked());
-
-    CommConfigInfo configInfo = ui->commSetting->getCommConfig();
-    setIpv4Settings(configInfo);
-    setIpv6Settings(configInfo);
-    setWiredSettings(configInfo);
-}
-
-void WiredSettingPage::setIpv6Settings(CommConfigInfo &configInfo)
-{
-    if (configInfo.ipv6Method == Ipv6Setting::ConfigMethod::Ignored)
-    {
-        m_ipv6Setting->setAddresses(QList<NetworkManager::IpAddress>());
-        return;
-    }
-    else if (configInfo.ipv6Method == Ipv6Setting::ConfigMethod::Automatic)
-    {
-        configInfo.ipv6Address = "";
-        configInfo.ipv6Prefix = 0;
-        configInfo.ipv6Gateway = "";
-    }
-    else
-    {
-    }
-
-    m_ipv6Setting->setMethod(configInfo.ipv6Method);
-    IpAddress ipv6Address;
-    ipv6Address.setIp(QHostAddress(configInfo.ipv6Address));
-    ipv6Address.setPrefixLength(configInfo.ipv6Prefix);
-    ipv6Address.setGateway(QHostAddress(configInfo.ipv6Gateway));
-
-    QList<IpAddress> ipv6AddressList;
-    ipv6AddressList << ipv6Address;
-    m_ipv6Setting->setAddresses(ipv6AddressList);
-
-    QList<QHostAddress> ipv6DNS;
-    ipv6DNS << QHostAddress(configInfo.ipv6PreferredDNS) << QHostAddress(configInfo.ipv6AlternateDNS);
-    m_ipv6Setting->setDns(ipv6DNS);
-}

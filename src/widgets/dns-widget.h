@@ -12,33 +12,28 @@
  * Author:     luoqing <luoqing@kylinos.com.cn>
  */
 
-#ifndef KIRAN_CPANEL_NETWORK_DSL_SETTING_PAGE_H
-#define KIRAN_CPANEL_NETWORK_DSL_SETTING_PAGE_H
+#ifndef KIRAN_CPANEL_NETWORK_DNS_WIDGET_H
+#define KIRAN_CPANEL_NETWORK_DNS_WIDGET_H
 
 #include <QWidget>
-#include "setting-page.h"
-//#include "widgets/comm-setting-widget.h"
+
 QT_BEGIN_NAMESPACE
 namespace Ui
 {
-class DslSettingPage;
+class DnsWidget;
 }
 QT_END_NAMESPACE
 
-class DslSettingPage : public SettingPage
+class DnsWidget : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit DslSettingPage(QWidget *parent = nullptr);
-    ~DslSettingPage() override;
-
-    void initUI();
-    void initConnection();
-    void initSpecificSettings() override;
+    explicit DnsWidget(QWidget *parent = nullptr);
+    ~DnsWidget() override;
 
 private:
-    Ui::DslSettingPage *ui;
+    Ui::DnsWidget *ui;
 };
 
-#endif  //KIRAN_CPANEL_NETWORK_DSL_SETTING_PAGE_H
+#endif  //KIRAN_CPANEL_NETWORK_DNS_WIDGET_H

@@ -17,6 +17,7 @@
 
 #include <NetworkManagerQt/WiredDevice>
 #include <QWidget>
+#include "page.h"
 
 using namespace NetworkManager;
 QT_BEGIN_NAMESPACE
@@ -26,7 +27,7 @@ class WiredPage;
 }
 QT_END_NAMESPACE
 
-class WiredPage : public QWidget
+class WiredPage : public Page
 {
     Q_OBJECT
 
@@ -40,10 +41,13 @@ public:
 public slots:
     void showWiredConnections();
     void handleActivateConnection(QString connectionPath);
+    void getDeviceInfo();
+    void refreshConnectionShow();
 
 private:
     Ui::WiredPage *ui;
     WiredDevice::Ptr m_wiredDevice;
+    QMap<QString,QString> m_deviceMap;
 };
 
 #endif  //KIRAN_CPANEL_NETWORK_WIRED_PAGE_H

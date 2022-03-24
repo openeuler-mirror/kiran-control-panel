@@ -17,7 +17,7 @@
 
 #include <QWidget>
 #include "setting-page.h"
-#include "widgets/comm-setting-widget.h"
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui
@@ -35,23 +35,21 @@ public:
     explicit WiredSettingPage(QWidget *parent = nullptr);
     ~WiredSettingPage() override;
 
-    void init();
+    void initSettingPage();
     void initConnecton();
-    void initUI();
-
-    void configureConnection();
-    void setIpv6Settings(CommConfigInfo &configInfo);
+    void initSpecificSettings() override;
+    void initWidgets();
+    void clearPtr() override;
 
 public slots:
     void handleSaveButtonClicked();
-    void refreshSettingPage(QString activeConnectionPath = "");
+    void saveSettingPage();
+    void showSettingPage(QString activeConnectionPath = "");
 
 signals:
 
 private:
     Ui::WiredSettingPage *ui;
-
-    KiranSwitchButton *m_autoConnection;
     KiranSwitchButton *m_security;
 };
 

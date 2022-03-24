@@ -16,13 +16,7 @@
 #include <qt5-log-i.h>
 #include "ui_dsl-page.h"
 
-enum EditPages
-{
-    PAGE_SHOW,
-    PAGE_SETTING
-};
-
-DslPage::DslPage(QWidget *parent) : QWidget(parent), ui(new Ui::DslPage)
+DslPage::DslPage(QWidget *parent) : Page(parent), ui(new Ui::DslPage)
 {
     ui->setupUi(this);
     initUI();
@@ -38,8 +32,6 @@ void DslPage::initUI()
 {
     ui->connectionShowPage->setTitle(tr("DSL"));
     ui->connectionShowPage->setSwitchButtonVisible(false);
-
-    ui->dslSettingPage->initConnectionSettings(ConnectionSettings::ConnectionType::Pppoe);
 }
 
 void DslPage::initConnection()

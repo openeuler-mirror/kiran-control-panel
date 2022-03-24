@@ -16,7 +16,7 @@
 #define KIRAN_CPANEL_NETWORK_DSL_PAGE_H
 
 #include <QWidget>
-
+#include "page.h"
 QT_BEGIN_NAMESPACE
 namespace Ui
 {
@@ -24,7 +24,7 @@ class DslPage;
 }
 QT_END_NAMESPACE
 
-class DslPage : public QWidget
+class DslPage : public Page
 {
     Q_OBJECT
 

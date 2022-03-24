@@ -12,33 +12,41 @@
  * Author:     luoqing <luoqing@kylinos.com.cn>
  */
 
-#ifndef KIRAN_CPANEL_NETWORK_DSL_SETTING_PAGE_H
-#define KIRAN_CPANEL_NETWORK_DSL_SETTING_PAGE_H
+#ifndef KIRAN_CPANEL_NETWORK_ETHERNET_WIDGET_H
+#define KIRAN_CPANEL_NETWORK_ETHERNET_WIDGET_H
 
 #include <QWidget>
-#include "setting-page.h"
-//#include "widgets/comm-setting-widget.h"
+#include <NetworkManagerQt/WiredSetting>
 QT_BEGIN_NAMESPACE
 namespace Ui
 {
-class DslSettingPage;
+class EthernetWidget;
 }
 QT_END_NAMESPACE
-
-class DslSettingPage : public SettingPage
+class KiranSwitchButton;
+using namespace NetworkManager;
+class EthernetWidget : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit DslSettingPage(QWidget *parent = nullptr);
-    ~DslSettingPage() override;
-
+    explicit EthernetWidget(QWidget *parent = nullptr);
+    ~EthernetWidget() override;
     void initUI();
+    void initEthernetMacComboBox();
     void initConnection();
-    void initSpecificSettings() override;
+    void setWiredSetting(const WiredSetting::Ptr &wiredSetting);
 
+public slots:
+    void handleCustomMTUChanged(bool checked);
+    void saveSettings();
+    void showSettings();
+    void resetSettings();
+    void clearPtr();
 private:
-    Ui::DslSettingPage *ui;
+    Ui::EthernetWidget *ui;
+    WiredSetting::Ptr m_wiredSetting;
+    KiranSwitchButton *m_mtuButton;
 };
 
-#endif  //KIRAN_CPANEL_NETWORK_DSL_SETTING_PAGE_H
+#endif  //KIRAN_CPANEL_NETWORK_ETHERNET_WIDGET_H

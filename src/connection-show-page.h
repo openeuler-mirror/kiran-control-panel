@@ -16,6 +16,7 @@
 #define KIRAN_CPANEL_NETWORK_CONNECTION_SHOW_PAGE_H
 
 #include <NetworkManagerQt/Connection>
+#include <NetworkManagerQt/Manager>
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QPushButton>
@@ -34,9 +35,11 @@ struct ConnectionInfo{
     QString uuid;
     QString connectionPath;
     QString activeConnectionPath;
+    NetworkManager::Status status;
 };
 
 Q_DECLARE_METATYPE(ConnectionInfo);
+Q_DECLARE_METATYPE(NetworkManager::Status)
 
 class ConnectionShowPage : public QWidget
 {
@@ -56,18 +59,18 @@ public:
 
 public slots:
     void clearConnectionLists();
-    void handleSwitchConnection(QListWidgetItem* current, QListWidgetItem* previous);
+    void handleConnectionItemClicked(QListWidgetItem* item);
     void updateActivatedConnectionInfo(QString activatedPath);
 
 signals:
     void requestCreatConnection();
-    void requestEditConnection(QString uuid, QString activeConnectionPath);
-    void activateCurrentItemConnection(const QString &connectionPath);
+    void requestEditConnection(const QString& uuid, QString activeConnectionPath);
+    void requestActivateCurrentItemConnection(const QString &connectionPath);
 
 private:
     Ui::ConnectionShowPage *ui;
     KiranSwitchButton *m_switchButton;
-    QListWidgetItem* m_activatedItem;
+    QListWidgetItem* m_previousActivatedItem;
 
 };
 

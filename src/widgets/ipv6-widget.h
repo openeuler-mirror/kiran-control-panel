@@ -12,33 +12,40 @@
  * Author:     luoqing <luoqing@kylinos.com.cn>
  */
 
-#ifndef KIRAN_CPANEL_NETWORK_DSL_SETTING_PAGE_H
-#define KIRAN_CPANEL_NETWORK_DSL_SETTING_PAGE_H
+#ifndef KIRAN_CPANEL_NETWORK_IPV6_WIDGET_H
+#define KIRAN_CPANEL_NETWORK_IPV6_WIDGET_H
 
 #include <QWidget>
-#include "setting-page.h"
-//#include "widgets/comm-setting-widget.h"
+#include <NetworkManagerQt/Ipv6Setting>
 QT_BEGIN_NAMESPACE
 namespace Ui
 {
-class DslSettingPage;
+class Ipv6Widget;
 }
 QT_END_NAMESPACE
+using namespace NetworkManager;
+Q_DECLARE_METATYPE(Ipv6Setting::ConfigMethod)
 
-class DslSettingPage : public SettingPage
+class Ipv6Widget : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit DslSettingPage(QWidget *parent = nullptr);
-    ~DslSettingPage() override;
-
+    explicit Ipv6Widget(QWidget *parent = nullptr);
+    ~Ipv6Widget() override;
     void initUI();
     void initConnection();
-    void initSpecificSettings() override;
+    void setIpv6Setting(const Ipv6Setting::Ptr &ipv6Setting);
 
+public slots:
+    void handleIpv6MethodChanged(NetworkManager::Ipv6Setting::ConfigMethod method);
+    void saveSettings();
+    void showSettings();
+    void resetSettings();
+    void clearPtr();
 private:
-    Ui::DslSettingPage *ui;
+    Ui::Ipv6Widget *ui;
+    Ipv6Setting::Ptr m_ipv6Setting;
 };
 
-#endif  //KIRAN_CPANEL_NETWORK_DSL_SETTING_PAGE_H
+#endif  //KIRAN_CPANEL_NETWORK_IPV6_WIDGET_H

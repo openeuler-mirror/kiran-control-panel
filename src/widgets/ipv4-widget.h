@@ -11,34 +11,39 @@
  *
  * Author:     luoqing <luoqing@kylinos.com.cn>
  */
-
-#ifndef KIRAN_CPANEL_NETWORK_DSL_SETTING_PAGE_H
-#define KIRAN_CPANEL_NETWORK_DSL_SETTING_PAGE_H
+#ifndef KIRAN_CPANEL_NETWORK_IPV4_WIDGET_H
+#define KIRAN_CPANEL_NETWORK_IPV4_WIDGET_H
 
 #include <QWidget>
-#include "setting-page.h"
-//#include "widgets/comm-setting-widget.h"
+#include <NetworkManagerQt/Ipv4Setting>
 QT_BEGIN_NAMESPACE
 namespace Ui
 {
-class DslSettingPage;
+class Ipv4Widget;
 }
 QT_END_NAMESPACE
-
-class DslSettingPage : public SettingPage
+using namespace NetworkManager;
+Q_DECLARE_METATYPE(NetworkManager::Ipv4Setting::ConfigMethod)
+class Ipv4Widget : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit DslSettingPage(QWidget *parent = nullptr);
-    ~DslSettingPage() override;
-
+    explicit Ipv4Widget(QWidget *parent = nullptr);
+    ~Ipv4Widget() override;
     void initUI();
     void initConnection();
-    void initSpecificSettings() override;
+    void setIpv4Setting(const Ipv4Setting::Ptr &ipv4Setting);
 
+public slots:
+    void handleIpv4MethodChanged(Ipv4Setting::ConfigMethod method);
+    void resetSettings();
+    void saveSettings();
+    void showSettings();
+    void clearPtr();
 private:
-    Ui::DslSettingPage *ui;
+    Ui::Ipv4Widget *ui;
+    Ipv4Setting::Ptr m_ipv4Setting;
 };
 
-#endif  //KIRAN_CPANEL_NETWORK_DSL_SETTING_PAGE_H
+#endif  //KIRAN_CPANEL_NETWORK_IPV4_WIDGET_H
