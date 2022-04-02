@@ -12,33 +12,43 @@
  * Author:     luoqing <luoqing@kylinos.com.cn>
  */
 
-#ifndef KIRAN_CPANEL_NETWORK_DSL_SETTING_PAGE_H
-#define KIRAN_CPANEL_NETWORK_DSL_SETTING_PAGE_H
+#ifndef KIRAN_CPANEL_NETWORK_VPN_IPSEC_H
+#define KIRAN_CPANEL_NETWORK_VPN_IPSEC_H
 
 #include <QWidget>
-#include "setting-page.h"
-
+#include <NetworkManagerQt/VpnSetting>
 QT_BEGIN_NAMESPACE
 namespace Ui
 {
-class DslSettingPage;
+class VpnIPsec;
 }
 QT_END_NAMESPACE
 
-class DslSettingPage : public QWidget
+using namespace NetworkManager;
+class KiranSwitchButton;
+class VpnIPsec : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit DslSettingPage(QWidget *parent = nullptr);
-    ~DslSettingPage() override;
+    explicit VpnIPsec(QWidget *parent = nullptr);
+    ~VpnIPsec() override;
 
     void initUI();
     void initConnection();
-//    void initSpecificSettings() override;
+    void setVpnSetting(const VpnSetting::Ptr &vpnSetting);
+
+public slots:
+    void saveSettings();
+    void showSettings();
+    void resetSettings();
+    void clearPtr();
 
 private:
-    Ui::DslSettingPage *ui;
+    Ui::VpnIPsec *ui;
+    VpnSetting::Ptr m_vpnSetting;
+    NMStringMap m_dataMap;
+    KiranSwitchButton *m_enableIPsec;
 };
 
-#endif  //KIRAN_CPANEL_NETWORK_DSL_SETTING_PAGE_H
+#endif  //KIRAN_CPANEL_NETWORK_VPN_IPSEC_H

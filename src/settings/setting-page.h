@@ -35,17 +35,25 @@ public:
     void initConnectionSettings(ConnectionSettings::ConnectionType connectionType,
                                 const QString &connectionUuid = "");
 
-    virtual void initSpecificSettings() = 0;
+    void setConnection(const Connection::Ptr &other);
+    void setConnectionSettings(const ConnectionSettings::Ptr &other);
     void createConnectionSettings();
+
+    virtual void initSettingPage();
+    virtual void initSpecificSettings() = 0;
+    virtual void initWidgets() = 0;
+    virtual void saveSettingPage() = 0;
+
     virtual void clearPtr();
 
-
 public slots:
+    void handleSaveButtonClicked(ConnectionSettings::ConnectionType connectionType);
 
 signals:
     void returnPreviousPage();
     void settingChanged();
     void settingUpdated();
+
 
 protected:
     NetworkManager::Connection::Ptr m_connection = nullptr;

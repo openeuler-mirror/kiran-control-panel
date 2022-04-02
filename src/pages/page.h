@@ -15,19 +15,27 @@
 #ifndef KIRAN_CPANEL_NETWORK_PAGE_H
 #define KIRAN_CPANEL_NETWORK_PAGE_H
 #include <QWidget>
+#include <NetworkManagerQt/Manager>
 
 enum EditPages
 {
     PAGE_SHOW,
     PAGE_SETTING
 };
-
+using namespace NetworkManager;
 class Page : public QWidget
 {
     Q_OBJECT
 public:
     Page(QWidget *parent= nullptr);
     ~Page();
+
+    void initNotifierConnection();
+
+public slots:
+    virtual void refreshConnectionLists();
+    virtual void handleNotifierConnectionChanged();
+
 };
 
 #endif  //KIRAN_CPANEL_NETWORK_PAGE_H

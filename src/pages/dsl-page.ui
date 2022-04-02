@@ -73,9 +73,6 @@
        <property name="bottomMargin">
         <number>0</number>
        </property>
-       <item>
-        <widget class="DslSettingPage" name="dslSettingPage" native="true"/>
-       </item>
       </layout>
      </widget>
     </widget>
@@ -87,12 +84,6 @@
    <class>ConnectionShowPage</class>
    <extends>QWidget</extends>
    <header location="global">connection-show-page.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>DslSettingPage</class>
-   <extends>QWidget</extends>
-   <header location="global">dsl-setting-page.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

@@ -35,15 +35,14 @@ public:
     explicit WiredSettingPage(QWidget *parent = nullptr);
     ~WiredSettingPage() override;
 
-    void initSettingPage();
     void initConnecton();
+    void initSettingPage() override;
     void initSpecificSettings() override;
-    void initWidgets();
+    void initWidgets() override;
     void clearPtr() override;
 
 public slots:
-    void handleSaveButtonClicked();
-    void saveSettingPage();
+    void saveSettingPage() override;
     void showSettingPage(QString activeConnectionPath = "");
 
 signals:

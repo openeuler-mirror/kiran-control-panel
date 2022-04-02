@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>WiredSettingPage</class>
- <widget class="QWidget" name="WiredSettingPage">
+ <class>VpnPptpSetting</class>
+ <widget class="QWidget" name="VpnPptpSetting">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>736</width>
-    <height>541</height>
+    <width>833</width>
+    <height>868</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>WiredSettingPage</string>
+   <string>VpnPptpSetting</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="leftMargin">
@@ -30,13 +30,13 @@
     <widget class="GeneralWidget" name="generalWidget" native="true"/>
    </item>
    <item>
-    <widget class="Ipv4Widget" name="ipv4Widget" native="true"/>
+    <widget class="VpnWidget" name="vpnWidget" native="true"/>
    </item>
    <item>
-    <widget class="Ipv6Widget" name="ipv6Widget" native="true"/>
+    <widget class="VpnPpp" name="vpnPpp" native="true"/>
    </item>
    <item>
-    <widget class="EthernetWidget" name="ethernetWidget" native="true"/>
+    <widget class="VpnIpvx" name="vpnIpvx" native="true"/>
    </item>
    <item>
     <widget class="GeneralButton" name="generalButton" native="true"/>
@@ -51,21 +51,21 @@
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>Ipv4Widget</class>
+   <class>VpnWidget</class>
    <extends>QWidget</extends>
-   <header location="global">ipv4-widget.h</header>
+   <header location="global">vpn-widget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>Ipv6Widget</class>
+   <class>VpnPpp</class>
    <extends>QWidget</extends>
-   <header location="global">ipv6-widget.h</header>
+   <header location="global">vpn-ppp.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>EthernetWidget</class>
+   <class>VpnIpvx</class>
    <extends>QWidget</extends>
-   <header location="global">ethernet-widget.h</header>
+   <header location="global">vpn-ipvx.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>

@@ -17,6 +17,8 @@ add_executable(${PROJECT_NAME}
         main.cpp
         )
 
+MESSAGE(${PROJECT_NAME})
+
 find_package(Qt${QT_VERSION} COMPONENTS ${REQUIRED_LIBS} REQUIRED)
 find_package(KF5NetworkManagerQt REQUIRED)
 
@@ -28,7 +30,9 @@ target_include_directories(${PROJECT_NAME} PRIVATE
         src
         src/pages
         src/settings
+        src/settings/vpn
         src/widgets
+        src/widgets/vpn
         ${KIRAN_WIDGETS_QT5_INCLUDE_DIRS}
         ${KLOG_QT5_INCLUDE_DIRS}
         )

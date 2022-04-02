@@ -1,22 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>WiredPage</class>
- <widget class="QWidget" name="WiredPage">
+ <class>VpnPage</class>
+ <widget class="QWidget" name="VpnPage">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>867</width>
-    <height>618</height>
+    <width>658</width>
+    <height>860</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>WiredPage</string>
+   <string>VpnPage</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_4">
-   <property name="spacing">
-    <number>0</number>
-   </property>
+  <layout class="QVBoxLayout" name="verticalLayout_7">
    <property name="leftMargin">
     <number>0</number>
    </property>
@@ -35,7 +32,7 @@
       <number>0</number>
      </property>
      <widget class="QWidget" name="page">
-      <layout class="QVBoxLayout" name="verticalLayout">
+      <layout class="QVBoxLayout" name="verticalLayout_2">
        <property name="spacing">
         <number>0</number>
        </property>
@@ -57,7 +54,10 @@
       </layout>
      </widget>
      <widget class="QWidget" name="page_2">
-      <layout class="QVBoxLayout" name="verticalLayout_3">
+      <layout class="QVBoxLayout" name="verticalLayout_6">
+       <property name="spacing">
+        <number>0</number>
+       </property>
        <property name="leftMargin">
         <number>0</number>
        </property>
@@ -80,13 +80,16 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>865</width>
-            <height>582</height>
+            <width>656</width>
+            <height>830</height>
            </rect>
           </property>
-          <layout class="QVBoxLayout" name="verticalLayout_2">
+          <layout class="QVBoxLayout" name="verticalLayout_5">
            <property name="spacing">
             <number>0</number>
+           </property>
+           <property name="sizeConstraint">
+            <enum>QLayout::SetDefaultConstraint</enum>
            </property>
            <property name="leftMargin">
             <number>0</number>
@@ -101,7 +104,80 @@
             <number>0</number>
            </property>
            <item>
-            <widget class="WiredSettingPage" name="wiredSettingPage" native="true"/>
+            <widget class="QWidget" name="vpnTypeWidget" native="true">
+             <layout class="QVBoxLayout" name="verticalLayout">
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="QLabel" name="label">
+                <property name="text">
+                 <string>VPN type</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="GeneralComboBox" name="vpnType"/>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QStackedWidget" name="vpnTypeStacked">
+             <widget class="QWidget" name="page_3">
+              <layout class="QVBoxLayout" name="verticalLayout_4">
+               <property name="spacing">
+                <number>0</number>
+               </property>
+               <property name="leftMargin">
+                <number>0</number>
+               </property>
+               <property name="topMargin">
+                <number>0</number>
+               </property>
+               <property name="rightMargin">
+                <number>0</number>
+               </property>
+               <property name="bottomMargin">
+                <number>0</number>
+               </property>
+               <item>
+                <widget class="VpnL2tpSetting" name="l2tpSetting" native="true"/>
+               </item>
+              </layout>
+             </widget>
+             <widget class="QWidget" name="page_4">
+              <layout class="QVBoxLayout" name="verticalLayout_3">
+               <property name="spacing">
+                <number>0</number>
+               </property>
+               <property name="leftMargin">
+                <number>0</number>
+               </property>
+               <property name="topMargin">
+                <number>0</number>
+               </property>
+               <property name="rightMargin">
+                <number>0</number>
+               </property>
+               <property name="bottomMargin">
+                <number>0</number>
+               </property>
+               <item>
+                <widget class="VpnPptpSetting" name="pptpSetting" native="true"/>
+               </item>
+              </layout>
+             </widget>
+            </widget>
            </item>
           </layout>
          </widget>
@@ -172,16 +248,27 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>WiredSettingPage</class>
-   <extends>QWidget</extends>
-   <header location="global">wired-setting-page.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>ConnectionShowPage</class>
    <extends>QWidget</extends>
    <header location="global">connection-show-page.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>VpnL2tpSetting</class>
+   <extends>QWidget</extends>
+   <header location="global">vpn-l2tp-setting.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>VpnPptpSetting</class>
+   <extends>QWidget</extends>
+   <header location="global">vpn-pptp-setting.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>GeneralComboBox</class>
+   <extends>QComboBox</extends>
+   <header location="global">general-widget.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

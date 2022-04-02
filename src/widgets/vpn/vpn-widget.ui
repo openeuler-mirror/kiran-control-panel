@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Ipv4Widget</class>
- <widget class="QWidget" name="Ipv4Widget">
+ <class>VpnWidget</class>
+ <widget class="QWidget" name="VpnWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>591</width>
-    <height>358</height>
+    <width>364</width>
+    <height>276</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Ipv4Widget</string>
+   <string>VpnWidget</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <property name="leftMargin">
@@ -27,21 +27,42 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="QLabel" name="label_18">
+    <widget class="QLabel" name="label">
      <property name="text">
-      <string>IPV4 Method</string>
+      <string>Gateway</string>
      </property>
     </widget>
    </item>
    <item>
-    <widget class="GeneralComboBox" name="ipv4Method"/>
+    <widget class="QLineEdit" name="gateway"/>
    </item>
    <item>
-    <widget class="QWidget" name="ipv4Manual" native="true">
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>User Name</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLineEdit" name="userName"/>
+   </item>
+   <item>
+    <widget class="QLabel" name="label_3">
+     <property name="text">
+      <string>Password Options</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="GeneralComboBox" name="passwordOptions">
+     <property name="focusPolicy">
+      <enum>Qt::WheelFocus</enum>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QWidget" name="passwordWidget" native="true">
      <layout class="QVBoxLayout" name="verticalLayout">
-      <property name="spacing">
-       <number>6</number>
-      </property>
       <property name="leftMargin">
        <number>0</number>
       </property>
@@ -55,57 +76,38 @@
        <number>0</number>
       </property>
       <item>
-       <widget class="QLabel" name="label">
+       <widget class="QLabel" name="label_4">
         <property name="text">
-         <string>IP Address</string>
+         <string>Password</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="ipv4Address"/>
-      </item>
-      <item>
-       <widget class="QLabel" name="label_2">
-        <property name="text">
-         <string>Net Mask</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="ipv4Netmask"/>
-      </item>
-      <item>
-       <widget class="QLabel" name="label_3">
-        <property name="text">
-         <string>Gateway</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="ipv4Gateway"/>
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <item>
+         <widget class="QLineEdit" name="password"/>
+        </item>
+        <item>
+         <widget class="QPushButton" name="passwordVisual">
+          <property name="text">
+           <string>PushButton</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
      </layout>
     </widget>
    </item>
    <item>
-    <widget class="QLabel" name="label_16">
+    <widget class="QLabel" name="label_5">
      <property name="text">
-      <string>Preferred DNS</string>
+      <string>NT Domain</string>
      </property>
     </widget>
    </item>
    <item>
-    <widget class="QLineEdit" name="ipv4PreferredDNS"/>
-   </item>
-   <item>
-    <widget class="QLabel" name="label_14">
-     <property name="text">
-      <string>Alternate DNS</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QLineEdit" name="ipv4AlternateDNS"/>
+    <widget class="QLineEdit" name="ntDomain"/>
    </item>
   </layout>
  </widget>

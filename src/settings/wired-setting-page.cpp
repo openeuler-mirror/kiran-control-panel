@@ -19,7 +19,6 @@
 #include <NetworkManagerQt/Ipv4Setting>
 #include <NetworkManagerQt/Manager>
 #include <NetworkManagerQt/Settings>
-#include <QScrollBar>
 #include "ui_wired-setting-page.h"
 WiredSettingPage::WiredSettingPage(QWidget *parent) : SettingPage(parent), ui(new Ui::WiredSettingPage)
 {
@@ -42,8 +41,6 @@ void WiredSettingPage::initSettingPage()
 
 void WiredSettingPage::initConnecton()
 {
-    connect(ui->returnButton, &QPushButton::clicked, [=]() { emit returnPreviousPage(); });
-    connect(ui->saveButton, &QPushButton::clicked, this, &WiredSettingPage::handleSaveButtonClicked);
 
 }
 
@@ -83,38 +80,6 @@ void WiredSettingPage::showSettingPage(QString activeConnectionPath)
         else
             ui->generalButton->initButton(SETTING_CONNECTION_STATUS_ACTIVATED,activeConnectionPath);
     }
-    QPointer<QScrollBar> scrollBar = ui->scrollArea->verticalScrollBar();
-    scrollBar->setValue(0);
-}
-
-Q_DECLARE_METATYPE(NetworkManager::Connection::Ptr)
-void WiredSettingPage::handleSaveButtonClicked()
-{
-    if(m_connectionSettings == nullptr)
-    {
-        initConnectionSettings(ConnectionSettings::ConnectionType::Wired);
-        initSettingPage();
-        saveSettingPage();
-        QDBusPendingReply<QDBusObjectPath> replyAdd = NetworkManager::addConnection(m_connectionSettings->toMap());
-        replyAdd.waitForFinished();
-        if (replyAdd.isError())
-        {
-            KLOG_DEBUG() << "add connection failed," << replyAdd.error();
-        }
-        KLOG_DEBUG() << "add new connection";
-    }
-    else
-    {
-        saveSettingPage();
-        connect(m_connection.data(),&NetworkManager::Connection::updated,this,&WiredSettingPage::settingUpdated);
-        QDBusPendingReply<> replyUpdate = m_connection->update(m_connectionSettings->toMap());
-        replyUpdate.waitForFinished();
-        if (replyUpdate.isError())
-        {
-            KLOG_DEBUG() << "error occurred while updating the connection" << replyUpdate.error();
-        }
-    }
-
 }
 
 void WiredSettingPage::saveSettingPage()

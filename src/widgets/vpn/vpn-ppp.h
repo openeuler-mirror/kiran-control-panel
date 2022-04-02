@@ -11,42 +11,52 @@
  *
  * Author:     luoqing <luoqing@kylinos.com.cn>
  */
-#ifndef KIRAN_CPANEL_NETWORK_IPV4_WIDGET_H
-#define KIRAN_CPANEL_NETWORK_IPV4_WIDGET_H
 
+#ifndef KIRAN_CPANEL_NETWORK_VPN_PPP_H
+#define KIRAN_CPANEL_NETWORK_VPN_PPP_H
+
+#include <NetworkManagerQt/VpnSetting>
 #include <QWidget>
-#include <NetworkManagerQt/Ipv4Setting>
 QT_BEGIN_NAMESPACE
 namespace Ui
 {
-class Ipv4Widget;
+class VpnPpp;
 }
 QT_END_NAMESPACE
 using namespace NetworkManager;
-Q_DECLARE_METATYPE(NetworkManager::Ipv4Setting::ConfigMethod)
 class KiranSwitchButton;
-class Ipv4Widget : public QWidget
+class VpnPpp : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit Ipv4Widget(QWidget *parent = nullptr);
-    ~Ipv4Widget() override;
+    explicit VpnPpp(QWidget *parent = nullptr);
+    ~VpnPpp() override;
     void initUI();
     void initConnection();
-    void setIpv4Setting(const Ipv4Setting::Ptr &ipv4Setting);
+    void initOptionsButton(const QStringList &supportOptions);
+    void initOptionsStrMap();
+    void setVpnSetting(const VpnSetting::Ptr &vpnSetting);
 
 public slots:
-    void handleIpv4MethodChanged(Ipv4Setting::ConfigMethod method);
-    void resetSettings();
     void saveSettings();
     void showSettings();
-
+    void resetSettings();
     void clearPtr();
+
+    void handleMPPEChanged(bool checked);
+
 private:
-    Ui::Ipv4Widget *ui;
-    Ipv4Setting::Ptr m_ipv4Setting;
-    KiranSwitchButton *m_neverDefault;
+    Ui::VpnPpp *ui;
+    VpnSetting::Ptr m_vpnSetting;
+    NMStringMap m_dataMap;
+
+    QMap<QString,QString> m_optionsStrMap;
+    QStringList m_supportOptions;
+    QMap<QString,KiranSwitchButton*> m_optionsButtonMap;
+
+    KiranSwitchButton *m_useMPPE;
+    KiranSwitchButton *m_statefulMPPE;
 };
 
-#endif  //KIRAN_CPANEL_NETWORK_IPV4_WIDGET_H
+#endif  //KIRAN_CPANEL_NETWORK_VPN_PPP_H

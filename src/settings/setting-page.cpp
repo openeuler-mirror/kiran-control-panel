@@ -45,7 +45,6 @@ void SettingPage::initConnectionSettings(ConnectionSettings::ConnectionType conn
             KLOG_DEBUG() << "can't find connection by uuid";
         }
         m_connectionSettings = m_connection->settings();
-
         m_isNewConnection = false;
     }
 }
@@ -64,5 +63,47 @@ void SettingPage::clearPtr()
     m_connectionSettings.clear();
 }
 
+void SettingPage::setConnection(const Connection::Ptr& other)
+{
+    m_connection = other;
+}
 
+void SettingPage::setConnectionSettings(const ConnectionSettings::Ptr& other)
+{
+    m_connectionSettings = other;
+}
 
+void SettingPage::handleSaveButtonClicked(ConnectionSettings::ConnectionType connectionType)
+{
+    if(m_connectionSettings == nullptr)
+    {
+        initConnectionSettings(connectionType);
+        initSettingPage();
+        saveSettingPage();
+        QDBusPendingReply<QDBusObjectPath> replyAdd = NetworkManager::addConnection(m_connectionSettings->toMap());
+        replyAdd.waitForFinished();
+        if (replyAdd.isError())
+        {
+            KLOG_DEBUG() << "add connection failed," << replyAdd.error();
+        }
+        else
+            KLOG_DEBUG() << "add new connection";
+    }
+    else
+    {
+        saveSettingPage();
+        connect(m_connection.data(),&NetworkManager::Connection::updated,this,&SettingPage::settingUpdated);
+        QDBusPendingReply<> replyUpdate = m_connection->update(m_connectionSettings->toMap());
+        replyUpdate.waitForFinished();
+        if (replyUpdate.isError())
+        {
+            KLOG_DEBUG() << "error occurred while updating the connection" << replyUpdate.error();
+        }
+    }
+}
+
+void SettingPage::initSettingPage()
+{
+    initSpecificSettings();
+    initWidgets();
+}

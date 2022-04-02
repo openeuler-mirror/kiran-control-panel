@@ -29,17 +29,17 @@
    <item>
     <widget class="QLabel" name="label_19">
      <property name="text">
-      <string>MAC address of Ethernet device</string>
+      <string>MAC Address Of Ethernet Device</string>
      </property>
     </widget>
    </item>
    <item>
-    <widget class="QComboBox" name="deviceMac"/>
+    <widget class="GeneralComboBox" name="deviceMac"/>
    </item>
    <item>
     <widget class="QLabel" name="label_20">
      <property name="text">
-      <string>Ethernet clone MAC address</string>
+      <string>Ethernet Clone MAC Address</string>
      </property>
     </widget>
    </item>
@@ -75,6 +75,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>GeneralComboBox</class>
+   <extends>QComboBox</extends>
+   <header location="global">general-widget.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

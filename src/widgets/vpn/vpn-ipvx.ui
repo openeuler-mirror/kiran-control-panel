@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>GeneralWidget</class>
- <widget class="QWidget" name="GeneralWidget">
+ <class>VpnIpvx</class>
+ <widget class="QWidget" name="VpnIpvx">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>507</width>
-    <height>159</height>
+    <width>564</width>
+    <height>251</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>GeneralWidget</string>
+   <string>VpnIpvx</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="leftMargin">
@@ -27,21 +27,21 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="QLabel" name="nameLabel">
+    <widget class="QLabel" name="label_18">
      <property name="text">
-      <string>TextLabel</string>
+      <string>IPV4 Method</string>
      </property>
     </widget>
    </item>
    <item>
-    <widget class="QLineEdit" name="connectionName"/>
+    <widget class="GeneralComboBox" name="ipv4Method"/>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="autoConnectionLayout">
+    <layout class="QHBoxLayout" name="neverDefaultLayout">
      <item>
-      <widget class="QLabel" name="label">
+      <widget class="QLabel" name="label_4">
        <property name="text">
-        <string>Auto Connection</string>
+        <string>Only applied in corresponding resources</string>
        </property>
       </widget>
      </item>
@@ -60,8 +60,35 @@
      </item>
     </layout>
    </item>
+   <item>
+    <widget class="QLabel" name="label_16">
+     <property name="text">
+      <string>Preferred DNS</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLineEdit" name="ipv4PreferredDNS"/>
+   </item>
+   <item>
+    <widget class="QLabel" name="label_14">
+     <property name="text">
+      <string>Alternate DNS</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLineEdit" name="ipv4AlternateDNS"/>
+   </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>GeneralComboBox</class>
+   <extends>QComboBox</extends>
+   <header location="global">general-widget.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

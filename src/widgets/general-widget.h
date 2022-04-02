@@ -17,7 +17,7 @@
 
 #include <NetworkManagerQt/ConnectionSettings>
 #include <QWidget>
-
+#include <QComboBox>
 QT_BEGIN_NAMESPACE
 namespace Ui
 {
@@ -25,6 +25,13 @@ class GeneralWidget;
 }
 QT_END_NAMESPACE
 using namespace NetworkManager;
+
+enum VpnType
+{
+    VPN_TYPE_L2TP,
+    VPN_TYPE_PPTP
+};
+
 class KiranSwitchButton;
 class GeneralWidget : public QWidget
 {
@@ -40,12 +47,22 @@ public:
 public slots:
     void saveSettings();
     void showSettings(ConnectionSettings::ConnectionType connectionType);
+    void showVpnSettings(VpnType vpnType);
     void clearPtr();
 private:
     Ui::GeneralWidget *ui;
     ConnectionSettings::Ptr m_connectionSettings;
     ConnectionSettings::ConnectionType m_connectionType;
     KiranSwitchButton *m_autoConnection;
+};
+
+class GeneralComboBox : public QComboBox
+{
+    Q_OBJECT
+public:
+    explicit GeneralComboBox(QWidget *parent = nullptr);
+
+    void wheelEvent(QWheelEvent *e) override;
 };
 
 #endif  //KIRAN_CPANEL_NETWORK_GENERAL_WIDGET_H

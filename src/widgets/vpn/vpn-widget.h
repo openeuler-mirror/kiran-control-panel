@@ -11,44 +11,44 @@
  *
  * Author:     luoqing <luoqing@kylinos.com.cn>
  */
+#ifndef KIRAN_CPANEL_NETWORK_VPN_WIDGET_H
+#define KIRAN_CPANEL_NETWORK_VPN_WIDGET_H
 
-#ifndef KIRAN_CPANEL_NETWORK_WIRED_PAGE_H
-#define KIRAN_CPANEL_NETWORK_WIRED_PAGE_H
-
-#include <NetworkManagerQt/WiredDevice>
+#include <NetworkManagerQt/VpnSetting>
 #include <QWidget>
-#include "page.h"
-
-using namespace NetworkManager;
 QT_BEGIN_NAMESPACE
 namespace Ui
 {
-class WiredPage;
+class VpnWidget;
 }
+using namespace NetworkManager;
 QT_END_NAMESPACE
-
-class WiredPage : public Page
+Q_DECLARE_METATYPE(Setting::SecretFlagType);
+class VpnWidget : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit WiredPage(QWidget *parent = nullptr);
-    ~WiredPage() override;
-
+    explicit VpnWidget(QWidget *parent = nullptr);
+    ~VpnWidget() override;
     void initUI();
     void initConnection();
+    void setVpnSetting(const VpnSetting::Ptr &vpnSetting);
 
 public slots:
-    void showWiredConnections();
-    void handleActivateConnection(QString connectionPath);
-    void getDeviceInfo();
-    void refreshConnectionLists() override;
-    void handleNotifierConnectionChanged() override;
+    void saveSettings();
+    void showSettings();
+    void resetSettings();
+    void clearPtr();
+
+    void handlePasswordOptionsChanged(Setting::SecretFlagType secretFlagType);
+    void enablePasswordVisual();
 
 private:
-    Ui::WiredPage *ui;
-    WiredDevice::Ptr m_wiredDevice;
-    QMap<QString,QString> m_deviceMap;
+    Ui::VpnWidget *ui;
+    VpnSetting::Ptr m_vpnSetting;
+    NMStringMap m_dataMap;
+    NMStringMap m_secretMap;
 };
 
-#endif  //KIRAN_CPANEL_NETWORK_WIRED_PAGE_H
+#endif  //KIRAN_CPANEL_NETWORK_VPN_WIDGET_H

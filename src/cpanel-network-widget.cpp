@@ -18,7 +18,8 @@
 enum NetworkSettingsPages
 {
     PAGE_WIRED,
-    PAGE_DSL
+    PAGE_DSL,
+    PAGE_VPN
 };
 
 CPanelNetworkWidget::CPanelNetworkWidget(QWidget* parent) : QWidget(parent), ui(new Ui::CPanelNetworkWidget)
@@ -38,9 +39,12 @@ void CPanelNetworkWidget::init()
 {
     ui->sidebar->insertItem(PAGE_WIRED, tr("Wired Network"));
     ui->sidebar->insertItem(PAGE_DSL, tr("DSL"));
+    ui->sidebar->insertItem(PAGE_VPN, tr("VPN"));
+
 
     ui->sidebar->item(PAGE_WIRED)->setData(Qt::UserRole, PAGE_WIRED);
     ui->sidebar->item(PAGE_DSL)->setData(Qt::UserRole, PAGE_DSL);
+    ui->sidebar->item(PAGE_VPN)->setData(Qt::UserRole, PAGE_VPN);
 
     connect(ui->sidebar, &QListWidget::currentItemChanged, [this](QListWidgetItem* current, QListWidgetItem* previous) {
         ui->stackedWidget->setCurrentIndex(current->data(Qt::UserRole).toInt());

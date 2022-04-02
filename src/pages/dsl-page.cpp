@@ -40,7 +40,7 @@ void DslPage::initConnection()
         ui->stackedWidget->setCurrentIndex(PAGE_SETTING);
     });
 
-    connect(ui->dslSettingPage, &DslSettingPage::returnPreviousPage, [=]() {
-        ui->stackedWidget->setCurrentIndex(PAGE_SHOW);
-    });
+//    connect(ui->dslSettingPage, &DslSettingPage::returnPreviousPage, [=]() {
+//        ui->stackedWidget->setCurrentIndex(PAGE_SHOW);
+//    });
 }

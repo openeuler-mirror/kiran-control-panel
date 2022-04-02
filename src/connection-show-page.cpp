@@ -55,19 +55,6 @@ void ConnectionShowPage::handleConnectionItemClicked(QListWidgetItem* item)
     //判断是否已激活
     if (item != m_previousActivatedItem)
     {
-//        if (m_previousActivatedItem != nullptr)
-//        {
-//            //断开当前激活的连接
-//            QString previousActivatedPath =
-//                m_previousActivatedItem->data(Qt::UserRole).value<ConnectionInfo>().activeConnectionPath;
-//            deactivateConnection(previousActivatedPath);
-//
-//            //更新item所带信息，清空已激活路径
-//            updateItemActivatedPath(m_previousActivatedItem);
-//            QWidget* widget = ui->connectionLists->itemWidget(m_previousActivatedItem);
-//            ItemWidget* itemWidget = qobject_cast<ItemWidget*>(widget);
-//            itemWidget->deactivateLabel();
-//        }
         QString connectionPath = item->data(Qt::UserRole).value<ConnectionInfo>().connectionPath;
         KLOG_DEBUG() << "emit activateCurrentItemConnection(connectionPath)";
         emit requestActivateCurrentItemConnection(connectionPath);
@@ -114,6 +101,12 @@ void ConnectionShowPage::addConnectionToLists(Connection::Ptr ptr)
 
     ui->connectionLists->addItem(item);
     ui->connectionLists->setItemWidget(item, itemWidget);
+
+    ui->connectionLists->setMaximumHeight(ui->connectionLists->sizeHintForRow(0) * ui->connectionLists->count()
+                                          + (2 * ui->connectionLists->frameWidth()));
+
+    KLOG_DEBUG() << "ui->connectionLists->maximumHeight():" << ui->connectionLists->maximumHeight();
+
     connect(itemWidget, &ItemWidget::editConnectionClicked, [=]() {
         QString uuid = item->data(Qt::UserRole).value<ConnectionInfo>().uuid;
         QString activeConnectionPath = item->data(Qt::UserRole).value<ConnectionInfo>().activeConnectionPath;
@@ -174,6 +167,7 @@ ItemWidget::ItemWidget(QWidget* parent) : QWidget(parent)
     m_horizonLayout->addStretch();
     m_horizonLayout->addWidget(m_activatedLabel);
     m_horizonLayout->addWidget(m_editConnection);
+    m_horizonLayout->setMargin(0);
 
     this->setLayout(m_horizonLayout);
     connect(m_editConnection, &QPushButton::clicked, this, &ItemWidget::editConnectionClicked);

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>VpnL2tpSetting</class>
+ <widget class="QWidget" name="VpnL2tpSetting">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1064</width>
+    <height>887</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>VpnL2tpSetting</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <item>
+    <widget class="GeneralWidget" name="generalWidget" native="true">
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="VpnWidget" name="vpnWidget" native="true">
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="VpnPpp" name="vpnPpp" native="true">
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="VpnIPsec" name="vpnIPsec" native="true">
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="VpnIpvx" name="vpnIpvx" native="true">
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="GeneralButton" name="generalButton" native="true"/>
+   </item>
+  </layout>
+  <zorder>generalWidget</zorder>
+  <zorder>vpnIpvx</zorder>
+  <zorder>vpnPpp</zorder>
+  <zorder>vpnWidget</zorder>
+  <zorder>vpnIPsec</zorder>
+  <zorder>generalButton</zorder>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>GeneralWidget</class>
+   <extends>QWidget</extends>
+   <header location="global">general-widget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>VpnWidget</class>
+   <extends>QWidget</extends>
+   <header location="global">vpn-widget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>VpnPpp</class>
+   <extends>QWidget</extends>
+   <header location="global">vpn-ppp.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>VpnIPsec</class>
+   <extends>QWidget</extends>
+   <header location="global">vpn-ipsec.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>VpnIpvx</class>
+   <extends>QWidget</extends>
+   <header location="global">vpn-ipvx.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>GeneralButton</class>
+   <extends>QWidget</extends>
+   <header location="global">general-button.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

@@ -16,7 +16,7 @@
 #include <kiran-switch-button.h>
 #include "ui_dsl-setting-page.h"
 
-DslSettingPage::DslSettingPage(QWidget *parent) : SettingPage(parent), ui(new Ui::DslSettingPage)
+DslSettingPage::DslSettingPage(QWidget *parent) : QWidget(parent), ui(new Ui::DslSettingPage)
 {
     ui->setupUi(this);
     initUI();
@@ -35,10 +35,10 @@ void DslSettingPage::initUI()
 
 void DslSettingPage::initConnection()
 {
-    connect(ui->returnButton, &QPushButton::clicked, this, &DslSettingPage::returnPreviousPage);
+//    connect(ui->returnButton, &QPushButton::clicked, this, &DslSettingPage::returnPreviousPage);
 }
 
-void DslSettingPage::initSpecificSettings()
-{
-
-}
+//void DslSettingPage::initSpecificSettings()
+//{
+//
+//}

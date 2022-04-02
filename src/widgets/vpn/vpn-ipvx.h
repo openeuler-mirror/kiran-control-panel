@@ -12,33 +12,44 @@
  * Author:     luoqing <luoqing@kylinos.com.cn>
  */
 
-#ifndef KIRAN_CPANEL_NETWORK_DSL_SETTING_PAGE_H
-#define KIRAN_CPANEL_NETWORK_DSL_SETTING_PAGE_H
+#ifndef KIRAN_CPANEL_NETWORK_VPN_IPVX_H
+#define KIRAN_CPANEL_NETWORK_VPN_IPVX_H
 
 #include <QWidget>
-#include "setting-page.h"
-
+#include <NetworkManagerQt/Ipv4Setting>
 QT_BEGIN_NAMESPACE
 namespace Ui
 {
-class DslSettingPage;
+class VpnIpvx;
 }
 QT_END_NAMESPACE
+using namespace NetworkManager;
+class KiranSwitchButton;
 
-class DslSettingPage : public QWidget
+class VpnIpvx : public QWidget
 {
     Q_OBJECT
-
 public:
-    explicit DslSettingPage(QWidget *parent = nullptr);
-    ~DslSettingPage() override;
+    explicit VpnIpvx(QWidget *parent = nullptr);
+    ~VpnIpvx() override;
 
     void initUI();
     void initConnection();
-//    void initSpecificSettings() override;
+    void setIpv4Setting(const Ipv4Setting::Ptr &ipv4Setting);
+
+public slots:
+    void saveSettings();
+    void showSeittngs();
+    void resetSettings();
+
+    void clearPtr();
 
 private:
-    Ui::DslSettingPage *ui;
+    Ui::VpnIpvx *ui;
+    KiranSwitchButton *m_neverDefault;
+    Ipv4Setting::Ptr m_ipv4Setting;
 };
 
-#endif  //KIRAN_CPANEL_NETWORK_DSL_SETTING_PAGE_H
+
+
+#endif  //KIRAN_CPANEL_NETWORK_VPN_IPVX_H

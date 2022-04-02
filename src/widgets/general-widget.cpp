@@ -77,6 +77,7 @@ void GeneralWidget::showSettings(ConnectionSettings::ConnectionType connectionTy
             connectionName = tr("Wired Connection %1");
             break;
         case ConnectionSettings::ConnectionType::Vpn:
+            connectionName = tr("");
             break;
         default:
             break;
@@ -92,6 +93,39 @@ void GeneralWidget::showSettings(ConnectionSettings::ConnectionType connectionTy
     }
 }
 
+void GeneralWidget::showVpnSettings(VpnType vpnType)
+{
+    m_connectionType = ConnectionSettings::ConnectionType::Vpn;
+    if(m_connectionSettings != nullptr)
+    {
+        QString connectionId = m_connectionSettings->id();
+        ui->connectionName->setText(connectionId);
+        m_autoConnection->setChecked(m_connectionSettings->autoconnect());
+    }
+    else
+    {
+        QString connectionName="";
+        switch (vpnType)
+        {
+        case VpnType::VPN_TYPE_L2TP:
+            connectionName = tr("VPN L2TP %1");
+            break;
+        case VpnType::VPN_TYPE_PPTP:
+            connectionName = tr("VPN PPTP %1");
+            break;
+        default:
+            break;
+        }
+
+        if(!connectionName.isEmpty())
+        {
+            //生成名称数字后缀
+            QString connectionNameStr = connectionName.arg(connectionSuffixNum(connectionName));
+            ui->connectionName->setText(connectionNameStr);
+        }
+        m_autoConnection->setChecked(true);
+    }
+}
 
 int GeneralWidget::connectionSuffixNum(QString& connName)
 {
@@ -132,3 +166,15 @@ void GeneralWidget::clearPtr()
 {
     m_connectionSettings.clear();
 }
+
+
+GeneralComboBox::GeneralComboBox(QWidget *parent) : QComboBox(parent)
+{
+
+}
+
+void GeneralComboBox::wheelEvent(QWheelEvent *e)
+{
+//    QComboBox::wheelEvent(e);
+}
+

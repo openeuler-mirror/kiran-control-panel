@@ -15,7 +15,7 @@
 #include "ipv4-widget.h"
 #include <qt5-log-i.h>
 #include "ui_ipv4-widget.h"
-
+#include <kiran-switch-button.h>
 Ipv4Widget::Ipv4Widget(QWidget *parent) : QWidget(parent), ui(new Ui::Ipv4Widget)
 {
     ui->setupUi(this);
@@ -109,7 +109,14 @@ void Ipv4Widget::saveSettings()
             m_ipv4Setting->setAddresses(ipv4AddresseList);
 
             QList<QHostAddress> ipv4DNS;
-            ipv4DNS << QHostAddress(ui->ipv4PreferredDNS->text()) << QHostAddress(ui->ipv4AlternateDNS->text());
+            if(!ui->ipv4PreferredDNS->text().isEmpty())
+            {
+                ipv4DNS << QHostAddress(ui->ipv4PreferredDNS->text());
+            }
+            if(!ui->ipv4AlternateDNS->text().isEmpty())
+            {
+                ipv4DNS << QHostAddress(ui->ipv4AlternateDNS->text());
+            }
             m_ipv4Setting->setDns(ipv4DNS);
         }
     }
@@ -171,3 +178,5 @@ void Ipv4Widget::clearPtr()
 {
     m_ipv4Setting.clear();
 }
+
+

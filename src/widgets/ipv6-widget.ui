@@ -34,12 +34,12 @@
      <item>
       <widget class="QLabel" name="label_22">
        <property name="text">
-        <string>IPV6 method</string>
+        <string>IPV6 Method</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QComboBox" name="ipv6Method"/>
+      <widget class="GeneralComboBox" name="ipv6Method"/>
      </item>
     </layout>
    </item>
@@ -64,7 +64,7 @@
       <item>
        <widget class="QLabel" name="label_4">
         <property name="text">
-         <string>IP address</string>
+         <string>IP Address</string>
         </property>
        </widget>
       </item>
@@ -116,6 +116,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>GeneralComboBox</class>
+   <extends>QComboBox</extends>
+   <header location="global">general-widget.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

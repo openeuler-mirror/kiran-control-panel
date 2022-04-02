@@ -16,7 +16,7 @@
 #include <NetworkManagerQt/ActiveConnection>
 #include <NetworkManagerQt/Manager>
 #include <NetworkManagerQt/Settings>
-#include <QListWidget>
+#include <QScrollBar>
 #include "ui_wired-page.h"
 
 WiredPage::WiredPage(QWidget *parent) : Page(parent), ui(new Ui::WiredPage)
@@ -24,7 +24,7 @@ WiredPage::WiredPage(QWidget *parent) : Page(parent), ui(new Ui::WiredPage)
     ui->setupUi(this);
     initUI();
     getDeviceInfo();
-    initConnecton();
+    initConnection();
 }
 
 WiredPage::~WiredPage()
@@ -70,20 +70,17 @@ void WiredPage::showWiredConnections()
     {
         if (conn->settings()->connectionType() == ConnectionSettings::ConnectionType::Wired)
         {
-            KLOG_DEBUG() << "________________";
-            KLOG_DEBUG() << "conn->uuid():" << conn->uuid();
-            KLOG_DEBUG() << "conn->name():" << conn->name();
-            KLOG_DEBUG() << "conn->path():" << conn->path();
-            KLOG_DEBUG() << "----------------";
             ui->connectionShowPage->addConnectionToLists(conn);
         }
     }
 }
 
-void WiredPage::initConnecton()
+void WiredPage::initConnection()
 {
     connect(ui->connectionShowPage, &ConnectionShowPage::requestCreatConnection, [=]() {
         ui->wiredSettingPage->showSettingPage();
+        QPointer<QScrollBar> scrollBar = ui->scrollArea->verticalScrollBar();
+        scrollBar->setValue(0);
         ui->stackedWidget->setCurrentIndex(PAGE_SETTING);
     });
 
@@ -91,36 +88,31 @@ void WiredPage::initConnecton()
         ui->wiredSettingPage->initConnectionSettings(ConnectionSettings::ConnectionType::Wired, uuid);
         ui->wiredSettingPage->initSettingPage();
         ui->wiredSettingPage->showSettingPage(activeConnectionPath);
+        QPointer<QScrollBar> scrollBar = ui->scrollArea->verticalScrollBar();
+        scrollBar->setValue(0);
         ui->stackedWidget->setCurrentIndex(PAGE_SETTING);
     });
 
-    connect(ui->wiredSettingPage, &WiredSettingPage::returnPreviousPage, [=]() {
+    connect(ui->returnButton, &QPushButton::clicked, [=]() {
         ui->wiredSettingPage->clearPtr();
         ui->stackedWidget->setCurrentIndex(PAGE_SHOW);
     });
+    //    connect(ui->saveButton, &QPushButton::clicked, ui->wiredSettingPage, &WiredSettingPage::handleSaveButtonClicked);
 
-    connect(ui->wiredSettingPage, &WiredSettingPage::settingUpdated, this, &WiredPage::refreshConnectionShow);
-
-    connect(notifier(), &Notifier::activeConnectionAdded, [=](const QString &path) {
-        KLOG_DEBUG() << "activeConnectionAdded:" << path;
+    connect(ui->saveButton, &QPushButton::clicked, [=]() {
+        ui->wiredSettingPage->handleSaveButtonClicked(ConnectionSettings::ConnectionType::Wired);
     });
 
-    connect(notifier(), &Notifier::activeConnectionRemoved, [=](const QString &path) {
-        KLOG_DEBUG() << "activeConnectionRemoved:" << path;
-        refreshConnectionShow();
-    });
-
-    connect(settingsNotifier(), &SettingsNotifier::connectionRemoved, [=](const QString &path) {
-        KLOG_DEBUG() << "SettingsNotifier::connectionRemoved:" << path;
-        refreshConnectionShow();
-    });
-
-    connect(settingsNotifier(), &SettingsNotifier::connectionAdded, [=](const QString &path) {
-        refreshConnectionShow();
+    connect(ui->wiredSettingPage, &WiredSettingPage::settingUpdated, [=]() {
+        KLOG_DEBUG() << "WiredSettingPage::settingUpdated";
+        ui->wiredSettingPage->clearPtr();
+        refreshConnectionLists();
     });
 
     connect(ui->connectionShowPage, &ConnectionShowPage::requestActivateCurrentItemConnection,
             this, &WiredPage::handleActivateConnection);
+
+    initNotifierConnection();
 
     //检测到新设备时，刷新
     connect(notifier(), &Notifier::deviceAdded, [=](const QString &uni) {
@@ -132,9 +124,9 @@ void WiredPage::initConnecton()
     });
 }
 
-void WiredPage::refreshConnectionShow()
+void WiredPage::refreshConnectionLists()
 {
-    ui->wiredSettingPage->clearPtr();
+    KLOG_DEBUG() << "WiredPage::refreshConnectionLists()";
     ui->connectionShowPage->clearConnectionLists();
     showWiredConnections();
     ui->stackedWidget->setCurrentIndex(PAGE_SHOW);
@@ -168,4 +160,10 @@ void WiredPage::handleActivateConnection(QString connectionPath)
         ui->connectionShowPage->update();
         KLOG_DEBUG() << "activate Connection successed";
     }
+}
+
+void WiredPage::handleNotifierConnectionChanged()
+{
+    ui->wiredSettingPage->clearPtr();
+    refreshConnectionLists();
 }

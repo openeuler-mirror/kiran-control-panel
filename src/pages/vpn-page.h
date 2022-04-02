@@ -12,33 +12,38 @@
  * Author:     luoqing <luoqing@kylinos.com.cn>
  */
 
-#ifndef KIRAN_CPANEL_NETWORK_DSL_SETTING_PAGE_H
-#define KIRAN_CPANEL_NETWORK_DSL_SETTING_PAGE_H
+#ifndef KIRAN_CPANEL_NETWORK_VPN_PAGE_H
+#define KIRAN_CPANEL_NETWORK_VPN_PAGE_H
 
 #include <QWidget>
-#include "setting-page.h"
-
+#include "page.h"
 QT_BEGIN_NAMESPACE
 namespace Ui
 {
-class DslSettingPage;
+class VpnPage;
 }
 QT_END_NAMESPACE
 
-class DslSettingPage : public QWidget
+class VpnPage : public Page
 {
     Q_OBJECT
 
 public:
-    explicit DslSettingPage(QWidget *parent = nullptr);
-    ~DslSettingPage() override;
+    explicit VpnPage(QWidget *parent = nullptr);
+    ~VpnPage() override;
 
     void initUI();
     void initConnection();
-//    void initSpecificSettings() override;
 
+public slots:
+    void showVpnConnections();
+    void clearVpnSetting();
+    void refreshConnectionLists() override;
+    void handleRequestEditConnection(const QString &uuid, QString activeConnectionPath);
+    void handleActivateConnection(QString connectionPath);
+    void handleNotifierConnectionChanged() override;
 private:
-    Ui::DslSettingPage *ui;
+    Ui::VpnPage *ui;
 };
 
-#endif  //KIRAN_CPANEL_NETWORK_DSL_SETTING_PAGE_H
+#endif  //KIRAN_CPANEL_NETWORK_VPN_PAGE_H

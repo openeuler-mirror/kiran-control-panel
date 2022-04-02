@@ -72,7 +72,7 @@
      <item>
       <widget class="QStackedWidget" name="stackedWidget">
        <property name="currentIndex">
-        <number>1</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="page">
         <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -122,6 +122,28 @@
          </item>
         </layout>
        </widget>
+       <widget class="QWidget" name="page_3">
+        <layout class="QVBoxLayout" name="verticalLayout_3">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="VpnPage" name="vpnPage" native="true"/>
+         </item>
+        </layout>
+       </widget>
       </widget>
      </item>
     </layout>
@@ -144,6 +166,12 @@
    <class>DslPage</class>
    <extends>QWidget</extends>
    <header location="global">dsl-page.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>VpnPage</class>
+   <extends>QWidget</extends>
+   <header location="global">vpn-page.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
