@@ -32,6 +32,8 @@ VpnL2tpSetting::~VpnL2tpSetting()
 
 void VpnL2tpSetting::initConnection()
 {
+    connect(ui->generalButton,&GeneralButton::disconnectButtonClicked,this,&VpnL2tpSetting::returnPreviousPage);
+    connect(ui->generalButton,&GeneralButton::deleteButtonClicked,this,&VpnL2tpSetting::returnPreviousPage);
 }
 
 void VpnL2tpSetting::initSettingPage()

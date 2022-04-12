@@ -70,6 +70,8 @@ void WiredPage::showWiredConnections()
     {
         if (conn->settings()->connectionType() == ConnectionSettings::ConnectionType::Wired)
         {
+            KLOG_DEBUG() << "conn->name():" << conn->name();
+            KLOG_DEBUG() << "conn->uuid():" << conn->uuid();
             ui->connectionShowPage->addConnectionToLists(conn);
         }
     }
@@ -93,24 +95,25 @@ void WiredPage::initConnection()
         ui->stackedWidget->setCurrentIndex(PAGE_SETTING);
     });
 
-    connect(ui->returnButton, &QPushButton::clicked, [=]() {
-        ui->wiredSettingPage->clearPtr();
-        ui->stackedWidget->setCurrentIndex(PAGE_SHOW);
-    });
-    //    connect(ui->saveButton, &QPushButton::clicked, ui->wiredSettingPage, &WiredSettingPage::handleSaveButtonClicked);
+    connect(ui->returnButton, &QPushButton::clicked, this, &WiredPage::handleReturnPreviousPage);
 
     connect(ui->saveButton, &QPushButton::clicked, [=]() {
         ui->wiredSettingPage->handleSaveButtonClicked(ConnectionSettings::ConnectionType::Wired);
+        handleReturnPreviousPage();
     });
 
+    connect(ui->wiredSettingPage, &WiredSettingPage::returnPreviousPage, this, &WiredPage::handleReturnPreviousPage);
     connect(ui->wiredSettingPage, &WiredSettingPage::settingUpdated, [=]() {
         KLOG_DEBUG() << "WiredSettingPage::settingUpdated";
-        ui->wiredSettingPage->clearPtr();
+        handleReturnPreviousPage();
         refreshConnectionLists();
     });
 
     connect(ui->connectionShowPage, &ConnectionShowPage::requestActivateCurrentItemConnection,
-            this, &WiredPage::handleActivateConnection);
+            this, &WiredPage::handleRequestActivateConnection);
+
+    connect(ui->connectionShowPage, &ConnectionShowPage::deactivatedItemConnection,
+            this, &WiredPage::handleStateDeactivated);
 
     initNotifierConnection();
 
@@ -129,10 +132,9 @@ void WiredPage::refreshConnectionLists()
     KLOG_DEBUG() << "WiredPage::refreshConnectionLists()";
     ui->connectionShowPage->clearConnectionLists();
     showWiredConnections();
-    ui->stackedWidget->setCurrentIndex(PAGE_SHOW);
 }
 
-void WiredPage::handleActivateConnection(QString connectionPath)
+void WiredPage::handleRequestActivateConnection(QString connectionPath)
 {
     Connection::Ptr connection = findConnection(connectionPath);
     ConnectionSettings::Ptr settings = connection->settings();
@@ -149,21 +151,93 @@ void WiredPage::handleActivateConnection(QString connectionPath)
     reply.waitForFinished();
     if (reply.isError())
     {
-        KLOG_DEBUG() << "activate connection failed" << reply.error();
-        //TODO:连接失败的处理
+        //TODO:调用activateConnection失败的处理
+        //此处处理进入激活流程失败的原因，并不涉及流程中某个具体阶段失败的原因
+        KLOG_DEBUG() << "activate connection failed:" << reply.error();
     }
     else
     {
+        KLOG_DEBUG() << "reply.reply():" << reply.reply();
         QString activatedPath = reply.value().path();
-        ActiveConnection::Ptr activatedConnectionObject = findActiveConnection(activatedPath);
-        ui->connectionShowPage->updateActivatedConnectionInfo(activatedPath);
-        ui->connectionShowPage->update();
-        KLOG_DEBUG() << "activate Connection successed";
     }
 }
 
-void WiredPage::handleNotifierConnectionChanged()
+//获取到当前激活对象后，开启等待动画，判断完激活状态后停止等待动画
+void WiredPage::handleActiveConnectionAdded(const QString &path)
+{
+    ActiveConnection::Ptr activatedConnection = findActiveConnection(path);
+    if (activatedConnection->type() == ConnectionSettings::ConnectionType::Wired)
+    {
+        QString uuid = activatedConnection->uuid();
+        ui->connectionShowPage->findItemByUuid(uuid);
+        connect(activatedConnection.data(), &ActiveConnection::stateChanged, [=](NetworkManager::ActiveConnection::State state) {
+            handleActiveConnectionStateChanged(state, path);
+        });
+        //加载等待动画
+        ui->connectionShowPage->connectionItemLoadingAnimation();
+    }
+}
+
+void WiredPage::handleActiveConnectionStateChanged(ActiveConnection::State state, const QString &path)
+{
+    switch (state)
+    {
+    case ActiveConnection::State::Unknown:
+        KLOG_DEBUG() << "ActiveConnection::State::Unknown";
+        break;
+    case ActiveConnection::State::Activating:
+        KLOG_DEBUG() << "ActiveConnection::State::Activating";
+        break;
+    case ActiveConnection::State::Activated:
+        KLOG_DEBUG() << "ActiveConnection::State::Activated";
+        handleStateActivated(path);
+        break;
+    case ActiveConnection::State::Deactivating:
+        KLOG_DEBUG() << "ActiveConnection::State::Deactivating";
+        break;
+    case ActiveConnection::State::Deactivated:
+        KLOG_DEBUG() << "ActiveConnection::State::Deactivated";
+        handleStateDeactivated(path);
+        break;
+    default:
+        break;
+    }
+}
+
+void WiredPage::handleActiveConnectionRemoved(const QString &path)
+{
+    KLOG_DEBUG() << "activeConnectionRemoved:" << path;
+}
+
+void WiredPage::handleStateActivated(QString activatedPath)
+{
+    ui->connectionShowPage->updateActivatedConnectionInfo(activatedPath);
+    ui->connectionShowPage->update();
+}
+
+void WiredPage::handleStateDeactivated(const QString &deactivatedPath)
+{
+    KLOG_DEBUG() << "handleStateDeactivated" << deactivatedPath;
+    ui->connectionShowPage->clearDeactivatedConnectionInfo(deactivatedPath);
+    ui->connectionShowPage->update();
+}
+
+void WiredPage::handleReturnPreviousPage()
 {
     ui->wiredSettingPage->clearPtr();
-    refreshConnectionLists();
+    ui->stackedWidget->setCurrentIndex(PAGE_SHOW);
+}
+
+void WiredPage::handleNotifierConnectionAdded(const QString &path)
+{
+    Connection::Ptr connection = findConnection(path);
+    if (connection->settings()->connectionType() == ConnectionSettings::ConnectionType::Wired)
+    {
+        ui->connectionShowPage->addConnectionToLists(connection);
+    }
+}
+
+void WiredPage::handleNotifierConnectionRemoved(const QString &path)
+{
+    ui->connectionShowPage->removeConnectionFromLists(path);
 }

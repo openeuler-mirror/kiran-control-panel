@@ -41,7 +41,8 @@ void WiredSettingPage::initSettingPage()
 
 void WiredSettingPage::initConnecton()
 {
-
+    connect(ui->generalButton,&GeneralButton::disconnectButtonClicked,this,&WiredSettingPage::returnPreviousPage);
+    connect(ui->generalButton,&GeneralButton::deleteButtonClicked,this,&WiredSettingPage::returnPreviousPage);
 }
 
 void WiredSettingPage::initSpecificSettings()

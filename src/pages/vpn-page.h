@@ -16,6 +16,7 @@
 #define KIRAN_CPANEL_NETWORK_VPN_PAGE_H
 
 #include <QWidget>
+#include <NetworkManagerQt/VpnConnection>
 #include "page.h"
 QT_BEGIN_NAMESPACE
 namespace Ui
@@ -40,8 +41,21 @@ public slots:
     void clearVpnSetting();
     void refreshConnectionLists() override;
     void handleRequestEditConnection(const QString &uuid, QString activeConnectionPath);
-    void handleActivateConnection(QString connectionPath);
-    void handleNotifierConnectionChanged() override;
+    void handleRequestActivateConnection(QString connectionPath);
+
+    void handleNotifierConnectionAdded(const QString &path) override;
+    void handleNotifierConnectionRemoved(const QString &path) override;
+    void activatingConnection(const QString &connectionPath);
+
+    void handleActiveConnectionAdded(const QString &activePath) override;
+    void handleActiveConnectionRemoved(const QString &activePath) override;
+
+    void handleVpnConnectionStateChanged(VpnConnection::State state, VpnConnection::StateChangeReason reason,const QString &activePath);
+    void handleVpnStateActivated(const QString &activePath);
+    void handleVpnStateDisconnected(const QString &activePath);
+    void handleVpnStateFailed(const QString &activePath);
+
+    void handleReturnPreviousPage();
 private:
     Ui::VpnPage *ui;
 };

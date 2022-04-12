@@ -23,6 +23,8 @@ enum EditPages
     PAGE_SETTING
 };
 using namespace NetworkManager;
+
+
 class Page : public QWidget
 {
     Q_OBJECT
@@ -34,8 +36,10 @@ public:
 
 public slots:
     virtual void refreshConnectionLists();
-    virtual void handleNotifierConnectionChanged();
-
+    virtual void handleNotifierConnectionAdded(const QString &path);
+    virtual void handleNotifierConnectionRemoved(const QString &path);
+    virtual void handleActiveConnectionAdded(const QString &activepath);
+    virtual void handleActiveConnectionRemoved(const QString &activepath);
 };
 
 #endif  //KIRAN_CPANEL_NETWORK_PAGE_H

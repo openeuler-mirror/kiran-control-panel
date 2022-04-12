@@ -67,6 +67,7 @@ void GeneralButton::initConnection()
             KLOG_INFO() << "Disconnect failed:" << reply.error();
 
         }
+        emit disconnectButtonClicked();
     });
 
     connect(ui->deleteButton, &QPushButton::clicked, this, &GeneralButton::handleDeleteConnection);
@@ -91,6 +92,7 @@ void GeneralButton::handleDeleteConnection()
         {
             KLOG_INFO() << "Delete the connection failed:" << reply.error();
         }
+        emit deleteButtonClicked();
     }
 }
 void GeneralButton::clearPtr()

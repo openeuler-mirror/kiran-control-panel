@@ -7,8 +7,8 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
 set(QT_VERSION 5)
-set(REQUIRED_LIBS Core Gui Widgets DBus Network)
-set(REQUIRED_LIBS_QUALIFIED Qt5::Core Qt5::Gui Qt5::Widgets Qt5::DBus Qt5::Network)
+set(REQUIRED_LIBS Core Gui Widgets DBus Network Svg)
+set(REQUIRED_LIBS_QUALIFIED Qt5::Core Qt5::Gui Qt5::Widgets Qt5::DBus Qt5::Network Qt5::Svg)
 
 file(GLOB_RECURSE SRC "src/*.cpp" "src/*.h" "src/*.ui")
 

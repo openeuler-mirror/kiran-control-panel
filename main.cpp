@@ -16,12 +16,11 @@
 #include <QApplication>
 #include "pages/wired-page.h"
 #include "src/cpanel-network-widget.h"
-
+#include <QInputDialog>
 int main(int argc, char *argv[]) {
     KiranApplication a(argc, argv);
     klog_qt5_init("", "kylinsec-session", "kiran-cpanel-network", "kiran-cpanel-network");
     CPanelNetworkWidget networkWidget;
     networkWidget.show();
-
     return QApplication::exec();
 }

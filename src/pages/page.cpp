@@ -25,24 +25,18 @@ Page::~Page()
 
 void Page::initNotifierConnection()
 {
-    connect(notifier(), &Notifier::activeConnectionAdded, [=](const QString &path) {
-        KLOG_DEBUG() << "activeConnectionAdded:" << path;
-    });
+    //该信号并不能判断连接是否真正Connected/Activated,只能判断一个连接被加入到激活容器中
+    connect(notifier(), &Notifier::activeConnectionAdded, this, &Page::handleActiveConnectionAdded);
+    connect(notifier(), &Notifier::activeConnectionRemoved, this, &Page::handleActiveConnectionRemoved);
 
-    connect(notifier(), &Notifier::activeConnectionRemoved, [=](const QString &path) {
-        KLOG_DEBUG() << "activeConnectionRemoved:" << path;
-//        refreshConnectionLists();
-        handleNotifierConnectionChanged();
-    });
+    //连接Wired时触发，而连接VPN时没有触发该信号，暂时不使用该信号
+    //    connect(notifier(), &Notifier::statusChanged, [=](NetworkManager::Status status) {
+    //      KLOG_DEBUG() << "NetworkManager::Status:" << status;
+    //
+    //    });
 
-    connect(settingsNotifier(), &SettingsNotifier::connectionRemoved, [=](const QString &path) {
-        KLOG_DEBUG() << "SettingsNotifier::connectionRemoved:" << path;
-        handleNotifierConnectionChanged();
-    });
-
-    connect(settingsNotifier(), &SettingsNotifier::connectionAdded, [=](const QString &path) {
-        handleNotifierConnectionChanged();
-    });
+    connect(settingsNotifier(), &SettingsNotifier::connectionAdded, this, &Page::handleNotifierConnectionAdded);
+    connect(settingsNotifier(), &SettingsNotifier::connectionRemoved, this, &Page::handleNotifierConnectionRemoved);
 }
 
 void Page::refreshConnectionLists()
@@ -50,7 +44,22 @@ void Page::refreshConnectionLists()
     KLOG_DEBUG() << "Page::refreshConnectionLists()";
 }
 
-void Page::handleNotifierConnectionChanged()
+void Page::handleNotifierConnectionAdded(const QString &path)
 {
-    KLOG_DEBUG() << "Page::handleNotifierConnectionChanged()";
+    KLOG_DEBUG() << "Page::handleNotifierConnectionAdded()";
+}
+
+void Page::handleNotifierConnectionRemoved(const QString &path)
+{
+    KLOG_DEBUG() << "Page::handleNotifierConnectionRemoved()";
+}
+
+void Page::handleActiveConnectionAdded(const QString &activepath)
+{
+    KLOG_DEBUG() << "activeConnectionAdded:" << activepath;
+}
+
+void Page::handleActiveConnectionRemoved(const QString &activepath)
+{
+    KLOG_DEBUG() << "activeConnectionRemoved:" << activepath;
 }

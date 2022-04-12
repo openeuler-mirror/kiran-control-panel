@@ -40,15 +40,25 @@ public:
 
 public slots:
     void showWiredConnections();
-    void handleActivateConnection(QString connectionPath);
+    void handleRequestActivateConnection(QString connectionPath);
+
+    void handleStateDeactivated(const QString &deactivatedPath);
+    void handleStateActivated(QString activatedPath);
+    void handleActiveConnectionStateChanged(ActiveConnection::State state,const QString &path);
+
+    void handleReturnPreviousPage();
+
     void getDeviceInfo();
     void refreshConnectionLists() override;
-    void handleNotifierConnectionChanged() override;
+    void handleNotifierConnectionAdded(const QString &path) override;
+    void handleNotifierConnectionRemoved(const QString &path) override;
 
+    void handleActiveConnectionAdded(const QString &path) override;
+    void handleActiveConnectionRemoved(const QString &path) override;
 private:
     Ui::WiredPage *ui;
     WiredDevice::Ptr m_wiredDevice;
-    QMap<QString,QString> m_deviceMap;
+    QMap<QString, QString> m_deviceMap;
 };
 
 #endif  //KIRAN_CPANEL_NETWORK_WIRED_PAGE_H

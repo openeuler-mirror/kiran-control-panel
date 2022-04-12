@@ -42,10 +42,6 @@ void VpnWidget::initUI()
     ui->passwordOptions->setFocusPolicy(Qt::NoFocus);
 
     ui->password->setEchoMode(QLineEdit::Password);
-
-    KLOG_DEBUG() << "Setting::SecretFlagType::None:" <<   Setting::SecretFlagType::None;
-    KLOG_DEBUG() << "Setting::SecretFlagType::NotSaved:" <<   Setting::SecretFlagType::NotSaved;
-    KLOG_DEBUG() << "Setting::SecretFlagType::NotRequired:" <<   Setting::SecretFlagType::NotRequired;
 }
 
 void VpnWidget::initConnection()
@@ -60,7 +56,6 @@ void VpnWidget::setVpnSetting(const VpnSetting::Ptr &vpnSetting)
     m_vpnSetting = vpnSetting;
 }
 
-//TODO:询问密码弹窗
 void VpnWidget::handlePasswordOptionsChanged(Setting::SecretFlagType secretFlagType)
 {
     switch (secretFlagType)
@@ -100,6 +95,7 @@ void VpnWidget::saveSettings()
         m_dataMap.insert("user", ui->userName->text());
         Setting::SecretFlagType secretFlag = ui->passwordOptions->currentData().value<Setting::SecretFlagType>();
         m_dataMap.insert("password-flags", QString::number(secretFlag));
+
         if (secretFlag == Setting::SecretFlagType::None)
             m_secretMap.insert("password", ui->password->text());
         else

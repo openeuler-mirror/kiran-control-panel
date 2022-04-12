@@ -48,6 +48,8 @@ public slots:
     void initButton(SettingConnectionStatus connectionStatus,const QString& activeConnectionPath="");
     void clearPtr();
 signals:
+    void disconnectButtonClicked();
+    void deleteButtonClicked();
 
 private:
     Ui::GeneralButton *ui;

@@ -19,9 +19,9 @@
 #include <NetworkManagerQt/Manager>
 #include <QHBoxLayout>
 #include <QLabel>
+#include <QListWidgetItem>
 #include <QPushButton>
 #include <QWidget>
-#include <QListWidgetItem>
 QT_BEGIN_NAMESPACE
 namespace Ui
 {
@@ -31,7 +31,8 @@ QT_END_NAMESPACE
 using namespace NetworkManager;
 class KiranSwitchButton;
 
-struct ConnectionInfo{
+struct ConnectionInfo
+{
     QString uuid;
     QString connectionPath;
     QString activeConnectionPath;
@@ -55,36 +56,44 @@ public:
     void setSwitchButtonVisible(bool visible);
 
     void addConnectionToLists(Connection::Ptr ptr);
-    void updateItemActivatedPath(QListWidgetItem* item,QString activatedPath="");
+    void removeConnectionFromLists(const QString &path);
+    void updateItemActivatedPath(QListWidgetItem *item, QString activatedPath = "");
+    void findItemByUuid(const QString &uuid);
 
 public slots:
     void clearConnectionLists();
-    void handleConnectionItemClicked(QListWidgetItem* item);
+    void handleConnectionItemClicked(QListWidgetItem *item);
     void updateActivatedConnectionInfo(QString activatedPath);
+    void clearDeactivatedConnectionInfo(const QString &deactivatedPath);
+
+    void connectionItemLoadingAnimation();
 
 signals:
     void requestCreatConnection();
-    void requestEditConnection(const QString& uuid, QString activeConnectionPath);
+    void requestEditConnection(const QString &uuid, QString activeConnectionPath);
     void requestActivateCurrentItemConnection(const QString &connectionPath);
+    void deactivatedItemConnection(const QString &connectionPath);
 
 private:
     Ui::ConnectionShowPage *ui;
     KiranSwitchButton *m_switchButton;
-    QListWidgetItem* m_previousActivatedItem;
-
+    QListWidgetItem *m_previousActivatedItem;
+    QListWidgetItem *m_currentActiveItem;
 };
 
+class AnimationLoadingLabel;
 class ItemWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit ItemWidget( QWidget *parent = nullptr);
+    explicit ItemWidget(QWidget *parent = nullptr);
 
 public:
     void setName(const QString &name);
     void activatedLabel();
     void deactivateLabel();
-
+    void setLoadingStatus(bool isLoading);
+    void setLabelVisible(bool isVisible);
 signals:
     void editConnectionClicked();
 
@@ -92,7 +101,7 @@ private:
     QLabel *m_connectionName;
     QHBoxLayout *m_horizonLayout;
     QPushButton *m_editConnection;
-    QLabel *m_activatedLabel;
+    AnimationLoadingLabel *m_activatedLabel;
 };
 
 #endif  //KIRAN_CPANEL_NETWORK_CONNECTION_SHOW_PAGE_H
