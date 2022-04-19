@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="zh_CN">
+<TS version="2.0" language="zh_CN">
 <context>
     <name>BatterySettingsPage</name>
     <message>
@@ -42,7 +42,7 @@
         <location filename="../src/pages/battery-settings/battery-settings-page.cpp" line="69"/>
         <location filename="../src/pages/battery-settings/battery-settings-page.cpp" line="85"/>
         <source>Suspend</source>
-        <translation>挂起</translation>
+        <translation>待机</translation>
     </message>
     <message>
         <location filename="../src/pages/battery-settings/battery-settings-page.cpp" line="70"/>
@@ -153,7 +153,7 @@
     </message>
     <message>
         <source>After idle the following time to lock the screen </source>
-        <translation type="vanished">空闲如下时间锁定屏幕</translation>
+        <translation>空闲如下时间锁定屏幕</translation>
     </message>
     <message>
         <location filename="../src/pages/general-settings/general-settings-page.cpp" line="116"/>
@@ -173,7 +173,7 @@
         <location filename="../src/pages/general-settings/general-settings-page.cpp" line="122"/>
         <location filename="../src/pages/general-settings/general-settings-page.cpp" line="127"/>
         <source>suspend</source>
-        <translation>挂起</translation>
+        <translation>待机</translation>
     </message>
     <message>
         <location filename="../src/pages/general-settings/general-settings-page.cpp" line="119"/>
@@ -195,7 +195,7 @@
     </message>
     <message>
         <source>brightness adjustment not available</source>
-        <translation type="vanished">亮度调整不可用</translation>
+        <translation>亮度调整不可用</translation>
     </message>
     <message>
         <location filename="../src/pages/general-settings/general-settings-page.cpp" line="367"/>
@@ -236,7 +236,7 @@
     <message>
         <location filename="../src/pages/power-settings/power-settings-page.cpp" line="64"/>
         <source>Suspend</source>
-        <translation>挂起</translation>
+        <translation>待机</translation>
     </message>
     <message>
         <location filename="../src/pages/power-settings/power-settings-page.cpp" line="65"/>
