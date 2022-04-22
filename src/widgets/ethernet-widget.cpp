@@ -34,6 +34,8 @@ void EthernetWidget::initUI()
     m_mtuButton = new KiranSwitchButton(this);
     ui->mtuLayout->addWidget(m_mtuButton);
     ui->customMTU->setVisible(false);
+    ui->customMTU->setMinimum(0);
+    ui->customMTU->setMaximum(10000);
     //UserData设为空""，为了匹配Mac地址为空的情况
     ui->deviceMac->addItem(tr("No device specified"), "");
     initEthernetMacComboBox();
@@ -127,4 +129,19 @@ void EthernetWidget::resetSettings()
 void EthernetWidget::clearPtr()
 {
     m_wiredSetting.clear();
+}
+
+bool EthernetWidget::isInputValid()
+{
+    isCloneMacValid(ui->cloneDeviceMac->text());
+    return false;
+}
+
+bool EthernetWidget::isCloneMacValid(const QString &cloneMac)
+{
+    if (cloneMac.isEmpty()) {
+        return true;
+    }
+    bool matched =  QRegExp("^([0-9A-Fa-f]{2}[:]){5}([0-9A-Fa-f]{2})$").exactMatch(cloneMac);
+    return matched;
 }

@@ -34,6 +34,9 @@ void Ipv6Widget::initUI()
     ui->ipv6Method->addItem(tr("Manual"), Ipv6Setting::ConfigMethod::Manual);
     ui->ipv6Method->addItem(tr("Ignored"), Ipv6Setting::ConfigMethod::Ignored);
     ui->ipv6Manual->setVisible(false);
+    ui->ipv6Address->setPlaceholderText("Required");
+    ui->ipv6Prefix->setMaximum(128);
+    ui->ipv6Prefix->setMinimum(1);
 }
 
 void Ipv6Widget::initConnection()
@@ -162,4 +165,41 @@ void Ipv6Widget::resetSettings()
 void Ipv6Widget::clearPtr()
 {
     m_ipv6Setting.clear();
+}
+
+bool Ipv6Widget::isInputValid()
+{
+    Ipv6Setting::ConfigMethod configMethod = ui->ipv6Method->currentData().value<Ipv6Setting::ConfigMethod>();
+    if(configMethod == Ipv6Setting::ConfigMethod::Ignored)
+    {
+
+    }
+    else if(configMethod == Ipv6Setting::ConfigMethod::Automatic)
+    {
+
+    }
+    else if(configMethod == Ipv6Setting::ConfigMethod::Manual)
+    {
+        isIpv6AddressValid(ui->ipv6Address->text());
+        isIpv6AddressValid(ui->ipv6Gateway->text());
+        isIpv6AddressValid(ui->ipv6AlternateDNS->text());
+        isIpv6AddressValid(ui->ipv6PreferredDNS->text());
+
+
+    }
+
+    return false;
+}
+
+bool Ipv6Widget::isIpv6AddressValid(const QString &address)
+{
+    QHostAddress ipAddr(address);
+    if (ipAddr == QHostAddress(QHostAddress::Null) || ipAddr == QHostAddress(QHostAddress::AnyIPv6)
+        || ipAddr.protocol() != QAbstractSocket::NetworkLayerProtocol::IPv6Protocol) {
+        return false;
+    }
+    if (ipAddr == QHostAddress(QHostAddress::LocalHostIPv6)) {
+        return false;
+    }
+    return true;
 }

@@ -37,10 +37,8 @@ void VpnWidget::initUI()
     ui->passwordOptions->addItem(tr("Ask"), Setting::SecretFlagType::NotSaved);
     ui->passwordOptions->addItem(tr("Not required"), Setting::SecretFlagType::NotRequired);
 
-    ui->passwordOptions;
-//    ui->passwordOptions->setFocusPolicy(Qt::StrongFocus);
-    ui->passwordOptions->setFocusPolicy(Qt::NoFocus);
 
+    ui->passwordOptions->setFocusPolicy(Qt::NoFocus);
     ui->password->setEchoMode(QLineEdit::Password);
 }
 

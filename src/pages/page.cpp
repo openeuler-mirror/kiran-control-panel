@@ -15,6 +15,8 @@
 #include "page.h"
 #include <qt5-log-i.h>
 #include <NetworkManagerQt/Settings>
+#include <NetworkManagerQt/WiredDevice>
+#include <NetworkManagerQt/WirelessDevice>
 Page::Page(QWidget *parent) : QWidget(parent)
 {
 }
@@ -63,3 +65,33 @@ void Page::handleActiveConnectionRemoved(const QString &activepath)
 {
     KLOG_DEBUG() << "activeConnectionRemoved:" << activepath;
 }
+
+
+//XXX:可以优化
+void Page::getDeviceInfo(Device::Type deviceType)
+{
+    const Device::List deviceList = networkInterfaces();
+//    KLOG_DEBUG() << "deviceList:" << deviceList;
+    for (Device::Ptr dev : deviceList)
+    {
+        if (dev->type() == deviceType)
+        {
+            if(deviceType == Device::Ethernet)
+            {
+                auto device = qobject_cast<WiredDevice *>(dev);
+                m_deviceMap.insert(device->permanentHardwareAddress(), device->uni());
+            }
+            else if(deviceType == Device::Wifi)
+            {
+                auto device = qobject_cast<WirelessDevice *>(dev);
+                m_deviceMap.insert(device->permanentHardwareAddress(), device->uni());
+            }
+        }
+    }
+    KLOG_DEBUG() << "m_deviceMap:" << m_deviceMap;
+    if (m_deviceMap.isEmpty())
+    {
+        KLOG_DEBUG() << "Wired device not found";
+    }
+}
+

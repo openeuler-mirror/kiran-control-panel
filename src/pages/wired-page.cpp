@@ -18,12 +18,13 @@
 #include <NetworkManagerQt/Settings>
 #include <QScrollBar>
 #include "ui_wired-page.h"
+#include <libnm/nm-connection.h>
 
 WiredPage::WiredPage(QWidget *parent) : Page(parent), ui(new Ui::WiredPage)
 {
     ui->setupUi(this);
     initUI();
-    getDeviceInfo();
+    getDeviceInfo(Device::Ethernet);
     initConnection();
 }
 
@@ -36,46 +37,9 @@ void WiredPage::initUI()
 {
     ui->connectionShowPage->setTitle(tr("Wired Network Adapter"));
     ui->connectionShowPage->setSwitchButtonVisible(true);
-    showWiredConnections();
+    ui->connectionShowPage->showConnectionLists(ConnectionSettings::ConnectionType::Wired);
 }
 
-void WiredPage::getDeviceInfo()
-{
-    const Device::List deviceList = networkInterfaces();
-    KLOG_DEBUG() << "deviceList:" << deviceList;
-    for (Device::Ptr dev : deviceList)
-    {
-        if (dev->type() == Device::Ethernet)
-        {
-            m_wiredDevice = qobject_cast<WiredDevice *>(dev);
-            KLOG_DEBUG() << "m_wiredDevice->ipInterfaceName():" << m_wiredDevice->ipInterfaceName();
-            KLOG_DEBUG() << "m_wiredDevice->interfaceName():" << m_wiredDevice->interfaceName();
-            KLOG_DEBUG() << "m_wiredDevice->uni():" << m_wiredDevice->uni();
-            KLOG_DEBUG() << "m_wiredDevice->udi():" << m_wiredDevice->udi();
-
-            m_deviceMap.insert(m_wiredDevice->permanentHardwareAddress(), m_wiredDevice->uni());
-        }
-    }
-    KLOG_DEBUG() << "m_deviceMap:" << m_deviceMap;
-    if (m_deviceMap.isEmpty())
-    {
-        KLOG_DEBUG() << "Wired device not found";
-    }
-}
-
-void WiredPage::showWiredConnections()
-{
-    const Connection::List connectionList = NetworkManager::listConnections();
-    for (Connection::Ptr conn : connectionList)
-    {
-        if (conn->settings()->connectionType() == ConnectionSettings::ConnectionType::Wired)
-        {
-            KLOG_DEBUG() << "conn->name():" << conn->name();
-            KLOG_DEBUG() << "conn->uuid():" << conn->uuid();
-            ui->connectionShowPage->addConnectionToLists(conn);
-        }
-    }
-}
 
 void WiredPage::initConnection()
 {
@@ -119,11 +83,11 @@ void WiredPage::initConnection()
 
     //检测到新设备时，刷新
     connect(notifier(), &Notifier::deviceAdded, [=](const QString &uni) {
-        getDeviceInfo();
+        getDeviceInfo(Device::Ethernet);
     });
 
     connect(notifier(), &Notifier::deviceRemoved, [=](const QString &uni) {
-        getDeviceInfo();
+        getDeviceInfo(Device::Ethernet);
     });
 }
 
@@ -131,7 +95,7 @@ void WiredPage::refreshConnectionLists()
 {
     KLOG_DEBUG() << "WiredPage::refreshConnectionLists()";
     ui->connectionShowPage->clearConnectionLists();
-    showWiredConnections();
+    ui->connectionShowPage->showConnectionLists(ConnectionSettings::ConnectionType::Wired);
 }
 
 void WiredPage::handleRequestActivateConnection(QString connectionPath)

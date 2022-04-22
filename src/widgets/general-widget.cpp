@@ -35,12 +35,12 @@ void GeneralWidget::initUI()
     m_autoConnection = new KiranSwitchButton(this);
     ui->autoConnectionLayout->addWidget(m_autoConnection);
     m_autoConnection->setChecked(true);
+    ui->connectionName->setPlaceholderText("Required");
 }
 
 void GeneralWidget::setConnectionSettings(const ConnectionSettings::Ptr &connectionSettings)
 {
     m_connectionSettings = connectionSettings;
-
 }
 
 void GeneralWidget::setNameLabel(const QString &name)
@@ -167,6 +167,16 @@ void GeneralWidget::clearPtr()
     m_connectionSettings.clear();
 }
 
+bool GeneralWidget::isInputValid()
+{
+    bool valid = true;
+    QString nameStr = ui->connectionName->text();
+    if (nameStr.isEmpty())
+    {
+        return false;
+    }
+    return valid;
+}
 
 GeneralComboBox::GeneralComboBox(QWidget *parent) : QComboBox(parent)
 {

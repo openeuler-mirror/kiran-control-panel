@@ -11,43 +11,42 @@
  *
  * Author:     luoqing <luoqing@kylinos.com.cn>
  */
-#ifndef KIRAN_CPANEL_NETWORK_IPV4_WIDGET_H
-#define KIRAN_CPANEL_NETWORK_IPV4_WIDGET_H
 
+#ifndef KIRAN_CPANEL_NETWORK_WIRELESS_WIDGET_H
+#define KIRAN_CPANEL_NETWORK_WIRELESS_WIDGET_H
+
+#include <NetworkManagerQt/WirelessSetting>
 #include <QWidget>
-#include <NetworkManagerQt/Ipv4Setting>
 QT_BEGIN_NAMESPACE
 namespace Ui
 {
-class Ipv4Widget;
+class WirelessWidget;
 }
 QT_END_NAMESPACE
 using namespace NetworkManager;
-Q_DECLARE_METATYPE(NetworkManager::Ipv4Setting::ConfigMethod)
-
-class Ipv4Widget : public QWidget
+class KiranSwitchButton;
+class WirelessWidget : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit Ipv4Widget(QWidget *parent = nullptr);
-    ~Ipv4Widget() override;
+    explicit WirelessWidget(QWidget *parent = nullptr);
+    ~WirelessWidget() override;
+
     void initUI();
     void initConnection();
-    void setIpv4Setting(const Ipv4Setting::Ptr &ipv4Setting);
-    bool isIpv4AddressValid(const QString &address);
-    bool isIpv4NetmaskValid(const QString &address);
-
+    void setWirelessSetting(const WirelessSetting::Ptr &wirelessSetting);
 public slots:
-    void handleIpv4MethodChanged(Ipv4Setting::ConfigMethod method);
-    void resetSettings();
     void saveSettings();
     void showSettings();
+    void resetSettings();
     void clearPtr();
-    bool isInputValid();
+    void handleCustomMTUChanged(bool checked);
+    void initMacComboBox();
 private:
-    Ui::Ipv4Widget *ui;
-    Ipv4Setting::Ptr m_ipv4Setting;
+    Ui::WirelessWidget *ui;
+    WirelessSetting::Ptr m_wirelessSetting;
+    KiranSwitchButton *m_mtuButton;
 };
 
-#endif  //KIRAN_CPANEL_NETWORK_IPV4_WIDGET_H
+#endif  //KIRAN_CPANEL_NETWORK_WIRELESS_WIDGET_H

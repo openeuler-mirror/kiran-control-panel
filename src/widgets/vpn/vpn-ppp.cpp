@@ -22,8 +22,6 @@ VpnPpp::VpnPpp(QWidget *parent) : QWidget(parent), ui(new Ui::VpnPpp)
     ui->setupUi(this);
     initUI();
     initConnection();
-
-    //test
     ui->label->setVisible(false);
 }
 

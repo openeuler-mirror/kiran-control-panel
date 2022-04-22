@@ -22,6 +22,7 @@
 #include <QListWidgetItem>
 #include <QPushButton>
 #include <QWidget>
+
 QT_BEGIN_NAMESPACE
 namespace Ui
 {
@@ -55,7 +56,9 @@ public:
     void setTitle(QString title);
     void setSwitchButtonVisible(bool visible);
 
+    void showConnectionLists(ConnectionSettings::ConnectionType type);
     void addConnectionToLists(Connection::Ptr ptr);
+
     void removeConnectionFromLists(const QString &path);
     void updateItemActivatedPath(QListWidgetItem *item, QString activatedPath = "");
     void findItemByUuid(const QString &uuid);
@@ -79,6 +82,7 @@ private:
     KiranSwitchButton *m_switchButton;
     QListWidgetItem *m_previousActivatedItem;
     QListWidgetItem *m_currentActiveItem;
+
 };
 
 class AnimationLoadingLabel;

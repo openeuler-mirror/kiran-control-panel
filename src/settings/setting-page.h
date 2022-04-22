@@ -29,7 +29,7 @@ class SettingPage : public QWidget
 {
     Q_OBJECT
 public:
-    SettingPage(QWidget *parent = nullptr);
+    explicit SettingPage(QWidget *parent = nullptr);
     ~SettingPage();
 
     void initConnectionSettings(ConnectionSettings::ConnectionType connectionType,

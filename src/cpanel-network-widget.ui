@@ -72,9 +72,9 @@
      <item>
       <widget class="QStackedWidget" name="stackedWidget">
        <property name="currentIndex">
-        <number>0</number>
+        <number>1</number>
        </property>
-       <widget class="QWidget" name="page">
+       <widget class="WiredPage" name="wiredPage">
         <layout class="QHBoxLayout" name="horizontalLayout_2">
          <property name="spacing">
           <number>0</number>
@@ -91,16 +91,9 @@
          <property name="bottomMargin">
           <number>0</number>
          </property>
-         <item>
-          <widget class="WiredPage" name="wiredPage" native="true">
-           <property name="styleSheet">
-            <string notr="true"/>
-           </property>
-          </widget>
-         </item>
         </layout>
        </widget>
-       <widget class="QWidget" name="page_2">
+       <widget class="WirelessPage" name="wirelessPage">
         <layout class="QHBoxLayout" name="horizontalLayout_3">
          <property name="spacing">
           <number>0</number>
@@ -117,12 +110,9 @@
          <property name="bottomMargin">
           <number>0</number>
          </property>
-         <item>
-          <widget class="DslPage" name="dslPage" native="true"/>
-         </item>
         </layout>
        </widget>
-       <widget class="QWidget" name="page_3">
+       <widget class="VpnPage" name="vpnPage">
         <layout class="QVBoxLayout" name="verticalLayout_3">
          <property name="spacing">
           <number>0</number>
@@ -139,9 +129,6 @@
          <property name="bottomMargin">
           <number>0</number>
          </property>
-         <item>
-          <widget class="VpnPage" name="vpnPage" native="true"/>
-         </item>
         </layout>
        </widget>
       </widget>
@@ -163,15 +150,15 @@
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>DslPage</class>
-   <extends>QWidget</extends>
-   <header location="global">dsl-page.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>VpnPage</class>
    <extends>QWidget</extends>
    <header location="global">vpn-page.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>WirelessPage</class>
+   <extends>QWidget</extends>
+   <header location="global">wireless-page.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

@@ -13,9 +13,9 @@
  */
 
 #include "ipv4-widget.h"
+#include <kiran-switch-button.h>
 #include <qt5-log-i.h>
 #include "ui_ipv4-widget.h"
-#include <kiran-switch-button.h>
 Ipv4Widget::Ipv4Widget(QWidget *parent) : QWidget(parent), ui(new Ui::Ipv4Widget)
 {
     ui->setupUi(this);
@@ -33,6 +33,8 @@ void Ipv4Widget::initUI()
     ui->ipv4Method->addItem(tr("Auto"), Ipv4Setting::ConfigMethod::Automatic);
     ui->ipv4Method->addItem(tr("Manual"), Ipv4Setting::ConfigMethod::Manual);
     ui->ipv4Manual->setVisible(false);
+    ui->ipv4Address->setPlaceholderText("Required");
+    ui->ipv4Netmask->setPlaceholderText("Required");
 }
 
 void Ipv4Widget::initConnection()
@@ -109,11 +111,11 @@ void Ipv4Widget::saveSettings()
             m_ipv4Setting->setAddresses(ipv4AddresseList);
 
             QList<QHostAddress> ipv4DNS;
-            if(!ui->ipv4PreferredDNS->text().isEmpty())
+            if (!ui->ipv4PreferredDNS->text().isEmpty())
             {
                 ipv4DNS << QHostAddress(ui->ipv4PreferredDNS->text());
             }
-            if(!ui->ipv4AlternateDNS->text().isEmpty())
+            if (!ui->ipv4AlternateDNS->text().isEmpty())
             {
                 ipv4DNS << QHostAddress(ui->ipv4AlternateDNS->text());
             }
@@ -177,6 +179,62 @@ void Ipv4Widget::resetSettings()
 void Ipv4Widget::clearPtr()
 {
     m_ipv4Setting.clear();
+}
+
+bool Ipv4Widget::isInputValid()
+{
+    Ipv4Setting::ConfigMethod configMethod = ui->ipv4Method->currentData().value<Ipv4Setting::ConfigMethod>();
+    if (configMethod == Ipv4Setting::ConfigMethod::Automatic)
+    {
+        isIpv4AddressValid(ui->ipv4PreferredDNS->text());
+        isIpv4AddressValid(ui->ipv4AlternateDNS->text());
+    }
+    else if (configMethod == Ipv4Setting::ConfigMethod::Manual)
+    {
+        ui->ipv4Address->text();
+        ui->ipv4Gateway->text();
+        ui->ipv4Netmask->text();
+        ui->ipv4PreferredDNS->text();
+        ui->ipv4AlternateDNS->text();
+
+
+        isIpv4AddressValid(ui->ipv4Address->text());
+        isIpv4AddressValid(ui->ipv4Gateway->text());
+        isIpv4AddressValid(ui->ipv4PreferredDNS->text());
+        isIpv4AddressValid(ui->ipv4AlternateDNS->text());
+
+        isIpv4NetmaskValid(ui->ipv4Netmask->text());
+
+    }
+    return false;
+}
+
+bool Ipv4Widget::isIpv4AddressValid(const QString &address)
+{
+    QHostAddress ipAddr(address);
+    if (ipAddr == QHostAddress(QHostAddress::Null) || ipAddr == QHostAddress(QHostAddress::AnyIPv4)
+        || ipAddr.protocol() != QAbstractSocket::NetworkLayerProtocol::IPv4Protocol) {
+        return false;
+    }
+    QRegExp regExpIP("((25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])[\\.]){3}(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])");
+    return regExpIP.exactMatch(address);
+}
+
+bool Ipv4Widget::isIpv4NetmaskValid(const QString &address)
+{
+    bool done;
+    quint32 mask = QHostAddress(address).toIPv4Address(&done);
+
+    if (!done) {
+        return false;
+    }
+
+    for (; mask != 0; mask <<= 1) {
+        if ((mask & (static_cast<uint>(1) << 31)) == 0)
+            return false; // Highest bit is now zero, but mask is non-zero.
+    }
+    QRegExp regExpIP("^((128|192)|2(24|4[08]|5[245]))(\\.(0|(128|192)|2((24)|(4[08])|(5[245])))){3}$");
+    return regExpIP.exactMatch(address);
 }
 
 

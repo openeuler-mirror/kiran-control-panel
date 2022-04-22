@@ -59,7 +59,6 @@ void ConnectionShowPage::handleConnectionItemClicked(QListWidgetItem* item)
     if (item != m_previousActivatedItem)
     {
         QString connectionPath = item->data(Qt::UserRole).value<ConnectionInfo>().connectionPath;
-        KLOG_DEBUG() << "emit activateCurrentItemConnection(connectionPath)";
         emit requestActivateCurrentItemConnection(connectionPath);
     }
     else
@@ -69,6 +68,51 @@ void ConnectionShowPage::handleConnectionItemClicked(QListWidgetItem* item)
 void ConnectionShowPage::setSwitchButtonVisible(bool visible)
 {
     m_switchButton->setVisible(visible);
+}
+
+#include <NetworkManagerQt/WirelessDevice>
+#include <NetworkManagerQt/WirelessNetwork>
+
+void ConnectionShowPage::showConnectionLists(ConnectionSettings::ConnectionType type)
+{
+    if (type == ConnectionSettings::ConnectionType::Wireless)
+    {
+        const Device::List deviceList = networkInterfaces();
+        KLOG_DEBUG() << "deviceList:" << deviceList;
+        for (Device::Ptr dev : deviceList)
+        {
+            if (dev->type() == Device::Wifi)
+            {
+                KLOG_DEBUG() << "dev->interfaceName():" << dev->interfaceName();
+                KLOG_DEBUG() << "dev->ipInterfaceName():" << dev->ipInterfaceName();
+
+                QSharedPointer<WirelessDevice> wirelessDevice = qobject_cast<WirelessDevice*>(dev);
+                WirelessNetwork::List wirelessNetworkList = wirelessDevice->networks();
+                for (WirelessNetwork::Ptr network : wirelessNetworkList)
+                {
+                    KLOG_DEBUG() << "network->ssid():" << network->ssid();
+                    KLOG_DEBUG() << "network->signalStrength():" << network->signalStrength();
+                    KLOG_DEBUG() << "network->device():" << network->device();
+                }
+            }
+        }
+    }
+
+    const Connection::List connectionList = NetworkManager::listConnections();
+    for (Connection::Ptr conn : connectionList)
+    {
+        if (conn->settings()->connectionType() == type)
+        {
+            if (type == ConnectionSettings::ConnectionType::Wireless)
+            {
+                KLOG_DEBUG() << "conn->path():" << conn->path();
+                KLOG_DEBUG() << "conn->uuid():" << conn->uuid();
+                KLOG_DEBUG() << "conn->name():" << conn->name();
+            }
+
+            addConnectionToLists(conn);
+        }
+    }
 }
 
 void ConnectionShowPage::addConnectionToLists(Connection::Ptr ptr)
@@ -116,9 +160,8 @@ void ConnectionShowPage::addConnectionToLists(Connection::Ptr ptr)
     item->setData(Qt::UserRole, var);
     ui->connectionLists->addItem(item);
     ui->connectionLists->setItemWidget(item, itemWidget);
-
     ui->connectionLists->setMaximumHeight(ui->connectionLists->sizeHintForRow(0) * ui->connectionLists->count() + (2 * ui->connectionLists->frameWidth()));
-    //    KLOG_DEBUG() << "ui->connectionLists->maximumHeight():" << ui->connectionLists->maximumHeight();
+
     connect(itemWidget, &ItemWidget::editConnectionClicked, [=]() {
         QString uuid = item->data(Qt::UserRole).value<ConnectionInfo>().uuid;
         QString activeConnectionPath = item->data(Qt::UserRole).value<ConnectionInfo>().activeConnectionPath;

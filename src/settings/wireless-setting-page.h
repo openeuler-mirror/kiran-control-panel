@@ -12,29 +12,28 @@
  * Author:     luoqing <luoqing@kylinos.com.cn>
  */
 
-#ifndef KIRAN_CPANEL_NETWORK_WIRED_SETTING_PAGE_H
-#define KIRAN_CPANEL_NETWORK_WIRED_SETTING_PAGE_H
+#ifndef KIRAN_CPANEL_NETWORK_WIRELESS_SETTING_PAGE_H
+#define KIRAN_CPANEL_NETWORK_WIRELESS_SETTING_PAGE_H
 
 #include <QWidget>
 #include "setting-page.h"
-
+#include <NetworkManagerQt/WirelessSetting>
+#include <NetworkManagerQt/WirelessSecuritySetting>
 QT_BEGIN_NAMESPACE
 namespace Ui
 {
-class WiredSettingPage;
+class WirelessSettingPage;
 }
 QT_END_NAMESPACE
-class KiranSwitchButton;
-
-class WiredSettingPage : public SettingPage
+using namespace NetworkManager;
+class WirelessSettingPage : public SettingPage
 {
     Q_OBJECT
 
 public:
-    explicit WiredSettingPage(QWidget *parent = nullptr);
-    ~WiredSettingPage() override;
-
-    void initConnecton();
+    explicit WirelessSettingPage(QWidget *parent = nullptr);
+    ~WirelessSettingPage() override;
+    void initConnection();
     void initSettingPage() override;
     void initSpecificSettings() override;
     void initWidgets() override;
@@ -43,12 +42,10 @@ public:
 public slots:
     void saveSettingPage() override;
     void showSettingPage(QString activeConnectionPath = "");
-
-signals:
-
 private:
-    Ui::WiredSettingPage *ui;
-    KiranSwitchButton *m_security;
+    Ui::WirelessSettingPage *ui;
+    WirelessSetting::Ptr m_wirelessSetting;
+    WirelessSecuritySetting::Ptr m_wirelessSecuritySetting;
 };
 
-#endif  //KIRAN_CPANEL_NETWORK_WIRED_SETTING_PAGE_H
+#endif  //KIRAN_CPANEL_NETWORK_WIRELESS_SETTING_PAGE_H

@@ -12,43 +12,35 @@
  * Author:     luoqing <luoqing@kylinos.com.cn>
  */
 
-#ifndef KIRAN_CPANEL_NETWORK_IPV6_WIDGET_H
-#define KIRAN_CPANEL_NETWORK_IPV6_WIDGET_H
+
+#ifndef KIRAN_CPANEL_NETWORK_WIRELESS_PAGE_H
+#define KIRAN_CPANEL_NETWORK_WIRELESS_PAGE_H
 
 #include <QWidget>
-#include <NetworkManagerQt/Ipv6Setting>
+#include "page.h"
 QT_BEGIN_NAMESPACE
 namespace Ui
 {
-class Ipv6Widget;
+class WirelessPage;
 }
 QT_END_NAMESPACE
-using namespace NetworkManager;
-Q_DECLARE_METATYPE(Ipv6Setting::ConfigMethod)
 
-class Ipv6Widget : public QWidget
+class WirelessPage : public Page
 {
     Q_OBJECT
 
 public:
-    explicit Ipv6Widget(QWidget *parent = nullptr);
-    ~Ipv6Widget() override;
+    explicit WirelessPage(QWidget *parent = nullptr);
+    ~WirelessPage() override;
     void initUI();
     void initConnection();
-    void setIpv6Setting(const Ipv6Setting::Ptr &ipv6Setting);
-
-    bool isIpv6AddressValid(const QString &address);
 
 public slots:
-    void handleIpv6MethodChanged(NetworkManager::Ipv6Setting::ConfigMethod method);
-    void saveSettings();
-    void showSettings();
-    void resetSettings();
-    void clearPtr();
-    bool isInputValid();
+    void handleRequestActivateConnection(QString connectionPath);
+
+    void handleReturnPreviousPage();
 private:
-    Ui::Ipv6Widget *ui;
-    Ipv6Setting::Ptr m_ipv6Setting;
+    Ui::WirelessPage *ui;
 };
 
-#endif  //KIRAN_CPANEL_NETWORK_IPV6_WIDGET_H
+#endif  //KIRAN_CPANEL_NETWORK_WIRELESS_PAGE_H

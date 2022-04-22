@@ -40,7 +40,7 @@ void VpnPage::initUI()
 {
     ui->connectionShowPage->setTitle(tr("VPN"));
     ui->connectionShowPage->setSwitchButtonVisible(true);
-    showVpnConnections();
+    ui->connectionShowPage->showConnectionLists(ConnectionSettings::Vpn);
 
     ui->vpnType->addItem(tr("L2TP"), VPN_TYPE_L2TP);
     ui->vpnType->addItem(tr("PPTP"), VPN_TYPE_PPTP);
@@ -115,22 +115,6 @@ void VpnPage::initConnection()
     initNotifierConnection();
 }
 
-void VpnPage::showVpnConnections()
-{
-    const Connection::List connectionList = NetworkManager::listConnections();
-    for (Connection::Ptr conn : connectionList)
-    {
-        if (conn->settings()->connectionType() == ConnectionSettings::ConnectionType::Vpn)
-        {
-            //            KLOG_DEBUG() << "________________";
-            //            KLOG_DEBUG() << "conn->uuid():" << conn->uuid();
-            //            KLOG_DEBUG() << "conn->name():" << conn->name();
-            //            KLOG_DEBUG() << "conn->path():" << conn->path();
-            //            KLOG_DEBUG() << "----------------";
-            ui->connectionShowPage->addConnectionToLists(conn);
-        }
-    }
-}
 
 void VpnPage::handleRequestEditConnection(const QString &uuid, QString activeConnectionPath)
 {
@@ -370,7 +354,7 @@ void VpnPage::refreshConnectionLists()
 {
     KLOG_DEBUG() << "VpnPage::refreshConnectionLists()";
     ui->connectionShowPage->clearConnectionLists();
-    showVpnConnections();
+    ui->connectionShowPage->showConnectionLists(ConnectionSettings::Vpn);
 }
 
 void VpnPage::clearVpnSetting()

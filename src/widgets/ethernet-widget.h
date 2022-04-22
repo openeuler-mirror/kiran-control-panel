@@ -36,6 +36,7 @@ public:
     void initEthernetMacComboBox();
     void initConnection();
     void setWiredSetting(const WiredSetting::Ptr &wiredSetting);
+    bool isCloneMacValid(const QString &cloneMac);
 
 public slots:
     void handleCustomMTUChanged(bool checked);
@@ -43,6 +44,8 @@ public slots:
     void showSettings();
     void resetSettings();
     void clearPtr();
+    bool isInputValid();
+
 private:
     Ui::EthernetWidget *ui;
     WiredSetting::Ptr m_wiredSetting;

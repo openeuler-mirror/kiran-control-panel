@@ -16,7 +16,7 @@
 #define KIRAN_CPANEL_NETWORK_PAGE_H
 #include <QWidget>
 #include <NetworkManagerQt/Manager>
-
+#include <NetworkManagerQt/Device>
 enum EditPages
 {
     PAGE_SHOW,
@@ -24,12 +24,11 @@ enum EditPages
 };
 using namespace NetworkManager;
 
-
 class Page : public QWidget
 {
     Q_OBJECT
 public:
-    Page(QWidget *parent= nullptr);
+    explicit Page(QWidget *parent= nullptr);
     ~Page();
 
     void initNotifierConnection();
@@ -40,6 +39,10 @@ public slots:
     virtual void handleNotifierConnectionRemoved(const QString &path);
     virtual void handleActiveConnectionAdded(const QString &activepath);
     virtual void handleActiveConnectionRemoved(const QString &activepath);
+
+    void getDeviceInfo(Device::Type deviceType);
+protected:
+    QMap<QString, QString> m_deviceMap;
 };
 
 #endif  //KIRAN_CPANEL_NETWORK_PAGE_H

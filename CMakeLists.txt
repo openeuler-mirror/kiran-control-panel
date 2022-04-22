@@ -33,6 +33,9 @@ target_include_directories(${PROJECT_NAME} PRIVATE
         src/settings/vpn
         src/widgets
         src/widgets/vpn
+        #暂时添加tray方便调试，之后修改
+        src/tray
+        src/tray/dbus
         ${KIRAN_WIDGETS_QT5_INCLUDE_DIRS}
         ${KLOG_QT5_INCLUDE_DIRS}
         )
@@ -44,5 +47,13 @@ target_link_libraries(${PROJECT_NAME}
         KF5::NetworkManagerQt
         )
 
-
-
+#set(TRAY kiran-network-status-icon)
+#add_executable(${TRAY}
+#        main.cpp
+#        )
+#
+#target_include_directories(${TRAY} PRIVATE
+#        )
+#
+#target_link_libraries(${TRAY}
+#        )

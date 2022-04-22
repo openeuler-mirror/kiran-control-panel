@@ -49,6 +49,7 @@ public slots:
     void showSettings(ConnectionSettings::ConnectionType connectionType);
     void showVpnSettings(VpnType vpnType);
     void clearPtr();
+    bool isInputValid();
 private:
     Ui::GeneralWidget *ui;
     ConnectionSettings::Ptr m_connectionSettings;
