@@ -14,8 +14,8 @@
 #ifndef KIRAN_CPANEL_NETWORK_MANAGER_TRAY_H
 #define KIRAN_CPANEL_NETWORK_MANAGER_TRAY_H
 
-#include <QWidget>
 #include <QSystemTrayIcon>
+#include <QWidget>
 QT_BEGIN_NAMESPACE
 namespace Ui
 {
@@ -35,7 +35,7 @@ public:
 
 private:
     Ui::ManagerTray *ui;
-    QSystemTrayIcon* m_systemTray;
+    QSystemTrayIcon *m_systemTray;
 };
 
 #endif  //KIRAN_CPANEL_NETWORK_MANAGER_TRAY_H

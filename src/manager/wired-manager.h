@@ -12,38 +12,39 @@
  * Author:     luoqing <luoqing@kylinos.com.cn>
  */
 
-#ifndef KIRAN_CPANEL_NETWORK_WIRED_PAGE_H
-#define KIRAN_CPANEL_NETWORK_WIRED_PAGE_H
+#ifndef KIRAN_CPANEL_NETWORK_WIRED_MANAGER_H
+#define KIRAN_CPANEL_NETWORK_WIRED_MANAGER_H
 
 #include <NetworkManagerQt/WiredDevice>
 #include <QWidget>
-#include "page.h"
+#include "manager.h"
 
 using namespace NetworkManager;
 QT_BEGIN_NAMESPACE
 namespace Ui
 {
-class WiredPage;
+class WiredManager;
 }
 QT_END_NAMESPACE
 
-class WiredPage : public Page
+class WiredManager : public Manager
 {
     Q_OBJECT
 
 public:
-    explicit WiredPage(QWidget *parent = nullptr);
-    ~WiredPage() override;
+    explicit WiredManager(QWidget *parent = nullptr);
+    ~WiredManager() override;
 
     void initUI();
     void initConnection();
 
 public slots:
-    void handleRequestActivateConnection(QString connectionPath);
+    void handleRequestActivateConnection(const QString &connectionPath,const QString &connectionParameter);
 
-    void handleStateDeactivated(const QString &deactivatedPath);
-    void handleStateActivated(QString activatedPath);
-    void handleActiveConnectionStateChanged(ActiveConnection::State state,const QString &path);
+    void handleStateDeactivated(const QString &deactivatedPath) override;
+    void handleStateActivated(const QString &activatedPath) override;
+
+//    void handleActiveConnectionStateChanged(ActiveConnection::State state,const QString &path);
 
     void handleReturnPreviousPage();
 
@@ -54,8 +55,8 @@ public slots:
     void handleActiveConnectionAdded(const QString &path) override;
     void handleActiveConnectionRemoved(const QString &path) override;
 private:
-    Ui::WiredPage *ui;
+    Ui::WiredManager *ui;
     WiredDevice::Ptr m_wiredDevice;
 };
 
-#endif  //KIRAN_CPANEL_NETWORK_WIRED_PAGE_H
+#endif  //KIRAN_CPANEL_NETWORK_WIRED_MANAGER_H

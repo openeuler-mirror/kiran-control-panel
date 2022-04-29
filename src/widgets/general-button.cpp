@@ -14,9 +14,9 @@
 
 #include "general-button.h"
 #include <kiran-message-box.h>
+#include <qt5-log-i.h>
 #include <NetworkManagerQt/Manager>
 #include "ui_general-button.h"
-#include <qt5-log-i.h>
 
 GeneralButton::GeneralButton(QWidget *parent) : QWidget(parent), ui(new Ui::GeneralButton)
 {
@@ -56,20 +56,17 @@ void GeneralButton::initButton(SettingConnectionStatus connectionStatus, const Q
     m_activeConnectionPath = activeConnectionPath;
 }
 
-
 void GeneralButton::initConnection()
 {
     connect(ui->disconnectButton, &QPushButton::clicked, [=]() {
-        QDBusPendingReply<> reply=  NetworkManager::deactivateConnection(m_activeConnectionPath);
+        QDBusPendingReply<> reply = NetworkManager::deactivateConnection(m_activeConnectionPath);
         reply.waitForFinished();
-        if(reply.isError())
+        if (reply.isError())
         {
             KLOG_INFO() << "Disconnect failed:" << reply.error();
-
         }
         emit disconnectButtonClicked();
     });
-
     connect(ui->deleteButton, &QPushButton::clicked, this, &GeneralButton::handleDeleteConnection);
 }
 
@@ -88,7 +85,7 @@ void GeneralButton::handleDeleteConnection()
     {
         QDBusPendingReply<> reply = m_connection->remove();
         reply.waitForFinished();
-        if(reply.isError())
+        if (reply.isError())
         {
             KLOG_INFO() << "Delete the connection failed:" << reply.error();
         }

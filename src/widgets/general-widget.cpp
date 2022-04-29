@@ -13,11 +13,12 @@
  */
 
 #include "general-widget.h"
-#include "ui_general-widget.h"
 #include <kiran-switch-button.h>
+#include <qt5-log-i.h>
 #include <NetworkManagerQt/Connection>
 #include <NetworkManagerQt/Settings>
-#include <qt5-log-i.h>
+#include <NetworkManagerQt/WirelessSetting>
+#include "ui_general-widget.h"
 
 GeneralWidget::GeneralWidget(QWidget *parent) : QWidget(parent), ui(new Ui::GeneralWidget)
 {
@@ -50,9 +51,9 @@ void GeneralWidget::setNameLabel(const QString &name)
 
 void GeneralWidget::saveSettings()
 {
-    if(m_connectionSettings != nullptr)
+    if (m_connectionSettings != nullptr)
     {
-        QString connectionId =  ui->connectionName->text();
+        QString connectionId = ui->connectionName->text();
         m_connectionSettings->setId(connectionId);
         m_connectionSettings->setAutoconnect(m_autoConnection->isChecked());
     }
@@ -61,42 +62,36 @@ void GeneralWidget::saveSettings()
 void GeneralWidget::showSettings(ConnectionSettings::ConnectionType connectionType)
 {
     m_connectionType = connectionType;
-
-    if(m_connectionSettings != nullptr)
+    if (m_connectionType == ConnectionSettings::Wired)
     {
-        QString connectionId = m_connectionSettings->id();
-        ui->connectionName->setText(connectionId);
-        m_autoConnection->setChecked(m_connectionSettings->autoconnect());
-    }
-    else
-    {
-        QString connectionName="";
-        switch (m_connectionType)
+        if (m_connectionSettings != nullptr)
         {
-        case ConnectionSettings::ConnectionType::Wired:
-            connectionName = tr("Wired Connection %1");
-            break;
-        case ConnectionSettings::ConnectionType::Vpn:
-            connectionName = tr("");
-            break;
-        default:
-            break;
+            QString connectionId = m_connectionSettings->id();
+            ui->connectionName->setText(connectionId);
+            m_autoConnection->setChecked(m_connectionSettings->autoconnect());
         }
-
-        if(!connectionName.isEmpty())
+        else
         {
+            QString connectionName = tr("Wired Connection %1");
             //生成名称数字后缀
             QString connectionNameStr = connectionName.arg(connectionSuffixNum(connectionName));
             ui->connectionName->setText(connectionNameStr);
+            m_autoConnection->setChecked(true);
         }
-        m_autoConnection->setChecked(true);
+    }
+    else if (m_connectionType == ConnectionSettings::Wireless)
+    {
+        WirelessSetting::Ptr wirelessSetting = m_connectionSettings->setting(Setting::Wireless).dynamicCast<WirelessSetting>();
+        ui->connectionName->setText(wirelessSetting->ssid());
+        ui->connectionName->setEnabled(false);
+        m_autoConnection->setChecked(m_connectionSettings->autoconnect());
     }
 }
 
 void GeneralWidget::showVpnSettings(VpnType vpnType)
 {
     m_connectionType = ConnectionSettings::ConnectionType::Vpn;
-    if(m_connectionSettings != nullptr)
+    if (m_connectionSettings != nullptr)
     {
         QString connectionId = m_connectionSettings->id();
         ui->connectionName->setText(connectionId);
@@ -104,7 +99,7 @@ void GeneralWidget::showVpnSettings(VpnType vpnType)
     }
     else
     {
-        QString connectionName="";
+        QString connectionName = "";
         switch (vpnType)
         {
         case VpnType::VPN_TYPE_L2TP:
@@ -117,7 +112,7 @@ void GeneralWidget::showVpnSettings(VpnType vpnType)
             break;
         }
 
-        if(!connectionName.isEmpty())
+        if (!connectionName.isEmpty())
         {
             //生成名称数字后缀
             QString connectionNameStr = connectionName.arg(connectionSuffixNum(connectionName));
@@ -127,7 +122,7 @@ void GeneralWidget::showVpnSettings(VpnType vpnType)
     }
 }
 
-int GeneralWidget::connectionSuffixNum(QString& connName)
+int GeneralWidget::connectionSuffixNum(QString &connName)
 {
     if (connName.isEmpty())
     {
@@ -180,11 +175,9 @@ bool GeneralWidget::isInputValid()
 
 GeneralComboBox::GeneralComboBox(QWidget *parent) : QComboBox(parent)
 {
-
 }
 
 void GeneralComboBox::wheelEvent(QWheelEvent *e)
 {
-//    QComboBox::wheelEvent(e);
+    //    QComboBox::wheelEvent(e);
 }
-

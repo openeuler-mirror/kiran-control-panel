@@ -62,7 +62,7 @@ void WirelessSettingPage::initWidgets()
 void WirelessSettingPage::showSettingPage(QString activeConnectionPath)
 {
     ui->generalWidget->setNameLabel(tr("Wireless name"));
-    ui->generalWidget->showSettings(ConnectionSettings::ConnectionType::Wired);
+    ui->generalWidget->showSettings(ConnectionSettings::ConnectionType::Wireless);
     ui->ipv4Widget->showSettings();
     ui->ipv6Widget->showSettings();
     ui->wirelessSecurity->showSettings();

@@ -12,31 +12,31 @@
  * Author:     luoqing <luoqing@kylinos.com.cn>
  */
 
-#include "vpn-page.h"
+#include "vpn-manager.h"
 #include <qt5-log-i.h>
 #include <NetworkManagerQt/Manager>
 #include <NetworkManagerQt/Settings>
 #include <NetworkManagerQt/VpnConnection>
 #include <QDialog>
 #include <QScrollBar>
-#include "ui_vpn-page.h"
+#include "ui_vpn-manager.h"
 #include "widgets/input-dialog.h"
 
 Q_DECLARE_METATYPE(VpnType)
 
-VpnPage::VpnPage(QWidget *parent) : Page(parent), ui(new Ui::VpnPage)
+VpnManager::VpnManager(QWidget *parent) : Manager(parent), ui(new Ui::VpnManager)
 {
     ui->setupUi(this);
     initUI();
     initConnection();
 }
 
-VpnPage::~VpnPage()
+VpnManager::~VpnManager()
 {
     delete ui;
 }
 
-void VpnPage::initUI()
+void VpnManager::initUI()
 {
     ui->connectionShowPage->setTitle(tr("VPN"));
     ui->connectionShowPage->setSwitchButtonVisible(true);
@@ -47,7 +47,7 @@ void VpnPage::initUI()
 }
 
 //XXX:是否使用模板提升通用性
-void VpnPage::initConnection()
+void VpnManager::initConnection()
 {
     connect(ui->connectionShowPage, &ConnectionShowPage::requestCreatConnection, [=]() {
         //默认创建vpn类型：L2TP
@@ -61,8 +61,8 @@ void VpnPage::initConnection()
         ui->stackedWidget->setCurrentIndex(PAGE_SETTING);
     });
 
-    connect(ui->connectionShowPage, &ConnectionShowPage::requestEditConnection, this, &VpnPage::handleRequestEditConnection);
-    connect(ui->connectionShowPage, &ConnectionShowPage::requestActivateCurrentItemConnection, this, &VpnPage::handleRequestActivateConnection);
+    connect(ui->connectionShowPage, &ConnectionShowPage::requestEditConnection, this, &VpnManager::handleRequestEditConnection);
+    connect(ui->connectionShowPage, &ConnectionShowPage::requestActivateCurrentItemConnection, this, &VpnManager::handleRequestActivateConnection);
 
     connect(ui->vpnType, QOverload<int>::of(&QComboBox::currentIndexChanged), [=](int index) {
         VpnType type = ui->vpnType->currentData().value<VpnType>();
@@ -80,9 +80,9 @@ void VpnPage::initConnection()
         }
     });
 
-    connect(ui->returnButton, &QPushButton::clicked, this, &VpnPage::handleReturnPreviousPage);
-    connect(ui->l2tpSetting, &VpnL2tpSetting::returnPreviousPage, this, &VpnPage::handleReturnPreviousPage);
-    connect(ui->pptpSetting, &VpnPptpSetting::returnPreviousPage, this, &VpnPage::handleReturnPreviousPage);
+    connect(ui->returnButton, &QPushButton::clicked, this, &VpnManager::handleReturnPreviousPage);
+    connect(ui->l2tpSetting, &VpnL2tpSetting::returnPreviousPage, this, &VpnManager::handleReturnPreviousPage);
+    connect(ui->pptpSetting, &VpnPptpSetting::returnPreviousPage, this, &VpnManager::handleReturnPreviousPage);
 
     connect(ui->saveButton, &QPushButton::clicked, [=]() {
         int index = ui->vpnTypeStacked->currentIndex();
@@ -116,7 +116,7 @@ void VpnPage::initConnection()
 }
 
 
-void VpnPage::handleRequestEditConnection(const QString &uuid, QString activeConnectionPath)
+void VpnManager::handleRequestEditConnection(const QString &uuid, QString activeConnectionPath)
 {
     //隐藏选择VPN类型
     ui->vpnTypeWidget->setVisible(false);
@@ -155,7 +155,7 @@ void VpnPage::handleRequestEditConnection(const QString &uuid, QString activeCon
 }
 
 //考虑弹窗输入密码的情况
-void VpnPage::handleRequestActivateConnection(QString connectionPath)
+void VpnManager::handleRequestActivateConnection(const QString &connectionPath,const QString &connectionParameter)
 {
     Connection::Ptr connection = findConnection(connectionPath);
     ConnectionSettings::Ptr settings = connection->settings();
@@ -165,11 +165,11 @@ void VpnPage::handleRequestActivateConnection(QString connectionPath)
     int passwordFlags = dataMap.value("password-flags").toInt();
     if (passwordFlags == Setting::SecretFlagType::None)
     {
-        activatingConnection(connectionPath);
+        activatingConnection(connectionPath,connectionParameter);
     }
     else if (passwordFlags == Setting::SecretFlagType::NotRequired)
     {
-        activatingConnection(connectionPath);
+        activatingConnection(connectionPath,connectionParameter);
     }
     else if (passwordFlags == Setting::SecretFlagType::NotSaved)
     {
@@ -185,7 +185,7 @@ void VpnPage::handleRequestActivateConnection(QString connectionPath)
             KLOG_DEBUG() << "secretsMap:" << secretsMap;
             vpnSetting->setSecrets(secretsMap);
 
-            activatingConnection(connectionPath);
+            activatingConnection(connectionPath,connectionParameter);
             connection->clearSecrets();
         });
 
@@ -193,10 +193,10 @@ void VpnPage::handleRequestActivateConnection(QString connectionPath)
     }
 }
 
-void VpnPage::activatingConnection(const QString &connectionPath)
+void VpnManager::activatingConnection(const QString &connectionPath,const QString &connectionParameter)
 {
     QDBusPendingReply<QDBusObjectPath> reply =
-        NetworkManager::activateConnection(connectionPath, "", "");
+        NetworkManager::activateConnection(connectionPath, "", connectionParameter);
 
     reply.waitForFinished();
     if (reply.isError())
@@ -211,22 +211,22 @@ void VpnPage::activatingConnection(const QString &connectionPath)
     }
 }
 
-void VpnPage::handleNotifierConnectionAdded(const QString &path)
+void VpnManager::handleNotifierConnectionAdded(const QString &path)
 {
     Connection::Ptr connection =  findConnection(path);
     if (connection->settings()->connectionType() == ConnectionSettings::ConnectionType::Vpn)
     {
-        ui->connectionShowPage->addConnectionToLists(connection);
+        ui->connectionShowPage->addConnectionToLists(connection,"");
     }
 }
 
 //remove时不能再创建连接对象，因为连接可能已经不存在了
-void VpnPage::handleNotifierConnectionRemoved(const QString &path)
+void VpnManager::handleNotifierConnectionRemoved(const QString &path)
 {
     ui->connectionShowPage->removeConnectionFromLists(path);
 }
 
-void VpnPage::handleActiveConnectionAdded(const QString &activePath)
+void VpnManager::handleActiveConnectionAdded(const QString &activePath)
 {
     ActiveConnection::Ptr activatedConnection = findActiveConnection(activePath);
     if (activatedConnection->type() == ConnectionSettings::ConnectionType::Vpn)
@@ -243,12 +243,12 @@ void VpnPage::handleActiveConnectionAdded(const QString &activePath)
     }
 }
 
-void VpnPage::handleActiveConnectionRemoved(const QString &activePath)
+void VpnManager::handleActiveConnectionRemoved(const QString &activePath)
 {
     KLOG_DEBUG() << "handleActiveConnectionRemoved";
 }
 
-void VpnPage::handleVpnConnectionStateChanged(VpnConnection::State state, VpnConnection::StateChangeReason reason, const QString &activePath)
+void VpnManager::handleVpnConnectionStateChanged(VpnConnection::State state, VpnConnection::StateChangeReason reason, const QString &activePath)
 {
     switch (state)
     {
@@ -326,38 +326,38 @@ void VpnPage::handleVpnConnectionStateChanged(VpnConnection::State state, VpnCon
     }
 }
 
-void VpnPage::handleVpnStateActivated(const QString &activePath)
+void VpnManager::handleVpnStateActivated(const QString &activePath)
 {
     ui->connectionShowPage->updateActivatedConnectionInfo(activePath);
     ui->connectionShowPage->update();
 }
 
-void VpnPage::handleVpnStateDisconnected(const QString &activePath)
+void VpnManager::handleVpnStateDisconnected(const QString &activePath)
 {
     ui->connectionShowPage->clearDeactivatedConnectionInfo(activePath);
     ui->connectionShowPage->update();
 }
 //预留，暂时不需要区分failed和disconnected
-void VpnPage::handleVpnStateFailed(const QString &activePath)
+void VpnManager::handleVpnStateFailed(const QString &activePath)
 {
     ui->connectionShowPage->clearDeactivatedConnectionInfo(activePath);
     ui->connectionShowPage->update();
 }
 
-void VpnPage::handleReturnPreviousPage()
+void VpnManager::handleReturnPreviousPage()
 {
     clearVpnSetting();
     ui->stackedWidget->setCurrentIndex(PAGE_SHOW);
 }
 
-void VpnPage::refreshConnectionLists()
+void VpnManager::refreshConnectionLists()
 {
-    KLOG_DEBUG() << "VpnPage::refreshConnectionLists()";
+    KLOG_DEBUG() << "VpnManager::refreshConnectionLists()";
     ui->connectionShowPage->clearConnectionLists();
     ui->connectionShowPage->showConnectionLists(ConnectionSettings::Vpn);
 }
 
-void VpnPage::clearVpnSetting()
+void VpnManager::clearVpnSetting()
 {
     int index = ui->vpnTypeStacked->currentIndex();
     switch (index)

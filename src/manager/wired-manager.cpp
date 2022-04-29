@@ -11,16 +11,16 @@
  *
  * Author:     luoqing <luoqing@kylinos.com.cn>
  */
-#include "wired-page.h"
+#include "wired-manager.h"
+#include <libnm/nm-connection.h>
 #include <qt5-log-i.h>
 #include <NetworkManagerQt/ActiveConnection>
 #include <NetworkManagerQt/Manager>
 #include <NetworkManagerQt/Settings>
 #include <QScrollBar>
-#include "ui_wired-page.h"
-#include <libnm/nm-connection.h>
+#include "ui_wired-manager.h"
 
-WiredPage::WiredPage(QWidget *parent) : Page(parent), ui(new Ui::WiredPage)
+WiredManager::WiredManager(QWidget *parent) : Manager(parent), ui(new Ui::WiredManager)
 {
     ui->setupUi(this);
     initUI();
@@ -28,12 +28,12 @@ WiredPage::WiredPage(QWidget *parent) : Page(parent), ui(new Ui::WiredPage)
     initConnection();
 }
 
-WiredPage::~WiredPage()
+WiredManager::~WiredManager()
 {
     delete ui;
 }
 
-void WiredPage::initUI()
+void WiredManager::initUI()
 {
     ui->connectionShowPage->setTitle(tr("Wired Network Adapter"));
     ui->connectionShowPage->setSwitchButtonVisible(true);
@@ -41,7 +41,7 @@ void WiredPage::initUI()
 }
 
 
-void WiredPage::initConnection()
+void WiredManager::initConnection()
 {
     connect(ui->connectionShowPage, &ConnectionShowPage::requestCreatConnection, [=]() {
         ui->wiredSettingPage->showSettingPage();
@@ -59,14 +59,14 @@ void WiredPage::initConnection()
         ui->stackedWidget->setCurrentIndex(PAGE_SETTING);
     });
 
-    connect(ui->returnButton, &QPushButton::clicked, this, &WiredPage::handleReturnPreviousPage);
+    connect(ui->returnButton, &QPushButton::clicked, this, &WiredManager::handleReturnPreviousPage);
 
     connect(ui->saveButton, &QPushButton::clicked, [=]() {
         ui->wiredSettingPage->handleSaveButtonClicked(ConnectionSettings::ConnectionType::Wired);
         handleReturnPreviousPage();
     });
 
-    connect(ui->wiredSettingPage, &WiredSettingPage::returnPreviousPage, this, &WiredPage::handleReturnPreviousPage);
+    connect(ui->wiredSettingPage, &WiredSettingPage::returnPreviousPage, this, &WiredManager::handleReturnPreviousPage);
     connect(ui->wiredSettingPage, &WiredSettingPage::settingUpdated, [=]() {
         KLOG_DEBUG() << "WiredSettingPage::settingUpdated";
         handleReturnPreviousPage();
@@ -74,10 +74,10 @@ void WiredPage::initConnection()
     });
 
     connect(ui->connectionShowPage, &ConnectionShowPage::requestActivateCurrentItemConnection,
-            this, &WiredPage::handleRequestActivateConnection);
+            this, &WiredManager::handleRequestActivateConnection);
 
     connect(ui->connectionShowPage, &ConnectionShowPage::deactivatedItemConnection,
-            this, &WiredPage::handleStateDeactivated);
+            this, &WiredManager::handleStateDeactivated);
 
     initNotifierConnection();
 
@@ -91,26 +91,23 @@ void WiredPage::initConnection()
     });
 }
 
-void WiredPage::refreshConnectionLists()
+void WiredManager::refreshConnectionLists()
 {
-    KLOG_DEBUG() << "WiredPage::refreshConnectionLists()";
+    KLOG_DEBUG() << "WiredManager::refreshConnectionLists()";
     ui->connectionShowPage->clearConnectionLists();
     ui->connectionShowPage->showConnectionLists(ConnectionSettings::ConnectionType::Wired);
 }
 
-void WiredPage::handleRequestActivateConnection(QString connectionPath)
+void WiredManager::handleRequestActivateConnection(const QString &connectionPath,const QString &connectionParameter)
 {
-    Connection::Ptr connection = findConnection(connectionPath);
-    ConnectionSettings::Ptr settings = connection->settings();
-    WiredSetting::Ptr wiredSetting = settings->setting(Setting::SettingType::Wired).dynamicCast<WiredSetting>();
+    m_deviceMap;
 
-    //根据connectionSettings中设置的设备MAC地址，查找对应的设备路径，以便激活连接
-    QString macAddress = wiredSetting->macAddress().toHex(':').toUpper();
-    QString devicePath = m_deviceMap.value(macAddress);
+    QString devicePath = "";
     KLOG_DEBUG() << "devicePath:" << devicePath;
 
+
     QDBusPendingReply<QDBusObjectPath> reply =
-        NetworkManager::activateConnection(connectionPath, devicePath, "");
+        NetworkManager::activateConnection(connectionPath, devicePath, connectionParameter);
 
     reply.waitForFinished();
     if (reply.isError())
@@ -127,7 +124,7 @@ void WiredPage::handleRequestActivateConnection(QString connectionPath)
 }
 
 //获取到当前激活对象后，开启等待动画，判断完激活状态后停止等待动画
-void WiredPage::handleActiveConnectionAdded(const QString &path)
+void WiredManager::handleActiveConnectionAdded(const QString &path)
 {
     ActiveConnection::Ptr activatedConnection = findActiveConnection(path);
     if (activatedConnection->type() == ConnectionSettings::ConnectionType::Wired)
@@ -142,66 +139,41 @@ void WiredPage::handleActiveConnectionAdded(const QString &path)
     }
 }
 
-void WiredPage::handleActiveConnectionStateChanged(ActiveConnection::State state, const QString &path)
-{
-    switch (state)
-    {
-    case ActiveConnection::State::Unknown:
-        KLOG_DEBUG() << "ActiveConnection::State::Unknown";
-        break;
-    case ActiveConnection::State::Activating:
-        KLOG_DEBUG() << "ActiveConnection::State::Activating";
-        break;
-    case ActiveConnection::State::Activated:
-        KLOG_DEBUG() << "ActiveConnection::State::Activated";
-        handleStateActivated(path);
-        break;
-    case ActiveConnection::State::Deactivating:
-        KLOG_DEBUG() << "ActiveConnection::State::Deactivating";
-        break;
-    case ActiveConnection::State::Deactivated:
-        KLOG_DEBUG() << "ActiveConnection::State::Deactivated";
-        handleStateDeactivated(path);
-        break;
-    default:
-        break;
-    }
-}
-
-void WiredPage::handleActiveConnectionRemoved(const QString &path)
+void WiredManager::handleActiveConnectionRemoved(const QString &path)
 {
     KLOG_DEBUG() << "activeConnectionRemoved:" << path;
 }
 
-void WiredPage::handleStateActivated(QString activatedPath)
+void WiredManager::handleStateActivated(const QString &activatedPath)
 {
     ui->connectionShowPage->updateActivatedConnectionInfo(activatedPath);
     ui->connectionShowPage->update();
 }
 
-void WiredPage::handleStateDeactivated(const QString &deactivatedPath)
+void WiredManager::handleStateDeactivated(const QString &deactivatedPath)
 {
     KLOG_DEBUG() << "handleStateDeactivated" << deactivatedPath;
     ui->connectionShowPage->clearDeactivatedConnectionInfo(deactivatedPath);
     ui->connectionShowPage->update();
 }
 
-void WiredPage::handleReturnPreviousPage()
+void WiredManager::handleReturnPreviousPage()
 {
     ui->wiredSettingPage->clearPtr();
     ui->stackedWidget->setCurrentIndex(PAGE_SHOW);
 }
 
-void WiredPage::handleNotifierConnectionAdded(const QString &path)
+//TODO:获取当前设备路径devicePath
+void WiredManager::handleNotifierConnectionAdded(const QString &path)
 {
     Connection::Ptr connection = findConnection(path);
     if (connection->settings()->connectionType() == ConnectionSettings::ConnectionType::Wired)
     {
-        ui->connectionShowPage->addConnectionToLists(connection);
+        ui->connectionShowPage->addConnectionToLists(connection,"");
     }
 }
 
-void WiredPage::handleNotifierConnectionRemoved(const QString &path)
+void WiredManager::handleNotifierConnectionRemoved(const QString &path)
 {
     ui->connectionShowPage->removeConnectionFromLists(path);
 }

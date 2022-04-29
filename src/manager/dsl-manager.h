@@ -12,35 +12,32 @@
  * Author:     luoqing <luoqing@kylinos.com.cn>
  */
 
-
-#ifndef KIRAN_CPANEL_NETWORK_WIRELESS_PAGE_H
-#define KIRAN_CPANEL_NETWORK_WIRELESS_PAGE_H
+#ifndef KIRAN_CPANEL_NETWORK_DSL_MANAGER_H
+#define KIRAN_CPANEL_NETWORK_DSL_MANAGER_H
 
 #include <QWidget>
-#include "page.h"
+#include "manager.h"
 QT_BEGIN_NAMESPACE
 namespace Ui
 {
-class WirelessPage;
+class DslManager;
 }
 QT_END_NAMESPACE
 
-class WirelessPage : public Page
+class DslManager : public Manager
 {
     Q_OBJECT
 
 public:
-    explicit WirelessPage(QWidget *parent = nullptr);
-    ~WirelessPage() override;
+    explicit DslManager(QWidget *parent = nullptr);
+    ~DslManager() override;
+
     void initUI();
     void initConnection();
 
-public slots:
-    void handleRequestActivateConnection(QString connectionPath);
 
-    void handleReturnPreviousPage();
 private:
-    Ui::WirelessPage *ui;
+    Ui::DslManager *ui;
 };
 
-#endif  //KIRAN_CPANEL_NETWORK_WIRELESS_PAGE_H
+#endif  //KIRAN_CPANEL_NETWORK_DSL_MANAGER_H

@@ -12,26 +12,26 @@
  * Author:     luoqing <luoqing@kylinos.com.cn>
  */
 
-#ifndef KIRAN_CPANEL_NETWORK_VPN_PAGE_H
-#define KIRAN_CPANEL_NETWORK_VPN_PAGE_H
+#ifndef KIRAN_CPANEL_NETWORK_VPN_MANAGER_H
+#define KIRAN_CPANEL_NETWORK_VPN_MANAGER_H
 
-#include <QWidget>
 #include <NetworkManagerQt/VpnConnection>
-#include "page.h"
+#include <QWidget>
+#include "manager.h"
 QT_BEGIN_NAMESPACE
 namespace Ui
 {
-class VpnPage;
+class VpnManager;
 }
 QT_END_NAMESPACE
 
-class VpnPage : public Page
+class VpnManager : public Manager
 {
     Q_OBJECT
 
 public:
-    explicit VpnPage(QWidget *parent = nullptr);
-    ~VpnPage() override;
+    explicit VpnManager(QWidget *parent = nullptr);
+    ~VpnManager() override;
 
     void initUI();
     void initConnection();
@@ -40,11 +40,11 @@ public slots:
     void clearVpnSetting();
     void refreshConnectionLists() override;
     void handleRequestEditConnection(const QString &uuid, QString activeConnectionPath);
-    void handleRequestActivateConnection(QString connectionPath);
+    void handleRequestActivateConnection(const QString &connectionPath,const QString &connectionParameter);
 
     void handleNotifierConnectionAdded(const QString &path) override;
     void handleNotifierConnectionRemoved(const QString &path) override;
-    void activatingConnection(const QString &connectionPath);
+    void activatingConnection(const QString &connectionPath,const QString &connectionParameter);
 
     void handleActiveConnectionAdded(const QString &activePath) override;
     void handleActiveConnectionRemoved(const QString &activePath) override;
@@ -56,7 +56,7 @@ public slots:
 
     void handleReturnPreviousPage();
 private:
-    Ui::VpnPage *ui;
+    Ui::VpnManager *ui;
 };
 
-#endif  //KIRAN_CPANEL_NETWORK_VPN_PAGE_H
+#endif  //KIRAN_CPANEL_NETWORK_VPN_MANAGER_H

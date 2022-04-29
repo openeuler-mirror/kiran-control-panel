@@ -72,9 +72,9 @@
      <item>
       <widget class="QStackedWidget" name="stackedWidget">
        <property name="currentIndex">
-        <number>1</number>
+        <number>2</number>
        </property>
-       <widget class="WiredPage" name="wiredPage">
+       <widget class="WiredManager" name="wiredPage">
         <layout class="QHBoxLayout" name="horizontalLayout_2">
          <property name="spacing">
           <number>0</number>
@@ -93,7 +93,7 @@
          </property>
         </layout>
        </widget>
-       <widget class="WirelessPage" name="wirelessPage">
+       <widget class="WirelessManager" name="wirelessPage">
         <layout class="QHBoxLayout" name="horizontalLayout_3">
          <property name="spacing">
           <number>0</number>
@@ -112,7 +112,7 @@
          </property>
         </layout>
        </widget>
-       <widget class="VpnPage" name="vpnPage">
+       <widget class="VpnManager" name="vpnPage">
         <layout class="QVBoxLayout" name="verticalLayout_3">
          <property name="spacing">
           <number>0</number>
@@ -144,21 +144,21 @@
    <header location="global">kiran-sidebar-widget.h</header>
   </customwidget>
   <customwidget>
-   <class>WiredPage</class>
+   <class>WiredManager</class>
    <extends>QWidget</extends>
-   <header location="global">wired-page.h</header>
+   <header location="global">wired-manager.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>VpnPage</class>
+   <class>VpnManager</class>
    <extends>QWidget</extends>
-   <header location="global">vpn-page.h</header>
+   <header location="global">vpn-manager.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>WirelessPage</class>
+   <class>WirelessManager</class>
    <extends>QWidget</extends>
-   <header location="global">wireless-page.h</header>
+   <header location="global">wireless-manager.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

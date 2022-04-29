@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>WiredPage</class>
- <widget class="QWidget" name="WiredPage">
+ <class>WirelessManager</class>
+ <widget class="QWidget" name="WirelessManager">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>867</width>
-    <height>618</height>
+    <width>755</width>
+    <height>548</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>WiredPage</string>
+   <string>WirelessManager</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_4">
+  <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
     <number>0</number>
    </property>
@@ -31,11 +31,8 @@
    </property>
    <item>
     <widget class="QStackedWidget" name="stackedWidget">
-     <property name="currentIndex">
-      <number>0</number>
-     </property>
      <widget class="QWidget" name="page">
-      <layout class="QVBoxLayout" name="verticalLayout">
+      <layout class="QVBoxLayout" name="verticalLayout_2">
        <property name="spacing">
         <number>0</number>
        </property>
@@ -80,11 +77,11 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>865</width>
-            <height>582</height>
+            <width>753</width>
+            <height>512</height>
            </rect>
           </property>
-          <layout class="QVBoxLayout" name="verticalLayout_2">
+          <layout class="QVBoxLayout" name="verticalLayout_4">
            <property name="spacing">
             <number>0</number>
            </property>
@@ -101,7 +98,7 @@
             <number>0</number>
            </property>
            <item>
-            <widget class="WiredSettingPage" name="wiredSettingPage" native="true"/>
+            <widget class="WirelessSettingPage" name="wirelessSettingPage" native="true"/>
            </item>
           </layout>
          </widget>
@@ -110,7 +107,7 @@
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout">
          <item>
-          <spacer name="horizontalSpacer">
+          <spacer name="horizontalSpacer_4">
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
            </property>
@@ -130,7 +127,7 @@
           </widget>
          </item>
          <item>
-          <spacer name="horizontalSpacer_2">
+          <spacer name="horizontalSpacer_5">
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
            </property>
@@ -150,7 +147,7 @@
           </widget>
          </item>
          <item>
-          <spacer name="horizontalSpacer_3">
+          <spacer name="horizontalSpacer_6">
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
            </property>
@@ -172,15 +169,15 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>WiredSettingPage</class>
-   <extends>QWidget</extends>
-   <header location="global">wired-setting-page.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>ConnectionShowPage</class>
    <extends>QWidget</extends>
    <header location="global">connection-show-page.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>WirelessSettingPage</class>
+   <extends>QWidget</extends>
+   <header location="global">wireless-setting-page.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

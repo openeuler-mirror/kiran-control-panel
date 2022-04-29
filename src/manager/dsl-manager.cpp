@@ -12,32 +12,31 @@
  * Author:     luoqing <luoqing@kylinos.com.cn>
  */
 
-#ifndef KIRAN_CPANEL_NETWORK_DSL_PAGE_H
-#define KIRAN_CPANEL_NETWORK_DSL_PAGE_H
+#include "dsl-manager.h"
+#include <qt5-log-i.h>
+#include "ui_dsl-manager.h"
 
-#include <QWidget>
-#include "page.h"
-QT_BEGIN_NAMESPACE
-namespace Ui
+DslManager::DslManager(QWidget *parent) : Manager(parent), ui(new Ui::DslManager)
 {
-class DslPage;
+    ui->setupUi(this);
+    initUI();
+    initConnection();
 }
-QT_END_NAMESPACE
 
-class DslPage : public Page
+DslManager::~DslManager()
 {
-    Q_OBJECT
+    delete ui;
+}
 
-public:
-    explicit DslPage(QWidget *parent = nullptr);
-    ~DslPage() override;
+void DslManager::initUI()
+{
+    ui->connectionShowPage->setTitle(tr("DSL"));
+    ui->connectionShowPage->setSwitchButtonVisible(false);
+}
 
-    void initUI();
-    void initConnection();
-
-
-private:
-    Ui::DslPage *ui;
-};
-
-#endif  //KIRAN_CPANEL_NETWORK_DSL_PAGE_H
+void DslManager::initConnection()
+{
+    connect(ui->connectionShowPage, &ConnectionShowPage::requestCreatConnection, [=]() {
+        ui->stackedWidget->setCurrentIndex(PAGE_SETTING);
+    });
+}

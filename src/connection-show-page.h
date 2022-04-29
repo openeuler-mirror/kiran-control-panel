@@ -17,6 +17,7 @@
 
 #include <NetworkManagerQt/Connection>
 #include <NetworkManagerQt/Manager>
+#include <NetworkManagerQt/WirelessNetwork>
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QListWidgetItem>
@@ -32,12 +33,22 @@ QT_END_NAMESPACE
 using namespace NetworkManager;
 class KiranSwitchButton;
 
+struct WirelessConnectionInfo
+{
+    int signalStrength;
+    QString accessPointPath;
+    QString ssid;
+    bool securitySetting;
+};
+
 struct ConnectionInfo
 {
     QString uuid;
     QString connectionPath;
+    QString devicePath;
     QString activeConnectionPath;
-    NetworkManager::Status status;
+    bool isWireless = false;
+    WirelessConnectionInfo wirelessInfo;
 };
 
 Q_DECLARE_METATYPE(ConnectionInfo);
@@ -56,12 +67,19 @@ public:
     void setTitle(QString title);
     void setSwitchButtonVisible(bool visible);
 
+    //在kf5-NetworkManager-qt中Connection是指具体的网络配置，不是指已经存在的网络
     void showConnectionLists(ConnectionSettings::ConnectionType type);
-    void addConnectionToLists(Connection::Ptr ptr);
+    void addConnectionToLists(Connection::Ptr ptr,const QString &devicePath);
+
+    //在kf5-NetworkManager-qt中Network是指存在的网络
+    void showWirelessNetworkLists();
+    void addWirelessNetworkToLists(WirelessNetwork::Ptr network,const QString &devicePath);
+
 
     void removeConnectionFromLists(const QString &path);
     void updateItemActivatedPath(QListWidgetItem *item, QString activatedPath = "");
     void findItemByUuid(const QString &uuid);
+    void findItemBySsid(const QString &ssid);
 
 public slots:
     void clearConnectionLists();
@@ -74,7 +92,8 @@ public slots:
 signals:
     void requestCreatConnection();
     void requestEditConnection(const QString &uuid, QString activeConnectionPath);
-    void requestActivateCurrentItemConnection(const QString &connectionPath);
+    void requestActivateCurrentItemConnection(const QString &connectionPath, const QString &connectionParameter = "");
+    void requestConnectWirelessNetwork(const ConnectionInfo &connectionInfo);
     void deactivatedItemConnection(const QString &connectionPath);
 
 private:
@@ -98,14 +117,25 @@ public:
     void deactivateLabel();
     void setLoadingStatus(bool isLoading);
     void setLabelVisible(bool isVisible);
+    void setWirelessLabel(bool security,int signal);
+    QPixmap getPixmapFromSvg(const QString &svgPath);
 signals:
     void editConnectionClicked();
 
 private:
+    QLabel *m_wirelessLabel;
     QLabel *m_connectionName;
     QHBoxLayout *m_horizonLayout;
     QPushButton *m_editConnection;
     AnimationLoadingLabel *m_activatedLabel;
+};
+
+
+class CustomSortListItem : public QListWidgetItem
+{
+public:
+    explicit CustomSortListItem(QWidget *parent = nullptr);
+    bool operator<(const QListWidgetItem &other) const;
 };
 
 #endif  //KIRAN_CPANEL_NETWORK_CONNECTION_SHOW_PAGE_H

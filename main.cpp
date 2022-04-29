@@ -14,7 +14,6 @@
 #include <kiran-application.h>
 #include <qt5-log-i.h>
 #include <QApplication>
-#include "pages/wired-page.h"
 #include "src/cpanel-network-widget.h"
 #include <QInputDialog>
 int main(int argc, char *argv[]) {

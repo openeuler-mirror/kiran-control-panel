@@ -12,8 +12,8 @@
  * Author:     luoqing <luoqing@kylinos.com.cn>
  */
 
-#ifndef KIRAN_CPANEL_NETWORK_PAGE_H
-#define KIRAN_CPANEL_NETWORK_PAGE_H
+#ifndef KIRAN_CPANEL_NETWORK_MANAGER_H
+#define KIRAN_CPANEL_NETWORK_MANAGER_H
 #include <QWidget>
 #include <NetworkManagerQt/Manager>
 #include <NetworkManagerQt/Device>
@@ -24,12 +24,12 @@ enum EditPages
 };
 using namespace NetworkManager;
 
-class Page : public QWidget
+class Manager : public QWidget
 {
     Q_OBJECT
 public:
-    explicit Page(QWidget *parent= nullptr);
-    ~Page();
+    explicit Manager(QWidget *parent= nullptr);
+    ~Manager();
 
     void initNotifierConnection();
 
@@ -40,9 +40,12 @@ public slots:
     virtual void handleActiveConnectionAdded(const QString &activepath);
     virtual void handleActiveConnectionRemoved(const QString &activepath);
 
+    virtual void handleActiveConnectionStateChanged(ActiveConnection::State state, const QString &path);
+    virtual void handleStateActivated(const QString &activatedPath);
+    virtual void handleStateDeactivated(const QString &deactivatedPath);
     void getDeviceInfo(Device::Type deviceType);
 protected:
     QMap<QString, QString> m_deviceMap;
 };
 
-#endif  //KIRAN_CPANEL_NETWORK_PAGE_H
+#endif  //KIRAN_CPANEL_NETWORK_MANAGER_H
