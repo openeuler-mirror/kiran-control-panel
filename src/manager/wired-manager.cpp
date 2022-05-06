@@ -24,7 +24,7 @@ WiredManager::WiredManager(QWidget *parent) : Manager(parent), ui(new Ui::WiredM
 {
     ui->setupUi(this);
     initUI();
-    getDeviceInfo(Device::Ethernet);
+    getDeviceList(Device::Ethernet);
     initConnection();
 }
 
@@ -70,6 +70,7 @@ void WiredManager::initConnection()
     connect(ui->wiredSettingPage, &WiredSettingPage::settingUpdated, [=]() {
         KLOG_DEBUG() << "WiredSettingPage::settingUpdated";
         handleReturnPreviousPage();
+        //xxx:不用刷新全部，只更新修改的item
         refreshConnectionLists();
     });
 
@@ -83,11 +84,11 @@ void WiredManager::initConnection()
 
     //检测到新设备时，刷新
     connect(notifier(), &Notifier::deviceAdded, [=](const QString &uni) {
-        getDeviceInfo(Device::Ethernet);
+        getDeviceList(Device::Ethernet);
     });
 
     connect(notifier(), &Notifier::deviceRemoved, [=](const QString &uni) {
-        getDeviceInfo(Device::Ethernet);
+        getDeviceList(Device::Ethernet);
     });
 }
 
@@ -146,6 +147,7 @@ void WiredManager::handleActiveConnectionRemoved(const QString &path)
 
 void WiredManager::handleStateActivated(const QString &activatedPath)
 {
+    ui->connectionShowPage->connectionStateNotify(ActiveConnection::Activated);
     ui->connectionShowPage->updateActivatedConnectionInfo(activatedPath);
     ui->connectionShowPage->update();
 }
@@ -153,6 +155,7 @@ void WiredManager::handleStateActivated(const QString &activatedPath)
 void WiredManager::handleStateDeactivated(const QString &deactivatedPath)
 {
     KLOG_DEBUG() << "handleStateDeactivated" << deactivatedPath;
+    ui->connectionShowPage->connectionStateNotify(ActiveConnection::Deactivated);
     ui->connectionShowPage->clearDeactivatedConnectionInfo(deactivatedPath);
     ui->connectionShowPage->update();
 }
@@ -166,6 +169,7 @@ void WiredManager::handleReturnPreviousPage()
 //TODO:获取当前设备路径devicePath
 void WiredManager::handleNotifierConnectionAdded(const QString &path)
 {
+    KLOG_DEBUG() << "WiredManager::handleNotifierConnectionAdded";
     Connection::Ptr connection = findConnection(path);
     if (connection->settings()->connectionType() == ConnectionSettings::ConnectionType::Wired)
     {
@@ -173,7 +177,9 @@ void WiredManager::handleNotifierConnectionAdded(const QString &path)
     }
 }
 
+//XXX:当connection被移除时，由于连接可能已经被删除，所有并不能通过findConnection(path)找到该连接对象，进而知道连接类型
 void WiredManager::handleNotifierConnectionRemoved(const QString &path)
 {
+//    KLOG_DEBUG() << "WiredManager::handleNotifierConnectionRemoved";
     ui->connectionShowPage->removeConnectionFromLists(path);
 }

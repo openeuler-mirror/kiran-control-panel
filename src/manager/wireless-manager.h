@@ -37,8 +37,10 @@ class WirelessManager : public Manager
 public:
     explicit WirelessManager(QWidget *parent = nullptr);
     ~WirelessManager() override;
+    void initDevice();
     void initUI();
     void initConnection();
+
 
 public slots:
     void handleRequestConnectWirelessNetwork(const ConnectionInfo &connectionInfo);
@@ -58,6 +60,9 @@ public slots:
 
     void handleNotifierConnectionAdded(const QString &path) override;
     void handleNotifierConnectionRemoved(const QString &path) override;
+
+    void handleNetworkDisappeared(const QString &ssid);
+    void handleNetworkAppeared(const QString &ssid);
 
     void handleReturnPreviousPage();
     void refreshConnectionLists() override;

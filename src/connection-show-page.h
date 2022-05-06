@@ -54,6 +54,7 @@ struct ConnectionInfo
 Q_DECLARE_METATYPE(ConnectionInfo);
 Q_DECLARE_METATYPE(NetworkManager::Status)
 
+
 class ConnectionShowPage : public QWidget
 {
     Q_OBJECT
@@ -66,6 +67,7 @@ public:
 
     void setTitle(QString title);
     void setSwitchButtonVisible(bool visible);
+    void setCreateButtonVisible(bool visible);
 
     //在kf5-NetworkManager-qt中Connection是指具体的网络配置，不是指已经存在的网络
     void showConnectionLists(ConnectionSettings::ConnectionType type);
@@ -74,18 +76,22 @@ public:
     //在kf5-NetworkManager-qt中Network是指存在的网络
     void showWirelessNetworkLists();
     void addWirelessNetworkToLists(WirelessNetwork::Ptr network,const QString &devicePath);
-
+    void addOtherWirelessItemToLists();
 
     void removeConnectionFromLists(const QString &path);
+    void removeWirelessNetworkFromLists(const QString &ssid);
     void updateItemActivatedPath(QListWidgetItem *item, QString activatedPath = "");
     void findItemByUuid(const QString &uuid);
     void findItemBySsid(const QString &ssid);
+
+
 
 public slots:
     void clearConnectionLists();
     void handleConnectionItemClicked(QListWidgetItem *item);
     void updateActivatedConnectionInfo(QString activatedPath);
     void clearDeactivatedConnectionInfo(const QString &deactivatedPath);
+    void connectionStateNotify(ActiveConnection::State state);
 
     void connectionItemLoadingAnimation();
 
@@ -113,11 +119,14 @@ public:
 
 public:
     void setName(const QString &name);
+    QString getName();
     void activatedLabel();
     void deactivateLabel();
     void setLoadingStatus(bool isLoading);
     void setLabelVisible(bool isVisible);
+    void setEditButtonVisible(bool isVisible);
     void setWirelessLabel(bool security,int signal);
+
     QPixmap getPixmapFromSvg(const QString &svgPath);
 signals:
     void editConnectionClicked();

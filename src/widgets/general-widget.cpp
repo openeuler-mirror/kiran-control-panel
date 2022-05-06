@@ -81,10 +81,18 @@ void GeneralWidget::showSettings(ConnectionSettings::ConnectionType connectionTy
     }
     else if (m_connectionType == ConnectionSettings::Wireless)
     {
-        WirelessSetting::Ptr wirelessSetting = m_connectionSettings->setting(Setting::Wireless).dynamicCast<WirelessSetting>();
-        ui->connectionName->setText(wirelessSetting->ssid());
-        ui->connectionName->setEnabled(false);
-        m_autoConnection->setChecked(m_connectionSettings->autoconnect());
+        if(m_connectionSettings != nullptr)
+        {
+            WirelessSetting::Ptr wirelessSetting = m_connectionSettings->setting(Setting::Wireless).dynamicCast<WirelessSetting>();
+            ui->connectionName->setText(wirelessSetting->ssid());
+            ui->connectionName->setEnabled(false);
+            m_autoConnection->setChecked(m_connectionSettings->autoconnect());
+        }
+        else
+        {
+//            ui->connectionName->setEnabled(true);
+//            m_autoConnection->setChecked(true);
+        }
     }
 }
 

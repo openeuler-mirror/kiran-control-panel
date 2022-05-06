@@ -223,6 +223,7 @@ void VpnManager::handleNotifierConnectionAdded(const QString &path)
 //remove时不能再创建连接对象，因为连接可能已经不存在了
 void VpnManager::handleNotifierConnectionRemoved(const QString &path)
 {
+//    KLOG_DEBUG() << "VpnManager::handleNotifierConnectionRemoved";
     ui->connectionShowPage->removeConnectionFromLists(path);
 }
 

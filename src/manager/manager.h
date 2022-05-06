@@ -14,9 +14,9 @@
 
 #ifndef KIRAN_CPANEL_NETWORK_MANAGER_H
 #define KIRAN_CPANEL_NETWORK_MANAGER_H
-#include <QWidget>
-#include <NetworkManagerQt/Manager>
 #include <NetworkManagerQt/Device>
+#include <NetworkManagerQt/Manager>
+#include <QWidget>
 enum EditPages
 {
     PAGE_SHOW,
@@ -28,7 +28,7 @@ class Manager : public QWidget
 {
     Q_OBJECT
 public:
-    explicit Manager(QWidget *parent= nullptr);
+    explicit Manager(QWidget *parent = nullptr);
     ~Manager();
 
     void initNotifierConnection();
@@ -43,9 +43,16 @@ public slots:
     virtual void handleActiveConnectionStateChanged(ActiveConnection::State state, const QString &path);
     virtual void handleStateActivated(const QString &activatedPath);
     virtual void handleStateDeactivated(const QString &deactivatedPath);
-    void getDeviceInfo(Device::Type deviceType);
+    void getDeviceList(Device::Type deviceType);
+
+
 protected:
     QMap<QString, QString> m_deviceMap;
+    QList<Device::Ptr> m_deviceList;
+
+private:
+    QTimer m_connectionTimer;
+    QString m_connectionRemovePath;
 };
 
 #endif  //KIRAN_CPANEL_NETWORK_MANAGER_H

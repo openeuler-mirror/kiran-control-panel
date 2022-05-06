@@ -56,7 +56,7 @@ void WirelessWidget::setWirelessSetting(const WirelessSetting::Ptr &wirelessSett
     m_wirelessSetting = wirelessSetting;
 }
 
-//TODO:ssid在什么情况下能被修改
+//区分连接隐藏网络和已存在网络的Setting
 void WirelessWidget::saveSettings()
 {
     if(m_wirelessSetting != nullptr)
@@ -65,9 +65,6 @@ void WirelessWidget::saveSettings()
         KLOG_DEBUG() << "macAddress:" << macAddress;
         m_wirelessSetting->setMacAddress(QByteArray::fromHex(macAddress.toUtf8()));
         m_wirelessSetting->setMtu(ui->customMTU->value());
-
-        ui->ssidEdit->text();
-//        m_wirelessSetting->setSsid();
     }
 }
 
@@ -91,6 +88,11 @@ void WirelessWidget::showSettings()
         resetSettings();
 }
 
+void WirelessWidget::setOtherWirelessSetting()
+{
+
+}
+
 void WirelessWidget::resetSettings()
 {
     ui->ssidEdit->clear();
@@ -98,6 +100,7 @@ void WirelessWidget::resetSettings()
     ui->deviceMac->setCurrentIndex(deviceMacIndex);
     ui->customMTU->setVisible(false);
 }
+
 
 void WirelessWidget::clearPtr()
 {
@@ -133,3 +136,4 @@ void WirelessWidget::initMacComboBox()
         }
     }
 }
+

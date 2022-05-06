@@ -24,9 +24,12 @@ MESSAGE(${PROJECT_NAME})
 find_package(Qt${QT_VERSION} COMPONENTS ${REQUIRED_LIBS} REQUIRED)
 find_package(KF5NetworkManagerQt REQUIRED)
 
+
 find_package(PkgConfig REQUIRED)
 pkg_search_module(KIRAN_WIDGETS_QT5 REQUIRED kiranwidgets-qt5)
 pkg_search_module(KLOG_QT5 REQUIRED klog-qt5)
+pkg_search_module(LIBNOTIFY REQUIRED libnotify)
+
 
 target_include_directories(${PROJECT_NAME} PRIVATE
         src
@@ -43,12 +46,14 @@ target_include_directories(${PROJECT_NAME} PRIVATE
         resources/kcp-network-themes
         ${KIRAN_WIDGETS_QT5_INCLUDE_DIRS}
         ${KLOG_QT5_INCLUDE_DIRS}
+        ${LIBNOTIFY_INCLUDE_DIRS}
         )
 
 target_link_libraries(${PROJECT_NAME}
         ${REQUIRED_LIBS_QUALIFIED}
         ${KIRAN_WIDGETS_QT5_LIBRARIES}
         ${KLOG_QT5_LIBRARIES}
+        ${LIBNOTIFY_LIBRARIES}
         KF5::NetworkManagerQt
         )
 

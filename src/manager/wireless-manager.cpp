@@ -15,12 +15,13 @@
 #include <qt5-log-i.h>
 #include <NetworkManagerQt/Settings>
 #include <NetworkManagerQt/WirelessDevice>
+#include <QEventLoop>
 #include <QScrollBar>
 #include "ui_wireless-manager.h"
 WirelessManager::WirelessManager(QWidget *parent) : Manager(parent), ui(new Ui::WirelessManager)
 {
     ui->setupUi(this);
-    getDeviceInfo(Device::Wifi);
+    initDevice();
     initUI();
     initConnection();
 }
@@ -30,16 +31,36 @@ WirelessManager::~WirelessManager()
     delete ui;
 }
 
+void WirelessManager::initDevice()
+{
+    getDeviceList(Device::Wifi);
+    if (m_deviceList.count() == 0)
+    {
+        //处理没有设备时的情况
+    }
+    else if (m_deviceList.count() == 1)
+    {
+        //只有一个设备时
+        m_currentWirelessDevice = qobject_cast<WirelessDevice *>(m_deviceList.at(0));
+    }
+    else
+    {
+        //存在多个设备时
+    }
+}
+
 void WirelessManager::initUI()
 {
     ui->connectionShowPage->setTitle(tr("Wireless Network Adapter"));
     ui->connectionShowPage->setSwitchButtonVisible(true);
+    ui->connectionShowPage->setCreateButtonVisible(false);
     ui->connectionShowPage->showWirelessNetworkLists();
 }
 
 void WirelessManager::initConnection()
 {
     connect(ui->connectionShowPage, &ConnectionShowPage::requestCreatConnection, [=]() {
+        ui->wirelessSettingPage->showSettingPage();
         QPointer<QScrollBar> scrollBar = ui->scrollArea->verticalScrollBar();
         scrollBar->setValue(0);
         ui->stackedWidget->setCurrentIndex(PAGE_SETTING);
@@ -76,8 +97,6 @@ void WirelessManager::initConnection()
     connect(ui->connectionShowPage, &ConnectionShowPage::deactivatedItemConnection,
             this, &WirelessManager::handleStateDeactivated);
 
-    initNotifierConnection();
-
     //检测到新设备
     connect(notifier(), &Notifier::deviceAdded, [=](const QString &uni) {
         KLOG_DEBUG() << "deviceAdded:" << uni;
@@ -86,6 +105,11 @@ void WirelessManager::initConnection()
     connect(notifier(), &Notifier::deviceRemoved, [=](const QString &uni) {
         KLOG_DEBUG() << "deviceRemoved:" << uni;
     });
+
+    initNotifierConnection();
+
+    connect(m_currentWirelessDevice.data(), &WirelessDevice::networkDisappeared, this, &WirelessManager::handleNetworkDisappeared);
+    connect(m_currentWirelessDevice.data(), &WirelessDevice::networkAppeared, this, &WirelessManager::handleNetworkAppeared);
 }
 
 //在已存在WirelessSetting配置的情况下，激活连接．（连接过一次后会创建WirelessSetting配置）
@@ -114,6 +138,7 @@ void WirelessManager::getWirelessAvailableConnections(const QString &devicePath)
 {
     Device::Ptr device = findNetworkInterface(devicePath);
     Connection::List connectionList = listConnections();
+    m_wirelssConnectionMap.clear();
     for (Connection::Ptr conn : connectionList)
     {
         if (conn->settings()->connectionType() == ConnectionSettings::Wireless)
@@ -126,31 +151,26 @@ void WirelessManager::getWirelessAvailableConnections(const QString &devicePath)
     }
 }
 
-//不存在WirelessSetting配置的情况下，连接无线网络
 void WirelessManager::handleRequestConnectWirelessNetwork(const ConnectionInfo &connectionInfo)
 {
     connectionInfo.connectionPath;
     QString ssid = connectionInfo.wirelessInfo.ssid;
+    KLOG_DEBUG() << "handleRequestConnectWirelessNetwork ssid:" << ssid;
     QString accessPointPath = connectionInfo.wirelessInfo.accessPointPath;
     QString devicePath = connectionInfo.devicePath;
-
     getWirelessAvailableConnections(devicePath);
-    m_wirelssConnectionMap.value(ssid);
-    KLOG_DEBUG() << "m_wirelssConnectionMap.value(ssid);" << m_wirelssConnectionMap.value(ssid);
-    KLOG_DEBUG() << "ssid:" << ssid;
-    KLOG_DEBUG() << "devicePath:" << devicePath;
-    KLOG_DEBUG() << "accessPointPath:" << accessPointPath;
     if (m_wirelssConnectionMap.contains(ssid))
     {
         Connection::Ptr connection = m_wirelssConnectionMap.value(ssid);
         QString connectionPath = connection->path();
+        KLOG_DEBUG() << "m_wirelssConnectionMap.value(ssid) connectionPath:" << connectionPath;
         activateWirelessConnection(connectionPath, devicePath, accessPointPath);
     }
     else
         addAndActivateWirelessConnection(ssid, devicePath, accessPointPath);
 }
 
-#include <QEventLoop>
+//不存在WirelessSetting配置的情况下，连接无线网络
 void WirelessManager::addAndActivateWirelessConnection(const QString &ssid, const QString &devicePath, const QString &accessPointPath)
 {
     KLOG_DEBUG() << "addAndActivateWirelessConnection";
@@ -158,7 +178,6 @@ void WirelessManager::addAndActivateWirelessConnection(const QString &ssid, cons
     WirelessDevice::Ptr wirelessDevice = qobject_cast<WirelessDevice *>(device);
     AccessPoint::Ptr accessPoint = wirelessDevice->findAccessPoint(accessPointPath);
     KLOG_DEBUG() << "accessPoint.isNull:" << accessPoint.isNull();
-    KLOG_DEBUG() << "accessPoint:" << accessPoint;
     KLOG_DEBUG() << "accessPoint->ssid():" << accessPoint->ssid();
 
     //Note:WirelessDevice在rescan搜索网络时，使用以下函数会失效，错误原因：没有及时更新ScanList,导致搜索不到network
@@ -275,12 +294,15 @@ void WirelessManager::handleActiveConnectionRemoved(const QString &path)
 
 void WirelessManager::handleStateActivated(const QString &activatedPath)
 {
+    ui->connectionShowPage->connectionStateNotify(ActiveConnection::Activated);
     ui->connectionShowPage->updateActivatedConnectionInfo(activatedPath);
     ui->connectionShowPage->update();
 }
 
 void WirelessManager::handleStateDeactivated(const QString &deactivatedPath)
 {
+    KLOG_DEBUG() << "WirelessManager::handleStateDeactivated";
+    ui->connectionShowPage->connectionStateNotify(ActiveConnection::Deactivated);
     ui->connectionShowPage->clearDeactivatedConnectionInfo(deactivatedPath);
     ui->connectionShowPage->update();
 }
@@ -292,7 +314,6 @@ void WirelessManager::handleNotifierConnectionAdded(const QString &path)
 void WirelessManager::handleNotifierConnectionRemoved(const QString &path)
 {
     KLOG_DEBUG() << "WirelessManager::handleNotifierConnectionRemoved :" << path;
-    refreshConnectionLists();
 }
 
 void WirelessManager::handleReturnPreviousPage()
@@ -304,9 +325,23 @@ void WirelessManager::handleReturnPreviousPage()
 void WirelessManager::refreshConnectionLists()
 {
     QEventLoop eventLoop;
-    QTimer::singleShot(500, &eventLoop, &QEventLoop::quit);
+    QTimer::singleShot(10000, &eventLoop, &QEventLoop::quit);
     eventLoop.exec();
     ui->connectionShowPage->clearConnectionLists();
     ui->connectionShowPage->showWirelessNetworkLists();
     //    m_currentWirelessDevice->requestScan();
+}
+
+void WirelessManager::handleNetworkDisappeared(const QString &ssid)
+{
+    KLOG_DEBUG() << "handleNetworkDisappeared ssid:" << ssid;
+    ui->connectionShowPage->removeWirelessNetworkFromLists(ssid);
+}
+
+void WirelessManager::handleNetworkAppeared(const QString &ssid)
+{
+    KLOG_DEBUG() << "handleNetworkAppeared ssid:" << ssid;
+    WirelessNetwork::Ptr network = m_currentWirelessDevice->findNetwork(ssid);
+    QString devicePath = m_currentWirelessDevice->uni();
+    ui->connectionShowPage->addWirelessNetworkToLists(network, devicePath);
 }

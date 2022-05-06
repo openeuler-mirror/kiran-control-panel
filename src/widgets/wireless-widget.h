@@ -38,6 +38,7 @@ public:
     void setWirelessSetting(const WirelessSetting::Ptr &wirelessSetting);
 public slots:
     void saveSettings();
+    void setOtherWirelessSetting();
     void showSettings();
     void resetSettings();
     void clearPtr();

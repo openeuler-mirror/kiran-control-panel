@@ -38,7 +38,20 @@ void Manager::initNotifierConnection()
     //    });
 
     connect(settingsNotifier(), &SettingsNotifier::connectionAdded, this, &Manager::handleNotifierConnectionAdded);
-    connect(settingsNotifier(), &SettingsNotifier::connectionRemoved, this, &Manager::handleNotifierConnectionRemoved);
+
+    m_connectionTimer.setInterval(100);
+    m_connectionTimer.setSingleShot(true);
+    //connectionRemoved信号会激发两次，原因暂时未知，使用定时器使短时间内多次相同信号只调用一次槽函数
+    connect(settingsNotifier(), &SettingsNotifier::connectionRemoved, [=](const QString &path) {
+        m_connectionRemovePath = path;
+        m_connectionTimer.start();
+    });
+
+    connect(&m_connectionTimer, &QTimer::timeout, [=]() {
+        handleNotifierConnectionRemoved(m_connectionRemovePath);
+    });
+
+    //    connect(settingsNotifier(), &SettingsNotifier::connectionRemoved, this, &Manager::handleNotifierConnectionRemoved,Qt::UniqueConnection);
 }
 
 void Manager::refreshConnectionLists()
@@ -66,31 +79,21 @@ void Manager::handleActiveConnectionRemoved(const QString &activepath)
     KLOG_DEBUG() << "activeConnectionRemoved:" << activepath;
 }
 
-
 //XXX:可以优化
-void Manager::getDeviceInfo(Device::Type deviceType)
+void Manager::getDeviceList(Device::Type deviceType)
 {
     const Device::List deviceList = networkInterfaces();
     for (Device::Ptr dev : deviceList)
     {
         if (dev->type() == deviceType)
         {
-            if(deviceType == Device::Ethernet)
-            {
-                auto device = qobject_cast<WiredDevice *>(dev);
-                m_deviceMap.insert(device->permanentHardwareAddress(), device->uni());
-            }
-            else if(deviceType == Device::Wifi)
-            {
-                auto device = qobject_cast<WirelessDevice *>(dev);
-                m_deviceMap.insert(device->permanentHardwareAddress(), device->uni());
-            }
+            m_deviceList << dev;
         }
     }
-    KLOG_DEBUG() << "m_deviceMap:" << m_deviceMap;
-    if (m_deviceMap.isEmpty())
+    KLOG_DEBUG() << "m_deviceList:" << m_deviceList;
+    if (m_deviceList.isEmpty())
     {
-        KLOG_DEBUG() << "Wired device not found";
+        KLOG_DEBUG() << "No available devices were found";
     }
 }
 
