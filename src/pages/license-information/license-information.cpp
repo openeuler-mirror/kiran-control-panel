@@ -48,7 +48,7 @@ LicenseInformation::LicenseInformation(QWidget *parent) : QWidget(parent),
 {
     ui->setupUi(this);
     readLicenseInfo();
-    ui->lab_contact_info->setText("400-625-6606");
+    ui->lab_contact_info->setText("400-012-6606");
     connect(ui->btn_status, SIGNAL(clicked()), this, SLOT(onBtnStatusClicked()));
 }
 
