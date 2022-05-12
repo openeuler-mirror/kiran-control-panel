@@ -1,6 +1,0 @@
-*.o
-*.cmake
-build.make
-cmake-build-debug
-*.qm
-.idea
