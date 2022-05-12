@@ -96,33 +96,59 @@ void KiranDisplayConfiguration::on_pushButton_extra_ok_clicked()
 
     ///FIXME:此处保存两次只是为了暂时解决修改分辨率时由于未进行屏幕排列导致的内容重叠以及屏幕之中存在间隔
     ///后续重构应该更改为下方参数修改时上方预览应同步修改，以及动态调整屏幕位置
-    for( int i=0;i<2;i++ )
-    {
-        //往屏幕数据中添加剩余的其它数据。
-        QVariantMap map = ui->panel->getData();
-        QMapIterator<QString, QVariant> iter(map);
-        while (iter.hasNext()) {
-            iter.next();
-            QVariantMap d = iter.value().toMap();
-            if(m_extraData.contains(iter.key()))//两个map的key值匹配上。
-            {
-                QVariantMap extraMap =  m_extraData.value(iter.key());
-                //添加
-                d.insert("primary", m_primaryMonitorName==d.value("name").toString());
-                d.insert("enabled", extraMap.value("enabled"));
-                d.insert("resolving", extraMap.value("resolving"));
-                d.insert("refreshRate", extraMap.value("refreshRate"));
-            }
-            setMonitorProperty(iter.key(), d);
-        }
-        //缩放率所有屏幕都是通用的。
-        Display("SetWindowScalingFactor", QVariantList() << ui->comboBox_extra_windowScalingFactor->currentIndex());
-        Display("ApplyChanges");
-        //可能设置失败，界面根据设置实际情况再刷新。
-        refreshWidget();
-    }
 
-    showMessageBox();
+    //往屏幕数据中添加剩余的其它数据。
+    QVariantMap map = ui->panel->getData();
+    QMapIterator<QString, QVariant> iter(map);
+    while (iter.hasNext()) {
+        iter.next();
+        QVariantMap d = iter.value().toMap();
+        if(m_extraData.contains(iter.key()))//两个map的key值匹配上。
+        {
+            QVariantMap extraMap =  m_extraData.value(iter.key());
+            //添加
+            d.insert("primary", m_primaryMonitorName==d.value("name").toString());
+            d.insert("enabled", extraMap.value("enabled"));
+            d.insert("resolving", extraMap.value("resolving"));
+            d.insert("refreshRate", extraMap.value("refreshRate"));
+        }
+        setMonitorProperty(iter.key(), d);
+    }
+    //缩放率所有屏幕都是通用的。
+    Display("SetWindowScalingFactor", QVariantList() << ui->comboBox_extra_windowScalingFactor->currentIndex());
+    Display("ApplyChanges");
+    //可能设置失败，界面根据设置实际情况再刷新。
+    refreshWidget();
+    
+
+    bool isSave = false;
+    showMessageBox(isSave);
+    if( isSave )
+    {
+    //往屏幕数据中添加剩余的其它数据。
+    QVariantMap map = ui->panel->getData();
+    QMapIterator<QString, QVariant> iter(map);
+    while (iter.hasNext()) {
+        iter.next();
+        QVariantMap d = iter.value().toMap();
+        if(m_extraData.contains(iter.key()))//两个map的key值匹配上。
+        {
+            QVariantMap extraMap =  m_extraData.value(iter.key());
+            //添加
+            d.insert("primary", m_primaryMonitorName==d.value("name").toString());
+            d.insert("enabled", extraMap.value("enabled"));
+            d.insert("resolving", extraMap.value("resolving"));
+            d.insert("refreshRate", extraMap.value("refreshRate"));
+        }
+        setMonitorProperty(iter.key(), d);
+    }
+    //缩放率所有屏幕都是通用的。
+    Display("SetWindowScalingFactor", QVariantList() << ui->comboBox_extra_windowScalingFactor->currentIndex());
+    Display("ApplyChanges");
+    //可能设置失败，界面根据设置实际情况再刷新。
+    refreshWidget();
+    
+    }
     m_dbusPropertiesChangedBlock = false;
 }
 
@@ -358,7 +384,7 @@ void KiranDisplayConfiguration::curExtraData2Cache()
     m_extraData.insert(m_curMonitorPath, map);
 }
 
-void KiranDisplayConfiguration::showMessageBox()
+void KiranDisplayConfiguration::showMessageBox(bool& isSave)
 {
     KiranMessageBox box(this);
     box.setTitle(tr("Is the display normal?"));
@@ -406,6 +432,10 @@ void KiranDisplayConfiguration::showMessageBox()
             box.setText(QObject::tr("Failed to apply display settings!%1").arg(var.toString()));
             box.exec();
         }
+        else
+        {
+            isSave = true;
+        }
     }
     else
     {
@@ -423,6 +453,10 @@ void KiranDisplayConfiguration::showMessageBox()
             box.addButton(&btn, QDialogButtonBox::AcceptRole);
             box.setText(QObject::tr("Fallback display setting failed! %1").arg(var.toString()));
             box.exec();
+        }
+        else
+        {
+            isSave = false;
         }
     }
 }
