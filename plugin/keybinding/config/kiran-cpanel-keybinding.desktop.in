@@ -1,0 +1,35 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Encoding=UTF-8
+Name=Kiran Cpanel Keybinding
+Name[zh_CN]=快捷键设置
+Comment=Kiran Cpanel Keybinding
+Comment[zh_CN]=快捷键设置
+Exec=kiran-cpanel-launcher --cpanel-plugin=kiran-cpanel-keybinding
+Icon=kcp-keybinding
+Terminal=false
+Type=Application
+X-KIRAN-NoDisplay=true
+
+Categories=GTK;Settings;HardwareSettings;X-Hardware;
+StartupNotify=true
+
+[Kiran Control Panel Plugin]
+#插件排序
+Weight=2
+#插件分类
+Category=individuation
+#插件共享库位置，若以'/'开头则为绝对路径，也可支持通过共享库名去插件安装目录去查找
+Library=@CPANEL_PLUGIN_DIR@/lib@PROJECT_NAME@.so
+SubItems=Keybinding
+
+[Keybinding]
+#插件子项名 该值提供给控制中心形成子项列表
+Name=Keybinding
+Name[zh_CN]=快捷键设置
+#插件Icon
+Icon=@ICON_DIR@/kck-page-keybinding.svg
+#插件关键字 该值提供给控制中心形成搜索列表
+Keywords[zh_CN]=快捷键
+Keywords=keybinding,shortcut
+
