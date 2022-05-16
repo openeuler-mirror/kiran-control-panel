@@ -38,7 +38,7 @@ LineEditWithCheckIcon::~LineEditWithCheckIcon()
 
 void LineEditWithCheckIcon::setVerificationStatus(bool isPassed)
 {
-    QString iconPath = isPassed ? ":/kcp-account-images/icon_correct.svg" : ":/kcp-account-images/icon_error.svg";
+    QString iconPath = isPassed ? ":/kcp-account/images/success-indicator.svg" : ":/kcp-account/images/error-indicator.svg";
     m_verificationStatus = isPassed ? VERIFICATION_PASSED : VERIFICATION_ERROR;
     setIcon(QIcon(iconPath));
 }

@@ -1,9 +1,44 @@
 <RCC>
     <qresource prefix="/kiran-control-panel">
         <file>images/search.svg</file>
-    </qresource>
+        <file>images/arrow.svg</file>
+        <file>images/loading.svg</file>
+        <file>images/tips-err.svg</file>
+        <file>images/tips-suc.svg</file>
+        <file>images/tips-info.svg</file>
+        <file>images/tips-warning.svg</file>
 
-    <qresource prefix="/kiran-control-panel">
         <file>themes/kiran-black.qss</file>
     </qresource>
+
+    <qresource prefix="/kcp-account">
+        <file>images/create-user-avatar.png</file>
+        <file>images/change-user-avatar.png</file>
+        <file>images/current-avatar-indicator.svg</file>
+        <file alias="images/success-indicator.svg">images/current-avatar-indicator.svg</file>
+        <file>images/error-indicator.svg</file>
+        <file>images/finger-0.svg</file>
+        <file>images/finger-25.svg</file>
+        <file>images/finger-50.svg</file>
+        <file>images/finger-75.svg</file>
+        <file>images/finger-100.svg</file>
+        <file>images/trash.svg</file>
+        <file>images/trash-hover.svg</file>
+        <file>images/trash-pressed.svg</file>
+        <file>themes/kiran-cpanel-account.qss</file>
+    </qresource>
+
+    <qresource prefix="/kcp-appearance">
+        <file alias="select.svg">images/arrow.svg</file>
+        <file>images/indicator-selected.png</file>
+        <file>images/dark-theme.png</file>
+        <file>images/light-theme.png</file>
+        <file>images/wallpaper-delete-normal.png</file>
+        <file>images/wallpaper-delete-pre.png</file>
+        <file>images/wallpaper-delete-select.png</file>
+        <file>images/kcp-appearance-font.svg</file>
+        <file>images/kcp-appearance-themes.svg</file>
+        <file>images/kcp-appearance-wallpaper.svg</file>
+    </qresource>
+
 </RCC>

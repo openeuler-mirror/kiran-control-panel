@@ -64,10 +64,10 @@ protected:
 
 private:
     QMap<HoverTipsTypeEnum, QString> m_tipsTypeIconMap = {
-        {HOVE_TIPS_SUC, ":/kcp-account-images/suc.svg"},
-        {HOVE_TIPS_INFO, ":/kcp-account-images/info.svg"},
-        {HOVE_TIPS_WARNING, ":/kcp-account-images/warning.svg"},
-        {HOVE_TIPS_ERR, ":/kcp-account-images/err.svg"}};
+        {HOVE_TIPS_SUC, ":/kiran-control-panel/images/tips-suc.svg"},
+        {HOVE_TIPS_INFO, ":/kiran-control-panel/images/tips-info.svg"},
+        {HOVE_TIPS_WARNING, ":/kiran-control-panel/images/tips-warning.svg"},
+        {HOVE_TIPS_ERR, ":/kiran-control-panel/images/tips-err.svg"}};
     QLabel *m_iconLabel;
     QLabel *m_textLabel;
     quint32 m_hideTimeout = 3000;

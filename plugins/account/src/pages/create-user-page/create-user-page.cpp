@@ -70,7 +70,7 @@ void CreateUserPage::initUI()
     m_errorTip->setAnimationEnable(true);
 
     /// 用户头像
-    ui->avatar->setHoverImage(":/kcp-account-images/change_user_icon.png");
+    ui->avatar->setHoverImage(":/kcp-account/images/change-user-avatar.png");
     ui->avatar->setClickEnable(true);
     connect(ui->avatar, &UserAvatarWidget::pressed, [this]() {
         emit sigSetIconForNewUser(ui->avatar->iconPath());

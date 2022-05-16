@@ -16,7 +16,7 @@
 #ifndef KIRANACCOUNTMANAGER_H
 #define KIRANACCOUNTMANAGER_H
 
-#include "kiranwidgets-qt5/kiran-titlebar-window.h"
+#include <kiranwidgets-qt5/kiran-titlebar-window.h>
 
 #include <QThread>
 #include <QWidget>
@@ -38,7 +38,7 @@ public:
     explicit KiranAccountManager(QWidget *parent = nullptr);
     ~KiranAccountManager();
 
-    virtual QSize sizeHint() const;
+    QSize sizeHint() const override;
 
 private Q_SLOTS:
     void setCurrentUser(const QString &userPath);

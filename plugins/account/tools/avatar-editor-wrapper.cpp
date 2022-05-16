@@ -12,11 +12,10 @@
  * Author:     liuxinhao <liuxinhao@kylinos.com.cn>
  */
 
- 
 #include "avatar-editor-wrapper.h"
-#include "avatar-editor/include/exit-code-defines.h"
-#include "config.h"
-#include "include/global-defines.h"
+#include "exit-code-defines.h"
+#include "kcp-account-config.h"
+#include "global-defines.h"
 #include "temporary-dir-manager.h"
 
 #include <QDebug>

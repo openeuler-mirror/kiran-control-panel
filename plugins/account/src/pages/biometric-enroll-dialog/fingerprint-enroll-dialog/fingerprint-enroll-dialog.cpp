@@ -181,12 +181,12 @@ void FingerprintEnrollDialog::setProgress(unsigned int value)
         const char *image;
     };
     static const ProgressPixmapInfo pixmapArray[] = {
-        {100, ":/kcp-account-images/finger_100.svg"},
-        {75, ":/kcp-account-images/finger_75.svg"},
-        {50, ":/kcp-account-images/finger_50.svg"},
-        {25, ":/kcp-account-images/finger_25.svg"},
-        {0, ":/kcp-account-images/finger_0.svg"}};
-    QString progressImage = ":/kcp-account-images/finger_0.svg";
+        {100, ":/kcp-account/images/finger-100.svg"},
+        {75, ":/kcp-account/images/finger-75.svg"},
+        {50, ":/kcp-account/images/finger-50.svg"},
+        {25, ":/kcp-account/images/finger-25.svg"},
+        {0, ":/kcp-account/images/finger-0.svg"}};
+    QString progressImage = ":/kcp-account/images/finger-0.svg";
     for (auto i : pixmapArray)
     {
         if (value >= i.value)

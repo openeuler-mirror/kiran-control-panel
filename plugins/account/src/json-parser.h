@@ -15,8 +15,8 @@
 #ifndef KIRAN_CPANEL_ACCOUNT_SRC_JSON_PARSER_H_
 #define KIRAN_CPANEL_ACCOUNT_SRC_JSON_PARSER_H_
 
-#include <QDebug>
 #include <QString>
+#include <QDebug>
 
 struct BiometricInfo
 {

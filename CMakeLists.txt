@@ -16,26 +16,21 @@ find_package(PkgConfig REQUIRED)
 find_package(Qt5 COMPONENTS Widgets X11Extras Svg LinguistTools)
 pkg_search_module(KLOG_QT5 REQUIRED klog-qt5)
 pkg_search_module(KIRAN_WIDGETS_QT5 REQUIRED kiranwidgets-qt5)
-pkg_search_module(GLIB_2 REQUIRED glib-2.0)
+#pkg_search_module(GLIB_2 REQUIRED glib-2.0)
 
-include(install-location-define.cmake)
+include(kcp_variables.cmake)
+include(kcp-qdbus-wrapper.cmake)
+
 configure_file(${CMAKE_SOURCE_DIR}/data/config.h.in ${CMAKE_BINARY_DIR}/config.h)
 configure_file(${CMAKE_SOURCE_DIR}/data/${PROJECT_NAME}.desktop.in ${CMAKE_BINARY_DIR}/${PROJECT_NAME}.desktop)
 configure_file(${CMAKE_SOURCE_DIR}/data/${PROJECT_NAME}.pc.in ${CMAKE_BINARY_DIR}/${PROJECT_NAME}.pc @ONLY)
 
-file(GLOB_RECURSE common "common/*")
 file(GLOB_RECURSE include "./include/*")
 file(GLOB CONTROL_PANEL_SRC "./src/*")
 file(GLOB TS_FILES "../translations/*.ts")
 
 set(RESOURCE ./resources/control-panel-resources.qrc) #资源文件名不能与插件资源名相同，否则会导致插件中部分图片无法正常加载显示。
 qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
-
-include_directories(
-        "${CMAKE_BINARY_DIR}"
-        "./common"
-        "./common/kiran-module-widget/"
-        "./include")
 
 add_executable(${PROJECT_NAME}
         ${common}
@@ -45,15 +40,15 @@ add_executable(${PROJECT_NAME}
         ${QM_FILES})
 
 target_include_directories(${PROJECT_NAME} PRIVATE
-        ../include
-        ../common
-        ../common/widgets
-        ./src/
+        ${CMAKE_CURRENT_BINARY_DIR}
+        include
+        src
         ${KLOG_QT5_INCLUDE_DIRS}
-        ${KIRAN_WIDGETS_QT5_INCLUDE_DIRS}
-        ${GLIB_2_INCLUDE_DIRS})
+        ${KIRAN_WIDGETS_QT5_INCLUDE_DIRS})
 
 target_link_libraries(${PROJECT_NAME}
+        common-widgets
+        plugin-info
         Qt5::Core
         Qt5::Gui
         Qt5::Svg
@@ -62,8 +57,7 @@ target_link_libraries(${PROJECT_NAME}
         dl
         pthread
         ${KLOG_QT5_LIBRARIES}
-        ${KIRAN_WIDGETS_QT5_LIBRARIES}
-        ${GLIB_2_LIBRARIES})
+        ${KIRAN_WIDGETS_QT5_LIBRARIES})
 
 #安装kiran-control-panel
 install(TARGETS ${PROJECT_NAME} DESTINATION ${INSTALL_BINDIR}/)
@@ -84,5 +78,6 @@ install(FILES ${CATEGORY_ICONS} DESTINATION ${CATEGORY_ICON_INSTALL_DIR})
 #安装kiran-control-panel icon文件
 install(FILES "${CMAKE_SOURCE_DIR}/data/kiran-control-panel.svg" DESTINATION ${INSTALL_DATADIR}/icons/hicolor/)
 
+add_subdirectory(lib)
 add_subdirectory(launcher)
 add_subdirectory(plugins)

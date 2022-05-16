@@ -1,25 +1,25 @@
 /**
- * Copyright (c) 2020 ~ 2021 KylinSec Co., Ltd. 
+ * Copyright (c) 2020 ~ 2021 KylinSec Co., Ltd.
  * kiran-cpanel-account is licensed under Mulan PSL v2.
- * You can use this software according to the terms and conditions of the Mulan PSL v2. 
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
  * You may obtain a copy of Mulan PSL v2 at:
- *          http://license.coscl.org.cn/MulanPSL2 
- * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND, 
- * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT, 
- * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.  
- * See the Mulan PSL v2 for more details.  
- * 
+ *          http://license.coscl.org.cn/MulanPSL2
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ *
  * Author:     liuxinhao <liuxinhao@kylinos.com.cn>
  */
 
- 
 #include "select-avatar-page.h"
 #include "avatar-item-button.h"
-#include "config.h"
 #include "flowlayout.h"
+#include "kcp-account-config.h"
 #include "scrollarea-container.h"
 #include "tools/avatar-editor-wrapper.h"
 
+#include <qt5-log-i.h>
 #include <widget-property-helper.h>
 #include <QButtonGroup>
 #include <QDebug>
@@ -28,7 +28,6 @@
 #include <QHBoxLayout>
 #include <QPushButton>
 #include <QScrollArea>
-#include <qt5-log-i.h>
 
 #define SYSTEM_AVATAR_OBJ_NAME "avatar_button_system"
 #define USER_AVATAR_OBJ_NAME "avatar_button_user"
@@ -71,10 +70,10 @@ void SelectAvatarPage::setCurrentAvatar(const QString &iconPath)
     QList<AvatarItemButton *> buttons = m_scrollArea->findChildren<AvatarItemButton *>(SYSTEM_AVATAR_OBJ_NAME);
     AvatarItemButton *currentAvatar = nullptr;
 
-    //删除之前用户添加头像
+    // 删除之前用户添加头像
     removeUserAvatar();
 
-    //是否是系统头像
+    // 是否是系统头像
     for (AvatarItemButton *button : buttons)
     {
         if (button->iconPath() == iconPath)
@@ -84,7 +83,7 @@ void SelectAvatarPage::setCurrentAvatar(const QString &iconPath)
         }
     }
 
-    //当前头像路径未匹配上系统头像路径,添加新的头像
+    // 当前头像路径未匹配上系统头像路径,添加新的头像
     if (currentAvatar != nullptr)
     {
         currentAvatar->setChecked(true);
@@ -102,7 +101,7 @@ void SelectAvatarPage::setCurrentAvatar(const QString &iconPath)
         }
     }
 
-    //保证添加按钮在最后
+    // 保证添加按钮在最后
     moveAddButtonToEnd();
 }
 
@@ -112,10 +111,11 @@ void SelectAvatarPage::initUI()
     QLayoutItem *item = nullptr;
 
     m_mainLayout = new QVBoxLayout(this);
-    m_mainLayout->setContentsMargins(24, 40, 24, 0);
+    m_mainLayout->setContentsMargins(16, 25, 16, 0);
     m_mainLayout->setSpacing(0);
 
     m_scrollArea = new QScrollArea;
+    m_scrollArea->setFrameShape(QFrame::NoFrame);
     m_scrollArea->setWidgetResizable(true);
     m_scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
     m_scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -124,9 +124,9 @@ void SelectAvatarPage::initUI()
 
     m_buttonGroup = new QButtonGroup(this);
     m_buttonGroup->setExclusive(true);
-    m_flowLayout = new FlowLayout(0, 24, 24);
+    m_flowLayout = new FlowLayout(0, 16, 16);
     m_flowLayout->setMargin(0);
-    ///NOTE:为什么直接使用QWidget不行?,为什么需要重写QWidget::sizeHint方法
+    /// NOTE:为什么直接使用QWidget不行?,为什么需要重写QWidget::sizeHint方法
     auto container = new ScrollAreaContainer(m_scrollArea);
     container->setLayout(m_flowLayout);
     m_scrollArea->setWidget(container);
@@ -134,7 +134,7 @@ void SelectAvatarPage::initUI()
     m_btnLayout = new QHBoxLayout;
     m_btnLayout->setSpacing(0);
     m_btnLayout->setMargin(0);
-    m_btnLayout->setContentsMargins(0, 40, 0, 40);
+    m_btnLayout->setContentsMargins(0, 40, 0, 20);
     m_mainLayout->addItem(m_btnLayout);
 
     item = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
@@ -147,9 +147,8 @@ void SelectAvatarPage::initUI()
     btn->setText(tr("Confirm"));
     Kiran::WidgetPropertyHelper::setButtonType(btn, Kiran::BUTTON_Default);
     m_btnLayout->addWidget(btn);
-    connect(btn, &QPushButton::clicked, [this]() {
-        sigReturnToPrevPage(m_mode, true);
-    });
+    connect(btn, &QPushButton::clicked, [this]()
+            { sigReturnToPrevPage(m_mode, true); });
 
     item = new QSpacerItem(76, 20, QSizePolicy::Fixed, QSizePolicy::Minimum);
     m_btnLayout->addItem(item);
@@ -160,16 +159,16 @@ void SelectAvatarPage::initUI()
     btn->setFixedSize(252, 60);
     btn->setText(tr("Return"));
     m_btnLayout->addWidget(btn);
-    connect(btn, &QPushButton::clicked, [this]() {
-        sigReturnToPrevPage(m_mode, false);
-    });
+    connect(btn, &QPushButton::clicked, [this]()
+            { sigReturnToPrevPage(m_mode, false); });
 
     item = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
     m_btnLayout->addItem(item);
 
     loadAvatar();
-    m_addButton = addAvatar(":/kcp-account-images/add_icon.png", AVATAR_ADD, false);
-    connect(m_addButton, &AvatarItemButton::clicked, [this]() {
+    m_addButton = addAvatar(":/kcp-account/images/create-user-avatar.png", AVATAR_ADD, false);
+    connect(m_addButton, &AvatarItemButton::clicked, [this]()
+            {
         //1.选择图片
         QString fileName = QFileDialog::getOpenFileName(this, tr("select picture"),
                                                         QDir::homePath(),
@@ -187,11 +186,10 @@ void SelectAvatarPage::initUI()
         {
             addAvatar(dstImagePath, AVATAR_CUSTOM, false);
             moveAddButtonToEnd();
-        }
-    });
+        } });
 }
 
-//加载/usr/share/kiran-account-manager/account-icons/下*.face显示
+// 加载/usr/share/kiran-account-manager/account-icons/下*.face显示
 void SelectAvatarPage::loadAvatar()
 {
     QDir dir(BUILDIN_AVATAR_DIR_PATH);
@@ -234,9 +232,9 @@ AvatarItemButton *SelectAvatarPage::addAvatar(const QString &iconPath, AvatarTyp
 
 void SelectAvatarPage::removeUserAvatar()
 {
-    //删除非系统头像
+    // 删除非系统头像
     QList<AvatarItemButton *> userAvatars = m_scrollArea->findChildren<AvatarItemButton *>(USER_AVATAR_OBJ_NAME);
-    //删除用户添加的头像
+    // 删除用户添加的头像
     QList<AvatarItemButton *> customAvatars = m_scrollArea->findChildren<AvatarItemButton *>(CUSTOM_AVATAR_OBJ_NAME);
 
     QList<AvatarItemButton *> deleteAvatars;

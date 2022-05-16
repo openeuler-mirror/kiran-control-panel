@@ -18,7 +18,7 @@
   */
  
 #include "user-avatar-widget.h"
-#include "config.h"
+#include "kcp-account-config.h"
 
 #include <QFile>
 #include <QMouseEvent>

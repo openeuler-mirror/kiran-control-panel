@@ -26,7 +26,7 @@
 
 AnimationPushButton::AnimationPushButton(QWidget *parent)
     : QPushButton(parent),
-      m_svgRender(QString(":/kcp-account-images/loading.svg"), this)
+      m_svgRender(QString(":/kiran-control-panel/images/loading.svg"), this)
 {
     initTimeLine();
 }

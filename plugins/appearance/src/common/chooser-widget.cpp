@@ -16,7 +16,7 @@
 #include <QMouseEvent>
 #include <QPainter>
 #include <QStyleOption>
-#include "common/include.h"
+#include "include.h"
 #include "ui_chooser-widget.h"
 
 ChooserWidget::ChooserWidget(QString title, int type, QWidget *parent) : QWidget(parent),

@@ -11,9 +11,6 @@
  * 
  * Author:     liuxinhao <liuxinhao@kylinos.com.cn>
  */
-
- 
-
 #ifndef KIRAN_ACCOUNT_MANAGER_AUTH_MANAGER_PAGE_H
 #define KIRAN_ACCOUNT_MANAGER_AUTH_MANAGER_PAGE_H
 

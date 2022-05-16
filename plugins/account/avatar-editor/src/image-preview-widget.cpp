@@ -18,6 +18,7 @@
 #include <QFile>
 #include <QMouseEvent>
 #include <QPainter>
+#include <QPainterPath>
 #include <QResizeEvent>
 #include <QTimer>
 #include <QWheelEvent>

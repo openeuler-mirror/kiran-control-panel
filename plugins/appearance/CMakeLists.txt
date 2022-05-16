@@ -1,41 +1,58 @@
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.2)
 
-project(kiran-cpanel-appearance)
-
-include(GNUInstallDirs)
-
-set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
-
-set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTOUIC ON)
-set(CMAKE_AUTORCC ON)
+set(TARGET_NAME kiran-cpanel-appearance)
 
 find_package(PkgConfig REQUIRED)
 find_package(Qt5 COMPONENTS Widgets Svg DBus LinguistTools Xml Concurrent Network)
-find_package(KiranDBusGenerate REQUIRED)
 pkg_search_module(KIRAN_WIDGETS_QT5 REQUIRED kiranwidgets-qt5)
 pkg_search_module(KLOG_QT5 REQUIRED klog-qt5)
 pkg_search_module(KIRAN_CC_DAEMON REQUIRED kiran-cc-daemon)
 
-#通过kiran control panel的pkgconfig配置文件取出插件Desktop安装位置、插件共享库安装位置
-pkg_search_module(KIRAN_CONTROL_PANEL_PKG REQUIRED kiran-control-panel)
-pkg_get_variable(CPANEL_PLUGIN_DIR kiran-control-panel plugin_location)
-pkg_get_variable(CPANEL_DESKTOP_DIR kiran-control-panel plugin_desktop_location)
-
-
 set(DATA_DIR "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATADIR}")
-set(TRANSLATIONS_DIR "${DATA_DIR}/${PROJECT_NAME}/translations/")
-set( TS_FILES "${PROJECT_SOURCE_DIR}/translations/kiran-cpanel-appearance.zh_CN.ts" )
+set(TRANSLATIONS_DIR "${DATA_DIR}/${TARGET_NAME}/translations/")
 
-#添加config.h.in文件
-configure_file (
-"${PROJECT_SOURCE_DIR}/config/config.h.in"
-"${PROJECT_BINARY_DIR}/config/config.h"
-)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config/config.h.in ${CMAKE_CURRENT_BINARY_DIR}/config/config.h)
 
+kiran_qt5_add_dbus_interface_ex(APPEARANCE_PROXY
+        src/dbus-interface/com.kylinsec.Kiran.SessionDaemon.Appearance.xml
+        appearance_backEnd_proxy AppearanceBackEndProxy)
 
-add_subdirectory(src)
-add_subdirectory(resources)
+qt5_create_translation( APPEARANCE_QM_FILES ${CMAKE_CURRENT_SOURCE_DIR} translations/kiran-cpanel-appearance.zh_CN.ts )
+
+file(GLOB_RECURSE APPEARANCE_SOURCE "*.cpp" "*.h")
+file(GLOB_RECURSE APPEARANCE_FORMS "*.ui")
+file(GLOB_RECURSE APPEARANCE_QRC "*.qrc")
+
+add_library(${TARGET_NAME} SHARED
+        ${APPEARANCE_SOURCE}
+        ${APPEARANCE_FORMS}
+        ${APPEARANCE_QRC}
+        ${APPEARANCE_PROXY}
+        ${APPEARANCE_QM_FILES})
+
+target_include_directories(${TARGET_NAME} PRIVATE
+        src
+        ${CMAKE_CURRENT_BINARY_DIR}
+        ${KLOG_QT5_INCLUDE_DIRS}
+        ${KIRAN_WIDGETS_QT5_INCLUDE_DIRS}
+        ${KIRAN_CC_DAEMON_INCLUDE_DIRS}
+        ${KCP_PLUGIN_INCLUDE_DIR})
+
+target_link_libraries(${TARGET_NAME}
+        Qt5::Widgets
+        Qt5::DBus
+        Qt5::Svg
+        Qt5::Core
+        Xcursor
+        X11
+        ${KIRANWIDGETS_QT5_LIBRARIES}
+        ${KLOG_QT5_LIBRARIES})
+
+install(TARGETS ${TARGET_NAME}
+        DESTINATION ${PLUGIN_LIBS_INSTALL_DIR}/)
+
+install(FILES ${QM_FILES}
+        DESTINATION ${TRANSLATIONS_DIR})
+
 add_subdirectory(config)
+add_subdirectory(resources)

@@ -35,7 +35,7 @@
       <number>0</number>
      </property>
      <property name="topMargin">
-      <number>50</number>
+      <number>25</number>
      </property>
      <item>
       <spacer name="horizontalSpacer">
@@ -93,7 +93,7 @@
       <number>0</number>
      </property>
      <property name="topMargin">
-      <number>24</number>
+      <number>16</number>
      </property>
      <item>
       <widget class="QLabel" name="label_name">
@@ -117,13 +117,13 @@
        <property name="minimumSize">
         <size>
          <width>0</width>
-         <height>40</height>
+         <height>36</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
          <width>16777215</width>
-         <height>40</height>
+         <height>36</height>
         </size>
        </property>
        <property name="contextMenuPolicy">
@@ -139,7 +139,7 @@
       <number>0</number>
      </property>
      <property name="topMargin">
-      <number>24</number>
+      <number>16</number>
      </property>
      <item>
       <widget class="QLabel" name="label_userType">
@@ -163,13 +163,13 @@
        <property name="minimumSize">
         <size>
          <width>0</width>
-         <height>40</height>
+         <height>36</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
          <width>16777215</width>
-         <height>40</height>
+         <height>36</height>
         </size>
        </property>
       </widget>
@@ -182,7 +182,7 @@
       <number>0</number>
      </property>
      <property name="topMargin">
-      <number>24</number>
+      <number>16</number>
      </property>
      <item>
       <widget class="QLabel" name="label_passwd">
@@ -212,13 +212,13 @@
        <property name="minimumSize">
         <size>
          <width>0</width>
-         <height>38</height>
+         <height>36</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
          <width>16777215</width>
-         <height>40</height>
+         <height>36</height>
         </size>
        </property>
       </widget>
@@ -231,7 +231,7 @@
       <number>0</number>
      </property>
      <property name="topMargin">
-      <number>24</number>
+      <number>16</number>
      </property>
      <item>
       <widget class="QLabel" name="label_confirmPasswd">
@@ -261,13 +261,13 @@
        <property name="minimumSize">
         <size>
          <width>0</width>
-         <height>38</height>
+         <height>36</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
          <width>16777215</width>
-         <height>40</height>
+         <height>36</height>
         </size>
        </property>
       </widget>
@@ -280,7 +280,7 @@
       <number>0</number>
      </property>
      <property name="topMargin">
-      <number>24</number>
+      <number>16</number>
      </property>
      <property name="bottomMargin">
       <number>10</number>
@@ -344,7 +344,7 @@
       <number>0</number>
      </property>
      <property name="bottomMargin">
-      <number>40</number>
+      <number>20</number>
      </property>
      <item>
       <spacer name="horizontalSpacer_4">

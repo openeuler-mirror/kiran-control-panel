@@ -16,7 +16,7 @@
 #include "kiran-account-manager.h"
 #include "account-itemwidget.h"
 #include "accounts-global-info.h"
-#include "config.h"
+#include "kcp-account-config.h"
 #include "hard-worker.h"
 
 #include "mask-widget.h"
@@ -124,7 +124,6 @@ void KiranAccountManager::initUI()
 
     /* 初始化界面主布局 */
     auto contentLayout = new QHBoxLayout(this);
-    contentLayout->setSpacing(0);
     contentLayout->setObjectName("AccountContentLayout");
     contentLayout->setContentsMargins(0, 0, 0, 0);
 
@@ -141,26 +140,39 @@ void KiranAccountManager::initUI()
     vLayout->setObjectName("SiderbarVLayout");
 
     m_tabList = new KiranSidebarWidget(siderbar);
+    m_tabList->setFrameShape(QFrame::NoFrame);
     m_tabList->setObjectName("tabList");
     m_tabList->setIconSize(QSize(40, 40));
     vLayout->addWidget(m_tabList);
     initUserList();
 
+    /* 分隔线 */
+    QFrame* spiliteLine = new QFrame(this);
+    spiliteLine->setFixedWidth(1);
+    spiliteLine->setFrameShape(QFrame::VLine);
+    spiliteLine->setFrameShadow(QFrame::Plain);
+    contentLayout->addWidget(spiliteLine);
+    spiliteLine->setSizePolicy(QSizePolicy::Minimum,QSizePolicy::Expanding);
+
     /* 内容区域 */
+#if 0
     QScrollArea *scrollArea = new QScrollArea(this);
+    scrollArea->setFrameShape(QFrame::NoFrame);
     scrollArea->setWidgetResizable(true);
 
     QWidget *scrollAreaContentWidget = new QWidget(this);
     QHBoxLayout *scrollAreaContentLayout = new QHBoxLayout;
     scrollAreaContentLayout->setMargin(0);
     scrollAreaContentWidget->setLayout(scrollAreaContentLayout);
+#endif
 
     m_stackWidget = new QStackedWidget(this);
     m_stackWidget->setObjectName("StackWidget");
-    scrollAreaContentLayout->addWidget(m_stackWidget);
+//    scrollAreaContentLayout->addWidget(m_stackWidget);
+    contentLayout->addWidget(m_stackWidget);
 
-    scrollArea->setWidget(scrollAreaContentWidget);
-    contentLayout->addWidget(scrollArea);
+//    scrollArea->setWidget(scrollAreaContentWidget);
+//    contentLayout->addWidget(scrollArea);
 
     m_page_createUser = new CreateUserPage(m_stackWidget);
     m_stackWidget->insertWidget(PAGE_CREATE_USER, m_page_createUser);
@@ -216,7 +228,7 @@ void KiranAccountManager::initUserList()
 
     ///创建用户按钮
     m_createUserItem = new QListWidgetItem(tr("Create new user"), m_tabList);
-    m_createUserItem->setIcon(QIcon(":/kcp-account-images/add_icon.png"));
+    m_createUserItem->setIcon(QIcon(":/kcp-account/images/create-user-avatar.png"));
     m_tabList->addItem(m_createUserItem);
 
     //加载非系统用户
@@ -429,7 +441,7 @@ void KiranAccountManager::setMaskVisible(bool visible)
 
 QSize KiranAccountManager::sizeHint() const
 {
-    return QSize(1020, 746);
+    return QSize(969, 679);
 }
 
 void KiranAccountManager::initPagePasswdExpirationPolicy()

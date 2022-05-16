@@ -16,6 +16,7 @@
 #include <kiran-log/qt5-log-i.h>
 #include <math.h>
 #include <QPainter>
+#include <QPainterPath>
 #include <QVBoxLayout>
 #include "../wallpaper-def.h"
 

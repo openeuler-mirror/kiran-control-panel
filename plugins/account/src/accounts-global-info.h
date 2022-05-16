@@ -11,8 +11,6 @@
  * 
  * Author:     liuxinhao <liuxinhao@kylinos.com.cn>
  */
-
- 
 #ifndef ACCOUNTSGLOBALINFO_H
 #define ACCOUNTSGLOBALINFO_H
 

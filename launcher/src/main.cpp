@@ -28,6 +28,7 @@
 #include <QTranslator>
 #include <iostream>
 #include <locale.h>
+#include <QStyleFactory>
 
 int main(int argc, char *argv[])
 {
@@ -138,7 +139,7 @@ int main(int argc, char *argv[])
     w.setIcon(titleIcon);
     w.setPlugin(pluginHelper);
     KLOG_DEBUG() << "sizeHint:" << w.sizeHint();
-    w.resize(w.sizeHint());
+
 
     int screeNum = QApplication::desktop()->screenNumber(QCursor::pos());
     QRect screenGeometry = QApplication::desktop()->screenGeometry(screeNum);

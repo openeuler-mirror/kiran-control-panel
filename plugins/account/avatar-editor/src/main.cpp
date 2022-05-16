@@ -25,8 +25,8 @@
 #include <qt5-log-i.h>
 #include <iostream>
 
-#include "../config.h"
-#include "include/exit-code-defines.h"
+#include "kcp-account-config.h"
+#include "exit-code-defines.h"
 #include "kiran-avatar-editor.h"
 
 //预览图像路径

@@ -111,7 +111,7 @@ void AvatarItemButton::paintEvent(QPaintEvent *event)
         QPoint checkedIconLeftop((this->width() - checkedIconSize.width()) / 2,
                                  (this->height() - checkedIconSize.height()) / 2);
         QRect checkedIconRect(checkedIconLeftop, checkedIconSize);
-        QSvgRenderer svgRenderer(QString(":/kcp-account-images/icon_correct.svg"));
+        QSvgRenderer svgRenderer(QString(":/kcp-account/images/success-indicator.svg"));
         svgRenderer.render(&painter, checkedIconRect);
     }
 }

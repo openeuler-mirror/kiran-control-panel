@@ -13,7 +13,7 @@
  */
 
 #include "accounts-global-info.h"
-#include "config.h"
+#include "kcp-account-config.h"
 #include "ksd_accounts_proxy.h"
 #include "ksd_accounts_user_proxy.h"
 
@@ -78,10 +78,9 @@ bool AccountsGlobalInfo::init()
         }
         settings.endGroup();
     };
-    KLOG_INFO("show root:%s", m_showRoot ? "true" : "false");
+    KLOG_DEBUG("show root:%s", m_showRoot ? "true" : "false");
 
     ///加载用户
-    QList<QDBusObjectPath> users;
     QDBusPendingReply<QList<QDBusObjectPath>> pendingReply;
     QList<QDBusObjectPath> objList;
     QList<QDBusObjectPath>::iterator objListIter;

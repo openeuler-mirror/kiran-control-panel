@@ -1,24 +1,17 @@
-set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTOUIC ON)
-
-file(GLOB_RECURSE KEYBOARD_DBUS_XML "dbus-wrapper/com.kylinsec.Kiran.SessionDaemon.Keyboard.xml")
-
 #定义源文件和头文件
 file(GLOB_RECURSE SOURCES "*.cpp")
 file(GLOB_RECURSE HEADERS "*.h")
 file(GLOB_RECURSE FORMS "*.ui")
-file(GLOB_RECURSE RESOURCES "${PROJECT_SOURCE_DIR}/resources/*.qrc")
-file(GLOB_RECURSE QSS "${PROJECT_SOURCE_DIR}/resources/style/*.qss")
+file(GLOB_RECURSE RESOURCES "${CMAKE_CURRENT_SOURCE_DIR}/resources/*.qrc")
+
 qt5_create_translation( QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES} )
 
-set_source_files_properties(${KEYBOARD_DBUS_XML} PROPERTIES
-	CLASSNAME "KeyboardBackEndProxy"
-	NO_NAMESPACE true
-)
+kiran_qt5_add_dbus_interface_ex(KEYBOARD_PROXY
+		dbus-wrapper/com.kylinsec.Kiran.SessionDaemon.Keyboard.xml
+		keyboard_backEnd_proxy
+		KeyboardBackEndProxy)
 
-kiran_qt5_add_dbus_interface(KEYBOARD_PROXY ${KEYBOARD_DBUS_XML} keyboard_backEnd_proxy)
-
-add_library(${PROJECT_NAME} SHARED
+add_library(${TARGET_NAME} SHARED
 	${SOURCES}
 	${HEADERS}
 	${FORMS}
@@ -27,14 +20,15 @@ add_library(${PROJECT_NAME} SHARED
 	${QM_FILES}
 	${QSS})
 
-target_include_directories(${PROJECT_NAME} PRIVATE
-	${CMAKE_BINARY_DIR}
-        ${KIRAN_CONTROL_PANEL_PKG_INCLUDE_DIRS}
+target_include_directories(${TARGET_NAME} PRIVATE
+		${CMAKE_CURRENT_BINARY_DIR}
+		${CMAKE_CURRENT_BINARY_DIR}/../
+        ${KCP_PLUGIN_INCLUDE_DIR}
         ${KLOG_QT5_INCLUDE_DIRS}
         ${KIRAN_WIDGETS_QT5_INCLUDE_DIRS}
         ${KIRAN_CC_DAEMON_INCLUDE_DIRS})
 
-target_link_libraries(${PROJECT_NAME} 
+target_link_libraries(${TARGET_NAME}
 	Qt5::Widgets
 	Qt5::DBus
 	Qt5::Svg
@@ -42,7 +36,7 @@ target_link_libraries(${PROJECT_NAME}
 	${KIRANWIDGETS_QT5_LIBRARIES}
 	${KLOG_QT5_LIBRARIES})
 
-install(TARGETS ${PROJECT_NAME}
+install(TARGETS ${TARGET_NAME}
         DESTINATION ${CPANEL_PLUGIN_DIR}/)
 
 install(FILES ${QM_FILES}

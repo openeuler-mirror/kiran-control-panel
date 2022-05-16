@@ -15,7 +15,7 @@
 
 #ifndef INTERFACE_H
 #define INTERFACE_H
-#include <kiran-control-panel/kcp-plugin-interface.h>
+#include "kcp-plugin-interface.h"
 
 class QTranslator;
 class KcpInterface : public QObject, public KcpPluginInterface
