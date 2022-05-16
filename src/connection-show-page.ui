@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>ConnectionShowPage</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,1,0">
+  <layout class="QVBoxLayout" name="verticalScrollAreaWidgetContentsLayout" stretch="0,1,0">
    <item>
     <widget class="QWidget" name="widget_2" native="true">
      <property name="sizePolicy">
@@ -53,9 +53,9 @@
     </widget>
    </item>
    <item>
-    <layout class="QVBoxLayout" name="verticalLayout">
+    <layout class="QVBoxLayout" name="m_verticalDeviceWidgetLayout">
      <item>
-      <widget class="QListWidget" name="connectionLists">
+      <widget class="ConnectionLists" name="connectionLists">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
          <horstretch>0</horstretch>
@@ -100,6 +100,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ConnectionLists</class>
+   <extends>QListWidget</extends>
+   <header location="global">connection-lists.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

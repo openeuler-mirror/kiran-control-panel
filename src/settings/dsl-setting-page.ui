@@ -28,7 +28,7 @@
         <height>708</height>
        </rect>
       </property>
-      <layout class="QVBoxLayout" name="verticalLayout_3">
+      <layout class="QVBoxLayout" name="m_verticalLayout">
        <property name="spacing">
         <number>6</number>
        </property>

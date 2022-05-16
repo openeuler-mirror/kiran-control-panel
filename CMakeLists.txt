@@ -36,8 +36,8 @@ target_include_directories(${PROJECT_NAME} PRIVATE
         src/manager
         src/settings
         src/settings/vpn
-        src/widgets
-        src/widgets/vpn
+        src/setting-widget
+        src/setting-widget/vpn
         #暂时添加tray方便调试，之后修改
         src/tray
         src/tray/dbus

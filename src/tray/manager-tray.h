@@ -16,13 +16,10 @@
 
 #include <QSystemTrayIcon>
 #include <QWidget>
-QT_BEGIN_NAMESPACE
-namespace Ui
-{
-class ManagerTray;
-}
-QT_END_NAMESPACE
-
+#include <QVBoxLayout>
+class WiredTrayPage;
+class WirelessTrayPage;
+class StatusNotifierManagerInterface;
 class ManagerTray : public QWidget
 {
     Q_OBJECT
@@ -31,11 +28,30 @@ public:
     explicit ManagerTray(QWidget *parent = nullptr);
     ~ManagerTray() override;
     void init();
+
     void initConnect();
+    void initUI();
+    void initTrayIcon();
+    void initMenu();
+    void initWiredTrayPage();
+    void initWirelessTrayPage();
+
+    void getTrayGeometry();
+    void setTrayPagePos();
+
+public:
+    void handleTrayClicked(QSystemTrayIcon::ActivationReason reason);
+    void showTrayPage();
+    void setTrayIcon();
 
 private:
-    Ui::ManagerTray *ui;
     QSystemTrayIcon *m_systemTray;
+    WiredTrayPage *m_wiredTrayPage;
+    WirelessTrayPage *m_wirelessTrayPage;
+    StatusNotifierManagerInterface *m_statusNotifierManager;
+
+    QVBoxLayout *m_verticalLayout;
+    int m_xTray, m_yTray, m_heightTray, m_widthTray;
 };
 
-#endif  //KIRAN_CPANEL_NETWORK_MANAGER_TRAY_H
+#endif  // KIRAN_CPANEL_NETWORK_MANAGER_TRAY_H

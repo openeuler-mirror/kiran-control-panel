@@ -12,51 +12,68 @@
  * Author:     luoqing <luoqing@kylinos.com.cn>
  */
 
-#ifndef KIRAN_CPANEL_NETWORK_CONNECTION_SHOW_PAGE_H
-#define KIRAN_CPANEL_NETWORK_CONNECTION_SHOW_PAGE_H
+#ifndef KIRAN_CPANEL_NETWORK_CONNECTION_LISTS_H
+#define KIRAN_CPANEL_NETWORK_CONNECTION_LISTS_H
 
 #include <NetworkManagerQt/Connection>
 #include <NetworkManagerQt/Manager>
 #include <NetworkManagerQt/WirelessNetwork>
+#include <QHBoxLayout>
+#include <QLabel>
+#include <QListWidget>
 #include <QListWidgetItem>
+#include <QPushButton>
 #include <QWidget>
+#include "custom-itemwidget.h"
 
-QT_BEGIN_NAMESPACE
-namespace Ui
-{
-class ConnectionShowPage;
-}
-QT_END_NAMESPACE
 using namespace NetworkManager;
-class KiranSwitchButton;
-#include "connection-lists.h"
 
-class ConnectionShowPage : public QWidget
+struct WirelessConnectionInfo
+{
+    int signalStrength;
+    QString accessPointPath;
+    QString ssid;
+    bool securitySetting;
+};
+
+struct ConnectionInfo
+{
+    QString uuid;
+    QString connectionPath;
+    QString devicePath;
+    QString activeConnectionPath;
+    bool isWireless = false;
+    WirelessConnectionInfo wirelessInfo;
+};
+
+Q_DECLARE_METATYPE(ConnectionInfo);
+Q_DECLARE_METATYPE(NetworkManager::Status)
+
+class ConnectionLists : public QListWidget
 {
     Q_OBJECT
 
 public:
-    explicit ConnectionShowPage(QWidget *parent = nullptr);
-    ~ConnectionShowPage() override;
+    explicit ConnectionLists(QWidget *parent = nullptr);
+    ~ConnectionLists() override;
     void initUI();
     void initConnect();
 
-    void setTitle(QString title);
-    void setSwitchButtonVisible(bool visible);
-    void setCreateButtonVisible(bool visible);
-
     // 在kf5-NetworkManager-qt中Connection是指具体的网络配置，不是指已经存在的网络
-    void showConnectionLists(ConnectionSettings::ConnectionType type);
+    void showConnectionLists(ConnectionSettings::ConnectionType type, ItemWidgetType itemType);
     void addConnectionToLists(Connection::Ptr ptr, const QString &devicePath);
+    void showWiredStatusIcon();
 
     // 在kf5-NetworkManager-qt中Network是指存在的网络
     void showWirelessNetworkLists();
     void addWirelessNetworkToLists(WirelessNetwork::Ptr network,
                                    const QString &devicePath);
+    void addOtherWirelessItemToLists();
 
     void removeConnectionFromLists(const QString &path);
     void removeWirelessNetworkFromLists(const QString &ssid);
-
+    void updateItemActivatedPath(QListWidgetItem *item,
+                                 QString activatedPath = "");
     void findItemByUuid(const QString &uuid);
     void findItemBySsid(const QString &ssid);
 
@@ -70,7 +87,6 @@ public slots:
 
 signals:
     void requestCreatConnection();
-
     void requestEditConnection(const QString &uuid, QString activeConnectionPath);
     void
     requestActivateCurrentItemConnection(const QString &connectionPath,
@@ -79,8 +95,16 @@ signals:
     void deactivatedItemConnection(const QString &connectionPath);
 
 private:
-    Ui::ConnectionShowPage *ui;
-    KiranSwitchButton *m_switchButton;
+    QListWidgetItem *m_previousActivatedItem;
+    QListWidgetItem *m_currentActiveItem;
+    ItemWidgetType m_itemShowType;
 };
 
-#endif  // KIRAN_CPANEL_NETWORK_CONNECTION_SHOW_PAGE_H
+class CustomSortListItem : public QListWidgetItem
+{
+public:
+    explicit CustomSortListItem(QWidget *parent = nullptr);
+    bool operator<(const QListWidgetItem &other) const;
+};
+
+#endif  // KIRAN_CPANEL_NETWORK_CONNECTION_LISTS_H

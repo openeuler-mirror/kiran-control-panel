@@ -17,6 +17,7 @@
 #include <NetworkManagerQt/WirelessDevice>
 #include <QEventLoop>
 #include <QScrollBar>
+#include <QPointer>
 #include "ui_wireless-manager.h"
 WirelessManager::WirelessManager(QWidget *parent) : Manager(parent), ui(new Ui::WirelessManager)
 {

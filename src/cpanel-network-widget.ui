@@ -36,7 +36,7 @@
     <number>0</number>
    </property>
    <item>
-    <layout class="QVBoxLayout" name="verticalLayout_2">
+    <layout class="QVBoxLayout" name="verticalScrollAreaWidgetContentsLayout">
      <property name="spacing">
       <number>0</number>
      </property>
@@ -65,7 +65,7 @@
     </layout>
    </item>
    <item>
-    <layout class="QVBoxLayout" name="verticalLayout">
+    <layout class="QVBoxLayout" name="m_verticalDeviceWidgetLayout">
      <property name="spacing">
       <number>0</number>
      </property>
@@ -113,7 +113,7 @@
         </layout>
        </widget>
        <widget class="VpnManager" name="vpnPage">
-        <layout class="QVBoxLayout" name="verticalLayout_3">
+        <layout class="QVBoxLayout" name="m_verticalLayout">
          <property name="spacing">
           <number>0</number>
          </property>

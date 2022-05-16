@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>WirelessWidget</class>
- <widget class="QWidget" name="WirelessWidget">
+ <class>VpnIpvx</class>
+ <widget class="QWidget" name="VpnIpvx">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>525</width>
-    <height>258</height>
+    <width>564</width>
+    <height>251</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>WirelessWidget</string>
+   <string>VpnIpvx</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
+  <layout class="QVBoxLayout" name="m_verticalDeviceWidgetLayout">
    <property name="leftMargin">
     <number>0</number>
    </property>
@@ -27,36 +27,26 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="QLabel" name="label">
+    <widget class="QLabel" name="label_18">
      <property name="text">
-      <string>SSID</string>
+      <string>IPV4 Method</string>
      </property>
     </widget>
    </item>
    <item>
-    <widget class="QLineEdit" name="ssidEdit"/>
+    <widget class="GeneralComboBox" name="ipv4Method"/>
    </item>
    <item>
-    <widget class="QLabel" name="label_19">
-     <property name="text">
-      <string>MAC Address Of Device</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="GeneralComboBox" name="deviceMac"/>
-   </item>
-   <item>
-    <layout class="QHBoxLayout" name="mtuLayout">
+    <layout class="QHBoxLayout" name="neverDefaultLayout">
      <item>
-      <widget class="QLabel" name="label_23">
+      <widget class="QLabel" name="label_4">
        <property name="text">
-        <string>Custom MTU</string>
+        <string>Only applied in corresponding resources</string>
        </property>
       </widget>
      </item>
      <item>
-      <spacer name="horizontalSpacer_5">
+      <spacer name="horizontalSpacer">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
@@ -71,7 +61,24 @@
     </layout>
    </item>
    <item>
-    <widget class="QSpinBox" name="customMTU"/>
+    <widget class="QLabel" name="label_16">
+     <property name="text">
+      <string>Preferred DNS</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLineEdit" name="ipv4PreferredDNS"/>
+   </item>
+   <item>
+    <widget class="QLabel" name="label_14">
+     <property name="text">
+      <string>Alternate DNS</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLineEdit" name="ipv4AlternateDNS"/>
    </item>
   </layout>
  </widget>

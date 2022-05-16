@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>WirelessSecurityWidget</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_3">
+  <layout class="QVBoxLayout" name="m_verticalLayout">
    <property name="leftMargin">
     <number>0</number>
    </property>
@@ -27,7 +27,7 @@
     <number>0</number>
    </property>
    <item>
-    <layout class="QVBoxLayout" name="verticalLayout">
+    <layout class="QVBoxLayout" name="m_verticalDeviceWidgetLayout">
      <item>
       <widget class="QLabel" name="label">
        <property name="text">
@@ -43,7 +43,7 @@
    <item>
     <widget class="QStackedWidget" name="stackedWidget">
      <widget class="QWidget" name="page">
-      <layout class="QVBoxLayout" name="verticalLayout_2">
+      <layout class="QVBoxLayout" name="verticalScrollAreaWidgetContentsLayout">
        <property name="spacing">
         <number>6</number>
        </property>

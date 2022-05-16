@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>EthernetWidget</class>
- <widget class="QWidget" name="EthernetWidget">
+ <class>WirelessWidget</class>
+ <widget class="QWidget" name="WirelessWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>480</width>
-    <height>383</height>
+    <width>525</width>
+    <height>258</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>EthernetWidget</string>
+   <string>WirelessWidget</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
+  <layout class="QVBoxLayout" name="m_verticalDeviceWidgetLayout">
    <property name="leftMargin">
     <number>0</number>
    </property>
@@ -27,24 +27,24 @@
     <number>0</number>
    </property>
    <item>
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>SSID</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLineEdit" name="ssidEdit"/>
+   </item>
+   <item>
     <widget class="QLabel" name="label_19">
      <property name="text">
-      <string>MAC Address Of Ethernet Device</string>
+      <string>MAC Address Of Device</string>
      </property>
     </widget>
    </item>
    <item>
     <widget class="GeneralComboBox" name="deviceMac"/>
-   </item>
-   <item>
-    <widget class="QLabel" name="label_20">
-     <property name="text">
-      <string>Ethernet Clone MAC Address</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QLineEdit" name="cloneDeviceMac"/>
    </item>
    <item>
     <layout class="QHBoxLayout" name="mtuLayout">

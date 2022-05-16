@@ -18,9 +18,10 @@
 #include <NetworkManagerQt/Settings>
 #include <NetworkManagerQt/VpnConnection>
 #include <QDialog>
+#include <QPointer>
 #include <QScrollBar>
+#include "setting-widget/input-dialog.h"
 #include "ui_vpn-manager.h"
-#include "widgets/input-dialog.h"
 
 Q_DECLARE_METATYPE(VpnType)
 

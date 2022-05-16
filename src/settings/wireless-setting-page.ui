@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>WirelessSettingPage</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
+  <layout class="QVBoxLayout" name="m_verticalDeviceWidgetLayout">
    <property name="spacing">
     <number>6</number>
    </property>

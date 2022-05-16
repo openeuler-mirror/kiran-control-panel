@@ -32,7 +32,7 @@
       <number>0</number>
      </property>
      <widget class="QWidget" name="page">
-      <layout class="QVBoxLayout" name="verticalLayout_2">
+      <layout class="QVBoxLayout" name="verticalScrollAreaWidgetContentsLayout">
        <property name="spacing">
         <number>0</number>
        </property>
@@ -105,7 +105,7 @@
            </property>
            <item>
             <widget class="QWidget" name="vpnTypeWidget" native="true">
-             <layout class="QVBoxLayout" name="verticalLayout">
+             <layout class="QVBoxLayout" name="m_verticalDeviceWidgetLayout">
               <property name="leftMargin">
                <number>0</number>
               </property>
@@ -156,7 +156,7 @@
               </layout>
              </widget>
              <widget class="QWidget" name="page_4">
-              <layout class="QVBoxLayout" name="verticalLayout_3">
+              <layout class="QVBoxLayout" name="m_verticalLayout">
                <property name="spacing">
                 <number>0</number>
                </property>

@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Ipv6Widget</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
+  <layout class="QVBoxLayout" name="m_verticalDeviceWidgetLayout">
    <property name="leftMargin">
     <number>0</number>
    </property>
@@ -45,7 +45,7 @@
    </item>
    <item>
     <widget class="QWidget" name="ipv6Manual" native="true">
-     <layout class="QVBoxLayout" name="verticalLayout_3">
+     <layout class="QVBoxLayout" name="m_verticalLayout">
       <property name="spacing">
        <number>0</number>
       </property>

@@ -17,6 +17,7 @@
 #include <NetworkManagerQt/Device>
 #include <NetworkManagerQt/Manager>
 #include <QWidget>
+#include <QTimer>
 enum EditPages
 {
     PAGE_SHOW,

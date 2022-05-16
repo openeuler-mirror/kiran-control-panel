@@ -18,6 +18,7 @@
 #include <NetworkManagerQt/Manager>
 #include <NetworkManagerQt/Settings>
 #include <QScrollBar>
+#include <QPointer>
 #include "ui_wired-manager.h"
 
 WiredManager::WiredManager(QWidget *parent) : Manager(parent), ui(new Ui::WiredManager)

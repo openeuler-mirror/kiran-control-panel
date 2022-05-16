@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>InputDialog</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_2">
+  <layout class="QVBoxLayout" name="verticalScrollAreaWidgetContentsLayout">
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_2">
      <property name="spacing">
@@ -32,7 +32,7 @@
     </layout>
    </item>
    <item>
-    <layout class="QVBoxLayout" name="verticalLayout">
+    <layout class="QVBoxLayout" name="m_verticalDeviceWidgetLayout">
      <item>
       <widget class="QLabel" name="textLabel">
        <property name="text">

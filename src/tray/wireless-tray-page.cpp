@@ -12,15 +12,14 @@
  * Author:     luoqing <luoqing@kylinos.com.cn>
  */
 
-#include "wireless-tray.h"
-#include "ui_wireless-tray.h"
+#include "wireless-tray-page.h"
 
-WirelessTray::WirelessTray(QWidget *parent) : QWidget(parent), ui(new Ui::WirelessTray)
+WirelessTrayPage::WirelessTrayPage(QWidget *parent) : TrayPage(parent)
 {
-    ui->setupUi(this);
+
 }
 
-WirelessTray::~WirelessTray()
+WirelessTrayPage::~WirelessTrayPage()
 {
-    delete ui;
+
 }

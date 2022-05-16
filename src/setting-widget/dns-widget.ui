@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>GeneralButton</class>
- <widget class="QWidget" name="GeneralButton">
+ <class>DnsWidget</class>
+ <widget class="QWidget" name="DnsWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>357</width>
-    <height>82</height>
+    <width>353</width>
+    <height>137</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>GeneralButton</string>
+   <string>DnsWidget</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
+  <layout class="QVBoxLayout" name="m_verticalDeviceWidgetLayout">
    <property name="leftMargin">
     <number>0</number>
    </property>
@@ -27,18 +27,24 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="QPushButton" name="disconnectButton">
+    <widget class="QLabel" name="label_16">
      <property name="text">
-      <string>Disconnect</string>
+      <string>Preferred DNS</string>
      </property>
     </widget>
    </item>
    <item>
-    <widget class="QPushButton" name="deleteButton">
+    <widget class="QLineEdit" name="preferredDNS"/>
+   </item>
+   <item>
+    <widget class="QLabel" name="label_14">
      <property name="text">
-      <string>Delete</string>
+      <string>Alternate DNS</string>
      </property>
     </widget>
+   </item>
+   <item>
+    <widget class="QLineEdit" name="alternateDNS"/>
    </item>
   </layout>
  </widget>

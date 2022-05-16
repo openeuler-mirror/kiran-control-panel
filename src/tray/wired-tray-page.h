@@ -16,24 +16,23 @@
 #define KIRAN_CPANEL_NETWORK_WIRED_TRAY_H
 
 #include <QWidget>
+#include "tray-page.h"
 
-QT_BEGIN_NAMESPACE
-namespace Ui
-{
-class WiredTray;
-}
-QT_END_NAMESPACE
-
-class WiredTray : public QWidget
+class WiredTrayPage : public TrayPage
 {
     Q_OBJECT
 
 public:
-    explicit WiredTray(QWidget *parent = nullptr);
-    ~WiredTray() override;
+    explicit WiredTrayPage(QWidget *parent = nullptr);
+    ~WiredTrayPage() override;
 
+    void init();
+    void initConnection();
+    void initUI();
+
+    void showWiredConnectionLists();
 private:
-    Ui::WiredTray *ui;
+
 };
 
 #endif  //KIRAN_CPANEL_NETWORK_WIRED_TRAY_H

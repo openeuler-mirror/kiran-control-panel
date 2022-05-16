@@ -12,28 +12,32 @@
  * Author:     luoqing <luoqing@kylinos.com.cn>
  */
 
-#ifndef KIRAN_CPANEL_NETWORK_WIRELESS_TRAY_H
-#define KIRAN_CPANEL_NETWORK_WIRELESS_TRAY_H
-
-#include <QWidget>
-
-QT_BEGIN_NAMESPACE
-namespace Ui
+#include "wired-tray-page.h"
+#include "connection-lists.h"
+WiredTrayPage::WiredTrayPage(QWidget *parent) : TrayPage(parent)
 {
-class WirelessTray;
+    init();
 }
-QT_END_NAMESPACE
 
-class WirelessTray : public QWidget
+WiredTrayPage::~WiredTrayPage()
 {
-    Q_OBJECT
+}
+void WiredTrayPage::init()
+{
+    initUI();
+}
+void WiredTrayPage::initConnection()
+{
+}
 
-public:
-    explicit WirelessTray(QWidget *parent = nullptr);
-    ~WirelessTray() override;
+void WiredTrayPage::initUI()
+{
+    setDeviceLabel(tr("Select wired network card"));
+    showWiredConnectionLists();
+}
 
-private:
-    Ui::WirelessTray *ui;
-};
-
-#endif  //KIRAN_CPANEL_NETWORK_WIRELESS_TRAY_H
+void WiredTrayPage::showWiredConnectionLists()
+{
+    m_connectionLists->showConnectionLists(ConnectionSettings::Wired, ITEM_WIDGET_TYPE_TRAY);
+    m_connectionLists->showWiredStatusIcon();
+}
