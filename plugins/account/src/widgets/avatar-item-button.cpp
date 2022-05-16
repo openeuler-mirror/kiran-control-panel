@@ -21,6 +21,7 @@
 
 #include <QMouseEvent>
 #include <QPainter>
+#include <QPainterPath>
 #include <QResizeEvent>
 #include <QStyleOption>
 #include <QSvgRenderer>

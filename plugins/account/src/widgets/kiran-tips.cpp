@@ -24,6 +24,7 @@
 #include <QGraphicsDropShadowEffect>
 #include <QGraphicsOpacityEffect>
 #include <QPainter>
+#include <QPainterPath>
 #include <QStyleOption>
 #include <QTimerEvent>
 

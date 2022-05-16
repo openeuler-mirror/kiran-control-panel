@@ -20,10 +20,10 @@
 #include "user-avatar-widget.h"
 #include "config.h"
 
-#include <QDebug>
 #include <QFile>
 #include <QMouseEvent>
 #include <QPainter>
+#include <QPainterPath>
 #include <QtMath>
 #include <qt5-log-i.h>
 

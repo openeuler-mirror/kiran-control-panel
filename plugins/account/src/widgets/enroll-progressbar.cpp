@@ -20,6 +20,7 @@
 
 #include "enroll-progressbar.h"
 #include <QPainter>
+#include <QPainterPath>
 
 EnrollProgressBar::EnrollProgressBar(QWidget *parent) : QWidget(parent)
 {

@@ -85,3 +85,4 @@ install(FILES ${CATEGORY_ICONS} DESTINATION ${CATEGORY_ICON_INSTALL_DIR})
 install(FILES "${CMAKE_SOURCE_DIR}/data/kiran-control-panel.svg" DESTINATION ${INSTALL_DATADIR}/icons/hicolor/)
 
 add_subdirectory(launcher)
+add_subdirectory(plugins)

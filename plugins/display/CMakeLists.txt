@@ -54,7 +54,7 @@ install(FILES ${CMAKE_BINARY_DIR}/kiran-cpanel-display.desktop DESTINATION ${CPA
 
 SET(link_source ${CPANEL_DESKTOP_DIR}/${PROJECT_NAME}.desktop)
 SET(link_target ${CMAKE_BINARY_DIR}/${PROJECT_NAME}-link.desktop)
-add_custom_target(kcp-applications-desktop ALL COMMAND ln -sf ${link_source} ${link_target})
+add_custom_target(kcp-applications-account-desktop ALL COMMAND ln -sf ${link_source} ${link_target})
 install(FILES ${link_target}
         DESTINATION ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATADIR}/applications/
         RENAME ${PROJECT_NAME}.desktop)
@@ -69,5 +69,5 @@ install(FILES "${CMAKE_SOURCE_DIR}/data/kcp-display-96.png" DESTINATION ${KCP_IC
 
 #安装翻译文件
 set(TRANSLATION_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATAROOTDIR}/${PROJECT_NAME}/translations)
-configure_file("data/config.h.in" ${CMAKE_BINARY_DIR}/config.h)
+configure_file( ${CMAKE_CURRENT_SOURCE_DIR}/data/config.h.in ${CMAKE_CURRENT_BINARY_DIR}/config.h)
 install(FILES ${QM_FILES} DESTINATION ${TRANSLATION_INSTALL_DIR} )

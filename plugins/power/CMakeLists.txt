@@ -81,16 +81,16 @@ target_link_libraries(${PROJECT_NAME}
 include(GNUInstallDirs)
 # 安装插件翻译
 set(KIRAN_POWER_MANAGER_TRANSLATIONS_DIR ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATAROOTDIR}/${PROJECT_NAME}/translations)
-configure_file(${CMAKE_SOURCE_DIR}/config/config.h.in ${CMAKE_BINARY_DIR}/config.h)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config/config.h.in ${CMAKE_CURRENT_BINARY_DIR}/config.h)
 install(FILES ${QM_FILES} DESTINATION ${KIRAN_POWER_MANAGER_TRANSLATIONS_DIR})
 
 # 安装插件desktop文件
-configure_file(${CMAKE_SOURCE_DIR}/config/kiran-cpanel-power.desktop.in ${CMAKE_BINARY_DIR}/kiran-cpanel-power.desktop @ONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config/kiran-cpanel-power.desktop.in ${CMAKE_CURRENT_BINARY_DIR}/kiran-cpanel-power.desktop @ONLY)
 install(FILES ${CMAKE_BINARY_DIR}/kiran-cpanel-power.desktop DESTINATION ${CPANEL_DESKTOP_DIR}/)
 
 SET(link_source ${CPANEL_DESKTOP_DIR}/${PROJECT_NAME}.desktop)
 SET(link_target ${CMAKE_BINARY_DIR}/${PROJECT_NAME}-link.desktop)
-add_custom_target(kcp-applications-desktop ALL COMMAND ln -sf ${link_source} ${link_target})
+add_custom_target(kcp-applications-power-desktop ALL COMMAND ln -sf ${link_source} ${link_target})
 install(FILES ${link_target}
         DESTINATION ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATADIR}/applications/
         RENAME ${PROJECT_NAME}.desktop)

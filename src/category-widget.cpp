@@ -20,6 +20,7 @@
 #include <qt5-log-i.h>
 #include <QListWidgetItem>
 #include <QPainter>
+#include <QPainterPath>
 #include <QPropertyAnimation>
 #include <QtMath>
 

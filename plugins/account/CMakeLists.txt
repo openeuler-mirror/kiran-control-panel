@@ -16,7 +16,7 @@ set(KAM_CONFIG_PATH "${KAM_CONF_DIR}/kiran-account-manager.conf")
 #默认头像路径
 set(KAM_DEFAULT_AVATAR_PATH "${KAM_BUILDIN_AVATAR_DIR_PATH}/0.face")
 
-configure_file(${CMAKE_SOURCE_DIR}/config/config.h.in ${CMAKE_BINARY_DIR}/config.h @ONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config/config.h.in ${CMAKE_CURRENT_BINARY_DIR}/config.h @ONLY)
 
 find_package(PkgConfig REQUIRED)
 find_package(KiranDBusGenerate REQUIRED)
@@ -116,8 +116,8 @@ endif()
 #安装控制中心插件
 install(TARGETS ${PROJECT_NAME} DESTINATION ${CPANEL_PLUGIN_DIR}/ )
 #安装控制中心插件desktop
-configure_file(${CMAKE_SOURCE_DIR}/config/kiran-cpanel-account.desktop.in ${CMAKE_BINARY_DIR}/kiran-cpanel-account.desktop @ONLY )
-install(FILES ${CMAKE_BINARY_DIR}/kiran-cpanel-account.desktop  DESTINATION ${CPANEL_DESKTOP_DIR}/ )
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config/kiran-cpanel-account.desktop.in ${CMAKE_CURRENT_BINARY_DIR}/kiran-cpanel-account.desktop @ONLY )
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/kiran-cpanel-account.desktop  DESTINATION ${CPANEL_DESKTOP_DIR}/ )
 
 SET(link_source ${CPANEL_DESKTOP_DIR}/${PROJECT_NAME}.desktop)
 SET(link_target ${CMAKE_BINARY_DIR}/${PROJECT_NAME}-link.desktop)
