@@ -1,0 +1,72 @@
+/*侧边栏*/
+QWidget#siderbar{
+    border-right:1px solid rgba(255,255,255,0.1);
+    border-left:none;
+    border-top:none;
+    border-bottom:none;
+}
+
+/*选择时区窗口*/
+KiranTimeZone[editHasFocus="false"]{
+    border:1px solid rgb(255,255,255,25);
+    border-radius:6px;
+}
+KiranTimeZone[editHasFocus="true"] {
+    border:1px solid rgb(67,163,242);
+    border-radius:6px;
+}
+
+/*选择时区列表*/
+KiranTimeZoneList{
+    background:transparent;
+}
+KiranTimeZoneItem{
+    background:rgba(255,255,255,0);
+    border-top:1px solid rgba(255,255,255,0.1);
+}
+KiranTimeZoneItem:focus{
+    background:rgba(255,255,255,0.05);
+}
+KiranTimeZoneItem:hover{
+    background:rgba(255,255,255,0.05);
+}
+
+KiranTimeZoneItem[isSelected="true"]{
+    background:rgb(67,163,242);
+}
+KiranTimeZoneItem[isSelected="true"] QLabel#icon{
+    border:none;
+    background:transparent;
+    border-image:url(:/kcp-datetime-images/selected.png);
+}
+KiranTimeZoneItem[isSelected="false"] QLabel#icon{
+    border:none;
+    background:transparent;
+    border-image:none;
+}
+KiranTimeZoneItem QLabel{
+    color:white;
+    background:transparent;
+}
+
+#time_sep1,#time_sep2{
+    border-image:url(:/kcp-datetime-images/colon.png);
+}
+KiranTimeZone QLabel#label_search{
+    qproperty-pixmap: url(:/kcp-datetime-images/search.svg);
+}
+
+KiranTimeZone QScrollArea{
+    background:transparent;
+}
+
+KiranTimeZone QWidget#scrollAreaWidgetContents{
+    background:transparent;
+}
+
+/*QLineEdit*/
+KiranTimeZone QLineEdit#edit_search{
+    border:none;
+    background:transparent;
+    color:white;
+}

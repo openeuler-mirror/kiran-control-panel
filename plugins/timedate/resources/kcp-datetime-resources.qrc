@@ -1,0 +1,31 @@
+<RCC>
+    <qresource prefix="/">
+        <file>kcp-timedate-images/arrow.svg</file>
+        <file>kcp-timedate-images/dial.svg</file>
+        <file>kcp-timedate-images/drap_down_arrow.png</file>
+        <file>kcp-timedate-images/hour_hand.svg</file>
+        <file>kcp-timedate-images/minute_hand.svg</file>
+        <file>kcp-timedate-images/off.png</file>
+        <file>kcp-timedate-images/on.png</file>
+        <file>kcp-timedate-images/search.svg</file>
+        <file>kcp-timedate-images/second_hand.svg</file>
+        <file>kcp-timedate-images/selected.png</file>
+        <file>kcp-timedate-images/time.svg</file>
+        <file>kcp-timedate-images/time_disable.svg</file>
+        <file>kcp-timedate-images/time_zone.svg</file>
+        <file>kcp-timedate-images/colon.png</file>
+        <file>kcp-timedate-images/icon_less_n.png</file>
+        <file>kcp-timedate-images/icon_less_pre.png</file>
+        <file>kcp-timedate-images/icon_less_s.png</file>
+        <file>kcp-timedate-images/icon_plus_n.png</file>
+        <file>kcp-timedate-images/icon_plus_pre.png</file>
+        <file>kcp-timedate-images/icon_plus_s.png</file>
+        <file>kcp-timedate-images/time.png</file>
+        <file>kcp-timedate-images/time_d.png</file>
+        <file>kcp-timedate-images/time_zone.png</file>
+        <file>kcp-timedate-images/time_format.svg</file>
+    </qresource>
+    <qresource prefix="/">
+        <file>kcp-timedate-themes/black-theme.qss</file>
+    </qresource>
+</RCC>
