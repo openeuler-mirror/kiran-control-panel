@@ -12,15 +12,15 @@
  * Author:     luoqing <luoqing@kylinos.com.cn>
  */
 
-#ifndef KIRAN_CPANEL_NETWORK_GENERAL_BUTTON_H
-#define KIRAN_CPANEL_NETWORK_GENERAL_BUTTON_H
+#ifndef KIRAN_CPANEL_NETWORK_DISCONNECT_AND_DELETE_BUTTON_H
+#define KIRAN_CPANEL_NETWORK_DISCONNECT_AND_DELETE_BUTTON_H
 
 #include <QWidget>
 #include <NetworkManagerQt/Connection>
 QT_BEGIN_NAMESPACE
 namespace Ui
 {
-class GeneralButton;
+class DisconnectAndDeleteButton;
 }
 QT_END_NAMESPACE
 using namespace NetworkManager;
@@ -32,13 +32,13 @@ enum SettingConnectionStatus
     SETTING_CONNECTION_STATUS_ACTIVATED
 };
 
-class GeneralButton : public QWidget
+class DisconnectAndDeleteButton : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit GeneralButton(QWidget *parent = nullptr);
-    ~GeneralButton() override;
+    explicit DisconnectAndDeleteButton(QWidget *parent = nullptr);
+    ~DisconnectAndDeleteButton() override;
     void initUI();
     void initConnection();
     void setConnectionPtr(const Connection::Ptr &connection);
@@ -52,9 +52,9 @@ signals:
     void deleteButtonClicked();
 
 private:
-    Ui::GeneralButton *ui;
+    Ui::DisconnectAndDeleteButton *ui;
     Connection::Ptr m_connection;
     QString m_activeConnectionPath;
 };
 
-#endif  //KIRAN_CPANEL_NETWORK_GENERAL_BUTTON_H
+#endif  // KIRAN_CPANEL_NETWORK_DISCONNECT_AND_DELETE_BUTTON_H

@@ -19,6 +19,11 @@
 #include <QScrollArea>
 #include <QVBoxLayout>
 #include <QWidget>
+#include <QPointer>
+#include <QTimer>
+#include <NetworkManagerQt/Manager>
+#include <NetworkManagerQt/Device>
+using namespace NetworkManager;
 class ConnectionLists;
 class TrayPage : public QWidget
 {
@@ -33,8 +38,23 @@ public:
     void initConnection();
     void setMultiDeviceWidgetVisible(bool visible);
     void setDeviceLabel(const QString &label);
+    void getDeviceList(Device::Type deviceType);
 
-public:
+    QPointer<ConnectionLists> getConnectionListsPtr();
+public slots:
+    virtual void handleNotifierConnectionAdded(const QString &path);
+    virtual void handleNotifierConnectionRemoved(const QString &path);
+    virtual void handleActiveConnectionAdded(const QString &activepath);
+    virtual void handleActiveConnectionRemoved(const QString &activepath);
+
+    virtual void handleActiveConnectionStateChanged(ActiveConnection::State state, const QString &path);
+    virtual void handleStateActivated(const QString &activatedPath);
+    virtual void handleStateDeactivated(const QString &deactivatedPath);
+
+protected:
+    QList<Device::Ptr> m_deviceList;
+
+private:
     QVBoxLayout *m_verticalLayout;
     QWidget *m_multiDevicewidget;
     QVBoxLayout *m_verticalDeviceWidgetLayout;
@@ -45,7 +65,9 @@ public:
     QVBoxLayout *m_verticalScrollAreaWidgetContentsLayout;
     ConnectionLists *m_connectionLists;
 
-private:
+    QTimer m_connectionTimer;
+    QString m_connectionRemovePath;
+
 };
 
 #endif  // TRAYPAGE_H

@@ -29,11 +29,11 @@ enum ItemWidgetType
 };
 
 class AnimationLoadingLabel;
-class CustomItemWidget : public QWidget
+class ConnectionItemWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit CustomItemWidget(ItemWidgetType itemWidgetType, QWidget *parent = nullptr);
+    explicit ConnectionItemWidget(ItemWidgetType itemWidgetType, QWidget *parent = nullptr);
 
 public:
     void initUI();
@@ -42,8 +42,8 @@ public:
 
     void setName(const QString &name);
     QString getName();
-    void activatedLabel();
-    void deactivateLabel();
+    void activatedStatus();
+    void deactivateStatus();
     void setLoadingStatus(bool isLoading);
     void setLabelVisible(bool isVisible);
     void setActionButtonVisible(bool isVisible);
@@ -54,8 +54,6 @@ public:
 
 
 public slots:
-    void handleTrayItemActivated();
-    void handleTrayItemClicked();
 
 signals:
     void actionButtonClicked();
@@ -63,14 +61,15 @@ signals:
 private:
     QLabel *m_connectionTypeIcon;
     QLabel *m_connectionName;
+    QLabel *m_connectionStatus;
     QHBoxLayout *m_horizonLayout;
     QHBoxLayout *m_horizonIconAndNameLayout;
-    QHBoxLayout *m_horizonActivatedLabelLayout;
-    QHBoxLayout *m_horizonConnectionInfoLayout;
+    QHBoxLayout *m_horizonActivateStatusLabelLayout;
     QSpacerItem *horizontalSpacer;
     QVBoxLayout *m_verticalLayout;
     QPushButton *m_actionButton;
     AnimationLoadingLabel *m_activatedLabel;
+
     QWidget *m_activeStatusWidget;
     ItemWidgetType m_itemWidgetType;
 

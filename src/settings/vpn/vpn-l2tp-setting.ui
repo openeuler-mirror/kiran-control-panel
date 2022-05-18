@@ -62,7 +62,7 @@
     </widget>
    </item>
    <item>
-    <widget class="GeneralButton" name="generalButton" native="true"/>
+    <widget class="DisconnectAndDeleteButton" name="generalButton" native="true"/>
    </item>
   </layout>
   <zorder>generalWidget</zorder>
@@ -104,9 +104,9 @@
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>GeneralButton</class>
+   <class>DisconnectAndDeleteButton</class>
    <extends>QWidget</extends>
-   <header location="global">general-button.h</header>
+   <header location="global">disconnect-and-delete-button.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

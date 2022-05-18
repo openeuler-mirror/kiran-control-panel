@@ -57,7 +57,7 @@ void ConnectionShowPage::initConnect()
     connect(ui->connectionLists, &ConnectionLists::requestActivateCurrentItemConnection, this, &ConnectionShowPage::requestActivateCurrentItemConnection);
     connect(ui->connectionLists, &ConnectionLists::requestConnectWirelessNetwork, this, &ConnectionShowPage::requestConnectWirelessNetwork);
     connect(ui->connectionLists, &ConnectionLists::deactivatedItemConnection, this, &ConnectionShowPage::deactivatedItemConnection);
-
+    connect(ui->connectionLists, &ConnectionLists::connectionUpdated, this, &ConnectionShowPage::connectionUpdated);
 }
 
 void ConnectionShowPage::handleConnectionItemClicked(QListWidgetItem* item)

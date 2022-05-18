@@ -101,16 +101,25 @@ void VpnManager::initConnection()
         handleReturnPreviousPage();
     });
 
-    connect(ui->l2tpSetting, &VpnL2tpSetting::settingUpdated, [=]() {
-        ui->l2tpSetting->clearPtr();
-        ui->stackedWidget->setCurrentIndex(PAGE_SHOW);
-        refreshConnectionLists();
-    });
+//    connect(ui->l2tpSetting, &VpnL2tpSetting::settingUpdated, [=]() {
+//        ui->l2tpSetting->clearPtr();
+//        ui->stackedWidget->setCurrentIndex(PAGE_SHOW);
+//        refreshConnectionLists();
+//    });
+//
+//    connect(ui->pptpSetting, &VpnL2tpSetting::settingUpdated, [=]() {
+//        ui->pptpSetting->clearPtr();
+//        ui->stackedWidget->setCurrentIndex(PAGE_SHOW);
+//        refreshConnectionLists();
+//    });
 
-    connect(ui->pptpSetting, &VpnL2tpSetting::settingUpdated, [=]() {
-        ui->pptpSetting->clearPtr();
-        ui->stackedWidget->setCurrentIndex(PAGE_SHOW);
-        refreshConnectionLists();
+    connect(ui->connectionShowPage,&ConnectionShowPage::connectionUpdated,[=](const QString &path){
+        KLOG_DEBUG() << "Connection::updated:" << path;
+        //移除后再加载进来以更新信息
+        ui->connectionShowPage->removeConnectionFromLists(path);
+        Connection::Ptr updateConnection = findConnection(path);
+        ui->connectionShowPage->addConnectionToLists(updateConnection,"");
+        handleReturnPreviousPage();
     });
 
     initNotifierConnection();

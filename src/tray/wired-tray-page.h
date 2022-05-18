@@ -15,9 +15,12 @@
 #ifndef KIRAN_CPANEL_NETWORK_WIRED_TRAY_H
 #define KIRAN_CPANEL_NETWORK_WIRED_TRAY_H
 
+#include <NetworkManagerQt/WiredDevice>
 #include <QWidget>
 #include "tray-page.h"
 
+using namespace NetworkManager;
+class ConnectionLists;
 class WiredTrayPage : public TrayPage
 {
     Q_OBJECT
@@ -31,8 +34,22 @@ public:
     void initUI();
 
     void showWiredConnectionLists();
-private:
+    void handleRequestActivateConnection(const QString &connectionPath, const QString &connectionParameter);
 
+    void handleNotifierConnectionAdded(const QString &path);
+    void handleNotifierConnectionRemoved(const QString &path);
+
+    void handleStateDeactivated(const QString &deactivatedPath);
+    void handleStateActivated(const QString &activatedPath);
+
+    void handleActiveConnectionAdded(const QString &path);
+    void handleActiveConnectionRemoved(const QString &path);
+
+
+private:
+    WiredDevice::Ptr m_wiredDevice;
+
+    QPointer<ConnectionLists> m_connectionLists;
 };
 
-#endif  //KIRAN_CPANEL_NETWORK_WIRED_TRAY_H
+#endif  // KIRAN_CPANEL_NETWORK_WIRED_TRAY_H

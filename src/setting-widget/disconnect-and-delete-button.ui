@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>GeneralButton</class>
- <widget class="QWidget" name="GeneralButton">
+ <class>DisconnectAndDeleteButton</class>
+ <widget class="QWidget" name="DisconnectAndDeleteButton">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>GeneralButton</string>
+   <string>DisconnectAndDeleteButton</string>
   </property>
   <layout class="QVBoxLayout" name="m_verticalDeviceWidgetLayout">
    <property name="leftMargin">

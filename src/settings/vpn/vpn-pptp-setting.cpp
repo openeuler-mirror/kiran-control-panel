@@ -20,8 +20,8 @@ VpnPptpSetting::VpnPptpSetting(QWidget *parent) : SettingPage(parent), ui(new Ui
 {
     ui->setupUi(this);
     ui->generalWidget->setNameLabel(tr("VPN name"));
-    connect(ui->generalButton,&GeneralButton::disconnectButtonClicked,this,&VpnPptpSetting::returnPreviousPage);
-    connect(ui->generalButton,&GeneralButton::deleteButtonClicked,this,&VpnPptpSetting::returnPreviousPage);
+    connect(ui->generalButton,&DisconnectAndDeleteButton::disconnectButtonClicked,this,&VpnPptpSetting::returnPreviousPage);
+    connect(ui->generalButton,&DisconnectAndDeleteButton::deleteButtonClicked,this,&VpnPptpSetting::returnPreviousPage);
 }
 
 VpnPptpSetting::~VpnPptpSetting()

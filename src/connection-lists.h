@@ -24,7 +24,7 @@
 #include <QListWidgetItem>
 #include <QPushButton>
 #include <QWidget>
-#include "custom-itemwidget.h"
+#include "connection-itemwidget.h"
 
 using namespace NetworkManager;
 
@@ -77,6 +77,8 @@ public:
     void findItemByUuid(const QString &uuid);
     void findItemBySsid(const QString &ssid);
 
+//    void topActivatedItem(int row);
+
 public slots:
     void clearConnectionLists();
     void handleConnectionItemClicked(QListWidgetItem *item);
@@ -88,11 +90,12 @@ public slots:
 signals:
     void requestCreatConnection();
     void requestEditConnection(const QString &uuid, QString activeConnectionPath);
-    void
-    requestActivateCurrentItemConnection(const QString &connectionPath,
+    void requestActivateCurrentItemConnection(const QString &connectionPath,
                                          const QString &connectionParameter = "");
     void requestConnectWirelessNetwork(const ConnectionInfo &connectionInfo);
     void deactivatedItemConnection(const QString &connectionPath);
+    void connectionUpdated(const QString &path);
+    void trayRequestDisconnect(const QString &activatedConnectionPath);
 
 private:
     QListWidgetItem *m_previousActivatedItem;

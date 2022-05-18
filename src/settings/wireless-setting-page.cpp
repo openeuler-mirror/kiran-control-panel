@@ -31,8 +31,8 @@ WirelessSettingPage::~WirelessSettingPage()
 
 void WirelessSettingPage::initConnection()
 {
-    connect(ui->generalButton,&GeneralButton::disconnectButtonClicked,this,&WirelessSettingPage::returnPreviousPage);
-    connect(ui->generalButton,&GeneralButton::deleteButtonClicked,this,&WirelessSettingPage::returnPreviousPage);
+    connect(ui->generalButton,&DisconnectAndDeleteButton::disconnectButtonClicked,this,&WirelessSettingPage::returnPreviousPage);
+    connect(ui->generalButton,&DisconnectAndDeleteButton::deleteButtonClicked,this,&WirelessSettingPage::returnPreviousPage);
 }
 
 void WirelessSettingPage::initSettingPage()

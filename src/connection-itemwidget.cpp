@@ -12,30 +12,28 @@
  * Author:     luoqing <luoqing@kylinos.com.cn>
  */
 
-#include "custom-itemwidget.h"
+#include "connection-itemwidget.h"
+#include <qt5-log-i.h>
 #include <QPainter>
 #include <QSvgRenderer>
 #include "animation-loading-label.h"
-#include <qt5-log-i.h>
 // 使用默认析构函数，父对象被释放时，会释放子对象
-CustomItemWidget::CustomItemWidget(ItemWidgetType itemWidgetType, QWidget* parent) : QWidget(parent)
+ConnectionItemWidget::ConnectionItemWidget(ItemWidgetType itemWidgetType, QWidget* parent) : QWidget(parent)
 {
     m_itemWidgetType = itemWidgetType;
     initUI();
 }
 
-void CustomItemWidget::initUI()
+void ConnectionItemWidget::initUI()
 {
     if (m_itemWidgetType == ITEM_WIDGET_TYPE_PLUGIN)
         initPluginItemWidget();
     else
         initTrayItemWidget();
-    connect(m_actionButton, &QPushButton::clicked, this, &CustomItemWidget::actionButtonClicked);
-    //测试用，记得删除
-    connect(m_actionButton, &QPushButton::clicked, this, &CustomItemWidget::handleTrayItemActivated);
+    connect(m_actionButton, &QPushButton::clicked, this, &ConnectionItemWidget::actionButtonClicked);
 }
 
-void CustomItemWidget::initPluginItemWidget()
+void ConnectionItemWidget::initPluginItemWidget()
 {
     m_connectionTypeIcon = new QLabel(this);
     m_connectionName = new QLabel(this);
@@ -56,47 +54,43 @@ void CustomItemWidget::initPluginItemWidget()
     this->setLayout(m_horizonLayout);
 }
 
-void CustomItemWidget::initTrayItemWidget()
+void ConnectionItemWidget::initTrayItemWidget()
 {
     m_connectionTypeIcon = new QLabel(this);
     m_connectionTypeIcon->setVisible(true);
     m_connectionName = new QLabel(this);
+    //    m_connectionName->setStyleSheet("background:yellow;");
 
     m_horizonIconAndNameLayout = new QHBoxLayout();
     m_horizonIconAndNameLayout->addWidget(m_connectionTypeIcon);
     m_horizonIconAndNameLayout->addWidget(m_connectionName);
-    m_horizonIconAndNameLayout->setContentsMargins(0, 10, 0, 0);
-//    m_horizonIconAndNameLayout->setMargin(0);
     m_horizonIconAndNameLayout->setSpacing(10);
-
     m_horizonIconAndNameLayout->addStretch();
 
     m_verticalLayout = new QVBoxLayout();
     m_verticalLayout->addLayout(m_horizonIconAndNameLayout);
 
     m_activeStatusWidget = new QWidget(this);
-    m_horizonActivatedLabelLayout = new QHBoxLayout(m_activeStatusWidget);
+    m_horizonActivateStatusLabelLayout = new QHBoxLayout(m_activeStatusWidget);
     // icon:16*16 ,spacing:10 -> Spacer:(26,16)
     horizontalSpacer = new QSpacerItem(26, 16, QSizePolicy::Fixed, QSizePolicy::Minimum);
-    m_horizonActivatedLabelLayout->addSpacerItem(horizontalSpacer);
+    m_horizonActivateStatusLabelLayout->addSpacerItem(horizontalSpacer);
 
-    m_activatedLabel = new AnimationLoadingLabel(m_activeStatusWidget);
-    m_activatedLabel->setFixedWidth(80);
-    m_activatedLabel->setVisible(false);
+    m_connectionStatus = new QLabel(m_activeStatusWidget);
+    m_connectionStatus->setFixedWidth(80);
+    m_connectionStatus->setVisible(false);
+    //    m_connectionStatus->setStyleSheet("background:red;");
+    m_connectionStatus->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
 
-    m_activatedLabel->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
+    m_horizonActivateStatusLabelLayout->addWidget(m_connectionStatus);
+    m_horizonActivateStatusLabelLayout->setAlignment(m_connectionStatus, Qt::AlignLeft);
 
-    m_horizonActivatedLabelLayout->addWidget(m_activatedLabel);
-    m_horizonActivatedLabelLayout->setAlignment(m_activatedLabel, Qt::AlignLeft);
+    m_horizonActivateStatusLabelLayout->setMargin(0);
+    m_horizonActivateStatusLabelLayout->setSpacing(10);
+    m_horizonActivateStatusLabelLayout->addStretch();
 
-//    m_horizonActivatedLabelLayout->setContentsMargins(0, 0, 0, 10);
-    m_horizonActivatedLabelLayout->setMargin(0);
-    m_horizonActivatedLabelLayout->setSpacing(10);
-    m_horizonActivatedLabelLayout->addStretch();
-
-    m_activeStatusWidget->setLayout(m_horizonActivatedLabelLayout);
-//    m_activeStatusWidget->setStyleSheet("background:green;");
-    m_activeStatusWidget->hide();
+    m_activeStatusWidget->setLayout(m_horizonActivateStatusLabelLayout);
+    //    m_activeStatusWidget->setStyleSheet("background:green;");
 
     m_verticalLayout->addWidget(m_activeStatusWidget);
 
@@ -109,37 +103,42 @@ void CustomItemWidget::initTrayItemWidget()
     m_actionButton->setVisible(false);
 
     m_horizonLayout->addLayout(m_verticalLayout);
-
     m_horizonLayout->addStretch();
+
+    m_activatedLabel = new AnimationLoadingLabel(this);
+    m_activatedLabel->setVisible(false);
+    //    m_activatedLabel->setStyleSheet("background:pink;");
+
+    m_horizonLayout->addWidget(m_activatedLabel);
     m_horizonLayout->addWidget(m_actionButton);
     m_horizonLayout->setMargin(0);
 
     m_horizonLayout->setContentsMargins(10, 0, 10, 0);
-    m_activeStatusWidget->setVisible(true);
+    m_activeStatusWidget->setVisible(false);
     //    this->setLayout(m_horizonLayout);
 
     setFixedHeight(50);
-
 }
 
-void CustomItemWidget::setName(const QString& name)
+void ConnectionItemWidget::setName(const QString& name)
 {
     QString nameStr = name;
-//    QFontMetricsF fontMetricsF(m_connectionName->font());
-//    if(fontMetricsF.width(nameStr) > m_connectionName->width())
-//    {
-//        nameStr = fontMetricsF.elidedText(nameStr,Qt::ElideRight,m_connectionName->width());
-//    }
-//    KLOG_DEBUG() << "elidedText:" << nameStr;
+    //    QFontMetricsF fontMetricsF(m_connectionName->font());
+    //    if(fontMetricsF.width(nameStr) > m_connectionName->width())
+    //    {
+    //        nameStr = fontMetricsF.elidedText(nameStr,Qt::ElideRight,m_connectionName->width());
+    //    }
+    //    KLOG_DEBUG() << "elidedText:" << nameStr;
     m_connectionName->setText(nameStr);
 }
 
-QString CustomItemWidget::getName()
+QString ConnectionItemWidget::getName()
 {
     return m_connectionName->text();
 }
 
-void CustomItemWidget::activatedLabel()
+//TODO:其他状态信息的显示，以及优化
+void ConnectionItemWidget::activatedStatus()
 {
     if (m_itemWidgetType == ITEM_WIDGET_TYPE_PLUGIN)
     {
@@ -150,28 +149,43 @@ void CustomItemWidget::activatedLabel()
     }
     else
     {
-        m_activatedLabel->setVisible(true);
-        //--------------------待修改
-        //        m_connectionTypeIcon->setAlignment();
+        m_activatedLabel->setVisible(false);
+        m_connectionStatus->setText(tr("Activated"));
+        m_connectionStatus->setVisible(true);
+        m_activeStatusWidget->setVisible(true);
+        m_actionButton->setVisible(true);
+        m_horizonIconAndNameLayout->setContentsMargins(0, 10, 0, 0);
+        m_horizonActivateStatusLabelLayout->setContentsMargins(0, 0, 0, 10);
     }
 }
 
-void CustomItemWidget::deactivateLabel()
+void ConnectionItemWidget::deactivateStatus()
 {
-    m_activatedLabel->setVisible(false);
+    if (m_itemWidgetType == ITEM_WIDGET_TYPE_PLUGIN)
+    {
+        m_activatedLabel->setVisible(false);
+    }
+    else
+    {
+        m_activatedLabel->setVisible(false);
+        m_connectionStatus->setVisible(false);
+        m_activeStatusWidget->setVisible(false);
+        m_actionButton->setVisible(false);
+        m_horizonIconAndNameLayout->setMargin(0);
+    }
 }
 
-void CustomItemWidget::setLoadingStatus(bool isLoading)
+void ConnectionItemWidget::setLoadingStatus(bool isLoading)
 {
     m_activatedLabel->setLoadingStatus(isLoading);
 }
 
-void CustomItemWidget::setLabelVisible(bool isVisible)
+void ConnectionItemWidget::setLabelVisible(bool isVisible)
 {
     m_activatedLabel->setVisible(isVisible);
 }
 
-void CustomItemWidget::setWirelessStatusIcon(bool security, int signal)
+void ConnectionItemWidget::setWirelessStatusIcon(bool security, int signal)
 {
     QString svgPath;
     if (security)
@@ -202,7 +216,7 @@ void CustomItemWidget::setWirelessStatusIcon(bool security, int signal)
     m_connectionTypeIcon->setVisible(true);
 }
 
-void CustomItemWidget::setWiredStatusIcon()
+void ConnectionItemWidget::setWiredStatusIcon()
 {
     // TODO:图标跟随网络状态改变
     QString svgPath = ":/kcp-network-images/wired-connection.svg";
@@ -212,7 +226,7 @@ void CustomItemWidget::setWiredStatusIcon()
     m_connectionTypeIcon->setVisible(true);
 }
 
-QPixmap CustomItemWidget::getPixmapFromSvg(const QString& svgPath)
+QPixmap ConnectionItemWidget::getPixmapFromSvg(const QString& svgPath)
 {
     QSvgRenderer svgRenderer(QString(svgPath), this);
     QPixmap pixmap(QSize(16, 16));
@@ -222,24 +236,7 @@ QPixmap CustomItemWidget::getPixmapFromSvg(const QString& svgPath)
     return pixmap;
 }
 
-void CustomItemWidget::setActionButtonVisible(bool isVisible)
+void ConnectionItemWidget::setActionButtonVisible(bool isVisible)
 {
     m_actionButton->setVisible(isVisible);
-}
-
-void CustomItemWidget::handleTrayItemActivated()
-{
-    //    m_activeStatusWidget->setVisible(true);
-    //    m_activatedLabel->setText(tr("Activated"));
-    //    m_activatedLabel->setVisible(true);
-    //    m_actionButton->setVisible(true);
-
-    m_activeStatusWidget->setVisible(false);
-    m_horizonIconAndNameLayout->setMargin(0);
-    update();
-}
-
-void CustomItemWidget::handleTrayItemClicked()
-{
-
 }

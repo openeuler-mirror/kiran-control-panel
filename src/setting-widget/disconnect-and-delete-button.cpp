@@ -12,29 +12,29 @@
  * Author:     luoqing <luoqing@kylinos.com.cn>
  */
 
-#include "general-button.h"
 #include <kiran-message-box.h>
 #include <qt5-log-i.h>
 #include <NetworkManagerQt/Manager>
-#include "ui_general-button.h"
+#include "disconnect-and-delete-button.h"
+#include "ui_disconnect-and-delete-button.h"
 
-GeneralButton::GeneralButton(QWidget *parent) : QWidget(parent), ui(new Ui::GeneralButton)
+DisconnectAndDeleteButton::DisconnectAndDeleteButton(QWidget *parent) : QWidget(parent), ui(new Ui::DisconnectAndDeleteButton)
 {
     ui->setupUi(this);
     initUI();
     initConnection();
 }
 
-GeneralButton::~GeneralButton()
+DisconnectAndDeleteButton::~DisconnectAndDeleteButton()
 {
     delete ui;
 }
 
-void GeneralButton::initUI()
+void DisconnectAndDeleteButton::initUI()
 {
 }
 
-void GeneralButton::initButton(SettingConnectionStatus connectionStatus, const QString &activeConnectionPath)
+void DisconnectAndDeleteButton::initButton(SettingConnectionStatus connectionStatus, const QString &activeConnectionPath)
 {
     switch (connectionStatus)
     {
@@ -56,7 +56,7 @@ void GeneralButton::initButton(SettingConnectionStatus connectionStatus, const Q
     m_activeConnectionPath = activeConnectionPath;
 }
 
-void GeneralButton::initConnection()
+void DisconnectAndDeleteButton::initConnection()
 {
     connect(ui->disconnectButton, &QPushButton::clicked, [=]() {
         QDBusPendingReply<> reply = NetworkManager::deactivateConnection(m_activeConnectionPath);
@@ -67,15 +67,15 @@ void GeneralButton::initConnection()
         }
         emit disconnectButtonClicked();
     });
-    connect(ui->deleteButton, &QPushButton::clicked, this, &GeneralButton::handleDeleteConnection);
+    connect(ui->deleteButton, &QPushButton::clicked, this, &DisconnectAndDeleteButton::handleDeleteConnection);
 }
 
-void GeneralButton::setConnectionPtr(const Connection::Ptr &connection)
+void DisconnectAndDeleteButton::setConnectionPtr(const Connection::Ptr &connection)
 {
     m_connection = connection;
 }
 
-void GeneralButton::handleDeleteConnection()
+void DisconnectAndDeleteButton::handleDeleteConnection()
 {
     QString tip = QString(tr("Are you sure you want to delete the connection %1")).arg(m_connection->name());
     KiranMessageBox::KiranStandardButton btn = KiranMessageBox::message(this, tr("Warning"),
@@ -92,7 +92,7 @@ void GeneralButton::handleDeleteConnection()
         emit deleteButtonClicked();
     }
 }
-void GeneralButton::clearPtr()
+void DisconnectAndDeleteButton::clearPtr()
 {
     m_connection.clear();
 }

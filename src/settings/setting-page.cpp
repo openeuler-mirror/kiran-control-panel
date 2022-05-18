@@ -92,6 +92,7 @@ void SettingPage::handleSaveButtonClicked(ConnectionSettings::ConnectionType con
     else
     {
         saveSettingPage();
+        //只有无线网络使用自定义settingUpdated信号，因为未连接无线网络前不存在本地Setting，无法在初始化时监听信号
         connect(m_connection.data(),&NetworkManager::Connection::updated,this,&SettingPage::settingUpdated);
         QDBusPendingReply<> replyUpdate = m_connection->update(m_connectionSettings->toMap());
         replyUpdate.waitForFinished();

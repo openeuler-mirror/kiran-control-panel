@@ -68,11 +68,21 @@ void WiredManager::initConnection()
     });
 
     connect(ui->wiredSettingPage, &WiredSettingPage::returnPreviousPage, this, &WiredManager::handleReturnPreviousPage);
-    connect(ui->wiredSettingPage, &WiredSettingPage::settingUpdated, [=]() {
-        KLOG_DEBUG() << "WiredSettingPage::settingUpdated";
+
+//    connect(ui->wiredSettingPage, &WiredSettingPage::settingUpdated, [=]() {
+//        KLOG_DEBUG() << "WiredSettingPage::settingUpdated";
+//        handleReturnPreviousPage();
+//        //xxx:不用刷新全部，只更新修改的item
+//        refreshConnectionLists();
+//    });
+
+    connect(ui->connectionShowPage,&ConnectionShowPage::connectionUpdated,[=](const QString &path){
+        KLOG_DEBUG() << "Connection::updated:" << path;
+        //移除后再加载进来以更新信息
+        ui->connectionShowPage->removeConnectionFromLists(path);
+        Connection::Ptr updateConnection = findConnection(path);
+        ui->connectionShowPage->addConnectionToLists(updateConnection,"");
         handleReturnPreviousPage();
-        //xxx:不用刷新全部，只更新修改的item
-        refreshConnectionLists();
     });
 
     connect(ui->connectionShowPage, &ConnectionShowPage::requestActivateCurrentItemConnection,
