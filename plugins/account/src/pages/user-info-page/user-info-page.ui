@@ -131,6 +131,9 @@
            <pointsize>15</pointsize>
           </font>
          </property>
+         <property name="styleSheet">
+          <string notr="true"/>
+         </property>
          <property name="text">
           <string>Account</string>
          </property>
@@ -156,7 +159,10 @@
         </spacer>
        </item>
        <item alignment="Qt::AlignHCenter">
-        <widget class="QPushButton" name="btn_changePasswd">
+        <widget class="KiranPushButton" name="btn_changePasswd">
+         <property name="styleSheet">
+          <string notr="true"/>
+         </property>
          <property name="text">
           <string>Change password</string>
          </property>
@@ -347,12 +353,15 @@
         </spacer>
        </item>
        <item alignment="Qt::AlignLeft|Qt::AlignVCenter">
-        <widget class="QPushButton" name="btn_authManager">
+        <widget class="KiranPushButton" name="btn_authManager">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
+         </property>
+         <property name="styleSheet">
+          <string notr="true"/>
          </property>
          <property name="text">
           <string>auth manager</string>
@@ -379,7 +388,10 @@
         </spacer>
        </item>
        <item alignment="Qt::AlignLeft|Qt::AlignVCenter">
-        <widget class="QPushButton" name="btn_passwdExpirationPolicy">
+        <widget class="KiranPushButton" name="btn_passwdExpirationPolicy">
+         <property name="styleSheet">
+          <string notr="true"/>
+         </property>
          <property name="text">
           <string>Password expiration policy</string>
          </property>
@@ -848,6 +860,11 @@
    <class>AnimationPushButton</class>
    <extends>QPushButton</extends>
    <header location="global">animation-push-button.h</header>
+  </customwidget>
+  <customwidget>
+   <class>KiranPushButton</class>
+   <extends>QPushButton</extends>
+   <header location="global">kiran-push-button.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

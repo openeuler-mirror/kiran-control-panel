@@ -18,13 +18,13 @@
     <number>0</number>
    </property>
    <property name="leftMargin">
-    <number>24</number>
+    <number>16</number>
    </property>
    <property name="topMargin">
     <number>0</number>
    </property>
    <property name="rightMargin">
-    <number>24</number>
+    <number>16</number>
    </property>
    <property name="bottomMargin">
     <number>0</number>
@@ -33,6 +33,9 @@
     <widget class="QWidget" name="widget_fingerAuth" native="true">
      <layout class="QHBoxLayout" name="layout_fingerAuth">
       <property name="spacing">
+       <number>0</number>
+      </property>
+      <property name="leftMargin">
        <number>0</number>
       </property>
       <property name="topMargin">
@@ -77,6 +80,9 @@
     <widget class="QWidget" name="widget_faceAuth" native="true">
      <layout class="QHBoxLayout" name="layout_faceAuth">
       <property name="spacing">
+       <number>0</number>
+      </property>
+      <property name="leftMargin">
        <number>0</number>
       </property>
       <property name="topMargin">
