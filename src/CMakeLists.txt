@@ -57,7 +57,7 @@ if(DISABLE_SYSTEM_INFO)
         if(DISABLE_KIRANWIDGETS)
                 target_include_directories(${PROJECT_NAME} PRIVATE
                         ${CMAKE_BINARY_DIR}
-                        "/usr/include/kylin-license"
+                        "/usr/include/ks-license"
                         ${KLOG_QT5_INCLUDE_DIRS})
 
                 target_link_libraries(${PROJECT_NAME}
@@ -73,7 +73,7 @@ if(DISABLE_SYSTEM_INFO)
 
                 target_include_directories(${PROJECT_NAME} PRIVATE
                         ${CMAKE_BINARY_DIR}
-                        "/usr/include/kylin-license"
+                        "/usr/include/ks-license"
                         ${KLOG_QT5_INCLUDE_DIRS}
                         ${KIRAN_WIDGETS_QT5_INCLUDE_DIRS})
 
@@ -103,7 +103,7 @@ else()
 
 	target_include_directories(${PROJECT_NAME} PRIVATE
 		${CMAKE_BINARY_DIR}
-		"/usr/include/kylin-license"
+                "/usr/include/ks-license"
 		${KIRAN_CONTROL_PANEL_PKG_INCLUDE_DIRS}
 		${KLOG_QT5_INCLUDE_DIRS}
 		${KIRAN_WIDGETS_QT5_INCLUDE_DIRS}

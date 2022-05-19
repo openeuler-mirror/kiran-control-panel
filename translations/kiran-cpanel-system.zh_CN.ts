@@ -565,71 +565,71 @@ p, li { white-space: pre-wrap; }
         <translation>联系我们:</translation>
     </message>
     <message>
-        <location filename="../src/pages/license-information/license-information.cpp" line="73"/>
-        <location filename="../src/pages/license-information/license-information.cpp" line="77"/>
-        <location filename="../src/pages/license-information/license-information.cpp" line="78"/>
-        <location filename="../src/pages/license-information/license-information.cpp" line="291"/>
-        <location filename="../src/pages/license-information/license-information.cpp" line="295"/>
-        <location filename="../src/pages/license-information/license-information.cpp" line="296"/>
+        <location filename="../src/pages/license-information/license-information.cpp" line="66"/>
+        <location filename="../src/pages/license-information/license-information.cpp" line="70"/>
+        <location filename="../src/pages/license-information/license-information.cpp" line="71"/>
+        <location filename="../src/pages/license-information/license-information.cpp" line="270"/>
+        <location filename="../src/pages/license-information/license-information.cpp" line="274"/>
+        <location filename="../src/pages/license-information/license-information.cpp" line="275"/>
         <source>Unknow</source>
         <translation>未知</translation>
     </message>
     <message>
-        <location filename="../src/pages/license-information/license-information.cpp" line="74"/>
-        <location filename="../src/pages/license-information/license-information.cpp" line="292"/>
+        <location filename="../src/pages/license-information/license-information.cpp" line="67"/>
+        <location filename="../src/pages/license-information/license-information.cpp" line="271"/>
         <source>Can&apos;t get activation information</source>
         <translation>无法获取激活信息</translation>
     </message>
     <message>
-        <location filename="../src/pages/license-information/license-information.cpp" line="102"/>
-        <location filename="../src/pages/license-information/license-information.cpp" line="155"/>
+        <location filename="../src/pages/license-information/license-information.cpp" line="91"/>
+        <location filename="../src/pages/license-information/license-information.cpp" line="147"/>
         <source>Activate</source>
         <translation>激活</translation>
     </message>
     <message>
-        <location filename="../src/pages/license-information/license-information.cpp" line="111"/>
+        <location filename="../src/pages/license-information/license-information.cpp" line="99"/>
         <source>The current time is illegal</source>
         <translation>当前时间不合法</translation>
     </message>
     <message>
-        <location filename="../src/pages/license-information/license-information.cpp" line="111"/>
+        <location filename="../src/pages/license-information/license-information.cpp" line="100"/>
         <source>Less than the installation time</source>
         <translation>小于安装时间</translation>
     </message>
     <message>
-        <location filename="../src/pages/license-information/license-information.cpp" line="121"/>
+        <location filename="../src/pages/license-information/license-information.cpp" line="112"/>
         <source>Not activated. Trail expiration: </source>
         <translation>未激活.试用到期: </translation>
     </message>
     <message>
-        <location filename="../src/pages/license-information/license-information.cpp" line="129"/>
+        <location filename="../src/pages/license-information/license-information.cpp" line="119"/>
         <source>get service status failed</source>
         <translation>获取服务状态信息失败</translation>
     </message>
     <message>
-        <location filename="../src/pages/license-information/license-information.cpp" line="132"/>
+        <location filename="../src/pages/license-information/license-information.cpp" line="122"/>
         <source>Not yet</source>
         <translation>暂无</translation>
     </message>
     <message>
-        <location filename="../src/pages/license-information/license-information.cpp" line="139"/>
-        <location filename="../src/pages/license-information/license-information.cpp" line="310"/>
+        <location filename="../src/pages/license-information/license-information.cpp" line="128"/>
+        <location filename="../src/pages/license-information/license-information.cpp" line="287"/>
         <source>Activated</source>
         <translation>已激活</translation>
     </message>
     <message>
-        <location filename="../src/pages/license-information/license-information.cpp" line="161"/>
-        <location filename="../src/pages/license-information/license-information.cpp" line="323"/>
+        <location filename="../src/pages/license-information/license-information.cpp" line="153"/>
+        <location filename="../src/pages/license-information/license-information.cpp" line="301"/>
         <source>Forever</source>
         <translation>永久授权</translation>
     </message>
     <message>
-        <location filename="../src/pages/license-information/license-information.cpp" line="357"/>
+        <location filename="../src/pages/license-information/license-information.cpp" line="330"/>
         <source>Copyright ©</source>
         <translation>版权所有 ©</translation>
     </message>
     <message>
-        <location filename="../src/pages/license-information/license-information.cpp" line="357"/>
+        <location filename="../src/pages/license-information/license-information.cpp" line="331"/>
         <source>KylinSec. All rights reserved.</source>
         <translation>KylinSec.保留所有权利.</translation>
     </message>
@@ -637,12 +637,12 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/dbus-wrapper/license-dbus.cpp" line="182"/>
+        <location filename="../src/dbus-wrapper/license-dbus.cpp" line="158"/>
         <source>Did not reply within the specified timeout</source>
         <translation>连接超时</translation>
     </message>
     <message>
-        <location filename="../src/dbus-wrapper/license-dbus.cpp" line="187"/>
+        <location filename="../src/dbus-wrapper/license-dbus.cpp" line="161"/>
         <source>The called service is not known</source>
         <translation>无法连接到Dbus服务</translation>
     </message>
@@ -749,31 +749,31 @@ p, li { white-space: pre-wrap; }
         <translation>版本协议:</translation>
     </message>
     <message>
-        <location filename="../src/pages/system-information/system-information.cpp" line="73"/>
+        <location filename="../src/pages/system-information/system-information.cpp" line="68"/>
         <source>Change</source>
         <translation>更改</translation>
     </message>
     <message>
-        <location filename="../src/pages/system-information/system-information.cpp" line="74"/>
-        <location filename="../src/pages/system-information/system-information.cpp" line="75"/>
+        <location filename="../src/pages/system-information/system-information.cpp" line="69"/>
+        <location filename="../src/pages/system-information/system-information.cpp" line="70"/>
         <source>Show</source>
         <translation>查看</translation>
     </message>
     <message>
-        <location filename="../src/pages/system-information/system-information.cpp" line="128"/>
-        <location filename="../src/pages/system-information/system-information.cpp" line="129"/>
-        <location filename="../src/pages/system-information/system-information.cpp" line="130"/>
-        <location filename="../src/pages/system-information/system-information.cpp" line="131"/>
+        <location filename="../src/pages/system-information/system-information.cpp" line="116"/>
+        <location filename="../src/pages/system-information/system-information.cpp" line="117"/>
+        <location filename="../src/pages/system-information/system-information.cpp" line="118"/>
+        <location filename="../src/pages/system-information/system-information.cpp" line="119"/>
         <source>Unknow</source>
         <translation>未知</translation>
     </message>
     <message>
-        <location filename="../src/pages/system-information/system-information.cpp" line="249"/>
+        <location filename="../src/pages/system-information/system-information.cpp" line="220"/>
         <source>Copyright ©</source>
         <translation>版权所有 ©</translation>
     </message>
     <message>
-        <location filename="../src/pages/system-information/system-information.cpp" line="249"/>
+        <location filename="../src/pages/system-information/system-information.cpp" line="221"/>
         <source>KylinSec. All rights reserved.</source>
         <translation>KylinSec.保留所有权利.</translation>
     </message>
