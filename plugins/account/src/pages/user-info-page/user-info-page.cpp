@@ -115,6 +115,10 @@ void UserInfoPage::setAvatarIconPath(const QString &iconPath)
 
 void UserInfoPage::initUI()
 {
+    ui->btn_changePasswd->setFontUnderLine(true);
+    ui->btn_authManager->setFontUnderLine(true);
+    ui->btn_passwdExpirationPolicy->setFontUnderLine(true);
+
     m_errorTip = new KiranTips(this);
     m_errorTip->setShowPosition(KiranTips::POSITION_BOTTM);
     m_errorTip->setAnimationEnable(true);

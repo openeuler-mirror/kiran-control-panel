@@ -18,9 +18,14 @@
   */
  
 #include "biometric-item.h"
+#include "ui_biometric-item.h"
+
 #include <QPainter>
 #include <QStyleOption>
-#include "ui_biometric-item.h"
+#include <QPainter>
+#include <QPainterPath>
+
+#include <kiran-palette.h>
 
 BiometricItem::BiometricItem(const QString &text,
                              const QString &biometricID,
@@ -42,8 +47,12 @@ BiometricItem::~BiometricItem()
 
 void BiometricItem::initUI(const QString &text, const QString &biometricID, BiometricItemType type)
 {
-    setFixedHeight(40);
+    setFixedHeight(36);
     ui->label_text->setText(text);
+
+    ui->btn_delete->setStyleSheet( " QToolButton{border-image:url(:/kcp-account/images/trash.svg);} "
+                                   " QToolButton:hover{border-image:url(:/kcp-account/images/trash-hover.svg);}"
+                                   " QToolButton:pressed{border-image:url(:/kcp-account/images/trash-pressed.svg);" );
 
     switch (type)
     {
@@ -70,8 +79,19 @@ void BiometricItem::paintEvent(QPaintEvent *event)
 {
     QStyleOption opt;
     opt.init(this);
+
     QPainter p(this);
-    style()->drawPrimitive(QStyle::PE_Widget, &opt, &p, this);
+    p.setRenderHint(QPainter::Antialiasing,true);
+    p.setPen(Qt::NoPen);
+
+    auto backgroundColor = KiranPalette::instance()->color(isEnabled()?KiranPalette::Normal:KiranPalette::Disabled,
+                                                        KiranPalette::Widget,
+                                                        KiranPalette::Background);
+
+    QPainterPath painterPath;
+    painterPath.addRoundedRect(opt.rect,6,6);
+
+    p.fillPath(painterPath,backgroundColor);
 }
 
 void BiometricItem::setItemAddEnabled(bool enabled)
