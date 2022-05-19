@@ -100,10 +100,7 @@ void KiranModuleWidget::setPlugins(const QList<QSharedPointer<CPanelPluginHelper
 
 void KiranModuleWidget::init()
 {
-    //设置item的总占用大小,包括间隙.
-    ui->list_subItems->setGridSize(QSize(296, 84));
-    ui->list_subItems->setIconSize(QSize(15, 15));
-
+    ui->list_subItems->setFrameShape(QFrame::NoFrame);
     ui->list_subItems->setSelectionMode(QListWidget::SingleSelection);
     connect(ui->list_subItems, &QListWidget::itemSelectionChanged,
             this, &KiranModuleWidget::handleSubItemChanged, Qt::QueuedConnection);
