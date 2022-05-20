@@ -17,9 +17,12 @@
 #include <QSystemTrayIcon>
 #include <QWidget>
 #include <QVBoxLayout>
-class WiredTrayPage;
-class WirelessTrayPage;
+#include <QTimer>
+#include <NetworkManagerQt/Manager>
+class WiredTrayWidget;
+class WirelessTrayWidget;
 class StatusNotifierManagerInterface;
+class TrayPage;
 class ManagerTray : public QWidget
 {
     Q_OBJECT
@@ -39,19 +42,26 @@ public:
     void getTrayGeometry();
     void setTrayPagePos();
 
-public:
+public slots:
     void handleTrayClicked(QSystemTrayIcon::ActivationReason reason);
     void showTrayPage();
-    void setTrayIcon();
+    void setTrayIcon(NetworkManager::Status status);
 
+    void handleDeviceAdded(const QString &devicePath);
+    void handleDeviceRemoved(const QString &devicePath);
+    void handleNetworkManagerStatusChanged(NetworkManager::Status status);
 private:
     QSystemTrayIcon *m_systemTray;
-    WiredTrayPage *m_wiredTrayPage;
-    WirelessTrayPage *m_wirelessTrayPage;
+    TrayPage *m_wiredTrayPage;
+    WirelessTrayWidget *m_wirelessTrayPage;
     StatusNotifierManagerInterface *m_statusNotifierManager;
 
     QVBoxLayout *m_verticalLayout;
     int m_xTray, m_yTray, m_heightTray, m_widthTray;
+
+    QTimer m_Timer;
+    QString m_addDevicePath;
+    int waitCounts;
 };
 
 #endif  // KIRAN_CPANEL_NETWORK_MANAGER_TRAY_H

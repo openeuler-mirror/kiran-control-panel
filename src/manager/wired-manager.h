@@ -44,8 +44,6 @@ public slots:
     void handleStateDeactivated(const QString &deactivatedPath) override;
     void handleStateActivated(const QString &activatedPath) override;
 
-//    void handleActiveConnectionStateChanged(ActiveConnection::State state,const QString &path);
-
     void handleReturnPreviousPage();
 
     void refreshConnectionLists() override;

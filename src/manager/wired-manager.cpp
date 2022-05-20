@@ -69,13 +69,6 @@ void WiredManager::initConnection()
 
     connect(ui->wiredSettingPage, &WiredSettingPage::returnPreviousPage, this, &WiredManager::handleReturnPreviousPage);
 
-//    connect(ui->wiredSettingPage, &WiredSettingPage::settingUpdated, [=]() {
-//        KLOG_DEBUG() << "WiredSettingPage::settingUpdated";
-//        handleReturnPreviousPage();
-//        //xxx:不用刷新全部，只更新修改的item
-//        refreshConnectionLists();
-//    });
-
     connect(ui->connectionShowPage,&ConnectionShowPage::connectionUpdated,[=](const QString &path){
         KLOG_DEBUG() << "Connection::updated:" << path;
         //移除后再加载进来以更新信息
@@ -94,13 +87,9 @@ void WiredManager::initConnection()
     initNotifierConnection();
 
     //检测到新设备时，刷新
-    connect(notifier(), &Notifier::deviceAdded, [=](const QString &uni) {
-        getDeviceList(Device::Ethernet);
-    });
+    connect(notifier(), &Notifier::deviceAdded, [=](const QString &uni) {});
 
-    connect(notifier(), &Notifier::deviceRemoved, [=](const QString &uni) {
-        getDeviceList(Device::Ethernet);
-    });
+    connect(notifier(), &Notifier::deviceRemoved, [=](const QString &uni) {});
 }
 
 void WiredManager::refreshConnectionLists()
@@ -165,7 +154,7 @@ void WiredManager::handleStateActivated(const QString &activatedPath)
 
 void WiredManager::handleStateDeactivated(const QString &deactivatedPath)
 {
-    KLOG_DEBUG() << "handleStateDeactivated" << deactivatedPath;
+    KLOG_DEBUG() << "handleActiveConnectionStateChanged" << deactivatedPath;
     ui->connectionShowPage->connectionStateNotify(ActiveConnection::Deactivated);
     ui->connectionShowPage->clearDeactivatedConnectionInfo(deactivatedPath);
     ui->connectionShowPage->update();

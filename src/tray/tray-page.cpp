@@ -11,21 +11,21 @@
  *
  * Author:     luoqing <luoqing@kylinos.com.cn>
  */
+
 #include "tray-page.h"
-#include "connection-show-page.h"
-#include <NetworkManagerQt/Manager>
-#include <NetworkManagerQt/Settings>
-#include <NetworkManagerQt/WiredDevice>
+#include "ui_tray-page.h"
 #include <qt5-log-i.h>
-#include "connection-lists.h"
-TrayPage::TrayPage(QWidget *parent) : QWidget(parent)
+#include "wired-tray-widget.h"
+TrayPage::TrayPage(TrayConnectionType trayConnectionType, QWidget *parent) : QWidget(parent), ui(new Ui::TrayPage)
 {
+    ui->setupUi(this);
+    m_trayConnectionType = trayConnectionType;
     init();
 }
 
 TrayPage::~TrayPage()
 {
-
+    delete ui;
 }
 
 void TrayPage::init()
@@ -36,117 +36,49 @@ void TrayPage::init()
 
 void TrayPage::initUI()
 {
-    m_verticalLayout = new QVBoxLayout(this);
-    m_verticalLayout->setSpacing(6);
-    m_verticalLayout->setContentsMargins(0, 0, 0, 0);
 
-    m_multiDevicewidget = new QWidget(this);
-    m_verticalDeviceWidgetLayout = new QVBoxLayout(m_multiDevicewidget);
-    m_verticalDeviceWidgetLayout->setContentsMargins(10, 10, 10, 10);
-    m_deviceLabel = new QLabel(m_multiDevicewidget);
-    m_verticalDeviceWidgetLayout->addWidget(m_deviceLabel);
-
-    m_deviceComboBox = new QComboBox(m_multiDevicewidget);
-    m_verticalDeviceWidgetLayout->addWidget(m_deviceComboBox);
-
-    m_verticalLayout->addWidget(m_multiDevicewidget);
-
-    m_scrollArea = new QScrollArea(this);
-    m_scrollArea->setWidgetResizable(true);
-    m_scrollAreaWidgetContents = new QWidget();
-
-    m_verticalScrollAreaWidgetContentsLayout = new QVBoxLayout(m_scrollAreaWidgetContents);
-    m_verticalScrollAreaWidgetContentsLayout->setSpacing(0);
-    m_verticalScrollAreaWidgetContentsLayout->setContentsMargins(0, 0, 0, 0);
-
-    m_connectionLists = new ConnectionLists(m_scrollAreaWidgetContents);
-    m_verticalScrollAreaWidgetContentsLayout->addWidget(m_connectionLists);
-
-    m_scrollArea->setWidget(m_scrollAreaWidgetContents);
-    m_verticalLayout->addWidget(m_scrollArea);
+    if (m_trayConnectionType == TRAY_CONNECTION_TYPE_WIRED)
+    {
+        initWiredPage();
+    }
+    else
+    {
+        initWirelessPage();
+    }
 }
 
 void TrayPage::initConnection()
 {
-    connect(notifier(), &Notifier::activeConnectionAdded, this, &TrayPage::handleActiveConnectionAdded);
-    connect(notifier(), &Notifier::activeConnectionRemoved, this, &TrayPage::handleActiveConnectionRemoved);
 
-    connect(settingsNotifier(), &SettingsNotifier::connectionAdded, this, &TrayPage::handleNotifierConnectionAdded);
-
-    m_connectionTimer.setInterval(100);
-    m_connectionTimer.setSingleShot(true);
-    //connectionRemoved信号会激发两次，原因暂时未知，使用定时器使短时间内多次相同信号只调用一次槽函数
-    connect(settingsNotifier(), &SettingsNotifier::connectionRemoved, [=](const QString &path) {
-                m_connectionRemovePath = path;
-                m_connectionTimer.start();
-            });
-
-    connect(&m_connectionTimer, &QTimer::timeout, [=]() {
-                handleNotifierConnectionRemoved(m_connectionRemovePath);
-            });
 }
 
-void TrayPage::setMultiDeviceWidgetVisible(bool visible)
+void TrayPage::initWiredPage()
 {
-    m_multiDevicewidget->setVisible(visible);
-}
+    ui->deviceLabel->setText(tr("Select wired network card"));
+    getDeviceList(Device::Ethernet);
 
-void TrayPage::setDeviceLabel(const QString &label)
-{
-    m_deviceLabel->setText(label);
-}
-
-QPointer<ConnectionLists> TrayPage::getConnectionListsPtr()
-{
-    return QPointer<ConnectionLists>(m_connectionLists);
-}
-
-void TrayPage::handleNotifierConnectionAdded(const QString &path)
-{
-}
-void TrayPage::handleNotifierConnectionRemoved(const QString &path)
-{
-}
-void TrayPage::handleActiveConnectionAdded(const QString &activepath)
-{
-}
-void TrayPage::handleActiveConnectionRemoved(const QString &activepath)
-{
-}
-
-void TrayPage::handleActiveConnectionStateChanged(ActiveConnection::State state, const QString &path)
-{
-    switch (state)
+    if(m_deviceList.count() > 1)
     {
-    case ActiveConnection::State::Unknown:
-        KLOG_DEBUG() << "ActiveConnection::State::Unknown";
-        break;
-    case ActiveConnection::State::Activating:
-        KLOG_DEBUG() << "ActiveConnection::State::Activating";
-        break;
-    case ActiveConnection::State::Activated:
-        KLOG_DEBUG() << "ActiveConnection::State::Activated";
-        handleStateActivated(path);
-        break;
-    case ActiveConnection::State::Deactivating:
-        KLOG_DEBUG() << "ActiveConnection::State::Deactivating";
-        break;
-    case ActiveConnection::State::Deactivated:
-        KLOG_DEBUG() << "ActiveConnection::State::Deactivated";
-        handleStateDeactivated(path);
-        break;
-    default:
-        break;
+        setMultiWiredDeviceWidget();
+    }
+    else if(m_deviceList.count() == 1)
+    {
+        ui->selectDevicewidget->setVisible(false);
+        QString devicePath =  m_deviceList.at(0)->uni();
+        KLOG_DEBUG() << "initWiredPage devicePath:" << devicePath;
+        WiredTrayWidget *wiredTrayWidget = new WiredTrayWidget(devicePath,this);
+        ui->stackedWidget->addWidget(wiredTrayWidget);
+    }
+    else
+    {
+        //m_deviceeList.count == 0
     }
 }
 
-void TrayPage::handleStateActivated(const QString &activatedPath)
+void TrayPage::initWirelessPage()
 {
-
-}
-void TrayPage::handleStateDeactivated(const QString &deactivatedPath)
-{
-
+    ui->deviceLabel->setText(tr("Select wireless network card"));
+    getDeviceList(Device::Wifi);
 }
 
 void TrayPage::getDeviceList(Device::Type deviceType)
@@ -159,9 +91,87 @@ void TrayPage::getDeviceList(Device::Type deviceType)
             m_deviceList << dev;
         }
     }
-    KLOG_DEBUG() << "m_deviceList:" << m_deviceList;
+    KLOG_INFO() << "m_deviceList:" << m_deviceList;
     if (m_deviceList.isEmpty())
     {
-        KLOG_DEBUG() << "No available devices were found";
+        KLOG_INFO() << "No available devices were found";
     }
+}
+
+void TrayPage::setMultiWiredDeviceWidget()
+{
+    for (Device::Ptr dev : m_deviceList)
+    {
+        QSharedPointer<WiredDevice> wiredDevice = qobject_cast<WiredDevice*>(dev);
+        QString devicePath = wiredDevice->uni();
+        QString deviceName = wiredDevice->interfaceName();
+        ui->deviceComboBox->addItem(deviceName,devicePath);
+
+        WiredTrayWidget *wiredTrayWidget = new WiredTrayWidget(devicePath,this);
+        ui->stackedWidget->addWidget(wiredTrayWidget);
+
+    }
+    connect(ui->deviceComboBox, QOverload<int>::of(&QComboBox::currentIndexChanged), [=](int index) {
+                QString devicePath = ui->deviceComboBox->currentData().toString();
+                handleDeviceComboBoxChanged(index);
+    });
+    ui->selectDevicewidget->setVisible(true);
+}
+
+void TrayPage::handleDeviceComboBoxChanged(int index)
+{
+    ui->stackedWidget->setCurrentIndex(index);
+}
+
+//重新获取device、初始化，刷新
+/*void TrayPage::handleDeviceAdded(const QString &devicePath)
+{
+    //需要 等待一段时间
+    Device::Ptr device = findNetworkInterface(devicePath);
+    if(device->type() == Device::Ethernet)
+    {
+        int previousWidgetCount = ui->stackedWidget->count();
+        getDeviceList(Device::Ethernet);
+        if(previousWidgetCount != 0)
+        {
+            ui->deviceComboBox->clear();
+            for (int i = 0; i < previousWidgetCount; ++i)
+            {
+                QWidget *widget= ui->stackedWidget->widget(i);
+                ui->stackedWidget->removeWidget(widget);
+                widget->deleteLater();
+            }
+            setMultiWiredDeviceWidget();
+        }
+        else
+            ui->selectDevicewidget->setVisible(false);
+    }
+    else if(device->type() == Device::Wifi)
+    {
+
+    }
+}
+
+void TrayPage::handleDeviceRemoved(const QString &devicePath)
+{
+
+}*/
+QStringList TrayPage::devicePathList()
+{
+    QStringList devicePathList;
+    for (Device::Ptr device :m_deviceList)
+    {
+        devicePathList << device->uni();
+    }
+    return devicePathList;
+}
+
+int TrayPage::pageHeight()
+{
+    KLOG_DEBUG() << "ui->selectDevicewidget->height():" << ui->selectDevicewidget->height();
+    KLOG_DEBUG() << "ui->stackedWidget->height():" << ui->stackedWidget->height();
+    ui->stackedWidget->widget(0);
+
+    int height = ui->selectDevicewidget->height() + ui->stackedWidget->height();
+    return height;
 }

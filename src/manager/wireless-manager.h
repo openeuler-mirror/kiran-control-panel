@@ -53,8 +53,6 @@ public slots:
     void handleActiveConnectionAdded(const QString &path) override;
     void handleActiveConnectionRemoved(const QString &path) override;
 
-//    void handleActiveConnectionStateChanged(ActiveConnection::State state, const QString &path);
-
     void handleStateActivated(const QString &activatedPath) override;
     void handleStateDeactivated(const QString &deactivatedPath) override;
 

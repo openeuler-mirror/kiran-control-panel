@@ -302,7 +302,7 @@ void WirelessManager::handleStateActivated(const QString &activatedPath)
 
 void WirelessManager::handleStateDeactivated(const QString &deactivatedPath)
 {
-    KLOG_DEBUG() << "WirelessManager::handleStateDeactivated";
+    KLOG_DEBUG() << "WirelessManager::handleActiveConnectionStateChanged";
     ui->connectionShowPage->connectionStateNotify(ActiveConnection::Deactivated);
     ui->connectionShowPage->clearDeactivatedConnectionInfo(deactivatedPath);
     ui->connectionShowPage->update();

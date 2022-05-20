@@ -59,6 +59,7 @@ public:
     void initUI();
     void initConnect();
 
+    void setDevicePath(const QString &devicePath);
     // 在kf5-NetworkManager-qt中Connection是指具体的网络配置，不是指已经存在的网络
     void showConnectionLists(ConnectionSettings::ConnectionType type, ItemWidgetType itemType);
     void addConnectionToLists(Connection::Ptr ptr, const QString &devicePath);
@@ -77,13 +78,16 @@ public:
     void findItemByUuid(const QString &uuid);
     void findItemBySsid(const QString &ssid);
 
+public slots:
+    void handleActiveConnectionStateChanged(ActiveConnection::State state);
+    void handleActiveStateDeactivated();
 //    void topActivatedItem(int row);
 
 public slots:
     void clearConnectionLists();
     void handleConnectionItemClicked(QListWidgetItem *item);
     void updateActivatedConnectionInfo(QString activatedPath);
-    void clearDeactivatedConnectionInfo(const QString &deactivatedPath);
+    void clearDeactivatedConnectionInfo();
     void connectionStateNotify(ActiveConnection::State state);
     void connectionItemLoadingAnimation();
 
@@ -101,6 +105,7 @@ private:
     QListWidgetItem *m_previousActivatedItem;
     QListWidgetItem *m_currentActiveItem;
     ItemWidgetType m_itemShowType;
+    QString m_currentDevicePath;
 };
 
 class CustomSortListItem : public QListWidgetItem

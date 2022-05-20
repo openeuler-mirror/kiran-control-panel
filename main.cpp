@@ -11,6 +11,7 @@
  *
  * Author:     luoqing <luoqing@kylinos.com.cn>
  */
+
 #include <libnotify/notify.h>
 #include <kiran-application.h>
 #include <qt5-log-i.h>
@@ -23,6 +24,5 @@ int main(int argc, char *argv[]) {
 //    CPanelNetworkWidget networkWidget;
 //    networkWidget.show();
     ManagerTray tray;
-
     return QApplication::exec();
 }

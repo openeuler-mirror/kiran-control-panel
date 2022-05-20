@@ -12,14 +12,14 @@
  * Author:     luoqing <luoqing@kylinos.com.cn>
  */
 
-#include "wireless-tray-page.h"
+#include "wireless-tray-widget.h"
 
-WirelessTrayPage::WirelessTrayPage(QWidget *parent) : TrayPage(parent)
+WirelessTrayWidget::WirelessTrayWidget(QWidget *parent) : ConnectionTray(parent)
 {
 
 }
 
-WirelessTrayPage::~WirelessTrayPage()
+WirelessTrayWidget::~WirelessTrayWidget()
 {
 
 }

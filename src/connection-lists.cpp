@@ -44,6 +44,11 @@ void ConnectionLists::initConnect()
     connect(this, &QListWidget::itemClicked, this, &ConnectionLists::handleConnectionItemClicked);
 }
 
+void ConnectionLists::setDevicePath(const QString& devicePath)
+{
+    m_currentDevicePath = devicePath;
+}
+
 void ConnectionLists::handleConnectionItemClicked(QListWidgetItem* item)
 {
     // 判断是否已激活
@@ -66,40 +71,32 @@ void ConnectionLists::handleConnectionItemClicked(QListWidgetItem* item)
 void ConnectionLists::showConnectionLists(ConnectionSettings::ConnectionType type, ItemWidgetType itemType)
 {
     m_itemShowType = itemType;
-    const Device::List deviceList = networkInterfaces();
-    Connection::List connectionList = listConnections();
-    KLOG_DEBUG() << "deviceList:" << deviceList;
-
     if (type == ConnectionSettings::Wired)
     {
-        for (Device::Ptr dev : deviceList)
+        Device::Ptr device = findNetworkInterface(m_currentDevicePath);
+        WiredDevice::Ptr wiredDevice = qobject_cast<WiredDevice*>(device);
+
+        Connection::List availableConnections = wiredDevice->availableConnections();
+        QString devicePath = wiredDevice->uni();
+        QString deviceName = wiredDevice->interfaceName();
+        KLOG_DEBUG() << "devicePath:" << devicePath;
+        KLOG_DEBUG() << "deviceName:" << deviceName;
+        KLOG_DEBUG() << "availableConnections():" << availableConnections;
+        for (Connection::Ptr conn : availableConnections)
         {
-            if (dev->type() == Device::Ethernet)
-            {
-                QSharedPointer<WiredDevice> wiredDevice = qobject_cast<WiredDevice*>(dev);
-                Connection::List availableConnections = wiredDevice->availableConnections();
-                QString devicePath = wiredDevice->uni();
-                QString deviceName = wiredDevice->interfaceName();
-                KLOG_DEBUG() << "devicePath:" << devicePath;
-                KLOG_DEBUG() << "deviceName:" << deviceName;
-                KLOG_DEBUG() << "availableConnections():" << availableConnections;
-                for (Connection::Ptr conn : availableConnections)
-                {
-                    addConnectionToLists(conn, devicePath);
-                }
-            }
+            addConnectionToLists(conn, devicePath);
         }
     }
     else if (type == ConnectionSettings::Vpn)
     {
+        // vpn暂时不指定设备
+        Connection::List connectionList = listConnections();
         for (Connection::Ptr conn : connectionList)
         {
             if (conn->settings()->connectionType() == ConnectionSettings::Vpn)
                 addConnectionToLists(conn, "");
         }
     }
-    // 有线网络是否需要排序
-    //     this->sortItems();
 }
 
 // VPN的设备不明,VPN暂不指定设备
@@ -119,23 +116,11 @@ void ConnectionLists::addConnectionToLists(Connection::Ptr ptr, const QString& d
     ActiveConnection::List activeConnectionList = activeConnections();
     for (ActiveConnection::Ptr activeConnection : activeConnectionList)
     {
-        if (activeConnection->uuid() == ptr->uuid())
+        QStringList deviceList = activeConnection->devices();
+        if (activeConnection->uuid() == ptr->uuid() && deviceList.contains(devicePath))
         {
             connectionInfo.activeConnectionPath = activeConnection->path();
-            connect(activeConnection.data(), &ActiveConnection::stateChanged, [=](ActiveConnection::State state)
-                    {
-                switch (state)
-                {
-                case ActiveConnection::State::Deactivated:
-                    KLOG_DEBUG() << "ActiveConnection::State::Deactivated";
-                    //更新item所带信息，清空已激活路径
-                    KLOG_DEBUG() << "Deactivated: activeConnection->path() : " << activeConnection->path();
-                    emit deactivatedItemConnection(activeConnection->path());
-                    break;
-                default:
-                    break;
-                } });
-
+            connect(activeConnection.data(), &ActiveConnection::stateChanged,this, &ConnectionLists::handleActiveConnectionStateChanged);
             itemWidget->activatedStatus();
             m_previousActivatedItem = item;
         }
@@ -149,10 +134,11 @@ void ConnectionLists::addConnectionToLists(Connection::Ptr ptr, const QString& d
     this->setItemWidget(item, itemWidget);
     this->setMaximumHeight(this->sizeHintForRow(0) * this->count() + (2 * this->frameWidth()));
 
-    //button在插件页面执行编辑操作，在托盘页面执行断开连接操作
-    if(m_itemShowType == ITEM_WIDGET_TYPE_PLUGIN)
+    // button在插件页面执行编辑操作，在托盘页面执行断开连接操作
+    if (m_itemShowType == ITEM_WIDGET_TYPE_PLUGIN)
     {
-        connect(itemWidget, &ConnectionItemWidget::actionButtonClicked, [=](){
+        connect(itemWidget, &ConnectionItemWidget::actionButtonClicked, [=]()
+                {
                     QString uuid = item->data(Qt::UserRole).value<ConnectionInfo>().uuid;
                     QString activeConnectionPath = item->data(Qt::UserRole).value<ConnectionInfo>().activeConnectionPath;
                     KLOG_DEBUG() << "uuid:" << uuid;
@@ -162,15 +148,36 @@ void ConnectionLists::addConnectionToLists(Connection::Ptr ptr, const QString& d
     }
     else
     {
-        connect(itemWidget, &ConnectionItemWidget::actionButtonClicked, [=](){
+        connect(itemWidget, &ConnectionItemWidget::actionButtonClicked, [=]()
+                {
                     QString activeConnectionPath = item->data(Qt::UserRole).value<ConnectionInfo>().activeConnectionPath;
                     emit trayRequestDisconnect(activeConnectionPath);
                 });
+        itemWidget->setWiredStatusIcon();
     }
 
-    connect(ptr.data(), &Connection::updated, [=]() {
-        emit connectionUpdated( ptr->path());
-    });
+    connect(ptr.data(), &Connection::updated, [=]()
+            { emit connectionUpdated(ptr->path()); });
+}
+
+void ConnectionLists::handleActiveConnectionStateChanged(ActiveConnection::State state)
+{
+    auto activeConnection = qobject_cast<ActiveConnection*>(sender()) ;
+    switch (state)
+    {
+    case ActiveConnection::State::Deactivated:
+        handleActiveStateDeactivated();
+        break;
+    default:
+        break;
+    }
+}
+
+void ConnectionLists::handleActiveStateDeactivated()
+{
+    connectionStateNotify(ActiveConnection::Deactivated);
+    clearDeactivatedConnectionInfo();
+    update();
 }
 
 void ConnectionLists::showWirelessNetworkLists()
@@ -403,8 +410,9 @@ void ConnectionLists::updateItemActivatedPath(QListWidgetItem* item, QString act
     item->setData(Qt::UserRole, var);
 }
 
-void ConnectionLists::clearDeactivatedConnectionInfo(const QString& deactivatedPath)
+void ConnectionLists::clearDeactivatedConnectionInfo()
 {
+    KLOG_DEBUG() << "clearDeactivatedConnectionInfo";
     if (m_previousActivatedItem != nullptr)
     {
         QWidget* widget = this->itemWidget(m_previousActivatedItem);
@@ -514,11 +522,12 @@ void ConnectionLists::showWiredStatusIcon()
     }
 }
 
-//void ConnectionLists::topActivatedItem(int row)
+
+// void ConnectionLists::topActivatedItem(int row)
 //{
-//        QListWidgetItem* topItem = takeItem(row);
-//        insertItem(0,topItem);
-//}
+//         QListWidgetItem* topItem = takeItem(row);
+//         insertItem(0,topItem);
+// }
 
 CustomSortListItem::CustomSortListItem(QWidget* parent)
 {

@@ -11,63 +11,52 @@
  *
  * Author:     luoqing <luoqing@kylinos.com.cn>
  */
-#ifndef TRAYPAGE_H
-#define TRAYPAGE_H
 
-#include <QComboBox>
-#include <QLabel>
-#include <QScrollArea>
-#include <QVBoxLayout>
-#include <QWidget>
-#include <QPointer>
-#include <QTimer>
-#include <NetworkManagerQt/Manager>
+#ifndef KIRAN_CPANEL_NETWORK_TRAY_PAGE_H
+#define KIRAN_CPANEL_NETWORK_TRAY_PAGE_H
+
 #include <NetworkManagerQt/Device>
+#include <QWidget>
+QT_BEGIN_NAMESPACE
+namespace Ui
+{
+class TrayPage;
+}
+QT_END_NAMESPACE
 using namespace NetworkManager;
-class ConnectionLists;
+enum TrayConnectionType
+{
+    TRAY_CONNECTION_TYPE_WIRED,
+    TRAT_CONNECTION_TYPE_WIRELESS
+};
+
 class TrayPage : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit TrayPage(QWidget *parent = nullptr);
-    ~TrayPage();
+    explicit TrayPage(TrayConnectionType trayConnectionType, QWidget *parent = nullptr);
+    ~TrayPage() override;
 
     void init();
     void initUI();
     void initConnection();
-    void setMultiDeviceWidgetVisible(bool visible);
-    void setDeviceLabel(const QString &label);
+    void initWiredPage();
+    void initWirelessPage();
     void getDeviceList(Device::Type deviceType);
+    void setMultiWiredDeviceWidget();
+    QStringList devicePathList();
+    int pageHeight();
 
-    QPointer<ConnectionLists> getConnectionListsPtr();
 public slots:
-    virtual void handleNotifierConnectionAdded(const QString &path);
-    virtual void handleNotifierConnectionRemoved(const QString &path);
-    virtual void handleActiveConnectionAdded(const QString &activepath);
-    virtual void handleActiveConnectionRemoved(const QString &activepath);
-
-    virtual void handleActiveConnectionStateChanged(ActiveConnection::State state, const QString &path);
-    virtual void handleStateActivated(const QString &activatedPath);
-    virtual void handleStateDeactivated(const QString &deactivatedPath);
-
-protected:
-    QList<Device::Ptr> m_deviceList;
+    void handleDeviceComboBoxChanged(int index);
+//    void handleDeviceAdded(const QString &devicePath);
+//    void handleDeviceRemoved(const QString &devicePath);
 
 private:
-    QVBoxLayout *m_verticalLayout;
-    QWidget *m_multiDevicewidget;
-    QVBoxLayout *m_verticalDeviceWidgetLayout;
-    QLabel *m_deviceLabel;
-    QComboBox *m_deviceComboBox;
-    QScrollArea *m_scrollArea;
-    QWidget *m_scrollAreaWidgetContents;
-    QVBoxLayout *m_verticalScrollAreaWidgetContentsLayout;
-    ConnectionLists *m_connectionLists;
-
-    QTimer m_connectionTimer;
-    QString m_connectionRemovePath;
-
+    Ui::TrayPage *ui;
+    TrayConnectionType m_trayConnectionType;
+    QList<Device::Ptr> m_deviceList;
 };
 
-#endif  // TRAYPAGE_H
+#endif  // KIRAN_CPANEL_NETWORK_TRAY_PAGE_H

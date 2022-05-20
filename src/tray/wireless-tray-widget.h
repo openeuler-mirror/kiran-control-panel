@@ -12,25 +12,25 @@
  * Author:     luoqing <luoqing@kylinos.com.cn>
  */
 
-#ifndef KIRAN_CPANEL_NETWORK_WIRELESS_TRAY_H
-#define KIRAN_CPANEL_NETWORK_WIRELESS_TRAY_H
+#ifndef KIRAN_CPANEL_NETWORK_WIRELESS_TRAY_WIDGET_H
+#define KIRAN_CPANEL_NETWORK_WIRELESS_TRAY_WIDGET_H
 
 #include <QWidget>
-#include "tray-page.h"
+#include "connection-tray.h"
 QT_BEGIN_NAMESPACE
 
 QT_END_NAMESPACE
 
-class WirelessTrayPage : public TrayPage
+class WirelessTrayWidget : public ConnectionTray
 {
     Q_OBJECT
 
 public:
-    explicit WirelessTrayPage(QWidget *parent = nullptr);
-    ~WirelessTrayPage() override;
+    explicit WirelessTrayWidget(QWidget *parent = nullptr);
+    ~WirelessTrayWidget() override;
 
 private:
 
 };
 
-#endif  //KIRAN_CPANEL_NETWORK_WIRELESS_TRAY_H
+#endif  // KIRAN_CPANEL_NETWORK_WIRELESS_TRAY_WIDGET_H

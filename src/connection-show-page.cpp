@@ -132,7 +132,7 @@ void ConnectionShowPage::updateActivatedConnectionInfo(QString activatedPath)
 
 void ConnectionShowPage::clearDeactivatedConnectionInfo(const QString& deactivatedPath)
 {
-    ui->connectionLists->clearDeactivatedConnectionInfo(deactivatedPath);
+    ui->connectionLists->clearDeactivatedConnectionInfo();
 }
 
 void ConnectionShowPage::connectionStateNotify(ActiveConnection::State state)

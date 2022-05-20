@@ -51,7 +51,6 @@ void Manager::initNotifierConnection()
         handleNotifierConnectionRemoved(m_connectionRemovePath);
     });
 
-    //    connect(settingsNotifier(), &SettingsNotifier::connectionRemoved, this, &Manager::handleNotifierConnectionRemoved,Qt::UniqueConnection);
 }
 
 void Manager::refreshConnectionLists()

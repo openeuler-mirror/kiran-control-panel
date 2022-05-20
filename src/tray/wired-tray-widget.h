@@ -12,22 +12,22 @@
  * Author:     luoqing <luoqing@kylinos.com.cn>
  */
 
-#ifndef KIRAN_CPANEL_NETWORK_WIRED_TRAY_H
-#define KIRAN_CPANEL_NETWORK_WIRED_TRAY_H
+#ifndef KIRAN_CPANEL_NETWORK_WIRED_TRAY_WIDGET_H
+#define KIRAN_CPANEL_NETWORK_WIRED_TRAY_WIDGET_H
 
 #include <NetworkManagerQt/WiredDevice>
 #include <QWidget>
-#include "tray-page.h"
+#include "connection-tray.h"
 
 using namespace NetworkManager;
 class ConnectionLists;
-class WiredTrayPage : public TrayPage
+class WiredTrayWidget : public ConnectionTray
 {
     Q_OBJECT
 
 public:
-    explicit WiredTrayPage(QWidget *parent = nullptr);
-    ~WiredTrayPage() override;
+    explicit WiredTrayWidget(const QString &devicePath, QWidget *parent = nullptr);
+    ~WiredTrayWidget() override;
 
     void init();
     void initConnection();
@@ -36,20 +36,20 @@ public:
     void showWiredConnectionLists();
     void handleRequestActivateConnection(const QString &connectionPath, const QString &connectionParameter);
 
-    void handleNotifierConnectionAdded(const QString &path);
-    void handleNotifierConnectionRemoved(const QString &path);
+    void handleNotifierConnectionAdded(const QString &path ) override;
+    void handleNotifierConnectionRemoved(const QString &path) override;
 
-    void handleStateDeactivated(const QString &deactivatedPath);
-    void handleStateActivated(const QString &activatedPath);
+    void handleStateDeactivated() override;
+    void handleStateActivated(const QString &activatedPath) override;
 
-    void handleActiveConnectionAdded(const QString &path);
-    void handleActiveConnectionRemoved(const QString &path);
-
+    void handleActiveConnectionAdded(const QString &path) override;
+    void handleActiveConnectionRemoved(const QString &path) override;
 
 private:
     WiredDevice::Ptr m_wiredDevice;
-
+    QString m_devicePath;
+    QVBoxLayout *m_verticalLayout;
     QPointer<ConnectionLists> m_connectionLists;
 };
 
-#endif  // KIRAN_CPANEL_NETWORK_WIRED_TRAY_H
+#endif  // KIRAN_CPANEL_NETWORK_WIRED_TRAY_WIDGET_H
