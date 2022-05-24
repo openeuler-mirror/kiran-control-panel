@@ -13,11 +13,18 @@
  */
 
 #include "theme-widget.h"
+#include "kiran-frame/kiran-frame.h"
+
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QMouseEvent>
-#include "kiran-log/qt5-log-i.h"
-#include "kiran-session-daemon/appearance-i.h"
+#include <QPainter>
+#include <QPainterPath>
+#include <QStyleOption>
+
+#include <kiran-log/qt5-log-i.h>
+#include <kiran-session-daemon/appearance-i.h>
+#include <kiran-palette.h>
 
 #define DARK_THEME "Kiran-dark"
 #define LIGHT_THEME "Kiran"
@@ -101,11 +108,12 @@ ThemeWidget::ThemeWidget(QString name, QString currentTheme, QWidget *parent) : 
     scSizePolicy.setVerticalPolicy(QSizePolicy::Fixed);
     this->setSizePolicy(scSizePolicy);
 
-    m_themeImgWidget = new QWidget(this);
+    m_themeImgWidget = new KiranFrame(this);
     m_themeImgWidget->setFixedHeight(60);
     m_themeImgWidget->setMinimumWidth(282);
+    m_themeImgWidget->setDrawBroder(false);
+    m_themeImgWidget->setFixedBorderState(KiranPalette::Checked);
     m_themeImgWidget->installEventFilter(this);
-    m_themeImgWidget->setObjectName("themeImgWidget");
 
     QLabel *themeName = new QLabel(this);
     themeName->setObjectName("themeName");
@@ -126,16 +134,15 @@ ThemeWidget::ThemeWidget(QString name, QString currentTheme, QWidget *parent) : 
 
     QLabel *img = new QLabel(m_themeImgWidget);
     img->setObjectName("img");
-    setStyleSheet("QLabel{border-color: red}");
     img->setAlignment(Qt::AlignCenter);
     if (name == DARK_THEME)
     {
-        img->setPixmap(QPixmap(":/images/Dark.png"));
+        img->setPixmap(QPixmap(":/kcp-appearance/images/dark-theme.png"));
         themeName->setText(tr("Dark Theme"));
     }
     else if (name == LIGHT_THEME)
     {
-        img->setPixmap(QPixmap(":/images/Light.png"));
+        img->setPixmap(QPixmap(":/kcp-appearance/images/light-theme.png"));
         themeName->setText(tr("Light Theme"));
     }
 
@@ -236,15 +243,16 @@ void ThemeWidget::setSelectStatus(bool selected, int themeType)
         switch (themeType)
         {
         case APPEARANCE_THEME_TYPE_GTK:
-            m_selectLabel->setPixmap(QPixmap(":/images/selected.png"));
-            m_themeImgWidget->setStyleSheet("#themeImgWidget{border: 1px solid #2eb3ff;}");
+            m_selectLabel->setPixmap(QPixmap(":/kcp-appearance/images/indicator-selected.png"));
+//            m_themeImgWidget->setStyleSheet("#themeImgWidget{border: 1px solid #2eb3ff;}");
+            m_themeImgWidget->setDrawBroder(true);
             break;
         case APPEARANCE_THEME_TYPE_ICON:
-            m_iconSelectLabel->setPixmap(QPixmap(":/images/selected.png"));
+            m_iconSelectLabel->setPixmap(QPixmap(":/kcp-appearance/images/indicator-selected.png"));
             m_iconImgWidget->setStyleSheet("#iconImgWidget{border: 1px solid #2eb3ff;}");
             break;
         case APPEARANCE_THEME_TYPE_CURSOR:
-            m_cursorSelectLabel->setPixmap(QPixmap(":/images/selected.png"));
+            m_cursorSelectLabel->setPixmap(QPixmap(":/kcp-appearance/images/indicator-selected.png"));
             m_cursorWidget->setStyleSheet("#cursorWidget{border: 1px solid #2eb3ff;}");
             break;
         default:
@@ -257,7 +265,8 @@ void ThemeWidget::setSelectStatus(bool selected, int themeType)
         {
         case APPEARANCE_THEME_TYPE_GTK:
             m_selectLabel->clear();
-            m_themeImgWidget->setStyleSheet("#themeImgWidget{border: none;}");
+//            m_themeImgWidget->setStyleSheet("#themeImgWidget{border: none;}");
+            m_themeImgWidget->setDrawBroder(false);
             break;
         case APPEARANCE_THEME_TYPE_ICON:
             m_iconSelectLabel->clear();

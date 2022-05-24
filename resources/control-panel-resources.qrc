@@ -29,7 +29,7 @@
     </qresource>
 
     <qresource prefix="/kcp-appearance">
-        <file alias="select.svg">images/arrow.svg</file>
+        <file alias="images/select.svg">images/arrow.svg</file>
         <file>images/indicator-selected.png</file>
         <file>images/dark-theme.png</file>
         <file>images/light-theme.png</file>

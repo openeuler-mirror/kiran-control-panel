@@ -13,11 +13,15 @@
  */
 
 #include "chooser-widget.h"
+#include "include.h"
+#include "ui_chooser-widget.h"
+
 #include <QMouseEvent>
 #include <QPainter>
 #include <QStyleOption>
-#include "include.h"
-#include "ui_chooser-widget.h"
+
+#include <kiran-palette.h>
+#include <QPainterPath>
 
 ChooserWidget::ChooserWidget(QString title, int type, QWidget *parent) : QWidget(parent),
                                                                          ui(new Ui::ChooserWidget)
@@ -32,10 +36,6 @@ ChooserWidget::~ChooserWidget()
     delete ui;
 }
 
-/**
- * @brief ChooserWidget::setName 设置选择控件名字
- * @param name 名字
- */
 void ChooserWidget::setName(QString name)
 {
     ui->label_name->setText(name);
@@ -45,9 +45,7 @@ void ChooserWidget::initUI(QString title)
 {
     ui->label_text->setText(title);
     ui->label_arrow->setFixedSize(16, 16);
-    ui->label_arrow->setPixmap(QPixmap(":/images/select.svg"));
-    ui->label_name->setStyleSheet("#label_name{color: #919191;}");
-    setStyleSheet("#ChooserWidget{background-color: #2d2d2d;border-radius : 6px;}");
+    ui->label_arrow->setPixmap(QPixmap(":/kcp-appearance/images/select.svg"));
 }
 
 void ChooserWidget::mousePressEvent(QMouseEvent *event)
@@ -63,6 +61,26 @@ void ChooserWidget::paintEvent(QPaintEvent *)
 {
     QStyleOption opt;
     opt.init(this);
+
+    KiranPalette::ColorState colorState = KiranPalette::Normal;
+    if( !(opt.state & QStyle::State_Enabled) )
+    {
+        colorState = KiranPalette::Disabled;
+    }
+    else if( opt.state & QStyle::State_Sunken )
+    {
+        colorState = KiranPalette::Active;
+    }
+    else if ( opt.state & QStyle::State_MouseOver )
+    {
+        colorState = KiranPalette::Hover;
+    }
+
+    auto kiranPalette = KiranPalette::instance();
+    auto background = kiranPalette->color(colorState,KiranPalette::Widget,KiranPalette::Background);
+
     QPainter p(this);
-    style()->drawPrimitive(QStyle::PE_Widget, &opt, &p, this);
+    QPainterPath painterPath;
+    painterPath.addRoundedRect(opt.rect,6,6);
+    p.fillPath(painterPath,background);
 }

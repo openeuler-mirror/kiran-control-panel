@@ -18,6 +18,8 @@
 #include <QLabel>
 #include <QObject>
 #include <QWidget>
+
+class KiranFrame;
 class ThemeWidget : public QWidget
 {
     Q_OBJECT
@@ -46,7 +48,7 @@ private:
     QWidget* m_currIconTheme;
 
     QLabel* m_selectLabel;
-    QWidget* m_themeImgWidget;
+    KiranFrame* m_themeImgWidget;
 
     QLabel* m_cursorSelectLabel;
     QWidget* m_cursorWidget;

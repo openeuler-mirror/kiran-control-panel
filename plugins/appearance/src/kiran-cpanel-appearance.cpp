@@ -47,7 +47,7 @@ KiranCpanelAppearance::~KiranCpanelAppearance()
 bool KiranCpanelAppearance::initUI()
 {
     //TODO:connect dbus if faile return false;
-    setIcon(QIcon(":/images/icon.png"));
+    setIcon(QIcon::fromTheme("kcp-appearance"));
 
     ui->listWidget->setIconSize(QSize(16, 16));
     addSidebarItem(tr("Wallpaper Setting"), ":/images/wallpaper.svg");

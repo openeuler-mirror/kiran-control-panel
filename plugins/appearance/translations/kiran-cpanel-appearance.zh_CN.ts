@@ -104,19 +104,6 @@
     </message>
 </context>
 <context>
-    <name>KcpInterface</name>
-    <message>
-        <location filename="../src/interface.cpp" line="78"/>
-        <source>warning</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/interface.cpp" line="78"/>
-        <source>load qss file failed</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>KiranCpanelAppearance</name>
     <message>
         <location filename="../src/kiran-cpanel-appearance.ui" line="14"/>

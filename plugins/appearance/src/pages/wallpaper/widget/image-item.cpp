@@ -63,6 +63,9 @@ void ImageItem::createDeleteButton()
     m_deleteBtn = new QToolButton(this);
     m_deleteBtn->setObjectName("deleteButton");
     m_deleteBtn->setFixedSize(64, 28);
+    m_deleteBtn->setStyleSheet("QToolButton{border:none;background-color:transparent;background-image:url(:/kcp-appearance/images/wallpaper-delete-normal.png);}"
+                               "QToolButton:hover{background-image:url(:/kcp-appearance/images/wallpaper-delete-pre.png);}"
+                               "QToolButton:pressed{background-image:url(:/kcp-appearance/images/wallpaper-delete-select.png);}");
 
     hLayout->addWidget(m_deleteBtn, Qt::AlignCenter);
     m_deleteBtn->hide();
@@ -243,7 +246,7 @@ void ImageItem::setIsSelected(bool selected)
 
 void ImageItem::drawLoadingImage(QPainter &painter)
 {
-    static QSvgRenderer loadingRender(QString(":/images/loading.svg"));
+    static QSvgRenderer loadingRender(QString(":/kiran-control-panel/images/loading.svg"));
     QRect widgetRect = rect();
     qreal widgetScaledFactor = widgetRect.width() / IMAGE_ITEM_DEFAULT_WIDTH;
     QSize loadingSize(loadingRender.defaultSize().width() * widgetScaledFactor,
