@@ -19,16 +19,19 @@
 
 namespace Ui
 {
-class ChooserWidget;
+class SettingBriefWidget;
 }
 
-class ChooserWidget : public QWidget
+/**
+ * 用于提供个性化设置的设置行，显示当前配置项值。也提供点击跳转的功能
+ */
+class SettingBriefWidget : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit ChooserWidget(QString title, int type = -1, QWidget *parent = 0);
-    ~ChooserWidget();
+    explicit SettingBriefWidget(QString title, int type = -1, QWidget *parent = 0);
+    ~SettingBriefWidget();
 
     void setName(QString name);
 
@@ -43,7 +46,7 @@ signals:
     void clicked();
 
 private:
-    Ui::ChooserWidget *ui;
+    Ui::SettingBriefWidget *ui;
     int m_wallpaperType = -1;
 };
 

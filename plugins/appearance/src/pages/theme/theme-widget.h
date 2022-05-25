@@ -20,6 +20,7 @@
 #include <QWidget>
 
 class KiranFrame;
+//TODO:此处之后需要重构ThemeSettingPreviewWidget
 class ThemeWidget : public QWidget
 {
     Q_OBJECT
@@ -44,14 +45,14 @@ protected:
 
 private:
     QLabel* m_iconSelectLabel;
-    QWidget* m_iconImgWidget;
+    KiranFrame* m_iconImgWidget;
     QWidget* m_currIconTheme;
 
     QLabel* m_selectLabel;
     KiranFrame* m_themeImgWidget;
 
     QLabel* m_cursorSelectLabel;
-    QWidget* m_cursorWidget;
+    KiranFrame* m_cursorWidget;
 
     QString m_theme;
 };

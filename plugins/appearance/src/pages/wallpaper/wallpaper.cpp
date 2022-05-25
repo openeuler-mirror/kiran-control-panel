@@ -19,7 +19,7 @@
 #include <QDir>
 #include <QFileDialog>
 #include <QThread>
-#include "common/chooser-widget.h"
+#include "common/setting-brief-widget.h"
 #include "dbus-interface/appearance-global-info.h"
 #include "ui_wallpaper.h"
 #include "wallpaper-def.h"
@@ -73,6 +73,8 @@ Wallpaper::~Wallpaper()
 
 void Wallpaper::initUI()
 {
+    ui->widget_desktop_preview->setDrawBroder(false);
+    ui->widget_lockscreen_preview->setDrawBroder(false);
     ui->stackedWidget_Wallpaper->setCurrentIndex(0);
     m_imageSelector = new ImageSelector(this);
     ui->vLayout_image_selector->addWidget(m_imageSelector);
@@ -102,7 +104,7 @@ void Wallpaper::createPreviewLabel()
  */
 void Wallpaper::createChooserWidget()
 {
-    m_desktopWpChooser = new ChooserWidget(tr("Set Desktop Wallpaper"), DESKTOP);
+    m_desktopWpChooser = new SettingBriefWidget(tr("Set Desktop Wallpaper"), DESKTOP);
     ui->vLayout_chooser->addWidget(m_desktopWpChooser);
     if (m_currDesktopWp.isNull())
         m_desktopWpChooser->setDisabled(true);
@@ -110,7 +112,7 @@ void Wallpaper::createChooserWidget()
     {
         QString desktopWpName = m_currDesktopWp.split("/").last();
         m_desktopWpChooser->setName(desktopWpName);
-        connect(m_desktopWpChooser, &ChooserWidget::clicked,
+        connect(m_desktopWpChooser, &SettingBriefWidget::clicked,
                 [=] {
                     m_imageSelector->setSelectorType(DESKTOP);
                     m_imageSelector->setSelectedImage(m_currDesktopWp, false);
@@ -118,7 +120,7 @@ void Wallpaper::createChooserWidget()
                 });
     }
 
-    m_lockScreenWPChooser = new ChooserWidget(tr("Set Lock Screen Wallpaper"), LOCK_SCREEN);
+    m_lockScreenWPChooser = new SettingBriefWidget(tr("Set Lock Screen Wallpaper"), LOCK_SCREEN);
     ui->vLayout_chooser->addWidget(m_lockScreenWPChooser);
     if (m_currLockScreenWp.isNull())
         m_lockScreenWPChooser->setDisabled(true);
@@ -127,7 +129,7 @@ void Wallpaper::createChooserWidget()
         QString lockScreenWpName = m_currLockScreenWp.split("/").last();
         m_lockScreenWPChooser->setName(lockScreenWpName);
 
-        connect(m_lockScreenWPChooser, &ChooserWidget::clicked,
+        connect(m_lockScreenWPChooser, &SettingBriefWidget::clicked,
                 [=] {
                     m_imageSelector->setSelectorType(LOCK_SCREEN);
                     m_imageSelector->setSelectedImage(m_currLockScreenWp, false);

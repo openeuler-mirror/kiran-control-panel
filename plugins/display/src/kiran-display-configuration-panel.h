@@ -34,6 +34,9 @@ public:
     void setData(const QVariantList &list, const bool &clearChecked=false);
     void changeItemDisabled(const bool &disabled);
 
+protected:
+    void paintEvent(QPaintEvent *event) override;
+
 Q_SIGNALS:
     void buttonChecked(QString monitorPath);
 

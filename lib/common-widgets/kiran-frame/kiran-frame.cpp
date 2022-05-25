@@ -124,14 +124,7 @@ void KiranFrame::paintEvent(QPaintEvent* event)
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
 
-    static bool first = true;
     auto kiranPalette = KiranPalette::instance();
-    if(first)
-    {
-        kiranPalette->dump();
-        first = false;
-    }
-
     if (m_drawBackground)
     {
         QColor backgroundColor;

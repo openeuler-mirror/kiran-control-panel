@@ -288,18 +288,14 @@
 <context>
     <name>ChooserWidget</name>
     <message>
-        <location filename="../../plugins/appearance/src/common/chooser-widget.ui" line="26"/>
-        <location filename="../../build/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_chooser-widget.h" line="68"/>
+        <location filename="../../cmake-build-debug/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_chooser-widget.h" line="68"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../plugins/appearance/src/common/chooser-widget.ui" line="47"/>
-        <location filename="../../plugins/appearance/src/common/chooser-widget.ui" line="67"/>
-        <location filename="../../plugins/appearance/src/common/chooser-widget.ui" line="74"/>
-        <location filename="../../build/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_chooser-widget.h" line="69"/>
-        <location filename="../../build/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_chooser-widget.h" line="70"/>
-        <location filename="../../build/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_chooser-widget.h" line="71"/>
+        <location filename="../../cmake-build-debug/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_chooser-widget.h" line="69"/>
+        <location filename="../../cmake-build-debug/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_chooser-widget.h" line="70"/>
+        <location filename="../../cmake-build-debug/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_chooser-widget.h" line="71"/>
         <source>TextLabel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -606,24 +602,28 @@
     <message>
         <location filename="../../plugins/appearance/src/pages/font/fonts.ui" line="14"/>
         <location filename="../../build/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_fonts.h" line="193"/>
+        <location filename="../../cmake-build-debug/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_fonts.h" line="193"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../plugins/appearance/src/pages/font/fonts.ui" line="76"/>
         <location filename="../../build/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_fonts.h" line="194"/>
+        <location filename="../../cmake-build-debug/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_fonts.h" line="194"/>
         <source>Application Font Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../plugins/appearance/src/pages/font/fonts.ui" line="152"/>
         <location filename="../../build/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_fonts.h" line="195"/>
+        <location filename="../../cmake-build-debug/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_fonts.h" line="195"/>
         <source>Titlebar Font Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../plugins/appearance/src/pages/font/fonts.ui" line="222"/>
         <location filename="../../build/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_fonts.h" line="196"/>
+        <location filename="../../cmake-build-debug/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_fonts.h" line="196"/>
         <source>Monospace Font Settings</source>
         <translation type="unfinished"></translation>
     </message>
@@ -816,12 +816,14 @@
     <message>
         <location filename="../../plugins/appearance/src/pages/theme/icon-themes/icon-themes.ui" line="14"/>
         <location filename="../../build/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_icon-themes.h" line="77"/>
+        <location filename="../../cmake-build-debug/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_icon-themes.h" line="77"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../plugins/appearance/src/pages/theme/icon-themes/icon-themes.ui" line="35"/>
         <location filename="../../build/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_icon-themes.h" line="78"/>
+        <location filename="../../cmake-build-debug/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_icon-themes.h" line="78"/>
         <source>Icon Themes Setting</source>
         <translation type="unfinished"></translation>
     </message>
@@ -915,6 +917,7 @@
     <message>
         <location filename="../../plugins/appearance/src/kiran-cpanel-appearance.ui" line="14"/>
         <location filename="../../build/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_kiran-cpanel-appearance.h" line="107"/>
+        <location filename="../../cmake-build-debug/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_kiran-cpanel-appearance.h" line="107"/>
         <source>KiranCpanelAppearance</source>
         <translation type="unfinished"></translation>
     </message>
@@ -946,100 +949,142 @@
     <name>KiranDisplayConfiguration</name>
     <message>
         <location filename="../../plugins/display/src/kiran-display-configuration.ui" line="14"/>
+        <location filename="../../build/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="496"/>
+        <location filename="../../cmake-build-debug/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="546"/>
         <source>KiranDisplayConfiguration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../plugins/display/src/kiran-display-configuration.ui" line="113"/>
+        <location filename="../../build/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="497"/>
+        <location filename="../../cmake-build-debug/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="547"/>
         <source>Copy display</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../plugins/display/src/kiran-display-configuration.ui" line="162"/>
+        <location filename="../../build/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="498"/>
+        <location filename="../../cmake-build-debug/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="548"/>
         <source>Extended display</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../plugins/display/src/kiran-display-configuration.ui" line="314"/>
-        <location filename="../../plugins/display/src/kiran-display-configuration.ui" line="655"/>
+        <location filename="../../plugins/display/src/kiran-display-configuration.ui" line="265"/>
+        <location filename="../../plugins/display/src/kiran-display-configuration.ui" line="606"/>
+        <location filename="../../build/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="499"/>
+        <location filename="../../build/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="510"/>
+        <location filename="../../cmake-build-debug/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="549"/>
+        <location filename="../../cmake-build-debug/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="560"/>
         <source>Resolution ratio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../plugins/display/src/kiran-display-configuration.ui" line="347"/>
-        <location filename="../../plugins/display/src/kiran-display-configuration.ui" line="688"/>
+        <location filename="../../plugins/display/src/kiran-display-configuration.ui" line="298"/>
+        <location filename="../../plugins/display/src/kiran-display-configuration.ui" line="639"/>
+        <location filename="../../build/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="500"/>
+        <location filename="../../build/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="511"/>
+        <location filename="../../cmake-build-debug/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="550"/>
+        <location filename="../../cmake-build-debug/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="561"/>
         <source>Refresh rate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../plugins/display/src/kiran-display-configuration.ui" line="377"/>
-        <location filename="../../plugins/display/src/kiran-display-configuration.ui" line="718"/>
+        <location filename="../../plugins/display/src/kiran-display-configuration.ui" line="328"/>
+        <location filename="../../plugins/display/src/kiran-display-configuration.ui" line="669"/>
+        <location filename="../../build/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="501"/>
+        <location filename="../../build/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="512"/>
+        <location filename="../../cmake-build-debug/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="551"/>
+        <location filename="../../cmake-build-debug/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="562"/>
         <source>Zoom rate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../plugins/display/src/kiran-display-configuration.ui" line="397"/>
-        <location filename="../../plugins/display/src/kiran-display-configuration.ui" line="738"/>
+        <location filename="../../plugins/display/src/kiran-display-configuration.ui" line="348"/>
+        <location filename="../../plugins/display/src/kiran-display-configuration.ui" line="689"/>
+        <location filename="../../build/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="502"/>
+        <location filename="../../build/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="513"/>
+        <location filename="../../cmake-build-debug/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="552"/>
+        <location filename="../../cmake-build-debug/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="563"/>
         <source>Automatic</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../plugins/display/src/kiran-display-configuration.ui" line="402"/>
-        <location filename="../../plugins/display/src/kiran-display-configuration.ui" line="743"/>
+        <location filename="../../plugins/display/src/kiran-display-configuration.ui" line="353"/>
+        <location filename="../../plugins/display/src/kiran-display-configuration.ui" line="694"/>
+        <location filename="../../build/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="503"/>
+        <location filename="../../build/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="514"/>
+        <location filename="../../cmake-build-debug/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="553"/>
+        <location filename="../../cmake-build-debug/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="564"/>
         <source>100% (recommended)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../plugins/display/src/kiran-display-configuration.ui" line="407"/>
-        <location filename="../../plugins/display/src/kiran-display-configuration.ui" line="748"/>
+        <location filename="../../plugins/display/src/kiran-display-configuration.ui" line="358"/>
+        <location filename="../../plugins/display/src/kiran-display-configuration.ui" line="699"/>
+        <location filename="../../build/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="504"/>
+        <location filename="../../build/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="515"/>
+        <location filename="../../cmake-build-debug/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="554"/>
+        <location filename="../../cmake-build-debug/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="565"/>
         <source>200%</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../plugins/display/src/kiran-display-configuration.ui" line="469"/>
-        <location filename="../../plugins/display/src/kiran-display-configuration.ui" line="807"/>
+        <location filename="../../plugins/display/src/kiran-display-configuration.ui" line="420"/>
+        <location filename="../../plugins/display/src/kiran-display-configuration.ui" line="758"/>
+        <location filename="../../build/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="506"/>
+        <location filename="../../build/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="517"/>
+        <location filename="../../cmake-build-debug/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="556"/>
+        <location filename="../../cmake-build-debug/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="567"/>
         <source>Apply</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../plugins/display/src/kiran-display-configuration.ui" line="491"/>
-        <location filename="../../plugins/display/src/kiran-display-configuration.ui" line="829"/>
+        <location filename="../../plugins/display/src/kiran-display-configuration.ui" line="442"/>
+        <location filename="../../plugins/display/src/kiran-display-configuration.ui" line="780"/>
+        <location filename="../../build/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="507"/>
+        <location filename="../../build/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="518"/>
+        <location filename="../../cmake-build-debug/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="557"/>
+        <location filename="../../cmake-build-debug/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="568"/>
         <source>Close</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../plugins/display/src/kiran-display-configuration.ui" line="558"/>
+        <location filename="../../plugins/display/src/kiran-display-configuration.ui" line="509"/>
+        <location filename="../../build/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="508"/>
+        <location filename="../../cmake-build-debug/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="558"/>
         <source>Open</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../plugins/display/src/kiran-display-configuration.ui" line="610"/>
+        <location filename="../../plugins/display/src/kiran-display-configuration.ui" line="561"/>
+        <location filename="../../build/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="509"/>
+        <location filename="../../cmake-build-debug/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="559"/>
         <source>Set as main display</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../plugins/display/src/kiran-display-configuration.cpp" line="322"/>
-        <location filename="../../plugins/display/src/kiran-display-configuration.cpp" line="344"/>
+        <location filename="../../plugins/display/src/kiran-display-configuration.cpp" line="324"/>
+        <location filename="../../plugins/display/src/kiran-display-configuration.cpp" line="346"/>
         <source> (recommended)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../plugins/display/src/kiran-display-configuration.cpp" line="364"/>
+        <location filename="../../plugins/display/src/kiran-display-configuration.cpp" line="366"/>
         <source>Is the display normal?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../plugins/display/src/kiran-display-configuration.cpp" line="367"/>
+        <location filename="../../plugins/display/src/kiran-display-configuration.cpp" line="369"/>
         <source>Save current configuration(K)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../plugins/display/src/kiran-display-configuration.cpp" line="371"/>
+        <location filename="../../plugins/display/src/kiran-display-configuration.cpp" line="373"/>
         <source>Restore previous configuration(R)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../plugins/display/src/kiran-display-configuration.cpp" line="379"/>
+        <location filename="../../plugins/display/src/kiran-display-configuration.cpp" line="381"/>
         <source>The display will resume the previous configuration in %1 seconds</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1048,31 +1093,43 @@
     <name>KiranDisplayConfigurationPanel</name>
     <message>
         <location filename="../../plugins/display/src/kiran-display-configuration-panel.ui" line="14"/>
+        <location filename="../../build/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration-panel.h" line="216"/>
+        <location filename="../../cmake-build-debug/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration-panel.h" line="218"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../plugins/display/src/kiran-display-configuration-panel.ui" line="124"/>
+        <location filename="../../plugins/display/src/kiran-display-configuration-panel.ui" line="122"/>
+        <location filename="../../build/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration-panel.h" line="218"/>
+        <location filename="../../cmake-build-debug/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration-panel.h" line="220"/>
         <source>Rotate left 90 degrees</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../plugins/display/src/kiran-display-configuration-panel.ui" line="164"/>
+        <location filename="../../plugins/display/src/kiran-display-configuration-panel.ui" line="162"/>
+        <location filename="../../build/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration-panel.h" line="222"/>
+        <location filename="../../cmake-build-debug/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration-panel.h" line="224"/>
         <source>Rotate right 90 degrees</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../plugins/display/src/kiran-display-configuration-panel.ui" line="203"/>
+        <location filename="../../plugins/display/src/kiran-display-configuration-panel.ui" line="201"/>
+        <location filename="../../build/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration-panel.h" line="226"/>
+        <location filename="../../cmake-build-debug/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration-panel.h" line="228"/>
         <source>Turn left and right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../plugins/display/src/kiran-display-configuration-panel.ui" line="247"/>
+        <location filename="../../plugins/display/src/kiran-display-configuration-panel.ui" line="245"/>
+        <location filename="../../build/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration-panel.h" line="230"/>
+        <location filename="../../cmake-build-debug/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration-panel.h" line="232"/>
         <source>upside down</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../plugins/display/src/kiran-display-configuration-panel.ui" line="291"/>
+        <location filename="../../plugins/display/src/kiran-display-configuration-panel.ui" line="289"/>
+        <location filename="../../build/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration-panel.h" line="234"/>
+        <location filename="../../cmake-build-debug/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration-panel.h" line="236"/>
         <source>Identification display</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1630,26 +1687,26 @@
     <message>
         <location filename="../../plugins/display/src/kiran-display-config-global.cpp" line="49"/>
         <location filename="../../plugins/display/src/kiran-display-config-global.h" line="90"/>
-        <location filename="../../plugins/display/src/kiran-display-configuration.cpp" line="399"/>
-        <location filename="../../plugins/display/src/kiran-display-configuration.cpp" line="417"/>
+        <location filename="../../plugins/display/src/kiran-display-configuration.cpp" line="401"/>
+        <location filename="../../plugins/display/src/kiran-display-configuration.cpp" line="419"/>
         <source>Tips</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../plugins/display/src/kiran-display-config-global.cpp" line="52"/>
         <location filename="../../plugins/display/src/kiran-display-config-global.h" line="93"/>
-        <location filename="../../plugins/display/src/kiran-display-configuration.cpp" line="402"/>
-        <location filename="../../plugins/display/src/kiran-display-configuration.cpp" line="420"/>
+        <location filename="../../plugins/display/src/kiran-display-configuration.cpp" line="404"/>
+        <location filename="../../plugins/display/src/kiran-display-configuration.cpp" line="422"/>
         <source>OK(K)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../plugins/display/src/kiran-display-configuration.cpp" line="406"/>
+        <location filename="../../plugins/display/src/kiran-display-configuration.cpp" line="408"/>
         <source>Failed to apply display settings!%1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../plugins/display/src/kiran-display-configuration.cpp" line="424"/>
+        <location filename="../../plugins/display/src/kiran-display-configuration.cpp" line="426"/>
         <source>Fallback display setting failed! %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1699,6 +1756,29 @@
     <message>
         <location filename="../../plugins/account/src/pages/select-avatar-page/select-avatar-page.cpp" line="175"/>
         <source>image files(*.bmp *.jpg *.png *.tif *.gif *.pcx *.tga *.exif *.fpx *.svg *.psd *.cdr *.pcd *.dxf *.ufo *.eps *.ai *.raw *.WMF *.webp)</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SettingBriefWidget</name>
+    <message>
+        <location filename="../../plugins/appearance/src/common/setting-brief-widget.ui" line="26"/>
+        <location filename="../../build/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_setting-brief-widget.h" line="68"/>
+        <location filename="../../cmake-build-debug/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_setting-brief-widget.h" line="68"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../plugins/appearance/src/common/setting-brief-widget.ui" line="47"/>
+        <location filename="../../plugins/appearance/src/common/setting-brief-widget.ui" line="67"/>
+        <location filename="../../plugins/appearance/src/common/setting-brief-widget.ui" line="74"/>
+        <location filename="../../build/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_setting-brief-widget.h" line="69"/>
+        <location filename="../../build/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_setting-brief-widget.h" line="70"/>
+        <location filename="../../build/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_setting-brief-widget.h" line="71"/>
+        <location filename="../../cmake-build-debug/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_setting-brief-widget.h" line="69"/>
+        <location filename="../../cmake-build-debug/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_setting-brief-widget.h" line="70"/>
+        <location filename="../../cmake-build-debug/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_setting-brief-widget.h" line="71"/>
+        <source>TextLabel</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1948,12 +2028,12 @@
 <context>
     <name>ThemeWidget</name>
     <message>
-        <location filename="../../plugins/appearance/src/pages/theme/theme-widget.cpp" line="145"/>
+        <location filename="../../plugins/appearance/src/pages/theme/theme-widget.cpp" line="143"/>
         <source>Dark Theme</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../plugins/appearance/src/pages/theme/theme-widget.cpp" line="150"/>
+        <location filename="../../plugins/appearance/src/pages/theme/theme-widget.cpp" line="148"/>
         <source>Light Theme</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1963,24 +2043,28 @@
     <message>
         <location filename="../../plugins/appearance/src/pages/theme/themes.ui" line="14"/>
         <location filename="../../build/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_themes.h" line="167"/>
+        <location filename="../../cmake-build-debug/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_themes.h" line="167"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../plugins/appearance/src/pages/theme/themes.ui" line="81"/>
         <location filename="../../build/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_themes.h" line="168"/>
+        <location filename="../../cmake-build-debug/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_themes.h" line="168"/>
         <source>Dark and Light Theme</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../plugins/appearance/src/pages/theme/themes.ui" line="109"/>
         <location filename="../../build/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_themes.h" line="169"/>
+        <location filename="../../cmake-build-debug/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_themes.h" line="169"/>
         <source>Themes Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../plugins/appearance/src/pages/theme/themes.ui" line="149"/>
         <location filename="../../build/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_themes.h" line="170"/>
+        <location filename="../../cmake-build-debug/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_themes.h" line="170"/>
         <source>Open Window Effects</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2295,79 +2379,85 @@
     <name>Wallpaper</name>
     <message>
         <location filename="../../plugins/appearance/src/pages/wallpaper/wallpaper.ui" line="14"/>
-        <location filename="../../build/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_wallpaper.h" line="178"/>
+        <location filename="../../build/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_wallpaper.h" line="179"/>
+        <location filename="../../cmake-build-debug/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_wallpaper.h" line="179"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../plugins/appearance/src/pages/wallpaper/wallpaper.ui" line="68"/>
-        <location filename="../../build/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_wallpaper.h" line="179"/>
+        <location filename="../../build/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_wallpaper.h" line="180"/>
+        <location filename="../../cmake-build-debug/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_wallpaper.h" line="180"/>
         <source>Set wallpaper</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../plugins/appearance/src/pages/wallpaper/wallpaper.ui" line="137"/>
-        <location filename="../../build/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_wallpaper.h" line="180"/>
+        <location filename="../../build/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_wallpaper.h" line="181"/>
+        <location filename="../../cmake-build-debug/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_wallpaper.h" line="181"/>
         <source>Desktop Wallpaper Preview</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../plugins/appearance/src/pages/wallpaper/wallpaper.ui" line="147"/>
-        <location filename="../../build/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_wallpaper.h" line="181"/>
+        <location filename="../../build/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_wallpaper.h" line="182"/>
+        <location filename="../../cmake-build-debug/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_wallpaper.h" line="182"/>
         <source>Lock Screen WallPaper Preview</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../plugins/appearance/src/pages/wallpaper/wallpaper.ui" line="166"/>
-        <location filename="../../build/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_wallpaper.h" line="182"/>
+        <location filename="../../build/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_wallpaper.h" line="183"/>
+        <location filename="../../cmake-build-debug/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_wallpaper.h" line="183"/>
         <source>Select wallpaper</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../plugins/appearance/src/pages/wallpaper/wallpaper.ui" line="220"/>
-        <location filename="../../build/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_wallpaper.h" line="183"/>
+        <location filename="../../build/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_wallpaper.h" line="184"/>
+        <location filename="../../cmake-build-debug/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_wallpaper.h" line="184"/>
         <source>Select Wallpaper</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../plugins/appearance/src/pages/wallpaper/wallpaper.cpp" line="105"/>
+        <location filename="../../plugins/appearance/src/pages/wallpaper/wallpaper.cpp" line="107"/>
         <source>Set Desktop Wallpaper</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../plugins/appearance/src/pages/wallpaper/wallpaper.cpp" line="121"/>
+        <location filename="../../plugins/appearance/src/pages/wallpaper/wallpaper.cpp" line="123"/>
         <source>Set Lock Screen Wallpaper</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../plugins/appearance/src/pages/wallpaper/wallpaper.cpp" line="161"/>
-        <location filename="../../plugins/appearance/src/pages/wallpaper/wallpaper.cpp" line="173"/>
+        <location filename="../../plugins/appearance/src/pages/wallpaper/wallpaper.cpp" line="163"/>
+        <location filename="../../plugins/appearance/src/pages/wallpaper/wallpaper.cpp" line="175"/>
         <source>set wallpaper</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../plugins/appearance/src/pages/wallpaper/wallpaper.cpp" line="161"/>
-        <location filename="../../plugins/appearance/src/pages/wallpaper/wallpaper.cpp" line="173"/>
+        <location filename="../../plugins/appearance/src/pages/wallpaper/wallpaper.cpp" line="163"/>
+        <location filename="../../plugins/appearance/src/pages/wallpaper/wallpaper.cpp" line="175"/>
         <source>Set wallpaper failed!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../plugins/appearance/src/pages/wallpaper/wallpaper.cpp" line="184"/>
+        <location filename="../../plugins/appearance/src/pages/wallpaper/wallpaper.cpp" line="186"/>
         <source>select picture</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../plugins/appearance/src/pages/wallpaper/wallpaper.cpp" line="186"/>
+        <location filename="../../plugins/appearance/src/pages/wallpaper/wallpaper.cpp" line="188"/>
         <source>image files(*.bmp *.jpg *.png *.tif *.gif *.pcx *.tga *.exif *.fpx *.svg *.psd *.cdr *.pcd *.dxf *.ufo *.eps *.ai *.raw *.WMF *.webp)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../plugins/appearance/src/pages/wallpaper/wallpaper.cpp" line="206"/>
+        <location filename="../../plugins/appearance/src/pages/wallpaper/wallpaper.cpp" line="208"/>
         <source>Add Image Failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../plugins/appearance/src/pages/wallpaper/wallpaper.cpp" line="207"/>
+        <location filename="../../plugins/appearance/src/pages/wallpaper/wallpaper.cpp" line="209"/>
         <source>The image already exists!</source>
         <translation type="unfinished"></translation>
     </message>

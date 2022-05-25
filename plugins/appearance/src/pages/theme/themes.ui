@@ -18,13 +18,13 @@
     <number>24</number>
    </property>
    <property name="leftMargin">
-    <number>24</number>
+    <number>16</number>
    </property>
    <property name="topMargin">
-    <number>24</number>
+    <number>16</number>
    </property>
    <property name="rightMargin">
-    <number>24</number>
+    <number>16</number>
    </property>
    <property name="bottomMargin">
     <number>40</number>
@@ -37,7 +37,7 @@
      <widget class="QWidget" name="page_theme">
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <property name="spacing">
-        <number>24</number>
+        <number>16</number>
        </property>
        <property name="leftMargin">
         <number>0</number>
@@ -113,7 +113,7 @@
          <item>
           <layout class="QVBoxLayout" name="verticalLayout_choose_widget">
            <property name="spacing">
-            <number>24</number>
+            <number>16</number>
            </property>
           </layout>
          </item>

@@ -23,7 +23,7 @@
 #include <QJsonParseError>
 #include <QMouseEvent>
 #include <QPushButton>
-#include "common/chooser-widget.h"
+#include "common/setting-brief-widget.h"
 #include "cursor-themes/cursor-themes.h"
 #include "dbus-interface/appearance-global-info.h"
 #include "icon-themes/icon-themes.h"
@@ -121,7 +121,7 @@ bool Themes::initThemesUI()
 bool Themes::initIconThemesUI()
 {
     //创建图标选择控件
-    m_chooseIconWidget = new ChooserWidget(tr("Choose icon themes"));
+    m_chooseIconWidget = new SettingBriefWidget(tr("Choose icon themes"));
     m_chooseIconWidget->setObjectName("chooseIconWidget");
     ui->verticalLayout_choose_widget->addWidget(m_chooseIconWidget);
 
@@ -145,7 +145,7 @@ bool Themes::initIconThemesUI()
     else
         ui->stackedWidget->addWidget(m_iconThemes);
 
-    connect(m_chooseIconWidget, &ChooserWidget::clicked,
+    connect(m_chooseIconWidget, &SettingBriefWidget::clicked,
             [=] {
                 ui->stackedWidget->setCurrentWidget(m_iconThemes);
             });
@@ -167,7 +167,7 @@ bool Themes::initIconThemesUI()
 bool Themes::initCursorThemesUI()
 {
     //创建光标选择控件
-    m_chooseCursorWidget = new ChooserWidget(tr("Choose cursor themes"));
+    m_chooseCursorWidget = new SettingBriefWidget(tr("Choose cursor themes"));
     m_chooseCursorWidget->setObjectName("chooseCursorWidget");
     ui->verticalLayout_choose_widget->addWidget(m_chooseCursorWidget);
 
@@ -190,7 +190,7 @@ bool Themes::initCursorThemesUI()
     else
         ui->stackedWidget->addWidget(m_cursorThemes);
 
-    connect(m_chooseCursorWidget, &ChooserWidget::clicked,
+    connect(m_chooseCursorWidget, &SettingBriefWidget::clicked,
             [=] {
                 ui->stackedWidget->setCurrentWidget(m_cursorThemes);
             });

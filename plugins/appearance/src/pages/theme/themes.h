@@ -26,12 +26,11 @@ class Themes;
 class QButtonGroup;
 class IconThemes;
 class ThemeWidgetGroup;
-class ChooserWidget;
+class SettingBriefWidget;
 class CursorThemes;
 class Themes : public QWidget
 {
     Q_OBJECT
-
 public:
     explicit Themes(QWidget *parent = 0);
     ~Themes();
@@ -57,11 +56,11 @@ private:
     Ui::Themes *ui;
 
     IconThemes *m_iconThemes;
-    ChooserWidget *m_chooseIconWidget;
+    SettingBriefWidget *m_chooseIconWidget;
     QString m_currIconThemes;
 
     CursorThemes *m_cursorThemes;
-    ChooserWidget *m_chooseCursorWidget;
+    SettingBriefWidget *m_chooseCursorWidget;
     QString m_currCursorThemes;
 
     //Gtk 主题

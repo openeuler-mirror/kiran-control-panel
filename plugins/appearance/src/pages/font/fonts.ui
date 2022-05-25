@@ -15,19 +15,19 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_4">
    <property name="spacing">
-    <number>24</number>
+    <number>16</number>
    </property>
    <property name="leftMargin">
-    <number>24</number>
+    <number>16</number>
    </property>
    <property name="topMargin">
-    <number>24</number>
+    <number>16</number>
    </property>
    <property name="rightMargin">
-    <number>24</number>
+    <number>16</number>
    </property>
    <property name="bottomMargin">
-    <number>40</number>
+    <number>16</number>
    </property>
    <item>
     <widget class="QWidget" name="widget_fonts" native="true">
@@ -50,7 +50,7 @@
       <item>
        <layout class="QVBoxLayout" name="verticalLayout_5">
         <property name="spacing">
-         <number>23</number>
+         <number>16</number>
         </property>
         <item>
          <widget class="QWidget" name="widget_2" native="true">

@@ -47,9 +47,11 @@ ThemeWidget::ThemeWidget(QSize iconSize, QString currentIconTheme,
     mainVLayout->setSpacing(4);
     mainVLayout->setMargin(0);
 
-    m_iconImgWidget = new QWidget(this);
+    m_iconImgWidget = new KiranFrame(this);
     m_iconImgWidget->setFixedHeight(70);
     m_iconImgWidget->setObjectName("iconImgWidget");
+    m_iconImgWidget->setDrawBroder(false);
+    m_iconImgWidget->setFixedBorderState(KiranPalette::Checked);
     m_iconImgWidget->installEventFilter(this);
 
     QLabel *iconName = new QLabel(this);
@@ -186,10 +188,13 @@ ThemeWidget::ThemeWidget(QSize cursorSize, QString currentCursorTheme,
                               "font-family: Noto Sans CJK SC regular;"
                               "font-size: 12px}");
 
-    m_cursorWidget = new QWidget(this);
+    m_cursorWidget = new KiranFrame(this);
     m_cursorWidget->setObjectName("cursorWidget");
     m_cursorWidget->setFixedHeight(40);
+    m_cursorWidget->setDrawBroder(false);
+    m_cursorWidget->setFixedBorderState(KiranPalette::Checked);
     m_cursorWidget->installEventFilter(this);
+
     mainVLayout->addWidget(m_cursorWidget);
     mainVLayout->addWidget(cursorName);
     //    setLayout(mainVLayout);
@@ -244,16 +249,15 @@ void ThemeWidget::setSelectStatus(bool selected, int themeType)
         {
         case APPEARANCE_THEME_TYPE_GTK:
             m_selectLabel->setPixmap(QPixmap(":/kcp-appearance/images/indicator-selected.png"));
-//            m_themeImgWidget->setStyleSheet("#themeImgWidget{border: 1px solid #2eb3ff;}");
             m_themeImgWidget->setDrawBroder(true);
             break;
         case APPEARANCE_THEME_TYPE_ICON:
             m_iconSelectLabel->setPixmap(QPixmap(":/kcp-appearance/images/indicator-selected.png"));
-            m_iconImgWidget->setStyleSheet("#iconImgWidget{border: 1px solid #2eb3ff;}");
+            m_iconImgWidget->setDrawBroder(true);
             break;
         case APPEARANCE_THEME_TYPE_CURSOR:
             m_cursorSelectLabel->setPixmap(QPixmap(":/kcp-appearance/images/indicator-selected.png"));
-            m_cursorWidget->setStyleSheet("#cursorWidget{border: 1px solid #2eb3ff;}");
+            m_cursorWidget->setDrawBroder(true);
             break;
         default:
             break;
@@ -265,16 +269,15 @@ void ThemeWidget::setSelectStatus(bool selected, int themeType)
         {
         case APPEARANCE_THEME_TYPE_GTK:
             m_selectLabel->clear();
-//            m_themeImgWidget->setStyleSheet("#themeImgWidget{border: none;}");
             m_themeImgWidget->setDrawBroder(false);
             break;
         case APPEARANCE_THEME_TYPE_ICON:
             m_iconSelectLabel->clear();
-            m_iconImgWidget->setStyleSheet("#iconImgWidget{border: none;}");
+            m_iconImgWidget->setDrawBroder(false);
             break;
         case APPEARANCE_THEME_TYPE_CURSOR:
             m_cursorSelectLabel->clear();
-            m_cursorWidget->setStyleSheet("#cursorWidget{border: none;}");
+            m_cursorWidget->setDrawBroder(false);
             break;
         default:
             break;

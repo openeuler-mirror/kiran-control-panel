@@ -24,7 +24,7 @@ class Wallpaper;
 
 class ImageSelector;
 class ThreadObject;
-class ChooserWidget;
+class SettingBriefWidget;
 class PreviewLabel;
 class Wallpaper : public QWidget
 {
@@ -55,8 +55,8 @@ private:
     QString m_cacheDirName;
     QString m_currDesktopWp;
     QString m_currLockScreenWp;
-    ChooserWidget *m_desktopWpChooser;
-    ChooserWidget *m_lockScreenWPChooser;
+    SettingBriefWidget *m_desktopWpChooser;
+    SettingBriefWidget *m_lockScreenWPChooser;
     PreviewLabel *m_desktopPreview;
     PreviewLabel *m_lockScreenPreview;
 

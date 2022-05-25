@@ -34,8 +34,8 @@ class KiranDisplayConfiguration : public QWidget, public PluginSubItemBase
 public:
    explicit KiranDisplayConfiguration(QWidget *parent = 0);
    ~KiranDisplayConfiguration();
-   bool hasUnsavedOptions() override;
 
+   bool hasUnsavedOptions() override;
    QSize sizeHint() const override;
 
 public Q_SLOTS:

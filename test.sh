@@ -18,7 +18,7 @@ echo 123123 |sudo -S make install
 
 ui_debug=0
 specify_style=""
-run_plugin_name="kiran-cpanel-appearance"
+run_plugin_name="kiran-cpanel-display"
 
 
 cmd=""

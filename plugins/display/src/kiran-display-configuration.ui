@@ -18,16 +18,16 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout" stretch="2,0,5">
    <property name="spacing">
-    <number>20</number>
+    <number>16</number>
    </property>
    <property name="leftMargin">
-    <number>24</number>
+    <number>16</number>
    </property>
    <property name="topMargin">
-    <number>24</number>
+    <number>16</number>
    </property>
    <property name="rightMargin">
-    <number>24</number>
+    <number>16</number>
    </property>
    <property name="bottomMargin">
     <number>0</number>
@@ -187,56 +187,7 @@ QPushButton {
    <item>
     <widget class="QScrollArea" name="scrollArea">
      <property name="styleSheet">
-      <string notr="true">
-  QScrollBar:vertical {
-      border: 0px solid grey;
-      background: rgba(255,255,255,10);
-      width: 6px;
-      margin: 20px 0px 20px 0px;
-  }
-  QScrollBar::handle:vertical {
-      background: rgba(255,255,255,30);
-      min-height: 20px;
-  }
-  QScrollBar::add-line:vertical {
-      border: 0px solid grey;
-      background: #32CC99;
-      height: 0px;
-      subcontrol-position: right;
-      subcontrol-origin: margin;
-  }
-
-  QScrollBar::sub-line:vertical {
-      border: 0px solid grey;
-      background: #32CC99;
-      height: 0px;
-      subcontrol-position: left;
-      subcontrol-origin: margin;
-  }
-
-  QScrollBar:horizontal {
-      border: 0px solid grey;
-      background: rgba(255,255,255,10);
-      height: 6px;
-      margin: 0px 20px 0 20px;
-  }
-  QScrollBar::handle:horizontal {
-      background: rgba(255,255,255,30);
-      min-width: 20px;
-  }
-  QScrollBar::add-line:horizontal {
-      border: 0px solid grey;
-      width: 0px;
-      subcontrol-position: right;
-      subcontrol-origin: margin;
-  }
-
-  QScrollBar::sub-line:horizontal {
-      border: 0px solid grey;
-      width: 0px;
-      subcontrol-position: left;
-      subcontrol-origin: margin;
-  }</string>
+      <string notr="true"/>
      </property>
      <property name="frameShape">
       <enum>QFrame::NoFrame</enum>
@@ -252,7 +203,7 @@ QPushButton {
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>700</width>
+        <width>722</width>
         <height>499</height>
        </rect>
       </property>
@@ -284,18 +235,18 @@ QPushButton {
        <item>
         <widget class="QStackedWidget" name="stackedWidget">
          <property name="currentIndex">
-          <number>0</number>
+          <number>1</number>
          </property>
          <widget class="QWidget" name="stackedWidgetPage1">
           <layout class="QVBoxLayout" name="verticalLayout_2">
            <property name="spacing">
-            <number>24</number>
+            <number>16</number>
            </property>
            <property name="leftMargin">
             <number>0</number>
            </property>
            <property name="topMargin">
-            <number>4</number>
+            <number>0</number>
            </property>
            <property name="rightMargin">
             <number>0</number>
@@ -320,17 +271,17 @@ QPushButton {
                <property name="minimumSize">
                 <size>
                  <width>0</width>
-                 <height>40</height>
+                 <height>36</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
                  <width>16777215</width>
-                 <height>40</height>
+                 <height>36</height>
                 </size>
                </property>
                <property name="styleSheet">
-                <string notr="true">QComboBox{combobox-popup:0;}</string>
+                <string notr="true"/>
                </property>
               </widget>
              </item>
@@ -353,13 +304,13 @@ QPushButton {
                <property name="minimumSize">
                 <size>
                  <width>0</width>
-                 <height>40</height>
+                 <height>36</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
                  <width>16777215</width>
-                 <height>40</height>
+                 <height>36</height>
                 </size>
                </property>
               </widget>
@@ -383,13 +334,13 @@ QPushButton {
                <property name="minimumSize">
                 <size>
                  <width>0</width>
-                 <height>40</height>
+                 <height>36</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
                  <width>16777215</width>
-                 <height>40</height>
+                 <height>36</height>
                 </size>
                </property>
                <item>
@@ -430,7 +381,7 @@ QPushButton {
            <item>
             <layout class="QHBoxLayout" name="horizontalLayout_5">
              <property name="spacing">
-              <number>58</number>
+              <number>40</number>
              </property>
              <property name="bottomMargin">
               <number>40</number>
@@ -452,14 +403,14 @@ QPushButton {
               <widget class="QPushButton" name="pushButton_ok">
                <property name="minimumSize">
                 <size>
-                 <width>250</width>
-                 <height>60</height>
+                 <width>110</width>
+                 <height>40</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>250</width>
-                 <height>60</height>
+                 <width>110</width>
+                 <height>40</height>
                 </size>
                </property>
                <property name="styleSheet">
@@ -474,14 +425,14 @@ QPushButton {
               <widget class="QPushButton" name="pushButton_cancel">
                <property name="minimumSize">
                 <size>
-                 <width>250</width>
-                 <height>60</height>
+                 <width>110</width>
+                 <height>40</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>250</width>
-                 <height>60</height>
+                 <width>110</width>
+                 <height>40</height>
                 </size>
                </property>
                <property name="styleSheet">
@@ -512,7 +463,7 @@ QPushButton {
          <widget class="QWidget" name="stackedWidgetPage2">
           <layout class="QVBoxLayout" name="verticalLayout_3">
            <property name="spacing">
-            <number>24</number>
+            <number>16</number>
            </property>
            <property name="leftMargin">
             <number>0</number>
@@ -661,17 +612,17 @@ QPushButton {
                <property name="minimumSize">
                 <size>
                  <width>0</width>
-                 <height>40</height>
+                 <height>36</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
                  <width>16777215</width>
-                 <height>40</height>
+                 <height>36</height>
                 </size>
                </property>
                <property name="styleSheet">
-                <string notr="true">QComboBox{combobox-popup:0;}</string>
+                <string notr="true"/>
                </property>
               </widget>
              </item>
@@ -694,13 +645,13 @@ QPushButton {
                <property name="minimumSize">
                 <size>
                  <width>0</width>
-                 <height>40</height>
+                 <height>36</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
                  <width>16777215</width>
-                 <height>40</height>
+                 <height>36</height>
                 </size>
                </property>
               </widget>
@@ -724,13 +675,13 @@ QPushButton {
                <property name="minimumSize">
                 <size>
                  <width>0</width>
-                 <height>40</height>
+                 <height>36</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
                  <width>16777215</width>
-                 <height>40</height>
+                 <height>36</height>
                 </size>
                </property>
                <item>
@@ -768,7 +719,7 @@ QPushButton {
            <item>
             <layout class="QHBoxLayout" name="horizontalLayout">
              <property name="spacing">
-              <number>58</number>
+              <number>40</number>
              </property>
              <property name="bottomMargin">
               <number>40</number>
@@ -790,14 +741,14 @@ QPushButton {
               <widget class="QPushButton" name="pushButton_extra_ok">
                <property name="minimumSize">
                 <size>
-                 <width>250</width>
-                 <height>60</height>
+                 <width>110</width>
+                 <height>40</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>250</width>
-                 <height>60</height>
+                 <width>110</width>
+                 <height>40</height>
                 </size>
                </property>
                <property name="styleSheet">
@@ -812,14 +763,14 @@ QPushButton {
               <widget class="QPushButton" name="pushButton_extra_cancel">
                <property name="minimumSize">
                 <size>
-                 <width>250</width>
-                 <height>60</height>
+                 <width>110</width>
+                 <height>40</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>250</width>
-                 <height>60</height>
+                 <width>110</width>
+                 <height>40</height>
                 </size>
                </property>
                <property name="styleSheet">

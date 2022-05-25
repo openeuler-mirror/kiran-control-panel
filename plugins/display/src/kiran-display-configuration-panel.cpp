@@ -16,8 +16,12 @@
 #include "ui_kiran-display-configuration-panel.h"
 #include "kiran-display-config-global.h"
 #include "kiran-display-config-identifying.h"
-#include<QToolTip>
+
+#include <kiran-palette.h>
+
+#include <QToolTip>
 #include <QPainter>
+#include <QPainterPath>
 
 using namespace KiranDisplayConfigGlobal;
 
@@ -108,4 +112,18 @@ void KiranDisplayConfigurationPanel::on_pushButton_identifying_clicked()
     KiranDisplayConfigIdentifying identify(this);
     identify.setText(text);
     identify.exec(pos);
+}
+
+void KiranDisplayConfigurationPanel::paintEvent(QPaintEvent *event)
+{
+    auto kiranPalette = KiranPalette::instance();
+    QColor backgroundColor = kiranPalette->color(KiranPalette::Normal,KiranPalette::Widget,KiranPalette::Background);
+
+    QPainterPath painterPath;
+    painterPath.addRoundedRect(this->rect(),6,6);
+
+    QPainter painter(this);
+    painter.fillPath(painterPath,backgroundColor);
+
+    QFrame::paintEvent(event);
 }

@@ -12,9 +12,9 @@
  * Author:     yuanxing <yuanxing@kylinos.com.cn>
  */
 
-#include "chooser-widget.h"
 #include "include.h"
-#include "ui_chooser-widget.h"
+#include "setting-brief-widget.h"
+#include "ui_setting-brief-widget.h"
 
 #include <QMouseEvent>
 #include <QPainter>
@@ -23,32 +23,33 @@
 #include <kiran-palette.h>
 #include <QPainterPath>
 
-ChooserWidget::ChooserWidget(QString title, int type, QWidget *parent) : QWidget(parent),
-                                                                         ui(new Ui::ChooserWidget)
+//TODO:箭头颜色应当随着主题变更
+SettingBriefWidget::SettingBriefWidget(QString title, int type, QWidget *parent) : QWidget(parent),
+                                                                         ui(new Ui::SettingBriefWidget)
 {
     ui->setupUi(this);
     initUI(title);
     m_wallpaperType = type;
 }
 
-ChooserWidget::~ChooserWidget()
+SettingBriefWidget::~SettingBriefWidget()
 {
     delete ui;
 }
 
-void ChooserWidget::setName(QString name)
+void SettingBriefWidget::setName(QString name)
 {
     ui->label_name->setText(name);
 }
 
-void ChooserWidget::initUI(QString title)
+void SettingBriefWidget::initUI(QString title)
 {
     ui->label_text->setText(title);
     ui->label_arrow->setFixedSize(16, 16);
     ui->label_arrow->setPixmap(QPixmap(":/kcp-appearance/images/select.svg"));
 }
 
-void ChooserWidget::mousePressEvent(QMouseEvent *event)
+void SettingBriefWidget::mousePressEvent(QMouseEvent *event)
 {
     if (event->button() == Qt::LeftButton)
     {
@@ -57,7 +58,7 @@ void ChooserWidget::mousePressEvent(QMouseEvent *event)
     QWidget::mousePressEvent(event);
 }
 
-void ChooserWidget::paintEvent(QPaintEvent *)
+void SettingBriefWidget::paintEvent(QPaintEvent *)
 {
     QStyleOption opt;
     opt.init(this);
@@ -82,5 +83,6 @@ void ChooserWidget::paintEvent(QPaintEvent *)
     QPainter p(this);
     QPainterPath painterPath;
     painterPath.addRoundedRect(opt.rect,6,6);
+
     p.fillPath(painterPath,background);
 }

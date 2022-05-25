@@ -17,6 +17,7 @@ find_package(Qt5 COMPONENTS Widgets DBus X11Extras Svg LinguistTools)
 pkg_search_module(KIRAN_CC_DAEMON REQUIRED kiran-cc-daemon)
 pkg_search_module(KLOG_QT5 REQUIRED klog-qt5)
 pkg_search_module(KIRANWIDGETS_QT5 REQUIRED kiranwidgets-qt5)
+pkg_search_module(KIRAN_STYLE_HELPER REQUIRED kiran-style-helper)
 
 file(GLOB_RECURSE SRC "src/*.cpp" "src/*.h" "src/*.ui")
 file(GLOB_RECURSE QRC "resources/*.qrc")
@@ -32,35 +33,29 @@ target_include_directories(${TARGET_NAME} PRIVATE
         ${KIRANWIDGETS_QT5_INCLUDE_DIRS}
         ${KIRAN_CONTROL_PANEL_INCLUDE_DIRS}
         ${CMAKE_CURRENT_BINARY_DIR}
-        ${KCP_PLUGIN_INCLUDE_DIR})
+        ${KCP_PLUGIN_INCLUDE_DIR}
+        ${KIRAN_STYLE_HELPER_INCLUDE_DIRS})
 
 target_link_libraries(${TARGET_NAME}
         Qt5::Widgets
         Qt5::DBus
         Qt5::X11Extras
-        Qt5::Svg)
+        Qt5::Svg
+        ${KIRAN_STYLE_HELPER_LIBRARIES})
 
 #安装插件到指定目录
-install(TARGETS ${TARGET_NAME} DESTINATION ${CPANEL_PLUGIN_DIR}/)
+install(TARGETS ${TARGET_NAME} DESTINATION ${PLUGIN_LIBS_INSTALL_DIR}/)
 
 #安装插件desktop
-configure_file(data/kiran-cpanel-display.desktop.in ${CMAKE_BINARY_DIR}/kiran-cpanel-display.desktop @ONLY)
-install(FILES ${CMAKE_BINARY_DIR}/kiran-cpanel-display.desktop DESTINATION ${CPANEL_DESKTOP_DIR}/ )
+configure_file(data/kiran-cpanel-display.desktop.in ${CMAKE_CURRENT_BINARY_DIR}/kiran-cpanel-display.desktop @ONLY)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/kiran-cpanel-display.desktop DESTINATION ${PLUGIN_DESKTOP_INSTALL_DIR}/ )
 
 SET(link_source ${PLUGIN_DESKTOP_INSTALL_DIR}/${TARGET_NAME}.desktop)
-SET(link_target ${CMAKE_BINARY_DIR}/${TARGET_NAME}-link.desktop)
+SET(link_target ${CMAKE_CURRENT_BINARY_DIR}/${TARGET_NAME}-link.desktop)
 add_custom_target(kcp-applications-account-desktop ALL COMMAND ln -sf ${link_source} ${link_target})
 install(FILES ${link_target}
         DESTINATION ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATADIR}/applications/
         RENAME ${TARGET_NAME}.desktop)
-
-#安装插件图标
-set(KCP_ICON_INSTALL_PATH ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor)
-install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/data/kcp-display-24.png" DESTINATION ${KCP_ICON_INSTALL_PATH}/24x24/apps RENAME kcp-display.png)
-install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/data/kcp-display-32.png" DESTINATION ${KCP_ICON_INSTALL_PATH}/32x32/apps RENAME kcp-display.png)
-install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/data/kcp-display-48.png" DESTINATION ${KCP_ICON_INSTALL_PATH}/48x48/apps RENAME kcp-display.png)
-install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/data/kcp-display-64.png" DESTINATION ${KCP_ICON_INSTALL_PATH}/64x64/apps RENAME kcp-display.png)
-install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/data/kcp-display-96.png" DESTINATION ${KCP_ICON_INSTALL_PATH}/96x96/apps RENAME kcp-display.png)
 
 #安装翻译文件
 set(TRANSLATION_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATAROOTDIR}/${TARGET_NAME}/translations)
