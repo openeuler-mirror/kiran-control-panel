@@ -18,11 +18,13 @@
 #include <QPainter>
 #include <qt5-log-i.h>
 
-CategoryListWidgetItemWidget::CategoryListWidgetItemWidget(QWidget *parent) : QWidget(parent), m_statusType(QEvent::None),m_showText(false)
+CategoryListWidgetItemWidget::CategoryListWidgetItemWidget(QWidget *parent)
+    : QWidget(parent) ,
+      m_showText(true)
 {
     setAttribute(Qt::WA_Hover,true);
     installEventFilter(this);
-    setStyleSheet("QToolTip{color:#000000;border: 0px solid #ffffff;background:#b3b3b3;}");
+    //setStyleSheet("QToolTip{color:#000000;border: 0px solid #ffffff;background:#b3b3b3;}");
     m_iconRect = QRect(cClassItemWgtLRPadding, cClassItemWgtTBPadding, cClassItemIconWd, cClassItemIconWd);
     m_textRect = QRect(cClassItemWgtLRPadding+cClassItemIconWd+cClassItemSpace, cClassItemWgtTBPadding, cClassItemTextWd, cClassItemIconWd);
 }
@@ -38,7 +40,8 @@ void CategoryListWidgetItemWidget::paintEvent(QPaintEvent *ev)
 
     QPen pen;
     pen.setWidth(1);
-    pen.setColor("#ffffff");
+
+    pen.setColor(palette().color(foregroundRole()));
     painter.setPen(pen);
     painter.drawPixmap(m_iconRect, m_icon);
     if(m_showText) painter.drawText(m_textRect, Qt::TextWrapAnywhere|Qt::AlignLeft|Qt::AlignVCenter, m_text);
@@ -65,29 +68,9 @@ QPixmap CategoryListWidgetItemWidget::pixmapToRound(const QPixmap &src, const QS
     painter.fillRect(0, 0, size.width(), size.height(), Qt::white);
     painter.setBrush(QColor(0, 0, 0));
     painter.drawRoundedRect(0, 0, size.width(), size.height(), radius, radius);
-
     QPixmap image = src.scaled(size);
     image.setMask(mask);
     return image;
-}
-
-bool CategoryListWidgetItemWidget::eventFilter(QObject * obj, QEvent * event)
-{
-    if(Q_LIKELY(obj == this))
-    {
-        switch (event->type()) {
-        case QEvent::HoverEnter:
-        case QEvent::HoverLeave:
-        case QEvent::FocusIn:
-        case QEvent::FocusOut:
-            m_statusType = event->type();
-            break;
-        default:
-            break;
-        }
-    }
-
-    return QWidget::eventFilter(obj, event);
 }
 
 void CategoryListWidgetItemWidget::setIcon(const QString &icon)
@@ -95,27 +78,9 @@ void CategoryListWidgetItemWidget::setIcon(const QString &icon)
     m_icon =  QPixmap(icon);//pixmapToRound(QPixmap(icon), m_iconRect.size(), 15);
 }
 
-void CategoryListWidgetItemWidget::setTextVisible(const bool &visible)
-{
-    m_showText = visible;
-    if(visible)
-    {
-        setFixedSize(textModeWd(), heightInt());
-    }
-    else
-    {
-        setFixedSize(iconModeWd(), heightInt());
-    }
-}
-
 void CategoryListWidgetItemWidget::setText(const QString &text)
 {
     m_text = text;
-}
-
-int CategoryListWidgetItemWidget::textModeWd()
-{
-    return 2*cClassItemWgtLRPadding + cClassItemSpace + cClassItemIconWd + cClassItemTextWd;
 }
 
 int CategoryListWidgetItemWidget::iconModeWd()

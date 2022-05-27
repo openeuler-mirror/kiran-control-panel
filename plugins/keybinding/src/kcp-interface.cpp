@@ -21,7 +21,7 @@
 #include <QFile>
 #include <QLocale>
 #include <QTranslator>
-#include "config/config.h"
+#include "keybinding-config.h"
 #include "keybinding_backEnd_proxy.h"
 #include "shortcut.h"
 

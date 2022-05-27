@@ -15,7 +15,7 @@
 #ifndef SHORTCUT_H
 #define SHORTCUT_H
 
-#include <keybinding_def.h>
+#include "keybinding_def.h"
 #include <QFile>
 #include <QLineEdit>
 #include <QTimer>

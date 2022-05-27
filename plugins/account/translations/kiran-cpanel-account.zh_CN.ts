@@ -96,27 +96,27 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/pages/auth-manager-page/auth-manager-page.ui" line="47"/>
+        <location filename="../src/pages/auth-manager-page/auth-manager-page.ui" line="50"/>
         <source>Fingerprint Authentication</source>
         <translation>指纹认证</translation>
     </message>
     <message>
-        <location filename="../src/pages/auth-manager-page/auth-manager-page.ui" line="91"/>
+        <location filename="../src/pages/auth-manager-page/auth-manager-page.ui" line="97"/>
         <source>Face Authentication</source>
         <translation>人脸认证</translation>
     </message>
     <message>
-        <location filename="../src/pages/auth-manager-page/auth-manager-page.ui" line="134"/>
+        <location filename="../src/pages/auth-manager-page/auth-manager-page.ui" line="140"/>
         <source>Password Authentication</source>
         <translation>密码认证</translation>
     </message>
     <message>
-        <location filename="../src/pages/auth-manager-page/auth-manager-page.ui" line="208"/>
+        <location filename="../src/pages/auth-manager-page/auth-manager-page.ui" line="214"/>
         <source>save</source>
         <translation>保存</translation>
     </message>
     <message>
-        <location filename="../src/pages/auth-manager-page/auth-manager-page.ui" line="249"/>
+        <location filename="../src/pages/auth-manager-page/auth-manager-page.ui" line="255"/>
         <source>return</source>
         <translation>返回</translation>
     </message>

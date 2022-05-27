@@ -32,6 +32,7 @@ PanelWindow::PanelWindow(QWidget *parent) : KiranTitlebarWindow(parent)
 void PanelWindow::initUI()
 {
     //初始化窗口相关
+    setTitleBarHeight(40);
     setButtonHints(KiranTitlebarWindow::TitlebarMinMaxCloseHints);
     setIcon(QIcon::fromTheme(qAppName()));
     setTitle(tr("Control Panel"));
@@ -42,7 +43,7 @@ void PanelWindow::initUI()
 
     //添加搜索框
     auto *searchBox = new CPanelSearchEdit(this);
-    searchBox->setFixedSize(352, 40);
+    searchBox->setFixedSize(352, 30);
     getTitlebarCustomLayout()->addWidget(searchBox);
     setTitlebarCustomLayoutAlignHCenter(true);
 }

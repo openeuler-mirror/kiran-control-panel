@@ -138,6 +138,7 @@ int main(int argc, char *argv[])
     QIcon titleIcon = QIcon::fromTheme(pluginDesktopInfo.Icon);
     w.setIcon(titleIcon);
     w.setPlugin(pluginHelper);
+    w.resize(w.sizeHint());
     KLOG_DEBUG() << "sizeHint:" << w.sizeHint();
 
 

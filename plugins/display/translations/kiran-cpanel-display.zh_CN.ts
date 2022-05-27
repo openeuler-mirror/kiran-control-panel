@@ -171,28 +171,28 @@
         <translation type="vanished">显示将会在 %1 秒后恢复之前的配置</translation>
     </message>
     <message>
-        <location filename="../src/kiran-display-configuration.cpp" line="324"/>
-        <location filename="../src/kiran-display-configuration.cpp" line="346"/>
+        <location filename="../src/kiran-display-configuration.cpp" line="325"/>
+        <location filename="../src/kiran-display-configuration.cpp" line="347"/>
         <source> (recommended)</source>
         <translation> (推荐)</translation>
     </message>
     <message>
-        <location filename="../src/kiran-display-configuration.cpp" line="366"/>
+        <location filename="../src/kiran-display-configuration.cpp" line="367"/>
         <source>Is the display normal?</source>
         <translation>显示是否正常?</translation>
     </message>
     <message>
-        <location filename="../src/kiran-display-configuration.cpp" line="369"/>
+        <location filename="../src/kiran-display-configuration.cpp" line="370"/>
         <source>Save current configuration(K)</source>
         <translation>保存当前配置(K)</translation>
     </message>
     <message>
-        <location filename="../src/kiran-display-configuration.cpp" line="373"/>
+        <location filename="../src/kiran-display-configuration.cpp" line="374"/>
         <source>Restore previous configuration(R)</source>
         <translation>恢复之前的配置(R)</translation>
     </message>
     <message>
-        <location filename="../src/kiran-display-configuration.cpp" line="381"/>
+        <location filename="../src/kiran-display-configuration.cpp" line="382"/>
         <source>The display will resume the previous configuration in %1 seconds</source>
         <translation>显示将会在 %1 秒后恢复之前的配置</translation>
     </message>
@@ -211,23 +211,23 @@
         <translation>左旋转90度</translation>
     </message>
     <message>
-        <location filename="../src/kiran-display-configuration-panel.ui" line="162"/>
+        <location filename="../src/kiran-display-configuration-panel.ui" line="153"/>
         <source>Rotate right 90 degrees</source>
         <translation>右旋转90度</translation>
     </message>
     <message>
-        <location filename="../src/kiran-display-configuration-panel.ui" line="201"/>
+        <location filename="../src/kiran-display-configuration-panel.ui" line="184"/>
         <source>Turn left and right</source>
         <translation>左右翻转</translation>
     </message>
     <message>
-        <location filename="../src/kiran-display-configuration-panel.ui" line="245"/>
+        <location filename="../src/kiran-display-configuration-panel.ui" line="218"/>
         <source>upside down</source>
         <oldsource>upside down </oldsource>
         <translation>上下翻转</translation>
     </message>
     <message>
-        <location filename="../src/kiran-display-configuration-panel.ui" line="289"/>
+        <location filename="../src/kiran-display-configuration-panel.ui" line="252"/>
         <source>Identification display</source>
         <translation>标识显示器</translation>
     </message>
@@ -268,8 +268,8 @@
     <message>
         <location filename="../src/kiran-display-config-global.cpp" line="52"/>
         <location filename="../src/kiran-display-config-global.h" line="93"/>
-        <location filename="../src/kiran-display-configuration.cpp" line="404"/>
-        <location filename="../src/kiran-display-configuration.cpp" line="422"/>
+        <location filename="../src/kiran-display-configuration.cpp" line="405"/>
+        <location filename="../src/kiran-display-configuration.cpp" line="423"/>
         <source>OK(K)</source>
         <oldsource>确定(K)</oldsource>
         <translation>确定(K)</translation>
@@ -286,18 +286,18 @@
     <message>
         <location filename="../src/kiran-display-config-global.cpp" line="49"/>
         <location filename="../src/kiran-display-config-global.h" line="90"/>
-        <location filename="../src/kiran-display-configuration.cpp" line="401"/>
-        <location filename="../src/kiran-display-configuration.cpp" line="419"/>
+        <location filename="../src/kiran-display-configuration.cpp" line="402"/>
+        <location filename="../src/kiran-display-configuration.cpp" line="420"/>
         <source>Tips</source>
         <translation>提示</translation>
     </message>
     <message>
-        <location filename="../src/kiran-display-configuration.cpp" line="408"/>
+        <location filename="../src/kiran-display-configuration.cpp" line="409"/>
         <source>Failed to apply display settings!%1</source>
         <translation>应用显示设置失败!%1</translation>
     </message>
     <message>
-        <location filename="../src/kiran-display-configuration.cpp" line="426"/>
+        <location filename="../src/kiran-display-configuration.cpp" line="427"/>
         <source>Fallback display setting failed! %1</source>
         <translation>回撤显示设置失败! %1</translation>
     </message>

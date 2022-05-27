@@ -8,7 +8,6 @@
         <file>images/tips-info.svg</file>
         <file>images/tips-warning.svg</file>
 
-        <file>themes/kiran-black.qss</file>
     </qresource>
 
     <qresource prefix="/kcp-account">
@@ -25,7 +24,6 @@
         <file>images/trash.svg</file>
         <file>images/trash-hover.svg</file>
         <file>images/trash-pressed.svg</file>
-        <file>themes/kiran-cpanel-account.qss</file>
     </qresource>
 
     <qresource prefix="/kcp-appearance">
@@ -39,6 +37,14 @@
         <file>images/kcp-appearance-font.svg</file>
         <file>images/kcp-appearance-themes.svg</file>
         <file>images/kcp-appearance-wallpaper.svg</file>
+    </qresource>
+
+    <qresource prefix="/kcp-display">
+        <file>images/flip-h.svg</file>
+        <file>images/flip-v.svg</file>
+        <file>images/identification.svg</file>
+        <file>images/rotation-left.svg</file>
+        <file>images/rotation-right.svg</file>
     </qresource>
 
 </RCC>

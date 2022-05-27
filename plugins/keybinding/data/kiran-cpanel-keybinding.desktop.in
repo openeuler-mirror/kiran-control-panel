@@ -20,7 +20,7 @@ Weight=2
 #插件分类
 Category=individuation
 #插件共享库位置，若以'/'开头则为绝对路径，也可支持通过共享库名去插件安装目录去查找
-Library=@CPANEL_PLUGIN_DIR@/lib@PROJECT_NAME@.so
+Library=libkiran-cpanel-keybinding.so
 SubItems=Keybinding
 
 [Keybinding]

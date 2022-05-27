@@ -122,25 +122,16 @@
            <string>Rotate left 90 degrees</string>
           </property>
           <property name="styleSheet">
-           <string notr="true">QPushButton{
- border-image:url(://kcp-display-images/rotation_left_btn_n.svg) ;
-border-radius:4px;
-}
- QPushButton:hover {
- border-image: url(://kcp-display-images/rotation_left_btn_s.svg);
-  }
-  QPushButton:pressed {
- border-image: url(://kcp-display-images/rotation_left_btn_pre.svg);
-  }
-QToolTip{color:#000000;border: 0px solid #ffffff;background:#b3b3b3;}
-
-  QPushButton:disabled {
- border-image: url(://kcp-display-images/rotation_left_btn_d.svg);
-  }
-</string>
+           <string notr="true"/>
           </property>
           <property name="text">
            <string/>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>40</width>
+            <height>24</height>
+           </size>
           </property>
          </widget>
         </item>
@@ -162,24 +153,16 @@ QToolTip{color:#000000;border: 0px solid #ffffff;background:#b3b3b3;}
            <string>Rotate right 90 degrees</string>
           </property>
           <property name="styleSheet">
-           <string notr="true">QPushButton{
- border-image:url(://kcp-display-images/rotation_right_btn_n.svg) ;
-border-radius:4px;
-}
- QPushButton:hover {
- border-image: url(://kcp-display-images/rotation_right_btn_s.svg);
-  }
-  QPushButton:pressed {
- border-image: url(://kcp-display-images/rotation_right_btn_pre.svg);
-  }
-
-QToolTip{color:#000000;border: 0px solid #ffffff;background:#b3b3b3;}
-  QPushButton:disabled {
- border-image: url(://kcp-display-images/rotation_right_btn_d.svg);
-  }</string>
+           <string notr="true"/>
           </property>
           <property name="text">
            <string/>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>40</width>
+            <height>24</height>
+           </size>
           </property>
          </widget>
         </item>
@@ -201,26 +184,16 @@ QToolTip{color:#000000;border: 0px solid #ffffff;background:#b3b3b3;}
            <string>Turn left and right</string>
           </property>
           <property name="styleSheet">
-           <string notr="true">QPushButton{
- border-image:url(://kcp-display-images/Flip horizontally_btn_n.svg) ;
-border-radius:4px;
-}
- QPushButton:hover {
- border-image: url(://kcp-display-images/Flip horizontally_btn_s.svg);
-  }
-  QPushButton:pressed {
- border-image: url(://kcp-display-images/Flip horizontally_btn_pre.svg);
-  }
-  QPushButton:checked {
- border-image: url(://kcp-display-images/Flip horizontally_btn_check.svg);
-  }
-QToolTip{color:#000000;border: 0px solid #ffffff;background:#b3b3b3;}
-  QPushButton:disabled {
- border-image: url(://kcp-display-images/Flip horizontally_btn_d.svg);
-  }</string>
+           <string notr="true"/>
           </property>
           <property name="text">
            <string/>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>40</width>
+            <height>24</height>
+           </size>
           </property>
           <property name="checkable">
            <bool>true</bool>
@@ -245,26 +218,16 @@ QToolTip{color:#000000;border: 0px solid #ffffff;background:#b3b3b3;}
            <string>upside down</string>
           </property>
           <property name="styleSheet">
-           <string notr="true">QPushButton{
- border-image:url(://kcp-display-images/Flip vertically_btn_n.svg) ;
-border-radius:4px;
-}
- QPushButton:hover {
- border-image: url(://kcp-display-images/Flip vertically_btn_s.svg);
-  }
-  QPushButton:pressed {
- border-image: url(://kcp-display-images/Flip vertically_btn_pre.svg);
-  }
-  QPushButton:checked {
- border-image: url(://kcp-display-images/Flip vertically_btn_check.svg);
-  }
-QToolTip{color:#000000;border: 0px solid #ffffff;background:#b3b3b3;}
-  QPushButton:disabled {
- border-image: url(://kcp-display-images/Flip vertically_btn_d.svg);
-  }</string>
+           <string notr="true"/>
           </property>
           <property name="text">
            <string/>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>40</width>
+            <height>24</height>
+           </size>
           </property>
           <property name="checkable">
            <bool>true</bool>
@@ -289,25 +252,16 @@ QToolTip{color:#000000;border: 0px solid #ffffff;background:#b3b3b3;}
            <string>Identification display</string>
           </property>
           <property name="styleSheet">
-           <string notr="true">QPushButton{
- border-image:url(://kcp-display-images/identification_btn_n.svg) ;
-border-radius:4px;
-}
- QPushButton:hover {
- border-image: url(://kcp-display-images/identification_btn_s.svg);
-  }
-  QPushButton:pressed {
- border-image: url(://kcp-display-images/identification_btn_pre.svg);
-  }
-
-QToolTip{color:#000000;border: 0px solid #ffffff;background:#b3b3b3;}
-
-  QPushButton:disabled {
- border-image: url(://kcp-display-images/identification_btn_d.svg);
-  }</string>
+           <string notr="true"/>
           </property>
           <property name="text">
            <string/>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>40</width>
+            <height>24</height>
+           </size>
           </property>
          </widget>
         </item>

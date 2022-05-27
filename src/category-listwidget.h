@@ -20,6 +20,7 @@
 #include <QButtonGroup>
 #include <QListWidget>
 
+//TODO: 重写该部分
 class CategoryListWidget : public QListWidget
 {
     Q_OBJECT
@@ -36,7 +37,6 @@ private:
 
 public slots:
     void setIconMode(const bool &iconMode = true);
-    void setTextShow(const bool &showText);
 
 protected:
     void resizeEvent(QResizeEvent *event) override;

@@ -43,25 +43,9 @@ bool installTranslator()
     return true;
 }
 
-bool loadStyleSheet()
-{
-    QFile file(":/kiran-control-panel/themes/kiran-black.qss");
-    if (file.open(QIODevice::ReadOnly))
-    {
-        QString styleContent = file.readAll();
-        qApp->setStyleSheet(styleContent);
-        return true;
-    }
-    KLOG_ERROR() << "can't load style sheet!";
-    return false;
-}
-
 int main(int argc, char *argv[])
 {
     KiranApplication a(argc, argv);
-
-    //默认开启QtDebug输出，交由zlog进行过滤
-    QLoggingCategory::defaultCategory()->setEnabled(QtDebugMsg, true);
 
     //初始化日志库
     klog_qt5_init("",
@@ -74,9 +58,6 @@ int main(int argc, char *argv[])
 
     //安装翻译
     installTranslator();
-
-    //加载样式表
-    loadStyleSheet();
 
     PanelWindow w;
     int screeNum = QApplication::desktop()->screenNumber(QCursor::pos());

@@ -20,11 +20,10 @@ pkg_search_module(KIRANWIDGETS_QT5 REQUIRED kiranwidgets-qt5)
 pkg_search_module(KIRAN_STYLE_HELPER REQUIRED kiran-style-helper)
 
 file(GLOB_RECURSE SRC "src/*.cpp" "src/*.h" "src/*.ui")
-file(GLOB_RECURSE QRC "resources/*.qrc")
 
 qt5_create_translation(QM_FILES ${CMAKE_CURRENT_SOURCE_DIR} translations/kiran-cpanel-display.zh_CN.ts)
 
-add_library(${TARGET_NAME} SHARED ${SRC} ${QRC} ${QM_FILES})
+add_library(${TARGET_NAME} SHARED ${SRC} ${QM_FILES})
 
 target_include_directories(${TARGET_NAME} PRIVATE
         src/

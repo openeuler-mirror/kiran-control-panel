@@ -18,6 +18,8 @@
 #include "ui_category-widget.h"
 
 #include <qt5-log-i.h>
+#include <kiran-palette.h>
+
 #include <QListWidgetItem>
 #include <QPainter>
 #include <QPainterPath>
@@ -50,8 +52,8 @@ void CategoryWidget::init()
         //由图标+文本显示模式->图标显示模式时等动画完成之后再绘制阴影
         if (ui->categorys->isIconMode())
         {
-            ui->categorys->setTextShow(false);
-            m_showShadow = false;
+//            ui->categorys->setTextShow(false);
+//            m_showShadow = false;
             update();
         }
     });
@@ -74,6 +76,19 @@ void CategoryWidget::paintEvent(QPaintEvent *event)
         drawShadow(painter);
     }
 
+    auto kiranPalette = KiranPalette::instance();
+
+    QPainter p(this);
+    QColor background,border;
+    background = kiranPalette->color(KiranPalette::Normal,KiranPalette::Window,KiranPalette::Background);
+    border = kiranPalette->color(KiranPalette::Normal,KiranPalette::Window,KiranPalette::Border);
+
+    p.fillRect(rect(),background);
+
+    QLine rightSideLine(rect().topRight(),rect().bottomRight());
+    p.setPen(border);
+    p.drawLine(rightSideLine);
+
     QWidget::paintEvent(event);
 }
 
@@ -89,9 +104,9 @@ void CategoryWidget::setIconMode(bool iconMode)
     ///由图标+文本显示模式->图标显示模式时等动画完成之后再绘制阴影
     if (!iconMode)
     {
-        ui->categorys->setTextShow(true);
-        m_showShadow = true;
-        update();
+//        ui->categorys->setTextShow(true);
+//        m_showShadow = true;
+//        update();
     }
 }
 

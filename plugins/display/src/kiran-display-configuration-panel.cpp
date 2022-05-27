@@ -30,6 +30,12 @@ KiranDisplayConfigurationPanel::KiranDisplayConfigurationPanel(QWidget *parent) 
     ui(new Ui::KiranDisplayConfigurationPanel)
 {
     ui->setupUi(this);
+
+    ui->pushButton_left->setIcon(QIcon(":/kcp-display/images/rotation-left.svg"));
+    ui->pushButton_right->setIcon(QIcon(":/kcp-display/images/rotation-right.svg"));
+    ui->pushButton_horizontal->setIcon(QIcon(":/kcp-display/images/flip-h.svg"));
+    ui->pushButton_vertical->setIcon(QIcon(":/kcp-display/images/flip-v.svg"));
+    ui->pushButton_identifying->setIcon(QIcon(":/kcp-display/images/identification.svg"));
     ui->btns_widget->setAttribute(Qt::WA_TranslucentBackground, true);
 
     connect(ui->contain, &KiranDisplayConfigItemContain::sigButtonChecked, this, [=](QString monitorPath){

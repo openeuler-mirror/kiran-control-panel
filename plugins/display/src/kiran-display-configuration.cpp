@@ -18,6 +18,7 @@
 #include "widget-property-helper.h"
 #include <QTimer>
 #include <QButtonGroup>
+#include <QResizeEvent>
 
 KiranDisplayConfiguration::KiranDisplayConfiguration(QWidget *parent) :
                                                                        QWidget(parent), m_btnGroup(nullptr), m_dbusPropertiesChangedBlock(false),
@@ -814,5 +815,5 @@ void KiranDisplayConfiguration::on_pushButton_extra_cancel_clicked()
 
 QSize KiranDisplayConfiguration::sizeHint() const
 {
-   return QSize(679,790);
+   return QSize(679,765);
 }

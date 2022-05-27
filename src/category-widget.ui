@@ -14,55 +14,7 @@
    <string>Form</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">QScrollBar:vertical {
-      border: 0px solid grey;
-      background: rgba(255,255,255,10);
-      width: 6px;
-      margin: 20px 0px 20px 0px;
-  }
-  QScrollBar::handle:vertical {
-      background: rgba(255,255,255,30);
-      min-height: 20px;
-  }
-  QScrollBar::add-line:vertical {
-      border: 0px solid grey;
-      background: #32CC99;
-      height: 0px;
-      subcontrol-position: right;
-      subcontrol-origin: margin;
-  }
-
-  QScrollBar::sub-line:vertical {
-      border: 0px solid grey;
-      background: #32CC99;
-      height: 0px;
-      subcontrol-position: left;
-      subcontrol-origin: margin;
-  }
-
-  QScrollBar:horizontal {
-      border: 0px solid grey;
-      background: rgba(255,255,255,10);
-      height: 6px;
-      margin: 0px 20px 0 20px;
-  }
-  QScrollBar::handle:horizontal {
-      background: rgba(255,255,255,30);
-      min-width: 20px;
-  }
-  QScrollBar::add-line:horizontal {
-      border: 0px solid grey;
-      width: 0px;
-      subcontrol-position: right;
-      subcontrol-origin: margin;
-  }
-
-  QScrollBar::sub-line:horizontal {
-      border: 0px solid grey;
-      width: 0px;
-      subcontrol-position: left;
-      subcontrol-origin: margin;
-  }</string>
+   <string notr="true"/>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <property name="spacing">

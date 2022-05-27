@@ -19,7 +19,7 @@
 #include <QFile>
 #include <QTranslator>
 #include <iostream>
-#include "../config/config.h"
+#include "keybinding-config.h"
 #include "main-window.h"
 #define TRANSLATION_DIR TRANSLATIONS_FILE_DIR
 

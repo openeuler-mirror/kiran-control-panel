@@ -30,6 +30,18 @@ CategoryListWidget::CategoryListWidget(QWidget *parent)
 
 void CategoryListWidget::init()
 {
+#if 0
+    setStyleSheet("QListWidget{"
+                  "border: 0px;"
+                  "border-top: 0px;"
+                  "border-right: 1px solid rgba(255, 255, 255, 20);"
+                  "border-bottom: 0px;"
+                  "outline:0px;"
+                  "}"
+                  "QListView::item{"
+                  "border-radius:10px;"
+                  "}");
+#endif
     initUI();
 }
 
@@ -38,7 +50,7 @@ void CategoryListWidget::initUI()
     setAttribute(Qt::WA_Hover, true);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setStyleSheet(styleSheetStr());
-    setViewportMargins(cListWidgetLeftPadding, 12, cListWidgetRightPadding, 12);
+    setViewportMargins(cListWidgetLeftPadding, 0, cListWidgetRightPadding, 0);
     setSelectionBehavior(QListView::SelectRows);
     setSelectionMode(QListView::SingleSelection);
 }
@@ -47,22 +59,6 @@ void CategoryListWidget::setIconMode(const bool &iconMode)
 {
     m_isIconMode = iconMode;
     iconMode ? setStyleSheet(styleSheetStr()) : setStyleSheet(styleExpandSheetStr());
-}
-
-void CategoryListWidget::setTextShow(const bool &showText)
-{
-    QListWidgetItem *tempItem = nullptr;
-    QWidget *widget = nullptr;
-    for (int i = 0; i < count(); i++)
-    {
-        tempItem = item(i);
-        widget = itemWidget(tempItem);
-        auto categoryItemWidget = qobject_cast<CategoryListWidgetItemWidget *>(widget);
-        if (categoryItemWidget)
-        {
-            categoryItemWidget->setTextVisible(showText);
-        }
-    }
 }
 
 void CategoryListWidget::resizeEvent(QResizeEvent *event)
@@ -78,12 +74,13 @@ bool CategoryListWidget::isIconMode() const
 
 QString CategoryListWidget::styleExpandSheetStr()
 {
+//    return "";
     return QString(" QListWidget{"
                    "border: 0px;"
                    "border-top: 0px;"
                    "border-right: 1px solid rgba(255, 255, 255, 20);"
                    "border-bottom: 0px;"  //                    "border-bottom-left-radius: 8px;"
-                   "background-color:#333333;"
+//                   "background-color:#333333;"
                    "outline:0px;"
                    "}"
                    "QListView::item{"
@@ -99,13 +96,14 @@ QString CategoryListWidget::styleExpandSheetStr()
 
 QString CategoryListWidget::styleSheetStr()
 {
+//    return "";
     return QString(" QListWidget{"
                    "border: 0px;"
                    "border-top: 0px;"
                    "border-right: 1px solid rgba(255, 255, 255, 20);"
                    "border-bottom: 0px;"
                    "outline:0px;"
-                   "background-color:#222222;"
+//                   "background-color:#222222;"
                    "}"
                    "QListView::item{"
                    "border-radius:10px;"
