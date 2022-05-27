@@ -1,60 +1,56 @@
-/**
- * Copyright (c) 2020 ~ 2021 KylinSec Co., Ltd. 
- * kiran-control-panel is licensed under Mulan PSL v2.
- * You can use this software according to the terms and conditions of the Mulan PSL v2. 
- * You may obtain a copy of Mulan PSL v2 at:
- *          http://license.coscl.org.cn/MulanPSL2 
- * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND, 
- * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT, 
- * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.  
- * See the Mulan PSL v2 for more details.  
- * 
- * Author:     liuxinhao <liuxinhao@kylinos.com.cn>
- */
+//
+// Created by liuxinhao on 2022/5/26.
+//
 
-#ifndef KIRANMODULECLASSWIDGET_H
-#define KIRANMODULECLASSWIDGET_H
+#ifndef KCP_CATEGORY_CATEGORY_WIDGET_H
+#define KCP_CATEGORY_CATEGORY_WIDGET_H
 
 #include <QWidget>
-#include "category-listwidget.h"
+#include <QPropertyAnimation>
 
-namespace Ui
-{
-class CategoryWidget;
-}
-
-class QPropertyAnimation;
+class QButtonGroup;
+class QAbstractButton;
+class QLayout;
+class QFrame;
 class CategoryWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit CategoryWidget(QWidget *parent = 0);
+    CategoryWidget(QWidget* parent = nullptr);
     ~CategoryWidget();
 
-    void init();
-    int iconModeWidth();
-    void setCurrentCategory(int categoryIndex);
+    int getCurrentCateogryIdx();
+    void setCurrentCategoryIdx(int idx);
 
+    const static int reduce_width;
+    const static int expand_width;
 signals:
-    void sigCurrentCategoryChanged(int currentIndex,int prevIndex);
+    void currentCategoryIndexChanged(int curIdx,int prevIdx);
 
 private:
-    void loadCategory();
-    void setIconMode(bool iconMode);
-    int textModeWd();
-    void drawShadow(QPainter &painter);
+    void init();
+    void loadCategories();
+    void expand();
+    void reduce();
+
+public:
+    bool eventFilter(QObject *watched, QEvent *event) override;
+
+private slots:
+    void handleCategoryItemToggled(QAbstractButton* btn,bool checked);
 
 protected:
     bool event(QEvent *event) override;
 
 private:
-    void paintEvent(QPaintEvent *event) override;
-
-private:
-    Ui::CategoryWidget *ui;
-    bool m_showShadow = false;  //是否有阴影
-    int m_shadowWidth = 0;  //阴影宽度
-    QPropertyAnimation *m_categorySliderAnimation = nullptr;
+    QButtonGroup* m_categoryBtnGroup;
+    QPropertyAnimation m_propertyAnimation;
+    QWidget* m_contentWidget = nullptr;
+    QLayout* m_contentLayout = nullptr;
+    QFrame* m_splitLine = nullptr;
+    int m_currentCategoryIdx = -1;
+    bool m_isExpaned = false;
 };
 
-#endif  // KIRANMODULECLASSWIDGET_H
+
+#endif //KCP_CATEGORY_CATEGORY_WIDGET_H

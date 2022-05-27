@@ -43,6 +43,7 @@ bool installTranslator()
     return true;
 }
 
+#include "kiran-palette.h"
 int main(int argc, char *argv[])
 {
     KiranApplication a(argc, argv);
@@ -55,6 +56,8 @@ int main(int argc, char *argv[])
 
     //加载相关插件的信息
     CPanelPluginManager::getInstance()->loadAll();
+
+    KiranPalette::instance()->dump();
 
     //安装翻译
     installTranslator();

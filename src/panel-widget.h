@@ -33,9 +33,6 @@ public:
 private:
     void init();
 
-private:
-    void resizeEvent(QResizeEvent *event);
-
 private slots:
     void handleCurrentCategoryChanged(int curCategoryIdx,
                                       int prevCategoryIdx);

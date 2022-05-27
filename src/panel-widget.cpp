@@ -41,17 +41,13 @@ void PanelWidget::init()
     //左侧分类窗口，不加入布局，浮于窗口上层
     m_categoryWidget = new CategoryWidget(this);
     m_categoryWidget->move(0, 0);
-    connect(m_categoryWidget, &CategoryWidget::sigCurrentCategoryChanged,
+    m_categoryWidget->resize(CategoryWidget::reduce_width,this->height());
+
+    connect(m_categoryWidget, &CategoryWidget::currentCategoryIndexChanged,
             this, &PanelWidget::handleCurrentCategoryChanged, Qt::QueuedConnection);
 
     //内容窗口，右边预留出左侧分类图标模式的宽度
-    ui->module_widget->setLeftContentsMargins(m_categoryWidget->iconModeWidth());
-}
-
-void PanelWidget::resizeEvent(QResizeEvent *event)
-{
-    m_categoryWidget->resize(m_categoryWidget->width(), this->height());
-    QWidget::resizeEvent(event);
+    ui->module_widget->setLeftContentsMargins(CategoryWidget::reduce_width );
 }
 
 void PanelWidget::handleCurrentCategoryChanged(int curCategoryIdx, int prevCategoryIdx)
@@ -62,7 +58,7 @@ void PanelWidget::handleCurrentCategoryChanged(int curCategoryIdx, int prevCateg
         if( ui->module_widget->checkHasUnSaved() )
         {
             KLOG_DEBUG() << "switch category reject," << prevCategoryIdx << "->" << curCategoryIdx;
-            m_categoryWidget->setCurrentCategory(m_currentCategoryIndex);
+            m_categoryWidget->setCurrentCategoryIdx(m_currentCategoryIndex);
             return;
         }
     }

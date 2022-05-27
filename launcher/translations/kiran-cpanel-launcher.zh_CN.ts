@@ -271,8 +271,6 @@
 <context>
     <name>CategoryWidget</name>
     <message>
-        <location filename="../../src/category-widget.ui" line="14"/>
-        <location filename="../../build/kiran-control-panel_autogen/include/ui_category-widget.h" line="49"/>
         <location filename="../../cmake-build-debug/kiran-control-panel_autogen/include/ui_category-widget.h" line="49"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
