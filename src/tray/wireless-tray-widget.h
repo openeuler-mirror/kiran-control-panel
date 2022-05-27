@@ -17,20 +17,52 @@
 
 #include <QWidget>
 #include "connection-tray.h"
-QT_BEGIN_NAMESPACE
-
-QT_END_NAMESPACE
-
+#include <NetworkManagerQt/WirelessDevice>
+#include <NetworkManagerQt/WirelessSecuritySetting>
+#include <NetworkManagerQt/WirelessSetting>
+#include "connection-lists.h"
+using namespace NetworkManager;
 class WirelessTrayWidget : public ConnectionTray
 {
     Q_OBJECT
 
 public:
-    explicit WirelessTrayWidget(QWidget *parent = nullptr);
+    explicit WirelessTrayWidget(const QString &devicePath,QWidget *parent = nullptr);
     ~WirelessTrayWidget() override;
 
-private:
+    void init();
+    void initUI();
+    void initConnection();
 
+public slots:
+    void handleRequestConnectWirelessNetwork(const ConnectionInfo &connectionInfo);
+    void getWirelessAvailableConnections(const QString &devicePath);
+    void activateWirelessConnection(const QString &connectionPath, const QString &devicePath,const QString &accessPointPath);
+    void addAndActivateWirelessConnection(const QString &password);
+    void setWirelessSecuritySetting(const WirelessSecuritySetting::Ptr &wirelessSecuritySetting, const QString& psk);
+    void setWirelessSetting(const WirelessSetting::Ptr &wirelessSetting);
+
+    void handleActiveConnectionAdded(const QString &path) override;
+    void handleActiveConnectionRemoved(const QString &path) override;
+
+    void handleStateActivated(const QString &activatedPath) override;
+    void handleStateDeactivated() override;
+
+    void handleNotifierConnectionAdded(const QString &path) override;
+    void handleNotifierConnectionRemoved(const QString &path) override;
+
+    void handleNetworkDisappeared(const QString &ssid);
+    void handleNetworkAppeared(const QString &ssid);
+
+    void requireInputPassword(const QString &ssid);
+
+private:
+    QMap<QString, Connection::Ptr> m_wirelssConnectionMap;
+    WirelessDevice::Ptr m_wirelessDevice;
+    QString m_devicePath;
+    QVBoxLayout *m_verticalLayout;
+    QPointer<ConnectionLists> m_connectionLists;
+    ConnectionInfo m_connectionInfo;
 };
 
 #endif  // KIRAN_CPANEL_NETWORK_WIRELESS_TRAY_WIDGET_H

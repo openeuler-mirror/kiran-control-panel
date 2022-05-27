@@ -41,7 +41,7 @@ public slots:
     virtual void handleActiveConnectionAdded(const QString &activepath);
     virtual void handleActiveConnectionRemoved(const QString &activepath);
 
-    virtual void handleActiveConnectionStateChanged(ActiveConnection::State state, const QString &path);
+    virtual void handleActiveConnectionStateChanged(ActiveConnection::State state);
     virtual void handleStateActivated(const QString &activatedPath);
     virtual void handleStateDeactivated(const QString &deactivatedPath);
     void getDeviceList(Device::Type deviceType);

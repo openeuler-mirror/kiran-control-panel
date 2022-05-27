@@ -36,44 +36,6 @@ void ConnectionTray::init()
 
 void ConnectionTray::initUI()
 {
-/*    m_verticalLayout = new QVBoxLayout(this);
-    m_verticalLayout->setSpacing(6);
-    m_verticalLayout->setContentsMargins(0, 0, 0, 0);
-
-    m_multiDevicewidget = new QWidget(this);
-    m_verticalDeviceWidgetLayout = new QVBoxLayout(m_multiDevicewidget);
-    m_verticalDeviceWidgetLayout->setContentsMargins(10, 10, 10, 10);
-    m_deviceLabel = new QLabel(m_multiDevicewidget);
-    m_verticalDeviceWidgetLayout->addWidget(m_deviceLabel);
-
-    m_deviceComboBox = new QComboBox(m_multiDevicewidget);
-    m_verticalDeviceWidgetLayout->addWidget(m_deviceComboBox);
-
-    m_verticalLayout->addWidget(m_multiDevicewidget);
-
-    m_stackedWidget = new QStackedWidget(this);
-
-
-    m_scrollArea = new QScrollArea(this);
-    m_scrollArea->setWidgetResizable(true);
-    m_scrollAreaWidgetContents = new QWidget();
-
-    m_verticalScrollAreaWidgetContentsLayout = new QVBoxLayout(m_scrollAreaWidgetContents);
-    m_verticalScrollAreaWidgetContentsLayout->setSpacing(0);
-    m_verticalScrollAreaWidgetContentsLayout->setContentsMargins(0, 0, 0, 0);
-
-    m_connectionLists = new ConnectionLists(m_scrollAreaWidgetContents);
-    m_verticalScrollAreaWidgetContentsLayout->addWidget(m_connectionLists);
-
-    m_scrollArea->setWidget(m_scrollAreaWidgetContents);
-    m_verticalLayout->addWidget(m_scrollArea);*/
-
-
-//    m_verticalLayout = new QVBoxLayout(this);
-//    m_verticalLayout->setSpacing(6);
-//    m_verticalLayout->setContentsMargins(0, 0, 0, 0);
-//    m_connectionLists = new ConnectionLists(this);
-//    m_verticalLayout->addWidget(m_connectionLists);
 }
 
 void ConnectionTray::initConnection()
@@ -141,6 +103,7 @@ void ConnectionTray::handleStateActivated(const QString &activatedPath)
 {
 
 }
+
 void ConnectionTray::handleStateDeactivated()
 {
 

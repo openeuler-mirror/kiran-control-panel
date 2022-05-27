@@ -22,7 +22,9 @@
 #define STATUS_NOTIFIER_MANAGER "org.kde.StatusNotifierManager"
 #define STATUS_NOTIFIER_MANAGER_OBJECT_NAME "/StatusNotifierManager"
 #define MAX_WAIT_COUNTS 10
-ManagerTray::ManagerTray(QWidget *parent) : QWidget(parent)
+ManagerTray::ManagerTray(QWidget *parent) : QWidget(parent),
+                                            m_wiredTrayPage(nullptr),
+                                            m_wirelessTrayPage(nullptr)
 {
     init();
 }
@@ -33,8 +35,6 @@ ManagerTray::~ManagerTray()
 
 void ManagerTray::init()
 {
-    initTrayIcon();
-    initWiredTrayPage();
     m_statusNotifierManager = new StatusNotifierManagerInterface(STATUS_NOTIFIER_MANAGER, STATUS_NOTIFIER_MANAGER_OBJECT_NAME, QDBusConnection::sessionBus(), this);
     initUI();
     initConnect();
@@ -42,17 +42,21 @@ void ManagerTray::init()
 
 void ManagerTray::initUI()
 {
+    initTrayPage();
+    initTrayIcon();
     m_verticalLayout = new QVBoxLayout(this);
-    m_verticalLayout->addWidget(m_wiredTrayPage);
+    if(m_wiredTrayPage != nullptr)
+        m_verticalLayout->addWidget(m_wiredTrayPage);
+    if(m_wirelessTrayPage != nullptr)
+        m_verticalLayout->addWidget(m_wirelessTrayPage);
     m_verticalLayout->setMargin(0);
-    //    this->setLayout(m_verticalLayout);
+    m_verticalLayout->setSpacing(0);
     this->setWindowFlags(Qt::Popup | Qt::BypassWindowManagerHint);
 }
 
 void ManagerTray::initConnect()
 {
-    connect(m_systemTray, &QSystemTrayIcon::activated, [=](QSystemTrayIcon::ActivationReason reason)
-            { handleTrayClicked(reason); });
+    connect(m_systemTray, &QSystemTrayIcon::activated, this,&ManagerTray::handleTrayClicked);
 
     m_Timer.setInterval(500);
     m_Timer.setSingleShot(true);
@@ -105,7 +109,6 @@ void ManagerTray::initConnect()
 void ManagerTray::initTrayIcon()
 {
     m_systemTray = new QSystemTrayIcon();
-    m_systemTray->icon();
     setTrayIcon(NetworkManager::status());
     m_systemTray->show();
 }
@@ -114,14 +117,49 @@ void ManagerTray::initMenu()
 {
 }
 
-void ManagerTray::initWiredTrayPage()
+//初始化条件：设备存在且可用
+void ManagerTray::initTrayPage()
 {
-    m_wiredTrayPage = new TrayPage(TRAY_CONNECTION_TYPE_WIRED, this);
+    getAvailableDeviceList();
+    if(m_wiredDeviceList.count() != 0)
+        m_wiredTrayPage = new TrayPage(m_wiredDeviceList, this);
+    KLOG_DEBUG() << "m_wirelessDeviceList:" << m_wirelessDeviceList;
+    for (int i = 0; i < m_wirelessDeviceList.count(); ++i)
+    {
+        KLOG_DEBUG() << "m_wirelessDeviceList.at(i):" << m_wirelessDeviceList.at(i)->uni();
+    }
+    if(m_wirelessDeviceList.count() != 0)
+        m_wirelessTrayPage = new TrayPage(m_wirelessDeviceList,this);
 }
 
-void ManagerTray::initWirelessTrayPage()
+void ManagerTray::getAvailableDeviceList()
 {
+    const Device::List deviceList = networkInterfaces();
+    for (Device::Ptr dev : deviceList)
+    {
+        KLOG_DEBUG() << "dev->interfaceName():" << dev->interfaceName();
+        KLOG_DEBUG() << "dev->managed():" << dev->managed();
+        KLOG_DEBUG() << "dev->availableConnections():" << dev->availableConnections();
+        KLOG_DEBUG() << "dev->state():" << dev->state();
+
+        if(dev->state() == Device::Unavailable)
+            continue ;
+
+        switch (dev->type())
+        {
+        case Device::Ethernet:
+            m_wiredDeviceList << dev;
+            break ;
+        case Device::Wifi:
+            m_wirelessDeviceList << dev;
+            break ;
+        default:
+            break ;
+        }
+    }
 }
+
+
 
 void ManagerTray::handleTrayClicked(QSystemTrayIcon::ActivationReason reason)
 {
@@ -185,6 +223,7 @@ void ManagerTray::getTrayGeometry()
 //TODO:切换图标颜色
 void ManagerTray::setTrayIcon(NetworkManager::Status status)
 {
+    //判断连接为有线还是无线，如果同时存在则图标为无线
     switch (status)
     {
     case NetworkManager::Status::Unknown:
@@ -219,24 +258,16 @@ void ManagerTray::setTrayIcon(NetworkManager::Status status)
     default:
         break ;
     }
-
-
 }
 
 // 重新获取device、初始化，刷新
+//XXX:可以优化
 void ManagerTray::handleDeviceAdded(const QString &devicePath)
 {
     Device::Ptr device = findNetworkInterface(devicePath);
     if (device->type() == Device::Ethernet)
     {
-        m_verticalLayout->removeWidget(m_wiredTrayPage);
-        delete m_wiredTrayPage;
-        m_wiredTrayPage = nullptr;
-
-        initWiredTrayPage();
-        m_verticalLayout->addWidget(m_wiredTrayPage);
-        m_verticalLayout->setMargin(0);
-        update();
+        reloadWiredTrayPage();
 
         /*
         KLOG_DEBUG() << "m_wiredTrayPage->sizeHint():" << m_wiredTrayPage->sizeHint();
@@ -257,27 +288,52 @@ void ManagerTray::handleDeviceAdded(const QString &devicePath)
     }
     else if (device->type() == Device::Wifi)
     {
+        reloadWirelessTrayPage();
     }
 }
 
 // XXX:当device被移除时，由于设备对象可能已经被删除，所以并不能通过findNetworkInterface(path)找到该设备接口，进而知道被删除的设备类型
 void ManagerTray::handleDeviceRemoved(const QString &devicePath)
 {
-
     if (m_wiredTrayPage->devicePathList().contains(devicePath))
-    {
-        m_verticalLayout->removeWidget(m_wiredTrayPage);
-        delete m_wiredTrayPage;
-        m_wiredTrayPage = nullptr;
-
-        initWiredTrayPage();
-        m_verticalLayout->addWidget(m_wiredTrayPage);
-        m_verticalLayout->setMargin(0);
-        update();
-    }
+        reloadWiredTrayPage();
+    else if (m_wirelessTrayPage->devicePathList().contains(devicePath))
+        reloadWirelessTrayPage();
 }
 
 void ManagerTray::handleNetworkManagerStatusChanged(NetworkManager::Status status)
 {
     setTrayIcon(status);
 }
+
+void ManagerTray::reloadWiredTrayPage()
+{
+    m_verticalLayout->removeWidget(m_wiredTrayPage);
+    delete m_wiredTrayPage;
+    m_wiredTrayPage = nullptr;
+
+    getAvailableDeviceList();
+    if(m_wiredDeviceList.count() != 0)
+        m_wiredTrayPage = new TrayPage(m_wiredDeviceList, this);
+
+    m_verticalLayout->count();
+    //XXX:待修改，使有线widget一直在最上层
+    m_verticalLayout->insertWidget(0,m_wiredTrayPage);
+    m_verticalLayout->setMargin(0);
+    update();
+}
+
+void ManagerTray::reloadWirelessTrayPage()
+{
+    m_verticalLayout->removeWidget(m_wirelessTrayPage);
+    delete m_wirelessTrayPage;
+    m_wirelessTrayPage = nullptr;
+
+    getAvailableDeviceList();
+    if(m_wiredDeviceList.count() != 0)
+        m_wirelessTrayPage = new TrayPage(m_wiredDeviceList, this);
+    m_verticalLayout->insertWidget(-1,m_wirelessTrayPage);
+    m_verticalLayout->setMargin(0);
+    update();
+}
+

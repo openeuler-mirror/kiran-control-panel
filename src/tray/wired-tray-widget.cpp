@@ -35,7 +35,6 @@ void WiredTrayWidget::init()
     m_verticalLayout->addWidget(m_connectionLists);
 
     getDeviceList(Device::Ethernet);
-    m_deviceList.count();
     initUI();
     initConnection();
 }
@@ -69,7 +68,8 @@ void WiredTrayWidget::initUI()
 void WiredTrayWidget::showWiredConnectionLists()
 {
     m_connectionLists->setDevicePath(m_devicePath);
-    m_connectionLists->showConnectionLists(ConnectionSettings::Wired, ITEM_WIDGET_TYPE_TRAY);
+    m_connectionLists->setItemWidgetType(ITEM_WIDGET_TYPE_TRAY);
+    m_connectionLists->showConnectionLists(ConnectionSettings::Wired);
     m_connectionLists->showWiredStatusIcon();
 }
 
@@ -117,9 +117,20 @@ void WiredTrayWidget::handleStateDeactivated()
 
 void WiredTrayWidget::handleStateActivated(const QString &activatedPath)
 {
+
     m_connectionLists->connectionStateNotify(ActiveConnection::Activated);
-    m_connectionLists->updateActivatedConnectionInfo(activatedPath);
-    m_connectionLists->update();
+    ActiveConnection::Ptr activeConnection = findActiveConnection(activatedPath);
+    QStringList deviceList =  activeConnection->devices();
+    if(deviceList.contains(m_devicePath))
+    {
+        m_connectionLists->updateActivatedConnectionInfo(activatedPath);
+        m_connectionLists->update();
+    }
+
+//    m_connectionLists->connectionStateNotify(ActiveConnection::Activated);
+//    m_connectionLists->updateActivatedConnectionInfo(activatedPath);
+//    m_connectionLists->update();
+
 }
 
 void WiredTrayWidget::handleActiveConnectionAdded(const QString &path)
@@ -138,4 +149,5 @@ void WiredTrayWidget::handleActiveConnectionAdded(const QString &path)
 
 void WiredTrayWidget::handleActiveConnectionRemoved(const QString &path)
 {
+
 }

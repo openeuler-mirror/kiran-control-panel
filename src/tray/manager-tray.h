@@ -19,6 +19,8 @@
 #include <QVBoxLayout>
 #include <QTimer>
 #include <NetworkManagerQt/Manager>
+#include <NetworkManagerQt/Device>
+using namespace NetworkManager;
 class WiredTrayWidget;
 class WirelessTrayWidget;
 class StatusNotifierManagerInterface;
@@ -36,11 +38,14 @@ public:
     void initUI();
     void initTrayIcon();
     void initMenu();
-    void initWiredTrayPage();
-    void initWirelessTrayPage();
+    void initTrayPage();
 
+    void getAvailableDeviceList();
     void getTrayGeometry();
     void setTrayPagePos();
+
+    void reloadWiredTrayPage();
+    void reloadWirelessTrayPage();
 
 public slots:
     void handleTrayClicked(QSystemTrayIcon::ActivationReason reason);
@@ -53,8 +58,11 @@ public slots:
 private:
     QSystemTrayIcon *m_systemTray;
     TrayPage *m_wiredTrayPage;
-    WirelessTrayWidget *m_wirelessTrayPage;
+    TrayPage *m_wirelessTrayPage;
     StatusNotifierManagerInterface *m_statusNotifierManager;
+
+    QList<Device::Ptr> m_wiredDeviceList;
+    QList<Device::Ptr> m_wirelessDeviceList;
 
     QVBoxLayout *m_verticalLayout;
     int m_xTray, m_yTray, m_heightTray, m_widthTray;

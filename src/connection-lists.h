@@ -60,8 +60,9 @@ public:
     void initConnect();
 
     void setDevicePath(const QString &devicePath);
+    void setItemWidgetType(ItemWidgetType itemType);
     // 在kf5-NetworkManager-qt中Connection是指具体的网络配置，不是指已经存在的网络
-    void showConnectionLists(ConnectionSettings::ConnectionType type, ItemWidgetType itemType);
+    void showConnectionLists(ConnectionSettings::ConnectionType type);
     void addConnectionToLists(Connection::Ptr ptr, const QString &devicePath);
     void showWiredStatusIcon();
 
@@ -76,20 +77,23 @@ public:
     void updateItemActivatedPath(QListWidgetItem *item,
                                  QString activatedPath = "");
     void findItemByUuid(const QString &uuid);
-    void findItemBySsid(const QString &ssid);
+    void findActiveItemBySsid(const QString &ssid);
+    int findItemBySsid(const QString &ssid);
 
 public slots:
     void handleActiveConnectionStateChanged(ActiveConnection::State state);
     void handleActiveStateDeactivated();
-//    void topActivatedItem(int row);
+    void handleConnectionUpdated();
 
-public slots:
     void clearConnectionLists();
     void handleConnectionItemClicked(QListWidgetItem *item);
     void updateActivatedConnectionInfo(QString activatedPath);
     void clearDeactivatedConnectionInfo();
     void connectionStateNotify(ActiveConnection::State state);
     void connectionItemLoadingAnimation();
+
+    void insertInputPasswordWidget(int insertRow);
+
 
 signals:
     void requestCreatConnection();
@@ -101,6 +105,8 @@ signals:
     void connectionUpdated(const QString &path);
     void trayRequestDisconnect(const QString &activatedConnectionPath);
 
+    void sendPasswordToWirelessSetting(const QString& password);
+
 private:
     QListWidgetItem *m_previousActivatedItem;
     QListWidgetItem *m_currentActiveItem;
@@ -108,10 +114,10 @@ private:
     QString m_currentDevicePath;
 };
 
-class CustomSortListItem : public QListWidgetItem
+class ConnectionSortListItem : public QListWidgetItem
 {
 public:
-    explicit CustomSortListItem(QWidget *parent = nullptr);
+    explicit ConnectionSortListItem(QWidget *parent = nullptr);
     bool operator<(const QListWidgetItem &other) const;
 };
 

@@ -86,6 +86,7 @@ void WirelessManager::initConnection()
     });
 
     connect(ui->wirelessSettingPage, &WirelessSettingPage::returnPreviousPage, this, &WirelessManager::handleReturnPreviousPage);
+    //XXX:更改信号
     connect(ui->wirelessSettingPage, &WirelessSettingPage::settingUpdated, [=]() {
         KLOG_DEBUG() << "WiredSettingPage::settingUpdated";
         handleReturnPreviousPage();
@@ -94,9 +95,6 @@ void WirelessManager::initConnection()
 
     connect(ui->connectionShowPage, &ConnectionShowPage::requestConnectWirelessNetwork,
             this, &WirelessManager::handleRequestConnectWirelessNetwork);
-
-    connect(ui->connectionShowPage, &ConnectionShowPage::deactivatedItemConnection,
-            this, &WirelessManager::handleStateDeactivated);
 
     //检测到新设备
     connect(notifier(), &Notifier::deviceAdded, [=](const QString &uni) {
@@ -262,11 +260,11 @@ void WirelessManager::setWirelessSetting(const WirelessSetting::Ptr &wirelessSet
 {
 }
 
-void WirelessManager::setWirelessSecuritySetting(const WirelessSecuritySetting::Ptr &wirelessSecurity)
+void WirelessManager::setWirelessSecuritySetting(const WirelessSecuritySetting::Ptr &wirelessSecuritySetting)
 {
-    wirelessSecurity->setPsk("12345678");
-    wirelessSecurity->setPskFlags(Setting::SecretFlagType::None);  //default: Save password for all users
-    wirelessSecurity->setInitialized(true);
+    wirelessSecuritySetting->setPsk("12345678");
+    wirelessSecuritySetting->setPskFlags(Setting::SecretFlagType::None);  //default: Save password for all users
+    wirelessSecuritySetting->setInitialized(true);
 }
 
 void WirelessManager::handleActiveConnectionAdded(const QString &path)
@@ -279,9 +277,7 @@ void WirelessManager::handleActiveConnectionAdded(const QString &path)
         QString ssid = wirelessSetting->ssid();
         ui->connectionShowPage->findItemBySsid(ssid);
 
-        connect(activatedConnection.data(), &ActiveConnection::stateChanged, [=](NetworkManager::ActiveConnection::State state) {
-            handleActiveConnectionStateChanged(state, path);
-        });
+        connect(activatedConnection.data(), &ActiveConnection::stateChanged,this,&WirelessManager::handleActiveConnectionStateChanged);
         //加载等待动画
         ui->connectionShowPage->connectionItemLoadingAnimation();
     }

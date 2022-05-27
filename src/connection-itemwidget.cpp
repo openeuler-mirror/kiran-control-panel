@@ -16,6 +16,7 @@
 #include <qt5-log-i.h>
 #include <QPainter>
 #include <QSvgRenderer>
+#include <QLineEdit>
 #include "animation-loading-label.h"
 // 使用默认析构函数，父对象被释放时，会释放子对象
 ConnectionItemWidget::ConnectionItemWidget(ItemWidgetType itemWidgetType, QWidget* parent) : QWidget(parent)
@@ -120,6 +121,7 @@ void ConnectionItemWidget::initTrayItemWidget()
     setFixedHeight(50);
 }
 
+//TODO:名称过长进行缩略
 void ConnectionItemWidget::setName(const QString& name)
 {
     QString nameStr = name;
@@ -142,7 +144,7 @@ void ConnectionItemWidget::activatedStatus()
 {
     if (m_itemWidgetType == ITEM_WIDGET_TYPE_PLUGIN)
     {
-        QPixmap pixmap = getPixmapFromSvg("/home/lq/git/icon_correct.svg");
+        QPixmap pixmap = getPixmapFromSvg(":/kcp-network-images/correct.png");
         m_activatedLabel->setPixmap(pixmap);
         m_activatedLabel->setAlignment(Qt::AlignCenter);
         m_activatedLabel->setVisible(true);
@@ -239,4 +241,56 @@ QPixmap ConnectionItemWidget::getPixmapFromSvg(const QString& svgPath)
 void ConnectionItemWidget::setActionButtonVisible(bool isVisible)
 {
     m_actionButton->setVisible(isVisible);
+}
+
+void ConnectionItemWidget::setOtherNetworkIcon()
+{
+    QString svgPath = ":/kcp-network-images/wireless-other-network.svg";
+    QPixmap pixmap = getPixmapFromSvg(svgPath);
+    m_connectionTypeIcon->setPixmap(pixmap);
+    m_connectionTypeIcon->setAlignment(Qt::AlignCenter);
+    m_connectionTypeIcon->setVisible(true);
+}
+
+InputPasswordWidget::InputPasswordWidget(QWidget* parent) : QWidget(parent)
+{
+    intUI();
+    initConnection();
+}
+
+void InputPasswordWidget::intUI()
+{
+//    setFixedHeight(50);
+    setFixedSize(240,50);
+    m_passwordEdit =  new QLineEdit(this);
+    m_passwordEdit->setFixedSize(160,24);
+    m_passwordEdit->setEchoMode(QLineEdit::Password);
+    m_activateConnectionButton = new QPushButton(this);
+    m_activateConnectionButton->setText(tr("Connect"));
+    m_activateConnectionButton->setFixedSize(50,24);
+
+    m_horizonLayout = new QHBoxLayout(this);
+
+    m_horizonLayout->addWidget(m_passwordEdit);
+    m_horizonLayout->addWidget(m_activateConnectionButton);
+    m_horizonLayout->setSpacing(10);
+    m_horizonLayout->setContentsMargins(10,13,10,13);
+    this->setLayout(m_horizonLayout);
+}
+
+void InputPasswordWidget::initConnection()
+{
+    connect(m_activateConnectionButton,&QPushButton::clicked,this,&InputPasswordWidget::handleInputPassword);
+}
+
+
+void InputPasswordWidget::handleInputPassword()
+{
+    QString password = m_passwordEdit->text();
+    emit sendPassword(password);
+}
+
+QString InputPasswordWidget::getPassword()
+{
+    return m_passwordEdit->text();
 }

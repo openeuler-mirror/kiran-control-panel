@@ -24,27 +24,21 @@ class TrayPage;
 }
 QT_END_NAMESPACE
 using namespace NetworkManager;
-enum TrayConnectionType
-{
-    TRAY_CONNECTION_TYPE_WIRED,
-    TRAT_CONNECTION_TYPE_WIRELESS
-};
 
 class TrayPage : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit TrayPage(TrayConnectionType trayConnectionType, QWidget *parent = nullptr);
+    explicit TrayPage(Device::List deviceList, QWidget *parent = nullptr);
     ~TrayPage() override;
 
     void init();
-    void initUI();
+    void initUI(Device::Type deviceType);
     void initConnection();
-    void initWiredPage();
-    void initWirelessPage();
+
     void getDeviceList(Device::Type deviceType);
-    void setMultiWiredDeviceWidget();
+    void setMultiDeviceWidget(Device::Type deviceType);
     QStringList devicePathList();
     int pageHeight();
 
@@ -55,7 +49,6 @@ public slots:
 
 private:
     Ui::TrayPage *ui;
-    TrayConnectionType m_trayConnectionType;
     QList<Device::Ptr> m_deviceList;
 };
 

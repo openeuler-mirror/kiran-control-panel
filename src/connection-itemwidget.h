@@ -49,6 +49,7 @@ public:
     void setActionButtonVisible(bool isVisible);
     void setWirelessStatusIcon(bool security, int signal);
     void setWiredStatusIcon();
+    void setOtherNetworkIcon();
 
     QPixmap getPixmapFromSvg(const QString &svgPath);
 
@@ -72,6 +73,29 @@ private:
 
     QWidget *m_activeStatusWidget;
     ItemWidgetType m_itemWidgetType;
+
+};
+
+class InputPasswordWidget : public QWidget
+{
+    Q_OBJECT
+public:
+    explicit InputPasswordWidget(QWidget *parent= nullptr);
+
+    void intUI();
+    void initConnection();
+
+public slots:
+    void handleInputPassword();
+    QString getPassword();
+
+signals:
+    void activateConnectionButtonClicked();
+    void sendPassword(const QString& password);
+private:
+    QPushButton *m_activateConnectionButton;
+    QLineEdit *m_passwordEdit;
+    QHBoxLayout *m_horizonLayout;
 
 };
 

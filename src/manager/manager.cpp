@@ -96,8 +96,10 @@ void Manager::getDeviceList(Device::Type deviceType)
     }
 }
 
-void Manager::handleActiveConnectionStateChanged(ActiveConnection::State state, const QString &path)
+void Manager::handleActiveConnectionStateChanged(ActiveConnection::State state)
 {
+    auto activeConnection = qobject_cast<ActiveConnection* >(sender());
+    QString path = activeConnection->path();
     switch (state)
     {
     case ActiveConnection::State::Unknown:

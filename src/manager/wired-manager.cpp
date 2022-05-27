@@ -132,9 +132,7 @@ void WiredManager::handleActiveConnectionAdded(const QString &path)
     {
         QString uuid = activatedConnection->uuid();
         ui->connectionShowPage->findItemByUuid(uuid);
-        connect(activatedConnection.data(), &ActiveConnection::stateChanged, [=](NetworkManager::ActiveConnection::State state) {
-            handleActiveConnectionStateChanged(state, path);
-        });
+        connect(activatedConnection.data(), &ActiveConnection::stateChanged, this, &WiredManager::handleActiveConnectionStateChanged);
         //加载等待动画
         ui->connectionShowPage->connectionItemLoadingAnimation();
     }

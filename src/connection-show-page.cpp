@@ -77,7 +77,7 @@ void ConnectionShowPage::setCreateButtonVisible(bool visible)
 
 void ConnectionShowPage::showConnectionLists(ConnectionSettings::ConnectionType type)
 {
-    ui->connectionLists->showConnectionLists(type, ITEM_WIDGET_TYPE_PLUGIN);
+    ui->connectionLists->showConnectionLists(type);
 }
 
 void ConnectionShowPage::addConnectionToLists(Connection::Ptr ptr, const QString& devicePath)
@@ -117,7 +117,7 @@ void ConnectionShowPage::findItemByUuid(const QString& uuid)
 
 void ConnectionShowPage::findItemBySsid(const QString& ssid)
 {
-    ui->connectionLists->findItemBySsid(ssid);
+    ui->connectionLists->findActiveItemBySsid(ssid);
 }
 
 void ConnectionShowPage::connectionItemLoadingAnimation()
