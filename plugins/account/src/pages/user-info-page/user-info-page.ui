@@ -47,7 +47,7 @@
       </size>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="page_userInfo">
       <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -447,14 +447,14 @@
            </property>
            <property name="minimumSize">
             <size>
-             <width>252</width>
-             <height>60</height>
+             <width>110</width>
+             <height>40</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>252</width>
-             <height>60</height>
+             <width>110</width>
+             <height>40</height>
             </size>
            </property>
            <property name="text">
@@ -472,7 +472,7 @@
            </property>
            <property name="sizeHint" stdset="0">
             <size>
-             <width>76</width>
+             <width>40</width>
              <height>20</height>
             </size>
            </property>
@@ -488,14 +488,14 @@
            </property>
            <property name="minimumSize">
             <size>
-             <width>252</width>
-             <height>60</height>
+             <width>110</width>
+             <height>40</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>252</width>
-             <height>60</height>
+             <width>110</width>
+             <height>40</height>
             </size>
            </property>
            <property name="text">
@@ -529,7 +529,7 @@
          <property name="sizeHint" stdset="0">
           <size>
            <width>20</width>
-           <height>20</height>
+           <height>40</height>
           </size>
          </property>
         </spacer>
@@ -741,7 +741,7 @@
           <number>0</number>
          </property>
          <property name="bottomMargin">
-          <number>20</number>
+          <number>40</number>
          </property>
          <item>
           <spacer name="horizontalSpacer_15">
@@ -766,14 +766,14 @@
            </property>
            <property name="minimumSize">
             <size>
-             <width>252</width>
-             <height>60</height>
+             <width>110</width>
+             <height>40</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>252</width>
-             <height>60</height>
+             <width>110</width>
+             <height>40</height>
             </size>
            </property>
            <property name="text">
@@ -791,7 +791,7 @@
            </property>
            <property name="sizeHint" stdset="0">
             <size>
-             <width>76</width>
+             <width>40</width>
              <height>20</height>
             </size>
            </property>
@@ -807,14 +807,14 @@
            </property>
            <property name="minimumSize">
             <size>
-             <width>252</width>
-             <height>60</height>
+             <width>110</width>
+             <height>40</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>252</width>
-             <height>60</height>
+             <width>110</width>
+             <height>40</height>
             </size>
            </property>
            <property name="text">

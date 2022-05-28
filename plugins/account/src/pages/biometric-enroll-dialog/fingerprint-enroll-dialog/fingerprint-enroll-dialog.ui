@@ -91,6 +91,9 @@
    </item>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
+     <property name="spacing">
+      <number>0</number>
+     </property>
      <property name="bottomMargin">
       <number>20</number>
      </property>
@@ -117,14 +120,14 @@
        </property>
        <property name="minimumSize">
         <size>
-         <width>120</width>
-         <height>45</height>
+         <width>110</width>
+         <height>40</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>16777215</width>
-         <height>45</height>
+         <width>110</width>
+         <height>40</height>
         </size>
        </property>
        <property name="text">
@@ -155,14 +158,14 @@
        </property>
        <property name="minimumSize">
         <size>
-         <width>120</width>
-         <height>45</height>
+         <width>110</width>
+         <height>40</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>16777215</width>
-         <height>45</height>
+         <width>110</width>
+         <height>40</height>
         </size>
        </property>
        <property name="text">

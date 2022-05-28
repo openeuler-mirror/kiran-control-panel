@@ -134,7 +134,7 @@ void SelectAvatarPage::initUI()
     m_btnLayout = new QHBoxLayout;
     m_btnLayout->setSpacing(0);
     m_btnLayout->setMargin(0);
-    m_btnLayout->setContentsMargins(0, 40, 0, 20);
+    m_btnLayout->setContentsMargins(0, 0, 0, 40);
     m_mainLayout->addItem(m_btnLayout);
 
     item = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
@@ -143,20 +143,20 @@ void SelectAvatarPage::initUI()
     btn = new QPushButton(this);
     btn->setObjectName("btn_confirm");
     btn->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    btn->setFixedSize(252, 60);
+    btn->setFixedSize(110, 40);
     btn->setText(tr("Confirm"));
     Kiran::WidgetPropertyHelper::setButtonType(btn, Kiran::BUTTON_Default);
     m_btnLayout->addWidget(btn);
     connect(btn, &QPushButton::clicked, [this]()
             { sigReturnToPrevPage(m_mode, true); });
 
-    item = new QSpacerItem(76, 20, QSizePolicy::Fixed, QSizePolicy::Minimum);
+    item = new QSpacerItem(40, 20, QSizePolicy::Fixed, QSizePolicy::Minimum);
     m_btnLayout->addItem(item);
 
     btn = new QPushButton(this);
     btn->setObjectName("btn_return");
     btn->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    btn->setFixedSize(252, 60);
+    btn->setFixedSize(110, 40);
     btn->setText(tr("Return"));
     m_btnLayout->addWidget(btn);
     connect(btn, &QPushButton::clicked, [this]()
