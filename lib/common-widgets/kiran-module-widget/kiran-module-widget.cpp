@@ -90,11 +90,11 @@ void KiranModuleWidget::setPlugins(const QList<QSharedPointer<CPanelPluginHelper
 
     if (ui->list_subItems->count() <= 1)
     {
-        ui->list_subItems->hide();
+        ui->widget_siderbar->hide();
     }
     else
     {
-        ui->list_subItems->show();
+        ui->widget_siderbar->show();
     }
 }
 
