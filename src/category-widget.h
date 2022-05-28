@@ -12,6 +12,7 @@ class QButtonGroup;
 class QAbstractButton;
 class QLayout;
 class QFrame;
+class QGraphicsDropShadowEffect;
 class CategoryWidget : public QWidget
 {
     Q_OBJECT
@@ -40,6 +41,7 @@ private slots:
     void handleCategoryItemToggled(QAbstractButton* btn,bool checked);
 
 protected:
+    void paintEvent(QPaintEvent* event) override;
     bool event(QEvent *event) override;
 
 private:
@@ -48,6 +50,7 @@ private:
     QWidget* m_contentWidget = nullptr;
     QLayout* m_contentLayout = nullptr;
     QFrame* m_splitLine = nullptr;
+    QGraphicsDropShadowEffect* m_dropShadowEffect = nullptr;
     int m_currentCategoryIdx = -1;
     bool m_isExpaned = false;
 };

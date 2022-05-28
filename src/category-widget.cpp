@@ -14,7 +14,9 @@
 #include <QResizeEvent>
 #include <QScrollArea>
 #include <QBoxLayout>
+#include <QGraphicsDropShadowEffect>
 
+const int shadow_width=10;
 const int CategoryWidget::reduce_width = 88;
 const int CategoryWidget::expand_width = 244;
 
@@ -29,8 +31,17 @@ CategoryWidget::~CategoryWidget()
 
 void CategoryWidget::init()
 {
+    //初始化阴影
+    m_dropShadowEffect = new QGraphicsDropShadowEffect(this);
+    m_dropShadowEffect->setBlurRadius(20);
+    m_dropShadowEffect->setOffset(-2,0);
+    m_dropShadowEffect->setColor("#000000");
+    m_dropShadowEffect->setEnabled(false);
+    this->setGraphicsEffect(m_dropShadowEffect);
+
     //感知鼠标悬浮
     setAttribute(Qt::WA_Hover);
+    setAttribute(Qt::WA_TranslucentBackground);
     parentWidget()->installEventFilter(this);
 
     //初始化动画相关参数
@@ -40,7 +51,7 @@ void CategoryWidget::init()
     //布局
     auto layout = new QHBoxLayout(this);
     layout->setSpacing(0);
-    layout->setMargin(0);
+    layout->setContentsMargins(0,0,shadow_width,0);
 
     //滚动区域
     auto pScrollArea = new QScrollArea(this);
@@ -59,6 +70,8 @@ void CategoryWidget::init()
     //分隔线条
     m_splitLine = new QFrame(this);
     m_splitLine->setFrameShape(QFrame::VLine);
+    m_splitLine->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Expanding);
+    m_splitLine->setFixedWidth(1);
     layout->addWidget(m_splitLine);
 
     m_categoryBtnGroup = new QButtonGroup(this);
@@ -67,6 +80,7 @@ void CategoryWidget::init()
             this,&CategoryWidget::handleCategoryItemToggled);
 
     loadCategories();
+    resize(reduce_width+shadow_width,0);
 }
 
 bool CategoryWidget::eventFilter(QObject *watched, QEvent *event)
@@ -95,17 +109,20 @@ bool CategoryWidget::event(QEvent *event)
 
 void CategoryWidget::expand()
 {
-    //m_contentWidget->setBackgroundRole(QPalette::Button);
-    m_propertyAnimation.setStartValue(QRect(0, 0, reduce_width, this->height()));
-    m_propertyAnimation.setEndValue(QRect(0, 0, expand_width, this->height()));
+    m_isExpaned=true;
+    m_dropShadowEffect->setEnabled(true);
+    m_propertyAnimation.setStartValue(QRect(0, 0, reduce_width+shadow_width, this->height()));
+    m_propertyAnimation.setEndValue(QRect(0, 0, expand_width+shadow_width, this->height()));
     m_propertyAnimation.setEasingCurve(QEasingCurve::InCubic);
     m_propertyAnimation.start();
 }
 
 void CategoryWidget::reduce()
 {
-    //m_propertyAnimation.setStartValue(QRect(0, 0, expand_width, this->height()));
-    m_propertyAnimation.setEndValue(QRect(0, 0, reduce_width, this->height()));
+    m_isExpaned=false;
+    m_dropShadowEffect->setEnabled(false);
+    m_propertyAnimation.setStartValue(QRect(0, 0, expand_width+shadow_width, this->height()));
+    m_propertyAnimation.setEndValue(QRect(0, 0, reduce_width+shadow_width, this->height()));
     m_propertyAnimation.setEasingCurve(QEasingCurve::OutCubic);
     m_propertyAnimation.start();
 }
@@ -156,4 +173,10 @@ void CategoryWidget::setCurrentCategoryIdx(int idx)
         return;
     auto btn = m_categoryBtnGroup->button(idx);
     btn->setChecked(true);
+}
+
+void CategoryWidget::paintEvent(QPaintEvent *event)
+{
+    QPainter p(this);
+    QWidget::paintEvent(event);
 }

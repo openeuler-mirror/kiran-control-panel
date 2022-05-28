@@ -41,7 +41,6 @@ void PanelWidget::init()
     //左侧分类窗口，不加入布局，浮于窗口上层
     m_categoryWidget = new CategoryWidget(this);
     m_categoryWidget->move(0, 0);
-    m_categoryWidget->resize(CategoryWidget::reduce_width,this->height());
 
     connect(m_categoryWidget, &CategoryWidget::currentCategoryIndexChanged,
             this, &PanelWidget::handleCurrentCategoryChanged, Qt::QueuedConnection);
