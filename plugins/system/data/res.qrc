@@ -1,0 +1,36 @@
+<RCC>
+    <qresource prefix="/images">
+        <file>arrow.svg</file>
+        <file>checked.svg</file>
+        <file>failed.png</file>
+        <file>hardware-information.svg</file>
+        <file>KEY.png</file>
+        <file>kylin-about.png</file>
+        <file>menu.svg</file>
+        <file>qrcode.svg</file>
+        <file>successful.png</file>
+        <file>system-information.svg</file>
+        <file>uncheckable.svg</file>
+        <file>uncheckable_check.svg</file>
+        <file>unchecked.svg</file>
+        <file>license_info.svg</file>
+    </qresource>
+    <qresource prefix="/qss">
+        <file>style.qss</file>
+    </qresource>
+    <qresource prefix="/logos">
+        <file>logos/amd.svg</file>
+        <file>logos/HUAWEI Kunpeng.png</file>
+        <file>logos/Loongson.gif</file>
+        <file>logos/PHYTIUM.png</file>
+        <file>logos/sw_64.png</file>
+        <file>logos/ZHAOXIN.png</file>
+        <file>logos/intel.jpg</file>
+    </qresource>
+    <qresource prefix="/version-license">
+        <file>version-license/gpl-3.0-en_US-title.txt</file>
+        <file>version-license/gpl-3.0-en_US-body.txt</file>
+        <file>version-license/gpl-3.0-zh_CN-title.txt</file>
+        <file>version-license/gpl-3.0-zh_CN-body.txt</file>
+    </qresource>
+</RCC>

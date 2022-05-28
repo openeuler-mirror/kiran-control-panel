@@ -1,0 +1,15 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Encoding=UTF-8
+Name=Kiran CPanel System
+Name[zh_CN]=系统信息
+Comment=Kiran CPanel System
+Comment[zh_CN]=系统信息
+Exec=kiran-cpanel-system
+Icon=kcp-system
+Terminal=false
+Type=Application
+Categories=GNOME;GTK;Application;Core;Documentation;X-Kylin-Doc;
+StartupNotify=true
+X-KIRAN-NoDisplay=true
+
