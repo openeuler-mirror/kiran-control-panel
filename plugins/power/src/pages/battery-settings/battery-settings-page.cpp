@@ -14,8 +14,8 @@
 
 
 #include "battery-settings-page.h"
-#include "common.h"
-#include "power.h"
+#include "common/common.h"
+#include "dbus/power.h"
 #include "ui_battery-settings-page.h"
 
 #include <qt5-log-i.h>

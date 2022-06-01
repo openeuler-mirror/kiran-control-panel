@@ -27,7 +27,7 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="QWidget" name="widget_logo" native="true">
+    <widget class="KylinsecLogo" name="widget_logo" native="true">
      <property name="minimumSize">
       <size>
        <width>0</width>
@@ -44,6 +44,9 @@
    </item>
    <item>
     <widget class="QScrollArea" name="scrollArea">
+     <property name="frameShape">
+      <enum>QFrame::NoFrame</enum>
+     </property>
      <property name="widgetResizable">
       <bool>true</bool>
      </property>
@@ -52,8 +55,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>601</width>
-        <height>472</height>
+        <width>603</width>
+        <height>477</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -91,7 +94,7 @@
            <number>0</number>
           </property>
           <item>
-           <widget class="QWidget" name="widget_CPU" native="true">
+           <widget class="KiranFrame" name="widget_CPU" native="true">
             <property name="minimumSize">
              <size>
               <width>0</width>
@@ -151,7 +154,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QWidget" name="widget_memory" native="true">
+           <widget class="KiranFrame" name="widget_memory" native="true">
             <property name="minimumSize">
              <size>
               <width>0</width>
@@ -211,7 +214,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QWidget" name="widget_hard_disk" native="true">
+           <widget class="KiranFrame" name="widget_hard_disk" native="true">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
               <horstretch>0</horstretch>
@@ -289,7 +292,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QWidget" name="widget_graphics_card" native="true">
+           <widget class="KiranFrame" name="widget_graphics_card" native="true">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
               <horstretch>0</horstretch>
@@ -364,7 +367,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QWidget" name="widget_network_card" native="true">
+           <widget class="KiranFrame" name="widget_network_card" native="true">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
               <horstretch>0</horstretch>
@@ -460,6 +463,20 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>KiranFrame</class>
+   <extends>QWidget</extends>
+   <header location="global">kiran-frame/kiran-frame.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>KylinsecLogo</class>
+   <extends>QWidget</extends>
+   <header location="global">kylinsec-logo.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

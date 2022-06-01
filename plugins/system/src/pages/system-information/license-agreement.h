@@ -11,38 +11,39 @@
  *
  * Author:     yuanxing <yuanxing@kylinos.com.cn>
  */
-
-#ifndef CHANGEHOSTNAMEWIDGET_H
-#define CHANGEHOSTNAMEWIDGET_H
+#ifndef LICENSEAGREEMENT_H
+#define LICENSEAGREEMENT_H
 
 #include <QWidget>
 #include <kiranwidgets-qt5/kiran-titlebar-window.h>
 
 namespace Ui
 {
-class ChangeHostNameWidget;
+class LicenseAgreement;
 }
 
-class ChangeHostNameWidget : public KiranTitlebarWindow
+
+class LicenseAgreement : public KiranTitlebarWindow
 {
     Q_OBJECT
+
 public:
-    explicit ChangeHostNameWidget();
-    ~ChangeHostNameWidget();
-    bool getLineEditStatus();
+    explicit LicenseAgreement(QWidget *parent, Qt::WindowFlags windowFlags=Qt::Window);
+    ~LicenseAgreement();
+    QString getEulaText();
+    void setEULA();
+    void setVersionLicnese();
+    //void setLicenseType(int type);
+
+public slots:
+    void exportLicense();
 
 private:
-    void initUI();
-
-signals:
-    void sigChangeNameSuccessful(bool isChanged, QString name);
-
-private slots:
-    void setNewHostName();
-    void setInputEditStatus();
+    QString getLocaleLang();
 
 private:
-    Ui::ChangeHostNameWidget *ui;
+    Ui::LicenseAgreement *ui;
+    int m_licenseType;
 };
 
-#endif  // CHANGEHOSTNAMEWIDGET_H
+#endif  // LICENSEAGREEMENT_H

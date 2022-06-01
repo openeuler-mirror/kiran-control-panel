@@ -21,7 +21,7 @@
 #include "general-settings-page.h"
 #include "kiran-message-box.h"
 #include "kiran-session-daemon/power-i.h"
-#include "power.h"
+#include "dbus/power.h"
 #include "ui_general-settings-page.h"
 
 #define MAX_IDLE_TIME 120

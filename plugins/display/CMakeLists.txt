@@ -49,13 +49,6 @@ install(TARGETS ${TARGET_NAME} DESTINATION ${PLUGIN_LIBS_INSTALL_DIR}/)
 configure_file(data/kiran-cpanel-display.desktop.in ${CMAKE_CURRENT_BINARY_DIR}/kiran-cpanel-display.desktop @ONLY)
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/kiran-cpanel-display.desktop DESTINATION ${PLUGIN_DESKTOP_INSTALL_DIR}/ )
 
-SET(link_source ${PLUGIN_DESKTOP_INSTALL_DIR}/${TARGET_NAME}.desktop)
-SET(link_target ${CMAKE_CURRENT_BINARY_DIR}/${TARGET_NAME}-link.desktop)
-add_custom_target(kcp-applications-account-desktop ALL COMMAND ln -sf ${link_source} ${link_target})
-install(FILES ${link_target}
-        DESTINATION ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATADIR}/applications/
-        RENAME ${TARGET_NAME}.desktop)
-
 #安装翻译文件
 set(TRANSLATION_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATAROOTDIR}/${TARGET_NAME}/translations)
 configure_file( ${CMAKE_CURRENT_SOURCE_DIR}/data/config.h.in ${CMAKE_CURRENT_BINARY_DIR}/config.h)

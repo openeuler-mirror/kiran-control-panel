@@ -31,20 +31,24 @@ class SystemInformation : public QWidget
 public:
     explicit SystemInformation(QWidget *parent = 0);
     ~SystemInformation();
+    void init();
     bool initUI();
     bool hasUnsavedOptions();
 
 private:
-    bool readSystemInfo(int infoType);
-    void getJsonValueFromString(QString jsonString);
+    bool readSystemInfo();
+    void parseSoftwareInfoJson(QString jsonString,
+                               QString &hostName,
+                               QString &arch,
+                               QString &systemVersion,
+                               QString &kernelVersion);
 
-private slots:
-    void onBtnchangeHostName(void);
+private slots :
+        void handleChangeHostName(void);
     void updateHostName(bool isChanged, QString name);
 
 protected:
     bool eventFilter(QObject *obj, QEvent *event);
-    void paintEvent(QPaintEvent *painEvent);
     virtual QSize sizeHint() const;
 
 private:

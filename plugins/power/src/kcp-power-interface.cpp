@@ -13,10 +13,10 @@
  */
 
 #include "kcp-power-interface.h"
-#include "battery-settings-page.h"
 #include "config.h"
-#include "general-settings-page.h"
-#include "power-settings-page.h"
+#include "pages/battery-settings//battery-settings-page.h"
+#include "pages/general-settings//general-settings-page.h"
+#include "pages/power-settings/power-settings-page.h"
 #include "upower-interface.h"
 
 #include <qt5-log-i.h>

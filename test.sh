@@ -16,11 +16,12 @@ cmake -DCMAKE_INSTALL_PREFIX=/usr/local -DCMAKE_BUILD_TYPE=debug ..
 make -j4
 echo 123123 |sudo -S make install
 
-#/usr/local/bin/kiran-control-panel
+/usr/local/bin/kiran-control-panel
+exit 0
+
 ui_debug=0
 specify_style=""
-run_plugin_name="kiran-cpanel-account"
-
+run_plugin_name="kiran-cpanel-timedate"
 
 cmd=""
 

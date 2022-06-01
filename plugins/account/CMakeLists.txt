@@ -98,13 +98,6 @@ install(TARGETS ${TARGET_NAME} DESTINATION ${PLUGIN_LIBS_INSTALL_DIR}/)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/data/kiran-cpanel-account.desktop.in ${CMAKE_CURRENT_BINARY_DIR}/kiran-cpanel-account.desktop @ONLY)
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/kiran-cpanel-account.desktop DESTINATION ${PLUGIN_DESKTOP_INSTALL_DIR}/)
 
-SET(link_source ${CPANEL_DESKTOP_DIR}/${TARGET_NAME}.desktop)
-SET(link_target ${CMAKE_BINARY_DIR}/${TARGET_NAME}-link.desktop)
-add_custom_target(kcp-applications-desktop ALL COMMAND ln -sf ${link_source} ${link_target})
-install(FILES ${link_target}
-        DESTINATION ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATADIR}/applications/
-        RENAME ${TARGET_NAME}.desktop)
-
 install(FILES ${QM_FILES} DESTINATION ${KCP_ACCOUNT_TRANSLATION_DIR})
 
 install(FILES ./data/kiran-account-manager.conf DESTINATION ${KCP_ACCOUNT_CONF_DIR})

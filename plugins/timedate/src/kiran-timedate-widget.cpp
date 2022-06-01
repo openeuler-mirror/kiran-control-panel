@@ -1,14 +1,14 @@
 /**
- * Copyright (c) 2020 ~ 2021 KylinSec Co., Ltd. 
+ * Copyright (c) 2020 ~ 2021 KylinSec Co., Ltd.
  * kiran-cpanel-timedate is licensed under Mulan PSL v2.
- * You can use this software according to the terms and conditions of the Mulan PSL v2. 
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
  * You may obtain a copy of Mulan PSL v2 at:
- *          http://license.coscl.org.cn/MulanPSL2 
- * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND, 
- * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT, 
- * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.  
- * See the Mulan PSL v2 for more details.  
- * 
+ *          http://license.coscl.org.cn/MulanPSL2
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ *
  * Author:     liuxinhao <liuxinhao@kylinos.com.cn>
  */
 
@@ -17,11 +17,12 @@
 #include "mask-widget.h"
 #include "ui_kiran-timedate-widget.h"
 
-#include "timezone-settings/time-zone-settings.h"
 #include "date-time-settings/date-time-settings.h"
 #include "display-format-settings/display-format-settings.h"
+#include "timezone-settings/time-zone-settings.h"
 
 #include <kiran-switch-button.h>
+#include <qt5-log-i.h>
 #include <widget-property-helper.h>
 #include <QDateTime>
 #include <QDebug>
@@ -29,7 +30,6 @@
 #include <QListWidgetItem>
 #include <QMessageBox>
 #include <QTimerEvent>
-#include <qt5-log-i.h>
 
 enum KiranTimeDateStackPageEnum
 {
@@ -39,10 +39,11 @@ enum KiranTimeDateStackPageEnum
     PAGE_END
 };
 
-#define DEFAULT_STYLE_FILE ":/kcp-timedate-themes/black-theme.qss"
-
 KiranTimeDateWidget::KiranTimeDateWidget(QWidget* parent)
-    : QWidget(parent), ui(new Ui::KiranTimeDateWidget), m_updateTimer(0), m_maskWidget(new MaskWidget(this))
+    : QWidget(parent),
+      ui(new Ui::KiranTimeDateWidget),
+      m_updateTimer(0),
+      m_maskWidget(new MaskWidget(this))
 {
     ui->setupUi(this);
     initUI();
@@ -62,78 +63,58 @@ void KiranTimeDateWidget::initUI()
     ui->label_utc->setContentsMargins(-1, 24, -1, -1);
     ui->label_dateTime->setContentsMargins(-1, 8, -1, -1);
 
-#if 0
-    /// 时区列表上标签
-    QMargins labelTimeZoneMargins = ui->label_timeZone->contentsMargins();
-    labelTimeZoneMargins.setTop(24);
-    labelTimeZoneMargins.setBottom(10);
-    ui->label_timeZone->setContentsMargins(labelTimeZoneMargins);
-
-    /// 设置时间日期上标签
-    QMargins labelSetTimeMargins = ui->label_setTime->contentsMargins();
-    labelSetTimeMargins.setTop(24);
-    labelSetTimeMargins.setBottom(10);
-    ui->label_setTime->setContentsMargins(labelSetTimeMargins);
-
-    QMargins labelSetDateMargins = ui->label_setTime->contentsMargins();
-    labelSetDateMargins.setTop(24);
-    labelSetDateMargins.setBottom(10);
-    ui->label_setDate->setContentsMargins(labelSetDateMargins);
-#endif
-
     /// 自动同步
     m_autoSyncSwitch = new KiranSwitchButton(this);
-    KLOG_DEBUG() << "new auth sync switch:" << m_autoSyncSwitch;
     ui->widget_autoSync->layout()->addWidget(m_autoSyncSwitch);
 
-    //自动同步开关的触发，设置"手动设置时间"标签的enable,判断当前页并切换
+    // 自动同步开关的触发，设置"手动设置时间"标签的enable,判断当前页并切换
     connect(m_autoSyncSwitch, &KiranSwitchButton::toggled,
-            this,&KiranTimeDateWidget::handleAutoSyncToggled);
+            this, &KiranTimeDateWidget::handleAutoSyncToggled);
 
     connect(globalData, &KiranTimeDateGlobalData::systemNTPChanged,
-            this,&KiranTimeDateWidget::handleSystemNTPChanged);
+            this, &KiranTimeDateWidget::handleSystemNTPChanged);
     connect(globalData, &KiranTimeDateGlobalData::systemCanNTPChanged,
-            this,&KiranTimeDateWidget::handleSysntemCanNTPChanged);
+            this, &KiranTimeDateWidget::handleSysntemCanNTPChanged);
 
     /* 初始化侧边栏Tab列表 */
     ui->tabList->setIconSize(QSize(16, 16));
     connect(ui->tabList, &KiranSidebarWidget::itemSelectionChanged,
-            this,&KiranTimeDateWidget::handleSidebarSelectionChanged);
+            this, &KiranTimeDateWidget::handleSidebarSelectionChanged);
 
     /// 时区设置
     initTimeZoneSettingsPage();
 
     /// 日期时间设置
     initDateTimeSettingsPage();
-    connect(globalData,&KiranTimeDateGlobalData::longDateFormatIndexChanged,
-            this,&KiranTimeDateWidget::handleSystemLongDisplayFormatChanged);
-    connect(globalData,&KiranTimeDateGlobalData::secondsShowingChanged,
-            this,&KiranTimeDateWidget::handleSystemSecondShowingChanged);
-    connect(globalData,&KiranTimeDateGlobalData::hourFormatChanged,
-            this,&KiranTimeDateWidget::handleSystemHourFormatChanged);
-    ///时间显示格式设置
+    connect(globalData, &KiranTimeDateGlobalData::longDateFormatIndexChanged,
+            this, &KiranTimeDateWidget::handleSystemLongDisplayFormatChanged);
+    connect(globalData, &KiranTimeDateGlobalData::secondsShowingChanged,
+            this, &KiranTimeDateWidget::handleSystemSecondShowingChanged);
+    connect(globalData, &KiranTimeDateGlobalData::hourFormatChanged,
+            this, &KiranTimeDateWidget::handleSystemHourFormatChanged);
+    /// 时间显示格式设置
     m_showSeconds = globalData->secondsShowing();
     m_curTimeDateFormat = globalData->longDateFormatList().at(KiranTimeDateGlobalData::instance()->longDateFormatIndex());
     m_hourFormat = globalData->hourFormat();
     initDisplayFormatSettingsPage();
 
-    //获取ntp是否可开启
+    // 获取ntp是否可开启
     bool can_ntp = globalData->systemCanNTP();
     m_autoSyncSwitch->setChecked(false);
     m_autoSyncSwitch->setEnabled(can_ntp);
     if (can_ntp)
     {
-        //时钟同步状态
+        // 时钟同步状态
         bool ntpStatus = globalData->systemNTP();
         m_autoSyncSwitch->setChecked(ntpStatus);
     }
 
-    ///更新侧边栏时间文本和时区显示
+    /// 更新侧边栏时间文本和时区显示
     updateTimeZoneLabel();
-    ///时区更改时，修改时间文本和时区显示
-    connect(globalData, &KiranTimeDateGlobalData::systemTimeZoneChanged, this,&KiranTimeDateWidget::handleSystemTimeZoneChanged);
+    /// 时区更改时，修改时间文本和时区显示
+    connect(globalData, &KiranTimeDateGlobalData::systemTimeZoneChanged, this, &KiranTimeDateWidget::handleSystemTimeZoneChanged);
     updateTimeLabel();
-    ///设置默认页
+    /// 设置默认页
     ui->tabList->setCurrentRow(0);
 }
 
@@ -141,36 +122,38 @@ void KiranTimeDateWidget::initTimeZoneSettingsPage()
 {
     auto sideBarItem = new QListWidgetItem(ui->tabList);
     sideBarItem->setText(tr("Change Time Zone"));
-    sideBarItem->setIcon(QIcon(":/kcp-timedate-images/time_zone.png"));
+    sideBarItem->setIcon(QIcon(":/kcp-timedate/images/time-zone.svg"));
     ui->tabList->addItem(sideBarItem);
 
     m_zoneSettingsPage = new TimezoneSettings(this);
-    ui->stack->insertWidget(PAGE_TIMEZONE_SETTING,m_zoneSettingsPage);
+    ui->stack->insertWidget(PAGE_TIMEZONE_SETTING, m_zoneSettingsPage);
 }
 
 void KiranTimeDateWidget::initDateTimeSettingsPage()
 {
     auto sideBarItem = new QListWidgetItem(ui->tabList);
     sideBarItem->setText(tr("Set Time Manually"));
+#if 0
     QIcon setTimeManualIcon;
     setTimeManualIcon.addPixmap(QPixmap(":/kcp-timedate-images/time.png"), QIcon::Normal);
     setTimeManualIcon.addPixmap(QPixmap(":/kcp-timedate-images/time_d.png"), QIcon::Disabled);
-    sideBarItem->setIcon(setTimeManualIcon);
+#endif
+    sideBarItem->setIcon(QIcon(":/kcp-timedate/images/time.svg"));
     ui->tabList->addItem(sideBarItem);
 
     m_dateTimeSettingsPage = new DateTimeSettings(this);
-    ui->stack->insertWidget(PAGE_DATETIME_SETTING,m_dateTimeSettingsPage);
+    ui->stack->insertWidget(PAGE_DATETIME_SETTING, m_dateTimeSettingsPage);
 }
 
 void KiranTimeDateWidget::initDisplayFormatSettingsPage()
 {
     auto sideBarItem = new QListWidgetItem(ui->tabList);
     sideBarItem->setText(tr("Time date format setting"));
-    sideBarItem->setIcon(QIcon(":/kcp-timedate-images/time_format.svg"));
+    sideBarItem->setIcon(QIcon(":/kcp-timedate/images/time-format.svg"));
     ui->tabList->addItem(sideBarItem);
 
     m_formatSettingsPage = new DisplayFormatSettings(this);
-    ui->stack->insertWidget(PAGE_DISPLAY_FORMAT_SETTING,m_formatSettingsPage);
+    ui->stack->insertWidget(PAGE_DISPLAY_FORMAT_SETTING, m_formatSettingsPage);
 }
 
 void KiranTimeDateWidget::updateTimeLabel()
@@ -179,18 +162,19 @@ void KiranTimeDateWidget::updateTimeLabel()
     QDateTime curDateTime = QDateTime::currentDateTime();
     QTime curTime = curDateTime.time();
     std::string curDateFormat = m_curTimeDateFormat.toStdString();
-    std::string curTimeFormat = m_hourFormat==TIMEDATE_HOUSR_FORMAT_12_HOURS?"%I:%M":"%H:%M";
-    if( m_showSeconds ){
+    std::string curTimeFormat = m_hourFormat == TIMEDATE_HOUSR_FORMAT_12_HOURS ? "%I:%M" : "%H:%M";
+    if (m_showSeconds)
+    {
         curTimeFormat += ":%S";
     }
 
-    std::string timeDateFormat = curDateFormat+" "+curTimeFormat;
+    std::string timeDateFormat = curDateFormat + " " + curTimeFormat;
     time_t rawtime;
-    struct tm *info;
+    struct tm* info;
     char buffer[256] = {0};
     time(&rawtime);
     info = localtime(&rawtime);
-    strftime(buffer,sizeof(buffer),timeDateFormat.c_str(),info);
+    strftime(buffer, sizeof(buffer), timeDateFormat.c_str(), info);
 
     ui->label_dateTime->setText(buffer);
 }
@@ -324,7 +308,7 @@ void KiranTimeDateWidget::handleSystemLongDisplayFormatChanged(int idx)
 
 void KiranTimeDateWidget::handleSystemSecondShowingChanged(bool enable)
 {
-    //改变日期时间显示界面时钟下方显示
+    // 改变日期时间显示界面时钟下方显示
     m_showSeconds = enable;
     updateTimeLabel();
 }
@@ -337,5 +321,5 @@ void KiranTimeDateWidget::handleSystemHourFormatChanged(TimedateHourFormat hourF
 
 QSize KiranTimeDateWidget::sizeHint() const
 {
-    return QSize(931,652);
+    return QSize(931, 652);
 }

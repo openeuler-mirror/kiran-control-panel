@@ -14,13 +14,14 @@
 
 #include "system-information.h"
 #include "dbus-wrapper/system-info-dbus.h"
-#include "license/license-agreement.h"
+#include "license-agreement.h"
 #include "ui_system-information.h"
+
 #include <kiranwidgets-qt5/kiran-message-box.h>
 #include <kiranwidgets-qt5/kiran-style-public-define.h>
 #include <kiranwidgets-qt5/widget-property-helper.h>
-#include <ks-license/license_i.h>
 
+#include <kiran-log/qt5-log-i.h>
 #include <QDateTime>
 #include <QDesktopWidget>
 #include <QFont>
@@ -28,9 +29,6 @@
 #include <QJsonObject>
 #include <QJsonValue>
 #include <QPainter>
-#include <kiran-log/qt5-log-i.h>
-
-#define SYSTEM_LOGO "KylinSec OS"
 
 #define HOST_NAME "host_name"
 #define ARCH "arch"
@@ -42,161 +40,168 @@
 using namespace Kiran::WidgetPropertyHelper;
 
 SystemInformation::SystemInformation(QWidget *parent)
-    : QWidget(parent), ui(new Ui::SystemInformation), hostNameWidget(nullptr),
-      licenseAgreement(nullptr) {
-  ui->setupUi(this);
-  initUI();
-
-  connect(ui->btn_change_name, SIGNAL(clicked()), this,
-          SLOT(onBtnchangeHostName()));
+    : QWidget(parent), ui(new Ui::SystemInformation), hostNameWidget(nullptr), licenseAgreement(nullptr)
+{
+    ui->setupUi(this);
+    init();
 }
 
-SystemInformation::~SystemInformation() {
-  delete ui;
-  if (hostNameWidget != nullptr) {
-    delete hostNameWidget;
-  }
-  if (licenseAgreement != nullptr) {
-    delete licenseAgreement;
-  }
-}
-
-bool SystemInformation::initUI() {
-  setMinimumWidth(400);
-  readSystemInfo(0);
-
-  ui->btn_change_name->setText(tr("Change"));
-  ui->btn_EULA->setText(tr("Show"));
-  ui->btn_version_license->setText(tr("Show"));
-
-  connect(ui->btn_EULA, &QPushButton::clicked, [this] {
-    if (licenseAgreement == nullptr) {
-      licenseAgreement = new LicenseAgreement();
+SystemInformation::~SystemInformation()
+{
+    delete ui;
+    if (hostNameWidget != nullptr)
+    {
+        delete hostNameWidget;
     }
-    licenseAgreement->setEULA();
-    int screenNum = QApplication::desktop()->screenNumber(QCursor::pos());
-    QRect screenGeometry = QApplication::desktop()->screenGeometry(screenNum);
-    licenseAgreement->move(
-        screenGeometry.x() + (screenGeometry.width() - this->width()) / 2,
-        screenGeometry.y() + (screenGeometry.height() - this->height()) / 2);
-    licenseAgreement->show();
-  });
-
-  connect(ui->btn_version_license, &QPushButton::clicked, [this] {
-    if (licenseAgreement == nullptr) {
-      licenseAgreement = new LicenseAgreement();
+    if (licenseAgreement != nullptr)
+    {
+        delete licenseAgreement;
     }
-    licenseAgreement->setVersionLicnese();
-    int screenNum = QApplication::desktop()->screenNumber(QCursor::pos());
-    QRect screenGeometry = QApplication::desktop()->screenGeometry(screenNum);
-    licenseAgreement->move(
-        screenGeometry.x() + (screenGeometry.width() - this->width()) / 2,
-        screenGeometry.y() + (screenGeometry.height() - this->height()) / 2);
-    licenseAgreement->show();
-  });
-
-  return true;
 }
 
-bool SystemInformation::hasUnsavedOptions() {
-  if (hostNameWidget != nullptr && hostNameWidget->getLineEditStatus()) {
-    return true;
-  } else
-    return false;
+void SystemInformation::init()
+{
+    setMinimumHeight(400);
+    initUI();
+    // clang-format off
+    connect(ui->btn_EULA, &QPushButton::clicked, [this]
+    {
+        if (licenseAgreement == nullptr)
+        {
+            licenseAgreement = new LicenseAgreement(this);
+        }
+        licenseAgreement->setEULA();
+        licenseAgreement->show();
+    });
+    connect(ui->btn_version_license, &QPushButton::clicked, [this]
+    {
+        if (licenseAgreement == nullptr) {
+            licenseAgreement = new LicenseAgreement(this);
+        }
+        licenseAgreement->setVersionLicnese();
+        licenseAgreement->show();
+    });
+    // clang-format on
+    connect(ui->btn_change_name, &QPushButton::clicked, this, &SystemInformation::handleChangeHostName);
 }
 
-/**
- * @brief SystemInformation::readSystemInfo:读取系统信息
- * @param infoType: 传入DBUS接口的参数，0：获取系统信息，1：获取硬件信息
- */
-bool SystemInformation::readSystemInfo(int infoType) {
-  QString systemInfo;
-  if (!InfoDbus::SystemInfo::getSystemInfo(infoType, systemInfo)) {
-    KLOG_DEBUG() << "get system information failed";
-    ui->lab_name_info->setText(tr("Unknow"));
-    ui->lab_core_version_info->setText(tr("Unknow"));
-    ui->lab_system_arch_info->setText(tr("Unknow"));
-    ui->lab_system_version_info->setText(tr("Unknow"));
-    ui->btn_change_name->hide();
-    return false;
-  } else {
-    KLOG_INFO() << systemInfo;
-    getJsonValueFromString(systemInfo);
-  }
-  return true;
-}
-
-/**
- * @brief SystemInformation::getJsonValueFromString:
- * 解析从DBUS后端获取的Json字符串
- * @param jsonString: DBUS后端获取的Json字符串
- */
-void SystemInformation::getJsonValueFromString(QString jsonString) {
-  QJsonParseError jsonError;
-  QJsonDocument jsonDocument =
-      QJsonDocument::fromJson(jsonString.toLocal8Bit().data(), &jsonError);
-  if (jsonDocument.isNull() || jsonError.error != QJsonParseError::NoError) {
-    KLOG_DEBUG() << " please check the activation information string "
-                 << jsonString.toLocal8Bit().data();
-    return;
-  }
-  if (jsonDocument.isObject()) {
-    QJsonObject obj = jsonDocument.object();
-    if (obj.contains(HOST_NAME)) {
-      QJsonValue value = obj.take(HOST_NAME);
-      if (value.isString()) {
-        QString hostName = value.toString();
-        ui->lab_name_info->setText(hostName);
-      }
+bool SystemInformation::initUI()
+{
+    QString systemInfoJson;
+    bool bRes = SystemInfoDBus::getSystemInfo(SYSTEMINFO_TYPE_SOFTWARE, systemInfoJson);
+    if (!bRes)
+    {
+        ui->lab_name_info->setText(tr("Unknow"));
+        ui->lab_core_version_info->setText(tr("Unknow"));
+        ui->lab_system_arch_info->setText(tr("Unknow"));
+        ui->lab_system_version_info->setText(tr("Unknow"));
+        ui->btn_change_name->hide();
     }
-    if (obj.contains(ARCH)) {
-      QJsonValue value = obj.take(ARCH);
-      if (value.isString()) {
-        QString arch = value.toString();
+    else
+    {
+        QString hostname,arch,systemVersion,kernelVersion;
+        parseSoftwareInfoJson(systemInfoJson,
+                              hostname,
+                              arch,
+                              systemVersion,
+                              kernelVersion);
+        qInfo() << hostname << arch << systemVersion << kernelVersion;
+        ui->lab_name_info->setText(hostname);
         ui->lab_system_arch_info->setText(arch);
-      }
+        ui->lab_system_version_info->setText(systemVersion);
+        ui->lab_core_version_info->setText(kernelVersion);
+
     }
-    if (obj.contains(PRODUCT_RELEASE)) {
-      QJsonValue value = obj.take(PRODUCT_RELEASE);
-      if (value.isString()) {
-        QString system_vresion = value.toString();
-        ui->lab_system_version_info->setText(system_vresion);
-      }
+
+    QList<QLabel *> labels = {ui->lab_name_info,ui->lab_core_version_info, ui->lab_system_arch_info,ui->lab_system_version_info};
+    for (auto label : labels)
+    {
+        label->setStyleSheet("color:#7e7e7e;font-family: \"Noto Sans CJK SC regular\";");
     }
-    if (obj.contains(KERNEL_NAME) && obj.contains(KERNEL_RELEASE)) {
-      QJsonValue value_name = obj.take(KERNEL_NAME);
-      QJsonValue value_release = obj.take(KERNEL_RELEASE);
-      if (value_name.isString() && value_release.isString()) {
-        QString kernel_version =
-            value_name.toString() + " " + value_release.toString();
-        ui->lab_core_version_info->setText(kernel_version);
-      }
+
+    auto kiranFrames = findChildren<KiranFrame *>();
+    for (auto frame : kiranFrames)
+    {
+        frame->setRadius(6);
+        frame->setDrawBroder(false);
     }
-  }
+
+
+    return true;
+}
+
+bool SystemInformation::hasUnsavedOptions()
+{
+    if (hostNameWidget != nullptr && hostNameWidget->getLineEditStatus())
+    {
+        return true;
+    }
+    else
+        return false;
+}
+
+void SystemInformation::parseSoftwareInfoJson(QString jsonString,
+                                              QString& hostName,
+                                              QString& arch,
+                                              QString& systemVersion,
+                                              QString& kernelVersion)
+{
+    QJsonParseError jsonError;
+    QJsonDocument jsonDocument = QJsonDocument::fromJson(jsonString.toLocal8Bit().data(), &jsonError);
+    if (jsonDocument.isNull() || jsonError.error != QJsonParseError::NoError || !jsonDocument.isObject())
+    {
+        KLOG_ERROR() << " please check the activation information string " << jsonString.toLocal8Bit().data();
+        return;
+    }
+    qInfo() <<jsonString;
+    QJsonObject rootObject = jsonDocument.object();
+    if( rootObject.contains("host_name") && rootObject["host_name"].isString() )
+    {
+        hostName = rootObject["host_name"].toString();
+    }
+    if( rootObject.contains("arch") && rootObject["arch"].isString() )
+    {
+        arch = rootObject["arch"].toString();
+    }
+    if( rootObject.contains("product_release") && rootObject["product_release"].isString() )
+    {
+        systemVersion = rootObject["product_release"].toString();
+    }
+    if( rootObject.contains("kernal_name") && rootObject["kernal_name"].isString() &&
+        rootObject.contains("kernel_release") && rootObject["kernel_release"].isString() )
+    {
+        kernelVersion = rootObject["kernal_name"].toString() + " " + rootObject["kernel_release"].toString();
+    }
 }
 
 /**
  * @brief SystemInformation::onBtnchangeHostName: 当点击更改用户名后的槽函数
  */
-void SystemInformation::onBtnchangeHostName() {
-  if (hostNameWidget == nullptr) {
-    hostNameWidget = new ChangeHostNameWidget;
-  }
-  hostNameWidget->setAttribute(Qt::WA_QuitOnClose, false);
-  hostNameWidget->installEventFilter(this);
-  connect(hostNameWidget, SIGNAL(sigChangeNameSuccessful(bool, QString)), this,
-          SLOT(updateHostName(bool, QString)));
-  hostNameWidget->raise();
-  hostNameWidget->show();
+void SystemInformation::handleChangeHostName()
+{
+    if (hostNameWidget == nullptr)
+    {
+        hostNameWidget = new ChangeHostNameWidget;
+    }
+    hostNameWidget->setAttribute(Qt::WA_QuitOnClose, false);
+    hostNameWidget->installEventFilter(this);
+    connect(hostNameWidget, SIGNAL(sigChangeNameSuccessful(bool, QString)), this,
+            SLOT(updateHostName(bool, QString)));
+    hostNameWidget->raise();
+    hostNameWidget->show();
 }
 
-void SystemInformation::updateHostName(bool isChanged, QString name) {
-  if (isChanged) {
-    KLOG_INFO() << "new host name is" << name;
-    ui->lab_name_info->setText(name);
-  } else {
-    return;
-  }
+void SystemInformation::updateHostName(bool isChanged, QString name)
+{
+    if (isChanged)
+    {
+        KLOG_INFO() << "new host name is" << name;
+        ui->lab_name_info->setText(name);
+    }
+    else
+    {
+        return;
+    }
 }
 
 /**
@@ -205,60 +210,36 @@ void SystemInformation::updateHostName(bool isChanged, QString name) {
  * @param  obj  事件
  * @return 是否过滤
  */
-bool SystemInformation::eventFilter(QObject *obj, QEvent *event) {
-  if (obj == hostNameWidget && event->type() == QEvent::Close) {
-    hostNameWidget->deleteLater();
-    hostNameWidget = nullptr;
-  }
-  return false;
+bool SystemInformation::eventFilter(QObject *obj, QEvent *event)
+{
+    if (obj == hostNameWidget && event->type() == QEvent::Close)
+    {
+        hostNameWidget->deleteLater();
+        hostNameWidget = nullptr;
+    }
+    return false;
 }
 
-void SystemInformation::paintEvent(QPaintEvent *painEvent) {
-  QDate currentDate = QDate::currentDate();
-  QString date = currentDate.toString("yyyy-MM-dd");
-  QString year = date.left(4);
-  QString copyright = QString(tr("Copyright ©")) + QString("%1 ").arg(year) +
-                      QString(tr("KylinSec. All rights reserved."));
+QSize SystemInformation::sizeHint() const
+{
+    int screenNum = QApplication::desktop()->screenNumber(QCursor::pos());
+    QRect screenGeometry = QApplication::desktop()->screenGeometry(screenNum);
 
-  QPainter painter(this);
-  QFont font = QFont("Noto Sans CJK SC regular", 46);
-  QRect drawRecLogo =
-      QRect(this->geometry().x() + 24, this->geometry().y() + 16, this->width(),
-            ui->widget_logo->height() - 16);
+    QSize size;
+    if (screenGeometry.height() >= 815 &&
+        screenGeometry.width() >= 800)  // 能显示全
+    {
+        size = QSize(800, 815);
+    }
+    else if (screenGeometry.height() >= this->height() &&
+             screenGeometry.width() >= this->width())
+    {
+        size = QSize(this->width(), this->height());
+    }
+    else
+    {
+        size = QSize(screenGeometry.width(), screenGeometry.height());
+    }
 
-  painter.setPen(QColor(46, 179, 255)); //#2eb3FF
-  painter.setFont(font);
-  painter.drawText(drawRecLogo, SYSTEM_LOGO);
-
-  QFontMetrics fm = painter.fontMetrics();
-  int heightText = fm.height();
-
-  int offsetHeight = heightText + 5 + 16;
-  QRect drawRecCopyright =
-      QRect(24, this->geometry().y() + offsetHeight, this->width(),
-            ui->widget_logo->height() - offsetHeight);
-  font.setPointSize(10);
-  font.setWeight(QFont::Normal);
-  painter.setPen(QColor(145, 145, 145));
-  painter.setFont(font);
-  painter.drawText(drawRecCopyright, copyright);
-}
-
-QSize SystemInformation::sizeHint() const {
-  int screenNum = QApplication::desktop()->screenNumber(QCursor::pos());
-  QRect screenGeometry = QApplication::desktop()->screenGeometry(screenNum);
-
-  QSize size;
-  if (screenGeometry.height() >= 815 &&
-      screenGeometry.width() >= 800) //能显示全
-  {
-    size = QSize(800, 815);
-  } else if (screenGeometry.height() >= this->height() &&
-             screenGeometry.width() >= this->width()) {
-    size = QSize(this->width(), this->height());
-  } else {
-    size = QSize(screenGeometry.width(), screenGeometry.height());
-  }
-
-  return size;
+    return size;
 }

@@ -29,17 +29,17 @@ class HardwareInformation : public QWidget
     Q_OBJECT
 
 public:
-    explicit HardwareInformation(QWidget *parent = 0);
+    explicit HardwareInformation(QWidget *parent = nullptr);
     ~HardwareInformation();
-    bool initUI(void);
 
-protected:
-    void paintEvent(QPaintEvent *painEvent);
-
+    void initUI();
 private:
-    bool readHardwareInfo(int infoType);
-    void getJsonValueFromString(QString jsonString);
-    void showListInfo();
+    bool parseHardwareInfoJson(const QString &json,
+                               QString &memory,
+                               QString &cpu,
+                               QStringList &disk,
+                               QStringList &graphics,
+                               QStringList &eths);
 
 private:
     Ui::HardwareInformation *ui;

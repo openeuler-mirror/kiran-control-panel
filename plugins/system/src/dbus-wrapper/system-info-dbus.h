@@ -16,14 +16,12 @@
 #define SYSTEMINFODBUS_H
 
 #include <QString>
+#include <kiran-system-daemon/systeminfo-i.h>
 
-namespace InfoDbus
+namespace SystemInfoDBus
 {
-namespace SystemInfo
-{
-bool getSystemInfo(int infoType, QString &info);
-bool setHostName(QString name);
+    bool getSystemInfo(SystemInfoType infoType, QString &info);
+    bool setHostName(QString name);
 }  // namespace SystemInfo
-}  // namespace InfoDbus
 
 #endif  // SYSTEMINFODBUS_H

@@ -30,7 +30,7 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="QWidget" name="widget_logo" native="true">
+    <widget class="KylinsecLogo" name="widget_logo" native="true">
      <property name="minimumSize">
       <size>
        <width>0</width>
@@ -64,6 +64,9 @@
    </item>
    <item>
     <widget class="QScrollArea" name="scrollArea">
+     <property name="frameShape">
+      <enum>QFrame::NoFrame</enum>
+     </property>
      <property name="widgetResizable">
       <bool>true</bool>
      </property>
@@ -72,8 +75,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>736</width>
-        <height>656</height>
+        <width>738</width>
+        <height>658</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -111,7 +114,7 @@
            <number>0</number>
           </property>
           <item>
-           <widget class="QWidget" name="widget_host_name" native="true">
+           <widget class="KiranFrame" name="widget_host_name" native="true">
             <property name="minimumSize">
              <size>
               <width>0</width>
@@ -194,7 +197,7 @@
                 </size>
                </property>
                <property name="text">
-                <string>PushButton</string>
+                <string>Change</string>
                </property>
               </widget>
              </item>
@@ -202,7 +205,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QWidget" name="widget_system_version" native="true">
+           <widget class="KiranFrame" name="widget_system_version" native="true">
             <property name="minimumSize">
              <size>
               <width>0</width>
@@ -265,7 +268,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QWidget" name="widget_kernel_version" native="true">
+           <widget class="KiranFrame" name="widget_kernel_version" native="true">
             <property name="minimumSize">
              <size>
               <width>0</width>
@@ -340,7 +343,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QWidget" name="widget_system_arch" native="true">
+           <widget class="KiranFrame" name="widget_system_arch" native="true">
             <property name="minimumSize">
              <size>
               <width>0</width>
@@ -403,7 +406,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QWidget" name="widget_EULA" native="true">
+           <widget class="KiranFrame" name="widget_EULA" native="true">
             <property name="minimumSize">
              <size>
               <width>0</width>
@@ -467,7 +470,7 @@
                 </size>
                </property>
                <property name="text">
-                <string>PushButton</string>
+                <string>Show</string>
                </property>
               </widget>
              </item>
@@ -475,7 +478,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QWidget" name="widget_version_license" native="true">
+           <widget class="KiranFrame" name="widget_version_license" native="true">
             <property name="minimumSize">
              <size>
               <width>0</width>
@@ -539,7 +542,7 @@
                 </size>
                </property>
                <property name="text">
-                <string>PushButton</string>
+                <string>Show</string>
                </property>
               </widget>
              </item>
@@ -568,6 +571,20 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>KylinsecLogo</class>
+   <extends>QWidget</extends>
+   <header location="global">kylinsec-logo.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>KiranFrame</class>
+   <extends>QWidget</extends>
+   <header location="global">kiran-frame/kiran-frame.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

@@ -32,20 +32,18 @@
 #define TIMEOUT_MS 5000
 #define TIMEOUT_MS_ONLINE 10000
 
-bool InfoDbus::SystemInfo::getSystemInfo(int infoType, QString &info)
+bool SystemInfoDBus::getSystemInfo(SystemInfoType infoType, QString &info)
 {
     QDBusMessage msgMethodCall = QDBusMessage::createMethodCall(SYSTEMINFO_DBUS_NAME,
                                                                 SYSTEMINFO_OBJECT_PATH,
                                                                 SYSTEMINFO_DBUS_INTERFACE,
                                                                 METHOD_GET_SYSTEMINFO);
-
-    msgMethodCall << infoType;
+    msgMethodCall << (int)infoType;
 
     QDBusMessage msgReply = QDBusConnection::systemBus().call(msgMethodCall,
                                                               QDBus::Block,
                                                               TIMEOUT_MS);
 
-    KLOG_DEBUG() << "msgReply " << msgReply;
     QString errorMsg;
     if (msgReply.type() == QDBusMessage::ReplyMessage)
     {
@@ -70,7 +68,7 @@ failed:
     return false;
 }
 
-bool InfoDbus::SystemInfo::setHostName(QString name)
+bool SystemInfoDBus::setHostName(QString name)
 {
     QDBusMessage msgMethodCall = QDBusMessage::createMethodCall(SYSTEMINFO_DBUS_NAME,
                                                                 SYSTEMINFO_OBJECT_PATH,
@@ -83,7 +81,6 @@ bool InfoDbus::SystemInfo::setHostName(QString name)
                                                               QDBus::Block,
                                                               TIMEOUT_MS);
 
-    KLOG_DEBUG() << "msgReply " << msgReply;
     QString errorMsg;
     if (msgReply.type() == QDBusMessage::ReplyMessage)
     {

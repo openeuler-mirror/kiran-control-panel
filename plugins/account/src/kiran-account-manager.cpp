@@ -141,6 +141,7 @@ void KiranAccountManager::initUI()
 
     m_tabList = new KiranSidebarWidget(siderbar);
     m_tabList->setFrameShape(QFrame::NoFrame);
+    m_tabList->setInvertIconPixelsEnable(false);
     m_tabList->setObjectName("tabList");
     m_tabList->setIconSize(QSize(40, 40));
     vLayout->addWidget(m_tabList);

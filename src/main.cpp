@@ -57,8 +57,6 @@ int main(int argc, char *argv[])
     //加载相关插件的信息
     CPanelPluginManager::getInstance()->loadAll();
 
-    KiranPalette::instance()->dump();
-
     //安装翻译
     installTranslator();
 

@@ -19,7 +19,7 @@ Weight=99
 #插件分类
 Category=timedate
 #插件共享库位置，若以'/'开头则为绝对路径，也可支持通过共享库名去插件安装目录去查找
-Library=lib@PROJECT_NAME@.so
+Library=lib@TARGET_NAME@.so
 SubItems=TimeDate
 
 [TimeDate]

@@ -314,12 +314,12 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/pages/biometric-enroll-dialog/face-enroll-dialog/face-enroll-dialog.ui" line="121"/>
+        <location filename="../src/pages/biometric-enroll-dialog/face-enroll-dialog/face-enroll-dialog.ui" line="124"/>
         <source>save</source>
         <translation>保存</translation>
     </message>
     <message>
-        <location filename="../src/pages/biometric-enroll-dialog/face-enroll-dialog/face-enroll-dialog.ui" line="159"/>
+        <location filename="../src/pages/biometric-enroll-dialog/face-enroll-dialog/face-enroll-dialog.ui" line="162"/>
         <source>cancel</source>
         <translation>取消</translation>
     </message>
@@ -376,12 +376,12 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/pages/biometric-enroll-dialog/fingerprint-enroll-dialog/fingerprint-enroll-dialog.ui" line="131"/>
+        <location filename="../src/pages/biometric-enroll-dialog/fingerprint-enroll-dialog/fingerprint-enroll-dialog.ui" line="134"/>
         <source>save</source>
         <translation>保存</translation>
     </message>
     <message>
-        <location filename="../src/pages/biometric-enroll-dialog/fingerprint-enroll-dialog/fingerprint-enroll-dialog.ui" line="169"/>
+        <location filename="../src/pages/biometric-enroll-dialog/fingerprint-enroll-dialog/fingerprint-enroll-dialog.ui" line="172"/>
         <source>cancel</source>
         <translation>取消</translation>
     </message>
@@ -514,18 +514,18 @@
     <name>KiranAccountManager</name>
     <message>
         <location filename="../src/kiran-account-manager.cpp" line="94"/>
-        <location filename="../src/kiran-account-manager.cpp" line="415"/>
+        <location filename="../src/kiran-account-manager.cpp" line="416"/>
         <source>disable</source>
         <translation>禁用</translation>
     </message>
     <message>
         <location filename="../src/kiran-account-manager.cpp" line="94"/>
-        <location filename="../src/kiran-account-manager.cpp" line="415"/>
+        <location filename="../src/kiran-account-manager.cpp" line="416"/>
         <source>enable</source>
         <translation>启用</translation>
     </message>
     <message>
-        <location filename="../src/kiran-account-manager.cpp" line="230"/>
+        <location filename="../src/kiran-account-manager.cpp" line="231"/>
         <source>Create new user</source>
         <translation>创建新用户</translation>
     </message>
@@ -621,12 +621,12 @@
         <translation>密码过期多少天认定为失效</translation>
     </message>
     <message>
-        <location filename="../src/pages/passwd-expiration-policy/password-expiration-policy-page.ui" line="277"/>
+        <location filename="../src/pages/passwd-expiration-policy/password-expiration-policy-page.ui" line="280"/>
         <source>save</source>
         <translation>保存</translation>
     </message>
     <message>
-        <location filename="../src/pages/passwd-expiration-policy/password-expiration-policy-page.ui" line="318"/>
+        <location filename="../src/pages/passwd-expiration-policy/password-expiration-policy-page.ui" line="321"/>
         <source>return</source>
         <translation>返回</translation>
     </message>

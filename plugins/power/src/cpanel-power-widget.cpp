@@ -13,11 +13,11 @@
  */
 
 #include "cpanel-power-widget.h"
-#include "battery-settings-page.h"
-#include "general-settings-page.h"
+#include "pages/battery-settings/battery-settings-page.h"
+#include "pages/general-settings/general-settings-page.h"
+#include "pages/power-settings/power-settings-page.h"
 #include "kiran-session-daemon/power-i.h"
-#include "power-settings-page.h"
-#include "power.h"
+#include "dbus/power.h"
 #include "ui_cpanel-power-widget.h"
 
 #include <QDebug>

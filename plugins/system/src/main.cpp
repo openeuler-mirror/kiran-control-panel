@@ -1,84 +1,99 @@
-/**
- * Copyright (c) 2020 ~ 2021 KylinSec Co., Ltd.
- * kiran-cpanel-system is licensed under Mulan PSL v2.
- * You can use this software according to the terms and conditions of the Mulan PSL v2.
- * You may obtain a copy of Mulan PSL v2 at:
- *          http://license.coscl.org.cn/MulanPSL2
- * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
- * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
- * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
- * See the Mulan PSL v2 for more details.
- *
- * Author:     yuanxing <yuanxing@kylinos.com.cn>
- */
+//
+// Created by liuxinhao on 2022/5/30.
+//
+
+#include "kcp-plugin-interface.h"
+#include "dbus-wrapper/system-info-dbus.h"
+#include "pages/system-information/system-information.h"
+#include "pages/hardware-information/hardware-information.h"
+
 #include <kiran-log/qt5-log-i.h>
-#include <QApplication>
-#include <QDesktopWidget>
-#include <QFile>
-#include <QLoggingCategory>
-#include <QMessageBox>
+#include <kiranwidgets-qt5/kiran-message-box.h>
+
 #include <QTranslator>
-#include <iostream>
-#include "config/config.h"
-#include "kiran-system-information.h"
-#include "pages/license-information/license-information.h"
+#include <QCoreApplication>
 
-#ifndef DISABLE_KIRANWIDGETS
-#include <kiran-single-application.h>
-#endif
+#define TRANSLATION_DIR "/usr/share/kiran-cpanel-system/translations"
 
-#define TRANSLATION_DIR TRANSLATIONS_FILE_DIR
-
-int main(int argc, char *argv[])
+class KcpInterface : public  QObject,public  KcpPluginInterface
 {
-#ifdef DISABLE_KIRANWIDGETS
-    QApplication a(argc, argv);
-#else
-    KiranSingleApplication a(argc, argv);
-#endif
+    Q_OBJECT
+    Q_PLUGIN_METADATA(IID KcpPluginInterface_iid)
+    Q_INTERFACES(KcpPluginInterface)
 
-    ///注册自定义的消息处理函数
-    QLoggingCategory::defaultCategory()->setEnabled(QtDebugMsg, true);
-    if (klog_qt5_init("", "kylinsec-session", "kiran-cpanel-system", "kiran-cpanel-system") < 0)
+public:
+    KcpInterface() = default;
+    ~KcpInterface(){};
+
+public:
+    virtual int init() override
     {
-        std::cout << "init zlog error" << std::endl;
+        QString systemInfo;
+        if (m_translator != nullptr)
+        {
+            QCoreApplication::removeTranslator(m_translator);
+            delete m_translator;
+            m_translator = nullptr;
+        }
+
+        m_translator = new QTranslator;
+        if (!m_translator->load(QLocale(),
+                                "kiran-cpanel-system",
+                                ".",
+                                TRANSLATION_DIR,
+                                ".qm"))
+        {
+            KLOG_DEBUG() << "Kiran cpanel system load translation failed";
+            m_translator->deleteLater();
+            m_translator = nullptr;
+        }
+        else
+        {
+            QCoreApplication::installTranslator(m_translator);
+        }
+        return 0;
     }
 
-    KLOG_DEBUG() << "******New Output*********";
-
-    ///加载qss样式表
-    QFile file(":/qss/style.qss");
-    if (file.open(QFile::ReadOnly))
+    virtual void uninit() override
     {
-        QString styleSheet = QLatin1String(file.readAll());
-
-        a.setStyleSheet(styleSheet);
-        file.close();
-    }
-    else
-    {
-        QMessageBox::warning(NULL, QObject::tr("warning"), QObject::tr("Open qss file failed"), QMessageBox::Ok);
+        if (m_translator)
+        {
+            QCoreApplication::removeTranslator(m_translator);
+            delete m_translator;
+            m_translator = nullptr;
+        }
     }
 
-    ///加载翻译文件
-    QTranslator *qtTranslator = new QTranslator(qApp);
-    if (qtTranslator->load(QLocale(), "kiran-cpanel-system", ".", TRANSLATION_DIR, ".qm"))
+    virtual QWidget* getSubItemWidget(QString id) override
     {
-        a.installTranslator(qtTranslator);
+        QWidget* widget = nullptr;
+        if (id == "SystemInformation")
+        {
+            widget = new SystemInformation();
+        }
+        else if (id == "HardwareInformation")
+        {
+            widget = new HardwareInformation();
+        }
+        m_currentWidget = widget;
+        return m_currentWidget;
     }
-    else
+
+    virtual bool haveUnsavedOptions()  override
     {
-        KLOG_DEBUG() << "Load Translator File failed : " << TRANSLATION_DIR;
+        return false;
     }
 
-    kiranSystemInformation w;
-    w.resize(w.sizeHint());
+    QStringList visibleSubItems() override
+    {
+        return QStringList() << "SystemInformation" << "HardwareInformation";
+    }
 
-    int screenNum = QApplication::desktop()->screenNumber(QCursor::pos());
-    QRect screenGeometry = QApplication::desktop()->screenGeometry(screenNum);
-    w.move(screenGeometry.x() + (screenGeometry.width() - w.width()) / 2,
-           screenGeometry.y() + (screenGeometry.height() - w.height()) / 2);
+private:
+    QWidget* m_currentWidget = nullptr;
+    QTranslator* m_translator = nullptr;
+};
 
-    w.show();
-    return a.exec();
-}
+
+
+#include "main.moc"

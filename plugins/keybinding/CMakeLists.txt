@@ -10,9 +10,7 @@ pkg_search_module(KLOG_QT5 REQUIRED klog-qt5)
 pkg_search_module(KIRAN_CC_DAEMON REQUIRED kiran-cc-daemon)
 
 set(DATA_DIR "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATADIR}")
-set(TRANSLATIONS_DIR "${DATA_DIR}/${PROJECT_NAME}/translations/")
-
-#添加config.h.in文件
+set(TRANSLATIONS_DIR "${INSTALL_DATADIR}/${TARGE_NAME}/translations/")
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config.h.in ${CMAKE_CURRENT_BINARY_DIR}/keybinding-config.h)
 
 file(GLOB_RECURSE KEYBINDING_SRC "./*.cpp" "./*.h" "./*.ui" "./*.qrc")
@@ -50,12 +48,7 @@ install(FILES ${QM_FILES}
         DESTINATION ${TRANSLATIONS_DIR})
 
 configure_file (${CMAKE_CURRENT_SOURCE_DIR}/data/kiran-cpanel-keybinding.desktop.in ${CMAKE_CURRENT_BINARY_DIR}/kiran-cpanel-keybinding.desktop)
-install(FILES "${CMAKE_CURRENT_BINARY_DIR}/kiran-cpanel-keybinding.desktop" DESTINATION ${PLUGIN_DESKTOP_INSTALL_DIR}/ )
-SET(link_source ${PLUGIN_DESKTOP_INSTALL_DIR}/kiran-cpanel-keybinding.desktop)
-add_custom_target(kiran-cpanel-keybinding-desktop ALL
-        COMMAND ln -sf ${link_source} ${CMAKE_CURRENT_BINARY_DIR}/kiran-cpanel-keybinding.desktop)
-install(FILES "${CMAKE_CURRENT_BINARY_DIR}/kiran-cpanel-keybinding.desktop"
-        DESTINATION ${DATA_DIR}/applications/)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/kiran-cpanel-keybinding.desktop DESTINATION ${PLUGIN_DESKTOP_INSTALL_DIR}/)
 
 add_subdirectory(resources/images)
 

@@ -16,7 +16,7 @@ X-KIRAN-NoDisplay=true
 [Kiran Control Panel Plugin]
 Weight=99
 Category=power-management
-Library=lib@PROJECT_NAME@.so
+Library=libkiran-cpanel-power.so
 SubItems=GeneralSettings,PowerSettings,BatterySettings
 
 [GeneralSettings]

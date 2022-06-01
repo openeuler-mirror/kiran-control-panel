@@ -32,10 +32,11 @@ CategoryWidget::~CategoryWidget()
 void CategoryWidget::init()
 {
     //初始化阴影
+    QColor shadowColor(0,0,0,255*0.9);
     m_dropShadowEffect = new QGraphicsDropShadowEffect(this);
     m_dropShadowEffect->setBlurRadius(20);
-    m_dropShadowEffect->setOffset(-2,0);
-    m_dropShadowEffect->setColor("#000000");
+    m_dropShadowEffect->setOffset(-4,0);
+    m_dropShadowEffect->setColor(shadowColor);
     m_dropShadowEffect->setEnabled(false);
     this->setGraphicsEffect(m_dropShadowEffect);
 

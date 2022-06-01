@@ -18,11 +18,14 @@
 #include "timedate-interface.h"
 #include "kiran-timedate-global-data.h"
 
-#include <QStyleOption>
-#include <QStyle>
-#include <QPainter>
+#include <kiran-palette.h>
+
 #include <QDebug>
 #include <QMessageBox>
+#include <QPainter>
+#include <QPainterPath>
+#include <QStyle>
+#include <QStyleOption>
 
 KiranTimeZone::KiranTimeZone(QWidget *parent) :
     QWidget(parent),
@@ -38,11 +41,6 @@ KiranTimeZone::KiranTimeZone(QWidget *parent) :
 KiranTimeZone::~KiranTimeZone()
 {
     delete ui;
-}
-
-bool KiranTimeZone::editHasFocus() const
-{
-    return m_editHasFocus;
 }
 
 QSize KiranTimeZone::sizeHint() const
@@ -90,6 +88,7 @@ void KiranTimeZone::scrollToCurrent()
 
 void KiranTimeZone::initUI()
 {
+    ui->label_search->setPixmap(QPixmap(":/kiran-control-panel/images/search.svg"));
     ui->edit_search->setPlaceholderText(tr("Search in all time zones..."));
     ui->scrollArea->setWidgetResizable(true);
 
@@ -122,22 +121,45 @@ void KiranTimeZone::initUI()
     ui->timeZoneList->initAllTimeZone();
 }
 
-void KiranTimeZone::setEditHasFocus(bool editHasFocus)
+bool KiranTimeZone::event(QEvent *event)
 {
-    m_editHasFocus = editHasFocus;
-    emit editHasFocusChanged(m_editHasFocus);
-    style()->polish(this);
-    ///NOTE:如果不重绘，聚焦边框样式不会更新
-    update();
+    if(event->type()==QEvent::ShowToParent){
+        scrollToCurrent();
+    }
+    return QWidget::event(event);
 }
 
 void KiranTimeZone::paintEvent(QPaintEvent *event)
 {
     QStyleOption opt;
-
     opt.init(this);
+
     QPainter p(this);
-    style()->drawPrimitive(QStyle::PE_Widget, &opt, &p, this);
+    p.setRenderHint(QPainter::Antialiasing);
+
+    if( m_editHasFocus )
+    {
+        opt.state |= QStyle::State_Selected;
+    }
+
+    auto kiranPalette = KiranPalette::instance();
+    auto borderColor = kiranPalette->color(m_editHasFocus?KiranPalette::Checked:KiranPalette::Normal,
+                                      KiranPalette::Widget,
+                                      KiranPalette::Border);
+
+    QPainterPath painterPath;
+    QRectF rectF = opt.rect;
+    painterPath.addRoundedRect(rectF.adjusted(0.5,0.5,-0.5,-0.5),6,6);
+
+    QPen pen;
+    pen.setWidth(0);
+    pen.setColor(borderColor);
+    pen.setCapStyle(Qt::RoundCap);
+    pen.setJoinStyle(Qt::RoundJoin);
+
+    p.setPen(pen);
+    p.setBrush(Qt::NoBrush);
+    p.drawPath(painterPath);
 
     QWidget::paintEvent(event);
 }
@@ -148,10 +170,12 @@ bool KiranTimeZone::eventFilter(QObject *obj, QEvent *event)
     if(obj==ui->edit_search){
         switch ( event->type() ) {
         case QEvent::FocusIn:
-            setEditHasFocus(true);
+            m_editHasFocus = true;
+            update();
             break;
         case QEvent::FocusOut:
-            setEditHasFocus(false);
+            m_editHasFocus = false;
+            update();
             break;
         case QEvent::FocusAboutToChange:
             break;
@@ -162,3 +186,4 @@ bool KiranTimeZone::eventFilter(QObject *obj, QEvent *event)
 
     return QWidget::eventFilter(obj,event);
 }
+

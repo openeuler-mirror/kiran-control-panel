@@ -47,4 +47,13 @@
         <file>images/rotation-right.svg</file>
     </qresource>
 
+    <qresource prefix="/kcp-timedate">
+        <file>images/dial.svg</file>
+        <file>images/hour-hand.svg</file>
+        <file>images/minute-hand.svg</file>
+        <file>images/second-hand.svg</file>
+        <file>images/time.svg</file>
+        <file>images/time-zone.svg</file>
+        <file>images/time-format.svg</file>
+    </qresource>
 </RCC>

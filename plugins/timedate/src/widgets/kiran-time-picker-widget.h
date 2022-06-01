@@ -31,6 +31,7 @@ public:
     void reset();
 public slots:
     void setHightLightColor(QColor hightLightColor);
+    void updateScrollPickerColor();
 
 Q_SIGNALS:
     void currentTimeChanged(QTime currentTime);
@@ -38,6 +39,7 @@ Q_SIGNALS:
 private:
     void initUI();
     void emitCurrentTimeChanged();
+
 protected:
     virtual void paintEvent(QPaintEvent *event) override;
 

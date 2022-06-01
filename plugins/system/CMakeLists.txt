@@ -1,12 +1,4 @@
-cmake_minimum_required(VERSION 2.8)
-
-project(kiran-cpanel-system)
-
-option(DISABLE_LICENSE "Disable to license system " OFF)
-option(DISABLE_SYSTEM_INFO "Don't show system and hardware information" OFF)
-option(DISABLE_KIRANWIDGETS "Don't use kiran widgets" OFF)
-
-include(GNUInstallDirs)
+set(TARGET_NAME kiran-cpanel-system)
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -15,35 +7,41 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)
 
 find_package(PkgConfig REQUIRED)
-find_package(Qt5 COMPONENTS Widgets Svg DBus LinguistTools Network PrintSupport)
+find_package(Qt5 COMPONENTS Widgets Svg DBus LinguistTools)
 pkg_search_module(KLOG_QT5 REQUIRED klog-qt5)
-pkg_search_module(LIBQRENCODE REQUIRED libqrencode)
+pkg_search_module(KIRAN_CC_DAEMON REQUIRED kiran-cc-daemon)
+pkg_search_module(KIRAN_STYLE_HELPER REQUIRED kiran-style-helper)
 
-if(NOT DISABLE_KIRANWIDGETS)
-	pkg_search_module(KIRAN_WIDGETS_QT5 REQUIRED kiranwidgets-qt5)
-endif()
+file(GLOB_RECURSE SYSTEM_SRC ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp
+                             ${CMAKE_CURRENT_SOURCE_DIR}/*.h
+                             ${CMAKE_CURRENT_SOURCE_DIR}/*.ui)
 
-if(NOT DISABLE_SYSTEM_INFO)
-	pkg_search_module(KIRAN_CC_DAEMON REQUIRED kiran-cc-daemon)
-	#通过kiran control panel的pkgconfig配置文件取出插件Desktop安装位置、插件共享库安装位置
-	pkg_search_module(KIRAN_CONTROL_PANEL_PKG REQUIRED kiran-control-panel)
-	pkg_get_variable(CPANEL_PLUGIN_DIR kiran-control-panel plugin_location)
-	pkg_get_variable(CPANEL_DESKTOP_DIR kiran-control-panel plugin_desktop_location)
-endif()
+qt5_create_translation(SYSTEM_QM ${CMAKE_CURRENT_SOURCE_DIR} ${PROJECT_SOURCE_DIR}/translations/kiran-cpanel-system.zh_CN.ts)
 
+add_library(${TARGET_NAME} SHARED
+        ${SYSTEM_SRC}
+        ${SYSTEM_QM}
+        ${CMAKE_CURRENT_SOURCE_DIR}/data/res.qrc)
 
-set(DATA_DIR "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATADIR}")
-set(BIN_DIR "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_BINDIR}")
-set(TRANSLATIONS_DIR "${DATA_DIR}/${PROJECT_NAME}/translations/")
-set(TS_FILES "${PROJECT_SOURCE_DIR}/translations/kiran-cpanel-system.zh_CN.ts" )
+target_include_directories(${TARGET_NAME} PRIVATE
+        ${CMAKE_CURRENT_BINARY_DIR}
+        ${CMAKE_CURRENT_SOURCE_DIR}/src
+        ${KCP_PLUGIN_INCLUDE_DIR}
+        ${KLOG_QT5_INCLUDE_DIRS}
+        ${KIRAN_WIDGETS_QT5_INCLUDE_DIRS}
+        ${KIRAN_CC_DAEMON_INCLUDE_DIRS}
+        ${KIRAN_STYLE_HELPER_INCLUDE_DIRS})
 
-#添加config.h.in文件
-configure_file (
-"${PROJECT_SOURCE_DIR}/config/config.h.in"
-"${PROJECT_BINARY_DIR}/config/config.h"
-)
+target_link_libraries(${TARGET_NAME}
+        common-widgets
+        Qt5::Widgets
+        Qt5::DBus
+        Qt5::Svg
+        ${KIRAN_WIDGETS_QT5_LIBRARIES}
+        ${KLOG_QT5_LIBRARIES}
+        ${KIRAN_STYLE_HELPER_LIBRARIES})
 
-add_subdirectory(src)
-add_subdirectory(data)
-add_subdirectory(config)
+install(TARGETS ${TARGET_NAME} DESTINATION ${PLUGIN_LIBS_INSTALL_DIR})
+install(FILES ${SYSTEM_QM} DESTINATION ${INSTALL_DATADIR}/${TARGET_NAME}/translations/)
 
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/${TARGET_NAME}.desktop DESTINATION ${PLUGIN_DESKTOP_INSTALL_DIR}/)

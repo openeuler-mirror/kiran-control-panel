@@ -15,8 +15,8 @@
 #include "power-settings-page.h"
 #include <kiran-session-daemon/power-i.h>
 #include <qt5-log-i.h>
-#include "power.h"
-#include "common.h"
+#include "dbus/power.h"
+#include "common/common.h"
 #include "ui_power-settings-page.h"
 
 using namespace Common;

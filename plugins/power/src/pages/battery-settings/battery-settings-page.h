@@ -17,7 +17,7 @@
 #define KIRAN_POWER_MANAGER_SRC_PAGES_BATTERY_SETTINGS_BATTERY_SETTINGS_PAGE_H_
 
 #include <QWidget>
-#include "power.h"
+#include "dbus/power.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui
