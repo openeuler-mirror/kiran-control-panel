@@ -1,0 +1,43 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Encoding=UTF-8
+Name=Kiran CPanel System
+Name[zh_CN]=系统信息
+Comment=Kiran CPanel System
+Comment[zh_CN]=系统信息
+Exec=kiran-cpanel-launcher --cpanel-plugin=kiran-cpanel-system
+Icon=kcp-system
+Terminal=false
+Type=Application
+Categories=GNOME;GTK;Application;Core;Documentation;X-Kylin-Doc;
+StartupNotify=true
+X-KIRAN-NoDisplay=true
+
+[Kiran Control Panel Plugin]
+#插件排序
+Weight=1
+#插件分类
+Category=about-system
+#插件共享库位置，若以'/'开头则为绝对路径，也可支持通过共享库名去插件安装目录去查找
+Library=libkiran-cpanel-system.so
+SubItems=SystemInformation,HardwareInformation,LicenseInformation
+
+[SystemInformation]
+#插件子项名 该值提供给控制中心形成子项列表
+Name=System Information
+Name[zh_CN]=系统信息
+#插件Icon
+Icon=system-information.svg
+#插件关键字 该值提供给控制中心形成搜索列表
+Keywords[zh_CN]=系统信息 
+Keywords=system,information
+
+[HardwareInformation]
+#插件子项名 该值提供给控制中心形成子项列表
+Name=Hardware Information
+Name[zh_CN]=硬件信息
+#插件Icon
+Icon=hardware-information.svg
+#插件关键字 该值提供给控制中心形成搜索列表
+Keywords[zh_CN]=硬件信息
+Keywords=hardware,information

@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file>themes/avatar-editor_back.qss</file>
+    </qresource>
+</RCC>

@@ -1,0 +1,12 @@
+[Desktop Entry]
+Name=Hardware
+Name[zh_CN]=硬件
+Comment=Hardware
+Comment[zh_CN]=硬件
+Icon=hardware.png
+
+[Kiran Control Panel Category]
+Category=hardware
+Weight=8
+Keywords[zh_CN]=硬件
+Keywords=Hardware

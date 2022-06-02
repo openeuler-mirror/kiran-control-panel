@@ -1,0 +1,12 @@
+includedir=@KCP_INSTALL_INCLUDE@
+
+category_desktop_location=@CATEGORY_DESKTOP_INSTALL_DIR@
+category_icon_location=@CATEGORY_ICON_INSTALL_DIR@
+
+plugin_location=@PLUGIN_LIBS_INSTALL_DIR@
+plugin_desktop_location=@PLUGIN_DESKTOP_INSTALL_DIR@
+
+Name: @PROJECT_NAME@
+Description: kiran control panel
+Version: @KIRAN_CONTROL_CENTER_VERSION@
+Cflags: -I${includedir}
