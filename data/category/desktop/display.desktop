@@ -1,0 +1,12 @@
+[Desktop Entry]
+Name=Display
+Name[zh_CN]=显示
+Comment=Display
+Comment[zh_CN]=显示
+Icon=display.png
+
+[Kiran Control Panel Category]
+Category=display
+Weight=2
+Keywords[zh_CN]=显示
+Keywords=Display

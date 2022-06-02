@@ -1,0 +1,12 @@
+[Desktop Entry]
+Name=Power Management
+Name[zh_CN]=电源管理
+Comment=Power Management
+Comment[zh_CN]=电源管理
+Icon=power-management.png
+
+[Kiran Control Panel Category]
+Category=power-management
+Weight=9
+Keywords[zh_CN]=电源管理
+Keywords=Power Management
