@@ -19,7 +19,7 @@ echo 123123 |sudo -S make install
 /usr/local/bin/kiran-control-panel
 exit 0
 
-ui_debug=0
+ui_debug=1
 specify_style=""
 run_plugin_name="kiran-cpanel-timedate"
 

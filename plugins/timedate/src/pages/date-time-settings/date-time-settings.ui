@@ -110,7 +110,7 @@
    <item>
     <layout class="QHBoxLayout" name="layout_datetimeButton" stretch="5,0,2,0,5">
      <property name="spacing">
-      <number>30</number>
+      <number>0</number>
      </property>
      <property name="bottomMargin">
       <number>0</number>
@@ -138,14 +138,14 @@
        </property>
        <property name="minimumSize">
         <size>
-         <width>232</width>
-         <height>60</height>
+         <width>110</width>
+         <height>40</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>232</width>
-         <height>60</height>
+         <width>110</width>
+         <height>40</height>
         </size>
        </property>
        <property name="text">
@@ -157,6 +157,9 @@
       <spacer name="horizontalSpacer_2">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
        </property>
        <property name="sizeHint" stdset="0">
         <size>
@@ -176,14 +179,14 @@
        </property>
        <property name="minimumSize">
         <size>
-         <width>232</width>
-         <height>60</height>
+         <width>110</width>
+         <height>40</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>232</width>
-         <height>60</height>
+         <width>110</width>
+         <height>40</height>
         </size>
        </property>
        <property name="text">

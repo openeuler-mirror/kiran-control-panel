@@ -7,7 +7,7 @@
         <file>images/tips-suc.svg</file>
         <file>images/tips-info.svg</file>
         <file>images/tips-warning.svg</file>
-
+        <file>images/selected.png</file>
     </qresource>
 
     <qresource prefix="/kcp-account">
