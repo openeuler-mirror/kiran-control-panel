@@ -132,7 +132,7 @@ void KiranAccountManager::initUI()
     contentLayout->addWidget(siderbar);
     siderbar->setObjectName("siderWidget");
     siderbar->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
-    siderbar->setFixedWidth(328);
+    siderbar->setFixedWidth(280);
 
     auto vLayout = new QVBoxLayout(siderbar);
     vLayout->setSpacing(0);
@@ -144,6 +144,7 @@ void KiranAccountManager::initUI()
     m_tabList->setInvertIconPixelsEnable(false);
     m_tabList->setObjectName("tabList");
     m_tabList->setIconSize(QSize(40, 40));
+    m_tabList->setFixedWidth(280);
     vLayout->addWidget(m_tabList);
     initUserList();
 
