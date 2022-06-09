@@ -14,7 +14,8 @@ add_library(${TARGET_NAME} STATIC ${COMMON_WIDGETS_INFO_H_FILES} ${COMMON_WIDGET
 
 target_include_directories(${TARGET_NAME} PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}
-        ${PROJECT_SOURCE_DIR}/include)
+        ${PROJECT_SOURCE_DIR}/include
+        ${KIRAN_STYLE_HELPER_INCLUDE_DIRS})
 
 target_include_directories(${TARGET_NAME} PRIVATE
         ${CMAKE_CURRENT_BINARY_DIR}

@@ -9,14 +9,14 @@
 
 #define DEFAULT_THEME ":/kcp-account/themes/kiran-cpanel-account.qss"
 
-class KcpInterface : public QObject,public KcpPluginInterface
+class KeybindingPlugin : public QObject,public KcpPluginInterface
 {
     Q_OBJECT
     Q_PLUGIN_METADATA(IID KcpPluginInterface_iid)
     Q_INTERFACES(KcpPluginInterface)
 
 public:
-    ~KcpInterface()= default;
+    ~KeybindingPlugin()= default;
     int init() override
     {
         if (!AccountsGlobalInfo::instance()->init())

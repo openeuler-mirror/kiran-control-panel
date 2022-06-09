@@ -2,110 +2,102 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="zh_CN">
 <context>
-    <name>KcpInterface</name>
+    <name>KeycodeTranslator</name>
     <message>
-        <location filename="../src/kcp-interface.cpp" line="65"/>
-        <source>Warning</source>
+        <location filename="../src/keycode-translator.cpp" line="128"/>
+        <source>None</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/kcp-interface.cpp" line="65"/>
-        <source>Load qss failed</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>MainWindow</name>
-    <message>
-        <location filename="../src/main-window.ui" line="14"/>
-        <source>MainWindow</source>
+        <location filename="../src/keycode-translator.cpp" line="132"/>
+        <source>disabled</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>Media Key</name>
     <message>
-        <location filename="../src/keybinding_def.h" line="65"/>
+        <location filename="../src/keycode-translator.cpp" line="57"/>
         <source>Audio Play</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/keybinding_def.h" line="66"/>
+        <location filename="../src/keycode-translator.cpp" line="58"/>
         <source>Search</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/keybinding_def.h" line="67"/>
+        <location filename="../src/keycode-translator.cpp" line="59"/>
         <source>WWW</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/keybinding_def.h" line="68"/>
+        <location filename="../src/keycode-translator.cpp" line="60"/>
         <source>Audio Lower Volume</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/keybinding_def.h" line="69"/>
+        <location filename="../src/keycode-translator.cpp" line="61"/>
         <source>Audio Raise Volume</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/keybinding_def.h" line="70"/>
+        <location filename="../src/keycode-translator.cpp" line="62"/>
         <source>Mic Mute</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/keybinding_def.h" line="71"/>
+        <location filename="../src/keycode-translator.cpp" line="63"/>
         <source>Audio Stop</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/keybinding_def.h" line="72"/>
+        <location filename="../src/keycode-translator.cpp" line="64"/>
         <source>Explorer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/keybinding_def.h" line="73"/>
+        <location filename="../src/keycode-translator.cpp" line="65"/>
         <source>Calculator</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/keybinding_def.h" line="74"/>
+        <location filename="../src/keycode-translator.cpp" line="66"/>
         <source>Audio Mute</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/keybinding_def.h" line="75"/>
+        <location filename="../src/keycode-translator.cpp" line="67"/>
         <source>Audio Pause</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/keybinding_def.h" line="76"/>
+        <location filename="../src/keycode-translator.cpp" line="68"/>
         <source>Audio Prev</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/keybinding_def.h" line="77"/>
+        <location filename="../src/keycode-translator.cpp" line="69"/>
         <source>Audio Media</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/keybinding_def.h" line="78"/>
+        <location filename="../src/keycode-translator.cpp" line="70"/>
         <source>Audio Next</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/keybinding_def.h" line="79"/>
+        <location filename="../src/keycode-translator.cpp" line="71"/>
         <source>Mail</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/keybinding_def.h" line="80"/>
+        <location filename="../src/keycode-translator.cpp" line="72"/>
         <source>Tools</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/keybinding_def.h" line="81"/>
+        <location filename="../src/keycode-translator.cpp" line="73"/>
         <source>Eject</source>
         <translation type="unfinished"></translation>
     </message>
@@ -124,16 +116,16 @@
     </message>
     <message>
         <location filename="../src/shortcut.ui" line="204"/>
-        <location filename="../src/shortcut.cpp" line="163"/>
-        <location filename="../src/shortcut.cpp" line="511"/>
+        <location filename="../src/shortcut.cpp" line="156"/>
+        <location filename="../src/shortcut.cpp" line="548"/>
         <source>Edit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/shortcut.ui" line="334"/>
         <location filename="../src/shortcut.ui" line="524"/>
-        <location filename="../src/shortcut.cpp" line="112"/>
-        <location filename="../src/shortcut.cpp" line="123"/>
+        <location filename="../src/shortcut.cpp" line="102"/>
+        <location filename="../src/shortcut.cpp" line="113"/>
         <source>Add</source>
         <translation type="unfinished"></translation>
     </message>
@@ -188,55 +180,69 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/shortcut.cpp" line="94"/>
+        <location filename="../src/shortcut.cpp" line="84"/>
         <source>Please enter a search keyword...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/shortcut.cpp" line="106"/>
+        <location filename="../src/shortcut.cpp" line="96"/>
         <source>Required</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/shortcut.cpp" line="132"/>
-        <location filename="../src/shortcut.cpp" line="138"/>
+        <location filename="../src/shortcut.cpp" line="122"/>
+        <location filename="../src/shortcut.cpp" line="128"/>
         <source>Please press the new shortcut key</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/shortcut.cpp" line="161"/>
+        <location filename="../src/shortcut.cpp" line="154"/>
         <source>Finished</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/shortcut.cpp" line="231"/>
         <location filename="../src/shortcut.cpp" line="652"/>
         <location filename="../src/shortcut.cpp" line="702"/>
         <location filename="../src/shortcut.cpp" line="723"/>
         <location filename="../src/shortcut.cpp" line="758"/>
         <location filename="../src/shortcut.cpp" line="778"/>
-        <location filename="../src/shortcut.cpp" line="801"/>
-        <location filename="../src/shortcut.cpp" line="819"/>
+        <location filename="../src/shortcut.cpp" line="802"/>
+        <location filename="../src/shortcut.cpp" line="822"/>
         <source>Failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/shortcut.cpp" line="232"/>
+        <location filename="../src/shortcut.cpp" line="297"/>
         <source>Get shortcut failed,error:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/shortcut.cpp" line="363"/>
+        <location filename="../src/shortcut.cpp" line="209"/>
+        <source>failed to load shortcut key data!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/shortcut.cpp" line="251"/>
+        <source>List shortcut failed,error:%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/shortcut.cpp" line="296"/>
+        <source>Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/shortcut.cpp" line="370"/>
         <source>Open File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/shortcut.cpp" line="601"/>
+        <location filename="../src/shortcut.cpp" line="600"/>
         <source>System</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/shortcut.cpp" line="603"/>
+        <location filename="../src/shortcut.cpp" line="602"/>
         <source>Sound</source>
         <translation type="unfinished"></translation>
     </message>
@@ -288,12 +294,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/shortcut.cpp" line="802"/>
+        <location filename="../src/shortcut.cpp" line="803"/>
         <source>Cannot use shortcut &quot;%1&quot;, Because you cannot enter with this key.Please try again using Ctrl, Alt, or Shift at the same time.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/shortcut.cpp" line="820"/>
+        <location filename="../src/shortcut.cpp" line="823"/>
         <source>Shortcut keys %1 are already used in %2,Please try again!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -309,16 +315,6 @@
         <location filename="../src/shortcut-item.ui" line="53"/>
         <location filename="../src/shortcut-item.ui" line="73"/>
         <source>TextLabel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/shortcut-item.cpp" line="58"/>
-        <source>None</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/shortcut-item.cpp" line="62"/>
-        <source>disabled</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

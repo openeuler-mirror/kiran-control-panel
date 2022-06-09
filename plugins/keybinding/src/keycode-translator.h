@@ -1,31 +1,18 @@
-/**
- * Copyright (c) 2020 ~ 2021 KylinSec Co., Ltd.
- * kiran-cpanel-keybinding is licensed under Mulan PSL v2.
- * You can use this software according to the terms and conditions of the Mulan PSL v2.
- * You may obtain a copy of Mulan PSL v2 at:
- *          http://license.coscl.org.cn/MulanPSL2
- * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
- * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
- * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
- * See the Mulan PSL v2 for more details.
- *
- * Author:     yuanxing <yuanxing@kylinos.com.cn>
- */
+//
+// Created by liuxinhao on 2022/6/8.
+//
 
-#ifndef KEYMAP_H
-#define KEYMAP_H
+#ifndef KIRAN_CONTROL_PANEL_KEYCODE_TRANSLATOR_H
+#define KIRAN_CONTROL_PANEL_KEYCODE_TRANSLATOR_H
 
-#include <QMetaEnum>
 #include <QObject>
-class KeyMap : public QObject
+
+class KeycodeTranslator : public  QObject
 {
     Q_OBJECT
 public:
-    explicit KeyMap(QObject *parent = nullptr);
-
-    QString keycodeToString(int keycode);
-
-    enum Keys
+    //TODO:该处的枚举值应和Qt::Key对应，不应直接赋值
+    enum Key
     {
         Escape = 0x01000000,
         Tab = 0x01000001,
@@ -170,10 +157,16 @@ public:
         Tools = 0x010000f1,
         Audio_Mic_Mute = 0x01000113,
     };
-    Q_ENUM(Keys)
+    Q_ENUM(Key)
 
 private:
-    QMetaEnum m_keyEnum;
+    KeycodeTranslator(QObject* parent);
+
+public:
+    static QString keycode2ReadableString(const QList<int>& keycodes);
+    static QString backendKeyString2Readable(const QString& keyString);
+    static QString readableKeyString2Backend(const QString& keyString);
 };
 
-#endif  // KEYMAP_H
+
+#endif //KIRAN_CONTROL_PANEL_KEYCODE_TRANSLATOR_H

@@ -8,6 +8,9 @@
         <file>images/tips-info.svg</file>
         <file>images/tips-warning.svg</file>
         <file>images/selected.png</file>
+        <file>images/trash.svg</file>
+        <file>images/trash-hover.svg</file>
+        <file>images/trash-pressed.svg</file>
     </qresource>
 
     <qresource prefix="/kcp-account">

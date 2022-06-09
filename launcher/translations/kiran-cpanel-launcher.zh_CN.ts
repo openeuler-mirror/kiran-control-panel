@@ -454,35 +454,30 @@
     <message>
         <location filename="../../plugins/timedate/src/pages/date-time-settings/date-time-settings.ui" line="14"/>
         <location filename="../../build/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_date-time-settings.h" line="148"/>
-        <location filename="../../cmake-build-debug/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_date-time-settings.h" line="148"/>
         <source>DateTimeSettings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../plugins/timedate/src/pages/date-time-settings/date-time-settings.ui" line="46"/>
         <location filename="../../build/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_date-time-settings.h" line="149"/>
-        <location filename="../../cmake-build-debug/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_date-time-settings.h" line="149"/>
         <source>Select Time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../plugins/timedate/src/pages/date-time-settings/date-time-settings.ui" line="88"/>
         <location filename="../../build/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_date-time-settings.h" line="150"/>
-        <location filename="../../cmake-build-debug/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_date-time-settings.h" line="150"/>
         <source>Select Date</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../plugins/timedate/src/pages/date-time-settings/date-time-settings.ui" line="152"/>
         <location filename="../../build/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_date-time-settings.h" line="151"/>
-        <location filename="../../cmake-build-debug/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_date-time-settings.h" line="151"/>
         <source>save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../plugins/timedate/src/pages/date-time-settings/date-time-settings.ui" line="193"/>
         <location filename="../../build/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_date-time-settings.h" line="152"/>
-        <location filename="../../cmake-build-debug/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_date-time-settings.h" line="152"/>
         <source>reset</source>
         <translation type="unfinished"></translation>
     </message>
@@ -500,35 +495,30 @@
     <message>
         <location filename="../../plugins/timedate/src/pages/display-format-settings/display-format-settings.ui" line="14"/>
         <location filename="../../build/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_display-format-settings.h" line="128"/>
-        <location filename="../../cmake-build-debug/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_display-format-settings.h" line="128"/>
         <source>DisplayFormatSettings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../plugins/timedate/src/pages/display-format-settings/display-format-settings.ui" line="46"/>
         <location filename="../../build/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_display-format-settings.h" line="129"/>
-        <location filename="../../cmake-build-debug/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_display-format-settings.h" line="129"/>
         <source>Long date display format</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../plugins/timedate/src/pages/display-format-settings/display-format-settings.ui" line="69"/>
         <location filename="../../build/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_display-format-settings.h" line="130"/>
-        <location filename="../../cmake-build-debug/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_display-format-settings.h" line="130"/>
         <source>Short date display format</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../plugins/timedate/src/pages/display-format-settings/display-format-settings.ui" line="89"/>
         <location filename="../../build/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_display-format-settings.h" line="131"/>
-        <location filename="../../cmake-build-debug/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_display-format-settings.h" line="131"/>
         <source>Time format</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../plugins/timedate/src/pages/display-format-settings/display-format-settings.ui" line="112"/>
         <location filename="../../build/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_display-format-settings.h" line="132"/>
-        <location filename="../../cmake-build-debug/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_display-format-settings.h" line="132"/>
         <source>Show time witch seconds</source>
         <translation type="unfinished"></translation>
     </message>
@@ -964,32 +954,26 @@
 <context>
     <name>KcpInterface</name>
     <message>
-        <location filename="../../plugins/keybinding/src/kcp-interface.cpp" line="65"/>
         <source>Warning</source>
-        <translation type="unfinished">警告</translation>
-    </message>
-    <message>
-        <location filename="../../plugins/keybinding/src/kcp-interface.cpp" line="65"/>
-        <source>Load qss failed</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">警告</translation>
     </message>
 </context>
 <context>
     <name>KiranAccountManager</name>
     <message>
         <location filename="../../plugins/account/src/kiran-account-manager.cpp" line="94"/>
-        <location filename="../../plugins/account/src/kiran-account-manager.cpp" line="416"/>
+        <location filename="../../plugins/account/src/kiran-account-manager.cpp" line="417"/>
         <source>disable</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../plugins/account/src/kiran-account-manager.cpp" line="94"/>
-        <location filename="../../plugins/account/src/kiran-account-manager.cpp" line="416"/>
+        <location filename="../../plugins/account/src/kiran-account-manager.cpp" line="417"/>
         <source>enable</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../plugins/account/src/kiran-account-manager.cpp" line="231"/>
+        <location filename="../../plugins/account/src/kiran-account-manager.cpp" line="232"/>
         <source>Create new user</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1041,7 +1025,6 @@
     <message>
         <location filename="../../plugins/timedate/src/widgets/kiran-date-picker-widget.ui" line="14"/>
         <location filename="../../build/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_kiran-date-picker-widget.h" line="103"/>
-        <location filename="../../cmake-build-debug/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_kiran-date-picker-widget.h" line="103"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1212,8 +1195,7 @@
     <name>KiranModuleWidget</name>
     <message>
         <location filename="../../lib/common-widgets/kiran-module-widget/kiran-module-widget.ui" line="14"/>
-        <location filename="../../build/lib/common-widgets/common-widgets_autogen/include/ui_kiran-module-widget.h" line="101"/>
-        <location filename="../../cmake-build-debug/lib/common-widgets/common-widgets_autogen/include/ui_kiran-module-widget.h" line="101"/>
+        <location filename="../../build/lib/common-widgets/common-widgets_autogen/include/ui_kiran-module-widget.h" line="108"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1235,15 +1217,13 @@
     <name>KiranTimeDateWidget</name>
     <message>
         <location filename="../../plugins/timedate/src/kiran-timedate-widget.ui" line="14"/>
-        <location filename="../../build/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_kiran-timedate-widget.h" line="170"/>
-        <location filename="../../cmake-build-debug/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_kiran-timedate-widget.h" line="172"/>
+        <location filename="../../build/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_kiran-timedate-widget.h" line="175"/>
         <source>KiranTimeDateWidget</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../plugins/timedate/src/kiran-timedate-widget.ui" line="155"/>
-        <location filename="../../build/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_kiran-timedate-widget.h" line="173"/>
-        <location filename="../../cmake-build-debug/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_kiran-timedate-widget.h" line="175"/>
+        <location filename="../../plugins/timedate/src/kiran-timedate-widget.ui" line="171"/>
+        <location filename="../../build/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_kiran-timedate-widget.h" line="178"/>
         <source>Automatic synchronizetion</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1273,7 +1253,6 @@
     <message>
         <location filename="../../plugins/timedate/src/widgets/kiran-time-picker-widget.ui" line="14"/>
         <location filename="../../build/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_kiran-time-picker-widget.h" line="135"/>
-        <location filename="../../cmake-build-debug/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_kiran-time-picker-widget.h" line="135"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1283,7 +1262,6 @@
     <message>
         <location filename="../../plugins/timedate/src/timezone/kiran-time-zone.ui" line="23"/>
         <location filename="../../build/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_kiran-time-zone.h" line="121"/>
-        <location filename="../../cmake-build-debug/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_kiran-time-zone.h" line="121"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1298,7 +1276,6 @@
     <message>
         <location filename="../../plugins/timedate/src/widgets/kiran-time-zone-item.ui" line="14"/>
         <location filename="../../build/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_kiran-time-zone-item.h" line="63"/>
-        <location filename="../../cmake-build-debug/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_kiran-time-zone-item.h" line="63"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1313,7 +1290,6 @@
     <message>
         <location filename="../../plugins/timedate/src/timezone/kiran-time-zone-list.ui" line="20"/>
         <location filename="../../build/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_kiran-time-zone-list.h" line="71"/>
-        <location filename="../../cmake-build-debug/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_kiran-time-zone-list.h" line="71"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1501,7 +1477,6 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../../plugins/keybinding/src/main-window.ui" line="14"/>
         <location filename="../../build/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_main-window.h" line="57"/>
         <source>MainWindow</source>
         <translation type="unfinished"></translation>
@@ -1525,87 +1500,87 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>Media Key</name>
     <message>
-        <location filename="../../plugins/keybinding/src/keybinding_def.h" line="65"/>
+        <location filename="../../plugins/keybinding/src/keybinding_def.h" line="67"/>
         <source>Audio Play</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../plugins/keybinding/src/keybinding_def.h" line="66"/>
+        <location filename="../../plugins/keybinding/src/keybinding_def.h" line="68"/>
         <source>Search</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../plugins/keybinding/src/keybinding_def.h" line="67"/>
+        <location filename="../../plugins/keybinding/src/keybinding_def.h" line="69"/>
         <source>WWW</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../plugins/keybinding/src/keybinding_def.h" line="68"/>
+        <location filename="../../plugins/keybinding/src/keybinding_def.h" line="70"/>
         <source>Audio Lower Volume</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../plugins/keybinding/src/keybinding_def.h" line="69"/>
+        <location filename="../../plugins/keybinding/src/keybinding_def.h" line="71"/>
         <source>Audio Raise Volume</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../plugins/keybinding/src/keybinding_def.h" line="70"/>
+        <location filename="../../plugins/keybinding/src/keybinding_def.h" line="72"/>
         <source>Mic Mute</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../plugins/keybinding/src/keybinding_def.h" line="71"/>
+        <location filename="../../plugins/keybinding/src/keybinding_def.h" line="73"/>
         <source>Audio Stop</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../plugins/keybinding/src/keybinding_def.h" line="72"/>
+        <location filename="../../plugins/keybinding/src/keybinding_def.h" line="74"/>
         <source>Explorer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../plugins/keybinding/src/keybinding_def.h" line="73"/>
+        <location filename="../../plugins/keybinding/src/keybinding_def.h" line="75"/>
         <source>Calculator</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../plugins/keybinding/src/keybinding_def.h" line="74"/>
+        <location filename="../../plugins/keybinding/src/keybinding_def.h" line="76"/>
         <source>Audio Mute</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../plugins/keybinding/src/keybinding_def.h" line="75"/>
+        <location filename="../../plugins/keybinding/src/keybinding_def.h" line="77"/>
         <source>Audio Pause</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../plugins/keybinding/src/keybinding_def.h" line="76"/>
+        <location filename="../../plugins/keybinding/src/keybinding_def.h" line="78"/>
         <source>Audio Prev</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../plugins/keybinding/src/keybinding_def.h" line="77"/>
+        <location filename="../../plugins/keybinding/src/keybinding_def.h" line="79"/>
         <source>Audio Media</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../plugins/keybinding/src/keybinding_def.h" line="78"/>
+        <location filename="../../plugins/keybinding/src/keybinding_def.h" line="80"/>
         <source>Audio Next</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../plugins/keybinding/src/keybinding_def.h" line="79"/>
+        <location filename="../../plugins/keybinding/src/keybinding_def.h" line="81"/>
         <source>Mail</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../plugins/keybinding/src/keybinding_def.h" line="80"/>
+        <location filename="../../plugins/keybinding/src/keybinding_def.h" line="82"/>
         <source>Tools</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../plugins/keybinding/src/keybinding_def.h" line="81"/>
+        <location filename="../../plugins/keybinding/src/keybinding_def.h" line="83"/>
         <source>Eject</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1671,7 +1646,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../../src/panel-widget.ui" line="14"/>
         <location filename="../../build/kiran-control-panel_autogen/include/ui_panel-widget.h" line="49"/>
-        <location filename="../../cmake-build-debug/kiran-control-panel_autogen/include/ui_panel-widget.h" line="49"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1956,20 +1930,23 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../../plugins/keybinding/src/shortcut.ui" line="14"/>
         <location filename="../../build/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="460"/>
+        <location filename="../../cmake-build-debug/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="460"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../plugins/keybinding/src/shortcut.ui" line="172"/>
         <location filename="../../build/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="462"/>
+        <location filename="../../cmake-build-debug/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="462"/>
         <source>Custom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../plugins/keybinding/src/shortcut.ui" line="204"/>
         <location filename="../../build/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="463"/>
-        <location filename="../../plugins/keybinding/src/shortcut.cpp" line="163"/>
-        <location filename="../../plugins/keybinding/src/shortcut.cpp" line="511"/>
+        <location filename="../../cmake-build-debug/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="463"/>
+        <location filename="../../plugins/keybinding/src/shortcut.cpp" line="162"/>
+        <location filename="../../plugins/keybinding/src/shortcut.cpp" line="613"/>
         <source>Edit</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1978,178 +1955,204 @@ p, li { white-space: pre-wrap; }
         <location filename="../../plugins/keybinding/src/shortcut.ui" line="524"/>
         <location filename="../../build/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="464"/>
         <location filename="../../build/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="469"/>
-        <location filename="../../plugins/keybinding/src/shortcut.cpp" line="112"/>
-        <location filename="../../plugins/keybinding/src/shortcut.cpp" line="123"/>
+        <location filename="../../cmake-build-debug/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="464"/>
+        <location filename="../../cmake-build-debug/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="469"/>
+        <location filename="../../plugins/keybinding/src/shortcut.cpp" line="108"/>
+        <location filename="../../plugins/keybinding/src/shortcut.cpp" line="119"/>
         <source>Add</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../plugins/keybinding/src/shortcut.ui" line="366"/>
         <location filename="../../build/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="465"/>
+        <location filename="../../cmake-build-debug/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="465"/>
         <source>Reset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../plugins/keybinding/src/shortcut.ui" line="412"/>
         <location filename="../../build/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="466"/>
+        <location filename="../../cmake-build-debug/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="466"/>
         <source>Custom Shortcut Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../plugins/keybinding/src/shortcut.ui" line="442"/>
         <location filename="../../build/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="467"/>
+        <location filename="../../cmake-build-debug/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="467"/>
         <source>Custom Shortcut application</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../plugins/keybinding/src/shortcut.ui" line="472"/>
         <location filename="../../build/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="468"/>
+        <location filename="../../cmake-build-debug/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="468"/>
         <source>Custom Shortcut Key</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../plugins/keybinding/src/shortcut.ui" line="556"/>
         <location filename="../../build/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="470"/>
+        <location filename="../../cmake-build-debug/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="470"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../plugins/keybinding/src/shortcut.ui" line="602"/>
         <location filename="../../build/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="471"/>
+        <location filename="../../cmake-build-debug/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="471"/>
         <source>Shortcut Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../plugins/keybinding/src/shortcut.ui" line="645"/>
         <location filename="../../build/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="472"/>
+        <location filename="../../cmake-build-debug/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="472"/>
         <source>Shortcut application</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../plugins/keybinding/src/shortcut.ui" line="676"/>
         <location filename="../../build/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="473"/>
+        <location filename="../../cmake-build-debug/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="473"/>
         <source>Shortcut key</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../plugins/keybinding/src/shortcut.ui" line="728"/>
         <location filename="../../build/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="474"/>
+        <location filename="../../cmake-build-debug/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="474"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../plugins/keybinding/src/shortcut.ui" line="760"/>
         <location filename="../../build/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="475"/>
+        <location filename="../../cmake-build-debug/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="475"/>
         <source>return</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../plugins/keybinding/src/shortcut.cpp" line="94"/>
+        <location filename="../../plugins/keybinding/src/shortcut.cpp" line="90"/>
         <source>Please enter a search keyword...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../plugins/keybinding/src/shortcut.cpp" line="106"/>
+        <location filename="../../plugins/keybinding/src/shortcut.cpp" line="102"/>
         <source>Required</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../plugins/keybinding/src/shortcut.cpp" line="132"/>
-        <location filename="../../plugins/keybinding/src/shortcut.cpp" line="138"/>
+        <location filename="../../plugins/keybinding/src/shortcut.cpp" line="128"/>
+        <location filename="../../plugins/keybinding/src/shortcut.cpp" line="134"/>
         <source>Please press the new shortcut key</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../plugins/keybinding/src/shortcut.cpp" line="161"/>
+        <location filename="../../plugins/keybinding/src/shortcut.cpp" line="160"/>
         <source>Finished</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../plugins/keybinding/src/shortcut.cpp" line="231"/>
-        <location filename="../../plugins/keybinding/src/shortcut.cpp" line="652"/>
-        <location filename="../../plugins/keybinding/src/shortcut.cpp" line="702"/>
-        <location filename="../../plugins/keybinding/src/shortcut.cpp" line="723"/>
-        <location filename="../../plugins/keybinding/src/shortcut.cpp" line="758"/>
-        <location filename="../../plugins/keybinding/src/shortcut.cpp" line="778"/>
-        <location filename="../../plugins/keybinding/src/shortcut.cpp" line="801"/>
-        <location filename="../../plugins/keybinding/src/shortcut.cpp" line="819"/>
+        <location filename="../../plugins/keybinding/src/shortcut.cpp" line="709"/>
+        <location filename="../../plugins/keybinding/src/shortcut.cpp" line="759"/>
+        <location filename="../../plugins/keybinding/src/shortcut.cpp" line="780"/>
+        <location filename="../../plugins/keybinding/src/shortcut.cpp" line="815"/>
+        <location filename="../../plugins/keybinding/src/shortcut.cpp" line="835"/>
+        <location filename="../../plugins/keybinding/src/shortcut.cpp" line="858"/>
+        <location filename="../../plugins/keybinding/src/shortcut.cpp" line="876"/>
         <source>Failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../plugins/keybinding/src/shortcut.cpp" line="232"/>
+        <location filename="../../plugins/keybinding/src/shortcut.cpp" line="300"/>
         <source>Get shortcut failed,error:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../plugins/keybinding/src/shortcut.cpp" line="363"/>
+        <location filename="../../plugins/keybinding/src/shortcut.cpp" line="215"/>
+        <source>failed to load shortcut key data!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../plugins/keybinding/src/shortcut.cpp" line="257"/>
+        <source>List shortcut failed,error:%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../plugins/keybinding/src/shortcut.cpp" line="299"/>
+        <source>Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../plugins/keybinding/src/shortcut.cpp" line="439"/>
         <source>Open File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../plugins/keybinding/src/shortcut.cpp" line="601"/>
+        <location filename="../../plugins/keybinding/src/shortcut.cpp" line="658"/>
         <source>System</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../plugins/keybinding/src/shortcut.cpp" line="603"/>
+        <location filename="../../plugins/keybinding/src/shortcut.cpp" line="660"/>
         <source>Sound</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../plugins/keybinding/src/shortcut.cpp" line="653"/>
+        <location filename="../../plugins/keybinding/src/shortcut.cpp" line="710"/>
         <source>Delete shortcut failed,error:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../plugins/keybinding/src/shortcut.cpp" line="666"/>
-        <location filename="../../plugins/keybinding/src/shortcut.cpp" line="741"/>
+        <location filename="../../plugins/keybinding/src/shortcut.cpp" line="723"/>
+        <location filename="../../plugins/keybinding/src/shortcut.cpp" line="798"/>
         <source>Warning</source>
         <translation type="unfinished">警告</translation>
     </message>
     <message>
-        <location filename="../../plugins/keybinding/src/shortcut.cpp" line="667"/>
-        <location filename="../../plugins/keybinding/src/shortcut.cpp" line="742"/>
+        <location filename="../../plugins/keybinding/src/shortcut.cpp" line="724"/>
+        <location filename="../../plugins/keybinding/src/shortcut.cpp" line="799"/>
         <source>Please complete the shortcut information!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../plugins/keybinding/src/shortcut.cpp" line="676"/>
+        <location filename="../../plugins/keybinding/src/shortcut.cpp" line="733"/>
         <source>Set shortcut</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../plugins/keybinding/src/shortcut.cpp" line="677"/>
+        <location filename="../../plugins/keybinding/src/shortcut.cpp" line="734"/>
         <source>Are you sure you want to disable this shortcut?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../plugins/keybinding/src/shortcut.cpp" line="703"/>
+        <location filename="../../plugins/keybinding/src/shortcut.cpp" line="760"/>
         <source>Modify system shortcut failed,error:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../plugins/keybinding/src/shortcut.cpp" line="724"/>
+        <location filename="../../plugins/keybinding/src/shortcut.cpp" line="781"/>
         <source>Modify custom shortcut failed,error:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../plugins/keybinding/src/shortcut.cpp" line="759"/>
+        <location filename="../../plugins/keybinding/src/shortcut.cpp" line="816"/>
         <source>Add custom shortcut failed,error:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../plugins/keybinding/src/shortcut.cpp" line="779"/>
+        <location filename="../../plugins/keybinding/src/shortcut.cpp" line="836"/>
         <source>Reset shortcut failed,error:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../plugins/keybinding/src/shortcut.cpp" line="802"/>
+        <location filename="../../plugins/keybinding/src/shortcut.cpp" line="859"/>
         <source>Cannot use shortcut &quot;%1&quot;, Because you cannot enter with this key.Please try again using Ctrl, Alt, or Shift at the same time.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../plugins/keybinding/src/shortcut.cpp" line="820"/>
+        <location filename="../../plugins/keybinding/src/shortcut.cpp" line="877"/>
         <source>Shortcut keys %1 are already used in %2,Please try again!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2159,6 +2162,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../../plugins/keybinding/src/shortcut-item.ui" line="32"/>
         <location filename="../../build/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut-item.h" line="76"/>
+        <location filename="../../cmake-build-debug/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut-item.h" line="76"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2167,16 +2171,18 @@ p, li { white-space: pre-wrap; }
         <location filename="../../plugins/keybinding/src/shortcut-item.ui" line="73"/>
         <location filename="../../build/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut-item.h" line="77"/>
         <location filename="../../build/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut-item.h" line="78"/>
+        <location filename="../../cmake-build-debug/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut-item.h" line="77"/>
+        <location filename="../../cmake-build-debug/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut-item.h" line="78"/>
         <source>TextLabel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../plugins/keybinding/src/shortcut-item.cpp" line="58"/>
+        <location filename="../../plugins/keybinding/src/shortcut-item.cpp" line="60"/>
         <source>None</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../plugins/keybinding/src/shortcut-item.cpp" line="62"/>
+        <location filename="../../plugins/keybinding/src/shortcut-item.cpp" line="64"/>
         <source>disabled</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2365,28 +2371,24 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../../plugins/timedate/src/pages/timezone-settings/time-zone-settings.ui" line="14"/>
         <location filename="../../build/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_time-zone-settings.h" line="125"/>
-        <location filename="../../cmake-build-debug/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_time-zone-settings.h" line="125"/>
         <source>TimezoneSettings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../plugins/timedate/src/pages/timezone-settings/time-zone-settings.ui" line="52"/>
         <location filename="../../build/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_time-zone-settings.h" line="126"/>
-        <location filename="../../cmake-build-debug/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_time-zone-settings.h" line="126"/>
         <source>Select Time Zone</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../plugins/timedate/src/pages/timezone-settings/time-zone-settings.ui" line="116"/>
         <location filename="../../build/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_time-zone-settings.h" line="127"/>
-        <location filename="../../cmake-build-debug/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_time-zone-settings.h" line="127"/>
         <source>save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../plugins/timedate/src/pages/timezone-settings/time-zone-settings.ui" line="154"/>
+        <location filename="../../plugins/timedate/src/pages/timezone-settings/time-zone-settings.ui" line="157"/>
         <location filename="../../build/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_time-zone-settings.h" line="128"/>
-        <location filename="../../cmake-build-debug/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_time-zone-settings.h" line="128"/>
         <source>reset</source>
         <translation type="unfinished"></translation>
     </message>
