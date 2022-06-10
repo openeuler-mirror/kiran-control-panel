@@ -46,12 +46,11 @@ public slots:
     virtual void handleActiveConnectionAdded(const QString &activepath);
     virtual void handleActiveConnectionRemoved(const QString &activepath);
 
-    virtual void handleDeviceAdded(const QString &devicePath);
-    virtual void handleDeviceRemoved(const QString &devicePath);
-
     virtual void handleActiveConnectionStateChanged(ActiveConnection::State state);
     virtual void handleStateActivated(const QString &activatedPath);
     virtual void handleStateDeactivated();
+
+    void distributeNotifeir();
 
 protected:
     QList<Device::Ptr> m_deviceList;

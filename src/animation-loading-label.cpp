@@ -14,50 +14,22 @@
 
 #include "animation-loading-label.h"
 #include <QPainter>
-
+#include <QPainterPath>
 AnimationLoadingLabel::AnimationLoadingLabel(QWidget *parent)
     : QLabel(parent),
-      m_dashOffset(0),
-      m_dashLength(89),
       m_angle(0),
       m_isLoading(false)
 {
-    setSize(16);
+    setRadiusSize(8);
+    setLineWidth(2);
     init();
 }
 
 void AnimationLoadingLabel::init()
 {
-    this->setFixedSize(32,32);
-
+    this->setFixedSize(16, 16);
     m_group = new QParallelAnimationGroup(this);
     m_group->setLoopCount(-1);
-
-    m_animation = new QPropertyAnimation(this);
-    m_animation->setPropertyName("dashLength");
-    m_animation->setTargetObject(this);
-    m_animation->setEasingCurve(QEasingCurve::InOutQuad);
-    m_animation->setStartValue(0.1);
-    m_animation->setKeyValueAt(0.15, 0.2);
-    m_animation->setKeyValueAt(0.6, 20);
-    m_animation->setKeyValueAt(0.7, 20);
-    m_animation->setEndValue(20);
-    m_animation->setDuration(2050);
-
-    m_group->addAnimation(m_animation);
-
-    m_animation = new QPropertyAnimation(this);
-    m_animation->setPropertyName("dashOffset");
-    m_animation->setTargetObject(this);
-    m_animation->setEasingCurve(QEasingCurve::InOutSine);
-    m_animation->setStartValue(0);
-    m_animation->setKeyValueAt(0.15, 0);
-    m_animation->setKeyValueAt(0.6, -7);
-    m_animation->setKeyValueAt(0.7, -7);
-    m_animation->setEndValue(-25);
-    m_animation->setDuration(2050);
-
-    m_group->addAnimation(m_animation);
 
     m_animation = new QPropertyAnimation(this);
     m_animation->setPropertyName("angle");
@@ -77,38 +49,43 @@ void AnimationLoadingLabel::paintEvent(QPaintEvent *event)
 
         QPainter painter(this);
         painter.setRenderHint(QPainter::Antialiasing);
-
         painter.translate(width() / 2, height() / 2);
         painter.rotate(m_angle);
 
-        QPen pen;
-        pen.setCapStyle(Qt::RoundCap);
-        pen.setWidthF(6);
-        pen.setColor(QColor("#393939"));
+        QConicalGradient gra(QPoint(0, 0), 0);
+        gra.setColorAt(0, QColor("#3BB6FE"));
+        gra.setColorAt(1, QColor("#FFFFFF"));
+        QBrush brush(gra);
 
-        QVector<qreal> pattern;
-        pattern << m_dashLength * m_size / 50 << 30 * m_size / 50;
+        QRect rect(-m_radiusSize, -m_radiusSize, m_radiusSize * 2, m_radiusSize * 2);
+        QPainterPath path;
+        path.arcTo(rect, 0, 270);
 
-        pen.setDashOffset(m_dashOffset * m_size / 50);
-        pen.setDashPattern(pattern);
+        QPainterPath subPath;
+        subPath.addEllipse(rect.adjusted(m_lineWidth, m_lineWidth, -m_lineWidth, -m_lineWidth));
 
-        painter.setPen(pen);
-
-        painter.drawEllipse(QPoint(0, 0), m_size / 2, m_size / 2);
+        path = path - subPath;
+        painter.setBrush(brush);
+        painter.setPen(Qt::NoPen);
+        painter.drawPath(path);
     }
     else
         QLabel::paintEvent(event);
 }
 
-void AnimationLoadingLabel::setSize(int size)
+void AnimationLoadingLabel::setRadiusSize(int size)
 {
-    m_size = size;
+    m_radiusSize = size;
+}
+void AnimationLoadingLabel::setLineWidth(int size)
+{
+    m_lineWidth = size;
 }
 
 void AnimationLoadingLabel::setLoadingStatus(bool isLoading)
 {
     m_isLoading = isLoading;
-    if(isLoading)
+    if (isLoading)
         m_group->start();
     else
         m_group->stop();

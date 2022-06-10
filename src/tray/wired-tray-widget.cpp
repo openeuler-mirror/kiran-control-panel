@@ -15,7 +15,7 @@
 #include "wired-tray-widget.h"
 #include <qt5-log-i.h>
 #include <NetworkManagerQt/Settings>
-#include "connection-lists.h"
+
 WiredTrayWidget::WiredTrayWidget(const QString &devicePath, QWidget *parent) : ConnectionTray(parent)
 {
     m_devicePath = devicePath;
@@ -28,6 +28,8 @@ WiredTrayWidget::~WiredTrayWidget()
 
 void WiredTrayWidget::init()
 {
+    setFixedWidth(240);
+    setContentsMargins(0,0,0,0);
     m_verticalLayout = new QVBoxLayout(this);
     m_verticalLayout->setSpacing(6);
     m_verticalLayout->setContentsMargins(0, 0, 0, 0);
@@ -41,9 +43,6 @@ void WiredTrayWidget::init()
 
 void WiredTrayWidget::initConnection()
 {
-    connect(m_connectionLists, &ConnectionLists::requestActivateCurrentItemConnection,
-            this, &WiredTrayWidget::handleRequestActivateConnection);
-
     connect(m_connectionLists, &ConnectionLists::connectionUpdated, [=](const QString &path)
     {
         m_connectionLists->removeConnectionFromLists(path);
@@ -51,13 +50,8 @@ void WiredTrayWidget::initConnection()
         m_connectionLists->addConnectionToLists(updateConnection,"");
     });
 
-    connect(m_connectionLists.data(), &ConnectionLists::trayRequestDisconnect, [=](const QString &activatedConnectionPath)
-    {
-        QDBusPendingReply<> reply = NetworkManager::deactivateConnection(activatedConnectionPath);
-        reply.waitForFinished();
-        if (reply.isError())
-            KLOG_INFO() << "Disconnect failed:" << reply.error();
-    });
+    connect(m_connectionLists,&ConnectionLists::trayRequestConnect,this,&WiredTrayWidget::handleRequestActivateConnection);
+    connect(m_connectionLists, &ConnectionLists::trayRequestDisconnect, this,&WiredTrayWidget::handleRequestDisconnect);
 }
 
 void WiredTrayWidget::initUI()
@@ -71,11 +65,14 @@ void WiredTrayWidget::showWiredConnectionLists()
     m_connectionLists->setItemWidgetType(ITEM_WIDGET_TYPE_TRAY);
     m_connectionLists->showConnectionLists(ConnectionSettings::Wired);
     m_connectionLists->showWiredStatusIcon();
+    m_connectionLists->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
 }
 
-void WiredTrayWidget::handleRequestActivateConnection(const QString &connectionPath, const QString &connectionParameter)
+void WiredTrayWidget::handleRequestActivateConnection(const ConnectionInfo &connectionInfo)
 {
     QString devicePath = "";
+    QString connectionParameter = "";
+    QString connectionPath = connectionInfo.connectionPath;
 
     // m_devicePath 可以未空，即不指定设备
     QDBusPendingReply<QDBusObjectPath> reply =
@@ -113,28 +110,25 @@ void WiredTrayWidget::handleNotifierConnectionRemoved(const QString &path)
 void WiredTrayWidget::handleStateDeactivated()
 {
     m_connectionLists->handleActiveStateDeactivated();
+    m_connectionLists->enableConnectButtonOfActivatingItem(true);
 }
 
 void WiredTrayWidget::handleStateActivated(const QString &activatedPath)
 {
-
-    m_connectionLists->connectionStateNotify(ActiveConnection::Activated);
     ActiveConnection::Ptr activeConnection = findActiveConnection(activatedPath);
     QStringList deviceList =  activeConnection->devices();
-    if(deviceList.contains(m_devicePath))
+    if(deviceList.contains(m_devicePath) && (activeConnection->type() == ConnectionSettings::Wired))
     {
+        m_connectionLists->connectionStateNotify(ActiveConnection::Activated);
+        KLOG_DEBUG() << "Wired   ::connectionStateNotify";
         m_connectionLists->updateActivatedConnectionInfo(activatedPath);
         m_connectionLists->update();
     }
-
-//    m_connectionLists->connectionStateNotify(ActiveConnection::Activated);
-//    m_connectionLists->updateActivatedConnectionInfo(activatedPath);
-//    m_connectionLists->update();
-
 }
 
 void WiredTrayWidget::handleActiveConnectionAdded(const QString &path)
 {
+    KLOG_DEBUG() << "handleActiveConnectionAdded path:" << path;
     ActiveConnection::Ptr activatedConnection = findActiveConnection(path);
     QStringList deviceList = activatedConnection->devices();
     if (activatedConnection->type() == ConnectionSettings::ConnectionType::Wired && deviceList.contains(m_devicePath))
@@ -144,10 +138,19 @@ void WiredTrayWidget::handleActiveConnectionAdded(const QString &path)
         connect(activatedConnection.data(), &ActiveConnection::stateChanged, this, &WiredTrayWidget::handleActiveConnectionStateChanged);
         // 加载等待动画
         m_connectionLists->connectionItemLoadingAnimation();
+        m_connectionLists->enableConnectButtonOfActivatingItem(false);
     }
 }
 
 void WiredTrayWidget::handleActiveConnectionRemoved(const QString &path)
 {
 
+}
+
+void WiredTrayWidget::handleRequestDisconnect(const QString &activatedConnectionPath)
+{
+    QDBusPendingReply<> reply = NetworkManager::deactivateConnection(activatedConnectionPath);
+    reply.waitForFinished();
+    if (reply.isError())
+        KLOG_INFO() << "Disconnect failed:" << reply.error();
 }

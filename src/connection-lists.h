@@ -28,6 +28,12 @@
 
 using namespace NetworkManager;
 
+enum ItemWidgetType
+{
+    ITEM_WIDGET_TYPE_TRAY,
+    ITEM_WIDGET_TYPE_PLUGIN
+};
+
 struct WirelessConnectionInfo
 {
     int signalStrength;
@@ -61,6 +67,7 @@ public:
 
     void setDevicePath(const QString &devicePath);
     void setItemWidgetType(ItemWidgetType itemType);
+
     // 在kf5-NetworkManager-qt中Connection是指具体的网络配置，不是指已经存在的网络
     void showConnectionLists(ConnectionSettings::ConnectionType type);
     void addConnectionToLists(Connection::Ptr ptr, const QString &devicePath);
@@ -80,10 +87,18 @@ public:
     void findActiveItemBySsid(const QString &ssid);
     int findItemBySsid(const QString &ssid);
 
+    void enableConnectButtonOfActivatingItem(bool enable);
+
 public slots:
-    void handleActiveConnectionStateChanged(ActiveConnection::State state);
+    void handleActiveStateChanged(ActiveConnection::State state);
     void handleActiveStateDeactivated();
     void handleConnectionUpdated();
+
+    void handleEditButtonClicked();
+    void handleDisconnectButtonClicked();
+    void handleConnectButtonClicked();
+    void handleCancelButtonClicked();
+    void handleIgnoreButtonClicked();
 
     void clearConnectionLists();
     void handleConnectionItemClicked(QListWidgetItem *item);
@@ -92,8 +107,8 @@ public slots:
     void connectionStateNotify(ActiveConnection::State state);
     void connectionItemLoadingAnimation();
 
-    void insertInputPasswordWidget(int insertRow);
-
+    void showInputPasswordWidgetOfItem(int itemRow);
+    int getPasswordWidgetRow();
 
 signals:
     void requestCreatConnection();
@@ -103,8 +118,11 @@ signals:
     void requestConnectWirelessNetwork(const ConnectionInfo &connectionInfo);
     void deactivatedItemConnection(const QString &connectionPath);
     void connectionUpdated(const QString &path);
-    void trayRequestDisconnect(const QString &activatedConnectionPath);
 
+    void trayRequestDisconnect(const QString &activatedConnectionPath);
+    void trayRequestConnect(const ConnectionInfo &connectionInfo);
+    void trayRequestIgnore(const QString &activatedConnectionPath);
+    void trayRequestCancel();
     void sendPasswordToWirelessSetting(const QString& password);
 
 private:
@@ -112,6 +130,9 @@ private:
     QListWidgetItem *m_currentActiveItem;
     ItemWidgetType m_itemShowType;
     QString m_currentDevicePath;
+    int m_passwordWidgetRow = -1;
+
+    QMap<QWidget*,QListWidgetItem*> m_itemWidgetMap;
 };
 
 class ConnectionSortListItem : public QListWidgetItem

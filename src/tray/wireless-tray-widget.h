@@ -36,6 +36,8 @@ public:
 
 public slots:
     void handleRequestConnectWirelessNetwork(const ConnectionInfo &connectionInfo);
+    void handleRequestDisconnect(const QString &activatedConnectionPath);
+
     void getWirelessAvailableConnections(const QString &devicePath);
     void activateWirelessConnection(const QString &connectionPath, const QString &devicePath,const QString &accessPointPath);
     void addAndActivateWirelessConnection(const QString &password);
@@ -47,9 +49,6 @@ public slots:
 
     void handleStateActivated(const QString &activatedPath) override;
     void handleStateDeactivated() override;
-
-    void handleNotifierConnectionAdded(const QString &path) override;
-    void handleNotifierConnectionRemoved(const QString &path) override;
 
     void handleNetworkDisappeared(const QString &ssid);
     void handleNetworkAppeared(const QString &ssid);

@@ -160,7 +160,6 @@ void ManagerTray::getAvailableDeviceList()
 }
 
 
-
 void ManagerTray::handleTrayClicked(QSystemTrayIcon::ActivationReason reason)
 {
     switch (reason)
@@ -187,6 +186,7 @@ void ManagerTray::setTrayPagePos()
     // TODO:随插入项高度动态变化
     int maxHeight = 434;
     int pageHeight = this->sizeHint().height();
+    KLOG_DEBUG() << "pageHeight:" << pageHeight;
     this->setGeometry(m_xTray - pageWidth / 2, m_yTray - pageHeight, pageWidth, pageHeight);
 }
 

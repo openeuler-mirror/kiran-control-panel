@@ -18,6 +18,7 @@
 #include <NetworkManagerQt/WiredDevice>
 #include <QWidget>
 #include "connection-tray.h"
+#include "connection-lists.h"
 
 using namespace NetworkManager;
 class ConnectionLists;
@@ -34,7 +35,8 @@ public:
     void initUI();
 
     void showWiredConnectionLists();
-    void handleRequestActivateConnection(const QString &connectionPath, const QString &connectionParameter);
+    void handleRequestActivateConnection(const ConnectionInfo &connectionInfo);
+    void handleRequestDisconnect(const QString &activatedConnectionPath);
 
     void handleNotifierConnectionAdded(const QString &path ) override;
     void handleNotifierConnectionRemoved(const QString &path) override;

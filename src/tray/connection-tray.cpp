@@ -58,17 +58,28 @@ void ConnectionTray::initConnection()
             });
 }
 
+void ConnectionTray::distributeNotifeir()
+{
+
+}
+
 void ConnectionTray::handleNotifierConnectionAdded(const QString &path)
 {
 }
+
 void ConnectionTray::handleNotifierConnectionRemoved(const QString &path)
 {
 }
+
 void ConnectionTray::handleActiveConnectionAdded(const QString &activepath)
 {
+    findActiveConnection(activepath);
+
 }
+
 void ConnectionTray::handleActiveConnectionRemoved(const QString &activepath)
 {
+
 }
 
 void ConnectionTray::handleActiveConnectionStateChanged(ActiveConnection::State state)
@@ -85,6 +96,7 @@ void ConnectionTray::handleActiveConnectionStateChanged(ActiveConnection::State 
         break;
     case ActiveConnection::State::Activated:
         KLOG_DEBUG() << "ActiveConnection::State::Activated";
+        KLOG_DEBUG() << "path:" << path;
         handleStateActivated(path);
         break;
     case ActiveConnection::State::Deactivating:
@@ -125,13 +137,3 @@ void ConnectionTray::getDeviceList(Device::Type deviceType)
         KLOG_DEBUG() << "No available devices were found";
     }
 }
-
-void ConnectionTray::handleDeviceAdded(const QString &devicePath)
-{
-}
-
-void ConnectionTray::handleDeviceRemoved(const QString &devicePath)
-{
-}
-
-

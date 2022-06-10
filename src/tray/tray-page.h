@@ -44,8 +44,6 @@ public:
 
 public slots:
     void handleDeviceComboBoxChanged(int index);
-//    void handleDeviceAdded(const QString &devicePath);
-//    void handleDeviceRemoved(const QString &devicePath);
 
 private:
     Ui::TrayPage *ui;

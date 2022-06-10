@@ -22,23 +22,18 @@
 #include <QPushButton>
 #include <QWidget>
 
-enum ItemWidgetType
-{
-    ITEM_WIDGET_TYPE_TRAY,
-    ITEM_WIDGET_TYPE_PLUGIN
-};
+
 
 class AnimationLoadingLabel;
 class ConnectionItemWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit ConnectionItemWidget(ItemWidgetType itemWidgetType, QWidget *parent = nullptr);
+    explicit ConnectionItemWidget(QWidget *parent = nullptr);
 
 public:
     void initUI();
     void initPluginItemWidget();
-    void initTrayItemWidget();
 
     void setName(const QString &name);
     QString getName();
@@ -57,7 +52,7 @@ public:
 public slots:
 
 signals:
-    void actionButtonClicked();
+    void editButtonClicked();
 
 private:
     QLabel *m_connectionTypeIcon;
@@ -72,8 +67,6 @@ private:
     AnimationLoadingLabel *m_activatedLabel;
 
     QWidget *m_activeStatusWidget;
-    ItemWidgetType m_itemWidgetType;
-
 };
 
 class InputPasswordWidget : public QWidget
@@ -94,6 +87,7 @@ signals:
     void sendPassword(const QString& password);
 private:
     QPushButton *m_activateConnectionButton;
+    QPushButton *m_cancelConnectButton;
     QLineEdit *m_passwordEdit;
     QHBoxLayout *m_horizonLayout;
 
