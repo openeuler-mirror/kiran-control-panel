@@ -13,7 +13,7 @@
  */
 
 #include "touchpad-page.h"
-#include <kcm-manager.h>
+#include "kcm-manager.h"
 #include <kiran-log/qt5-log-i.h>
 #include <kiran-session-daemon/touchpad-i.h>
 #include <QCheckBox>

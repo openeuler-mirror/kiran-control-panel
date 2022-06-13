@@ -23,7 +23,6 @@
 #include <QFile>
 #include <QLocale>
 #include <QTranslator>
-#include "config/config.h"
 #include "kcm-manager.h"
 #include "mouse-page.h"
 #include "touchPad_backEnd_proxy.h"
@@ -108,7 +107,7 @@ int KcpInterface::init()
     if (!m_translator->load(QLocale(),
                             "kiran-cpanel-mouse",
                             ".",
-                            TRANSLATIONS_FILE_DIR,
+                            "/usr/share/applications/kiran-cpanel-mouse",
                             ".qm"))
     {
         KLOG_DEBUG() << "Kiran cpanel mouse load translation failed";
