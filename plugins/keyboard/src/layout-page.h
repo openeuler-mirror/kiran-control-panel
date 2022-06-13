@@ -34,7 +34,10 @@ public:
     ~LayoutPage();
 
 private:
+    void init();
     void initUI();
+    void initConnection();
+
     void getValidLayout();
     int getJsonValueFromString(QString jsonString);
     void createLayoutItem();
@@ -51,7 +54,7 @@ public slots:
 
 private:
     Ui::LayoutPage *ui;
-    QSharedPointer<KeyboardBackEndProxy> m_keyboardInterface;
+    KeyboardBackEndProxy* m_keyboardInterface;
     QMap<QString, QString> m_layoutMap;
     QList<ChooseItem *> m_itemList;
     QStringList m_layoutList;

@@ -37,7 +37,7 @@ private:
     void initUI();
     void initComponentValue();
     void setWidgetsStatus(bool status);
-    QSharedPointer<KeyboardBackEndProxy> m_keyboardInterface;
+    KeyboardBackEndProxy* m_keyboardInterface;
 
 private:
     Ui::GeneralPage *ui;

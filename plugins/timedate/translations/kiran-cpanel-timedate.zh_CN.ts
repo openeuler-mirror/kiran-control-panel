@@ -319,7 +319,10 @@
 <context>
     <name>ChooseItem</name>
     <message>
-        <location filename="../../keyboard/src/widgets/choose-item.ui" line="35"/>
+        <location filename="../../keyboard/widgets/choose-item.ui" line="35"/>
+        <location filename="../../../build/plugins/keyboard/kiran-cpanel-keyboard_autogen/include/ui_choose-item.h" line="80"/>
+        <location filename="../../../cmake-build-debug/plugins/keyboard/kiran-cpanel-keyboard_autogen/include/ui_choose-item.h" line="80"/>
+        <location filename="../../../cmake-build-debug/plugins/keyboard/src/kiran-cpanel-keyboard_autogen/include/ui_choose-item.h" line="80"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
@@ -662,52 +665,82 @@
     <name>GeneralPage</name>
     <message>
         <location filename="../../keyboard/src/general-page.ui" line="14"/>
+        <location filename="../../../build/plugins/keyboard/kiran-cpanel-keyboard_autogen/include/ui_general-page.h" line="220"/>
+        <location filename="../../../cmake-build-debug/plugins/keyboard/kiran-cpanel-keyboard_autogen/include/ui_general-page.h" line="220"/>
+        <location filename="../../../cmake-build-debug/plugins/keyboard/src/kiran-cpanel-keyboard_autogen/include/ui_general-page.h" line="220"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../keyboard/src/general-page.ui" line="40"/>
+        <location filename="../../../build/plugins/keyboard/kiran-cpanel-keyboard_autogen/include/ui_general-page.h" line="221"/>
+        <location filename="../../../cmake-build-debug/plugins/keyboard/kiran-cpanel-keyboard_autogen/include/ui_general-page.h" line="221"/>
+        <location filename="../../../cmake-build-debug/plugins/keyboard/src/kiran-cpanel-keyboard_autogen/include/ui_general-page.h" line="221"/>
         <source>Repeat Key</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../keyboard/src/general-page.ui" line="47"/>
+        <location filename="../../../build/plugins/keyboard/kiran-cpanel-keyboard_autogen/include/ui_general-page.h" line="222"/>
+        <location filename="../../../cmake-build-debug/plugins/keyboard/kiran-cpanel-keyboard_autogen/include/ui_general-page.h" line="222"/>
+        <location filename="../../../cmake-build-debug/plugins/keyboard/src/kiran-cpanel-keyboard_autogen/include/ui_general-page.h" line="222"/>
         <source>(Repeat a key while holding it down)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../keyboard/src/general-page.ui" line="83"/>
+        <location filename="../../../build/plugins/keyboard/kiran-cpanel-keyboard_autogen/include/ui_general-page.h" line="224"/>
+        <location filename="../../../cmake-build-debug/plugins/keyboard/kiran-cpanel-keyboard_autogen/include/ui_general-page.h" line="224"/>
+        <location filename="../../../cmake-build-debug/plugins/keyboard/src/kiran-cpanel-keyboard_autogen/include/ui_general-page.h" line="224"/>
         <source>Delay</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../keyboard/src/general-page.ui" line="126"/>
+        <location filename="../../../build/plugins/keyboard/kiran-cpanel-keyboard_autogen/include/ui_general-page.h" line="225"/>
+        <location filename="../../../cmake-build-debug/plugins/keyboard/kiran-cpanel-keyboard_autogen/include/ui_general-page.h" line="225"/>
+        <location filename="../../../cmake-build-debug/plugins/keyboard/src/kiran-cpanel-keyboard_autogen/include/ui_general-page.h" line="225"/>
         <source>Short</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../keyboard/src/general-page.ui" line="146"/>
+        <location filename="../../../build/plugins/keyboard/kiran-cpanel-keyboard_autogen/include/ui_general-page.h" line="226"/>
+        <location filename="../../../cmake-build-debug/plugins/keyboard/kiran-cpanel-keyboard_autogen/include/ui_general-page.h" line="226"/>
+        <location filename="../../../cmake-build-debug/plugins/keyboard/src/kiran-cpanel-keyboard_autogen/include/ui_general-page.h" line="226"/>
         <source>Long</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../keyboard/src/general-page.ui" line="164"/>
+        <location filename="../../../build/plugins/keyboard/kiran-cpanel-keyboard_autogen/include/ui_general-page.h" line="227"/>
+        <location filename="../../../cmake-build-debug/plugins/keyboard/kiran-cpanel-keyboard_autogen/include/ui_general-page.h" line="227"/>
+        <location filename="../../../cmake-build-debug/plugins/keyboard/src/kiran-cpanel-keyboard_autogen/include/ui_general-page.h" line="227"/>
         <source>Interval</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../keyboard/src/general-page.ui" line="210"/>
+        <location filename="../../../build/plugins/keyboard/kiran-cpanel-keyboard_autogen/include/ui_general-page.h" line="228"/>
+        <location filename="../../../cmake-build-debug/plugins/keyboard/kiran-cpanel-keyboard_autogen/include/ui_general-page.h" line="228"/>
+        <location filename="../../../cmake-build-debug/plugins/keyboard/src/kiran-cpanel-keyboard_autogen/include/ui_general-page.h" line="228"/>
         <source>Slow</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../keyboard/src/general-page.ui" line="230"/>
+        <location filename="../../../build/plugins/keyboard/kiran-cpanel-keyboard_autogen/include/ui_general-page.h" line="229"/>
+        <location filename="../../../cmake-build-debug/plugins/keyboard/kiran-cpanel-keyboard_autogen/include/ui_general-page.h" line="229"/>
+        <location filename="../../../cmake-build-debug/plugins/keyboard/src/kiran-cpanel-keyboard_autogen/include/ui_general-page.h" line="229"/>
         <source>Fast</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../keyboard/src/general-page.ui" line="246"/>
-        <location filename="../../keyboard/src/general-page.cpp" line="73"/>
+        <location filename="../../../build/plugins/keyboard/kiran-cpanel-keyboard_autogen/include/ui_general-page.h" line="230"/>
+        <location filename="../../../cmake-build-debug/plugins/keyboard/kiran-cpanel-keyboard_autogen/include/ui_general-page.h" line="230"/>
+        <location filename="../../../cmake-build-debug/plugins/keyboard/src/kiran-cpanel-keyboard_autogen/include/ui_general-page.h" line="230"/>
+        <location filename="../../keyboard/src/general-page.cpp" line="70"/>
         <source>Enter characters to test the settings</source>
         <translation type="unfinished"></translation>
     </message>
@@ -952,6 +985,19 @@
     </message>
 </context>
 <context>
+    <name>KeycodeTranslator</name>
+    <message>
+        <location filename="../../keybinding/src/keycode-translator.cpp" line="128"/>
+        <source>None</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../keybinding/src/keycode-translator.cpp" line="132"/>
+        <source>disabled</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>KiranAccountManager</name>
     <message>
         <location filename="../../account/src/kiran-account-manager.cpp" line="94"/>
@@ -1189,6 +1235,7 @@
     <message>
         <location filename="../../../lib/common-widgets/kiran-module-widget/kiran-module-widget.ui" line="14"/>
         <location filename="../../../build/lib/common-widgets/common-widgets_autogen/include/ui_kiran-module-widget.h" line="108"/>
+        <location filename="../../../cmake-build-debug/lib/common-widgets/common-widgets_autogen/include/ui_kiran-module-widget.h" line="108"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1312,7 +1359,10 @@
 <context>
     <name>LayoutItem</name>
     <message>
-        <location filename="../../keyboard/src/widgets/layout-item.ui" line="14"/>
+        <location filename="../../keyboard/widgets/layout-item.ui" line="14"/>
+        <location filename="../../../build/plugins/keyboard/kiran-cpanel-keyboard_autogen/include/ui_layout-item.h" line="61"/>
+        <location filename="../../../cmake-build-debug/plugins/keyboard/kiran-cpanel-keyboard_autogen/include/ui_layout-item.h" line="61"/>
+        <location filename="../../../cmake-build-debug/plugins/keyboard/src/kiran-cpanel-keyboard_autogen/include/ui_layout-item.h" line="61"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1320,7 +1370,10 @@
 <context>
     <name>LayoutList</name>
     <message>
-        <location filename="../../keyboard/src/widgets/layout-list.ui" line="20"/>
+        <location filename="../../keyboard/widgets/layout-list.ui" line="20"/>
+        <location filename="../../../build/plugins/keyboard/kiran-cpanel-keyboard_autogen/include/ui_layout-list.h" line="142"/>
+        <location filename="../../../cmake-build-debug/plugins/keyboard/kiran-cpanel-keyboard_autogen/include/ui_layout-list.h" line="139"/>
+        <location filename="../../../cmake-build-debug/plugins/keyboard/src/kiran-cpanel-keyboard_autogen/include/ui_layout-list.h" line="148"/>
         <source>LayoutList</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1329,71 +1382,89 @@
     <name>LayoutPage</name>
     <message>
         <location filename="../../keyboard/src/layout-page.ui" line="14"/>
+        <location filename="../../../build/plugins/keyboard/kiran-cpanel-keyboard_autogen/include/ui_layout-page.h" line="226"/>
+        <location filename="../../../cmake-build-debug/plugins/keyboard/kiran-cpanel-keyboard_autogen/include/ui_layout-page.h" line="226"/>
+        <location filename="../../../cmake-build-debug/plugins/keyboard/src/kiran-cpanel-keyboard_autogen/include/ui_layout-page.h" line="226"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../keyboard/src/layout-page.ui" line="67"/>
+        <location filename="../../../build/plugins/keyboard/kiran-cpanel-keyboard_autogen/include/ui_layout-page.h" line="227"/>
+        <location filename="../../../cmake-build-debug/plugins/keyboard/kiran-cpanel-keyboard_autogen/include/ui_layout-page.h" line="227"/>
+        <location filename="../../../cmake-build-debug/plugins/keyboard/src/kiran-cpanel-keyboard_autogen/include/ui_layout-page.h" line="227"/>
         <source>Select Kayboard Layout</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../keyboard/src/layout-page.ui" line="105"/>
-        <location filename="../../keyboard/src/layout-page.cpp" line="395"/>
+        <location filename="../../../build/plugins/keyboard/kiran-cpanel-keyboard_autogen/include/ui_layout-page.h" line="228"/>
+        <location filename="../../../cmake-build-debug/plugins/keyboard/kiran-cpanel-keyboard_autogen/include/ui_layout-page.h" line="228"/>
+        <location filename="../../../cmake-build-debug/plugins/keyboard/src/kiran-cpanel-keyboard_autogen/include/ui_layout-page.h" line="228"/>
+        <location filename="../../keyboard/src/layout-page.cpp" line="407"/>
         <source>Edit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../keyboard/src/layout-page.ui" line="206"/>
-        <location filename="../../keyboard/src/layout-page.cpp" line="274"/>
+        <location filename="../../../build/plugins/keyboard/kiran-cpanel-keyboard_autogen/include/ui_layout-page.h" line="230"/>
+        <location filename="../../../cmake-build-debug/plugins/keyboard/kiran-cpanel-keyboard_autogen/include/ui_layout-page.h" line="230"/>
+        <location filename="../../../cmake-build-debug/plugins/keyboard/src/kiran-cpanel-keyboard_autogen/include/ui_layout-page.h" line="230"/>
+        <location filename="../../keyboard/src/layout-page.cpp" line="286"/>
         <source>Add Layout</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../keyboard/src/layout-page.ui" line="297"/>
+        <location filename="../../../build/plugins/keyboard/kiran-cpanel-keyboard_autogen/include/ui_layout-page.h" line="231"/>
+        <location filename="../../../cmake-build-debug/plugins/keyboard/kiran-cpanel-keyboard_autogen/include/ui_layout-page.h" line="231"/>
+        <location filename="../../../cmake-build-debug/plugins/keyboard/src/kiran-cpanel-keyboard_autogen/include/ui_layout-page.h" line="231"/>
         <source>Addition</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../keyboard/src/layout-page.ui" line="335"/>
+        <location filename="../../keyboard/src/layout-page.ui" line="338"/>
+        <location filename="../../../build/plugins/keyboard/kiran-cpanel-keyboard_autogen/include/ui_layout-page.h" line="232"/>
+        <location filename="../../../cmake-build-debug/plugins/keyboard/kiran-cpanel-keyboard_autogen/include/ui_layout-page.h" line="232"/>
+        <location filename="../../../cmake-build-debug/plugins/keyboard/src/kiran-cpanel-keyboard_autogen/include/ui_layout-page.h" line="232"/>
         <source>Return</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../keyboard/src/layout-page.cpp" line="93"/>
-        <location filename="../../keyboard/src/layout-page.cpp" line="298"/>
-        <location filename="../../keyboard/src/layout-page.cpp" line="338"/>
-        <location filename="../../keyboard/src/layout-page.cpp" line="371"/>
+        <location filename="../../keyboard/src/layout-page.cpp" line="107"/>
+        <location filename="../../keyboard/src/layout-page.cpp" line="310"/>
+        <location filename="../../keyboard/src/layout-page.cpp" line="350"/>
+        <location filename="../../keyboard/src/layout-page.cpp" line="383"/>
         <source>Failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../keyboard/src/layout-page.cpp" line="94"/>
+        <location filename="../../keyboard/src/layout-page.cpp" line="107"/>
         <source>You have added this keyboard layout!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../keyboard/src/layout-page.cpp" line="299"/>
+        <location filename="../../keyboard/src/layout-page.cpp" line="311"/>
         <source>The %1 keyboard layout does not exist!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../keyboard/src/layout-page.cpp" line="339"/>
+        <location filename="../../keyboard/src/layout-page.cpp" line="351"/>
         <source>The keyboard layout is currently in use and cannot be deleted!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../keyboard/src/layout-page.cpp" line="351"/>
+        <location filename="../../keyboard/src/layout-page.cpp" line="363"/>
         <source>Delete Layout</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../keyboard/src/layout-page.cpp" line="372"/>
+        <location filename="../../keyboard/src/layout-page.cpp" line="384"/>
         <source>You do not appear to have added %1 keyboard layout!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../keyboard/src/layout-page.cpp" line="386"/>
+        <location filename="../../keyboard/src/layout-page.cpp" line="398"/>
         <source>Finish</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1470,110 +1541,97 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../../../build/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_main-window.h" line="57"/>
-        <source>MainWindow</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../keyboard/src/main-window.ui" line="14"/>
+        <location filename="../../../build/plugins/keyboard/kiran-cpanel-keyboard_autogen/include/ui_main-window.h" line="80"/>
+        <location filename="../../../cmake-build-debug/plugins/keyboard/kiran-cpanel-keyboard_autogen/include/ui_main-window.h" line="80"/>
+        <location filename="../../../cmake-build-debug/plugins/keyboard/src/kiran-cpanel-keyboard_autogen/include/ui_main-window.h" line="80"/>
         <source>KCPWindow</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../keyboard/src/main-window.cpp" line="23"/>
-        <source>General Option</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../keyboard/src/main-window.cpp" line="24"/>
-        <source>Keyboard Layout</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>Media Key</name>
     <message>
-        <location filename="../../keybinding/src/keybinding_def.h" line="67"/>
+        <location filename="../../keybinding/src/keycode-translator.cpp" line="57"/>
         <source>Audio Play</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../keybinding/src/keybinding_def.h" line="68"/>
+        <location filename="../../keybinding/src/keycode-translator.cpp" line="58"/>
         <source>Search</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../keybinding/src/keybinding_def.h" line="69"/>
+        <location filename="../../keybinding/src/keycode-translator.cpp" line="59"/>
         <source>WWW</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../keybinding/src/keybinding_def.h" line="70"/>
+        <location filename="../../keybinding/src/keycode-translator.cpp" line="60"/>
         <source>Audio Lower Volume</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../keybinding/src/keybinding_def.h" line="71"/>
+        <location filename="../../keybinding/src/keycode-translator.cpp" line="61"/>
         <source>Audio Raise Volume</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../keybinding/src/keybinding_def.h" line="72"/>
+        <location filename="../../keybinding/src/keycode-translator.cpp" line="62"/>
         <source>Mic Mute</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../keybinding/src/keybinding_def.h" line="73"/>
+        <location filename="../../keybinding/src/keycode-translator.cpp" line="63"/>
         <source>Audio Stop</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../keybinding/src/keybinding_def.h" line="74"/>
+        <location filename="../../keybinding/src/keycode-translator.cpp" line="64"/>
         <source>Explorer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../keybinding/src/keybinding_def.h" line="75"/>
+        <location filename="../../keybinding/src/keycode-translator.cpp" line="65"/>
         <source>Calculator</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../keybinding/src/keybinding_def.h" line="76"/>
+        <location filename="../../keybinding/src/keycode-translator.cpp" line="66"/>
         <source>Audio Mute</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../keybinding/src/keybinding_def.h" line="77"/>
+        <location filename="../../keybinding/src/keycode-translator.cpp" line="67"/>
         <source>Audio Pause</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../keybinding/src/keybinding_def.h" line="78"/>
+        <location filename="../../keybinding/src/keycode-translator.cpp" line="68"/>
         <source>Audio Prev</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../keybinding/src/keybinding_def.h" line="79"/>
+        <location filename="../../keybinding/src/keycode-translator.cpp" line="69"/>
         <source>Audio Media</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../keybinding/src/keybinding_def.h" line="80"/>
+        <location filename="../../keybinding/src/keycode-translator.cpp" line="70"/>
         <source>Audio Next</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../keybinding/src/keybinding_def.h" line="81"/>
+        <location filename="../../keybinding/src/keycode-translator.cpp" line="71"/>
         <source>Mail</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../keybinding/src/keybinding_def.h" line="82"/>
+        <location filename="../../keybinding/src/keycode-translator.cpp" line="72"/>
         <source>Tools</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../keybinding/src/keybinding_def.h" line="83"/>
+        <location filename="../../keybinding/src/keycode-translator.cpp" line="73"/>
         <source>Eject</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1851,7 +1909,7 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../keyboard/src/widgets/layout-list.cpp" line="137"/>
+        <location filename="../../keyboard/widgets/layout-list.cpp" line="137"/>
         <source>No search results, please search again...</source>
         <translation type="unfinished">无搜索结果，请重新搜索...</translation>
     </message>
@@ -1938,214 +1996,214 @@ p, li { white-space: pre-wrap; }
         <location filename="../../keybinding/src/shortcut.ui" line="204"/>
         <location filename="../../../build/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="463"/>
         <location filename="../../../cmake-build-debug/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="463"/>
-        <location filename="../../keybinding/src/shortcut.cpp" line="162"/>
-        <location filename="../../keybinding/src/shortcut.cpp" line="613"/>
+        <location filename="../../keybinding/src/shortcut.cpp" line="156"/>
+        <location filename="../../keybinding/src/shortcut.cpp" line="548"/>
         <source>Edit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../keybinding/src/shortcut.ui" line="334"/>
-        <location filename="../../keybinding/src/shortcut.ui" line="524"/>
+        <location filename="../../keybinding/src/shortcut.ui" line="527"/>
         <location filename="../../../build/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="464"/>
         <location filename="../../../build/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="469"/>
         <location filename="../../../cmake-build-debug/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="464"/>
         <location filename="../../../cmake-build-debug/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="469"/>
-        <location filename="../../keybinding/src/shortcut.cpp" line="108"/>
-        <location filename="../../keybinding/src/shortcut.cpp" line="119"/>
+        <location filename="../../keybinding/src/shortcut.cpp" line="102"/>
+        <location filename="../../keybinding/src/shortcut.cpp" line="113"/>
         <source>Add</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../keybinding/src/shortcut.ui" line="366"/>
+        <location filename="../../keybinding/src/shortcut.ui" line="369"/>
         <location filename="../../../build/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="465"/>
         <location filename="../../../cmake-build-debug/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="465"/>
         <source>Reset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../keybinding/src/shortcut.ui" line="412"/>
+        <location filename="../../keybinding/src/shortcut.ui" line="415"/>
         <location filename="../../../build/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="466"/>
         <location filename="../../../cmake-build-debug/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="466"/>
         <source>Custom Shortcut Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../keybinding/src/shortcut.ui" line="442"/>
+        <location filename="../../keybinding/src/shortcut.ui" line="445"/>
         <location filename="../../../build/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="467"/>
         <location filename="../../../cmake-build-debug/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="467"/>
         <source>Custom Shortcut application</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../keybinding/src/shortcut.ui" line="472"/>
+        <location filename="../../keybinding/src/shortcut.ui" line="475"/>
         <location filename="../../../build/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="468"/>
         <location filename="../../../cmake-build-debug/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="468"/>
         <source>Custom Shortcut Key</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../keybinding/src/shortcut.ui" line="556"/>
+        <location filename="../../keybinding/src/shortcut.ui" line="562"/>
         <location filename="../../../build/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="470"/>
         <location filename="../../../cmake-build-debug/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="470"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../keybinding/src/shortcut.ui" line="602"/>
+        <location filename="../../keybinding/src/shortcut.ui" line="608"/>
         <location filename="../../../build/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="471"/>
         <location filename="../../../cmake-build-debug/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="471"/>
         <source>Shortcut Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../keybinding/src/shortcut.ui" line="645"/>
+        <location filename="../../keybinding/src/shortcut.ui" line="651"/>
         <location filename="../../../build/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="472"/>
         <location filename="../../../cmake-build-debug/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="472"/>
         <source>Shortcut application</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../keybinding/src/shortcut.ui" line="676"/>
+        <location filename="../../keybinding/src/shortcut.ui" line="682"/>
         <location filename="../../../build/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="473"/>
         <location filename="../../../cmake-build-debug/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="473"/>
         <source>Shortcut key</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../keybinding/src/shortcut.ui" line="728"/>
+        <location filename="../../keybinding/src/shortcut.ui" line="734"/>
         <location filename="../../../build/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="474"/>
         <location filename="../../../cmake-build-debug/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="474"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../keybinding/src/shortcut.ui" line="760"/>
+        <location filename="../../keybinding/src/shortcut.ui" line="769"/>
         <location filename="../../../build/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="475"/>
         <location filename="../../../cmake-build-debug/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="475"/>
         <source>return</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../keybinding/src/shortcut.cpp" line="90"/>
+        <location filename="../../keybinding/src/shortcut.cpp" line="84"/>
         <source>Please enter a search keyword...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../keybinding/src/shortcut.cpp" line="102"/>
+        <location filename="../../keybinding/src/shortcut.cpp" line="96"/>
         <source>Required</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../../keybinding/src/shortcut.cpp" line="122"/>
         <location filename="../../keybinding/src/shortcut.cpp" line="128"/>
-        <location filename="../../keybinding/src/shortcut.cpp" line="134"/>
         <source>Please press the new shortcut key</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../keybinding/src/shortcut.cpp" line="160"/>
+        <location filename="../../keybinding/src/shortcut.cpp" line="154"/>
         <source>Finished</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../keybinding/src/shortcut.cpp" line="709"/>
-        <location filename="../../keybinding/src/shortcut.cpp" line="759"/>
-        <location filename="../../keybinding/src/shortcut.cpp" line="780"/>
-        <location filename="../../keybinding/src/shortcut.cpp" line="815"/>
-        <location filename="../../keybinding/src/shortcut.cpp" line="835"/>
-        <location filename="../../keybinding/src/shortcut.cpp" line="858"/>
-        <location filename="../../keybinding/src/shortcut.cpp" line="876"/>
+        <location filename="../../keybinding/src/shortcut.cpp" line="652"/>
+        <location filename="../../keybinding/src/shortcut.cpp" line="702"/>
+        <location filename="../../keybinding/src/shortcut.cpp" line="723"/>
+        <location filename="../../keybinding/src/shortcut.cpp" line="758"/>
+        <location filename="../../keybinding/src/shortcut.cpp" line="778"/>
+        <location filename="../../keybinding/src/shortcut.cpp" line="802"/>
+        <location filename="../../keybinding/src/shortcut.cpp" line="822"/>
         <source>Failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../keybinding/src/shortcut.cpp" line="300"/>
+        <location filename="../../keybinding/src/shortcut.cpp" line="297"/>
         <source>Get shortcut failed,error:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../keybinding/src/shortcut.cpp" line="215"/>
+        <location filename="../../keybinding/src/shortcut.cpp" line="209"/>
         <source>failed to load shortcut key data!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../keybinding/src/shortcut.cpp" line="257"/>
+        <location filename="../../keybinding/src/shortcut.cpp" line="251"/>
         <source>List shortcut failed,error:%1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../keybinding/src/shortcut.cpp" line="299"/>
+        <location filename="../../keybinding/src/shortcut.cpp" line="296"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../keybinding/src/shortcut.cpp" line="439"/>
+        <location filename="../../keybinding/src/shortcut.cpp" line="370"/>
         <source>Open File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../keybinding/src/shortcut.cpp" line="658"/>
+        <location filename="../../keybinding/src/shortcut.cpp" line="600"/>
         <source>System</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../keybinding/src/shortcut.cpp" line="660"/>
+        <location filename="../../keybinding/src/shortcut.cpp" line="602"/>
         <source>Sound</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../keybinding/src/shortcut.cpp" line="710"/>
+        <location filename="../../keybinding/src/shortcut.cpp" line="653"/>
         <source>Delete shortcut failed,error:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../keybinding/src/shortcut.cpp" line="723"/>
-        <location filename="../../keybinding/src/shortcut.cpp" line="798"/>
+        <location filename="../../keybinding/src/shortcut.cpp" line="666"/>
+        <location filename="../../keybinding/src/shortcut.cpp" line="741"/>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../keybinding/src/shortcut.cpp" line="724"/>
-        <location filename="../../keybinding/src/shortcut.cpp" line="799"/>
+        <location filename="../../keybinding/src/shortcut.cpp" line="667"/>
+        <location filename="../../keybinding/src/shortcut.cpp" line="742"/>
         <source>Please complete the shortcut information!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../keybinding/src/shortcut.cpp" line="733"/>
+        <location filename="../../keybinding/src/shortcut.cpp" line="676"/>
         <source>Set shortcut</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../keybinding/src/shortcut.cpp" line="734"/>
+        <location filename="../../keybinding/src/shortcut.cpp" line="677"/>
         <source>Are you sure you want to disable this shortcut?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../keybinding/src/shortcut.cpp" line="760"/>
+        <location filename="../../keybinding/src/shortcut.cpp" line="703"/>
         <source>Modify system shortcut failed,error:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../keybinding/src/shortcut.cpp" line="781"/>
+        <location filename="../../keybinding/src/shortcut.cpp" line="724"/>
         <source>Modify custom shortcut failed,error:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../keybinding/src/shortcut.cpp" line="816"/>
+        <location filename="../../keybinding/src/shortcut.cpp" line="759"/>
         <source>Add custom shortcut failed,error:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../keybinding/src/shortcut.cpp" line="836"/>
+        <location filename="../../keybinding/src/shortcut.cpp" line="779"/>
         <source>Reset shortcut failed,error:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../keybinding/src/shortcut.cpp" line="859"/>
+        <location filename="../../keybinding/src/shortcut.cpp" line="803"/>
         <source>Cannot use shortcut &quot;%1&quot;, Because you cannot enter with this key.Please try again using Ctrl, Alt, or Shift at the same time.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../keybinding/src/shortcut.cpp" line="877"/>
+        <location filename="../../keybinding/src/shortcut.cpp" line="823"/>
         <source>Shortcut keys %1 are already used in %2,Please try again!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2167,16 +2225,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../../../cmake-build-debug/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut-item.h" line="77"/>
         <location filename="../../../cmake-build-debug/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut-item.h" line="78"/>
         <source>TextLabel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../keybinding/src/shortcut-item.cpp" line="60"/>
-        <source>None</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../keybinding/src/shortcut-item.cpp" line="64"/>
-        <source>disabled</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -13,37 +13,30 @@
  */
 
 #include "layout-page.h"
+#include "keyboard_backEnd_proxy.h"
+#include "ui_layout-page.h"
+#include "widgets/choose-item.h"
+#include "widgets/layout-list.h"
+#include "kiran-session-daemon/keyboard-i.h"
+
 #include <kiran-log/qt5-log-i.h>
 #include <kiran-message-box.h>
 #include <widget-property-helper.h>
+#include <kiran-style-property.h>
+
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonParseError>
 #include <QScrollBar>
-#include "dbus-wrapper/dbus-wrapper.h"
-#include "keyboard_backEnd_proxy.h"
-#include "ui_layout-page.h"
-#include "widgets/choose-item.h"
-#include "widgets/layout-list.h"
-LayoutPage::LayoutPage(QWidget *parent) : QWidget(parent),
-                                          ui(new Ui::LayoutPage)
+
+LayoutPage::LayoutPage(QWidget *parent)
+    : QWidget(parent),
+    ui(new Ui::LayoutPage),
+    m_keyboardInterface(new KeyboardBackEndProxy(KEYBOARD_DBUS_NAME,KEYBOARD_OBJECT_PATH,QDBusConnection::sessionBus(),this))
 {
     ui->setupUi(this);
-
-    DbusWrapper *dbusWrapper = new DbusWrapper;
-    m_keyboardInterface = dbusWrapper->getKeyboardInterface();
-    dbusWrapper->deleteLater();
-    dbusWrapper = nullptr;
-    connect(m_keyboardInterface.data(), &KeyboardBackEndProxy::layoutsChanged,
-            [this](QStringList layoutList) {
-                KLOG_INFO() << "get layoutsChanged signal: " << layoutList;
-                m_layoutList = layoutList;
-                //更新界面
-                updateLayout();
-            });
-
-    initUI();
+    init();
     getValidLayout();
     createLayoutItem();
 }
@@ -53,55 +46,75 @@ LayoutPage::~LayoutPage()
     delete ui;
 }
 
+void LayoutPage::init()
+{
+    initUI();
+    initConnection();
+}
+
 void LayoutPage::initUI()
 {
+    Kiran::Style::PropertyHelper::setButtonType(ui->btn_add,Kiran::Style::BUTTON_Default);
+    ui->btn_add->setIconSize(QSize(32,32));
+    ui->btn_add->setIcon(QPixmap(":/kcp-keyboard/images/addition.svg"));
+
     m_vLayout = new QVBoxLayout();
     m_vLayout->setMargin(0);
     m_vLayout->setContentsMargins(0, 0, 0, 0);
     m_vLayout->setSpacing(10);
     ui->layout_selector->setLayout(m_vLayout);
     ui->stackedWidget->setCurrentWidget(ui->page_layoutList);
-    Kiran::WidgetPropertyHelper::setButtonType(ui->btn_page_add, Kiran::BUTTON_Default);
+    Kiran::Style::PropertyHelper::setButtonType(ui->btn_page_add,Kiran::Style::BUTTON_Default);
+
     ui->btn_page_add->setDisabled(true);
+}
+
+void LayoutPage::initConnection()
+{
+    connect(m_keyboardInterface, &KeyboardBackEndProxy::layoutsChanged,[this](QStringList layoutList) {
+        KLOG_INFO() << "get layoutsChanged signal: " << layoutList;
+        m_layoutList = layoutList;
+        //更新界面
+        updateLayout();
+    });
 
     connect(ui->btn_edit, &QPushButton::clicked, this, &LayoutPage::setEditMode);
-    connect(ui->btn_add, &QToolButton::clicked,
-            [this] {
-                ui->stackedWidget->setCurrentWidget(ui->page_layoutAddition);
-            });
-    connect(ui->btn_page_add, &QPushButton::clicked,
-            [this] {
-                QString additionLayout;
-                QString countryName = ui->widget_layout_list->getSelectedCountry();
-                QMap<QString, QString>::const_iterator i = m_layoutMap.begin();
-                while (i != m_layoutMap.end())
-                {
-                    if (i.value() == countryName)
-                    {
-                        additionLayout = i.key();
-                        break;
-                    }
-                    ++i;
-                }
-                if (!m_layoutList.contains(additionLayout))
-                {
-                    if (addLayout(additionLayout))
-                        ui->stackedWidget->setCurrentWidget(ui->page_layoutList);
-                }
-                else
-                    KiranMessageBox::message(nullptr,
-                                             tr("Failed"),
-                                             tr("You have added this keyboard layout!"),
-                                             KiranMessageBox::Ok);
-            });
-    connect(ui->widget_layout_list, &LayoutList::itemChanged,
-            [this](QString countryName) {
-                ui->btn_page_add->setDisabled(false);
-            });
-    connect(ui->btn_return, &QPushButton::clicked,
-            [this] {
-                ui->stackedWidget->setCurrentWidget(ui->page_layoutList);
-            });
+
+    connect(ui->btn_add, &QToolButton::clicked,[this] {
+        ui->stackedWidget->setCurrentWidget(ui->page_layoutAddition);
+    });
+
+    connect(ui->btn_page_add, &QPushButton::clicked,[this] {
+        QString additionLayout;
+        QString countryName = ui->widget_layout_list->getSelectedCountry();
+        QMap<QString, QString>::const_iterator i = m_layoutMap.begin();
+        while (i != m_layoutMap.end())
+        {
+            if (i.value() == countryName)
+            {
+                additionLayout = i.key();
+                break;
+            }
+            ++i;
+        }
+        if (!m_layoutList.contains(additionLayout))
+        {
+            if (addLayout(additionLayout))
+            ui->stackedWidget->setCurrentWidget(ui->page_layoutList);
+        }
+        else
+        {
+            KiranMessageBox::message(nullptr,tr("Failed"),tr("You have added this keyboard layout!"),KiranMessageBox::Ok);
+        }
+    });
+
+    connect(ui->widget_layout_list, &LayoutList::itemChanged,[this](QString countryName) {
+        ui->btn_page_add->setDisabled(false);
+    });
+
+    connect(ui->btn_return, &QPushButton::clicked,[this] {
+        ui->stackedWidget->setCurrentWidget(ui->page_layoutList);
+    });
 }
 
 void LayoutPage::getValidLayout()
@@ -110,8 +123,7 @@ void LayoutPage::getValidLayout()
     reply.waitForFinished();
     if (reply.isError() || !reply.isValid())
     {
-        KLOG_DEBUG() << "Call GetValidLayouts method failed "
-                     << " Error: " << reply.error().message();
+        KLOG_DEBUG() << "Call GetValidLayouts method failed," << reply.error().message();
         return;
     }
     else

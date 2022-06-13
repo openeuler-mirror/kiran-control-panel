@@ -9,5 +9,5 @@ add_subdirectory(system)
 add_subdirectory(timedate)
 
 add_subdirectory(keybinding)
-#add_subdirectory(keyboard)
+add_subdirectory(keyboard)
 #add_subdirectory(mouse)

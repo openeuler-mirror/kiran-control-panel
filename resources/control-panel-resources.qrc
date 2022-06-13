@@ -11,6 +11,7 @@
         <file>images/trash.svg</file>
         <file>images/trash-hover.svg</file>
         <file>images/trash-pressed.svg</file>
+        <file>images/indicator-selected.png</file>
     </qresource>
 
     <qresource prefix="/kcp-account">
@@ -58,5 +59,9 @@
         <file>images/time.svg</file>
         <file>images/time-zone.svg</file>
         <file>images/time-format.svg</file>
+    </qresource>
+
+    <qresource prefix="/kcp-keyboard">
+        <file>images/addition.svg</file>
     </qresource>
 </RCC>

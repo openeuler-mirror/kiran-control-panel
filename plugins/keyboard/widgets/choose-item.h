@@ -16,19 +16,20 @@
 #define CHOOSEITEM_H
 
 #include <QWidget>
+#include "kiran-frame/kiran-frame.h"
 
 namespace Ui
 {
 class ChooseItem;
 }
 
-class ChooseItem : public QWidget
+class ChooseItem : public KiranFrame
 {
     Q_OBJECT
-
 public:
     explicit ChooseItem(QWidget *parent = 0);
     ~ChooseItem();
+
     void setSelected(bool isSelected);
     void setEditMode(bool isEditMode);
     QString getLayoutName();
@@ -43,7 +44,6 @@ private:
 
 protected:
     void mousePressEvent(QMouseEvent *event) override;
-    virtual void paintEvent(QPaintEvent *event) override;
 
 public slots:
     void seletedLayoutChanged(QString selectLayout);

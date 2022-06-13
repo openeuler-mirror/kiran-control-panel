@@ -13,20 +13,21 @@
  */
 
 #include "choose-item.h"
+#include "ui_choose-item.h"
+
 #include <QMouseEvent>
 #include <QPainter>
 #include <QStyleOption>
-#include "ui_choose-item.h"
-ChooseItem::ChooseItem(QWidget *parent) : QWidget(parent),
+
+ChooseItem::ChooseItem(QWidget *parent) : KiranFrame(parent),
                                           ui(new Ui::ChooseItem)
 {
     ui->setupUi(this);
     setObjectName("ChooseItem");
     initUI();
-    connect(ui->btn_delete, &QToolButton::clicked,
-            [this] {
-                emit sigDelete(m_layoutName);
-            });
+    connect(ui->btn_delete, &QToolButton::clicked,[this] {
+        emit sigDelete(m_layoutName);
+    });
 }
 
 ChooseItem::~ChooseItem()
@@ -57,8 +58,13 @@ void ChooseItem::setNames(QString countryName, QString layoutName)
 
 void ChooseItem::initUI()
 {
-    ui->btn_delete->setIcon(QIcon(":/keyboard/images/delete.svg"));
+    setDrawBroder(false);
+    setAttribute(Qt::WA_Hover);
+    ui->btn_delete->setIcon(QIcon(":/kiran-control-panel/images/trash.svg"));
     ui->btn_delete->hide();
+
+    QPixmap pixmap(":/kiran-control-panel/images/indicator-selected.png");
+    ui->label_selected->setPixmap(pixmap);
     ui->label_selected->hide();
 }
 
@@ -71,16 +77,6 @@ void ChooseItem::mousePressEvent(QMouseEvent *event)
     QWidget::mousePressEvent(event);
 }
 
-void ChooseItem::paintEvent(QPaintEvent *event)
-{
-    QStyleOption opt;
-
-    opt.init(this);
-    QPainter p(this);
-    style()->drawPrimitive(QStyle::PE_Widget, &opt, &p, this);
-
-    QWidget::paintEvent(event);
-}
 
 void ChooseItem::seletedLayoutChanged(QString selectLayout)
 {

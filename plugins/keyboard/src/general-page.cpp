@@ -12,48 +12,45 @@
  * Author:     yuanxing <yuanxing@kylinos.com.cn>
  */
 
+#include "ui_general-page.h"
 #include "general-page.h"
+#include "keyboard_backEnd_proxy.h"
+
 #include <kiran-log/qt5-log-i.h>
 #include <QSharedPointer>
 #include <iostream>
-#include "dbus-wrapper/dbus-wrapper.h"
-#include "keyboard_backEnd_proxy.h"
-#include "ui_general-page.h"
+#include <kiran-session-daemon/keyboard-i.h>
 
 #define TIMEOUT 100
 #define PAGE_BASE_SIZE_WIDTH 636
 #define PAGE_BASE_SIZE_HEIGHT 670
 
-GeneralPage::GeneralPage(QWidget *parent) : QWidget(parent),
-                                            ui(new Ui::GeneralPage)
+GeneralPage::GeneralPage(QWidget *parent)
+    : QWidget(parent),
+    ui(new Ui::GeneralPage),
+      m_keyboardInterface(new KeyboardBackEndProxy(KEYBOARD_DBUS_NAME,KEYBOARD_OBJECT_PATH,QDBusConnection::sessionBus(),this))
 {
     ui->setupUi(this);
 
-    DbusWrapper *dbusWrapper = new DbusWrapper;
-    m_keyboardInterface = dbusWrapper->getKeyboardInterface();
-    dbusWrapper->deleteLater();
-    dbusWrapper = nullptr;
-
     m_timer = new QTimer(this);
-    connect(m_timer, &QTimer::timeout,
-            [this] {
-                qint32 delay = ui->hslider_delay->value();
-                qint32 interval = ui->hslider_interval->value();
-                KLOG_INFO() << "delay = :" << delay;
-                KLOG_INFO() << "interval = :" << interval;
-                if (m_delay != delay)
-                {
-                    m_delay = delay;
-                    m_keyboardInterface->setRepeat_delay(m_delay);
-                }
-                if (m_interval != interval)
-                {
-                    m_interval = interval;
-                    auto value = ui->hslider_interval->maximum() - interval + 10;
-                    m_keyboardInterface->setRepeat_interval(value);
-                }
-                m_timer->stop();
-            });
+    connect(m_timer, &QTimer::timeout,[this] {
+        qint32 delay = ui->hslider_delay->value();
+        qint32 interval = ui->hslider_interval->value();
+        KLOG_INFO() << "delay = :" << delay;
+        KLOG_INFO() << "interval = :" << interval;
+        if (m_delay != delay)
+        {
+            m_delay = delay;
+            m_keyboardInterface->setRepeat_delay(m_delay);
+        }
+        if (m_interval != interval)
+        {
+            m_interval = interval;
+            auto value = ui->hslider_interval->maximum() - interval + 10;
+            m_keyboardInterface->setRepeat_interval(value);
+        }
+        m_timer->stop();
+    });
 
     initUI();
 }
@@ -92,7 +89,7 @@ void GeneralPage::initComponentValue()
                     m_keyboardInterface->setRepeat_enabled(status);
                 }
             });
-    connect(m_keyboardInterface.data(), &KeyboardBackEndProxy::repeat_enabledChanged,
+    connect(m_keyboardInterface, &KeyboardBackEndProxy::repeat_enabledChanged,
             [this](bool isEnabled) {
                 //更新界面
                 m_repeateEnabled = isEnabled;
@@ -108,7 +105,7 @@ void GeneralPage::initComponentValue()
             [this] {
                 m_timer->start(TIMEOUT);
             });
-    connect(m_keyboardInterface.data(), &KeyboardBackEndProxy::repeat_delayChanged,
+    connect(m_keyboardInterface, &KeyboardBackEndProxy::repeat_delayChanged,
             [this](int value) {
                 //更新界面
                 if (m_delay != value)
@@ -128,7 +125,7 @@ void GeneralPage::initComponentValue()
             [this] {
                 m_timer->start(TIMEOUT);
             });
-    connect(m_keyboardInterface.data(), &KeyboardBackEndProxy::repeat_intervalChanged,
+    connect(m_keyboardInterface, &KeyboardBackEndProxy::repeat_intervalChanged,
             [this](qint32 value) {
                 //更新界面
                 if (m_interval != (ui->hslider_interval->maximum() - value + 10))
