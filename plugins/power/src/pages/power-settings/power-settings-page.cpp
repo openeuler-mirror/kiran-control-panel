@@ -60,7 +60,6 @@ void PowerSettingsPage::initUI()
     ///计算机空闲进行的操作
     // clang-format off
     QMap<QString, PowerAction> computerIdleActionsMap = {
-        {tr("Display Off"), POWER_ACTION_DISPLAY_OFF},
         {tr("Suspend"), POWER_ACTION_COMPUTER_SUSPEND},
         {tr("Shutdown"), POWER_ACTION_COMPUTER_SHUTDOWN},
         {tr("Hibernate"), POWER_ACTION_COMPUTER_HIBERNATE},
@@ -192,6 +191,10 @@ void PowerSettingsPage::handleIdleTimeActionCurrentIdxChanged(int idx)
     if (reply.isError())
     {
         KLOG_WARNING() << "set idle action for computer failed" << reply.error();
+    }
+    else
+    {
+        KLOG_INFO() << "power --> " << idleAction.idleTimeout << idleAction.idleAction;
     }
 }
 
