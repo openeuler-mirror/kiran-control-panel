@@ -26,14 +26,14 @@
 #include "general-page.h"
 #include "layout-page.h"
 
-class KeyboardPlugin : public QObject, public KcpPluginInterface
+class KcpKeyboard : public QObject, public KcpPluginInterface
 {
     Q_OBJECT
     Q_PLUGIN_METADATA(IID KcpPluginInterface_iid)
     Q_INTERFACES(KcpPluginInterface)
 public:
-    KeyboardPlugin():QObject(){};
-    ~KeyboardPlugin(){};
+    KcpKeyboard():QObject(){};
+    ~KcpKeyboard(){};
 
 public:
     virtual int init() override

@@ -13,13 +13,13 @@
  */
 
 #include <kiran-single-application.h>
+#include <kiran-palette.h>
 #include <qt5-log-i.h>
+
 #include <QCommandLineParser>
 #include <QDesktopWidget>
-#include <QFile>
 #include <QLoggingCategory>
 #include <QTranslator>
-#include <iostream>
 
 #include "config.h"
 #include "panel-window.h"
@@ -43,7 +43,6 @@ bool installTranslator()
     return true;
 }
 
-#include "kiran-palette.h"
 int main(int argc, char *argv[])
 {
     KiranApplication a(argc, argv);

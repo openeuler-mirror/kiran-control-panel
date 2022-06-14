@@ -4,19 +4,21 @@
 #include "temporary-dir-manager.h"
 #include "kcp-account-config.h"
 
+#include <QApplication>
 #include <QStyle>
 #include <qt5-log-i.h>
+#include <QTranslator>
 
 #define DEFAULT_THEME ":/kcp-account/themes/kiran-cpanel-account.qss"
 
-class KeybindingPlugin : public QObject,public KcpPluginInterface
+class KcpAccount : public QObject,public KcpPluginInterface
 {
     Q_OBJECT
     Q_PLUGIN_METADATA(IID KcpPluginInterface_iid)
     Q_INTERFACES(KcpPluginInterface)
 
 public:
-    ~KeybindingPlugin()= default;
+    ~KcpAccount()= default;
     int init() override
     {
         if (!AccountsGlobalInfo::instance()->init())
@@ -24,6 +26,7 @@ public:
             KLOG_ERROR() << "load user info failed!";
             return -1;
         }
+
         if (!TemporaryDirManager::instance()->init(qAppName()))
         {
             KLOG_ERROR() << "init temporary dir manager failed!";

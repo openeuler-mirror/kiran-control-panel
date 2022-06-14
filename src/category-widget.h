@@ -25,6 +25,7 @@ public:
 
     const static int reduce_width;
     const static int expand_width;
+
 signals:
     void currentCategoryIndexChanged(int curIdx,int prevIdx);
 

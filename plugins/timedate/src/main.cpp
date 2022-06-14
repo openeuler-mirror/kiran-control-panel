@@ -10,13 +10,13 @@
 
 #include <QTranslator>
 
-class TimedatePlugin : public QObject, public KcpPluginInterface
+class KcpTimedate : public QObject, public KcpPluginInterface
 {
     Q_OBJECT
     Q_PLUGIN_METADATA(IID KcpPluginInterface_iid)
     Q_INTERFACES(KcpPluginInterface)
 private:
-    ~TimedatePlugin() override = default;
+    ~KcpTimedate() override = default;
     int init() override
     {
         // TODO:后续考虑全局数据的创建和释放与控件的生存周期绑定

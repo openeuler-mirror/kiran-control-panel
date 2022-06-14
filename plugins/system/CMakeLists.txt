@@ -16,7 +16,7 @@ file(GLOB_RECURSE SYSTEM_SRC ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp
                              ${CMAKE_CURRENT_SOURCE_DIR}/*.h
                              ${CMAKE_CURRENT_SOURCE_DIR}/*.ui)
 
-qt5_create_translation(SYSTEM_QM ${CMAKE_CURRENT_SOURCE_DIR} ${PROJECT_SOURCE_DIR}/translations/kiran-cpanel-system.zh_CN.ts)
+qt5_create_translation(SYSTEM_QM ${CMAKE_CURRENT_SOURCE_DIR} .//translations/kiran-cpanel-system.zh_CN.ts)
 
 add_library(${TARGET_NAME} SHARED
         ${SYSTEM_SRC}

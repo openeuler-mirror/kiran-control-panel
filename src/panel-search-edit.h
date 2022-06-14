@@ -50,8 +50,8 @@ private:
     void setSearchPopupVisible(bool searchPopupVisible);
 
 signals:
-
     void sigJump(int categoryIdx,int subItemIdx);
+
 private:
     QStandardItemModel* m_searchModel = nullptr;
     QCompleter* m_completer = nullptr;

@@ -1711,6 +1711,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../../../src/panel-widget.ui" line="14"/>
         <location filename="../../../build/kiran-control-panel_autogen/include/ui_panel-widget.h" line="49"/>
+        <location filename="../../../cmake-build-debug/kiran-control-panel_autogen/include/ui_panel-widget.h" line="49"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>

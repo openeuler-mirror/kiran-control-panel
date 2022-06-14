@@ -1,17 +1,16 @@
 /**
- * Copyright (c) 2020 ~ 2021 KylinSec Co., Ltd. 
+ * Copyright (c) 2020 ~ 2021 KylinSec Co., Ltd.
  * kiran-control-panel is licensed under Mulan PSL v2.
- * You can use this software according to the terms and conditions of the Mulan PSL v2. 
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
  * You may obtain a copy of Mulan PSL v2 at:
- *          http://license.coscl.org.cn/MulanPSL2 
- * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND, 
- * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT, 
- * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.  
- * See the Mulan PSL v2 for more details.  
- * 
+ *          http://license.coscl.org.cn/MulanPSL2
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ *
  * Author:     liuxinhao <liuxinhao@kylinos.com.cn>
  */
-
 
 #include "panel-search-edit.h"
 #include "plugin-manager.h"
@@ -60,10 +59,10 @@ void CPanelSearchEdit::init()
 {
     setObjectName("edit_search");
 
-    //为搜索文本预留位置
+    // 为搜索文本预留位置
     setTextMargins(30, 0, 10, 0);
 
-    //控件和布局初始化
+    // 控件和布局初始化
     auto *searchIcon = new QLabel(this);
     searchIcon->setMaximumSize(20, 20);
     searchIcon->setCursor(QCursor(Qt::ArrowCursor));
@@ -77,7 +76,7 @@ void CPanelSearchEdit::init()
     layout->addSpacerItem(spacerItem);
     setLayout(layout);
 
-    ///填充搜索model
+    /// 填充搜索model
     m_searchModel = buildSearchModel();
 
     m_completer = new QCompleter(this);
@@ -101,7 +100,8 @@ QStandardItemModel *CPanelSearchEdit::buildSearchModel()
                                  QString tooltip,
                                  QString path,
                                  int categoryIdx,
-                                 int subItemIdx) -> void {
+                                 int subItemIdx) -> void
+    {
         foreach (auto searchKey, searchKeys)
         {
             auto *newItem = new QStandardItem;
@@ -135,7 +135,7 @@ QStandardItemModel *CPanelSearchEdit::buildSearchModel()
     return itemModel;
 }
 
-///设置搜索弹出框是否可见的属性，提供给stylesheet
+/// 设置搜索弹出框是否可见的属性，提供给stylesheet
 void CPanelSearchEdit::setSearchPopupVisible(bool searchPopupVisible)
 {
     setProperty("searchPopupVisible", searchPopupVisible);
@@ -144,12 +144,12 @@ void CPanelSearchEdit::setSearchPopupVisible(bool searchPopupVisible)
     this->update();
 }
 
-///事件过滤器
+/// 事件过滤器
 bool CPanelSearchEdit::eventFilter(QObject *watched, QEvent *event)
 {
     if (watched == m_completer->popup())
     {
-        ///过滤自动补全弹出的显示和隐藏事件，同步设置QWidget动态属性，以便更新相应的stylesheet
+        /// 过滤自动补全弹出的显示和隐藏事件，同步设置QWidget动态属性，以便更新相应的stylesheet
         if (event->type() == QEvent::Show)
         {
             setSearchPopupVisible(true);
