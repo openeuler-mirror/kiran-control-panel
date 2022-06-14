@@ -21,7 +21,7 @@ exit 0
 
 ui_debug=0
 specify_style=""
-run_plugin_name="kiran-cpanel-mouse"
+run_plugin_name="kiran-cpanel-audio"
 
 cmd=""
 

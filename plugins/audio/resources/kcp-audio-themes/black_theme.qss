@@ -1,0 +1,21 @@
+QLabel#volume{
+	color:#2eb3ff;
+}
+QLabel#outputVolume{
+    color:#2eb3ff;
+}
+QLabel#inputVolume{
+    color:#2eb3ff;
+}
+
+QWidget#volumeSettingPage{
+    background-color:#222222;
+    border: 1px solid #393939;
+    border-radius:6px;
+}
+
+QWidget#mixedSettingPage{
+    background-color:#222222;
+    border: 1px solid #393939;
+    border-radius:6px;
+}

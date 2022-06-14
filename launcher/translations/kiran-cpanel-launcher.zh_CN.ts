@@ -97,6 +97,19 @@
     </message>
 </context>
 <context>
+    <name>AudioSystemTray</name>
+    <message>
+        <location filename="../../plugins/audio/src/system-tray/audio-system-tray.cpp" line="82"/>
+        <source>Volume Setting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../plugins/audio/src/system-tray/audio-system-tray.cpp" line="83"/>
+        <source>Mixed Setting</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>AuthManagerPage</name>
     <message>
         <location filename="../../plugins/account/src/pages/auth-manager-page/auth-manager-page.ui" line="14"/>
@@ -172,30 +185,35 @@
     <message>
         <location filename="../../plugins/power/src/pages/battery-settings/battery-settings-page.ui" line="14"/>
         <location filename="../../build/plugins/power/kiran-cpanel-power_autogen/include/ui_battery-settings-page.h" line="159"/>
+        <location filename="../../cmake-build-debug/plugins/power/kiran-cpanel-power_autogen/include/ui_battery-settings-page.h" line="159"/>
         <source>BatterySettingsPage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../plugins/power/src/pages/battery-settings/battery-settings-page.ui" line="43"/>
         <location filename="../../build/plugins/power/kiran-cpanel-power_autogen/include/ui_battery-settings-page.h" line="160"/>
+        <location filename="../../cmake-build-debug/plugins/power/kiran-cpanel-power_autogen/include/ui_battery-settings-page.h" line="160"/>
         <source>After idle for more than the following time, the computer will execute</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../plugins/power/src/pages/battery-settings/battery-settings-page.ui" line="76"/>
         <location filename="../../build/plugins/power/kiran-cpanel-power_autogen/include/ui_battery-settings-page.h" line="161"/>
+        <location filename="../../cmake-build-debug/plugins/power/kiran-cpanel-power_autogen/include/ui_battery-settings-page.h" line="161"/>
         <source>When the battery is lit up, it will be executed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../plugins/power/src/pages/battery-settings/battery-settings-page.ui" line="106"/>
         <location filename="../../build/plugins/power/kiran-cpanel-power_autogen/include/ui_battery-settings-page.h" line="162"/>
+        <location filename="../../cmake-build-debug/plugins/power/kiran-cpanel-power_autogen/include/ui_battery-settings-page.h" line="162"/>
         <source>The monitor will turn off when it is idle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../plugins/power/src/pages/battery-settings/battery-settings-page.ui" line="136"/>
         <location filename="../../build/plugins/power/kiran-cpanel-power_autogen/include/ui_battery-settings-page.h" line="163"/>
+        <location filename="../../cmake-build-debug/plugins/power/kiran-cpanel-power_autogen/include/ui_battery-settings-page.h" line="163"/>
         <source>Reduce screen brightness when idle</source>
         <translation type="unfinished"></translation>
     </message>
@@ -251,10 +269,31 @@
     </message>
 </context>
 <context>
+    <name>CPanelAudioWidget</name>
+    <message>
+        <location filename="../../plugins/audio/src/plugin/cpanel-audio-widget.ui" line="14"/>
+        <location filename="../../build/plugins/audio/kiran-cpanel-audio_autogen/include/ui_cpanel-audio-widget.h" line="118"/>
+        <location filename="../../cmake-build-debug/plugins/audio/kiran-cpanel-audio_autogen/include/ui_cpanel-audio-widget.h" line="118"/>
+        <source>CPanelAudioWidget</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../plugins/audio/src/plugin/cpanel-audio-widget.cpp" line="40"/>
+        <source>Output</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../plugins/audio/src/plugin/cpanel-audio-widget.cpp" line="41"/>
+        <source>Input</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>CPanelPowerWidget</name>
     <message>
         <location filename="../../plugins/power/src/cpanel-power-widget.ui" line="14"/>
         <location filename="../../build/plugins/power/kiran-cpanel-power_autogen/include/ui_cpanel-power-widget.h" line="97"/>
+        <location filename="../../cmake-build-debug/plugins/power/kiran-cpanel-power_autogen/include/ui_cpanel-power-widget.h" line="97"/>
         <source>CPanelPowerWidget</source>
         <translation type="unfinished"></translation>
     </message>
@@ -750,48 +789,56 @@
     <message>
         <location filename="../../plugins/power/src/pages/general-settings/general-settings-page.ui" line="14"/>
         <location filename="../../build/plugins/power/kiran-cpanel-power_autogen/include/ui_general-settings-page.h" line="241"/>
+        <location filename="../../cmake-build-debug/plugins/power/kiran-cpanel-power_autogen/include/ui_general-settings-page.h" line="241"/>
         <source>GeneralSettingsPage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../plugins/power/src/pages/general-settings/general-settings-page.ui" line="40"/>
         <location filename="../../build/plugins/power/kiran-cpanel-power_autogen/include/ui_general-settings-page.h" line="242"/>
+        <location filename="../../cmake-build-debug/plugins/power/kiran-cpanel-power_autogen/include/ui_general-settings-page.h" line="242"/>
         <source>When the power button is pressed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../plugins/power/src/pages/general-settings/general-settings-page.ui" line="64"/>
         <location filename="../../build/plugins/power/kiran-cpanel-power_autogen/include/ui_general-settings-page.h" line="243"/>
+        <location filename="../../cmake-build-debug/plugins/power/kiran-cpanel-power_autogen/include/ui_general-settings-page.h" line="243"/>
         <source>When the suspend button is pressed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../plugins/power/src/pages/general-settings/general-settings-page.ui" line="92"/>
         <location filename="../../build/plugins/power/kiran-cpanel-power_autogen/include/ui_general-settings-page.h" line="244"/>
+        <location filename="../../cmake-build-debug/plugins/power/kiran-cpanel-power_autogen/include/ui_general-settings-page.h" line="244"/>
         <source>When closing the lid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../plugins/power/src/pages/general-settings/general-settings-page.ui" line="153"/>
         <location filename="../../build/plugins/power/kiran-cpanel-power_autogen/include/ui_general-settings-page.h" line="245"/>
+        <location filename="../../cmake-build-debug/plugins/power/kiran-cpanel-power_autogen/include/ui_general-settings-page.h" line="245"/>
         <source>Display brightness setting</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../plugins/power/src/pages/general-settings/general-settings-page.ui" line="173"/>
         <location filename="../../build/plugins/power/kiran-cpanel-power_autogen/include/ui_general-settings-page.h" line="246"/>
+        <location filename="../../cmake-build-debug/plugins/power/kiran-cpanel-power_autogen/include/ui_general-settings-page.h" line="246"/>
         <source>0%</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../plugins/power/src/pages/general-settings/general-settings-page.ui" line="201"/>
         <location filename="../../build/plugins/power/kiran-cpanel-power_autogen/include/ui_general-settings-page.h" line="247"/>
+        <location filename="../../cmake-build-debug/plugins/power/kiran-cpanel-power_autogen/include/ui_general-settings-page.h" line="247"/>
         <source>Regard computer as idle after</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../plugins/power/src/pages/general-settings/general-settings-page.ui" line="264"/>
         <location filename="../../build/plugins/power/kiran-cpanel-power_autogen/include/ui_general-settings-page.h" line="249"/>
+        <location filename="../../cmake-build-debug/plugins/power/kiran-cpanel-power_autogen/include/ui_general-settings-page.h" line="249"/>
         <source>Lock screen when idle</source>
         <translation type="unfinished"></translation>
     </message>
@@ -981,6 +1028,42 @@
     <message>
         <location filename="../../plugins/appearance/src/pages/wallpaper/widget/image-selector.cpp" line="192"/>
         <source>Are you sure you want to delete this picture?</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>InputPage</name>
+    <message>
+        <location filename="../../plugins/audio/src/plugin/input-page.ui" line="14"/>
+        <location filename="../../build/plugins/audio/kiran-cpanel-audio_autogen/include/ui_input-page.h" line="163"/>
+        <location filename="../../cmake-build-debug/plugins/audio/kiran-cpanel-audio_autogen/include/ui_input-page.h" line="163"/>
+        <source>InputPage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../plugins/audio/src/plugin/input-page.ui" line="40"/>
+        <location filename="../../build/plugins/audio/kiran-cpanel-audio_autogen/include/ui_input-page.h" line="164"/>
+        <location filename="../../cmake-build-debug/plugins/audio/kiran-cpanel-audio_autogen/include/ui_input-page.h" line="164"/>
+        <source>Input devices</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../plugins/audio/src/plugin/input-page.ui" line="80"/>
+        <location filename="../../build/plugins/audio/kiran-cpanel-audio_autogen/include/ui_input-page.h" line="165"/>
+        <location filename="../../cmake-build-debug/plugins/audio/kiran-cpanel-audio_autogen/include/ui_input-page.h" line="165"/>
+        <source>Input volume</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../plugins/audio/src/plugin/input-page.ui" line="148"/>
+        <location filename="../../build/plugins/audio/kiran-cpanel-audio_autogen/include/ui_input-page.h" line="167"/>
+        <location filename="../../cmake-build-debug/plugins/audio/kiran-cpanel-audio_autogen/include/ui_input-page.h" line="167"/>
+        <source>Feedback volume</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../plugins/audio/src/plugin/input-page.cpp" line="240"/>
+        <source>No input device detected</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1714,6 +1797,56 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>OutputPage</name>
+    <message>
+        <location filename="../../plugins/audio/src/plugin/output-page.ui" line="14"/>
+        <location filename="../../build/plugins/audio/kiran-cpanel-audio_autogen/include/ui_output-page.h" line="208"/>
+        <location filename="../../cmake-build-debug/plugins/audio/kiran-cpanel-audio_autogen/include/ui_output-page.h" line="208"/>
+        <source>OutputPage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../plugins/audio/src/plugin/output-page.ui" line="55"/>
+        <location filename="../../build/plugins/audio/kiran-cpanel-audio_autogen/include/ui_output-page.h" line="209"/>
+        <location filename="../../cmake-build-debug/plugins/audio/kiran-cpanel-audio_autogen/include/ui_output-page.h" line="209"/>
+        <source>Output devices</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../plugins/audio/src/plugin/output-page.ui" line="110"/>
+        <location filename="../../build/plugins/audio/kiran-cpanel-audio_autogen/include/ui_output-page.h" line="210"/>
+        <location filename="../../cmake-build-debug/plugins/audio/kiran-cpanel-audio_autogen/include/ui_output-page.h" line="210"/>
+        <source>Output volume</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../plugins/audio/src/plugin/output-page.ui" line="202"/>
+        <location filename="../../build/plugins/audio/kiran-cpanel-audio_autogen/include/ui_output-page.h" line="212"/>
+        <location filename="../../cmake-build-debug/plugins/audio/kiran-cpanel-audio_autogen/include/ui_output-page.h" line="212"/>
+        <source>Left/right balance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../plugins/audio/src/plugin/output-page.ui" line="257"/>
+        <location filename="../../build/plugins/audio/kiran-cpanel-audio_autogen/include/ui_output-page.h" line="213"/>
+        <location filename="../../cmake-build-debug/plugins/audio/kiran-cpanel-audio_autogen/include/ui_output-page.h" line="213"/>
+        <source>Left</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../plugins/audio/src/plugin/output-page.ui" line="289"/>
+        <location filename="../../build/plugins/audio/kiran-cpanel-audio_autogen/include/ui_output-page.h" line="214"/>
+        <location filename="../../cmake-build-debug/plugins/audio/kiran-cpanel-audio_autogen/include/ui_output-page.h" line="214"/>
+        <source>Right</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../plugins/audio/src/plugin/output-page.cpp" line="96"/>
+        <source>No output device detected</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>PanelWidget</name>
     <message>
         <location filename="../../src/panel-widget.ui" line="14"/>
@@ -1829,18 +1962,21 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../../plugins/power/src/pages/power-settings/power-settings-page.ui" line="14"/>
         <location filename="../../build/plugins/power/kiran-cpanel-power_autogen/include/ui_power-settings-page.h" line="112"/>
+        <location filename="../../cmake-build-debug/plugins/power/kiran-cpanel-power_autogen/include/ui_power-settings-page.h" line="112"/>
         <source>PowerSettingsPage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../plugins/power/src/pages/power-settings/power-settings-page.ui" line="43"/>
         <location filename="../../build/plugins/power/kiran-cpanel-power_autogen/include/ui_power-settings-page.h" line="113"/>
+        <location filename="../../cmake-build-debug/plugins/power/kiran-cpanel-power_autogen/include/ui_power-settings-page.h" line="113"/>
         <source>After idle for more than the following time, the computer will execute</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../plugins/power/src/pages/power-settings/power-settings-page.ui" line="76"/>
         <location filename="../../build/plugins/power/kiran-cpanel-power_autogen/include/ui_power-settings-page.h" line="114"/>
+        <location filename="../../cmake-build-debug/plugins/power/kiran-cpanel-power_autogen/include/ui_power-settings-page.h" line="114"/>
         <source>The monitor will turn off when it is idle</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2730,6 +2866,22 @@ p, li { white-space: pre-wrap; }
         <location filename="../../plugins/account/src/pages/user-info-page/user-info-page.cpp" line="339"/>
         <source>Warning</source>
         <translation type="unfinished">警告</translation>
+    </message>
+</context>
+<context>
+    <name>VolumeSettingPage</name>
+    <message>
+        <location filename="../../plugins/audio/src/system-tray/volume-setting-page.ui" line="35"/>
+        <location filename="../../build/plugins/audio/kiran-audio-status-icon_autogen/include/ui_volume-setting-page.h" line="123"/>
+        <source>VolumeSettingPage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../plugins/audio/src/system-tray/volume-setting-page.ui" line="104"/>
+        <location filename="../../build/plugins/audio/kiran-audio-status-icon_autogen/include/ui_volume-setting-page.h" line="124"/>
+        <location filename="../../plugins/audio/src/system-tray/volume-setting-page.cpp" line="57"/>
+        <source>Volume</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
