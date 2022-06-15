@@ -22,7 +22,6 @@ public:
 
     int getCurrentCateogryIdx();
     void setCurrentCategoryIdx(int idx);
-
     const static int reduce_width;
     const static int expand_width;
 

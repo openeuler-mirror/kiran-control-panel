@@ -32,9 +32,11 @@ public:
     ~KiranModuleWidget();
 
     void setLeftContentsMargins(const int &leftmargin);
+
     void clear();
     void setPlugins(const PluginHelperPtrList &plugins);
     bool checkHasUnSaved();
+    void jumpTo(const QString& subItemID);
 
 private slots:
     void handleCurrentItemChanged();

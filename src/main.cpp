@@ -60,7 +60,7 @@ void processCommandLine()
     cmdParser.process(*singleApp);
 
     QString category = cmdParser.value(categoryOption);
-    QString subItem = cmdParser.value(categoryOption);
+    QString subItem = cmdParser.value(subItemOption);
     if( !subItem.isEmpty() && category.isEmpty() )
     {
         std::cerr << "failed to set sub item without category" << std::endl;
@@ -73,6 +73,7 @@ void processCommandLine()
             QJsonObject jumpInfoObject({{"category", category},{"subitem",subItem}});
             QJsonDocument jumpInfoDoc(jumpInfoObject);
             QByteArray byteArray = jumpInfoDoc.toJson();
+            singleApp->sendMessage(byteArray);
         }
         else
         {
@@ -94,6 +95,10 @@ int main(int argc, char *argv[])
 
     // 处理命令行参数
     processCommandLine();
+    if( !app.isPrimary() )
+    {
+        exit(EXIT_SUCCESS);
+    }
 
     // 加载相关插件的信息
     PluginManager::getInstance()->loadAll();
@@ -102,6 +107,8 @@ int main(int argc, char *argv[])
     installTranslator();
 
     PanelWindow w;
+    w.jump(defaultCategory,defaultSubItem);
+
     int screeNum = QApplication::desktop()->screenNumber(QCursor::pos());
     QRect screenGeometry = QApplication::desktop()->screenGeometry(screeNum);
     w.resize(1060, 830);

@@ -17,6 +17,7 @@
 #include "kiranwidgets-qt5/kiran-titlebar-window.h"
 #include "panel-widget.h"
 
+class PanelWidget;
 /**
  * @brief 控制面板主窗口
  */
@@ -26,11 +27,17 @@ class PanelWindow : public KiranTitlebarWindow
 public:
     explicit PanelWindow(QWidget *parent = nullptr);
 
+    void jump(const QString& categoryName,const QString& subItem);
+
 private:
     void initUI();
 
 private slots:
     void handleInstanceStarted();
+    void handleReceivedMessage( quint32 instanceId, QByteArray message );
+
+private:
+    PanelWidget* m_panelWidget = nullptr;
 };
 
 #endif //__PANEL_WINDOW_H__

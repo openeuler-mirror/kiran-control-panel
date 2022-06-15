@@ -31,6 +31,7 @@ PanelWindow::PanelWindow(QWidget *parent) : KiranTitlebarWindow(parent)
 {
     initUI();
     connect(static_cast<KiranSingleApplication*>(qApp),&KiranSingleApplication::instanceStarted,this,&PanelWindow::handleInstanceStarted);
+    connect(static_cast<KiranSingleApplication*>(qApp),&KiranSingleApplication::receivedMessage,this,&PanelWindow::handleReceivedMessage);
 }
 
 void PanelWindow::initUI()
@@ -42,8 +43,8 @@ void PanelWindow::initUI()
     setTitle(tr("Control Panel"));
 
     //初始化中心显示窗口
-    auto *centerWidget = new PanelWidget(this);
-    setWindowContentWidget(centerWidget);
+    m_panelWidget = new PanelWidget(this);
+    setWindowContentWidget(m_panelWidget);
 
     //添加搜索框
     auto *searchBox = new CPanelSearchEdit(this);
@@ -69,4 +70,22 @@ void PanelWindow::handleInstanceStarted()
     QX11Info::setAppTime(QX11Info::getTimestamp());
     raise();
     activateWindow();
+}
+
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <qt5-log-i.h>
+void PanelWindow::handleReceivedMessage(quint32 instanceId, QByteArray message)
+{
+    QJsonDocument doc = QJsonDocument::fromJson(message);
+    QJsonObject jsonObject = doc.object();
+    QString category = jsonObject["category"].toString();
+    QString subItem = jsonObject["subitem"].toString();
+    jump(category,subItem);
+}
+
+void PanelWindow::jump(const QString& categoryName,const QString& subItem)
+{
+    KLOG_DEBUG() << "jump to" << categoryName << subItem;
+    m_panelWidget->jumpTo(categoryName,subItem);
 }
