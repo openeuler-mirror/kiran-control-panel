@@ -105,7 +105,7 @@ bool SystemInformation::initUI()
                               arch,
                               systemVersion,
                               kernelVersion);
-        qInfo() << hostname << arch << systemVersion << kernelVersion;
+        KLOG_DEBUG() << hostname << arch << systemVersion << kernelVersion;
         ui->lab_name_info->setText(hostname);
         ui->lab_system_arch_info->setText(arch);
         ui->lab_system_version_info->setText(systemVersion);

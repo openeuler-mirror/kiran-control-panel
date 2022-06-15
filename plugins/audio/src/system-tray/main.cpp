@@ -28,22 +28,6 @@
 
 #define MAX_WAIT_COUNTS 10
 
-void loadStylesheet()
-{
-    QFile file(":/kcp-audio-themes/black_theme.qss");
-    if (file.open(QIODevice::ReadOnly))
-    {
-        QString style = file.readAll();
-        qApp->setStyleSheet(style);
-        KLOG_INFO() << "load stylesheet success";
-        file.close();
-    }
-    else
-    {
-        KLOG_INFO() << "load stylesheet failed";
-    }
-}
-
 int main(int argc, char *argv[])
 {
     KiranApplication a(argc, argv);
@@ -59,7 +43,6 @@ int main(int argc, char *argv[])
     }
     else
         KLOG_INFO() << "installTranslator failed";
-    loadStylesheet();
 
     AudioSystemTray *audioSystemTray = nullptr;
 

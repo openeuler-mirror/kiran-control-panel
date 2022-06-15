@@ -67,9 +67,34 @@ void PanelWidget::handleCurrentCategoryChanged(int curCategoryIdx, int prevCateg
         KLOG_DEBUG() << "update current category Idx" << curCategoryIdx;
         m_currentCategoryIndex = curCategoryIdx;
 
-        auto categorys = CPanelPluginManager::getInstance()->getCategorys();
+        auto categorys = PluginManager::getInstance()->getCategorys();
         auto category = categorys.at(m_currentCategoryIndex);
         KLOG_DEBUG() << "update module widget for category:" << (category?category->getCategoryDesktopInfo().name:"null");
-        ui->module_widget->setPlugins(category?category->getPlugins():QList<QSharedPointer<CPanelPluginHelper>>());
+        ui->module_widget->setPlugins(category?category->getPlugins():QList<QSharedPointer<PluginHelper>>());
     }
+}
+
+void PanelWidget::jumpTo(const QString &categoryName, const QString &subItem)
+{
+    auto categorys = PluginManager::getInstance()->getCategorys();
+
+    int categoryIdx = -1;
+
+    for( int i=0; i<categorys.count(); i++)
+    {
+        auto category = categorys.at(i);
+        if( category->getCategoryDesktopInfo().categoryName == categoryName )
+        {
+            categoryIdx = i;
+            break ;
+        }
+    }
+
+    if( categoryIdx == -1 )
+    {
+        KLOG_ERROR() << QString("can't jump to category <%1>,not find!").arg(categoryName);
+        return;
+    }
+
+    m_categoryWidget->setCurrentCategoryIdx(categoryIdx);
 }

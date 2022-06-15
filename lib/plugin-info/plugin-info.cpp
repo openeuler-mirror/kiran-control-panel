@@ -1,17 +1,16 @@
 /**
- * Copyright (c) 2020 ~ 2021 KylinSec Co., Ltd. 
+ * Copyright (c) 2020 ~ 2021 KylinSec Co., Ltd.
  * kiran-control-panel is licensed under Mulan PSL v2.
- * You can use this software according to the terms and conditions of the Mulan PSL v2. 
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
  * You may obtain a copy of Mulan PSL v2 at:
- *          http://license.coscl.org.cn/MulanPSL2 
- * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND, 
- * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT, 
- * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.  
- * See the Mulan PSL v2 for more details.  
- * 
+ *          http://license.coscl.org.cn/MulanPSL2
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ *
  * Author:     liuxinhao <liuxinhao@kylinos.com.cn>
  */
-
 
 #include "plugin-info.h"
 #include "config.h"
@@ -21,6 +20,9 @@
 #include <QApplication>
 #include <QFileInfo>
 #include <QLocale>
+#include <QMetaMethod>
+#include <QObject>
+#include <QSet>
 #include <QTranslator>
 
 ///[Desktop Entry]
@@ -36,15 +38,15 @@
 #define KEY_LIBRARY "Library"
 #define KEY_SUBITEMS "SubItems"
 
-///subitem
+/// subitem
 #define KEY_SUBITEM_ID "Id"
 #define KEY_SUBITEM_NAME "Name"
 #define KEY_SUBITEM_ICON "Icon"
 #define KEY_SUBITEM_KEYWORDS "Keywords"
 
-QSharedPointer<CPanelPluginHelper> CPanelPluginHelper::loadPlugin(const QString& desktop)
+PluginHelperPtr PluginHelper::loadPlugin(const QString& desktop)
 {
-    QSharedPointer<CPanelPluginHelper> pSharedPluginHelper(new CPanelPluginHelper);
+    PluginHelperPtr pSharedPluginHelper(new PluginHelper);
     if (!pSharedPluginHelper->load(desktop))
     {
         KLOG_ERROR() << "can't load plugin desktop <" << desktop << ">!";
@@ -53,12 +55,12 @@ QSharedPointer<CPanelPluginHelper> CPanelPluginHelper::loadPlugin(const QString&
     return pSharedPluginHelper;
 }
 
-CPanelPluginHelper::~CPanelPluginHelper()
+PluginHelper::~PluginHelper()
 {
     clear();
 }
 
-bool CPanelPluginHelper::load(const QString& desktopFile)
+bool PluginHelper::load(const QString& desktopFile)
 {
     clear();
 
@@ -69,41 +71,65 @@ bool CPanelPluginHelper::load(const QString& desktopFile)
     }
 
     PluginDesktopInfo desktopInfo;
-    //解析插件Desktop中的信息
+
+    // 解析插件Desktop中的信息
     if (!parseDesktopInfo(desktopFile, desktopInfo))
     {
         KLOG_ERROR() << "parser desktop failed!," << desktopFile;
     }
-    //加载插件共享库
+
+    // 加载插件共享库
     KcpPluginInterface* pluginInterface = nullptr;
-    if (!loadLibrary(desktopInfo.library, pluginInterface))
+    QObject* pluginInstance = nullptr;
+    if (!loadLibrary(desktopInfo.library, pluginInterface, pluginInstance))
     {
         KLOG_ERROR() << "load library failed!" << desktopInfo.library;
         return false;
     }
-    //通过插件接口获取应该显示的功能项和Desktop中的信息取交集
-    QStringList visibleSubItems = pluginInterface->visibleSubItems();
-    QList<PluginSubItemInfo> newSubItems;
-    foreach (auto subitem, desktopInfo.subItems)
+
+    // 检查插件是否向外提供控制面板指定信号,若提供则连接该信号至PluginHelper转发至外部
+    auto pluginMetaObject = pluginInstance->metaObject();
+    static QSet<QString> PluginSignalMap = {
+        "visibleSubItemsChanged()"
+    };
+    for (auto pluginSignal : PluginSignalMap)
     {
-        if (visibleSubItems.contains(subitem.id))
+        int sigIdx = pluginMetaObject->indexOfSignal(pluginSignal.toStdString().c_str());
+        if (sigIdx != -1)
         {
-            newSubItems.append(subitem);
+            // 和SIGNAL宏一样
+            QString connectSignalName = "2"+pluginSignal;
+
+            if (!connect(pluginInstance, connectSignalName.toStdString().c_str(),
+                         this, connectSignalName.toStdString().c_str()))
+            {
+                KLOG_ERROR() << "can't connect plugin" << desktopInfo.name << pluginSignal;
+            }
+            else
+            {
+                KLOG_DEBUG() << "connect plugin" << desktopInfo.name << pluginSignal << "to plugin helper success";
+            }
         }
     }
-    desktopInfo.subItems.swap(newSubItems);
+
     m_pluginDesktopInfo = desktopInfo;
     m_pluginInterface = pluginInterface;
     return true;
 }
 
-const PluginDesktopInfo& CPanelPluginHelper::getPluginDesktopInfo()
+const PluginDesktopInfo& PluginHelper::getPluginDesktopInfo()
 {
     return m_pluginDesktopInfo;
 }
 
-bool CPanelPluginHelper::loadLibrary(const QString& library,
-                                     KcpPluginInterface*& pluginInterface)
+QStringList PluginHelper::visibleSubItems()
+{
+    return m_pluginInterface->visibleSubItems();
+}
+
+bool PluginHelper::loadLibrary(const QString& library,
+                               KcpPluginInterface*& pluginInterface,
+                               QObject*& pluginInstance)
 {
     QFileInfo libraryInfo(library);
     if (!libraryInfo.exists())
@@ -125,7 +151,15 @@ bool CPanelPluginHelper::loadLibrary(const QString& library,
         return false;
     }
 
-    m_pluginHandle.dumpObjectInfo();
+    // TODO:连接QPluginLoader::instance()信号到PluginHelper之中
+    //  QObject* pluginInstance = m_pluginHandle.instance();
+    //  const QMetaObject* metaObject = pluginInstance->metaObject();
+    //  int methodCount = metaObject->methodCount();
+    //  for(int i=0;i<methodCount;i++)
+    //  {
+    //      KLOG_INFO() << "meta method: " <<  metaObject->method(i).typeName() << metaObject->method(i).methodType() <<  metaObject->method(i).name();
+    //  }
+    //  KLOG_INFO() << "singal <notifyVisiableCategoryChanged>:" << metaObject->indexOfSignal("notifyVisiableCategoryChanged()");
 
     KcpPluginInterface* pInterface = qobject_cast<KcpPluginInterface*>(m_pluginHandle.instance());
     if (!pInterface)
@@ -144,29 +178,11 @@ bool CPanelPluginHelper::loadLibrary(const QString& library,
     }
 
     pluginInterface = pInterface;
+    pluginInstance = m_pluginHandle.instance();
     return true;
 }
 
-QStringList CPanelPluginHelper::getLocaleKey(const QString& key)
-{
-    QLocale locale;
-    QString localeName = locale.name();
-    QString languageName = locale.nativeLanguageName();
-    QString countryName = locale.nativeCountryName();
-
-    // clang-format off
-    QStringList keys = {
-        QString("%1[%2]").arg(key).arg(localeName),
-        QString("%1[%2]").arg(key).arg(languageName),
-        QString("%1[%2]").arg(key).arg(countryName),
-        QString("%1").arg(key)
-    };
-    // clang-format on
-
-    return keys;
-}
-
-void CPanelPluginHelper::clear()
+void PluginHelper::clear()
 {
     if (m_pluginInterface)
     {
@@ -180,7 +196,7 @@ void CPanelPluginHelper::clear()
     }
 }
 
-QWidget* CPanelPluginHelper::getSubItemWidget(const QString& subItemName)
+QWidget* PluginHelper::getSubItemWidget(const QString& subItemName)
 {
     if (!m_pluginInterface)
     {
@@ -191,7 +207,7 @@ QWidget* CPanelPluginHelper::getSubItemWidget(const QString& subItemName)
     return m_pluginInterface->getSubItemWidget(subItemName);
 }
 
-bool CPanelPluginHelper::haveUnsavedOptions()
+bool PluginHelper::haveUnsavedOptions()
 {
     if (!m_pluginInterface)
     {
@@ -202,7 +218,7 @@ bool CPanelPluginHelper::haveUnsavedOptions()
     return m_pluginInterface->haveUnsavedOptions();
 }
 
-bool CPanelPluginHelper::parseDesktopInfo(const QString& desktopPath, PluginDesktopInfo& desktopInfo)
+bool PluginHelper::parseDesktopInfo(const QString& desktopPath, PluginDesktopInfo& desktopInfo)
 {
     GError* error = nullptr;
     std::string desktopFilePath = desktopPath.toStdString();
@@ -221,7 +237,7 @@ bool CPanelPluginHelper::parseDesktopInfo(const QString& desktopPath, PluginDesk
         goto out;
     }
 
-    ///name
+    /// name
     name = g_key_file_get_locale_string(keyFile,
                                         GROUP_DESKTOP_ENTRY,
                                         KEY_NAME,
@@ -236,7 +252,7 @@ bool CPanelPluginHelper::parseDesktopInfo(const QString& desktopPath, PluginDesk
     desktopInfo.name = name;
     g_free(name);
 
-    ///comment
+    /// comment
     comment = g_key_file_get_locale_string(keyFile,
                                            GROUP_DESKTOP_ENTRY,
                                            KEY_COMMENT,
@@ -251,7 +267,7 @@ bool CPanelPluginHelper::parseDesktopInfo(const QString& desktopPath, PluginDesk
     desktopInfo.comment = comment;
     g_free(comment);
 
-    ///icon
+    /// icon
     icon = g_key_file_get_string(keyFile,
                                  GROUP_DESKTOP_ENTRY,
                                  KEY_ICON,
@@ -265,7 +281,7 @@ bool CPanelPluginHelper::parseDesktopInfo(const QString& desktopPath, PluginDesk
     desktopInfo.Icon = icon;
     g_free(icon);
 
-    ///weight
+    /// weight
     weight = g_key_file_get_int64(keyFile, GROUP_KIRAN_CONTROL_PANEL_PLUGIN, KEY_WEIGHT, &error);
     if (error)
     {
@@ -274,7 +290,7 @@ bool CPanelPluginHelper::parseDesktopInfo(const QString& desktopPath, PluginDesk
     }
     desktopInfo.weight = weight;
 
-    //category
+    // category
     category = g_key_file_get_string(keyFile, GROUP_KIRAN_CONTROL_PANEL_PLUGIN, KEY_CATEGORY, &error);
     if (!category)
     {
@@ -285,7 +301,7 @@ bool CPanelPluginHelper::parseDesktopInfo(const QString& desktopPath, PluginDesk
     desktopInfo.category = category;
     g_free(category);
 
-    //library
+    // library
     library = g_key_file_get_string(keyFile, GROUP_KIRAN_CONTROL_PANEL_PLUGIN, KEY_LIBRARY, &error);
     if (!library)
     {
@@ -299,7 +315,7 @@ bool CPanelPluginHelper::parseDesktopInfo(const QString& desktopPath, PluginDesk
     {
         desktopInfo.library.insert(0, QString(PLUGIN_LIBRARY_DIR) + "/");
     }
-    //subItems
+    // subItems
     subItems = g_key_file_get_string(keyFile, GROUP_KIRAN_CONTROL_PANEL_PLUGIN, KEY_SUBITEMS, &error);
     if (!subItems)
     {

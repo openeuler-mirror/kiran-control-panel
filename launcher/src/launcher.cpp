@@ -26,10 +26,6 @@
 #include <QScreen>
 #include <QX11Info>
 
-#ifdef qApp
-#undef qApp
-#endif
-#define qApp (static_cast<KiranSingleApplication*>(QCoreApplication::instance()))
 
 Launcher::Launcher(QWidget *parent) :
     KiranTitlebarWindow(parent)
@@ -38,7 +34,7 @@ Launcher::Launcher(QWidget *parent) :
     m_moduleWidget = new KiranModuleWidget(this);
 
     setWindowContentWidget(m_moduleWidget);
-    connect(qApp,&KiranSingleApplication::instanceStarted,this,&Launcher::handleActivateSlot);
+    connect(static_cast<KiranSingleApplication*>(qApp),&KiranSingleApplication::instanceStarted,this,&Launcher::handleActivateSlot);
 }
 
 Launcher::~Launcher()
@@ -46,14 +42,14 @@ Launcher::~Launcher()
 
 }
 
-void Launcher::setPlugins(const QList<QSharedPointer<CPanelPluginHelper>> &plugins)
+void Launcher::setPlugins(const QList<QSharedPointer<PluginHelper>> &plugins)
 {
     m_moduleWidget->setPlugins(plugins);
 }
 
-void Launcher::setPlugin(QSharedPointer<CPanelPluginHelper> plugin)
+void Launcher::setPlugin(QSharedPointer<PluginHelper> plugin)
 {
-    QList<QSharedPointer<CPanelPluginHelper>> plugins = {plugin};
+    QList<QSharedPointer<PluginHelper>> plugins = {plugin};
     m_moduleWidget->setPlugins(plugins);
 }
 

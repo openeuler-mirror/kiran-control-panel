@@ -28,7 +28,7 @@ SubItems=Themes,Fonts,Wallpaper
 Name=Theme
 Name[zh_CN]=主题设置
 #插件Icon
-Icon=@ICON_DIR@/kcp-page-themes.svg
+Icon=kcp-appearance-themes
 #插件关键字 该值提供给控制中心形成搜索列表
 Keywords[zh_CN]=主题,个性化
 Keywords=theme,appearance
@@ -38,7 +38,7 @@ Keywords=theme,appearance
 Name=Font
 Name[zh_CN]=字体设置
 #插件Icon
-Icon=@ICON_DIR@/kcp-page-font.svg
+Icon=kcp-appearance-font
 #插件关键字 该值提供给控制中心形成搜索列表
 Keywords[zh_CN]=字体,个性化
 Keywords=font,appearance
@@ -48,7 +48,7 @@ Keywords=font,appearance
 Name=Wallpaper
 Name[zh_CN]=壁纸设置
 #插件Icon
-Icon=@ICON_DIR@/kcp-page-wallpaper.svg
+Icon=kcp-appearance-wallpaper
 #插件关键字 该值提供给控制中心形成搜索列表
 Keywords[zh_CN]=壁纸,个性化 
 Keywords=wallpaper,appearance

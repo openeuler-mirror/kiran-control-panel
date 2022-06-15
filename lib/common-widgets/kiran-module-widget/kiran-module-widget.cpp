@@ -45,17 +45,26 @@ void KiranModuleWidget::setLeftContentsMargins(const int &leftmargin)
 
 void KiranModuleWidget::clear()
 {
+    disconnect(this, SIGNAL(handlePluginVisibleSubItemsChanged()));
+
     ui->list_subItems->clear();
+
     m_currentSubItemIdx = -1;
     if (m_subItemWidget)
     {
         m_subItemWidget->deleteLater();
         m_subItemWidget = nullptr;
     }
+
+    for(auto plugin:m_plugins)
+    {
+        disconnect(plugin.data(),&PluginHelper::visibleSubItemsChanged,
+               this,&KiranModuleWidget::handlePluginVisibleSubItemsChanged);
+    }
     m_plugins.clear();
 }
 
-void KiranModuleWidget::setPlugins(const QList<QSharedPointer<CPanelPluginHelper>> &plugins)
+void KiranModuleWidget::setPlugins(const PluginHelperPtrList &plugins)
 {
     clear();
 
@@ -64,17 +73,29 @@ void KiranModuleWidget::setPlugins(const QList<QSharedPointer<CPanelPluginHelper
     ///填充第二层列表
     for (int i = 0; i < plugins.count(); i++)
     {
-        const auto &pluginHelper = plugins.at(i);
+        auto pluginHelper = plugins.at(i);
+        connect(pluginHelper.data(),&PluginHelper::visibleSubItemsChanged,this,&KiranModuleWidget::handlePluginVisibleSubItemsChanged);
+        auto visibleSubItems = pluginHelper->visibleSubItems();
         auto pluginDesktopInfo = pluginHelper->getPluginDesktopInfo();
-        KLOG_DEBUG() << "plugin:" << pluginDesktopInfo.name;
         auto subItems = pluginDesktopInfo.subItems;
         foreach (auto subItem, subItems)
         {
+            if( !visibleSubItems.contains(subItem.id) )
+                continue ;
+
             KLOG_DEBUG() << "    sub item:" << subItem.name;
             auto *item = new QListWidgetItem();
             item->setSizeHint(QSize(item->sizeHint().width(), 60));
             item->setText(subItem.name);
-            item->setIcon(QIcon::fromTheme(subItem.icon));
+            QIcon icon = QIcon::fromTheme(subItem.icon);
+            if( !icon.isNull() )
+            {
+                item->setIcon(icon);
+            }
+            else
+            {
+                KLOG_WARNING() << "can't find item icon:" << pluginDesktopInfo.name << " -> " << subItem.name;
+            }
             item->setData(ROLE_PLUGIN_HELPER_INDEX, i);
             item->setData(ROLE_SUBITEM_ID, subItem.id);
             ui->list_subItems->addItem(item);
@@ -85,7 +106,7 @@ void KiranModuleWidget::setPlugins(const QList<QSharedPointer<CPanelPluginHelper
     {
         ui->list_subItems->setItemSelected(ui->list_subItems->item(0),true);
         //NOTE：为了获取一个正确的初始化大小，手动调用槽函数，将功能项第一条的窗口加入显示
-        handleSubItemChanged();
+        handleCurrentItemChanged();
     }
 
     if (ui->list_subItems->count() <= 1)
@@ -103,7 +124,7 @@ void KiranModuleWidget::init()
     ui->list_subItems->setFrameShape(QFrame::NoFrame);
     ui->list_subItems->setSelectionMode(QListWidget::SingleSelection);
     connect(ui->list_subItems, &QListWidget::itemSelectionChanged,
-            this, &KiranModuleWidget::handleSubItemChanged, Qt::QueuedConnection);
+            this, &KiranModuleWidget::handleCurrentItemChanged, Qt::QueuedConnection);
 }
 
 bool KiranModuleWidget::checkHasUnSaved()
@@ -134,7 +155,7 @@ bool KiranModuleWidget::checkHasUnSaved()
 }
 
 ///NOTE:此处最好不拿prev参数作为调用QListWidget的参数，可能存在prev item已从列表中删除
-void KiranModuleWidget::handleSubItemChanged()
+void KiranModuleWidget::handleCurrentItemChanged()
 {
     auto selectedItems = ui->list_subItems->selectedItems();
     if(selectedItems.size() != 1)
@@ -206,4 +227,12 @@ void KiranModuleWidget::handleSubItemChanged()
     }
 
     m_subItemWidget = widget;
+}
+
+void KiranModuleWidget::handlePluginVisibleSubItemsChanged()
+{
+    setPlugins( PluginHelperPtrList(m_plugins) );
+    ///后续单独处理子项新增以及删除条目，不再重新刷新
+    ///send()->PluginHelper 拿到PluginHelper的索引
+    ///通过ROLE_PLUGIN_HELPER_INDEX找到该插件对应的节点，再比对新增删除
 }

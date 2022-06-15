@@ -92,7 +92,8 @@ void CPanelSearchEdit::init()
 
 QStandardItemModel *CPanelSearchEdit::buildSearchModel()
 {
-    auto categorys = CPanelPluginManager::getInstance()->getCategorys();
+    //TODO:需要连接每个插件的子项更新事件,更新搜索关键词
+    auto categorys = PluginManager::getInstance()->getCategorys();
     auto itemModel = new QStandardItemModel(this);
     auto addSearchItemsFunc = [](QStandardItemModel *model,
                                  QStringList searchKeys,

@@ -45,27 +45,35 @@ struct PluginDesktopInfo
 };
 
 class QTranslator;
-class CPanelPluginHelper
+
+class PluginHelper;
+typedef QSharedPointer<PluginHelper> PluginHelperPtr;
+typedef QList<PluginHelperPtr> PluginHelperPtrList;
+
+class PluginHelper : public QObject
 {
+    Q_OBJECT
 public:
-    static QSharedPointer<CPanelPluginHelper> loadPlugin(const QString& desktopFile);
+    static PluginHelperPtr loadPlugin(const QString& desktopFile);
 
-    CPanelPluginHelper() = default;
-    ~CPanelPluginHelper();
+    PluginHelper() = default;
+    ~PluginHelper();
 
-    bool load(const QString& desktopFile);
     const PluginDesktopInfo& getPluginDesktopInfo();
+
     ///插件接口方法包装
+    QStringList visibleSubItems();
     QWidget* getSubItemWidget(const QString& subItemName);
     bool haveUnsavedOptions();
 
+signals:
+    void visibleSubItemsChanged();
+
 private:
+    bool load(const QString& desktopFile);
     void clear();
-    ///通过传入一个key，返回当前语言环境的key列表
-    ///eg: 传入Name，返回{"Name[zh_CN]","Name[zh]","Name"}
-    QStringList getLocaleKey(const QString& key);
     static bool parseDesktopInfo(const QString& desktopPath,PluginDesktopInfo& desktopInfo);
-    bool loadLibrary(const QString& library, KcpPluginInterface*& pluginInterface);
+    bool loadLibrary(const QString& library, KcpPluginInterface*& pluginInterface,QObject*& pluginInstance);
 
 private:
     QPluginLoader m_pluginHandle;

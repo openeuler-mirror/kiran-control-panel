@@ -1323,7 +1323,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../lib/common-widgets/kiran-module-widget/kiran-module-widget.cpp" line="122"/>
+        <location filename="../../../lib/common-widgets/kiran-module-widget/kiran-module-widget.cpp" line="131"/>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1624,7 +1624,6 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../../../build/plugins/keyboard/kiran-cpanel-keyboard_autogen/include/ui_main-window.h" line="80"/>
         <location filename="../../../cmake-build-debug/plugins/keyboard/kiran-cpanel-keyboard_autogen/include/ui_main-window.h" line="80"/>
         <location filename="../../../cmake-build-debug/plugins/keyboard/src/kiran-cpanel-keyboard_autogen/include/ui_main-window.h" line="80"/>
         <source>KCPWindow</source>
@@ -1852,7 +1851,7 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>PanelWindow</name>
     <message>
-        <location filename="../../../src/panel-window.cpp" line="38"/>
+        <location filename="../../../src/panel-window.cpp" line="42"/>
         <source>Control Panel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1975,26 +1974,21 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../../power/src/pages/power-settings/power-settings-page.cpp" line="63"/>
-        <source>Display Off</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../power/src/pages/power-settings/power-settings-page.cpp" line="64"/>
         <source>Suspend</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../power/src/pages/power-settings/power-settings-page.cpp" line="65"/>
+        <location filename="../../power/src/pages/power-settings/power-settings-page.cpp" line="64"/>
         <source>Shutdown</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../power/src/pages/power-settings/power-settings-page.cpp" line="66"/>
+        <location filename="../../power/src/pages/power-settings/power-settings-page.cpp" line="65"/>
         <source>Hibernate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../power/src/pages/power-settings/power-settings-page.cpp" line="67"/>
+        <location filename="../../power/src/pages/power-settings/power-settings-page.cpp" line="66"/>
         <source>Do nothing</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2872,7 +2866,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../../audio/src/system-tray/volume-setting-page.ui" line="104"/>
         <location filename="../../../build/plugins/audio/kiran-audio-status-icon_autogen/include/ui_volume-setting-page.h" line="124"/>
-        <location filename="../../audio/src/system-tray/volume-setting-page.cpp" line="57"/>
+        <location filename="../../audio/src/system-tray/volume-setting-page.cpp" line="58"/>
         <source>Volume</source>
         <translation type="unfinished"></translation>
     </message>

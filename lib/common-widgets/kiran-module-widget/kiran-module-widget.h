@@ -33,17 +33,18 @@ public:
 
     void setLeftContentsMargins(const int &leftmargin);
     void clear();
-    void setPlugins(const QList<QSharedPointer<CPanelPluginHelper>> &plugins);
+    void setPlugins(const PluginHelperPtrList &plugins);
     bool checkHasUnSaved();
 
 private slots:
-    void handleSubItemChanged();
+    void handleCurrentItemChanged();
+    void handlePluginVisibleSubItemsChanged();
 
 private:
     void init();
 
 private:
-    QList<QSharedPointer<CPanelPluginHelper>> m_plugins;
+    PluginHelperPtrList m_plugins;
     Ui::KiranModuleWidget *ui;
     int m_currentSubItemIdx = -1;
     QWidget *m_subItemWidget = nullptr;

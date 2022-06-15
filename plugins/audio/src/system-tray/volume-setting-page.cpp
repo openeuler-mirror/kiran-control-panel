@@ -28,6 +28,7 @@
 VolumeSettingPage::VolumeSettingPage(enum AudioNode audio, QString objectPath, QWidget *parent) : QWidget(parent), ui(new Ui::VolumeSettingPage)
 {
     ui->setupUi(this);
+    ui->volume->setStyleSheet("color:#2eb3ff;");
     QDBusConnection session = QDBusConnection::sessionBus();
     m_audioInterface = AudioInterface::instance();
     audioNode = audio;

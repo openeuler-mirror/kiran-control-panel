@@ -46,7 +46,6 @@ public:
         {
             qApp->installTranslator(m_translator);
         }
-
         return 0;
     }
 

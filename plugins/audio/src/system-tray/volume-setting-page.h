@@ -32,7 +32,6 @@ class AudioStreamInterface;
 class VolumeSettingPage : public QWidget
 {
     Q_OBJECT
-
 public:
     explicit VolumeSettingPage(enum AudioNode audio, const QString objectPath, QWidget *parent = nullptr);
     ~VolumeSettingPage() override;

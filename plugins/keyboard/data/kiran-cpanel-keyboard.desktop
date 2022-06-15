@@ -28,7 +28,7 @@ SubItems=GeneralOptions,KeyboardLayout
 Name=General Option
 Name[zh_CN]=通用选项
 #插件Icon
-Icon=@ICON_DIR@/kck-page-generation.svg
+Icon=kcp-keyboard-generation
 #插件关键字 该值提供给控制中心形成搜索列表
 Keywords[zh_CN]=通用选项
 Keywords=general,keyboard
@@ -38,7 +38,7 @@ Keywords=general,keyboard
 Name=Keyboard Layout
 Name[zh_CN]=键盘布局
 #插件Icon
-Icon=@ICON_DIR@/kck-page-layout.png
+Icon=kcp-keyboard-layout
 #插件关键字 该值提供给控制中心形成搜索列表
 Keywords[zh_CN]=键盘布局
 Keywords=layout,keyboard

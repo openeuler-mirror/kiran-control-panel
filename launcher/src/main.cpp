@@ -106,7 +106,7 @@ int main(int argc, char *argv[])
         KLOG_CERR("kiran log init error");
     }
 
-    auto pluginHelper = CPanelPluginHelper::loadPlugin(pluginDesktopPath);
+    auto pluginHelper = PluginHelper::loadPlugin(pluginDesktopPath);
     if (!pluginHelper)
     {
         exit(EXIT_FAILURE);

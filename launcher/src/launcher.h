@@ -28,8 +28,8 @@ public:
     explicit Launcher(QWidget *parent = nullptr);
     ~Launcher();
 
-    void setPlugins(const QList<QSharedPointer<CPanelPluginHelper>>& plugins );
-    void setPlugin(QSharedPointer<CPanelPluginHelper> plguins);
+    void setPlugins(const QList<QSharedPointer<PluginHelper>>& plugins );
+    void setPlugin(QSharedPointer<PluginHelper> plguins);
 
 public:
     virtual QSize sizeHint() const override;

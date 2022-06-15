@@ -28,7 +28,7 @@ SubItems=MouseSettings,TouchPadSettings
 Name=Mouse Settings
 Name[zh_CN]=鼠标设置
 #插件Icon
-Icon=@ICON_DIR@/mouse.svg
+Icon=kcp-page-mouse
 #插件关键字 该值提供给控制中心形成搜索列表
 Keywords[zh_CN]=鼠标
 Keywords=mouse
@@ -38,7 +38,7 @@ Keywords=mouse
 Name=TouchPad Settings
 Name[zh_CN]=触摸板设置
 #插件Icon
-Icon=@ICON_DIR@/touchpad.svg
+Icon=kcp-page-touchpad
 #插件关键字 该值提供给控制中心形成搜索列表
 Keywords[zh_CN]=触摸板
 Keywords=touchPad

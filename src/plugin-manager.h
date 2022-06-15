@@ -21,26 +21,25 @@
 #include "kcp-plugin-interface.h"
 #include "plugin-info.h"
 
-class CPanelPluginManager
+class PluginManager
 {
 public:
-    using CategoryInfoList = QList<QSharedPointer<CPanelCategoryInfo>>;
-    static CPanelPluginManager* getInstance();
+    static PluginManager* getInstance();
     static void deleteInstance();
-    ~CPanelPluginManager();
+    ~PluginManager();
 
     void loadAll();
-    CategoryInfoList getCategorys();
+    CategoryInfoPtrList getCategorys();
 
 private:
-    CPanelPluginManager();
+    PluginManager();
     void clear();
 
 private:
-    CategoryInfoList m_categoryInfos;
+    CategoryInfoPtrList m_categoryInfos;
 
 private:
-    static CPanelPluginManager* _instance;
+    static PluginManager* _instance;
 };
 
 

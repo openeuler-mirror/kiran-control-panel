@@ -28,6 +28,9 @@ public:
 
 private:
     void initUI();
+
+private slots:
+    void handleInstanceStarted();
 };
 
 #endif //__PANEL_WINDOW_H__

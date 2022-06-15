@@ -84,3 +84,4 @@ install(FILES "${CMAKE_SOURCE_DIR}/data/kiran-control-panel.svg" DESTINATION ${I
 add_subdirectory(lib)
 add_subdirectory(launcher)
 add_subdirectory(plugins)
+add_subdirectory(data)
