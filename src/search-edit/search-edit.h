@@ -17,32 +17,22 @@
 
 #include <QLineEdit>
 #include <QItemDelegate>
+#include <QStandardItemModel>
+#include <QStyleOption>
 
-//TODO:完成控制面板搜索
-
-class CPanelSearchDelegate : public QItemDelegate
-{
-    Q_OBJECT
-public:
-    explicit CPanelSearchDelegate(QObject* parent = nullptr);
-    ~CPanelSearchDelegate();
-
-public:
-    void paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const override;
-};
+#include <kiran-search-box.h>
 
 class QStandardItemModel;
 class QCompleter;
 class QListView;
-class CPanelSearchEdit : public QLineEdit
+class SearchModel;
+class SearchDelegate;
+class SearchEdit : public KiranSearchBox
 {
     Q_OBJECT
 public:
-    bool eventFilter(QObject* watched, QEvent* event) override;
-
-public:
-    explicit CPanelSearchEdit(QWidget* parent = nullptr);
-    ~CPanelSearchEdit();
+    explicit SearchEdit(QWidget* parent = nullptr);
+    ~SearchEdit();
 
 private:
     void init();
@@ -50,10 +40,11 @@ private:
     void setSearchPopupVisible(bool searchPopupVisible);
 
 signals:
-    void sigJump(int categoryIdx,int subItemIdx);
+    void requestJumpTo(const QString& categoryID,const QString& subItemID);
 
 private:
-    QStandardItemModel* m_searchModel = nullptr;
+    SearchModel* m_searchModel = nullptr;
+    SearchDelegate* m_searchDelegate = nullptr;
     QCompleter* m_completer = nullptr;
 };
 

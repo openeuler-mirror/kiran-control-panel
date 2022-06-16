@@ -121,6 +121,7 @@ void KiranModuleWidget::setPlugins(const PluginHelperPtrList &plugins)
 
 void KiranModuleWidget::init()
 {
+    ui->list_subItems->setInvertIconPixelsEnable(true);
     ui->list_subItems->setFrameShape(QFrame::NoFrame);
     ui->list_subItems->setSelectionMode(QListWidget::SingleSelection);
     connect(ui->list_subItems, &QListWidget::itemSelectionChanged,

@@ -27,7 +27,7 @@ configure_file(${CMAKE_SOURCE_DIR}/data/${PROJECT_NAME}.desktop.in ${CMAKE_BINAR
 configure_file(${CMAKE_SOURCE_DIR}/data/${PROJECT_NAME}.pc.in ${CMAKE_BINARY_DIR}/${PROJECT_NAME}.pc @ONLY)
 
 file(GLOB_RECURSE include "./include/*")
-file(GLOB CONTROL_PANEL_SRC "./src/*")
+file(GLOB_RECURSE CONTROL_PANEL_SRC "./src/*")
 file(GLOB TS_FILES "../translations/*.ts")
 
 set(RESOURCE ./resources/control-panel-resources.qrc) #资源文件名不能与插件资源名相同，否则会导致插件中部分图片无法正常加载显示。

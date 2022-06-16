@@ -13,6 +13,8 @@
 #include <QApplication>
 #include <QTranslator>
 
+bool addBattery=false;
+
 class KcpPower : public QObject,public KcpPluginInterface
 {
     Q_OBJECT

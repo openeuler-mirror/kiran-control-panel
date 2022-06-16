@@ -77,6 +77,7 @@ void KiranTimeDateWidget::initUI()
             this, &KiranTimeDateWidget::handleSysntemCanNTPChanged);
 
     /* 初始化侧边栏Tab列表 */
+    ui->tabList->setInvertIconPixelsEnable(true);
     ui->tabList->setIconSize(QSize(16, 16));
     connect(ui->tabList, &KiranSidebarWidget::itemSelectionChanged,
             this, &KiranTimeDateWidget::handleSidebarSelectionChanged);

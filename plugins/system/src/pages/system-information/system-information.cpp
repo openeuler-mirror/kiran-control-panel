@@ -153,7 +153,6 @@ void SystemInformation::parseSoftwareInfoJson(QString jsonString,
         KLOG_ERROR() << " please check the activation information string " << jsonString.toLocal8Bit().data();
         return;
     }
-    qInfo() <<jsonString;
     QJsonObject rootObject = jsonDocument.object();
     if( rootObject.contains("host_name") && rootObject["host_name"].isString() )
     {

@@ -61,12 +61,13 @@ public:
 
     const PluginDesktopInfo& getPluginDesktopInfo();
 
-    ///插件接口方法包装
+    // 插件接口方法包装
     QStringList visibleSubItems();
     QWidget* getSubItemWidget(const QString& subItemName);
     bool haveUnsavedOptions();
 
 signals:
+    // 部分插件会提供该信号，提示visibleSubItem变化，需要重新读取
     void visibleSubItemsChanged();
 
 private:

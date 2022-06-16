@@ -27,6 +27,7 @@ class PanelWindow : public KiranTitlebarWindow
 public:
     explicit PanelWindow(QWidget *parent = nullptr);
 
+public slots:
     void jump(const QString& categoryName,const QString& subItem);
 
 private:

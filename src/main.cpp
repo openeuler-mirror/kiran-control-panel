@@ -46,8 +46,7 @@ bool installTranslator()
 }
 
 QString defaultCategory = "about-system";
-QString defaultSubItem = "SystemInformation";
-
+QString defaultSubItem  = "SystemInformation";
 void processCommandLine()
 {
     KiranSingleApplication* singleApp = dynamic_cast<KiranSingleApplication*>(qApp);
@@ -66,6 +65,7 @@ void processCommandLine()
         std::cerr << "failed to set sub item without category" << std::endl;
         exit(EXIT_FAILURE);
     }
+
     if( !category.isEmpty() )
     {
         if( !singleApp->isPrimary() )
