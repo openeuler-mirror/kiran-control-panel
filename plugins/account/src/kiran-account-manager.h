@@ -39,7 +39,6 @@ public:
     ~KiranAccountManager();
 
     QSize sizeHint() const override;
-
 private Q_SLOTS:
     void setCurrentUser(const QString &userPath);
     void setMaskVisible(bool visible);

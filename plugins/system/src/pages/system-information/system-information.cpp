@@ -221,24 +221,5 @@ bool SystemInformation::eventFilter(QObject *obj, QEvent *event)
 
 QSize SystemInformation::sizeHint() const
 {
-    int screenNum = QApplication::desktop()->screenNumber(QCursor::pos());
-    QRect screenGeometry = QApplication::desktop()->screenGeometry(screenNum);
-
-    QSize size;
-    if (screenGeometry.height() >= 815 &&
-        screenGeometry.width() >= 800)  // 能显示全
-    {
-        size = QSize(800, 815);
-    }
-    else if (screenGeometry.height() >= this->height() &&
-             screenGeometry.width() >= this->width())
-    {
-        size = QSize(this->width(), this->height());
-    }
-    else
-    {
-        size = QSize(screenGeometry.width(), screenGeometry.height());
-    }
-
-    return size;
+    return {500,657};
 }

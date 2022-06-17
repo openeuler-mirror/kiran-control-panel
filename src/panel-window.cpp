@@ -92,3 +92,10 @@ void PanelWindow::jump(const QString& categoryName,const QString& subItem)
     KLOG_DEBUG() << "jump to" << categoryName << subItem;
     m_panelWidget->jumpTo(categoryName,subItem);
 }
+
+#include <QResizeEvent>
+void PanelWindow::resizeEvent(QResizeEvent *event)
+{
+    KLOG_DEBUG() << "---> kiran control panel resize event:" << event->size();
+    QWidget::resizeEvent(event);
+}

@@ -322,5 +322,5 @@ void KiranTimeDateWidget::handleSystemHourFormatChanged(TimedateHourFormat hourF
 
 QSize KiranTimeDateWidget::sizeHint() const
 {
-    return QSize(931, 652);
+    return {780, 650};
 }

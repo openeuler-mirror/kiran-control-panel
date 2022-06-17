@@ -48,11 +48,14 @@ void KiranModuleWidget::clear()
     disconnect(this, SIGNAL(handlePluginVisibleSubItemsChanged()));
 
     ui->list_subItems->clear();
+    ui->widget_siderbar->hide();
 
     m_currentSubItemIdx = -1;
     if (m_subItemWidget)
     {
-        m_subItemWidget->deleteLater();
+        m_subItemWidget->removeEventFilter(this);
+        // 该处若使用 "m_subItemWidge.deleteLater()" 会导致后续布局变大的情况
+        delete m_subItemWidget;
         m_subItemWidget = nullptr;
     }
 
@@ -102,20 +105,13 @@ void KiranModuleWidget::setPlugins(const PluginHelperPtrList &plugins)
         }
     }
 
+    ui->widget_siderbar->setVisible(ui->list_subItems->count() > 1);
+
     if (ui->list_subItems->count() >= 0)
     {
         ui->list_subItems->setItemSelected(ui->list_subItems->item(0), true);
         // NOTE：为了获取一个正确的初始化大小，手动调用槽函数，将功能项第一条的窗口加入显示
         handleCurrentItemChanged();
-    }
-
-    if (ui->list_subItems->count() <= 1)
-    {
-        ui->widget_siderbar->hide();
-    }
-    else
-    {
-        ui->widget_siderbar->show();
     }
 }
 
@@ -190,6 +186,7 @@ void KiranModuleWidget::handleCurrentItemChanged()
     /// 清理之前的功能项控件
     if (m_subItemWidget)
     {
+        m_subItemWidget->removeEventFilter(this);
         ui->centerLayout->removeWidget(m_subItemWidget);
         delete m_subItemWidget;
         m_subItemWidget = nullptr;
@@ -226,8 +223,8 @@ void KiranModuleWidget::handleCurrentItemChanged()
     {
         KLOG_ERROR() << "can't get subitem widget" << subItemID;
     }
-
     m_subItemWidget = widget;
+    m_subItemWidget->installEventFilter(this);
 }
 
 void KiranModuleWidget::handlePluginVisibleSubItemsChanged()
@@ -255,4 +252,19 @@ void KiranModuleWidget::jumpTo(const QString &subItemID)
     {
         ui->list_subItems->setItemSelected(item,true);
     }
+}
+
+#include <QEvent>
+#include <QResizeEvent>
+bool KiranModuleWidget::eventFilter(QObject *watched, QEvent *event)
+{
+    if( watched == m_subItemWidget )
+    {
+        if( event->type() == QEvent::Resize )
+        {
+            QResizeEvent* qResizeEvent = dynamic_cast<QResizeEvent*>(event);
+            KLOG_DEBUG() << "---> sub item resize event:" << qResizeEvent->size();
+        }
+    }
+    return QWidget::eventFilter(watched,event);
 }

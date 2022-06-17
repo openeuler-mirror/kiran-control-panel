@@ -111,7 +111,7 @@ int main(int argc, char *argv[])
 
     int screeNum = QApplication::desktop()->screenNumber(QCursor::pos());
     QRect screenGeometry = QApplication::desktop()->screenGeometry(screeNum);
-    w.resize(1060, 830);
+    w.resize(993, 711);
     w.move(screenGeometry.x() + (screenGeometry.width() - w.width()) / 2,
            screenGeometry.y() + (screenGeometry.height() - w.height()) / 2);
     w.show();

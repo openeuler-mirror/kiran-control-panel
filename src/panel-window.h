@@ -27,6 +27,9 @@ class PanelWindow : public KiranTitlebarWindow
 public:
     explicit PanelWindow(QWidget *parent = nullptr);
 
+protected:
+    void resizeEvent(QResizeEvent* event) override;
+
 public slots:
     void jump(const QString& categoryName,const QString& subItem);
 

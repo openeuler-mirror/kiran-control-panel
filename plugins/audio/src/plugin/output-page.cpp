@@ -227,5 +227,5 @@ void OutputPage::handleSinkDelete(int index)
 
 QSize OutputPage::sizeHint() const
 {
-    return QSize(634, 670);
+    return {500, 657};
 }

@@ -2,7 +2,7 @@
 
 cd `dirname $0`
 shell_dir=`pwd`
-build_dir=$shell_dir"/build"
+build_dir=$shell_dir"/cmake-build-debug"
 
 #if [ -d $build_dir ]; then
 #  rm -rf $build_dir
@@ -16,7 +16,7 @@ cmake -DCMAKE_BUILD_TYPE=debug -DCMAKE_INSTALL_PREFIX=/usr ..
 make -j4
 echo 123123 |sudo -S make install
 
-/usr/bin/kiran-control-panel -c about-system -s SystemInformation
+/usr/bin/kiran-control-panel
 exit 0
 
 ui_debug=0

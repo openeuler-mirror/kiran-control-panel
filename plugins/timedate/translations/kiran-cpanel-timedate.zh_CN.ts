@@ -6,12 +6,14 @@
     <message>
         <location filename="../../account/src/widgets/account-itemwidget.ui" line="14"/>
         <location filename="../../../build/plugins/account/kiran-cpanel-account_autogen/include/ui_account-itemwidget.h" line="83"/>
+        <location filename="../../../cmake-build-debug/plugins/account/kiran-cpanel-account_autogen/include/ui_account-itemwidget.h" line="83"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../account/src/widgets/account-itemwidget.ui" line="63"/>
         <location filename="../../../build/plugins/account/kiran-cpanel-account_autogen/include/ui_account-itemwidget.h" line="84"/>
+        <location filename="../../../cmake-build-debug/plugins/account/kiran-cpanel-account_autogen/include/ui_account-itemwidget.h" line="84"/>
         <source>Tom Hardy</source>
         <translation type="unfinished"></translation>
     </message>
@@ -36,36 +38,42 @@
     <message>
         <location filename="../../account/src/pages/advance-settings-page/advance-settings.ui" line="14"/>
         <location filename="../../../build/plugins/account/kiran-cpanel-account_autogen/include/ui_advance-settings.h" line="203"/>
+        <location filename="../../../cmake-build-debug/plugins/account/kiran-cpanel-account_autogen/include/ui_advance-settings.h" line="203"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../account/src/pages/advance-settings-page/advance-settings.ui" line="43"/>
         <location filename="../../../build/plugins/account/kiran-cpanel-account_autogen/include/ui_advance-settings.h" line="204"/>
+        <location filename="../../../cmake-build-debug/plugins/account/kiran-cpanel-account_autogen/include/ui_advance-settings.h" line="204"/>
         <source>Login shell</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../account/src/pages/advance-settings-page/advance-settings.ui" line="89"/>
         <location filename="../../../build/plugins/account/kiran-cpanel-account_autogen/include/ui_advance-settings.h" line="205"/>
+        <location filename="../../../cmake-build-debug/plugins/account/kiran-cpanel-account_autogen/include/ui_advance-settings.h" line="205"/>
         <source>Specify user id</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../account/src/pages/advance-settings-page/advance-settings.ui" line="159"/>
         <location filename="../../../build/plugins/account/kiran-cpanel-account_autogen/include/ui_advance-settings.h" line="206"/>
+        <location filename="../../../cmake-build-debug/plugins/account/kiran-cpanel-account_autogen/include/ui_advance-settings.h" line="206"/>
         <source>Specify user home</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../account/src/pages/advance-settings-page/advance-settings.ui" line="262"/>
         <location filename="../../../build/plugins/account/kiran-cpanel-account_autogen/include/ui_advance-settings.h" line="207"/>
+        <location filename="../../../cmake-build-debug/plugins/account/kiran-cpanel-account_autogen/include/ui_advance-settings.h" line="207"/>
         <source>confirm</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../account/src/pages/advance-settings-page/advance-settings.ui" line="303"/>
         <location filename="../../../build/plugins/account/kiran-cpanel-account_autogen/include/ui_advance-settings.h" line="208"/>
+        <location filename="../../../cmake-build-debug/plugins/account/kiran-cpanel-account_autogen/include/ui_advance-settings.h" line="208"/>
         <source>cancel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -114,36 +122,42 @@
     <message>
         <location filename="../../account/src/pages/auth-manager-page/auth-manager-page.ui" line="14"/>
         <location filename="../../../build/plugins/account/kiran-cpanel-account_autogen/include/ui_auth-manager-page.h" line="179"/>
+        <location filename="../../../cmake-build-debug/plugins/account/kiran-cpanel-account_autogen/include/ui_auth-manager-page.h" line="179"/>
         <source>AuthManagerPage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../account/src/pages/auth-manager-page/auth-manager-page.ui" line="50"/>
         <location filename="../../../build/plugins/account/kiran-cpanel-account_autogen/include/ui_auth-manager-page.h" line="180"/>
+        <location filename="../../../cmake-build-debug/plugins/account/kiran-cpanel-account_autogen/include/ui_auth-manager-page.h" line="180"/>
         <source>Fingerprint Authentication</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../account/src/pages/auth-manager-page/auth-manager-page.ui" line="97"/>
         <location filename="../../../build/plugins/account/kiran-cpanel-account_autogen/include/ui_auth-manager-page.h" line="181"/>
+        <location filename="../../../cmake-build-debug/plugins/account/kiran-cpanel-account_autogen/include/ui_auth-manager-page.h" line="181"/>
         <source>Face Authentication</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../account/src/pages/auth-manager-page/auth-manager-page.ui" line="140"/>
         <location filename="../../../build/plugins/account/kiran-cpanel-account_autogen/include/ui_auth-manager-page.h" line="182"/>
+        <location filename="../../../cmake-build-debug/plugins/account/kiran-cpanel-account_autogen/include/ui_auth-manager-page.h" line="182"/>
         <source>Password Authentication</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../account/src/pages/auth-manager-page/auth-manager-page.ui" line="214"/>
         <location filename="../../../build/plugins/account/kiran-cpanel-account_autogen/include/ui_auth-manager-page.h" line="183"/>
+        <location filename="../../../cmake-build-debug/plugins/account/kiran-cpanel-account_autogen/include/ui_auth-manager-page.h" line="183"/>
         <source>save</source>
         <translation type="unfinished">保存</translation>
     </message>
     <message>
         <location filename="../../account/src/pages/auth-manager-page/auth-manager-page.ui" line="255"/>
         <location filename="../../../build/plugins/account/kiran-cpanel-account_autogen/include/ui_auth-manager-page.h" line="184"/>
+        <location filename="../../../cmake-build-debug/plugins/account/kiran-cpanel-account_autogen/include/ui_auth-manager-page.h" line="184"/>
         <source>return</source>
         <translation type="unfinished"></translation>
     </message>
@@ -185,30 +199,35 @@
     <message>
         <location filename="../../power/src/pages/battery-settings/battery-settings-page.ui" line="14"/>
         <location filename="../../../build/plugins/power/kiran-cpanel-power_autogen/include/ui_battery-settings-page.h" line="159"/>
+        <location filename="../../../cmake-build-debug/plugins/power/kiran-cpanel-power_autogen/include/ui_battery-settings-page.h" line="159"/>
         <source>BatterySettingsPage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../power/src/pages/battery-settings/battery-settings-page.ui" line="43"/>
         <location filename="../../../build/plugins/power/kiran-cpanel-power_autogen/include/ui_battery-settings-page.h" line="160"/>
+        <location filename="../../../cmake-build-debug/plugins/power/kiran-cpanel-power_autogen/include/ui_battery-settings-page.h" line="160"/>
         <source>After idle for more than the following time, the computer will execute</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../power/src/pages/battery-settings/battery-settings-page.ui" line="76"/>
         <location filename="../../../build/plugins/power/kiran-cpanel-power_autogen/include/ui_battery-settings-page.h" line="161"/>
+        <location filename="../../../cmake-build-debug/plugins/power/kiran-cpanel-power_autogen/include/ui_battery-settings-page.h" line="161"/>
         <source>When the battery is lit up, it will be executed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../power/src/pages/battery-settings/battery-settings-page.ui" line="106"/>
         <location filename="../../../build/plugins/power/kiran-cpanel-power_autogen/include/ui_battery-settings-page.h" line="162"/>
+        <location filename="../../../cmake-build-debug/plugins/power/kiran-cpanel-power_autogen/include/ui_battery-settings-page.h" line="162"/>
         <source>The monitor will turn off when it is idle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../power/src/pages/battery-settings/battery-settings-page.ui" line="136"/>
         <location filename="../../../build/plugins/power/kiran-cpanel-power_autogen/include/ui_battery-settings-page.h" line="163"/>
+        <location filename="../../../cmake-build-debug/plugins/power/kiran-cpanel-power_autogen/include/ui_battery-settings-page.h" line="163"/>
         <source>Reduce screen brightness when idle</source>
         <translation type="unfinished"></translation>
     </message>
@@ -247,18 +266,21 @@
     <message>
         <location filename="../../account/src/widgets/biometric-item.ui" line="14"/>
         <location filename="../../../build/plugins/account/kiran-cpanel-account_autogen/include/ui_biometric-item.h" line="77"/>
+        <location filename="../../../cmake-build-debug/plugins/account/kiran-cpanel-account_autogen/include/ui_biometric-item.h" line="77"/>
         <source>BiometricItem</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../account/src/widgets/biometric-item.ui" line="35"/>
         <location filename="../../../build/plugins/account/kiran-cpanel-account_autogen/include/ui_biometric-item.h" line="78"/>
+        <location filename="../../../cmake-build-debug/plugins/account/kiran-cpanel-account_autogen/include/ui_biometric-item.h" line="78"/>
         <source>text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../account/src/widgets/biometric-item.ui" line="73"/>
         <location filename="../../../build/plugins/account/kiran-cpanel-account_autogen/include/ui_biometric-item.h" line="79"/>
+        <location filename="../../../cmake-build-debug/plugins/account/kiran-cpanel-account_autogen/include/ui_biometric-item.h" line="79"/>
         <source>add</source>
         <translation type="unfinished"></translation>
     </message>
@@ -268,6 +290,7 @@
     <message>
         <location filename="../../audio/src/plugin/cpanel-audio-widget.ui" line="14"/>
         <location filename="../../../build/plugins/audio/kiran-cpanel-audio_autogen/include/ui_cpanel-audio-widget.h" line="118"/>
+        <location filename="../../../cmake-build-debug/plugins/audio/kiran-cpanel-audio_autogen/include/ui_cpanel-audio-widget.h" line="118"/>
         <source>CPanelAudioWidget</source>
         <translation type="unfinished"></translation>
     </message>
@@ -287,6 +310,7 @@
     <message>
         <location filename="../../power/src/cpanel-power-widget.ui" line="14"/>
         <location filename="../../../build/plugins/power/kiran-cpanel-power_autogen/include/ui_cpanel-power-widget.h" line="97"/>
+        <location filename="../../../cmake-build-debug/plugins/power/kiran-cpanel-power_autogen/include/ui_cpanel-power-widget.h" line="97"/>
         <source>CPanelPowerWidget</source>
         <translation type="unfinished"></translation>
     </message>
@@ -362,48 +386,56 @@
     <message>
         <location filename="../../account/src/pages/create-user-page/create-user-page.ui" line="14"/>
         <location filename="../../../build/plugins/account/kiran-cpanel-account_autogen/include/ui_create-user-page.h" line="286"/>
+        <location filename="../../../cmake-build-debug/plugins/account/kiran-cpanel-account_autogen/include/ui_create-user-page.h" line="286"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../account/src/pages/create-user-page/create-user-page.ui" line="101"/>
         <location filename="../../../build/plugins/account/kiran-cpanel-account_autogen/include/ui_create-user-page.h" line="287"/>
+        <location filename="../../../cmake-build-debug/plugins/account/kiran-cpanel-account_autogen/include/ui_create-user-page.h" line="287"/>
         <source>User name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../account/src/pages/create-user-page/create-user-page.ui" line="147"/>
         <location filename="../../../build/plugins/account/kiran-cpanel-account_autogen/include/ui_create-user-page.h" line="288"/>
+        <location filename="../../../cmake-build-debug/plugins/account/kiran-cpanel-account_autogen/include/ui_create-user-page.h" line="288"/>
         <source>User type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../account/src/pages/create-user-page/create-user-page.ui" line="190"/>
         <location filename="../../../build/plugins/account/kiran-cpanel-account_autogen/include/ui_create-user-page.h" line="289"/>
+        <location filename="../../../cmake-build-debug/plugins/account/kiran-cpanel-account_autogen/include/ui_create-user-page.h" line="289"/>
         <source>Password</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../account/src/pages/create-user-page/create-user-page.ui" line="239"/>
         <location filename="../../../build/plugins/account/kiran-cpanel-account_autogen/include/ui_create-user-page.h" line="290"/>
+        <location filename="../../../cmake-build-debug/plugins/account/kiran-cpanel-account_autogen/include/ui_create-user-page.h" line="290"/>
         <source>Confirm password</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../account/src/pages/create-user-page/create-user-page.ui" line="294"/>
         <location filename="../../../build/plugins/account/kiran-cpanel-account_autogen/include/ui_create-user-page.h" line="291"/>
+        <location filename="../../../cmake-build-debug/plugins/account/kiran-cpanel-account_autogen/include/ui_create-user-page.h" line="291"/>
         <source>Advance setting</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../account/src/pages/create-user-page/create-user-page.ui" line="389"/>
         <location filename="../../../build/plugins/account/kiran-cpanel-account_autogen/include/ui_create-user-page.h" line="292"/>
+        <location filename="../../../cmake-build-debug/plugins/account/kiran-cpanel-account_autogen/include/ui_create-user-page.h" line="292"/>
         <source>Confirm</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../account/src/pages/create-user-page/create-user-page.ui" line="436"/>
         <location filename="../../../build/plugins/account/kiran-cpanel-account_autogen/include/ui_create-user-page.h" line="293"/>
+        <location filename="../../../cmake-build-debug/plugins/account/kiran-cpanel-account_autogen/include/ui_create-user-page.h" line="293"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -487,30 +519,35 @@
     <message>
         <location filename="../src/pages/date-time-settings/date-time-settings.ui" line="14"/>
         <location filename="../../../build/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_date-time-settings.h" line="148"/>
+        <location filename="../../../cmake-build-debug/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_date-time-settings.h" line="148"/>
         <source>DateTimeSettings</source>
         <translation>日期时间设置</translation>
     </message>
     <message>
         <location filename="../src/pages/date-time-settings/date-time-settings.ui" line="46"/>
         <location filename="../../../build/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_date-time-settings.h" line="149"/>
+        <location filename="../../../cmake-build-debug/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_date-time-settings.h" line="149"/>
         <source>Select Time</source>
         <translation>选择时间</translation>
     </message>
     <message>
         <location filename="../src/pages/date-time-settings/date-time-settings.ui" line="88"/>
         <location filename="../../../build/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_date-time-settings.h" line="150"/>
+        <location filename="../../../cmake-build-debug/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_date-time-settings.h" line="150"/>
         <source>Select Date</source>
         <translation>选择日期</translation>
     </message>
     <message>
         <location filename="../src/pages/date-time-settings/date-time-settings.ui" line="152"/>
         <location filename="../../../build/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_date-time-settings.h" line="151"/>
+        <location filename="../../../cmake-build-debug/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_date-time-settings.h" line="151"/>
         <source>save</source>
         <translation>保存</translation>
     </message>
     <message>
         <location filename="../src/pages/date-time-settings/date-time-settings.ui" line="193"/>
         <location filename="../../../build/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_date-time-settings.h" line="152"/>
+        <location filename="../../../cmake-build-debug/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_date-time-settings.h" line="152"/>
         <source>reset</source>
         <translation>重置</translation>
     </message>
@@ -528,30 +565,35 @@
     <message>
         <location filename="../src/pages/display-format-settings/display-format-settings.ui" line="14"/>
         <location filename="../../../build/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_display-format-settings.h" line="128"/>
+        <location filename="../../../cmake-build-debug/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_display-format-settings.h" line="128"/>
         <source>DisplayFormatSettings</source>
         <translation>日期时间格式设置</translation>
     </message>
     <message>
         <location filename="../src/pages/display-format-settings/display-format-settings.ui" line="46"/>
         <location filename="../../../build/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_display-format-settings.h" line="129"/>
+        <location filename="../../../cmake-build-debug/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_display-format-settings.h" line="129"/>
         <source>Long date display format</source>
         <translation>长日期显示格式</translation>
     </message>
     <message>
         <location filename="../src/pages/display-format-settings/display-format-settings.ui" line="69"/>
         <location filename="../../../build/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_display-format-settings.h" line="130"/>
+        <location filename="../../../cmake-build-debug/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_display-format-settings.h" line="130"/>
         <source>Short date display format</source>
         <translation>短日期显示格式</translation>
     </message>
     <message>
         <location filename="../src/pages/display-format-settings/display-format-settings.ui" line="89"/>
         <location filename="../../../build/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_display-format-settings.h" line="131"/>
+        <location filename="../../../cmake-build-debug/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_display-format-settings.h" line="131"/>
         <source>Time format</source>
         <translation>时间格式</translation>
     </message>
     <message>
         <location filename="../src/pages/display-format-settings/display-format-settings.ui" line="112"/>
         <location filename="../../../build/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_display-format-settings.h" line="132"/>
+        <location filename="../../../cmake-build-debug/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_display-format-settings.h" line="132"/>
         <source>Show time witch seconds</source>
         <translation>时间显示秒</translation>
     </message>
@@ -571,24 +613,28 @@
     <message>
         <location filename="../../account/src/pages/biometric-enroll-dialog/face-enroll-dialog/face-enroll-dialog.ui" line="14"/>
         <location filename="../../../build/plugins/account/kiran-cpanel-account_autogen/include/ui_face-enroll-dialog.h" line="123"/>
+        <location filename="../../../cmake-build-debug/plugins/account/kiran-cpanel-account_autogen/include/ui_face-enroll-dialog.h" line="123"/>
         <source>FaceEnrollDialog</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../account/src/pages/biometric-enroll-dialog/face-enroll-dialog/face-enroll-dialog.ui" line="63"/>
         <location filename="../../../build/plugins/account/kiran-cpanel-account_autogen/include/ui_face-enroll-dialog.h" line="124"/>
+        <location filename="../../../cmake-build-debug/plugins/account/kiran-cpanel-account_autogen/include/ui_face-enroll-dialog.h" line="124"/>
         <source>balabalalbala...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../account/src/pages/biometric-enroll-dialog/face-enroll-dialog/face-enroll-dialog.ui" line="124"/>
         <location filename="../../../build/plugins/account/kiran-cpanel-account_autogen/include/ui_face-enroll-dialog.h" line="125"/>
+        <location filename="../../../cmake-build-debug/plugins/account/kiran-cpanel-account_autogen/include/ui_face-enroll-dialog.h" line="125"/>
         <source>save</source>
         <translation type="unfinished">保存</translation>
     </message>
     <message>
         <location filename="../../account/src/pages/biometric-enroll-dialog/face-enroll-dialog/face-enroll-dialog.ui" line="162"/>
         <location filename="../../../build/plugins/account/kiran-cpanel-account_autogen/include/ui_face-enroll-dialog.h" line="126"/>
+        <location filename="../../../cmake-build-debug/plugins/account/kiran-cpanel-account_autogen/include/ui_face-enroll-dialog.h" line="126"/>
         <source>cancel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -614,24 +660,28 @@
     <message>
         <location filename="../../account/src/pages/biometric-enroll-dialog/fingerprint-enroll-dialog/fingerprint-enroll-dialog.ui" line="14"/>
         <location filename="../../../build/plugins/account/kiran-cpanel-account_autogen/include/ui_fingerprint-enroll-dialog.h" line="132"/>
+        <location filename="../../../cmake-build-debug/plugins/account/kiran-cpanel-account_autogen/include/ui_fingerprint-enroll-dialog.h" line="132"/>
         <source>FingerprintEnrollDialog</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../account/src/pages/biometric-enroll-dialog/fingerprint-enroll-dialog/fingerprint-enroll-dialog.ui" line="70"/>
         <location filename="../../../build/plugins/account/kiran-cpanel-account_autogen/include/ui_fingerprint-enroll-dialog.h" line="133"/>
+        <location filename="../../../cmake-build-debug/plugins/account/kiran-cpanel-account_autogen/include/ui_fingerprint-enroll-dialog.h" line="133"/>
         <source>balabalalbala...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../account/src/pages/biometric-enroll-dialog/fingerprint-enroll-dialog/fingerprint-enroll-dialog.ui" line="134"/>
         <location filename="../../../build/plugins/account/kiran-cpanel-account_autogen/include/ui_fingerprint-enroll-dialog.h" line="134"/>
+        <location filename="../../../cmake-build-debug/plugins/account/kiran-cpanel-account_autogen/include/ui_fingerprint-enroll-dialog.h" line="134"/>
         <source>save</source>
         <translation type="unfinished">保存</translation>
     </message>
     <message>
         <location filename="../../account/src/pages/biometric-enroll-dialog/fingerprint-enroll-dialog/fingerprint-enroll-dialog.ui" line="172"/>
         <location filename="../../../build/plugins/account/kiran-cpanel-account_autogen/include/ui_fingerprint-enroll-dialog.h" line="135"/>
+        <location filename="../../../cmake-build-debug/plugins/account/kiran-cpanel-account_autogen/include/ui_fingerprint-enroll-dialog.h" line="135"/>
         <source>cancel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -760,48 +810,56 @@
     <message>
         <location filename="../../power/src/pages/general-settings/general-settings-page.ui" line="14"/>
         <location filename="../../../build/plugins/power/kiran-cpanel-power_autogen/include/ui_general-settings-page.h" line="241"/>
+        <location filename="../../../cmake-build-debug/plugins/power/kiran-cpanel-power_autogen/include/ui_general-settings-page.h" line="241"/>
         <source>GeneralSettingsPage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../power/src/pages/general-settings/general-settings-page.ui" line="40"/>
         <location filename="../../../build/plugins/power/kiran-cpanel-power_autogen/include/ui_general-settings-page.h" line="242"/>
+        <location filename="../../../cmake-build-debug/plugins/power/kiran-cpanel-power_autogen/include/ui_general-settings-page.h" line="242"/>
         <source>When the power button is pressed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../power/src/pages/general-settings/general-settings-page.ui" line="64"/>
         <location filename="../../../build/plugins/power/kiran-cpanel-power_autogen/include/ui_general-settings-page.h" line="243"/>
+        <location filename="../../../cmake-build-debug/plugins/power/kiran-cpanel-power_autogen/include/ui_general-settings-page.h" line="243"/>
         <source>When the suspend button is pressed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../power/src/pages/general-settings/general-settings-page.ui" line="92"/>
         <location filename="../../../build/plugins/power/kiran-cpanel-power_autogen/include/ui_general-settings-page.h" line="244"/>
+        <location filename="../../../cmake-build-debug/plugins/power/kiran-cpanel-power_autogen/include/ui_general-settings-page.h" line="244"/>
         <source>When closing the lid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../power/src/pages/general-settings/general-settings-page.ui" line="153"/>
         <location filename="../../../build/plugins/power/kiran-cpanel-power_autogen/include/ui_general-settings-page.h" line="245"/>
+        <location filename="../../../cmake-build-debug/plugins/power/kiran-cpanel-power_autogen/include/ui_general-settings-page.h" line="245"/>
         <source>Display brightness setting</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../power/src/pages/general-settings/general-settings-page.ui" line="173"/>
         <location filename="../../../build/plugins/power/kiran-cpanel-power_autogen/include/ui_general-settings-page.h" line="246"/>
+        <location filename="../../../cmake-build-debug/plugins/power/kiran-cpanel-power_autogen/include/ui_general-settings-page.h" line="246"/>
         <source>0%</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../power/src/pages/general-settings/general-settings-page.ui" line="201"/>
         <location filename="../../../build/plugins/power/kiran-cpanel-power_autogen/include/ui_general-settings-page.h" line="247"/>
+        <location filename="../../../cmake-build-debug/plugins/power/kiran-cpanel-power_autogen/include/ui_general-settings-page.h" line="247"/>
         <source>Regard computer as idle after</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../power/src/pages/general-settings/general-settings-page.ui" line="264"/>
         <location filename="../../../build/plugins/power/kiran-cpanel-power_autogen/include/ui_general-settings-page.h" line="249"/>
+        <location filename="../../../cmake-build-debug/plugins/power/kiran-cpanel-power_autogen/include/ui_general-settings-page.h" line="249"/>
         <source>Lock screen when idle</source>
         <translation type="unfinished"></translation>
     </message>
@@ -999,24 +1057,28 @@
     <message>
         <location filename="../../audio/src/plugin/input-page.ui" line="14"/>
         <location filename="../../../build/plugins/audio/kiran-cpanel-audio_autogen/include/ui_input-page.h" line="163"/>
+        <location filename="../../../cmake-build-debug/plugins/audio/kiran-cpanel-audio_autogen/include/ui_input-page.h" line="163"/>
         <source>InputPage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../audio/src/plugin/input-page.ui" line="40"/>
         <location filename="../../../build/plugins/audio/kiran-cpanel-audio_autogen/include/ui_input-page.h" line="164"/>
+        <location filename="../../../cmake-build-debug/plugins/audio/kiran-cpanel-audio_autogen/include/ui_input-page.h" line="164"/>
         <source>Input devices</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../audio/src/plugin/input-page.ui" line="80"/>
         <location filename="../../../build/plugins/audio/kiran-cpanel-audio_autogen/include/ui_input-page.h" line="165"/>
+        <location filename="../../../cmake-build-debug/plugins/audio/kiran-cpanel-audio_autogen/include/ui_input-page.h" line="165"/>
         <source>Input volume</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../audio/src/plugin/input-page.ui" line="148"/>
         <location filename="../../../build/plugins/audio/kiran-cpanel-audio_autogen/include/ui_input-page.h" line="167"/>
+        <location filename="../../../cmake-build-debug/plugins/audio/kiran-cpanel-audio_autogen/include/ui_input-page.h" line="167"/>
         <source>Feedback volume</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1106,6 +1168,7 @@
     <message>
         <location filename="../src/widgets/kiran-date-picker-widget.ui" line="14"/>
         <location filename="../../../build/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_kiran-date-picker-widget.h" line="103"/>
+        <location filename="../../../cmake-build-debug/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_kiran-date-picker-widget.h" line="103"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1115,18 +1178,21 @@
     <message>
         <location filename="../../display/src/kiran-display-configuration.ui" line="14"/>
         <location filename="../../../build/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="496"/>
+        <location filename="../../../cmake-build-debug/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="496"/>
         <source>KiranDisplayConfiguration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../display/src/kiran-display-configuration.ui" line="113"/>
         <location filename="../../../build/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="497"/>
+        <location filename="../../../cmake-build-debug/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="497"/>
         <source>Copy display</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../display/src/kiran-display-configuration.ui" line="162"/>
         <location filename="../../../build/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="498"/>
+        <location filename="../../../cmake-build-debug/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="498"/>
         <source>Extended display</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1135,6 +1201,8 @@
         <location filename="../../display/src/kiran-display-configuration.ui" line="606"/>
         <location filename="../../../build/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="499"/>
         <location filename="../../../build/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="510"/>
+        <location filename="../../../cmake-build-debug/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="499"/>
+        <location filename="../../../cmake-build-debug/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="510"/>
         <source>Resolution ratio</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1143,6 +1211,8 @@
         <location filename="../../display/src/kiran-display-configuration.ui" line="639"/>
         <location filename="../../../build/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="500"/>
         <location filename="../../../build/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="511"/>
+        <location filename="../../../cmake-build-debug/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="500"/>
+        <location filename="../../../cmake-build-debug/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="511"/>
         <source>Refresh rate</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1151,6 +1221,8 @@
         <location filename="../../display/src/kiran-display-configuration.ui" line="669"/>
         <location filename="../../../build/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="501"/>
         <location filename="../../../build/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="512"/>
+        <location filename="../../../cmake-build-debug/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="501"/>
+        <location filename="../../../cmake-build-debug/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="512"/>
         <source>Zoom rate</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1159,6 +1231,8 @@
         <location filename="../../display/src/kiran-display-configuration.ui" line="689"/>
         <location filename="../../../build/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="502"/>
         <location filename="../../../build/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="513"/>
+        <location filename="../../../cmake-build-debug/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="502"/>
+        <location filename="../../../cmake-build-debug/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="513"/>
         <source>Automatic</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1167,6 +1241,8 @@
         <location filename="../../display/src/kiran-display-configuration.ui" line="694"/>
         <location filename="../../../build/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="503"/>
         <location filename="../../../build/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="514"/>
+        <location filename="../../../cmake-build-debug/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="503"/>
+        <location filename="../../../cmake-build-debug/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="514"/>
         <source>100% (recommended)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1175,6 +1251,8 @@
         <location filename="../../display/src/kiran-display-configuration.ui" line="699"/>
         <location filename="../../../build/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="504"/>
         <location filename="../../../build/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="515"/>
+        <location filename="../../../cmake-build-debug/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="504"/>
+        <location filename="../../../cmake-build-debug/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="515"/>
         <source>200%</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1183,6 +1261,8 @@
         <location filename="../../display/src/kiran-display-configuration.ui" line="758"/>
         <location filename="../../../build/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="506"/>
         <location filename="../../../build/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="517"/>
+        <location filename="../../../cmake-build-debug/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="506"/>
+        <location filename="../../../cmake-build-debug/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="517"/>
         <source>Apply</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1191,18 +1271,22 @@
         <location filename="../../display/src/kiran-display-configuration.ui" line="780"/>
         <location filename="../../../build/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="507"/>
         <location filename="../../../build/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="518"/>
+        <location filename="../../../cmake-build-debug/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="507"/>
+        <location filename="../../../cmake-build-debug/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="518"/>
         <source>Close</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../display/src/kiran-display-configuration.ui" line="509"/>
         <location filename="../../../build/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="508"/>
+        <location filename="../../../cmake-build-debug/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="508"/>
         <source>Open</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../display/src/kiran-display-configuration.ui" line="561"/>
         <location filename="../../../build/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="509"/>
+        <location filename="../../../cmake-build-debug/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="509"/>
         <source>Set as main display</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1238,36 +1322,42 @@
     <message>
         <location filename="../../display/src/kiran-display-configuration-panel.ui" line="14"/>
         <location filename="../../../build/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration-panel.h" line="145"/>
+        <location filename="../../../cmake-build-debug/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration-panel.h" line="145"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../display/src/kiran-display-configuration-panel.ui" line="122"/>
         <location filename="../../../build/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration-panel.h" line="147"/>
+        <location filename="../../../cmake-build-debug/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration-panel.h" line="147"/>
         <source>Rotate left 90 degrees</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../display/src/kiran-display-configuration-panel.ui" line="153"/>
         <location filename="../../../build/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration-panel.h" line="151"/>
+        <location filename="../../../cmake-build-debug/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration-panel.h" line="151"/>
         <source>Rotate right 90 degrees</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../display/src/kiran-display-configuration-panel.ui" line="184"/>
         <location filename="../../../build/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration-panel.h" line="155"/>
+        <location filename="../../../cmake-build-debug/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration-panel.h" line="155"/>
         <source>Turn left and right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../display/src/kiran-display-configuration-panel.ui" line="218"/>
         <location filename="../../../build/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration-panel.h" line="159"/>
+        <location filename="../../../cmake-build-debug/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration-panel.h" line="159"/>
         <source>upside down</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../display/src/kiran-display-configuration-panel.ui" line="252"/>
         <location filename="../../../build/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration-panel.h" line="163"/>
+        <location filename="../../../cmake-build-debug/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration-panel.h" line="163"/>
         <source>Identification display</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1300,12 +1390,14 @@
     <message>
         <location filename="../src/kiran-timedate-widget.ui" line="14"/>
         <location filename="../../../build/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_kiran-timedate-widget.h" line="175"/>
+        <location filename="../../../cmake-build-debug/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_kiran-timedate-widget.h" line="175"/>
         <source>KiranTimeDateWidget</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/kiran-timedate-widget.ui" line="171"/>
         <location filename="../../../build/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_kiran-timedate-widget.h" line="178"/>
+        <location filename="../../../cmake-build-debug/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_kiran-timedate-widget.h" line="178"/>
         <source>Automatic synchronizetion</source>
         <translation>自动同步</translation>
     </message>
@@ -1335,6 +1427,7 @@
     <message>
         <location filename="../src/widgets/kiran-time-picker-widget.ui" line="14"/>
         <location filename="../../../build/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_kiran-time-picker-widget.h" line="135"/>
+        <location filename="../../../cmake-build-debug/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_kiran-time-picker-widget.h" line="135"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1344,6 +1437,7 @@
     <message>
         <location filename="../src/timezone/kiran-time-zone.ui" line="23"/>
         <location filename="../../../build/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_kiran-time-zone.h" line="121"/>
+        <location filename="../../../cmake-build-debug/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_kiran-time-zone.h" line="121"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1358,6 +1452,7 @@
     <message>
         <location filename="../src/widgets/kiran-time-zone-item.ui" line="14"/>
         <location filename="../../../build/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_kiran-time-zone-item.h" line="63"/>
+        <location filename="../../../cmake-build-debug/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_kiran-time-zone-item.h" line="63"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1372,6 +1467,7 @@
     <message>
         <location filename="../src/timezone/kiran-time-zone-list.ui" line="20"/>
         <location filename="../../../build/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_kiran-time-zone-list.h" line="71"/>
+        <location filename="../../../cmake-build-debug/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_kiran-time-zone-list.h" line="71"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1381,6 +1477,7 @@
     <message>
         <location filename="../../account/src/widgets/kiran-tips.ui" line="29"/>
         <location filename="../../../build/plugins/account/kiran-cpanel-account_autogen/include/ui_kiran-tips.h" line="71"/>
+        <location filename="../../../cmake-build-debug/plugins/account/kiran-cpanel-account_autogen/include/ui_kiran-tips.h" line="71"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1665,42 +1762,49 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../../mouse/src/mouse-page.ui" line="14"/>
         <location filename="../../../build/plugins/mouse/kiran-cpanel-mouse_autogen/include/ui_mouse-page.h" line="226"/>
+        <location filename="../../../cmake-build-debug/plugins/mouse/kiran-cpanel-mouse_autogen/include/ui_mouse-page.h" line="226"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../mouse/src/mouse-page.ui" line="83"/>
         <location filename="../../../build/plugins/mouse/kiran-cpanel-mouse_autogen/include/ui_mouse-page.h" line="227"/>
+        <location filename="../../../cmake-build-debug/plugins/mouse/kiran-cpanel-mouse_autogen/include/ui_mouse-page.h" line="227"/>
         <source>Select Mouse Hand</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../mouse/src/mouse-page.ui" line="132"/>
         <location filename="../../../build/plugins/mouse/kiran-cpanel-mouse_autogen/include/ui_mouse-page.h" line="228"/>
+        <location filename="../../../cmake-build-debug/plugins/mouse/kiran-cpanel-mouse_autogen/include/ui_mouse-page.h" line="228"/>
         <source>Mouse Motion Acceleration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../mouse/src/mouse-page.ui" line="186"/>
         <location filename="../../../build/plugins/mouse/kiran-cpanel-mouse_autogen/include/ui_mouse-page.h" line="229"/>
+        <location filename="../../../cmake-build-debug/plugins/mouse/kiran-cpanel-mouse_autogen/include/ui_mouse-page.h" line="229"/>
         <source>Slow</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../mouse/src/mouse-page.ui" line="206"/>
         <location filename="../../../build/plugins/mouse/kiran-cpanel-mouse_autogen/include/ui_mouse-page.h" line="230"/>
+        <location filename="../../../cmake-build-debug/plugins/mouse/kiran-cpanel-mouse_autogen/include/ui_mouse-page.h" line="230"/>
         <source>Fast</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../mouse/src/mouse-page.ui" line="243"/>
         <location filename="../../../build/plugins/mouse/kiran-cpanel-mouse_autogen/include/ui_mouse-page.h" line="231"/>
+        <location filename="../../../cmake-build-debug/plugins/mouse/kiran-cpanel-mouse_autogen/include/ui_mouse-page.h" line="231"/>
         <source>Natural Scroll</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../mouse/src/mouse-page.ui" line="277"/>
         <location filename="../../../build/plugins/mouse/kiran-cpanel-mouse_autogen/include/ui_mouse-page.h" line="233"/>
+        <location filename="../../../cmake-build-debug/plugins/mouse/kiran-cpanel-mouse_autogen/include/ui_mouse-page.h" line="233"/>
         <source>Middle Emulation Enabled</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1720,36 +1824,42 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../../audio/src/plugin/output-page.ui" line="14"/>
         <location filename="../../../build/plugins/audio/kiran-cpanel-audio_autogen/include/ui_output-page.h" line="208"/>
+        <location filename="../../../cmake-build-debug/plugins/audio/kiran-cpanel-audio_autogen/include/ui_output-page.h" line="208"/>
         <source>OutputPage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../audio/src/plugin/output-page.ui" line="55"/>
         <location filename="../../../build/plugins/audio/kiran-cpanel-audio_autogen/include/ui_output-page.h" line="209"/>
+        <location filename="../../../cmake-build-debug/plugins/audio/kiran-cpanel-audio_autogen/include/ui_output-page.h" line="209"/>
         <source>Output devices</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../audio/src/plugin/output-page.ui" line="110"/>
         <location filename="../../../build/plugins/audio/kiran-cpanel-audio_autogen/include/ui_output-page.h" line="210"/>
+        <location filename="../../../cmake-build-debug/plugins/audio/kiran-cpanel-audio_autogen/include/ui_output-page.h" line="210"/>
         <source>Output volume</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../audio/src/plugin/output-page.ui" line="202"/>
         <location filename="../../../build/plugins/audio/kiran-cpanel-audio_autogen/include/ui_output-page.h" line="212"/>
+        <location filename="../../../cmake-build-debug/plugins/audio/kiran-cpanel-audio_autogen/include/ui_output-page.h" line="212"/>
         <source>Left/right balance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../audio/src/plugin/output-page.ui" line="257"/>
         <location filename="../../../build/plugins/audio/kiran-cpanel-audio_autogen/include/ui_output-page.h" line="213"/>
+        <location filename="../../../cmake-build-debug/plugins/audio/kiran-cpanel-audio_autogen/include/ui_output-page.h" line="213"/>
         <source>Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../audio/src/plugin/output-page.ui" line="289"/>
         <location filename="../../../build/plugins/audio/kiran-cpanel-audio_autogen/include/ui_output-page.h" line="214"/>
+        <location filename="../../../cmake-build-debug/plugins/audio/kiran-cpanel-audio_autogen/include/ui_output-page.h" line="214"/>
         <source>Right</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1772,7 +1882,7 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>PanelWindow</name>
     <message>
-        <location filename="../../../src/panel-window.cpp" line="43"/>
+        <location filename="../../../src/panel-window.cpp" line="46"/>
         <source>Control Panel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1782,60 +1892,70 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../../account/src/pages/passwd-expiration-policy/password-expiration-policy-page.ui" line="14"/>
         <location filename="../../../build/plugins/account/kiran-cpanel-account_autogen/include/ui_password-expiration-policy-page.h" line="248"/>
+        <location filename="../../../cmake-build-debug/plugins/account/kiran-cpanel-account_autogen/include/ui_password-expiration-policy-page.h" line="248"/>
         <source>PasswordExpirationPolicyPage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../account/src/pages/passwd-expiration-policy/password-expiration-policy-page.ui" line="43"/>
         <location filename="../../../build/plugins/account/kiran-cpanel-account_autogen/include/ui_password-expiration-policy-page.h" line="249"/>
+        <location filename="../../../cmake-build-debug/plugins/account/kiran-cpanel-account_autogen/include/ui_password-expiration-policy-page.h" line="249"/>
         <source>User expires</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../account/src/pages/passwd-expiration-policy/password-expiration-policy-page.ui" line="67"/>
         <location filename="../../../build/plugins/account/kiran-cpanel-account_autogen/include/ui_password-expiration-policy-page.h" line="250"/>
+        <location filename="../../../cmake-build-debug/plugins/account/kiran-cpanel-account_autogen/include/ui_password-expiration-policy-page.h" line="250"/>
         <source>yyyy-MM-dd</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../account/src/pages/passwd-expiration-policy/password-expiration-policy-page.ui" line="84"/>
         <location filename="../../../build/plugins/account/kiran-cpanel-account_autogen/include/ui_password-expiration-policy-page.h" line="251"/>
+        <location filename="../../../cmake-build-debug/plugins/account/kiran-cpanel-account_autogen/include/ui_password-expiration-policy-page.h" line="251"/>
         <source>Last password change</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../account/src/pages/passwd-expiration-policy/password-expiration-policy-page.ui" line="108"/>
         <location filename="../../../build/plugins/account/kiran-cpanel-account_autogen/include/ui_password-expiration-policy-page.h" line="252"/>
+        <location filename="../../../cmake-build-debug/plugins/account/kiran-cpanel-account_autogen/include/ui_password-expiration-policy-page.h" line="252"/>
         <source>1990-01-01</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../account/src/pages/passwd-expiration-policy/password-expiration-policy-page.ui" line="125"/>
         <location filename="../../../build/plugins/account/kiran-cpanel-account_autogen/include/ui_password-expiration-policy-page.h" line="253"/>
+        <location filename="../../../cmake-build-debug/plugins/account/kiran-cpanel-account_autogen/include/ui_password-expiration-policy-page.h" line="253"/>
         <source>Maximum vaild days of password</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../account/src/pages/passwd-expiration-policy/password-expiration-policy-page.ui" line="162"/>
         <location filename="../../../build/plugins/account/kiran-cpanel-account_autogen/include/ui_password-expiration-policy-page.h" line="254"/>
+        <location filename="../../../cmake-build-debug/plugins/account/kiran-cpanel-account_autogen/include/ui_password-expiration-policy-page.h" line="254"/>
         <source>Prompt time before password expiration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../account/src/pages/passwd-expiration-policy/password-expiration-policy-page.ui" line="199"/>
         <location filename="../../../build/plugins/account/kiran-cpanel-account_autogen/include/ui_password-expiration-policy-page.h" line="255"/>
+        <location filename="../../../cmake-build-debug/plugins/account/kiran-cpanel-account_autogen/include/ui_password-expiration-policy-page.h" line="255"/>
         <source>how many days after password expires will become inactive</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../account/src/pages/passwd-expiration-policy/password-expiration-policy-page.ui" line="280"/>
         <location filename="../../../build/plugins/account/kiran-cpanel-account_autogen/include/ui_password-expiration-policy-page.h" line="256"/>
+        <location filename="../../../cmake-build-debug/plugins/account/kiran-cpanel-account_autogen/include/ui_password-expiration-policy-page.h" line="256"/>
         <source>save</source>
         <translation type="unfinished">保存</translation>
     </message>
     <message>
         <location filename="../../account/src/pages/passwd-expiration-policy/password-expiration-policy-page.ui" line="321"/>
         <location filename="../../../build/plugins/account/kiran-cpanel-account_autogen/include/ui_password-expiration-policy-page.h" line="257"/>
+        <location filename="../../../cmake-build-debug/plugins/account/kiran-cpanel-account_autogen/include/ui_password-expiration-policy-page.h" line="257"/>
         <source>return</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1875,18 +1995,21 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../../power/src/pages/power-settings/power-settings-page.ui" line="14"/>
         <location filename="../../../build/plugins/power/kiran-cpanel-power_autogen/include/ui_power-settings-page.h" line="112"/>
+        <location filename="../../../cmake-build-debug/plugins/power/kiran-cpanel-power_autogen/include/ui_power-settings-page.h" line="112"/>
         <source>PowerSettingsPage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../power/src/pages/power-settings/power-settings-page.ui" line="43"/>
         <location filename="../../../build/plugins/power/kiran-cpanel-power_autogen/include/ui_power-settings-page.h" line="113"/>
+        <location filename="../../../cmake-build-debug/plugins/power/kiran-cpanel-power_autogen/include/ui_power-settings-page.h" line="113"/>
         <source>After idle for more than the following time, the computer will execute</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../power/src/pages/power-settings/power-settings-page.ui" line="76"/>
         <location filename="../../../build/plugins/power/kiran-cpanel-power_autogen/include/ui_power-settings-page.h" line="114"/>
+        <location filename="../../../cmake-build-debug/plugins/power/kiran-cpanel-power_autogen/include/ui_power-settings-page.h" line="114"/>
         <source>The monitor will turn off when it is idle</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2457,24 +2580,28 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/pages/timezone-settings/time-zone-settings.ui" line="14"/>
         <location filename="../../../build/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_time-zone-settings.h" line="125"/>
+        <location filename="../../../cmake-build-debug/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_time-zone-settings.h" line="125"/>
         <source>TimezoneSettings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/pages/timezone-settings/time-zone-settings.ui" line="52"/>
         <location filename="../../../build/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_time-zone-settings.h" line="126"/>
+        <location filename="../../../cmake-build-debug/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_time-zone-settings.h" line="126"/>
         <source>Select Time Zone</source>
         <translation>选择时区</translation>
     </message>
     <message>
         <location filename="../src/pages/timezone-settings/time-zone-settings.ui" line="116"/>
         <location filename="../../../build/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_time-zone-settings.h" line="127"/>
+        <location filename="../../../cmake-build-debug/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_time-zone-settings.h" line="127"/>
         <source>save</source>
         <translation>保存</translation>
     </message>
     <message>
         <location filename="../src/pages/timezone-settings/time-zone-settings.ui" line="157"/>
         <location filename="../../../build/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_time-zone-settings.h" line="128"/>
+        <location filename="../../../cmake-build-debug/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_time-zone-settings.h" line="128"/>
         <source>reset</source>
         <translation>重置</translation>
     </message>
@@ -2484,66 +2611,77 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../../mouse/src/touchpad-page.ui" line="14"/>
         <location filename="../../../build/plugins/mouse/kiran-cpanel-mouse_autogen/include/ui_touchpad-page.h" line="320"/>
+        <location filename="../../../cmake-build-debug/plugins/mouse/kiran-cpanel-mouse_autogen/include/ui_touchpad-page.h" line="320"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../mouse/src/touchpad-page.ui" line="83"/>
         <location filename="../../../build/plugins/mouse/kiran-cpanel-mouse_autogen/include/ui_touchpad-page.h" line="321"/>
+        <location filename="../../../cmake-build-debug/plugins/mouse/kiran-cpanel-mouse_autogen/include/ui_touchpad-page.h" line="321"/>
         <source>TouchPad Enabled</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../mouse/src/touchpad-page.ui" line="131"/>
         <location filename="../../../build/plugins/mouse/kiran-cpanel-mouse_autogen/include/ui_touchpad-page.h" line="323"/>
+        <location filename="../../../cmake-build-debug/plugins/mouse/kiran-cpanel-mouse_autogen/include/ui_touchpad-page.h" line="323"/>
         <source>Select TouchPad Hand</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../mouse/src/touchpad-page.ui" line="180"/>
         <location filename="../../../build/plugins/mouse/kiran-cpanel-mouse_autogen/include/ui_touchpad-page.h" line="324"/>
+        <location filename="../../../cmake-build-debug/plugins/mouse/kiran-cpanel-mouse_autogen/include/ui_touchpad-page.h" line="324"/>
         <source>TouchPad Motion Acceleration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../mouse/src/touchpad-page.ui" line="223"/>
         <location filename="../../../build/plugins/mouse/kiran-cpanel-mouse_autogen/include/ui_touchpad-page.h" line="325"/>
+        <location filename="../../../cmake-build-debug/plugins/mouse/kiran-cpanel-mouse_autogen/include/ui_touchpad-page.h" line="325"/>
         <source>Slow</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../mouse/src/touchpad-page.ui" line="243"/>
         <location filename="../../../build/plugins/mouse/kiran-cpanel-mouse_autogen/include/ui_touchpad-page.h" line="326"/>
+        <location filename="../../../cmake-build-debug/plugins/mouse/kiran-cpanel-mouse_autogen/include/ui_touchpad-page.h" line="326"/>
         <source>Fast</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../mouse/src/touchpad-page.ui" line="273"/>
         <location filename="../../../build/plugins/mouse/kiran-cpanel-mouse_autogen/include/ui_touchpad-page.h" line="327"/>
+        <location filename="../../../cmake-build-debug/plugins/mouse/kiran-cpanel-mouse_autogen/include/ui_touchpad-page.h" line="327"/>
         <source>Select Click Method</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../mouse/src/touchpad-page.ui" line="317"/>
         <location filename="../../../build/plugins/mouse/kiran-cpanel-mouse_autogen/include/ui_touchpad-page.h" line="328"/>
+        <location filename="../../../cmake-build-debug/plugins/mouse/kiran-cpanel-mouse_autogen/include/ui_touchpad-page.h" line="328"/>
         <source>Select Scroll Method</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../mouse/src/touchpad-page.ui" line="361"/>
         <location filename="../../../build/plugins/mouse/kiran-cpanel-mouse_autogen/include/ui_touchpad-page.h" line="329"/>
+        <location filename="../../../cmake-build-debug/plugins/mouse/kiran-cpanel-mouse_autogen/include/ui_touchpad-page.h" line="329"/>
         <source>Natural Scroll</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../mouse/src/touchpad-page.ui" line="409"/>
         <location filename="../../../build/plugins/mouse/kiran-cpanel-mouse_autogen/include/ui_touchpad-page.h" line="331"/>
+        <location filename="../../../cmake-build-debug/plugins/mouse/kiran-cpanel-mouse_autogen/include/ui_touchpad-page.h" line="331"/>
         <source>Enabled while Typing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../mouse/src/touchpad-page.ui" line="457"/>
         <location filename="../../../build/plugins/mouse/kiran-cpanel-mouse_autogen/include/ui_touchpad-page.h" line="333"/>
+        <location filename="../../../cmake-build-debug/plugins/mouse/kiran-cpanel-mouse_autogen/include/ui_touchpad-page.h" line="333"/>
         <source>Tap to Click</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2583,90 +2721,105 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../../account/src/pages/user-info-page/user-info-page.ui" line="14"/>
         <location filename="../../../build/plugins/account/kiran-cpanel-account_autogen/include/ui_user-info-page.h" line="450"/>
+        <location filename="../../../cmake-build-debug/plugins/account/kiran-cpanel-account_autogen/include/ui_user-info-page.h" line="450"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../account/src/pages/user-info-page/user-info-page.ui" line="138"/>
         <location filename="../../../build/plugins/account/kiran-cpanel-account_autogen/include/ui_user-info-page.h" line="451"/>
+        <location filename="../../../cmake-build-debug/plugins/account/kiran-cpanel-account_autogen/include/ui_user-info-page.h" line="451"/>
         <source>Account</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../account/src/pages/user-info-page/user-info-page.ui" line="167"/>
         <location filename="../../../build/plugins/account/kiran-cpanel-account_autogen/include/ui_user-info-page.h" line="452"/>
+        <location filename="../../../cmake-build-debug/plugins/account/kiran-cpanel-account_autogen/include/ui_user-info-page.h" line="452"/>
         <source>Change password</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../account/src/pages/user-info-page/user-info-page.ui" line="193"/>
         <location filename="../../../build/plugins/account/kiran-cpanel-account_autogen/include/ui_user-info-page.h" line="453"/>
+        <location filename="../../../cmake-build-debug/plugins/account/kiran-cpanel-account_autogen/include/ui_user-info-page.h" line="453"/>
         <source>User id</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../account/src/pages/user-info-page/user-info-page.ui" line="251"/>
         <location filename="../../../build/plugins/account/kiran-cpanel-account_autogen/include/ui_user-info-page.h" line="454"/>
+        <location filename="../../../cmake-build-debug/plugins/account/kiran-cpanel-account_autogen/include/ui_user-info-page.h" line="454"/>
         <source>User type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../account/src/pages/user-info-page/user-info-page.ui" line="312"/>
         <location filename="../../../build/plugins/account/kiran-cpanel-account_autogen/include/ui_user-info-page.h" line="455"/>
+        <location filename="../../../cmake-build-debug/plugins/account/kiran-cpanel-account_autogen/include/ui_user-info-page.h" line="455"/>
         <source>User status</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../account/src/pages/user-info-page/user-info-page.ui" line="367"/>
         <location filename="../../../build/plugins/account/kiran-cpanel-account_autogen/include/ui_user-info-page.h" line="456"/>
+        <location filename="../../../cmake-build-debug/plugins/account/kiran-cpanel-account_autogen/include/ui_user-info-page.h" line="456"/>
         <source>auth manager</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../account/src/pages/user-info-page/user-info-page.ui" line="396"/>
         <location filename="../../../build/plugins/account/kiran-cpanel-account_autogen/include/ui_user-info-page.h" line="457"/>
+        <location filename="../../../cmake-build-debug/plugins/account/kiran-cpanel-account_autogen/include/ui_user-info-page.h" line="457"/>
         <source>Password expiration policy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../account/src/pages/user-info-page/user-info-page.ui" line="461"/>
         <location filename="../../../build/plugins/account/kiran-cpanel-account_autogen/include/ui_user-info-page.h" line="458"/>
+        <location filename="../../../cmake-build-debug/plugins/account/kiran-cpanel-account_autogen/include/ui_user-info-page.h" line="458"/>
         <source>Confirm</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../account/src/pages/user-info-page/user-info-page.ui" line="502"/>
         <location filename="../../../build/plugins/account/kiran-cpanel-account_autogen/include/ui_user-info-page.h" line="459"/>
+        <location filename="../../../cmake-build-debug/plugins/account/kiran-cpanel-account_autogen/include/ui_user-info-page.h" line="459"/>
         <source>Delete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../account/src/pages/user-info-page/user-info-page.ui" line="577"/>
         <location filename="../../../build/plugins/account/kiran-cpanel-account_autogen/include/ui_user-info-page.h" line="460"/>
+        <location filename="../../../cmake-build-debug/plugins/account/kiran-cpanel-account_autogen/include/ui_user-info-page.h" line="460"/>
         <source>Current password</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../account/src/pages/user-info-page/user-info-page.ui" line="638"/>
         <location filename="../../../build/plugins/account/kiran-cpanel-account_autogen/include/ui_user-info-page.h" line="461"/>
+        <location filename="../../../cmake-build-debug/plugins/account/kiran-cpanel-account_autogen/include/ui_user-info-page.h" line="461"/>
         <source>New password</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../account/src/pages/user-info-page/user-info-page.ui" line="687"/>
         <location filename="../../../build/plugins/account/kiran-cpanel-account_autogen/include/ui_user-info-page.h" line="462"/>
+        <location filename="../../../cmake-build-debug/plugins/account/kiran-cpanel-account_autogen/include/ui_user-info-page.h" line="462"/>
         <source>Enter the new password again</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../account/src/pages/user-info-page/user-info-page.ui" line="780"/>
         <location filename="../../../build/plugins/account/kiran-cpanel-account_autogen/include/ui_user-info-page.h" line="463"/>
+        <location filename="../../../cmake-build-debug/plugins/account/kiran-cpanel-account_autogen/include/ui_user-info-page.h" line="463"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../account/src/pages/user-info-page/user-info-page.ui" line="821"/>
         <location filename="../../../build/plugins/account/kiran-cpanel-account_autogen/include/ui_user-info-page.h" line="464"/>
+        <location filename="../../../cmake-build-debug/plugins/account/kiran-cpanel-account_autogen/include/ui_user-info-page.h" line="464"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2749,12 +2902,14 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../../audio/src/system-tray/volume-setting-page.ui" line="35"/>
         <location filename="../../../build/plugins/audio/kiran-audio-status-icon_autogen/include/ui_volume-setting-page.h" line="123"/>
+        <location filename="../../../cmake-build-debug/plugins/audio/kiran-audio-status-icon_autogen/include/ui_volume-setting-page.h" line="123"/>
         <source>VolumeSettingPage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../audio/src/system-tray/volume-setting-page.ui" line="104"/>
         <location filename="../../../build/plugins/audio/kiran-audio-status-icon_autogen/include/ui_volume-setting-page.h" line="124"/>
+        <location filename="../../../cmake-build-debug/plugins/audio/kiran-audio-status-icon_autogen/include/ui_volume-setting-page.h" line="124"/>
         <location filename="../../audio/src/system-tray/volume-setting-page.cpp" line="58"/>
         <source>Volume</source>
         <translation type="unfinished"></translation>

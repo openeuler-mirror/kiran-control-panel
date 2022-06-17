@@ -360,7 +360,7 @@ void InputPage::handleSourceDelete(int index)
 
 QSize InputPage::sizeHint() const
 {
-    return QSize(634, 670);
+    return {500, 657};
 }
 
 //通过QMultimedia模块获取反馈音量

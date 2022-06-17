@@ -38,6 +38,7 @@ public:
     bool checkHasUnSaved();
     void jumpTo(const QString& subItemID);
 
+    bool eventFilter(QObject *watched, QEvent *event) override;
 private slots:
     void handleCurrentItemChanged();
     void handlePluginVisibleSubItemsChanged();

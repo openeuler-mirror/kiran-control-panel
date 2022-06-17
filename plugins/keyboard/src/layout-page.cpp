@@ -407,3 +407,8 @@ void LayoutPage::setEditMode()
         ui->btn_edit->setText(tr("Edit"));
     }
 }
+
+QSize LayoutPage::sizeHint() const
+{
+    return {419,595};
+}

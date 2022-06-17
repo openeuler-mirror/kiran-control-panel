@@ -31,7 +31,7 @@ class GeneralPage : public QWidget
 public:
     explicit GeneralPage(QWidget *parent = 0);
     ~GeneralPage();
-    virtual QSize sizeHint() const override;
+    QSize sizeHint() const override;
 
 private:
     void initUI();

@@ -2,14 +2,6 @@
 <ui version="4.0">
  <class>KiranTimeDateWidget</class>
  <widget class="QWidget" name="KiranTimeDateWidget">
-  <property name="geometry">
-   <rect>
-    <x>0</x>
-    <y>0</y>
-    <width>967</width>
-    <height>680</height>
-   </rect>
-  </property>
   <property name="windowTitle">
    <string>KiranTimeDateWidget</string>
   </property>

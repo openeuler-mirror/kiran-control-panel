@@ -22,8 +22,6 @@
 #include <kiran-session-daemon/keyboard-i.h>
 
 #define TIMEOUT 100
-#define PAGE_BASE_SIZE_WIDTH 636
-#define PAGE_BASE_SIZE_HEIGHT 670
 
 GeneralPage::GeneralPage(QWidget *parent)
     : QWidget(parent),
@@ -62,7 +60,7 @@ GeneralPage::~GeneralPage()
 
 QSize GeneralPage::sizeHint() const
 {
-    return QSize(PAGE_BASE_SIZE_WIDTH, PAGE_BASE_SIZE_HEIGHT);
+    return {419, 595};
 }
 
 void GeneralPage::initUI()

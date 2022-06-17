@@ -37,7 +37,7 @@ PowerSettingsPage::~PowerSettingsPage()
 
 QSize PowerSettingsPage::sizeHint() const
 {
-    return QSize(518,585);
+    return {500,657};
 }
 
 void PowerSettingsPage::init()

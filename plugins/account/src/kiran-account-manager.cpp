@@ -442,7 +442,7 @@ void KiranAccountManager::setMaskVisible(bool visible)
 
 QSize KiranAccountManager::sizeHint() const
 {
-    return QSize(969, 679);
+    return {780, 657};
 }
 
 void KiranAccountManager::initPagePasswdExpirationPolicy()

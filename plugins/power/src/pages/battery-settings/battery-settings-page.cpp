@@ -42,7 +42,7 @@ BatterySettingsPage::~BatterySettingsPage()
 
 QSize BatterySettingsPage::sizeHint() const
 {
-    return QSize(518,585);
+    return {500,657};
 }
 
 void BatterySettingsPage::init()

@@ -264,3 +264,8 @@ void Fonts::handleFontChanged(int type, QString fontInfo)
         break;
     }
 }
+
+QSize Fonts::sizeHint() const
+{
+    return {500,657};
+}

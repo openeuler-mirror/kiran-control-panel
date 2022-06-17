@@ -32,6 +32,7 @@ class LayoutPage : public QWidget
 public:
     explicit LayoutPage(QWidget *parent = 0);
     ~LayoutPage();
+    QSize sizeHint() const override;
 
 private:
     void init();
