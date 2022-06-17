@@ -60,7 +60,6 @@ PluginManager::~PluginManager()
 void PluginManager::loadAll()
 {
     clear();
-
     CategoryInfoPtrList tempCategoryList;
 
     /// 读出所有的分类信息
@@ -120,7 +119,6 @@ void PluginManager::loadAll()
         int categoryIdx = categoryIdxMapIter.value();
         tempCategoryList.at(categoryIdx)->insertPlugin(ret);
     }
-
 #if 1
     for(auto categoryInfo:tempCategoryList)
     {

@@ -42,7 +42,7 @@ void PanelWindow::initUI()
     //初始化窗口相关
     setTitleBarHeight(40);
     setButtonHints(KiranTitlebarWindow::TitlebarMinMaxCloseHints);
-    setIcon(QIcon::fromTheme(qAppName()));
+    setIcon(QIcon::fromTheme("kiran-control-panel"));
     setTitle(tr("Control Panel"));
 
     //初始化中心显示窗口
