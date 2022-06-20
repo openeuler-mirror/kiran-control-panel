@@ -33,7 +33,7 @@ TrayItemWidget::~TrayItemWidget()
 void TrayItemWidget::initUI()
 {
     ui->activeStatusWidget->setVisible(false);
-    ui->inputPasswordWidget->setVisible(false);
+    ui->inputTextWidget->setVisible(false);
 
     setFixedWidth(240);
     setContentsMargins(10,10,10,10);
@@ -41,7 +41,8 @@ void TrayItemWidget::initUI()
 
 void TrayItemWidget::initConnection()
 {
-    connect(ui->inputPasswordConnectButton,&QPushButton::clicked,this,&TrayItemWidget::handleInputPassword);
+    connect(ui->inputTextConnectButton,&QPushButton::clicked,this, &TrayItemWidget::handleInputText);
+    connect(ui->inputTextCancelButton,&QPushButton::clicked,this,&TrayItemWidget::cancelButtonClicked);
     connect(ui->connectButton,&QPushButton::clicked,this,&TrayItemWidget::connectButtonClicked);
     connect(ui->disconnectButton,&QPushButton::clicked,this,&TrayItemWidget::disconnectButttonClicked);
     connect(ui->ignoreButton,&QPushButton::clicked,this,&TrayItemWidget::ignoreButtonClicked);
@@ -115,7 +116,7 @@ void TrayItemWidget::setOtherNetworkIcon()
 
 void TrayItemWidget::activatedStatus()
 {
-    ui->inputPasswordWidget->setVisible(false);
+    ui->inputTextWidget->setVisible(false);
     ui->activeStatusWidget->setVisible(true);
     ui->cancelAndConnect->setVisible(false);
 
@@ -128,17 +129,17 @@ void TrayItemWidget::activatedStatus()
 
 void TrayItemWidget::deactivateStatus()
 {
-    ui->activeStatusWidget->setVisible(false);
-    ui->inputPasswordWidget->setVisible(false);
+    simpleStatus();
+    setLoadingStatus(false);
 }
 
 void TrayItemWidget::prepareConnectStatus()
 {
-    ui->connectionStatus->setText(tr("Available"));
+    ui->connectionStatus->setText(tr("Unconnected"));
     ui->activeStatusWidget->setVisible(true);
     ui->cancelAndConnect->setVisible(true);
     ui->ignoreAnddisconnect->setVisible(false);
-    ui->inputPasswordWidget->setVisible(false);
+    ui->inputTextWidget->setVisible(false);
 }
 
 void TrayItemWidget::activatingStatus()
@@ -183,19 +184,34 @@ QPixmap TrayItemWidget::getPixmapFromSvg(const QString &svgPath)
 void TrayItemWidget::showInputPasswordWidget()
 {
     ui->activeStatusWidget->setVisible(false);
-    ui->inputPasswordWidget->setVisible(true);
+    ui->inputTextWidget->setVisible(true);
+    ui->inputTextEdit->setEchoMode(QLineEdit::Password);
+    ui->inputTextEdit->setPlaceholderText(tr("Please input password"));
+    ui->inputTextConnectButton->setEnabled(true);
 }
 
-void TrayItemWidget::handleInputPassword()
+void TrayItemWidget::showInputSsidWidget()
 {
-    QString password = ui->passwordEdit->text();
-    emit sendPassword(password);
-    ui->inputPasswordConnectButton->setEnabled(false);
+    ui->activeStatusWidget->setVisible(false);
+    ui->inputTextWidget->setVisible(true);
+    ui->inputTextEdit->setEchoMode(QLineEdit::Normal);
+    ui->inputTextEdit->setPlaceholderText(tr("Please input a network name"));
+    ui->inputTextConnectButton->setEnabled(true);
+}
+void TrayItemWidget::handleInputText()
+{
+    ui->inputTextConnectButton->setEnabled(false);
+    QString text = ui->inputTextEdit->text();
+    if(ui->inputTextEdit->echoMode() == QLineEdit::Password)
+        emit sendPassword(text);
+    else
+        emit sendSsid(text);
+    ui->inputTextEdit->clear();
 }
 
 QString TrayItemWidget::getPassword()
 {
-    return ui->passwordEdit->text();
+    return ui->inputTextEdit->text();
 }
 
 void TrayItemWidget::setIgnoreAndDisconnectButtonVisible(bool isVisible)
@@ -211,7 +227,8 @@ void TrayItemWidget::setCancelAndConnectButtonVisible(bool isVisible)
 void TrayItemWidget::simpleStatus()
 {
     ui->activeStatusWidget->setVisible(false);
-    ui->inputPasswordWidget->setVisible(false);
+    ui->inputTextWidget->setVisible(false);
+    ui->inputTextEdit->clear();
 }
 
 void TrayItemWidget::setEnableConnectButton(bool enable)
@@ -219,4 +236,8 @@ void TrayItemWidget::setEnableConnectButton(bool enable)
     ui->connectButton->setEnabled(enable);
 }
 
+TrayItemWidgetStatus TrayItemWidget::itemWidgetStatus()
+{
+    return m_currentItemWidgetStatus;
+}
 

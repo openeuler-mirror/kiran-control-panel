@@ -69,23 +69,6 @@ void TrayPage::initConnection()
 
 }
 
-void TrayPage::getDeviceList(Device::Type deviceType)
-{
-    const Device::List deviceList = networkInterfaces();
-    for (Device::Ptr dev : deviceList)
-    {
-        if (dev->type() == deviceType)
-        {
-            m_deviceList << dev;
-        }
-    }
-    KLOG_INFO() << "m_deviceList:" << m_deviceList;
-    if (m_deviceList.isEmpty())
-    {
-        KLOG_INFO() << "No available devices were found";
-    }
-}
-
 void TrayPage::setMultiDeviceWidget(Device::Type deviceType)
 {
     for (Device::Ptr dev : m_deviceList)

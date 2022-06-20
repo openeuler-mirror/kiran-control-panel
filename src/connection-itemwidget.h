@@ -69,28 +69,4 @@ private:
     QWidget *m_activeStatusWidget;
 };
 
-class InputPasswordWidget : public QWidget
-{
-    Q_OBJECT
-public:
-    explicit InputPasswordWidget(QWidget *parent= nullptr);
-
-    void intUI();
-    void initConnection();
-
-public slots:
-    void handleInputPassword();
-    QString getPassword();
-
-signals:
-    void activateConnectionButtonClicked();
-    void sendPassword(const QString& password);
-private:
-    QPushButton *m_activateConnectionButton;
-    QPushButton *m_cancelConnectButton;
-    QLineEdit *m_passwordEdit;
-    QHBoxLayout *m_horizonLayout;
-
-};
-
 #endif  // KIRAN_CPANEL_NETWORK_CUSTOMITEMWIDGET_H

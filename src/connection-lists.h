@@ -25,6 +25,7 @@
 #include <QPushButton>
 #include <QWidget>
 #include "connection-itemwidget.h"
+#include "status-notification.h"
 
 using namespace NetworkManager;
 
@@ -44,6 +45,7 @@ struct WirelessConnectionInfo
 
 struct ConnectionInfo
 {
+    QString id;
     QString uuid;
     QString connectionPath;
     QString devicePath;
@@ -52,7 +54,7 @@ struct ConnectionInfo
     WirelessConnectionInfo wirelessInfo;
 };
 
-Q_DECLARE_METATYPE(ConnectionInfo);
+Q_DECLARE_METATYPE(ConnectionInfo)
 Q_DECLARE_METATYPE(NetworkManager::Status)
 
 class ConnectionLists : public QListWidget
@@ -77,21 +79,25 @@ public:
     void showWirelessNetworkLists();
     void addWirelessNetworkToLists(WirelessNetwork::Ptr network,
                                    const QString &devicePath);
-    void addOtherWirelessItemToLists();
+    void showOtherWirelessItem();
+
+//    void addWirelessItemToLists();
 
     void removeConnectionFromLists(const QString &path);
     void removeWirelessNetworkFromLists(const QString &ssid);
     void updateItemActivatedPath(QListWidgetItem *item,
                                  QString activatedPath = "");
-    void findItemByUuid(const QString &uuid);
-    void findActiveItemBySsid(const QString &ssid);
+    // XXX:使用模板进行优化，减少重复代码
+    int findItemByUuid(const QString &uuid);
     int findItemBySsid(const QString &ssid);
+    int findItemByActivatedPath(const QString &activatedPath);
 
-    void enableConnectButtonOfActivatingItem(bool enable);
+    void setCurrentActiveItem(int row);
+    void enableConnectButtonOfItem(QListWidgetItem *item, bool enable);
 
 public slots:
     void handleActiveStateChanged(ActiveConnection::State state);
-    void handleActiveStateDeactivated();
+    void handleActiveStateDeactivated(const QString &activatedConnectionPath);
     void handleConnectionUpdated();
 
     void handleEditButtonClicked();
@@ -102,19 +108,19 @@ public slots:
 
     void clearConnectionLists();
     void handleConnectionItemClicked(QListWidgetItem *item);
-    void updateActivatedConnectionInfo(QString activatedPath);
-    void clearDeactivatedConnectionInfo();
-    void connectionStateNotify(ActiveConnection::State state);
-    void connectionItemLoadingAnimation();
+    void updateItemActivatingStatus();
+    void updateItemActivatedStatus(const QString &activatedConnectionPath);
+    void clearItemActivatedConnectionInfo(QListWidgetItem *activatedItem);
+//    void connectionStateNotify(ActiveConnection::State state, const QString &activatedConnectionPath);
 
     void showInputPasswordWidgetOfItem(int itemRow);
-    int getPasswordWidgetRow();
+    void itemSimpleStatus(int row);
 
 signals:
     void requestCreatConnection();
     void requestEditConnection(const QString &uuid, QString activeConnectionPath);
     void requestActivateCurrentItemConnection(const QString &connectionPath,
-                                         const QString &connectionParameter = "");
+                                              const QString &connectionParameter = "");
     void requestConnectWirelessNetwork(const ConnectionInfo &connectionInfo);
     void deactivatedItemConnection(const QString &connectionPath);
     void connectionUpdated(const QString &path);
@@ -122,17 +128,18 @@ signals:
     void trayRequestDisconnect(const QString &activatedConnectionPath);
     void trayRequestConnect(const ConnectionInfo &connectionInfo);
     void trayRequestIgnore(const QString &activatedConnectionPath);
-    void trayRequestCancel();
-    void sendPasswordToWirelessSetting(const QString& password);
+    void trayRequestCancel(const QString &activatedConnectionPath);
 
+    void sendPasswordToWirelessSetting(const QString &password);
+    void sendSsidToWirelessSetting(const QString &ssid);
 private:
+    // TODO:去掉m_previousActivatedItem和m_currentActiveItem
     QListWidgetItem *m_previousActivatedItem;
     QListWidgetItem *m_currentActiveItem;
     ItemWidgetType m_itemShowType;
     QString m_currentDevicePath;
-    int m_passwordWidgetRow = -1;
-
-    QMap<QWidget*,QListWidgetItem*> m_itemWidgetMap;
+    QMap<QWidget *, QListWidgetItem *> m_itemWidgetMap;
+    StatusNotification m_statusNotification;
 };
 
 class ConnectionSortListItem : public QListWidgetItem

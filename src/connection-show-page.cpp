@@ -110,32 +110,38 @@ void ConnectionShowPage::clearConnectionLists()
     ui->connectionLists->clearConnectionLists();
 }
 
-void ConnectionShowPage::findItemByUuid(const QString& uuid)
+int ConnectionShowPage::findItemByUuid(const QString& uuid)
 {
-    ui->connectionLists->findItemByUuid(uuid);
+    return ui->connectionLists->findItemByUuid(uuid);
 }
 
-void ConnectionShowPage::findItemBySsid(const QString& ssid)
+int ConnectionShowPage::findItemBySsid(const QString& ssid)
 {
-    ui->connectionLists->findActiveItemBySsid(ssid);
+    return ui->connectionLists->findItemBySsid(ssid);
 }
 
+void ConnectionShowPage::setCurrentActiveItem(int row)
+{
+    ui->connectionLists->setCurrentActiveItem(row);
+}
 void ConnectionShowPage::connectionItemLoadingAnimation()
 {
-    ui->connectionLists->connectionItemLoadingAnimation();
+    ui->connectionLists->updateItemActivatingStatus();
 }
 
 void ConnectionShowPage::updateActivatedConnectionInfo(QString activatedPath)
 {
-    ui->connectionLists->updateActivatedConnectionInfo(activatedPath);
+    ui->connectionLists->updateItemActivatedStatus(activatedPath);
 }
 
 void ConnectionShowPage::clearDeactivatedConnectionInfo(const QString& deactivatedPath)
 {
-    ui->connectionLists->clearDeactivatedConnectionInfo();
+    int row = ui->connectionLists->findItemByActivatedPath(deactivatedPath);
+    auto activatedItem = ui->connectionLists->item(row);
+    ui->connectionLists->clearItemActivatedConnectionInfo(activatedItem);
 }
 
-void ConnectionShowPage::connectionStateNotify(ActiveConnection::State state)
+void ConnectionShowPage::connectionStateNotify(ActiveConnection::State state,const QString &activatedConnectionPath)
 {
-    ui->connectionLists->connectionStateNotify(state);
+//    ui->connectionLists->connectionStateNotify(state,activatedConnectionPath);
 }

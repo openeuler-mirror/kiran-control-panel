@@ -107,7 +107,7 @@ void WirelessManager::initConnection()
 
     initNotifierConnection();
 
-    connect(m_currentWirelessDevice.data(), &WirelessDevice::networkDisappeared, this, &WirelessManager::handleNetworkDisappeared);
+    connect(m_currentWirelessDevice.data(), &WirelessDevice::networkDisappeared, this, &WirelessManager::handleNetworkDisappeared,Qt::QueuedConnection);
     connect(m_currentWirelessDevice.data(), &WirelessDevice::networkAppeared, this, &WirelessManager::handleNetworkAppeared);
 }
 
@@ -145,7 +145,8 @@ void WirelessManager::getWirelessAvailableConnections(const QString &devicePath)
             WirelessSetting::Ptr wirelessSetting = conn->settings()->setting(Setting::SettingType::Wireless).dynamicCast<WirelessSetting>();
             KLOG_DEBUG() << "wirelessSetting->ssid():" << wirelessSetting->ssid();
             KLOG_DEBUG() << "wirelessSetting->security():" << wirelessSetting->security();
-            m_wirelssConnectionMap.insert(wirelessSetting->ssid(), conn);
+            QString ssid  = QString(wirelessSetting->ssid());
+            m_wirelssConnectionMap.insert(ssid, conn);
         }
     }
 }
@@ -275,8 +276,8 @@ void WirelessManager::handleActiveConnectionAdded(const QString &path)
         ConnectionSettings::Ptr settings = activatedConnection->connection()->settings();
         WirelessSetting::Ptr wirelessSetting = settings->setting(Setting::Wireless).dynamicCast<WirelessSetting>();
         QString ssid = wirelessSetting->ssid();
-        ui->connectionShowPage->findItemBySsid(ssid);
-
+        int row = ui->connectionShowPage->findItemBySsid(ssid);
+        ui->connectionShowPage->setCurrentActiveItem(row);
         connect(activatedConnection.data(), &ActiveConnection::stateChanged,this,&WirelessManager::handleActiveConnectionStateChanged);
         //加载等待动画
         ui->connectionShowPage->connectionItemLoadingAnimation();
@@ -291,7 +292,7 @@ void WirelessManager::handleActiveConnectionRemoved(const QString &path)
 
 void WirelessManager::handleStateActivated(const QString &activatedPath)
 {
-    ui->connectionShowPage->connectionStateNotify(ActiveConnection::Activated);
+    ui->connectionShowPage->connectionStateNotify(ActiveConnection::Activated,activatedPath);
     ui->connectionShowPage->updateActivatedConnectionInfo(activatedPath);
     ui->connectionShowPage->update();
 }
@@ -299,7 +300,7 @@ void WirelessManager::handleStateActivated(const QString &activatedPath)
 void WirelessManager::handleStateDeactivated(const QString &deactivatedPath)
 {
     KLOG_DEBUG() << "WirelessManager::handleActiveConnectionStateChanged";
-    ui->connectionShowPage->connectionStateNotify(ActiveConnection::Deactivated);
+    ui->connectionShowPage->connectionStateNotify(ActiveConnection::Deactivated,deactivatedPath);
     ui->connectionShowPage->clearDeactivatedConnectionInfo(deactivatedPath);
     ui->connectionShowPage->update();
 }

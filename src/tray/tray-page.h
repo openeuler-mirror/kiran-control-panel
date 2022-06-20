@@ -37,7 +37,6 @@ public:
     void initUI(Device::Type deviceType);
     void initConnection();
 
-    void getDeviceList(Device::Type deviceType);
     void setMultiDeviceWidget(Device::Type deviceType);
     QStringList devicePathList();
     int pageHeight();

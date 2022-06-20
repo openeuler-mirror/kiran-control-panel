@@ -14,18 +14,18 @@
 #ifndef TRAYPAGE_H
 #define TRAYPAGE_H
 
-#include <QComboBox>
-#include <QLabel>
-#include <QScrollArea>
-#include <QVBoxLayout>
 #include <QWidget>
 #include <QPointer>
 #include <QTimer>
 #include <QStackedWidget>
 #include <NetworkManagerQt/Manager>
 #include <NetworkManagerQt/Device>
+
 using namespace NetworkManager;
 class ConnectionLists;
+class StatusNotification;
+Q_DECLARE_METATYPE(ActiveConnection::State);
+
 class ConnectionTray : public QWidget
 {
     Q_OBJECT
@@ -47,29 +47,23 @@ public slots:
     virtual void handleActiveConnectionRemoved(const QString &activepath);
 
     virtual void handleActiveConnectionStateChanged(ActiveConnection::State state);
+    virtual void handleStateActivating(const QString &activatedPath);
     virtual void handleStateActivated(const QString &activatedPath);
-    virtual void handleStateDeactivated();
+    virtual void handleStateDeactivated(const QString &activatedPath);
+
+    virtual void handleDeviceStateChanged(Device::State newstate, Device::State oldstate, Device::StateChangeReason reason);
 
     void distributeNotifeir();
 
 protected:
     QList<Device::Ptr> m_deviceList;
-
+    Device::Ptr m_devicePtr;
+    StatusNotification m_statusNotification;
 private:
-    QVBoxLayout *m_verticalLayout;
-    QWidget *m_multiDevicewidget;
-    QStackedWidget* m_stackedWidget;
-    QVBoxLayout *m_verticalDeviceWidgetLayout;
-    QLabel *m_deviceLabel;
-    QComboBox *m_deviceComboBox;
-    QScrollArea *m_scrollArea;
-    QWidget *m_scrollAreaWidgetContents;
-    QVBoxLayout *m_verticalScrollAreaWidgetContentsLayout;
-    ConnectionLists *m_connectionLists;
-
-    QTimer m_connectionTimer;
+    QTimer m_connectionRemovedTimer;
+    QTimer m_StateActivatedTimer;
     QString m_connectionRemovePath;
-
+    QString m_activatedPath;
 };
 
 #endif  // TRAYPAGE_H

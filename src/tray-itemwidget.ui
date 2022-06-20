@@ -380,7 +380,7 @@
     </widget>
    </item>
    <item>
-    <widget class="QWidget" name="inputPasswordWidget" native="true">
+    <widget class="QWidget" name="inputTextWidget" native="true">
      <layout class="QVBoxLayout" name="verticalLayout_4">
       <property name="spacing">
        <number>8</number>
@@ -398,7 +398,7 @@
        <number>0</number>
       </property>
       <item>
-       <widget class="QLineEdit" name="passwordEdit">
+       <widget class="QLineEdit" name="inputTextEdit">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
           <horstretch>0</horstretch>
@@ -425,7 +425,7 @@
          <number>20</number>
         </property>
         <item>
-         <widget class="QPushButton" name="inputPasswordCancelButton">
+         <widget class="QPushButton" name="inputTextCancelButton">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
             <horstretch>0</horstretch>
@@ -450,7 +450,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="inputPasswordConnectButton">
+         <widget class="QPushButton" name="inputTextConnectButton">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
             <horstretch>0</horstretch>

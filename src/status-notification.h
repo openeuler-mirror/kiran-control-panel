@@ -12,17 +12,23 @@
 * Author:     luoqing <luoqing@kylinos.com.cn>
 */
 
-#ifndef KIRAN_CPANEL_NETWORK_CONNECTIONSTATENOTIFY_H
-#define KIRAN_CPANEL_NETWORK_CONNECTIONSTATENOTIFY_H
+#ifndef KIRAN_CPANEL_NETWORK_STATUSNOTIFICATION_H
+#define KIRAN_CPANEL_NETWORK_STATUSNOTIFICATION_H
 
 #include <QObject>
-class ConnectionStateNotify : public QObject
+#include <NetworkManagerQt/Manager>
+using namespace NetworkManager;
+struct ConnectionInfo;
+class StatusNotification : public QObject
 {
     Q_OBJECT
 public:
-    explicit ConnectionStateNotify(QObject *parent = nullptr);
-
-
+    explicit StatusNotification(QObject *parent = nullptr);
+    ~StatusNotification();
+public slots:
+    void connectionStateNotify(ActiveConnection::State state,ConnectionInfo connectionInfo);
+    void connectionDeactivatedNotify(ActiveConnection::State state);
+    void deviceStateNotify(Device::State newstate);
 };
 
-#endif  // KIRAN_CPANEL_NETWORK_CONNECTIONSTATENOTIFY_H
+#endif  // KIRAN_CPANEL_NETWORK_STATUSNOTIFICATION_H

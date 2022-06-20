@@ -1,15 +1,15 @@
 /**
-* Copyright (c) 2022 KylinSec Co., Ltd.
-* kiran-cpanel-network is licensed under Mulan PSL v2.
-* You can use this software according to the terms and conditions of the Mulan PSL v2.
-* You may obtain a copy of Mulan PSL v2 at:
-*          http://license.coscl.org.cn/MulanPSL2
-* THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
-* EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
-* MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
-* See the Mulan PSL v2 for more details.
-*
-* Author:     luoqing <luoqing@kylinsec.com.cn>
+ * Copyright (c) 2022 KylinSec Co., Ltd.
+ * kiran-cpanel-network is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *          http://license.coscl.org.cn/MulanPSL2
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ *
+ * Author:     luoqing <luoqing@kylinsec.com.cn>
  */
 
 #ifndef KIRAN_CPANEL_NETWORK_TRAY_ITEMWIDGET_H
@@ -26,9 +26,10 @@ QT_END_NAMESPACE
 
 enum TrayItemWidgetStatus
 {
-    WIDGET_STATUS_BRIEF,
-    WIDGET_STATUS_DISPALY,
-    WIDGET_STATUS_INPUT_PASSWORD
+    WIDGET_STATUS_SIMPLE,
+    WIDGET_STATUS_PREPARE_CONNECT,
+    WIDGET_STATUS_ACTIVATING,
+    WIDGET_STATUS_ACTIVATED
 };
 
 class TrayItemWidget : public QWidget
@@ -58,7 +59,7 @@ public:
     void activatingStatus();
 
     void setLoadingStatus(bool isLoading);
-//    void setLoadingLabelVisible(bool isVisible);
+    //    void setLoadingLabelVisible(bool isVisible);
     void setConnectionStatusLabel();
     void setEnableConnectButton(bool enable);
 
@@ -69,13 +70,16 @@ public:
     QPixmap getPixmapFromSvg(const QString &svgPath);
 
     void showInputPasswordWidget();
+    void showInputSsidWidget();
+    TrayItemWidgetStatus itemWidgetStatus();
 
 public slots:
-    void handleInputPassword();
+    void handleInputText();
     QString getPassword();
 
 signals:
-    void sendPassword(const QString& password);
+    void sendPassword(const QString &password);
+    void sendSsid(const QString &ssid);
     void connectButtonClicked();
     void disconnectButttonClicked();
     void ignoreButtonClicked();
@@ -83,6 +87,7 @@ signals:
 
 private:
     Ui::TrayItemWidget *ui;
+    TrayItemWidgetStatus m_currentItemWidgetStatus;
 };
 
 #endif  // KIRAN_CPANEL_NETWORK_TRAY_ITEMWIDGET_H

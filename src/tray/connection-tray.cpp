@@ -15,9 +15,12 @@
 #include <NetworkManagerQt/Manager>
 #include <NetworkManagerQt/Settings>
 #include <NetworkManagerQt/WiredDevice>
+#include <NetworkManagerQt/WirelessSetting>
 #include "connection-lists.h"
 #include "connection-show-page.h"
 #include "connection-tray.h"
+#include "status-notification.h"
+
 ConnectionTray::ConnectionTray(QWidget *parent) : QWidget(parent)
 {
     init();
@@ -25,7 +28,6 @@ ConnectionTray::ConnectionTray(QWidget *parent) : QWidget(parent)
 
 ConnectionTray::~ConnectionTray()
 {
-
 }
 
 void ConnectionTray::init()
@@ -45,16 +47,27 @@ void ConnectionTray::initConnection()
 
     connect(settingsNotifier(), &SettingsNotifier::connectionAdded, this, &ConnectionTray::handleNotifierConnectionAdded);
 
-    m_connectionTimer.setInterval(100);
-    m_connectionTimer.setSingleShot(true);
+    m_connectionRemovedTimer.setInterval(100);
+    m_connectionRemovedTimer.setSingleShot(true);
     //connectionRemoved信号会激发两次，原因暂时未知，使用定时器使短时间内多次相同信号只调用一次槽函数
     connect(settingsNotifier(), &SettingsNotifier::connectionRemoved, [=](const QString &path) {
                 m_connectionRemovePath = path;
-                m_connectionTimer.start();
+                m_connectionRemovedTimer.start();
             });
 
-    connect(&m_connectionTimer, &QTimer::timeout, [=]() {
+    connect(&m_connectionRemovedTimer, &QTimer::timeout, [=]() {
                 handleNotifierConnectionRemoved(m_connectionRemovePath);
+            });
+
+    /**
+     * ActiveConnection::State::Activated信号会重复激发两次，但是由dbus发送的Activated信号并没有重复
+     * 原因暂时未知，使用定时器使短时间内多次相同信号只调用一次槽函数
+     * */
+    m_StateActivatedTimer.setSingleShot(true);
+    m_StateActivatedTimer.setInterval(100);
+    connect(&m_StateActivatedTimer, &QTimer::timeout, [=](){
+                KLOG_DEBUG() << "handleStateActivated:";
+                handleStateActivated(m_activatedPath);
             });
 }
 
@@ -73,19 +86,19 @@ void ConnectionTray::handleNotifierConnectionRemoved(const QString &path)
 
 void ConnectionTray::handleActiveConnectionAdded(const QString &activepath)
 {
-    findActiveConnection(activepath);
-
 }
 
 void ConnectionTray::handleActiveConnectionRemoved(const QString &activepath)
 {
-
 }
 
 void ConnectionTray::handleActiveConnectionStateChanged(ActiveConnection::State state)
 {
     auto activeConnection = qobject_cast<ActiveConnection* >(sender());
-    QString path = activeConnection->path();
+    m_activatedPath = activeConnection->path();
+    QString id = activeConnection->id();
+    KLOG_DEBUG() << "handleActiveConnectionStateChanged path:" << m_activatedPath;
+
     switch (state)
     {
     case ActiveConnection::State::Unknown:
@@ -93,22 +106,27 @@ void ConnectionTray::handleActiveConnectionStateChanged(ActiveConnection::State 
         break;
     case ActiveConnection::State::Activating:
         KLOG_DEBUG() << "ActiveConnection::State::Activating";
+        handleStateActivating(m_activatedPath);
         break;
     case ActiveConnection::State::Activated:
         KLOG_DEBUG() << "ActiveConnection::State::Activated";
-        KLOG_DEBUG() << "path:" << path;
-        handleStateActivated(path);
+        m_StateActivatedTimer.start();
         break;
     case ActiveConnection::State::Deactivating:
         KLOG_DEBUG() << "ActiveConnection::State::Deactivating";
         break;
     case ActiveConnection::State::Deactivated:
-        KLOG_DEBUG() << "ActiveConnection::State::Deactivated";
-        handleStateDeactivated();
+        KLOG_DEBUG() << "ActiveConnection::State::Deactivated id:" << id;
+        handleStateDeactivated(m_activatedPath);
         break;
     default:
         break;
     }
+}
+
+void ConnectionTray::handleStateActivating(const QString &activatedPath)
+{
+
 }
 
 void ConnectionTray::handleStateActivated(const QString &activatedPath)
@@ -116,7 +134,7 @@ void ConnectionTray::handleStateActivated(const QString &activatedPath)
 
 }
 
-void ConnectionTray::handleStateDeactivated()
+void ConnectionTray::handleStateDeactivated(const QString &activatedPath)
 {
 
 }
@@ -136,4 +154,9 @@ void ConnectionTray::getDeviceList(Device::Type deviceType)
     {
         KLOG_DEBUG() << "No available devices were found";
     }
+}
+
+void ConnectionTray::handleDeviceStateChanged(Device::State newstate, Device::State oldstate, Device::StateChangeReason reason)
+{
+
 }

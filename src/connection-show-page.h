@@ -57,15 +57,17 @@ public:
     void removeConnectionFromLists(const QString &path);
     void removeWirelessNetworkFromLists(const QString &ssid);
 
-    void findItemByUuid(const QString &uuid);
-    void findItemBySsid(const QString &ssid);
+    int findItemByUuid(const QString &uuid);
+    int findItemBySsid(const QString &ssid);
+
+    void setCurrentActiveItem(int row);
 
 public slots:
     void clearConnectionLists();
     void handleConnectionItemClicked(QListWidgetItem *item);
     void updateActivatedConnectionInfo(QString activatedPath);
     void clearDeactivatedConnectionInfo(const QString &deactivatedPath);
-    void connectionStateNotify(ActiveConnection::State state);
+    void connectionStateNotify(ActiveConnection::State state,const QString &activatedConnectionPath);
     void connectionItemLoadingAnimation();
 
 signals:

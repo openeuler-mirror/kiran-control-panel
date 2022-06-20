@@ -131,7 +131,8 @@ void WiredManager::handleActiveConnectionAdded(const QString &path)
     if (activatedConnection->type() == ConnectionSettings::ConnectionType::Wired)
     {
         QString uuid = activatedConnection->uuid();
-        ui->connectionShowPage->findItemByUuid(uuid);
+        int row = ui->connectionShowPage->findItemByUuid(uuid);
+        ui->connectionShowPage->setCurrentActiveItem(row);
         connect(activatedConnection.data(), &ActiveConnection::stateChanged, this, &WiredManager::handleActiveConnectionStateChanged);
         //加载等待动画
         ui->connectionShowPage->connectionItemLoadingAnimation();
@@ -145,15 +146,14 @@ void WiredManager::handleActiveConnectionRemoved(const QString &path)
 
 void WiredManager::handleStateActivated(const QString &activatedPath)
 {
-    ui->connectionShowPage->connectionStateNotify(ActiveConnection::Activated);
+    ui->connectionShowPage->connectionStateNotify(ActiveConnection::Activated,activatedPath);
     ui->connectionShowPage->updateActivatedConnectionInfo(activatedPath);
     ui->connectionShowPage->update();
 }
 
 void WiredManager::handleStateDeactivated(const QString &deactivatedPath)
 {
-    KLOG_DEBUG() << "handleActiveConnectionStateChanged" << deactivatedPath;
-    ui->connectionShowPage->connectionStateNotify(ActiveConnection::Deactivated);
+    ui->connectionShowPage->connectionStateNotify(ActiveConnection::Deactivated,deactivatedPath);
     ui->connectionShowPage->clearDeactivatedConnectionInfo(deactivatedPath);
     ui->connectionShowPage->update();
 }

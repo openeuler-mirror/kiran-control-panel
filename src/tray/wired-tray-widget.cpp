@@ -107,21 +107,23 @@ void WiredTrayWidget::handleNotifierConnectionRemoved(const QString &path)
 }
 
 // XXX:可以优化
-void WiredTrayWidget::handleStateDeactivated()
+void WiredTrayWidget::handleStateDeactivated(const QString &activatedPath)
 {
-    m_connectionLists->handleActiveStateDeactivated();
-    m_connectionLists->enableConnectButtonOfActivatingItem(true);
+    m_connectionLists->handleActiveStateDeactivated(activatedPath);
 }
 
 void WiredTrayWidget::handleStateActivated(const QString &activatedPath)
 {
+    KLOG_DEBUG() << "Wired  handleStateActivated";
     ActiveConnection::Ptr activeConnection = findActiveConnection(activatedPath);
     QStringList deviceList =  activeConnection->devices();
     if(deviceList.contains(m_devicePath) && (activeConnection->type() == ConnectionSettings::Wired))
     {
-        m_connectionLists->connectionStateNotify(ActiveConnection::Activated);
-        KLOG_DEBUG() << "Wired   ::connectionStateNotify";
-        m_connectionLists->updateActivatedConnectionInfo(activatedPath);
+        m_connectionLists->updateItemActivatedStatus(activatedPath);
+
+        int row = m_connectionLists->findItemByActivatedPath(activatedPath);
+        ConnectionInfo connectionInfo = m_connectionLists->item(row)->data(Qt::UserRole).value<ConnectionInfo>();
+        m_statusNotification.connectionStateNotify(ActiveConnection::Activated,connectionInfo);
         m_connectionLists->update();
     }
 }
@@ -130,16 +132,24 @@ void WiredTrayWidget::handleActiveConnectionAdded(const QString &path)
 {
     KLOG_DEBUG() << "handleActiveConnectionAdded path:" << path;
     ActiveConnection::Ptr activatedConnection = findActiveConnection(path);
+    if(activatedConnection.isNull())
+        return ;
     QStringList deviceList = activatedConnection->devices();
     if (activatedConnection->type() == ConnectionSettings::ConnectionType::Wired && deviceList.contains(m_devicePath))
     {
         QString uuid = activatedConnection->uuid();
-        m_connectionLists->findItemByUuid(uuid);
+        int row = m_connectionLists->findItemByUuid(uuid);
+        m_connectionLists->setCurrentActiveItem(row);
+        QListWidgetItem *activeItem = m_connectionLists->item(row);
+        m_connectionLists->updateItemActivatedPath(activeItem,path);
         connect(activatedConnection.data(), &ActiveConnection::stateChanged, this, &WiredTrayWidget::handleActiveConnectionStateChanged);
-        // 加载等待动画
-        m_connectionLists->connectionItemLoadingAnimation();
-        m_connectionLists->enableConnectButtonOfActivatingItem(false);
+        connect(activatedConnection.data(), &ActiveConnection::stateChanged, &m_statusNotification, &StatusNotification::connectionDeactivatedNotify,Qt::DirectConnection);
     }
+}
+
+void WiredTrayWidget::handleStateActivating(const QString &activatedPath)
+{
+    m_connectionLists->updateItemActivatingStatus();
 }
 
 void WiredTrayWidget::handleActiveConnectionRemoved(const QString &path)
@@ -154,3 +164,5 @@ void WiredTrayWidget::handleRequestDisconnect(const QString &activatedConnection
     if (reply.isError())
         KLOG_INFO() << "Disconnect failed:" << reply.error();
 }
+
+

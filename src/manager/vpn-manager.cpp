@@ -245,7 +245,8 @@ void VpnManager::handleActiveConnectionAdded(const QString &activePath)
         VpnConnection::Ptr vpnConnection = findActiveConnection(activePath).dynamicCast<VpnConnection>();
         QString uuid = vpnConnection->uuid();
         KLOG_DEBUG() << "vpn uuid:" << uuid;
-        ui->connectionShowPage->findItemByUuid(uuid);
+        int row =  ui->connectionShowPage->findItemByUuid(uuid);
+        ui->connectionShowPage->setCurrentActiveItem(row);
         connect(vpnConnection.data(), &VpnConnection::stateChanged, [=](VpnConnection::State state, VpnConnection::StateChangeReason reason) {
             handleVpnConnectionStateChanged(state, reason, activePath);
         });
