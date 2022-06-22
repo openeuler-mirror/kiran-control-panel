@@ -18,7 +18,7 @@
 #include "timedate-interface.h"
 #include "kiran-timedate-global-data.h"
 
-#include <kiran-palette.h>
+#include <style-palette.h>
 
 #include <QDebug>
 #include <QMessageBox>
@@ -26,6 +26,8 @@
 #include <QPainterPath>
 #include <QStyle>
 #include <QStyleOption>
+
+using namespace Kiran;
 
 KiranTimeZone::KiranTimeZone(QWidget *parent) :
     QWidget(parent),
@@ -142,10 +144,10 @@ void KiranTimeZone::paintEvent(QPaintEvent *event)
         opt.state |= QStyle::State_Selected;
     }
 
-    auto kiranPalette = KiranPalette::instance();
-    auto borderColor = kiranPalette->color(m_editHasFocus?KiranPalette::Checked:KiranPalette::Normal,
-                                      KiranPalette::Widget,
-                                      KiranPalette::Border);
+    auto kiranPalette = StylePalette::instance();
+    auto borderColor = kiranPalette->color(m_editHasFocus?StylePalette::Checked:StylePalette::Normal,
+                                           StylePalette::Widget,
+                                           StylePalette::Border);
 
     QPainterPath painterPath;
     QRectF rectF = opt.rect;

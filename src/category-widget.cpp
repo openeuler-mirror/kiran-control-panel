@@ -6,7 +6,7 @@
 #include "category-item.h"
 #include "plugin-manager.h"
 
-#include <kiran-palette.h>
+#include <style-palette.h>
 
 #include <QButtonGroup>
 #include <QEvent>

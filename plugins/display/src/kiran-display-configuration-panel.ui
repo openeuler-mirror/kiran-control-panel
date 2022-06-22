@@ -105,7 +105,7 @@
          </spacer>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton_left">
+         <widget class="KiranIconPushButton" name="pushButton_left">
           <property name="minimumSize">
            <size>
             <width>40</width>
@@ -136,7 +136,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton_right">
+         <widget class="KiranIconPushButton" name="pushButton_right">
           <property name="minimumSize">
            <size>
             <width>40</width>
@@ -167,7 +167,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton_horizontal">
+         <widget class="KiranIconPushButton" name="pushButton_horizontal">
           <property name="minimumSize">
            <size>
             <width>40</width>
@@ -201,7 +201,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton_vertical">
+         <widget class="KiranIconPushButton" name="pushButton_vertical">
           <property name="minimumSize">
            <size>
             <width>40</width>
@@ -235,7 +235,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton_identifying">
+         <widget class="KiranIconPushButton" name="pushButton_identifying">
           <property name="minimumSize">
            <size>
             <width>40</width>
@@ -291,6 +291,11 @@
    <extends>QWidget</extends>
    <header>kiran-display-config-item-contain.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>KiranIconPushButton</class>
+   <extends>QPushButton</extends>
+   <header location="global">kiran-icon-pushbutton/kiran-icon-pushbutton.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

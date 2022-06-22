@@ -334,25 +334,25 @@
     <name>ChangeHostNameWidget</name>
     <message>
         <location filename="../../system/src/pages/system-information/change-host-name-widget.ui" line="32"/>
-        <location filename="../../../build/plugins/system/kiran-cpanel-system_autogen/include/ui_change-host-name-widget.h" line="117"/>
+        <location filename="../../../cmake-build-debug/plugins/system/kiran-cpanel-system_autogen/include/ui_change-host-name-widget.h" line="117"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../system/src/pages/system-information/change-host-name-widget.ui" line="92"/>
-        <location filename="../../../build/plugins/system/kiran-cpanel-system_autogen/include/ui_change-host-name-widget.h" line="118"/>
+        <location filename="../../../cmake-build-debug/plugins/system/kiran-cpanel-system_autogen/include/ui_change-host-name-widget.h" line="118"/>
         <source>Host Name:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../system/src/pages/system-information/change-host-name-widget.ui" line="154"/>
-        <location filename="../../../build/plugins/system/kiran-cpanel-system_autogen/include/ui_change-host-name-widget.h" line="119"/>
+        <location filename="../../../cmake-build-debug/plugins/system/kiran-cpanel-system_autogen/include/ui_change-host-name-widget.h" line="119"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../system/src/pages/system-information/change-host-name-widget.ui" line="173"/>
-        <location filename="../../../build/plugins/system/kiran-cpanel-system_autogen/include/ui_change-host-name-widget.h" line="120"/>
+        <location filename="../../../cmake-build-debug/plugins/system/kiran-cpanel-system_autogen/include/ui_change-host-name-widget.h" line="120"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -376,7 +376,7 @@
     <name>ChooseItem</name>
     <message>
         <location filename="../../keyboard/widgets/choose-item.ui" line="35"/>
-        <location filename="../../../build/plugins/keyboard/kiran-cpanel-keyboard_autogen/include/ui_choose-item.h" line="80"/>
+        <location filename="../../../cmake-build-debug/plugins/keyboard/kiran-cpanel-keyboard_autogen/include/ui_choose-item.h" line="80"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
@@ -718,25 +718,25 @@
     <name>Fonts</name>
     <message>
         <location filename="../../appearance/src/pages/font/fonts.ui" line="14"/>
-        <location filename="../../../build/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_fonts.h" line="193"/>
+        <location filename="../../../cmake-build-debug/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_fonts.h" line="193"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../appearance/src/pages/font/fonts.ui" line="76"/>
-        <location filename="../../../build/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_fonts.h" line="194"/>
+        <location filename="../../../cmake-build-debug/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_fonts.h" line="194"/>
         <source>Application Font Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../appearance/src/pages/font/fonts.ui" line="152"/>
-        <location filename="../../../build/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_fonts.h" line="195"/>
+        <location filename="../../../cmake-build-debug/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_fonts.h" line="195"/>
         <source>Titlebar Font Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../appearance/src/pages/font/fonts.ui" line="222"/>
-        <location filename="../../../build/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_fonts.h" line="196"/>
+        <location filename="../../../cmake-build-debug/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_fonts.h" line="196"/>
         <source>Monospace Font Settings</source>
         <translation type="unfinished"></translation>
     </message>
@@ -745,62 +745,62 @@
     <name>GeneralPage</name>
     <message>
         <location filename="../../keyboard/src/general-page.ui" line="14"/>
-        <location filename="../../../build/plugins/keyboard/kiran-cpanel-keyboard_autogen/include/ui_general-page.h" line="220"/>
+        <location filename="../../../cmake-build-debug/plugins/keyboard/kiran-cpanel-keyboard_autogen/include/ui_general-page.h" line="220"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../keyboard/src/general-page.ui" line="40"/>
-        <location filename="../../../build/plugins/keyboard/kiran-cpanel-keyboard_autogen/include/ui_general-page.h" line="221"/>
+        <location filename="../../../cmake-build-debug/plugins/keyboard/kiran-cpanel-keyboard_autogen/include/ui_general-page.h" line="221"/>
         <source>Repeat Key</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../keyboard/src/general-page.ui" line="47"/>
-        <location filename="../../../build/plugins/keyboard/kiran-cpanel-keyboard_autogen/include/ui_general-page.h" line="222"/>
+        <location filename="../../../cmake-build-debug/plugins/keyboard/kiran-cpanel-keyboard_autogen/include/ui_general-page.h" line="222"/>
         <source>(Repeat a key while holding it down)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../keyboard/src/general-page.ui" line="83"/>
-        <location filename="../../../build/plugins/keyboard/kiran-cpanel-keyboard_autogen/include/ui_general-page.h" line="224"/>
+        <location filename="../../../cmake-build-debug/plugins/keyboard/kiran-cpanel-keyboard_autogen/include/ui_general-page.h" line="224"/>
         <source>Delay</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../keyboard/src/general-page.ui" line="126"/>
-        <location filename="../../../build/plugins/keyboard/kiran-cpanel-keyboard_autogen/include/ui_general-page.h" line="225"/>
+        <location filename="../../../cmake-build-debug/plugins/keyboard/kiran-cpanel-keyboard_autogen/include/ui_general-page.h" line="225"/>
         <source>Short</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../keyboard/src/general-page.ui" line="146"/>
-        <location filename="../../../build/plugins/keyboard/kiran-cpanel-keyboard_autogen/include/ui_general-page.h" line="226"/>
+        <location filename="../../../cmake-build-debug/plugins/keyboard/kiran-cpanel-keyboard_autogen/include/ui_general-page.h" line="226"/>
         <source>Long</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../keyboard/src/general-page.ui" line="164"/>
-        <location filename="../../../build/plugins/keyboard/kiran-cpanel-keyboard_autogen/include/ui_general-page.h" line="227"/>
+        <location filename="../../../cmake-build-debug/plugins/keyboard/kiran-cpanel-keyboard_autogen/include/ui_general-page.h" line="227"/>
         <source>Interval</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../keyboard/src/general-page.ui" line="210"/>
-        <location filename="../../../build/plugins/keyboard/kiran-cpanel-keyboard_autogen/include/ui_general-page.h" line="228"/>
+        <location filename="../../../cmake-build-debug/plugins/keyboard/kiran-cpanel-keyboard_autogen/include/ui_general-page.h" line="228"/>
         <source>Slow</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../keyboard/src/general-page.ui" line="230"/>
-        <location filename="../../../build/plugins/keyboard/kiran-cpanel-keyboard_autogen/include/ui_general-page.h" line="229"/>
+        <location filename="../../../cmake-build-debug/plugins/keyboard/kiran-cpanel-keyboard_autogen/include/ui_general-page.h" line="229"/>
         <source>Fast</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../keyboard/src/general-page.ui" line="246"/>
-        <location filename="../../../build/plugins/keyboard/kiran-cpanel-keyboard_autogen/include/ui_general-page.h" line="230"/>
-        <location filename="../../keyboard/src/general-page.cpp" line="70"/>
+        <location filename="../../../cmake-build-debug/plugins/keyboard/kiran-cpanel-keyboard_autogen/include/ui_general-page.h" line="230"/>
+        <location filename="../../keyboard/src/general-page.cpp" line="68"/>
         <source>Enter characters to test the settings</source>
         <translation type="unfinished"></translation>
     </message>
@@ -954,45 +954,45 @@
     <name>HardwareInformation</name>
     <message>
         <location filename="../../system/src/pages/hardware-information/hardware-information.ui" line="14"/>
-        <location filename="../../../build/plugins/system/kiran-cpanel-system_autogen/include/ui_hardware-information.h" line="256"/>
+        <location filename="../../../cmake-build-debug/plugins/system/kiran-cpanel-system_autogen/include/ui_hardware-information.h" line="256"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../system/src/pages/hardware-information/hardware-information.ui" line="129"/>
-        <location filename="../../../build/plugins/system/kiran-cpanel-system_autogen/include/ui_hardware-information.h" line="257"/>
+        <location filename="../../../cmake-build-debug/plugins/system/kiran-cpanel-system_autogen/include/ui_hardware-information.h" line="257"/>
         <source>CPU:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../system/src/pages/hardware-information/hardware-information.ui" line="149"/>
         <location filename="../../system/src/pages/hardware-information/hardware-information.ui" line="209"/>
-        <location filename="../../../build/plugins/system/kiran-cpanel-system_autogen/include/ui_hardware-information.h" line="258"/>
-        <location filename="../../../build/plugins/system/kiran-cpanel-system_autogen/include/ui_hardware-information.h" line="260"/>
+        <location filename="../../../cmake-build-debug/plugins/system/kiran-cpanel-system_autogen/include/ui_hardware-information.h" line="258"/>
+        <location filename="../../../cmake-build-debug/plugins/system/kiran-cpanel-system_autogen/include/ui_hardware-information.h" line="260"/>
         <source>TextLabel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../system/src/pages/hardware-information/hardware-information.ui" line="189"/>
-        <location filename="../../../build/plugins/system/kiran-cpanel-system_autogen/include/ui_hardware-information.h" line="259"/>
+        <location filename="../../../cmake-build-debug/plugins/system/kiran-cpanel-system_autogen/include/ui_hardware-information.h" line="259"/>
         <source>Memory:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../system/src/pages/hardware-information/hardware-information.ui" line="249"/>
-        <location filename="../../../build/plugins/system/kiran-cpanel-system_autogen/include/ui_hardware-information.h" line="261"/>
+        <location filename="../../../cmake-build-debug/plugins/system/kiran-cpanel-system_autogen/include/ui_hardware-information.h" line="261"/>
         <source>Hard disk:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../system/src/pages/hardware-information/hardware-information.ui" line="327"/>
-        <location filename="../../../build/plugins/system/kiran-cpanel-system_autogen/include/ui_hardware-information.h" line="262"/>
+        <location filename="../../../cmake-build-debug/plugins/system/kiran-cpanel-system_autogen/include/ui_hardware-information.h" line="262"/>
         <source>Graphics card:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../system/src/pages/hardware-information/hardware-information.ui" line="402"/>
-        <location filename="../../../build/plugins/system/kiran-cpanel-system_autogen/include/ui_hardware-information.h" line="263"/>
+        <location filename="../../../cmake-build-debug/plugins/system/kiran-cpanel-system_autogen/include/ui_hardware-information.h" line="263"/>
         <source>Network card:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1008,13 +1008,13 @@
     <name>IconThemes</name>
     <message>
         <location filename="../../appearance/src/pages/theme/icon-themes/icon-themes.ui" line="14"/>
-        <location filename="../../../build/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_icon-themes.h" line="77"/>
+        <location filename="../../../cmake-build-debug/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_icon-themes.h" line="77"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../appearance/src/pages/theme/icon-themes/icon-themes.ui" line="35"/>
-        <location filename="../../../build/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_icon-themes.h" line="78"/>
+        <location filename="../../../cmake-build-debug/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_icon-themes.h" line="78"/>
         <source>Icon Themes Setting</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1143,7 +1143,7 @@
     <name>KiranCpanelAppearance</name>
     <message>
         <location filename="../../appearance/src/kiran-cpanel-appearance.ui" line="14"/>
-        <location filename="../../../build/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_kiran-cpanel-appearance.h" line="107"/>
+        <location filename="../../../cmake-build-debug/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_kiran-cpanel-appearance.h" line="107"/>
         <source>KiranCpanelAppearance</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1177,21 +1177,18 @@
     <name>KiranDisplayConfiguration</name>
     <message>
         <location filename="../../display/src/kiran-display-configuration.ui" line="14"/>
-        <location filename="../../../build/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="496"/>
         <location filename="../../../cmake-build-debug/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="496"/>
         <source>KiranDisplayConfiguration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../display/src/kiran-display-configuration.ui" line="113"/>
-        <location filename="../../../build/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="497"/>
         <location filename="../../../cmake-build-debug/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="497"/>
         <source>Copy display</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../display/src/kiran-display-configuration.ui" line="162"/>
-        <location filename="../../../build/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="498"/>
         <location filename="../../../cmake-build-debug/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="498"/>
         <source>Extended display</source>
         <translation type="unfinished"></translation>
@@ -1199,8 +1196,6 @@
     <message>
         <location filename="../../display/src/kiran-display-configuration.ui" line="265"/>
         <location filename="../../display/src/kiran-display-configuration.ui" line="606"/>
-        <location filename="../../../build/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="499"/>
-        <location filename="../../../build/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="510"/>
         <location filename="../../../cmake-build-debug/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="499"/>
         <location filename="../../../cmake-build-debug/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="510"/>
         <source>Resolution ratio</source>
@@ -1209,8 +1204,6 @@
     <message>
         <location filename="../../display/src/kiran-display-configuration.ui" line="298"/>
         <location filename="../../display/src/kiran-display-configuration.ui" line="639"/>
-        <location filename="../../../build/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="500"/>
-        <location filename="../../../build/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="511"/>
         <location filename="../../../cmake-build-debug/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="500"/>
         <location filename="../../../cmake-build-debug/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="511"/>
         <source>Refresh rate</source>
@@ -1219,8 +1212,6 @@
     <message>
         <location filename="../../display/src/kiran-display-configuration.ui" line="328"/>
         <location filename="../../display/src/kiran-display-configuration.ui" line="669"/>
-        <location filename="../../../build/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="501"/>
-        <location filename="../../../build/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="512"/>
         <location filename="../../../cmake-build-debug/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="501"/>
         <location filename="../../../cmake-build-debug/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="512"/>
         <source>Zoom rate</source>
@@ -1229,8 +1220,6 @@
     <message>
         <location filename="../../display/src/kiran-display-configuration.ui" line="348"/>
         <location filename="../../display/src/kiran-display-configuration.ui" line="689"/>
-        <location filename="../../../build/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="502"/>
-        <location filename="../../../build/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="513"/>
         <location filename="../../../cmake-build-debug/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="502"/>
         <location filename="../../../cmake-build-debug/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="513"/>
         <source>Automatic</source>
@@ -1239,8 +1228,6 @@
     <message>
         <location filename="../../display/src/kiran-display-configuration.ui" line="353"/>
         <location filename="../../display/src/kiran-display-configuration.ui" line="694"/>
-        <location filename="../../../build/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="503"/>
-        <location filename="../../../build/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="514"/>
         <location filename="../../../cmake-build-debug/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="503"/>
         <location filename="../../../cmake-build-debug/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="514"/>
         <source>100% (recommended)</source>
@@ -1249,8 +1236,6 @@
     <message>
         <location filename="../../display/src/kiran-display-configuration.ui" line="358"/>
         <location filename="../../display/src/kiran-display-configuration.ui" line="699"/>
-        <location filename="../../../build/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="504"/>
-        <location filename="../../../build/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="515"/>
         <location filename="../../../cmake-build-debug/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="504"/>
         <location filename="../../../cmake-build-debug/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="515"/>
         <source>200%</source>
@@ -1259,8 +1244,6 @@
     <message>
         <location filename="../../display/src/kiran-display-configuration.ui" line="420"/>
         <location filename="../../display/src/kiran-display-configuration.ui" line="758"/>
-        <location filename="../../../build/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="506"/>
-        <location filename="../../../build/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="517"/>
         <location filename="../../../cmake-build-debug/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="506"/>
         <location filename="../../../cmake-build-debug/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="517"/>
         <source>Apply</source>
@@ -1269,8 +1252,6 @@
     <message>
         <location filename="../../display/src/kiran-display-configuration.ui" line="442"/>
         <location filename="../../display/src/kiran-display-configuration.ui" line="780"/>
-        <location filename="../../../build/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="507"/>
-        <location filename="../../../build/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="518"/>
         <location filename="../../../cmake-build-debug/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="507"/>
         <location filename="../../../cmake-build-debug/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="518"/>
         <source>Close</source>
@@ -1278,14 +1259,12 @@
     </message>
     <message>
         <location filename="../../display/src/kiran-display-configuration.ui" line="509"/>
-        <location filename="../../../build/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="508"/>
         <location filename="../../../cmake-build-debug/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="508"/>
         <source>Open</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../display/src/kiran-display-configuration.ui" line="561"/>
-        <location filename="../../../build/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="509"/>
         <location filename="../../../cmake-build-debug/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration.h" line="509"/>
         <source>Set as main display</source>
         <translation type="unfinished"></translation>
@@ -1321,42 +1300,36 @@
     <name>KiranDisplayConfigurationPanel</name>
     <message>
         <location filename="../../display/src/kiran-display-configuration-panel.ui" line="14"/>
-        <location filename="../../../build/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration-panel.h" line="145"/>
         <location filename="../../../cmake-build-debug/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration-panel.h" line="145"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../display/src/kiran-display-configuration-panel.ui" line="122"/>
-        <location filename="../../../build/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration-panel.h" line="147"/>
         <location filename="../../../cmake-build-debug/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration-panel.h" line="147"/>
         <source>Rotate left 90 degrees</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../display/src/kiran-display-configuration-panel.ui" line="153"/>
-        <location filename="../../../build/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration-panel.h" line="151"/>
         <location filename="../../../cmake-build-debug/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration-panel.h" line="151"/>
         <source>Rotate right 90 degrees</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../display/src/kiran-display-configuration-panel.ui" line="184"/>
-        <location filename="../../../build/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration-panel.h" line="155"/>
         <location filename="../../../cmake-build-debug/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration-panel.h" line="155"/>
         <source>Turn left and right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../display/src/kiran-display-configuration-panel.ui" line="218"/>
-        <location filename="../../../build/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration-panel.h" line="159"/>
         <location filename="../../../cmake-build-debug/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration-panel.h" line="159"/>
         <source>upside down</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../display/src/kiran-display-configuration-panel.ui" line="252"/>
-        <location filename="../../../build/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration-panel.h" line="163"/>
         <location filename="../../../cmake-build-debug/plugins/display/kiran-cpanel-display_autogen/include/ui_kiran-display-configuration-panel.h" line="163"/>
         <source>Identification display</source>
         <translation type="unfinished"></translation>
@@ -1366,13 +1339,12 @@
     <name>KiranModuleWidget</name>
     <message>
         <location filename="../../../lib/common-widgets/kiran-module-widget/kiran-module-widget.ui" line="14"/>
-        <location filename="../../../build/lib/common-widgets/common-widgets_autogen/include/ui_kiran-module-widget.h" line="108"/>
         <location filename="../../../cmake-build-debug/lib/common-widgets/common-widgets_autogen/include/ui_kiran-module-widget.h" line="108"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../lib/common-widgets/kiran-module-widget/kiran-module-widget.cpp" line="144"/>
+        <location filename="../../../lib/common-widgets/kiran-module-widget/kiran-module-widget.cpp" line="140"/>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1388,16 +1360,16 @@
 <context>
     <name>KiranTimeDateWidget</name>
     <message>
-        <location filename="../src/kiran-timedate-widget.ui" line="14"/>
-        <location filename="../../../build/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_kiran-timedate-widget.h" line="175"/>
-        <location filename="../../../cmake-build-debug/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_kiran-timedate-widget.h" line="175"/>
+        <location filename="../src/kiran-timedate-widget.ui" line="6"/>
+        <location filename="../../../build/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_kiran-timedate-widget.h" line="174"/>
+        <location filename="../../../cmake-build-debug/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_kiran-timedate-widget.h" line="174"/>
         <source>KiranTimeDateWidget</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/kiran-timedate-widget.ui" line="171"/>
-        <location filename="../../../build/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_kiran-timedate-widget.h" line="178"/>
-        <location filename="../../../cmake-build-debug/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_kiran-timedate-widget.h" line="178"/>
+        <location filename="../src/kiran-timedate-widget.ui" line="163"/>
+        <location filename="../../../build/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_kiran-timedate-widget.h" line="177"/>
+        <location filename="../../../cmake-build-debug/plugins/timedate/kiran-cpanel-timedate_autogen/include/ui_kiran-timedate-widget.h" line="177"/>
         <source>Automatic synchronizetion</source>
         <translation>自动同步</translation>
     </message>
@@ -1442,7 +1414,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/timezone/kiran-time-zone.cpp" line="92"/>
+        <location filename="../src/timezone/kiran-time-zone.cpp" line="94"/>
         <source>Search in all time zones...</source>
         <translation>在所有时区中搜索...</translation>
     </message>
@@ -1457,7 +1429,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/kiran-time-zone-item.cpp" line="56"/>
+        <location filename="../src/widgets/kiran-time-zone-item.cpp" line="58"/>
         <source>No search results, please search again...</source>
         <translation>无搜索结果，请重新搜索...</translation>
     </message>
@@ -1499,7 +1471,7 @@
     <name>LayoutItem</name>
     <message>
         <location filename="../../keyboard/widgets/layout-item.ui" line="14"/>
-        <location filename="../../../build/plugins/keyboard/kiran-cpanel-keyboard_autogen/include/ui_layout-item.h" line="61"/>
+        <location filename="../../../cmake-build-debug/plugins/keyboard/kiran-cpanel-keyboard_autogen/include/ui_layout-item.h" line="61"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1508,7 +1480,7 @@
     <name>LayoutList</name>
     <message>
         <location filename="../../keyboard/widgets/layout-list.ui" line="20"/>
-        <location filename="../../../build/plugins/keyboard/kiran-cpanel-keyboard_autogen/include/ui_layout-list.h" line="142"/>
+        <location filename="../../../cmake-build-debug/plugins/keyboard/kiran-cpanel-keyboard_autogen/include/ui_layout-list.h" line="142"/>
         <source>LayoutList</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1517,77 +1489,77 @@
     <name>LayoutPage</name>
     <message>
         <location filename="../../keyboard/src/layout-page.ui" line="14"/>
-        <location filename="../../../build/plugins/keyboard/kiran-cpanel-keyboard_autogen/include/ui_layout-page.h" line="226"/>
+        <location filename="../../../cmake-build-debug/plugins/keyboard/kiran-cpanel-keyboard_autogen/include/ui_layout-page.h" line="226"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../keyboard/src/layout-page.ui" line="67"/>
-        <location filename="../../../build/plugins/keyboard/kiran-cpanel-keyboard_autogen/include/ui_layout-page.h" line="227"/>
+        <location filename="../../../cmake-build-debug/plugins/keyboard/kiran-cpanel-keyboard_autogen/include/ui_layout-page.h" line="227"/>
         <source>Select Kayboard Layout</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../keyboard/src/layout-page.ui" line="105"/>
-        <location filename="../../../build/plugins/keyboard/kiran-cpanel-keyboard_autogen/include/ui_layout-page.h" line="228"/>
-        <location filename="../../keyboard/src/layout-page.cpp" line="407"/>
+        <location filename="../../../cmake-build-debug/plugins/keyboard/kiran-cpanel-keyboard_autogen/include/ui_layout-page.h" line="228"/>
+        <location filename="../../keyboard/src/layout-page.cpp" line="408"/>
         <source>Edit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../keyboard/src/layout-page.ui" line="206"/>
-        <location filename="../../../build/plugins/keyboard/kiran-cpanel-keyboard_autogen/include/ui_layout-page.h" line="230"/>
-        <location filename="../../keyboard/src/layout-page.cpp" line="286"/>
+        <location filename="../../../cmake-build-debug/plugins/keyboard/kiran-cpanel-keyboard_autogen/include/ui_layout-page.h" line="230"/>
+        <location filename="../../keyboard/src/layout-page.cpp" line="287"/>
         <source>Add Layout</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../keyboard/src/layout-page.ui" line="297"/>
-        <location filename="../../../build/plugins/keyboard/kiran-cpanel-keyboard_autogen/include/ui_layout-page.h" line="231"/>
+        <location filename="../../../cmake-build-debug/plugins/keyboard/kiran-cpanel-keyboard_autogen/include/ui_layout-page.h" line="231"/>
         <source>Addition</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../keyboard/src/layout-page.ui" line="338"/>
-        <location filename="../../../build/plugins/keyboard/kiran-cpanel-keyboard_autogen/include/ui_layout-page.h" line="232"/>
+        <location filename="../../../cmake-build-debug/plugins/keyboard/kiran-cpanel-keyboard_autogen/include/ui_layout-page.h" line="232"/>
         <source>Return</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../keyboard/src/layout-page.cpp" line="107"/>
-        <location filename="../../keyboard/src/layout-page.cpp" line="310"/>
-        <location filename="../../keyboard/src/layout-page.cpp" line="350"/>
-        <location filename="../../keyboard/src/layout-page.cpp" line="383"/>
+        <location filename="../../keyboard/src/layout-page.cpp" line="108"/>
+        <location filename="../../keyboard/src/layout-page.cpp" line="311"/>
+        <location filename="../../keyboard/src/layout-page.cpp" line="351"/>
+        <location filename="../../keyboard/src/layout-page.cpp" line="384"/>
         <source>Failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../keyboard/src/layout-page.cpp" line="107"/>
+        <location filename="../../keyboard/src/layout-page.cpp" line="108"/>
         <source>You have added this keyboard layout!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../keyboard/src/layout-page.cpp" line="311"/>
+        <location filename="../../keyboard/src/layout-page.cpp" line="312"/>
         <source>The %1 keyboard layout does not exist!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../keyboard/src/layout-page.cpp" line="351"/>
+        <location filename="../../keyboard/src/layout-page.cpp" line="352"/>
         <source>The keyboard layout is currently in use and cannot be deleted!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../keyboard/src/layout-page.cpp" line="363"/>
+        <location filename="../../keyboard/src/layout-page.cpp" line="364"/>
         <source>Delete Layout</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../keyboard/src/layout-page.cpp" line="384"/>
+        <location filename="../../keyboard/src/layout-page.cpp" line="385"/>
         <source>You do not appear to have added %1 keyboard layout!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../keyboard/src/layout-page.cpp" line="398"/>
+        <location filename="../../keyboard/src/layout-page.cpp" line="399"/>
         <source>Finish</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1596,13 +1568,13 @@
     <name>LicenseAgreement</name>
     <message>
         <location filename="../../system/src/pages/system-information/license-agreement.ui" line="32"/>
-        <location filename="../../../build/plugins/system/kiran-cpanel-system_autogen/include/ui_license-agreement.h" line="100"/>
+        <location filename="../../../cmake-build-debug/plugins/system/kiran-cpanel-system_autogen/include/ui_license-agreement.h" line="100"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../system/src/pages/system-information/license-agreement.ui" line="76"/>
-        <location filename="../../../build/plugins/system/kiran-cpanel-system_autogen/include/ui_license-agreement.h" line="101"/>
+        <location filename="../../../cmake-build-debug/plugins/system/kiran-cpanel-system_autogen/include/ui_license-agreement.h" line="101"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -1612,13 +1584,13 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../../system/src/pages/system-information/license-agreement.ui" line="110"/>
-        <location filename="../../../build/plugins/system/kiran-cpanel-system_autogen/include/ui_license-agreement.h" line="106"/>
+        <location filename="../../../cmake-build-debug/plugins/system/kiran-cpanel-system_autogen/include/ui_license-agreement.h" line="106"/>
         <source>Export</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../system/src/pages/system-information/license-agreement.ui" line="148"/>
-        <location filename="../../../build/plugins/system/kiran-cpanel-system_autogen/include/ui_license-agreement.h" line="107"/>
+        <location filename="../../../cmake-build-debug/plugins/system/kiran-cpanel-system_autogen/include/ui_license-agreement.h" line="107"/>
         <source>Close</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1873,7 +1845,6 @@ p, li { white-space: pre-wrap; }
     <name>PanelWidget</name>
     <message>
         <location filename="../../../src/panel-widget.ui" line="14"/>
-        <location filename="../../../build/kiran-control-panel_autogen/include/ui_panel-widget.h" line="49"/>
         <location filename="../../../cmake-build-debug/kiran-control-panel_autogen/include/ui_panel-widget.h" line="49"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
@@ -2147,7 +2118,7 @@ p, li { white-space: pre-wrap; }
     <name>SettingBriefWidget</name>
     <message>
         <location filename="../../appearance/src/common/setting-brief-widget.ui" line="26"/>
-        <location filename="../../../build/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_setting-brief-widget.h" line="68"/>
+        <location filename="../../../cmake-build-debug/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_setting-brief-widget.h" line="68"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2155,9 +2126,9 @@ p, li { white-space: pre-wrap; }
         <location filename="../../appearance/src/common/setting-brief-widget.ui" line="47"/>
         <location filename="../../appearance/src/common/setting-brief-widget.ui" line="67"/>
         <location filename="../../appearance/src/common/setting-brief-widget.ui" line="74"/>
-        <location filename="../../../build/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_setting-brief-widget.h" line="69"/>
-        <location filename="../../../build/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_setting-brief-widget.h" line="70"/>
-        <location filename="../../../build/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_setting-brief-widget.h" line="71"/>
+        <location filename="../../../cmake-build-debug/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_setting-brief-widget.h" line="69"/>
+        <location filename="../../../cmake-build-debug/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_setting-brief-widget.h" line="70"/>
+        <location filename="../../../cmake-build-debug/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_setting-brief-widget.h" line="71"/>
         <source>TextLabel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2166,19 +2137,19 @@ p, li { white-space: pre-wrap; }
     <name>Shortcut</name>
     <message>
         <location filename="../../keybinding/src/shortcut.ui" line="14"/>
-        <location filename="../../../build/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="460"/>
+        <location filename="../../../cmake-build-debug/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="460"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../keybinding/src/shortcut.ui" line="172"/>
-        <location filename="../../../build/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="462"/>
+        <location filename="../../../cmake-build-debug/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="462"/>
         <source>Custom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../keybinding/src/shortcut.ui" line="204"/>
-        <location filename="../../../build/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="463"/>
+        <location filename="../../../cmake-build-debug/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="463"/>
         <location filename="../../keybinding/src/shortcut.cpp" line="156"/>
         <location filename="../../keybinding/src/shortcut.cpp" line="548"/>
         <source>Edit</source>
@@ -2187,8 +2158,8 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../../keybinding/src/shortcut.ui" line="334"/>
         <location filename="../../keybinding/src/shortcut.ui" line="527"/>
-        <location filename="../../../build/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="464"/>
-        <location filename="../../../build/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="469"/>
+        <location filename="../../../cmake-build-debug/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="464"/>
+        <location filename="../../../cmake-build-debug/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="469"/>
         <location filename="../../keybinding/src/shortcut.cpp" line="102"/>
         <location filename="../../keybinding/src/shortcut.cpp" line="113"/>
         <source>Add</source>
@@ -2196,61 +2167,61 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../../keybinding/src/shortcut.ui" line="369"/>
-        <location filename="../../../build/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="465"/>
+        <location filename="../../../cmake-build-debug/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="465"/>
         <source>Reset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../keybinding/src/shortcut.ui" line="415"/>
-        <location filename="../../../build/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="466"/>
+        <location filename="../../../cmake-build-debug/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="466"/>
         <source>Custom Shortcut Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../keybinding/src/shortcut.ui" line="445"/>
-        <location filename="../../../build/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="467"/>
+        <location filename="../../../cmake-build-debug/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="467"/>
         <source>Custom Shortcut application</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../keybinding/src/shortcut.ui" line="475"/>
-        <location filename="../../../build/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="468"/>
+        <location filename="../../../cmake-build-debug/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="468"/>
         <source>Custom Shortcut Key</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../keybinding/src/shortcut.ui" line="562"/>
-        <location filename="../../../build/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="470"/>
+        <location filename="../../../cmake-build-debug/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="470"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../keybinding/src/shortcut.ui" line="608"/>
-        <location filename="../../../build/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="471"/>
+        <location filename="../../../cmake-build-debug/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="471"/>
         <source>Shortcut Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../keybinding/src/shortcut.ui" line="651"/>
-        <location filename="../../../build/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="472"/>
+        <location filename="../../../cmake-build-debug/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="472"/>
         <source>Shortcut application</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../keybinding/src/shortcut.ui" line="682"/>
-        <location filename="../../../build/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="473"/>
+        <location filename="../../../cmake-build-debug/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="473"/>
         <source>Shortcut key</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../keybinding/src/shortcut.ui" line="734"/>
-        <location filename="../../../build/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="474"/>
+        <location filename="../../../cmake-build-debug/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="474"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../keybinding/src/shortcut.ui" line="769"/>
-        <location filename="../../../build/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="475"/>
+        <location filename="../../../cmake-build-debug/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut.h" line="475"/>
         <source>return</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2383,15 +2354,15 @@ p, li { white-space: pre-wrap; }
     <name>ShortcutItem</name>
     <message>
         <location filename="../../keybinding/src/shortcut-item.ui" line="32"/>
-        <location filename="../../../build/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut-item.h" line="76"/>
+        <location filename="../../../cmake-build-debug/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut-item.h" line="76"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../keybinding/src/shortcut-item.ui" line="53"/>
         <location filename="../../keybinding/src/shortcut-item.ui" line="73"/>
-        <location filename="../../../build/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut-item.h" line="77"/>
-        <location filename="../../../build/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut-item.h" line="78"/>
+        <location filename="../../../cmake-build-debug/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut-item.h" line="77"/>
+        <location filename="../../../cmake-build-debug/plugins/keybinding/kiran-cpanel-keybinding_autogen/include/ui_shortcut-item.h" line="78"/>
         <source>TextLabel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2431,13 +2402,13 @@ p, li { white-space: pre-wrap; }
     <name>SystemInformation</name>
     <message>
         <location filename="../../system/src/pages/system-information/system-information.ui" line="14"/>
-        <location filename="../../../build/plugins/system/kiran-cpanel-system_autogen/include/ui_system-information.h" line="299"/>
+        <location filename="../../../cmake-build-debug/plugins/system/kiran-cpanel-system_autogen/include/ui_system-information.h" line="299"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../system/src/pages/system-information/system-information.ui" line="149"/>
-        <location filename="../../../build/plugins/system/kiran-cpanel-system_autogen/include/ui_system-information.h" line="300"/>
+        <location filename="../../../cmake-build-debug/plugins/system/kiran-cpanel-system_autogen/include/ui_system-information.h" line="300"/>
         <source>Host Name:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2446,54 +2417,54 @@ p, li { white-space: pre-wrap; }
         <location filename="../../system/src/pages/system-information/system-information.ui" line="260"/>
         <location filename="../../system/src/pages/system-information/system-information.ui" line="335"/>
         <location filename="../../system/src/pages/system-information/system-information.ui" line="398"/>
-        <location filename="../../../build/plugins/system/kiran-cpanel-system_autogen/include/ui_system-information.h" line="301"/>
-        <location filename="../../../build/plugins/system/kiran-cpanel-system_autogen/include/ui_system-information.h" line="304"/>
-        <location filename="../../../build/plugins/system/kiran-cpanel-system_autogen/include/ui_system-information.h" line="306"/>
-        <location filename="../../../build/plugins/system/kiran-cpanel-system_autogen/include/ui_system-information.h" line="308"/>
+        <location filename="../../../cmake-build-debug/plugins/system/kiran-cpanel-system_autogen/include/ui_system-information.h" line="301"/>
+        <location filename="../../../cmake-build-debug/plugins/system/kiran-cpanel-system_autogen/include/ui_system-information.h" line="304"/>
+        <location filename="../../../cmake-build-debug/plugins/system/kiran-cpanel-system_autogen/include/ui_system-information.h" line="306"/>
+        <location filename="../../../cmake-build-debug/plugins/system/kiran-cpanel-system_autogen/include/ui_system-information.h" line="308"/>
         <source>TextLabel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../system/src/pages/system-information/system-information.ui" line="200"/>
-        <location filename="../../../build/plugins/system/kiran-cpanel-system_autogen/include/ui_system-information.h" line="302"/>
+        <location filename="../../../cmake-build-debug/plugins/system/kiran-cpanel-system_autogen/include/ui_system-information.h" line="302"/>
         <source>Change</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../system/src/pages/system-information/system-information.ui" line="240"/>
-        <location filename="../../../build/plugins/system/kiran-cpanel-system_autogen/include/ui_system-information.h" line="303"/>
+        <location filename="../../../cmake-build-debug/plugins/system/kiran-cpanel-system_autogen/include/ui_system-information.h" line="303"/>
         <source>System Version:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../system/src/pages/system-information/system-information.ui" line="315"/>
-        <location filename="../../../build/plugins/system/kiran-cpanel-system_autogen/include/ui_system-information.h" line="305"/>
+        <location filename="../../../cmake-build-debug/plugins/system/kiran-cpanel-system_autogen/include/ui_system-information.h" line="305"/>
         <source>Kernel Version:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../system/src/pages/system-information/system-information.ui" line="378"/>
-        <location filename="../../../build/plugins/system/kiran-cpanel-system_autogen/include/ui_system-information.h" line="307"/>
+        <location filename="../../../cmake-build-debug/plugins/system/kiran-cpanel-system_autogen/include/ui_system-information.h" line="307"/>
         <source>System Architecture:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../system/src/pages/system-information/system-information.ui" line="441"/>
-        <location filename="../../../build/plugins/system/kiran-cpanel-system_autogen/include/ui_system-information.h" line="309"/>
+        <location filename="../../../cmake-build-debug/plugins/system/kiran-cpanel-system_autogen/include/ui_system-information.h" line="309"/>
         <source>EULA:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../system/src/pages/system-information/system-information.ui" line="473"/>
         <location filename="../../system/src/pages/system-information/system-information.ui" line="545"/>
-        <location filename="../../../build/plugins/system/kiran-cpanel-system_autogen/include/ui_system-information.h" line="310"/>
-        <location filename="../../../build/plugins/system/kiran-cpanel-system_autogen/include/ui_system-information.h" line="312"/>
+        <location filename="../../../cmake-build-debug/plugins/system/kiran-cpanel-system_autogen/include/ui_system-information.h" line="310"/>
+        <location filename="../../../cmake-build-debug/plugins/system/kiran-cpanel-system_autogen/include/ui_system-information.h" line="312"/>
         <source>Show</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../system/src/pages/system-information/system-information.ui" line="513"/>
-        <location filename="../../../build/plugins/system/kiran-cpanel-system_autogen/include/ui_system-information.h" line="311"/>
+        <location filename="../../../cmake-build-debug/plugins/system/kiran-cpanel-system_autogen/include/ui_system-information.h" line="311"/>
         <source>Version License:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2509,12 +2480,12 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>ThemeWidget</name>
     <message>
-        <location filename="../../appearance/src/pages/theme/theme-widget.cpp" line="143"/>
+        <location filename="../../appearance/src/pages/theme/theme-widget.cpp" line="145"/>
         <source>Dark Theme</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../appearance/src/pages/theme/theme-widget.cpp" line="148"/>
+        <location filename="../../appearance/src/pages/theme/theme-widget.cpp" line="150"/>
         <source>Light Theme</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2523,25 +2494,25 @@ p, li { white-space: pre-wrap; }
     <name>Themes</name>
     <message>
         <location filename="../../appearance/src/pages/theme/themes.ui" line="14"/>
-        <location filename="../../../build/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_themes.h" line="167"/>
+        <location filename="../../../cmake-build-debug/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_themes.h" line="167"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../appearance/src/pages/theme/themes.ui" line="81"/>
-        <location filename="../../../build/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_themes.h" line="168"/>
+        <location filename="../../../cmake-build-debug/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_themes.h" line="168"/>
         <source>Dark and Light Theme</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../appearance/src/pages/theme/themes.ui" line="109"/>
-        <location filename="../../../build/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_themes.h" line="169"/>
+        <location filename="../../../cmake-build-debug/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_themes.h" line="169"/>
         <source>Themes Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../appearance/src/pages/theme/themes.ui" line="149"/>
-        <location filename="../../../build/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_themes.h" line="170"/>
+        <location filename="../../../cmake-build-debug/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_themes.h" line="170"/>
         <source>Open Window Effects</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2919,37 +2890,37 @@ p, li { white-space: pre-wrap; }
     <name>Wallpaper</name>
     <message>
         <location filename="../../appearance/src/pages/wallpaper/wallpaper.ui" line="14"/>
-        <location filename="../../../build/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_wallpaper.h" line="179"/>
+        <location filename="../../../cmake-build-debug/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_wallpaper.h" line="179"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../appearance/src/pages/wallpaper/wallpaper.ui" line="68"/>
-        <location filename="../../../build/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_wallpaper.h" line="180"/>
+        <location filename="../../../cmake-build-debug/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_wallpaper.h" line="180"/>
         <source>Set wallpaper</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../appearance/src/pages/wallpaper/wallpaper.ui" line="137"/>
-        <location filename="../../../build/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_wallpaper.h" line="181"/>
+        <location filename="../../../cmake-build-debug/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_wallpaper.h" line="181"/>
         <source>Desktop Wallpaper Preview</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../appearance/src/pages/wallpaper/wallpaper.ui" line="147"/>
-        <location filename="../../../build/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_wallpaper.h" line="182"/>
+        <location filename="../../../cmake-build-debug/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_wallpaper.h" line="182"/>
         <source>Lock Screen WallPaper Preview</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../appearance/src/pages/wallpaper/wallpaper.ui" line="166"/>
-        <location filename="../../../build/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_wallpaper.h" line="183"/>
+        <location filename="../../../cmake-build-debug/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_wallpaper.h" line="183"/>
         <source>Select wallpaper</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../appearance/src/pages/wallpaper/wallpaper.ui" line="220"/>
-        <location filename="../../../build/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_wallpaper.h" line="184"/>
+        <location filename="../../../cmake-build-debug/plugins/appearance/kiran-cpanel-appearance_autogen/include/ui_wallpaper.h" line="184"/>
         <source>Select Wallpaper</source>
         <translation type="unfinished"></translation>
     </message>

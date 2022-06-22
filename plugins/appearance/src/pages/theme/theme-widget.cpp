@@ -24,7 +24,9 @@
 
 #include <kiran-log/qt5-log-i.h>
 #include <kiran-session-daemon/appearance-i.h>
-#include <kiran-palette.h>
+#include <style-palette.h>
+
+using namespace Kiran;
 
 #define DARK_THEME "Kiran-dark"
 #define LIGHT_THEME "Kiran"
@@ -51,7 +53,7 @@ ThemeWidget::ThemeWidget(QSize iconSize, QString currentIconTheme,
     m_iconImgWidget->setFixedHeight(70);
     m_iconImgWidget->setObjectName("iconImgWidget");
     m_iconImgWidget->setDrawBroder(false);
-    m_iconImgWidget->setFixedBorderState(KiranPalette::Checked);
+    m_iconImgWidget->setFixedBorderState(StylePalette::Checked);
     m_iconImgWidget->installEventFilter(this);
 
     QLabel *iconName = new QLabel(this);
@@ -114,7 +116,7 @@ ThemeWidget::ThemeWidget(QString name, QString currentTheme, QWidget *parent) : 
     m_themeImgWidget->setFixedHeight(60);
     m_themeImgWidget->setMinimumWidth(282);
     m_themeImgWidget->setDrawBroder(false);
-    m_themeImgWidget->setFixedBorderState(KiranPalette::Checked);
+    m_themeImgWidget->setFixedBorderState(StylePalette::Checked);
     m_themeImgWidget->installEventFilter(this);
 
     QLabel *themeName = new QLabel(this);
@@ -192,7 +194,7 @@ ThemeWidget::ThemeWidget(QSize cursorSize, QString currentCursorTheme,
     m_cursorWidget->setObjectName("cursorWidget");
     m_cursorWidget->setFixedHeight(40);
     m_cursorWidget->setDrawBroder(false);
-    m_cursorWidget->setFixedBorderState(KiranPalette::Checked);
+    m_cursorWidget->setFixedBorderState(StylePalette::Checked);
     m_cursorWidget->installEventFilter(this);
 
     mainVLayout->addWidget(m_cursorWidget);

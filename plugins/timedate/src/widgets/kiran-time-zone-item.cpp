@@ -1,18 +1,20 @@
 #include "kiran-time-zone-item.h"
 #include "ui_kiran-time-zone-item.h"
 
-#include <kiran-palette.h>
+#include <style-palette.h>
 
 #include <QDebug>
 #include <QMouseEvent>
 #include <QPainter>
 #include <QStyleOption>
 
-KiranTimeZoneItem::KiranTimeZoneItem(const ZoneInfo zoneInfo, QWidget *parent) : QWidget(parent),
-                                                                                 ui(new Ui::KiranTimeZoneItem),
-                                                                                 m_searchHighLightColor("#43a3f2"),
-                                                                                 m_isSelected(false),
-                                                                                 m_isResultTip(false)
+using namespace Kiran;
+KiranTimeZoneItem::KiranTimeZoneItem(const ZoneInfo zoneInfo, QWidget *parent)
+    : QWidget(parent),
+      ui(new Ui::KiranTimeZoneItem),
+      m_searchHighLightColor("#43a3f2"),
+      m_isSelected(false),
+      m_isResultTip(false)
 {
     ui->setupUi(this);
 
@@ -154,18 +156,18 @@ void KiranTimeZoneItem::paintEvent(QPaintEvent *event)
     QStyleOption opt;
     opt.init(this);
 
-    auto kiranPalette = KiranPalette::instance();
+    auto kiranPalette = StylePalette::instance();
 
     bool hover = opt.state & QStyle::State_MouseOver;
 
     QColor background=Qt::transparent, border;
     if (hover)
     {
-        background = kiranPalette->color(KiranPalette::Hover, KiranPalette::Widget, KiranPalette::Background);
+        background = kiranPalette->color(StylePalette::Hover, StylePalette::Widget, StylePalette::Background);
     }
-    border = kiranPalette->color(KiranPalette::Normal,
-                                 KiranPalette::Widget,
-                                 KiranPalette::Border);
+    border = kiranPalette->color(StylePalette::Normal,
+                                 StylePalette::Widget,
+                                 StylePalette::Border);
 
     QPainter p(this);
     p.fillRect(opt.rect, background);

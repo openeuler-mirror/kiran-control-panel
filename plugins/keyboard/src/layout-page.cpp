@@ -21,14 +21,15 @@
 
 #include <kiran-log/qt5-log-i.h>
 #include <kiran-message-box.h>
-#include <widget-property-helper.h>
-#include <kiran-style-property.h>
+#include <style-property.h>
 
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonParseError>
 #include <QScrollBar>
+
+using namespace Kiran;
 
 LayoutPage::LayoutPage(QWidget *parent)
     : QWidget(parent),
@@ -54,7 +55,7 @@ void LayoutPage::init()
 
 void LayoutPage::initUI()
 {
-    Kiran::Style::PropertyHelper::setButtonType(ui->btn_add,Kiran::Style::BUTTON_Default);
+    StylePropertyHelper::setButtonType(ui->btn_add,BUTTON_Default);
     ui->btn_add->setIconSize(QSize(32,32));
     ui->btn_add->setIcon(QPixmap(":/kcp-keyboard/images/addition.svg"));
 
@@ -64,7 +65,7 @@ void LayoutPage::initUI()
     m_vLayout->setSpacing(10);
     ui->layout_selector->setLayout(m_vLayout);
     ui->stackedWidget->setCurrentWidget(ui->page_layoutList);
-    Kiran::Style::PropertyHelper::setButtonType(ui->btn_page_add,Kiran::Style::BUTTON_Default);
+    StylePropertyHelper::setButtonType(ui->btn_page_add,BUTTON_Default);
 
     ui->btn_page_add->setDisabled(true);
 }
