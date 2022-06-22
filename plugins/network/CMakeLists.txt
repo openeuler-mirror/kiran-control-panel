@@ -10,8 +10,8 @@ set(QT_VERSION 5)
 set(REQUIRED_LIBS Core Gui Widgets DBus Network Svg)
 set(REQUIRED_LIBS_QUALIFIED Qt5::Core Qt5::Gui Qt5::Widgets Qt5::DBus Qt5::Network Qt5::Svg)
 
-file(GLOB_RECURSE SRC "src/*.cpp" "src/*.h" "src/*.ui")
-file(GLOB_RECURSE QRC "resources/*.qrc")
+file(GLOB_RECURSE SRC "plugins/network/src/*.cpp" "plugins/network/src/*.h" "plugins/network/src/*.ui")
+file(GLOB_RECURSE QRC "plugins/network/resources/*.qrc")
 
 add_executable(${PROJECT_NAME}
         ${SRC}
