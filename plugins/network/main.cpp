@@ -15,8 +15,8 @@
 #include <kiran-application.h>
 #include <qt5-log-i.h>
 #include <QApplication>
-#include "src/cpanel-network-widget.h"
-#include "tray/manager-tray.h"
+#include "cpanel-network-widget.h"
+#include "manager-tray.h"
 
 int main(int argc, char *argv[]) {
     KiranApplication a(argc, argv);

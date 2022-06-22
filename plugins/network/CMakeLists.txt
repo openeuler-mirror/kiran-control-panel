@@ -10,13 +10,13 @@ set(QT_VERSION 5)
 set(REQUIRED_LIBS Core Gui Widgets DBus Network Svg)
 set(REQUIRED_LIBS_QUALIFIED Qt5::Core Qt5::Gui Qt5::Widgets Qt5::DBus Qt5::Network Qt5::Svg)
 
-file(GLOB_RECURSE SRC "plugins/network/src/*.cpp" "plugins/network/src/*.h" "plugins/network/src/*.ui")
-file(GLOB_RECURSE QRC "plugins/network/resources/*.qrc")
+file(GLOB_RECURSE SRC "./src/*.cpp" "./src/*.h" "./src/*.ui")
+file(GLOB_RECURSE QRC "./resources/*.qrc")
 
 add_executable(${PROJECT_NAME}
         ${SRC}
         ${QRC}
-        main.cpp
+        ./main.cpp
         )
 
 MESSAGE(${PROJECT_NAME})
@@ -31,18 +31,18 @@ pkg_search_module(KLOG_QT5 REQUIRED klog-qt5)
 pkg_search_module(LIBNOTIFY REQUIRED libnotify)
 
 target_include_directories(${PROJECT_NAME} PRIVATE
-        src
-        src/plugin/manager
-        src/plugin/settings
-        src/plugin/settings/vpn
-        src/plugin/setting-widget
-        src/plugin/setting-widget/vpn
+        ./src
+        ./src/plugin/manager
+        ./src/plugin/settings
+        ./src/plugin/settings/vpn
+        ./src/plugin/setting-widget
+        ./src/plugin/setting-widget/vpn
         #暂时添加tray方便调试，之后修改
-        src/tray
-        src/tray/dbus
-        resources
-        resources/kcp-network-images
-        resources/kcp-network-themes
+        ./src/tray
+        ./src/tray/dbus
+        ./resources
+        ./resources/kcp-network-images
+        ./resources/kcp-network-themes
         ${KIRAN_WIDGETS_QT5_INCLUDE_DIRS}
         ${KLOG_QT5_INCLUDE_DIRS}
         ${LIBNOTIFY_INCLUDE_DIRS}
