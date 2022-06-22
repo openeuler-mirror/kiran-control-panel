@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>WiredSettingPage</class>
+ <widget class="QWidget" name="WiredSettingPage">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>736</width>
+    <height>541</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>WiredSettingPage</string>
+  </property>
+  <layout class="QVBoxLayout" name="m_verticalDeviceWidgetLayout">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <item>
+    <widget class="GeneralWidget" name="generalWidget" native="true"/>
+   </item>
+   <item>
+    <widget class="Ipv4Widget" name="ipv4Widget" native="true"/>
+   </item>
+   <item>
+    <widget class="Ipv6Widget" name="ipv6Widget" native="true"/>
+   </item>
+   <item>
+    <widget class="EthernetWidget" name="ethernetWidget" native="true"/>
+   </item>
+   <item>
+    <widget class="DisconnectAndDeleteButton" name="generalButton" native="true"/>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>GeneralWidget</class>
+   <extends>QWidget</extends>
+   <header location="global">general-widget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>Ipv4Widget</class>
+   <extends>QWidget</extends>
+   <header location="global">ipv4-widget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>Ipv6Widget</class>
+   <extends>QWidget</extends>
+   <header location="global">ipv6-widget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>EthernetWidget</class>
+   <extends>QWidget</extends>
+   <header location="global">ethernet-widget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>DisconnectAndDeleteButton</class>
+   <extends>QWidget</extends>
+   <header location="global">disconnect-and-delete-button.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

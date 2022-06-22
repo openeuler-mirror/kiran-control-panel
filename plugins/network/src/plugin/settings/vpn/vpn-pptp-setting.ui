@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>VpnPptpSetting</class>
+ <widget class="QWidget" name="VpnPptpSetting">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>833</width>
+    <height>868</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>VpnPptpSetting</string>
+  </property>
+  <layout class="QVBoxLayout" name="m_verticalDeviceWidgetLayout">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <item>
+    <widget class="GeneralWidget" name="generalWidget" native="true"/>
+   </item>
+   <item>
+    <widget class="VpnWidget" name="vpnWidget" native="true"/>
+   </item>
+   <item>
+    <widget class="VpnPpp" name="vpnPpp" native="true"/>
+   </item>
+   <item>
+    <widget class="VpnIpvx" name="vpnIpvx" native="true"/>
+   </item>
+   <item>
+    <widget class="DisconnectAndDeleteButton" name="generalButton" native="true"/>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>GeneralWidget</class>
+   <extends>QWidget</extends>
+   <header location="global">general-widget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>VpnWidget</class>
+   <extends>QWidget</extends>
+   <header location="global">vpn-widget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>VpnPpp</class>
+   <extends>QWidget</extends>
+   <header location="global">vpn-ppp.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>VpnIpvx</class>
+   <extends>QWidget</extends>
+   <header location="global">vpn-ipvx.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>DisconnectAndDeleteButton</class>
+   <extends>QWidget</extends>
+   <header location="global">disconnect-and-delete-button.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>
