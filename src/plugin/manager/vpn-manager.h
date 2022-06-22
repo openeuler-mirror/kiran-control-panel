@@ -38,7 +38,6 @@ public:
 
 public slots:
     void clearVpnSetting();
-    void refreshConnectionLists() override;
     void handleRequestEditConnection(const QString &uuid, QString activeConnectionPath);
     void handleRequestActivateConnection(const QString &connectionPath,const QString &connectionParameter);
 

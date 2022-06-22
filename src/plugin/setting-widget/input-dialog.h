@@ -37,7 +37,6 @@ public:
     void setTitle(const QString &title);
     void setText(const QString &text);
 
-
 signals:
     void password(const QString &password);
 

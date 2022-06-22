@@ -32,7 +32,7 @@ class WiredManager : public Manager
     Q_OBJECT
 
 public:
-    explicit WiredManager(QWidget *parent = nullptr);
+    explicit WiredManager(const QString &devicePath,QWidget *parent = nullptr);
     ~WiredManager() override;
 
     void initUI();
@@ -43,10 +43,9 @@ public slots:
 
     void handleStateDeactivated(const QString &deactivatedPath) override;
     void handleStateActivated(const QString &activatedPath) override;
-
+    void handleStateActivating(const QString &activatedPath) override;
     void handleReturnPreviousPage();
 
-    void refreshConnectionLists() override;
     void handleNotifierConnectionAdded(const QString &path) override;
     void handleNotifierConnectionRemoved(const QString &path) override;
 

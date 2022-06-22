@@ -247,18 +247,15 @@ void WirelessTrayWidget::handleActiveConnectionAdded(const QString &path)
         ConnectionSettings::Ptr settings = activatedConnection->connection()->settings();
         WirelessSetting::Ptr wirelessSetting = settings->setting(Setting::Wireless).dynamicCast<WirelessSetting>();
         QString ssid = QString(wirelessSetting->ssid());
-        int row = m_connectionLists->findItemBySsid(ssid);
-        if(row != -1)
+        QListWidgetItem *activeItem = m_connectionLists->findItemBySsid(ssid);
+        if(activeItem != nullptr)
         {
             //更新item信息
-            m_connectionLists->setCurrentActiveItem(row);
-            QListWidgetItem *activeItem = m_connectionLists->item(row);
             m_connectionLists->updateItemActivatedPath(activeItem, path);
         }
         else
         {
-            row = m_connectionLists->count() - 1;
-            m_connectionLists->itemSimpleStatus(row);
+            m_connectionLists->itemSimpleStatus(activeItem);
         }
         connect(activatedConnection.data(), &ActiveConnection::stateChanged, this, &WirelessTrayWidget::handleActiveConnectionStateChanged,Qt::QueuedConnection);
         connect(activatedConnection.data(), &ActiveConnection::stateChanged, &m_statusNotification, &StatusNotification::connectionDeactivatedNotify,Qt::DirectConnection);
@@ -271,8 +268,13 @@ void WirelessTrayWidget::handleActiveConnectionRemoved(const QString &path)
 
 void WirelessTrayWidget::handleStateActivating(const QString &activatedPath)
 {
-    // 加载等待动画
-    m_connectionLists->updateItemActivatingStatus();
+    ActiveConnection::Ptr activatedConnection = findActiveConnection(activatedPath);
+    QStringList deviceList = activatedConnection->devices();
+    if ((activatedConnection->type() == ConnectionSettings::ConnectionType::Wireless) && deviceList.contains(m_devicePath))
+    {
+        auto item = m_connectionLists->findItemByActivatedPath(activatedPath);
+        m_connectionLists->updateItemActivatingStatus(item);
+    }
 }
 
 void WirelessTrayWidget::handleStateActivated(const QString &activatedPath)
@@ -287,8 +289,8 @@ void WirelessTrayWidget::handleStateActivated(const QString &activatedPath)
         KLOG_DEBUG() << "handleStateActivated activatedPath:" << activatedPath;
         m_connectionLists->updateItemActivatedStatus(activatedPath);
 
-        int row = m_connectionLists->findItemByActivatedPath(activatedPath);
-        ConnectionInfo connectionInfo = m_connectionLists->item(row)->data(Qt::UserRole).value<ConnectionInfo>();
+        auto item = m_connectionLists->findItemByActivatedPath(activatedPath);
+        ConnectionInfo connectionInfo = item->data(Qt::UserRole).value<ConnectionInfo>();
         m_statusNotification.connectionStateNotify(ActiveConnection::Activated,connectionInfo);
 
         m_connectionLists->sortItems();
@@ -318,14 +320,13 @@ void WirelessTrayWidget::handleNetworkAppeared(const QString &ssid)
 
 void WirelessTrayWidget::requireInputPassword(const QString &ssid)
 {
-    int itemRow = m_connectionLists->findItemBySsid(ssid);
+    QListWidgetItem *item = m_connectionLists->findItemBySsid(ssid);
     //没找到，对应隐藏网络
-    if(itemRow == -1)
+    if(item == nullptr)
     {
-        itemRow = m_connectionLists->count() - 1;
+        item = m_connectionLists->getHiddenNetworkItem();
     }
-    KLOG_DEBUG() << "itemRow:" << itemRow;
-    m_connectionLists->showInputPasswordWidgetOfItem(itemRow);
+    m_connectionLists->showInputPasswordWidgetOfItem(item);
 }
 
 //cancel暂时用disconnect代替
@@ -391,5 +392,8 @@ void WirelessTrayWidget::handleDeviceStateChanged(Device::State newstate, Device
                 }
             }
         }
+        //TODO:弹窗 要求重新输入密码
+
+
     }
 }

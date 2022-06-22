@@ -14,7 +14,6 @@
 
 #include "connection-show-page.h"
 #include <kiran-switch-button.h>
-#include <libnotify/notify.h>
 #include <qt5-log-i.h>
 #include <NetworkManagerQt/Settings>
 #include <NetworkManagerQt/WiredDevice>
@@ -52,17 +51,54 @@ void ConnectionShowPage::initConnect()
 {
     connect(ui->createConnectionButton, &QPushButton::clicked, [=]() { emit requestCreatConnection(); });
     connect(ui->connectionLists, &ConnectionLists::requestCreatConnection, this, &ConnectionShowPage::requestCreatConnection);
-//    connect(ui->connectionLists, &QListWidget::itemClicked, this, &ConnectionShowPage::handleConnectionItemClicked);
+
     connect(ui->connectionLists, &ConnectionLists::requestEditConnection, this, &ConnectionShowPage::requestEditConnection);
     connect(ui->connectionLists, &ConnectionLists::requestActivateCurrentItemConnection, this, &ConnectionShowPage::requestActivateCurrentItemConnection);
     connect(ui->connectionLists, &ConnectionLists::requestConnectWirelessNetwork, this, &ConnectionShowPage::requestConnectWirelessNetwork);
     connect(ui->connectionLists, &ConnectionLists::deactivatedItemConnection, this, &ConnectionShowPage::deactivatedItemConnection);
     connect(ui->connectionLists, &ConnectionLists::connectionUpdated, this, &ConnectionShowPage::connectionUpdated);
+
+    connect(m_switchButton,&KiranSwitchButton::toggled,this,&ConnectionShowPage::handleToggledSwitchButton);
+
+    connect(notifier(), &Notifier::wirelessEnabledChanged, this,&ConnectionShowPage::handleWirelessEnabledChanged);
+    connect(notifier(), &Notifier::networkingEnabledChanged, [=](){});
 }
 
-void ConnectionShowPage::handleConnectionItemClicked(QListWidgetItem* item)
+void ConnectionShowPage::setConnectionType(ConnectionSettings::ConnectionType connectionType)
 {
-    ui->connectionLists->handleConnectionItemClicked(item);
+    m_connectionType = connectionType;
+}
+
+void ConnectionShowPage::handleToggledSwitchButton(bool toggled)
+{
+    switch (m_connectionType)
+    {
+    case ConnectionSettings::Wired:
+        ui->connectionLists->setVisible(toggled);
+        ui->createConnectionButton->setVisible(toggled);
+        break ;
+    case ConnectionSettings::Wireless:
+        setWirelessEnabled(toggled);
+        break ;
+    case ConnectionSettings::Vpn:
+        break ;
+    default:
+        break ;
+    }
+}
+
+void ConnectionShowPage::handleWirelessEnabledChanged(bool enabled)
+{
+    m_switchButton->setChecked(enabled);
+    ui->connectionLists->setVisible(enabled);
+    ui->createConnectionButton->setVisible(enabled);
+}
+
+
+void  ConnectionShowPage::setDevicePath(const QString& devicePath)
+{
+    m_devicePath = devicePath;
+    ui->connectionLists->setDevicePath(devicePath);
 }
 
 void ConnectionShowPage::setSwitchButtonVisible(bool visible)
@@ -110,38 +146,57 @@ void ConnectionShowPage::clearConnectionLists()
     ui->connectionLists->clearConnectionLists();
 }
 
-int ConnectionShowPage::findItemByUuid(const QString& uuid)
+QListWidgetItem* ConnectionShowPage::findItemByUuid(const QString& uuid)
 {
     return ui->connectionLists->findItemByUuid(uuid);
 }
 
-int ConnectionShowPage::findItemBySsid(const QString& ssid)
+QListWidgetItem* ConnectionShowPage::findItemBySsid(const QString& ssid)
 {
     return ui->connectionLists->findItemBySsid(ssid);
 }
 
-void ConnectionShowPage::setCurrentActiveItem(int row)
+QListWidgetItem* ConnectionShowPage::findItemByActivatedPath(const QString& activatedPath)
 {
-    ui->connectionLists->setCurrentActiveItem(row);
-}
-void ConnectionShowPage::connectionItemLoadingAnimation()
-{
-    ui->connectionLists->updateItemActivatingStatus();
+    return ui->connectionLists->findItemByActivatedPath(activatedPath);
 }
 
-void ConnectionShowPage::updateActivatedConnectionInfo(QString activatedPath)
+void ConnectionShowPage::updateItemActivatingStatus(QListWidgetItem *item)
+{
+    ui->connectionLists->updateItemActivatingStatus(item);
+}
+
+void ConnectionShowPage::updateItemActivatedStatus(const QString &activatedPath)
 {
     ui->connectionLists->updateItemActivatedStatus(activatedPath);
 }
 
-void ConnectionShowPage::clearDeactivatedConnectionInfo(const QString& deactivatedPath)
-{
-    int row = ui->connectionLists->findItemByActivatedPath(deactivatedPath);
-    auto activatedItem = ui->connectionLists->item(row);
-    ui->connectionLists->clearItemActivatedConnectionInfo(activatedItem);
-}
-
 void ConnectionShowPage::connectionStateNotify(ActiveConnection::State state,const QString &activatedConnectionPath)
 {
-//    ui->connectionLists->connectionStateNotify(state,activatedConnectionPath);
 }
+
+void ConnectionShowPage::setItemWidgetType(ItemWidgetType itemType)
+{
+    ui->connectionLists->setItemWidgetType(itemType);
+}
+
+void ConnectionShowPage::handleActiveStateDeactivated(const QString &activatedConnectionPath)
+{
+    ui->connectionLists->handleActiveStateDeactivated(activatedConnectionPath);
+}
+void ConnectionShowPage::sortItems()
+{
+    ui->connectionLists->sortItems();
+}
+
+void ConnectionShowPage::updateItemActivatedPath(QListWidgetItem* item, QString activatedPath)
+{
+    ui->connectionLists->updateItemActivatedPath(item,activatedPath);
+}
+
+void ConnectionShowPage::itemSimpleStatus(QListWidgetItem *item)
+{
+    ui->connectionLists->itemSimpleStatus(item);
+}
+
+

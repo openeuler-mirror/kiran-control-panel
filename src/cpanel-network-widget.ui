@@ -72,65 +72,8 @@
      <item>
       <widget class="QStackedWidget" name="stackedWidget">
        <property name="currentIndex">
-        <number>2</number>
+        <number>-1</number>
        </property>
-       <widget class="WiredManager" name="wiredPage">
-        <layout class="QHBoxLayout" name="horizontalLayout_2">
-         <property name="spacing">
-          <number>0</number>
-         </property>
-         <property name="leftMargin">
-          <number>0</number>
-         </property>
-         <property name="topMargin">
-          <number>0</number>
-         </property>
-         <property name="rightMargin">
-          <number>0</number>
-         </property>
-         <property name="bottomMargin">
-          <number>0</number>
-         </property>
-        </layout>
-       </widget>
-       <widget class="WirelessManager" name="wirelessPage">
-        <layout class="QHBoxLayout" name="horizontalLayout_3">
-         <property name="spacing">
-          <number>0</number>
-         </property>
-         <property name="leftMargin">
-          <number>0</number>
-         </property>
-         <property name="topMargin">
-          <number>0</number>
-         </property>
-         <property name="rightMargin">
-          <number>0</number>
-         </property>
-         <property name="bottomMargin">
-          <number>0</number>
-         </property>
-        </layout>
-       </widget>
-       <widget class="VpnManager" name="vpnPage">
-        <layout class="QVBoxLayout" name="m_verticalLayout">
-         <property name="spacing">
-          <number>0</number>
-         </property>
-         <property name="leftMargin">
-          <number>0</number>
-         </property>
-         <property name="topMargin">
-          <number>0</number>
-         </property>
-         <property name="rightMargin">
-          <number>0</number>
-         </property>
-         <property name="bottomMargin">
-          <number>0</number>
-         </property>
-        </layout>
-       </widget>
       </widget>
      </item>
     </layout>
@@ -142,24 +85,6 @@
    <class>KiranSidebarWidget</class>
    <extends>QListWidget</extends>
    <header location="global">kiran-sidebar-widget.h</header>
-  </customwidget>
-  <customwidget>
-   <class>WiredManager</class>
-   <extends>QWidget</extends>
-   <header location="global">wired-manager.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>VpnManager</class>
-   <extends>QWidget</extends>
-   <header location="global">vpn-manager.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>WirelessManager</class>
-   <extends>QWidget</extends>
-   <header location="global">wireless-manager.h</header>
-   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>

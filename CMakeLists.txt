@@ -30,14 +30,13 @@ pkg_search_module(KIRAN_WIDGETS_QT5 REQUIRED kiranwidgets-qt5)
 pkg_search_module(KLOG_QT5 REQUIRED klog-qt5)
 pkg_search_module(LIBNOTIFY REQUIRED libnotify)
 
-
 target_include_directories(${PROJECT_NAME} PRIVATE
         src
-        src/manager
-        src/settings
-        src/settings/vpn
-        src/setting-widget
-        src/setting-widget/vpn
+        src/plugin/manager
+        src/plugin/settings
+        src/plugin/settings/vpn
+        src/plugin/setting-widget
+        src/plugin/setting-widget/vpn
         #暂时添加tray方便调试，之后修改
         src/tray
         src/tray/dbus

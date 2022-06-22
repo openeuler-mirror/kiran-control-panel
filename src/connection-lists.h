@@ -88,11 +88,10 @@ public:
     void updateItemActivatedPath(QListWidgetItem *item,
                                  QString activatedPath = "");
     // XXX:使用模板进行优化，减少重复代码
-    int findItemByUuid(const QString &uuid);
-    int findItemBySsid(const QString &ssid);
-    int findItemByActivatedPath(const QString &activatedPath);
-
-    void setCurrentActiveItem(int row);
+    QListWidgetItem *findItemByUuid(const QString &uuid);
+    QListWidgetItem *findItemBySsid(const QString &ssid);
+    QListWidgetItem *findItemByActivatedPath(const QString &activatedPath);
+    QListWidgetItem *getHiddenNetworkItem();
     void enableConnectButtonOfItem(QListWidgetItem *item, bool enable);
 
 public slots:
@@ -108,13 +107,13 @@ public slots:
 
     void clearConnectionLists();
     void handleConnectionItemClicked(QListWidgetItem *item);
-    void updateItemActivatingStatus();
+    void updateItemActivatingStatus(QListWidgetItem *item);
     void updateItemActivatedStatus(const QString &activatedConnectionPath);
     void clearItemActivatedConnectionInfo(QListWidgetItem *activatedItem);
 //    void connectionStateNotify(ActiveConnection::State state, const QString &activatedConnectionPath);
 
-    void showInputPasswordWidgetOfItem(int itemRow);
-    void itemSimpleStatus(int row);
+    void showInputPasswordWidgetOfItem(QListWidgetItem *item);
+    void itemSimpleStatus(QListWidgetItem *item);
 
 signals:
     void requestCreatConnection();
@@ -133,9 +132,6 @@ signals:
     void sendPasswordToWirelessSetting(const QString &password);
     void sendSsidToWirelessSetting(const QString &ssid);
 private:
-    // TODO:去掉m_previousActivatedItem和m_currentActiveItem
-    QListWidgetItem *m_previousActivatedItem;
-    QListWidgetItem *m_currentActiveItem;
     ItemWidgetType m_itemShowType;
     QString m_currentDevicePath;
     QMap<QWidget *, QListWidgetItem *> m_itemWidgetMap;

@@ -27,7 +27,7 @@ ConnectionItemWidget::ConnectionItemWidget( QWidget* parent) : QWidget(parent)
 void ConnectionItemWidget::initUI()
 {
     initPluginItemWidget();
-    connect(m_actionButton, &QPushButton::clicked, this, &ConnectionItemWidget::editButtonClicked);
+    connect(m_editButton, &QPushButton::clicked, this, &ConnectionItemWidget::editButtonClicked);
 }
 
 void ConnectionItemWidget::initPluginItemWidget()
@@ -35,7 +35,7 @@ void ConnectionItemWidget::initPluginItemWidget()
     m_connectionTypeIcon = new QLabel(this);
     m_connectionName = new QLabel(this);
     m_horizonLayout = new QHBoxLayout(this);
-    m_actionButton = new QPushButton(this);
+    m_editButton = new QPushButton(this);
     m_activatedLabel = new AnimationLoadingLabel(this);
 
     m_connectionTypeIcon->setVisible(false);
@@ -45,7 +45,7 @@ void ConnectionItemWidget::initPluginItemWidget()
     m_horizonLayout->addWidget(m_connectionName);
     m_horizonLayout->addStretch();
     m_horizonLayout->addWidget(m_activatedLabel);
-    m_horizonLayout->addWidget(m_actionButton);
+    m_horizonLayout->addWidget(m_editButton);
     m_horizonLayout->setMargin(0);
 
     this->setLayout(m_horizonLayout);
@@ -72,7 +72,7 @@ QString ConnectionItemWidget::getName()
 //TODO:其他状态信息的显示，以及优化
 void ConnectionItemWidget::activatedStatus()
 {
-    QPixmap pixmap = getPixmapFromSvg(":/kcp-network-images/correct.png");
+    QPixmap pixmap(":/kcp-network-images/correct.png");
     m_activatedLabel->setPixmap(pixmap);
     m_activatedLabel->setAlignment(Qt::AlignCenter);
     m_activatedLabel->setVisible(true);
@@ -145,9 +145,9 @@ QPixmap ConnectionItemWidget::getPixmapFromSvg(const QString& svgPath)
     return pixmap;
 }
 
-void ConnectionItemWidget::setActionButtonVisible(bool isVisible)
+void ConnectionItemWidget::setEditButtonVisible(bool isVisible)
 {
-    m_actionButton->setVisible(isVisible);
+    m_editButton->setVisible(isVisible);
 }
 
 void ConnectionItemWidget::setOtherNetworkIcon()

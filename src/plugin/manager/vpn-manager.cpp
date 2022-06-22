@@ -20,7 +20,7 @@
 #include <QDialog>
 #include <QPointer>
 #include <QScrollBar>
-#include "setting-widget/input-dialog.h"
+#include "input-dialog.h"
 #include "ui_vpn-manager.h"
 
 Q_DECLARE_METATYPE(VpnType)
@@ -39,8 +39,10 @@ VpnManager::~VpnManager()
 
 void VpnManager::initUI()
 {
+    ui->connectionShowPage->setConnectionType(ConnectionSettings::Vpn);
+    ui->connectionShowPage->setItemWidgetType(ITEM_WIDGET_TYPE_PLUGIN);
     ui->connectionShowPage->setTitle(tr("VPN"));
-    ui->connectionShowPage->setSwitchButtonVisible(true);
+    ui->connectionShowPage->setSwitchButtonVisible(false);
     ui->connectionShowPage->showConnectionLists(ConnectionSettings::Vpn);
 
     ui->vpnType->addItem(tr("L2TP"), VPN_TYPE_L2TP);
@@ -100,18 +102,6 @@ void VpnManager::initConnection()
         }
         handleReturnPreviousPage();
     });
-
-//    connect(ui->l2tpSetting, &VpnL2tpSetting::settingUpdated, [=]() {
-//        ui->l2tpSetting->clearPtr();
-//        ui->stackedWidget->setCurrentIndex(PAGE_SHOW);
-//        refreshConnectionLists();
-//    });
-//
-//    connect(ui->pptpSetting, &VpnL2tpSetting::settingUpdated, [=]() {
-//        ui->pptpSetting->clearPtr();
-//        ui->stackedWidget->setCurrentIndex(PAGE_SHOW);
-//        refreshConnectionLists();
-//    });
 
     connect(ui->connectionShowPage,&ConnectionShowPage::connectionUpdated,[=](const QString &path){
         KLOG_DEBUG() << "Connection::updated:" << path;
@@ -230,10 +220,8 @@ void VpnManager::handleNotifierConnectionAdded(const QString &path)
     }
 }
 
-//remove时不能再创建连接对象，因为连接可能已经不存在了
 void VpnManager::handleNotifierConnectionRemoved(const QString &path)
 {
-//    KLOG_DEBUG() << "VpnManager::handleNotifierConnectionRemoved";
     ui->connectionShowPage->removeConnectionFromLists(path);
 }
 
@@ -245,13 +233,14 @@ void VpnManager::handleActiveConnectionAdded(const QString &activePath)
         VpnConnection::Ptr vpnConnection = findActiveConnection(activePath).dynamicCast<VpnConnection>();
         QString uuid = vpnConnection->uuid();
         KLOG_DEBUG() << "vpn uuid:" << uuid;
-        int row =  ui->connectionShowPage->findItemByUuid(uuid);
-        ui->connectionShowPage->setCurrentActiveItem(row);
+        QListWidgetItem *activeItem = ui->connectionShowPage->findItemByUuid(uuid);
+        ui->connectionShowPage->updateItemActivatedPath(activeItem,activePath);
         connect(vpnConnection.data(), &VpnConnection::stateChanged, [=](VpnConnection::State state, VpnConnection::StateChangeReason reason) {
             handleVpnConnectionStateChanged(state, reason, activePath);
         });
         //加载等待动画
-        ui->connectionShowPage->connectionItemLoadingAnimation();
+        auto item = ui->connectionShowPage->findItemByActivatedPath(activePath);
+        ui->connectionShowPage->updateItemActivatingStatus(item);
     }
 }
 
@@ -260,6 +249,8 @@ void VpnManager::handleActiveConnectionRemoved(const QString &activePath)
     KLOG_DEBUG() << "handleActiveConnectionRemoved";
 }
 
+//TODO:验证失败的情况处理
+//TODO:若没有安装VPN插件则需要提示
 void VpnManager::handleVpnConnectionStateChanged(VpnConnection::State state, VpnConnection::StateChangeReason reason, const QString &activePath)
 {
     switch (state)
@@ -340,33 +331,29 @@ void VpnManager::handleVpnConnectionStateChanged(VpnConnection::State state, Vpn
 
 void VpnManager::handleVpnStateActivated(const QString &activePath)
 {
-    ui->connectionShowPage->updateActivatedConnectionInfo(activePath);
-    ui->connectionShowPage->update();
+    ActiveConnection::Ptr activeConnection = findActiveConnection(activePath);
+    if( activeConnection->type() == ConnectionSettings::Vpn)
+    {
+        ui->connectionShowPage->updateItemActivatedStatus(activePath);
+        ui->connectionShowPage->update();
+    }
 }
 
 void VpnManager::handleVpnStateDisconnected(const QString &activePath)
 {
-    ui->connectionShowPage->clearDeactivatedConnectionInfo(activePath);
-    ui->connectionShowPage->update();
+    ui->connectionShowPage->handleActiveStateDeactivated(activePath);
 }
-//预留，暂时不需要区分failed和disconnected
+
+//TODO:处理连接failed的情况
 void VpnManager::handleVpnStateFailed(const QString &activePath)
 {
-    ui->connectionShowPage->clearDeactivatedConnectionInfo(activePath);
-    ui->connectionShowPage->update();
+    ui->connectionShowPage->handleActiveStateDeactivated(activePath);
 }
 
 void VpnManager::handleReturnPreviousPage()
 {
     clearVpnSetting();
     ui->stackedWidget->setCurrentIndex(PAGE_SHOW);
-}
-
-void VpnManager::refreshConnectionLists()
-{
-    KLOG_DEBUG() << "VpnManager::refreshConnectionLists()";
-    ui->connectionShowPage->clearConnectionLists();
-    ui->connectionShowPage->showConnectionLists(ConnectionSettings::Vpn);
 }
 
 void VpnManager::clearVpnSetting()

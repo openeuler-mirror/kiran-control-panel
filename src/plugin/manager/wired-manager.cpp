@@ -21,11 +21,11 @@
 #include <QPointer>
 #include "ui_wired-manager.h"
 
-WiredManager::WiredManager(QWidget *parent) : Manager(parent), ui(new Ui::WiredManager)
+WiredManager::WiredManager(const QString &devicePath, QWidget *parent) : Manager(parent), ui(new Ui::WiredManager)
 {
     ui->setupUi(this);
+    m_devicePath = devicePath;
     initUI();
-    getDeviceList(Device::Ethernet);
     initConnection();
 }
 
@@ -36,11 +36,13 @@ WiredManager::~WiredManager()
 
 void WiredManager::initUI()
 {
+    ui->connectionShowPage->setConnectionType(ConnectionSettings::Wired);
+    ui->connectionShowPage->setDevicePath(m_devicePath);
+    ui->connectionShowPage->setItemWidgetType(ITEM_WIDGET_TYPE_PLUGIN);
     ui->connectionShowPage->setTitle(tr("Wired Network Adapter"));
-    ui->connectionShowPage->setSwitchButtonVisible(true);
+    ui->connectionShowPage->setSwitchButtonVisible(false);
     ui->connectionShowPage->showConnectionLists(ConnectionSettings::ConnectionType::Wired);
 }
-
 
 void WiredManager::initConnection()
 {
@@ -85,30 +87,12 @@ void WiredManager::initConnection()
             this, &WiredManager::handleStateDeactivated);
 
     initNotifierConnection();
-
-    //检测到新设备时，刷新
-    connect(notifier(), &Notifier::deviceAdded, [=](const QString &uni) {});
-
-    connect(notifier(), &Notifier::deviceRemoved, [=](const QString &uni) {});
-}
-
-void WiredManager::refreshConnectionLists()
-{
-    KLOG_DEBUG() << "WiredManager::refreshConnectionLists()";
-    ui->connectionShowPage->clearConnectionLists();
-    ui->connectionShowPage->showConnectionLists(ConnectionSettings::ConnectionType::Wired);
 }
 
 void WiredManager::handleRequestActivateConnection(const QString &connectionPath,const QString &connectionParameter)
 {
-    m_deviceMap;
-
-    QString devicePath = "";
-    KLOG_DEBUG() << "devicePath:" << devicePath;
-
-
     QDBusPendingReply<QDBusObjectPath> reply =
-        NetworkManager::activateConnection(connectionPath, devicePath, connectionParameter);
+        NetworkManager::activateConnection(connectionPath, m_devicePath, connectionParameter);
 
     reply.waitForFinished();
     if (reply.isError())
@@ -128,14 +112,29 @@ void WiredManager::handleRequestActivateConnection(const QString &connectionPath
 void WiredManager::handleActiveConnectionAdded(const QString &path)
 {
     ActiveConnection::Ptr activatedConnection = findActiveConnection(path);
-    if (activatedConnection->type() == ConnectionSettings::ConnectionType::Wired)
+    if(activatedConnection.isNull())
+        return ;
+    QStringList deviceList = activatedConnection->devices();
+    if (activatedConnection->type() == ConnectionSettings::ConnectionType::Wired && deviceList.contains(m_devicePath))
     {
         QString uuid = activatedConnection->uuid();
-        int row = ui->connectionShowPage->findItemByUuid(uuid);
-        ui->connectionShowPage->setCurrentActiveItem(row);
+        QListWidgetItem *activeItem = ui->connectionShowPage->findItemByUuid(uuid);
+        ui->connectionShowPage->updateItemActivatedPath(activeItem,path);
         connect(activatedConnection.data(), &ActiveConnection::stateChanged, this, &WiredManager::handleActiveConnectionStateChanged);
+    }
+}
+
+void WiredManager::handleStateActivating(const QString &activatedPath)
+{
+    ActiveConnection::Ptr activatedConnection = findActiveConnection(activatedPath);
+    if(activatedConnection.isNull())
+        return ;
+    QStringList deviceList = activatedConnection->devices();
+    if (activatedConnection->type() == ConnectionSettings::ConnectionType::Wired && deviceList.contains(m_devicePath))
+    {
         //加载等待动画
-        ui->connectionShowPage->connectionItemLoadingAnimation();
+        auto item = ui->connectionShowPage->findItemByActivatedPath(activatedPath);
+        ui->connectionShowPage->updateItemActivatingStatus(item);
     }
 }
 
@@ -144,18 +143,21 @@ void WiredManager::handleActiveConnectionRemoved(const QString &path)
     KLOG_DEBUG() << "activeConnectionRemoved:" << path;
 }
 
+//TODO:提升代码，增强复用性
 void WiredManager::handleStateActivated(const QString &activatedPath)
 {
-    ui->connectionShowPage->connectionStateNotify(ActiveConnection::Activated,activatedPath);
-    ui->connectionShowPage->updateActivatedConnectionInfo(activatedPath);
-    ui->connectionShowPage->update();
+    ActiveConnection::Ptr activeConnection = findActiveConnection(activatedPath);
+    QStringList deviceList =  activeConnection->devices();
+    if(deviceList.contains(m_devicePath) && (activeConnection->type() == ConnectionSettings::Wired))
+    {
+        ui->connectionShowPage->updateItemActivatedStatus(activatedPath);
+        ui->connectionShowPage->update();
+    }
 }
 
 void WiredManager::handleStateDeactivated(const QString &deactivatedPath)
 {
-    ui->connectionShowPage->connectionStateNotify(ActiveConnection::Deactivated,deactivatedPath);
-    ui->connectionShowPage->clearDeactivatedConnectionInfo(deactivatedPath);
-    ui->connectionShowPage->update();
+    ui->connectionShowPage->handleActiveStateDeactivated(deactivatedPath);
 }
 
 void WiredManager::handleReturnPreviousPage()
@@ -164,20 +166,21 @@ void WiredManager::handleReturnPreviousPage()
     ui->stackedWidget->setCurrentIndex(PAGE_SHOW);
 }
 
-//TODO:获取当前设备路径devicePath
+
 void WiredManager::handleNotifierConnectionAdded(const QString &path)
 {
     KLOG_DEBUG() << "WiredManager::handleNotifierConnectionAdded";
     Connection::Ptr connection = findConnection(path);
     if (connection->settings()->connectionType() == ConnectionSettings::ConnectionType::Wired)
     {
-        ui->connectionShowPage->addConnectionToLists(connection,"");
+        ui->connectionShowPage->addConnectionToLists(connection,m_devicePath);
     }
 }
 
-//XXX:当connection被移除时，由于连接可能已经被删除，所有并不能通过findConnection(path)找到该连接对象，进而知道连接类型
+//Note:当connection被移除时，由于连接可能已经被删除，所有并不能通过findConnection(path)找到该连接对象，进而知道连接类型
 void WiredManager::handleNotifierConnectionRemoved(const QString &path)
 {
-//    KLOG_DEBUG() << "WiredManager::handleNotifierConnectionRemoved";
     ui->connectionShowPage->removeConnectionFromLists(path);
 }
+
+

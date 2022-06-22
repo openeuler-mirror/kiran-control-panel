@@ -36,7 +36,6 @@ void WiredTrayWidget::init()
     m_connectionLists = new ConnectionLists(this);
     m_verticalLayout->addWidget(m_connectionLists);
 
-    getDeviceList(Device::Ethernet);
     initUI();
     initConnection();
 }
@@ -97,7 +96,7 @@ void WiredTrayWidget::handleNotifierConnectionAdded(const QString &path)
     Connection::Ptr connection = findConnection(path);
     if (connection->settings()->connectionType() == ConnectionSettings::ConnectionType::Wired)
     {
-        m_connectionLists->addConnectionToLists(connection, "");
+        m_connectionLists->addConnectionToLists(connection, m_devicePath);
     }
 }
 
@@ -120,9 +119,8 @@ void WiredTrayWidget::handleStateActivated(const QString &activatedPath)
     if(deviceList.contains(m_devicePath) && (activeConnection->type() == ConnectionSettings::Wired))
     {
         m_connectionLists->updateItemActivatedStatus(activatedPath);
-
-        int row = m_connectionLists->findItemByActivatedPath(activatedPath);
-        ConnectionInfo connectionInfo = m_connectionLists->item(row)->data(Qt::UserRole).value<ConnectionInfo>();
+        auto item = m_connectionLists->findItemByActivatedPath(activatedPath);
+        ConnectionInfo connectionInfo = item->data(Qt::UserRole).value<ConnectionInfo>();
         m_statusNotification.connectionStateNotify(ActiveConnection::Activated,connectionInfo);
         m_connectionLists->update();
     }
@@ -138,18 +136,25 @@ void WiredTrayWidget::handleActiveConnectionAdded(const QString &path)
     if (activatedConnection->type() == ConnectionSettings::ConnectionType::Wired && deviceList.contains(m_devicePath))
     {
         QString uuid = activatedConnection->uuid();
-        int row = m_connectionLists->findItemByUuid(uuid);
-        m_connectionLists->setCurrentActiveItem(row);
-        QListWidgetItem *activeItem = m_connectionLists->item(row);
+        QListWidgetItem *activeItem = m_connectionLists->findItemByUuid(uuid);
         m_connectionLists->updateItemActivatedPath(activeItem,path);
         connect(activatedConnection.data(), &ActiveConnection::stateChanged, this, &WiredTrayWidget::handleActiveConnectionStateChanged);
         connect(activatedConnection.data(), &ActiveConnection::stateChanged, &m_statusNotification, &StatusNotification::connectionDeactivatedNotify,Qt::DirectConnection);
     }
 }
 
+//需要做判断
 void WiredTrayWidget::handleStateActivating(const QString &activatedPath)
 {
-    m_connectionLists->updateItemActivatingStatus();
+    ActiveConnection::Ptr activatedConnection = findActiveConnection(activatedPath);
+    if(activatedConnection.isNull())
+        return ;
+    QStringList deviceList = activatedConnection->devices();
+    if (activatedConnection->type() == ConnectionSettings::ConnectionType::Wired && deviceList.contains(m_devicePath))
+    {
+        auto item = m_connectionLists->findItemByActivatedPath(activatedPath);
+        m_connectionLists->updateItemActivatingStatus(item);
+    }
 }
 
 void WiredTrayWidget::handleActiveConnectionRemoved(const QString &path)

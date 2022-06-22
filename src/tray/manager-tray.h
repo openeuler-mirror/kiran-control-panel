@@ -51,12 +51,16 @@ public slots:
     void handleTrayClicked(QSystemTrayIcon::ActivationReason reason);
     void showTrayPage();
     void setTrayIcon(NetworkManager::Status status);
+    void handleNetworkSettingClicked();
 
     void handleDeviceAdded(const QString &devicePath);
     void handleDeviceRemoved(const QString &devicePath);
     void handleNetworkManagerStatusChanged(NetworkManager::Status status);
 private:
     QSystemTrayIcon *m_systemTray;
+    QMenu* m_menu;
+    QAction* m_networkSetting;
+
     TrayPage *m_wiredTrayPage;
     TrayPage *m_wirelessTrayPage;
     StatusNotifierManagerInterface *m_statusNotifierManager;

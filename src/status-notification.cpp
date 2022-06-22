@@ -58,10 +58,10 @@ void StatusNotification::connectionStateNotify(ActiveConnection::State state,Con
             bodyStr = body.arg(id);
             icon = "/home/lq/git/kiran-cpanel-network/resources/kcp-network-images/wired-connection.svg";
         }
+        NotifyNotification* notify = notify_notification_new(summary.toStdString().c_str(), bodyStr.toStdString().c_str(), icon.toStdString().c_str());
+        notify_notification_show(notify, nullptr);
+        g_object_unref(G_OBJECT(notify));
     }
-    NotifyNotification* notify = notify_notification_new(summary.toStdString().c_str(), bodyStr.toStdString().c_str(), icon.toStdString().c_str());
-    notify_notification_show(notify, nullptr);
-    g_object_unref(G_OBJECT(notify));
 }
 
 void StatusNotification::connectionDeactivatedNotify(ActiveConnection::State state)

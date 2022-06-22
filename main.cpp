@@ -12,17 +12,17 @@
  * Author:     luoqing <luoqing@kylinos.com.cn>
  */
 
-#include <libnotify/notify.h>
 #include <kiran-application.h>
 #include <qt5-log-i.h>
 #include <QApplication>
 #include "src/cpanel-network-widget.h"
 #include "tray/manager-tray.h"
+
 int main(int argc, char *argv[]) {
     KiranApplication a(argc, argv);
     klog_qt5_init("", "kylinsec-session", "kiran-cpanel-network", "kiran-cpanel-network");
-//    CPanelNetworkWidget networkWidget;
-//    networkWidget.show();
+    CPanelNetworkWidget networkWidget;
+    networkWidget.show();
     ManagerTray tray;
     return QApplication::exec();
 }

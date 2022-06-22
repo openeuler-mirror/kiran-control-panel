@@ -78,24 +78,6 @@ void Manager::handleActiveConnectionRemoved(const QString &activepath)
     KLOG_DEBUG() << "activeConnectionRemoved:" << activepath;
 }
 
-//XXX:可以优化
-void Manager::getDeviceList(Device::Type deviceType)
-{
-    const Device::List deviceList = networkInterfaces();
-    for (Device::Ptr dev : deviceList)
-    {
-        if (dev->type() == deviceType)
-        {
-            m_deviceList << dev;
-        }
-    }
-    KLOG_DEBUG() << "m_deviceList:" << m_deviceList;
-    if (m_deviceList.isEmpty())
-    {
-        KLOG_DEBUG() << "No available devices were found";
-    }
-}
-
 void Manager::handleActiveConnectionStateChanged(ActiveConnection::State state)
 {
     auto activeConnection = qobject_cast<ActiveConnection* >(sender());
@@ -107,6 +89,7 @@ void Manager::handleActiveConnectionStateChanged(ActiveConnection::State state)
         break;
     case ActiveConnection::State::Activating:
         KLOG_DEBUG() << "ActiveConnection::State::Activating";
+        handleStateActivating(path);
         break;
     case ActiveConnection::State::Activated:
         KLOG_DEBUG() << "ActiveConnection::State::Activated";
@@ -130,4 +113,27 @@ void Manager::handleStateActivated(const QString &activatedPath)
 
 void Manager::handleStateDeactivated(const QString &deactivatedPath)
 {
+}
+
+//XXX:可以优化
+void Manager::getDeviceList(Device::Type deviceType)
+{
+    const Device::List deviceList = networkInterfaces();
+    for (Device::Ptr dev : deviceList)
+    {
+        if (dev->type() == deviceType)
+        {
+            m_deviceList << dev;
+        }
+    }
+    KLOG_DEBUG() << "m_deviceList:" << m_deviceList;
+    if (m_deviceList.isEmpty())
+    {
+        KLOG_DEBUG() << "No available devices were found";
+    }
+}
+
+void Manager::handleStateActivating(const QString &activatedPath)
+{
+
 }

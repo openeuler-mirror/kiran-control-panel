@@ -41,6 +41,9 @@ public:
     void initUI();
     void initConnect();
 
+    void setConnectionType(ConnectionSettings::ConnectionType connectionType);
+    void setDevicePath(const QString& devicePath);
+    void setItemWidgetType(ItemWidgetType itemType);
     void setTitle(QString title);
     void setSwitchButtonVisible(bool visible);
     void setCreateButtonVisible(bool visible);
@@ -57,19 +60,25 @@ public:
     void removeConnectionFromLists(const QString &path);
     void removeWirelessNetworkFromLists(const QString &ssid);
 
-    int findItemByUuid(const QString &uuid);
-    int findItemBySsid(const QString &ssid);
+    QListWidgetItem *findItemByUuid(const QString &uuid);
+    QListWidgetItem *findItemBySsid(const QString &ssid);
+    QListWidgetItem *findItemByActivatedPath(const QString &activatedPath);
 
-    void setCurrentActiveItem(int row);
+    void sortItems();
+    void itemSimpleStatus(QListWidgetItem *item);
+
 
 public slots:
     void clearConnectionLists();
-    void handleConnectionItemClicked(QListWidgetItem *item);
-    void updateActivatedConnectionInfo(QString activatedPath);
-    void clearDeactivatedConnectionInfo(const QString &deactivatedPath);
-    void connectionStateNotify(ActiveConnection::State state,const QString &activatedConnectionPath);
-    void connectionItemLoadingAnimation();
 
+    void updateItemActivatedStatus(const QString &activatedPath);
+    void connectionStateNotify(ActiveConnection::State state,const QString &activatedConnectionPath);
+    void updateItemActivatingStatus(QListWidgetItem *item);
+    void updateItemActivatedPath(QListWidgetItem* item, QString activatedPath);
+
+    void handleActiveStateDeactivated(const QString &activatedConnectionPath);
+    void handleToggledSwitchButton(bool toggled);
+    void handleWirelessEnabledChanged(bool enabled);
 signals:
     void requestCreatConnection();
 
@@ -83,6 +92,8 @@ signals:
 private:
     Ui::ConnectionShowPage *ui;
     KiranSwitchButton *m_switchButton;
+    ConnectionSettings::ConnectionType m_connectionType;
+    QString m_devicePath;
 };
 
 #endif  // KIRAN_CPANEL_NETWORK_CONNECTION_SHOW_PAGE_H

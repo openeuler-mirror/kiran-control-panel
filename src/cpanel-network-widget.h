@@ -16,7 +16,8 @@
 #define KIRAN_CPANEL_NETWORK_CPANEL_NETWORK_WIDGET_H
 
 #include <QWidget>
-
+#include <NetworkManagerQt/Device>
+using namespace NetworkManager;
 QT_BEGIN_NAMESPACE
 namespace Ui
 {
@@ -34,9 +35,14 @@ public:
     ~CPanelNetworkWidget() override;
 
     void init();
+    void getAvailableDeviceList();
+    void initPage();
+
 
 private:
     Ui::CPanelNetworkWidget *ui;
+    QList<Device::Ptr> m_wiredDeviceList;
+    QList<Device::Ptr> m_wirelessDeviceList;
 };
 
 #endif  //KIRAN_CPANEL_NETWORK_CPANEL_NETWORK_WIDGET_H

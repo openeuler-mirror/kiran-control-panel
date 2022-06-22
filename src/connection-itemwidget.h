@@ -41,7 +41,7 @@ public:
     void deactivateStatus();
     void setLoadingStatus(bool isLoading);
     void setLabelVisible(bool isVisible);
-    void setActionButtonVisible(bool isVisible);
+    void setEditButtonVisible(bool isVisible);
     void setWirelessStatusIcon(bool security, int signal);
     void setWiredStatusIcon();
     void setOtherNetworkIcon();
@@ -63,7 +63,7 @@ private:
     QHBoxLayout *m_horizonActivateStatusLabelLayout;
     QSpacerItem *horizontalSpacer;
     QVBoxLayout *m_verticalLayout;
-    QPushButton *m_actionButton;
+    QPushButton *m_editButton;
     AnimationLoadingLabel *m_activatedLabel;
 
     QWidget *m_activeStatusWidget;

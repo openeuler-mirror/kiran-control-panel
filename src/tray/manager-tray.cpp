@@ -19,9 +19,12 @@
 #include "tray-page.h"
 #include "wired-tray-widget.h"
 #include "wireless-tray-widget.h"
+#include <QMenu>
+
 #define STATUS_NOTIFIER_MANAGER "org.kde.StatusNotifierManager"
 #define STATUS_NOTIFIER_MANAGER_OBJECT_NAME "/StatusNotifierManager"
 #define MAX_WAIT_COUNTS 10
+
 ManagerTray::ManagerTray(QWidget *parent) : QWidget(parent),
                                             m_wiredTrayPage(nullptr),
                                             m_wirelessTrayPage(nullptr)
@@ -37,6 +40,7 @@ void ManagerTray::init()
 {
     m_statusNotifierManager = new StatusNotifierManagerInterface(STATUS_NOTIFIER_MANAGER, STATUS_NOTIFIER_MANAGER_OBJECT_NAME, QDBusConnection::sessionBus(), this);
     initUI();
+    initMenu();
     initConnect();
 }
 
@@ -115,6 +119,16 @@ void ManagerTray::initTrayIcon()
 
 void ManagerTray::initMenu()
 {
+    m_menu = new QMenu(this);
+    m_networkSetting = new QAction(tr("Network settings"));
+
+    m_menu->addAction(m_networkSetting);
+    getTrayGeometry();
+    m_menu->sizeHint();
+//    m_menu->exec();
+//    m_menu->popup(QPoint(500,500));
+    m_systemTray->setContextMenu(m_menu);
+    connect(m_networkSetting,&QAction::triggered,this,&ManagerTray::handleNetworkSettingClicked);
 }
 
 //初始化条件：设备存在且可用
@@ -123,11 +137,6 @@ void ManagerTray::initTrayPage()
     getAvailableDeviceList();
     if(m_wiredDeviceList.count() != 0)
         m_wiredTrayPage = new TrayPage(m_wiredDeviceList, this);
-    KLOG_DEBUG() << "m_wirelessDeviceList:" << m_wirelessDeviceList;
-    for (int i = 0; i < m_wirelessDeviceList.count(); ++i)
-    {
-        KLOG_DEBUG() << "m_wirelessDeviceList.at(i):" << m_wirelessDeviceList.at(i)->uni();
-    }
     if(m_wirelessDeviceList.count() != 0)
         m_wirelessTrayPage = new TrayPage(m_wirelessDeviceList,this);
 }
@@ -170,6 +179,13 @@ void ManagerTray::handleTrayClicked(QSystemTrayIcon::ActivationReason reason)
     default:
         break;
     }
+}
+
+void ManagerTray::handleNetworkSettingClicked()
+{
+    QProcess process(this);
+    process.startDetached("kiran-control-panel");
+    KLOG_DEBUG() << "handleNetworkSettingClicked";
 }
 
 void ManagerTray::showTrayPage()
@@ -336,4 +352,5 @@ void ManagerTray::reloadWirelessTrayPage()
     m_verticalLayout->setMargin(0);
     update();
 }
+
 
