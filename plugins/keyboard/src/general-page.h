@@ -27,20 +27,21 @@ class KeyboardBackEndProxy;
 class GeneralPage : public QWidget
 {
     Q_OBJECT
-
 public:
     explicit GeneralPage(QWidget *parent = 0);
     ~GeneralPage();
     QSize sizeHint() const override;
 
 private:
-    void initUI();
-    void initComponentValue();
-    void setWidgetsStatus(bool status);
-    KeyboardBackEndProxy* m_keyboardInterface;
+    void init();
+
+private slots:
+    void handleSaverTimerTimeOut();
+    void handleSwitchRepeatKeyToggled(bool checked);
 
 private:
     Ui::GeneralPage *ui;
+    KeyboardBackEndProxy* m_keyboardInterface;
     QTimer *m_timer = nullptr;
     bool m_repeateEnabled = false;
     qint32 m_delay;

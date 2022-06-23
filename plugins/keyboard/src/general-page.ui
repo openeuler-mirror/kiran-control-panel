@@ -62,7 +62,7 @@
       </spacer>
      </item>
      <item>
-      <widget class="KiranSwitchButton" name="checkBox">
+      <widget class="KiranSwitchButton" name="switch_repeatKey">
        <property name="text">
         <string/>
        </property>

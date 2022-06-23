@@ -39,8 +39,7 @@ private:
     void initUI();
     void initConnection();
 
-    void getValidLayout();
-    int getJsonValueFromString(QString jsonString);
+    void loadValidLayouts();
     void createLayoutItem();
     void updateLayout();
 

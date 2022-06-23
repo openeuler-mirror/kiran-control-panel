@@ -38,8 +38,6 @@ LayoutPage::LayoutPage(QWidget *parent)
 {
     ui->setupUi(this);
     init();
-    getValidLayout();
-    createLayoutItem();
 }
 
 LayoutPage::~LayoutPage()
@@ -49,6 +47,11 @@ LayoutPage::~LayoutPage()
 
 void LayoutPage::init()
 {
+    // 加载有效的布局
+    loadValidLayouts();
+    // 创建布局条目
+    createLayoutItem();
+
     initUI();
     initConnection();
 }
@@ -73,7 +76,7 @@ void LayoutPage::initUI()
 void LayoutPage::initConnection()
 {
     connect(m_keyboardInterface, &KeyboardBackEndProxy::layoutsChanged,[this](QStringList layoutList) {
-        KLOG_INFO() << "get layoutsChanged signal: " << layoutList;
+        KLOG_DEBUG() << "keyboard layout: layouts changed:" << layoutList;
         m_layoutList = layoutList;
         //更新界面
         updateLayout();
@@ -118,78 +121,53 @@ void LayoutPage::initConnection()
     });
 }
 
-void LayoutPage::getValidLayout()
+void LayoutPage::loadValidLayouts()
 {
     QDBusPendingReply<QString> reply = m_keyboardInterface->GetValidLayouts();
     reply.waitForFinished();
     if (reply.isError() || !reply.isValid())
     {
-        KLOG_DEBUG() << "Call GetValidLayouts method failed," << reply.error().message();
+        KLOG_ERROR() << "keyboard layout: get valid layout failed," << reply.error().message();
         return;
     }
-    else
-    {
-        QString json = reply.argumentAt(0).toString();
-        if (0 < getJsonValueFromString(json))
-        {
-            QStringList validLayoutCountry;
-            QMap<QString, QString>::const_iterator i = m_layoutMap.begin();
-            while (i != m_layoutMap.end())
-            {
-                validLayoutCountry.append(i.value());
-                ++i;
-            }
-            ui->widget_layout_list->setCountryList(validLayoutCountry);
-        }
-    }
-}
 
-int LayoutPage::getJsonValueFromString(QString jsonString)
-{
-    QJsonParseError jsonError;
-    QJsonDocument jsonDocument = QJsonDocument::fromJson(jsonString.toLocal8Bit().data(), &jsonError);
-    if (jsonDocument.isNull() || jsonError.error != QJsonParseError::NoError)
+    QString jsonString = reply.argumentAt(0).toString();
+    QJsonParseError jsonError{};
+    QJsonDocument jsonDoc = QJsonDocument::fromJson(jsonString.toLocal8Bit().data(),&jsonError);
+    if( jsonDoc.isNull() || jsonError.error!=QJsonParseError::NoError )
     {
-        KLOG_DEBUG() << " please check the string " << jsonString.toLocal8Bit().data();
-        return -1;
+        KLOG_ERROR() << "keyboard layout: parse valid layouts failed,QJsonParseError:" << error.error << error.errorString();
+        return;
     }
-    if (jsonDocument.isArray())
+
+    if( !jsonDoc.isArray() )
     {
-        QJsonArray array = jsonDocument.array();
-        int layoutNum = array.size();
-        if (layoutNum < 1)
-            return -1;
-        for (int i = 0; i < layoutNum; i++)
+        KLOG_ERROR() << "keyboard layout: valid layouts json result isn't array!";
+        return ;
+    }
+
+    QJsonArray validLayoutArray = jsonDoc.array();
+    QStringList countryNameList;
+    for(const auto& validLayout:validLayoutArray)
+    {
+        if( !validLayout.isObject() )
         {
-            QString countryName;
-            QString layoutName;
-            QJsonValue value = array.at(i);
-            if (value.type() == QJsonValue::Object)
-            {
-                QJsonObject obj = value.toObject();
-                if (obj.contains("country_name"))
-                {
-                    QJsonValue value = obj.value("country_name");
-                    if (value.isString())
-                    {
-                        countryName = value.toVariant().toString();
-                        //                        KLOG_INFO() << countryName;
-                    }
-                }
-                if (obj.contains("layout_name"))
-                {
-                    QJsonValue value = obj.value("layout_name");
-                    if (value.isString())
-                    {
-                        layoutName = value.toVariant().toString();
-                        //                        KLOG_INFO() << layoutName;
-                    }
-                }
-                m_layoutMap.insert(layoutName, countryName);
-            }
+            KLOG_WARNING() << "keyboard layout: valid layout item isn't json object!";
+            continue;
         }
+        QJsonObject validLayoutObject = validLayout.toObject();
+        if( !validLayoutObject.contains("layout_name") || !validLayoutObject.contains("country_name") )
+        {
+            KLOG_WARNING() << "keyboard layout: valid layout item missing json key: layout_name or country_name!";
+            continue;
+        }
+        QString layoutName = validLayoutObject["layout_name"].toString();
+        QString countryName = validLayoutObject["country_name"].toString();
+        m_layoutMap.insert(layoutName, countryName);
+        countryNameList.append(countryName);
     }
-    return m_layoutMap.size();
+
+    ui->widget_layout_list->setCountryList(countryNameList);
 }
 
 void LayoutPage::createLayoutItem()
@@ -201,12 +179,13 @@ void LayoutPage::createLayoutItem()
     for (int i = 0; i < m_layoutList.size(); i++)
     {
         QString layoutName = m_layoutList.at(i);
+
         if (!m_layoutMap.contains(layoutName))
         {
             continue;
         }
         QString countryName = m_layoutMap.value(layoutName);
-        KLOG_INFO() << countryName;
+
         ChooseItem *chooseItem = new ChooseItem(this);
         chooseItem->setNames(countryName, layoutName);
         m_vLayout->addWidget(chooseItem);
@@ -230,7 +209,6 @@ void LayoutPage::updateLayout()
         QString countryName;
         if (m_layoutList.size() > m_itemList.size())  // add
         {
-            KLOG_INFO() << "add";
             for (int i = 0; i < (m_layoutList.size() - m_itemList.size()); i++)
             {
                 //添加缺少的选择项
@@ -244,7 +222,6 @@ void LayoutPage::updateLayout()
         }
         else if (m_layoutList.size() < m_itemList.size())  //delete
         {
-            KLOG_INFO() << "delete";
             for (int i = 0; i < (m_itemList.size() - m_layoutList.size()); i++)
             {
                 //删除多余的选择项
@@ -294,8 +271,6 @@ bool LayoutPage::addLayout(QString layoutName)
             ChooseItem *item = new ChooseItem(this);
             item->setNames(m_layoutMap.value(layoutName), layoutName);
             connect(item, &ChooseItem::clicked, this, &LayoutPage::chooseItemClicked);
-            //connect(this, &LayoutPage::layoutSelectChanged, chooseItem, &ChooseItem::seletedLayoutChanged);
-
             connect(item, &ChooseItem::sigDelete, this, &LayoutPage::deleteLayout);
 
             m_vLayout->addWidget(item);
@@ -337,7 +312,6 @@ void LayoutPage::chooseItemClicked()
             m_layout = selectedLayoutName;
             ///TODO:是否需要自己更新layoutList而不是通过dbus获取
             m_layoutList = m_keyboardInterface->layouts();
-            //emit layoutSelectChanged(selectedLayoutName);
             updateLayout();
         }
     }

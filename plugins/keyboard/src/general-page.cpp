@@ -21,36 +21,14 @@
 #include <iostream>
 #include <kiran-session-daemon/keyboard-i.h>
 
-#define TIMEOUT 100
-
 GeneralPage::GeneralPage(QWidget *parent)
     : QWidget(parent),
     ui(new Ui::GeneralPage),
-      m_keyboardInterface(new KeyboardBackEndProxy(KEYBOARD_DBUS_NAME,KEYBOARD_OBJECT_PATH,QDBusConnection::sessionBus(),this))
+    m_keyboardInterface(new KeyboardBackEndProxy(KEYBOARD_DBUS_NAME,KEYBOARD_OBJECT_PATH,QDBusConnection::sessionBus(),this))
 {
     ui->setupUi(this);
 
-    m_timer = new QTimer(this);
-    connect(m_timer, &QTimer::timeout,[this] {
-        qint32 delay = ui->hslider_delay->value();
-        qint32 interval = ui->hslider_interval->value();
-        KLOG_INFO() << "delay = :" << delay;
-        KLOG_INFO() << "interval = :" << interval;
-        if (m_delay != delay)
-        {
-            m_delay = delay;
-            m_keyboardInterface->setRepeat_delay(m_delay);
-        }
-        if (m_interval != interval)
-        {
-            m_interval = interval;
-            auto value = ui->hslider_interval->maximum() - interval + 10;
-            m_keyboardInterface->setRepeat_interval(value);
-        }
-        m_timer->stop();
-    });
-
-    initUI();
+    init();
 }
 
 GeneralPage::~GeneralPage()
@@ -63,80 +41,89 @@ QSize GeneralPage::sizeHint() const
     return {419, 595};
 }
 
-void GeneralPage::initUI()
+void GeneralPage::init()
 {
+    m_timer = new QTimer(this);
+    m_timer->setInterval(100);
+    m_timer->setSingleShot(true);
+    connect(m_timer, &QTimer::timeout,this,&GeneralPage::handleSaverTimerTimeOut);
+
     ui->lineEdit_key->setPlaceholderText(tr("Enter characters to test the settings"));
-    initComponentValue();
-}
 
-void GeneralPage::initComponentValue()
-{
-    //获取重复键设置
+    // 重复键开关
     m_repeateEnabled = m_keyboardInterface->repeat_enabled();
-    ui->checkBox->setChecked(m_repeateEnabled);
-    if (!m_repeateEnabled)
-    {
-        setWidgetsStatus(m_repeateEnabled);
-    }
-    connect(ui->checkBox, &KiranSwitchButton::toggled,
-            [this](bool status) {
-                setWidgetsStatus(status);
-                if (m_repeateEnabled != status)
-                {
-                    m_repeateEnabled = status;
-                    m_keyboardInterface->setRepeat_enabled(status);
-                }
-            });
-    connect(m_keyboardInterface, &KeyboardBackEndProxy::repeat_enabledChanged,
-            [this](bool isEnabled) {
-                //更新界面
-                m_repeateEnabled = isEnabled;
-                ui->checkBox->setChecked(isEnabled);
-                KLOG_INFO() << "get repeat_enabledChanged signal:  " << isEnabled;
-            });
+    ui->switch_repeatKey->setChecked(m_repeateEnabled);
+    handleSwitchRepeatKeyToggled(m_repeateEnabled);
+    connect(ui->switch_repeatKey,&KiranSwitchButton::toggled,
+            this,&GeneralPage::handleSwitchRepeatKeyToggled);
+    connect(m_keyboardInterface,&KeyboardBackEndProxy::repeat_enabledChanged,[this](bool enabled){
+        KLOG_DEBUG() << "keyboard general setting repeat enable changed:" << enabled;
+        m_repeateEnabled = enabled;
+        ui->switch_repeatKey->setChecked(enabled);
+    });
 
-    //延时
+    // 重复键延时设置
     m_delay = m_keyboardInterface->repeat_delay();
-    KLOG_INFO() << m_delay;
     ui->hslider_delay->setValue(m_delay);
-    connect(ui->hslider_delay, &QSlider::valueChanged,
-            [this] {
-                m_timer->start(TIMEOUT);
-            });
-    connect(m_keyboardInterface, &KeyboardBackEndProxy::repeat_delayChanged,
-            [this](int value) {
-                //更新界面
-                if (m_delay != value)
-                {
-                    m_delay = value;
-                    ui->hslider_delay->setValue(value);
-                }
-                KLOG_INFO() << "get repeat_delayChanged signal: " << value;
-            });
+    connect(ui->hslider_delay,&QSlider::valueChanged,[this](int value){
+        m_timer->start();
+    });
+    connect(m_keyboardInterface,&KeyboardBackEndProxy::repeat_delayChanged,[this](int delay){
+        if( m_delay!=delay )
+        {
+            KLOG_DEBUG() << "keyboard general setting repeat delay changed:" << delay;
+            m_delay=delay;
+            ui->hslider_delay->setValue(m_delay);
+        }
+    });
 
-    //速度
-    qint32 value = m_keyboardInterface->repeat_interval();
-    m_interval = ui->hslider_interval->maximum() - value + 10;
-    KLOG_INFO() << m_interval;
+
+    // 重复键间隔设置
+    m_interval = m_keyboardInterface->repeat_interval();
     ui->hslider_interval->setValue(m_interval);
-    connect(ui->hslider_interval, &QSlider::valueChanged,
-            [this] {
-                m_timer->start(TIMEOUT);
-            });
-    connect(m_keyboardInterface, &KeyboardBackEndProxy::repeat_intervalChanged,
-            [this](qint32 value) {
-                //更新界面
-                if (m_interval != (ui->hslider_interval->maximum() - value + 10))
-                {
-                    m_interval = ui->hslider_interval->maximum() - value + 10;
-                    ui->hslider_interval->setValue(m_interval);
-                }
-                KLOG_INFO() << "get repeat_intervalChanged signal: " << value;
-            });
+    connect(ui->hslider_interval,&QSlider::valueChanged,[this](int value){
+        m_timer->start();
+    });
+    connect(m_keyboardInterface,&KeyboardBackEndProxy::repeat_intervalChanged,[this](int interval){
+        if (m_interval != (ui->hslider_interval->maximum() - interval + 10))
+        {
+            KLOG_DEBUG() << "keyboard general setting repeat interval changed:" << interval;
+            m_interval = ui->hslider_interval->maximum() - interval + 10;;
+            ui->hslider_interval->setValue(m_interval);
+        }
+    });
 }
 
-void GeneralPage::setWidgetsStatus(bool status)
+void GeneralPage::handleSaverTimerTimeOut()
 {
-    ui->hslider_delay->setDisabled(!status);
-    ui->hslider_interval->setDisabled(!status);
+    qint32 delay = ui->hslider_delay->value();
+    qint32 interval = ui->hslider_interval->value();
+
+    if (m_delay != delay)
+    {
+        m_delay = delay;
+        m_keyboardInterface->setRepeat_delay(m_delay);
+    }
+
+    if (m_interval != interval)
+    {
+        m_interval = interval;
+        auto value = ui->hslider_interval->maximum() - interval + 10;
+        m_keyboardInterface->setRepeat_interval(value);
+    }
+
+    KLOG_DEBUG() << "keyboard general setting save:";
+    KLOG_DEBUG() << "repeat delay   :" << delay;
+    KLOG_DEBUG() << "repeat interval:" << interval;
+}
+
+void GeneralPage::handleSwitchRepeatKeyToggled(bool checked)
+{
+    ui->hslider_delay->setEnabled(checked);
+    ui->hslider_interval->setEnabled(checked);
+    if (m_repeateEnabled != checked)
+    {
+        m_repeateEnabled = checked;
+        m_keyboardInterface->setRepeat_enabled(checked);
+    }
 }
