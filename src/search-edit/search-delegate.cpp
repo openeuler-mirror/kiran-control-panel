@@ -20,3 +20,10 @@ void SearchDelegate::paint(QPainter *painter,
 {
     QItemDelegate::paint(painter, option, index);
 }
+
+QSize SearchDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
+{
+    QSize size = QItemDelegate::sizeHint(option,index);
+    size.setHeight(36);
+    return size;
+}

@@ -16,6 +16,7 @@ public:
 
 public:
     void paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const override;
+    QSize sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const override;
 };
 
 #endif  // KIRAN_CONTROL_PANEL_SEARCH_DELEGATE_H
