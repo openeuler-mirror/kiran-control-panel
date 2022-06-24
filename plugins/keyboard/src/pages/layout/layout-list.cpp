@@ -13,12 +13,16 @@
  */
 
 #include "layout-list.h"
-#include <kiran-log/qt5-log-i.h>
-#include <QPainter>
-#include <QScrollBar>
 #include "layout-item.h"
 #include "ui_layout-list.h"
-#define TIMEOUT 150
+
+#include <kiran-log/qt5-log-i.h>
+#include <QPainter>
+#include <QPainterPath>
+#include <QScrollBar>
+#include <style-palette.h>
+
+using namespace Kiran;
 
 LayoutList::LayoutList(QWidget* parent) : QWidget(parent),
                                           m_editHasFocus(false),
@@ -31,7 +35,6 @@ LayoutList::LayoutList(QWidget* parent) : QWidget(parent),
 
     connect(m_timer, &QTimer::timeout,
             [this] {
-                //serch
                 search();
                 m_timer->stop();
             });
@@ -188,13 +191,32 @@ void LayoutList::adjustSize()
 
 void LayoutList::paintEvent(QPaintEvent* event)
 {
-    QStyleOption opt;
+    QPainter p(this);
+    p.setRenderHint(QPainter::Antialiasing);
 
+    QPainterPath painterPath;
+    QRectF frect = rect();
+    frect.adjust(0.5,0.5,-0.5,-0.5);
+    painterPath.addRoundedRect(frect,6,6);
+
+    auto stylePalette = StylePalette::instance();
+    QColor borderColor = stylePalette->color(editHasFocus()?StylePalette::Checked:StylePalette::Normal,
+                                             StylePalette::Widget,
+                                             StylePalette::Border);
+
+    p.setPen(borderColor);
+    p.drawPath(painterPath);
+
+    QWidget::paintEvent(event);
+#if 0
+    QStyleOption opt;
+    //editHasFocus
     opt.init(this);
     QPainter p(this);
     style()->drawPrimitive(QStyle::PE_Widget, &opt, &p, this);
 
     QWidget::paintEvent(event);
+#endif
 }
 
 bool LayoutList::eventFilter(QObject* obj, QEvent* event)

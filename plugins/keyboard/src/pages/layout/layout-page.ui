@@ -365,7 +365,7 @@
   <customwidget>
    <class>LayoutList</class>
    <extends>QWidget</extends>
-   <header>widgets/layout-list.h</header>
+   <header>layout-list.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

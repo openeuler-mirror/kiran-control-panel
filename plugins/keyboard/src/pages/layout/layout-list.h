@@ -28,12 +28,16 @@ class LayoutList : public QWidget
 {
     Q_OBJECT
     Q_PROPERTY(bool editHasFocus READ editHasFocus WRITE setEditHasFocus NOTIFY editHasFocusChanged)
+
 public:
     explicit LayoutList(QWidget *parent = 0);
     ~LayoutList();
+
     void setCountryList(QStringList layoutList);
+
     QString getSelectedCountry();
     bool editHasFocus() const;
+
     virtual QSize sizeHint() const override;
 
 public slots:

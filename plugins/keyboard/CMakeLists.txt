@@ -25,6 +25,8 @@ add_library(${TARGET_NAME} SHARED
 
 target_include_directories(${TARGET_NAME} PRIVATE
         ./src/
+        ./src/pages/general
+        ./src/pages/layout
         ${CMAKE_CURRENT_BINARY_DIR}
         ${KCP_PLUGIN_INCLUDE_DIR}
         ${KIRAN_WIDGETS_QT5_INCLUDE_DIRS}

@@ -15,8 +15,8 @@
 #include "layout-page.h"
 #include "keyboard_backEnd_proxy.h"
 #include "ui_layout-page.h"
-#include "widgets/choose-item.h"
-#include "widgets/layout-list.h"
+#include "choose-item.h"
+#include "layout-list.h"
 #include "kiran-session-daemon/keyboard-i.h"
 
 #include <kiran-log/qt5-log-i.h>
@@ -47,12 +47,13 @@ LayoutPage::~LayoutPage()
 
 void LayoutPage::init()
 {
+    initUI();
+
     // 加载有效的布局
     loadValidLayouts();
     // 创建布局条目
     createLayoutItem();
 
-    initUI();
     initConnection();
 }
 
@@ -136,7 +137,7 @@ void LayoutPage::loadValidLayouts()
     QJsonDocument jsonDoc = QJsonDocument::fromJson(jsonString.toLocal8Bit().data(),&jsonError);
     if( jsonDoc.isNull() || jsonError.error!=QJsonParseError::NoError )
     {
-        KLOG_ERROR() << "keyboard layout: parse valid layouts failed,QJsonParseError:" << error.error << error.errorString();
+        KLOG_ERROR() << "keyboard layout: parse valid layouts failed,QJsonParseError:" << jsonError.error << jsonError.errorString();
         return;
     }
 
