@@ -199,4 +199,11 @@ void ConnectionShowPage::itemSimpleStatus(QListWidgetItem *item)
     ui->connectionLists->itemSimpleStatus(item);
 }
 
-
+QListWidgetItem* ConnectionShowPage::item(int row)
+{
+    return  ui->connectionLists->item(row);
+}
+int ConnectionShowPage::count()
+{
+    return ui->connectionLists->count();
+}

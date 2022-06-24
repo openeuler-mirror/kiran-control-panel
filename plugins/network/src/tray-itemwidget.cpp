@@ -200,13 +200,16 @@ void TrayItemWidget::showInputSsidWidget()
 }
 void TrayItemWidget::handleInputText()
 {
-    ui->inputTextConnectButton->setEnabled(false);
     QString text = ui->inputTextEdit->text();
-    if(ui->inputTextEdit->echoMode() == QLineEdit::Password)
-        emit sendPassword(text);
-    else
-        emit sendSsid(text);
-    ui->inputTextEdit->clear();
+    if(!text.isEmpty())
+    {
+        ui->inputTextConnectButton->setEnabled(false);
+        if(ui->inputTextEdit->echoMode() == QLineEdit::Password)
+            emit sendPassword(text);
+        else
+            emit sendSsid(text);
+        ui->inputTextEdit->clear();
+    }
 }
 
 QString TrayItemWidget::getPassword()

@@ -177,7 +177,10 @@ void WirelessManager::handleActiveConnectionAdded(const QString &path)
         }
         else
         {
-            ui->connectionShowPage->itemSimpleStatus(activeItem);
+            //将排在最后的隐藏网络item复原
+            int row = ui->connectionShowPage->count() - 1;
+            auto item = ui->connectionShowPage->item(row);
+            ui->connectionShowPage->itemSimpleStatus(item);
         }
         connect(activatedConnection.data(), &ActiveConnection::stateChanged,this,&WirelessManager::handleActiveConnectionStateChanged);
 
@@ -187,7 +190,7 @@ void WirelessManager::handleActiveConnectionAdded(const QString &path)
 //断开网络时，会自动rescan搜索无线网络
 void WirelessManager::handleActiveConnectionRemoved(const QString &path)
 {
-    KLOG_DEBUG() << "WirelessManager::handleActiveConnectionRemoved:" << path;
+    ui->connectionShowPage->handleActiveStateDeactivated(path);
 }
 
 void WirelessManager::handleStateActivating(const QString &activatedPath)
@@ -198,7 +201,8 @@ void WirelessManager::handleStateActivating(const QString &activatedPath)
     {
         //加载等待动画
         auto item = ui->connectionShowPage->findItemByActivatedPath(activatedPath);
-        ui->connectionShowPage->updateItemActivatingStatus(item);
+        if(item != nullptr)
+            ui->connectionShowPage->updateItemActivatingStatus(item);
     }
 }
 

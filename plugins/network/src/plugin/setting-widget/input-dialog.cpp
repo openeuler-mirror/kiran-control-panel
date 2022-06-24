@@ -54,7 +54,6 @@ void InputDialog::initConnection()
     });
 }
 
-
 void InputDialog::setTitle(const QString &title)
 {
     ui->titleLabel->setText(title);

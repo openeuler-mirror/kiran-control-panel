@@ -140,7 +140,7 @@ void WiredManager::handleStateActivating(const QString &activatedPath)
 
 void WiredManager::handleActiveConnectionRemoved(const QString &path)
 {
-    KLOG_DEBUG() << "activeConnectionRemoved:" << path;
+    ui->connectionShowPage->handleActiveStateDeactivated(path);
 }
 
 //TODO:提升代码，增强复用性

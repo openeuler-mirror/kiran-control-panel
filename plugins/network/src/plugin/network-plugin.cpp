@@ -16,7 +16,7 @@
 #include <qt5-log-i.h>
 #include <NetworkManagerQt/Manager>
 #include <QCoreApplication>
-#include "network-details.h"
+#include "details-page.h"
 #include "vpn-manager.h"
 #include "wired-manager.h"
 #include "wireless-manager.h"
@@ -91,7 +91,7 @@ QWidget *NetworkPlugin::getSubItemWidget(QString subItemName)
 
     if(subItemName == "Network Details")
     {
-        widget = new NetworkDetails();
+        widget = new DetailsPage();
     }
     return widget;
 }

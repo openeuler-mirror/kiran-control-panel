@@ -95,7 +95,6 @@ public:
     void enableConnectButtonOfItem(QListWidgetItem *item, bool enable);
 
 public slots:
-    void handleActiveStateChanged(ActiveConnection::State state);
     void handleActiveStateDeactivated(const QString &activatedConnectionPath);
     void handleConnectionUpdated();
 
@@ -112,6 +111,7 @@ public slots:
     void clearItemActivatedConnectionInfo(QListWidgetItem *activatedItem);
 //    void connectionStateNotify(ActiveConnection::State state, const QString &activatedConnectionPath);
 
+    void handleSendPassword(const QString &password);
     void showInputPasswordWidgetOfItem(QListWidgetItem *item);
     void itemSimpleStatus(QListWidgetItem *item);
 

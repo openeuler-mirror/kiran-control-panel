@@ -152,7 +152,6 @@ void ConnectionLists::addConnectionToLists(Connection::Ptr ptr, const QString& d
         if (activeConnection->uuid() == ptr->uuid() && deviceList.contains(devicePath))
         {
             connectionInfo.activeConnectionPath = activeConnection->path();
-            connect(activeConnection.data(), &ActiveConnection::stateChanged, this, &ConnectionLists::handleActiveStateChanged);
             connect(activeConnection.data(), &ActiveConnection::stateChanged, &m_statusNotification, &StatusNotification::connectionDeactivatedNotify,Qt::DirectConnection);
             //TODO:优化代码
             switch (activeConnection->state())
@@ -213,20 +212,6 @@ void ConnectionLists::handleConnectionUpdated()
 {
     auto ptr = qobject_cast<Connection*>(sender());
     emit connectionUpdated(ptr->path());
-}
-
-void ConnectionLists::handleActiveStateChanged(ActiveConnection::State state)
-{
-    auto activeConnection = qobject_cast<ActiveConnection*>(sender());
-    QString path = activeConnection->path();
-    switch (state)
-    {
-    case ActiveConnection::State::Deactivated:
-        handleActiveStateDeactivated(path);
-        break;
-    default:
-        break;
-    }
 }
 
 void ConnectionLists::handleActiveStateDeactivated(const QString &activatedConnectionPath)
@@ -311,7 +296,6 @@ void ConnectionLists::addWirelessNetworkToLists(WirelessNetwork::Ptr network, co
             if ((ssid == connectionInfo.wirelessInfo.ssid) && deviceList.contains(devicePath))
             {
                 connectionInfo.activeConnectionPath = activeConnection->path();
-                connect(activeConnection.data(), &ActiveConnection::stateChanged, this, &ConnectionLists::handleActiveStateChanged);
                 connect(activeConnection.data(), &ActiveConnection::stateChanged, &m_statusNotification, &StatusNotification::connectionDeactivatedNotify,Qt::DirectConnection);
                 switch (activeConnection->state())
                 {
@@ -588,7 +572,33 @@ void ConnectionLists::showInputPasswordWidgetOfItem(QListWidgetItem *item)
     QWidget* widget = itemWidget(item);
     TrayItemWidget *trayItemWidget = qobject_cast<TrayItemWidget*>(widget);
     trayItemWidget->showInputPasswordWidget();
-    connect(trayItemWidget,&TrayItemWidget::sendPassword,this,&ConnectionLists::sendPasswordToWirelessSetting);
+//    connect(trayItemWidget,&TrayItemWidget::sendPassword,this,&ConnectionLists::sendPasswordToWirelessSetting);
+//    connect(trayItemWidget,&TrayItemWidget::sendPassword,[=](const QString &password){
+//        emit sendPasswordToWirelessSetting(password);
+//        int hiddenNetworkRow =  this->count() - 1;
+//        QListWidgetItem *hiddenNetworkItem = this->item(hiddenNetworkRow);
+//        if(item == hiddenNetworkItem)
+//        {
+//            this->itemSimpleStatus(item);
+//        }
+//    });
+
+    connect(trayItemWidget,&TrayItemWidget::sendPassword,this,&ConnectionLists::handleSendPassword);
+}
+
+void ConnectionLists::handleSendPassword(const QString &password)
+{
+    KLOG_DEBUG() << "handleSendPassword";
+    auto widget = qobject_cast<QWidget* >(sender());
+    QListWidgetItem *item = m_itemWidgetMap.value(widget);
+    int hiddenNetworkRow =  this->count() - 1;
+    QListWidgetItem *hiddenNetworkItem = this->item(hiddenNetworkRow);
+    if(item == hiddenNetworkItem)
+    {
+        KLOG_DEBUG() << "handleSendPassword itemSimpleStatus";
+        this->itemSimpleStatus(item);
+    }
+    emit sendPasswordToWirelessSetting(password);
 }
 
 QListWidgetItem *ConnectionLists::findItemByUuid(const QString& uuid)
@@ -732,6 +742,8 @@ QListWidgetItem* ConnectionLists::getHiddenNetworkItem()
     int row = this->count() - 1;
     return  item(row);
 }
+
+
 
 ConnectionSortListItem::ConnectionSortListItem(QWidget* parent)
 {

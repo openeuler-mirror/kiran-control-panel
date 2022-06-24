@@ -65,7 +65,10 @@ public:
     QListWidgetItem *findItemByActivatedPath(const QString &activatedPath);
 
     void sortItems();
+    int count();
+    QListWidgetItem *item(int row);
     void itemSimpleStatus(QListWidgetItem *item);
+
 
 
 public slots:

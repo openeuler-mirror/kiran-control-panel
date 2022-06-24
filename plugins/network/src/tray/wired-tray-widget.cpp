@@ -159,7 +159,7 @@ void WiredTrayWidget::handleStateActivating(const QString &activatedPath)
 
 void WiredTrayWidget::handleActiveConnectionRemoved(const QString &path)
 {
-
+    m_connectionLists->handleActiveStateDeactivated(path);
 }
 
 void WiredTrayWidget::handleRequestDisconnect(const QString &activatedConnectionPath)
