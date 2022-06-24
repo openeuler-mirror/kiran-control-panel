@@ -47,6 +47,8 @@ bool installTranslator()
 
 QString defaultCategory = "about-system";
 QString defaultSubItem  = "SystemInformation";
+bool listAllPluginInfo = false;
+
 void processCommandLine()
 {
     KiranSingleApplication* singleApp = dynamic_cast<KiranSingleApplication*>(qApp);
@@ -54,8 +56,10 @@ void processCommandLine()
     QCommandLineParser cmdParser;
     QCommandLineOption categoryOption("c","主面板进入哪个分类","category");
     QCommandLineOption subItemOption("s","分类下的哪个子项","subItem");
+    QCommandLineOption listInfoOption("l","列举出所有的子功能项");
+
     cmdParser.addHelpOption();
-    cmdParser.addOptions({categoryOption,subItemOption});
+    cmdParser.addOptions({categoryOption,subItemOption,listInfoOption});
     cmdParser.process(*singleApp);
 
     QString category = cmdParser.value(categoryOption);
@@ -81,6 +85,38 @@ void processCommandLine()
             defaultSubItem = subItem;
         }
     }
+
+    if( cmdParser.isSet(listInfoOption) )
+    {
+        listAllPluginInfo = true;
+    }
+}
+
+void dumpPluginManagerInfo()
+{
+    auto pluginManager = PluginManager::getInstance();
+    for(auto category:pluginManager->getCategorys())
+    {
+        auto categoryInfo = category->getCategoryDesktopInfo();
+        fprintf(stdout,"category id: <%s> name: <%s>\n",
+                categoryInfo.categoryName.toStdString().c_str(),
+                categoryInfo.name.toStdString().c_str());
+
+        for(auto plugin:category->getPlugins())
+        {
+            auto pluginInfo = plugin->getPluginDesktopInfo();
+            fprintf(stdout,"\tplugin name: <%s>\n",pluginInfo.name.toStdString().c_str());
+
+            auto subItemsInfo = pluginInfo.subItems;
+            for(auto subItem:subItemsInfo)
+            {
+                fprintf(stdout,"\t\tsubitem id: <%s> name: <%s> keywords: <%s>\n",
+                        subItem.id.toStdString().c_str(),
+                        subItem.name.toStdString().c_str(),
+                        subItem.keywords.join(",").toStdString().c_str());
+            }
+        }
+    }
 }
 
 int main(int argc, char *argv[])
@@ -102,6 +138,13 @@ int main(int argc, char *argv[])
 
     // 加载相关插件的信息
     PluginManager::getInstance()->loadAll();
+
+    // 输出所有插件，所有功能子项的信息
+    if( listAllPluginInfo )
+    {
+        dumpPluginManagerInfo();
+        exit(EXIT_SUCCESS);
+    }
 
     // 安装翻译
     installTranslator();
