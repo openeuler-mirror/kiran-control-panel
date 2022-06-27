@@ -17,31 +17,29 @@
 
 #include <QDialog>
 #include <kiran-message-box.h>
-QT_BEGIN_NAMESPACE
-namespace Ui
-{
-class InputDialog;
-}
-QT_END_NAMESPACE
+#include <QLineEdit>
+#include <QPushButton>
 
-class InputDialog : public QDialog
+class TextInputDialog : public KiranMessageBox
 {
     Q_OBJECT
 
 public:
-    explicit InputDialog(QWidget *parent = nullptr);
-    ~InputDialog() override;
+    explicit TextInputDialog(QWidget *parent = nullptr);
+    ~TextInputDialog() override;
 
     void init();
+    void initUI();
     void initConnection();
-    void setTitle(const QString &title);
-    void setText(const QString &text);
-
+    void setlineEditEchoMode(QLineEdit::EchoMode);
 signals:
     void password(const QString &password);
+    void ssid(const QString &ssid);
 
 private:
-    Ui::InputDialog *ui;
+    QLineEdit *m_lineEdit;
+    QPushButton *m_confirmButton;
+    QPushButton *m_cancelButton;
 };
 
 #endif  //KIRAN_CPANEL_NETWORK_INPUT_DIALOG_H

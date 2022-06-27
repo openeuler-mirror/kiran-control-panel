@@ -26,9 +26,10 @@ public:
     explicit StatusNotification(QObject *parent = nullptr);
     ~StatusNotification();
 public slots:
-    void connectionStateNotify(ActiveConnection::State state,ConnectionInfo connectionInfo);
-    void connectionDeactivatedNotify(ActiveConnection::State state);
+    void ActiveConnectionStateNotify(ActiveConnection::State state,ConnectionInfo connectionInfo);
+    void ActiveConnectionDeactivatedNotify(ActiveConnection::State state);
     void deviceStateNotify(Device::State newstate);
+    void connectitonFailedNotify(const QString &connectionName);
 };
 
 #endif  // KIRAN_CPANEL_NETWORK_STATUSNOTIFICATION_H

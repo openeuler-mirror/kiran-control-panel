@@ -14,7 +14,7 @@
 
 #include "cpanel-network-widget.h"
 #include <qt5-log-i.h>
-#include "plugin/network-details.h"
+#include "plugin/details-page.h"
 #include "ui_cpanel-network-widget.h"
 #include "vpn-manager.h"
 #include "wired-manager.h"
@@ -85,7 +85,7 @@ void CPanelNetworkWidget::initPage()
     ui->sidebar->item(row)->setData(Qt::UserRole, row);
     row++;
 
-    NetworkDetails *networkDetails = new NetworkDetails(this);
+    DetailsPage *networkDetails = new DetailsPage(this);
     ui->stackedWidget->addWidget(networkDetails);
     ui->sidebar->insertItem(row,"Network Details");
     ui->sidebar->item(row)->setData(Qt::UserRole, row);
@@ -98,11 +98,6 @@ void CPanelNetworkWidget::getAvailableDeviceList()
     const Device::List deviceList = networkInterfaces();
     for (Device::Ptr dev : deviceList)
     {
-        KLOG_DEBUG() << "dev->interfaceName():" << dev->interfaceName();
-        KLOG_DEBUG() << "dev->managed():" << dev->managed();
-        KLOG_DEBUG() << "dev->availableConnections():" << dev->availableConnections();
-        KLOG_DEBUG() << "dev->state():" << dev->state();
-
         if(dev->state() == Device::Unavailable)
             continue ;
 

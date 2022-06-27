@@ -327,7 +327,7 @@ void ManagerTray::reloadWiredTrayPage()
     m_verticalLayout->removeWidget(m_wiredTrayPage);
     delete m_wiredTrayPage;
     m_wiredTrayPage = nullptr;
-
+    m_wiredDeviceList.clear();
     getAvailableDeviceList();
     if(m_wiredDeviceList.count() != 0)
         m_wiredTrayPage = new TrayPage(m_wiredDeviceList, this);
@@ -344,10 +344,11 @@ void ManagerTray::reloadWirelessTrayPage()
     m_verticalLayout->removeWidget(m_wirelessTrayPage);
     delete m_wirelessTrayPage;
     m_wirelessTrayPage = nullptr;
+    m_wirelessDeviceList.clear();
 
     getAvailableDeviceList();
-    if(m_wiredDeviceList.count() != 0)
-        m_wirelessTrayPage = new TrayPage(m_wiredDeviceList, this);
+    if(m_wirelessDeviceList.count() != 0)
+        m_wirelessTrayPage = new TrayPage(m_wirelessDeviceList, this);
     m_verticalLayout->insertWidget(-1,m_wirelessTrayPage);
     m_verticalLayout->setMargin(0);
     update();

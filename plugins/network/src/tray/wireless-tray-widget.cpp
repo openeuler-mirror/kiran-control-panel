@@ -60,7 +60,7 @@ void WirelessTrayWidget::initConnection()
     connect(m_wirelessDevice.data(), &WirelessDevice::networkAppeared, this, &WirelessTrayWidget::handleNetworkAppeared);
 
     connect(m_connectionLists, &ConnectionLists::sendPasswordToWirelessSetting, this, &WirelessTrayWidget::setSecurityPskAndActivateWirelessConnection);
-    connect(m_connectionLists, &ConnectionLists::sendSsidToWirelessSetting, this, &WirelessTrayWidget::handleRequestConnectHiddenNetwork);
+    connect(m_connectionLists, &ConnectionLists::sendSsidToWireless, this, &WirelessTrayWidget::handleRequestConnectHiddenNetwork);
 
     connect(m_devicePtr.data(),&Device::stateChanged,this,&WirelessTrayWidget::handleDeviceStateChanged);
 }
@@ -99,6 +99,7 @@ void WirelessTrayWidget::handleRequestConnectHiddenNetwork(const QString &ssid)
     //若要连接的隐藏网络已经被显式探测到了，则返回
     if(m_wirelessDevice->findNetwork(ssid) != nullptr)
     {
+        KLOG_DEBUG() << "Hidden networks have been explicitly detected,return";
         return ;
     }
 /** Note:连接隐藏网络时不指定AccessPointPath*/
@@ -241,6 +242,11 @@ void WirelessTrayWidget::handleActiveConnectionAdded(const QString &path)
 {
     KLOG_DEBUG() << "handleActiveConnectionAdded :" << path;
     ActiveConnection::Ptr activatedConnection = findActiveConnection(path);
+    if(activatedConnection == nullptr)
+    {
+        KLOG_DEBUG() << "activatedConnection == nullptr";
+        return ;
+    }
     QStringList deviceList = activatedConnection->devices();
     if ((activatedConnection->type() == ConnectionSettings::ConnectionType::Wireless) && deviceList.contains(m_devicePath))
     {
@@ -255,25 +261,36 @@ void WirelessTrayWidget::handleActiveConnectionAdded(const QString &path)
         }
         else
         {
-            m_connectionLists->itemSimpleStatus(activeItem);
+            //将排在最后的隐藏网络item复原
+            int row = m_connectionLists->count() - 1;
+            auto item = m_connectionLists->item(row);
+            m_connectionLists->itemSimpleStatus(item);
         }
         connect(activatedConnection.data(), &ActiveConnection::stateChanged, this, &WirelessTrayWidget::handleActiveConnectionStateChanged,Qt::QueuedConnection);
-        connect(activatedConnection.data(), &ActiveConnection::stateChanged, &m_statusNotification, &StatusNotification::connectionDeactivatedNotify,Qt::DirectConnection);
+        connect(activatedConnection.data(), &ActiveConnection::stateChanged, &m_statusNotification, &StatusNotification::ActiveConnectionDeactivatedNotify,Qt::DirectConnection);
     }
 }
 
 void WirelessTrayWidget::handleActiveConnectionRemoved(const QString &path)
 {
+    m_connectionLists->handleActiveStateDeactivated(path);
 }
 
 void WirelessTrayWidget::handleStateActivating(const QString &activatedPath)
 {
     ActiveConnection::Ptr activatedConnection = findActiveConnection(activatedPath);
+    if(activatedConnection == nullptr)
+    {
+        //连接一个不存在的无线网络时，activatedConnection为空
+        KLOG_DEBUG() << "activatedConnection == nullptr";
+        return ;
+    }
     QStringList deviceList = activatedConnection->devices();
     if ((activatedConnection->type() == ConnectionSettings::ConnectionType::Wireless) && deviceList.contains(m_devicePath))
     {
         auto item = m_connectionLists->findItemByActivatedPath(activatedPath);
-        m_connectionLists->updateItemActivatingStatus(item);
+        if(item != nullptr)
+            m_connectionLists->updateItemActivatingStatus(item);
     }
 }
 
@@ -291,7 +308,7 @@ void WirelessTrayWidget::handleStateActivated(const QString &activatedPath)
 
         auto item = m_connectionLists->findItemByActivatedPath(activatedPath);
         ConnectionInfo connectionInfo = item->data(Qt::UserRole).value<ConnectionInfo>();
-        m_statusNotification.connectionStateNotify(ActiveConnection::Activated,connectionInfo);
+        m_statusNotification.ActiveConnectionStateNotify(ActiveConnection::Activated, connectionInfo);
 
         m_connectionLists->sortItems();
         m_connectionLists->update();
@@ -373,6 +390,7 @@ void WirelessTrayWidget::setSecurityPskAndActivateWirelessConnection(const QStri
 
 void WirelessTrayWidget::handleDeviceStateChanged(Device::State newstate, Device::State oldstate, Device::StateChangeReason reason)
 {
+    KLOG_DEBUG() << "Device::StateChangeReason reaso" << reason;
     //验证失败，删除配置，以便重新配置，避免出现重复的配置文件
     if((oldstate == Device::NeedAuth) && (newstate == Device::Failed))
     {
@@ -393,7 +411,10 @@ void WirelessTrayWidget::handleDeviceStateChanged(Device::State newstate, Device
             }
         }
         //TODO:弹窗 要求重新输入密码
+    }
 
-
+    if(reason == NetworkManager::Device::SsidNotFound)
+    {
+        KLOG_DEBUG() << "reason == NetworkManager::Device::SsidNotFound";
     }
 }

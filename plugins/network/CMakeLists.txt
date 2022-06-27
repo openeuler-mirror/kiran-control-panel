@@ -49,6 +49,7 @@ target_include_directories(${PROJECT_NAME} PRIVATE
         )
 
 target_link_libraries(${PROJECT_NAME}
+        common-widgets
         ${REQUIRED_LIBS_QUALIFIED}
         ${KIRAN_WIDGETS_QT5_LIBRARIES}
         ${KLOG_QT5_LIBRARIES}
