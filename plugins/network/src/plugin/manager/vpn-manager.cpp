@@ -20,7 +20,7 @@
 #include <QDialog>
 #include <QPointer>
 #include <QScrollBar>
-#include "input-dialog.h"
+#include "text-input-dialog.h"
 #include "ui_vpn-manager.h"
 
 Q_DECLARE_METATYPE(VpnType)
@@ -173,12 +173,12 @@ void VpnManager::handleRequestActivateConnection(const QString &connectionPath,c
     }
     else if (passwordFlags == Setting::SecretFlagType::NotSaved)
     {
-        InputDialog inputDialog;
+        TextInputDialog inputDialog;
         inputDialog.setTitle(tr("Tips"));
         QString tips = QString(tr("Password required to connect to %1.")).arg(settings->id());
         inputDialog.setText(tips);
 
-        connect(&inputDialog, &InputDialog::password, [=](const QString &password) {
+        connect(&inputDialog, &TextInputDialog::password, [=](const QString &password) {
             NMStringMap secretsMap = vpnSetting->secrets();
             KLOG_DEBUG() << "password:" << password;
             secretsMap.insert("password", password);

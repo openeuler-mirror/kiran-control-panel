@@ -19,6 +19,7 @@
 #include <QScrollBar>
 #include <QPointer>
 #include "ui_wireless-manager.h"
+#include "text-input-dialog.h"
 
 WirelessManager::WirelessManager(const QString &devicePath,QWidget *parent) : Manager(parent), ui(new Ui::WirelessManager)
 {
@@ -84,8 +85,9 @@ void WirelessManager::initConnection()
     connect(ui->connectionShowPage, &ConnectionShowPage::requestConnectWirelessNetwork,
             this, &WirelessManager::handleRequestConnectWirelessNetwork);
 
-    initNotifierConnection();
+    connect(ui->connectionShowPage, &ConnectionShowPage::sendSsidToWireless, this, &WirelessManager::handleRequestConnectHiddenNetwork);
 
+    initNotifierConnection();
     connect(m_wirelessDevice.data(), &WirelessDevice::networkDisappeared, this, &WirelessManager::handleNetworkDisappeared,Qt::QueuedConnection);
     connect(m_wirelessDevice.data(), &WirelessDevice::networkAppeared, this, &WirelessManager::handleNetworkAppeared);
 }
@@ -93,7 +95,9 @@ void WirelessManager::initConnection()
 //在已存在WirelessSetting配置的情况下，激活连接．（连接过一次后会创建WirelessSetting配置）
 void WirelessManager::activateWirelessConnection(const QString &connectionPath, const QString &devicePath, const QString &accessPointPath)
 {
-    KLOG_DEBUG() << "activateWirelessConnection";
+    KLOG_DEBUG() << "connectionPath:" << connectionPath;
+    KLOG_DEBUG() << "devicePath:" << devicePath;
+    KLOG_DEBUG() << "accessPointPath:" << accessPointPath;
     if (!connectionPath.isEmpty())
     {
         QDBusPendingReply<QDBusObjectPath> reply =
@@ -114,17 +118,15 @@ void WirelessManager::activateWirelessConnection(const QString &connectionPath, 
 
 void WirelessManager::getWirelessAvailableConnections(const QString &devicePath)
 {
-    Device::Ptr device = findNetworkInterface(devicePath);
-    Connection::List connectionList = listConnections();
+    Connection::List availableConnectionList = m_devicePtr->availableConnections();
     m_wirelssConnectionMap.clear();
-    for (Connection::Ptr conn : connectionList)
+    for (Connection::Ptr conn : availableConnectionList)
     {
         if (conn->settings()->connectionType() == ConnectionSettings::Wireless)
         {
             WirelessSetting::Ptr wirelessSetting = conn->settings()->setting(Setting::SettingType::Wireless).dynamicCast<WirelessSetting>();
-            KLOG_DEBUG() << "wirelessSetting->ssid():" << wirelessSetting->ssid();
-            KLOG_DEBUG() << "wirelessSetting->security():" << wirelessSetting->security();
             QString ssid  = QString(wirelessSetting->ssid());
+            KLOG_DEBUG() << "wirelessSetting->ssid():" << wirelessSetting->ssid();
             m_wirelssConnectionMap.insert(ssid, conn);
         }
     }
@@ -152,7 +154,7 @@ void WirelessManager::handleRequestConnectWirelessNetwork(const ConnectionInfo &
         WirelessSecuritySetting::KeyMgmt keyMgmt = wirelessSecurity->keyMgmt();
         if (keyMgmt != WirelessSecuritySetting::KeyMgmt::WpaNone)
         {
-//            emit requestPasswordFromTray(ssid);
+            requireInputPassword(ssid);
         }
         else
             addAndActivateWirelessConnection(m_connectionSettings);
@@ -325,7 +327,6 @@ void WirelessManager::createConnectionSettings(const QString &ssid, const QStrin
 
 void WirelessManager::addAndActivateWirelessConnection(ConnectionSettings::Ptr connectionSettings)
 {
-    KLOG_DEBUG() << "addAndActivateWirelessConnection";
     const QString ssid = m_connectionInfo.wirelessInfo.ssid;
     const QString accessPointPath = m_connectionInfo.wirelessInfo.accessPointPath;
     KLOG_DEBUG() << "accessPointPath" << accessPointPath;
@@ -336,4 +337,52 @@ void WirelessManager::addAndActivateWirelessConnection(ConnectionSettings::Ptr c
     reply.waitForFinished();
     if (reply.isError())
         KLOG_DEBUG() << "Connection failed: " << reply.error();
+}
+
+void WirelessManager::requireInputPassword(const QString &ssid)
+{
+    TextInputDialog inputDialog;
+    inputDialog.setTitle(tr("Tips"));
+    QString tips = QString(tr("Password required to connect to %1.")).arg(ssid);
+    inputDialog.setText(tips);
+    inputDialog.setlineEditEchoMode(QLineEdit::Password);
+    connect(&inputDialog, &TextInputDialog::password, this,&WirelessManager::setSecurityPskAndActivateWirelessConnection);
+
+    inputDialog.exec();
+}
+
+void WirelessManager::setSecurityPskAndActivateWirelessConnection(const QString &password)
+{
+    WirelessSecuritySetting::Ptr wirelessSecurity =
+        m_connectionSettings->setting(Setting::WirelessSecurity).dynamicCast<WirelessSecuritySetting>();
+
+    wirelessSecurity->setPsk(password);
+    wirelessSecurity->setPskFlags(Setting::SecretFlagType::None);  // default: Save password for all users
+    wirelessSecurity->setInitialized(true);
+    addAndActivateWirelessConnection(m_connectionSettings);
+}
+
+void WirelessManager::handleRequestConnectHiddenNetwork(const QString &ssid)
+{
+    m_connectionInfo.wirelessInfo.ssid = ssid;
+    //若要连接的隐藏网络已经被显式探测到了，则返回
+    if(m_wirelessDevice->findNetwork(ssid) != nullptr)
+    {
+        KLOG_DEBUG() << "Hidden networks have been explicitly detected,return";
+        return ;
+    }
+    /** Note:连接隐藏网络时不指定AccessPointPath*/
+    QString accessPointPath = "";
+    getWirelessAvailableConnections(m_devicePath);
+    if (m_wirelssConnectionMap.contains(ssid))
+    {
+        Connection::Ptr connection = m_wirelssConnectionMap.value(ssid);
+        QString connectionPath = connection->path();
+        activateWirelessConnection(connectionPath, m_devicePath, accessPointPath);
+    }
+    else
+    {
+        createConnectionSettings(ssid,accessPointPath);
+        requireInputPassword(ssid);
+    }
 }

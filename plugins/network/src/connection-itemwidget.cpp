@@ -18,6 +18,7 @@
 #include <QSvgRenderer>
 #include <QLineEdit>
 #include "animation-loading-label.h"
+
 // 使用默认析构函数，父对象被释放时，会释放子对象
 ConnectionItemWidget::ConnectionItemWidget( QWidget* parent) : QWidget(parent)
 {

@@ -98,11 +98,6 @@ void CPanelNetworkWidget::getAvailableDeviceList()
     const Device::List deviceList = networkInterfaces();
     for (Device::Ptr dev : deviceList)
     {
-        KLOG_DEBUG() << "dev->interfaceName():" << dev->interfaceName();
-        KLOG_DEBUG() << "dev->managed():" << dev->managed();
-        KLOG_DEBUG() << "dev->availableConnections():" << dev->availableConnections();
-        KLOG_DEBUG() << "dev->state():" << dev->state();
-
         if(dev->state() == Device::Unavailable)
             continue ;
 

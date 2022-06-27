@@ -121,7 +121,7 @@ void WiredTrayWidget::handleStateActivated(const QString &activatedPath)
         m_connectionLists->updateItemActivatedStatus(activatedPath);
         auto item = m_connectionLists->findItemByActivatedPath(activatedPath);
         ConnectionInfo connectionInfo = item->data(Qt::UserRole).value<ConnectionInfo>();
-        m_statusNotification.connectionStateNotify(ActiveConnection::Activated,connectionInfo);
+        m_statusNotification.ActiveConnectionStateNotify(ActiveConnection::Activated, connectionInfo);
         m_connectionLists->update();
     }
 }
@@ -139,7 +139,7 @@ void WiredTrayWidget::handleActiveConnectionAdded(const QString &path)
         QListWidgetItem *activeItem = m_connectionLists->findItemByUuid(uuid);
         m_connectionLists->updateItemActivatedPath(activeItem,path);
         connect(activatedConnection.data(), &ActiveConnection::stateChanged, this, &WiredTrayWidget::handleActiveConnectionStateChanged);
-        connect(activatedConnection.data(), &ActiveConnection::stateChanged, &m_statusNotification, &StatusNotification::connectionDeactivatedNotify,Qt::DirectConnection);
+        connect(activatedConnection.data(), &ActiveConnection::stateChanged, &m_statusNotification, &StatusNotification::ActiveConnectionDeactivatedNotify,Qt::DirectConnection);
     }
 }
 

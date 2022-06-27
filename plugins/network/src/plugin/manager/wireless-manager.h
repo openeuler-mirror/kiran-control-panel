@@ -39,6 +39,7 @@ public:
 
     void initUI();
     void initConnection();
+    void requireInputPassword(const QString &ssid);
 
 public slots:
     void handleRequestConnectWirelessNetwork(const ConnectionInfo &connectionInfo);
@@ -47,6 +48,9 @@ public slots:
     void addAndActivateWirelessConnection(ConnectionSettings::Ptr connectionSettings);
 
     void createConnectionSettings(const QString &ssid,const QString &accessPointPath);
+    void setSecurityPskAndActivateWirelessConnection(const QString &password);
+
+    void handleRequestConnectHiddenNetwork(const QString &ssid);
 
     void handleActiveConnectionAdded(const QString &path) override;
     void handleActiveConnectionRemoved(const QString &path) override;

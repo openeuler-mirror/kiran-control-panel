@@ -22,6 +22,7 @@
 #include <QSvgRenderer>
 #include "animation-loading-label.h"
 #include "tray-itemwidget.h"
+#include "text-input-dialog.h"
 
 ConnectionLists::ConnectionLists(QWidget* parent) : QListWidget(parent)
 {
@@ -62,6 +63,7 @@ void ConnectionLists::handleConnectionItemClicked(QListWidgetItem* item)
     {
         bool isWireless = connectionInfo.isWireless;
         QString connectionPath = connectionInfo.connectionPath;
+
         if(m_itemShowType == ITEM_WIDGET_TYPE_TRAY)
         {
             //若item的height为100,说明item已经展开，并进入了激活操作流程
@@ -70,6 +72,7 @@ void ConnectionLists::handleConnectionItemClicked(QListWidgetItem* item)
                 item->setSizeHint(QSize(240,100));
                 QWidget* widget = this->itemWidget(item);
                 TrayItemWidget* trayItemWidget = qobject_cast<TrayItemWidget*>(widget);
+                //Note:signalStrength == -1 对应连接隐藏网络
                 if(connectionInfo.wirelessInfo.signalStrength == -1)
                     trayItemWidget->showInputSsidWidget();
                 else
@@ -79,7 +82,20 @@ void ConnectionLists::handleConnectionItemClicked(QListWidgetItem* item)
         else
         {
             if (isWireless)
-                emit requestConnectWirelessNetwork(connectionInfo);
+            {
+                if(connectionInfo.wirelessInfo.signalStrength == -1)
+                {
+                    KLOG_DEBUG() << "plugin connectionInfo.wirelessInfo.signalStrength == -1";
+                    TextInputDialog ssidInputDialog;
+                    ssidInputDialog.setTitle(tr("Tips"));
+                    QString tips = QString(tr("Please input a network name"));
+                    ssidInputDialog.setText(tips);
+                    connect(&ssidInputDialog, &TextInputDialog::ssid, this, &ConnectionLists::sendSsidToWireless);
+                    ssidInputDialog.exec();
+                }
+                else
+                    emit requestConnectWirelessNetwork(connectionInfo);
+            }
             else
                 emit requestActivateCurrentItemConnection(connectionPath);
         }
@@ -152,7 +168,7 @@ void ConnectionLists::addConnectionToLists(Connection::Ptr ptr, const QString& d
         if (activeConnection->uuid() == ptr->uuid() && deviceList.contains(devicePath))
         {
             connectionInfo.activeConnectionPath = activeConnection->path();
-            connect(activeConnection.data(), &ActiveConnection::stateChanged, &m_statusNotification, &StatusNotification::connectionDeactivatedNotify,Qt::DirectConnection);
+            connect(activeConnection.data(), &ActiveConnection::stateChanged, &m_statusNotification, &StatusNotification::ActiveConnectionDeactivatedNotify,Qt::DirectConnection);
             //TODO:优化代码
             switch (activeConnection->state())
             {
@@ -296,7 +312,7 @@ void ConnectionLists::addWirelessNetworkToLists(WirelessNetwork::Ptr network, co
             if ((ssid == connectionInfo.wirelessInfo.ssid) && deviceList.contains(devicePath))
             {
                 connectionInfo.activeConnectionPath = activeConnection->path();
-                connect(activeConnection.data(), &ActiveConnection::stateChanged, &m_statusNotification, &StatusNotification::connectionDeactivatedNotify,Qt::DirectConnection);
+                connect(activeConnection.data(), &ActiveConnection::stateChanged, &m_statusNotification, &StatusNotification::ActiveConnectionDeactivatedNotify,Qt::DirectConnection);
                 switch (activeConnection->state())
                 {
                 case ActiveConnection::Activating:
@@ -380,6 +396,7 @@ void ConnectionLists::showOtherWirelessItem()
     }
 
     ConnectionInfo connectionInfo;
+    connectionInfo.isWireless = true;
     // 隐藏网络信号设为－１，以方便排序在最底层
     connectionInfo.wirelessInfo.signalStrength = -1;
     QVariant var;
@@ -400,7 +417,7 @@ void ConnectionLists::showOtherWirelessItem()
         m_itemWidgetMap.insert(trayItemWidget,item);
         connect(trayItemWidget, &TrayItemWidget::connectButtonClicked, this,&ConnectionLists::handleConnectButtonClicked);
         connect(trayItemWidget, &TrayItemWidget::cancelButtonClicked, this,&ConnectionLists::handleCancelButtonClicked);
-        connect(trayItemWidget,&TrayItemWidget::sendSsid,this,&ConnectionLists::sendSsidToWirelessSetting);
+        connect(trayItemWidget,&TrayItemWidget::sendSsid,this, &ConnectionLists::sendSsidToWireless);
     }
     this->sortItems();
 }

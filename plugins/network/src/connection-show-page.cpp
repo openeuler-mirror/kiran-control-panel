@@ -58,6 +58,8 @@ void ConnectionShowPage::initConnect()
     connect(ui->connectionLists, &ConnectionLists::deactivatedItemConnection, this, &ConnectionShowPage::deactivatedItemConnection);
     connect(ui->connectionLists, &ConnectionLists::connectionUpdated, this, &ConnectionShowPage::connectionUpdated);
 
+    connect(ui->connectionLists, &ConnectionLists::sendSsidToWireless, this, &ConnectionShowPage::sendSsidToWireless);
+
     connect(m_switchButton,&KiranSwitchButton::toggled,this,&ConnectionShowPage::handleToggledSwitchButton);
 
     connect(notifier(), &Notifier::wirelessEnabledChanged, this,&ConnectionShowPage::handleWirelessEnabledChanged);

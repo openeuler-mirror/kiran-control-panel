@@ -28,10 +28,9 @@ StatusNotification::~StatusNotification()
     notify_uninit();
 }
 
-
-void StatusNotification::connectionStateNotify(ActiveConnection::State state,ConnectionInfo connectionInfo)
+void StatusNotification::ActiveConnectionStateNotify(ActiveConnection::State state,ConnectionInfo connectionInfo)
 {
-    KLOG_DEBUG() << "connectionStateNotify";
+    KLOG_DEBUG() << "ActiveConnectionStateNotify";
     QString id = connectionInfo.id;
     QString ssid = connectionInfo.wirelessInfo.ssid;
     QString summary, body, bodyStr, icon;
@@ -64,11 +63,12 @@ void StatusNotification::connectionStateNotify(ActiveConnection::State state,Con
     }
 }
 
-void StatusNotification::connectionDeactivatedNotify(ActiveConnection::State state)
+//xxx:deactivated时的通知待优化
+void StatusNotification::ActiveConnectionDeactivatedNotify(ActiveConnection::State state)
 {
   if (state == ActiveConnection::Deactivated)
     {
-        KLOG_DEBUG() << "connectionDeactivatedNotify";
+        KLOG_DEBUG() << "ActiveConnectionDeactivatedNotify";
         bool isWireless;
         QString id,ssid;
         QString summary, body, bodyStr, icon;
@@ -102,8 +102,19 @@ void StatusNotification::connectionDeactivatedNotify(ActiveConnection::State sta
     }
 }
 
+void StatusNotification::connectitonFailedNotify(const QString &connectionName)
+{
+    QString summary, body, bodyStr, icon;
+    summary = tr("Connection Failed");
+    body = tr("Failed to connect to the network \"%1\"");
+    bodyStr = body.arg(connectionName);
+
+    NotifyNotification* notify = notify_notification_new(summary.toStdString().c_str(), bodyStr.toStdString().c_str(), icon.toStdString().c_str());
+    notify_notification_show(notify, nullptr);
+    g_object_unref(G_OBJECT(notify));
+}
+
 void StatusNotification::deviceStateNotify(Device::State newstate)
 {
 
 }
-

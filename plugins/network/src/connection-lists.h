@@ -81,8 +81,6 @@ public:
                                    const QString &devicePath);
     void showOtherWirelessItem();
 
-//    void addWirelessItemToLists();
-
     void removeConnectionFromLists(const QString &path);
     void removeWirelessNetworkFromLists(const QString &ssid);
     void updateItemActivatedPath(QListWidgetItem *item,
@@ -109,7 +107,6 @@ public slots:
     void updateItemActivatingStatus(QListWidgetItem *item);
     void updateItemActivatedStatus(const QString &activatedConnectionPath);
     void clearItemActivatedConnectionInfo(QListWidgetItem *activatedItem);
-//    void connectionStateNotify(ActiveConnection::State state, const QString &activatedConnectionPath);
 
     void handleSendPassword(const QString &password);
     void showInputPasswordWidgetOfItem(QListWidgetItem *item);
@@ -130,7 +127,7 @@ signals:
     void trayRequestCancel(const QString &activatedConnectionPath);
 
     void sendPasswordToWirelessSetting(const QString &password);
-    void sendSsidToWirelessSetting(const QString &ssid);
+    void sendSsidToWireless(const QString &ssid);
 private:
     ItemWidgetType m_itemShowType;
     QString m_currentDevicePath;

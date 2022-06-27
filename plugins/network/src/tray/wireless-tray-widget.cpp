@@ -60,7 +60,7 @@ void WirelessTrayWidget::initConnection()
     connect(m_wirelessDevice.data(), &WirelessDevice::networkAppeared, this, &WirelessTrayWidget::handleNetworkAppeared);
 
     connect(m_connectionLists, &ConnectionLists::sendPasswordToWirelessSetting, this, &WirelessTrayWidget::setSecurityPskAndActivateWirelessConnection);
-    connect(m_connectionLists, &ConnectionLists::sendSsidToWirelessSetting, this, &WirelessTrayWidget::handleRequestConnectHiddenNetwork);
+    connect(m_connectionLists, &ConnectionLists::sendSsidToWireless, this, &WirelessTrayWidget::handleRequestConnectHiddenNetwork);
 
     connect(m_devicePtr.data(),&Device::stateChanged,this,&WirelessTrayWidget::handleDeviceStateChanged);
 }
@@ -267,7 +267,7 @@ void WirelessTrayWidget::handleActiveConnectionAdded(const QString &path)
             m_connectionLists->itemSimpleStatus(item);
         }
         connect(activatedConnection.data(), &ActiveConnection::stateChanged, this, &WirelessTrayWidget::handleActiveConnectionStateChanged,Qt::QueuedConnection);
-        connect(activatedConnection.data(), &ActiveConnection::stateChanged, &m_statusNotification, &StatusNotification::connectionDeactivatedNotify,Qt::DirectConnection);
+        connect(activatedConnection.data(), &ActiveConnection::stateChanged, &m_statusNotification, &StatusNotification::ActiveConnectionDeactivatedNotify,Qt::DirectConnection);
     }
 }
 
@@ -308,7 +308,7 @@ void WirelessTrayWidget::handleStateActivated(const QString &activatedPath)
 
         auto item = m_connectionLists->findItemByActivatedPath(activatedPath);
         ConnectionInfo connectionInfo = item->data(Qt::UserRole).value<ConnectionInfo>();
-        m_statusNotification.connectionStateNotify(ActiveConnection::Activated,connectionInfo);
+        m_statusNotification.ActiveConnectionStateNotify(ActiveConnection::Activated, connectionInfo);
 
         m_connectionLists->sortItems();
         m_connectionLists->update();

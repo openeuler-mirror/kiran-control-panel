@@ -17,15 +17,12 @@
 #include <QApplication>
 #include "cpanel-network-widget.h"
 #include "manager-tray.h"
-#include "input-dialog.h"
 
 int main(int argc, char *argv[]) {
     KiranApplication a(argc, argv);
     klog_qt5_init("", "kylinsec-session", "kiran-cpanel-network", "kiran-cpanel-network");
     CPanelNetworkWidget networkWidget;
     networkWidget.show();
-    InputDialog inputDialog;
-    inputDialog.show();
     ManagerTray tray;
     return QApplication::exec();
 }

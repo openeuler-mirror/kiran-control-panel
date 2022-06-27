@@ -92,6 +92,8 @@ signals:
     void requestConnectWirelessNetwork(const ConnectionInfo &connectionInfo);
     void deactivatedItemConnection(const QString &connectionPath);
     void connectionUpdated(const QString &path);
+
+    void sendSsidToWireless(const QString &ssid);
 private:
     Ui::ConnectionShowPage *ui;
     KiranSwitchButton *m_switchButton;
