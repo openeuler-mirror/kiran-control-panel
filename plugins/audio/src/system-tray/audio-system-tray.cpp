@@ -18,6 +18,7 @@
 #include "dbus/status-notifier-manager.h"
 #include "system-tray/mixed-setting-page.h"
 #include "system-tray/volume-setting-page.h"
+#include "kiran-rounded-tray-popup/kiran-rounded-tray-popup.h"
 
 #include <kiran-session-daemon/audio-i.h>
 #include <qt5-log-i.h>
@@ -58,6 +59,9 @@ void AudioSystemTray::initVolumeSettingPage(QString objectPath)
     m_volumeSettingPage->setWindowFlags(Qt::Popup | Qt::BypassWindowManagerHint);
     m_volumeSettingPage->hideLine();
     m_volumeSettingPage->setAttribute(Qt::WA_TranslucentBackground);
+
+    m_volumenPopup = new KiranRoundedTrayPopup();
+    m_volumenPopup->setContentWidget(m_volumeSettingPage);
 }
 
 void AudioSystemTray::initMixedSettingPage()
@@ -66,6 +70,9 @@ void AudioSystemTray::initMixedSettingPage()
     m_mixedSettingPage->setObjectName("mixedSettingPage");
     m_mixedSettingPage->setWindowFlags(Qt::Popup | Qt::BypassWindowManagerHint);
     m_mixedSettingPage->setAttribute(Qt::WA_TranslucentBackground);
+
+    m_mixedPopup = new KiranRoundedTrayPopup();
+    m_mixedPopup->setContentWidget(m_mixedSettingPage);
 }
 
 void AudioSystemTray::initTrayIcon()
@@ -126,7 +133,7 @@ void AudioSystemTray::handleAudioTrayClicked(QSystemTrayIcon::ActivationReason r
     {
     case QSystemTrayIcon::Trigger:
         setVolumeSettingPos();
-        m_volumeSettingPage->show();
+        m_volumenPopup->show();
         break;
     }
 }
@@ -143,24 +150,24 @@ void AudioSystemTray::setVolumeSettingPos()
 
     //xxx:当底部面板位置改变时，托盘界面弹出位置
     if (yTray == 0)
-        m_volumeSettingPage->setGeometry(xTray - pageWidth / 2, yTray + heightTray, pageWidth, pageHeight);  //顶部
+        m_volumenPopup->setGeometry(xTray - pageWidth / 2, yTray + heightTray, pageWidth, pageHeight);  //顶部
     else
-        m_volumeSettingPage->setGeometry(xTray - pageWidth / 2, yTray - pageHeight, pageWidth, pageHeight);  //底部
+        m_volumenPopup->setGeometry(xTray - pageWidth / 2, yTray - pageHeight, pageWidth, pageHeight);  //底部
 }
 
 void AudioSystemTray::handleMixedSettingClicked()
 {
     setMixedSettingPos();
-    m_mixedSettingPage->show();
+    m_mixedPopup->show();
 }
 
 //XXX:弹出MixedSetting界面调整
 void AudioSystemTray::setMixedSettingPos()
 {
     getTrayGeometry();
-    KLOG_DEBUG() << "m_mixedSettingPage->sizeHint:" << m_mixedSettingPage->sizeHint();
-    int height = m_mixedSettingPage->sizeHint().height();
-    int width = m_mixedSettingPage->sizeHint().width();
+    KLOG_DEBUG() << "m_mixedPopup->sizeHint:" << m_mixedPopup->sizeHint();
+    int height = m_mixedPopup->sizeHint().height();
+    int width = m_mixedPopup->sizeHint().width();
 
     QScreen *screen = QGuiApplication::primaryScreen();
     int screenWidth = screen->availableGeometry().width();
@@ -169,12 +176,12 @@ void AudioSystemTray::setMixedSettingPos()
     //xxx:当底部面板位置改变时，托盘界面弹出位置,顶部位置不准确
     if (yTray == 0)
     {
-        m_mixedSettingPage->move(xTray - width / 2, yTray + heightTray);
+        m_mixedPopup->move(xTray - width / 2, yTray + heightTray);
         KLOG_DEBUG() << "顶部";
     }
     else
     {
-        m_mixedSettingPage->move(xTray - width / 2, yTray - height);
+        m_mixedPopup->move(xTray - width / 2, yTray - height);
         KLOG_DEBUG() << "底部";
     }
 }

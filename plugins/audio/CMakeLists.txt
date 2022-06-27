@@ -60,6 +60,7 @@ target_include_directories(${TRAY_PROCESS} PRIVATE
         ${KLOG_QT5_INCLUDE_DIRS})
 
 target_link_libraries(${TRAY_PROCESS}
+        common-widgets
         Qt5::Widgets Qt5::DBus Qt5::Svg Qt5::Multimedia
         ${KIRAN_WIDGETS_QT5_LIBRARIES}
         ${KIRAN_CC_DAEMON_LIBRARIES}

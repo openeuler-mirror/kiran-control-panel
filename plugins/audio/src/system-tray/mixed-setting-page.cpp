@@ -96,10 +96,3 @@ void MixedSettingPage::handleSinkInputDelete(int index)
     update();
 }
 
-void MixedSettingPage::paintEvent(QPaintEvent *Event)
-{
-    QStyleOption opt;
-    opt.init(this);
-    QPainter p(this);
-    style()->drawPrimitive(QStyle::PE_Widget, &opt, &p, this);
-}

@@ -184,14 +184,6 @@ void VolumeSettingPage::volumeIconColorSwitch(QString svgPath, QString color)
     ui->muteButton->setIcon(icon);
 }
 
-void VolumeSettingPage::paintEvent(QPaintEvent *event)
-{
-    QStyleOption opt;
-    opt.init(this);
-    QPainter p(this);
-    style()->drawPrimitive(QStyle::PE_Widget, &opt, &p, this);
-}
-
 void VolumeSettingPage::hideLine()
 {
     ui->line->hide();

@@ -23,6 +23,7 @@ class MixedSettingPage;
 class StatusNotifierManagerInterface;
 class AudioInterface;
 class AudioDeviceInterface;
+class KiranRoundedTrayPopup;
 class AudioSystemTray : public QWidget
 {
     Q_OBJECT
@@ -53,8 +54,12 @@ private:
     QAction* m_volumeSetting;
     QAction* m_mixedSetting;
 
+    KiranRoundedTrayPopup* m_volumenPopup;
+    KiranRoundedTrayPopup* m_mixedPopup;
+
     VolumeSettingPage* m_volumeSettingPage;
     MixedSettingPage* m_mixedSettingPage;
+
     StatusNotifierManagerInterface* m_statusNotifierManager;
     AudioInterface* m_audioInterface;
     AudioDeviceInterface* m_sink;

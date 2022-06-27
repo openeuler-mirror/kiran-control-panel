@@ -28,7 +28,6 @@ class MixedSettingPage : public QWidget
 public:
     explicit MixedSettingPage(QWidget *parent = nullptr);
     ~MixedSettingPage();
-    void paintEvent(QPaintEvent *Event) override;
 public slots:
     void initSinkInput();
     void initSink();

@@ -44,7 +44,6 @@ public:
     void clickMuteButton(Audio *audio);
     void volumeIconColorSwitch(QString svgPath, QString color);
 
-    void paintEvent(QPaintEvent *event) override;
 public slots:
     void handleVolumeChanged(double value);
     void handleMuteButtonClicked();
