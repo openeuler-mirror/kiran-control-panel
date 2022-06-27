@@ -86,8 +86,12 @@ void KiranAccountManager::appendSiderbarItem(const QString &userPath)
 {
     KSDAccountsUserProxy interface(ACCOUNTS_DBUS_NAME,userPath, QDBusConnection::systemBus());
 
-    QString iconFile = interface.icon_file().isEmpty() ? DEFAULT_USER_AVATAR : interface.icon_file();
-    KLOG_INFO() << "append siderbar item:" << interface.user_name() << iconFile;
+    QString iconFile = interface.icon_file();
+    QPixmap tempPixmap;
+    if( iconFile.isEmpty() || !tempPixmap.load(iconFile) )
+    {
+        iconFile = DEFAULT_USER_AVATAR;
+    }
 
     auto item = new QListWidgetItem(interface.user_name(), m_tabList);
     item->setIcon(QPixmap(iconFile));
