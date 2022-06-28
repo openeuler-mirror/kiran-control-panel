@@ -32,7 +32,7 @@
    <item>
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>2</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="page_shortcut">
       <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -82,7 +82,7 @@
        <item>
         <widget class="QStackedWidget" name="stackedWidget_search">
          <property name="currentIndex">
-          <number>0</number>
+          <number>1</number>
          </property>
          <widget class="QWidget" name="page_shortcut_list">
           <property name="sizePolicy">
@@ -109,6 +109,9 @@
            </property>
            <item>
             <widget class="QScrollArea" name="scrollArea">
+             <property name="frameShape">
+              <enum>QFrame::NoFrame</enum>
+             </property>
              <property name="widgetResizable">
               <bool>true</bool>
              </property>
@@ -117,8 +120,8 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>623</width>
-                <height>419</height>
+                <width>635</width>
+                <height>431</height>
                </rect>
               </property>
               <property name="sizePolicy">
@@ -242,6 +245,9 @@
            </property>
            <item>
             <widget class="QScrollArea" name="scrollArea_2">
+             <property name="frameShape">
+              <enum>QFrame::NoFrame</enum>
+             </property>
              <property name="widgetResizable">
               <bool>true</bool>
              </property>
@@ -250,8 +256,8 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>88</width>
-                <height>18</height>
+                <width>635</width>
+                <height>431</height>
                </rect>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_9">

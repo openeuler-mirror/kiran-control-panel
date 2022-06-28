@@ -19,12 +19,14 @@
 #include "uid-validator.h"
 #include "kiran-tips.h"
 
-#include <kiran-switch-button.h>
-#include <widget-property-helper.h>
 #include <QDebug>
 #include <QDir>
 #include <QFileInfo>
 #include <QIcon>
+#include <kiran-switch-button.h>
+#include <style-property.h>
+
+using namespace Kiran;
 
 AdvanceSettings::AdvanceSettings(QWidget *parent)
     : KiranTitlebarWindow(parent),
@@ -159,7 +161,7 @@ void AdvanceSettings::initUI()
     });
 
     /// confirm,cancel
-    Kiran::WidgetPropertyHelper::setButtonType(ui->btn_confirm, Kiran::BUTTON_Default);
+    StylePropertyHelper::setButtonType(ui->btn_confirm,BUTTON_Default);
     connect(ui->btn_confirm, &QPushButton::clicked, [this]() {
         QFileInfo fileInfo;
         ///数据校验

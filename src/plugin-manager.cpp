@@ -84,7 +84,7 @@ void PluginManager::loadAll()
     {
         return category_1->getCategoryDesktopInfo().weight > category_2->getCategoryDesktopInfo().weight;
     };
-    qSort(tempCategoryList.begin(), tempCategoryList.end(), sortFunc);
+    std::sort(tempCategoryList.begin(),tempCategoryList.end(),sortFunc);
 
     /// 记录下分类的ID和分类列表中序号对应关系
     QMap<QString, int> categoryIdxMap;

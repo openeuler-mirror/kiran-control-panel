@@ -11,18 +11,19 @@
  * 
  * Author:     liuxinhao <liuxinhao@kylinos.com.cn>
  */
-
- 
-#include <widget-property-helper.h>
 #include <QApplication>
 #include <QMessageBox>
 #include <QPushButton>
 #include <QVBoxLayout>
 
+#include <style-property.h>
+
 #include "exit-code-defines.h"
 #include "image-preview-widget.h"
 #include "kiran-avatar-editor.h"
 #include "ui-defines.h"
+
+using namespace Kiran;
 
 KiranAvatarEditor::KiranAvatarEditor(const QString &srcImagePath, const QString &dstImagePath, QWidget *parent)
     : KiranTitlebarWindow(parent)
@@ -81,7 +82,7 @@ void KiranAvatarEditor::initUI(const QString &srcImagePath,
     buttonLayout->addItem(spacerItem_1);
 
     m_btnConfrim = new QPushButton(this);
-    Kiran::WidgetPropertyHelper::setButtonType(m_btnConfrim, Kiran::BUTTON_Default);
+    StylePropertyHelper::setButtonType(m_btnConfrim,BUTTON_Default);
     m_btnConfrim->setObjectName("btn_confirm");
     m_btnConfrim->setFixedSize(100, 50);
     m_btnConfrim->setText(tr("Confirm"));

@@ -97,7 +97,7 @@ void AnimationPushButton::initTimeLine()
     m_timeLine.setUpdateInterval(50);
     m_timeLine.setDuration(750);
     m_timeLine.setFrameRange(0, 360);
-    m_timeLine.setCurveShape(QTimeLine::LinearCurve);
+    m_timeLine.setEasingCurve(QEasingCurve(QEasingCurve::Linear));
     connect(&m_timeLine, &QTimeLine::frameChanged, [this](int value) {
         m_rotationAngle = value;
         update();

@@ -16,8 +16,7 @@
 
 #include <kiran-log/qt5-log-i.h>
 #include <kiranwidgets-qt5/kiran-message-box.h>
-#include <kiranwidgets-qt5/kiran-style-public-define.h>
-#include <kiranwidgets-qt5/widget-property-helper.h>
+#include <style-property.h>
 
 #include <QDesktopWidget>
 #include <QFile>
@@ -38,8 +37,8 @@ enum LicenseType
     VERSION_LICENSE
 };
 
-using namespace Kiran::WidgetPropertyHelper;
 using namespace Kiran;
+
 LicenseAgreement::LicenseAgreement(QWidget *parent, Qt::WindowFlags windowFlags)
     : KiranTitlebarWindow(parent),
       ui(new Ui::LicenseAgreement)
@@ -48,8 +47,8 @@ LicenseAgreement::LicenseAgreement(QWidget *parent, Qt::WindowFlags windowFlags)
     setIcon(QIcon(":/images/kylin-about.png"));
     setButtonHints(TitlebarMinimizeButtonHint | TitlebarCloseButtonHint);
     setResizeable(false);
-    setButtonType(ui->btn_license_close, BUTTON_Default);
-    setButtonType(ui->btn_license_export, BUTTON_Normal);
+    StylePropertyHelper::setButtonType(ui->btn_license_close,BUTTON_Default);
+    StylePropertyHelper::setButtonType(ui->btn_license_export, BUTTON_Normal);
     setWindowModality(Qt::ApplicationModal);
     connect(ui->btn_license_close, &QPushButton::clicked, this, &LicenseAgreement::close);
 
@@ -101,12 +100,13 @@ void LicenseAgreement::exportLicense()
         //将EULA文字转化为PDF
         QPrinter printer(QPrinter::PrinterResolution);
         printer.setOutputFormat(QPrinter::PdfFormat);
-        printer.setPaperSize(QPrinter::A4);
+        printer.setPageSize(QPageSize(QPageSize::A4));
         printer.setOutputFileName(fileName);
 
         QTextDocument doc;
         doc.setPlainText(eulaText); /* 可替换为文档内容 */
-        doc.setPageSize(printer.pageRect().size());
+        QRect pageRect = printer.pageLayout().paintRectPixels(printer.resolution());
+        doc.setPageSize(pageRect.size());
         doc.print(&printer);
         file.close();
     }

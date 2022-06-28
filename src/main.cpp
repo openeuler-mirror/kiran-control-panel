@@ -21,6 +21,7 @@
 #include <QTranslator>
 #include <QJsonObject>
 #include <QJsonDocument>
+#include <QScreen>
 
 #include "config.h"
 #include "panel-window.h"
@@ -152,8 +153,8 @@ int main(int argc, char *argv[])
     PanelWindow w;
     w.jump(defaultCategory,defaultSubItem);
 
-    int screeNum = QApplication::desktop()->screenNumber(QCursor::pos());
-    QRect screenGeometry = QApplication::desktop()->screenGeometry(screeNum);
+    auto screen = QApplication::screenAt(QCursor::pos());
+    QRect screenGeometry = screen->geometry();
     w.resize(993, 711);
     w.move(screenGeometry.x() + (screenGeometry.width() - w.width()) / 2,
            screenGeometry.y() + (screenGeometry.height() - w.height()) / 2);

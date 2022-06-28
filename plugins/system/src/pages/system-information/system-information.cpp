@@ -17,9 +17,6 @@
 #include "license-agreement.h"
 #include "ui_system-information.h"
 
-#include <kiranwidgets-qt5/kiran-message-box.h>
-#include <kiranwidgets-qt5/kiran-style-public-define.h>
-#include <kiranwidgets-qt5/widget-property-helper.h>
 
 #include <kiran-log/qt5-log-i.h>
 #include <QDateTime>
@@ -29,15 +26,13 @@
 #include <QJsonObject>
 #include <QJsonValue>
 #include <QPainter>
-
+#include <style-property.h>
 #define HOST_NAME "host_name"
 #define ARCH "arch"
 #define KERNEL_VERSION "kernel_version"
 #define KERNEL_NAME "kernal_name"
 #define KERNEL_RELEASE "kernel_release"
 #define PRODUCT_RELEASE "product_release"
-
-using namespace Kiran::WidgetPropertyHelper;
 
 SystemInformation::SystemInformation(QWidget *parent)
     : QWidget(parent), ui(new Ui::SystemInformation), hostNameWidget(nullptr), licenseAgreement(nullptr)
@@ -83,6 +78,9 @@ void SystemInformation::init()
     });
     // clang-format on
     connect(ui->btn_change_name, &QPushButton::clicked, this, &SystemInformation::handleChangeHostName);
+    Kiran::StylePropertyHelper::setButtonType(ui->btn_change_name,Kiran::BUTTON_Default);
+    Kiran::StylePropertyHelper::setButtonType(ui->btn_EULA,Kiran::BUTTON_Default);
+    Kiran::StylePropertyHelper::setButtonType(ui->btn_version_license,Kiran::BUTTON_Default);
 }
 
 bool SystemInformation::initUI()
@@ -125,7 +123,6 @@ bool SystemInformation::initUI()
         frame->setRadius(6);
         frame->setDrawBroder(false);
     }
-
 
     return true;
 }

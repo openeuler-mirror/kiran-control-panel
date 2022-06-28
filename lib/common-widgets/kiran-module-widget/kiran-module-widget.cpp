@@ -109,7 +109,7 @@ void KiranModuleWidget::setPlugins(const PluginHelperPtrList &plugins)
 
     if (ui->list_subItems->count() >= 0)
     {
-        ui->list_subItems->setItemSelected(ui->list_subItems->item(0), true);
+        ui->list_subItems->item(0)->setSelected(true);
         // NOTE：为了获取一个正确的初始化大小，手动调用槽函数，将功能项第一条的窗口加入显示
         handleCurrentItemChanged();
     }
@@ -175,7 +175,7 @@ void KiranModuleWidget::handleCurrentItemChanged()
     if (checkHasUnSaved())
     {
         KLOG_DEBUG() << "switch sub item" << row << "reject";
-        ui->list_subItems->setItemSelected(ui->list_subItems->item(m_currentSubItemIdx), true);
+        ui->list_subItems->item(m_currentSubItemIdx)->setSelected(true);
         return;
     }
 
@@ -250,7 +250,7 @@ void KiranModuleWidget::jumpTo(const QString &subItemID)
 
     if (item != nullptr)
     {
-        ui->list_subItems->setItemSelected(item,true);
+        item->setSelected(true);
     }
 }
 

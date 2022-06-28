@@ -192,7 +192,7 @@ bool AppearanceGlobalInfo::getFont(int type, QStringList &fontList)
         KLOG_INFO() << "Font type is: " << type
                     << " Font info is:" << fontInfo;
 
-        fontInfoList = fontInfo.split(" ", QString::SkipEmptyParts);
+        fontInfoList = fontInfo.split(" ", Qt::SkipEmptyParts);
         if (!fontInfoList.isEmpty())
         {
             fontSize = fontInfoList.takeLast();

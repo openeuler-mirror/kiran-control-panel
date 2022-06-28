@@ -205,7 +205,7 @@ void ImagePreviewWidget::imageAutomaticPosition()
 
 void ImagePreviewWidget::wheelEvent(QWheelEvent *event)
 {
-    if (event->delta() > 0)
+    if (event->angleDelta().y() > 0)
     {
         pixmapReduce();
     }
