@@ -107,7 +107,7 @@ void KiranModuleWidget::setPlugins(const PluginHelperPtrList &plugins)
 
     ui->widget_siderbar->setVisible(ui->list_subItems->count() > 1);
 
-    if (ui->list_subItems->count() >= 0)
+    if (ui->list_subItems->count() > 0)
     {
         ui->list_subItems->item(0)->setSelected(true);
         // NOTE：为了获取一个正确的初始化大小，手动调用槽函数，将功能项第一条的窗口加入显示
