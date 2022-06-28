@@ -15,6 +15,7 @@
 #include <kiran-message-box.h>
 #include <qt5-log-i.h>
 #include <NetworkManagerQt/Manager>
+#include "status-notification.h"
 #include "disconnect-and-delete-button.h"
 #include "ui_disconnect-and-delete-button.h"
 
@@ -83,8 +84,10 @@ void DisconnectAndDeleteButton::handleDeleteConnection()
                                                                         KiranMessageBox::Yes | KiranMessageBox::No);
     if (btn == KiranMessageBox::Yes)
     {
+        QString connectionName = m_connection->name();
         QDBusPendingReply<> reply = m_connection->remove();
         reply.waitForFinished();
+        StatusNotification::connectionDeleteNotify(connectionName);
         if (reply.isError())
         {
             KLOG_INFO() << "Delete the connection failed:" << reply.error();
@@ -92,6 +95,7 @@ void DisconnectAndDeleteButton::handleDeleteConnection()
         emit deleteButtonClicked();
     }
 }
+
 void DisconnectAndDeleteButton::clearPtr()
 {
     m_connection.clear();

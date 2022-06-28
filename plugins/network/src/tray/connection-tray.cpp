@@ -97,7 +97,6 @@ void ConnectionTray::handleActiveConnectionStateChanged(ActiveConnection::State 
     auto activeConnection = qobject_cast<ActiveConnection* >(sender());
     m_activatedPath = activeConnection->path();
     QString id = activeConnection->id();
-    KLOG_DEBUG() << "handleActiveConnectionStateChanged path:" << m_activatedPath;
 
     switch (state)
     {
@@ -117,6 +116,8 @@ void ConnectionTray::handleActiveConnectionStateChanged(ActiveConnection::State 
         break;
     case ActiveConnection::State::Deactivated:
         KLOG_DEBUG() << "ActiveConnection::State::Deactivated id:" << id;
+        if(!id.isEmpty())
+            StatusNotification::ActiveConnectionDeactivatedNotify(id);
         handleStateDeactivated(m_activatedPath);
         break;
     default:

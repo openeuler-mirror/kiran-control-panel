@@ -106,7 +106,8 @@ void WirelessManager::activateWirelessConnection(const QString &connectionPath, 
         reply.waitForFinished();
         if (reply.isError())
         {
-            KLOG_DEBUG() << "activate connection failed:" << reply.error();
+            KLOG_ERROR() << "activate connection failed:" << reply.error();
+            StatusNotification::connectitonFailedNotify(connectionPath);
         }
         else
         {
@@ -161,10 +162,15 @@ void WirelessManager::handleRequestConnectWirelessNetwork(const ConnectionInfo &
     }
 }
 
-
+//TODO:什么情况下activatedConnection会为空
 void WirelessManager::handleActiveConnectionAdded(const QString &path)
 {
     ActiveConnection::Ptr activatedConnection = findActiveConnection(path);
+    if(activatedConnection == nullptr)
+    {
+        KLOG_DEBUG() << "activatedConnection == nullptr";
+        return ;
+    }
     QStringList deviceList = activatedConnection->devices();
     if ((activatedConnection->type() == ConnectionSettings::ConnectionType::Wireless) && deviceList.contains(m_devicePath))
     {
@@ -185,7 +191,6 @@ void WirelessManager::handleActiveConnectionAdded(const QString &path)
             ui->connectionShowPage->itemSimpleStatus(item);
         }
         connect(activatedConnection.data(), &ActiveConnection::stateChanged,this,&WirelessManager::handleActiveConnectionStateChanged);
-
     }
 }
 
@@ -210,7 +215,6 @@ void WirelessManager::handleStateActivating(const QString &activatedPath)
 
 void WirelessManager::handleStateActivated(const QString &activatedPath)
 {
-    KLOG_DEBUG() << "Wireless  handleStateActivated";
     ActiveConnection::Ptr activeConnection = findActiveConnection(activatedPath);
     if(activeConnection.isNull())
         return ;
@@ -256,13 +260,11 @@ void WirelessManager::refreshConnectionLists()
 
 void WirelessManager::handleNetworkDisappeared(const QString &ssid)
 {
-    KLOG_DEBUG() << "handleNetworkDisappeared ssid:" << ssid;
     ui->connectionShowPage->removeWirelessNetworkFromLists(ssid);
 }
 
 void WirelessManager::handleNetworkAppeared(const QString &ssid)
 {
-    KLOG_DEBUG() << "handleNetworkAppeared ssid:" << ssid;
     WirelessNetwork::Ptr network = m_wirelessDevice->findNetwork(ssid);
     QString devicePath = m_wirelessDevice->uni();
     ui->connectionShowPage->addWirelessNetworkToLists(network, devicePath);

@@ -9,27 +9,31 @@
 * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
 * See the Mulan PSL v2 for more details.
 *
-* Author:     luoqing <luoqing@kylinos.com.cn>
+* Author:     luoqing <luoqing@kylinsec.com.cn>
 */
 
 #ifndef KIRAN_CPANEL_NETWORK_STATUSNOTIFICATION_H
 #define KIRAN_CPANEL_NETWORK_STATUSNOTIFICATION_H
 
-#include <QObject>
 #include <NetworkManagerQt/Manager>
+#include <QObject>
 using namespace NetworkManager;
 struct ConnectionInfo;
-class StatusNotification : public QObject
+class StatusNotification : QObject
 {
     Q_OBJECT
 public:
     explicit StatusNotification(QObject *parent = nullptr);
     ~StatusNotification();
-public slots:
-    void ActiveConnectionStateNotify(ActiveConnection::State state,ConnectionInfo connectionInfo);
-    void ActiveConnectionDeactivatedNotify(ActiveConnection::State state);
-    void deviceStateNotify(Device::State newstate);
-    void connectitonFailedNotify(const QString &connectionName);
+
+    static void ActiveConnectionActivatedNotify(ConnectionInfo connectionInfo);
+    static void ActiveConnectionDeactivatedNotify(const QString &connectionName);
+
+    static void connectitonFailedNotify(const QString &connectionPath);
+    static void connectionDeleteNotify(const QString  &connectionName);
+
+    static void deviceStateNotify(Device::State newstate);
+
 };
 
 #endif  // KIRAN_CPANEL_NETWORK_STATUSNOTIFICATION_H

@@ -144,7 +144,10 @@ void WirelessTrayWidget::activateWirelessConnection(const QString &connectionPat
 
         reply.waitForFinished();
         if (reply.isError())
+        {
             KLOG_ERROR() << "activate connection failed:" << reply.error();
+            StatusNotification::connectitonFailedNotify(connectionPath);
+        }
         else
             KLOG_DEBUG() << "reply.reply():" << reply.reply();
     }
@@ -266,13 +269,14 @@ void WirelessTrayWidget::handleActiveConnectionAdded(const QString &path)
             auto item = m_connectionLists->item(row);
             m_connectionLists->itemSimpleStatus(item);
         }
-        connect(activatedConnection.data(), &ActiveConnection::stateChanged, this, &WirelessTrayWidget::handleActiveConnectionStateChanged,Qt::QueuedConnection);
-        connect(activatedConnection.data(), &ActiveConnection::stateChanged, &m_statusNotification, &StatusNotification::ActiveConnectionDeactivatedNotify,Qt::DirectConnection);
+        connect(activatedConnection.data(), &ActiveConnection::stateChanged, this, &WirelessTrayWidget::handleActiveConnectionStateChanged);
+//        connect(activatedConnection.data(), &ActiveConnection::stateChanged, &m_statusNotification, &StatusNotification::ActiveConnectionDeactivatedNotify,Qt::DirectConnection);
     }
 }
 
 void WirelessTrayWidget::handleActiveConnectionRemoved(const QString &path)
 {
+    KLOG_DEBUG() << "ConnectionRemoved";
     m_connectionLists->handleActiveStateDeactivated(path);
 }
 
@@ -308,7 +312,7 @@ void WirelessTrayWidget::handleStateActivated(const QString &activatedPath)
 
         auto item = m_connectionLists->findItemByActivatedPath(activatedPath);
         ConnectionInfo connectionInfo = item->data(Qt::UserRole).value<ConnectionInfo>();
-        m_statusNotification.ActiveConnectionStateNotify(ActiveConnection::Activated, connectionInfo);
+        StatusNotification::ActiveConnectionActivatedNotify(connectionInfo);
 
         m_connectionLists->sortItems();
         m_connectionLists->update();
@@ -317,7 +321,7 @@ void WirelessTrayWidget::handleStateActivated(const QString &activatedPath)
 
 void WirelessTrayWidget::handleStateDeactivated(const QString &activatedPath)
 {
-    KLOG_DEBUG() << "handleStateDeactivated activatedPath:" << activatedPath;
+    KLOG_DEBUG() << "StateDeactivated :" << activatedPath;
     m_connectionLists->handleActiveStateDeactivated(activatedPath);
 }
 
@@ -371,10 +375,21 @@ void WirelessTrayWidget::handleRequestIgnore(const QString &activatedConnectionP
     if (reply.isError())
         KLOG_INFO() << "Disconnect failed:" << reply.error();
 
-    QDBusPendingReply<> replyRemove = connection->remove();
-    replyRemove.waitForFinished();
-    if (replyRemove.isError())
-        KLOG_INFO() << "Remove connection failed:" << reply.error();
+    /*
+     * Note:deactivate后，通过信号发出deactivate的状态通知，通知需要从connection中获取id信息
+     * 如果deactivate后立马删除connection,可能导致状态通知获取不到相应的信息
+     * 故延时一段时间，以便状态通知能获取到id信息
+     * 有待改进
+     * */
+
+    QTimer::singleShot(100, this, [connection]()
+                       {
+                           QDBusPendingReply<> replyRemove = connection->remove();
+                           replyRemove.waitForFinished();
+                           if (replyRemove.isError())
+                               KLOG_INFO() << "Remove connection failed:" << replyRemove.error();
+
+                       });
 }
 
 void WirelessTrayWidget::setSecurityPskAndActivateWirelessConnection(const QString &password)

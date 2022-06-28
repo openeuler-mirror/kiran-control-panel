@@ -20,6 +20,7 @@
 #include <QScrollBar>
 #include <QPointer>
 #include "ui_wired-manager.h"
+#include "status-notification.h"
 
 WiredManager::WiredManager(const QString &devicePath, QWidget *parent) : Manager(parent), ui(new Ui::WiredManager)
 {
@@ -97,9 +98,9 @@ void WiredManager::handleRequestActivateConnection(const QString &connectionPath
     reply.waitForFinished();
     if (reply.isError())
     {
-        //TODO:调用activateConnection失败的处理
         //此处处理进入激活流程失败的原因，并不涉及流程中某个具体阶段失败的原因
-        KLOG_DEBUG() << "activate connection failed:" << reply.error();
+        KLOG_ERROR() << "activate connection failed:" << reply.error();
+        StatusNotification::connectitonFailedNotify(connectionPath);
     }
     else
     {

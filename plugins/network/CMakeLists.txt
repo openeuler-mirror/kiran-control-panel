@@ -19,8 +19,6 @@ add_executable(${PROJECT_NAME}
         ./main.cpp
         )
 
-MESSAGE(${PROJECT_NAME})
-
 find_package(Qt${QT_VERSION} COMPONENTS ${REQUIRED_LIBS} REQUIRED)
 find_package(KF5NetworkManagerQt REQUIRED)
 
