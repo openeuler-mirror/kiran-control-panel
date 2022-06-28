@@ -21,7 +21,7 @@
 
 #include <kiran-switch-button.h>
 #include <kiranwidgets-qt5/kiran-message-box.h>
-#include <widget-property-helper.h>
+#include <style-property.h>
 #include <kiran-system-daemon/accounts-i.h>
 #include <qt5-log-i.h>
 
@@ -29,13 +29,14 @@
 #include <QMessageBox>
 #include <QEvent>
 #include <QKeyEvent>
-#include <QMouseEvent>
 
 enum PageEnum
 {
     PAGE_USER_INFO,
     PAGE_CHANGE_PASSWD
 };
+
+using namespace Kiran;
 
 UserInfoPage::UserInfoPage(QWidget *parent) : QWidget(parent),
                                               ui(new Ui::UserInfoPage)
@@ -129,9 +130,9 @@ void UserInfoPage::initUI()
     m_userStatusSwitch = new KiranSwitchButton(this);
     ui->layout_userStatusSwitch->insertWidget(0, m_userStatusSwitch);
 
-    Kiran::WidgetPropertyHelper::setButtonType(ui->btn_saveProperty, Kiran::BUTTON_Default);
-    Kiran::WidgetPropertyHelper::setButtonType(ui->btn_deleteUser, Kiran::BUTTON_Warning);
-    Kiran::WidgetPropertyHelper::setButtonType(ui->btn_savePasswd, Kiran::BUTTON_Default);
+    StylePropertyHelper::setButtonType(ui->btn_saveProperty, BUTTON_Default);
+    StylePropertyHelper::setButtonType(ui->btn_deleteUser, BUTTON_Warning);
+    StylePropertyHelper::setButtonType(ui->btn_savePasswd, BUTTON_Default);
 
     /* 用户显示页面 */
     //用户头像

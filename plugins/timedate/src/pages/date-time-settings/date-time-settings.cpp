@@ -18,7 +18,9 @@
 #include "timedate-interface.h"
 #include "ui_date-time-settings.h"
 
-#include <widget-property-helper.h>
+#include <style-property.h>
+
+using namespace Kiran;
 
 DateTimeSettings::DateTimeSettings(QWidget *parent) : QWidget(parent), ui(new Ui::DateTimeSettings)
 {
@@ -33,7 +35,7 @@ DateTimeSettings::~DateTimeSettings()
 
 void DateTimeSettings::init()
 {
-    Kiran::WidgetPropertyHelper::setButtonType(ui->btn_save,Kiran::BUTTON_Default);
+    StylePropertyHelper::setButtonType(ui->btn_save,Kiran::BUTTON_Default);
     connect(ui->btn_save, &QPushButton::clicked, this, &DateTimeSettings::handleButtonSaveClicked);
     connect(ui->btn_reset, &QPushButton::clicked, this, &DateTimeSettings::handleButtonResetClicked);
 }

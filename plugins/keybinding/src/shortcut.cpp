@@ -23,7 +23,7 @@
 #include <kiran-log/qt5-log-i.h>
 #include <kiran-message-box.h>
 #include <kiran-session-daemon/keybinding-i.h>
-#include <kiranwidgets-qt5/widget-property-helper.h>
+#include <style-property.h>
 
 #include <QClipboard>
 #include <QFileDialog>
@@ -31,6 +31,8 @@
 #include <QtConcurrentRun>
 
 Q_DECLARE_METATYPE(QList<ShortcutInfoPtr>)
+
+using namespace Kiran;
 
 Shortcut::Shortcut(QWidget *parent) : QWidget(parent),
                                       ui(new Ui::Shortcut)
@@ -83,9 +85,9 @@ void Shortcut::initUI()
 {
     ui->lineEdit_search->setPlaceholderText(tr("Please enter a search keyword..."));
 
-    Kiran::WidgetPropertyHelper::setButtonType(ui->btn_shortcut_add, Kiran::BUTTON_Default);
-    Kiran::WidgetPropertyHelper::setButtonType(ui->btn_page_add, Kiran::BUTTON_Default);
-    Kiran::WidgetPropertyHelper::setButtonType(ui->btn_save, Kiran::BUTTON_Default);
+    StylePropertyHelper::setButtonType(ui->btn_shortcut_add, Kiran::BUTTON_Default);
+    StylePropertyHelper::setButtonType(ui->btn_page_add, Kiran::BUTTON_Default);
+    StylePropertyHelper::setButtonType(ui->btn_save, Kiran::BUTTON_Default);
 
     ui->stackedWidget->setCurrentWidget(ui->page_shortcut);
     ui->stackedWidget_search->setCurrentWidget(ui->page_shortcut_list);

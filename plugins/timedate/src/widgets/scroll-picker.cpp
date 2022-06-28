@@ -649,7 +649,7 @@ void ScrollPicker::wheelEvent(QWheelEvent *event)
     }
 
     int itemHeight = height()/showCount();
-    int delta = event->delta();
+    int delta = event->angleDelta().y();
 
     if( !m_loop && ( (delta<0&&m_currentIndex.row()==(count()-1))||(delta>0&&m_currentIndex.row()==0) ) ){
         m_deviation = 0;

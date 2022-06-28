@@ -150,37 +150,37 @@ void Fonts::connectSignals()
 {
     connect(AppearanceGlobalInfo::instance(), &AppearanceGlobalInfo::fontChanged, this, &Fonts::handleFontChanged);
 
-    connect(ui->cbox_application_font_name, QOverload<const QString&>::of(&QComboBox::activated), [=](QString text) {
+    connect(ui->cbox_application_font_name, &QComboBox::textActivated, [=](QString text) {
         m_applicationFontInfo.replace(0, text);
         KLOG_INFO() << "select applicationFont name = " << m_applicationFontInfo.at(0);
         KLOG_INFO() << "select applicationFont size = " << m_applicationFontInfo.at(1);
         setFont(APPEARANCE_FONT_TYPE_APPLICATION, m_applicationFontInfo);
     });
-    connect(ui->cbox_application_font_size, QOverload<const QString&>::of(&QComboBox::activated), [=](QString text) {
+    connect(ui->cbox_application_font_size, &QComboBox::textActivated, [=](QString text) {
         m_applicationFontInfo.replace(1, text);
         KLOG_INFO() << "select applicationFont name = " << m_applicationFontInfo.at(0);
         KLOG_INFO() << "select applicationFont size = " << m_applicationFontInfo.at(1);
         setFont(APPEARANCE_FONT_TYPE_APPLICATION, m_applicationFontInfo);
     });
-    connect(ui->cbox_monospace_font_name, QOverload<const QString&>::of(&QComboBox::activated), [=](QString text) {
+    connect(ui->cbox_monospace_font_name, &QComboBox::textActivated, [=](QString text) {
         m_monospaceFontInfo.replace(0, text);
         KLOG_INFO() << "monospaceFontInfo name = " << m_monospaceFontInfo.at(0);
         KLOG_INFO() << "monospaceFontInfo size = " << m_monospaceFontInfo.at(1);
         setFont(APPEARANCE_FONT_TYPE_MONOSPACE, m_monospaceFontInfo);
     });
-    connect(ui->cbox_monospace_font_size, QOverload<const QString&>::of(&QComboBox::activated), [=](QString text) {
+    connect(ui->cbox_monospace_font_size, &QComboBox::textActivated, [=](QString text) {
         m_monospaceFontInfo.replace(1, text);
         KLOG_INFO() << "monospaceFontInfo name = " << m_monospaceFontInfo.at(0);
         KLOG_INFO() << "monospaceFontInfo size = " << m_monospaceFontInfo.at(1);
         setFont(APPEARANCE_FONT_TYPE_MONOSPACE, m_monospaceFontInfo);
     });
-    connect(ui->cbox_titlebar_font_name, QOverload<const QString&>::of(&QComboBox::activated), [=](QString text) {
+    connect(ui->cbox_titlebar_font_name, &QComboBox::textActivated, [=](QString text) {
         m_windowTitleFontInfo.replace(0, text);
         KLOG_INFO() << "windowTitleFontInfo name = " << m_windowTitleFontInfo.at(0);
         KLOG_INFO() << "windowTitleFontInfo size = " << m_windowTitleFontInfo.at(1);
         setFont(APPEARANCE_FONT_TYPE_WINDOW_TITLE, m_windowTitleFontInfo);
     });
-    connect(ui->cbox_titlebar_font_size, QOverload<const QString&>::of(&QComboBox::activated), [=](QString text) {
+    connect(ui->cbox_titlebar_font_size, &QComboBox::textActivated, [=](QString text) {
         m_windowTitleFontInfo.replace(1, text);
         KLOG_INFO() << "windowTitleFont name = " << m_windowTitleFontInfo.at(0);
         KLOG_INFO() << "windowTitleFont size = " << m_windowTitleFontInfo.at(1);
@@ -222,7 +222,7 @@ void Fonts::showFontInfo(QComboBox* nameParent, QComboBox* sizeParent, QString n
 
 void Fonts::handleFontChanged(int type, QString fontInfo)
 {
-    QStringList fontInfoList = fontInfo.split(" ", QString::SkipEmptyParts);
+    QStringList fontInfoList = fontInfo.split(" ", Qt::SkipEmptyParts);
     QString fontSize = fontInfoList.takeLast();
     QString fontName = fontInfoList.join(" ");
     KLOG_INFO() << "font changed : " << type << ",name: " << fontName << ",size: " << fontSize;

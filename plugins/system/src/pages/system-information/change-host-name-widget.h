@@ -27,7 +27,7 @@ class ChangeHostNameWidget : public KiranTitlebarWindow
 {
     Q_OBJECT
 public:
-    explicit ChangeHostNameWidget();
+    explicit ChangeHostNameWidget(QWidget* parent=nullptr);
     ~ChangeHostNameWidget();
     bool getLineEditStatus();
 

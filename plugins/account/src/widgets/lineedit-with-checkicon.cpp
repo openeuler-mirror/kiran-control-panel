@@ -47,7 +47,7 @@ void LineEditWithCheckIcon::initUI()
 {
     setContextMenuPolicy(Qt::NoContextMenu);
     setIconSize(QSize(16, 16));
-    setIconPosition(Kiran::ICON_POSITION_RIGHT);
+    setIconPosition(KiranIconLineEdit::ICON_POSITION_RIGHT);
     setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
     connect(this, &QLineEdit::textChanged, [this](const QString &text) {
         ///密码框输入密码不为空的情况下调整字体和字间距

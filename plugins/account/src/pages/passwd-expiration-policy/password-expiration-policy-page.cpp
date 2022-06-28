@@ -13,15 +13,15 @@
  */
 
 #include "password-expiration-policy-page.h"
+#include "ksd_accounts_user_proxy.h"
+#include "ui_password-expiration-policy-page.h"
+
+#include <QDBusPendingReply>
+#include <QJsonDocument>
 #include <kiran-switch-button.h>
 #include <kiran-system-daemon/accounts-i.h>
 #include <qt5-log-i.h>
-#include <widget-property-helper.h>
-#include <QDBusPendingReply>
-#include <QJsonDocument>
-
-#include "ksd_accounts_user_proxy.h"
-#include "ui_password-expiration-policy-page.h"
+#include <style-property.h>
 
 using namespace Kiran;
 
@@ -49,7 +49,7 @@ void PasswordExpirationPolicyPage::setCurrentUser(const QString &userObj)
 
 void PasswordExpirationPolicyPage::initUI()
 {
-    WidgetPropertyHelper::setButtonType(ui->btn_save, BUTTON_Default);
+    StylePropertyHelper::setButtonType(ui->btn_save, BUTTON_Default);
 
     ///用户过期时间
     m_userExpiresSwitch = new KiranSwitchButton(this);

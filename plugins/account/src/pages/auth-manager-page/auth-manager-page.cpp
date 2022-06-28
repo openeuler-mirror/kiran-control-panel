@@ -20,13 +20,11 @@
 
 #include "ksd_accounts_user_proxy.h"
 
+#include <QList>
 #include <kiran-message-box.h>
 #include <kiran-switch-button.h>
 #include <qt5-log-i.h>
-#include <widget-property-helper.h>
-#include <QCheckBox>
-#include <QJsonDocument>
-#include <QList>
+#include <style-property.h>
 
 using namespace Kiran;
 
@@ -66,7 +64,7 @@ void AuthManagerPage::setCurrentUser(const QString &userObj)
 
 void AuthManagerPage::initUI()
 {
-    WidgetPropertyHelper::setButtonType(ui->btn_save, BUTTON_Default);
+    StylePropertyHelper::setButtonType(ui->btn_save, BUTTON_Default);
 
     m_fingerAuthSwitch = new KiranSwitchButton(this);
     ui->layout_fingerAuth->addWidget(m_fingerAuthSwitch);

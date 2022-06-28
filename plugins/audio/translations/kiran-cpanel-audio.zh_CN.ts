@@ -4,12 +4,12 @@
 <context>
     <name>AudioSystemTray</name>
     <message>
-        <location filename="../src/system-tray/audio-system-tray.cpp" line="79"/>
+        <location filename="../src/system-tray/audio-system-tray.cpp" line="89"/>
         <source>Volume Setting</source>
         <translation>音量设置</translation>
     </message>
     <message>
-        <location filename="../src/system-tray/audio-system-tray.cpp" line="80"/>
+        <location filename="../src/system-tray/audio-system-tray.cpp" line="90"/>
         <source>Mixed Setting</source>
         <translation>混合设置</translation>
     </message>
@@ -22,12 +22,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/plugin/cpanel-audio-widget.cpp" line="39"/>
+        <location filename="../src/plugin/cpanel-audio-widget.cpp" line="40"/>
         <source>Output</source>
         <translation>输出</translation>
     </message>
     <message>
-        <location filename="../src/plugin/cpanel-audio-widget.cpp" line="40"/>
+        <location filename="../src/plugin/cpanel-audio-widget.cpp" line="41"/>
         <source>Input</source>
         <translation>输入</translation>
     </message>
@@ -55,7 +55,7 @@
         <translation>反馈音量</translation>
     </message>
     <message>
-        <location filename="../src/plugin/input-page.cpp" line="239"/>
+        <location filename="../src/plugin/input-page.cpp" line="240"/>
         <source>No input device detected</source>
         <translation>没检测到输入设备</translation>
     </message>
@@ -93,7 +93,7 @@
         <translation>右</translation>
     </message>
     <message>
-        <location filename="../src/plugin/output-page.cpp" line="93"/>
+        <location filename="../src/plugin/output-page.cpp" line="96"/>
         <source>No output device detected</source>
         <translation>为检测到输出设备</translation>
     </message>
@@ -107,7 +107,7 @@
     </message>
     <message>
         <location filename="../src/system-tray/volume-setting-page.ui" line="104"/>
-        <location filename="../src/system-tray/volume-setting-page.cpp" line="55"/>
+        <location filename="../src/system-tray/volume-setting-page.cpp" line="58"/>
         <source>Volume</source>
         <translation>音量</translation>
     </message>
