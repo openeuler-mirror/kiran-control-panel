@@ -31,8 +31,8 @@ WirelessSettingPage::~WirelessSettingPage()
 
 void WirelessSettingPage::initConnection()
 {
-    connect(ui->generalButton,&DisconnectAndDeleteButton::disconnectButtonClicked,this,&WirelessSettingPage::returnPreviousPage);
-    connect(ui->generalButton,&DisconnectAndDeleteButton::deleteButtonClicked,this,&WirelessSettingPage::returnPreviousPage);
+    connect(ui->disconnectAndDeleteButton,&DisconnectAndDeleteButton::disconnectButtonClicked,this,&WirelessSettingPage::returnPreviousPage);
+    connect(ui->disconnectAndDeleteButton,&DisconnectAndDeleteButton::deleteButtonClicked,this,&WirelessSettingPage::returnPreviousPage);
 }
 
 void WirelessSettingPage::initSettingPage()
@@ -54,7 +54,7 @@ void WirelessSettingPage::initWidgets()
     ui->generalWidget->setConnectionSettings(m_connectionSettings);
     ui->ipv4Widget->setIpv4Setting(m_ipv4Setting);
     ui->ipv6Widget->setIpv6Setting(m_ipv6Setting);
-    ui->generalButton->setConnectionPtr(m_connection);
+    ui->disconnectAndDeleteButton->setConnectionPtr(m_connection);
     ui->wirelessSecurity->setWirelessSecuritySetting(m_wirelessSecuritySetting);
     ui->wireless->setWirelessSetting(m_wirelessSetting);
 }
@@ -70,15 +70,15 @@ void WirelessSettingPage::showSettingPage(QString activeConnectionPath)
 
     if (m_connectionSettings.isNull())
     {
-        ui->generalButton->initButton(SETTING_CONNECTION_STATUS_NEW);
+        ui->disconnectAndDeleteButton->initButton(SETTING_CONNECTION_STATUS_NEW);
     }
     else
     {
         //通过将激活路径传入SettingPage,判断该连接是否激活，也可通过uuid判断
         if (activeConnectionPath.isEmpty())
-            ui->generalButton->initButton(SETTING_CONNECTION_STATUS_DEACTIVATED);
+            ui->disconnectAndDeleteButton->initButton(SETTING_CONNECTION_STATUS_DEACTIVATED);
         else
-            ui->generalButton->initButton(SETTING_CONNECTION_STATUS_ACTIVATED,activeConnectionPath);
+            ui->disconnectAndDeleteButton->initButton(SETTING_CONNECTION_STATUS_ACTIVATED,activeConnectionPath);
     }
 }
 
@@ -100,7 +100,7 @@ void WirelessSettingPage::clearPtr()
     SettingPage::clearPtr();
 
     ui->generalWidget->clearPtr();
-    ui->generalButton->clearPtr();
+    ui->disconnectAndDeleteButton->clearPtr();
     ui->ipv4Widget->clearPtr();
     ui->ipv6Widget->clearPtr();
     ui->wirelessSecurity->clearPtr();

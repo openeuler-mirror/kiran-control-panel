@@ -42,7 +42,7 @@ public:
     void initConnect();
 
     void setConnectionType(ConnectionSettings::ConnectionType connectionType);
-    void setDevicePath(const QString& devicePath);
+    void setDevicePath(const QString &devicePath);
     void setItemWidgetType(ItemWidgetType itemType);
     void setTitle(QString title);
     void setSwitchButtonVisible(bool visible);
@@ -69,15 +69,13 @@ public:
     QListWidgetItem *item(int row);
     void itemSimpleStatus(QListWidgetItem *item);
 
-
-
 public slots:
     void clearConnectionLists();
 
     void updateItemActivatedStatus(const QString &activatedPath);
-    void connectionStateNotify(ActiveConnection::State state,const QString &activatedConnectionPath);
+    void connectionStateNotify(ActiveConnection::State state, const QString &activatedConnectionPath);
     void updateItemActivatingStatus(QListWidgetItem *item);
-    void updateItemActivatedPath(QListWidgetItem* item, QString activatedPath);
+    void updateItemActivatedPath(QListWidgetItem *item, QString activatedPath);
 
     void handleActiveStateDeactivated(const QString &activatedConnectionPath);
     void handleToggledSwitchButton(bool toggled);
@@ -94,6 +92,7 @@ signals:
     void connectionUpdated(const QString &path);
 
     void sendSsidToWireless(const QString &ssid);
+
 private:
     Ui::ConnectionShowPage *ui;
     KiranSwitchButton *m_switchButton;

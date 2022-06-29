@@ -29,7 +29,7 @@
    <item>
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="page">
       <layout class="QVBoxLayout" name="verticalScrollAreaWidgetContentsLayout">
@@ -80,8 +80,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>656</width>
-            <height>830</height>
+            <width>646</width>
+            <height>812</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -126,7 +126,7 @@
                </widget>
               </item>
               <item>
-               <widget class="GeneralComboBox" name="vpnType"/>
+               <widget class="OptionsComboBox" name="vpnType"/>
               </item>
              </layout>
             </widget>
@@ -266,9 +266,9 @@
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>GeneralComboBox</class>
+   <class>OptionsComboBox</class>
    <extends>QComboBox</extends>
-   <header location="global">general-widget.h</header>
+   <header location="global">options-combobox.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

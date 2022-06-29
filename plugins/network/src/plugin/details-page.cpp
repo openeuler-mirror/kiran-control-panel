@@ -17,6 +17,7 @@
 #include <QTimer>
 #include "connection-details-widget.h"
 #include "ui_details-page.h"
+
 DetailsPage::DetailsPage(QWidget *parent) : QWidget(parent), ui(new Ui::DetailsPage)
 {
     ui->setupUi(this);
@@ -35,8 +36,6 @@ void DetailsPage::initUI()
     Device::List deviceList = networkInterfaces();
     for (Device::Ptr device : deviceList)
     {
-        KLOG_DEBUG() << "device->type():" << device->type();
-        KLOG_DEBUG() << "device->interfaceName():" << device->interfaceName();
         if ((device->type() == Device::Wifi) ||
             (device->type() == Device::Ethernet))
         {

@@ -15,6 +15,7 @@
 #include "vpn-widget.h"
 #include <qt5-log-i.h>
 #include "ui_vpn-widget.h"
+#include <QHostAddress>
 
 VpnWidget::VpnWidget(QWidget *parent) : QWidget(parent), ui(new Ui::VpnWidget)
 {
@@ -116,13 +117,11 @@ void VpnWidget::showSettings()
     {
         NMStringMap dataMap = m_vpnSetting->data();
         NMStringMap secretMap = m_vpnSetting->secrets();
-
         ui->gateway->setText(dataMap.value("gateway"));
         ui->userName->setText(dataMap.value("user"));
 
         KLOG_DEBUG() << "password-flags:" << dataMap.value("password-flags");
         int index = ui->passwordOptions->findData(dataMap.value("password-flags"));
-        KLOG_DEBUG() << "index:" << index;
         ui->passwordOptions->setCurrentIndex(index);
 
         KLOG_DEBUG() << "password:" << secretMap.value("password");
@@ -147,4 +146,35 @@ void VpnWidget::resetSettings()
 void VpnWidget::clearPtr()
 {
     m_vpnSetting.clear();
+}
+
+bool VpnWidget::isInputValid()
+{
+    bool valid = true;
+
+    if (ui->gateway->text().isEmpty())
+        valid = false;
+    else
+        valid = isIpv4AddressValid(ui->gateway->text());
+
+    if (ui->userName->text().isEmpty())
+        valid = false;
+
+    if ((ui->passwordOptions->currentData().value<Setting::SecretFlagType>() == NetworkManager::Setting::SecretFlagType::None)
+        && ui->password->text().isEmpty())
+        valid = false;
+
+    return valid;
+}
+
+
+bool VpnWidget::isIpv4AddressValid(const QString &address)
+{
+    QHostAddress ipAddr(address);
+    if (ipAddr == QHostAddress(QHostAddress::Null) || ipAddr == QHostAddress(QHostAddress::AnyIPv4)
+        || ipAddr.protocol() != QAbstractSocket::NetworkLayerProtocol::IPv4Protocol) {
+        return false;
+    }
+    QRegExp regExpIP("((25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])[\\.]){3}(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])");
+    return regExpIP.exactMatch(address);
 }

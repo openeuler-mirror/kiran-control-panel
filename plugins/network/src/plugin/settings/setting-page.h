@@ -43,6 +43,7 @@ public:
     virtual void initSpecificSettings() = 0;
     virtual void initWidgets() = 0;
     virtual void saveSettingPage() = 0;
+    virtual bool isInputValid();
 
     virtual void clearPtr();
 

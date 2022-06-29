@@ -94,7 +94,8 @@ void WiredTrayWidget::handleRequestActivateConnection(const ConnectionInfo &conn
 void WiredTrayWidget::handleNotifierConnectionAdded(const QString &path)
 {
     Connection::Ptr connection = findConnection(path);
-    if (connection->settings()->connectionType() == ConnectionSettings::ConnectionType::Wired)
+    if ((connection->settings()->connectionType() == ConnectionSettings::ConnectionType::Wired)
+        && (!connection->name().isEmpty()))
     {
         m_connectionLists->addConnectionToLists(connection, m_devicePath);
     }

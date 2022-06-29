@@ -12,8 +12,8 @@
  * Author:     luoqing <luoqing@kylinos.com.cn>
  */
 
-#ifndef KIRAN_CPANEL_NETWORK_GENERAL_WIDGET_H
-#define KIRAN_CPANEL_NETWORK_GENERAL_WIDGET_H
+#ifndef KIRAN_CPANEL_NETWORK_CONNECTION_NAME_WIDGET_H
+#define KIRAN_CPANEL_NETWORK_CONNECTION_NAME_WIDGET_H
 
 #include <NetworkManagerQt/ConnectionSettings>
 #include <QWidget>
@@ -21,7 +21,7 @@
 QT_BEGIN_NAMESPACE
 namespace Ui
 {
-class GeneralWidget;
+class ConnectionNameWidget;
 }
 QT_END_NAMESPACE
 using namespace NetworkManager;
@@ -33,13 +33,13 @@ enum VpnType
 };
 
 class KiranSwitchButton;
-class GeneralWidget : public QWidget
+class ConnectionNameWidget : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit GeneralWidget(QWidget *parent = nullptr);
-    ~GeneralWidget() override;
+    explicit ConnectionNameWidget(QWidget *parent = nullptr);
+    ~ConnectionNameWidget() override;
     void initUI();
     void setConnectionSettings(const ConnectionSettings::Ptr &connectionSettings);
     void setNameLabel(const QString &name);
@@ -51,19 +51,9 @@ public slots:
     void clearPtr();
     bool isInputValid();
 private:
-    Ui::GeneralWidget *ui;
+    Ui::ConnectionNameWidget *ui;
     ConnectionSettings::Ptr m_connectionSettings;
     ConnectionSettings::ConnectionType m_connectionType;
     KiranSwitchButton *m_autoConnection;
 };
-
-class GeneralComboBox : public QComboBox
-{
-    Q_OBJECT
-public:
-    explicit GeneralComboBox(QWidget *parent = nullptr);
-
-    void wheelEvent(QWheelEvent *e) override;
-};
-
-#endif  //KIRAN_CPANEL_NETWORK_GENERAL_WIDGET_H
+#endif  //KIRAN_CPANEL_NETWORK_CONNECTION_NAME_WIDGET_H

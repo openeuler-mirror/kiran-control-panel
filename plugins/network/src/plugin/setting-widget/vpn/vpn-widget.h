@@ -34,6 +34,7 @@ public:
     void initUI();
     void initConnection();
     void setVpnSetting(const VpnSetting::Ptr &vpnSetting);
+    bool isIpv4AddressValid(const QString &address);
 
 public slots:
     void saveSettings();
@@ -41,6 +42,7 @@ public slots:
     void resetSettings();
     void clearPtr();
 
+    bool isInputValid();
     void handlePasswordOptionsChanged(Setting::SecretFlagType secretFlagType);
     void enablePasswordVisual();
 

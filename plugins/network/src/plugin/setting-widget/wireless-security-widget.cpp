@@ -15,6 +15,7 @@
 #include "wireless-security-widget.h"
 #include <NetworkManagerQt/Setting>
 #include "ui_wireless-security-widget.h"
+
 Q_DECLARE_METATYPE(Setting::SecretFlagType)
 WirelessSecurityWidget::WirelessSecurityWidget(QWidget *parent) : QWidget(parent), ui(new Ui::WirelessSecurityWidget)
 {
@@ -41,6 +42,9 @@ void WirelessSecurityWidget::initUI()
 
     ui->passwordEdit->setPlaceholderText("Required");
     ui->passwordEdit->setEchoMode(QLineEdit::Password);
+
+    //Note:暂时不需要在该处输入和显示密码的功能，暂时隐藏
+    ui->passwordWidget->setVisible(false);
 }
 
 void WirelessSecurityWidget::initConnection()
@@ -48,9 +52,9 @@ void WirelessSecurityWidget::initConnection()
     connect(ui->securityOption, QOverload<int>::of(&QComboBox::currentIndexChanged), [=](int index) {
         handleSecurityOptionChanged(ui->securityOption->currentData().value<WirelessSecuritySetting::KeyMgmt>());
     });
-    connect(ui->passwordOption, QOverload<int>::of(&QComboBox::currentIndexChanged), [=](int index) {
-        handlePasswordOptionsChanged(ui->passwordOption->currentData().value<Setting::SecretFlagType>());
-    });
+//    connect(ui->passwordOption, QOverload<int>::of(&QComboBox::currentIndexChanged), [=](int index) {
+//        handlePasswordOptionsChanged(ui->passwordOption->currentData().value<Setting::SecretFlagType>());
+//    });
     connect(ui->passwordVisual, &QPushButton::clicked, this, &WirelessSecurityWidget::enablePasswordVisual);
 }
 
@@ -157,7 +161,8 @@ void WirelessSecurityWidget::showSettings()
             {
                 secretFlagIndex = ui->passwordOption->findData(Setting::NotRequired);
             }
-            ui->passwordWidget->setVisible(true);
+            //暂时隐藏passwordWidget
+//            ui->passwordWidget->setVisible(true);
             ui->passwordOption->setCurrentIndex(secretFlagIndex);
             ui->passwordEdit->setText(m_wirelessSecuritySetting->psk());
         }
@@ -190,6 +195,7 @@ void WirelessSecurityWidget::resetSettings()
     ui->securityOption->setCurrentIndex(index);
     index = ui->passwordOption->findData(Setting::None);
     ui->passwordOption->setCurrentIndex(index);
-    ui->passwordWidget->setVisible(true);
+    //暂时隐藏passwordWidget
+//    ui->passwordWidget->setVisible(true);
     ui->passwordEdit->clear();
 }

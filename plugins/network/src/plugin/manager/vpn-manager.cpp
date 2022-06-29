@@ -23,6 +23,7 @@
 #include "text-input-dialog.h"
 #include "ui_vpn-manager.h"
 #include "status-notification.h"
+#include "connection-name-widget.h"
 
 Q_DECLARE_METATYPE(VpnType)
 
@@ -93,15 +94,22 @@ void VpnManager::initConnection()
         switch (index)
         {
         case VPN_TYPE_L2TP:
-            ui->l2tpSetting->handleSaveButtonClicked(ConnectionSettings::ConnectionType::Vpn);
+            if(ui->l2tpSetting->isInputValid())
+            {
+                ui->l2tpSetting->handleSaveButtonClicked(ConnectionSettings::ConnectionType::Vpn);
+                handleReturnPreviousPage();
+            }
             break;
         case VPN_TYPE_PPTP:
-            ui->pptpSetting->handleSaveButtonClicked(ConnectionSettings::ConnectionType::Vpn);
+            if(ui->pptpSetting->isInputValid())
+            {
+                ui->pptpSetting->handleSaveButtonClicked(ConnectionSettings::ConnectionType::Vpn);
+                handleReturnPreviousPage();
+            }
             break;
         default:
             break;
         }
-        handleReturnPreviousPage();
     });
 
     connect(ui->connectionShowPage,&ConnectionShowPage::connectionUpdated,[=](const QString &path){
@@ -212,7 +220,8 @@ void VpnManager::activateVPNConnection(const QString &connectionPath,const QStri
 void VpnManager::handleNotifierConnectionAdded(const QString &path)
 {
     Connection::Ptr connection =  findConnection(path);
-    if (connection->settings()->connectionType() == ConnectionSettings::ConnectionType::Vpn)
+    if ((connection->settings()->connectionType() == ConnectionSettings::ConnectionType::Vpn)
+        && (!connection->name().isEmpty()))
     {
         ui->connectionShowPage->addConnectionToLists(connection,"");
     }
@@ -249,7 +258,6 @@ void VpnManager::handleActiveConnectionAdded(const QString &activePath)
 
 void VpnManager::handleActiveConnectionRemoved(const QString &activePath)
 {
-    KLOG_DEBUG() << "handleActiveConnectionRemoved";
 }
 
 //TODO:若没有安装VPN插件则需要提示

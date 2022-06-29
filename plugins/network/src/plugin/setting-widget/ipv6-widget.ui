@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>322</width>
-    <height>315</height>
+    <height>371</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -39,7 +39,7 @@
       </widget>
      </item>
      <item>
-      <widget class="GeneralComboBox" name="ipv6Method"/>
+      <widget class="OptionsComboBox" name="ipv6Method"/>
      </item>
     </layout>
    </item>
@@ -118,9 +118,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>GeneralComboBox</class>
+   <class>OptionsComboBox</class>
    <extends>QComboBox</extends>
-   <header location="global">general-widget.h</header>
+   <header location="global">options-combobox.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

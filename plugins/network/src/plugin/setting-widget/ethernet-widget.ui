@@ -34,7 +34,7 @@
     </widget>
    </item>
    <item>
-    <widget class="GeneralComboBox" name="deviceMac"/>
+    <widget class="OptionsComboBox" name="deviceMac"/>
    </item>
    <item>
     <widget class="QLabel" name="label_20">
@@ -77,9 +77,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>GeneralComboBox</class>
+   <class>OptionsComboBox</class>
    <extends>QComboBox</extends>
-   <header location="global">general-widget.h</header>
+   <header location="global">options-combobox.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

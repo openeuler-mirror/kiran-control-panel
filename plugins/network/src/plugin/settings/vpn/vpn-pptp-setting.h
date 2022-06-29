@@ -39,6 +39,7 @@ public:
 
 public slots:
     void saveSettingPage() override;
+    bool isInputValid() override;
     void showSettingPage(QString activeConnectionPath = "");
 
 private:

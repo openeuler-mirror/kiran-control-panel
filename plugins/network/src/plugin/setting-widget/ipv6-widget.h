@@ -46,6 +46,7 @@ public slots:
     void resetSettings();
     void clearPtr();
     bool isInputValid();
+
 private:
     Ui::Ipv6Widget *ui;
     Ipv6Setting::Ptr m_ipv6Setting;

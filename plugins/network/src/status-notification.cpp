@@ -93,7 +93,7 @@ void StatusNotification::ActiveConnectionDeactivatedNotify(const QString& connec
 void StatusNotification::connectionDeleteNotify(const QString& connectionName)
 {
     QString summary, body, bodyStr, icon;
-    summary = tr("Connection Failed");
+    summary = tr("Connection deleted");
     body = tr("The connection has been deleted \"%1\"");
     bodyStr = body.arg(connectionName);
 

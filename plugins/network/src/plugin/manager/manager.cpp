@@ -38,19 +38,7 @@ void Manager::initNotifierConnection()
     //    });
 
     connect(settingsNotifier(), &SettingsNotifier::connectionAdded, this, &Manager::handleNotifierConnectionAdded);
-
-    m_connectionTimer.setInterval(100);
-    m_connectionTimer.setSingleShot(true);
-    //connectionRemoved信号会激发两次，原因暂时未知，使用定时器使短时间内多次相同信号只调用一次槽函数
-    connect(settingsNotifier(), &SettingsNotifier::connectionRemoved, [=](const QString &path) {
-        m_connectionRemovePath = path;
-        m_connectionTimer.start();
-    });
-
-    connect(&m_connectionTimer, &QTimer::timeout, [=]() {
-        handleNotifierConnectionRemoved(m_connectionRemovePath);
-    });
-
+    connect(settingsNotifier(), &SettingsNotifier::connectionRemoved, this,&Manager::handleNotifierConnectionRemoved);
 }
 
 void Manager::refreshConnectionLists()
