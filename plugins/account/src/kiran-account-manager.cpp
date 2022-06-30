@@ -29,12 +29,15 @@
 #include <kiran-sidebar-widget.h>
 #include <kiran-style-public-define.h>
 #include <qt5-log-i.h>
+#include <style-palette.h>
 #include <QDebug>
 #include <QHBoxLayout>
 #include <QIcon>
 #include <QScrollArea>
 #include <QStackedWidget>
 #include <QtWidgets/QListWidgetItem>
+
+using namespace Kiran;
 
 #define ITEM_USER_OBJ_PATH_ROLE Qt::UserRole + 1
 
@@ -233,8 +236,9 @@ void KiranAccountManager::initUserList()
 
     ///创建用户按钮
     m_createUserItem = new QListWidgetItem(tr("Create new user"), m_tabList);
-    m_createUserItem->setIcon(QIcon(":/kcp-account/images/create-user-avatar.png"));
     m_tabList->addItem(m_createUserItem);
+    updateCreateUserIcon();
+    connect(StylePalette::instance(),&StylePalette::themeChanged,this,&KiranAccountManager::updateCreateUserIcon);
 
     //加载非系统用户
     QList<QString> userObjList;
@@ -442,6 +446,21 @@ void KiranAccountManager::setMaskVisible(bool visible)
     {
         m_maskWidget->hide();
     }
+}
+
+void KiranAccountManager::updateCreateUserIcon()
+{
+    QIcon icon(":/kcp-account/images/create-user-avatar.png");
+    QPixmap pixmap = icon.pixmap(40,40);
+
+    if( StylePalette::instance()->paletteType() != Kiran::PALETTE_DARK )
+    {
+        QImage image = pixmap.toImage();
+        image.invertPixels(QImage::InvertRgb);
+        pixmap = QPixmap::fromImage(image);
+    }
+
+    m_createUserItem->setIcon(pixmap);
 }
 
 QSize KiranAccountManager::sizeHint() const
