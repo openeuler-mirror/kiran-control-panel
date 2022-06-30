@@ -27,6 +27,7 @@ class ImageLoadManager : public QObject
 private:
     ImageLoadManager(QObject *parent = nullptr);
     void init();
+    static void appExitCleanup();
 
 public:
     static ImageLoadManager *instance();
