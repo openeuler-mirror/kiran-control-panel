@@ -49,8 +49,8 @@ ImageLoadManager *ImageLoadManager::instance()
         if (pInst.isNull())
         {
             pInst.reset(new ImageLoadManager);
+            qAddPostRoutine(&ImageLoadManager::appExitCleanup);
         }
-        qAddPostRoutine(&ImageLoadManager::appExitCleanup);
     }
 
     return pInst.data();
