@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>591</width>
-    <height>358</height>
+    <height>401</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -34,7 +34,7 @@
     </widget>
    </item>
    <item>
-    <widget class="GeneralComboBox" name="ipv4Method"/>
+    <widget class="OptionsComboBox" name="ipv4Method"/>
    </item>
    <item>
     <widget class="QWidget" name="ipv4Manual" native="true">
@@ -111,9 +111,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>GeneralComboBox</class>
+   <class>OptionsComboBox</class>
    <extends>QComboBox</extends>
-   <header location="global">general-widget.h</header>
+   <header location="global">options-combobox.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

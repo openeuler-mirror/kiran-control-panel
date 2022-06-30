@@ -27,7 +27,7 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="GeneralWidget" name="generalWidget" native="true">
+    <widget class="ConnectionNameWidget" name="generalWidget" native="true">
      <property name="styleSheet">
       <string notr="true"/>
      </property>
@@ -74,9 +74,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>GeneralWidget</class>
+   <class>ConnectionNameWidget</class>
    <extends>QWidget</extends>
-   <header location="global">general-widget.h</header>
+   <header location="global">connection-name-widget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>

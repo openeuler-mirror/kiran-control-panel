@@ -43,7 +43,7 @@ public slots:
 
     void handleNotifierConnectionAdded(const QString &path) override;
     void handleNotifierConnectionRemoved(const QString &path) override;
-    void activatingConnection(const QString &connectionPath,const QString &connectionParameter);
+    void activateVPNConnection(const QString &connectionPath,const QString &connectionParameter);
 
     void handleActiveConnectionAdded(const QString &activePath) override;
     void handleActiveConnectionRemoved(const QString &activePath) override;

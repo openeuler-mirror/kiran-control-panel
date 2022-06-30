@@ -34,7 +34,7 @@
     </widget>
    </item>
    <item>
-    <widget class="GeneralComboBox" name="ipv4Method"/>
+    <widget class="OptionsComboBox" name="ipv4Method"/>
    </item>
    <item>
     <layout class="QHBoxLayout" name="neverDefaultLayout">
@@ -84,9 +84,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>GeneralComboBox</class>
+   <class>OptionsComboBox</class>
    <extends>QComboBox</extends>
-   <header location="global">general-widget.h</header>
+   <header location="global">options-combobox.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

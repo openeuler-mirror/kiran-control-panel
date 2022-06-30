@@ -47,6 +47,13 @@ void TrayItemWidget::initConnection()
     connect(ui->disconnectButton,&QPushButton::clicked,this,&TrayItemWidget::disconnectButttonClicked);
     connect(ui->ignoreButton,&QPushButton::clicked,this,&TrayItemWidget::ignoreButtonClicked);
     connect(ui->cancelButton,&QPushButton::clicked,this,&TrayItemWidget::cancelButtonClicked);
+
+    connect(ui->inputTextEdit,&QLineEdit::textEdited,[=](){
+                if(ui->inputTextEdit->text().isEmpty())
+                    ui->inputTextConnectButton->setEnabled(false);
+                else
+                    ui->inputTextConnectButton->setEnabled(true);
+            });
 }
 
 void TrayItemWidget::setWidgetsInDifferentStatus(TrayItemWidgetStatus WidgetStatus)

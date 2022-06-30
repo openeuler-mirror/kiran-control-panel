@@ -20,6 +20,7 @@
 #include <NetworkManagerQt/Manager>
 #include <NetworkManagerQt/Settings>
 #include "ui_wired-setting-page.h"
+
 WiredSettingPage::WiredSettingPage(QWidget *parent) : SettingPage(parent), ui(new Ui::WiredSettingPage)
 {
     ui->setupUi(this);
@@ -41,8 +42,8 @@ void WiredSettingPage::initSettingPage()
 
 void WiredSettingPage::initConnecton()
 {
-    connect(ui->generalButton,&DisconnectAndDeleteButton::disconnectButtonClicked,this,&WiredSettingPage::returnPreviousPage);
-    connect(ui->generalButton,&DisconnectAndDeleteButton::deleteButtonClicked,this,&WiredSettingPage::returnPreviousPage);
+    connect(ui->disconnectAndDeleteButton, &DisconnectAndDeleteButton::disconnectButtonClicked, this, &WiredSettingPage::returnPreviousPage);
+    connect(ui->disconnectAndDeleteButton, &DisconnectAndDeleteButton::deleteButtonClicked, this, &WiredSettingPage::returnPreviousPage);
 }
 
 void WiredSettingPage::initSpecificSettings()
@@ -58,7 +59,7 @@ void WiredSettingPage::initWidgets()
     ui->ipv4Widget->setIpv4Setting(m_ipv4Setting);
     ui->ipv6Widget->setIpv6Setting(m_ipv6Setting);
     ui->ethernetWidget->setWiredSetting(m_wiredSetting);
-    ui->generalButton->setConnectionPtr(m_connection);
+    ui->disconnectAndDeleteButton->setConnectionPtr(m_connection);
 }
 
 void WiredSettingPage::showSettingPage(QString activeConnectionPath)
@@ -71,15 +72,15 @@ void WiredSettingPage::showSettingPage(QString activeConnectionPath)
 
     if (m_connectionSettings.isNull())
     {
-        ui->generalButton->initButton(SETTING_CONNECTION_STATUS_NEW);
+        ui->disconnectAndDeleteButton->initButton(SETTING_CONNECTION_STATUS_NEW);
     }
     else
     {
-        //通过将激活路径传入SettingPage,判断该连接是否激活，也可通过uuid判断
+        // 通过将激活路径传入SettingPage,判断该连接是否激活，也可通过uuid判断
         if (activeConnectionPath.isEmpty())
-            ui->generalButton->initButton(SETTING_CONNECTION_STATUS_DEACTIVATED);
+            ui->disconnectAndDeleteButton->initButton(SETTING_CONNECTION_STATUS_DEACTIVATED);
         else
-            ui->generalButton->initButton(SETTING_CONNECTION_STATUS_ACTIVATED,activeConnectionPath);
+            ui->disconnectAndDeleteButton->initButton(SETTING_CONNECTION_STATUS_ACTIVATED, activeConnectionPath);
     }
 }
 
@@ -99,11 +100,16 @@ void WiredSettingPage::clearPtr()
     SettingPage::clearPtr();
 
     ui->generalWidget->clearPtr();
-    ui->generalButton->clearPtr();
+    ui->disconnectAndDeleteButton->clearPtr();
     ui->ipv4Widget->clearPtr();
     ui->ipv6Widget->clearPtr();
     ui->ethernetWidget->clearPtr();
 }
 
-
-//TODO:判断输入格式合法性
+bool WiredSettingPage::isInputValid()
+{
+    if (ui->ipv4Widget->isInputValid() || ui->ipv6Widget->isInputValid() || ui->generalWidget->isInputValid())
+        return true;
+    else
+        return false;
+}

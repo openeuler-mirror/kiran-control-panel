@@ -9,7 +9,7 @@
  * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
  * See the Mulan PSL v2 for more details.
  *
- * Author:     luoqing <luoqing@kylinos.com.cn>
+ * Author:     luoqing <luoqing@kylinsec.com.cn>
  */
 
 #include "vpn-manager.h"
@@ -22,6 +22,8 @@
 #include <QScrollBar>
 #include "text-input-dialog.h"
 #include "ui_vpn-manager.h"
+#include "status-notification.h"
+#include "connection-name-widget.h"
 
 Q_DECLARE_METATYPE(VpnType)
 
@@ -92,15 +94,22 @@ void VpnManager::initConnection()
         switch (index)
         {
         case VPN_TYPE_L2TP:
-            ui->l2tpSetting->handleSaveButtonClicked(ConnectionSettings::ConnectionType::Vpn);
+            if(ui->l2tpSetting->isInputValid())
+            {
+                ui->l2tpSetting->handleSaveButtonClicked(ConnectionSettings::ConnectionType::Vpn);
+                handleReturnPreviousPage();
+            }
             break;
         case VPN_TYPE_PPTP:
-            ui->pptpSetting->handleSaveButtonClicked(ConnectionSettings::ConnectionType::Vpn);
+            if(ui->pptpSetting->isInputValid())
+            {
+                ui->pptpSetting->handleSaveButtonClicked(ConnectionSettings::ConnectionType::Vpn);
+                handleReturnPreviousPage();
+            }
             break;
         default:
             break;
         }
-        handleReturnPreviousPage();
     });
 
     connect(ui->connectionShowPage,&ConnectionShowPage::connectionUpdated,[=](const QString &path){
@@ -165,11 +174,11 @@ void VpnManager::handleRequestActivateConnection(const QString &connectionPath,c
     int passwordFlags = dataMap.value("password-flags").toInt();
     if (passwordFlags == Setting::SecretFlagType::None)
     {
-        activatingConnection(connectionPath,connectionParameter);
+        activateVPNConnection(connectionPath, connectionParameter);
     }
     else if (passwordFlags == Setting::SecretFlagType::NotRequired)
     {
-        activatingConnection(connectionPath,connectionParameter);
+        activateVPNConnection(connectionPath, connectionParameter);
     }
     else if (passwordFlags == Setting::SecretFlagType::NotSaved)
     {
@@ -180,12 +189,9 @@ void VpnManager::handleRequestActivateConnection(const QString &connectionPath,c
 
         connect(&inputDialog, &TextInputDialog::password, [=](const QString &password) {
             NMStringMap secretsMap = vpnSetting->secrets();
-            KLOG_DEBUG() << "password:" << password;
             secretsMap.insert("password", password);
-            KLOG_DEBUG() << "secretsMap:" << secretsMap;
             vpnSetting->setSecrets(secretsMap);
-
-            activatingConnection(connectionPath,connectionParameter);
+            activateVPNConnection(connectionPath, connectionParameter);
             connection->clearSecrets();
         });
 
@@ -193,7 +199,7 @@ void VpnManager::handleRequestActivateConnection(const QString &connectionPath,c
     }
 }
 
-void VpnManager::activatingConnection(const QString &connectionPath,const QString &connectionParameter)
+void VpnManager::activateVPNConnection(const QString &connectionPath,const QString &connectionParameter)
 {
     QDBusPendingReply<QDBusObjectPath> reply =
         NetworkManager::activateConnection(connectionPath, "", connectionParameter);
@@ -201,8 +207,8 @@ void VpnManager::activatingConnection(const QString &connectionPath,const QStrin
     reply.waitForFinished();
     if (reply.isError())
     {
-        KLOG_DEBUG() << "activate connection failed" << reply.error();
-        //TODO:连接失败的处理
+        KLOG_ERROR() << "activate connection failed" << reply.error();
+        StatusNotification::connectitonFailedNotify(connectionPath);
     }
     else
     {
@@ -214,7 +220,8 @@ void VpnManager::activatingConnection(const QString &connectionPath,const QStrin
 void VpnManager::handleNotifierConnectionAdded(const QString &path)
 {
     Connection::Ptr connection =  findConnection(path);
-    if (connection->settings()->connectionType() == ConnectionSettings::ConnectionType::Vpn)
+    if ((connection->settings()->connectionType() == ConnectionSettings::ConnectionType::Vpn)
+        && (!connection->name().isEmpty()))
     {
         ui->connectionShowPage->addConnectionToLists(connection,"");
     }
@@ -228,6 +235,11 @@ void VpnManager::handleNotifierConnectionRemoved(const QString &path)
 void VpnManager::handleActiveConnectionAdded(const QString &activePath)
 {
     ActiveConnection::Ptr activatedConnection = findActiveConnection(activePath);
+    if(activatedConnection == nullptr)
+    {
+        KLOG_DEBUG() << "activatedConnection == nullptr";
+        return ;
+    }
     if (activatedConnection->type() == ConnectionSettings::ConnectionType::Vpn)
     {
         VpnConnection::Ptr vpnConnection = findActiveConnection(activePath).dynamicCast<VpnConnection>();
@@ -246,13 +258,16 @@ void VpnManager::handleActiveConnectionAdded(const QString &activePath)
 
 void VpnManager::handleActiveConnectionRemoved(const QString &activePath)
 {
-    KLOG_DEBUG() << "handleActiveConnectionRemoved";
 }
 
-//TODO:验证失败的情况处理
 //TODO:若没有安装VPN插件则需要提示
 void VpnManager::handleVpnConnectionStateChanged(VpnConnection::State state, VpnConnection::StateChangeReason reason, const QString &activePath)
 {
+    auto activeConnection = findActiveConnection(activePath);
+    KLOG_DEBUG()  << " activeConnection->id():" <<  activeConnection->id();
+    QString id = "";
+    if(activeConnection != nullptr)
+        id = activeConnection->id();
     switch (state)
     {
     case VpnConnection::State::Unknown:
@@ -276,10 +291,14 @@ void VpnManager::handleVpnConnectionStateChanged(VpnConnection::State state, Vpn
         break;
     case VpnConnection::State::Failed:
         KLOG_DEBUG() << "VpnConnection::State::Failed";
+        if(!id.isEmpty())
+            StatusNotification::ActiveConnectionDeactivatedNotify(id);
         handleVpnStateFailed(activePath);
         break;
     case VpnConnection::State::Disconnected:
         KLOG_DEBUG() << "VpnConnection::State::Disconnected";
+        if(!id.isEmpty())
+            StatusNotification::ActiveConnectionDeactivatedNotify(id);
         handleVpnStateDisconnected(activePath);
         break;
     default:
@@ -332,9 +351,15 @@ void VpnManager::handleVpnConnectionStateChanged(VpnConnection::State state, Vpn
 void VpnManager::handleVpnStateActivated(const QString &activePath)
 {
     ActiveConnection::Ptr activeConnection = findActiveConnection(activePath);
+    if(activeConnection.isNull())
+        return ;
     if( activeConnection->type() == ConnectionSettings::Vpn)
     {
         ui->connectionShowPage->updateItemActivatedStatus(activePath);
+        auto item = ui->connectionShowPage->findItemByActivatedPath(activePath);
+        ConnectionInfo connectionInfo = item->data(Qt::UserRole).value<ConnectionInfo>();
+        StatusNotification::ActiveConnectionActivatedNotify(connectionInfo);
+
         ui->connectionShowPage->update();
     }
 }
@@ -344,7 +369,6 @@ void VpnManager::handleVpnStateDisconnected(const QString &activePath)
     ui->connectionShowPage->handleActiveStateDeactivated(activePath);
 }
 
-//TODO:处理连接failed的情况
 void VpnManager::handleVpnStateFailed(const QString &activePath)
 {
     ui->connectionShowPage->handleActiveStateDeactivated(activePath);

@@ -80,7 +80,7 @@
        </widget>
       </item>
       <item>
-       <widget class="GeneralComboBox" name="mppeSecurity">
+       <widget class="OptionsComboBox" name="mppeSecurity">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
           <horstretch>0</horstretch>
@@ -123,9 +123,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>GeneralComboBox</class>
+   <class>OptionsComboBox</class>
    <extends>QComboBox</extends>
-   <header location="global">general-widget.h</header>
+   <header location="global">options-combobox.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

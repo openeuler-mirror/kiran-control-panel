@@ -30,7 +30,7 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="GeneralWidget" name="generalWidget" native="true"/>
+    <widget class="ConnectionNameWidget" name="generalWidget" native="true"/>
    </item>
    <item>
     <widget class="WirelessSecurityWidget" name="wirelessSecurity" native="true"/>
@@ -45,15 +45,15 @@
     <widget class="WirelessWidget" name="wireless" native="true"/>
    </item>
    <item>
-    <widget class="DisconnectAndDeleteButton" name="generalButton" native="true"/>
+    <widget class="DisconnectAndDeleteButton" name="disconnectAndDeleteButton" native="true"/>
    </item>
   </layout>
  </widget>
  <customwidgets>
   <customwidget>
-   <class>GeneralWidget</class>
+   <class>ConnectionNameWidget</class>
    <extends>QWidget</extends>
-   <header location="global">general-widget.h</header>
+   <header location="global">connection-name-widget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>

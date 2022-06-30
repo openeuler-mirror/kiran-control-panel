@@ -93,6 +93,8 @@ public:
     void enableConnectButtonOfItem(QListWidgetItem *item, bool enable);
 
 public slots:
+    void handleActiveConnectionStateChanged(ActiveConnection::State state);
+
     void handleActiveStateDeactivated(const QString &activatedConnectionPath);
     void handleConnectionUpdated();
 
@@ -128,6 +130,8 @@ signals:
 
     void sendPasswordToWirelessSetting(const QString &password);
     void sendSsidToWireless(const QString &ssid);
+
+
 private:
     ItemWidgetType m_itemShowType;
     QString m_currentDevicePath;

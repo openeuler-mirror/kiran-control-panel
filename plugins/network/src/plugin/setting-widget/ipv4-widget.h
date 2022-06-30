@@ -45,6 +45,7 @@ public slots:
     void showSettings();
     void clearPtr();
     bool isInputValid();
+
 private:
     Ui::Ipv4Widget *ui;
     Ipv4Setting::Ptr m_ipv4Setting;

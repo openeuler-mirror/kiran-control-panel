@@ -80,9 +80,9 @@ void WiredTrayWidget::handleRequestActivateConnection(const ConnectionInfo &conn
     reply.waitForFinished();
     if (reply.isError())
     {
-        // TODO:调用activateConnection失败的处理
         // 此处处理进入激活流程失败的原因，并不涉及流程中某个具体阶段失败的原因
         KLOG_ERROR() << "activate connection failed:" << reply.error();
+        StatusNotification::connectitonFailedNotify(connectionPath);
     }
     else
     {
@@ -94,7 +94,8 @@ void WiredTrayWidget::handleRequestActivateConnection(const ConnectionInfo &conn
 void WiredTrayWidget::handleNotifierConnectionAdded(const QString &path)
 {
     Connection::Ptr connection = findConnection(path);
-    if (connection->settings()->connectionType() == ConnectionSettings::ConnectionType::Wired)
+    if ((connection->settings()->connectionType() == ConnectionSettings::ConnectionType::Wired)
+        && (!connection->name().isEmpty()))
     {
         m_connectionLists->addConnectionToLists(connection, m_devicePath);
     }
@@ -121,7 +122,7 @@ void WiredTrayWidget::handleStateActivated(const QString &activatedPath)
         m_connectionLists->updateItemActivatedStatus(activatedPath);
         auto item = m_connectionLists->findItemByActivatedPath(activatedPath);
         ConnectionInfo connectionInfo = item->data(Qt::UserRole).value<ConnectionInfo>();
-        m_statusNotification.ActiveConnectionStateNotify(ActiveConnection::Activated, connectionInfo);
+        StatusNotification::ActiveConnectionActivatedNotify(connectionInfo);
         m_connectionLists->update();
     }
 }
@@ -139,7 +140,7 @@ void WiredTrayWidget::handleActiveConnectionAdded(const QString &path)
         QListWidgetItem *activeItem = m_connectionLists->findItemByUuid(uuid);
         m_connectionLists->updateItemActivatedPath(activeItem,path);
         connect(activatedConnection.data(), &ActiveConnection::stateChanged, this, &WiredTrayWidget::handleActiveConnectionStateChanged);
-        connect(activatedConnection.data(), &ActiveConnection::stateChanged, &m_statusNotification, &StatusNotification::ActiveConnectionDeactivatedNotify,Qt::DirectConnection);
+//        connect(activatedConnection.data(), &ActiveConnection::stateChanged, &m_statusNotification, &StatusNotification::ActiveConnectionDeactivatedNotify,Qt::DirectConnection);
     }
 }
 

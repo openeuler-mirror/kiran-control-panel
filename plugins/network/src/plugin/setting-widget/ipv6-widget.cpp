@@ -44,6 +44,7 @@ void Ipv6Widget::initConnection()
     connect(ui->ipv6Method, QOverload<int>::of(&QComboBox::currentIndexChanged), [=](int index) {
         handleIpv6MethodChanged(ui->ipv6Method->currentData().value<NetworkManager::Ipv6Setting::ConfigMethod>());
     });
+
 }
 
 void Ipv6Widget::setIpv6Setting(const Ipv6Setting::Ptr &ipv6Setting)

@@ -12,26 +12,26 @@
  * Author:     luoqing <luoqing@kylinos.com.cn>
  */
 
-#include "general-widget.h"
+#include "connection-name-widget.h"
 #include <kiran-switch-button.h>
 #include <qt5-log-i.h>
 #include <NetworkManagerQt/Connection>
 #include <NetworkManagerQt/Settings>
 #include <NetworkManagerQt/WirelessSetting>
-#include "ui_general-widget.h"
+#include "ui_connection-name-widget.h"
 
-GeneralWidget::GeneralWidget(QWidget *parent) : QWidget(parent), ui(new Ui::GeneralWidget)
+ConnectionNameWidget::ConnectionNameWidget(QWidget *parent) : QWidget(parent), ui(new Ui::ConnectionNameWidget)
 {
     ui->setupUi(this);
     initUI();
 }
 
-GeneralWidget::~GeneralWidget()
+ConnectionNameWidget::~ConnectionNameWidget()
 {
     delete ui;
 }
 
-void GeneralWidget::initUI()
+void ConnectionNameWidget::initUI()
 {
     m_autoConnection = new KiranSwitchButton(this);
     ui->autoConnectionLayout->addWidget(m_autoConnection);
@@ -39,17 +39,17 @@ void GeneralWidget::initUI()
     ui->connectionName->setPlaceholderText("Required");
 }
 
-void GeneralWidget::setConnectionSettings(const ConnectionSettings::Ptr &connectionSettings)
+void ConnectionNameWidget::setConnectionSettings(const ConnectionSettings::Ptr &connectionSettings)
 {
     m_connectionSettings = connectionSettings;
 }
 
-void GeneralWidget::setNameLabel(const QString &name)
+void ConnectionNameWidget::setNameLabel(const QString &name)
 {
     ui->nameLabel->setText(name);
 }
 
-void GeneralWidget::saveSettings()
+void ConnectionNameWidget::saveSettings()
 {
     if (m_connectionSettings != nullptr)
     {
@@ -59,7 +59,7 @@ void GeneralWidget::saveSettings()
     }
 }
 
-void GeneralWidget::showSettings(ConnectionSettings::ConnectionType connectionType)
+void ConnectionNameWidget::showSettings(ConnectionSettings::ConnectionType connectionType)
 {
     m_connectionType = connectionType;
     if (m_connectionType == ConnectionSettings::Wired)
@@ -76,7 +76,7 @@ void GeneralWidget::showSettings(ConnectionSettings::ConnectionType connectionTy
             //生成名称数字后缀
             QString connectionNameStr = connectionName.arg(connectionSuffixNum(connectionName));
             ui->connectionName->setText(connectionNameStr);
-            m_autoConnection->setChecked(true);
+            m_autoConnection->setChecked(false);
         }
     }
     else if (m_connectionType == ConnectionSettings::Wireless)
@@ -96,7 +96,7 @@ void GeneralWidget::showSettings(ConnectionSettings::ConnectionType connectionTy
     }
 }
 
-void GeneralWidget::showVpnSettings(VpnType vpnType)
+void ConnectionNameWidget::showVpnSettings(VpnType vpnType)
 {
     m_connectionType = ConnectionSettings::ConnectionType::Vpn;
     if (m_connectionSettings != nullptr)
@@ -126,11 +126,11 @@ void GeneralWidget::showVpnSettings(VpnType vpnType)
             QString connectionNameStr = connectionName.arg(connectionSuffixNum(connectionName));
             ui->connectionName->setText(connectionNameStr);
         }
-        m_autoConnection->setChecked(true);
+        m_autoConnection->setChecked(false);
     }
 }
 
-int GeneralWidget::connectionSuffixNum(QString &connName)
+int ConnectionNameWidget::connectionSuffixNum(QString &connName)
 {
     if (connName.isEmpty())
     {
@@ -165,12 +165,12 @@ int GeneralWidget::connectionSuffixNum(QString &connName)
     return connSuffixNum;
 }
 
-void GeneralWidget::clearPtr()
+void ConnectionNameWidget::clearPtr()
 {
     m_connectionSettings.clear();
 }
 
-bool GeneralWidget::isInputValid()
+bool ConnectionNameWidget::isInputValid()
 {
     bool valid = true;
     QString nameStr = ui->connectionName->text();
@@ -179,13 +179,4 @@ bool GeneralWidget::isInputValid()
         return false;
     }
     return valid;
-}
-
-GeneralComboBox::GeneralComboBox(QWidget *parent) : QComboBox(parent)
-{
-}
-
-void GeneralComboBox::wheelEvent(QWheelEvent *e)
-{
-    //    QComboBox::wheelEvent(e);
 }

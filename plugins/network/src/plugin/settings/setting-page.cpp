@@ -108,3 +108,8 @@ void SettingPage::initSettingPage()
     initSpecificSettings();
     initWidgets();
 }
+
+bool SettingPage::isInputValid()
+{
+    return false;
+}

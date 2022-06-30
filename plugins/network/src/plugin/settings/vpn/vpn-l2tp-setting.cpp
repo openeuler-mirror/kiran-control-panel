@@ -102,3 +102,8 @@ void VpnL2tpSetting::clearPtr()
     ui->vpnIpvx->clearPtr();
     ui->generalButton->clearPtr();
 }
+
+bool VpnL2tpSetting::isInputValid()
+{
+    return ui->vpnWidget->isInputValid() || ui->generalWidget->isInputValid();
+}
