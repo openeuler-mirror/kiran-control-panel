@@ -68,6 +68,7 @@ void LayoutItem::mousePressEvent(QMouseEvent *event)
     {
         emit clicked();
     }
+    QWidget::mousePressEvent(event);
 }
 
 void LayoutItem::setisPressed(bool pressed)
