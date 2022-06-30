@@ -55,4 +55,4 @@ install(TARGETS ${TARGET_NAME}
 install(FILES ./data/kiran-cpanel-mouse.desktop
         DESTINATION ${PLUGIN_DESKTOP_INSTALL_DIR}/)
 
-install(FILES ${QM_FILES} DESTINATION ${INSTALL_DATADIR}/application/kiran-cpanel-mouse/translations/)
+install(FILES ${MOUSE_QM_FILES} DESTINATION ${INSTALL_DATADIR}/kiran-cpanel-mouse/translations/)

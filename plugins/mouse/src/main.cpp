@@ -65,7 +65,7 @@ public:
         if (!m_translator->load(QLocale(),
                                 "kiran-cpanel-mouse",
                                 ".",
-                                "/usr/share/applications/kiran-cpanel-mouse",
+                                "/usr/share/kiran-cpanel-mouse/translations/",
                                 ".qm"))
         {
             KLOG_DEBUG() << "Kiran cpanel mouse load translation failed";
