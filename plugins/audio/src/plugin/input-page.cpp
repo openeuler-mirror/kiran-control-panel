@@ -403,7 +403,5 @@ void InputPage::initAudioInput()
 //XXX: QIODevice一直在监听PCM数据，可以优化一下,或许100ms获取一次数据
 void InputPage::refreshFeedBack()
 {
-    int value = round(m_audioInfo->level() * 100);
     ui->volumeScale->setPercent(m_audioInfo->level());
-
 }

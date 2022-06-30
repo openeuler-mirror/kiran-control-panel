@@ -57,7 +57,7 @@
     <message>
         <location filename="../src/plugin/input-page.cpp" line="240"/>
         <source>No input device detected</source>
-        <translation>没检测到输入设备</translation>
+        <translation>未检测到输入设备</translation>
     </message>
 </context>
 <context>
@@ -95,7 +95,7 @@
     <message>
         <location filename="../src/plugin/output-page.cpp" line="96"/>
         <source>No output device detected</source>
-        <translation>为检测到输出设备</translation>
+        <translation>未检测到输出设备</translation>
     </message>
 </context>
 <context>

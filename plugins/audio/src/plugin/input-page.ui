@@ -72,7 +72,7 @@
       <number>0</number>
      </property>
      <property name="topMargin">
-      <number>24</number>
+      <number>16</number>
      </property>
      <item>
       <widget class="QLabel" name="label_2">
@@ -140,7 +140,7 @@
       <number>0</number>
      </property>
      <property name="topMargin">
-      <number>24</number>
+      <number>16</number>
      </property>
      <item>
       <widget class="QLabel" name="label_3">
@@ -168,6 +168,9 @@
     <layout class="QHBoxLayout" name="horizontalLayout_7">
      <property name="spacing">
       <number>0</number>
+     </property>
+     <property name="topMargin">
+      <number>10</number>
      </property>
      <item>
       <widget class="VolumeScale" name="volumeScale" native="true">

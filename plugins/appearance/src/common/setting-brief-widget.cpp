@@ -30,6 +30,7 @@ SettingBriefWidget::SettingBriefWidget(QString title, int type, QWidget *parent)
 {
     ui->setupUi(this);
     initUI(title);
+    setAttribute(Qt::WA_Hover);
     m_wallpaperType = type;
 }
 
