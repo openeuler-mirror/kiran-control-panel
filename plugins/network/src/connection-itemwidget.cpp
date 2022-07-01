@@ -18,17 +18,21 @@
 #include <QSvgRenderer>
 #include <QLineEdit>
 #include "animation-loading-label.h"
+#include <QApplication>
 
 // 使用默认析构函数，父对象被释放时，会释放子对象
-ConnectionItemWidget::ConnectionItemWidget( QWidget* parent) : QWidget(parent)
+ConnectionItemWidget::ConnectionItemWidget( QWidget* parent) : KiranFrame(parent)
 {
     initUI();
 }
 
 void ConnectionItemWidget::initUI()
 {
+    setFixedHeight(36);
     initPluginItemWidget();
     connect(m_editButton, &QPushButton::clicked, this, &ConnectionItemWidget::editButtonClicked);
+    setDrawBroder(false);
+    setAttribute(Qt::WA_Hover);
 }
 
 void ConnectionItemWidget::initPluginItemWidget()
@@ -42,6 +46,13 @@ void ConnectionItemWidget::initPluginItemWidget()
     m_connectionTypeIcon->setVisible(false);
     m_activatedLabel->setVisible(false);
 
+//    auto pixmap = QApplication::style()->standardPixmap(QStyle::SP_ArrowRight);
+    m_editButton->setIcon(QIcon(":/kcp-network-images/details-info.svg"));
+    m_editButton->setIconSize(QSize(16,16));
+    m_editButton->setFixedSize(30,36);
+    m_editButton->setFlat(true);
+    KLOG_DEBUG() << "m_editButton->size():" << m_editButton->sizeHint();
+
     m_horizonLayout->addWidget(m_connectionTypeIcon);
     m_horizonLayout->addWidget(m_connectionName);
     m_horizonLayout->addStretch();
@@ -50,6 +61,7 @@ void ConnectionItemWidget::initPluginItemWidget()
     m_horizonLayout->setMargin(0);
 
     this->setLayout(m_horizonLayout);
+    this->setContentsMargins(10,0,3,0);
 }
 
 //TODO:名称过长进行缩略

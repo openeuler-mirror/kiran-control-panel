@@ -27,6 +27,7 @@ find_package(PkgConfig REQUIRED)
 pkg_search_module(KIRAN_WIDGETS_QT5 REQUIRED kiranwidgets-qt5)
 pkg_search_module(KLOG_QT5 REQUIRED klog-qt5)
 pkg_search_module(LIBNOTIFY REQUIRED libnotify)
+pkg_search_module(KIRAN_STYLE_HELPER REQUIRED kiran-style-helper)
 
 target_include_directories(${PROJECT_NAME} PRIVATE
         ./src
@@ -44,6 +45,7 @@ target_include_directories(${PROJECT_NAME} PRIVATE
         ${KIRAN_WIDGETS_QT5_INCLUDE_DIRS}
         ${KLOG_QT5_INCLUDE_DIRS}
         ${LIBNOTIFY_INCLUDE_DIRS}
+        ${KIRAN_STYLE_HELPER_INCLUDE_DIRS}
         )
 
 target_link_libraries(${PROJECT_NAME}
@@ -52,6 +54,7 @@ target_link_libraries(${PROJECT_NAME}
         ${KIRAN_WIDGETS_QT5_LIBRARIES}
         ${KLOG_QT5_LIBRARIES}
         ${LIBNOTIFY_LIBRARIES}
+        ${KIRAN_STYLE_HELPER_LIBRARIES}
         KF5::NetworkManagerQt
         )
 

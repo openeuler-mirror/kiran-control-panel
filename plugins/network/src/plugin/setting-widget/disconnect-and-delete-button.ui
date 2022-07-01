@@ -7,18 +7,21 @@
     <x>0</x>
     <y>0</y>
     <width>357</width>
-    <height>82</height>
+    <height>94</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>DisconnectAndDeleteButton</string>
   </property>
   <layout class="QVBoxLayout" name="m_verticalDeviceWidgetLayout">
+   <property name="spacing">
+    <number>10</number>
+   </property>
    <property name="leftMargin">
     <number>0</number>
    </property>
    <property name="topMargin">
-    <number>0</number>
+    <number>16</number>
    </property>
    <property name="rightMargin">
     <number>0</number>

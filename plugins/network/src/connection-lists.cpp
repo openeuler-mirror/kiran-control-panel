@@ -37,6 +37,7 @@ ConnectionLists::~ConnectionLists()
 void ConnectionLists::initUI()
 {
     this->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
+    this->setSelectionMode(SelectionMode::NoSelection);
 }
 
 void ConnectionLists::initConnect()
@@ -106,6 +107,13 @@ void ConnectionLists::handleConnectionItemClicked(QListWidgetItem* item)
 
 void ConnectionLists::showConnectionLists(ConnectionSettings::ConnectionType type)
 {
+    if(m_itemShowType == ITEM_WIDGET_TYPE_TRAY)
+    {
+        setFixedWidth(240);
+    }
+    else
+        this->setGridSize(QSize(240,46));
+
     if (type == ConnectionSettings::Wired)
     {
         Device::Ptr device = findNetworkInterface(m_currentDevicePath);
@@ -113,7 +121,6 @@ void ConnectionLists::showConnectionLists(ConnectionSettings::ConnectionType typ
 
         Connection::List availableConnections = wiredDevice->availableConnections();
         QString devicePath = wiredDevice->uni();
-        KLOG_DEBUG() << "devicePath:" << devicePath;
         KLOG_DEBUG() << "deviceName:" << wiredDevice->interfaceName();
         for (Connection::Ptr conn : availableConnections)
         {
@@ -130,11 +137,6 @@ void ConnectionLists::showConnectionLists(ConnectionSettings::ConnectionType typ
                 addConnectionToLists(conn, "");
         }
     }
-
-    if(m_itemShowType == ITEM_WIDGET_TYPE_TRAY)
-    {
-        setFixedWidth(240);
-    }
 }
 
 //TODO:优化代码
@@ -143,17 +145,18 @@ void ConnectionLists::addConnectionToLists(Connection::Ptr ptr, const QString& d
     TrayItemWidget* trayItemWidget = nullptr;
     ConnectionItemWidget* connectionItemWidget = nullptr;
     QListWidgetItem* item = new QListWidgetItem();
-    item->setSizeHint(QSize(240, 50));
 
     if (m_itemShowType == ITEM_WIDGET_TYPE_TRAY)
     {
         trayItemWidget = new TrayItemWidget();
         trayItemWidget->setName(ptr->name());
+        item->setSizeHint(QSize(240, 50));
     }
     else
     {
         connectionItemWidget = new ConnectionItemWidget();
         connectionItemWidget->setName(ptr->name());
+        item->setSizeHint(QSize(240, 36));
     }
 
     ConnectionInfo connectionInfo;
@@ -200,12 +203,10 @@ void ConnectionLists::addConnectionToLists(Connection::Ptr ptr, const QString& d
             default:
                 break;
             }
-
         }
     }
     connect(ptr.data(), &Connection::updated, this, &ConnectionLists::handleConnectionUpdated);
     this->addItem(item);
-    this->setMaximumHeight(this->sizeHintForRow(0) * this->count() + (2 * this->frameWidth()));
 
     QVariant var;
     var.setValue(connectionInfo);
@@ -214,12 +215,14 @@ void ConnectionLists::addConnectionToLists(Connection::Ptr ptr, const QString& d
     if (m_itemShowType == ITEM_WIDGET_TYPE_PLUGIN)
     {
         this->setItemWidget(item, connectionItemWidget);
+        this->setMaximumHeight(this->gridSize().height() * this->count());
         m_itemWidgetMap.insert(connectionItemWidget,item);
         connect(connectionItemWidget, &ConnectionItemWidget::editButtonClicked, this,&ConnectionLists::handleEditButtonClicked);
     }
     else
     {
         this->setItemWidget(item, trayItemWidget);
+        this->setMaximumHeight(this->sizeHintForRow(0) * this->count() + (2 * this->frameWidth()));
         m_itemWidgetMap.insert(trayItemWidget,item);
         connect(trayItemWidget, &TrayItemWidget::disconnectButttonClicked, this,&ConnectionLists::handleDisconnectButtonClicked);
         connect(trayItemWidget, &TrayItemWidget::connectButtonClicked, this,&ConnectionLists::handleConnectButtonClicked);
@@ -236,7 +239,6 @@ void ConnectionLists::handleConnectionUpdated()
 
 void ConnectionLists::handleActiveStateDeactivated(const QString &activatedConnectionPath)
 {
-    KLOG_DEBUG() << "handleActiveStateDeactivated";
     QListWidgetItem *activatedItem = findItemByActivatedPath(activatedConnectionPath);
     //没有找到item则直接返回
     if(activatedItem == nullptr)
@@ -253,6 +255,13 @@ void ConnectionLists::handleActiveStateDeactivated(const QString &activatedConne
 
 void ConnectionLists::showWirelessNetworkLists()
 {
+    if(m_itemShowType == ITEM_WIDGET_TYPE_TRAY)
+    {
+        setFixedWidth(240);
+    }
+    else
+        this->setGridSize(QSize(240,46));
+
     Device::Ptr device = findNetworkInterface(m_currentDevicePath);
     if (device->type() == Device::Wifi)
     {
@@ -287,12 +296,14 @@ void ConnectionLists::addWirelessNetworkToLists(WirelessNetwork::Ptr network, co
 
     TrayItemWidget* trayItemWidget = nullptr;
     ConnectionItemWidget* connectionItemWidget = nullptr;
+    ConnectionSortListItem* item = new ConnectionSortListItem();
 
     if (m_itemShowType == ITEM_WIDGET_TYPE_TRAY)
     {
         trayItemWidget = new TrayItemWidget();
         trayItemWidget->setName(network->ssid());
         trayItemWidget->setWirelessStatusIcon(connectionInfo.isWireless, connectionInfo.wirelessInfo.signalStrength);
+        item->setSizeHint(QSize(240, 50));
     }
     else
     {
@@ -300,9 +311,8 @@ void ConnectionLists::addWirelessNetworkToLists(WirelessNetwork::Ptr network, co
         connectionItemWidget->setName(network->ssid());
         connectionItemWidget->setEditButtonVisible(false);
         connectionItemWidget->setWirelessStatusIcon(connectionInfo.isWireless, connectionInfo.wirelessInfo.signalStrength);
+        item->setSizeHint(QSize(240, 36));
     }
-    ConnectionSortListItem* item = new ConnectionSortListItem();
-    item->setSizeHint(QSize(240, 50));
 
     // 已连接的情况
     ActiveConnection::List activeConnectionList = activeConnections();
@@ -360,17 +370,20 @@ void ConnectionLists::addWirelessNetworkToLists(WirelessNetwork::Ptr network, co
     var.setValue(connectionInfo);
     item->setData(Qt::UserRole, var);
     this->addItem(item);
-    this->setMaximumHeight(this->sizeHintForRow(0) * this->count() + (2 * this->frameWidth()));
 
     if (m_itemShowType == ITEM_WIDGET_TYPE_PLUGIN)
     {
         this->setItemWidget(item, connectionItemWidget);
+        this->setMaximumHeight(this->gridSize().height() * this->count());
+        KLOG_DEBUG() << "this->gridSize().height():" << this->gridSize().height();
+        KLOG_DEBUG() << "this->count():" <<this->count();
         m_itemWidgetMap.insert(connectionItemWidget,item);
         connect(connectionItemWidget, &ConnectionItemWidget::editButtonClicked, this,&ConnectionLists::handleEditButtonClicked);
     }
     else
     {
         this->setItemWidget(item, trayItemWidget);
+        this->setMaximumHeight(this->sizeHintForRow(0) * this->count() + (2 * this->frameWidth()));
         m_itemWidgetMap.insert(trayItemWidget,item);
         connect(trayItemWidget, &TrayItemWidget::disconnectButttonClicked, this,&ConnectionLists::handleDisconnectButtonClicked);
         connect(trayItemWidget, &TrayItemWidget::connectButtonClicked, this,&ConnectionLists::handleConnectButtonClicked);
@@ -378,7 +391,6 @@ void ConnectionLists::addWirelessNetworkToLists(WirelessNetwork::Ptr network, co
         connect(trayItemWidget, &TrayItemWidget::ignoreButtonClicked, this,&ConnectionLists::handleIgnoreButtonClicked);
 
     }
-
     // 根据signalStrength自定义排序
     this->sortItems();
 }
@@ -388,14 +400,13 @@ void ConnectionLists::showOtherWirelessItem()
     TrayItemWidget* trayItemWidget = nullptr;
     ConnectionItemWidget* connectionItemWidget = nullptr;
     ConnectionSortListItem* item = new ConnectionSortListItem();
-    item->setSizeHint(QSize(240, 50));
 
     if (m_itemShowType == ITEM_WIDGET_TYPE_TRAY)
     {
         trayItemWidget = new TrayItemWidget();
         trayItemWidget->setName(tr("Other WiFi networks"));
         trayItemWidget->setOtherNetworkIcon();
-
+        item->setSizeHint(QSize(240, 50));
     }
     else
     {
@@ -403,6 +414,7 @@ void ConnectionLists::showOtherWirelessItem()
         connectionItemWidget->setName(tr("Other WiFi networks"));
         connectionItemWidget->setEditButtonVisible(false);
         connectionItemWidget->setOtherNetworkIcon();
+        item->setSizeHint(QSize(240, 36));
     }
 
     ConnectionInfo connectionInfo;
@@ -413,17 +425,18 @@ void ConnectionLists::showOtherWirelessItem()
     var.setValue(connectionInfo);
     item->setData(Qt::UserRole, var);
     this->addItem(item);
-    this->setMaximumHeight(this->sizeHintForRow(0) * this->count() + (2 * this->frameWidth()));
 
     if (m_itemShowType == ITEM_WIDGET_TYPE_PLUGIN)
     {
         this->setItemWidget(item, connectionItemWidget);
+        this->setMaximumHeight(this->gridSize().height() * this->count());
         m_itemWidgetMap.insert(connectionItemWidget,item);
         connect(connectionItemWidget, &ConnectionItemWidget::editButtonClicked, this,&ConnectionLists::handleEditButtonClicked);
     }
     else
     {
         this->setItemWidget(item, trayItemWidget);
+        this->setMaximumHeight(this->sizeHintForRow(0) * this->count() + (2 * this->frameWidth()));
         m_itemWidgetMap.insert(trayItemWidget,item);
         connect(trayItemWidget, &TrayItemWidget::connectButtonClicked, this,&ConnectionLists::handleConnectButtonClicked);
         connect(trayItemWidget, &TrayItemWidget::cancelButtonClicked, this,&ConnectionLists::handleCancelButtonClicked);
@@ -449,7 +462,10 @@ void ConnectionLists::removeConnectionFromLists(const QString& path)
             break;
         }
     }
-    this->setMaximumHeight(this->sizeHintForRow(0) * this->count() + (2 * this->frameWidth()));
+    if(m_itemShowType == ITEM_WIDGET_TYPE_PLUGIN)
+        this->setMaximumHeight(this->gridSize().height() * this->count());
+    else
+        this->setMaximumHeight(this->sizeHintForRow(0) * this->count() + (2 * this->frameWidth()));
 }
 
 void ConnectionLists::removeWirelessNetworkFromLists(const QString& ssid)
@@ -467,7 +483,10 @@ void ConnectionLists::removeWirelessNetworkFromLists(const QString& ssid)
             break;
         }
     }
-    this->setMaximumHeight(this->sizeHintForRow(0) * this->count() + (2 * this->frameWidth()));
+    if(m_itemShowType == ITEM_WIDGET_TYPE_PLUGIN)
+        this->setMaximumHeight(this->gridSize().height() * this->count());
+    else
+        this->setMaximumHeight(this->sizeHintForRow(0) * this->count() + (2 * this->frameWidth()));
 }
 
 /**
@@ -547,12 +566,12 @@ void ConnectionLists::updateItemActivatedPath(QListWidgetItem* item, QString act
 void ConnectionLists::clearItemActivatedConnectionInfo(QListWidgetItem *activatedItem)
 {
     KLOG_DEBUG() << "clearItemActivatedConnectionInfo";
-    activatedItem->setSizeHint(QSize(240,50));
     QWidget* widget = this->itemWidget(activatedItem);
     if (m_itemShowType == ITEM_WIDGET_TYPE_TRAY)
     {
         TrayItemWidget* trayItemWidget = qobject_cast<TrayItemWidget*>(widget);
         trayItemWidget->deactivateStatus();
+        activatedItem->setSizeHint(QSize(240,50));
     }
     else
     {

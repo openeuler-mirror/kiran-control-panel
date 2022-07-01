@@ -22,7 +22,6 @@ VpnPpp::VpnPpp(QWidget *parent) : QWidget(parent), ui(new Ui::VpnPpp)
     ui->setupUi(this);
     initUI();
     initConnection();
-    ui->label->setVisible(false);
 }
 
 VpnPpp::~VpnPpp()
@@ -67,6 +66,7 @@ void VpnPpp::initOptionsButton(const QStringList &supportOptions)
             horizontalLayout->addWidget(strLabel);
             horizontalLayout->addStretch();
             horizontalLayout->addWidget(switchButton);
+            horizontalLayout->setContentsMargins(0,0,0,0);
             ui->optionsLayout->addLayout(horizontalLayout);
         }
         else

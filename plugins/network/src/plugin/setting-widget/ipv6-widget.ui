@@ -6,19 +6,22 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>322</width>
-    <height>371</height>
+    <width>616</width>
+    <height>481</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Ipv6Widget</string>
   </property>
-  <layout class="QVBoxLayout" name="m_verticalDeviceWidgetLayout">
+  <layout class="QVBoxLayout" name="verticalLayout_7">
+   <property name="spacing">
+    <number>16</number>
+   </property>
    <property name="leftMargin">
     <number>0</number>
    </property>
    <property name="topMargin">
-    <number>0</number>
+    <number>16</number>
    </property>
    <property name="rightMargin">
     <number>0</number>
@@ -29,7 +32,7 @@
    <item>
     <layout class="QVBoxLayout" name="verticalLayout_18">
      <property name="spacing">
-      <number>0</number>
+      <number>10</number>
      </property>
      <item>
       <widget class="QLabel" name="label_22">
@@ -39,15 +42,28 @@
       </widget>
      </item>
      <item>
-      <widget class="OptionsComboBox" name="ipv6Method"/>
+      <widget class="OptionsComboBox" name="ipv6Method">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>36</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>36</height>
+        </size>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>
    <item>
     <widget class="QWidget" name="ipv6Manual" native="true">
-     <layout class="QVBoxLayout" name="m_verticalLayout">
+     <layout class="QVBoxLayout" name="verticalLayout_6">
       <property name="spacing">
-       <number>0</number>
+       <number>16</number>
       </property>
       <property name="leftMargin">
        <number>0</number>
@@ -62,57 +78,157 @@
        <number>0</number>
       </property>
       <item>
-       <widget class="QLabel" name="label_4">
-        <property name="text">
-         <string>IP Address</string>
+       <layout class="QVBoxLayout" name="verticalLayout_3">
+        <property name="spacing">
+         <number>10</number>
         </property>
-       </widget>
+        <item>
+         <widget class="QLabel" name="label_4">
+          <property name="text">
+           <string>IP Address</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="ipv6Address">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>36</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>36</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
       <item>
-       <widget class="QLineEdit" name="ipv6Address"/>
-      </item>
-      <item>
-       <widget class="QLabel" name="label_5">
-        <property name="text">
-         <string>Prefix</string>
+       <layout class="QVBoxLayout" name="verticalLayout_4">
+        <property name="spacing">
+         <number>10</number>
         </property>
-       </widget>
+        <item>
+         <widget class="QLabel" name="label_5">
+          <property name="text">
+           <string>Prefix</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QSpinBox" name="ipv6Prefix">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>36</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>36</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
       <item>
-       <widget class="QSpinBox" name="ipv6Prefix"/>
-      </item>
-      <item>
-       <widget class="QLabel" name="label_6">
-        <property name="text">
-         <string>Gateway</string>
+       <layout class="QVBoxLayout" name="verticalLayout_5">
+        <property name="spacing">
+         <number>10</number>
         </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="ipv6Gateway"/>
+        <item>
+         <widget class="QLabel" name="label_6">
+          <property name="text">
+           <string>Gateway</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="ipv6Gateway">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>36</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>36</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
      </layout>
     </widget>
    </item>
    <item>
-    <widget class="QLabel" name="label_15">
-     <property name="text">
-      <string>Preferred DNS</string>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <property name="spacing">
+      <number>10</number>
      </property>
-    </widget>
+     <item>
+      <widget class="QLabel" name="label_15">
+       <property name="text">
+        <string>Preferred DNS</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="ipv6PreferredDNS">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>36</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>36</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
    <item>
-    <widget class="QLineEdit" name="ipv6PreferredDNS"/>
-   </item>
-   <item>
-    <widget class="QLabel" name="label_17">
-     <property name="text">
-      <string>Alternate DNS</string>
+    <layout class="QVBoxLayout" name="verticalLayout_2">
+     <property name="spacing">
+      <number>10</number>
      </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QLineEdit" name="ipv6AlternateDNS"/>
+     <item>
+      <widget class="QLabel" name="label_17">
+       <property name="text">
+        <string>Alternate DNS</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="ipv6AlternateDNS">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>36</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>36</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
   </layout>
  </widget>

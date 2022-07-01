@@ -24,7 +24,7 @@
 #include "ui_vpn-manager.h"
 #include "status-notification.h"
 #include "connection-name-widget.h"
-
+#include <style-property.h>
 Q_DECLARE_METATYPE(VpnType)
 
 VpnManager::VpnManager(QWidget *parent) : Manager(parent), ui(new Ui::VpnManager)
@@ -49,6 +49,7 @@ void VpnManager::initUI()
 
     ui->vpnType->addItem(tr("L2TP"), VPN_TYPE_L2TP);
     ui->vpnType->addItem(tr("PPTP"), VPN_TYPE_PPTP);
+    Kiran::StylePropertyHelper::setButtonType(ui->saveButton,Kiran::BUTTON_Default);
 }
 
 //XXX:是否使用模板提升通用性

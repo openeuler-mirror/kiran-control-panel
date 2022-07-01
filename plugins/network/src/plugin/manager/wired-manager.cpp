@@ -21,7 +21,7 @@
 #include <QScrollBar>
 #include "status-notification.h"
 #include "ui_wired-manager.h"
-
+#include <style-property.h>
 WiredManager::WiredManager(const QString &devicePath, QWidget *parent) : Manager(parent), ui(new Ui::WiredManager)
 {
     ui->setupUi(this);
@@ -43,6 +43,7 @@ void WiredManager::initUI()
     ui->connectionShowPage->setTitle(tr("Wired Network Adapter"));
     ui->connectionShowPage->setSwitchButtonVisible(false);
     ui->connectionShowPage->showConnectionLists(ConnectionSettings::ConnectionType::Wired);
+    Kiran::StylePropertyHelper::setButtonType(ui->saveButton,Kiran::BUTTON_Default);
 }
 
 void WiredManager::initConnection()

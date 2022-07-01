@@ -41,6 +41,7 @@ void VpnWidget::initUI()
 
     ui->passwordOptions->setFocusPolicy(Qt::NoFocus);
     ui->password->setEchoMode(QLineEdit::Password);
+    ui->passwordVisual->setVisible(false);
 }
 
 void VpnWidget::initConnection()

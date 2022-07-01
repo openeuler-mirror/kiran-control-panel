@@ -13,5 +13,6 @@
         <file>kcp-network-images/wired-disconnected.svg</file>
         <file>kcp-network-images/wired-error.svg</file>
         <file>kcp-network-images/correct.png</file>
+        <file>kcp-network-images/details-info.svg</file>
     </qresource>
 </RCC>

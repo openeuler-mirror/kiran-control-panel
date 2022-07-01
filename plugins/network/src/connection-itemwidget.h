@@ -21,9 +21,10 @@
 #include <QListWidgetItem>
 #include <QPushButton>
 #include <QWidget>
+#include "kiran-frame/kiran-frame.h"
 
 class AnimationLoadingLabel;
-class ConnectionItemWidget : public QWidget
+class ConnectionItemWidget : public KiranFrame
 {
     Q_OBJECT
 public:

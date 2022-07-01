@@ -93,6 +93,7 @@ void VpnIPsec::showSettings()
 void VpnIPsec::resetSettings()
 {
     m_enableIPsec->setChecked(false);
+    ui->IPsecWidget->setVisible(false);
     ui->groupName->clear();
     ui->groupId->clear();
     ui->preSharedKey->clear();

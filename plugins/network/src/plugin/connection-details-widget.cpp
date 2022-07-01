@@ -27,7 +27,7 @@ ConnectionDetailsWidget::ConnectionDetailsWidget(Device::Ptr device, QWidget *pa
 {
     ui->setupUi(this);
     m_device = device;
-    initUI();
+    init();
 }
 
 ConnectionDetailsWidget::~ConnectionDetailsWidget()
@@ -35,10 +35,9 @@ ConnectionDetailsWidget::~ConnectionDetailsWidget()
     delete ui;
 }
 
-void ConnectionDetailsWidget::initUI()
+void ConnectionDetailsWidget::init()
 {
-    setFrameBroder(false);
-    ui->ipv6GatewayWidget->setVisible(false);
+    initUI();
     m_activeConnection = m_device->activeConnection();
     if (m_activeConnection == nullptr)
         return;
@@ -59,6 +58,29 @@ void ConnectionDetailsWidget::initUI()
         ui->rate->setText(rate);
     }
     setIpDetails();
+}
+
+void ConnectionDetailsWidget::initUI()
+{
+    QList<KiranFrame *> widgets = {ui->securityTypeWidget, ui->frequencyBandWidget, ui->channelWidget, ui->InterfaceWidget,
+                                   ui->macWidget, ui->ipv4Widget, ui->gatewayWidget, ui->preferredDNSWidget, ui->subnetMaskWidget,
+                                   ui->ipv6Widget, ui->ipv6GatewayWidget, ui->prefixWidget, ui->rateWidget};
+
+    for (auto widget : widgets)
+    {
+        widget->setDrawBroder(false);
+    }
+
+    QList<QLabel *> labels = {ui->securityType, ui->frequencyBand, ui->channel, ui->networkInterface,
+                              ui->mac, ui->ipv4, ui->ipv4Gateway, ui->preferredDNS, ui->subnetMask,
+                              ui->ipv6, ui->ipv6Gateway, ui->prefix, ui->rate};
+
+    for (auto label : labels)
+    {
+        label->setStyleSheet("color:#919191;font-family: \"Noto Sans CJK SC Light\";");
+    }
+
+    ui->ipv6GatewayWidget->setVisible(false);
 }
 
 void ConnectionDetailsWidget::setWirelessSpecificDetails()
@@ -115,7 +137,7 @@ void ConnectionDetailsWidget::setWirelessSpecificDetails()
 void ConnectionDetailsWidget::setIpDetails()
 {
     IpConfig ipV4Config = m_activeConnection->ipV4Config();
-    IpAddress ipv4Address = ipV4Config.addresses().at(0);
+    IpAddress ipv4Address = ipV4Config.addresses().value(0);
     QString address = ipv4Address.ip().toString();
     QString netmask = ipv4Address.netmask().toString();
     QString gateway = ipV4Config.gateway();
@@ -129,6 +151,7 @@ void ConnectionDetailsWidget::setIpDetails()
     if (!dhcpOptions.isEmpty())
     {
         QVariant domainNameServers = dhcpOptions.value("domain_name_servers");
+        // 以空格为分隔
         QStringList dns = domainNameServers.toString().split(" ");
         preferredDNS = dns.value(0);
     }
@@ -137,32 +160,15 @@ void ConnectionDetailsWidget::setIpDetails()
         Ipv4Setting::Ptr ipv4Setting = m_connection->settings()->setting(Setting::Ipv4).dynamicCast<Ipv4Setting>();
         if (!ipv4Setting->dns().isEmpty())
         {
-            preferredDNS = ipv4Setting->dns().at(0).toString();
+            preferredDNS = ipv4Setting->dns().value(0).toString();
         }
     }
     ui->preferredDNS->setText(preferredDNS);
 
     IpConfig ipV6Config = m_activeConnection->ipV6Config();
-    IpAddress ipv6Address = ipV6Config.addresses().at(0);
+    IpAddress ipv6Address = ipV6Config.addresses().value(0);
     QString ipv6 = ipv6Address.ip().toString();
     int prefix = ipv6Address.prefixLength();
     ui->ipv6->setText(ipv6);
     ui->prefix->setText(QString::number(prefix));
-}
-
-void ConnectionDetailsWidget::setFrameBroder(bool enable)
-{
-    ui->securityTypeWidget->setDrawBroder(enable);
-    ui->frequencyBandWidget->setDrawBroder(enable);
-    ui->channelWidget->setDrawBroder(enable);
-    ui->InterfaceWidget->setDrawBroder(enable);
-    ui->macWidget->setDrawBroder(enable);
-    ui->ipv4Widget->setDrawBroder(enable);
-    ui->gatewayWidget->setDrawBroder(enable);
-    ui->preferredDNSWidget->setDrawBroder(enable);
-    ui->subnetMaskWidget->setDrawBroder(enable);
-    ui->ipv6Widget->setDrawBroder(enable);
-    ui->ipv6GatewayWidget->setDrawBroder(enable);
-    ui->prefixWidget->setDrawBroder(enable);
-    ui->rateWidget->setDrawBroder(enable);
 }

@@ -35,11 +35,11 @@ class ConnectionDetailsWidget : public QWidget
 public:
     explicit ConnectionDetailsWidget(Device::Ptr device, QWidget *parent = nullptr);
     ~ConnectionDetailsWidget() override;
+    void init();
     void initUI();
     void setWirelessSpecificDetails();
     void setIpDetails();
 
-    void setFrameBroder(bool enable);
 private:
     Ui::ConnectionDetailsWidget *ui;
     Device::Ptr m_device;

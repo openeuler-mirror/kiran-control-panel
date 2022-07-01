@@ -21,7 +21,7 @@
 VpnL2tpSetting::VpnL2tpSetting(QWidget *parent) : SettingPage(parent), ui(new Ui::VpnL2tpSetting)
 {
     ui->setupUi(this);
-    ui->generalWidget->setNameLabel(tr("VPN name"));
+    ui->connectioNameWidget->setNameLabel(tr("VPN name"));
     initConnection();
 }
 
@@ -32,8 +32,8 @@ VpnL2tpSetting::~VpnL2tpSetting()
 
 void VpnL2tpSetting::initConnection()
 {
-    connect(ui->generalButton,&DisconnectAndDeleteButton::disconnectButtonClicked,this,&VpnL2tpSetting::returnPreviousPage);
-    connect(ui->generalButton,&DisconnectAndDeleteButton::deleteButtonClicked,this,&VpnL2tpSetting::returnPreviousPage);
+    connect(ui->disconnectAndDeleteWidget,&DisconnectAndDeleteButton::disconnectButtonClicked,this,&VpnL2tpSetting::returnPreviousPage);
+    connect(ui->disconnectAndDeleteWidget,&DisconnectAndDeleteButton::deleteButtonClicked,this,&VpnL2tpSetting::returnPreviousPage);
 }
 
 void VpnL2tpSetting::initSettingPage()
@@ -51,17 +51,17 @@ void VpnL2tpSetting::initSpecificSettings()
 
 void VpnL2tpSetting::initWidgets()
 {
-    ui->generalWidget->setConnectionSettings(m_connectionSettings);
+    ui->connectioNameWidget->setConnectionSettings(m_connectionSettings);
     ui->vpnWidget->setVpnSetting(m_vpnSetting);
     ui->vpnPpp->setVpnSetting(m_vpnSetting);
     ui->vpnIPsec->setVpnSetting(m_vpnSetting);
     ui->vpnIpvx->setIpv4Setting(m_ipv4Setting);
-    ui->generalButton->setConnectionPtr(m_connection);
+    ui->disconnectAndDeleteWidget->setConnectionPtr(m_connection);
 }
 
 void VpnL2tpSetting::showSettingPage(QString activeConnectionPath)
 {
-    ui->generalWidget->showVpnSettings(VpnType::VPN_TYPE_L2TP);
+    ui->connectioNameWidget->showVpnSettings(VpnType::VPN_TYPE_L2TP);
     ui->vpnWidget->showSettings();
     ui->vpnPpp->showSettings();
     ui->vpnIPsec->showSettings();
@@ -69,21 +69,23 @@ void VpnL2tpSetting::showSettingPage(QString activeConnectionPath)
 
     if (m_connectionSettings.isNull())
     {
-        ui->generalButton->initButton(SETTING_CONNECTION_STATUS_NEW);
+        ui->disconnectAndDeleteWidget->initButton(SETTING_CONNECTION_STATUS_NEW);
+        ui->disconnectAndDeleteWidget->setVisible(false);
     }
     else
     {
         //通过将激活路径传入SettingPage,判断该连接是否激活，也可通过uuid判断
+        ui->disconnectAndDeleteWidget->setVisible(true);
         if (activeConnectionPath.isEmpty())
-            ui->generalButton->initButton(SETTING_CONNECTION_STATUS_DEACTIVATED);
+            ui->disconnectAndDeleteWidget->initButton(SETTING_CONNECTION_STATUS_DEACTIVATED);
         else
-            ui->generalButton->initButton(SETTING_CONNECTION_STATUS_ACTIVATED,activeConnectionPath);
+            ui->disconnectAndDeleteWidget->initButton(SETTING_CONNECTION_STATUS_ACTIVATED,activeConnectionPath);
     }
 }
 
 void VpnL2tpSetting::saveSettingPage()
 {
-    ui->generalWidget->saveSettings();
+    ui->connectioNameWidget->saveSettings();
     ui->vpnWidget->saveSettings();
     ui->vpnPpp->saveSettings();
     ui->vpnIPsec->saveSettings();
@@ -95,15 +97,15 @@ void VpnL2tpSetting::clearPtr()
     m_vpnSetting.clear();
     SettingPage::clearPtr();
 
-    ui->generalWidget->clearPtr();
+    ui->connectioNameWidget->clearPtr();
     ui->vpnWidget->clearPtr();
     ui->vpnPpp->clearPtr();
     ui->vpnIPsec->clearPtr();
     ui->vpnIpvx->clearPtr();
-    ui->generalButton->clearPtr();
+    ui->disconnectAndDeleteWidget->clearPtr();
 }
 
 bool VpnL2tpSetting::isInputValid()
 {
-    return ui->vpnWidget->isInputValid() || ui->generalWidget->isInputValid();
+    return ui->vpnWidget->isInputValid() || ui->connectioNameWidget->isInputValid();
 }
