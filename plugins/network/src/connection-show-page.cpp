@@ -15,6 +15,7 @@
 #include "connection-show-page.h"
 #include <kiran-switch-button.h>
 #include <qt5-log-i.h>
+#include <style-property.h>
 #include <NetworkManagerQt/Settings>
 #include <NetworkManagerQt/WiredDevice>
 #include <NetworkManagerQt/WirelessDevice>
@@ -43,13 +44,16 @@ void ConnectionShowPage::setTitle(QString title)
 void ConnectionShowPage::initUI()
 {
     m_switchButton = new KiranSwitchButton(this);
+
     ui->titleLayout->addWidget(m_switchButton);
     ui->connectionLists->setMaximumHeight(ui->connectionLists->sizeHintForRow(0) * ui->connectionLists->count() + (2 * ui->connectionLists->frameWidth()));
+    Kiran::StylePropertyHelper::setButtonType(ui->createConnectionButton, Kiran::BUTTON_Default);
 }
 
 void ConnectionShowPage::initConnect()
 {
-    connect(ui->createConnectionButton, &QPushButton::clicked, [=](){ emit requestCreatConnection(); });
+    connect(ui->createConnectionButton, &QPushButton::clicked, [=]()
+            { emit requestCreatConnection(); });
     connect(ui->connectionLists, &ConnectionLists::requestCreatConnection, this, &ConnectionShowPage::requestCreatConnection);
 
     connect(ui->connectionLists, &ConnectionLists::requestEditConnection, this, &ConnectionShowPage::requestEditConnection);
@@ -62,13 +66,43 @@ void ConnectionShowPage::initConnect()
 
     connect(m_switchButton, &KiranSwitchButton::toggled, this, &ConnectionShowPage::handleToggledSwitchButton);
 
-    connect(notifier(), &Notifier::wirelessEnabledChanged, this, &ConnectionShowPage::handleWirelessEnabledChanged);
+    /**
+     *如果频繁的打开/禁用网络，会频繁发送信号，使用定时器进行处理
+     * */
+    m_timer.setInterval(100);
+    m_timer.setSingleShot(true);
+    connect(notifier(), &Notifier::wirelessEnabledChanged, [=](bool enable)
+            {
+                m_wirlessNetworkEnable = enable;
+                m_timer.start(); });
+
+    connect(&m_timer, &QTimer::timeout, [=]()
+            { handleWirelessEnabledChanged(m_wirlessNetworkEnable); });
+
+    //    connect(notifier(), &Notifier::wirelessEnabledChanged, this, &ConnectionShowPage::handleWirelessEnabledChanged);
     connect(notifier(), &Notifier::networkingEnabledChanged, [=]() {});
 }
 
 void ConnectionShowPage::setConnectionType(ConnectionSettings::ConnectionType connectionType)
 {
     m_connectionType = connectionType;
+}
+
+// XXX:该函数有待修改
+void ConnectionShowPage::initSwitchButton()
+{
+    switch (m_connectionType)
+    {
+    case ConnectionSettings::Wired:
+        break;
+    case ConnectionSettings::Wireless:
+        m_switchButton->setChecked(isWirelessEnabled());
+        break;
+    case ConnectionSettings::Vpn:
+        break;
+    default:
+        break;
+    }
 }
 
 void ConnectionShowPage::handleToggledSwitchButton(bool toggled)
@@ -91,6 +125,7 @@ void ConnectionShowPage::handleToggledSwitchButton(bool toggled)
 
 void ConnectionShowPage::handleWirelessEnabledChanged(bool enabled)
 {
+    KLOG_DEBUG() << "-----------------WirelessEnabledChanged:" << enabled;
     m_switchButton->setChecked(enabled);
     ui->connectionLists->setVisible(enabled);
     ui->createConnectionButton->setVisible(enabled);
@@ -170,10 +205,6 @@ void ConnectionShowPage::updateItemActivatingStatus(QListWidgetItem* item)
 void ConnectionShowPage::updateItemActivatedStatus(const QString& activatedPath)
 {
     ui->connectionLists->updateItemActivatedStatus(activatedPath);
-}
-
-void ConnectionShowPage::connectionStateNotify(ActiveConnection::State state, const QString& activatedConnectionPath)
-{
 }
 
 void ConnectionShowPage::setItemWidgetType(ItemWidgetType itemType)

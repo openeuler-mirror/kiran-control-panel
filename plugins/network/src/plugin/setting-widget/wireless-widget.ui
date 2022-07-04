@@ -6,19 +6,22 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>525</width>
-    <height>258</height>
+    <width>868</width>
+    <height>246</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>WirelessWidget</string>
   </property>
-  <layout class="QVBoxLayout" name="m_verticalDeviceWidgetLayout">
+  <layout class="QVBoxLayout" name="verticalLayout_4">
+   <property name="spacing">
+    <number>8</number>
+   </property>
    <property name="leftMargin">
     <number>0</number>
    </property>
    <property name="topMargin">
-    <number>0</number>
+    <number>16</number>
    </property>
    <property name="rightMargin">
     <number>0</number>
@@ -27,51 +30,114 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="QLabel" name="label">
-     <property name="text">
-      <string>SSID</string>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <property name="spacing">
+      <number>10</number>
      </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QLineEdit" name="ssidEdit"/>
-   </item>
-   <item>
-    <widget class="QLabel" name="label_19">
-     <property name="text">
-      <string>MAC Address Of Device</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="OptionsComboBox" name="deviceMac"/>
-   </item>
-   <item>
-    <layout class="QHBoxLayout" name="mtuLayout">
      <item>
-      <widget class="QLabel" name="label_23">
+      <widget class="QLabel" name="label">
        <property name="text">
-        <string>Custom MTU</string>
+        <string>SSID</string>
        </property>
       </widget>
      </item>
      <item>
-      <spacer name="horizontalSpacer_5">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
+      <widget class="QLineEdit" name="ssidEdit">
+       <property name="minimumSize">
         <size>
-         <width>40</width>
-         <height>20</height>
+         <width>0</width>
+         <height>36</height>
         </size>
        </property>
-      </spacer>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>36</height>
+        </size>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>
    <item>
-    <widget class="QSpinBox" name="customMTU"/>
+    <layout class="QVBoxLayout" name="verticalLayout_2">
+     <property name="spacing">
+      <number>10</number>
+     </property>
+     <property name="topMargin">
+      <number>8</number>
+     </property>
+     <item>
+      <widget class="QLabel" name="label_19">
+       <property name="text">
+        <string>MAC Address Of Device</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="OptionsComboBox" name="deviceMac">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>36</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>36</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QVBoxLayout" name="verticalLayout_3">
+     <property name="spacing">
+      <number>8</number>
+     </property>
+     <item>
+      <layout class="QHBoxLayout" name="mtuLayout">
+       <item>
+        <widget class="QLabel" name="label_23">
+         <property name="text">
+          <string>Custom MTU</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_5">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <widget class="QSpinBox" name="customMTU">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>36</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>36</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
   </layout>
  </widget>

@@ -20,6 +20,7 @@
 #include <NetworkManagerQt/WirelessNetwork>
 #include <QListWidgetItem>
 #include <QWidget>
+#include <QTimer>
 
 QT_BEGIN_NAMESPACE
 namespace Ui
@@ -41,6 +42,7 @@ public:
     void initUI();
     void initConnect();
 
+    void initSwitchButton();
     void setConnectionType(ConnectionSettings::ConnectionType connectionType);
     void setDevicePath(const QString &devicePath);
     void setItemWidgetType(ItemWidgetType itemType);
@@ -73,7 +75,6 @@ public slots:
     void clearConnectionLists();
 
     void updateItemActivatedStatus(const QString &activatedPath);
-    void connectionStateNotify(ActiveConnection::State state, const QString &activatedConnectionPath);
     void updateItemActivatingStatus(QListWidgetItem *item);
     void updateItemActivatedPath(QListWidgetItem *item, QString activatedPath);
 
@@ -98,6 +99,8 @@ private:
     KiranSwitchButton *m_switchButton;
     ConnectionSettings::ConnectionType m_connectionType;
     QString m_devicePath;
+    QTimer m_timer;
+    bool m_wirlessNetworkEnable;
 };
 
 #endif  // KIRAN_CPANEL_NETWORK_CONNECTION_SHOW_PAGE_H

@@ -7,18 +7,21 @@
     <x>0</x>
     <y>0</y>
     <width>453</width>
-    <height>461</height>
+    <height>401</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>VpnPpp</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalScrollAreaWidgetContentsLayout">
+  <layout class="QVBoxLayout" name="verticalLayout_3">
+   <property name="spacing">
+    <number>8</number>
+   </property>
    <property name="leftMargin">
     <number>0</number>
    </property>
    <property name="topMargin">
-    <number>0</number>
+    <number>8</number>
    </property>
    <property name="rightMargin">
     <number>0</number>
@@ -26,13 +29,6 @@
    <property name="bottomMargin">
     <number>0</number>
    </property>
-   <item>
-    <widget class="QLabel" name="label">
-     <property name="text">
-      <string>VPN PPP</string>
-     </property>
-    </widget>
-   </item>
    <item>
     <layout class="QHBoxLayout" name="useMPPELayout">
      <item>
@@ -59,7 +55,10 @@
    </item>
    <item>
     <widget class="QWidget" name="mppeWidget" native="true">
-     <layout class="QVBoxLayout" name="m_verticalDeviceWidgetLayout">
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <property name="spacing">
+       <number>8</number>
+      </property>
       <property name="leftMargin">
        <number>0</number>
       </property>
@@ -73,21 +72,43 @@
        <number>0</number>
       </property>
       <item>
-       <widget class="QLabel" name="label_3">
-        <property name="text">
-         <string>Security</string>
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <property name="spacing">
+         <number>10</number>
         </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="OptionsComboBox" name="mppeSecurity">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
+        <property name="topMargin">
+         <number>0</number>
         </property>
-       </widget>
+        <item>
+         <widget class="QLabel" name="label_3">
+          <property name="text">
+           <string>Security</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="OptionsComboBox" name="mppeSecurity">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>36</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>36</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
       <item>
        <layout class="QHBoxLayout" name="statefulMPPELayout">
@@ -117,7 +138,11 @@
     </widget>
    </item>
    <item>
-    <layout class="QVBoxLayout" name="optionsLayout"/>
+    <layout class="QVBoxLayout" name="optionsLayout">
+     <property name="spacing">
+      <number>4</number>
+     </property>
+    </layout>
    </item>
   </layout>
  </widget>

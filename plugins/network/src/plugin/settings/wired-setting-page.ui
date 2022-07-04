@@ -7,13 +7,16 @@
     <x>0</x>
     <y>0</y>
     <width>736</width>
-    <height>541</height>
+    <height>417</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>WiredSettingPage</string>
   </property>
-  <layout class="QVBoxLayout" name="m_verticalDeviceWidgetLayout">
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="spacing">
+    <number>0</number>
+   </property>
    <property name="leftMargin">
     <number>0</number>
    </property>
@@ -27,7 +30,7 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="ConnectionNameWidget" name="generalWidget" native="true"/>
+    <widget class="ConnectionNameWidget" name="connectionNameWidget" native="true"/>
    </item>
    <item>
     <widget class="Ipv4Widget" name="ipv4Widget" native="true"/>
@@ -40,6 +43,22 @@
    </item>
    <item>
     <widget class="DisconnectAndDeleteButton" name="disconnectAndDeleteButton" native="true"/>
+   </item>
+   <item>
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Expanding</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
    </item>
   </layout>
  </widget>

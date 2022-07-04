@@ -7,18 +7,21 @@
     <x>0</x>
     <y>0</y>
     <width>599</width>
-    <height>227</height>
+    <height>247</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>WirelessSecurityWidget</string>
   </property>
-  <layout class="QVBoxLayout" name="m_verticalLayout">
+  <layout class="QVBoxLayout" name="verticalLayout_3">
+   <property name="spacing">
+    <number>16</number>
+   </property>
    <property name="leftMargin">
     <number>0</number>
    </property>
    <property name="topMargin">
-    <number>0</number>
+    <number>8</number>
    </property>
    <property name="rightMargin">
     <number>0</number>
@@ -28,6 +31,9 @@
    </property>
    <item>
     <layout class="QVBoxLayout" name="m_verticalDeviceWidgetLayout">
+     <property name="spacing">
+      <number>10</number>
+     </property>
      <item>
       <widget class="QLabel" name="label">
        <property name="text">
@@ -36,16 +42,29 @@
       </widget>
      </item>
      <item>
-      <widget class="QComboBox" name="securityOption"/>
+      <widget class="OptionsComboBox" name="securityOption">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>36</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>36</height>
+        </size>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>
    <item>
     <widget class="QStackedWidget" name="stackedWidget">
      <widget class="QWidget" name="page">
-      <layout class="QVBoxLayout" name="verticalScrollAreaWidgetContentsLayout">
+      <layout class="QVBoxLayout" name="verticalLayout_2">
        <property name="spacing">
-        <number>6</number>
+        <number>16</number>
        </property>
        <property name="leftMargin">
         <number>0</number>
@@ -60,18 +79,41 @@
         <number>0</number>
        </property>
        <item>
-        <widget class="QLabel" name="label_2">
-         <property name="text">
-          <string>Password Options</string>
+        <layout class="QVBoxLayout" name="verticalLayout">
+         <property name="spacing">
+          <number>10</number>
          </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QComboBox" name="passwordOption"/>
+         <item>
+          <widget class="QLabel" name="label_2">
+           <property name="text">
+            <string>Password Options</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="OptionsComboBox" name="passwordOption">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>36</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>36</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
        <item>
         <widget class="QWidget" name="passwordWidget" native="true">
          <layout class="QVBoxLayout" name="passwordLayout">
+          <property name="spacing">
+           <number>10</number>
+          </property>
           <property name="leftMargin">
            <number>0</number>
           </property>
@@ -94,7 +136,20 @@
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout">
             <item>
-             <widget class="QLineEdit" name="passwordEdit"/>
+             <widget class="QLineEdit" name="passwordEdit">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>36</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>36</height>
+               </size>
+              </property>
+             </widget>
             </item>
             <item>
              <widget class="QPushButton" name="passwordVisual">
@@ -114,6 +169,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>OptionsComboBox</class>
+   <extends>QComboBox</extends>
+   <header location="global">options-combobox.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

@@ -23,6 +23,6 @@ int main(int argc, char *argv[]) {
     klog_qt5_init("", "kylinsec-session", "kiran-cpanel-network", "kiran-cpanel-network");
     CPanelNetworkWidget networkWidget;
     networkWidget.show();
-    ManagerTray tray;
+//    ManagerTray tray;
     return QApplication::exec();
 }

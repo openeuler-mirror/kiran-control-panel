@@ -6,14 +6,17 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1064</width>
-    <height>887</height>
+    <width>827</width>
+    <height>462</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>VpnL2tpSetting</string>
   </property>
-  <layout class="QVBoxLayout" name="m_verticalDeviceWidgetLayout">
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="spacing">
+    <number>0</number>
+   </property>
    <property name="leftMargin">
     <number>0</number>
    </property>
@@ -27,7 +30,7 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="ConnectionNameWidget" name="generalWidget" native="true">
+    <widget class="ConnectionNameWidget" name="connectioNameWidget" native="true">
      <property name="styleSheet">
       <string notr="true"/>
      </property>
@@ -62,15 +65,29 @@
     </widget>
    </item>
    <item>
-    <widget class="DisconnectAndDeleteButton" name="generalButton" native="true"/>
+    <widget class="DisconnectAndDeleteButton" name="disconnectAndDeleteWidget" native="true"/>
+   </item>
+   <item>
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>399</height>
+      </size>
+     </property>
+    </spacer>
    </item>
   </layout>
-  <zorder>generalWidget</zorder>
+  <zorder>connectioNameWidget</zorder>
   <zorder>vpnIpvx</zorder>
   <zorder>vpnPpp</zorder>
   <zorder>vpnWidget</zorder>
   <zorder>vpnIPsec</zorder>
-  <zorder>generalButton</zorder>
+  <zorder>disconnectAndDeleteWidget</zorder>
+  <zorder>verticalSpacer</zorder>
  </widget>
  <customwidgets>
   <customwidget>

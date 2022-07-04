@@ -102,10 +102,15 @@ void TrayPage::handleDeviceComboBoxChanged(int index)
 QStringList TrayPage::devicePathList()
 {
     QStringList devicePathList;
+    KLOG_DEBUG() << "m_deviceList:" << m_deviceList;
     for (Device::Ptr device :m_deviceList)
     {
-        devicePathList << device->uni();
+        if(device == nullptr)
+            KLOG_DEBUG() << "device == nullptr";
+        else
+            devicePathList << device->uni();
     }
+    KLOG_DEBUG() << "devicePathList:" << devicePathList;
     return devicePathList;
 }
 

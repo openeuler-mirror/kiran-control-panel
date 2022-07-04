@@ -20,6 +20,7 @@
 #include <QPointer>
 #include "ui_wireless-manager.h"
 #include "text-input-dialog.h"
+#include <style-property.h>
 
 WirelessManager::WirelessManager(const QString &devicePath,QWidget *parent) : Manager(parent), ui(new Ui::WirelessManager)
 {
@@ -42,9 +43,14 @@ void WirelessManager::initUI()
     ui->connectionShowPage->setDevicePath(m_devicePath);
     ui->connectionShowPage->setItemWidgetType(ITEM_WIDGET_TYPE_PLUGIN);
     ui->connectionShowPage->setTitle(tr("Wireless Network Adapter"));
+    ui->connectionShowPage->initSwitchButton();
     ui->connectionShowPage->setSwitchButtonVisible(true);
     ui->connectionShowPage->setCreateButtonVisible(false);
     ui->connectionShowPage->showWirelessNetworkLists();
+    Kiran::StylePropertyHelper::setButtonType(ui->saveButton,Kiran::BUTTON_Default);
+
+    //XXX:由于存在switchButton，所以特别修改一下topMargin
+//    ui->connectionShowPage->setContentsMargins(0,-12,0,0);
 }
 
 void WirelessManager::initConnection()

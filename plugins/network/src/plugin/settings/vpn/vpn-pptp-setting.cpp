@@ -70,10 +70,12 @@ void VpnPptpSetting::showSettingPage(QString activeConnectionPath)
     if (m_connectionSettings.isNull())
     {
         ui->generalButton->initButton(SETTING_CONNECTION_STATUS_NEW);
+        ui->generalButton->setVisible(false);
     }
     else
     {
         //通过将激活路径传入SettingPage,判断该连接是否激活，也可通过uuid判断
+        ui->generalButton->setVisible(true);
         if (activeConnectionPath.isEmpty())
             ui->generalButton->initButton(SETTING_CONNECTION_STATUS_DEACTIVATED);
         else

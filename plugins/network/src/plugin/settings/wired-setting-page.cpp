@@ -55,7 +55,7 @@ void WiredSettingPage::initSpecificSettings()
 
 void WiredSettingPage::initWidgets()
 {
-    ui->generalWidget->setConnectionSettings(m_connectionSettings);
+    ui->connectionNameWidget->setConnectionSettings(m_connectionSettings);
     ui->ipv4Widget->setIpv4Setting(m_ipv4Setting);
     ui->ipv6Widget->setIpv6Setting(m_ipv6Setting);
     ui->ethernetWidget->setWiredSetting(m_wiredSetting);
@@ -64,8 +64,8 @@ void WiredSettingPage::initWidgets()
 
 void WiredSettingPage::showSettingPage(QString activeConnectionPath)
 {
-    ui->generalWidget->setNameLabel(tr("Network name"));
-    ui->generalWidget->showSettings(ConnectionSettings::ConnectionType::Wired);
+    ui->connectionNameWidget->setNameLabel(tr("Network name"));
+    ui->connectionNameWidget->showSettings(ConnectionSettings::ConnectionType::Wired);
     ui->ipv4Widget->showSettings();
     ui->ipv6Widget->showSettings();
     ui->ethernetWidget->showSettings();
@@ -86,7 +86,7 @@ void WiredSettingPage::showSettingPage(QString activeConnectionPath)
 
 void WiredSettingPage::saveSettingPage()
 {
-    ui->generalWidget->saveSettings();
+    ui->connectionNameWidget->saveSettings();
     ui->ipv4Widget->saveSettings();
     ui->ipv6Widget->saveSettings();
     ui->ethernetWidget->saveSettings();
@@ -99,7 +99,7 @@ void WiredSettingPage::clearPtr()
     m_wiredSetting.clear();
     SettingPage::clearPtr();
 
-    ui->generalWidget->clearPtr();
+    ui->connectionNameWidget->clearPtr();
     ui->disconnectAndDeleteButton->clearPtr();
     ui->ipv4Widget->clearPtr();
     ui->ipv6Widget->clearPtr();
@@ -108,7 +108,7 @@ void WiredSettingPage::clearPtr()
 
 bool WiredSettingPage::isInputValid()
 {
-    if (ui->ipv4Widget->isInputValid() || ui->ipv6Widget->isInputValid() || ui->generalWidget->isInputValid())
+    if (ui->ipv4Widget->isInputValid() || ui->ipv6Widget->isInputValid() || ui->connectionNameWidget->isInputValid())
         return true;
     else
         return false;

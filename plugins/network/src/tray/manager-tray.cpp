@@ -147,11 +147,12 @@ void ManagerTray::getAvailableDeviceList()
     for (Device::Ptr dev : deviceList)
     {
         KLOG_DEBUG() << "dev->interfaceName():" << dev->interfaceName();
-        KLOG_DEBUG() << "dev->managed():" << dev->managed();
         KLOG_DEBUG() << "dev->availableConnections():" << dev->availableConnections();
         KLOG_DEBUG() << "dev->state():" << dev->state();
 
         if(dev->state() == Device::Unavailable)
+            continue ;
+        if(dev->state() == Device::Unmanaged)
             continue ;
 
         switch (dev->type())
@@ -311,6 +312,7 @@ void ManagerTray::handleDeviceAdded(const QString &devicePath)
 // XXX:当device被移除时，由于设备对象可能已经被删除，所以并不能通过findNetworkInterface(path)找到该设备接口，进而知道被删除的设备类型
 void ManagerTray::handleDeviceRemoved(const QString &devicePath)
 {
+    KLOG_DEBUG() << "handleDeviceRemoved:" << devicePath;
     if (m_wiredTrayPage->devicePathList().contains(devicePath))
         reloadWiredTrayPage();
     else if (m_wirelessTrayPage->devicePathList().contains(devicePath))

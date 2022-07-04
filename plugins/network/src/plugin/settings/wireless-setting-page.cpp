@@ -71,9 +71,11 @@ void WirelessSettingPage::showSettingPage(QString activeConnectionPath)
     if (m_connectionSettings.isNull())
     {
         ui->disconnectAndDeleteButton->initButton(SETTING_CONNECTION_STATUS_NEW);
+        ui->disconnectAndDeleteButton->setVisible(false);
     }
     else
     {
+        ui->disconnectAndDeleteButton->setVisible(false);
         //通过将激活路径传入SettingPage,判断该连接是否激活，也可通过uuid判断
         if (activeConnectionPath.isEmpty())
             ui->disconnectAndDeleteButton->initButton(SETTING_CONNECTION_STATUS_DEACTIVATED);
