@@ -114,7 +114,7 @@ bool SystemInformation::initUI()
     QList<QLabel *> labels = {ui->lab_name_info,ui->lab_core_version_info, ui->lab_system_arch_info,ui->lab_system_version_info};
     for (auto label : labels)
     {
-        label->setStyleSheet("color:#7e7e7e;font-family: \"Noto Sans CJK SC regular\";");
+        label->setStyleSheet("color:#919191;font-family: \"Noto Sans CJK SC regular\";");
     }
 
     auto kiranFrames = findChildren<KiranFrame *>();
