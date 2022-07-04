@@ -28,10 +28,6 @@
 #include <QSpacerItem>
 #include <QStandardItemModel>
 
-#define MODEL_ROLE_CATEGORY_IDX Qt::UserRole
-#define MODEL_ROLE_SUBITEM_IDX Qt::UserRole + 2
-#define MODEL_ROLE_PATH Qt::UserRole + 3
-
 SearchEdit::SearchEdit(QWidget *parent)
     : KiranSearchBox(parent)
 {

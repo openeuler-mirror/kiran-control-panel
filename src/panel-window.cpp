@@ -33,8 +33,8 @@
 PanelWindow::PanelWindow(QWidget *parent) : KiranTitlebarWindow(parent)
 {
     initUI();
-    connect(static_cast<KiranSingleApplication*>(qApp),&KiranSingleApplication::instanceStarted,this,&PanelWindow::handleInstanceStarted);
-    connect(static_cast<KiranSingleApplication*>(qApp),&KiranSingleApplication::receivedMessage,this,&PanelWindow::handleReceivedMessage);
+    connect(dynamic_cast<KiranSingleApplication*>(qApp),&KiranSingleApplication::instanceStarted,this,&PanelWindow::handleInstanceStarted);
+    connect(dynamic_cast<KiranSingleApplication*>(qApp),&KiranSingleApplication::receivedMessage,this,&PanelWindow::handleReceivedMessage);
 }
 
 void PanelWindow::initUI()
