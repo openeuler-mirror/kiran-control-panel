@@ -28,7 +28,7 @@ SubItems=Keybinding
 Name=Keybinding
 Name[zh_CN]=快捷键设置
 #插件Icon
-Icon=@ICON_DIR@/kck-page-keybinding.svg
+Icon=kcp-keybinding-keybinding
 #插件关键字 该值提供给控制中心形成搜索列表
 Keywords[zh_CN]=快捷键
 Keywords=keybinding,shortcut

@@ -19,20 +19,21 @@
 #include "scrollarea-container.h"
 #include "tools/avatar-editor-wrapper.h"
 
-#include <qt5-log-i.h>
-#include <widget-property-helper.h>
 #include <QButtonGroup>
-#include <QDebug>
 #include <QDir>
 #include <QFileDialog>
 #include <QHBoxLayout>
 #include <QPushButton>
 #include <QScrollArea>
+#include <qt5-log-i.h>
+#include <style-property.h>
 
 #define SYSTEM_AVATAR_OBJ_NAME "avatar_button_system"
 #define USER_AVATAR_OBJ_NAME "avatar_button_user"
 #define ADD_AVATAR_OBJ_NAME "avatar_button_add"
 #define CUSTOM_AVATAR_OBJ_NAME "avatar_button_custom"
+
+using namespace Kiran;
 
 SelectAvatarPage::SelectAvatarPage(QWidget *parent) : QWidget(parent),
                                                       m_mode(CHANGE_AVATAR_FOR_USER)
@@ -145,7 +146,7 @@ void SelectAvatarPage::initUI()
     btn->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     btn->setFixedSize(110, 40);
     btn->setText(tr("Confirm"));
-    Kiran::WidgetPropertyHelper::setButtonType(btn, Kiran::BUTTON_Default);
+    StylePropertyHelper::setButtonType(btn, BUTTON_Default);
     m_btnLayout->addWidget(btn);
     connect(btn, &QPushButton::clicked, [this]()
             { sigReturnToPrevPage(m_mode, true); });

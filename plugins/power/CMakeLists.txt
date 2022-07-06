@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.2)
 
 set(TARGET_NAME kiran-cpanel-power)
 
-add_definitions(-DTEST)
+#add_definitions(-DTEST)
 
 find_package(PkgConfig REQUIRED)
 find_package(Qt5 COMPONENTS Widgets Svg DBus LinguistTools)
@@ -48,9 +48,8 @@ target_link_libraries(${TARGET_NAME}
         ${QGSETTINGS_LIBRARIES}
         ${UPOWER_GLIB_LIBRARIES})
 
-include(GNUInstallDirs)
 # 安装插件翻译
-set(KIRAN_POWER_MANAGER_TRANSLATIONS_DIR ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATAROOTDIR}/${TARGET_NAME}/translations)
+set(KIRAN_POWER_MANAGER_TRANSLATIONS_DIR ${INSTALL_DATADIR}/${TARGET_NAME}/translations)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config/config.h.in ${CMAKE_CURRENT_BINARY_DIR}/config.h)
 install(FILES ${POWER_QM_FILES} DESTINATION ${KIRAN_POWER_MANAGER_TRANSLATIONS_DIR})
 

@@ -36,6 +36,7 @@ target_include_directories(${TARGET_NAME} PRIVATE
         ${KIRAN_STYLE_HELPER_INCLUDE_DIRS})
 
 target_link_libraries(${TARGET_NAME}
+        common-widgets
         Qt5::Widgets
         Qt5::DBus
         Qt5::X11Extras

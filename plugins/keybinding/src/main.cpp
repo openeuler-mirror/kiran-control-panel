@@ -12,55 +12,96 @@
  * Author:     yuanxing <yuanxing@kylinos.com.cn>
  */
 
+#include "kcp-plugin-interface.h"
+#include "shortcut.h"
+
 #include <kiran-log/qt5-log-i.h>
-#include <kiran-message-box.h>
-#include <kiran-single-application.h>
+#include <kiran-session-daemon/keybinding-i.h>
+
 #include <QApplication>
-#include <QFile>
 #include <QTranslator>
-#include <iostream>
-#include "keybinding-config.h"
-#include "main-window.h"
-#define TRANSLATION_DIR TRANSLATIONS_FILE_DIR
+#include <QDBusConnection>
+#include <QDBusConnectionInterface>
 
-int main(int argc, char *argv[])
+class kcpKeybinding : public QObject, public KcpPluginInterface
 {
-    //设置日志输出
-    if (klog_qt5_init("", "kylinsec-session", "kiran-cpanel-keybinding", "kiran-cpanel-keybinding") < 0)
-    {
-        std::cout << "init klog error" << std::endl;
-    }
-    KLOG_INFO("******New Output*********\n");
+    Q_OBJECT
+    Q_PLUGIN_METADATA(IID KcpPluginInterface_iid)
+    Q_INTERFACES(KcpPluginInterface)
 
-    //只允许单个程序运行
-    KiranSingleApplication a(argc, argv);
+public:
+    kcpKeybinding()=default;
+    ~kcpKeybinding(){};
 
-    QFile file(":/style/style.qss");
-    if (file.open(QFile::ReadOnly))
+public:
+    /**
+     * 插件需提供的初始化方法，在其中加载翻译文件或做其他初始化操作
+     * \return 初始化返回值 返回0标志成功，其他值标志失败！
+     */
+    int init() override
     {
-        QString styleSheet = QLatin1String(file.readAll());
+        if (!QDBusConnection::sessionBus().interface()->isServiceRegistered(KEYBINDING_DBUS_NAME).value())
+        {
+            KLOG_INFO() << "Connect keybinding dbus service failed!";
+            return -1;
+        }
+        //TODO:统一修改翻译文件的加载路径
+        return 0;
+    };
 
-        a.setStyleSheet(styleSheet);
-        file.close();
-    }
-    else
+    /**
+     * 插件需提供取消初始化的操作，在其中对翻译文件进行卸载或取消其他初始化操作
+     */
+    void uninit() override
     {
-        KiranMessageBox::message(nullptr, "warning", "Open failed", KiranMessageBox::Ok);
-    }
-
-    //加载翻译文件
-    QTranslator *qtTranslator = new QTranslator(qApp);
-    if (qtTranslator->load(QLocale(), "kiran-cpanel-keybinding", ".", TRANSLATION_DIR, ".qm"))
-    {
-        a.installTranslator(qtTranslator);
-    }
-    else
-    {
-        qDebug("Load Translator File failed : %s\n", TRANSLATION_DIR);
     }
 
-    MainWindow w;
-    w.show();
+    /**
+     * \brief 通过插件功能项名称(PluginSubItem->name)获取显示控件
+     * \param id 功能项ID
+     * \return 该功能项的显示控件
+     */
+    QWidget* getSubItemWidget(QString subItemName) override
+    {
+        QWidget* widget = nullptr;
+        if (subItemName == "Keybinding")
+        {
+            widget = new Shortcut;
+        }
+        m_currentWidget = widget;
 
-    return a.exec();
-}
+//        //加载样式表
+//        QFile file(":/style/style.qss");
+//        if (file.open(QFile::ReadOnly))
+//        {
+//            QString styleSheet = QLatin1String(file.readAll());
+//
+//            m_currentWidget->setStyleSheet(styleSheet);
+//            file.close();
+//        }
+//        else
+//        {
+//            KiranMessageBox::message(nullptr, tr("Warning"), tr("Load qss failed"), KiranMessageBox::Ok);
+//        }
+        return m_currentWidget;
+    }
+
+    /**
+     * 插件实现该方法用于判断是否存在未保存的设置项,用于提供切换页面时做检查
+     * \return 是否存在未保存项
+     */
+    bool haveUnsavedOptions() override
+    {
+        return false;
+    }
+
+    QStringList visibleSubItems() override
+    {
+        return QStringList() << "Keybinding";
+    }
+
+private:
+    QWidget* m_currentWidget = nullptr;
+};
+
+#include "main.moc"

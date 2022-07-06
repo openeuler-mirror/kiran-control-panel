@@ -17,12 +17,14 @@
 #include "kiran-display-config-global.h"
 #include "kiran-display-config-identifying.h"
 
-#include <kiran-palette.h>
 
 #include <QToolTip>
 #include <QPainter>
 #include <QPainterPath>
+#include <style-property.h>
+#include <style-palette.h>
 
+using namespace Kiran;
 using namespace KiranDisplayConfigGlobal;
 
 KiranDisplayConfigurationPanel::KiranDisplayConfigurationPanel(QWidget *parent) :
@@ -31,11 +33,11 @@ KiranDisplayConfigurationPanel::KiranDisplayConfigurationPanel(QWidget *parent) 
 {
     ui->setupUi(this);
 
-    ui->pushButton_left->setIcon(QIcon(":/kcp-display/images/rotation-left.svg"));
-    ui->pushButton_right->setIcon(QIcon(":/kcp-display/images/rotation-right.svg"));
-    ui->pushButton_horizontal->setIcon(QIcon(":/kcp-display/images/flip-h.svg"));
-    ui->pushButton_vertical->setIcon(QIcon(":/kcp-display/images/flip-v.svg"));
-    ui->pushButton_identifying->setIcon(QIcon(":/kcp-display/images/identification.svg"));
+    ui->pushButton_left->setThemeIcon(QPixmap(":/kcp-display/images/rotation-left.svg"),PALETTE_DARK);
+    ui->pushButton_right->setThemeIcon(QPixmap(":/kcp-display/images/rotation-right.svg"),PALETTE_DARK);
+    ui->pushButton_horizontal->setThemeIcon(QPixmap(":/kcp-display/images/flip-h.svg"),PALETTE_DARK);
+    ui->pushButton_vertical->setThemeIcon(QPixmap(":/kcp-display/images/flip-v.svg"),PALETTE_DARK);
+    ui->pushButton_identifying->setThemeIcon(QPixmap(":/kcp-display/images/identification.svg"),PALETTE_DARK);
     ui->btns_widget->setAttribute(Qt::WA_TranslucentBackground, true);
 
     connect(ui->contain, &KiranDisplayConfigItemContain::sigButtonChecked, this, [=](QString monitorPath){
@@ -122,8 +124,8 @@ void KiranDisplayConfigurationPanel::on_pushButton_identifying_clicked()
 
 void KiranDisplayConfigurationPanel::paintEvent(QPaintEvent *event)
 {
-    auto kiranPalette = KiranPalette::instance();
-    QColor backgroundColor = kiranPalette->color(KiranPalette::Normal,KiranPalette::Widget,KiranPalette::Background);
+    auto kiranPalette = StylePalette::instance();
+    QColor backgroundColor = kiranPalette->color(StylePalette::Normal,StylePalette::Widget,StylePalette::Background);
 
     QPainterPath painterPath;
     painterPath.addRoundedRect(this->rect(),6,6);

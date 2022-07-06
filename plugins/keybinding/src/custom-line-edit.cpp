@@ -33,8 +33,8 @@ void CustomLineEdit::initUI()
     setFocusPolicy(Qt::ClickFocus);
     setReadOnly(true);
     setObjectName("CustomLineEdit");
-    setStyleSheet("#CustomLineEdit{border:1px solid #393939;border-radius:6px;padding-left:10px;padding-right:10px;}"
-                  "#CustomLineEdit:focus{border:1px solid #2eb3ff;}");
+//    setStyleSheet("#CustomLineEdit{border:1px solid #393939;border-radius:6px;padding-left:10px;padding-right:10px;}"
+//                  "#CustomLineEdit:focus{border:1px solid #2eb3ff;}");
 }
 
 void CustomLineEdit::keyReleaseEvent(QKeyEvent *event)
@@ -90,7 +90,6 @@ void CustomLineEdit::keyReleaseEvent(QKeyEvent *event)
         keycodes.append(Qt::Key_Alt);
         keycodes.append(event->key());
     }
-
     //three modifier
     else if (event->key() != 0 && event->modifiers() == (Qt::AltModifier | Qt::ShiftModifier | Qt::ControlModifier))
     {

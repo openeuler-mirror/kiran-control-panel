@@ -25,7 +25,9 @@
 #include <QPainter>
 #include <QPainterPath>
 
-#include <kiran-palette.h>
+#include <style-palette.h>
+
+ using namespace Kiran;
 
 BiometricItem::BiometricItem(const QString &text,
                              const QString &biometricID,
@@ -84,9 +86,9 @@ void BiometricItem::paintEvent(QPaintEvent *event)
     p.setRenderHint(QPainter::Antialiasing,true);
     p.setPen(Qt::NoPen);
 
-    auto backgroundColor = KiranPalette::instance()->color(isEnabled()?KiranPalette::Normal:KiranPalette::Disabled,
-                                                        KiranPalette::Widget,
-                                                        KiranPalette::Background);
+    auto backgroundColor = StylePalette::instance()->color(isEnabled()?StylePalette::Normal:StylePalette::Disabled,
+                                                           StylePalette::Widget,
+                                                           StylePalette::Background);
 
     QPainterPath painterPath;
     painterPath.addRoundedRect(opt.rect,6,6);

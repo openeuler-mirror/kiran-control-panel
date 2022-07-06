@@ -38,10 +38,13 @@ public slots:
     void seletedZoneInfoChanged(const QString& zoneID);
     void setisSelected(bool isSelected);
     void mousePressEvent(QMouseEvent *event) override;
+
 protected:
     virtual void paintEvent(QPaintEvent *event) override;
+
 private:
     Ui::KiranTimeZoneItem *ui;
+    QPixmap m_selectedIcon;
     QColor m_searchHighLightColor;
     bool m_isSelected;
     QString m_keyword;

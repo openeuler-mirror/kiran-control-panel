@@ -7,7 +7,11 @@
         <file>images/tips-suc.svg</file>
         <file>images/tips-info.svg</file>
         <file>images/tips-warning.svg</file>
-
+        <file>images/selected.png</file>
+        <file>images/trash.svg</file>
+        <file>images/trash-hover.svg</file>
+        <file>images/trash-pressed.svg</file>
+        <file>images/indicator-selected.png</file>
     </qresource>
 
     <qresource prefix="/kcp-account">
@@ -28,6 +32,7 @@
 
     <qresource prefix="/kcp-appearance">
         <file alias="images/select.svg">images/arrow.svg</file>
+        <file alias="images/select-black.svg">images/arrow-black.svg</file>
         <file>images/indicator-selected.png</file>
         <file>images/dark-theme.png</file>
         <file>images/light-theme.png</file>
@@ -55,5 +60,9 @@
         <file>images/time.svg</file>
         <file>images/time-zone.svg</file>
         <file>images/time-format.svg</file>
+    </qresource>
+
+    <qresource prefix="/kcp-keyboard">
+        <file>images/addition.svg</file>
     </qresource>
 </RCC>

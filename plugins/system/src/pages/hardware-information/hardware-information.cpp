@@ -106,7 +106,7 @@ void HardwareInformation::initUI(void)
     QList<QLabel *> labels = {ui->label_CPU_info, ui->label_memory_info};
     for (auto label : labels)
     {
-        label->setStyleSheet("color:#7e7e7e;font-family: \"Noto Sans CJK SC regular\";");
+        label->setStyleSheet("color:#919191;font-family: \"Noto Sans CJK SC regular\";");
     }
 
     QList<QLayout *> layouts = {ui->gridLayout_hard_disk, ui->gridLayout_graphics_card, ui->gridLayout_network_card};
@@ -116,7 +116,7 @@ void HardwareInformation::initUI(void)
         {
             auto item = layout->itemAt(i);
             auto label = item->widget();
-            label->setStyleSheet("color:#7e7e7e;font-family: \"Noto Sans CJK SC regular\";");
+            label->setStyleSheet("color:#919191;font-family: \"Noto Sans CJK SC regular\";");
         }
     }
 }

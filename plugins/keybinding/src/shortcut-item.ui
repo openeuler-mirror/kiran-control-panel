@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>ShortcutItem</class>
- <widget class="QWidget" name="ShortcutItem">
+ <widget class="KiranFrame" name="ShortcutItem">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -95,6 +95,14 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>KiranFrame</class>
+   <extends>QWidget</extends>
+   <header>kiran-frame/kiran-frame.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

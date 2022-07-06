@@ -29,12 +29,15 @@
 #include <kiran-sidebar-widget.h>
 #include <kiran-style-public-define.h>
 #include <qt5-log-i.h>
+#include <style-palette.h>
 #include <QDebug>
 #include <QHBoxLayout>
 #include <QIcon>
 #include <QScrollArea>
 #include <QStackedWidget>
 #include <QtWidgets/QListWidgetItem>
+
+using namespace Kiran;
 
 #define ITEM_USER_OBJ_PATH_ROLE Qt::UserRole + 1
 
@@ -86,8 +89,12 @@ void KiranAccountManager::appendSiderbarItem(const QString &userPath)
 {
     KSDAccountsUserProxy interface(ACCOUNTS_DBUS_NAME,userPath, QDBusConnection::systemBus());
 
-    QString iconFile = interface.icon_file().isEmpty() ? DEFAULT_USER_AVATAR : interface.icon_file();
-    KLOG_INFO() << "append siderbar item:" << interface.user_name() << iconFile;
+    QString iconFile = interface.icon_file();
+    QPixmap tempPixmap;
+    if( iconFile.isEmpty() || !tempPixmap.load(iconFile) )
+    {
+        iconFile = DEFAULT_USER_AVATAR;
+    }
 
     auto item = new QListWidgetItem(interface.user_name(), m_tabList);
     item->setIcon(QPixmap(iconFile));
@@ -132,7 +139,7 @@ void KiranAccountManager::initUI()
     contentLayout->addWidget(siderbar);
     siderbar->setObjectName("siderWidget");
     siderbar->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
-    siderbar->setFixedWidth(328);
+    siderbar->setFixedWidth(280);
 
     auto vLayout = new QVBoxLayout(siderbar);
     vLayout->setSpacing(0);
@@ -141,9 +148,9 @@ void KiranAccountManager::initUI()
 
     m_tabList = new KiranSidebarWidget(siderbar);
     m_tabList->setFrameShape(QFrame::NoFrame);
-    m_tabList->setInvertIconPixelsEnable(false);
     m_tabList->setObjectName("tabList");
     m_tabList->setIconSize(QSize(40, 40));
+    m_tabList->setFixedWidth(280);
     vLayout->addWidget(m_tabList);
     initUserList();
 
@@ -229,8 +236,9 @@ void KiranAccountManager::initUserList()
 
     ///创建用户按钮
     m_createUserItem = new QListWidgetItem(tr("Create new user"), m_tabList);
-    m_createUserItem->setIcon(QIcon(":/kcp-account/images/create-user-avatar.png"));
     m_tabList->addItem(m_createUserItem);
+    updateCreateUserIcon();
+    connect(StylePalette::instance(),&StylePalette::themeChanged,this,&KiranAccountManager::updateCreateUserIcon);
 
     //加载非系统用户
     QList<QString> userObjList;
@@ -440,9 +448,24 @@ void KiranAccountManager::setMaskVisible(bool visible)
     }
 }
 
+void KiranAccountManager::updateCreateUserIcon()
+{
+    QIcon icon(":/kcp-account/images/create-user-avatar.png");
+    QPixmap pixmap = icon.pixmap(40,40);
+
+    if( StylePalette::instance()->paletteType() != Kiran::PALETTE_DARK )
+    {
+        QImage image = pixmap.toImage();
+        image.invertPixels(QImage::InvertRgb);
+        pixmap = QPixmap::fromImage(image);
+    }
+
+    m_createUserItem->setIcon(pixmap);
+}
+
 QSize KiranAccountManager::sizeHint() const
 {
-    return QSize(969, 679);
+    return {780, 657};
 }
 
 void KiranAccountManager::initPagePasswdExpirationPolicy()

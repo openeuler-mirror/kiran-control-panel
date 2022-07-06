@@ -18,19 +18,22 @@
 
 #include <QDesktopWidget>
 #include <QMessageBox>
+#include <QScreen>
 
 #include <kiranwidgets-qt5/kiran-message-box.h>
-#include <kiranwidgets-qt5/kiran-style-public-define.h>
-#include <kiranwidgets-qt5/widget-property-helper.h>
+#include <style-property.h>
 
-ChangeHostNameWidget::ChangeHostNameWidget() : KiranTitlebarWindow(),
-                                               ui(new Ui::ChangeHostNameWidget)
+using namespace Kiran;
+
+ChangeHostNameWidget::ChangeHostNameWidget(QWidget* parent)
+    : KiranTitlebarWindow(parent),
+      ui(new Ui::ChangeHostNameWidget)
 {
     ui->setupUi(getWindowContentWidget());
     setButtonHints(TitlebarMinimizeButtonHint | TitlebarCloseButtonHint);
     setContentWrapperMarginBottom(0);
     setResizeable(false);
-    Kiran::WidgetPropertyHelper::setButtonType(ui->btn_save, Kiran::BUTTON_Default);
+    StylePropertyHelper::setButtonType(ui->btn_save,Kiran::BUTTON_Default);
     initUI();
     connect(ui->btn_cancel, SIGNAL(clicked()), this, SLOT(close()));
     connect(ui->btn_save, SIGNAL(clicked()), this, SLOT(setNewHostName()));
@@ -57,8 +60,8 @@ void ChangeHostNameWidget::initUI()
 
     ui->btn_save->setEnabled(false);
 
-    int screenNum = QApplication::desktop()->screenNumber(QCursor::pos());
-    QRect screenGeometry = QApplication::desktop()->screenGeometry(screenNum);
+    auto screen = QApplication::screenAt(QCursor::pos());
+    auto screenGeometry = screen->geometry();
     this->move(screenGeometry.x() + (screenGeometry.width() - this->width()) / 2,
                screenGeometry.y() + (screenGeometry.height() - this->height()) / 2);
 }

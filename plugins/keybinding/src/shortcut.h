@@ -16,19 +16,19 @@
 #define SHORTCUT_H
 
 #include "keybinding_def.h"
+
 #include <QFile>
 #include <QLineEdit>
 #include <QTimer>
 #include <QToolButton>
 #include <QVBoxLayout>
 #include <QWidget>
+#include <QFuture>
 
 namespace Ui
 {
 class Shortcut;
 }
-
-Q_DECLARE_METATYPE(ShortcutInfo *)
 
 class ThreadObject;
 class ShortcutItem;
@@ -42,57 +42,68 @@ class Shortcut : public QWidget
 public:
     explicit Shortcut(QWidget *parent = 0);
     ~Shortcut();
+
     QSize sizeHint() const override;
 
 private:
+    void init();
     void initUI();
-    ShortcutItem *createShortcutItem(QVBoxLayout *parent, ShortcutInfo *shortcutInfo, int type);
-    void getAllShortcuts();
-    ShortcutInfo *getShortcut(QString uid, QString kind);
+
+    //从Json对象之中提取信息至ShortcutInfo
+    static void fetchShortcutInfoFromJson(const QJsonObject&obj, ShortcutInfoPtr &info);
+    //加载全部快捷键
+    void loadShortcuts();
+    bool getShortcutInfo(const QString &uid, ShortcutInfoPtr &info);
+
+private:
+    ShortcutItem *createShortcutItem(QVBoxLayout *parent, ShortcutInfoPtr shortcutInfo, int type);
     bool isConflict(QString &originName, QString newKeyCombination);
     bool isValidKeycode(QList<int> keycodes);
-    QString convertToString(QList<int> keyCode);
-    QString convertToBackendStr(QString keyStr);
     bool getExecFromDesktop(QString fileName, QString &exec);
-    void updateShorcut(ShortcutInfo *newShortcut);
-    void insertShortcut(ShortcutInfo *shortcutInfo);
+    void updateShorcut(ShortcutInfoPtr newShortcut);
+    void insertShortcut(ShortcutInfoPtr shortcutInfo);
     void clearFilterItems();
-    int getJsonValue(QString result, QMap<QString, QString> &info);
 
 public slots:
-    void addShortcut(QString result);
-    void deleteShortcut(QString result);
-    void editShortcut(QString result);
-    void handleShortcutInfo(QList<ShortcutInfo *> shortcutInfoList);
+    void handleShortcutsLoadSuccesed(QList<ShortcutInfoPtr> shortcuts);
+    void handleShortcutsLoadFailed(QString error);
+
+    void handleShortcutAdded(QString result);
+    void handledShortcutDeleted(QString result);
+    void handleShortcutChanged(QString result);
+
     void handleInputKeycode(QList<int> keycodes);
-    void onDeleteShortcut(QString uid);
-    void onEditShortcut(int type, QString uid, QString name, QString keyCombination, QString action = nullptr);
-    void onSave();
-    void onAdd();
-    void onReset();
+
+    void handleItemDeleteClicked(QString uid);
+    void handleItemClicked(int type, QString uid, QString name, QString keyCombination, QString action = nullptr);
+
+    void handleSaveClicked();
+    void handleAppendClicked();
+    void handleResetClicked();
     void openFileSys();
-    void search();
+
+    void handleSearchTimerTimeout();
 
 private:
     virtual bool eventFilter(QObject *target, QEvent *event);
 
-signals:
-    void sigShortcutChanged(QString uid, QString kind);
-
 private:
     Ui::Shortcut *ui;
-    QList<ShortcutInfo *> m_shortcuts;
+
+    QFuture<void> m_loadShortcutsFuture;
+
+    QList<ShortcutInfoPtr> m_shortcutInfoList;
     QList<ShortcutItem *> m_shortcutItem;
     QList<ShortcutItem *> m_filterItem;
+
     QToolButton *m_btnModifyApp;
     QToolButton *m_btnCustomApp;
     CustomLineEdit *m_lECustomKey;
     CustomLineEdit *m_lEModifyKey;
-    QThread *m_thread;
-    ThreadObject *m_threadObject;
-    KeyMap *m_keyMap;
+
     KeybindingBackEndProxy *m_keybindingInterface;
-    QTimer *m_timer;
+    QTimer *m_searchTimer;
+
     bool m_isEditMode = false;
     int m_customShortcutCount = 0;
     QString m_editUid;

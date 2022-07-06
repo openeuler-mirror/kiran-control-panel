@@ -7,7 +7,9 @@
 #include <QAbstractButton>
 #include <QPainter>
 #include <QPainterPath>
-#include <kiran-palette.h>
+#include <style-palette.h>
+
+using namespace Kiran;
 
 CategoryItem::CategoryItem(QWidget *parent) : QAbstractButton(parent)
 {
@@ -24,19 +26,19 @@ void CategoryItem::paintEvent(QPaintEvent *e)
     p.setRenderHint(QPainter::Antialiasing);
 
     QColor background;
-    auto kiranPalette = KiranPalette::instance();
+    auto kiranPalette = StylePalette::instance();
 
-    KiranPalette::ColorState colorState = KiranPalette::Normal;
+    StylePalette::ColorState colorState = StylePalette::Normal;
     if( isChecked() )
-        colorState = KiranPalette::Checked;
+        colorState = StylePalette::Checked;
     else if( underMouse() )
-        colorState = KiranPalette::Hover;
+        colorState = StylePalette::Hover;
 
-    if( parentWidget() && colorState!=KiranPalette::Normal )
+    if( parentWidget() && colorState!=StylePalette::Normal )
     {
         QPainterPath path;
         path.addRoundedRect(rect(), 6, 6);
-        background = kiranPalette->color(colorState,KiranPalette::Widget,KiranPalette::Background);
+        background = kiranPalette->color(colorState,StylePalette::Widget,StylePalette::Background);
         p.fillPath(path, background);
     }
 

@@ -8,14 +8,14 @@
 #include "kiran-display-configuration.h"
 
 class QTranslator;
-class KcpInterface : public QObject, public KcpPluginInterface
+class KcpDisplay : public QObject, public KcpPluginInterface
 {
     Q_OBJECT
     Q_PLUGIN_METADATA(IID KcpPluginInterface_iid)
     Q_INTERFACES(KcpPluginInterface)
 public:
-    KcpInterface() = default;
-    ~KcpInterface() = default;
+    KcpDisplay() = default;
+    ~KcpDisplay() = default;
 
     int init() override
     {

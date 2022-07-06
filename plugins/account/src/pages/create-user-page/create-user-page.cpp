@@ -20,15 +20,15 @@
 #include "ui_create-user-page.h"
 #include "user-name-validator.h"
 
-#include <kiranwidgets-qt5/kiran-message-box.h>
 #include <qt5-log-i.h>
-#include <widget-property-helper.h>
-#include <QDebug>
 #include <QEvent>
 #include <QKeyEvent>
 #include <QListView>
 #include <QMessageBox>
-#include <QMouseEvent>
+#include <kiranwidgets-qt5/kiran-message-box.h>
+#include <style-property.h>
+
+using namespace Kiran;
 
 CreateUserPage::CreateUserPage(QWidget *parent) : QWidget(parent),
                                                   ui(new Ui::CreateUserPage)
@@ -120,7 +120,7 @@ void CreateUserPage::initUI()
     });
 
     /// 确认按钮
-    Kiran::WidgetPropertyHelper::setButtonType(ui->btn_confirm, Kiran::BUTTON_Default);
+    StylePropertyHelper::setButtonType(ui->btn_confirm, BUTTON_Default);
     connect(ui->btn_confirm, &QPushButton::clicked, this, &CreateUserPage::handlerCreateNewUser);
 
     /// 取消按钮

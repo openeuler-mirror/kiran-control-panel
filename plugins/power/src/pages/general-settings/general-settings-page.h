@@ -35,7 +35,7 @@ class GeneralSettingsPage : public QWidget
 public:
     explicit GeneralSettingsPage(QWidget *parent = nullptr);
     ~GeneralSettingsPage() override;
-    virtual QSize sizeHint() const override;
+    QSize sizeHint() const override;
 
 private:
     void init();

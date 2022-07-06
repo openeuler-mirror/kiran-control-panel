@@ -23,8 +23,8 @@
 #define TIMEOUT 100
 #define SLIDER_MINIMUM 0
 #define SLIDER_MAXIMUN 100
-#define PAGE_BASE_SIZE_WIDTH 700
-#define PAGE_BASE_SIZE_HEIGHT 670
+#define PAGE_BASE_SIZE_WIDTH 500
+#define PAGE_BASE_SIZE_HEIGHT 657
 
 MousePage::MousePage(QWidget *parent) : QWidget(parent),
                                         ui(new Ui::MousePage),

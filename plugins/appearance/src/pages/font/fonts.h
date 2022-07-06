@@ -31,6 +31,7 @@ public:
     explicit Fonts(QWidget *parent = 0);
     ~Fonts();
 
+    QSize sizeHint() const override;
 private:
     bool initUI();
     void getCurrentFontInfo(int fontType);

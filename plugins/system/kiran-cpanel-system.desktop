@@ -27,7 +27,7 @@ SubItems=SystemInformation,HardwareInformation,LicenseInformation
 Name=System Information
 Name[zh_CN]=系统信息
 #插件Icon
-Icon=system-information.svg
+Icon=kcp-page-system-information
 #插件关键字 该值提供给控制中心形成搜索列表
 Keywords[zh_CN]=系统信息 
 Keywords=system,information
@@ -37,7 +37,7 @@ Keywords=system,information
 Name=Hardware Information
 Name[zh_CN]=硬件信息
 #插件Icon
-Icon=hardware-information.svg
+Icon=kcp-page-hardware-information
 #插件关键字 该值提供给控制中心形成搜索列表
 Keywords[zh_CN]=硬件信息
 Keywords=hardware,information

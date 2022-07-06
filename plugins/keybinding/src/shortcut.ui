@@ -82,7 +82,7 @@
        <item>
         <widget class="QStackedWidget" name="stackedWidget_search">
          <property name="currentIndex">
-          <number>0</number>
+          <number>1</number>
          </property>
          <widget class="QWidget" name="page_shortcut_list">
           <property name="sizePolicy">
@@ -109,6 +109,9 @@
            </property>
            <item>
             <widget class="QScrollArea" name="scrollArea">
+             <property name="frameShape">
+              <enum>QFrame::NoFrame</enum>
+             </property>
              <property name="widgetResizable">
               <bool>true</bool>
              </property>
@@ -117,8 +120,8 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>633</width>
-                <height>409</height>
+                <width>635</width>
+                <height>431</height>
                </rect>
               </property>
               <property name="sizePolicy">
@@ -242,6 +245,9 @@
            </property>
            <item>
             <widget class="QScrollArea" name="scrollArea_2">
+             <property name="frameShape">
+              <enum>QFrame::NoFrame</enum>
+             </property>
              <property name="widgetResizable">
               <bool>true</bool>
              </property>
@@ -250,8 +256,8 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>633</width>
-                <height>409</height>
+                <width>635</width>
+                <height>431</height>
                </rect>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_9">
@@ -320,14 +326,14 @@
           <widget class="QPushButton" name="btn_shortcut_add">
            <property name="minimumSize">
             <size>
-             <width>252</width>
-             <height>60</height>
+             <width>110</width>
+             <height>40</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>252</width>
-             <height>60</height>
+             <width>110</width>
+             <height>40</height>
             </size>
            </property>
            <property name="text">
@@ -339,6 +345,9 @@
           <spacer name="horizontalSpacer_3">
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Fixed</enum>
            </property>
            <property name="sizeHint" stdset="0">
             <size>
@@ -352,14 +361,14 @@
           <widget class="QPushButton" name="btn_reset">
            <property name="minimumSize">
             <size>
-             <width>252</width>
-             <height>60</height>
+             <width>110</width>
+             <height>40</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>252</width>
-             <height>60</height>
+             <width>110</width>
+             <height>40</height>
             </size>
            </property>
            <property name="text">
@@ -510,14 +519,14 @@
           <widget class="QPushButton" name="btn_page_add">
            <property name="minimumSize">
             <size>
-             <width>252</width>
-             <height>60</height>
+             <width>110</width>
+             <height>40</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>252</width>
-             <height>60</height>
+             <width>110</width>
+             <height>40</height>
             </size>
            </property>
            <property name="text">
@@ -529,6 +538,9 @@
           <spacer name="horizontalSpacer">
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Fixed</enum>
            </property>
            <property name="sizeHint" stdset="0">
             <size>
@@ -542,14 +554,14 @@
           <widget class="QPushButton" name="btn_cancel">
            <property name="minimumSize">
             <size>
-             <width>252</width>
-             <height>60</height>
+             <width>110</width>
+             <height>40</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>252</width>
-             <height>60</height>
+             <width>110</width>
+             <height>40</height>
             </size>
            </property>
            <property name="text">
@@ -714,14 +726,14 @@
           <widget class="QPushButton" name="btn_save">
            <property name="minimumSize">
             <size>
-             <width>252</width>
-             <height>60</height>
+             <width>110</width>
+             <height>40</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>252</width>
-             <height>60</height>
+             <width>110</width>
+             <height>40</height>
             </size>
            </property>
            <property name="text">
@@ -733,6 +745,9 @@
           <spacer name="horizontalSpacer_2">
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Fixed</enum>
            </property>
            <property name="sizeHint" stdset="0">
             <size>
@@ -746,14 +761,14 @@
           <widget class="QPushButton" name="btn_return">
            <property name="minimumSize">
             <size>
-             <width>252</width>
-             <height>60</height>
+             <width>110</width>
+             <height>40</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>252</width>
-             <height>60</height>
+             <width>110</width>
+             <height>40</height>
             </size>
            </property>
            <property name="text">

@@ -20,6 +20,13 @@
 #include <QStandardPaths>
 #include <QtConcurrent/QtConcurrent>
 
+void ImageLoadManager::appExitCleanup()
+{
+    // 避免偶发的QCoreApplication析构时,先会将QCoreApplication::self置为null,然后才等待全局线程退出,导致图片加载线程判断Application不存在，而崩溃
+    // 修改为在QCoreApplication析构时未将QCoreApplication::self时执行清理，等待线程退出
+    ImageLoadManager::instance()->reset();
+}
+
 ImageLoadManager::ImageLoadManager(QObject *parent) : QObject(parent)
 {
     init();
@@ -42,6 +49,7 @@ ImageLoadManager *ImageLoadManager::instance()
         if (pInst.isNull())
         {
             pInst.reset(new ImageLoadManager);
+            qAddPostRoutine(&ImageLoadManager::appExitCleanup);
         }
     }
 

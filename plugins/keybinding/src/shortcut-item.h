@@ -16,38 +16,39 @@
 #define SHORTCUTITEM_H
 
 #include <QWidget>
+
+#include "kiran-frame/kiran-frame.h"
 #include "keybinding_def.h"
 
 namespace Ui
 {
 class ShortcutItem;
 }
-//Q_DECLARE_METATYPE(ShortcutInfo *)
 
-class ShortcutItem : public QWidget
+class ShortcutItem : public KiranFrame
 {
     Q_OBJECT
-
 public:
-    explicit ShortcutItem(int type, ShortcutInfo *shortcutInfo, QWidget *parent = 0);
+    explicit ShortcutItem(int type, ShortcutInfoPtr shortcutInfo, QWidget *parent = 0);
     ~ShortcutItem();
-    void setname(QString);
+
+    void setName(QString name);
     void setKeyBinding(QString);
     void setAction(QString action);
     void setEditMode(bool isEditMode);
+
     QString getName();
     int getType();
     QString getUid();
     QString getShowKeybinding();
-    ShortcutInfo *getShortcut();
+    ShortcutInfoPtr getShortcut();
 
 protected:
-    virtual void paintEvent(QPaintEvent *event) override;
+    //void paintEvent(QPaintEvent *event) override;
     void mousePressEvent(QMouseEvent *event) override;
 
 private:
     void initUI();
-    QString handleKeyCombination(QString origStr);
 
 signals:
     void sigDelete(QString uid);
@@ -56,7 +57,7 @@ signals:
 private:
     Ui::ShortcutItem *ui;
     int m_type;
-    ShortcutInfo *m_shortcutInfo;
+    ShortcutInfoPtr m_shortcutInfo;
     bool m_isPressed = false;
 };
 

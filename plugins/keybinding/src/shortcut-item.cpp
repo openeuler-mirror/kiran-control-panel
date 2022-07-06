@@ -13,18 +13,23 @@
  */
 
 #include "shortcut-item.h"
+#include "ui_shortcut-item.h"
+#include "keycode-translator.h"
+
 #include <kiran-log/qt5-log-i.h>
+
 #include <QMouseEvent>
 #include <QPainter>
 #include <QStyleOption>
-#include "ui_shortcut-item.h"
-ShortcutItem::ShortcutItem(int type, ShortcutInfo *shortcutInfo, QWidget *parent) : QWidget(parent),
-                                                                                    ui(new Ui::ShortcutItem)
 
+ShortcutItem::ShortcutItem(int type, ShortcutInfoPtr shortcutInfo, QWidget *parent)
+    : KiranFrame(parent),
+      ui(new Ui::ShortcutItem)
 {
     ui->setupUi(this);
     m_shortcutInfo = shortcutInfo;
     m_type = type;
+
     initUI();
 }
 
@@ -35,57 +40,26 @@ ShortcutItem::~ShortcutItem()
 
 void ShortcutItem::initUI()
 {
+    setRadius(6);
+    setAttribute(Qt::WA_Hover);
+    setDrawBroder(false);
+
     ui->btn_delete->hide();
-    ui->btn_delete->setIcon(QIcon(":/images/delete.svg"));
+    ui->btn_delete->setIcon(QIcon(":/kiran-control-panel/images/trash.svg"));
 
     ui->label_keybination->setStyleSheet("QLabel#label_keybination{color:#919191}");
 
     ui->label_name->setText(m_shortcutInfo->name);
 
-    ui->label_keybination->setText(handleKeyCombination(m_shortcutInfo->keyCombination));
+    QString readableString = KeycodeTranslator::backendKeyString2Readable(m_shortcutInfo->keyCombination);
+    ui->label_keybination->setText(readableString);
 
-    connect(ui->btn_delete, &QToolButton::clicked,
-            [this] {
-                sigDelete(m_shortcutInfo->uid);
-            });
+    connect(ui->btn_delete, &QToolButton::clicked, [this]{
+        sigDelete(m_shortcutInfo->uid);
+    });
 }
 
-QString ShortcutItem::handleKeyCombination(QString origStr)
-{
-    QString keyCombination;
-    if (origStr.isEmpty())
-    {
-        keyCombination = QString(tr("None"));
-    }
-    else if (origStr.contains("disable", Qt::CaseInsensitive))
-    {
-        keyCombination = QString(tr("disabled"));
-    }
-    else
-    {
-        origStr = origStr.replace("<", "");
-        origStr = origStr.replace(">", "-");
-        QStringList list = origStr.split("-", QString::SkipEmptyParts);
-        //handle speciel key
-        for (int i = 0; i < list.size(); i++)
-        {
-            if (SpecialKeyMap.contains(list.at(i).toLower()))
-            {
-                list.replace(i, SpecialKeyMap.value(list.at(i).toLower()));
-            }
-            if (MediaKeyMap.contains(list.at(i)))
-            {
-                QString media = qApp->translate("Media Key", MediaKeyMap.value(list.at(i)).toStdString().c_str());
-                list.replace(i, media);
-            }
-        }
-
-        keyCombination = list.join("+");
-    }
-    return keyCombination;
-}
-
-void ShortcutItem::setname(QString name)
+void ShortcutItem::setName(QString name)
 {
     m_shortcutInfo->name = name;
     ui->label_name->setText(name);
@@ -93,9 +67,10 @@ void ShortcutItem::setname(QString name)
 
 void ShortcutItem::setKeyBinding(QString keyCombination)
 {
-    QString showkeyCombination = handleKeyCombination(keyCombination);
     m_shortcutInfo->keyCombination = keyCombination;
-    ui->label_keybination->setText(showkeyCombination);
+
+    QString readableString = KeycodeTranslator::backendKeyString2Readable(keyCombination);
+    ui->label_keybination->setText(readableString);
 }
 
 void ShortcutItem::setAction(QString action)
@@ -109,6 +84,7 @@ void ShortcutItem::setEditMode(bool isEditMode)
         ui->btn_delete->setVisible(isEditMode);
 }
 
+/*
 void ShortcutItem::paintEvent(QPaintEvent *event)
 {
     QStyleOption opt;
@@ -119,6 +95,7 @@ void ShortcutItem::paintEvent(QPaintEvent *event)
 
     QWidget::paintEvent(event);
 }
+*/
 
 void ShortcutItem::mousePressEvent(QMouseEvent *event)
 {
@@ -149,7 +126,7 @@ QString ShortcutItem::getShowKeybinding()
     return ui->label_keybination->text();
 }
 
-ShortcutInfo *ShortcutItem::getShortcut()
+ShortcutInfoPtr ShortcutItem::getShortcut()
 {
     return m_shortcutInfo;
 }

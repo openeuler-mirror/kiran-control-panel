@@ -29,9 +29,9 @@
 #define KEY_WEIGHT "Weight"
 #define KEY_KEYWORDS "Keywords"
 
-QSharedPointer<CPanelCategoryInfo> CPanelCategoryInfo::loadCategory(const QString& categoryPath)
+CategoryInfoPtr CategoryInfo::loadCategory(const QString& categoryPath)
 {
-    QSharedPointer<CPanelCategoryInfo> pSharedCategoryInfo(new CPanelCategoryInfo);
+    CategoryInfoPtr pSharedCategoryInfo(new CategoryInfo);
     if (!pSharedCategoryInfo->load(categoryPath))
     {
         KLOG_ERROR() << "can't load category desktop <" << categoryPath << ">!";
@@ -40,16 +40,16 @@ QSharedPointer<CPanelCategoryInfo> CPanelCategoryInfo::loadCategory(const QStrin
     return pSharedCategoryInfo;
 }
 
-CPanelCategoryInfo::CPanelCategoryInfo()
+CategoryInfo::CategoryInfo()
 {
 }
 
-CPanelCategoryInfo::~CPanelCategoryInfo()
+CategoryInfo::~CategoryInfo()
 {
     clear();
 }
 
-bool CPanelCategoryInfo::load(const QString& categoryPath)
+bool CategoryInfo::load(const QString& categoryPath)
 {
     clear();
 
@@ -80,17 +80,17 @@ bool CPanelCategoryInfo::load(const QString& categoryPath)
     return true;
 }
 
-bool CPanelCategoryInfo::isValid()
+bool CategoryInfo::isValid()
 {
     return m_isValid;
 }
 
-const CPanelCategoryInfo::CategoryDesktopInfo& CPanelCategoryInfo::getCategoryDesktopInfo() const
+const CategoryInfo::CategoryDesktopInfo& CategoryInfo::getCategoryDesktopInfo() const
 {
     return m_categoryDesktopInfo;
 }
 
-void CPanelCategoryInfo::insertPlugin(QSharedPointer<CPanelPluginHelper> pluginHelper)
+void CategoryInfo::insertPlugin(PluginHelperPtr pluginHelper)
 {
     auto pluginDesktopInfo = pluginHelper->getPluginDesktopInfo();
     if (pluginDesktopInfo.category != m_categoryDesktopInfo.categoryName)
@@ -112,19 +112,19 @@ void CPanelCategoryInfo::insertPlugin(QSharedPointer<CPanelPluginHelper> pluginH
     m_plugins.insert(beforeIter, pluginHelper);
 }
 
-int CPanelCategoryInfo::pluginsCount()
+int CategoryInfo::pluginsCount()
 {
     return m_plugins.count();
 }
 
-void CPanelCategoryInfo::clear()
+void CategoryInfo::clear()
 {
     m_isValid = false;
     m_plugins.clear();
     m_categoryDesktopInfo = {};
 }
 
-bool CPanelCategoryInfo::parseDesktopInfo(const QString& desktopPath, CPanelCategoryInfo::CategoryDesktopInfo& desktopInfo)
+bool CategoryInfo::parseDesktopInfo(const QString& desktopPath, CategoryInfo::CategoryDesktopInfo& desktopInfo)
 {
     bool bRes = false;
     GKeyFile *keyFile = nullptr;
@@ -215,7 +215,7 @@ out:
     return bRes;
 }
 
-QSharedPointer<CPanelPluginHelper> CPanelCategoryInfo::getPlugin(int idx)
+PluginHelperPtr CategoryInfo::getPlugin(int idx)
 {
     if (idx >= m_plugins.count())
     {
@@ -224,7 +224,7 @@ QSharedPointer<CPanelPluginHelper> CPanelCategoryInfo::getPlugin(int idx)
     return m_plugins.at(idx);
 }
 
-QList<QSharedPointer<CPanelPluginHelper>> CPanelCategoryInfo::getPlugins()
+PluginHelperPtrList CategoryInfo::getPlugins()
 {
     return m_plugins;
 }

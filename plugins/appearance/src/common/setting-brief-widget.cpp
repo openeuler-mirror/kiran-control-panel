@@ -20,15 +20,17 @@
 #include <QPainter>
 #include <QStyleOption>
 
-#include <kiran-palette.h>
+#include <style-palette.h>
 #include <QPainterPath>
 
+using namespace Kiran;
 //TODO:箭头颜色应当随着主题变更
 SettingBriefWidget::SettingBriefWidget(QString title, int type, QWidget *parent) : QWidget(parent),
                                                                          ui(new Ui::SettingBriefWidget)
 {
     ui->setupUi(this);
     initUI(title);
+    setAttribute(Qt::WA_Hover);
     m_wallpaperType = type;
 }
 
@@ -46,7 +48,8 @@ void SettingBriefWidget::initUI(QString title)
 {
     ui->label_text->setText(title);
     ui->label_arrow->setFixedSize(16, 16);
-    ui->label_arrow->setPixmap(QPixmap(":/kcp-appearance/images/select.svg"));
+    ui->label_arrow->setPixmap(QPixmap(getThemeArrowIcon()));
+    connect(StylePalette::instance(),&StylePalette::themeChanged,this,&SettingBriefWidget::updateThemeArrowIcon);
 }
 
 void SettingBriefWidget::mousePressEvent(QMouseEvent *event)
@@ -63,26 +66,40 @@ void SettingBriefWidget::paintEvent(QPaintEvent *)
     QStyleOption opt;
     opt.init(this);
 
-    KiranPalette::ColorState colorState = KiranPalette::Normal;
+    StylePalette::ColorState colorState = StylePalette::Normal;
     if( !(opt.state & QStyle::State_Enabled) )
     {
-        colorState = KiranPalette::Disabled;
+        colorState = StylePalette::Disabled;
     }
     else if( opt.state & QStyle::State_Sunken )
     {
-        colorState = KiranPalette::Active;
+        colorState = StylePalette::Active;
     }
     else if ( opt.state & QStyle::State_MouseOver )
     {
-        colorState = KiranPalette::Hover;
+        colorState = StylePalette::Hover;
     }
 
-    auto kiranPalette = KiranPalette::instance();
-    auto background = kiranPalette->color(colorState,KiranPalette::Widget,KiranPalette::Background);
+    auto kiranPalette = StylePalette::instance();
+    auto background = kiranPalette->color(colorState,StylePalette::Widget,StylePalette::Background);
 
     QPainter p(this);
     QPainterPath painterPath;
     painterPath.addRoundedRect(opt.rect,6,6);
 
     p.fillPath(painterPath,background);
+}
+
+QString SettingBriefWidget::getThemeArrowIcon()
+{
+    static QMap<Kiran::PaletteType,QString> arrowIcons = {
+        {PALETTE_LIGHT,":/kcp-appearance/images/select-black.svg"},
+        {PALETTE_DARK,":/kcp-appearance/images/select.svg"}
+    };
+    return arrowIcons.value(StylePalette::instance()->paletteType());
+}
+
+void SettingBriefWidget::updateThemeArrowIcon()
+{
+    ui->label_arrow->setPixmap(QPixmap(getThemeArrowIcon()));
 }

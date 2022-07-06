@@ -29,6 +29,7 @@
 #include <iostream>
 #include <locale.h>
 #include <QStyleFactory>
+#include <QScreen>
 
 int main(int argc, char *argv[])
 {
@@ -59,7 +60,7 @@ int main(int argc, char *argv[])
     QString lang = qgetenv("LANG");
     if(lang.contains("."))
     {
-        QStringList splitRes = lang.split(".",QString::SkipEmptyParts);
+        QStringList splitRes = lang.split(".",Qt::SkipEmptyParts);
         if(splitRes.size() == 2 && splitRes.at(1)!="UTF-8" )
         {
             splitRes.replace(1,"UTF-8");
@@ -106,7 +107,7 @@ int main(int argc, char *argv[])
         KLOG_CERR("kiran log init error");
     }
 
-    auto pluginHelper = CPanelPluginHelper::loadPlugin(pluginDesktopPath);
+    auto pluginHelper = PluginHelper::loadPlugin(pluginDesktopPath);
     if (!pluginHelper)
     {
         exit(EXIT_FAILURE);
@@ -141,9 +142,8 @@ int main(int argc, char *argv[])
     w.resize(w.sizeHint());
     KLOG_DEBUG() << "sizeHint:" << w.sizeHint();
 
-
-    int screeNum = QApplication::desktop()->screenNumber(QCursor::pos());
-    QRect screenGeometry = QApplication::desktop()->screenGeometry(screeNum);
+    QScreen* screen = QApplication::screenAt(QCursor::pos());
+    QRect screenGeometry = screen->geometry();
     w.move(screenGeometry.x() + (screenGeometry.width() - w.width()) / 2,
            screenGeometry.y() + (screenGeometry.height() - w.height()) / 2);
     w.show();

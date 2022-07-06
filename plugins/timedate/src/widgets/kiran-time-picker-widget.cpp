@@ -1,11 +1,13 @@
 #include "kiran-time-picker-widget.h"
 #include "ui_kiran-time-picker-widget.h"
 
-#include <kiran-palette.h>
+#include <style-palette.h>
 
 #include <QStyleOption>
 #include <QPainter>
 #include <QDebug>
+
+using namespace Kiran;
 
 KiranTimePickerWidget::KiranTimePickerWidget(QWidget *parent) :
     QWidget(parent),
@@ -111,7 +113,7 @@ void KiranTimePickerWidget::initUI()
     setCurrentTime(QTime::currentTime());
 
     updateScrollPickerColor();
-    connect(KiranPalette::instance(),&KiranPalette::themeChanged,this,&KiranTimePickerWidget::updateScrollPickerColor);
+    connect(StylePalette::instance(),&StylePalette::themeChanged,this,&KiranTimePickerWidget::updateScrollPickerColor);
 
     connect(ui->scrollpicker_hour,QOverload<const QString&>::of(&ScrollPicker::currentTextChanged),[this](){
         emitCurrentTimeChanged();
@@ -149,8 +151,8 @@ void KiranTimePickerWidget::paintEvent(QPaintEvent *event)
 
 void KiranTimePickerWidget::updateScrollPickerColor()
 {
-    auto kiranPalette = KiranPalette::instance();
-    QColor fontColor = kiranPalette->color(KiranPalette::Normal,KiranPalette::Widget,KiranPalette::Foreground);
+    auto kiranPalette = StylePalette::instance();
+    QColor fontColor = kiranPalette->color(StylePalette::Normal,StylePalette::Widget,StylePalette::Foreground);
 
     ui->scrollpicker_hour->setFontColor(fontColor);
     ui->scrollpicker_minute->setFontColor(fontColor);

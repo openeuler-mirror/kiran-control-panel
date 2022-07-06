@@ -18,6 +18,11 @@
 #include <QString>
 #include <QWidget>
 
+/// NOTE:
+/// 插件信号功能：
+/// 部分接口插件通过定义信号来进行传递给控制中心主面板
+/// 1. void visibleSubItemsChanged(); 通知控制面板刷新侧边栏子项,将会重新调用插件'visibleSubItems'重新读取显示的子项
+
 //插件抽象接口
 class KcpPluginInterface
 {

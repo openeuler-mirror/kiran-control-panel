@@ -28,15 +28,15 @@
 
 #define TRANSLATION_DIR TRANSLATIONS_FILE_DIR
 
-class KcpInterface : public QObject, public KcpPluginInterface
+class KcpAppearance : public QObject, public KcpPluginInterface
 {
     Q_OBJECT
     Q_PLUGIN_METADATA(IID KcpPluginInterface_iid)
     Q_INTERFACES(KcpPluginInterface)
 
 public:
-    KcpInterface() = default;
-    ~KcpInterface() = default;
+    KcpAppearance() = default;
+    ~KcpAppearance() = default;
 
 public:
     /**

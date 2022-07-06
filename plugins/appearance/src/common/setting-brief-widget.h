@@ -37,6 +37,7 @@ public:
 
 private:
     void initUI(QString title);
+    QString getThemeArrowIcon();
 
 protected:
     virtual void mousePressEvent(QMouseEvent *event);
@@ -44,6 +45,9 @@ protected:
 
 signals:
     void clicked();
+
+private slots:
+    void updateThemeArrowIcon();
 
 private:
     Ui::SettingBriefWidget *ui;

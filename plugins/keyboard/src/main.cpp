@@ -12,54 +12,103 @@
 * Author:     yuanxing <yuanxing@kylinos.com.cn>
 */
 
-#include <kiran-log/qt5-log-i.h>
+#include <kcp-plugin-interface.h>
+#include <kiran-session-daemon/keyboard-i.h>
 #include <kiran-message-box.h>
-#include <kiran-single-application.h>
+#include <qt5-log-i.h>
+
+#include <QDBusConnection>
+#include <QDBusConnectionInterface>
 #include <QApplication>
-#include <QFile>
 #include <QTranslator>
-#include <iostream>
-#include "main-window.h"
-#define TRANSLATION_DIR "/usr/share/kiran-cpanel-keyboard/translation/"
+#include <QFile>
 
-int main(int argc, char *argv[])
+#include "general-page.h"
+#include "layout-page.h"
+
+class KcpKeyboard : public QObject, public KcpPluginInterface
 {
-    //设置日志输出
-    if (klog_qt5_init("", "kylinsec-session", "kiran-cpanel-keyboard", "kiran-cpanel-keyboard") < 0)
+    Q_OBJECT
+    Q_PLUGIN_METADATA(IID KcpPluginInterface_iid)
+    Q_INTERFACES(KcpPluginInterface)
+public:
+    KcpKeyboard():QObject(){};
+    ~KcpKeyboard(){};
+
+public:
+    virtual int init() override
     {
-        std::cout << "init klog error" << std::endl;
+        if (!QDBusConnection::sessionBus().interface()->isServiceRegistered(KEYBOARD_DBUS_NAME).value())
+        {
+            KLOG_INFO() << "Connect keyboard dbus service failed!";
+            return -1;
+        }
+
+        //加载翻译文件
+        if (m_translator != nullptr)
+        {
+            QCoreApplication::removeTranslator(m_translator);
+            delete m_translator;
+            m_translator = nullptr;
+        }
+
+        m_translator = new QTranslator;
+        if (!m_translator->load(QLocale(),
+                                "kiran-cpanel-keyboard",
+                                ".",
+                                "/usr/share/kiran-cpanel-keyboard/translations/",
+                                ".qm"))
+        {
+            KLOG_DEBUG() << "Kiran cpanel keyboard load translation failed";
+            m_translator->deleteLater();
+            m_translator = nullptr;
+        }
+        else
+        {
+            QCoreApplication::installTranslator(m_translator);
+        }
+
+        return 0;
     }
-    KLOG_INFO("******New Output*********\n");
 
-    //只允许单个程序运行
-    KiranSingleApplication a(argc, argv);
-
-    QFile file(":/keyboard/style/style.qss");
-    if (file.open(QFile::ReadOnly))
+    virtual void uninit() override
     {
-        QString styleSheet = QLatin1String(file.readAll());
-
-        a.setStyleSheet(styleSheet);
-        file.close();
+        if (m_translator)
+        {
+            QCoreApplication::removeTranslator(m_translator);
+            delete m_translator;
+            m_translator = nullptr;
+        }
     }
-    else
+
+    virtual QWidget* getSubItemWidget(QString subItemName) override
     {
-        KiranMessageBox::message(nullptr, "warning", "Open failed", KiranMessageBox::Ok);
+        QWidget* widget = nullptr;
+        if (subItemName == "GeneralOptions")
+        {
+            widget = new GeneralPage;
+        }
+        else if (subItemName == "KeyboardLayout")
+        {
+            widget = new LayoutPage();
+        }
+        m_currentWidget = widget;
+
+        return m_currentWidget;
     }
 
-    //加载翻译文件
-    QTranslator *qtTranslator = new QTranslator(qApp);
-    if (qtTranslator->load(QLocale(), "kiran-cpanel-keyboard", ".", TRANSLATION_DIR, ".qm"))
+    virtual bool haveUnsavedOptions() override
     {
-        a.installTranslator(qtTranslator);
+        return false;
     }
-    else
+
+    QStringList visibleSubItems() override
     {
-        qDebug("Load Translator File failed : %s\n", TRANSLATION_DIR);
+        return QStringList() << "GeneralOptions" << "KeyboardLayout";
     }
+private:
+    QWidget* m_currentWidget = nullptr;
+    QTranslator* m_translator = nullptr;
+};
 
-    MainWindow w;
-    w.show();
-
-    return a.exec();
-}
+#include "main.moc"

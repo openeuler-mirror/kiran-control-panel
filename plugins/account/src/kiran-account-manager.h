@@ -43,6 +43,7 @@ public:
 private Q_SLOTS:
     void setCurrentUser(const QString &userPath);
     void setMaskVisible(bool visible);
+    void updateCreateUserIcon();
 
 private:
     void initUI();

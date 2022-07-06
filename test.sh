@@ -2,7 +2,7 @@
 
 cd `dirname $0`
 shell_dir=`pwd`
-build_dir=$shell_dir"/build"
+build_dir=$shell_dir"/cmake-build-debug"
 
 #if [ -d $build_dir ]; then
 #  rm -rf $build_dir
@@ -11,17 +11,17 @@ build_dir=$shell_dir"/build"
 #mkdir $build_dir
 
 cd $build_dir
-cmake -DCMAKE_INSTALL_PREFIX=/usr/local -DCMAKE_BUILD_TYPE=debug ..
+cmake -DCMAKE_BUILD_TYPE=debug -DCMAKE_INSTALL_PREFIX=/usr ..
 #make -j4 -B
 make -j4
 echo 123123 |sudo -S make install
 
-/usr/local/bin/kiran-control-panel
+/usr/bin/kiran-control-panel
 exit 0
 
 ui_debug=0
 specify_style=""
-run_plugin_name="kiran-cpanel-timedate"
+run_plugin_name="kiran-cpanel-audio"
 
 cmd=""
 
@@ -29,7 +29,7 @@ if [ "$ui_debug" -gt "0" ]; then
     cmd="gammaray"
 fi
 
-cmd=$cmd" /usr/local/bin/kiran-cpanel-launcher"
+cmd=$cmd" /usr/bin/kiran-cpanel-launcher"
 
 if [ -n "$specify_style" ]; then
   cmd=$cmd" -style="$specify_style

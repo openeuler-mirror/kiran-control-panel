@@ -352,7 +352,7 @@ void GeneralSettingsPage::setBrightnessPercent(int percent)
 
 QSize GeneralSettingsPage::sizeHint() const
 {
-    return QSize(518, 585);
+    return {500, 657};
 }
 
 void GeneralSettingsPage::updateIdleTimeLabel(int min)

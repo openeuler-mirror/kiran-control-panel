@@ -1,0 +1,18 @@
+<RCC>
+    <qresource prefix="/">
+        <file>kcp-network-images/wireless-1.svg</file>
+        <file>kcp-network-images/wireless-1-security.svg</file>
+        <file>kcp-network-images/wireless-2.svg</file>
+        <file>kcp-network-images/wireless-2-security.svg</file>
+        <file>kcp-network-images/wireless-3.svg</file>
+        <file>kcp-network-images/wireless-3-security.svg</file>
+        <file>kcp-network-images/wireless-4.svg</file>
+        <file>kcp-network-images/wireless-4-security.svg</file>
+        <file>kcp-network-images/wireless-other-network.svg</file>
+        <file>kcp-network-images/wired-connection.svg</file>
+        <file>kcp-network-images/wired-disconnected.svg</file>
+        <file>kcp-network-images/wired-error.svg</file>
+        <file>kcp-network-images/correct.png</file>
+        <file>kcp-network-images/details-info.svg</file>
+    </qresource>
+</RCC>

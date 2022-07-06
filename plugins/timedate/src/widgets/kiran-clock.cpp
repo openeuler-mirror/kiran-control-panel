@@ -40,7 +40,6 @@ void KiranClock::loadPixmap()
     m_hourReader.load(QString(":/kcp-timedate/images/hour-hand.svg"));
     m_minuteReader.load(QString(":/kcp-timedate/images/minute-hand.svg"));
     m_secondReader.load(QString(":/kcp-timedate/images/second-hand.svg"));
-
     update();
 }
 
@@ -48,10 +47,9 @@ void KiranClock::initShadow()
 {
     m_effect = new QGraphicsDropShadowEffect(this);
     m_effect->setXOffset(0);
-    m_effect->setYOffset(18);
-    m_effect->setBlurRadius(60);
+    m_effect->setYOffset(6);
+    m_effect->setBlurRadius(20);
     m_effect->setColor(QColor(0,0,0,255*0.3));
-
     this->setGraphicsEffect(m_effect);
 }
 

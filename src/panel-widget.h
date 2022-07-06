@@ -30,6 +30,7 @@ public:
     explicit PanelWidget(QWidget *parent = 0);
     ~PanelWidget();
 
+    void jumpTo(const QString& categoryName,const QString& subItem);
 private:
     void init();
 

@@ -23,8 +23,12 @@
 
 #include "plugin-info.h"
 
+class CategoryInfo;
+typedef QSharedPointer<CategoryInfo> CategoryInfoPtr;
+typedef QList<CategoryInfoPtr> CategoryInfoPtrList;
+
 ///分类信息
-class CPanelCategoryInfo
+class CategoryInfo
 {
     struct CategoryDesktopInfo
     {
@@ -36,17 +40,18 @@ class CPanelCategoryInfo
         int weight;
     };
 public:
-    static QSharedPointer<CPanelCategoryInfo> loadCategory(const QString& categoryPath);
 
-    CPanelCategoryInfo();
-    ~CPanelCategoryInfo();
+    static CategoryInfoPtr loadCategory(const QString& categoryPath);
+
+    CategoryInfo();
+    ~CategoryInfo();
 
     bool load(const QString& categoryPath);
     bool isValid();
     const CategoryDesktopInfo& getCategoryDesktopInfo() const;
-    void insertPlugin(QSharedPointer<CPanelPluginHelper> pluginHelper);
-    QSharedPointer<CPanelPluginHelper> getPlugin(int idx);
-    QList<QSharedPointer<CPanelPluginHelper>> getPlugins();
+    void insertPlugin(PluginHelperPtr pluginHelper);
+    PluginHelperPtr getPlugin(int idx);
+    PluginHelperPtrList getPlugins();
     int pluginsCount();
 
 private:
@@ -58,7 +63,7 @@ private:
     ///分类的desktop文件信息
     CategoryDesktopInfo m_categoryDesktopInfo;
     ///插件列表
-    QList<QSharedPointer<CPanelPluginHelper>> m_plugins;
+    PluginHelperPtrList m_plugins;
 };
 
 #endif  //KIRAN_CONTROL_PANEL_COMMON_CATEGORY_INFO_H_

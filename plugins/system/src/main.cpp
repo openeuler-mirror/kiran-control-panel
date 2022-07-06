@@ -15,15 +15,15 @@
 
 #define TRANSLATION_DIR "/usr/share/kiran-cpanel-system/translations"
 
-class KcpInterface : public  QObject,public  KcpPluginInterface
+class KcpSystemInformation : public  QObject,public  KcpPluginInterface
 {
     Q_OBJECT
     Q_PLUGIN_METADATA(IID KcpPluginInterface_iid)
     Q_INTERFACES(KcpPluginInterface)
 
 public:
-    KcpInterface() = default;
-    ~KcpInterface(){};
+    KcpSystemInformation() = default;
+    ~KcpSystemInformation(){};
 
 public:
     virtual int init() override

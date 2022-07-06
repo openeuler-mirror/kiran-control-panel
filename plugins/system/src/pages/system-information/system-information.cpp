@@ -17,9 +17,6 @@
 #include "license-agreement.h"
 #include "ui_system-information.h"
 
-#include <kiranwidgets-qt5/kiran-message-box.h>
-#include <kiranwidgets-qt5/kiran-style-public-define.h>
-#include <kiranwidgets-qt5/widget-property-helper.h>
 
 #include <kiran-log/qt5-log-i.h>
 #include <QDateTime>
@@ -29,15 +26,13 @@
 #include <QJsonObject>
 #include <QJsonValue>
 #include <QPainter>
-
+#include <style-property.h>
 #define HOST_NAME "host_name"
 #define ARCH "arch"
 #define KERNEL_VERSION "kernel_version"
 #define KERNEL_NAME "kernal_name"
 #define KERNEL_RELEASE "kernel_release"
 #define PRODUCT_RELEASE "product_release"
-
-using namespace Kiran::WidgetPropertyHelper;
 
 SystemInformation::SystemInformation(QWidget *parent)
     : QWidget(parent), ui(new Ui::SystemInformation), hostNameWidget(nullptr), licenseAgreement(nullptr)
@@ -83,6 +78,9 @@ void SystemInformation::init()
     });
     // clang-format on
     connect(ui->btn_change_name, &QPushButton::clicked, this, &SystemInformation::handleChangeHostName);
+    Kiran::StylePropertyHelper::setButtonType(ui->btn_change_name,Kiran::BUTTON_Default);
+    Kiran::StylePropertyHelper::setButtonType(ui->btn_EULA,Kiran::BUTTON_Default);
+    Kiran::StylePropertyHelper::setButtonType(ui->btn_version_license,Kiran::BUTTON_Default);
 }
 
 bool SystemInformation::initUI()
@@ -105,7 +103,7 @@ bool SystemInformation::initUI()
                               arch,
                               systemVersion,
                               kernelVersion);
-        qInfo() << hostname << arch << systemVersion << kernelVersion;
+        KLOG_DEBUG() << hostname << arch << systemVersion << kernelVersion;
         ui->lab_name_info->setText(hostname);
         ui->lab_system_arch_info->setText(arch);
         ui->lab_system_version_info->setText(systemVersion);
@@ -116,7 +114,7 @@ bool SystemInformation::initUI()
     QList<QLabel *> labels = {ui->lab_name_info,ui->lab_core_version_info, ui->lab_system_arch_info,ui->lab_system_version_info};
     for (auto label : labels)
     {
-        label->setStyleSheet("color:#7e7e7e;font-family: \"Noto Sans CJK SC regular\";");
+        label->setStyleSheet("color:#919191;font-family: \"Noto Sans CJK SC regular\";");
     }
 
     auto kiranFrames = findChildren<KiranFrame *>();
@@ -125,7 +123,6 @@ bool SystemInformation::initUI()
         frame->setRadius(6);
         frame->setDrawBroder(false);
     }
-
 
     return true;
 }
@@ -153,7 +150,6 @@ void SystemInformation::parseSoftwareInfoJson(QString jsonString,
         KLOG_ERROR() << " please check the activation information string " << jsonString.toLocal8Bit().data();
         return;
     }
-    qInfo() <<jsonString;
     QJsonObject rootObject = jsonDocument.object();
     if( rootObject.contains("host_name") && rootObject["host_name"].isString() )
     {
@@ -222,24 +218,5 @@ bool SystemInformation::eventFilter(QObject *obj, QEvent *event)
 
 QSize SystemInformation::sizeHint() const
 {
-    int screenNum = QApplication::desktop()->screenNumber(QCursor::pos());
-    QRect screenGeometry = QApplication::desktop()->screenGeometry(screenNum);
-
-    QSize size;
-    if (screenGeometry.height() >= 815 &&
-        screenGeometry.width() >= 800)  // 能显示全
-    {
-        size = QSize(800, 815);
-    }
-    else if (screenGeometry.height() >= this->height() &&
-             screenGeometry.width() >= this->width())
-    {
-        size = QSize(this->width(), this->height());
-    }
-    else
-    {
-        size = QSize(screenGeometry.width(), screenGeometry.height());
-    }
-
-    return size;
+    return {500,657};
 }

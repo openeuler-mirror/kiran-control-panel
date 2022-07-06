@@ -221,7 +221,7 @@ void KiranTips::drawUpArrowBackground(QPainter *painter)
     painter->fillPath(trianglesPath, m_bgColor);
 
     QPainterPath rectPath;
-    rectPath.addRoundRect(0, TRIANGLE_SIDE_LENGTH,
+    rectPath.addRoundedRect(0, TRIANGLE_SIDE_LENGTH,
                           width(), height() - TRIANGLE_SIDE_LENGTH,
                           TIPS_RECT_RND, TIPS_RECT_RND);
     painter->fillPath(rectPath, m_bgColor);
@@ -239,7 +239,7 @@ void KiranTips::drawDownArrowBackground(QPainter *painter)
     painter->fillPath(trianglesPath, m_bgColor);
 
     QPainterPath rectPath;
-    rectPath.addRoundRect(0, 0,
+    rectPath.addRoundedRect(0, 0,
                           width(), height() - TRIANGLE_SIDE_LENGTH,
                           TIPS_RECT_RND, TIPS_RECT_RND);
     painter->fillPath(rectPath, m_bgColor);
@@ -257,7 +257,7 @@ void KiranTips::drawLeftArrowBackground(QPainter *painter)
     painter->fillPath(trianglesPath, m_bgColor);
 
     QPainterPath rectPath;
-    rectPath.addRoundRect(TRIANGLE_SIDE_LENGTH, 0,
+    rectPath.addRoundedRect(TRIANGLE_SIDE_LENGTH, 0,
                           width() - TRIANGLE_SIDE_LENGTH, height(),
                           TIPS_RECT_RND, TIPS_RECT_RND);
     painter->fillPath(rectPath, m_bgColor);
@@ -273,7 +273,7 @@ void KiranTips::drawRightArrowBackground(QPainter *painter)
     painter->fillPath(trianglesPath, m_bgColor);
 
     QPainterPath rectPath;
-    rectPath.addRoundRect(0, 0, width() - TRIANGLE_SIDE_LENGTH, height(), TIPS_RECT_RND, TIPS_RECT_RND);
+    rectPath.addRoundedRect(0, 0, width() - TRIANGLE_SIDE_LENGTH, height(), TIPS_RECT_RND, TIPS_RECT_RND);
     painter->fillPath(rectPath, m_bgColor);
 }
 
@@ -283,7 +283,7 @@ QSize KiranTips::getRightSize() const
     QFontMetrics fontMetrics(font);
     QMargins layoutContentMargins = this->layout()->contentsMargins();
 
-    ui->label->setFixedWidth(fontMetrics.width(ui->label->text()) + 10);
+    ui->label->setFixedWidth(fontMetrics.horizontalAdvance(ui->label->text()) + 10);
     ui->label->setFixedHeight(fontMetrics.height());
 
     QSize size;
