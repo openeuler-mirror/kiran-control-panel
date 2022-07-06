@@ -1,0 +1,12 @@
+[Desktop Entry]
+Name=Network
+Name[zh_CN]=网络
+Comment=Network
+Comment[zh_CN]=网络
+Icon=network.png
+
+[Kiran Control Panel Category]
+Category=network
+Weight=3
+Keywords[zh_CN]=网络
+keywords=Network

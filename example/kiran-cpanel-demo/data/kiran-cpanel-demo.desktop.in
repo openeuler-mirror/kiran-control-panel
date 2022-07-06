@@ -1,0 +1,43 @@
+[Desktop Entry]
+#插件名
+Name=Kiran Control Panel Plugin Demo
+Name[zh_CN]=控制面板插件demo
+Comment=Kiran Control Panel Plugin Demo
+Comment[zh_CN]=控制面板插件demo
+#插件图标
+Icon=kcp-demo
+#通过启动器单独执行 <kiran-cpanel-launcher -cpanel-plugin 插件的desktop文件名>
+Exec=kiran-cpanel-launcher --cpanel-plugin=kiran-cpanel-demo
+Categories=Settings;System;X-Common-Features;X-Common-Features;
+Terminal=false
+Type=Application
+X-KIRAN-NoDisplay=true
+
+[Kiran Control Panel Plugin]
+#插件排序
+Weight=3
+#插件分类
+Category=individuation
+#插件共享库位置，若以'/'开头则为绝对路径，也可支持通过共享库名去插件安装目录去查找
+Library=lib@PROJECT_NAME@.so
+SubItems=SubItem1,SubItem2
+
+[SubItem1]
+#插件子项名 该值提供给控制中心形成子项列表
+Name=SubItem1
+Name[zh_CN]=功能项1
+#插件Icon
+Icon=kcp-demo-subitem-1
+#插件关键字 该值提供给控制中心形成搜索列表
+Keywords[zh_CN]=Dialog,SubItem1,001
+
+[SubItem2]
+#插件子项名 该值提供给控制中心形成子项列表
+Name=SubItem2
+Name[zh_CN]=功能项2
+#插件Icon
+Icon=kcp-demo-subitem-2
+#插件关键字 该值提供给控制中心形成搜索列表
+Keywords[zh_CN]=Dialog,SubItem1,001
+
+

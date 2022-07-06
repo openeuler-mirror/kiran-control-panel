@@ -1,0 +1,12 @@
+[Desktop Entry]
+Name=TimeDate
+Name[zh_CN]=日期时间
+Comment=TimeDate
+Comment[zh_CN]=日期时间
+Icon=timedate.png
+
+[Kiran Control Panel Category]
+Category=timedate
+Weight=4
+Keywords[zh_CN]=日期时间
+Keywords=timedate

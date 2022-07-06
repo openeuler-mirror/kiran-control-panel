@@ -1,0 +1,12 @@
+[Desktop Entry]
+Name=Individuation
+Name[zh_CN]=个性化
+Comment=Individuation
+Comment[zh_CN]=个性化
+Icon=individuation.png
+
+[Kiran Control Panel Category]
+Category=individuation
+Weight=1
+Keywords[zh_CN]=个性化
+Keywords=Individuation

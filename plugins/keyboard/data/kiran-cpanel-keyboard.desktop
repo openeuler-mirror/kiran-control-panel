@@ -1,0 +1,44 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Encoding=UTF-8
+Name=Kiran Cpanel Keyboard
+Name[zh_CN]=键盘布局设置
+Comment=Kiran Cpanel Mouse
+Comment[zh_CN]=键盘布局设置
+Exec=kiran-cpanel-launcher --cpanel-plugin=kiran-cpanel-keyboard
+Icon=kcp-keyboard
+Terminal=false
+Type=Application
+X-KIRAN-NoDisplay=true
+
+Categories=GTK;Settings;HardwareSettings;X-Hardware;
+StartupNotify=true
+
+[Kiran Control Panel Plugin]
+#插件排序
+Weight=1
+#插件分类
+Category=regional-language
+#插件共享库位置，若以'/'开头则为绝对路径，也可支持通过共享库名去插件安装目录去查找
+Library=libkiran-cpanel-keyboard.so
+SubItems=GeneralOptions,KeyboardLayout
+
+[GeneralOptions]
+#插件子项名 该值提供给控制中心形成子项列表
+Name=General Option
+Name[zh_CN]=通用选项
+#插件Icon
+Icon=kcp-keyboard-generation
+#插件关键字 该值提供给控制中心形成搜索列表
+Keywords[zh_CN]=通用选项
+Keywords=general,keyboard
+
+[KeyboardLayout]
+#插件子项名 该值提供给控制中心形成子项列表
+Name=Keyboard Layout
+Name[zh_CN]=键盘布局
+#插件Icon
+Icon=kcp-keyboard-layout
+#插件关键字 该值提供给控制中心形成搜索列表
+Keywords[zh_CN]=键盘布局
+Keywords=layout,keyboard
