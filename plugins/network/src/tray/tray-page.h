@@ -39,10 +39,12 @@ public:
 
     void setMultiDeviceWidget(Device::Type deviceType);
     QStringList devicePathList();
-    int pageHeight();
 
 public slots:
     void handleDeviceComboBoxChanged(int index);
+
+signals:
+    void adjustedTraySize(QSize sizeHint);
 
 private:
     Ui::TrayPage *ui;

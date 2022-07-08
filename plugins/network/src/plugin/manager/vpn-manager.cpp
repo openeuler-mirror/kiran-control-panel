@@ -358,7 +358,7 @@ void VpnManager::handleVpnStateActivated(const QString &activePath)
     {
         ui->connectionShowPage->updateItemActivatedStatus(activePath);
         auto item = ui->connectionShowPage->findItemByActivatedPath(activePath);
-        ConnectionInfo connectionInfo = item->data(Qt::UserRole).value<ConnectionInfo>();
+        NetworkConnectionInfo connectionInfo = item->data(Qt::UserRole).value<NetworkConnectionInfo>();
         StatusNotification::ActiveConnectionActivatedNotify(connectionInfo);
 
         ui->connectionShowPage->update();

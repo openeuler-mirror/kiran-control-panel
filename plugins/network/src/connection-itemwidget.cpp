@@ -30,9 +30,10 @@ void ConnectionItemWidget::initUI()
 {
     setFixedHeight(36);
     initPluginItemWidget();
-    connect(m_editButton, &QPushButton::clicked, this, &ConnectionItemWidget::editButtonClicked);
     setDrawBroder(false);
     setAttribute(Qt::WA_Hover);
+    connect(Kiran::StylePalette::instance(),&Kiran::StylePalette::themeChanged,this,&ConnectionItemWidget::handleThemeChanged);
+    connect(m_editButton, &QPushButton::clicked, this, &ConnectionItemWidget::editButtonClicked);
 }
 
 void ConnectionItemWidget::initPluginItemWidget()
@@ -47,11 +48,10 @@ void ConnectionItemWidget::initPluginItemWidget()
     m_activatedLabel->setVisible(false);
 
 //    auto pixmap = QApplication::style()->standardPixmap(QStyle::SP_ArrowRight);
-    m_editButton->setIcon(QIcon(":/kcp-network-images/details-info.svg"));
+    m_editButton->setIcon(trayIconColorSwitch(":/kcp-network-images/details-info.svg"));
     m_editButton->setIconSize(QSize(16,16));
     m_editButton->setFixedSize(30,36);
     m_editButton->setFlat(true);
-    KLOG_DEBUG() << "m_editButton->size():" << m_editButton->sizeHint();
 
     m_horizonLayout->addWidget(m_connectionTypeIcon);
     m_horizonLayout->addWidget(m_connectionName);
@@ -131,7 +131,7 @@ void ConnectionItemWidget::setWirelessStatusIcon(bool security, int signal)
         else if (75 <= signal && signal <= 100)
             svgPath = ":/kcp-network-images/wireless-4.svg";
     }
-    QPixmap pixmap = getPixmapFromSvg(svgPath);
+    QPixmap pixmap = trayIconColorSwitch(svgPath);
     KLOG_DEBUG() << "svgPath:" << svgPath;
     m_connectionTypeIcon->setPixmap(pixmap);
     m_connectionTypeIcon->setAlignment(Qt::AlignCenter);
@@ -142,20 +142,10 @@ void ConnectionItemWidget::setWiredStatusIcon()
 {
     // TODO:图标跟随网络状态改变
     QString svgPath = ":/kcp-network-images/wired-connection.svg";
-    QPixmap pixmap = getPixmapFromSvg(svgPath);
+    QPixmap pixmap = trayIconColorSwitch(svgPath);
     m_connectionTypeIcon->setPixmap(pixmap);
     m_connectionTypeIcon->setAlignment(Qt::AlignCenter);
     m_connectionTypeIcon->setVisible(true);
-}
-
-QPixmap ConnectionItemWidget::getPixmapFromSvg(const QString& svgPath)
-{
-    QSvgRenderer svgRenderer(QString(svgPath), this);
-    QPixmap pixmap(QSize(16, 16));
-    pixmap.fill(Qt::transparent);
-    QPainter painter(&pixmap);
-    svgRenderer.render(&painter);
-    return pixmap;
 }
 
 void ConnectionItemWidget::setEditButtonVisible(bool isVisible)
@@ -166,9 +156,34 @@ void ConnectionItemWidget::setEditButtonVisible(bool isVisible)
 void ConnectionItemWidget::setOtherNetworkIcon()
 {
     QString svgPath = ":/kcp-network-images/wireless-other-network.svg";
-    QPixmap pixmap = getPixmapFromSvg(svgPath);
+    QPixmap pixmap = trayIconColorSwitch(svgPath);
     m_connectionTypeIcon->setPixmap(pixmap);
     m_connectionTypeIcon->setAlignment(Qt::AlignCenter);
     m_connectionTypeIcon->setVisible(true);
 }
 
+void ConnectionItemWidget::handleThemeChanged(Kiran::PaletteType paletteType)
+{
+    if(m_connectionTypeIcon->pixmap() != nullptr)
+    {
+        QImage image = m_connectionTypeIcon->pixmap()->toImage();
+        image.invertPixels(QImage::InvertRgb);
+        QPixmap pixmap = QPixmap::fromImage(image);
+        m_connectionTypeIcon->setPixmap(pixmap);
+    }
+    m_editButton->setIcon(trayIconColorSwitch(":/kcp-network-images/details-info.svg"));
+}
+
+QPixmap ConnectionItemWidget::trayIconColorSwitch(const QString &iconPath)
+{
+    //icon原本为浅色
+    QIcon icon(iconPath);
+    QPixmap pixmap = icon.pixmap(16,16);
+    if( Kiran::StylePalette::instance()->paletteType() != Kiran::PALETTE_DARK )
+    {
+        QImage image = pixmap.toImage();
+        image.invertPixels(QImage::InvertRgb);
+        pixmap = QPixmap::fromImage(image);
+    }
+    return pixmap;
+}

@@ -125,7 +125,6 @@ void ConnectionShowPage::handleToggledSwitchButton(bool toggled)
 
 void ConnectionShowPage::handleWirelessEnabledChanged(bool enabled)
 {
-    KLOG_DEBUG() << "-----------------WirelessEnabledChanged:" << enabled;
     m_switchButton->setChecked(enabled);
     ui->connectionLists->setVisible(enabled);
     ui->createConnectionButton->setVisible(enabled);

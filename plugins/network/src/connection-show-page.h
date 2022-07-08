@@ -88,7 +88,7 @@ signals:
     void
     requestActivateCurrentItemConnection(const QString &connectionPath,
                                          const QString &connectionParameter = "");
-    void requestConnectWirelessNetwork(const ConnectionInfo &connectionInfo);
+    void requestConnectWirelessNetwork(const NetworkConnectionInfo &connectionInfo);
     void deactivatedItemConnection(const QString &connectionPath);
     void connectionUpdated(const QString &path);
 

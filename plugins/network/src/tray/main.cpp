@@ -15,14 +15,11 @@
 #include <kiran-application.h>
 #include <qt5-log-i.h>
 #include <QApplication>
-#include "cpanel-network-widget.h"
 #include "manager-tray.h"
 
 int main(int argc, char *argv[]) {
     KiranApplication a(argc, argv);
     klog_qt5_init("", "kylinsec-session", "kiran-cpanel-network", "kiran-cpanel-network");
-    CPanelNetworkWidget networkWidget;
-    networkWidget.show();
-//    ManagerTray tray;
+    ManagerTray tray;
     return QApplication::exec();
 }

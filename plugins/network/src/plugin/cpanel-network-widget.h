@@ -17,7 +17,10 @@
 
 #include <QWidget>
 #include <NetworkManagerQt/Device>
-using namespace NetworkManager;
+#include "kiran-sidebar-widget.h"
+#include "style-palette.h"
+#include <QTimer>
+
 QT_BEGIN_NAMESPACE
 namespace Ui
 {
@@ -35,14 +38,31 @@ public:
     ~CPanelNetworkWidget() override;
 
     void init();
+    void initSubItemsList();
     void getAvailableDeviceList();
     void initPage();
+    void initConnect();
 
+    void reload();
+    QPixmap trayIconColorSwitch(const QString &iconPath);
+
+public slots:
+    void handleDeviceAdded(const QString &devicePath);
+    void handleDeviceRemoved(const QString &devicePath);
+    void handleThemeChanged(Kiran::PaletteType paletteType);
+
+signals:
+    void subItemsChanged();
 
 private:
     Ui::CPanelNetworkWidget *ui;
-    QList<Device::Ptr> m_wiredDeviceList;
-    QList<Device::Ptr> m_wirelessDeviceList;
+    QList<NetworkManager::Device::Ptr> m_wiredDeviceList;
+    QList<NetworkManager::Device::Ptr> m_wirelessDeviceList;
+    QStringList m_subItemsList;
+
+    QTimer m_Timer;
+    QString m_addDevicePath;
+    int waitCounts;
 };
 
 #endif  //KIRAN_CPANEL_NETWORK_CPANEL_NETWORK_WIDGET_H

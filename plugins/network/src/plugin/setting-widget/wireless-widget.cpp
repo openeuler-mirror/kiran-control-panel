@@ -32,7 +32,7 @@ WirelessWidget::~WirelessWidget()
 
 void WirelessWidget::initUI()
 {
-    ui->ssidEdit->setPlaceholderText("Required");
+    ui->ssidEdit->setPlaceholderText(tr("Required"));
     ui->ssidEdit->setEnabled(false);
     m_mtuButton = new KiranSwitchButton(this);
     ui->mtuLayout->addWidget(m_mtuButton);
