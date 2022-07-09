@@ -54,7 +54,7 @@
     <name>KiranControlPanelWindow</name>
     <message>
         <source>Control Center</source>
-        <translation type="vanished">控制中心</translation>
+        <translation>控制中心</translation>
     </message>
 </context>
 <context>
