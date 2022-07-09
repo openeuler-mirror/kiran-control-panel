@@ -14,18 +14,18 @@
 
 #include "manager-tray.h"
 #include <qt5-log-i.h>
+#include <QMenu>
 #include <QVBoxLayout>
 #include "status-notifier-manager.h"
 #include "tray-page.h"
 #include "wired-tray-widget.h"
 #include "wireless-tray-widget.h"
-#include <QMenu>
 
 #define STATUS_NOTIFIER_MANAGER "org.kde.StatusNotifierManager"
 #define STATUS_NOTIFIER_MANAGER_OBJECT_NAME "/StatusNotifierManager"
 #define MAX_WAIT_COUNTS 10
 
-ManagerTray::ManagerTray(QWidget *parent) : QWidget(parent),
+ManagerTray::ManagerTray(QWidget *parent) : KiranRoundedTrayPopup(parent),
                                             m_wiredTrayPage(nullptr),
                                             m_wirelessTrayPage(nullptr)
 {
@@ -42,25 +42,31 @@ void ManagerTray::init()
     initUI();
     initMenu();
     initConnect();
+    //    setStyleSheet("background:yellow;");
 }
 
 void ManagerTray::initUI()
 {
     initTrayPage();
     initTrayIcon();
-    m_verticalLayout = new QVBoxLayout(this);
-    if(m_wiredTrayPage != nullptr)
+    QWidget *widget = new QWidget(this);
+    widget->setContentsMargins(0, 0, 0, 0);
+    m_verticalLayout = new QVBoxLayout(widget);
+    if (m_wiredTrayPage != nullptr)
         m_verticalLayout->addWidget(m_wiredTrayPage);
-    if(m_wirelessTrayPage != nullptr)
+    if (m_wirelessTrayPage != nullptr)
         m_verticalLayout->addWidget(m_wirelessTrayPage);
     m_verticalLayout->setMargin(0);
     m_verticalLayout->setSpacing(0);
-    this->setWindowFlags(Qt::Popup | Qt::BypassWindowManagerHint);
+    m_verticalLayout->addStretch();
+    setContentWidget(widget);
+    setContentsMargins(0, 0, 0, 0);
+    setMaximumHeight(868);
 }
 
 void ManagerTray::initConnect()
 {
-    connect(m_systemTray, &QSystemTrayIcon::activated, this,&ManagerTray::handleTrayClicked);
+    connect(m_systemTray, &QSystemTrayIcon::activated, this, &ManagerTray::handleTrayClicked);
 
     m_Timer.setInterval(500);
     m_Timer.setSingleShot(true);
@@ -106,8 +112,22 @@ void ManagerTray::initConnect()
                     KLOG_INFO() << "wait counts:" << waitCounts;
                 } });
 
-    connect(notifier(), &Notifier::deviceRemoved, this,&ManagerTray::handleDeviceRemoved);
-    connect(notifier(),&Notifier::statusChanged,this,&ManagerTray::handleNetworkManagerStatusChanged);
+    connect(notifier(), &Notifier::deviceRemoved, this, &ManagerTray::handleDeviceRemoved);
+    connect(notifier(), &Notifier::statusChanged, this, &ManagerTray::handleNetworkManagerStatusChanged);
+
+    // 无线网络如果一下消失多个网络，短时间会触发多次SizeHint变更的信号
+    m_wirelessTimer.setInterval(100);
+    m_wirelessTimer.setSingleShot(true);
+    connect(m_wirelessTrayPage, &TrayPage::adjustedTraySize, [=](QSize sizeHint)
+            {
+                m_wirelessTraySizeHint = sizeHint;
+                m_wirelessTimer.start(); });
+    connect(&m_wirelessTimer, &QTimer::timeout, [=]()
+            { handleAdjustedTraySize(m_wirelessTraySizeHint); });
+
+    connect(m_wiredTrayPage, &TrayPage::adjustedTraySize, this, &ManagerTray::handleAdjustedTraySize);
+
+    connect(Kiran::StylePalette::instance(), &Kiran::StylePalette::themeChanged, this, &ManagerTray::handleThemeChanged);
 }
 
 void ManagerTray::initTrayIcon()
@@ -125,20 +145,20 @@ void ManagerTray::initMenu()
     m_menu->addAction(m_networkSetting);
     getTrayGeometry();
     m_menu->sizeHint();
-//    m_menu->exec();
-//    m_menu->popup(QPoint(500,500));
+    //    m_menu->exec();
+    //    m_menu->popup(QPoint(500,500));
     m_systemTray->setContextMenu(m_menu);
-    connect(m_networkSetting,&QAction::triggered,this,&ManagerTray::handleNetworkSettingClicked);
+    connect(m_networkSetting, &QAction::triggered, this, &ManagerTray::handleNetworkSettingClicked);
 }
 
-//初始化条件：设备存在且可用
+// 初始化条件：设备存在且可用
 void ManagerTray::initTrayPage()
 {
     getAvailableDeviceList();
-    if(m_wiredDeviceList.count() != 0)
+    if (m_wiredDeviceList.count() != 0)
         m_wiredTrayPage = new TrayPage(m_wiredDeviceList, this);
-    if(m_wirelessDeviceList.count() != 0)
-        m_wirelessTrayPage = new TrayPage(m_wirelessDeviceList,this);
+    if (m_wirelessDeviceList.count() != 0)
+        m_wirelessTrayPage = new TrayPage(m_wirelessDeviceList, this);
 }
 
 void ManagerTray::getAvailableDeviceList()
@@ -150,25 +170,24 @@ void ManagerTray::getAvailableDeviceList()
         KLOG_DEBUG() << "dev->availableConnections():" << dev->availableConnections();
         KLOG_DEBUG() << "dev->state():" << dev->state();
 
-        if(dev->state() == Device::Unavailable)
-            continue ;
-        if(dev->state() == Device::Unmanaged)
-            continue ;
+        if (dev->state() == Device::Unavailable)
+            continue;
+        if (dev->state() == Device::Unmanaged)
+            continue;
 
         switch (dev->type())
         {
         case Device::Ethernet:
             m_wiredDeviceList << dev;
-            break ;
+            break;
         case Device::Wifi:
             m_wirelessDeviceList << dev;
-            break ;
+            break;
         default:
-            break ;
+            break;
         }
     }
 }
-
 
 void ManagerTray::handleTrayClicked(QSystemTrayIcon::ActivationReason reason)
 {
@@ -186,31 +205,33 @@ void ManagerTray::handleNetworkSettingClicked()
 {
     QProcess process(this);
     process.startDetached("kiran-control-panel");
-    KLOG_DEBUG() << "handleNetworkSettingClicked";
 }
 
 void ManagerTray::showTrayPage()
 {
-    KLOG_DEBUG() << "showTrayPage";
-    setTrayPagePos();
+    // XXX:托盘界面在不可见的情况，不方便去修改size和位置，暂时先显示后在调整大小和位置
     this->show();
+    QTimer::singleShot(50, this, [=]()
+                       {
+                           adjustSize();
+                           setTrayPagePos(); });
 }
 
 void ManagerTray::setTrayPagePos()
 {
     getTrayGeometry();
-    int pageWidth = 240;
-    // TODO:随插入项高度动态变化
-    int maxHeight = 434;
-    int pageHeight = this->sizeHint().height();
-    KLOG_DEBUG() << "pageHeight:" << pageHeight;
-    this->setGeometry(m_xTray - pageWidth / 2, m_yTray - pageHeight, pageWidth, pageHeight);
+    int pageHeight = this->size().height();
+    int pageWidth = this->size().width();
+    KLOG_DEBUG() << "this->sizeHint():" << this->sizeHint();
+    // 抵消KiranRoundedTrayPopup的margin
+    int offset = 8;
+    this->move(m_xTray - pageWidth / 2, m_yTray - pageHeight + offset);
 }
 
 void ManagerTray::getTrayGeometry()
 {
     // 名称待修改
-    QDBusPendingReply<QString> getGeometry = m_statusNotifierManager->GetGeometry("kiran-cpanel-network");
+    QDBusPendingReply<QString> getGeometry = m_statusNotifierManager->GetGeometry("~04-network");
     KLOG_DEBUG() << "getGeometry.value():" << getGeometry.value();
 
     double height, width, x, y;
@@ -237,71 +258,54 @@ void ManagerTray::getTrayGeometry()
     m_yTray = static_cast<int>(y);
 }
 
-//TODO:切换图标颜色
 void ManagerTray::setTrayIcon(NetworkManager::Status status)
 {
-    //判断连接为有线还是无线，如果同时存在则图标为无线
+    // 判断连接为有线还是无线，如果同时存在则图标为无线
     switch (status)
     {
     case NetworkManager::Status::Unknown:
         // 未知
-        m_systemTray->setIcon(QIcon(":/kcp-network-images/wired-error.svg"));
-        break ;
+        m_systemTray->setIcon(trayIconColorSwitch(":/kcp-network-images/wired-error.svg"));
+        break;
     case NetworkManager::Status::Asleep:
         // 不可用
-        m_systemTray->setIcon(QIcon(":/kcp-network-images/wired-disconnected.svg"));
-        break ;
+        m_systemTray->setIcon(trayIconColorSwitch(":/kcp-network-images/wired-disconnected.svg"));
+        break;
     case NetworkManager::Status::Disconnected:
         // 不可用
-        m_systemTray->setIcon(QIcon(":/kcp-network-images/wired-disconnected.svg"));
-        break ;
+        m_systemTray->setIcon(trayIconColorSwitch(":/kcp-network-images/wired-disconnected.svg"));
+        break;
     case NetworkManager::Status::Disconnecting:
-        break ;
+        break;
     case NetworkManager::Status::Connecting:
         // 加载动画
-        break ;
+        break;
     case NetworkManager::Status::ConnectedLinkLocal:
-        m_systemTray->setIcon(QIcon(":/kcp-network-images/wired-disconnected.svg"));
+        m_systemTray->setIcon(trayIconColorSwitch(":/kcp-network-images/wired-disconnected.svg"));
         // 不可用
-        break ;
+        break;
     case NetworkManager::Status::ConnectedSiteOnly:
         // 未知
-        m_systemTray->setIcon(QIcon(":/kcp-network-images/wired-error.svg"));
-        break ;
+        m_systemTray->setIcon(trayIconColorSwitch(":/kcp-network-images/wired-error.svg"));
+        break;
     case NetworkManager::Status::Connected:
         // 可用
-        m_systemTray->setIcon(QIcon(":/kcp-network-images/wired-connection.svg"));
-        break ;
+        //        m_systemTray->setIcon(QIcon(":/kcp-network-images/wired-connection.svg"));
+        m_systemTray->setIcon(trayIconColorSwitch(":/kcp-network-images/wired-connection.svg"));
+        break;
     default:
-        break ;
+        break;
     }
 }
 
 // 重新获取device、初始化，刷新
-//XXX:可以优化
+// XXX:可以优化
 void ManagerTray::handleDeviceAdded(const QString &devicePath)
 {
     Device::Ptr device = findNetworkInterface(devicePath);
     if (device->type() == Device::Ethernet)
     {
         reloadWiredTrayPage();
-
-        /*
-        KLOG_DEBUG() << "m_wiredTrayPage->sizeHint():" << m_wiredTrayPage->sizeHint();
-        KLOG_DEBUG() << "m_wiredTrayPage->geometry():" << m_wiredTrayPage->geometry();
-        KLOG_DEBUG() << "m_wiredTrayPage->height():" << m_wiredTrayPage->height();
-        sizeIncrement();
-        int pageWidth = 240;
-        int pageHeight = 226;
-        QSize size(pageWidth,226);
-        m_wiredTrayPage->pageHeight();
-        KLOG_DEBUG() << "m_wiredTrayPage->pageHeight():" << m_wiredTrayPage->pageHeight();
-        pageHeight = m_wiredTrayPage->pageHeight();
-//        resize(size);
-//        setGeometry(1725,1040,240,226);
-        setGeometry(m_xTray - pageWidth / 2, m_yTray - pageHeight, pageWidth, pageHeight);
-//        showTrayPage();
-        */
     }
     else if (device->type() == Device::Wifi)
     {
@@ -312,11 +316,17 @@ void ManagerTray::handleDeviceAdded(const QString &devicePath)
 // XXX:当device被移除时，由于设备对象可能已经被删除，所以并不能通过findNetworkInterface(path)找到该设备接口，进而知道被删除的设备类型
 void ManagerTray::handleDeviceRemoved(const QString &devicePath)
 {
-    KLOG_DEBUG() << "handleDeviceRemoved:" << devicePath;
-    if (m_wiredTrayPage->devicePathList().contains(devicePath))
-        reloadWiredTrayPage();
-    else if (m_wirelessTrayPage->devicePathList().contains(devicePath))
-        reloadWirelessTrayPage();
+    if (m_wiredTrayPage != nullptr)
+    {
+        if (m_wiredTrayPage->devicePathList().contains(devicePath))
+            reloadWiredTrayPage();
+    }
+
+    if (m_wirelessTrayPage != nullptr)
+    {
+        if (m_wirelessTrayPage->devicePathList().contains(devicePath))
+            reloadWirelessTrayPage();
+    }
 }
 
 void ManagerTray::handleNetworkManagerStatusChanged(NetworkManager::Status status)
@@ -331,12 +341,11 @@ void ManagerTray::reloadWiredTrayPage()
     m_wiredTrayPage = nullptr;
     m_wiredDeviceList.clear();
     getAvailableDeviceList();
-    if(m_wiredDeviceList.count() != 0)
+    if (m_wiredDeviceList.count() != 0)
         m_wiredTrayPage = new TrayPage(m_wiredDeviceList, this);
 
-    m_verticalLayout->count();
-    //XXX:待修改，使有线widget一直在最上层
-    m_verticalLayout->insertWidget(0,m_wiredTrayPage);
+    // XXX:待修改，使有线widget一直在最上层
+    m_verticalLayout->insertWidget(0, m_wiredTrayPage);
     m_verticalLayout->setMargin(0);
     update();
 }
@@ -349,11 +358,39 @@ void ManagerTray::reloadWirelessTrayPage()
     m_wirelessDeviceList.clear();
 
     getAvailableDeviceList();
-    if(m_wirelessDeviceList.count() != 0)
+    if (m_wirelessDeviceList.count() != 0)
         m_wirelessTrayPage = new TrayPage(m_wirelessDeviceList, this);
-    m_verticalLayout->insertWidget(-1,m_wirelessTrayPage);
+    m_verticalLayout->insertWidget(-1, m_wirelessTrayPage);
     m_verticalLayout->setMargin(0);
     update();
 }
 
+void ManagerTray::handleAdjustedTraySize(QSize sizeHint)
+{
+    // this->sizeHint() 更新不及时，需要等一段时间
+    QTimer::singleShot(100, this, [=]()
+       {
+           adjustSize();
+           setTrayPagePos();
+       });
+}
 
+void ManagerTray::handleThemeChanged(Kiran::PaletteType paletteType)
+{
+    setTrayIcon(NetworkManager::status());
+}
+
+QPixmap ManagerTray::trayIconColorSwitch(const QString &iconPath)
+{
+    // icon原本为浅色
+    QIcon icon(iconPath);
+    QPixmap pixmap = icon.pixmap(16, 16);
+    if (Kiran::StylePalette::instance()->paletteType() != Kiran::PALETTE_DARK)
+    {
+        QImage image = pixmap.toImage();
+        image.invertPixels(QImage::InvertRgb);
+        pixmap = QPixmap::fromImage(image);
+    }
+
+    return pixmap;
+}

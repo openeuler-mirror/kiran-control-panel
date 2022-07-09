@@ -35,8 +35,9 @@ public:
     void initUI();
 
     void showWiredConnectionLists();
-    void handleRequestActivateConnection(const ConnectionInfo &connectionInfo);
+    void handleRequestActivateConnection(const NetworkConnectionInfo &connectionInfo);
     void handleRequestDisconnect(const QString &activatedConnectionPath);
+    void handleRequestCancel(const QString &activatedConnectionPath);
 
     void handleNotifierConnectionAdded(const QString &path) override;
     void handleNotifierConnectionRemoved(const QString &path) override;
@@ -48,6 +49,8 @@ public:
     void handleActiveConnectionAdded(const QString &path) override;
     void handleActiveConnectionRemoved(const QString &path) override;
 
+signals:
+    void adjustedTraySize(QSize sizeHint);
 private:
     WiredDevice::Ptr m_wiredDevice;
     QString m_devicePath;
