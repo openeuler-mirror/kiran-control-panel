@@ -15,7 +15,7 @@
 #define KIRAN_CPANEL_NETWORK_NETWORKPLUGIN_H
 
 #include <QTranslator>
-#include <kiran-control-panel/kcp-plugin-interface.h>
+#include <kcp-plugin-interface.h>
 #include <QTimer>
 
 /// NOTE:
