@@ -15,11 +15,69 @@
 #include <kiran-application.h>
 #include <qt5-log-i.h>
 #include <QApplication>
+#include <QTimer>
+#include <QTranslator>
+#include <QDBusConnection>
+#include <QDBusConnectionInterface>
 #include "manager-tray.h"
+#include "config.h"
+#define MAX_WAIT_COUNTS 10
 
 int main(int argc, char *argv[]) {
     KiranApplication a(argc, argv);
     klog_qt5_init("", "kylinsec-session", "kiran-cpanel-network", "kiran-cpanel-network");
-    ManagerTray tray;
+
+    KLOG_INFO() << "autostart!";
+    QTranslator translator;
+    if (translator.load(QLocale(), "kiran-cpanel-network", ".", TRANSLATE_PREFIX, ".qm"))
+    {
+        a.installTranslator(&translator);
+        KLOG_INFO() << "installTranslator load:" << a.installTranslator(&translator);
+    }
+    else
+        KLOG_INFO() << "installTranslator failed";
+
+    ManagerTray *tray = nullptr;
+    QTimer timer;
+    timer.setInterval(1000);
+    int waitCounts = 0;
+    QObject::connect(&timer, &QTimer::timeout, [&]() {
+                         if (QDBusConnection::sessionBus().interface()->isServiceRegistered("org.kde.StatusNotifierWatcher"))
+                         {
+                             KLOG_INFO() << "org.kde.StatusNotifierWatcher isServiceRegistered" << QDBusConnection::sessionBus().interface()->isServiceRegistered("org.kde.StatusNotifierWatcher");
+                             KLOG_INFO() << "QSystemTrayIcon::isSystemTrayAvailable():" << QSystemTrayIcon::isSystemTrayAvailable();
+
+                             KLOG_INFO() << "init  ManagerTray";
+                             tray = new ManagerTray;
+                             KLOG_INFO() << "wait loop : new ManagerTray sucess ";
+                             KLOG_INFO() << "currentDateTime:"<<QDateTime::currentDateTime();
+                             timer.stop();
+                         }
+                         else
+                         {
+                             waitCounts++;
+                             KLOG_INFO() << "waitCounts:" << waitCounts;
+                             if (waitCounts > MAX_WAIT_COUNTS)
+                             {
+                                 KLOG_INFO() << "超过等待次数，程序退出";
+                                 return QApplication::quit();
+                             }
+                         }
+                     });
+
+    if (QDBusConnection::sessionBus().interface()->isServiceRegistered("org.kde.StatusNotifierWatcher"))
+    {
+        KLOG_INFO() << "org.kde.StatusNotifierWatcher isServiceRegistered" << QDBusConnection::sessionBus().interface()->isServiceRegistered("org.kde.StatusNotifierWatcher");
+        KLOG_INFO() << "QSystemTrayIcon::isSystemTrayAvailable():" << QSystemTrayIcon::isSystemTrayAvailable();
+        KLOG_INFO() << "init  ManagerTray";
+        tray = new ManagerTray;
+        KLOG_INFO() << "new ManagerTray sucess ";
+    }
+    else
+    {
+        timer.start();
+        KLOG_INFO() << "start wait loop";
+        KLOG_INFO() << "currentDateTime:" <<  QDateTime::currentDateTime();
+    }
     return QApplication::exec();
 }

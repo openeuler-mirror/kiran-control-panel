@@ -10,37 +10,37 @@
     </message>
     <message>
         <location filename="../src/plugin/cpanel-network-widget.cpp" line="64"/>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="138"/>
+        <location filename="../src/plugin/cpanel-network-widget.cpp" line="139"/>
         <source>Wired Connection %1</source>
         <translation>有线连接%1</translation>
     </message>
     <message>
         <location filename="../src/plugin/cpanel-network-widget.cpp" line="67"/>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="146"/>
+        <location filename="../src/plugin/cpanel-network-widget.cpp" line="147"/>
         <source>Wired Connection</source>
         <translation>有线连接</translation>
     </message>
     <message>
         <location filename="../src/plugin/cpanel-network-widget.cpp" line="83"/>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="154"/>
+        <location filename="../src/plugin/cpanel-network-widget.cpp" line="155"/>
         <source>Wireless Connection %1</source>
         <translation>无线连接%1</translation>
     </message>
     <message>
         <location filename="../src/plugin/cpanel-network-widget.cpp" line="86"/>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="162"/>
+        <location filename="../src/plugin/cpanel-network-widget.cpp" line="163"/>
         <source>Wireless Connection</source>
         <translation>无线连接</translation>
     </message>
     <message>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="97"/>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="168"/>
+        <location filename="../src/plugin/cpanel-network-widget.cpp" line="98"/>
+        <location filename="../src/plugin/cpanel-network-widget.cpp" line="169"/>
         <source>VPN</source>
         <translation>VPN</translation>
     </message>
     <message>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="104"/>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="169"/>
+        <location filename="../src/plugin/cpanel-network-widget.cpp" line="105"/>
+        <location filename="../src/plugin/cpanel-network-widget.cpp" line="170"/>
         <source>Network Details</source>
         <translation>网络详情</translation>
     </message>
@@ -134,18 +134,18 @@
 <context>
     <name>ConnectionLists</name>
     <message>
-        <location filename="../src/connection-lists.cpp" line="112"/>
+        <location filename="../src/connection-lists.cpp" line="114"/>
         <source>Tips</source>
         <translation type="unfinished">提示</translation>
     </message>
     <message>
-        <location filename="../src/connection-lists.cpp" line="113"/>
+        <location filename="../src/connection-lists.cpp" line="115"/>
         <source>Please input a network name</source>
         <translation>请输入网络名称</translation>
     </message>
     <message>
-        <location filename="../src/connection-lists.cpp" line="452"/>
-        <location filename="../src/connection-lists.cpp" line="460"/>
+        <location filename="../src/connection-lists.cpp" line="453"/>
+        <location filename="../src/connection-lists.cpp" line="461"/>
         <source>Other WiFi networks</source>
         <translation>其它WIFI网络</translation>
     </message>
@@ -904,7 +904,7 @@
         <translation>返回</translation>
     </message>
     <message>
-        <location filename="../src/plugin/manager/wired-manager.cpp" line="43"/>
+        <location filename="../src/plugin/manager/wired-manager.cpp" line="44"/>
         <source>Wired Network Adapter</source>
         <translation>有线网卡</translation>
     </message>

@@ -231,7 +231,7 @@ void ManagerTray::setTrayPagePos()
 void ManagerTray::getTrayGeometry()
 {
     // 名称待修改
-    QDBusPendingReply<QString> getGeometry = m_statusNotifierManager->GetGeometry("kiran-network-status-icon");
+    QDBusPendingReply<QString> getGeometry = m_statusNotifierManager->GetGeometry("~04-network");
     KLOG_DEBUG() << "getGeometry.value():" << getGeometry.value();
 
     double height, width, x, y;
