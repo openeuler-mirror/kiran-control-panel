@@ -64,9 +64,6 @@ void EthernetWidget::initEthernetMacComboBox()
 void EthernetWidget::initConnection()
 {
     connect(m_mtuButton, &QAbstractButton::toggled, this, &EthernetWidget::handleCustomMTUChanged);
-
-    connect(notifier(),&Notifier::deviceAdded,[=](){initEthernetMacComboBox();});
-    connect(notifier(),&Notifier::deviceRemoved,[=](){initEthernetMacComboBox();});
 }
 
 void EthernetWidget::setWiredSetting(const WiredSetting::Ptr &wiredSetting)

@@ -34,7 +34,7 @@ void Ipv6Widget::initUI()
     ui->ipv6Method->addItem(tr("Manual"), Ipv6Setting::ConfigMethod::Manual);
     ui->ipv6Method->addItem(tr("Ignored"), Ipv6Setting::ConfigMethod::Ignored);
     ui->ipv6Manual->setVisible(false);
-    ui->ipv6Address->setPlaceholderText("Required");
+    ui->ipv6Address->setPlaceholderText(tr("Required"));
     ui->ipv6Prefix->setMaximum(128);
     ui->ipv6Prefix->setMinimum(1);
 }

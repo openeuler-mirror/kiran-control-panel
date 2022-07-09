@@ -42,7 +42,7 @@ public:
     void requireInputPassword(const QString &ssid);
 
 public slots:
-    void handleRequestConnectWirelessNetwork(const ConnectionInfo &connectionInfo);
+    void handleRequestConnectWirelessNetwork(const NetworkConnectionInfo &connectionInfo);
     void getWirelessAvailableConnections(const QString &devicePath);
     void activateWirelessConnection(const QString &connectionPath, const QString &devicePath,const QString &accessPointPath);
     void addAndActivateWirelessConnection(ConnectionSettings::Ptr connectionSettings);
@@ -76,7 +76,7 @@ private:
     QMap<QString, Connection::Ptr> m_wirelssConnectionMap;
     WirelessDevice::Ptr m_wirelessDevice;
     ConnectionSettings::Ptr m_connectionSettings;
-    ConnectionInfo m_connectionInfo;
+    NetworkConnectionInfo m_connectionInfo;
 };
 
 #endif  //KIRAN_CPANEL_NETWORK_WIRELESS_MANAGER_H

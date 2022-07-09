@@ -13,8 +13,8 @@
  */
 
 #include "tray-page.h"
-#include "ui_tray-page.h"
 #include <qt5-log-i.h>
+#include "ui_tray-page.h"
 #include "wired-tray-widget.h"
 #include "wireless-tray-widget.h"
 
@@ -23,6 +23,7 @@ TrayPage::TrayPage(Device::List deviceList, QWidget *parent) : QWidget(parent), 
     ui->setupUi(this);
     m_deviceList = deviceList;
     init();
+//    setStyleSheet("background:bule;");
 }
 
 TrayPage::~TrayPage()
@@ -40,27 +41,32 @@ void TrayPage::init()
 void TrayPage::initUI(Device::Type deviceType)
 {
     setFixedWidth(240);
-    if(m_deviceList.count() > 1)
+    setMaximumHeight(434);
+    ui->stackedWidget->setContentsMargins(0, 0, 0, 0);
+
+    if (m_deviceList.count() > 1)
         setMultiDeviceWidget(deviceType);
-    else if(m_deviceList.count() == 1)
+    else if (m_deviceList.count() == 1)
     {
         ui->selectDevicewidget->setVisible(false);
-        QString devicePath =  m_deviceList.at(0)->uni();
-        if(deviceType == Device::Ethernet)
+        QString devicePath = m_deviceList.at(0)->uni();
+        if (deviceType == Device::Ethernet)
         {
-            WiredTrayWidget *wiredTrayWidget = new WiredTrayWidget(devicePath,this);
+            WiredTrayWidget *wiredTrayWidget = new WiredTrayWidget(devicePath, this);
             ui->stackedWidget->addWidget(wiredTrayWidget);
+            connect(wiredTrayWidget,&WiredTrayWidget::adjustedTraySize,this,&TrayPage::adjustedTraySize);
         }
-        else if(deviceType == Device::Wifi)
+        else if (deviceType == Device::Wifi)
         {
-            WirelessTrayWidget *wirelessTrayWidget = new WirelessTrayWidget(devicePath,this);
+            WirelessTrayWidget *wirelessTrayWidget = new WirelessTrayWidget(devicePath, this);
             ui->stackedWidget->addWidget(wirelessTrayWidget);
+            connect(wirelessTrayWidget, &WirelessTrayWidget::adjustedTraySize,this,&TrayPage::adjustedTraySize);
         }
     }
     else
     {
-        //m_deviceeList.count == 0
-        return ;
+        // m_deviceeList.count == 0
+        return;
     }
 }
 
@@ -75,22 +81,39 @@ void TrayPage::setMultiDeviceWidget(Device::Type deviceType)
     {
         QString devicePath = dev->uni();
         QString deviceName = dev->interfaceName();
-        ui->deviceComboBox->addItem(deviceName,devicePath);
+        ui->deviceComboBox->addItem(deviceName, devicePath);
 
-        if(deviceType == Device::Ethernet)
+        if (deviceType == Device::Ethernet)
         {
             ui->deviceLabel->setText(tr("Select wired network card"));
-            WiredTrayWidget *wiredTrayWidget = new WiredTrayWidget(devicePath,this);
-            ui->stackedWidget->addWidget(wiredTrayWidget);
+
+            QWidget *widget = new QWidget();
+            auto vLayout = new QVBoxLayout(widget);
+            vLayout->setSpacing(0);
+            vLayout->setContentsMargins(0, 0, 0, 0);
+
+            WiredTrayWidget *wiredTrayWidget = new WiredTrayWidget(devicePath, this);
+            vLayout->addWidget(wiredTrayWidget,0,Qt::AlignHCenter|Qt::AlignTop);
+            ui->stackedWidget->addWidget(widget);
+
+            connect(wiredTrayWidget, &WiredTrayWidget::adjustedTraySize,this,&TrayPage::adjustedTraySize);
         }
-        else if(deviceType == Device::Wifi)
+        else if (deviceType == Device::Wifi)
         {
             ui->deviceLabel->setText(tr("Select wireless network card"));
-            WirelessTrayWidget *wirelessTrayWidget = new WirelessTrayWidget(devicePath,this);
-            ui->stackedWidget->addWidget(wirelessTrayWidget);
+            QWidget *widget = new QWidget();
+            auto vLayout = new QVBoxLayout(widget);
+            vLayout->setSpacing(0);
+            vLayout->setContentsMargins(0, 0, 0, 0);
+
+            WirelessTrayWidget *wirelessTrayWidget = new WirelessTrayWidget(devicePath, this);
+            vLayout->addWidget(wirelessTrayWidget,0,Qt::AlignHCenter|Qt::AlignTop);
+            ui->stackedWidget->addWidget(widget);
+
+            connect(wirelessTrayWidget, &WirelessTrayWidget::adjustedTraySize,this,&TrayPage::adjustedTraySize);
         }
     }
-    connect(ui->deviceComboBox, QOverload<int>::of(&QComboBox::currentIndexChanged),this,&TrayPage::handleDeviceComboBoxChanged);
+    connect(ui->deviceComboBox, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &TrayPage::handleDeviceComboBoxChanged);
     ui->selectDevicewidget->setVisible(true);
 }
 
@@ -103,25 +126,15 @@ QStringList TrayPage::devicePathList()
 {
     QStringList devicePathList;
     KLOG_DEBUG() << "m_deviceList:" << m_deviceList;
-    for (Device::Ptr device :m_deviceList)
+    for (Device::Ptr device : m_deviceList)
     {
-        if(device == nullptr)
+        if (device == nullptr)
             KLOG_DEBUG() << "device == nullptr";
         else
             devicePathList << device->uni();
     }
     KLOG_DEBUG() << "devicePathList:" << devicePathList;
     return devicePathList;
-}
-
-int TrayPage::pageHeight()
-{
-    KLOG_DEBUG() << "ui->selectDevicewidget->height():" << ui->selectDevicewidget->height();
-    KLOG_DEBUG() << "ui->stackedWidget->height():" << ui->stackedWidget->height();
-    ui->stackedWidget->widget(0);
-
-    int height = ui->selectDevicewidget->height() + ui->stackedWidget->height();
-    return height;
 }
 
 

@@ -139,7 +139,7 @@ void WirelessManager::getWirelessAvailableConnections(const QString &devicePath)
     }
 }
 
-void WirelessManager::handleRequestConnectWirelessNetwork(const ConnectionInfo &connectionInfo)
+void WirelessManager::handleRequestConnectWirelessNetwork(const NetworkConnectionInfo &connectionInfo)
 {
     m_connectionInfo = connectionInfo;
     QString ssid = connectionInfo.wirelessInfo.ssid;

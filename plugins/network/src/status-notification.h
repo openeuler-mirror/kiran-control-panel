@@ -18,7 +18,7 @@
 #include <NetworkManagerQt/Manager>
 #include <QObject>
 using namespace NetworkManager;
-struct ConnectionInfo;
+struct NetworkConnectionInfo;
 class StatusNotification : QObject
 {
     Q_OBJECT
@@ -26,7 +26,7 @@ public:
     explicit StatusNotification(QObject *parent = nullptr);
     ~StatusNotification();
 
-    static void ActiveConnectionActivatedNotify(ConnectionInfo connectionInfo);
+    static void ActiveConnectionActivatedNotify(NetworkConnectionInfo connectionInfo);
     static void ActiveConnectionDeactivatedNotify(const QString &connectionName);
 
     static void connectitonFailedNotify(const QString &connectionPath);

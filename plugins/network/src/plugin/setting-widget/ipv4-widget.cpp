@@ -33,8 +33,8 @@ void Ipv4Widget::initUI()
     ui->ipv4Method->addItem(tr("Auto"), Ipv4Setting::ConfigMethod::Automatic);
     ui->ipv4Method->addItem(tr("Manual"), Ipv4Setting::ConfigMethod::Manual);
     ui->ipv4Manual->setVisible(false);
-    ui->ipv4Address->setPlaceholderText("Required");
-    ui->ipv4Netmask->setPlaceholderText("Required");
+    ui->ipv4Address->setPlaceholderText(tr("Required"));
+    ui->ipv4Netmask->setPlaceholderText(tr("Required"));
 }
 
 void Ipv4Widget::initConnection()

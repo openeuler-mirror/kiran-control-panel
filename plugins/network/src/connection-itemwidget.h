@@ -45,9 +45,10 @@ public:
     void setWiredStatusIcon();
     void setOtherNetworkIcon();
 
-    QPixmap getPixmapFromSvg(const QString &svgPath);
+    QPixmap trayIconColorSwitch(const QString &iconPath);
 
 public slots:
+    void handleThemeChanged(Kiran::PaletteType paletteType );
 
 signals:
     void editButtonClicked();

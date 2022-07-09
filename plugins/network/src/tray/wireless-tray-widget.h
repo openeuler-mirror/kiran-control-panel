@@ -36,7 +36,7 @@ public:
     void initConnection();
 
 public slots:
-    void handleRequestConnectWirelessNetwork(const ConnectionInfo &connectionInfo);
+    void handleRequestConnectWirelessNetwork(const NetworkConnectionInfo &connectionInfo);
     void handleRequestConnectHiddenNetwork(const QString &ssid);
 
     void handleRequestDisconnect(const QString &activatedConnectionPath);
@@ -65,6 +65,9 @@ public slots:
 
     void requireInputPassword(const QString &ssid);
 
+signals:
+    void adjustedTraySize(QSize sizeHint);
+
 private:
     QMap<QString, Connection::Ptr> m_wirelssConnectionMap;
     WirelessDevice::Ptr m_wirelessDevice;
@@ -72,7 +75,7 @@ private:
     QString m_devicePath;
     QVBoxLayout *m_verticalLayout;
     QPointer<ConnectionLists> m_connectionLists;
-    ConnectionInfo m_connectionInfo;
+    NetworkConnectionInfo m_connectionInfo;
 };
 
 #endif  // KIRAN_CPANEL_NETWORK_WIRELESS_TRAY_WIDGET_H

@@ -66,6 +66,8 @@ void DisconnectAndDeleteButton::initConnection()
         {
             KLOG_INFO() << "Disconnect failed:" << reply.error();
         }
+        else
+            KLOG_DEBUG() << "deactivateConnection reply:" << reply.reply();
         emit disconnectButtonClicked();
     });
     connect(ui->deleteButton, &QPushButton::clicked, this, &DisconnectAndDeleteButton::handleDeleteConnection);
