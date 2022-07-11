@@ -43,11 +43,8 @@ void VolumeScale::drawTicks(QPainter *painter)
     int posX = 0;
     int posY = 0;
     int length = geometry().width();
-    KLOG_DEBUG() << "geometry().width():" <<geometry().width();
 
     int ticksCount = length / TICK_SPACE;
-
-    KLOG_DEBUG() << "ticksCount:  " << ticksCount;
 
     int percentTicks = m_percent * ticksCount;
 
@@ -62,7 +59,6 @@ void VolumeScale::drawTicks(QPainter *painter)
         }
         painter->drawRect(posX,10,TICK_WIDTH,TICK_HEIGHT);
         posX += TICK_SPACE;
-        KLOG_DEBUG() << "drawRect:" << posX << ":" << i;
     }
 }
 void VolumeScale::setPercent(qreal percent)
