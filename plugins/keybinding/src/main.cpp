@@ -45,7 +45,21 @@ public:
             KLOG_INFO() << "Connect keybinding dbus service failed!";
             return -1;
         }
-        //TODO:统一修改翻译文件的加载路径
+        m_translator = new QTranslator;
+        if (!m_translator->load(QLocale(),
+                            "kiran-cpanel-keybinding",
+                            ".",
+                            "/usr/share/kiran-cpanel-keybinding/translations/",
+                            ".qm"))
+        {
+            KLOG_DEBUG() << "Kiran cpanel keybinding load translation failed";
+            m_translator->deleteLater();
+            m_translator = nullptr;
+        }
+        else
+        {
+            QCoreApplication::installTranslator(m_translator);
+        }
         return 0;
     };
 
@@ -102,6 +116,7 @@ public:
 
 private:
     QWidget* m_currentWidget = nullptr;
+    QTranslator* m_translator = nullptr;
 };
 
 #include "main.moc"

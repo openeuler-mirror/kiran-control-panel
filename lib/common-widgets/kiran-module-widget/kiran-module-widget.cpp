@@ -138,9 +138,9 @@ bool KiranModuleWidget::checkHasUnSaved()
     if (haveUnsavedOptions)
     {
         auto clickedButton = KiranMessageBox::message(this, tr("Warning"),
-                                                      QString("The edited content in %1 is not saved."
+                                                      QString(tr("The edited content in %1 is not saved."
                                                               " After switching, the edited content will be lost."
-                                                              " Are you sure you want to save？")
+                                                              " Are you sure you want to save？"))
                                                           .arg(subItemName),
                                                       KiranMessageBox::Yes | KiranMessageBox::No);
         if (clickedButton == KiranMessageBox::No)

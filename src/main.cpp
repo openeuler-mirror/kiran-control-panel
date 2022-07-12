@@ -31,8 +31,8 @@ using namespace std;
 
 bool installTranslator()
 {
-    QTranslator tsor;
-    if (!tsor.load(QLocale(),
+    QTranslator* tsor = new QTranslator(qApp);
+    if (!tsor->load(QLocale(),
                    qAppName(),
                    ".",
                    TRANSLATE_PREFIX,
@@ -42,7 +42,7 @@ bool installTranslator()
         return false;
     }
 
-    QCoreApplication::installTranslator(&tsor);
+    QCoreApplication::installTranslator(tsor);
     return true;
 }
 
