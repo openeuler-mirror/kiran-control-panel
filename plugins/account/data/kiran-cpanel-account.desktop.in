@@ -25,6 +25,7 @@ SubItems=Account
 [Account]
 #插件子项名 该值提供给控制中心形成子项列表
 Name=account
+Name[zh_CN]=帐户选项
 Icon=kcp-account
 Keywords=account,user
 #插件关键字 该值提供给控制中心形成搜索列表
