@@ -84,7 +84,7 @@ Keywords=About Systems
 - about-system    
   关于系统
 - account-management    
-  账户管理
+  帐户管理
 - timedate    
   日期时间
 - display    
