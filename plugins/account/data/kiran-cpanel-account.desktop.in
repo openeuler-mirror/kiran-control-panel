@@ -28,4 +28,4 @@ Name=account
 Icon=kcp-account
 Keywords=account,user
 #插件关键字 该值提供给控制中心形成搜索列表
-Keywords[zh_CN]=账户管理
+Keywords[zh_CN]=账户
