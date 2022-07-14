@@ -48,6 +48,7 @@ void ConnectionShowPage::initUI()
     ui->titleLayout->addWidget(m_switchButton);
     ui->connectionLists->setMaximumHeight(ui->connectionLists->sizeHintForRow(0) * ui->connectionLists->count() + (2 * ui->connectionLists->frameWidth()));
     Kiran::StylePropertyHelper::setButtonType(ui->createConnectionButton, Kiran::BUTTON_Default);
+    ui->createConnectionButton->setIcon(QIcon(":/kcp-network-images/connection-add.svg"));
 }
 
 void ConnectionShowPage::initConnect()

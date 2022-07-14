@@ -28,13 +28,13 @@ class WiredTrayWidget;
 class WirelessTrayWidget;
 class StatusNotifierManagerInterface;
 class TrayPage;
-class ManagerTray : public KiranRoundedTrayPopup
+class NetworkTray : public KiranRoundedTrayPopup
 {
     Q_OBJECT
 
 public:
-    explicit ManagerTray(QWidget *parent = nullptr);
-    ~ManagerTray() override;
+    explicit NetworkTray(QWidget *parent = nullptr);
+    ~NetworkTray() override;
     void init();
 
     void initConnect();

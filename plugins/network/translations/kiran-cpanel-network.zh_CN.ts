@@ -9,28 +9,44 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Wired Connection %1</source>
+        <translation type="vanished">有线连接%1</translation>
+    </message>
+    <message>
+        <source>Wired Connection</source>
+        <translation type="vanished">有线连接</translation>
+    </message>
+    <message>
+        <source>Wireless Connection %1</source>
+        <translation type="vanished">无线连接%1</translation>
+    </message>
+    <message>
+        <source>Wireless Connection</source>
+        <translation type="vanished">无线连接</translation>
+    </message>
+    <message>
         <location filename="../src/plugin/cpanel-network-widget.cpp" line="64"/>
         <location filename="../src/plugin/cpanel-network-widget.cpp" line="139"/>
-        <source>Wired Connection %1</source>
-        <translation>有线连接%1</translation>
+        <source>Wired Network %1</source>
+        <translation>有线网络 %1</translation>
     </message>
     <message>
         <location filename="../src/plugin/cpanel-network-widget.cpp" line="67"/>
         <location filename="../src/plugin/cpanel-network-widget.cpp" line="147"/>
-        <source>Wired Connection</source>
-        <translation>有线连接</translation>
+        <source>Wired Network</source>
+        <translation>有线网络</translation>
     </message>
     <message>
         <location filename="../src/plugin/cpanel-network-widget.cpp" line="83"/>
         <location filename="../src/plugin/cpanel-network-widget.cpp" line="155"/>
-        <source>Wireless Connection %1</source>
-        <translation>无线连接%1</translation>
+        <source>Wireless Network %1</source>
+        <translation>无线网络  %1</translation>
     </message>
     <message>
         <location filename="../src/plugin/cpanel-network-widget.cpp" line="86"/>
         <location filename="../src/plugin/cpanel-network-widget.cpp" line="163"/>
-        <source>Wireless Connection</source>
-        <translation>无线连接</translation>
+        <source>Wireless Network</source>
+        <translation>无线网络</translation>
     </message>
     <message>
         <location filename="../src/plugin/cpanel-network-widget.cpp" line="98"/>
@@ -444,9 +460,16 @@
 <context>
     <name>ManagerTray</name>
     <message>
-        <location filename="../src/tray/manager-tray.cpp" line="143"/>
         <source>Network settings</source>
-        <translation>网络设置</translation>
+        <translation type="vanished">网络设置</translation>
+    </message>
+</context>
+<context>
+    <name>NetworkTray</name>
+    <message>
+        <location filename="../src/tray/network-tray.cpp" line="143"/>
+        <source>Network settings</source>
+        <translation type="unfinished">网络设置</translation>
     </message>
 </context>
 <context>
@@ -698,11 +721,6 @@
         <location filename="../src/plugin/manager/vpn-manager.cpp" line="46"/>
         <source>VPN</source>
         <translation type="unfinished">VPN</translation>
-    </message>
-    <message>
-        <location filename="../src/plugin/manager/vpn-manager.cpp" line="50"/>
-        <source>L2TP</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/plugin/manager/vpn-manager.cpp" line="51"/>

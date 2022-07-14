@@ -18,7 +18,7 @@
 #include <NetworkManagerQt/Settings>
 #include <NetworkManagerQt/Utils>
 
-WirelessTrayWidget::WirelessTrayWidget(const QString &devicePath, QWidget *parent) : ConnectionTray(parent)
+WirelessTrayWidget::WirelessTrayWidget(const QString &devicePath, QWidget *parent) : TrayWidget(parent)
 {
     m_devicePath = devicePath;
     init();

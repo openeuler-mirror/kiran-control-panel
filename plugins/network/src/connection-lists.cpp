@@ -892,14 +892,17 @@ void ConnectionLists::adjustTraySize()
 
 void ConnectionLists::hideEvent(QHideEvent* event)
 {
-    for (int i = 0; i < this->count(); ++i)
+    if(m_itemShowType == ITEM_WIDGET_TYPE_TRAY)
     {
-        auto tmpItem = this->item(i);
-        //activeConnectionPath 为空代表未激活
-        if(tmpItem->data(Qt::UserRole).value<NetworkConnectionInfo>().activeConnectionPath.isEmpty())
+        for (int i = 0; i < this->count(); ++i)
         {
-            if(tmpItem->sizeHint().height() != 50)
-                itemSimpleStatus(tmpItem);
+            auto tmpItem = this->item(i);
+            //activeConnectionPath 为空代表未激活
+            if(tmpItem->data(Qt::UserRole).value<NetworkConnectionInfo>().activeConnectionPath.isEmpty())
+            {
+                if(tmpItem->sizeHint().height() != 50)
+                    itemSimpleStatus(tmpItem);
+            }
         }
     }
     QWidget::hideEvent(event);

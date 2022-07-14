@@ -18,34 +18,34 @@
 #include <NetworkManagerQt/WirelessSetting>
 #include "connection-lists.h"
 #include "connection-show-page.h"
-#include "connection-tray.h"
 #include "status-notification.h"
+#include "tray-widget.h"
 
-ConnectionTray::ConnectionTray(QWidget *parent) : QWidget(parent)
+TrayWidget::TrayWidget(QWidget *parent) : QWidget(parent)
 {
     init();
 }
 
-ConnectionTray::~ConnectionTray()
+TrayWidget::~TrayWidget()
 {
 }
 
-void ConnectionTray::init()
+void TrayWidget::init()
 {
     initUI();
     initConnection();
 }
 
-void ConnectionTray::initUI()
+void TrayWidget::initUI()
 {
 }
 
-void ConnectionTray::initConnection()
+void TrayWidget::initConnection()
 {
-    connect(notifier(), &Notifier::activeConnectionAdded, this, &ConnectionTray::handleActiveConnectionAdded);
-    connect(notifier(), &Notifier::activeConnectionRemoved, this, &ConnectionTray::handleActiveConnectionRemoved);
+    connect(notifier(), &Notifier::activeConnectionAdded, this, &TrayWidget::handleActiveConnectionAdded);
+    connect(notifier(), &Notifier::activeConnectionRemoved, this, &TrayWidget::handleActiveConnectionRemoved);
 
-    connect(settingsNotifier(), &SettingsNotifier::connectionAdded, this, &ConnectionTray::handleNotifierConnectionAdded);
+    connect(settingsNotifier(), &SettingsNotifier::connectionAdded, this, &TrayWidget::handleNotifierConnectionAdded);
 
     m_connectionRemovedTimer.setInterval(100);
     m_connectionRemovedTimer.setSingleShot(true);
@@ -71,28 +71,28 @@ void ConnectionTray::initConnection()
             });
 }
 
-void ConnectionTray::distributeNotifeir()
+void TrayWidget::distributeNotifeir()
 {
 
 }
 
-void ConnectionTray::handleNotifierConnectionAdded(const QString &path)
+void TrayWidget::handleNotifierConnectionAdded(const QString &path)
 {
 }
 
-void ConnectionTray::handleNotifierConnectionRemoved(const QString &path)
+void TrayWidget::handleNotifierConnectionRemoved(const QString &path)
 {
 }
 
-void ConnectionTray::handleActiveConnectionAdded(const QString &activepath)
+void TrayWidget::handleActiveConnectionAdded(const QString &activepath)
 {
 }
 
-void ConnectionTray::handleActiveConnectionRemoved(const QString &activepath)
+void TrayWidget::handleActiveConnectionRemoved(const QString &activepath)
 {
 }
 
-void ConnectionTray::handleActiveConnectionStateChanged(ActiveConnection::State state)
+void TrayWidget::handleActiveConnectionStateChanged(ActiveConnection::State state)
 {
     auto activeConnection = qobject_cast<ActiveConnection* >(sender());
     m_activatedPath = activeConnection->path();
@@ -125,22 +125,22 @@ void ConnectionTray::handleActiveConnectionStateChanged(ActiveConnection::State 
     }
 }
 
-void ConnectionTray::handleStateActivating(const QString &activatedPath)
+void TrayWidget::handleStateActivating(const QString &activatedPath)
 {
 
 }
 
-void ConnectionTray::handleStateActivated(const QString &activatedPath)
+void TrayWidget::handleStateActivated(const QString &activatedPath)
 {
 
 }
 
-void ConnectionTray::handleStateDeactivated(const QString &activatedPath)
+void TrayWidget::handleStateDeactivated(const QString &activatedPath)
 {
 
 }
 
-void ConnectionTray::getDeviceList(Device::Type deviceType)
+void TrayWidget::getDeviceList(Device::Type deviceType)
 {
     const Device::List deviceList = networkInterfaces();
     for (Device::Ptr dev : deviceList)
@@ -157,7 +157,7 @@ void ConnectionTray::getDeviceList(Device::Type deviceType)
     }
 }
 
-void ConnectionTray::handleDeviceStateChanged(Device::State newstate, Device::State oldstate, Device::StateChangeReason reason)
+void TrayWidget::handleDeviceStateChanged(Device::State newstate, Device::State oldstate, Device::StateChangeReason reason)
 {
 
 }

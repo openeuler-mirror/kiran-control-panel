@@ -274,7 +274,7 @@ void AudioSystemTray::setTrayIcon(int value)
 void AudioSystemTray::handleVolumeSettingClicked()
 {
     QProcess process(this);
-    process.startDetached("kiran-cpanel-launcher --cpanel-plugin=kiran-cpanel-audio");
+    process.startDetached("kiran-control-panel -c audio -s OutputPage");
 }
 
 void AudioSystemTray::getTrayIconStyle()
