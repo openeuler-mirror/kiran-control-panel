@@ -280,15 +280,15 @@ void InputPage::initConnet()
     connect(m_defaultSource, &AudioDeviceInterface::active_portChanged, [=](const QString &value) {
         handleActivePortChanged(value);
     });
+
+    //Fix:SourceAdded 和 SourceDelete没有被激发
     connect(m_audioInterface, &AudioInterface::SourceAdded, [this](uint index) {
         handleSourceAdded(index);
     });
     connect(m_audioInterface, &AudioInterface::SourceDelete, [this](uint index) {
         handleSourceDelete(index);
     });
-    connect(m_audioInterface, &AudioInterface::DefaultSourceChange, [this](uint index) {
-        handleDefaultSourceChanged(index);
-    });
+    connect(m_audioInterface, &AudioInterface::DefaultSourceChange, this,&InputPage::handleDefaultSourceChanged,Qt::QueuedConnection);
 }
 
 void InputPage::handleActivePortChanged(const QString &value)
@@ -315,29 +315,34 @@ void InputPage::handleVolumeChanged(double value)
     ui->volumeSetting->blockSignals(false);
 }
 
+/*
+ * TODO:
+ * 1、处理快速拔插设备
+ * 2、设备插入后是否需要等待设备准备好
+ * */
+
 void InputPage::handleDefaultSourceChanged(int index)
 {
     KLOG_DEBUG() << "DefaultSourceChanged:" << index;
-
     //delete and restart init defaultSource
-    delete m_defaultSource;
+    m_defaultSource->deleteLater();
     m_defaultSource = nullptr;
+
     ui->inputDevices->clear();
     initInputDevice();
     initInputSettins();
 
     ui->volumeScale->setPercent(0);
+
     if(m_audioInfo != nullptr)
     {
         m_audioInfo->stop();
-        delete m_audioInfo;
+        m_audioInfo->deleteLater();
         m_audioInfo = nullptr;
     }
     if(m_audioInput != nullptr)
     {
-        m_audioInput->stop();
-        m_audioInput->disconnect(this);
-        delete m_audioInput;
+        m_audioInput->deleteLater();
         m_audioInput = nullptr;
     }
     if(isValidPort)
