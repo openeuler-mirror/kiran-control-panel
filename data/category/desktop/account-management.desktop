@@ -1,12 +1,12 @@
 [Desktop Entry]
 Name=Account Management
-Name[zh_CN]=账户
+Name[zh_CN]=帐户
 Comment=Account Management
-Comment[zh_CN]=账户管理
+Comment[zh_CN]=帐户管理
 Icon=account-management.png
 
 [Kiran Control Panel Category]
 Category=account-management
 Weight=6
-Keywords[zh_CN]=账户
+Keywords[zh_CN]=帐户
 Keywords=Account Management

@@ -175,7 +175,7 @@
     <name>CreateUserPage</name>
     <message>
         <source>Account type</source>
-        <translation type="vanished">账户类型</translation>
+        <translation type="vanished">帐户类型</translation>
     </message>
     <message>
         <location filename="../src/pages/create-user-page/create-user-page.cpp" line="82"/>
@@ -229,19 +229,19 @@
     </message>
     <message>
         <source>Please enter account name first</source>
-        <translation type="vanished">请先输入账户名</translation>
+        <translation type="vanished">请先输入帐户名</translation>
     </message>
     <message>
         <source>Please enter your account name</source>
-        <translation type="vanished">请输入账户名</translation>
+        <translation type="vanished">请输入帐户名</translation>
     </message>
     <message>
         <source>Account cannot be a pure number</source>
-        <translation type="vanished">账户名不能全为数字</translation>
+        <translation type="vanished">帐户名不能全为数字</translation>
     </message>
     <message>
         <source>Account already exists</source>
-        <translation type="vanished">账户名已存在</translation>
+        <translation type="vanished">帐户名已存在</translation>
     </message>
     <message>
         <source>Please enter your userName name</source>
@@ -477,7 +477,7 @@
     </message>
     <message>
         <source>account type</source>
-        <translation type="vanished">账户类型</translation>
+        <translation type="vanished">帐户类型</translation>
     </message>
     <message>
         <location filename="../src/hard-worker.cpp" line="195"/>
@@ -531,7 +531,7 @@
     </message>
     <message>
         <source>User Manager</source>
-        <translation type="vanished">账户管理工具</translation>
+        <translation type="vanished">帐户管理工具</translation>
     </message>
     <message>
         <source>Create new account</source>
@@ -730,11 +730,11 @@
     </message>
     <message>
         <source>Account type</source>
-        <translation type="vanished">账户类型</translation>
+        <translation type="vanished">帐户类型</translation>
     </message>
     <message>
         <source>Account status</source>
-        <translation type="vanished">启用账户</translation>
+        <translation type="vanished">启用帐户</translation>
     </message>
     <message>
         <location filename="../src/pages/user-info-page/user-info-page.ui" line="251"/>
@@ -798,7 +798,7 @@
     </message>
     <message>
         <source>Account information updated successfully</source>
-        <translation type="vanished">账户信息更新成功</translation>
+        <translation type="vanished">帐户信息更新成功</translation>
     </message>
     <message>
         <location filename="../src/pages/user-info-page/user-info-page.cpp" line="330"/>
