@@ -1,0 +1,12 @@
+[Desktop Entry]
+Name=audio
+Name[zh_CN]=声音
+Comment=audio settings
+Comment[zh_CN]=声音设置
+Icon=audio.png
+
+[Kiran Control Panel Category]
+Category=audio
+Weight=10
+Keywords[zh_CN]=声音
+Keywords=audio

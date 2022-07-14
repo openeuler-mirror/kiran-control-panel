@@ -26,7 +26,7 @@ SubItems=Keybinding
 [Keybinding]
 #插件子项名 该值提供给控制中心形成子项列表
 Name=Keybinding
-Name[zh_CN]=快捷键设置
+Name[zh_CN]=快捷键
 #插件Icon
 Icon=kcp-keybinding-keybinding
 #插件关键字 该值提供给控制中心形成搜索列表
