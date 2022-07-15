@@ -68,17 +68,21 @@ void Ipv4Widget::saveSettings()
 {
     if (m_ipv4Setting != nullptr)
     {
+        IpAddress ipv4Address;
         Ipv4Setting::ConfigMethod method = ui->ipv4Method->currentData().value<NetworkManager::Ipv4Setting::ConfigMethod>();
         if (method == Ipv4Setting::ConfigMethod::Automatic)
         {
             m_ipv4Setting->setMethod(method);
+            ipv4Address.setIp(QHostAddress(""));
+            ipv4Address.setNetmask(QHostAddress(""));
+            ipv4Address.setGateway(QHostAddress(""));
+            m_ipv4Setting->setAddresses(QList<NetworkManager::IpAddress>() << ipv4Address);
         }
         else if (method == Ipv4Setting::ConfigMethod::Manual)
         {
             m_ipv4Setting->setMethod(method);
-            IpAddress ipv4Address;
-            ipv4Address.setIp(QHostAddress(ui->ipv4Address->text()));
 
+            ipv4Address.setIp(QHostAddress(ui->ipv4Address->text()));
             // XXX:输入合法性检测
             QString netMask = ui->ipv4Netmask->text();
             if (!netMask.contains("."))
@@ -108,18 +112,19 @@ void Ipv4Widget::saveSettings()
             QList<IpAddress> ipv4AddresseList;
             ipv4AddresseList << ipv4Address;
             m_ipv4Setting->setAddresses(ipv4AddresseList);
-
-            QList<QHostAddress> ipv4DNS;
-            if (!ui->ipv4PreferredDNS->text().isEmpty())
-            {
-                ipv4DNS << QHostAddress(ui->ipv4PreferredDNS->text());
-            }
-            if (!ui->ipv4AlternateDNS->text().isEmpty())
-            {
-                ipv4DNS << QHostAddress(ui->ipv4AlternateDNS->text());
-            }
-            m_ipv4Setting->setDns(ipv4DNS);
         }
+
+        QList<QHostAddress> ipv4DNS;
+        if (!ui->ipv4PreferredDNS->text().isEmpty())
+        {
+            ipv4DNS << QHostAddress(ui->ipv4PreferredDNS->text());
+        }
+        if (!ui->ipv4AlternateDNS->text().isEmpty())
+        {
+            ipv4DNS << QHostAddress(ui->ipv4AlternateDNS->text());
+        }
+        KLOG_DEBUG() << "ipv4DNS:" << ipv4DNS;
+        m_ipv4Setting->setDns(ipv4DNS);
     }
 }
 
@@ -140,24 +145,25 @@ void Ipv4Widget::showSettings()
             QString address = ipv4Address.ip().toString();
             QString netmask = ipv4Address.netmask().toString();
             QString gateway = ipv4Address.gateway().toString();
-            QString preferredDNS = "";
-            QString alternateDNS = "";
 
             ui->ipv4Address->setText(address);
             ui->ipv4Netmask->setText(netmask);
             ui->ipv4Gateway->setText(gateway);
-
-            if (!m_ipv4Setting->dns().isEmpty())
-            {
-                preferredDNS = m_ipv4Setting->dns().at(0).toString();
-                if (m_ipv4Setting->dns().count() >= 2)
-                {
-                    alternateDNS = m_ipv4Setting->dns().at(1).toString();
-                }
-            }
-            ui->ipv4PreferredDNS->setText(preferredDNS);
-            ui->ipv4AlternateDNS->setText(alternateDNS);
         }
+        QString preferredDNS = "";
+        QString alternateDNS = "";
+        if (!m_ipv4Setting->dns().isEmpty())
+        {
+            preferredDNS = m_ipv4Setting->dns().at(0).toString();
+            if (m_ipv4Setting->dns().count() >= 2)
+            {
+                alternateDNS = m_ipv4Setting->dns().at(1).toString();
+            }
+        }
+        KLOG_DEBUG() << "preferredDNS:" <<  preferredDNS;
+        KLOG_DEBUG() << "alternateDNS:" <<  alternateDNS;
+        ui->ipv4PreferredDNS->setText(preferredDNS);
+        ui->ipv4AlternateDNS->setText(alternateDNS);
     }
     else
         resetSettings();
@@ -179,6 +185,7 @@ void Ipv4Widget::clearPtr()
     m_ipv4Setting.clear();
 }
 
+// TODO:验证功能待完善，暂时置为true
 bool Ipv4Widget::isInputValid()
 {
     Ipv4Setting::ConfigMethod configMethod = ui->ipv4Method->currentData().value<Ipv4Setting::ConfigMethod>();
@@ -202,7 +209,7 @@ bool Ipv4Widget::isInputValid()
 
         isIpv4NetmaskValid(ui->ipv4Netmask->text());
     }
-    return false;
+    return true;
 }
 
 bool Ipv4Widget::isIpv4AddressValid(const QString &address)

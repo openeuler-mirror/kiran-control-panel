@@ -124,7 +124,7 @@
     <message>
         <location filename="../src/plugin/connection-details-widget.ui" line="559"/>
         <source>Preferred DNS</source>
-        <translation>首先DNS</translation>
+        <translation>首选DNS</translation>
     </message>
     <message>
         <location filename="../src/plugin/connection-details-widget.ui" line="625"/>

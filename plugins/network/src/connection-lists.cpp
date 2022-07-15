@@ -239,7 +239,7 @@ void ConnectionLists::addConnectionToLists(Connection::Ptr ptr, const QString& d
             }
         }
     }
-    connect(ptr.data(), &Connection::updated, this, &ConnectionLists::handleConnectionUpdated);
+    connect(ptr.data(), &Connection::updated, this, &ConnectionLists::handleConnectionUpdated,Qt::UniqueConnection);
     this->addItem(item);
 
     QVariant var;
