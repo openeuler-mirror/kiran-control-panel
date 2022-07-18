@@ -2,41 +2,6 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="zh_CN">
 <context>
-    <name>CreateUserPage</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">取消</translation>
-    </message>
-</context>
-<context>
-    <name>CursorThemes</name>
-    <message>
-        <source>Faild</source>
-        <translation type="obsolete">失败</translation>
-    </message>
-</context>
-<context>
-    <name>IconThemes</name>
-    <message>
-        <source>Faild</source>
-        <translation type="obsolete">失败</translation>
-    </message>
-</context>
-<context>
-    <name>KcpInterface</name>
-    <message>
-        <source>warning</source>
-        <translation type="obsolete">警告</translation>
-    </message>
-</context>
-<context>
-    <name>KiranAvatarEditor</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">取消</translation>
-    </message>
-</context>
-<context>
     <name>KiranCPanelMouse</name>
     <message>
         <source>Mouse and TouchPad</source>
@@ -149,41 +114,60 @@
         <source>Fast</source>
         <translation type="vanished">快速</translation>
     </message>
+    <message>
+        <location filename="../build-kiran-cpanel-mouse-qt5_11-Debug/ui_kiran-cpanel-mouse-widget.h" line="99"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MousePage</name>
     <message>
         <location filename="../src/mouse-page.ui" line="14"/>
+        <location filename="../build/src/kiran-cpanel-mouse_autogen/include/ui_mouse-page.h" line="226"/>
+        <location filename="../build-kiran-cpanel-mouse-qt5_11-Debug/ui_mouse-page.h" line="226"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mouse-page.ui" line="83"/>
+        <location filename="../build/src/kiran-cpanel-mouse_autogen/include/ui_mouse-page.h" line="227"/>
+        <location filename="../build-kiran-cpanel-mouse-qt5_11-Debug/ui_mouse-page.h" line="227"/>
         <source>Select Mouse Hand</source>
         <translation>选择鼠标手持模式</translation>
     </message>
     <message>
         <location filename="../src/mouse-page.ui" line="132"/>
+        <location filename="../build/src/kiran-cpanel-mouse_autogen/include/ui_mouse-page.h" line="228"/>
+        <location filename="../build-kiran-cpanel-mouse-qt5_11-Debug/ui_mouse-page.h" line="228"/>
         <source>Mouse Motion Acceleration</source>
         <translation>鼠标移动加速</translation>
     </message>
     <message>
         <location filename="../src/mouse-page.ui" line="186"/>
+        <location filename="../build/src/kiran-cpanel-mouse_autogen/include/ui_mouse-page.h" line="229"/>
+        <location filename="../build-kiran-cpanel-mouse-qt5_11-Debug/ui_mouse-page.h" line="229"/>
         <source>Slow</source>
         <translation>慢</translation>
     </message>
     <message>
         <location filename="../src/mouse-page.ui" line="206"/>
+        <location filename="../build/src/kiran-cpanel-mouse_autogen/include/ui_mouse-page.h" line="230"/>
+        <location filename="../build-kiran-cpanel-mouse-qt5_11-Debug/ui_mouse-page.h" line="230"/>
         <source>Fast</source>
         <translation>快</translation>
     </message>
     <message>
         <location filename="../src/mouse-page.ui" line="243"/>
+        <location filename="../build/src/kiran-cpanel-mouse_autogen/include/ui_mouse-page.h" line="231"/>
+        <location filename="../build-kiran-cpanel-mouse-qt5_11-Debug/ui_mouse-page.h" line="231"/>
         <source>Natural Scroll</source>
         <translation>是否为自然滚动</translation>
     </message>
     <message>
         <location filename="../src/mouse-page.ui" line="277"/>
+        <location filename="../build/src/kiran-cpanel-mouse_autogen/include/ui_mouse-page.h" line="233"/>
+        <location filename="../build-kiran-cpanel-mouse-qt5_11-Debug/ui_mouse-page.h" line="233"/>
         <source>Middle Emulation Enabled</source>
         <translation>同时按下左右键模拟中键</translation>
     </message>
@@ -201,20 +185,29 @@
 <context>
     <name>MouseSettings</name>
     <message>
+        <location filename="../build-kiran-cpanel-mouse-qt5_11-Debug/ui_mouse-settings.h" line="226"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../build-kiran-cpanel-mouse-qt5_11-Debug/ui_mouse-settings.h" line="227"/>
         <source>Select Mouse Hand</source>
-        <translation type="vanished">选择鼠标手持模式</translation>
+        <translation>选择鼠标手持模式</translation>
     </message>
     <message>
+        <location filename="../build-kiran-cpanel-mouse-qt5_11-Debug/ui_mouse-settings.h" line="228"/>
         <source>Mouse Motion Acceleration</source>
-        <translation type="vanished">鼠标移动加速</translation>
+        <translation>鼠标移动加速</translation>
     </message>
     <message>
+        <location filename="../build-kiran-cpanel-mouse-qt5_11-Debug/ui_mouse-settings.h" line="231"/>
         <source>Natural Scroll</source>
-        <translation type="vanished">是否为自然滚动</translation>
+        <translation>是否为自然滚动</translation>
     </message>
     <message>
+        <location filename="../build-kiran-cpanel-mouse-qt5_11-Debug/ui_mouse-settings.h" line="233"/>
         <source>Middle Emulation Enabled</source>
-        <translation type="vanished">同时按下左右键模拟中键</translation>
+        <translation>同时按下左右键模拟中键</translation>
     </message>
     <message>
         <source>Right Hand Mode</source>
@@ -225,16 +218,18 @@
         <translation type="vanished">左手模式</translation>
     </message>
     <message>
+        <location filename="../build-kiran-cpanel-mouse-qt5_11-Debug/ui_mouse-settings.h" line="229"/>
         <source>Slow</source>
-        <translation type="vanished">慢</translation>
+        <translation>慢</translation>
     </message>
     <message>
         <source>Standard</source>
         <translation type="vanished">标准</translation>
     </message>
     <message>
+        <location filename="../build-kiran-cpanel-mouse-qt5_11-Debug/ui_mouse-settings.h" line="230"/>
         <source>Fast</source>
-        <translation type="vanished">快</translation>
+        <translation>快</translation>
     </message>
 </context>
 <context>
@@ -269,74 +264,81 @@
     </message>
 </context>
 <context>
-    <name>Shortcut</name>
-    <message>
-        <source>Reset</source>
-        <translation type="obsolete">重置</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">取消</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="obsolete">保存</translation>
-    </message>
-</context>
-<context>
     <name>TouchPadPage</name>
     <message>
         <location filename="../src/touchpad-page.ui" line="14"/>
+        <location filename="../build/src/kiran-cpanel-mouse_autogen/include/ui_touchpad-page.h" line="320"/>
+        <location filename="../build-kiran-cpanel-mouse-qt5_11-Debug/ui_touchpad-page.h" line="320"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/touchpad-page.ui" line="83"/>
+        <location filename="../build/src/kiran-cpanel-mouse_autogen/include/ui_touchpad-page.h" line="321"/>
+        <location filename="../build-kiran-cpanel-mouse-qt5_11-Debug/ui_touchpad-page.h" line="321"/>
         <source>TouchPad Enabled</source>
         <translation>开启触摸板</translation>
     </message>
     <message>
         <location filename="../src/touchpad-page.ui" line="131"/>
+        <location filename="../build/src/kiran-cpanel-mouse_autogen/include/ui_touchpad-page.h" line="323"/>
+        <location filename="../build-kiran-cpanel-mouse-qt5_11-Debug/ui_touchpad-page.h" line="323"/>
         <source>Select TouchPad Hand</source>
         <translation>选择触摸板使用模式</translation>
     </message>
     <message>
         <location filename="../src/touchpad-page.ui" line="180"/>
+        <location filename="../build/src/kiran-cpanel-mouse_autogen/include/ui_touchpad-page.h" line="324"/>
+        <location filename="../build-kiran-cpanel-mouse-qt5_11-Debug/ui_touchpad-page.h" line="324"/>
         <source>TouchPad Motion Acceleration</source>
         <translation>触摸板移动加速</translation>
     </message>
     <message>
         <location filename="../src/touchpad-page.ui" line="223"/>
+        <location filename="../build/src/kiran-cpanel-mouse_autogen/include/ui_touchpad-page.h" line="325"/>
+        <location filename="../build-kiran-cpanel-mouse-qt5_11-Debug/ui_touchpad-page.h" line="325"/>
         <source>Slow</source>
         <translation>慢</translation>
     </message>
     <message>
         <location filename="../src/touchpad-page.ui" line="243"/>
+        <location filename="../build/src/kiran-cpanel-mouse_autogen/include/ui_touchpad-page.h" line="326"/>
+        <location filename="../build-kiran-cpanel-mouse-qt5_11-Debug/ui_touchpad-page.h" line="326"/>
         <source>Fast</source>
         <translation>快</translation>
     </message>
     <message>
         <location filename="../src/touchpad-page.ui" line="273"/>
+        <location filename="../build/src/kiran-cpanel-mouse_autogen/include/ui_touchpad-page.h" line="327"/>
+        <location filename="../build-kiran-cpanel-mouse-qt5_11-Debug/ui_touchpad-page.h" line="327"/>
         <source>Select Click Method</source>
         <translation>设置点击触摸板方式</translation>
     </message>
     <message>
         <location filename="../src/touchpad-page.ui" line="317"/>
+        <location filename="../build/src/kiran-cpanel-mouse_autogen/include/ui_touchpad-page.h" line="328"/>
+        <location filename="../build-kiran-cpanel-mouse-qt5_11-Debug/ui_touchpad-page.h" line="328"/>
         <source>Select Scroll Method</source>
         <translation>滚动窗口方式</translation>
     </message>
     <message>
         <location filename="../src/touchpad-page.ui" line="361"/>
+        <location filename="../build/src/kiran-cpanel-mouse_autogen/include/ui_touchpad-page.h" line="329"/>
+        <location filename="../build-kiran-cpanel-mouse-qt5_11-Debug/ui_touchpad-page.h" line="329"/>
         <source>Natural Scroll</source>
         <translation>是否为自然滚动</translation>
     </message>
     <message>
         <location filename="../src/touchpad-page.ui" line="409"/>
+        <location filename="../build/src/kiran-cpanel-mouse_autogen/include/ui_touchpad-page.h" line="331"/>
+        <location filename="../build-kiran-cpanel-mouse-qt5_11-Debug/ui_touchpad-page.h" line="331"/>
         <source>Enabled while Typing</source>
         <translation>打字时触摸板禁用</translation>
     </message>
     <message>
         <location filename="../src/touchpad-page.ui" line="457"/>
+        <location filename="../build/src/kiran-cpanel-mouse_autogen/include/ui_touchpad-page.h" line="333"/>
+        <location filename="../build-kiran-cpanel-mouse-qt5_11-Debug/ui_touchpad-page.h" line="333"/>
         <source>Tap to Click</source>
         <translation>轻击(不按下)触摸板功能是否生效</translation>
     </message>
@@ -382,48 +384,63 @@
         <translation type="vanished">禁用触摸板</translation>
     </message>
     <message>
+        <location filename="../build-kiran-cpanel-mouse-qt5_11-Debug/ui_touchpad-settings.h" line="320"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../build-kiran-cpanel-mouse-qt5_11-Debug/ui_touchpad-settings.h" line="321"/>
         <source>TouchPad Enabled</source>
-        <translation type="vanished">开启触摸板</translation>
+        <translation>开启触摸板</translation>
     </message>
     <message>
+        <location filename="../build-kiran-cpanel-mouse-qt5_11-Debug/ui_touchpad-settings.h" line="323"/>
         <source>Select TouchPad Hand</source>
-        <translation type="vanished">选择触摸板使用模式</translation>
+        <translation>选择触摸板使用模式</translation>
     </message>
     <message>
+        <location filename="../build-kiran-cpanel-mouse-qt5_11-Debug/ui_touchpad-settings.h" line="324"/>
         <source>TouchPad Motion Acceleration</source>
-        <translation type="vanished">触摸板移动加速</translation>
+        <translation>触摸板移动加速</translation>
     </message>
     <message>
+        <location filename="../build-kiran-cpanel-mouse-qt5_11-Debug/ui_touchpad-settings.h" line="327"/>
         <source>Select Click Method</source>
-        <translation type="vanished">设置点击触摸板方式</translation>
+        <translation>设置点击触摸板方式</translation>
     </message>
     <message>
+        <location filename="../build-kiran-cpanel-mouse-qt5_11-Debug/ui_touchpad-settings.h" line="328"/>
         <source>Select Scroll Method</source>
-        <translation type="vanished">滚动窗口方式</translation>
+        <translation>滚动窗口方式</translation>
     </message>
     <message>
+        <location filename="../build-kiran-cpanel-mouse-qt5_11-Debug/ui_touchpad-settings.h" line="329"/>
         <source>Natural Scroll</source>
-        <translation type="vanished">是否为自然滚动</translation>
+        <translation>是否为自然滚动</translation>
     </message>
     <message>
+        <location filename="../build-kiran-cpanel-mouse-qt5_11-Debug/ui_touchpad-settings.h" line="331"/>
         <source>Enabled while Typing</source>
-        <translation type="vanished">打字时触摸板禁用</translation>
+        <translation>打字时触摸板禁用</translation>
     </message>
     <message>
+        <location filename="../build-kiran-cpanel-mouse-qt5_11-Debug/ui_touchpad-settings.h" line="333"/>
         <source>Tap to Click</source>
-        <translation type="vanished">轻击(不按下)触摸板功能是否生效</translation>
+        <translation>轻击(不按下)触摸板功能是否生效</translation>
     </message>
     <message>
+        <location filename="../build-kiran-cpanel-mouse-qt5_11-Debug/ui_touchpad-settings.h" line="325"/>
         <source>Slow</source>
-        <translation type="vanished">慢</translation>
+        <translation>慢</translation>
     </message>
     <message>
         <source>Standard</source>
         <translation type="vanished">标准</translation>
     </message>
     <message>
+        <location filename="../build-kiran-cpanel-mouse-qt5_11-Debug/ui_touchpad-settings.h" line="326"/>
         <source>Fast</source>
-        <translation type="vanished">快</translation>
+        <translation>快</translation>
     </message>
     <message>
         <source>Right Hand Mode</source>
@@ -448,17 +465,6 @@
     <message>
         <source>Edge Scroll</source>
         <translation type="vanished">边缘滑动</translation>
-    </message>
-</context>
-<context>
-    <name>UserInfoPage</name>
-    <message>
-        <source>Save</source>
-        <translation type="obsolete">保存</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">取消</translation>
     </message>
 </context>
 </TS>

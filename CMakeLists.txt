@@ -26,19 +26,20 @@ configure_file(${CMAKE_SOURCE_DIR}/data/config.h.in ${CMAKE_BINARY_DIR}/config.h
 configure_file(${CMAKE_SOURCE_DIR}/data/${PROJECT_NAME}.desktop.in ${CMAKE_BINARY_DIR}/${PROJECT_NAME}.desktop)
 configure_file(${CMAKE_SOURCE_DIR}/data/${PROJECT_NAME}.pc.in ${CMAKE_BINARY_DIR}/${PROJECT_NAME}.pc @ONLY)
 
-file(GLOB_RECURSE include "./include/*")
+file(GLOB_RECURSE INCLUDE_SRC "./include/*")
 file(GLOB_RECURSE CONTROL_PANEL_SRC "./src/*")
-file(GLOB TS_FILES "../translations/*.ts")
 
 set(RESOURCE ./resources/control-panel-resources.qrc) #资源文件名不能与插件资源名相同，否则会导致插件中部分图片无法正常加载显示。
-qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
+
+file(GLOB_RECURSE LIB_SRC "lib/*.cpp" "lib/*.h")
+set(PANEL_ALL_TRANSLATION_SRC ${INCLUDE_SRC} ${CONTROL_PANEL_SRC} ${LIB_SRC} )
+qt5_create_translation(PANEL_QM_FILES ${PANEL_ALL_TRANSLATION_SRC} "translations/kiran-control-panel.zh_CN.ts")
 
 add_executable(${PROJECT_NAME}
-        ${common}
-        ${include}
+        ${INCLUDE_SRC}
         ${CONTROL_PANEL_SRC}
         ${RESOURCE}
-        ${QM_FILES})
+        ${PANEL_QM_FILES})
 
 target_include_directories(${PROJECT_NAME} PRIVATE
         ${CMAKE_CURRENT_BINARY_DIR}
@@ -65,13 +66,13 @@ target_link_libraries(${PROJECT_NAME}
 #安装kiran-control-panel
 install(TARGETS ${PROJECT_NAME} DESTINATION ${INSTALL_BINDIR}/)
 #安装kiran-control-panel插件开发头文件
-install(FILES ${include} DESTINATION ${KCP_INSTALL_INCLUDE}/)
+install(FILES ${INCLUDE_SRC} DESTINATION ${KCP_INSTALL_INCLUDE}/)
 #安装kiran-control-panel.desktop
 install(FILES "${CMAKE_BINARY_DIR}/${PROJECT_NAME}.desktop" DESTINATION "${INSTALL_DATADIR}/applications/")
 #安装kiran-control-panel.pc文件
 install(FILES "${CMAKE_BINARY_DIR}/${PROJECT_NAME}.pc" DESTINATION "${INSTALL_LIBDIR}/pkgconfig/")
 #安装kiran-control-panel翻译文件
-install(FILES ${QM_FILES} DESTINATION ${TRANSLATION_INSTALL_DIR})
+install(FILES ${PANEL_QM_FILES} DESTINATION ${TRANSLATION_INSTALL_DIR})
 #安装kiran-control-panel category desktop文件
 file(GLOB CATEGORY_DESKTOP "./data/category/desktop/*.desktop")
 install(FILES ${CATEGORY_DESKTOP} DESTINATION ${CATEGORY_DESKTOP_INSTALL_DIR})
