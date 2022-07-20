@@ -172,9 +172,11 @@ void Ipv6Widget::clearPtr()
     m_ipv6Setting.clear();
 }
 
+//TODO:不完善，待优化
 bool Ipv6Widget::isInputValid()
 {
     Ipv6Setting::ConfigMethod configMethod = ui->ipv6Method->currentData().value<Ipv6Setting::ConfigMethod>();
+    bool valid = true;
     if (configMethod == Ipv6Setting::ConfigMethod::Ignored)
     {
     }
@@ -183,13 +185,28 @@ bool Ipv6Widget::isInputValid()
     }
     else if (configMethod == Ipv6Setting::ConfigMethod::Manual)
     {
-        isIpv6AddressValid(ui->ipv6Address->text());
+        QString ipv6 = ui->ipv6Address->text();
+        if (ipv6.isEmpty())
+        {
+            valid = false;
+            KLOG_DEBUG() << "Ipv6 Address cannot be empty";
+        }
+        else
+        {
+            if (!isIpv6AddressValid(ipv6))
+            {
+                valid = false;
+                KLOG_DEBUG() << "Ipv6Address invalid";
+            }
+                
+        }
+
         isIpv6AddressValid(ui->ipv6Gateway->text());
         isIpv6AddressValid(ui->ipv6AlternateDNS->text());
         isIpv6AddressValid(ui->ipv6PreferredDNS->text());
     }
 
-    return true;
+    return valid;
 }
 
 bool Ipv6Widget::isIpv6AddressValid(const QString &address)

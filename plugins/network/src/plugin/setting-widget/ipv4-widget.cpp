@@ -160,8 +160,8 @@ void Ipv4Widget::showSettings()
                 alternateDNS = m_ipv4Setting->dns().at(1).toString();
             }
         }
-        KLOG_DEBUG() << "preferredDNS:" <<  preferredDNS;
-        KLOG_DEBUG() << "alternateDNS:" <<  alternateDNS;
+        KLOG_DEBUG() << "preferredDNS:" << preferredDNS;
+        KLOG_DEBUG() << "alternateDNS:" << alternateDNS;
         ui->ipv4PreferredDNS->setText(preferredDNS);
         ui->ipv4AlternateDNS->setText(alternateDNS);
     }
@@ -185,10 +185,11 @@ void Ipv4Widget::clearPtr()
     m_ipv4Setting.clear();
 }
 
-// TODO:验证功能待完善，暂时置为true
+// TODO:验证功能待完善
 bool Ipv4Widget::isInputValid()
 {
     Ipv4Setting::ConfigMethod configMethod = ui->ipv4Method->currentData().value<Ipv4Setting::ConfigMethod>();
+    bool valid = true;
     if (configMethod == Ipv4Setting::ConfigMethod::Automatic)
     {
         isIpv4AddressValid(ui->ipv4PreferredDNS->text());
@@ -196,20 +197,46 @@ bool Ipv4Widget::isInputValid()
     }
     else if (configMethod == Ipv4Setting::ConfigMethod::Manual)
     {
-        ui->ipv4Address->text();
+        QString ipv4 =  ui->ipv4Address->text();
+        QString netMask =  ui->ipv4Netmask->text();
+
+        if (ipv4.isEmpty())
+        {
+            valid = false;
+            KLOG_DEBUG() << "Ipv4 address cannot be empty";
+        }
+        else
+        {
+            if(!isIpv4AddressValid(ipv4))
+            {
+                valid = false;
+                KLOG_DEBUG() << "Ipv4Address invalid";
+            }
+        }
+        
+        if (netMask.isEmpty())
+        {
+            valid = false;
+            KLOG_DEBUG() << "NetMask cannot be empty";
+        }
+        else
+        {
+            if(!isIpv4NetmaskValid(netMask))
+            {
+                valid = false;
+                KLOG_DEBUG() << "Netmask invalid";
+            }
+        }
+
         ui->ipv4Gateway->text();
-        ui->ipv4Netmask->text();
         ui->ipv4PreferredDNS->text();
         ui->ipv4AlternateDNS->text();
-
-        isIpv4AddressValid(ui->ipv4Address->text());
         isIpv4AddressValid(ui->ipv4Gateway->text());
         isIpv4AddressValid(ui->ipv4PreferredDNS->text());
         isIpv4AddressValid(ui->ipv4AlternateDNS->text());
 
-        isIpv4NetmaskValid(ui->ipv4Netmask->text());
     }
-    return true;
+    return valid;
 }
 
 bool Ipv4Widget::isIpv4AddressValid(const QString &address)

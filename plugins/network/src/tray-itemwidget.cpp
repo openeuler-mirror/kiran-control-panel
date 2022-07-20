@@ -19,6 +19,7 @@
 #include <QPainter>
 #include <QStyleOption>
 #include <QSvgRenderer>
+#include <QPainterPath>
 #include "ui_tray-itemwidget.h"
 
 TrayItemWidget::TrayItemWidget(QWidget *parent) : QWidget(parent), ui(new Ui::TrayItemWidget)
@@ -248,7 +249,7 @@ TrayItemWidgetStatus TrayItemWidget::itemWidgetStatus()
     return m_currentItemWidgetStatus;
 }
 
-#include <QPainterPath>
+
 void TrayItemWidget::paintEvent(QPaintEvent *event)
 {
     QStyleOption opt;
@@ -285,6 +286,7 @@ void TrayItemWidget::paintEvent(QPaintEvent *event)
                                       Kiran::StylePalette::Widget,
                                       Kiran::StylePalette::Border);
     auto pen = painter.pen();
+    pen.setWidth(1);
     pen.setColor(borderColor);
     painter.strokePath(painterPath, pen);
 

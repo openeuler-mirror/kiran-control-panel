@@ -14,8 +14,8 @@
 
 #include "vpn-widget.h"
 #include <qt5-log-i.h>
-#include "ui_vpn-widget.h"
 #include <QHostAddress>
+#include "ui_vpn-widget.h"
 
 VpnWidget::VpnWidget(QWidget *parent) : QWidget(parent), ui(new Ui::VpnWidget)
 {
@@ -38,7 +38,6 @@ void VpnWidget::initUI()
     ui->passwordOptions->addItem(tr("Ask"), Setting::SecretFlagType::NotSaved);
     ui->passwordOptions->addItem(tr("Not required"), Setting::SecretFlagType::NotRequired);
 
-
     ui->passwordOptions->setFocusPolicy(Qt::NoFocus);
     ui->password->setEchoMode(QLineEdit::Password);
     ui->passwordVisual->setVisible(false);
@@ -46,9 +45,8 @@ void VpnWidget::initUI()
 
 void VpnWidget::initConnection()
 {
-    connect(ui->passwordOptions, QOverload<int>::of(&QComboBox::currentIndexChanged), [=](int index) {
-        handlePasswordOptionsChanged(ui->passwordOptions->currentData().value<Setting::SecretFlagType>());
-    });
+    connect(ui->passwordOptions, QOverload<int>::of(&QComboBox::currentIndexChanged), [=](int index)
+            { handlePasswordOptionsChanged(ui->passwordOptions->currentData().value<Setting::SecretFlagType>()); });
     connect(ui->passwordVisual, &QPushButton::clicked, this, &VpnWidget::enablePasswordVisual);
 }
 void VpnWidget::setVpnSetting(const VpnSetting::Ptr &vpnSetting)
@@ -152,28 +150,30 @@ void VpnWidget::clearPtr()
 bool VpnWidget::isInputValid()
 {
     bool valid = true;
-
-    if (ui->gateway->text().isEmpty())
+    QString gatewayStr = ui->gateway->text();
+    if (gatewayStr.isEmpty())
         valid = false;
     else
-        valid = isIpv4AddressValid(ui->gateway->text());
+    {
+        if (!isIpv4AddressValid(gatewayStr))
+            valid = false;
+    }
 
     if (ui->userName->text().isEmpty())
         valid = false;
 
-    if ((ui->passwordOptions->currentData().value<Setting::SecretFlagType>() == NetworkManager::Setting::SecretFlagType::None)
-        && ui->password->text().isEmpty())
+    if ((ui->passwordOptions->currentData().value<Setting::SecretFlagType>() == NetworkManager::Setting::SecretFlagType::None) 
+    && ui->password->text().isEmpty())
         valid = false;
 
     return valid;
 }
 
-
 bool VpnWidget::isIpv4AddressValid(const QString &address)
 {
     QHostAddress ipAddr(address);
-    if (ipAddr == QHostAddress(QHostAddress::Null) || ipAddr == QHostAddress(QHostAddress::AnyIPv4)
-        || ipAddr.protocol() != QAbstractSocket::NetworkLayerProtocol::IPv4Protocol) {
+    if (ipAddr == QHostAddress(QHostAddress::Null) || ipAddr == QHostAddress(QHostAddress::AnyIPv4) || ipAddr.protocol() != QAbstractSocket::NetworkLayerProtocol::IPv4Protocol)
+    {
         return false;
     }
     QRegExp regExpIP("((25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])[\\.]){3}(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])");
