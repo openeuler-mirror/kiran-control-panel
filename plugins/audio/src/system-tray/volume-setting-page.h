@@ -42,7 +42,7 @@ public:
     void initSettings(Audio *audio);
     template <class Audio>
     void clickMuteButton(Audio *audio);
-    void volumeIconColorSwitch(QString svgPath, QString color);
+    QPixmap trayIconColorSwitch(const QString &iconPath);
 
 public slots:
     void handleVolumeChanged(double value);
