@@ -98,5 +98,5 @@ void VpnPptpSetting::clearPtr()
 
 bool VpnPptpSetting::isInputValid()
 {
-    return ui->vpnWidget->isInputValid() || ui->generalWidget->isInputValid();
+    return ui->vpnWidget->isInputValid() && ui->generalWidget->isInputValid();
 }

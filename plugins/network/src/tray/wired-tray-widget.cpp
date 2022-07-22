@@ -16,7 +16,7 @@
 #include <qt5-log-i.h>
 #include <NetworkManagerQt/Settings>
 
-WiredTrayWidget::WiredTrayWidget(const QString &devicePath, QWidget *parent) : ConnectionTray(parent)
+WiredTrayWidget::WiredTrayWidget(const QString &devicePath, QWidget *parent) : TrayWidget(parent)
 {
     m_devicePath = devicePath;
     init();
@@ -88,7 +88,7 @@ void WiredTrayWidget::handleRequestActivateConnection(const NetworkConnectionInf
     }
     else
     {
-        KLOG_DEBUG() << "reply.reply():" << reply.reply();
+        KLOG_DEBUG() << "reply:" << reply.reply();
         QString activatedPath = reply.value().path();
     }
 }
@@ -140,8 +140,7 @@ void WiredTrayWidget::handleActiveConnectionAdded(const QString &path)
         QString uuid = activatedConnection->uuid();
         QListWidgetItem *activeItem = m_connectionLists->findItemByUuid(uuid);
         m_connectionLists->updateItemActivatedPath(activeItem,path);
-        connect(activatedConnection.data(), &ActiveConnection::stateChanged, this, &WiredTrayWidget::handleActiveConnectionStateChanged);
-//        connect(activatedConnection.data(), &ActiveConnection::stateChanged, &m_statusNotification, &StatusNotification::ActiveConnectionDeactivatedNotify,Qt::DirectConnection);
+        connect(activatedConnection.data(), &ActiveConnection::stateChanged, this, &WiredTrayWidget::handleActiveConnectionStateChanged,Qt::UniqueConnection);
     }
 }
 

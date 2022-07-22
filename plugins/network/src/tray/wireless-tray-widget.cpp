@@ -18,7 +18,7 @@
 #include <NetworkManagerQt/Settings>
 #include <NetworkManagerQt/Utils>
 
-WirelessTrayWidget::WirelessTrayWidget(const QString &devicePath, QWidget *parent) : ConnectionTray(parent)
+WirelessTrayWidget::WirelessTrayWidget(const QString &devicePath, QWidget *parent) : TrayWidget(parent)
 {
     m_devicePath = devicePath;
     init();
@@ -270,9 +270,7 @@ void WirelessTrayWidget::handleActiveConnectionAdded(const QString &path)
             auto item = m_connectionLists->item(row);
             m_connectionLists->itemSimpleStatus(item);
         }
-        connect(activatedConnection.data(), &ActiveConnection::stateChanged, this, &WirelessTrayWidget::handleActiveConnectionStateChanged);
-//        connect(activatedConnection.data(), &ActiveConnection::stateChanged, &m_statusNotification, &StatusNotification::ActiveConnectionDeactivatedNotify,Qt::DirectConnection);
-
+        connect(activatedConnection.data(), &ActiveConnection::stateChanged, this, &WirelessTrayWidget::handleActiveConnectionStateChanged,Qt::UniqueConnection);
     }
 }
 

@@ -26,13 +26,13 @@ class ConnectionLists;
 class StatusNotification;
 Q_DECLARE_METATYPE(ActiveConnection::State);
 
-class ConnectionTray : public QWidget
+class TrayWidget : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit ConnectionTray(QWidget *parent = nullptr);
-    ~ConnectionTray();
+    explicit TrayWidget(QWidget *parent = nullptr);
+    ~TrayWidget();
 
     void init();
     void initUI();
@@ -54,6 +54,7 @@ public slots:
     virtual void handleDeviceStateChanged(Device::State newstate, Device::State oldstate, Device::StateChangeReason reason);
 
     void distributeNotifeir();
+
 
 protected:
     QList<Device::Ptr> m_deviceList;

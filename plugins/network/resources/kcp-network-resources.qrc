@@ -18,5 +18,6 @@
         <file>kcp-network-images/wired.svg</file>
         <file>kcp-network-images/network-details.svg</file>
         <file>kcp-network-images/vpn.svg</file>
+        <file>kcp-network-images/connection-add.svg</file>
     </qresource>
 </RCC>

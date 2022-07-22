@@ -5,6 +5,7 @@ find_package(Qt5 COMPONENTS Widgets DBus Svg Multimedia)
 pkg_search_module(KIRAN_CC_DAEMON REQUIRED kiran-cc-daemon)
 pkg_search_module(KIRAN_WIDGETS_QT5 REQUIRED kiranwidgets-qt5)
 pkg_search_module(KLOG_QT5 REQUIRED klog-qt5)
+pkg_search_module(KIRAN_STYLE_HELPER REQUIRED kiran-style-helper)
 
 qt5_create_translation(AUDIO_QM_FILES ${CMAKE_CURRENT_SOURCE_DIR} translations/kiran-cpanel-audio.zh_CN.ts)
 
@@ -57,14 +58,16 @@ target_include_directories(${TRAY_PROCESS} PRIVATE
         config
         ${KIRAN_WIDGETS_QT5_INCLUDE_DIRS}
         ${KIRAN_CC_DAEMON_INCLUDE_DIRS}
-        ${KLOG_QT5_INCLUDE_DIRS})
+        ${KLOG_QT5_INCLUDE_DIRS}
+        ${KIRAN_STYLE_HELPER_DIRS})
 
 target_link_libraries(${TRAY_PROCESS}
         common-widgets
         Qt5::Widgets Qt5::DBus Qt5::Svg Qt5::Multimedia
         ${KIRAN_WIDGETS_QT5_LIBRARIES}
         ${KIRAN_CC_DAEMON_LIBRARIES}
-        ${KLOG_QT5_LIBRARIES})
+        ${KLOG_QT5_LIBRARIES}
+        ${KIRAN_STYLE_HELPER_LIBRARIES})
 
 #安装翻译
 set(AUDIO_TRANSLATION_DIR_INSTALL_PATH ${INSTALL_DATADIR}/${TARGET_NAME}/translations)

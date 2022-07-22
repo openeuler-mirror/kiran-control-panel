@@ -15,15 +15,15 @@
 #ifndef KIRAN_CPANEL_NETWORK_WIRELESS_TRAY_WIDGET_H
 #define KIRAN_CPANEL_NETWORK_WIRELESS_TRAY_WIDGET_H
 
+#include <NetworkManagerQt/Security8021xSetting>
 #include <NetworkManagerQt/WirelessDevice>
 #include <NetworkManagerQt/WirelessSecuritySetting>
 #include <NetworkManagerQt/WirelessSetting>
-#include <NetworkManagerQt/Security8021xSetting>
 #include <QWidget>
 #include "connection-lists.h"
-#include "connection-tray.h"
+#include "tray-widget.h"
 using namespace NetworkManager;
-class WirelessTrayWidget : public ConnectionTray
+class WirelessTrayWidget : public TrayWidget
 {
     Q_OBJECT
 

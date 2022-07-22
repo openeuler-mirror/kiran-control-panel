@@ -15,12 +15,12 @@
 #include <kiran-application.h>
 #include <qt5-log-i.h>
 #include <QApplication>
-#include <QTimer>
-#include <QTranslator>
 #include <QDBusConnection>
 #include <QDBusConnectionInterface>
-#include "manager-tray.h"
+#include <QTimer>
+#include <QTranslator>
 #include "config.h"
+#include "network-tray.h"
 #define MAX_WAIT_COUNTS 10
 
 int main(int argc, char *argv[]) {
@@ -37,7 +37,7 @@ int main(int argc, char *argv[]) {
     else
         KLOG_INFO() << "installTranslator failed";
 
-    ManagerTray *tray = nullptr;
+    NetworkTray *tray = nullptr;
     QTimer timer;
     timer.setInterval(1000);
     int waitCounts = 0;
@@ -47,9 +47,9 @@ int main(int argc, char *argv[]) {
                              KLOG_INFO() << "org.kde.StatusNotifierWatcher isServiceRegistered" << QDBusConnection::sessionBus().interface()->isServiceRegistered("org.kde.StatusNotifierWatcher");
                              KLOG_INFO() << "QSystemTrayIcon::isSystemTrayAvailable():" << QSystemTrayIcon::isSystemTrayAvailable();
 
-                             KLOG_INFO() << "init  ManagerTray";
-                             tray = new ManagerTray;
-                             KLOG_INFO() << "wait loop : new ManagerTray sucess ";
+                             KLOG_INFO() << "init  NetworkTray";
+                             tray = new NetworkTray;
+                             KLOG_INFO() << "wait loop : new NetworkTray sucess ";
                              KLOG_INFO() << "currentDateTime:"<<QDateTime::currentDateTime();
                              timer.stop();
                          }
@@ -69,9 +69,9 @@ int main(int argc, char *argv[]) {
     {
         KLOG_INFO() << "org.kde.StatusNotifierWatcher isServiceRegistered" << QDBusConnection::sessionBus().interface()->isServiceRegistered("org.kde.StatusNotifierWatcher");
         KLOG_INFO() << "QSystemTrayIcon::isSystemTrayAvailable():" << QSystemTrayIcon::isSystemTrayAvailable();
-        KLOG_INFO() << "init  ManagerTray";
-        tray = new ManagerTray;
-        KLOG_INFO() << "new ManagerTray sucess ";
+        KLOG_INFO() << "init  NetworkTray";
+        tray = new NetworkTray;
+        KLOG_INFO() << "new NetworkTray sucess ";
     }
     else
     {
@@ -79,5 +79,6 @@ int main(int argc, char *argv[]) {
         KLOG_INFO() << "start wait loop";
         KLOG_INFO() << "currentDateTime:" <<  QDateTime::currentDateTime();
     }
+
     return QApplication::exec();
 }

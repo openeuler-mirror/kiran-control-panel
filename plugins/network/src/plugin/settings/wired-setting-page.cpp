@@ -108,7 +108,7 @@ void WiredSettingPage::clearPtr()
 
 bool WiredSettingPage::isInputValid()
 {
-    if (ui->ipv4Widget->isInputValid() || ui->ipv6Widget->isInputValid() || ui->connectionNameWidget->isInputValid())
+    if (ui->ipv4Widget->isInputValid() && ui->ipv6Widget->isInputValid() && ui->connectionNameWidget->isInputValid())
         return true;
     else
         return false;

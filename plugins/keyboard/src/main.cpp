@@ -84,7 +84,7 @@ public:
     virtual QWidget* getSubItemWidget(QString subItemName) override
     {
         QWidget* widget = nullptr;
-        if (subItemName == "GeneralOptions")
+        if (subItemName == "KeyboardGeneralOptions")
         {
             widget = new GeneralPage;
         }
@@ -104,7 +104,7 @@ public:
 
     QStringList visibleSubItems() override
     {
-        return QStringList() << "GeneralOptions" << "KeyboardLayout";
+        return QStringList() << "KeyboardGeneralOptions" << "KeyboardLayout";
     }
 private:
     QWidget* m_currentWidget = nullptr;

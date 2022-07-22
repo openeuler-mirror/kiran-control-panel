@@ -18,11 +18,11 @@
 #include <NetworkManagerQt/WiredDevice>
 #include <QWidget>
 #include "connection-lists.h"
-#include "connection-tray.h"
+#include "tray-widget.h"
 
 using namespace NetworkManager;
 class ConnectionLists;
-class WiredTrayWidget : public ConnectionTray
+class WiredTrayWidget : public TrayWidget
 {
     Q_OBJECT
 

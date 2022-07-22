@@ -29,6 +29,7 @@ SubItems=Network
 [Network]
 #功能子项名 该值提供给控制中心形成功能子项列表
 Name=network
+Name[zh_CN]=网络选项
 #插件Icon
 Icon=kcp-network
 #插件关键字 该值提供给控制中心形成搜索列表

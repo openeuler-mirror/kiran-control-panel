@@ -9,11 +9,12 @@
  * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
  * See the Mulan PSL v2 for more details.
  *
- * Author:     luoqing <luoqing@kylinos.com.cn>
+ * Author:     luoqing <luoqing@kylinsec.com.cn>
  */
 #include "wired-manager.h"
 #include <libnm/nm-connection.h>
 #include <qt5-log-i.h>
+#include <style-property.h>
 #include <NetworkManagerQt/ActiveConnection>
 #include <NetworkManagerQt/Manager>
 #include <NetworkManagerQt/Settings>
@@ -21,7 +22,6 @@
 #include <QScrollBar>
 #include "status-notification.h"
 #include "ui_wired-manager.h"
-#include <style-property.h>
 WiredManager::WiredManager(const QString &devicePath, QWidget *parent) : Manager(parent), ui(new Ui::WiredManager)
 {
     ui->setupUi(this);
@@ -44,7 +44,7 @@ void WiredManager::initUI()
     ui->connectionShowPage->setTitle(tr("Wired Network Adapter"));
     ui->connectionShowPage->setSwitchButtonVisible(false);
     ui->connectionShowPage->showConnectionLists(ConnectionSettings::ConnectionType::Wired);
-    Kiran::StylePropertyHelper::setButtonType(ui->saveButton,Kiran::BUTTON_Default);
+    Kiran::StylePropertyHelper::setButtonType(ui->saveButton, Kiran::BUTTON_Default);
 }
 
 void WiredManager::initConnection()
@@ -67,27 +67,11 @@ void WiredManager::initConnection()
 
     connect(ui->returnButton, &QPushButton::clicked, this, &WiredManager::handleReturnPreviousPage);
 
-    connect(ui->saveButton, &QPushButton::clicked, [=]()
-            {
-                if(ui->wiredSettingPage->isInputValid())
-                {
-                    ui->wiredSettingPage->handleSaveButtonClicked(ConnectionSettings::ConnectionType::Wired);
-                    handleReturnPreviousPage();
-                }
-                else
-                    KLOG_DEBUG() <<"Invalid input exists";
-            });
+    connect(ui->saveButton, &QPushButton::clicked, this, &WiredManager::handleSaveButtonClicked);
 
     connect(ui->wiredSettingPage, &WiredSettingPage::returnPreviousPage, this, &WiredManager::handleReturnPreviousPage);
 
-    connect(ui->connectionShowPage, &ConnectionShowPage::connectionUpdated, [=](const QString &path)
-            {
-                KLOG_DEBUG() << "Connection::updated:" << path;
-                //移除后再加载进来以更新信息
-                ui->connectionShowPage->removeConnectionFromLists(path);
-                Connection::Ptr updateConnection = findConnection(path);
-                ui->connectionShowPage->addConnectionToLists(updateConnection,"");
-                handleReturnPreviousPage(); });
+    connect(ui->connectionShowPage, &ConnectionShowPage::connectionUpdated, this,&WiredManager::handleConnectionUpdated);
 
     connect(ui->connectionShowPage, &ConnectionShowPage::requestActivateCurrentItemConnection,
             this, &WiredManager::handleRequestActivateConnection);
@@ -187,4 +171,44 @@ void WiredManager::handleNotifierConnectionRemoved(const QString &path)
 {
     KLOG_DEBUG() << "WiredManager::handleNotifierConnectionRemoved";
     ui->connectionShowPage->removeConnectionFromLists(path);
+}
+
+void WiredManager::handleSaveButtonClicked()
+{
+    if (ui->wiredSettingPage->isInputValid())
+    {
+        ui->wiredSettingPage->handleSaveButtonClicked(ConnectionSettings::ConnectionType::Wired);
+        handleReturnPreviousPage();
+    }
+    else
+        KLOG_DEBUG() << "Invalid input exists";
+}
+
+void WiredManager::handleConnectionUpdated(const QString &path)
+{
+    KLOG_DEBUG() << "Connection::updated:" << path;
+    Connection::Ptr updateConnection = findConnection(path);
+    if (updateConnection->settings()->connectionType() == ConnectionSettings::Wired)
+    {
+        //移除后再加载进来以更新信息
+        ui->connectionShowPage->removeConnectionFromLists(path);
+        ui->connectionShowPage->addConnectionToLists(updateConnection, "");
+        handleReturnPreviousPage();
+
+        QString updateConnectionPath = updateConnection->path();
+        ActiveConnection::List activeConnectionLists = activeConnections();
+        //已连接的网络的配置被修改后，点击保存 ，应该重新连接网络，以使配置生效
+        for (auto activeConn : activeConnectionLists)
+        {
+            if (activeConn->connection()->path() == updateConnectionPath)
+            {
+                auto deviceLists = activeConn->devices();
+                if (deviceLists.contains(m_devicePath))
+                {
+                    QDBusPendingReply<> reply = NetworkManager::deactivateConnection(activeConn->connection()->path());
+                    handleRequestActivateConnection(updateConnectionPath, "");
+                }
+            }
+        }
+    }
 }
