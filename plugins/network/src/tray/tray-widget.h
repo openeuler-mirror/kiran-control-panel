@@ -55,6 +55,7 @@ public slots:
 
     void distributeNotifeir();
 
+
 protected:
     QList<Device::Ptr> m_deviceList;
     Device::Ptr m_devicePtr;

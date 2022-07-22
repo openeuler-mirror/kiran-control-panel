@@ -38,6 +38,7 @@ public:
     void initConnection();
 
     void setMultiDeviceWidget(Device::Type deviceType);
+    void setSingleDeviceWidget(Device::Type deviceType);
     QStringList devicePathList();
 
 public slots:

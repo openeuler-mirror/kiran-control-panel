@@ -12,10 +12,13 @@
  * Author:     luoqing <luoqing@kylinos.com.cn>
  */
 
-#include <qt5-log-i.h>
-#include <QMenu>
-#include <QVBoxLayout>
 #include "network-tray.h"
+#include <qt5-log-i.h>
+#include <style-palette.h>
+#include <QMenu>
+#include <QPainter>
+#include <QPainterPath>
+#include <QVBoxLayout>
 #include "status-notifier-manager.h"
 #include "tray-page.h"
 #include "wired-tray-widget.h"
@@ -42,7 +45,6 @@ void NetworkTray::init()
     initUI();
     initMenu();
     initConnect();
-    //    setStyleSheet("background:yellow;");
 }
 
 void NetworkTray::initUI()
@@ -68,35 +70,17 @@ void NetworkTray::initConnect()
 {
     connect(m_systemTray, &QSystemTrayIcon::activated, this, &NetworkTray::handleTrayClicked);
 
-    m_Timer.setInterval(500);
-    m_Timer.setSingleShot(true);
-    waitCounts = 1;
-    connect(&m_Timer, &QTimer::timeout, [=]()
-            {
-                Device::Ptr device = findNetworkInterface(m_addDevicePath);
-                if(device->managed())
-                {
-                    handleDeviceAdded(m_addDevicePath);
-                    m_Timer.stop();
-                }
-                else
-                {
-                    KLOG_INFO() << "this device interface is not ready";
-                    m_Timer.start();
-                }
-                waitCounts++;
-                if(waitCounts > MAX_WAIT_COUNTS)
-                {
-                    KLOG_INFO() << "This device is not currently managed by NetworkManager";
-                    m_Timer.stop();
-                } });
-
     // 需要等待一段时间，Device::List networkInterfaces() 来不及更新
-    connect(notifier(), &Notifier::deviceAdded, [=](const QString &uni)
+    connect(notifier(), &Notifier::deviceAdded, [this](const QString &uni)
             {
                 m_addDevicePath = uni;
                 Device::Ptr device = findNetworkInterface(m_addDevicePath);
-                KLOG_DEBUG() << "device->availableConnections().isEmpty():" << device->availableConnections().isEmpty();
+                if(device.isNull())
+                {
+                    KLOG_DEBUG() << "this device interface is not found";
+                    return;
+                }
+
                 KLOG_DEBUG() << "device->managed():" << device->managed();
                 if(!device->isValid())
                 {
@@ -109,7 +93,35 @@ void NetworkTray::initConnect()
                 {
                     KLOG_INFO() << "this device interface is not ready";
                     m_Timer.start();
-                    KLOG_INFO() << "wait counts:" << waitCounts;
+                    KLOG_INFO() << "wait counts:" << m_waitCounts;
+                } });
+
+    m_Timer.setInterval(500);
+    m_Timer.setSingleShot(true);
+    m_waitCounts = 1;
+    connect(&m_Timer, &QTimer::timeout, [this]()
+            {
+                Device::Ptr device = findNetworkInterface(m_addDevicePath);
+                if(device.isNull())
+                {
+                    KLOG_DEBUG() << "this device interface is not found";
+                    return ;
+                }
+                if(device->managed())
+                {
+                    handleDeviceAdded(m_addDevicePath);
+                    m_Timer.stop();
+                }
+                else
+                {
+                    KLOG_INFO() << "this device interface is not ready";
+                    m_Timer.start();
+                }
+                m_waitCounts++;
+                if(m_waitCounts > MAX_WAIT_COUNTS)
+                {
+                    KLOG_INFO() << "This device is not currently managed by NetworkManager";
+                    m_Timer.stop();
                 } });
 
     connect(notifier(), &Notifier::deviceRemoved, this, &NetworkTray::handleDeviceRemoved);
@@ -118,11 +130,11 @@ void NetworkTray::initConnect()
     // 无线网络如果一下消失多个网络，短时间会触发多次SizeHint变更的信号
     m_wirelessTimer.setInterval(100);
     m_wirelessTimer.setSingleShot(true);
-    connect(m_wirelessTrayPage, &TrayPage::adjustedTraySize, [=](QSize sizeHint)
+    connect(m_wirelessTrayPage, &TrayPage::adjustedTraySize, [this](QSize sizeHint)
             {
                 m_wirelessTraySizeHint = sizeHint;
                 m_wirelessTimer.start(); });
-    connect(&m_wirelessTimer, &QTimer::timeout, [=]()
+    connect(&m_wirelessTimer, &QTimer::timeout, [this]()
             { handleAdjustedTraySize(m_wirelessTraySizeHint); });
 
     connect(m_wiredTrayPage, &TrayPage::adjustedTraySize, this, &NetworkTray::handleAdjustedTraySize);
@@ -329,6 +341,17 @@ void NetworkTray::handleDeviceRemoved(const QString &devicePath)
     }
 }
 
+//TODO:处理Unmanaged和Unavailable的情况
+void NetworkTray::handleDeviceStateChanged(NetworkManager::Device::State newstate,
+                                           NetworkManager::Device::State oldstate,
+                                           NetworkManager::Device::StateChangeReason reason)
+{
+}
+
+void NetworkTray::handleDeviceManagedChanged()
+{
+}
+
 void NetworkTray::handleNetworkManagerStatusChanged(NetworkManager::Status status)
 {
     setTrayIcon(status);
@@ -369,10 +392,9 @@ void NetworkTray::handleAdjustedTraySize(QSize sizeHint)
 {
     // this->sizeHint() 更新不及时，需要等一段时间
     QTimer::singleShot(100, this, [=]()
-       {
+                       {
            adjustSize();
-           setTrayPagePos();
-       });
+           setTrayPagePos(); });
 }
 
 void NetworkTray::handleThemeChanged(Kiran::PaletteType paletteType)
@@ -393,4 +415,30 @@ QPixmap NetworkTray::trayIconColorSwitch(const QString &iconPath)
     }
 
     return pixmap;
+}
+
+void NetworkTray::paintEvent(QPaintEvent *event)
+{
+    auto stylePalette = Kiran::StylePalette::instance();
+    auto borderColor = stylePalette->color(Kiran::StylePalette::Normal, Kiran::StylePalette::Window, Kiran::StylePalette::Border);
+
+    QPainter painter(this);
+    painter.setRenderHint(QPainter::Antialiasing);
+
+    QPainterPath painterPath;
+    // 抵消KiranRoundedTrayPopup的margin
+    int offset = 8;
+
+    QRectF frect(rect().adjusted(8, 8, -8, -8));
+    painterPath.addRoundedRect(frect, 4, 4);
+
+    painter.setPen(borderColor);
+    painter.drawPath(painterPath);
+
+    // auto pen = painter.pen();
+    // pen.setWidth(1);
+    // pen.setColor(borderColor);
+    // painter.strokePath(painterPath, pen);
+
+    QWidget::paintEvent(event);
 }

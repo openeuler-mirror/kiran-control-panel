@@ -71,34 +71,7 @@ void WiredManager::initConnection()
 
     connect(ui->wiredSettingPage, &WiredSettingPage::returnPreviousPage, this, &WiredManager::handleReturnPreviousPage);
 
-    connect(ui->connectionShowPage, &ConnectionShowPage::connectionUpdated, [=](const QString &path)
-            {
-                KLOG_DEBUG() << "Connection::updated:" << path;
-                Connection::Ptr updateConnection = findConnection(path);
-                if (updateConnection->settings()->connectionType() == ConnectionSettings::Wired)
-                {
-                    //移除后再加载进来以更新信息
-                    ui->connectionShowPage->removeConnectionFromLists(path);
-                    ui->connectionShowPage->addConnectionToLists(updateConnection, "");
-                    handleReturnPreviousPage();
-
-                    QString updateConnectionPath = updateConnection->path();
-                    ActiveConnection::List activeConnectionLists = activeConnections();
-                    //已连接的网络的配置被修改后，点击保存 ，应该重新连接网络，以使配置生效
-                    for (auto activeConn : activeConnectionLists)
-                    {
-                        if (activeConn->connection()->path() == updateConnectionPath)
-                        {
-                            auto deviceLists = activeConn->devices();
-                            if (deviceLists.contains(m_devicePath))
-                            {
-                                QDBusPendingReply<> reply = NetworkManager::deactivateConnection(activeConn->connection()->path());
-                                handleRequestActivateConnection(updateConnectionPath, "");
-                            }
-                        }
-                    }
-                }
-            });
+    connect(ui->connectionShowPage, &ConnectionShowPage::connectionUpdated, this,&WiredManager::handleConnectionUpdated);
 
     connect(ui->connectionShowPage, &ConnectionShowPage::requestActivateCurrentItemConnection,
             this, &WiredManager::handleRequestActivateConnection);
@@ -209,4 +182,33 @@ void WiredManager::handleSaveButtonClicked()
     }
     else
         KLOG_DEBUG() << "Invalid input exists";
+}
+
+void WiredManager::handleConnectionUpdated(const QString &path)
+{
+    KLOG_DEBUG() << "Connection::updated:" << path;
+    Connection::Ptr updateConnection = findConnection(path);
+    if (updateConnection->settings()->connectionType() == ConnectionSettings::Wired)
+    {
+        //移除后再加载进来以更新信息
+        ui->connectionShowPage->removeConnectionFromLists(path);
+        ui->connectionShowPage->addConnectionToLists(updateConnection, "");
+        handleReturnPreviousPage();
+
+        QString updateConnectionPath = updateConnection->path();
+        ActiveConnection::List activeConnectionLists = activeConnections();
+        //已连接的网络的配置被修改后，点击保存 ，应该重新连接网络，以使配置生效
+        for (auto activeConn : activeConnectionLists)
+        {
+            if (activeConn->connection()->path() == updateConnectionPath)
+            {
+                auto deviceLists = activeConn->devices();
+                if (deviceLists.contains(m_devicePath))
+                {
+                    QDBusPendingReply<> reply = NetworkManager::deactivateConnection(activeConn->connection()->path());
+                    handleRequestActivateConnection(updateConnectionPath, "");
+                }
+            }
+        }
+    }
 }

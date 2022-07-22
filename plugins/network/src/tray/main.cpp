@@ -79,5 +79,6 @@ int main(int argc, char *argv[]) {
         KLOG_INFO() << "start wait loop";
         KLOG_INFO() << "currentDateTime:" <<  QDateTime::currentDateTime();
     }
+
     return QApplication::exec();
 }

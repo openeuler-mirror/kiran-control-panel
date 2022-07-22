@@ -172,7 +172,7 @@ void Ipv6Widget::clearPtr()
     m_ipv6Setting.clear();
 }
 
-//TODO:不完善，待优化
+// TODO:不完善，待优化
 bool Ipv6Widget::isInputValid()
 {
     Ipv6Setting::ConfigMethod configMethod = ui->ipv6Method->currentData().value<Ipv6Setting::ConfigMethod>();
@@ -198,7 +198,6 @@ bool Ipv6Widget::isInputValid()
                 valid = false;
                 KLOG_DEBUG() << "Ipv6Address invalid";
             }
-                
         }
 
         isIpv6AddressValid(ui->ipv6Gateway->text());

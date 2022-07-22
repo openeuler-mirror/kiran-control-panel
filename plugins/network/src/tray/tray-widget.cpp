@@ -42,33 +42,10 @@ void TrayWidget::initUI()
 
 void TrayWidget::initConnection()
 {
-    connect(notifier(), &Notifier::activeConnectionAdded, this, &TrayWidget::handleActiveConnectionAdded);
-    connect(notifier(), &Notifier::activeConnectionRemoved, this, &TrayWidget::handleActiveConnectionRemoved);
-
-    connect(settingsNotifier(), &SettingsNotifier::connectionAdded, this, &TrayWidget::handleNotifierConnectionAdded);
-
-    m_connectionRemovedTimer.setInterval(100);
-    m_connectionRemovedTimer.setSingleShot(true);
-    //connectionRemoved信号会激发两次，原因暂时未知，使用定时器使短时间内多次相同信号只调用一次槽函数
-    connect(settingsNotifier(), &SettingsNotifier::connectionRemoved, [=](const QString &path) {
-                m_connectionRemovePath = path;
-                m_connectionRemovedTimer.start();
-            });
-
-    connect(&m_connectionRemovedTimer, &QTimer::timeout, [=]() {
-                handleNotifierConnectionRemoved(m_connectionRemovePath);
-            });
-
-    /**
-     * ActiveConnection::State::Activated信号会重复激发两次，但是由dbus发送的Activated信号并没有重复
-     * 原因暂时未知，使用定时器使短时间内多次相同信号只调用一次槽函数
-     * */
-    m_StateActivatedTimer.setSingleShot(true);
-    m_StateActivatedTimer.setInterval(100);
-    connect(&m_StateActivatedTimer, &QTimer::timeout, [=](){
-                KLOG_DEBUG() << "handleStateActivated:";
-                handleStateActivated(m_activatedPath);
-            });
+    connect(notifier(), &Notifier::activeConnectionAdded, this, &TrayWidget::handleActiveConnectionAdded,Qt::UniqueConnection);
+    connect(notifier(), &Notifier::activeConnectionRemoved, this, &TrayWidget::handleActiveConnectionRemoved,Qt::UniqueConnection);
+    connect(settingsNotifier(), &SettingsNotifier::connectionAdded, this, &TrayWidget::handleNotifierConnectionAdded,Qt::UniqueConnection);
+    connect(settingsNotifier(), &SettingsNotifier::connectionRemoved,this,&TrayWidget::handleNotifierConnectionRemoved,Qt::UniqueConnection);
 }
 
 void TrayWidget::distributeNotifeir()
@@ -109,7 +86,7 @@ void TrayWidget::handleActiveConnectionStateChanged(ActiveConnection::State stat
         break;
     case ActiveConnection::State::Activated:
         KLOG_DEBUG() << "ActiveConnection::State::Activated";
-        m_StateActivatedTimer.start();
+        handleStateActivated(m_activatedPath);
         break;
     case ActiveConnection::State::Deactivating:
         KLOG_DEBUG() << "ActiveConnection::State::Deactivating";

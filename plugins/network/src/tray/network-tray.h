@@ -14,14 +14,14 @@
 #ifndef KIRAN_CPANEL_NETWORK_MANAGER_TRAY_H
 #define KIRAN_CPANEL_NETWORK_MANAGER_TRAY_H
 
-#include <QSystemTrayIcon>
-#include <QWidget>
-#include <QVBoxLayout>
-#include <QTimer>
-#include <NetworkManagerQt/Manager>
-#include <NetworkManagerQt/Device>
-#include "kiran-rounded-tray-popup/kiran-rounded-tray-popup.h"
 #include <style-palette.h>
+#include <NetworkManagerQt/Device>
+#include <NetworkManagerQt/Manager>
+#include <QSystemTrayIcon>
+#include <QTimer>
+#include <QVBoxLayout>
+#include <QWidget>
+#include "kiran-rounded-tray-popup/kiran-rounded-tray-popup.h"
 
 using namespace NetworkManager;
 class WiredTrayWidget;
@@ -60,16 +60,24 @@ public slots:
     void handleDeviceRemoved(const QString &devicePath);
     void handleNetworkManagerStatusChanged(NetworkManager::Status status);
 
+    void handleDeviceStateChanged(NetworkManager::Device::State newstate,
+                                  NetworkManager::Device::State oldstate,
+                                  NetworkManager::Device::StateChangeReason reason);
+    void handleDeviceManagedChanged();
+
     void handleAdjustedTraySize(QSize sizeHint);
 
     QPixmap trayIconColorSwitch(const QString &iconPath);
 
     void handleThemeChanged(Kiran::PaletteType paletteType);
 
+protected:
+    void paintEvent(QPaintEvent *event) override;
+
 private:
     QSystemTrayIcon *m_systemTray;
-    QMenu* m_menu;
-    QAction* m_networkSetting;
+    QMenu *m_menu;
+    QAction *m_networkSetting;
 
     TrayPage *m_wiredTrayPage;
     TrayPage *m_wirelessTrayPage;
@@ -84,7 +92,7 @@ private:
     QTimer m_Timer;
     QTimer m_wirelessTimer;
     QString m_addDevicePath;
-    int waitCounts;
+    int m_waitCounts;
     QSize m_wirelessTraySizeHint;
 };
 

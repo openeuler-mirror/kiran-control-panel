@@ -53,6 +53,7 @@ public slots:
     void handleActiveConnectionRemoved(const QString &path) override;
 
     void handleSaveButtonClicked();
+    void handleConnectionUpdated(const QString &path);
 
 private:
     Ui::WiredManager *ui;
