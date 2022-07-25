@@ -22,7 +22,7 @@
 #include <QWidget>
 #include "connection-lists.h"
 #include "tray-widget.h"
-using namespace NetworkManager;
+
 class WirelessTrayWidget : public TrayWidget
 {
     Q_OBJECT
@@ -45,11 +45,11 @@ public slots:
 
     void getWirelessAvailableConnections(const QString &devicePath);
     void activateWirelessConnection(const QString &connectionPath, const QString &devicePath, const QString &accessPointPath);
-    void addAndActivateWirelessConnection(ConnectionSettings::Ptr connectionSettings);
+    void addAndActivateWirelessConnection(NetworkManager::ConnectionSettings::Ptr connectionSettings);
     void setSecurityPskAndActivateWirelessConnection(const QString &password);
 
-    void createConnectionSettings(const QString &ssid,const QString &accessPointPath);
-    void setWirelessSecurityPsk(const WirelessSecuritySetting::Ptr &wirelessSecuritySetting, const QString &psk);
+    void createConnectionSettings(const QString &ssid, const QString &accessPointPath);
+    void setWirelessSecurityPsk(const NetworkManager::WirelessSecuritySetting::Ptr &wirelessSecuritySetting, const QString &psk);
 
     void handleActiveConnectionAdded(const QString &path) override;
     void handleActiveConnectionRemoved(const QString &path) override;
@@ -61,7 +61,7 @@ public slots:
     void handleNetworkDisappeared(const QString &ssid);
     void handleNetworkAppeared(const QString &ssid);
 
-    void handleDeviceStateChanged(Device::State newstate, Device::State oldstate, Device::StateChangeReason reason) override;
+    void handleDeviceStateChanged(NetworkManager::Device::State newstate, NetworkManager::Device::State oldstate, NetworkManager::Device::StateChangeReason reason) override;
 
     void requireInputPassword(const QString &ssid);
 
@@ -69,9 +69,9 @@ signals:
     void adjustedTraySize(QSize sizeHint);
 
 private:
-    QMap<QString, Connection::Ptr> m_wirelssConnectionMap;
-    WirelessDevice::Ptr m_wirelessDevice;
-    ConnectionSettings::Ptr m_connectionSettings;
+    QMap<QString, NetworkManager::Connection::Ptr> m_wirelssConnectionMap;
+    NetworkManager::WirelessDevice::Ptr m_wirelessDevice;
+    NetworkManager::ConnectionSettings::Ptr m_connectionSettings;
     QString m_devicePath;
     QVBoxLayout *m_verticalLayout;
     QPointer<ConnectionLists> m_connectionLists;

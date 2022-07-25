@@ -15,6 +15,8 @@
 #include "wireless-security-widget.h"
 #include <NetworkManagerQt/Setting>
 #include "ui_wireless-security-widget.h"
+using namespace NetworkManager;
+
 
 Q_DECLARE_METATYPE(Setting::SecretFlagType)
 WirelessSecurityWidget::WirelessSecurityWidget(QWidget *parent) : QWidget(parent), ui(new Ui::WirelessSecurityWidget)

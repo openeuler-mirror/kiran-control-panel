@@ -18,6 +18,8 @@
 #include <NetworkManagerQt/Manager>
 #include <NetworkManagerQt/WiredDevice>
 #include "ui_ethernet-widget.h"
+using namespace NetworkManager;
+
 EthernetWidget::EthernetWidget(QWidget *parent) : QWidget(parent), ui(new Ui::EthernetWidget)
 {
     ui->setupUi(this);

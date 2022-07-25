@@ -18,6 +18,7 @@
 #include <NetworkManagerQt/ActiveConnection>
 #include <NetworkManagerQt/Settings>
 #include "connection-lists.h"
+using namespace NetworkManager;
 
 StatusNotification::StatusNotification(QObject* parent) : QObject(parent)
 {

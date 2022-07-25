@@ -16,6 +16,7 @@
 #include <qt5-log-i.h>
 #include <QHostAddress>
 #include "ui_vpn-widget.h"
+using namespace NetworkManager;
 
 VpnWidget::VpnWidget(QWidget *parent) : QWidget(parent), ui(new Ui::VpnWidget)
 {

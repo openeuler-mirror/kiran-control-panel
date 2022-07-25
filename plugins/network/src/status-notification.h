@@ -17,7 +17,7 @@
 
 #include <NetworkManagerQt/Manager>
 #include <QObject>
-using namespace NetworkManager;
+
 struct NetworkConnectionInfo;
 class StatusNotification : QObject
 {
@@ -32,7 +32,7 @@ public:
     static void connectitonFailedNotify(const QString &connectionPath);
     static void connectionDeleteNotify(const QString  &connectionName);
 
-    static void deviceStateNotify(Device::State newstate);
+    static void deviceStateNotify(NetworkManager::Device::State newstate);
 
 };
 

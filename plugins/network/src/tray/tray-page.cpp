@@ -17,6 +17,7 @@
 #include "ui_tray-page.h"
 #include "wired-tray-widget.h"
 #include "wireless-tray-widget.h"
+using namespace NetworkManager;
 
 TrayPage::TrayPage(Device::List deviceList, QWidget *parent) : QWidget(parent), ui(new Ui::TrayPage)
 {

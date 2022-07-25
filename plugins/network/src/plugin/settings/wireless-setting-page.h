@@ -25,7 +25,7 @@ namespace Ui
 class WirelessSettingPage;
 }
 QT_END_NAMESPACE
-using namespace NetworkManager;
+
 class WirelessSettingPage : public SettingPage
 {
     Q_OBJECT
@@ -44,8 +44,8 @@ public slots:
     void showSettingPage(QString activeConnectionPath = "");
 private:
     Ui::WirelessSettingPage *ui;
-    WirelessSetting::Ptr m_wirelessSetting;
-    WirelessSecuritySetting::Ptr m_wirelessSecuritySetting;
+    NetworkManager::WirelessSetting::Ptr m_wirelessSetting;
+    NetworkManager::WirelessSecuritySetting::Ptr m_wirelessSecuritySetting;
 };
 
 #endif  //KIRAN_CPANEL_NETWORK_WIRELESS_SETTING_PAGE_H

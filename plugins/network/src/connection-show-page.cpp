@@ -22,6 +22,7 @@
 #include <NetworkManagerQt/WirelessSetting>
 #include "animation-loading-label.h"
 #include "ui_connection-show-page.h"
+using namespace NetworkManager;
 
 ConnectionShowPage::ConnectionShowPage(QWidget* parent) : QWidget(parent), ui(new Ui::ConnectionShowPage)
 {

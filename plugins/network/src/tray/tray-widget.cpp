@@ -20,6 +20,7 @@
 #include "connection-show-page.h"
 #include "status-notification.h"
 #include "tray-widget.h"
+using namespace NetworkManager;
 
 TrayWidget::TrayWidget(QWidget *parent) : QWidget(parent)
 {

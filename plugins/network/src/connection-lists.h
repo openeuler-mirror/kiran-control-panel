@@ -27,8 +27,6 @@
 #include "connection-itemwidget.h"
 #include "status-notification.h"
 
-using namespace NetworkManager;
-
 enum ItemWidgetType
 {
     ITEM_WIDGET_TYPE_TRAY,
@@ -54,7 +52,6 @@ struct NetworkConnectionInfo
     WirelessConnectionInfo wirelessInfo;
 };
 
-
 Q_DECLARE_METATYPE(NetworkConnectionInfo)
 Q_DECLARE_METATYPE(NetworkManager::Status)
 
@@ -72,13 +69,13 @@ public:
     void setItemWidgetType(ItemWidgetType itemType);
 
     // 在kf5-NetworkManager-qt中Connection是指具体的网络配置，不是指已经存在的网络
-    void showConnectionLists(ConnectionSettings::ConnectionType type);
-    void addConnectionToLists(Connection::Ptr ptr, const QString &devicePath);
+    void showConnectionLists(NetworkManager::ConnectionSettings::ConnectionType type);
+    void addConnectionToLists(NetworkManager::Connection::Ptr ptr, const QString &devicePath);
     void showWiredStatusIcon();
 
     // 在kf5-NetworkManager-qt中Network是指存在的网络
     void showWirelessNetworkLists();
-    void addWirelessNetworkToLists(WirelessNetwork::Ptr network,
+    void addWirelessNetworkToLists(NetworkManager::WirelessNetwork::Ptr network,
                                    const QString &devicePath);
     void showOtherWirelessItem();
 
@@ -95,9 +92,8 @@ public:
 
     void adjustTraySize();
 
-
 public slots:
-    void handleActiveConnectionStateChanged(ActiveConnection::State state);
+    void handleActiveConnectionStateChanged(NetworkManager::ActiveConnection::State state);
 
     void handleActiveStateDeactivated(const QString &activatedConnectionPath);
     void handleConnectionUpdated();
@@ -139,6 +135,7 @@ signals:
     void sendSsidToWireless(const QString &ssid);
 
     void adjustedTraySize(QSize size);
+
 private:
     ItemWidgetType m_itemShowType;
     QString m_currentDevicePath;

@@ -15,6 +15,8 @@
 #include <kiran-switch-button.h>
 #include "ui_vpn-ipvx.h"
 #include <qt5-log-i.h>
+using namespace NetworkManager;
+
 Q_DECLARE_METATYPE(NetworkManager::Ipv4Setting::ConfigMethod)
 
 VpnIpvx::VpnIpvx(QWidget *parent) : QWidget(parent), ui(new Ui::VpnIpvx)

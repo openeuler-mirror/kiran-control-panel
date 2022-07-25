@@ -19,7 +19,7 @@
 #include <QWidget>
 #include "manager.h"
 
-using namespace NetworkManager;
+
 QT_BEGIN_NAMESPACE
 namespace Ui
 {
@@ -57,7 +57,7 @@ public slots:
 
 private:
     Ui::WiredManager *ui;
-    WiredDevice::Ptr m_wiredDevice;
+    NetworkManager::WiredDevice::Ptr m_wiredDevice;
 };
 
 #endif  // KIRAN_CPANEL_NETWORK_WIRED_MANAGER_H

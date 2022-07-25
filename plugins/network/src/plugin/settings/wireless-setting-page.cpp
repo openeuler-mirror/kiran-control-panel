@@ -15,6 +15,7 @@
 #include "wireless-setting-page.h"
 #include "ui_wireless-setting-page.h"
 #include <qt5-log-i.h>
+using namespace NetworkManager;
 
 WirelessSettingPage::WirelessSettingPage(QWidget *parent) : SettingPage(parent), ui(new Ui::WirelessSettingPage)
 {

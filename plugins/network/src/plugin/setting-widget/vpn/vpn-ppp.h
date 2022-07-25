@@ -23,7 +23,7 @@ namespace Ui
 class VpnPpp;
 }
 QT_END_NAMESPACE
-using namespace NetworkManager;
+
 class KiranSwitchButton;
 class VpnPpp : public QWidget
 {
@@ -36,7 +36,7 @@ public:
     void initConnection();
     void initOptionsButton(const QStringList &supportOptions);
     void initOptionsStrMap();
-    void setVpnSetting(const VpnSetting::Ptr &vpnSetting);
+    void setVpnSetting(const NetworkManager::VpnSetting::Ptr &vpnSetting);
 
 public slots:
     void saveSettings();
@@ -48,7 +48,7 @@ public slots:
 
 private:
     Ui::VpnPpp *ui;
-    VpnSetting::Ptr m_vpnSetting;
+    NetworkManager::VpnSetting::Ptr m_vpnSetting;
     NMStringMap m_dataMap;
 
     QMap<QString,QString> m_optionsStrMap;

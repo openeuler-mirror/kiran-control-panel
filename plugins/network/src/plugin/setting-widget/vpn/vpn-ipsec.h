@@ -24,7 +24,7 @@ class VpnIPsec;
 }
 QT_END_NAMESPACE
 
-using namespace NetworkManager;
+
 class KiranSwitchButton;
 class VpnIPsec : public QWidget
 {
@@ -36,7 +36,7 @@ public:
 
     void initUI();
     void initConnection();
-    void setVpnSetting(const VpnSetting::Ptr &vpnSetting);
+    void setVpnSetting(const NetworkManager::VpnSetting::Ptr &vpnSetting);
 
 public slots:
     void saveSettings();
@@ -46,7 +46,7 @@ public slots:
 
 private:
     Ui::VpnIPsec *ui;
-    VpnSetting::Ptr m_vpnSetting;
+    NetworkManager::VpnSetting::Ptr m_vpnSetting;
     NMStringMap m_dataMap;
     KiranSwitchButton *m_enableIPsec;
 };

@@ -18,6 +18,8 @@
 #include <NetworkManagerQt/Manager>
 #include <NetworkManagerQt/WirelessDevice>
 #include <qt5-log-i.h>
+using namespace NetworkManager;
+
 WirelessWidget::WirelessWidget(QWidget *parent) : QWidget(parent), ui(new Ui::WirelessWidget)
 {
     ui->setupUi(this);

@@ -21,6 +21,7 @@
 #include "ui_wireless-manager.h"
 #include "text-input-dialog.h"
 #include <style-property.h>
+using namespace NetworkManager;
 
 WirelessManager::WirelessManager(const QString &devicePath,QWidget *parent) : Manager(parent), ui(new Ui::WirelessManager)
 {

@@ -24,6 +24,8 @@
 #include "wired-tray-widget.h"
 #include "wireless-tray-widget.h"
 
+using namespace NetworkManager;
+
 #define STATUS_NOTIFIER_MANAGER "org.kde.StatusNotifierManager"
 #define STATUS_NOTIFIER_MANAGER_OBJECT_NAME "/StatusNotifierManager"
 #define MAX_WAIT_COUNTS 10

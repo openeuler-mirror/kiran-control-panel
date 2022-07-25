@@ -17,6 +17,7 @@
 #include <NetworkManagerQt/Settings>
 #include <qt5-log-i.h>
 #define ServiceTypeL2TP "org.freedesktop.NetworkManager.l2tp"
+using namespace NetworkManager;
 
 VpnL2tpSetting::VpnL2tpSetting(QWidget *parent) : SettingPage(parent), ui(new Ui::VpnL2tpSetting)
 {

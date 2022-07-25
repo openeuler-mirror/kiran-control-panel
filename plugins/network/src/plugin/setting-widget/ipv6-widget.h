@@ -15,16 +15,16 @@
 #ifndef KIRAN_CPANEL_NETWORK_IPV6_WIDGET_H
 #define KIRAN_CPANEL_NETWORK_IPV6_WIDGET_H
 
-#include <QWidget>
 #include <NetworkManagerQt/Ipv6Setting>
+#include <QWidget>
 QT_BEGIN_NAMESPACE
 namespace Ui
 {
 class Ipv6Widget;
 }
 QT_END_NAMESPACE
-using namespace NetworkManager;
-Q_DECLARE_METATYPE(Ipv6Setting::ConfigMethod)
+
+Q_DECLARE_METATYPE(NetworkManager::Ipv6Setting::ConfigMethod)
 
 class Ipv6Widget : public QWidget
 {
@@ -35,7 +35,7 @@ public:
     ~Ipv6Widget() override;
     void initUI();
     void initConnection();
-    void setIpv6Setting(const Ipv6Setting::Ptr &ipv6Setting);
+    void setIpv6Setting(const NetworkManager::Ipv6Setting::Ptr &ipv6Setting);
 
     bool isIpv6AddressValid(const QString &address);
 
@@ -49,7 +49,7 @@ public slots:
 
 private:
     Ui::Ipv6Widget *ui;
-    Ipv6Setting::Ptr m_ipv6Setting;
+    NetworkManager::Ipv6Setting::Ptr m_ipv6Setting;
 };
 
-#endif  //KIRAN_CPANEL_NETWORK_IPV6_WIDGET_H
+#endif  // KIRAN_CPANEL_NETWORK_IPV6_WIDGET_H

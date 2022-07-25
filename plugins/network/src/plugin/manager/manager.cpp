@@ -17,6 +17,9 @@
 #include <NetworkManagerQt/Settings>
 #include <NetworkManagerQt/WiredDevice>
 #include <NetworkManagerQt/WirelessDevice>
+
+using namespace NetworkManager;
+
 Manager::Manager(QWidget *parent) : QWidget(parent)
 {
 }

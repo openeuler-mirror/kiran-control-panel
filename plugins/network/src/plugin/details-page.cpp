@@ -17,6 +17,7 @@
 #include <QTimer>
 #include "connection-details-widget.h"
 #include "ui_details-page.h"
+using namespace NetworkManager;
 
 DetailsPage::DetailsPage(QWidget *parent) : QWidget(parent), ui(new Ui::DetailsPage)
 {

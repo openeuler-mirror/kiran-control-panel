@@ -44,7 +44,7 @@ public slots:
 
 private:
     Ui::VpnPptpSetting *ui;
-    VpnSetting::Ptr m_vpnSetting;
+    NetworkManager::VpnSetting::Ptr m_vpnSetting;
 };
 
 #endif  //KIRAN_CPANEL_NETWORK_VPN_PPTP_SETTING_H

@@ -23,7 +23,6 @@ enum EditPages
     PAGE_SHOW,
     PAGE_SETTING
 };
-using namespace NetworkManager;
 
 class Manager : public QWidget
 {
@@ -41,17 +40,17 @@ public slots:
     virtual void handleActiveConnectionAdded(const QString &activepath);
     virtual void handleActiveConnectionRemoved(const QString &activepath);
 
-    virtual void handleActiveConnectionStateChanged(ActiveConnection::State state);
+    virtual void handleActiveConnectionStateChanged(NetworkManager::ActiveConnection::State state);
     virtual void handleStateActivated(const QString &activatedPath);
     virtual void handleStateActivating(const QString &activatedPath);
     virtual void handleStateDeactivated(const QString &deactivatedPath);
-    void getDeviceList(Device::Type deviceType);
+    void getDeviceList(NetworkManager::Device::Type deviceType);
 
 protected:
     QMap<QString, QString> m_deviceMap;
-    QList<Device::Ptr> m_deviceList;
+    QList<NetworkManager::Device::Ptr> m_deviceList;
     QString m_devicePath;
-    Device::Ptr m_devicePtr;
+    NetworkManager::Device::Ptr m_devicePtr;
 
 private:
     QTimer m_connectionTimer;

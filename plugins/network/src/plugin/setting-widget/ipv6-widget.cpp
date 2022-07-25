@@ -15,6 +15,7 @@
 #include "ipv6-widget.h"
 #include <qt5-log-i.h>
 #include "ui_ipv6-widget.h"
+using namespace NetworkManager;
 
 Ipv6Widget::Ipv6Widget(QWidget *parent) : QWidget(parent), ui(new Ui::Ipv6Widget)
 {

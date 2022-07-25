@@ -27,6 +27,7 @@
 #define LIST_MAX_HEIGHT 358
 #define TRAY_ITEM_NORAML_SIZE QSize(240, 50)
 #define TRAY_ITEM_EXTENDED_SIZE QSize(240, 100)
+using namespace NetworkManager;
 
 ConnectionLists::ConnectionLists(QWidget* parent) : QListWidget(parent)
 {

@@ -15,6 +15,7 @@
 #include "wired-tray-widget.h"
 #include <qt5-log-i.h>
 #include <NetworkManagerQt/Settings>
+using namespace NetworkManager;
 
 WiredTrayWidget::WiredTrayWidget(const QString &devicePath, QWidget *parent) : TrayWidget(parent)
 {

@@ -18,6 +18,7 @@
 #include "status-notification.h"
 #include "disconnect-and-delete-button.h"
 #include "ui_disconnect-and-delete-button.h"
+using namespace NetworkManager;
 
 DisconnectAndDeleteButton::DisconnectAndDeleteButton(QWidget *parent) : QWidget(parent), ui(new Ui::DisconnectAndDeleteButton)
 {

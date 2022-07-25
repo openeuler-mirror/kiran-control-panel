@@ -21,6 +21,7 @@
 #include <NetworkManagerQt/WirelessSecuritySetting>
 #include <NetworkManagerQt/WirelessSetting>
 #include "ui_connection-details-widget.h"
+using namespace NetworkManager;
 
 ConnectionDetailsWidget::ConnectionDetailsWidget(Device::Ptr device, QWidget *parent)
     : QWidget(parent), ui(new Ui::ConnectionDetailsWidget)
