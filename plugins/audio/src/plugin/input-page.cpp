@@ -260,31 +260,37 @@ void InputPage::initConnet()
 {
     connect(ui->inputDevices, static_cast<void (QComboBox::*)(int)>(&QComboBox::activated), [=](int index)
             {
-        KLOG_DEBUG() << "initConnet activated index:" << index;
-        QString namePort = ui->inputDevices->itemData(index, Qt::UserRole).toString();
-        if (!namePort.isNull())
-        {
-            m_defaultSource->SetActivePort(namePort);
-            KLOG_DEBUG() << "SetActivePort:" << namePort;
-        }
-        else
-            KLOG_DEBUG() << "namePort is null"; });
+                QString namePort = ui->inputDevices->itemData(index, Qt::UserRole).toString();
+                if (!namePort.isNull())
+                {
+                    if(m_defaultSource != nullptr)
+                    {
+                        m_defaultSource->SetActivePort(namePort);
+                        KLOG_DEBUG() << "SetActivePort:" << namePort;
+                    }
+                    else
+                        KLOG_DEBUG() << "m_defaultSource is null";
+                }
+                else
+                    KLOG_DEBUG() << "namePort is null"; });
 
     connect(ui->volumeSetting, &QSlider::valueChanged, [=](int value)
             {
-        double volumeValue = static_cast<double>(value) / static_cast<double>(100);
-        m_defaultSource->SetVolume(volumeValue); });
+                double volumeValue = static_cast<double>(value) / static_cast<double>(100);
+                if (m_defaultSource != nullptr)
+                {
+                    m_defaultSource->SetVolume(volumeValue);
+                    KLOG_DEBUG() << "SetVolume:" << volumeValue;
+                }
+                else
+                    KLOG_DEBUG() << "m_defaultSource is null"; });
 
-    connect(m_defaultSource, &AudioDeviceInterface::volumeChanged, [=](double value)
-            { handleVolumeChanged(value); });
-    connect(m_defaultSource, &AudioDeviceInterface::active_portChanged, [=](const QString &value)
-            { handleActivePortChanged(value); });
+    connect(m_defaultSource, &AudioDeviceInterface::volumeChanged, this, &InputPage::handleVolumeChanged);
+    connect(m_defaultSource, &AudioDeviceInterface::active_portChanged, this, &InputPage::handleActivePortChanged);
 
     // Fix:SourceAdded 和 SourceDelete没有被激发
-    connect(m_audioInterface, &AudioInterface::SourceAdded, [this](uint index)
-            { handleSourceAdded(index); });
-    connect(m_audioInterface, &AudioInterface::SourceDelete, [this](uint index)
-            { handleSourceDelete(index); });
+    connect(m_audioInterface, &AudioInterface::SourceAdded, this, &InputPage::handleSourceAdded);
+    connect(m_audioInterface, &AudioInterface::SourceDelete, this, &InputPage::handleSourceDelete);
     connect(m_audioInterface, &AudioInterface::DefaultSourceChange, this, &InputPage::handleDefaultSourceChanged, Qt::QueuedConnection);
 }
 
@@ -325,7 +331,9 @@ void InputPage::handleDefaultSourceChanged(int index)
     m_defaultSource->deleteLater();
     m_defaultSource = nullptr;
 
+    ui->inputDevices->blockSignals(true);
     ui->inputDevices->clear();
+    ui->inputDevices->blockSignals(false);
     initInputDevice();
     initInputSettins();
 
@@ -347,10 +355,8 @@ void InputPage::handleDefaultSourceChanged(int index)
         initVoulumeFeedBack();
     }
 
-    connect(m_defaultSource, &AudioDeviceInterface::volumeChanged, [=](double value)
-            { handleVolumeChanged(value); });
-    connect(m_defaultSource, &AudioDeviceInterface::active_portChanged, [=](const QString &value)
-            { handleActivePortChanged(value); });
+    connect(m_defaultSource, &AudioDeviceInterface::volumeChanged, this, &InputPage::handleVolumeChanged);
+    connect(m_defaultSource, &AudioDeviceInterface::active_portChanged, this, &InputPage::handleActivePortChanged);
 }
 
 //暂时没有处理Source增加减少的需求
