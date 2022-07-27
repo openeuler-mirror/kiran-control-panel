@@ -76,7 +76,7 @@ void AnimationPushButton::paintEvent(QPaintEvent *event)
         {
             painter.translate(this->rect().center());
             painter.rotate(m_rotationAngle);
-            int svgDrawSize = qMin(width(), height()) - 40;
+            int svgDrawSize = qMin(width(), height()) - 20;
             QRect renderRect((width() - svgDrawSize) / 2 - width() / 2,
                              (height() - svgDrawSize) / 2 - height() / 2,
                              svgDrawSize,
