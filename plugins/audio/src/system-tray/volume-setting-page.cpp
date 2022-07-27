@@ -57,9 +57,7 @@ void VolumeSettingPage::initAudioDevice()
 {
     initSettings(m_sink);
     ui->volumeName->setText(tr("Volume"));
-    connect(m_sink, &AudioDeviceInterface::volumeChanged, [=](double value) {
-        handleVolumeChanged(value);
-    });
+    connect(m_sink, &AudioDeviceInterface::volumeChanged,this,&VolumeSettingPage::handleVolumeChanged);
     connect(m_sink, &AudioDeviceInterface::muteChanged, [=](bool value) {
         KLOG_DEBUG() << "m_sink  muteChanged:" << value;
     });
@@ -69,9 +67,7 @@ void VolumeSettingPage::initAudioStream()
 {
     initSettings(m_sinkInput);
     ui->volumeName->setText(m_sinkInput->GetProperty("application.name"));
-    connect(m_sinkInput, &AudioStreamInterface::volumeChanged, [=](double value) {
-        handleVolumeChanged(value);
-    });
+    connect(m_sinkInput, &AudioStreamInterface::volumeChanged, this,&VolumeSettingPage::handleVolumeChanged);
     connect(m_sinkInput, &AudioStreamInterface::muteChanged, [=](bool value) {
         KLOG_DEBUG() << "m_sinkInput muteChanged:" << value;
     });

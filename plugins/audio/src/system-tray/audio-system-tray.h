@@ -17,6 +17,8 @@
 
 #include <QSystemTrayIcon>
 #include <QWidget>
+// #include <QVBoxLayout>
+// #include <QScrollArea>
 
 class VolumeSettingPage;
 class MixedSettingPage;
@@ -47,6 +49,7 @@ public slots:
     void handleVolumeSettingClicked();
     void getTrayIconStyle();
     void setTrayIcon(int value);
+    void handleAdjustedMixedSettingPageSize();
 
 private:
     QSystemTrayIcon* m_systemTray;
@@ -56,6 +59,9 @@ private:
 
     KiranRoundedTrayPopup* m_volumenPopup;
     KiranRoundedTrayPopup* m_mixedPopup;
+
+    // QScrollArea *m_scrollArea;
+    // QVBoxLayout *m_vboxScrollAreaLayout;
 
     VolumeSettingPage* m_volumeSettingPage;
     MixedSettingPage* m_mixedSettingPage;
