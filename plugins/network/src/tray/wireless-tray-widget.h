@@ -61,6 +61,9 @@ public slots:
     void handleNetworkDisappeared(const QString &ssid);
     void handleNetworkAppeared(const QString &ssid);
 
+    void handleNotifierConnectionAdded(const QString &path) override;
+    void handleNotifierConnectionRemoved(const QString &path) override;
+
     void handleDeviceStateChanged(NetworkManager::Device::State newstate, NetworkManager::Device::State oldstate, NetworkManager::Device::StateChangeReason reason) override;
 
     void requireInputPassword(const QString &ssid);

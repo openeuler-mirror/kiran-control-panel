@@ -319,6 +319,16 @@ void WirelessTrayWidget::handleStateActivated(const QString &activatedPath)
     }
 }
 
+void WirelessTrayWidget::handleNotifierConnectionAdded(const QString &path)
+{
+    
+}
+    
+void WirelessTrayWidget::handleNotifierConnectionRemoved(const QString &path)
+{
+
+}
+
 void WirelessTrayWidget::handleStateDeactivated(const QString &activatedPath)
 {
     KLOG_DEBUG() << "StateDeactivated :" << activatedPath;

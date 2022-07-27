@@ -113,7 +113,7 @@ void ConnectionShowPage::handleToggledSwitchButton(bool toggled)
     {
     case ConnectionSettings::Wired:
         ui->connectionLists->setVisible(toggled);
-        ui->createConnectionButton->setVisible(toggled);
+        // ui->createConnectionButton->setVisible(toggled);
         break;
     case ConnectionSettings::Wireless:
         setWirelessEnabled(toggled);
@@ -125,11 +125,12 @@ void ConnectionShowPage::handleToggledSwitchButton(bool toggled)
     }
 }
 
+//TODO:控制无线网络设备开关
 void ConnectionShowPage::handleWirelessEnabledChanged(bool enabled)
 {
     m_switchButton->setChecked(enabled);
     ui->connectionLists->setVisible(enabled);
-    ui->createConnectionButton->setVisible(enabled);
+    // ui->createConnectionButton->setVisible(enabled);
 }
 
 void ConnectionShowPage::setDevicePath(const QString& devicePath)

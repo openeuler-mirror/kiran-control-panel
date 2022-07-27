@@ -40,11 +40,11 @@ void TextInputDialog::initUI()
     setTitle(tr("Tips"));
 //    setText(tr("Please input password"));
 
-    m_confirmButton =  new QPushButton("Yes");
-    m_cancelButton = new QPushButton("Cancel");
+    m_confirmButton =  new QPushButton(tr("Yes"));
+    m_cancelButton = new QPushButton(tr("Cancel"));
     addButton(m_confirmButton,QDialogButtonBox::AcceptRole);
     addButton(m_cancelButton,QDialogButtonBox::RejectRole);
-}
+}  
 
 void TextInputDialog::initConnection()
 {

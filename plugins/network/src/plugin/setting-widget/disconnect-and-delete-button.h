@@ -45,6 +45,8 @@ public:
 
 public slots:
     void handleDeleteConnection();
+    void handleIgnoreWireless();
+
     void initButton(SettingConnectionStatus connectionStatus,const QString& activeConnectionPath="");
     void clearPtr();
 signals:
