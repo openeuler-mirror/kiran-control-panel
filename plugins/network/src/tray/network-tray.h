@@ -59,6 +59,7 @@ public slots:
     void handleDeviceAdded(const QString &devicePath);
     void handleDeviceRemoved(const QString &devicePath);
     void handleNetworkManagerStatusChanged(NetworkManager::Status status);
+    void handlePrimaryConnectionChanged(const QString &uni);
 
     void handleDeviceStateChanged(NetworkManager::Device::State newstate,
                                   NetworkManager::Device::State oldstate,

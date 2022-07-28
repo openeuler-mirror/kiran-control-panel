@@ -421,7 +421,6 @@ void ConnectionLists::addWirelessNetworkToLists(WirelessNetwork::Ptr network, co
     {
         this->setItemWidget(item, connectionItemWidget);
         this->setMaximumHeight(this->gridSize().height() * this->count());
-        KLOG_DEBUG() << "this->gridSize().height():" << this->gridSize().height();
         KLOG_DEBUG() << "this->count():" << this->count();
         m_itemWidgetMap.insert(connectionItemWidget, item);
         connect(connectionItemWidget, &ConnectionItemWidget::editButtonClicked, this, &ConnectionLists::handleEditButtonClicked);
@@ -868,7 +867,7 @@ void ConnectionLists::handleActiveConnectionStateChanged(ActiveConnection::State
 void ConnectionLists::adjustTraySize()
 {
     int oldHeight = this->size().height();
-    KLOG_DEBUG() << "oldHeight:" << oldHeight;
+
     // 需要更新页面大小
     int totalheight = 0;
     for (int i = 0; i < this->count(); i++)
@@ -879,12 +878,12 @@ void ConnectionLists::adjustTraySize()
         setFixedHeight(totalheight);
     else
         setFixedHeight(LIST_MAX_HEIGHT);
-    KLOG_DEBUG() << "this->size():" << this->size();
-    KLOG_DEBUG() << "this->sizeHint():" << this->sizeHint();
+    // KLOG_DEBUG() << "this->size():" << this->size();
+    // KLOG_DEBUG() << "this->sizeHint():" << this->sizeHint();
 
     int newHeight = this->size().height();
     int changedHeight = newHeight - oldHeight;
-    KLOG_DEBUG() << "changedHeight:" << changedHeight;
+
     QSize(this->sizeHint().width(), changedHeight);
 
     emit adjustedTraySize(QSize(this->sizeHint().width(), changedHeight));
