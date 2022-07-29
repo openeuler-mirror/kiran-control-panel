@@ -150,18 +150,18 @@
 <context>
     <name>ConnectionLists</name>
     <message>
-        <location filename="../src/connection-lists.cpp" line="115"/>
+        <location filename="../src/connection-lists.cpp" line="123"/>
         <source>Tips</source>
         <translation type="unfinished">提示</translation>
     </message>
     <message>
-        <location filename="../src/connection-lists.cpp" line="116"/>
+        <location filename="../src/connection-lists.cpp" line="124"/>
         <source>Please input a network name</source>
         <translation>请输入网络名称</translation>
     </message>
     <message>
-        <location filename="../src/connection-lists.cpp" line="454"/>
-        <location filename="../src/connection-lists.cpp" line="462"/>
+        <location filename="../src/connection-lists.cpp" line="449"/>
+        <location filename="../src/connection-lists.cpp" line="457"/>
         <source>Other WiFi networks</source>
         <translation>其它WIFI网络</translation>
     </message>
@@ -264,7 +264,7 @@
     <message>
         <location filename="../src/plugin/setting-widget/disconnect-and-delete-button.cpp" line="95"/>
         <source>Are you sure you want to delete the connection %1</source>
-        <translation type="unfinished">您是否确定要删除连接 &quot;%1&quot;</translation>
+        <translation>您是否确定要删除连接 &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="../src/plugin/setting-widget/disconnect-and-delete-button.cpp" line="96"/>
@@ -471,7 +471,7 @@
 <context>
     <name>NetworkTray</name>
     <message>
-        <location filename="../src/tray/network-tray.cpp" line="157"/>
+        <location filename="../src/tray/network-tray.cpp" line="160"/>
         <source>Network settings</source>
         <translation>网络设置</translation>
     </message>
@@ -479,42 +479,61 @@
 <context>
     <name>StatusNotification</name>
     <message>
-        <location filename="../src/status-notification.cpp" line="38"/>
+        <location filename="../src/status-notification.cpp" line="36"/>
+        <location filename="../src/status-notification.cpp" line="47"/>
+        <location filename="../src/status-notification.cpp" line="61"/>
+        <location filename="../src/status-notification.cpp" line="73"/>
+        <location filename="../src/status-notification.cpp" line="85"/>
         <source>Connection Failed</source>
         <translation>连接失败</translation>
     </message>
     <message>
-        <location filename="../src/status-notification.cpp" line="39"/>
+        <source>Failed to connect to the network</source>
+        <translation type="vanished">无法连接到网络</translation>
+    </message>
+    <message>
+        <location filename="../src/status-notification.cpp" line="37"/>
+        <source>the network not found</source>
+        <translation>未找到网络</translation>
+    </message>
+    <message>
+        <location filename="../src/status-notification.cpp" line="48"/>
+        <source>The hidden network &quot;%1&quot; to be connected has been detected and exists in the network list</source>
+        <translation>要连接的隐藏网络“%1”已经被探测到，并存在于网络列表中</translation>
+    </message>
+    <message>
+        <location filename="../src/status-notification.cpp" line="62"/>
+        <location filename="../src/status-notification.cpp" line="74"/>
         <source>Failed to connect to the network &quot;%1&quot;</source>
         <translation>无法连接到网络 &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../src/status-notification.cpp" line="54"/>
+        <location filename="../src/status-notification.cpp" line="99"/>
         <source>Connection activated</source>
         <translation>网络已连接</translation>
     </message>
     <message>
-        <location filename="../src/status-notification.cpp" line="55"/>
+        <location filename="../src/status-notification.cpp" line="100"/>
         <source>You are now connected to the network &quot;%1&quot;</source>
         <translation>您已连接到网络 &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../src/status-notification.cpp" line="84"/>
+        <location filename="../src/status-notification.cpp" line="129"/>
         <source>Connection deactivated</source>
         <translation>连接断开</translation>
     </message>
     <message>
-        <location filename="../src/status-notification.cpp" line="85"/>
+        <location filename="../src/status-notification.cpp" line="130"/>
         <source>You have now disconnected the network &quot;%1&quot;</source>
         <translation>您已断开网络连接 &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../src/status-notification.cpp" line="97"/>
+        <location filename="../src/status-notification.cpp" line="142"/>
         <source>Connection deleted</source>
         <translation>连接已删除</translation>
     </message>
     <message>
-        <location filename="../src/status-notification.cpp" line="98"/>
+        <location filename="../src/status-notification.cpp" line="143"/>
         <source>The connection has been deleted &quot;%1&quot;</source>
         <translation>已删除连接 &quot;%1&quot;</translation>
     </message>
@@ -972,19 +991,23 @@
         <translation>返回</translation>
     </message>
     <message>
-        <location filename="../src/plugin/manager/wireless-manager.cpp" line="46"/>
+        <location filename="../src/plugin/manager/wireless-manager.cpp" line="47"/>
         <source>Wireless Network Adapter</source>
         <translation>无线网卡</translation>
     </message>
     <message>
-        <location filename="../src/plugin/manager/wireless-manager.cpp" line="354"/>
+        <location filename="../src/plugin/manager/wireless-manager.cpp" line="369"/>
         <source>Tips</source>
         <translation>提示</translation>
     </message>
     <message>
-        <location filename="../src/plugin/manager/wireless-manager.cpp" line="355"/>
+        <location filename="../src/plugin/manager/wireless-manager.cpp" line="370"/>
         <source>Password required to connect to %1.</source>
         <translation>连接网络 &quot;%1&quot; 需要密码</translation>
+    </message>
+    <message>
+        <source>the network &quot;%1&quot; not found</source>
+        <translation type="vanished">未找到网络 &quot;%1&quot;</translation>
     </message>
 </context>
 <context>
@@ -1056,6 +1079,14 @@
         <location filename="../src/plugin/settings/wireless-setting-page.cpp" line="65"/>
         <source>Wireless name</source>
         <translation>无线网络名称</translation>
+    </message>
+</context>
+<context>
+    <name>WirelessTrayWidget</name>
+    <message>
+        <location filename="../src/tray/wireless-tray-widget.cpp" line="469"/>
+        <source>the network &quot;%1&quot; not found</source>
+        <translation>未找到网络 &quot;%1&quot;</translation>
     </message>
 </context>
 <context>

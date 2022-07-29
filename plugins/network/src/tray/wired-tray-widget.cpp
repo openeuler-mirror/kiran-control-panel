@@ -39,6 +39,12 @@ void WiredTrayWidget::init()
 
     initUI();
     initConnection();
+
+    m_devicePtr = findNetworkInterface(m_devicePath);
+    ActiveConnection::Ptr  activatedConnection = m_devicePtr->activeConnection();
+    if(!activatedConnection.isNull())
+        connect(activatedConnection.data(), &ActiveConnection::stateChanged, this, &WiredTrayWidget::handleActiveConnectionStateChanged, Qt::UniqueConnection);
+        
 }
 
 void WiredTrayWidget::initConnection()

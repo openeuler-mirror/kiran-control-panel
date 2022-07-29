@@ -79,7 +79,7 @@ void ConnectionLists::handleConnectionItemClicked(QListWidgetItem* item)
             if (item->sizeHint().height() != 100)
             {
                 item->setSizeHint(TRAY_ITEM_EXTENDED_SIZE);
-
+                //将其它展开但是未激活的item收缩回去
                 for (int i = 0; i < this->count(); ++i)
                 {
                     auto tmpItem = this->item(i);
@@ -97,9 +97,17 @@ void ConnectionLists::handleConnectionItemClicked(QListWidgetItem* item)
 
                 QWidget* widget = this->itemWidget(item);
                 TrayItemWidget* trayItemWidget = qobject_cast<TrayItemWidget*>(widget);
-                // Note:signalStrength == -1 对应连接隐藏网络
-                if (connectionInfo.wirelessInfo.signalStrength == -1)
-                    trayItemWidget->showInputSsidWidget();
+                
+                if (isWireless)
+                {
+                    // Note:signalStrength == -1 对应连接隐藏网络
+                    if (connectionInfo.wirelessInfo.signalStrength == -1)
+                    {
+                        trayItemWidget->showInputSsidWidget();
+                    }
+                    else
+                        trayItemWidget->prepareConnectStatus();
+                }
                 else
                     trayItemWidget->prepareConnectStatus();
             }
@@ -204,12 +212,6 @@ void ConnectionLists::addConnectionToLists(Connection::Ptr ptr, const QString& d
         if (activeConnection->uuid() == ptr->uuid() && deviceList.contains(devicePath))
         {
             connectionInfo.activeConnectionPath = activeConnection->path();
-            if (m_itemShowType == ITEM_WIDGET_TYPE_TRAY)
-            {
-                connect(activeConnection.data(), &ActiveConnection::stateChanged, this, &ConnectionLists::handleActiveConnectionStateChanged, 
-                Qt::ConnectionType(Qt::DirectConnection | Qt::UniqueConnection));
-            }
-
             switch (activeConnection->state())
             {
             case ActiveConnection::Activating:
@@ -370,12 +372,6 @@ void ConnectionLists::addWirelessNetworkToLists(WirelessNetwork::Ptr network, co
             if ((ssid == connectionInfo.wirelessInfo.ssid) && deviceList.contains(devicePath))
             {
                 connectionInfo.activeConnectionPath = activeConnection->path();
-                if (m_itemShowType == ITEM_WIDGET_TYPE_TRAY)
-                {
-                    // 用于connection的状态通知
-                    connect(activeConnection.data(), &ActiveConnection::stateChanged, this, &ConnectionLists::handleActiveConnectionStateChanged, 
-                    Qt::ConnectionType(Qt::DirectConnection | Qt::UniqueConnection));
-                }
                 switch (activeConnection->state())
                 {
                 case ActiveConnection::Activating:
@@ -672,7 +668,7 @@ void ConnectionLists::showInputPasswordWidgetOfItem(QListWidgetItem* item)
     QWidget* widget = itemWidget(item);
     TrayItemWidget* trayItemWidget = qobject_cast<TrayItemWidget*>(widget);
     trayItemWidget->showInputPasswordWidget();
-    connect(trayItemWidget, &TrayItemWidget::sendPassword, this, &ConnectionLists::handleSendPassword);
+    connect(trayItemWidget, &TrayItemWidget::sendPassword, this, &ConnectionLists::handleSendPassword,Qt::UniqueConnection);
 }
 
 void ConnectionLists::handleSendPassword(const QString& password)
@@ -830,37 +826,6 @@ QListWidgetItem* ConnectionLists::getHiddenNetworkItem()
 {
     int row = this->count() - 1;
     return item(row);
-}
-
-void ConnectionLists::handleActiveConnectionStateChanged(ActiveConnection::State state)
-{
-    auto activeConnection = qobject_cast<ActiveConnection*>(sender());
-    QString id = "";
-    if (activeConnection != nullptr)
-        id = activeConnection->id();
-
-    switch (state)
-    {
-    case ActiveConnection::State::Unknown:
-        KLOG_DEBUG() << "ActiveConnection::State::Unknown";
-        break;
-    case ActiveConnection::State::Activating:
-        KLOG_DEBUG() << "ActiveConnection::State::Activating";
-        break;
-    case ActiveConnection::State::Activated:
-        KLOG_DEBUG() << "ActiveConnection::State::Activated";
-        break;
-    case ActiveConnection::State::Deactivating:
-        KLOG_DEBUG() << "ActiveConnection::State::Deactivating";
-        break;
-    case ActiveConnection::State::Deactivated:
-        KLOG_DEBUG() << "ActiveConnection::State::Deactivated id:" << id;
-        if (!id.isEmpty())
-            StatusNotification::ActiveConnectionDeactivatedNotify(id);
-        break;
-    default:
-        break;
-    }
 }
 
 // TODO:优化adjustTraySize的变更策略

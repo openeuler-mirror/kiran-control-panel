@@ -128,3 +128,8 @@ void Manager::handleStateActivating(const QString &activatedPath)
 {
 
 }
+
+void Manager::handleDeviceStateChanged(NetworkManager::Device::State newstate, NetworkManager::Device::State oldstate, NetworkManager::Device::StateChangeReason reason)
+{
+
+}

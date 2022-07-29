@@ -44,6 +44,9 @@ public slots:
     virtual void handleStateActivated(const QString &activatedPath);
     virtual void handleStateActivating(const QString &activatedPath);
     virtual void handleStateDeactivated(const QString &deactivatedPath);
+
+    virtual void handleDeviceStateChanged(NetworkManager::Device::State newstate, NetworkManager::Device::State oldstate, NetworkManager::Device::StateChangeReason reason);
+
     void getDeviceList(NetworkManager::Device::Type deviceType);
 
 protected:

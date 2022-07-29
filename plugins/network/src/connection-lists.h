@@ -93,8 +93,6 @@ public:
     void adjustTraySize();
 
 public slots:
-    void handleActiveConnectionStateChanged(NetworkManager::ActiveConnection::State state);
-
     void handleActiveStateDeactivated(const QString &activatedConnectionPath);
     void handleConnectionUpdated();
 

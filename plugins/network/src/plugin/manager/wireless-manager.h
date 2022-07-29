@@ -16,6 +16,7 @@
 #define KIRAN_CPANEL_NETWORK_WIRELESS_MANAGER_H
 
 #include <NetworkManagerQt/WirelessDevice>
+#include <NetworkManagerQt/Device>
 #include <NetworkManagerQt/WirelessSecuritySetting>
 #include <NetworkManagerQt/WirelessSetting>
 #include <QWidget>
@@ -63,6 +64,9 @@ public slots:
 
     void handleNetworkDisappeared(const QString &ssid);
     void handleNetworkAppeared(const QString &ssid);
+
+    void handleDeviceStateChanged(NetworkManager::Device::State newstate, NetworkManager::Device::State oldstate, NetworkManager::Device::StateChangeReason reason) override;
+
 
     void handleReturnPreviousPage();
     void refreshConnectionLists() override;
