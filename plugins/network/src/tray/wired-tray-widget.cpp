@@ -15,6 +15,7 @@
 #include "wired-tray-widget.h"
 #include <qt5-log-i.h>
 #include <NetworkManagerQt/Settings>
+using namespace NetworkManager;
 
 WiredTrayWidget::WiredTrayWidget(const QString &devicePath, QWidget *parent) : TrayWidget(parent)
 {
@@ -38,6 +39,12 @@ void WiredTrayWidget::init()
 
     initUI();
     initConnection();
+
+    m_devicePtr = findNetworkInterface(m_devicePath);
+    ActiveConnection::Ptr  activatedConnection = m_devicePtr->activeConnection();
+    if(!activatedConnection.isNull())
+        connect(activatedConnection.data(), &ActiveConnection::stateChanged, this, &WiredTrayWidget::handleActiveConnectionStateChanged, Qt::UniqueConnection);
+        
 }
 
 void WiredTrayWidget::initConnection()

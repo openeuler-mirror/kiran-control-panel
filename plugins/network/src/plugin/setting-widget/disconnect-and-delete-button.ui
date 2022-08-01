@@ -43,6 +43,13 @@
      </property>
     </widget>
    </item>
+   <item>
+    <widget class="QPushButton" name="ignoreButton">
+     <property name="text">
+      <string>Ignore</string>
+     </property>
+    </widget>
+   </item>
   </layout>
  </widget>
  <resources/>

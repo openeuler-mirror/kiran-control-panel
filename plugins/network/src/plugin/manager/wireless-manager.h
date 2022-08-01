@@ -12,11 +12,11 @@
  * Author:     luoqing <luoqing@kylinos.com.cn>
  */
 
-
 #ifndef KIRAN_CPANEL_NETWORK_WIRELESS_MANAGER_H
 #define KIRAN_CPANEL_NETWORK_WIRELESS_MANAGER_H
 
 #include <NetworkManagerQt/WirelessDevice>
+#include <NetworkManagerQt/Device>
 #include <NetworkManagerQt/WirelessSecuritySetting>
 #include <NetworkManagerQt/WirelessSetting>
 #include <QWidget>
@@ -44,10 +44,10 @@ public:
 public slots:
     void handleRequestConnectWirelessNetwork(const NetworkConnectionInfo &connectionInfo);
     void getWirelessAvailableConnections(const QString &devicePath);
-    void activateWirelessConnection(const QString &connectionPath, const QString &devicePath,const QString &accessPointPath);
-    void addAndActivateWirelessConnection(ConnectionSettings::Ptr connectionSettings);
+    void activateWirelessConnection(const QString &connectionPath, const QString &devicePath, const QString &accessPointPath);
+    void addAndActivateWirelessConnection(NetworkManager::ConnectionSettings::Ptr connectionSettings);
 
-    void createConnectionSettings(const QString &ssid,const QString &accessPointPath);
+    void createConnectionSettings(const QString &ssid, const QString &accessPointPath);
     void setSecurityPskAndActivateWirelessConnection(const QString &password);
 
     void handleRequestConnectHiddenNetwork(const QString &ssid);
@@ -65,18 +65,21 @@ public slots:
     void handleNetworkDisappeared(const QString &ssid);
     void handleNetworkAppeared(const QString &ssid);
 
+    void handleDeviceStateChanged(NetworkManager::Device::State newstate, NetworkManager::Device::State oldstate, NetworkManager::Device::StateChangeReason reason) override;
+
+
     void handleReturnPreviousPage();
     void refreshConnectionLists() override;
 
 signals:
-    void requestPasswordFromTray(const QString  &ssid);
+    void requestPasswordFromTray(const QString &ssid);
 
 private:
     Ui::WirelessManager *ui;
-    QMap<QString, Connection::Ptr> m_wirelssConnectionMap;
-    WirelessDevice::Ptr m_wirelessDevice;
-    ConnectionSettings::Ptr m_connectionSettings;
+    QMap<QString, NetworkManager::Connection::Ptr> m_wirelssConnectionMap;
+    NetworkManager::WirelessDevice::Ptr m_wirelessDevice;
+    NetworkManager::ConnectionSettings::Ptr m_connectionSettings;
     NetworkConnectionInfo m_connectionInfo;
 };
 
-#endif  //KIRAN_CPANEL_NETWORK_WIRELESS_MANAGER_H
+#endif  // KIRAN_CPANEL_NETWORK_WIRELESS_MANAGER_H

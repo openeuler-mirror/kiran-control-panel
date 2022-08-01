@@ -134,34 +134,43 @@ void OutputPage::initBalanceSetting()
 
 void OutputPage::initConnect()
 {
-    connect(m_defaultSink, &AudioDeviceInterface::volumeChanged, [=](double value)
-            { handleVolumeChanged(value); });
-    connect(m_defaultSink, &AudioDeviceInterface::balanceChanged, [=](double balance)
-            { handleBalanceChanged(balance); });
-    connect(m_defaultSink, &AudioDeviceInterface::active_portChanged, [=](const QString &value)
-            { handleActivePortChanged(value); });
-    connect(m_audioInterface, &AudioInterface::SinkAdded, [this](uint index)
-            { handleSinkAdded(index); });
-    connect(m_audioInterface, &AudioInterface::SinkDelete, [this](uint index)
-            { handleSinkDelete(index); });
+    connect(m_defaultSink, &AudioDeviceInterface::volumeChanged, this, &OutputPage::handleVolumeChanged);
+    connect(m_defaultSink, &AudioDeviceInterface::balanceChanged, this, &OutputPage::handleBalanceChanged);
+    connect(m_defaultSink, &AudioDeviceInterface::active_portChanged, this, &OutputPage::handleActivePortChanged);
+    connect(m_audioInterface, &AudioInterface::SinkAdded, this, &OutputPage::handleSinkAdded);
+    connect(m_audioInterface, &AudioInterface::SinkDelete, this, &OutputPage::handleSinkDelete);
     connect(m_audioInterface, &AudioInterface::DefaultSinkChange, this, &OutputPage::handleDefaultSinkChanged, Qt::QueuedConnection);
 
     connect(ui->outputDevices, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), [=](int index)
             {
                 QString namePort = ui->outputDevices->itemData(index, Qt::UserRole).toString();
                 KLOG_DEBUG() << "SetActivePort:" << namePort;
-                m_defaultSink->SetActivePort(namePort); });
+                if(m_defaultSink != nullptr)
+                    m_defaultSink->SetActivePort(namePort); 
+                else
+                    KLOG_DEBUG() << "m_defaultSink is null"; });
 
     connect(ui->volumeSetting, &QSlider::valueChanged, [=](int value)
             {
                 double volumeValue = static_cast<double>(ui->volumeSetting->sliderPosition()) / static_cast<double>(100);
-                m_defaultSink->SetVolume(volumeValue); });
+                if(m_defaultSink != nullptr)
+                {
+                    m_defaultSink->SetVolume(volumeValue); 
+                    KLOG_DEBUG() << "SetVolume:" << volumeValue;
+                }  
+                else
+                    KLOG_DEBUG() << "m_defaultSink is null"; });
 
     connect(ui->volumeBalance, &QSlider::valueChanged, [=](int value)
             {
                 double balanceValue = static_cast<double>(value) / static_cast<double>(100);
-                m_defaultSink->SetBalance(balanceValue);
-                KLOG_DEBUG() << "balanceValue" << balanceValue; });
+                if (m_defaultSink == nullptr)
+                {
+                    m_defaultSink->SetBalance(balanceValue);
+                    KLOG_DEBUG() << "balanceValue" << balanceValue;
+                }
+                else
+                    KLOG_DEBUG() << "m_defaultSink is null"; });
 }
 
 void OutputPage::handleActivePortChanged(const QString &value)
@@ -202,21 +211,19 @@ void OutputPage::handleSinkAdded(int index)
 
 void OutputPage::handleDefaultSinkChanged(int index)
 {
-    KLOG_DEBUG() << "DefaultSinkChanged";
     // delete and restart init defaultSource
     m_defaultSink->deleteLater();
     m_defaultSink = nullptr;
+    ui->outputDevices->blockSignals(true);
     ui->outputDevices->clear();
+    ui->outputDevices->blockSignals(false);
 
     initOutputDevice();
     initOutputSettins();
 
-    connect(m_defaultSink, &AudioDeviceInterface::volumeChanged, [=](double value)
-            { handleVolumeChanged(value); });
-    connect(m_defaultSink, &AudioDeviceInterface::balanceChanged, [=](double balance)
-            { handleBalanceChanged(balance); });
-    connect(m_defaultSink, &AudioDeviceInterface::active_portChanged, [=](const QString &value)
-            { handleActivePortChanged(value); });
+    connect(m_defaultSink, &AudioDeviceInterface::volumeChanged, this, &OutputPage::handleVolumeChanged);
+    connect(m_defaultSink, &AudioDeviceInterface::balanceChanged, this, &OutputPage::handleBalanceChanged);
+    connect(m_defaultSink, &AudioDeviceInterface::active_portChanged, this, &OutputPage::handleActivePortChanged);
 }
 
 void OutputPage::handleSinkDelete(int index)

@@ -16,6 +16,8 @@
 #include <kiran-switch-button.h>
 #include <qt5-log-i.h>
 #include "ui_ipv4-widget.h"
+using namespace NetworkManager;
+
 Ipv4Widget::Ipv4Widget(QWidget *parent) : QWidget(parent), ui(new Ui::Ipv4Widget)
 {
     ui->setupUi(this);

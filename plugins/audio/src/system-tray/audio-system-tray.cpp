@@ -16,9 +16,9 @@
 #include "dbus/audio-device-interface.h"
 #include "dbus/audio-interface.h"
 #include "dbus/status-notifier-manager.h"
+#include "kiran-rounded-tray-popup/kiran-rounded-tray-popup.h"
 #include "system-tray/mixed-setting-page.h"
 #include "system-tray/volume-setting-page.h"
-#include "kiran-rounded-tray-popup/kiran-rounded-tray-popup.h"
 
 #include <kiran-session-daemon/audio-i.h>
 #include <qt5-log-i.h>
@@ -29,6 +29,7 @@
 #include <QPainter>
 #include <QScreen>
 #include <QSvgRenderer>
+
 
 #define STATUS_NOTIFIER_MANAGER "org.kde.StatusNotifierManager"
 #define STATUS_NOTIFIER_MANAGER_OBJECT_NAME "/StatusNotifierManager"
@@ -64,6 +65,7 @@ void AudioSystemTray::initVolumeSettingPage(QString objectPath)
     m_volumenPopup->setContentWidget(m_volumeSettingPage);
 }
 
+
 void AudioSystemTray::initMixedSettingPage()
 {
     m_mixedSettingPage = new MixedSettingPage();
@@ -71,8 +73,10 @@ void AudioSystemTray::initMixedSettingPage()
     m_mixedSettingPage->setWindowFlags(Qt::Popup | Qt::BypassWindowManagerHint);
     m_mixedSettingPage->setAttribute(Qt::WA_TranslucentBackground);
 
+    connect(m_mixedSettingPage,&MixedSettingPage::adjustedMixedSettingPageSize,this,&AudioSystemTray::handleAdjustedMixedSettingPageSize);
     m_mixedPopup = new KiranRoundedTrayPopup();
     m_mixedPopup->setContentWidget(m_mixedSettingPage);
+
 }
 
 void AudioSystemTray::initTrayIcon()
@@ -93,38 +97,29 @@ void AudioSystemTray::initMenu()
     m_menu->addAction(m_volumeSetting);
     m_systemTray->setContextMenu(m_menu);
 
-    connect(m_volumeSetting, &QAction::triggered, [=]() {
-        handleVolumeSettingClicked();
-    });
-
-    connect(m_mixedSetting, &QAction::triggered, [=]() {
-        handleMixedSettingClicked();
-    });
-
-    KLOG_INFO() << "initMenu()";
+    connect(m_volumeSetting, &QAction::triggered, this, &AudioSystemTray::handleVolumeSettingClicked);
+    connect(m_mixedSetting, &QAction::triggered, this, &AudioSystemTray::handleMixedSettingClicked);
 }
 
 void AudioSystemTray::initConnect()
 {
-    connect(m_systemTray, &QSystemTrayIcon::activated, [=](QSystemTrayIcon::ActivationReason reason) {
-        handleAudioTrayClicked(reason);
-    });
+    connect(m_systemTray, &QSystemTrayIcon::activated, this, &AudioSystemTray::handleAudioTrayClicked);
 
-    connect(m_sink, &AudioDeviceInterface::volumeChanged, [=](double value) {
-        int currentVolume = round(value * 100);  //表示数值的时候向上取整
-        KLOG_DEBUG() << "m_sink volumeChanged :" << currentVolume;
-        setTrayIcon(currentVolume);
-    });
+    connect(m_sink, &AudioDeviceInterface::volumeChanged, [=](double value)
+            {
+                int currentVolume = round(value * 100);  //表示数值的时候向上取整
+                KLOG_DEBUG() << "m_sink volumeChanged :" << currentVolume;
+                setTrayIcon(currentVolume); });
 
-    connect(m_statusNotifierManager, &StatusNotifierManagerInterface::StyleChanged, [=](const QString &style) {
-        KLOG_DEBUG() << "StyleChanged";
-        //重新获取style
-        getTrayIconStyle();
-        //获取当前音量值重新设置TrayIcon
-        m_sink->volume();
-        double currentVolumeDouble = m_sink->volume() * 100;
-        setTrayIcon(round(currentVolumeDouble));
-    });
+    connect(m_statusNotifierManager, &StatusNotifierManagerInterface::StyleChanged, [=](const QString &style)
+            {
+                KLOG_DEBUG() << "StyleChanged";
+                //重新获取style
+                getTrayIconStyle();
+                //获取当前音量值重新设置TrayIcon
+                m_sink->volume();
+                double currentVolumeDouble = m_sink->volume() * 100;
+                setTrayIcon(round(currentVolumeDouble)); });
 }
 
 void AudioSystemTray::handleAudioTrayClicked(QSystemTrayIcon::ActivationReason reason)
@@ -141,18 +136,11 @@ void AudioSystemTray::handleAudioTrayClicked(QSystemTrayIcon::ActivationReason r
 void AudioSystemTray::setVolumeSettingPos()
 {
     getTrayGeometry();
+    int offset = 8;  // KiranRoundedTrayPopup 的margin为8
     int pageWidth = 300;
     int pageHeight = 66;
 
-    QScreen *screen = QGuiApplication::primaryScreen();
-    int screenWidth = screen->availableGeometry().width();
-    int screenHeight = screen->availableGeometry().height();
-
-    //xxx:当底部面板位置改变时，托盘界面弹出位置
-    if (yTray == 0)
-        m_volumenPopup->setGeometry(xTray - pageWidth / 2, yTray + heightTray, pageWidth, pageHeight);  //顶部
-    else
-        m_volumenPopup->setGeometry(xTray - pageWidth / 2, yTray - pageHeight, pageWidth, pageHeight);  //底部
+    m_volumenPopup->setGeometry(xTray - pageWidth / 2, yTray - pageHeight - offset, pageWidth, pageHeight); 
 }
 
 void AudioSystemTray::handleMixedSettingClicked()
@@ -161,28 +149,25 @@ void AudioSystemTray::handleMixedSettingClicked()
     m_mixedPopup->show();
 }
 
-//XXX:弹出MixedSetting界面调整
+
+// XXX:弹出MixedSetting界面调整
 void AudioSystemTray::setMixedSettingPos()
 {
     getTrayGeometry();
-    KLOG_DEBUG() << "m_mixedPopup->sizeHint:" << m_mixedPopup->sizeHint();
-    int height = m_mixedPopup->sizeHint().height();
+    int offset = 8;  // KiranRoundedTrayPopup 的margin为8
+    int height = m_mixedSettingPage->getHeight();
     int width = m_mixedPopup->sizeHint().width();
 
-    QScreen *screen = QGuiApplication::primaryScreen();
-    int screenWidth = screen->availableGeometry().width();
-    int screenHeight = screen->availableGeometry().height();
+    m_mixedPopup->setFixedHeight(height + offset*2);
+    m_mixedPopup->move(xTray - width / 2, yTray - height - offset);
+}
 
-    //xxx:当底部面板位置改变时，托盘界面弹出位置,顶部位置不准确
-    if (yTray == 0)
+
+void AudioSystemTray::handleAdjustedMixedSettingPageSize()
+{
+    if(m_mixedPopup->isVisible())
     {
-        m_mixedPopup->move(xTray - width / 2, yTray + heightTray);
-        KLOG_DEBUG() << "顶部";
-    }
-    else
-    {
-        m_mixedPopup->move(xTray - width / 2, yTray - height);
-        KLOG_DEBUG() << "底部";
+        setMixedSettingPos();
     }
 }
 
@@ -224,10 +209,6 @@ void AudioSystemTray::getTrayGeometry()
             {
                 QJsonObject object = doc.object();
                 QStringList list = object.keys();
-                for (int i = 0; i < list.count(); ++i)
-                {
-                    KLOG_DEBUG() << list.at(i);
-                }
                 height = object.value("height").toDouble();
                 width = object.value("width").toDouble();
                 x = object.value("x").toDouble();
@@ -246,28 +227,24 @@ void AudioSystemTray::getTrayGeometry()
     KLOG_DEBUG() << "yTray" << yTray;
 }
 
-//XXX:频繁调用函数,需要优化
+// XXX:频繁调用函数,需要优化
 void AudioSystemTray::setTrayIcon(int value)
 {
     if (value == 0)
     {
         trayIconColorSwitch(":/kcp-audio-images/kcp-audio-mute.svg", m_colorTheme);
-        KLOG_DEBUG() << "trayIconColorSwitch:mute";
     }
     else if (0 < value && value <= 33)
     {
         trayIconColorSwitch(":/kcp-audio-images/kcp-audio-low.svg", m_colorTheme);
-        KLOG_DEBUG() << "trayIconColorSwitch:low";
     }
     else if (33 < value && value <= 66)
     {
         trayIconColorSwitch(":/kcp-audio-images/kcp-audio-medium.svg", m_colorTheme);
-        KLOG_DEBUG() << "trayIconColorSwitch:medium";
     }
     else
     {
         trayIconColorSwitch(":/kcp-audio-images/kcp-audio-loud.svg", m_colorTheme);
-        KLOG_DEBUG() << "trayIconColorSwitch:loud";
     }
 }
 
@@ -305,3 +282,4 @@ void AudioSystemTray::getTrayIconStyle()
     m_colorTheme = QString("rgb(%1,%2,%3)").arg(red * 255).arg(green * 255).arg(blue * 255);
     KLOG_DEBUG() << "getTrayIconStyle:" << m_colorTheme;
 }
+

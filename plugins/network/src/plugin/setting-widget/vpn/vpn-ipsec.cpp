@@ -16,6 +16,8 @@
 #include "ui_vpn-ipsec.h"
 #include <kiran-switch-button.h>
 #include <qt5-log-i.h>
+using namespace NetworkManager;
+
 VpnIPsec::VpnIPsec(QWidget *parent) : QWidget(parent), ui(new Ui::VpnIPsec)
 {
     ui->setupUi(this);

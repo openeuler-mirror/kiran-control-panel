@@ -28,7 +28,7 @@ namespace Ui
 class ConnectionShowPage;
 }
 QT_END_NAMESPACE
-using namespace NetworkManager;
+
 class KiranSwitchButton;
 #include "connection-lists.h"
 
@@ -43,7 +43,7 @@ public:
     void initConnect();
 
     void initSwitchButton();
-    void setConnectionType(ConnectionSettings::ConnectionType connectionType);
+    void setConnectionType(NetworkManager::ConnectionSettings::ConnectionType connectionType);
     void setDevicePath(const QString &devicePath);
     void setItemWidgetType(ItemWidgetType itemType);
     void setTitle(QString title);
@@ -51,12 +51,12 @@ public:
     void setCreateButtonVisible(bool visible);
 
     // 在kf5-NetworkManager-qt中Connection是指具体的网络配置，不是指已经存在的网络
-    void showConnectionLists(ConnectionSettings::ConnectionType type);
-    void addConnectionToLists(Connection::Ptr ptr, const QString &devicePath);
+    void showConnectionLists(NetworkManager::ConnectionSettings::ConnectionType type);
+    void addConnectionToLists(NetworkManager::Connection::Ptr ptr, const QString &devicePath);
 
     // 在kf5-NetworkManager-qt中Network是指存在的网络
     void showWirelessNetworkLists();
-    void addWirelessNetworkToLists(WirelessNetwork::Ptr network,
+    void addWirelessNetworkToLists(NetworkManager::WirelessNetwork::Ptr network,
                                    const QString &devicePath);
 
     void removeConnectionFromLists(const QString &path);
@@ -97,7 +97,7 @@ signals:
 private:
     Ui::ConnectionShowPage *ui;
     KiranSwitchButton *m_switchButton;
-    ConnectionSettings::ConnectionType m_connectionType;
+    NetworkManager::ConnectionSettings::ConnectionType m_connectionType;
     QString m_devicePath;
     QTimer m_timer;
     bool m_wirlessNetworkEnable;

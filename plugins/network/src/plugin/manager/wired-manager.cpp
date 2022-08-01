@@ -22,6 +22,8 @@
 #include <QScrollBar>
 #include "status-notification.h"
 #include "ui_wired-manager.h"
+using namespace NetworkManager;
+
 WiredManager::WiredManager(const QString &devicePath, QWidget *parent) : Manager(parent), ui(new Ui::WiredManager)
 {
     ui->setupUi(this);

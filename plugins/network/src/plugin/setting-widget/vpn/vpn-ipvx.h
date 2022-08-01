@@ -23,7 +23,7 @@ namespace Ui
 class VpnIpvx;
 }
 QT_END_NAMESPACE
-using namespace NetworkManager;
+
 class KiranSwitchButton;
 
 class VpnIpvx : public QWidget
@@ -35,7 +35,7 @@ public:
 
     void initUI();
     void initConnection();
-    void setIpv4Setting(const Ipv4Setting::Ptr &ipv4Setting);
+    void setIpv4Setting(const NetworkManager::Ipv4Setting::Ptr &ipv4Setting);
 
 public slots:
     void saveSettings();
@@ -47,7 +47,7 @@ public slots:
 private:
     Ui::VpnIpvx *ui;
     KiranSwitchButton *m_neverDefault;
-    Ipv4Setting::Ptr m_ipv4Setting;
+    NetworkManager::Ipv4Setting::Ptr m_ipv4Setting;
 };
 
 

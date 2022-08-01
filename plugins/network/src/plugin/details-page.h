@@ -16,7 +16,6 @@
 
 #include <NetworkManagerQt/Manager>
 #include <QWidget>
-using namespace NetworkManager;
 
 QT_BEGIN_NAMESPACE
 namespace Ui
@@ -46,12 +45,12 @@ public slots:
     void handleActiveConnectionAdded(const QString &activeConnectionPath);
     void handleActiveConnectionRemoved(const QString &activeConnectionPath);
     void handleActiveConnectionChanged();
-    void handleActiveConnectionStateChanged(ActiveConnection::State state);
+    void handleActiveConnectionStateChanged(NetworkManager::ActiveConnection::State state);
 
 private:
     Ui::DetailsPage *ui;
-    Device::List m_deviceList;
-    ActiveConnection::List m_activatedConnectionList;
+    NetworkManager::Device::List m_deviceList;
+    NetworkManager::ActiveConnection::List m_activatedConnectionList;
 };
 
 #endif  // KIRAN_CPANEL_NETWORK_DETAILS_PAGE_H

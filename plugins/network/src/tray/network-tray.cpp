@@ -24,6 +24,8 @@
 #include "wired-tray-widget.h"
 #include "wireless-tray-widget.h"
 
+using namespace NetworkManager;
+
 #define STATUS_NOTIFIER_MANAGER "org.kde.StatusNotifierManager"
 #define STATUS_NOTIFIER_MANAGER_OBJECT_NAME "/StatusNotifierManager"
 #define MAX_WAIT_COUNTS 10
@@ -70,7 +72,8 @@ void NetworkTray::initConnect()
 {
     connect(m_systemTray, &QSystemTrayIcon::activated, this, &NetworkTray::handleTrayClicked);
 
-    // 需要等待一段时间，Device::List networkInterfaces() 来不及更新
+    // TODO:优化deviceAdded的逻辑
+    //  需要等待一段时间，Device::List networkInterfaces() 来不及更新
     connect(notifier(), &Notifier::deviceAdded, [this](const QString &uni)
             {
                 m_addDevicePath = uni;
@@ -126,6 +129,8 @@ void NetworkTray::initConnect()
 
     connect(notifier(), &Notifier::deviceRemoved, this, &NetworkTray::handleDeviceRemoved);
     connect(notifier(), &Notifier::statusChanged, this, &NetworkTray::handleNetworkManagerStatusChanged);
+
+    connect(notifier(), &Notifier::primaryConnectionChanged, this, &NetworkTray::handlePrimaryConnectionChanged);
 
     // 无线网络如果一下消失多个网络，短时间会触发多次SizeHint变更的信号
     m_wirelessTimer.setInterval(100);
@@ -270,43 +275,99 @@ void NetworkTray::getTrayGeometry()
     m_yTray = static_cast<int>(y);
 }
 
+// TODO:增加其他状态图标
 void NetworkTray::setTrayIcon(NetworkManager::Status status)
 {
-    // 判断连接为有线还是无线，如果同时存在则图标为无线
-    switch (status)
+    // 判断主连接类型，托盘网络图标以主连接类型为准
+    // NetworkManager::primaryConnectionType() 更新不及时，暂时不用
+    ActiveConnection::Ptr primaryActiveConnection = primaryConnection();
+    if (primaryActiveConnection != nullptr)
     {
-    case NetworkManager::Status::Unknown:
-        // 未知
-        m_systemTray->setIcon(trayIconColorSwitch(":/kcp-network-images/wired-error.svg"));
-        break;
-    case NetworkManager::Status::Asleep:
-        // 不可用
-        m_systemTray->setIcon(trayIconColorSwitch(":/kcp-network-images/wired-disconnected.svg"));
-        break;
-    case NetworkManager::Status::Disconnected:
-        // 不可用
-        m_systemTray->setIcon(trayIconColorSwitch(":/kcp-network-images/wired-disconnected.svg"));
-        break;
-    case NetworkManager::Status::Disconnecting:
-        break;
-    case NetworkManager::Status::Connecting:
-        // 加载动画
-        break;
-    case NetworkManager::Status::ConnectedLinkLocal:
-        m_systemTray->setIcon(trayIconColorSwitch(":/kcp-network-images/wired-disconnected.svg"));
-        // 不可用
-        break;
-    case NetworkManager::Status::ConnectedSiteOnly:
-        // 未知
-        m_systemTray->setIcon(trayIconColorSwitch(":/kcp-network-images/wired-error.svg"));
-        break;
-    case NetworkManager::Status::Connected:
-        // 可用
-        //        m_systemTray->setIcon(QIcon(":/kcp-network-images/wired-connection.svg"));
-        m_systemTray->setIcon(trayIconColorSwitch(":/kcp-network-images/wired-connection.svg"));
-        break;
-    default:
-        break;
+        auto primaryConnectionType = primaryActiveConnection->connection()->settings()->connectionType();
+        if (primaryConnectionType == ConnectionSettings::Wireless)
+        {
+            // ActiveConnection::Ptr primaryActiveConnection  = primaryConnection();
+            // WirelessSetting::Ptr wirelessSetting = primaryActiveConnection->connection()->settings()->setting(Setting::Wireless).dynamicCast<WirelessSetting>();
+            // QString ssid = QString(wirelessSetting->ssid());
+
+            // QString devicePath = primaryActiveConnection->devices().value(0);
+            // Device::Ptr device = findNetworkInterface(devicePath);
+            // WirelessDevice::Ptr wirelessDevice = qobject_cast<WirelessDevice*>(device);
+            // WirelessNetwork::Ptr wirelessNetwork = wirelessDevice->findNetwork(ssid);
+            // int signalStrength = wirelessNetwork->signalStrength();
+
+            switch (status)
+            {
+            case NetworkManager::Status::Unknown:
+                // 未知
+                m_systemTray->setIcon(trayIconColorSwitch(":/kcp-network-images/wired-disconnected.svg"));
+                break;
+            case NetworkManager::Status::Asleep:
+                // 不可用
+                m_systemTray->setIcon(trayIconColorSwitch(":/kcp-network-images/wired-disconnected.svg"));
+                break;
+            case NetworkManager::Status::Disconnected:
+                // 不可用
+                m_systemTray->setIcon(trayIconColorSwitch(":/kcp-network-images/wired-disconnected.svg"));
+                break;
+            case NetworkManager::Status::Disconnecting:
+                break;
+            case NetworkManager::Status::Connecting:
+                // 加载动画
+                break;
+            case NetworkManager::Status::ConnectedLinkLocal:
+                m_systemTray->setIcon(trayIconColorSwitch(":/kcp-network-images/wired-disconnected.svg"));
+                // 不可用
+                break;
+            case NetworkManager::Status::ConnectedSiteOnly:
+                // 未知
+                m_systemTray->setIcon(trayIconColorSwitch(":/kcp-network-images/wired-disconnected.svg"));
+                break;
+            case NetworkManager::Status::Connected:
+                // 可用
+                m_systemTray->setIcon(trayIconColorSwitch(":/kcp-network-images/wireless-4.svg"));
+                break;
+            default:
+                break;
+            }
+        }
+        else
+        {
+            switch (status)
+            {
+            case NetworkManager::Status::Unknown:
+                // 未知
+                m_systemTray->setIcon(trayIconColorSwitch(":/kcp-network-images/wired-disconnected.svg"));
+                break;
+            case NetworkManager::Status::Asleep:
+                // 不可用
+                m_systemTray->setIcon(trayIconColorSwitch(":/kcp-network-images/wired-disconnected.svg"));
+                break;
+            case NetworkManager::Status::Disconnected:
+                // 不可用
+                m_systemTray->setIcon(trayIconColorSwitch(":/kcp-network-images/wired-disconnected.svg"));
+                break;
+            case NetworkManager::Status::Disconnecting:
+                break;
+            case NetworkManager::Status::Connecting:
+                // 加载动画
+                break;
+            case NetworkManager::Status::ConnectedLinkLocal:
+                m_systemTray->setIcon(trayIconColorSwitch(":/kcp-network-images/wired-disconnected.svg"));
+                // 不可用
+                break;
+            case NetworkManager::Status::ConnectedSiteOnly:
+                // 未知
+                m_systemTray->setIcon(trayIconColorSwitch(":/kcp-network-images/wired-disconnected.svg"));
+                break;
+            case NetworkManager::Status::Connected:
+                // 可用
+                m_systemTray->setIcon(trayIconColorSwitch(":/kcp-network-images/wired-connection.svg"));
+                break;
+            default:
+                break;
+            }
+        }
     }
 }
 
@@ -341,7 +402,7 @@ void NetworkTray::handleDeviceRemoved(const QString &devicePath)
     }
 }
 
-//TODO:处理Unmanaged和Unavailable的情况
+// TODO:处理Unmanaged和Unavailable的情况
 void NetworkTray::handleDeviceStateChanged(NetworkManager::Device::State newstate,
                                            NetworkManager::Device::State oldstate,
                                            NetworkManager::Device::StateChangeReason reason)
@@ -355,6 +416,11 @@ void NetworkTray::handleDeviceManagedChanged()
 void NetworkTray::handleNetworkManagerStatusChanged(NetworkManager::Status status)
 {
     setTrayIcon(status);
+}
+
+void NetworkTray::handlePrimaryConnectionChanged(const QString &uni)
+{
+    setTrayIcon(NetworkManager::status());
 }
 
 void NetworkTray::reloadWiredTrayPage()

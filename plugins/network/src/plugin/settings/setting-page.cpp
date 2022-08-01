@@ -17,6 +17,7 @@
 #include <qt5-log-i.h>
 #include <NetworkManagerQt/AdslSetting>
 #include <NetworkManagerQt/Settings>
+using namespace NetworkManager;
 
 SettingPage::SettingPage(QWidget* parent) : QWidget(parent)
 {

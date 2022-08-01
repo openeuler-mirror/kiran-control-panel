@@ -15,6 +15,7 @@
 #include "wireless-setting-page.h"
 #include "ui_wireless-setting-page.h"
 #include <qt5-log-i.h>
+using namespace NetworkManager;
 
 WirelessSettingPage::WirelessSettingPage(QWidget *parent) : SettingPage(parent), ui(new Ui::WirelessSettingPage)
 {
@@ -75,7 +76,7 @@ void WirelessSettingPage::showSettingPage(QString activeConnectionPath)
     }
     else
     {
-        ui->disconnectAndDeleteButton->setVisible(false);
+        ui->disconnectAndDeleteButton->setVisible(true);
         //通过将激活路径传入SettingPage,判断该连接是否激活，也可通过uuid判断
         if (activeConnectionPath.isEmpty())
             ui->disconnectAndDeleteButton->initButton(SETTING_CONNECTION_STATUS_DEACTIVATED);

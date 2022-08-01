@@ -17,6 +17,7 @@
 
 #include <QMap>
 #include <QWidget>
+#include <QScrollArea>
 
 class AudioInterface;
 class QVBoxLayout;
@@ -28,15 +29,27 @@ class MixedSettingPage : public QWidget
 public:
     explicit MixedSettingPage(QWidget *parent = nullptr);
     ~MixedSettingPage();
+
+    int getHeight();
 public slots:
     void initSinkInput();
     void initSink();
     void handleSinkInputAdded(int index);
     void handleSinkInputDelete(int index);
 
+protected:
+    // void paintEvent(QPaintEvent* event) override; 
+signals:
+    void adjustedMixedSettingPageSize();
+
 private:
     AudioInterface *m_audioInterface;
+    
     QVBoxLayout *m_vboxLayout;
+    QScrollArea *m_scrollArea;
+    QWidget * m_scrollAreaWidgetContents;
+    QVBoxLayout *m_vboxScrollAreaLayout;
+
     QMap<int, VolumeSettingPage *> m_sinkInputsMap;
 };
 

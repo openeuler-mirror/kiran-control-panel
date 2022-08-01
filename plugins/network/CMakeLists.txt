@@ -7,7 +7,7 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
 set(QT_VERSION 5)
-set(REQUIRED_LIBS Core Gui Widgets DBus Network Svg)
+set(REQUIRED_LIBS Core Gui Widgets DBus Network Svg LinguistTools)
 set(REQUIRED_LIBS_QUALIFIED Qt5::Core Qt5::Gui Qt5::Widgets Qt5::DBus Qt5::Network Qt5::Svg)
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/data/network-config.h.in ${CMAKE_CURRENT_BINARY_DIR}/data/network-config.h)

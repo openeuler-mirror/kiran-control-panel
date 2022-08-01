@@ -220,7 +220,6 @@ void CPanelNetworkWidget::initConnect()
 
     connect(ui->sidebar, &QListWidget::itemClicked, [this](QListWidgetItem *item)
             {
-                KLOG_DEBUG() << " item->data(Qt::UserRole).toInt():" << item->data(Qt::UserRole).toInt();
                 ui->stackedWidget->setCurrentIndex(item->data(Qt::UserRole).toInt());
             });
 

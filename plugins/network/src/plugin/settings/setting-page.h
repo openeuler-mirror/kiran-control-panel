@@ -23,8 +23,6 @@
 #include <QObject>
 #include <QWidget>
 
-using namespace NetworkManager;
-
 class SettingPage : public QWidget
 {
     Q_OBJECT
@@ -32,11 +30,11 @@ public:
     explicit SettingPage(QWidget *parent = nullptr);
     ~SettingPage();
 
-    void initConnectionSettings(ConnectionSettings::ConnectionType connectionType,
+    void initConnectionSettings(NetworkManager::ConnectionSettings::ConnectionType connectionType,
                                 const QString &connectionUuid = "");
 
-    void setConnection(const Connection::Ptr &other);
-    void setConnectionSettings(const ConnectionSettings::Ptr &other);
+    void setConnection(const NetworkManager::Connection::Ptr &other);
+    void setConnectionSettings(const NetworkManager::ConnectionSettings::Ptr &other);
     void createConnectionSettings();
 
     virtual void initSettingPage();
@@ -48,7 +46,7 @@ public:
     virtual void clearPtr();
 
 public slots:
-    void handleSaveButtonClicked(ConnectionSettings::ConnectionType connectionType);
+    void handleSaveButtonClicked(NetworkManager::ConnectionSettings::ConnectionType connectionType);
 
 signals:
     void returnPreviousPage();

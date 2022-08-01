@@ -16,6 +16,7 @@
 #include <kiran-switch-button.h>
 #include <qt5-log-i.h>
 #include "ui_vpn-ppp.h"
+using namespace NetworkManager;
 
 VpnPpp::VpnPpp(QWidget *parent) : QWidget(parent), ui(new Ui::VpnPpp)
 {

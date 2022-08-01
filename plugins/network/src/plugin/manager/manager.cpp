@@ -17,6 +17,9 @@
 #include <NetworkManagerQt/Settings>
 #include <NetworkManagerQt/WiredDevice>
 #include <NetworkManagerQt/WirelessDevice>
+
+using namespace NetworkManager;
+
 Manager::Manager(QWidget *parent) : QWidget(parent)
 {
 }
@@ -122,6 +125,11 @@ void Manager::getDeviceList(Device::Type deviceType)
 }
 
 void Manager::handleStateActivating(const QString &activatedPath)
+{
+
+}
+
+void Manager::handleDeviceStateChanged(NetworkManager::Device::State newstate, NetworkManager::Device::State oldstate, NetworkManager::Device::StateChangeReason reason)
 {
 
 }

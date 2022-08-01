@@ -11,6 +11,7 @@
  *
  * Author:     luoqing <luoqing@kylinos.com.cn>
  */
+
 #include <qt5-log-i.h>
 #include <NetworkManagerQt/Manager>
 #include <NetworkManagerQt/Settings>
@@ -20,6 +21,8 @@
 #include "connection-show-page.h"
 #include "status-notification.h"
 #include "tray-widget.h"
+
+using namespace NetworkManager;
 
 TrayWidget::TrayWidget(QWidget *parent) : QWidget(parent)
 {
@@ -42,15 +45,14 @@ void TrayWidget::initUI()
 
 void TrayWidget::initConnection()
 {
-    connect(notifier(), &Notifier::activeConnectionAdded, this, &TrayWidget::handleActiveConnectionAdded,Qt::UniqueConnection);
-    connect(notifier(), &Notifier::activeConnectionRemoved, this, &TrayWidget::handleActiveConnectionRemoved,Qt::UniqueConnection);
-    connect(settingsNotifier(), &SettingsNotifier::connectionAdded, this, &TrayWidget::handleNotifierConnectionAdded,Qt::UniqueConnection);
-    connect(settingsNotifier(), &SettingsNotifier::connectionRemoved,this,&TrayWidget::handleNotifierConnectionRemoved,Qt::UniqueConnection);
+    connect(notifier(), &Notifier::activeConnectionAdded, this, &TrayWidget::handleActiveConnectionAdded, Qt::UniqueConnection);
+    connect(notifier(), &Notifier::activeConnectionRemoved, this, &TrayWidget::handleActiveConnectionRemoved, Qt::UniqueConnection);
+    connect(settingsNotifier(), &SettingsNotifier::connectionAdded, this, &TrayWidget::handleNotifierConnectionAdded, Qt::UniqueConnection);
+    connect(settingsNotifier(), &SettingsNotifier::connectionRemoved, this, &TrayWidget::handleNotifierConnectionRemoved, Qt::UniqueConnection);
 }
 
 void TrayWidget::distributeNotifeir()
 {
-
 }
 
 void TrayWidget::handleNotifierConnectionAdded(const QString &path)
@@ -71,10 +73,11 @@ void TrayWidget::handleActiveConnectionRemoved(const QString &activepath)
 
 void TrayWidget::handleActiveConnectionStateChanged(ActiveConnection::State state)
 {
-    auto activeConnection = qobject_cast<ActiveConnection* >(sender());
+    auto activeConnection = qobject_cast<ActiveConnection *>(sender());
     m_activatedPath = activeConnection->path();
     QString id = activeConnection->id();
-
+    QStringList deviceList = activeConnection->devices();
+    m_devicePtr->uni();
     switch (state)
     {
     case ActiveConnection::State::Unknown:
@@ -93,9 +96,13 @@ void TrayWidget::handleActiveConnectionStateChanged(ActiveConnection::State stat
         break;
     case ActiveConnection::State::Deactivated:
         KLOG_DEBUG() << "ActiveConnection::State::Deactivated id:" << id;
-        if(!id.isEmpty())
-            StatusNotification::ActiveConnectionDeactivatedNotify(id);
-        handleStateDeactivated(m_activatedPath);
+        KLOG_DEBUG()  << "device path:" << m_devicePtr->uni();
+        if (deviceList.contains(m_devicePtr->uni()))
+        {
+            if (!id.isEmpty())
+                StatusNotification::ActiveConnectionDeactivatedNotify(id);
+            handleStateDeactivated(m_activatedPath);
+        }
         break;
     default:
         break;
@@ -104,17 +111,14 @@ void TrayWidget::handleActiveConnectionStateChanged(ActiveConnection::State stat
 
 void TrayWidget::handleStateActivating(const QString &activatedPath)
 {
-
 }
 
 void TrayWidget::handleStateActivated(const QString &activatedPath)
 {
-
 }
 
 void TrayWidget::handleStateDeactivated(const QString &activatedPath)
 {
-
 }
 
 void TrayWidget::getDeviceList(Device::Type deviceType)
@@ -136,5 +140,4 @@ void TrayWidget::getDeviceList(Device::Type deviceType)
 
 void TrayWidget::handleDeviceStateChanged(Device::State newstate, Device::State oldstate, Device::StateChangeReason reason)
 {
-
 }

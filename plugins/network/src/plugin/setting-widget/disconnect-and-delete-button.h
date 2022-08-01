@@ -23,7 +23,7 @@ namespace Ui
 class DisconnectAndDeleteButton;
 }
 QT_END_NAMESPACE
-using namespace NetworkManager;
+
 
 enum SettingConnectionStatus
 {
@@ -41,10 +41,12 @@ public:
     ~DisconnectAndDeleteButton() override;
     void initUI();
     void initConnection();
-    void setConnectionPtr(const Connection::Ptr &connection);
+    void setConnectionPtr(const NetworkManager::Connection::Ptr &connection);
 
 public slots:
     void handleDeleteConnection();
+    void handleIgnoreWireless();
+
     void initButton(SettingConnectionStatus connectionStatus,const QString& activeConnectionPath="");
     void clearPtr();
 signals:
@@ -53,7 +55,7 @@ signals:
 
 private:
     Ui::DisconnectAndDeleteButton *ui;
-    Connection::Ptr m_connection;
+    NetworkManager::Connection::Ptr m_connection;
     QString m_activeConnectionPath;
 };
 
