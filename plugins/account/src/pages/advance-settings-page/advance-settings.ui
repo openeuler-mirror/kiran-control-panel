@@ -86,7 +86,7 @@
      <item>
       <widget class="QLabel" name="label_specifyUserID">
        <property name="text">
-        <string>Specify user id</string>
+        <string>Specify user id (needs to be greater than 1000)</string>
        </property>
       </widget>
      </item>

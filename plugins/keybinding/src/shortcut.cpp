@@ -486,6 +486,7 @@ void Shortcut::handleShortcutsLoadFailed(QString error)
 void Shortcut::handleShortcutAdded(QString result)
 {
     QJsonParseError jsonErr{};
+
     QJsonDocument jsonDoc = QJsonDocument::fromJson(result.toLocal8Bit().data(),&jsonErr);
 
     if( jsonErr.error!=QJsonParseError::NoError || jsonDoc.isNull() )
@@ -497,22 +498,15 @@ void Shortcut::handleShortcutAdded(QString result)
     ShortcutInfoPtr shortcutInfo(new ShortcutInfo);
     QJsonObject jsonObject = jsonDoc.object();
 
-    fetchShortcutInfoFromJson(jsonObject,shortcutInfo);
+    fetchShortcutInfoFromJson(jsonObject, shortcutInfo);
     QString uid = shortcutInfo->uid;
     QString kind = shortcutInfo->kind;
+    if (uid.startsWith("Custom", Qt::CaseInsensitive))
+    {
+        shortcutInfo->type = SHORTCUT_TYPE_CUSTOM;
+    }
 
     KLOG_DEBUG() << "shortcut added:" << shortcutInfo->uid << shortcutInfo->kind << shortcutInfo->name;
-
-    static QMap<QString,ShortcutType> typeJsonKeyMap{
-        {KEYBINDING_SHORTCUT_JK_SYSTEM,SHORTCUT_TYPE_SYSTEM},
-        {KEYBINDING_SHORTCUT_JK_CUSTOM,SHORTCUT_TYPE_CUSTOM}
-    };
-
-    if( typeJsonKeyMap.find(kind) == typeJsonKeyMap.end() )
-    {
-        KLOG_ERROR() << "ShortcutAdded invalid kind:" << kind;
-        return;
-    }
 
     getShortcutInfo(uid,shortcutInfo);
     insertShortcut(shortcutInfo);

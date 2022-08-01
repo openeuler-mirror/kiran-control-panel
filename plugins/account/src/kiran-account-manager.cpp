@@ -417,7 +417,15 @@ void KiranAccountManager::connectToInfoChanged()
                         }
                         KSDAccountsUserProxy userInterface(ACCOUNTS_DBUS_NAME,itemUserPath, QDBusConnection::systemBus());
                         QString userName = userInterface.user_name();
-                        QString iconFile = userInterface.icon_file().isEmpty() ? DEFAULT_USER_AVATAR : userInterface.icon_file();
+
+                        QString iconFile = userInterface.icon_file();
+                        QPixmap tempPixmap;
+                        if( iconFile.isEmpty() || !tempPixmap.load(iconFile) )
+                        {
+                            iconFile = DEFAULT_USER_AVATAR;
+                        }
+
+
                         bool isLocked = userInterface.locked();
                         item->setText(userName);
                         item->setIcon(QIcon(iconFile));
