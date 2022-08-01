@@ -46,9 +46,9 @@ void CPanelNetworkWidget::init()
 {
     initPage();
     initConnect();
-
 }
 
+//TODO:增加sidebarItem与设备的对应关系
 void CPanelNetworkWidget::initPage()
 {
     getAvailableDeviceList();
@@ -218,10 +218,7 @@ void CPanelNetworkWidget::initConnect()
 
     connect(notifier(), &Notifier::deviceRemoved, this, &CPanelNetworkWidget::handleDeviceRemoved);
 
-    connect(ui->sidebar, &QListWidget::itemClicked, [this](QListWidgetItem *item)
-            {
-                ui->stackedWidget->setCurrentIndex(item->data(Qt::UserRole).toInt());
-            });
+    connect(ui->sidebar, &QListWidget::itemClicked, this,&CPanelNetworkWidget::handleSideBarItemClicked);
 
     connect(Kiran::StylePalette::instance(), &Kiran::StylePalette::themeChanged, this, &CPanelNetworkWidget::handleThemeChanged);
 }
@@ -280,5 +277,32 @@ void CPanelNetworkWidget::handleThemeChanged(Kiran::PaletteType paletteType)
         image.invertPixels(QImage::InvertRgb);
         pixmap = QPixmap::fromImage(image);
         ui->sidebar->item(i)->setIcon(pixmap);
+    }
+}
+
+void CPanelNetworkWidget::handleSideBarItemClicked(QListWidgetItem *item)
+{
+    ui->stackedWidget->setCurrentIndex(item->data(Qt::UserRole).toInt());
+    
+    QString itemText =  item->text();
+    KLOG_DEBUG() << "item clicked:" <<  item->text();
+    if(itemText.contains(tr("Wireless Network")))
+    {
+        KLOG_DEBUG() << "item clicked wireless";
+        for (auto device : m_wirelessDeviceList)
+        {
+            WirelessDevice::Ptr wirelessDevice = qobject_cast<WirelessDevice *>(device);
+            QDBusPendingReply<> replyRequestScan = wirelessDevice->requestScan();
+
+            replyRequestScan.waitForFinished();
+            if (replyRequestScan.isError())
+            {
+                KLOG_DEBUG() << "wireless Device name:" << wirelessDevice->interfaceName() << " requestScan error:" << replyRequestScan.error();
+            }
+            else
+            {
+                KLOG_DEBUG() << "wireless Device name:" << wirelessDevice->interfaceName() << " requestScan reply:" << replyRequestScan.reply();
+            }
+        }
     }
 }

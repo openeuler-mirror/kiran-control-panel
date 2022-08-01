@@ -164,7 +164,7 @@ void WirelessTrayWidget::activateWirelessConnection(const QString &connectionPat
             StatusNotification::connectitonFailedNotify(connectionPath);
         }
         else
-            KLOG_DEBUG() << "reply.reply():" << reply.reply();
+            KLOG_DEBUG() << "reply.reply():" << reply.reply();    
     }
 }
 
@@ -322,11 +322,23 @@ void WirelessTrayWidget::handleStateActivating(const QString &activatedPath)
         if (item != nullptr)
             m_connectionLists->updateItemActivatingStatus(item);
     }
+
+    QDBusPendingReply<> replyRequestScan = m_wirelessDevice->requestScan();
+    replyRequestScan.waitForFinished();
+    KLOG_DEBUG() << "State Activating requestScan";
+    if (replyRequestScan.isError())
+    {
+        KLOG_DEBUG() << "State Activating requestScan error:" << replyRequestScan.error();
+    }
+    else
+    {
+        KLOG_DEBUG() << "State Activating requestScan reply:" << replyRequestScan.reply();
+    }
 }
 
 void WirelessTrayWidget::handleStateActivated(const QString &activatedPath)
 {
-    KLOG_DEBUG() << "Wireless  handleStateActivated";
+    KLOG_DEBUG() << "Wireless State: Activated";
     ActiveConnection::Ptr activeConnection = findActiveConnection(activatedPath);
     if (activeConnection.isNull())
         return;
@@ -341,6 +353,19 @@ void WirelessTrayWidget::handleStateActivated(const QString &activatedPath)
         StatusNotification::ActiveConnectionActivatedNotify(connectionInfo);
         m_connectionLists->sortItems();
         m_connectionLists->update();
+
+        //连接成功后手动rescan
+        QDBusPendingReply<> replyRequestScan = m_wirelessDevice->requestScan();
+        replyRequestScan.waitForFinished();
+        KLOG_DEBUG() << "--------------------------StateActivated requestScan";
+        if (replyRequestScan.isError())
+        {
+            KLOG_DEBUG() << "StateActivated requestScan error:" << replyRequestScan.error();
+        }
+        else
+        {
+            KLOG_DEBUG() << "StateActivated requestScan reply:" << replyRequestScan.reply();
+        }
     }
 }
 

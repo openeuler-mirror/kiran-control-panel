@@ -206,6 +206,7 @@ void NetworkTray::getAvailableDeviceList()
     }
 }
 
+// Note:点击托盘显示页面的同时,让所有无线设备扫描一次网络
 void NetworkTray::handleTrayClicked(QSystemTrayIcon::ActivationReason reason)
 {
     switch (reason)
@@ -215,6 +216,22 @@ void NetworkTray::handleTrayClicked(QSystemTrayIcon::ActivationReason reason)
         break;
     default:
         break;
+    }
+
+    for (auto device : m_wirelessDeviceList)
+    {
+        WirelessDevice::Ptr wirelessDevice = qobject_cast<WirelessDevice *>(device);
+        QDBusPendingReply<> replyRequestScan = wirelessDevice->requestScan();
+
+        replyRequestScan.waitForFinished();
+        if (replyRequestScan.isError())
+        {
+            KLOG_DEBUG() << "wireless Device name:" << wirelessDevice->interfaceName() << " requestScan error:" << replyRequestScan.error();
+        }
+        else
+        {
+            KLOG_DEBUG() << "wireless Device name:" << wirelessDevice->interfaceName() << " requestScan reply:" << replyRequestScan.reply();
+        }
     }
 }
 
