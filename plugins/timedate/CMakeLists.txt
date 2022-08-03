@@ -12,14 +12,14 @@ pkg_search_module(KIRAN_STYLE_HELPER REQUIRED kiran-style-helper)
 file(GLOB_RECURSE SRC
         "src/*.cpp"
         "src/*.h")
-
+        
 include_directories("${CMAKE_BINARY_DIR}" "src" )
-qt5_create_translation( QM_FILES ${CMAKE_SOURCE_DIR} translations/kiran-cpanel-timedate.zh_CN.ts )
+qt5_create_translation( TIMEDATE_QM_FILES ${CMAKE_CURRENT_SOURCE_DIR} "translations/kiran-cpanel-timedate.zh_CN.ts" )
 
 add_library(${TARGET_NAME} SHARED
         ${SRC}
         ${QRC}
-        ${QM_FILES})
+        ${TIMEDATE_QM_FILES})
 
 target_include_directories(${TARGET_NAME} PRIVATE
         include
@@ -54,6 +54,6 @@ install(FILES ${CMAKE_CURRENT_BINARY_DIR}/kiran-cpanel-timedate.desktop DESTINAT
 install(TARGETS ${TARGET_NAME} DESTINATION ${PLUGIN_LIBS_INSTALL_DIR})
 
 #安装翻译文件
-set(TRANSLATE_INSTALL_DIR ${INSTALL_DATADIR}/${PROJECT_NAME}/translations/)
+set(TRANSLATE_INSTALL_DIR ${INSTALL_DATADIR}/${TARGET_NAME}/translations/)
 configure_file(./config/config.h.in ${CMAKE_CURRENT_BINARY_DIR}/kcp-timedate-config.h @ONLY)
-install(FILES ${QM_FILES} DESTINATION ${TRANSLATE_INSTALL_DIR} )
+install(FILES ${TIMEDATE_QM_FILES} DESTINATION ${TRANSLATE_INSTALL_DIR} )

@@ -21,23 +21,23 @@ SubItems=GeneralSettings,PowerSettings,BatterySettings
 
 [GeneralSettings]
 Name=General Settings
-Name[zh_CN]=通用设置
+Name[zh_CN]=通用选项
 Icon=kcp-power-general-settings
 Keywords=General Settings
-Keywords[zh_CN]=通用设置
+Keywords[zh_CN]=通用选项
 
 [PowerSettings]
 Name=Power Settings
-Name[zh_CN]=电源设置
+Name[zh_CN]=电源选项
 Icon=kcp-power-power-settings
 Keywords=Power Settings
-Keywords[zh_CN]=电源设置
+Keywords[zh_CN]=电源选项
 
 [BatterySettings]
 Name=Battery Settings
-Name[zh_CN]=电池设置
+Name[zh_CN]=电池选项
 Icon=kcp-power-battery-settings
 Keywords=Battery Settings
-Keywords[zh_CN]=电池设置
+Keywords[zh_CN]=电池选项
 
 

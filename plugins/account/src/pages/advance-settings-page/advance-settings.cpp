@@ -62,6 +62,7 @@ void AdvanceSettings::setInfo(QString userName, AdvanceSettingsInfo &info)
     else
     {
         ui->edit_loginShell->clear();
+        ui->edit_loginShell->setText(DEFAULT_SHELL);
     }
 
     ///缓存账用户信息，当特殊用户Home目录设置关闭时，重新生成Home目录路径
@@ -175,12 +176,20 @@ void AdvanceSettings::initUI()
             return;
         }
         //uid
-        if (m_switchUserID->isChecked() &&
-            ui->edit_userID->text().isEmpty())
+        if (m_switchUserID->isChecked())
         {
-            m_editTip->setText(tr("Please enter specify user Id"));
-            m_editTip->showTipAroundWidget(ui->edit_userID);
-            return;
+            if (ui->edit_userID->text().isEmpty())
+            {
+                m_editTip->setText(tr("Please enter specify user Id"));
+                m_editTip->showTipAroundWidget(ui->edit_userID);
+                return;
+            }
+            else if (ui->edit_userID->text().toInt() < 1000)
+            {
+                m_editTip->setText(tr("Please enter an integer above 1000"));
+                m_editTip->showTipAroundWidget(ui->edit_userID);
+                return;
+            }
         }
         //home
         QString homePath = ui->edit_specifyUserHome->text();
