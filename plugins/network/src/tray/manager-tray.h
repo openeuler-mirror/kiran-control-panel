@@ -20,12 +20,15 @@
 #include <QTimer>
 #include <NetworkManagerQt/Manager>
 #include <NetworkManagerQt/Device>
+#include "kiran-rounded-tray-popup/kiran-rounded-tray-popup.h"
+#include <style-palette.h>
+
 using namespace NetworkManager;
 class WiredTrayWidget;
 class WirelessTrayWidget;
 class StatusNotifierManagerInterface;
 class TrayPage;
-class ManagerTray : public QWidget
+class ManagerTray : public KiranRoundedTrayPopup
 {
     Q_OBJECT
 
@@ -56,6 +59,13 @@ public slots:
     void handleDeviceAdded(const QString &devicePath);
     void handleDeviceRemoved(const QString &devicePath);
     void handleNetworkManagerStatusChanged(NetworkManager::Status status);
+
+    void handleAdjustedTraySize(QSize sizeHint);
+
+    QPixmap trayIconColorSwitch(const QString &iconPath);
+
+    void handleThemeChanged(Kiran::PaletteType paletteType);
+
 private:
     QSystemTrayIcon *m_systemTray;
     QMenu* m_menu;
@@ -72,8 +82,10 @@ private:
     int m_xTray, m_yTray, m_heightTray, m_widthTray;
 
     QTimer m_Timer;
+    QTimer m_wirelessTimer;
     QString m_addDevicePath;
     int waitCounts;
+    QSize m_wirelessTraySizeHint;
 };
 
 #endif  // KIRAN_CPANEL_NETWORK_MANAGER_TRAY_H

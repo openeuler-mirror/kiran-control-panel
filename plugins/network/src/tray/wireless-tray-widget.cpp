@@ -27,13 +27,15 @@ WirelessTrayWidget::WirelessTrayWidget(const QString &devicePath, QWidget *paren
 WirelessTrayWidget::~WirelessTrayWidget()
 {
 }
+
 void WirelessTrayWidget::init()
 {
     m_verticalLayout = new QVBoxLayout(this);
-    m_verticalLayout->setSpacing(6);
+    m_verticalLayout->setSpacing(0);
     m_verticalLayout->setContentsMargins(0, 0, 0, 0);
     m_connectionLists = new ConnectionLists(this);
     m_verticalLayout->addWidget(m_connectionLists);
+//    m_verticalLayout->addStretch();
 
     m_devicePtr = findNetworkInterface(m_devicePath);
     m_wirelessDevice = qobject_cast<WirelessDevice *>(m_devicePtr);
@@ -63,9 +65,10 @@ void WirelessTrayWidget::initConnection()
     connect(m_connectionLists, &ConnectionLists::sendSsidToWireless, this, &WirelessTrayWidget::handleRequestConnectHiddenNetwork);
 
     connect(m_devicePtr.data(),&Device::stateChanged,this,&WirelessTrayWidget::handleDeviceStateChanged);
+    connect(m_connectionLists, &ConnectionLists::adjustedTraySize, this, &WirelessTrayWidget::adjustedTraySize);
 }
 
-void WirelessTrayWidget::handleRequestConnectWirelessNetwork(const ConnectionInfo &connectionInfo)
+void WirelessTrayWidget::handleRequestConnectWirelessNetwork(const NetworkConnectionInfo &connectionInfo)
 {
     m_connectionInfo = connectionInfo;
     QString ssid = connectionInfo.wirelessInfo.ssid;
@@ -213,7 +216,6 @@ void WirelessTrayWidget::createConnectionSettings(const QString &ssid,const QStr
 
 void WirelessTrayWidget::addAndActivateWirelessConnection(ConnectionSettings::Ptr connectionSettings)
 {
-    KLOG_DEBUG() << "addAndActivateWirelessConnection";
     const QString ssid = m_connectionInfo.wirelessInfo.ssid;
     const QString accessPointPath = m_connectionInfo.wirelessInfo.accessPointPath;
     KLOG_DEBUG() << "accessPointPath" << accessPointPath;
@@ -247,7 +249,6 @@ void WirelessTrayWidget::handleActiveConnectionAdded(const QString &path)
     ActiveConnection::Ptr activatedConnection = findActiveConnection(path);
     if(activatedConnection == nullptr)
     {
-        KLOG_DEBUG() << "activatedConnection == nullptr";
         return ;
     }
     QStringList deviceList = activatedConnection->devices();
@@ -271,6 +272,7 @@ void WirelessTrayWidget::handleActiveConnectionAdded(const QString &path)
         }
         connect(activatedConnection.data(), &ActiveConnection::stateChanged, this, &WirelessTrayWidget::handleActiveConnectionStateChanged);
 //        connect(activatedConnection.data(), &ActiveConnection::stateChanged, &m_statusNotification, &StatusNotification::ActiveConnectionDeactivatedNotify,Qt::DirectConnection);
+
     }
 }
 
@@ -311,9 +313,8 @@ void WirelessTrayWidget::handleStateActivated(const QString &activatedPath)
         m_connectionLists->updateItemActivatedStatus(activatedPath);
 
         auto item = m_connectionLists->findItemByActivatedPath(activatedPath);
-        ConnectionInfo connectionInfo = item->data(Qt::UserRole).value<ConnectionInfo>();
+        NetworkConnectionInfo connectionInfo = item->data(Qt::UserRole).value<NetworkConnectionInfo>();
         StatusNotification::ActiveConnectionActivatedNotify(connectionInfo);
-
         m_connectionLists->sortItems();
         m_connectionLists->update();
     }
@@ -358,6 +359,8 @@ void WirelessTrayWidget::handleRequestCancel(const QString &activatedConnectionP
     reply.waitForFinished();
     if (reply.isError())
         KLOG_INFO() << "Disconnect failed:" << reply.error();
+    else
+        KLOG_INFO() << "deactivateConnection:" << reply.reply();
 }
 
 /**忽略该网络：断开连接并移除该网络配置*/

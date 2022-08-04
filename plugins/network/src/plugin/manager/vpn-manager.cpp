@@ -47,7 +47,7 @@ void VpnManager::initUI()
     ui->connectionShowPage->setSwitchButtonVisible(false);
     ui->connectionShowPage->showConnectionLists(ConnectionSettings::Vpn);
 
-    ui->vpnType->addItem(tr("L2TP"), VPN_TYPE_L2TP);
+//    ui->vpnType->addItem(tr("L2TP"), VPN_TYPE_L2TP);
     ui->vpnType->addItem(tr("PPTP"), VPN_TYPE_PPTP);
     Kiran::StylePropertyHelper::setButtonType(ui->saveButton,Kiran::BUTTON_Default);
 }
@@ -58,9 +58,9 @@ void VpnManager::initConnection()
     connect(ui->connectionShowPage, &ConnectionShowPage::requestCreatConnection, [=]() {
         //默认创建vpn类型：L2TP
         ui->vpnTypeWidget->setVisible(true);
-        ui->vpnType->setCurrentIndex(VPN_TYPE_L2TP);
-        ui->vpnTypeStacked->setCurrentIndex(VPN_TYPE_L2TP);
-        ui->l2tpSetting->showSettingPage();
+        ui->vpnType->setCurrentIndex(0);
+        ui->vpnTypeStacked->setCurrentIndex(VPN_TYPE_PPTP);
+        ui->pptpSetting->showSettingPage();
 
         QPointer<QScrollBar> scrollBar = ui->scrollArea->verticalScrollBar();
         scrollBar->setValue(0);
@@ -72,7 +72,7 @@ void VpnManager::initConnection()
 
     connect(ui->vpnType, QOverload<int>::of(&QComboBox::currentIndexChanged), [=](int index) {
         VpnType type = ui->vpnType->currentData().value<VpnType>();
-        ui->vpnTypeStacked->setCurrentIndex(type);
+        ui->vpnTypeStacked->setCurrentIndex(VPN_TYPE_PPTP);
         switch (type)
         {
         case VPN_TYPE_L2TP:
@@ -358,7 +358,7 @@ void VpnManager::handleVpnStateActivated(const QString &activePath)
     {
         ui->connectionShowPage->updateItemActivatedStatus(activePath);
         auto item = ui->connectionShowPage->findItemByActivatedPath(activePath);
-        ConnectionInfo connectionInfo = item->data(Qt::UserRole).value<ConnectionInfo>();
+        NetworkConnectionInfo connectionInfo = item->data(Qt::UserRole).value<NetworkConnectionInfo>();
         StatusNotification::ActiveConnectionActivatedNotify(connectionInfo);
 
         ui->connectionShowPage->update();

@@ -43,7 +43,7 @@ struct WirelessConnectionInfo
     bool securitySetting;
 };
 
-struct ConnectionInfo
+struct NetworkConnectionInfo
 {
     QString id;
     QString uuid;
@@ -54,7 +54,8 @@ struct ConnectionInfo
     WirelessConnectionInfo wirelessInfo;
 };
 
-Q_DECLARE_METATYPE(ConnectionInfo)
+
+Q_DECLARE_METATYPE(NetworkConnectionInfo)
 Q_DECLARE_METATYPE(NetworkManager::Status)
 
 class ConnectionLists : public QListWidget
@@ -92,6 +93,9 @@ public:
     QListWidgetItem *getHiddenNetworkItem();
     void enableConnectButtonOfItem(QListWidgetItem *item, bool enable);
 
+    void adjustTraySize();
+
+
 public slots:
     void handleActiveConnectionStateChanged(ActiveConnection::State state);
 
@@ -114,24 +118,27 @@ public slots:
     void showInputPasswordWidgetOfItem(QListWidgetItem *item);
     void itemSimpleStatus(QListWidgetItem *item);
 
+protected:
+    void hideEvent(QHideEvent *event) override;
+
 signals:
     void requestCreatConnection();
     void requestEditConnection(const QString &uuid, QString activeConnectionPath);
     void requestActivateCurrentItemConnection(const QString &connectionPath,
                                               const QString &connectionParameter = "");
-    void requestConnectWirelessNetwork(const ConnectionInfo &connectionInfo);
+    void requestConnectWirelessNetwork(const NetworkConnectionInfo &connectionInfo);
     void deactivatedItemConnection(const QString &connectionPath);
     void connectionUpdated(const QString &path);
 
     void trayRequestDisconnect(const QString &activatedConnectionPath);
-    void trayRequestConnect(const ConnectionInfo &connectionInfo);
+    void trayRequestConnect(const NetworkConnectionInfo &connectionInfo);
     void trayRequestIgnore(const QString &activatedConnectionPath);
     void trayRequestCancel(const QString &activatedConnectionPath);
 
     void sendPasswordToWirelessSetting(const QString &password);
     void sendSsidToWireless(const QString &ssid);
 
-
+    void adjustedTraySize(QSize size);
 private:
     ItemWidgetType m_itemShowType;
     QString m_currentDevicePath;

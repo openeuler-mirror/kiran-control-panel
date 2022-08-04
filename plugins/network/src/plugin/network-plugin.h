@@ -15,7 +15,7 @@
 #define KIRAN_CPANEL_NETWORK_NETWORKPLUGIN_H
 
 #include <QTranslator>
-#include <kiran-control-panel/kcp-plugin-interface.h>
+#include <kcp-plugin-interface.h>
 #include <QTimer>
 
 /// NOTE:
@@ -64,26 +64,13 @@ public:
      */
     QStringList visibleSubItems() override;
 
-    void initSubItemsList();
-    void getAvailableDeviceList();
-    void initConnect();
     void loadTranslator();
-
-public slots:
-    void handleDeviceAdded(const QString &devicePath);
-    void handleDeviceRemoved(const QString &devicePath);
 
 signals:
     void visibleSubItemsChanged();
 
 private:
-    QStringList m_wiredDevicePathList;
-    QStringList m_wirelessDevicePathList;
-    QStringList m_subItemsList;
-
-    QTimer m_Timer;
-    QString m_addDevicePath;
-    int waitCounts;
+    QWidget* m_currentWidget = nullptr;
     QTranslator* m_translator = nullptr;
 };
 

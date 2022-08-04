@@ -22,9 +22,9 @@ VpnWidget::VpnWidget(QWidget *parent) : QWidget(parent), ui(new Ui::VpnWidget)
     ui->setupUi(this);
     initUI();
     initConnection();
-    ui->gateway->setPlaceholderText("Required");
-    ui->userName->setPlaceholderText("Required");
-    ui->password->setPlaceholderText("Required");
+    ui->gateway->setPlaceholderText(tr("Required"));
+    ui->userName->setPlaceholderText(tr("Required"));
+    ui->password->setPlaceholderText(tr("Required"));
 }
 
 VpnWidget::~VpnWidget()

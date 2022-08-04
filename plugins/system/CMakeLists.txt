@@ -7,7 +7,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)
 
 find_package(PkgConfig REQUIRED)
-find_package(Qt5 COMPONENTS Widgets Svg DBus LinguistTools)
+find_package(Qt5 COMPONENTS Widgets Svg DBus LinguistTools PrintSupport)
 pkg_search_module(KLOG_QT5 REQUIRED klog-qt5)
 pkg_search_module(KIRAN_CC_DAEMON REQUIRED kiran-cc-daemon)
 pkg_search_module(KIRAN_STYLE_HELPER REQUIRED kiran-style-helper)
@@ -37,6 +37,7 @@ target_link_libraries(${TARGET_NAME}
         Qt5::Widgets
         Qt5::DBus
         Qt5::Svg
+        Qt5::PrintSupport
         ${KIRAN_WIDGETS_QT5_LIBRARIES}
         ${KLOG_QT5_LIBRARIES}
         ${KIRAN_STYLE_HELPER_LIBRARIES})

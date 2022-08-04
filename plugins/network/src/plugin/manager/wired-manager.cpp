@@ -32,6 +32,7 @@ WiredManager::WiredManager(const QString &devicePath, QWidget *parent) : Manager
 
 WiredManager::~WiredManager()
 {
+    ui->wiredSettingPage->clearPtr();
     delete ui;
 }
 

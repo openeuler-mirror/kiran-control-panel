@@ -210,7 +210,7 @@ void AudioSystemTray::trayIconColorSwitch(QString svgPath, QString color)
 
 void AudioSystemTray::getTrayGeometry()
 {
-    QDBusPendingReply<QString> getGeometry = m_statusNotifierManager->GetGeometry("kiran-audio-status-icon");
+    QDBusPendingReply<QString> getGeometry = m_statusNotifierManager->GetGeometry("~02-volume");
     KLOG_DEBUG() << "getGeometry.value():" << getGeometry.value();
 
     double height, width, x, y;

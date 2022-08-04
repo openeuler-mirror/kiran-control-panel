@@ -40,7 +40,7 @@ void WirelessSecurityWidget::initUI()
     ui->passwordOption->addItem(tr("Save password for this user"), Setting::SecretFlagType::AgentOwned);
     ui->passwordOption->addItem(tr("Ask me always"), Setting::SecretFlagType::NotSaved);
 
-    ui->passwordEdit->setPlaceholderText("Required");
+    ui->passwordEdit->setPlaceholderText(tr("Required"));
     ui->passwordEdit->setEchoMode(QLineEdit::Password);
 
     //Note:暂时不需要在该处输入和显示密码的功能，暂时隐藏

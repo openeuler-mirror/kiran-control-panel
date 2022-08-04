@@ -43,7 +43,7 @@ void StatusNotification::connectitonFailedNotify(const QString& connectionPath)
     g_object_unref(G_OBJECT(notify));
 }
 
-void StatusNotification::ActiveConnectionActivatedNotify(ConnectionInfo connectionInfo)
+void StatusNotification::ActiveConnectionActivatedNotify(NetworkConnectionInfo connectionInfo)
 {
     KLOG_DEBUG() << "ActiveConnectionStateNotify";
     QString id = connectionInfo.id;

@@ -16,15 +16,15 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/appearance-config.h.in ${CMAKE_CURREN
 kiran_qt5_add_dbus_interface_ex(APPEARANCE_PROXY
         src/dbus-interface/com.kylinsec.Kiran.SessionDaemon.Appearance.xml
         appearance_backEnd_proxy AppearanceBackEndProxy)
-
-qt5_create_translation( APPEARANCE_QM_FILES ${CMAKE_CURRENT_SOURCE_DIR} translations/kiran-cpanel-appearance.zh_CN.ts )
+ 
+qt5_create_translation( APPEARANCE_QM_FILES ${CMAKE_CURRENT_SOURCE_DIR} "translations/kiran-cpanel-appearance.zh_CN.ts" )
 
 file(GLOB_RECURSE APPEARANCE_SRC
         ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/*.h
         ${CMAKE_CURRENT_SOURCE_DIR}/*.ui)
 
-add_library(${TARGET_NAME} SHARED ${APPEARANCE_SRC} ${APPEARANCE_PROXY})
+add_library(${TARGET_NAME} SHARED ${APPEARANCE_SRC} ${APPEARANCE_PROXY} ${APPEARANCE_QM_FILES})
 
 target_include_directories(${TARGET_NAME} PRIVATE
         src
@@ -50,7 +50,7 @@ target_link_libraries(${TARGET_NAME}
 install(TARGETS ${TARGET_NAME}
         DESTINATION ${PLUGIN_LIBS_INSTALL_DIR}/)
 
-install(FILES ${QM_FILES}
+install(FILES ${APPEARANCE_QM_FILES}
         DESTINATION ${APPEARANCE_TRANSLATIONS_DIR})
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/kiran-cpanel-appearance.desktop.in ${CMAKE_CURRENT_BINARY_DIR}/kiran-cpanel-appearance.desktop @ONLY)

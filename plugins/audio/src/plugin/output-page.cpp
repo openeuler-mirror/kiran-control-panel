@@ -160,9 +160,8 @@ void OutputPage::initConnect()
     connect(m_audioInterface, &AudioInterface::SinkDelete, [this](uint index) {
         handleSinkDelete(index);
     });
-    connect(m_audioInterface, &AudioInterface::DefaultSinkChange, [this](uint index) {
-        handleDefaultSinkChanged(index);
-    });
+    connect(m_audioInterface, &AudioInterface::DefaultSinkChange, this,&OutputPage::handleDefaultSinkChanged,Qt::QueuedConnection);
+
 
     connect(ui->outputDevices, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), [=](int index) {
         QString namePort = ui->outputDevices->itemData(index, Qt::UserRole).toString();
@@ -211,7 +210,7 @@ void OutputPage::handleDefaultSinkChanged(int index)
 {
     KLOG_DEBUG() << "DefaultSinkChanged";
     //delete and restart init defaultSource
-    delete m_defaultSink;
+    m_defaultSink->deleteLater();
     m_defaultSink = nullptr;
     ui->outputDevices->clear();
 

@@ -14,5 +14,9 @@
         <file>kcp-network-images/wired-error.svg</file>
         <file>kcp-network-images/correct.png</file>
         <file>kcp-network-images/details-info.svg</file>
+        <file>kcp-network-images/wireless.svg</file>
+        <file>kcp-network-images/wired.svg</file>
+        <file>kcp-network-images/network-details.svg</file>
+        <file>kcp-network-images/vpn.svg</file>
     </qresource>
 </RCC>
