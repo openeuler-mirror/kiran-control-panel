@@ -50,6 +50,7 @@ public slots:
     void handleDeviceAdded(const QString &devicePath);
     void handleDeviceRemoved(const QString &devicePath);
     void handleThemeChanged(Kiran::PaletteType paletteType);
+    void handleSideBarItemClicked(QListWidgetItem *item);
 
 signals:
     void subItemsChanged();

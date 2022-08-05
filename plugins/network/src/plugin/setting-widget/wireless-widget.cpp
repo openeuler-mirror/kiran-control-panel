@@ -49,8 +49,6 @@ void WirelessWidget::initUI()
 void WirelessWidget::initConnection()
 {
     connect(m_mtuButton, &QAbstractButton::toggled, this, &WirelessWidget::handleCustomMTUChanged);
-    connect(notifier(),&Notifier::deviceAdded,[=](){initMacComboBox();});
-    connect(notifier(),&Notifier::deviceRemoved,[=](){initMacComboBox();});
 }
 
 void WirelessWidget::setWirelessSetting(const WirelessSetting::Ptr &wirelessSetting)

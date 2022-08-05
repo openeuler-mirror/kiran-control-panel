@@ -207,7 +207,7 @@ void WirelessManager::handleActiveConnectionAdded(const QString &path)
     }
 }
 
-//断开网络时，会自动rescan搜索无线网络
+//断开网络时，会自动触发rescan搜索无线网络
 void WirelessManager::handleActiveConnectionRemoved(const QString &path)
 {
     ui->connectionShowPage->handleActiveStateDeactivated(path);
