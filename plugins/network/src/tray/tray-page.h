@@ -23,21 +23,22 @@ namespace Ui
 class TrayPage;
 }
 QT_END_NAMESPACE
-using namespace NetworkManager;
+
 
 class TrayPage : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit TrayPage(Device::List deviceList, QWidget *parent = nullptr);
+    explicit TrayPage(NetworkManager::Device::List deviceList, QWidget *parent = nullptr);
     ~TrayPage() override;
 
     void init();
-    void initUI(Device::Type deviceType);
+    void initUI(NetworkManager::Device::Type deviceType);
     void initConnection();
 
-    void setMultiDeviceWidget(Device::Type deviceType);
+    void setMultiDeviceWidget(NetworkManager::Device::Type deviceType);
+    void setSingleDeviceWidget(NetworkManager::Device::Type deviceType);
     QStringList devicePathList();
 
 public slots:
@@ -48,7 +49,7 @@ signals:
 
 private:
     Ui::TrayPage *ui;
-    QList<Device::Ptr> m_deviceList;
+    QList<NetworkManager::Device::Ptr> m_deviceList;
 };
 
 #endif  // KIRAN_CPANEL_NETWORK_TRAY_PAGE_H

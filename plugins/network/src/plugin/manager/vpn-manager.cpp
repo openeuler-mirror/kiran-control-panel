@@ -25,6 +25,8 @@
 #include "status-notification.h"
 #include "connection-name-widget.h"
 #include <style-property.h>
+using namespace NetworkManager;
+
 Q_DECLARE_METATYPE(VpnType)
 
 VpnManager::VpnManager(QWidget *parent) : Manager(parent), ui(new Ui::VpnManager)

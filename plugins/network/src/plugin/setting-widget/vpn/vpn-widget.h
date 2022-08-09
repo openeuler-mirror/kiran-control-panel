@@ -21,9 +21,9 @@ namespace Ui
 {
 class VpnWidget;
 }
-using namespace NetworkManager;
+
 QT_END_NAMESPACE
-Q_DECLARE_METATYPE(Setting::SecretFlagType);
+Q_DECLARE_METATYPE(NetworkManager::Setting::SecretFlagType);
 class VpnWidget : public QWidget
 {
     Q_OBJECT
@@ -33,7 +33,7 @@ public:
     ~VpnWidget() override;
     void initUI();
     void initConnection();
-    void setVpnSetting(const VpnSetting::Ptr &vpnSetting);
+    void setVpnSetting(const NetworkManager::VpnSetting::Ptr &vpnSetting);
     bool isIpv4AddressValid(const QString &address);
 
 public slots:
@@ -43,12 +43,12 @@ public slots:
     void clearPtr();
 
     bool isInputValid();
-    void handlePasswordOptionsChanged(Setting::SecretFlagType secretFlagType);
+    void handlePasswordOptionsChanged(NetworkManager::Setting::SecretFlagType secretFlagType);
     void enablePasswordVisual();
 
 private:
     Ui::VpnWidget *ui;
-    VpnSetting::Ptr m_vpnSetting;
+    NetworkManager::VpnSetting::Ptr m_vpnSetting;
     NMStringMap m_dataMap;
     NMStringMap m_secretMap;
 };

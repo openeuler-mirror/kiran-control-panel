@@ -17,6 +17,7 @@
 
 #include <QWidget>
 #include <NetworkManagerQt/WiredSetting>
+
 QT_BEGIN_NAMESPACE
 namespace Ui
 {
@@ -24,7 +25,7 @@ class EthernetWidget;
 }
 QT_END_NAMESPACE
 class KiranSwitchButton;
-using namespace NetworkManager;
+
 class EthernetWidget : public QWidget
 {
     Q_OBJECT
@@ -35,7 +36,7 @@ public:
     void initUI();
     void initEthernetMacComboBox();
     void initConnection();
-    void setWiredSetting(const WiredSetting::Ptr &wiredSetting);
+    void setWiredSetting(const NetworkManager::WiredSetting::Ptr &wiredSetting);
     bool isCloneMacValid(const QString &cloneMac);
 
 public slots:
@@ -48,7 +49,7 @@ public slots:
 
 private:
     Ui::EthernetWidget *ui;
-    WiredSetting::Ptr m_wiredSetting;
+    NetworkManager::WiredSetting::Ptr m_wiredSetting;
     KiranSwitchButton *m_mtuButton;
 };
 

@@ -17,6 +17,7 @@
 #include <QTimer>
 #include "connection-details-widget.h"
 #include "ui_details-page.h"
+using namespace NetworkManager;
 
 DetailsPage::DetailsPage(QWidget *parent) : QWidget(parent), ui(new Ui::DetailsPage)
 {
@@ -57,8 +58,10 @@ void DetailsPage::initUI()
         QWidget *widget = new ConnectionDetailsWidget(m_deviceList.at(0), this);
         ui->stackedWidget->addWidget(widget);
     }
-    else
+    else if(m_deviceList.count() == 0)
     {
+        QWidget *widget = new ConnectionDetailsWidget(nullptr, this);
+        ui->stackedWidget->addWidget(widget);
     }
 }
 

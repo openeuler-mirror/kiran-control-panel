@@ -6,7 +6,7 @@
     <message>
         <location filename="../src/system-tray/audio-system-tray.cpp" line="89"/>
         <source>Volume Setting</source>
-        <translation>音量设置</translation>
+        <translation>声音设置</translation>
     </message>
     <message>
         <location filename="../src/system-tray/audio-system-tray.cpp" line="90"/>

@@ -16,6 +16,8 @@
 #include "ui_vpn-pptp-setting.h"
 #include <qt5-log-i.h>
 #define ServiceTypePPTP "org.freedesktop.NetworkManager.pptp"
+using namespace NetworkManager;
+
 VpnPptpSetting::VpnPptpSetting(QWidget *parent) : SettingPage(parent), ui(new Ui::VpnPptpSetting)
 {
     ui->setupUi(this);
@@ -98,5 +100,5 @@ void VpnPptpSetting::clearPtr()
 
 bool VpnPptpSetting::isInputValid()
 {
-    return ui->vpnWidget->isInputValid() || ui->generalWidget->isInputValid();
+    return ui->vpnWidget->isInputValid() && ui->generalWidget->isInputValid();
 }

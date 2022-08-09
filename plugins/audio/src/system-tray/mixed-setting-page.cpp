@@ -29,22 +29,43 @@
 MixedSettingPage::MixedSettingPage(QWidget *parent) : QWidget(parent)
 {
     m_audioInterface = AudioInterface::instance();
-    m_vboxLayout = new QVBoxLayout();
+    m_vboxLayout = new QVBoxLayout(this);
     m_vboxLayout->setMargin(0);
     m_vboxLayout->setSpacing(0);
 
+    //TODO:增加scrollArea
+    
+    // m_scrollArea = new QScrollArea(this);
+    // m_scrollArea->setWidgetResizable(true);
+    
+    // m_scrollAreaWidgetContents = new QWidget();
+    // m_vboxScrollAreaLayout = new QVBoxLayout(m_scrollAreaWidgetContents);
+    // m_vboxScrollAreaLayout->setMargin(0);
+    // m_vboxScrollAreaLayout->setSpacing(0);
+    // m_scrollAreaWidgetContents->setStyleSheet("QWidget{"
+    //                                     "border: 1px solid red;"
+    //                                     "border-radius:6px;"
+    //                                     "}");
+
     initSink();
     initSinkInput();
-    setLayout(m_vboxLayout);
+
+    // m_scrollArea->setWidget(m_scrollAreaWidgetContents);
+    // m_scrollArea->setFixedWidth(300);
+    // m_scrollArea->setFrameShape(QFrame::NoFrame);
+    // m_scrollArea->setStyleSheet("QScrollArea{"
+    //                                     "border: 1px solid red;"
+    //                                     "border-radius:6px;"
+    //                                     "}");
+
+    // m_vboxLayout->addWidget(m_scrollArea);
+    // setStyleSheet("background:red;border-radius:6px;");
+
     this->layout()->setSizeConstraint(QLayout::SetFixedSize);
     ensurePolished();
 
-    connect(m_audioInterface, &AudioInterface::SinkInputAdded, [=](int index) {
-        handleSinkInputAdded(index);
-    });
-    connect(m_audioInterface, &AudioInterface::SinkInputDelete, [=](int index) {
-        handleSinkInputDelete(index);
-    });
+    connect(m_audioInterface, &AudioInterface::SinkInputAdded, this,&MixedSettingPage::handleSinkInputAdded);
+    connect(m_audioInterface, &AudioInterface::SinkInputDelete, this,&MixedSettingPage::handleSinkInputDelete);
 }
 
 MixedSettingPage::~MixedSettingPage()
@@ -57,6 +78,7 @@ void MixedSettingPage::initSink()
     VolumeSettingPage *sinkSetting = new VolumeSettingPage(AUDIO_DEVICE, defaultSinkPath);
     sinkSetting->hideLine();
     m_vboxLayout->addWidget(sinkSetting);
+    // m_vboxScrollAreaLayout->addWidget(sinkSetting);
 }
 
 void MixedSettingPage::initSinkInput()
@@ -74,6 +96,7 @@ void MixedSettingPage::initSinkInput()
         KLOG_DEBUG() << "index" << index;
         m_sinkInputsMap[index] = sinkInputSettings;
         m_vboxLayout->addWidget(sinkInputSettings);
+        // m_vboxScrollAreaLayout->addWidget(sinkInputSettings);
     }
 }
 
@@ -85,14 +108,71 @@ void MixedSettingPage::handleSinkInputAdded(int index)
     VolumeSettingPage *sinkInputAdded = new VolumeSettingPage(AUDIO_STREAM, objectPath);
     m_sinkInputsMap[index] = sinkInputAdded;
     m_vboxLayout->addWidget(sinkInputAdded);
+    // m_vboxScrollAreaLayout->addWidget(sinkInputAdded);
+    Q_EMIT adjustedMixedSettingPageSize();
 }
 
 void MixedSettingPage::handleSinkInputDelete(int index)
 {
     KLOG_DEBUG() << "SinkInputDelete index: " << index;
-    KLOG_DEBUG() << "m_sinkInputsMap[index];" << m_sinkInputsMap[index];
     delete m_sinkInputsMap[index];
     m_sinkInputsMap[index] = nullptr;
+    int removeNum = m_sinkInputsMap.remove(index);
     update();
+    adjustSize();
+    Q_EMIT adjustedMixedSettingPageSize();
 }
 
+int MixedSettingPage::getHeight()
+{
+    // KLOG_DEBUG() << "m_vboxLayout->sizeHint():" << m_vboxLayout->sizeHint();
+    int height = 66 * (m_sinkInputsMap.count() + 1);
+
+    if(height > 198)
+        height = 198;
+
+    return height;
+}
+
+/*
+#include <style-palette.h>
+#include <style-property.h>
+#include <QPainterPath>
+void MixedSettingPage::paintEvent(QPaintEvent* event)
+{
+    QStyleOption opt;
+    QStyle::State state;
+
+    opt.initFrom(this);
+    state = opt.state;
+    QRectF frect = opt.rect;
+    QPainterPath painterPath;
+    painterPath.addRect(frect);
+
+    QPainter painter(this);
+    painter.setRenderHint(QPainter::Antialiasing);
+
+    auto kiranPalette = Kiran::StylePalette::instance();
+    QColor backgroundColor;
+
+    backgroundColor = kiranPalette->color(Kiran::StylePalette::Normal,
+                                            Kiran::StylePalette::Window,
+                                            Kiran::StylePalette::Background);
+    
+    painter.fillRect(frect, backgroundColor);
+
+    QColor borderColor;
+    borderColor = kiranPalette->color(Kiran::StylePalette::Normal,
+                                      Kiran::StylePalette::Widget,
+                                      Kiran::StylePalette::Border);
+    
+    auto pen = painter.pen();
+    pen.setWidth(1);
+    pen.setColor(borderColor);
+    pen.setStyle(Qt::SolidLine);
+    painter.strokePath(painterPath, pen);
+
+
+    QWidget::paintEvent(event);
+}
+*/

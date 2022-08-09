@@ -23,7 +23,7 @@ namespace Ui
 class WirelessWidget;
 }
 QT_END_NAMESPACE
-using namespace NetworkManager;
+
 class KiranSwitchButton;
 class WirelessWidget : public QWidget
 {
@@ -35,7 +35,7 @@ public:
 
     void initUI();
     void initConnection();
-    void setWirelessSetting(const WirelessSetting::Ptr &wirelessSetting);
+    void setWirelessSetting(const NetworkManager::WirelessSetting::Ptr &wirelessSetting);
 public slots:
     void saveSettings();
     void setOtherWirelessSetting();
@@ -46,7 +46,7 @@ public slots:
     void initMacComboBox();
 private:
     Ui::WirelessWidget *ui;
-    WirelessSetting::Ptr m_wirelessSetting;
+    NetworkManager::WirelessSetting::Ptr m_wirelessSetting;
     KiranSwitchButton *m_mtuButton;
 };
 

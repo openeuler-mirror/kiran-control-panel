@@ -16,13 +16,14 @@
 
 #include <QWidget>
 #include <NetworkManagerQt/Ipv4Setting>
+
 QT_BEGIN_NAMESPACE
 namespace Ui
 {
 class Ipv4Widget;
 }
 QT_END_NAMESPACE
-using namespace NetworkManager;
+
 Q_DECLARE_METATYPE(NetworkManager::Ipv4Setting::ConfigMethod)
 
 class Ipv4Widget : public QWidget
@@ -34,12 +35,12 @@ public:
     ~Ipv4Widget() override;
     void initUI();
     void initConnection();
-    void setIpv4Setting(const Ipv4Setting::Ptr &ipv4Setting);
+    void setIpv4Setting(const NetworkManager::Ipv4Setting::Ptr &ipv4Setting);
     bool isIpv4AddressValid(const QString &address);
     bool isIpv4NetmaskValid(const QString &address);
 
 public slots:
-    void handleIpv4MethodChanged(Ipv4Setting::ConfigMethod method);
+    void handleIpv4MethodChanged(NetworkManager::Ipv4Setting::ConfigMethod method);
     void resetSettings();
     void saveSettings();
     void showSettings();
@@ -48,7 +49,7 @@ public slots:
 
 private:
     Ui::Ipv4Widget *ui;
-    Ipv4Setting::Ptr m_ipv4Setting;
+    NetworkManager::Ipv4Setting::Ptr m_ipv4Setting;
 };
 
 #endif  //KIRAN_CPANEL_NETWORK_IPV4_WIDGET_H

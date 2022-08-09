@@ -21,6 +21,7 @@
 #include <NetworkManagerQt/WirelessSecuritySetting>
 #include <NetworkManagerQt/WirelessSetting>
 #include "ui_connection-details-widget.h"
+using namespace NetworkManager;
 
 ConnectionDetailsWidget::ConnectionDetailsWidget(Device::Ptr device, QWidget *parent)
     : QWidget(parent), ui(new Ui::ConnectionDetailsWidget)
@@ -38,26 +39,29 @@ ConnectionDetailsWidget::~ConnectionDetailsWidget()
 void ConnectionDetailsWidget::init()
 {
     initUI();
-    m_activeConnection = m_device->activeConnection();
-    if (m_activeConnection == nullptr)
-        return;
-    m_connection = m_activeConnection->connection();
-
-    ui->networkInterface->setText(m_device->interfaceName());
-    if (m_activeConnection->type() == ConnectionSettings::Wireless)
-        setWirelessSpecificDetails();
-    else
+    if (m_device != nullptr)
     {
-        ui->wirelssSpecialWidget->setVisible(false);
-        WiredDevice::Ptr wiredDevice = qobject_cast<WiredDevice *>(m_device);
-        ui->mac->setText(wiredDevice->hardwareAddress());
-        int bitRate = wiredDevice->bitRate();
-        QString rate = "-";
-        if (bitRate != 0)
-            rate = QString("%1 Mb/s").arg(bitRate / 1000);
-        ui->rate->setText(rate);
+        m_activeConnection = m_device->activeConnection();
+        if (m_activeConnection == nullptr)
+            return;
+        m_connection = m_activeConnection->connection();
+
+        ui->networkInterface->setText(m_device->interfaceName());
+        if (m_activeConnection->type() == ConnectionSettings::Wireless)
+            setWirelessSpecificDetails();
+        else
+        {
+            ui->wirelssSpecialWidget->setVisible(false);
+            WiredDevice::Ptr wiredDevice = qobject_cast<WiredDevice *>(m_device);
+            ui->mac->setText(wiredDevice->hardwareAddress());
+            int bitRate = wiredDevice->bitRate();
+            QString rate = "-";
+            if (bitRate != 0)
+                rate = QString("%1 Mb/s").arg(bitRate / 1000);
+            ui->rate->setText(rate);
+        }
+        setIpDetails();
     }
-    setIpDetails();
 }
 
 void ConnectionDetailsWidget::initUI()
@@ -77,6 +81,8 @@ void ConnectionDetailsWidget::initUI()
 
     for (auto label : labels)
     {
+        if(m_device == nullptr)
+            label->setText("-");
         label->setStyleSheet("color:#919191;font-family: \"Noto Sans CJK SC Light\";");
     }
 

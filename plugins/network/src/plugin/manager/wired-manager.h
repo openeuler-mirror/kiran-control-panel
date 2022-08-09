@@ -19,7 +19,7 @@
 #include <QWidget>
 #include "manager.h"
 
-using namespace NetworkManager;
+
 QT_BEGIN_NAMESPACE
 namespace Ui
 {
@@ -32,14 +32,14 @@ class WiredManager : public Manager
     Q_OBJECT
 
 public:
-    explicit WiredManager(const QString &devicePath,QWidget *parent = nullptr);
+    explicit WiredManager(const QString &devicePath, QWidget *parent = nullptr);
     ~WiredManager() override;
 
     void initUI();
     void initConnection();
 
 public slots:
-    void handleRequestActivateConnection(const QString &connectionPath,const QString &connectionParameter);
+    void handleRequestActivateConnection(const QString &connectionPath, const QString &connectionParameter);
 
     void handleStateDeactivated(const QString &deactivatedPath) override;
     void handleStateActivated(const QString &activatedPath) override;
@@ -51,9 +51,13 @@ public slots:
 
     void handleActiveConnectionAdded(const QString &path) override;
     void handleActiveConnectionRemoved(const QString &path) override;
+
+    void handleSaveButtonClicked();
+    void handleConnectionUpdated(const QString &path);
+
 private:
     Ui::WiredManager *ui;
-    WiredDevice::Ptr m_wiredDevice;
+    NetworkManager::WiredDevice::Ptr m_wiredDevice;
 };
 
-#endif  //KIRAN_CPANEL_NETWORK_WIRED_MANAGER_H
+#endif  // KIRAN_CPANEL_NETWORK_WIRED_MANAGER_H

@@ -18,6 +18,8 @@
 #include <NetworkManagerQt/Manager>
 #include <NetworkManagerQt/WirelessDevice>
 #include <qt5-log-i.h>
+using namespace NetworkManager;
+
 WirelessWidget::WirelessWidget(QWidget *parent) : QWidget(parent), ui(new Ui::WirelessWidget)
 {
     ui->setupUi(this);
@@ -47,8 +49,6 @@ void WirelessWidget::initUI()
 void WirelessWidget::initConnection()
 {
     connect(m_mtuButton, &QAbstractButton::toggled, this, &WirelessWidget::handleCustomMTUChanged);
-    connect(notifier(),&Notifier::deviceAdded,[=](){initMacComboBox();});
-    connect(notifier(),&Notifier::deviceRemoved,[=](){initMacComboBox();});
 }
 
 void WirelessWidget::setWirelessSetting(const WirelessSetting::Ptr &wirelessSetting)

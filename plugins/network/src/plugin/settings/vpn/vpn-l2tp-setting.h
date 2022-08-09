@@ -46,7 +46,7 @@ public slots:
 
 private:
     Ui::VpnL2tpSetting *ui;
-    VpnSetting::Ptr m_vpnSetting;
+    NetworkManager::VpnSetting::Ptr m_vpnSetting;
 };
 
 #endif  //KIRAN_CPANEL_NETWORK_VPN_L2TP_SETTING_H

@@ -44,14 +44,14 @@ CPanelNetworkWidget::~CPanelNetworkWidget()
 
 void CPanelNetworkWidget::init()
 {
-    initSubItemsList();
     initPage();
     initConnect();
-
 }
 
+//TODO:增加sidebarItem与设备的对应关系
 void CPanelNetworkWidget::initPage()
 {
+    getAvailableDeviceList();
     int row = 0;
     for (int i = 0; i < m_wiredDeviceList.count(); ++i)
     {
@@ -61,10 +61,10 @@ void CPanelNetworkWidget::initPage()
         WiredManager *wiredManager = new WiredManager(devicePath, this);
         ui->stackedWidget->insertWidget(row,wiredManager);
 
-        QString subItemName = tr("Wired Connection %1");
+        QString subItemName = tr("Wired Network %1");
         QString subItemNameStr = subItemName.arg(i + 1);
-        if(m_wiredDeviceList.count() == 0)
-            ui->sidebar->insertItem(row, tr("Wired Connection"));
+        if(m_wiredDeviceList.count() == 1)
+            ui->sidebar->insertItem(row, tr("Wired Network"));
         else
             ui->sidebar->insertItem(row, subItemNameStr);
         ui->sidebar->item(row)->setData(Qt::UserRole, row);
@@ -80,10 +80,10 @@ void CPanelNetworkWidget::initPage()
         WirelessManager *wirelessManager = new WirelessManager(devicePath, this);
         ui->stackedWidget->insertWidget(row,wirelessManager);
 
-        QString subItemName = tr("Wireless Connection %1");
+        QString subItemName = tr("Wireless Network %1");
         QString subItemNameStr = subItemName.arg(i+1);
-        if(m_wirelessDeviceList.count() == 0)
-            ui->sidebar->insertItem(row, tr("Wireless Connection"));
+        if(m_wirelessDeviceList.count() == 1)
+            ui->sidebar->insertItem(row, tr("Wireless Network"));
         else
             ui->sidebar->insertItem(row, subItemNameStr);
 
@@ -106,6 +106,8 @@ void CPanelNetworkWidget::initPage()
     ui->sidebar->item(row)->setData(Qt::UserRole, row);
     ui->sidebar->item(row)->setIcon(trayIconColorSwitch(":/kcp-network-images/network-details.svg"));
     row++;
+
+    ui->sidebar->setCurrentRow(0);
 }
 
 void CPanelNetworkWidget::getAvailableDeviceList()
@@ -132,11 +134,9 @@ void CPanelNetworkWidget::getAvailableDeviceList()
 
 void CPanelNetworkWidget::initSubItemsList()
 {
-    getAvailableDeviceList();
-
     if (m_wiredDeviceList.count() > 1)
     {
-        QString subItemName = tr("Wired Connection %1");
+        QString subItemName = tr("Wired Network %1");
         for (int i = 0; i < m_wiredDeviceList.count(); ++i)
         {
             QString subItemNameStr = subItemName.arg(i + 1);
@@ -144,7 +144,7 @@ void CPanelNetworkWidget::initSubItemsList()
     }
     else if (m_wiredDeviceList.count() == 1)
     {
-        m_subItemsList << tr("Wired Connection");
+        m_subItemsList << tr("Wired Network");
     }
     else  // m_wiredDeviceList.count() == 0
     {
@@ -152,7 +152,7 @@ void CPanelNetworkWidget::initSubItemsList()
 
     if (m_wirelessDeviceList.count() > 1)
     {
-        QString subItemName = tr("Wireless Connection %1");
+        QString subItemName = tr("Wireless Network %1");
         for (int i = 0; i < m_wirelessDeviceList.count(); ++i)
         {
             QString subItemNameStr = subItemName.arg(i + 1);
@@ -160,7 +160,7 @@ void CPanelNetworkWidget::initSubItemsList()
     }
     else if (m_wirelessDeviceList.count() == 1)
     {
-        m_subItemsList << tr("Wireless Connection");
+        m_subItemsList << tr("Wireless Network");
     }
     else  // m_wiredDeviceList.count() == 0
     {
@@ -218,11 +218,7 @@ void CPanelNetworkWidget::initConnect()
 
     connect(notifier(), &Notifier::deviceRemoved, this, &CPanelNetworkWidget::handleDeviceRemoved);
 
-    connect(ui->sidebar, &QListWidget::itemClicked, [this](QListWidgetItem *item)
-            {
-                KLOG_DEBUG() << " item->data(Qt::UserRole).toInt():" << item->data(Qt::UserRole).toInt();
-                ui->stackedWidget->setCurrentIndex(item->data(Qt::UserRole).toInt());
-            });
+    connect(ui->sidebar, &QListWidget::itemClicked, this,&CPanelNetworkWidget::handleSideBarItemClicked);
 
     connect(Kiran::StylePalette::instance(), &Kiran::StylePalette::themeChanged, this, &CPanelNetworkWidget::handleThemeChanged);
 }
@@ -252,9 +248,7 @@ void CPanelNetworkWidget::reload()
     ui->sidebar->clear();
     m_wiredDeviceList.clear();
     m_wirelessDeviceList.clear();
-    m_subItemsList.clear();
 
-    initSubItemsList();
     initPage();
     ui->stackedWidget->setCurrentIndex(0);
 }
@@ -283,5 +277,32 @@ void CPanelNetworkWidget::handleThemeChanged(Kiran::PaletteType paletteType)
         image.invertPixels(QImage::InvertRgb);
         pixmap = QPixmap::fromImage(image);
         ui->sidebar->item(i)->setIcon(pixmap);
+    }
+}
+
+void CPanelNetworkWidget::handleSideBarItemClicked(QListWidgetItem *item)
+{
+    ui->stackedWidget->setCurrentIndex(item->data(Qt::UserRole).toInt());
+    
+    QString itemText =  item->text();
+    KLOG_DEBUG() << "item clicked:" <<  item->text();
+    if(itemText.contains(tr("Wireless Network")))
+    {
+        KLOG_DEBUG() << "item clicked wireless";
+        for (auto device : m_wirelessDeviceList)
+        {
+            WirelessDevice::Ptr wirelessDevice = qobject_cast<WirelessDevice *>(device);
+            QDBusPendingReply<> replyRequestScan = wirelessDevice->requestScan();
+
+            replyRequestScan.waitForFinished();
+            if (replyRequestScan.isError())
+            {
+                KLOG_DEBUG() << "wireless Device name:" << wirelessDevice->interfaceName() << " requestScan error:" << replyRequestScan.error();
+            }
+            else
+            {
+                KLOG_DEBUG() << "wireless Device name:" << wirelessDevice->interfaceName() << " requestScan reply:" << replyRequestScan.reply();
+            }
+        }
     }
 }

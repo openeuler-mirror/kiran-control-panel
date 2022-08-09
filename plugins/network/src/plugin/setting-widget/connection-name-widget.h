@@ -24,7 +24,7 @@ namespace Ui
 class ConnectionNameWidget;
 }
 QT_END_NAMESPACE
-using namespace NetworkManager;
+
 
 enum VpnType
 {
@@ -41,19 +41,20 @@ public:
     explicit ConnectionNameWidget(QWidget *parent = nullptr);
     ~ConnectionNameWidget() override;
     void initUI();
-    void setConnectionSettings(const ConnectionSettings::Ptr &connectionSettings);
+    void setConnectionSettings(const NetworkManager::ConnectionSettings::Ptr &connectionSettings);
     void setNameLabel(const QString &name);
     int connectionSuffixNum(QString &connName);
 public slots:
     void saveSettings();
-    void showSettings(ConnectionSettings::ConnectionType connectionType);
+    void showSettings(NetworkManager::ConnectionSettings::ConnectionType connectionType);
     void showVpnSettings(VpnType vpnType);
     void clearPtr();
     bool isInputValid();
 private:
     Ui::ConnectionNameWidget *ui;
-    ConnectionSettings::Ptr m_connectionSettings;
-    ConnectionSettings::ConnectionType m_connectionType;
     KiranSwitchButton *m_autoConnection;
+    NetworkManager::ConnectionSettings::Ptr m_connectionSettings;
+    NetworkManager::ConnectionSettings::ConnectionType m_connectionType;
+
 };
 #endif  //KIRAN_CPANEL_NETWORK_CONNECTION_NAME_WIDGET_H

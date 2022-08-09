@@ -14,31 +14,30 @@
 #ifndef TRAYPAGE_H
 #define TRAYPAGE_H
 
-#include <QWidget>
-#include <QPointer>
-#include <QTimer>
-#include <QStackedWidget>
-#include <NetworkManagerQt/Manager>
 #include <NetworkManagerQt/Device>
+#include <NetworkManagerQt/Manager>
+#include <QPointer>
+#include <QStackedWidget>
+#include <QTimer>
+#include <QWidget>
 
-using namespace NetworkManager;
 class ConnectionLists;
 class StatusNotification;
-Q_DECLARE_METATYPE(ActiveConnection::State);
+Q_DECLARE_METATYPE(NetworkManager::ActiveConnection::State);
 
-class ConnectionTray : public QWidget
+class TrayWidget : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit ConnectionTray(QWidget *parent = nullptr);
-    ~ConnectionTray();
+    explicit TrayWidget(QWidget *parent = nullptr);
+    ~TrayWidget();
 
     void init();
     void initUI();
     void initConnection();
 
-    void getDeviceList(Device::Type deviceType);
+    void getDeviceList(NetworkManager::Device::Type deviceType);
 
 public slots:
     virtual void handleNotifierConnectionAdded(const QString &path);
@@ -46,19 +45,20 @@ public slots:
     virtual void handleActiveConnectionAdded(const QString &activepath);
     virtual void handleActiveConnectionRemoved(const QString &activepath);
 
-    virtual void handleActiveConnectionStateChanged(ActiveConnection::State state);
+    virtual void handleActiveConnectionStateChanged(NetworkManager::ActiveConnection::State state);
     virtual void handleStateActivating(const QString &activatedPath);
     virtual void handleStateActivated(const QString &activatedPath);
     virtual void handleStateDeactivated(const QString &activatedPath);
 
-    virtual void handleDeviceStateChanged(Device::State newstate, Device::State oldstate, Device::StateChangeReason reason);
+    virtual void handleDeviceStateChanged(NetworkManager::Device::State newstate, NetworkManager::Device::State oldstate, NetworkManager::Device::StateChangeReason reason);
 
     void distributeNotifeir();
 
 protected:
-    QList<Device::Ptr> m_deviceList;
-    Device::Ptr m_devicePtr;
+    QList<NetworkManager::Device::Ptr> m_deviceList;
+    NetworkManager::Device::Ptr m_devicePtr;
     StatusNotification m_statusNotification;
+
 private:
     QTimer m_connectionRemovedTimer;
     QTimer m_StateActivatedTimer;

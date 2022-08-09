@@ -17,6 +17,9 @@
 #include <NetworkManagerQt/Settings>
 #include <NetworkManagerQt/WiredDevice>
 #include <NetworkManagerQt/WirelessDevice>
+
+using namespace NetworkManager;
+
 Manager::Manager(QWidget *parent) : QWidget(parent)
 {
 }
@@ -28,8 +31,8 @@ Manager::~Manager()
 void Manager::initNotifierConnection()
 {
     //该信号并不能判断连接是否真正Connected/Activated,只能判断一个连接被加入到激活容器中
-    connect(notifier(), &Notifier::activeConnectionAdded, this, &Manager::handleActiveConnectionAdded);
-    connect(notifier(), &Notifier::activeConnectionRemoved, this, &Manager::handleActiveConnectionRemoved);
+    connect(notifier(), &Notifier::activeConnectionAdded, this, &Manager::handleActiveConnectionAdded,Qt::UniqueConnection);
+    connect(notifier(), &Notifier::activeConnectionRemoved, this, &Manager::handleActiveConnectionRemoved,Qt::UniqueConnection);
 
     //连接Wired时触发，而连接VPN时没有触发该信号，暂时不使用该信号
     //    connect(notifier(), &Notifier::statusChanged, [=](NetworkManager::Status status) {
@@ -37,8 +40,8 @@ void Manager::initNotifierConnection()
     //
     //    });
 
-    connect(settingsNotifier(), &SettingsNotifier::connectionAdded, this, &Manager::handleNotifierConnectionAdded);
-    connect(settingsNotifier(), &SettingsNotifier::connectionRemoved, this,&Manager::handleNotifierConnectionRemoved);
+    connect(settingsNotifier(), &SettingsNotifier::connectionAdded, this, &Manager::handleNotifierConnectionAdded,Qt::UniqueConnection);
+    connect(settingsNotifier(), &SettingsNotifier::connectionRemoved, this,&Manager::handleNotifierConnectionRemoved,Qt::UniqueConnection);
 }
 
 void Manager::refreshConnectionLists()
@@ -122,6 +125,11 @@ void Manager::getDeviceList(Device::Type deviceType)
 }
 
 void Manager::handleStateActivating(const QString &activatedPath)
+{
+
+}
+
+void Manager::handleDeviceStateChanged(NetworkManager::Device::State newstate, NetworkManager::Device::State oldstate, NetworkManager::Device::StateChangeReason reason)
 {
 
 }

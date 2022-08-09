@@ -19,8 +19,6 @@
 #include <NetworkManagerQt/Device>
 #include <QWidget>
 
-using namespace NetworkManager;
-
 QT_BEGIN_NAMESPACE
 namespace Ui
 {
@@ -33,7 +31,7 @@ class ConnectionDetailsWidget : public QWidget
     Q_OBJECT
 
 public:
-    explicit ConnectionDetailsWidget(Device::Ptr device, QWidget *parent = nullptr);
+    explicit ConnectionDetailsWidget(NetworkManager::Device::Ptr device, QWidget *parent = nullptr);
     ~ConnectionDetailsWidget() override;
     void init();
     void initUI();
@@ -42,9 +40,9 @@ public:
 
 private:
     Ui::ConnectionDetailsWidget *ui;
-    Device::Ptr m_device;
-    ActiveConnection::Ptr m_activeConnection;
-    Connection::Ptr m_connection;
+    NetworkManager::Device::Ptr m_device;
+    NetworkManager::ActiveConnection::Ptr m_activeConnection;
+    NetworkManager::Connection::Ptr m_connection;
 };
 
 #endif  // KIRAN_CONTROL_PANEL_CONNECTION_DETAILS_WIDGET_H

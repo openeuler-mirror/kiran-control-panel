@@ -15,16 +15,16 @@
 #ifndef KIRAN_CPANEL_NETWORK_WIRELESS_SECURITY_WIDGET_H
 #define KIRAN_CPANEL_NETWORK_WIRELESS_SECURITY_WIDGET_H
 
-#include <QWidget>
-#include <NetworkManagerQt/WirelessSecuritySetting>
 #include <NetworkManagerQt/Security8021xSetting>
+#include <NetworkManagerQt/WirelessSecuritySetting>
+#include <QWidget>
 QT_BEGIN_NAMESPACE
 namespace Ui
 {
 class WirelessSecurityWidget;
 }
 QT_END_NAMESPACE
-using namespace NetworkManager;
+
 Q_DECLARE_METATYPE(NetworkManager::WirelessSecuritySetting::KeyMgmt)
 class WirelessSecurityWidget : public QWidget
 {
@@ -36,20 +36,21 @@ public:
 
     void initUI();
     void initConnection();
-    void setWirelessSecuritySetting(const WirelessSecuritySetting::Ptr &wirelessSecuritySetting);
+    void setWirelessSecuritySetting(const NetworkManager::WirelessSecuritySetting::Ptr &wirelessSecuritySetting);
 
 public slots:
-    void handleSecurityOptionChanged(WirelessSecuritySetting::KeyMgmt keyMgmt);
-    void handlePasswordOptionsChanged(Setting::SecretFlagType secretFlagType);
+    void handleSecurityOptionChanged(NetworkManager::WirelessSecuritySetting::KeyMgmt keyMgmt);
+    void handlePasswordOptionsChanged(NetworkManager::Setting::SecretFlagType secretFlagType);
     void enablePasswordVisual();
     void saveSettings();
     void showSettings();
     void resetSettings();
     void clearPtr();
+
 private:
     Ui::WirelessSecurityWidget *ui;
-    WirelessSecuritySetting::Ptr m_wirelessSecuritySetting;
-    Security8021xSetting::Ptr m_security8021xSetting;
+    NetworkManager::WirelessSecuritySetting::Ptr m_wirelessSecuritySetting;
+    NetworkManager::Security8021xSetting::Ptr m_security8021xSetting;
 };
 
-#endif  //KIRAN_CPANEL_NETWORK_WIRELESS_SECURITY_WIDGET_H
+#endif  // KIRAN_CPANEL_NETWORK_WIRELESS_SECURITY_WIDGET_H

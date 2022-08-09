@@ -18,11 +18,10 @@
 #include <NetworkManagerQt/WiredDevice>
 #include <QWidget>
 #include "connection-lists.h"
-#include "connection-tray.h"
+#include "tray-widget.h"
 
-using namespace NetworkManager;
 class ConnectionLists;
-class WiredTrayWidget : public ConnectionTray
+class WiredTrayWidget : public TrayWidget
 {
     Q_OBJECT
 
@@ -51,8 +50,9 @@ public:
 
 signals:
     void adjustedTraySize(QSize sizeHint);
+
 private:
-    WiredDevice::Ptr m_wiredDevice;
+    NetworkManager::WiredDevice::Ptr m_wiredDevice;
     QString m_devicePath;
     QVBoxLayout *m_verticalLayout;
     QPointer<ConnectionLists> m_connectionLists;

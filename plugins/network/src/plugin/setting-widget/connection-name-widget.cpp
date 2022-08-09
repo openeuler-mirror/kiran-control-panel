@@ -19,6 +19,7 @@
 #include <NetworkManagerQt/Settings>
 #include <NetworkManagerQt/WirelessSetting>
 #include "ui_connection-name-widget.h"
+using namespace NetworkManager;
 
 ConnectionNameWidget::ConnectionNameWidget(QWidget *parent) : QWidget(parent), ui(new Ui::ConnectionNameWidget)
 {

@@ -24,6 +24,7 @@
 #include <QPainter>
 #include <QStyleOption>
 #include <QSvgRenderer>
+#include <style-palette.h>
 
 VolumeSettingPage::VolumeSettingPage(enum AudioNode audio, QString objectPath, QWidget *parent) : QWidget(parent), ui(new Ui::VolumeSettingPage)
 {
@@ -56,9 +57,7 @@ void VolumeSettingPage::initAudioDevice()
 {
     initSettings(m_sink);
     ui->volumeName->setText(tr("Volume"));
-    connect(m_sink, &AudioDeviceInterface::volumeChanged, [=](double value) {
-        handleVolumeChanged(value);
-    });
+    connect(m_sink, &AudioDeviceInterface::volumeChanged,this,&VolumeSettingPage::handleVolumeChanged);
     connect(m_sink, &AudioDeviceInterface::muteChanged, [=](bool value) {
         KLOG_DEBUG() << "m_sink  muteChanged:" << value;
     });
@@ -68,9 +67,7 @@ void VolumeSettingPage::initAudioStream()
 {
     initSettings(m_sinkInput);
     ui->volumeName->setText(m_sinkInput->GetProperty("application.name"));
-    connect(m_sinkInput, &AudioStreamInterface::volumeChanged, [=](double value) {
-        handleVolumeChanged(value);
-    });
+    connect(m_sinkInput, &AudioStreamInterface::volumeChanged, this,&VolumeSettingPage::handleVolumeChanged);
     connect(m_sinkInput, &AudioStreamInterface::muteChanged, [=](bool value) {
         KLOG_DEBUG() << "m_sinkInput muteChanged:" << value;
     });
@@ -147,41 +144,34 @@ void VolumeSettingPage::setVolumeIcon(int value)
 {
     if (value == 0)
     {
-        volumeIconColorSwitch(":/kcp-audio-images/kcp-audio-mute.svg", "#ffffff");
+        ui->muteButton->setIcon(trayIconColorSwitch(":/kcp-audio-images/kcp-audio-mute.svg"));
     }
     else if (0 < value && value <= 33)
     {
-        volumeIconColorSwitch(":/kcp-audio-images/kcp-audio-low.svg", "#ffffff");
+        ui->muteButton->setIcon(trayIconColorSwitch(":/kcp-audio-images/kcp-audio-low.svg"));
     }
     else if (33 < value && value <= 66)
     {
-        volumeIconColorSwitch(":/kcp-audio-images/kcp-audio-medium.svg", "#ffffff");
+        ui->muteButton->setIcon(trayIconColorSwitch(":/kcp-audio-images/kcp-audio-medium.svg"));
     }
     else
     {
-        volumeIconColorSwitch(":/kcp-audio-images/kcp-audio-loud.svg", "#ffffff");
+        ui->muteButton->setIcon(trayIconColorSwitch(":/kcp-audio-images/kcp-audio-loud.svg"));
     }
 }
 
-void VolumeSettingPage::volumeIconColorSwitch(QString svgPath, QString color)
+QPixmap VolumeSettingPage::trayIconColorSwitch(const QString &iconPath)
 {
-    QFile file(svgPath);
-    file.open(QIODevice::ReadOnly);
-
-    QRegExp rx("fill: #[0-9a-f]*");
-    QByteArray data = file.readAll();
-    QString svg(data);
-
-    QByteArray svgModifed = svg.replace(rx, "fill: " + color).toUtf8();
-    //    KLOG_DEBUG() << "svgModifed" << svgModifed;
-
-    QSvgRenderer svgRenderer(svgModifed);
-    QPixmap pixmap(QSize(16, 16));
-    pixmap.fill(Qt::transparent);
-    QPainter painter(&pixmap);
-    svgRenderer.render(&painter);
-    QIcon icon(pixmap);
-    ui->muteButton->setIcon(icon);
+    //icon原本为浅色
+    QIcon icon(iconPath);
+    QPixmap pixmap = icon.pixmap(16,16);
+    if( Kiran::StylePalette::instance()->paletteType() != Kiran::PALETTE_DARK )
+    {
+        QImage image = pixmap.toImage();
+        image.invertPixels(QImage::InvertRgb);
+        pixmap = QPixmap::fromImage(image);
+    }
+    return pixmap;
 }
 
 void VolumeSettingPage::hideLine()

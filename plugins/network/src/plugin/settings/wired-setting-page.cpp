@@ -20,6 +20,7 @@
 #include <NetworkManagerQt/Manager>
 #include <NetworkManagerQt/Settings>
 #include "ui_wired-setting-page.h"
+using namespace NetworkManager;
 
 WiredSettingPage::WiredSettingPage(QWidget *parent) : SettingPage(parent), ui(new Ui::WiredSettingPage)
 {
@@ -108,7 +109,7 @@ void WiredSettingPage::clearPtr()
 
 bool WiredSettingPage::isInputValid()
 {
-    if (ui->ipv4Widget->isInputValid() || ui->ipv6Widget->isInputValid() || ui->connectionNameWidget->isInputValid())
+    if (ui->ipv4Widget->isInputValid() && ui->ipv6Widget->isInputValid() && ui->connectionNameWidget->isInputValid())
         return true;
     else
         return false;

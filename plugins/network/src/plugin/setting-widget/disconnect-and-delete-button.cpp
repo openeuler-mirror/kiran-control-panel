@@ -12,12 +12,15 @@
  * Author:     luoqing <luoqing@kylinos.com.cn>
  */
 
+#include "disconnect-and-delete-button.h"
 #include <kiran-message-box.h>
 #include <qt5-log-i.h>
+#include <NetworkManagerQt/ConnectionSettings>
 #include <NetworkManagerQt/Manager>
+#include <QTimer>
 #include "status-notification.h"
-#include "disconnect-and-delete-button.h"
 #include "ui_disconnect-and-delete-button.h"
+using namespace NetworkManager;
 
 DisconnectAndDeleteButton::DisconnectAndDeleteButton(QWidget *parent) : QWidget(parent), ui(new Ui::DisconnectAndDeleteButton)
 {
@@ -33,6 +36,7 @@ DisconnectAndDeleteButton::~DisconnectAndDeleteButton()
 
 void DisconnectAndDeleteButton::initUI()
 {
+    ui->ignoreButton->setVisible(false);
 }
 
 void DisconnectAndDeleteButton::initButton(SettingConnectionStatus connectionStatus, const QString &activeConnectionPath)
@@ -55,11 +59,23 @@ void DisconnectAndDeleteButton::initButton(SettingConnectionStatus connectionSta
         break;
     }
     m_activeConnectionPath = activeConnectionPath;
+
+    auto activeConnectionPtr = NetworkManager::findActiveConnection(m_activeConnectionPath);
+    if(activeConnectionPtr != nullptr)
+    {
+        ConnectionSettings::ConnectionType connectionType = activeConnectionPtr->connection()->settings()->connectionType();
+        if (connectionType == ConnectionSettings::Wireless)
+        {
+            ui->deleteButton->setVisible(false);
+            ui->ignoreButton->setVisible(true);
+        }
+    }
 }
 
 void DisconnectAndDeleteButton::initConnection()
 {
-    connect(ui->disconnectButton, &QPushButton::clicked, [=]() {
+    connect(ui->disconnectButton, &QPushButton::clicked, [=]()
+            {
         QDBusPendingReply<> reply = NetworkManager::deactivateConnection(m_activeConnectionPath);
         reply.waitForFinished();
         if (reply.isError())
@@ -68,9 +84,9 @@ void DisconnectAndDeleteButton::initConnection()
         }
         else
             KLOG_DEBUG() << "deactivateConnection reply:" << reply.reply();
-        emit disconnectButtonClicked();
-    });
+        emit disconnectButtonClicked(); });
     connect(ui->deleteButton, &QPushButton::clicked, this, &DisconnectAndDeleteButton::handleDeleteConnection);
+    connect(ui->ignoreButton, &QPushButton::clicked, this, &DisconnectAndDeleteButton::handleIgnoreWireless);
 }
 
 void DisconnectAndDeleteButton::setConnectionPtr(const Connection::Ptr &connection)
@@ -101,4 +117,25 @@ void DisconnectAndDeleteButton::handleDeleteConnection()
 void DisconnectAndDeleteButton::clearPtr()
 {
     m_connection.clear();
+}
+
+// Note:ignore无线网络先断开网络再删除配置，功能与delete部分重合
+void DisconnectAndDeleteButton::handleIgnoreWireless()
+{
+    QDBusPendingReply<> reply = NetworkManager::deactivateConnection(m_activeConnectionPath);
+    reply.waitForFinished();
+    if (reply.isError())
+        KLOG_DEBUG() << "Disconnect failed:" << reply.error();
+
+    /*
+     * Note:deactivate后，通过信号发出deactivate的状态通知，通知需要从connection中获取id信息
+     * 如果deactivate后立马删除connection,可能导致状态通知获取不到相应的信息
+     * 故延时一段时间，以便状态通知能获取到id信息
+     * 有待改进
+     * */
+    QTimer::singleShot(100, this, [this]()
+                       {
+                        QDBusPendingReply<> reply = m_connection->remove();
+                        reply.waitForFinished();
+                        emit deleteButtonClicked(); });
 }

@@ -14,27 +14,27 @@
 #ifndef KIRAN_CPANEL_NETWORK_MANAGER_TRAY_H
 #define KIRAN_CPANEL_NETWORK_MANAGER_TRAY_H
 
-#include <QSystemTrayIcon>
-#include <QWidget>
-#include <QVBoxLayout>
-#include <QTimer>
-#include <NetworkManagerQt/Manager>
-#include <NetworkManagerQt/Device>
-#include "kiran-rounded-tray-popup/kiran-rounded-tray-popup.h"
 #include <style-palette.h>
+#include <NetworkManagerQt/Device>
+#include <NetworkManagerQt/Manager>
+#include <QSystemTrayIcon>
+#include <QTimer>
+#include <QVBoxLayout>
+#include <QWidget>
+#include "kiran-rounded-tray-popup/kiran-rounded-tray-popup.h"
 
-using namespace NetworkManager;
+
 class WiredTrayWidget;
 class WirelessTrayWidget;
 class StatusNotifierManagerInterface;
 class TrayPage;
-class ManagerTray : public KiranRoundedTrayPopup
+class NetworkTray : public KiranRoundedTrayPopup
 {
     Q_OBJECT
 
 public:
-    explicit ManagerTray(QWidget *parent = nullptr);
-    ~ManagerTray() override;
+    explicit NetworkTray(QWidget *parent = nullptr);
+    ~NetworkTray() override;
     void init();
 
     void initConnect();
@@ -59,6 +59,12 @@ public slots:
     void handleDeviceAdded(const QString &devicePath);
     void handleDeviceRemoved(const QString &devicePath);
     void handleNetworkManagerStatusChanged(NetworkManager::Status status);
+    void handlePrimaryConnectionChanged(const QString &uni);
+
+    void handleDeviceStateChanged(NetworkManager::Device::State newstate,
+                                  NetworkManager::Device::State oldstate,
+                                  NetworkManager::Device::StateChangeReason reason);
+    void handleDeviceManagedChanged();
 
     void handleAdjustedTraySize(QSize sizeHint);
 
@@ -66,17 +72,20 @@ public slots:
 
     void handleThemeChanged(Kiran::PaletteType paletteType);
 
+protected:
+    void paintEvent(QPaintEvent *event) override;
+
 private:
     QSystemTrayIcon *m_systemTray;
-    QMenu* m_menu;
-    QAction* m_networkSetting;
+    QMenu *m_menu;
+    QAction *m_networkSetting;
 
     TrayPage *m_wiredTrayPage;
     TrayPage *m_wirelessTrayPage;
     StatusNotifierManagerInterface *m_statusNotifierManager;
 
-    QList<Device::Ptr> m_wiredDeviceList;
-    QList<Device::Ptr> m_wirelessDeviceList;
+    QList<NetworkManager::Device::Ptr> m_wiredDeviceList;
+    QList<NetworkManager::Device::Ptr> m_wirelessDeviceList;
 
     QVBoxLayout *m_verticalLayout;
     int m_xTray, m_yTray, m_heightTray, m_widthTray;
@@ -84,7 +93,7 @@ private:
     QTimer m_Timer;
     QTimer m_wirelessTimer;
     QString m_addDevicePath;
-    int waitCounts;
+    int m_waitCounts;
     QSize m_wirelessTraySizeHint;
 };
 

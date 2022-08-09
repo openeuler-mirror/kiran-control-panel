@@ -19,6 +19,7 @@
 #include <QPainter>
 #include <QStyleOption>
 #include <QSvgRenderer>
+#include <QPainterPath>
 #include "ui_tray-itemwidget.h"
 
 TrayItemWidget::TrayItemWidget(QWidget *parent) : QWidget(parent), ui(new Ui::TrayItemWidget)
@@ -167,14 +168,8 @@ void TrayItemWidget::activatingStatus()
 
 void TrayItemWidget::setLoadingStatus(bool isLoading)
 {
-    //    ui->loadingLabel->setLoadingStatus(isLoading);
     ui->connectionStatus->setLoadingStatus(isLoading);
 }
-
-// void TrayItemWidget::setLoadingLabelVisible(bool isVisible)
-//{
-//     ui->loadingLabel->setVisible(isVisible);
-// }
 
 void TrayItemWidget::setConnectionStatusLabel()
 {
@@ -248,7 +243,7 @@ TrayItemWidgetStatus TrayItemWidget::itemWidgetStatus()
     return m_currentItemWidgetStatus;
 }
 
-#include <QPainterPath>
+
 void TrayItemWidget::paintEvent(QPaintEvent *event)
 {
     QStyleOption opt;
@@ -269,7 +264,7 @@ void TrayItemWidget::paintEvent(QPaintEvent *event)
     if ((state & QStyle::State_MouseOver) && testAttribute(Qt::WA_Hover))
     {
         backgroundColor = kiranPalette->color(Kiran::StylePalette::Hover,
-                                              Kiran::StylePalette::Widget,
+                                              Kiran::StylePalette::Window,
                                               Kiran::StylePalette::Background);
     }
     else
@@ -284,9 +279,16 @@ void TrayItemWidget::paintEvent(QPaintEvent *event)
     borderColor = kiranPalette->color(Kiran::StylePalette::Normal,
                                       Kiran::StylePalette::Widget,
                                       Kiran::StylePalette::Border);
+    
     auto pen = painter.pen();
+    pen.setWidth(1);
     pen.setColor(borderColor);
-    painter.strokePath(painterPath, pen);
+    // pen.setStyle(Qt::SolidLine);
+    // painter.strokePath(painterPath, pen);
+
+    painter.setPen(pen);
+    painter.drawLine(frect.topLeft(), frect.topRight());
+
 
     QWidget::paintEvent(event);
 }
