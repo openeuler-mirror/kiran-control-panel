@@ -56,6 +56,7 @@ void CategoryWidget::init()
 
     //滚动区域
     auto pScrollArea = new QScrollArea(this);
+    pScrollArea->setAutoFillBackground(true);
     pScrollArea->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     pScrollArea->setFrameStyle(QFrame::NoFrame);
     layout->addWidget(pScrollArea);
