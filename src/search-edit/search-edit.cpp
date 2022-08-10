@@ -21,12 +21,14 @@
 #include <QApplication>
 #include <QCompleter>
 #include <QEvent>
+#include <QTimer>
 #include <QKeyEvent>
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QListView>
 #include <QSpacerItem>
 #include <QStandardItemModel>
+#include <kiran-message-box.h>
 
 SearchEdit::SearchEdit(QWidget *parent)
     : KiranSearchBox(parent)
@@ -53,16 +55,40 @@ void SearchEdit::init()
     m_completer->installEventFilter(this);
 
     setCompleter(m_completer);
-
     // clang-format off
     connect(m_completer, QOverload<const QModelIndex &>::of(&QCompleter::activated), [this](const QModelIndex &index) {
         if( !index.isValid() )
+        {
             return ;
-
+        }
         QString categoryID,subItemID;
         auto filterModel = m_completer->completionModel();
         categoryID = filterModel->data(index,SearchModel::roleCategoryID).toString();
         subItemID = filterModel->data(index,SearchModel::roleSubItemID).toString();
+        emit requestJumpTo(categoryID,subItemID);
+        QTimer::singleShot(0,this,&QLineEdit::clear);
+    });
+    connect(this,&QLineEdit::returnPressed,[this](){
+        QString searchkey = text();
+        if( searchkey.isEmpty() )
+        {
+            return;
+        }
+
+        auto items = m_searchModel->findItems(searchkey);
+        if( items.isEmpty() )
+        {
+            auto clickedButton = KiranMessageBox::message(this,tr("Info"),tr("Failed to find related items, please re-enter!"),KiranMessageBox::Ok|KiranMessageBox::No);
+            if( clickedButton == KiranMessageBox::Ok )
+                clear();
+            return;
+        }
+
+        auto item = items.at(0);
+        auto categoryID = item->data(SearchModel::roleCategoryID).toString();
+        auto subItemID = item->data(SearchModel::roleSubItemID).toString();
+        clear();
+        
         emit requestJumpTo(categoryID,subItemID);
     });
     // clang-format on
