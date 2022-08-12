@@ -30,4 +30,17 @@
         <translation>控制面板</translation>
     </message>
 </context>
+<context>
+    <name>SearchEdit</name>
+    <message>
+        <location filename="../src/search-edit/search-edit.cpp" line="81"/>
+        <source>Info</source>
+        <translation>提示</translation>
+    </message>
+    <message>
+        <location filename="../src/search-edit/search-edit.cpp" line="81"/>
+        <source>Failed to find related items, please re-enter!</source>
+        <translation>未能搜索到相关项，请重新输入!</translation>
+    </message>
+</context>
 </TS>
