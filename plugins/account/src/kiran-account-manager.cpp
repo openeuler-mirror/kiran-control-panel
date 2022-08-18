@@ -359,7 +359,7 @@ void KiranAccountManager::initPageSelectAvatar()
 void KiranAccountManager::initPageAuthManager()
 {
     //TODO:init auth manager page
-    connect(m_page_authManager, &AuthManagerPage::sigReturn, [this]() {
+    connect(m_page_authManager, &AuthManagerPage::sigReturn, this,[this]() {
         m_stackWidget->setCurrentIndex(PAGE_USER_INFO);
     });
 }
@@ -367,13 +367,13 @@ void KiranAccountManager::initPageAuthManager()
 void KiranAccountManager::connectToInfoChanged()
 {
     //处理用户新增、删除
-    connect(AccountsGlobalInfo::instance(), &AccountsGlobalInfo::UserAdded,
+    connect(AccountsGlobalInfo::instance(), &AccountsGlobalInfo::UserAdded,this,
             [this](const QDBusObjectPath &obj) {
                 KLOG_INFO() << "siderbar add item:" << obj.path();
                 appendSiderbarItem(obj.path());
             });
 
-    connect(AccountsGlobalInfo::instance(), &AccountsGlobalInfo::UserDeleted,
+    connect(AccountsGlobalInfo::instance(), &AccountsGlobalInfo::UserDeleted,this,
             [this](const QDBusObjectPath &obj) {
                 KLOG_INFO() << "siderbar delete item:" << obj.path();
                 int findIdx = -1;
@@ -402,7 +402,7 @@ void KiranAccountManager::connectToInfoChanged()
             });
 
     //处理用户属性变更
-    connect(AccountsGlobalInfo::instance(), &AccountsGlobalInfo::UserPropertyChanged,
+    connect(AccountsGlobalInfo::instance(), &AccountsGlobalInfo::UserPropertyChanged,this,
             [this](QString userPath, QString propertyName, QVariant value) {
                 //侧边栏
                 if ((propertyName == "locked") || (propertyName == "icon_file"))
