@@ -75,11 +75,11 @@ void DetailsPage::initMultiConnectionDetailsWidget()
         QWidget *widget = new ConnectionDetailsWidget(device, this);
         ui->stackedWidget->addWidget(widget);
     }
-    connect(ui->activatedConnectionComboBox, QOverload<int>::of(&QComboBox::currentIndexChanged), this,
-            &DetailsPage::handleActivatedConnectionComboBoxChanged);
+    connect(ui->activatedConnectionComboBox, QOverload<int>::of(&QComboBox::activated), this,
+            &DetailsPage::handleActivatedConnectionComboBoxActivated, Qt::UniqueConnection);
 }
 
-void DetailsPage::handleActivatedConnectionComboBoxChanged(int index)
+void DetailsPage::handleActivatedConnectionComboBoxActivated(int index)
 {
     ui->stackedWidget->setCurrentIndex(index);
 }
@@ -131,10 +131,12 @@ void DetailsPage::clear()
 {
     m_deviceList.clear();
     ui->activatedConnectionComboBox->clear();
-    for (int i = 0; i < ui->stackedWidget->count(); ++i)
+    int count = ui->stackedWidget->count();
+    for (int i = 0; i < count; i++)
     {
         QWidget *widget = ui->stackedWidget->currentWidget();
         ui->stackedWidget->removeWidget(widget);
+        widget->deleteLater();
     }
 }
 
