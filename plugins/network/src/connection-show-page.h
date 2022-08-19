@@ -19,8 +19,8 @@
 #include <NetworkManagerQt/Manager>
 #include <NetworkManagerQt/WirelessNetwork>
 #include <QListWidgetItem>
-#include <QWidget>
 #include <QTimer>
+#include <QWidget>
 
 QT_BEGIN_NAMESPACE
 namespace Ui
@@ -39,6 +39,8 @@ class ConnectionShowPage : public QWidget
 public:
     explicit ConnectionShowPage(QWidget *parent = nullptr);
     ~ConnectionShowPage() override;
+
+    void init(NetworkManager::ConnectionSettings::ConnectionType connectionType, const QString &devicePath);
     void initUI();
     void initConnect();
 

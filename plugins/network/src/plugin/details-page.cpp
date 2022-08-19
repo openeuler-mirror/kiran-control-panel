@@ -58,7 +58,7 @@ void DetailsPage::initUI()
         QWidget *widget = new ConnectionDetailsWidget(m_deviceList.at(0), this);
         ui->stackedWidget->addWidget(widget);
     }
-    else if(m_deviceList.count() == 0)
+    else if (m_deviceList.count() == 0)
     {
         QWidget *widget = new ConnectionDetailsWidget(nullptr, this);
         ui->stackedWidget->addWidget(widget);
@@ -105,12 +105,13 @@ void DetailsPage::handleDeviceRemoved(const QString &devicePath)
 
 void DetailsPage::handleActiveConnectionChanged()
 {
+    reload();
 }
 
 void DetailsPage::handleActiveConnectionAdded(const QString &activeConnectionPath)
 {
     ActiveConnection::Ptr activeConnection = findActiveConnection(activeConnectionPath);
-    connect(activeConnection.data(), &ActiveConnection::stateChanged, this, &DetailsPage::handleActiveConnectionStateChanged);
+    connect(activeConnection.data(), &ActiveConnection::stateChanged, this, &DetailsPage::handleActiveConnectionStateChanged, Qt::UniqueConnection);
 }
 
 void DetailsPage::handleActiveConnectionRemoved(const QString &activeConnectionPath)

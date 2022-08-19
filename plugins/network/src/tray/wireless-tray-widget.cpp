@@ -43,10 +43,9 @@ void WirelessTrayWidget::init()
     initUI();
     initConnection();
 
-    ActiveConnection::Ptr  activatedConnection = m_wirelessDevice->activeConnection();
-    if(!activatedConnection.isNull())
+    ActiveConnection::Ptr activatedConnection = m_wirelessDevice->activeConnection();
+    if (!activatedConnection.isNull())
         connect(activatedConnection.data(), &ActiveConnection::stateChanged, this, &WirelessTrayWidget::handleActiveConnectionStateChanged, Qt::UniqueConnection);
-
 }
 
 void WirelessTrayWidget::initUI()
@@ -70,7 +69,7 @@ void WirelessTrayWidget::initConnection()
     connect(m_connectionLists, &ConnectionLists::sendPasswordToWirelessSetting, this, &WirelessTrayWidget::setSecurityPskAndActivateWirelessConnection);
     connect(m_connectionLists, &ConnectionLists::sendSsidToWireless, this, &WirelessTrayWidget::handleRequestConnectHiddenNetwork);
 
-    connect(m_devicePtr.data(), &Device::stateChanged, this, &WirelessTrayWidget::handleDeviceStateChanged,Qt::UniqueConnection);
+    connect(m_devicePtr.data(), &Device::stateChanged, this, &WirelessTrayWidget::handleDeviceStateChanged, Qt::UniqueConnection);
     connect(m_connectionLists, &ConnectionLists::adjustedTraySize, this, &WirelessTrayWidget::adjustedTraySize);
 }
 
@@ -110,7 +109,7 @@ void WirelessTrayWidget::handleRequestConnectHiddenNetwork(const QString &ssid)
     {
         KLOG_DEBUG() << "Hidden networks have been explicitly detected,return";
         StatusNotification::connectitonHiddenNetworkFailedNotify(ssid);
-        
+
         QListWidgetItem *item = m_connectionLists->getHiddenNetworkItem();
         m_connectionLists->itemSimpleStatus(item);
         return;
@@ -148,7 +147,7 @@ void WirelessTrayWidget::getWirelessAvailableConnections(const QString &devicePa
 }
 
 // 在已存在WirelessSetting配置的情况下，激活连接．（连接过一次后会创建WirelessSetting配置）
-//Note:不存在的无线网络或者配置，能activate成功，但是返回的ActivateConnection可能会空，从而导致错误
+// Note:不存在的无线网络或者配置，能activate成功，但是返回的ActivateConnection可能会空，从而导致错误
 void WirelessTrayWidget::activateWirelessConnection(const QString &connectionPath, const QString &devicePath, const QString &accessPointPath)
 {
     if (!connectionPath.isEmpty())
@@ -164,7 +163,7 @@ void WirelessTrayWidget::activateWirelessConnection(const QString &connectionPat
             StatusNotification::connectitonFailedNotify(connectionPath);
         }
         else
-            KLOG_DEBUG() << "reply.reply():" << reply.reply();    
+            KLOG_DEBUG() << "reply.reply():" << reply.reply();
     }
 }
 
@@ -226,13 +225,13 @@ void WirelessTrayWidget::createConnectionSettings(const QString &ssid, const QSt
     }
 }
 
-//Note:不存在的无线网络或者配置，activate成功，但是返回的ActivateConnection可能会空，从而导致错误
+// Note:不存在的无线网络或者配置，activate成功，但是返回的ActivateConnection可能会空，从而导致错误
 void WirelessTrayWidget::addAndActivateWirelessConnection(ConnectionSettings::Ptr connectionSettings)
 {
     const QString ssid = m_connectionInfo.wirelessInfo.ssid;
     const QString accessPointPath = m_connectionInfo.wirelessInfo.accessPointPath;
     KLOG_DEBUG() << "accessPointPath" << accessPointPath;
-    KLOG_DEBUG() << "wireless device path:" << m_devicePath; 
+    KLOG_DEBUG() << "wireless device path:" << m_devicePath;
     QDBusPendingReply<QDBusObjectPath, QDBusObjectPath> reply =
         NetworkManager::addAndActivateConnection(connectionSettings->toMap(), m_devicePath, accessPointPath);
 
@@ -260,9 +259,9 @@ void WirelessTrayWidget::handleRequestDisconnect(const QString &activatedConnect
 }
 
 /*FIX:
-*由于ActiveConnection为空，暂时无法获得有效的连接信息
-*存在多个网卡时，由于无法确定是那个该ActiveConnection来自那个设备，则多个设备都会发送通知
-*/
+ *由于ActiveConnection为空，暂时无法获得有效的连接信息
+ *存在多个网卡时，由于无法确定是那个该ActiveConnection来自那个设备，则多个设备都会发送通知
+ */
 void WirelessTrayWidget::handleActiveConnectionAdded(const QString &path)
 {
     //多个网卡，还需要判断设备
@@ -270,12 +269,12 @@ void WirelessTrayWidget::handleActiveConnectionAdded(const QString &path)
     ActiveConnection::Ptr activatedConnection = findActiveConnection(path);
     if (activatedConnection == nullptr)
     {
-        //Note:目前已知连接一个不存在的无线网络时，activatedConnection为空
+        // Note:目前已知连接一个不存在的无线网络时，activatedConnection为空
         StatusNotification::connectitonFailedNotify();
         KLOG_DEBUG() << "new add activatedConnection is nullptr";
         return;
     }
-    
+
     QStringList deviceList = activatedConnection->devices();
     if ((activatedConnection->type() == ConnectionSettings::ConnectionType::Wireless) && deviceList.contains(m_devicePath))
     {
@@ -296,7 +295,7 @@ void WirelessTrayWidget::handleActiveConnectionAdded(const QString &path)
             m_connectionLists->itemSimpleStatus(item);
         }
         connect(activatedConnection.data(), &ActiveConnection::stateChanged, this, &WirelessTrayWidget::handleActiveConnectionStateChanged, Qt::UniqueConnection);
-    } 
+    }
 }
 
 void WirelessTrayWidget::handleActiveConnectionRemoved(const QString &path)
@@ -310,7 +309,7 @@ void WirelessTrayWidget::handleStateActivating(const QString &activatedPath)
     ActiveConnection::Ptr activatedConnection = findActiveConnection(activatedPath);
     if (activatedConnection == nullptr)
     {
-        //Note:目前已知连接一个不存在的无线网络时，activatedConnection为空
+        // Note:目前已知连接一个不存在的无线网络时，activatedConnection为空
         StatusNotification::connectitonFailedNotify();
         KLOG_DEBUG() << "activatedConnection == nullptr";
         return;
@@ -357,7 +356,6 @@ void WirelessTrayWidget::handleStateActivated(const QString &activatedPath)
         //连接成功后手动rescan
         QDBusPendingReply<> replyRequestScan = m_wirelessDevice->requestScan();
         replyRequestScan.waitForFinished();
-        KLOG_DEBUG() << "--------------------------StateActivated requestScan";
         if (replyRequestScan.isError())
         {
             KLOG_DEBUG() << "StateActivated requestScan error:" << replyRequestScan.error();
@@ -447,8 +445,7 @@ void WirelessTrayWidget::handleRequestIgnore(const QString &activatedConnectionP
                            QDBusPendingReply<> replyRemove = connection->remove();
                            replyRemove.waitForFinished();
                            if (replyRemove.isError())
-                               KLOG_INFO() << "Remove connection failed:" << replyRemove.error();
-                       });
+                               KLOG_INFO() << "Remove connection failed:" << replyRemove.error(); });
 }
 
 void WirelessTrayWidget::setSecurityPskAndActivateWirelessConnection(const QString &password)
