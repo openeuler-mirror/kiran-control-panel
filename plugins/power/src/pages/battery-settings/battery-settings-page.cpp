@@ -65,7 +65,6 @@ void BatterySettingsPage::initUI()
     ///计算机空闲进行的操作
     // clang-format off
     QMap<QString, int> computerIdleActionsMap = {
-        {tr("Display Off"), POWER_ACTION_DISPLAY_OFF},
         {tr("Suspend"), POWER_ACTION_COMPUTER_SUSPEND},
         {tr("Shutdown"), POWER_ACTION_COMPUTER_SHUTDOWN},
         {tr("Hibernate"), POWER_ACTION_COMPUTER_HIBERNATE},

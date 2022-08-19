@@ -82,6 +82,7 @@ KiranTips::KiranTips(QWidget *parent) : QWidget(parent),
         }
     });
     setVisible(false);
+    setHideTimeout(3000);
 }
 
 KiranTips::~KiranTips()
