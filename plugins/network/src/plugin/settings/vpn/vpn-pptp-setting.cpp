@@ -85,7 +85,6 @@ void VpnPptpSetting::showSettingPage(QString activeConnectionPath)
 
 void VpnPptpSetting::clearPtr()
 {
-    KLOG_DEBUG() << "VpnPptpSetting::clearPtr";
     m_vpnSetting.clear();
     SettingPage::clearPtr();
 

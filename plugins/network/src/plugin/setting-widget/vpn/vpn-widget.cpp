@@ -13,6 +13,7 @@
  */
 
 #include "vpn-widget.h"
+#include <kiran-message-box.h>
 #include <qt5-log-i.h>
 #include <QHostAddress>
 #include "ui_vpn-widget.h"
@@ -150,24 +151,53 @@ void VpnWidget::clearPtr()
 
 bool VpnWidget::isInputValid()
 {
-    bool valid = true;
     QString gatewayStr = ui->gateway->text();
     if (gatewayStr.isEmpty())
-        valid = false;
+    {
+        QString error = QString(tr("Gateway can not be empty"));
+        KiranMessageBox::KiranStandardButton btn = KiranMessageBox::message(this, tr("Error"),
+                                                                            error,
+                                                                            KiranMessageBox::Yes | KiranMessageBox::No);
+        KLOG_DEBUG() << "Gateway cannot be empty";
+        return false;
+    }
     else
     {
         if (!isIpv4AddressValid(gatewayStr))
-            valid = false;
+        {
+            QString error = QString(tr("Gateway invalid"));
+            KiranMessageBox::KiranStandardButton btn = KiranMessageBox::message(this, tr("Error"),
+                                                                                error,
+                                                                                KiranMessageBox::Yes | KiranMessageBox::No);
+            KLOG_DEBUG() << "Gateway invalid";
+            return false;
+        }
     }
 
     if (ui->userName->text().isEmpty())
-        valid = false;
+    {
+        QString error = QString(tr("user name can not be empty"));
+        KiranMessageBox::KiranStandardButton btn = KiranMessageBox::message(this, tr("Error"),
+                                                                            error,
+                                                                            KiranMessageBox::Yes | KiranMessageBox::No);
 
-    if ((ui->passwordOptions->currentData().value<Setting::SecretFlagType>() == NetworkManager::Setting::SecretFlagType::None) 
-    && ui->password->text().isEmpty())
-        valid = false;
+        KLOG_DEBUG() << "user name can not be empty";
+        return false;
+    }
 
-    return valid;
+    if ((ui->passwordOptions->currentData().value<Setting::SecretFlagType>() == Setting::SecretFlagType::None) &&
+        ui->password->text().isEmpty())
+    {
+        QString error = QString(tr("password can not be empty"));
+        KiranMessageBox::KiranStandardButton btn = KiranMessageBox::message(this, tr("Error"),
+                                                                            error,
+                                                                            KiranMessageBox::Yes | KiranMessageBox::No);
+
+        KLOG_DEBUG() << "password can not be empty";
+        return false;
+    }
+
+    return true;
 }
 
 bool VpnWidget::isIpv4AddressValid(const QString &address)

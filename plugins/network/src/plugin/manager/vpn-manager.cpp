@@ -47,8 +47,8 @@ void VpnManager::initUI()
     ui->connectionShowPage->setTitle(tr("VPN"));
     ui->connectionShowPage->setSwitchButtonVisible(false);
 
-    //    ui->vpnType->addItem(tr("L2TP"), VPN_TYPE_L2TP);
-    ui->vpnType->addItem(tr("PPTP"), VPN_TYPE_PPTP);
+    ui->vpnType->addItem(tr("L2TP"), VPN_TYPE_L2TP);
+    // ui->vpnType->addItem(tr("PPTP"), VPN_TYPE_PPTP);
     Kiran::StylePropertyHelper::setButtonType(ui->saveButton, Kiran::BUTTON_Default);
 }
 
@@ -59,9 +59,10 @@ void VpnManager::initConnection()
             {
         //默认创建vpn类型：L2TP
         ui->vpnTypeWidget->setVisible(true);
-        ui->vpnType->setCurrentIndex(0);
-        ui->vpnTypeStacked->setCurrentIndex(VPN_TYPE_PPTP);
-        ui->pptpSetting->showSettingPage();
+        ui->vpnType->setCurrentIndex(VPN_TYPE_L2TP);
+        ui->vpnTypeStacked->setCurrentIndex(VPN_TYPE_L2TP);
+        ui->l2tpSetting->showSettingPage();
+        // ui->vpnType->setCurrentIndex(0);
 
         QPointer<QScrollBar> scrollBar = ui->scrollArea->verticalScrollBar();
         scrollBar->setValue(0);
@@ -73,7 +74,7 @@ void VpnManager::initConnection()
     connect(ui->vpnType, QOverload<int>::of(&QComboBox::currentIndexChanged), [=](int index)
             {
         VpnType type = ui->vpnType->currentData().value<VpnType>();
-        ui->vpnTypeStacked->setCurrentIndex(VPN_TYPE_PPTP);
+        ui->vpnTypeStacked->setCurrentIndex(type);
         switch (type)
         {
         case VPN_TYPE_L2TP:
@@ -186,14 +187,14 @@ void VpnManager::handleRequestActivateConnection(const QString &connectionPath, 
         inputDialog.setTitle(tr("Tips"));
         QString tips = QString(tr("Password required to connect to %1.")).arg(settings->id());
         inputDialog.setText(tips);
-
-        connect(&inputDialog, &TextInputDialog::password, [=](const QString &password)
+        inputDialog.setlineEditEchoMode(QLineEdit::Password);
+        connect(&inputDialog, &TextInputDialog::password, this, [=](const QString &password)
                 {
-            NMStringMap secretsMap = vpnSetting->secrets();
-            secretsMap.insert("password", password);
-            vpnSetting->setSecrets(secretsMap);
-            activateVPNConnection(connectionPath, connectionParameter);
-            connection->clearSecrets(); });
+                    NMStringMap secretsMap = vpnSetting->secrets();
+                    secretsMap.insert("password", password);
+                    vpnSetting->setSecrets(secretsMap);
+                    activateVPNConnection(connectionPath, connectionParameter);
+                    connection->clearSecrets(); });
 
         inputDialog.exec();
     }

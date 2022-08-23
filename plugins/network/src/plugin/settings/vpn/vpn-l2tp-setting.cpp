@@ -107,5 +107,5 @@ void VpnL2tpSetting::clearPtr()
 
 bool VpnL2tpSetting::isInputValid()
 {
-    return ui->vpnWidget->isInputValid() || ui->connectioNameWidget->isInputValid();
+    return ui->vpnWidget->isInputValid() && ui->connectioNameWidget->isInputValid();
 }
