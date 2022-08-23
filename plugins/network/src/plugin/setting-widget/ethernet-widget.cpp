@@ -13,11 +13,13 @@
  */
 
 #include "ethernet-widget.h"
+#include <kiran-message-box.h>
 #include <kiran-switch-button.h>
 #include <qt5-log-i.h>
 #include <NetworkManagerQt/Manager>
 #include <NetworkManagerQt/WiredDevice>
 #include "ui_ethernet-widget.h"
+
 using namespace NetworkManager;
 
 EthernetWidget::EthernetWidget(QWidget *parent) : QWidget(parent), ui(new Ui::EthernetWidget)
@@ -38,7 +40,7 @@ void EthernetWidget::initUI()
     ui->customMTU->setVisible(false);
     ui->customMTU->setMinimum(0);
     ui->customMTU->setMaximum(10000);
-    //UserData设为空""，为了匹配Mac地址为空的情况
+    // UserData设为空""，为了匹配Mac地址为空的情况
     ui->deviceMac->addItem(tr("No device specified"), "");
     initEthernetMacComboBox();
 }
@@ -75,7 +77,7 @@ void EthernetWidget::setWiredSetting(const WiredSetting::Ptr &wiredSetting)
 
 void EthernetWidget::saveSettings()
 {
-    if(m_wiredSetting != nullptr)
+    if (m_wiredSetting != nullptr)
     {
         QString macAddress = ui->deviceMac->currentData().toString();
         QString cloneMac = ui->cloneDeviceMac->text();
@@ -89,7 +91,7 @@ void EthernetWidget::saveSettings()
 
 void EthernetWidget::showSettings()
 {
-    if(m_wiredSetting != nullptr)
+    if (m_wiredSetting != nullptr)
     {
         QString deviceMac = m_wiredSetting->macAddress().toHex(':').toUpper();
         QString cloneDeviceMac = m_wiredSetting->clonedMacAddress().toHex(':').toUpper();
@@ -132,15 +134,26 @@ void EthernetWidget::clearPtr()
 
 bool EthernetWidget::isInputValid()
 {
-    isCloneMacValid(ui->cloneDeviceMac->text());
-    return false;
+    if (!isCloneMacValid(ui->cloneDeviceMac->text()))
+    {
+        QString error = QString(tr("Clone Mac invalid"));
+        KiranMessageBox::KiranStandardButton btn = KiranMessageBox::message(this, tr("Error"),
+                                                                            error,
+                                                                            KiranMessageBox::Yes | KiranMessageBox::No);
+
+        KLOG_DEBUG() << "Clone Mac invalid";
+        return false;
+    }
+    return true;
 }
 
 bool EthernetWidget::isCloneMacValid(const QString &cloneMac)
 {
-    if (cloneMac.isEmpty()) {
+    if (cloneMac.isEmpty())
+    {
         return true;
     }
-    bool matched =  QRegExp("^([0-9A-Fa-f]{2}[:]){5}([0-9A-Fa-f]{2})$").exactMatch(cloneMac);
+    bool matched = QRegExp("^([0-9A-Fa-f]{2}[:]){5}([0-9A-Fa-f]{2})$").exactMatch(cloneMac);
+
     return matched;
 }

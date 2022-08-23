@@ -180,7 +180,9 @@ void WiredManager::handleSaveButtonClicked()
         handleReturnPreviousPage();
     }
     else
+    {
         KLOG_DEBUG() << "Invalid input exists";
+    }
 }
 
 void WiredManager::handleConnectionUpdated(const QString &path)

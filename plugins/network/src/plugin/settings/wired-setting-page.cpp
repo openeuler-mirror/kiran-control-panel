@@ -20,18 +20,17 @@
 #include <NetworkManagerQt/Manager>
 #include <NetworkManagerQt/Settings>
 #include "ui_wired-setting-page.h"
+
 using namespace NetworkManager;
 
 WiredSettingPage::WiredSettingPage(QWidget *parent) : SettingPage(parent), ui(new Ui::WiredSettingPage)
 {
     ui->setupUi(this);
     initConnecton();
-    KLOG_DEBUG() << "WiredSettingPage::WiredSettingPage(QWidget *parent)";
 }
 
 WiredSettingPage::~WiredSettingPage()
 {
-    KLOG_DEBUG() << "WiredSettingPage::~WiredSettingPage()";
     delete ui;
 }
 
@@ -54,6 +53,7 @@ void WiredSettingPage::initSpecificSettings()
     m_wiredSetting = m_connectionSettings->setting(Setting::SettingType::Wired).dynamicCast<WiredSetting>();
 }
 
+// TODO:修改命名
 void WiredSettingPage::initWidgets()
 {
     ui->connectionNameWidget->setConnectionSettings(m_connectionSettings);
@@ -109,7 +109,8 @@ void WiredSettingPage::clearPtr()
 
 bool WiredSettingPage::isInputValid()
 {
-    if (ui->ipv4Widget->isInputValid() && ui->ipv6Widget->isInputValid() && ui->connectionNameWidget->isInputValid())
+    if (ui->ipv4Widget->isInputValid() && ui->ipv6Widget->isInputValid() &&
+        ui->connectionNameWidget->isInputValid() && ui->ethernetWidget->isInputValid())
         return true;
     else
         return false;
