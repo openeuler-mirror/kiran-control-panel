@@ -63,11 +63,11 @@ void VpnPpp::initOptionsButton(const QStringList &supportOptions)
             switchButton->setProperty("option", option);
             m_optionsButtonMap[option] = switchButton;
 
-            QHBoxLayout *horizontalLayout = new QHBoxLayout(this);
+            QHBoxLayout *horizontalLayout = new QHBoxLayout();
             horizontalLayout->addWidget(strLabel);
             horizontalLayout->addStretch();
             horizontalLayout->addWidget(switchButton);
-            horizontalLayout->setContentsMargins(0,0,0,0);
+            horizontalLayout->setContentsMargins(0, 0, 0, 0);
             ui->optionsLayout->addLayout(horizontalLayout);
         }
         else
@@ -156,7 +156,7 @@ void VpnPpp::saveSettings()
     m_vpnSetting->setInitialized(true);
 }
 
-//XXX:优化流程
+// XXX:优化流程
 void VpnPpp::showSettings()
 {
     if (m_vpnSetting != nullptr)

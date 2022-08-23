@@ -13,6 +13,7 @@
  */
 
 #include "ipv4-widget.h"
+#include <kiran-message-box.h>
 #include <kiran-switch-button.h>
 #include <qt5-log-i.h>
 #include "ui_ipv4-widget.h"
@@ -65,7 +66,6 @@ void Ipv4Widget::setIpv4Setting(const Ipv4Setting::Ptr &ipv4Setting)
     m_ipv4Setting = ipv4Setting;
 }
 
-// TODO:错误提示弹窗
 void Ipv4Widget::saveSettings()
 {
     if (m_ipv4Setting != nullptr)
@@ -85,7 +85,6 @@ void Ipv4Widget::saveSettings()
             m_ipv4Setting->setMethod(method);
 
             ipv4Address.setIp(QHostAddress(ui->ipv4Address->text()));
-            // XXX:输入合法性检测
             QString netMask = ui->ipv4Netmask->text();
             if (!netMask.contains("."))
             {
@@ -134,8 +133,11 @@ void Ipv4Widget::showSettings()
 {
     if (m_ipv4Setting != nullptr)
     {
+        KLOG_DEBUG() << "m_ipv4Setting->method():" << m_ipv4Setting->method();
+
         if (m_ipv4Setting->method() == Ipv4Setting::ConfigMethod::Automatic)
         {
+            KLOG_DEBUG() << "Ipv4Setting::ConfigMethod::Automatic";
             resetSettings();
         }
         else if (m_ipv4Setting->method() == Ipv4Setting::ConfigMethod::Manual)
@@ -143,10 +145,14 @@ void Ipv4Widget::showSettings()
             int ipv4MethodIndex = ui->ipv4Method->findData(m_ipv4Setting->method());
             ui->ipv4Method->setCurrentIndex(ipv4MethodIndex);
             // xxx:取addresses的方式有待改进
-            IpAddress ipv4Address = m_ipv4Setting->addresses().at(0);
+            IpAddress ipv4Address = m_ipv4Setting->addresses().value(0);
             QString address = ipv4Address.ip().toString();
             QString netmask = ipv4Address.netmask().toString();
             QString gateway = ipv4Address.gateway().toString();
+
+            KLOG_DEBUG() << "address:" << address;
+            KLOG_DEBUG() << "netmask:" << netmask;
+            KLOG_DEBUG() << "gateway:" << gateway;
 
             ui->ipv4Address->setText(address);
             ui->ipv4Netmask->setText(netmask);
@@ -188,57 +194,108 @@ void Ipv4Widget::clearPtr()
 }
 
 // TODO:验证功能待完善
+// XXX:输入验证提示暂时先用弹框，之后修改
 bool Ipv4Widget::isInputValid()
 {
     Ipv4Setting::ConfigMethod configMethod = ui->ipv4Method->currentData().value<Ipv4Setting::ConfigMethod>();
-    bool valid = true;
+
     if (configMethod == Ipv4Setting::ConfigMethod::Automatic)
     {
-        isIpv4AddressValid(ui->ipv4PreferredDNS->text());
-        isIpv4AddressValid(ui->ipv4AlternateDNS->text());
     }
     else if (configMethod == Ipv4Setting::ConfigMethod::Manual)
     {
-        QString ipv4 =  ui->ipv4Address->text();
-        QString netMask =  ui->ipv4Netmask->text();
+        QString ipv4 = ui->ipv4Address->text();
+        QString netMask = ui->ipv4Netmask->text();
+        QString ipv4Gateway = ui->ipv4Gateway->text();
 
         if (ipv4.isEmpty())
         {
-            valid = false;
-            KLOG_DEBUG() << "Ipv4 address cannot be empty";
+            QString error = QString(tr("Ipv4 address can not be empty"));
+            KiranMessageBox::KiranStandardButton btn = KiranMessageBox::message(this, tr("Error"),
+                                                                                error,
+                                                                                KiranMessageBox::Yes | KiranMessageBox::No);
+
+            KLOG_DEBUG() << "Ipv4 address can not be empty";
+            return false;
         }
         else
         {
-            if(!isIpv4AddressValid(ipv4))
+            if (!isIpv4AddressValid(ipv4))
             {
-                valid = false;
-                KLOG_DEBUG() << "Ipv4Address invalid";
+                QString error = QString(tr("Ipv4 Address invalid"));
+                KiranMessageBox::KiranStandardButton btn = KiranMessageBox::message(this, tr("Error"),
+                                                                                    error,
+                                                                                    KiranMessageBox::Yes | KiranMessageBox::No);
+                KLOG_DEBUG() << "Ipv4 Address invalid";
+                return false;
             }
         }
-        
+
         if (netMask.isEmpty())
         {
-            valid = false;
+            QString error = QString(tr("NetMask can not be empty"));
+            KiranMessageBox::KiranStandardButton btn = KiranMessageBox::message(this, tr("Error"),
+                                                                                error,
+                                                                                KiranMessageBox::Yes | KiranMessageBox::No);
             KLOG_DEBUG() << "NetMask cannot be empty";
+            return false;
         }
         else
         {
-            if(!isIpv4NetmaskValid(netMask))
+            if (!isIpv4NetmaskValid(netMask))
             {
-                valid = false;
+                QString error = QString(tr("Netmask invalid"));
+                KiranMessageBox::KiranStandardButton btn = KiranMessageBox::message(this, tr("Error"),
+                                                                                    error,
+                                                                                    KiranMessageBox::Yes | KiranMessageBox::No);
                 KLOG_DEBUG() << "Netmask invalid";
+                return false;
             }
         }
 
-        ui->ipv4Gateway->text();
-        ui->ipv4PreferredDNS->text();
-        ui->ipv4AlternateDNS->text();
-        isIpv4AddressValid(ui->ipv4Gateway->text());
-        isIpv4AddressValid(ui->ipv4PreferredDNS->text());
-        isIpv4AddressValid(ui->ipv4AlternateDNS->text());
-
+        if (!ipv4Gateway.isEmpty())
+        {
+            if (!isIpv4AddressValid(ipv4Gateway))
+            {
+                QString error = QString(tr("Ipv4 Gateway invalid"));
+                KiranMessageBox::KiranStandardButton btn = KiranMessageBox::message(this, tr("Error"),
+                                                                                    error,
+                                                                                    KiranMessageBox::Yes | KiranMessageBox::No);
+                KLOG_DEBUG() << "Ipv4 Netmask invalid";
+                return false;
+            }
+        }
     }
-    return valid;
+
+    QString preferredDNS = ui->ipv4PreferredDNS->text();
+    if (!preferredDNS.isEmpty())
+    {
+        if (!isIpv4AddressValid(preferredDNS))
+        {
+            QString error = QString(tr("Ipv4 Preferred DNS invalid"));
+            KiranMessageBox::KiranStandardButton btn = KiranMessageBox::message(this, tr("Error"),
+                                                                                error,
+                                                                                KiranMessageBox::Yes | KiranMessageBox::No);
+            KLOG_DEBUG() << "Ipv4 Preferred DNS invalid";
+            return false;
+        }
+    }
+
+    QString alternateDNS = ui->ipv4AlternateDNS->text();
+    if (!alternateDNS.isEmpty())
+    {
+        if (!isIpv4AddressValid(alternateDNS))
+        {
+            QString error = QString(tr("Ipv4 Alternate DNS invalid"));
+            KiranMessageBox::KiranStandardButton btn = KiranMessageBox::message(this, tr("Error"),
+                                                                                error,
+                                                                                KiranMessageBox::Yes | KiranMessageBox::No);
+            KLOG_DEBUG() << "Ipv4 Alternate DNS invalid";
+            return false;
+        }
+    }
+
+    return true;
 }
 
 bool Ipv4Widget::isIpv4AddressValid(const QString &address)

@@ -13,6 +13,7 @@
  */
 
 #include "connection-name-widget.h"
+#include <kiran-message-box.h>
 #include <kiran-switch-button.h>
 #include <qt5-log-i.h>
 #include <NetworkManagerQt/Connection>
@@ -82,7 +83,7 @@ void ConnectionNameWidget::showSettings(ConnectionSettings::ConnectionType conne
     }
     else if (m_connectionType == ConnectionSettings::Wireless)
     {
-        if(m_connectionSettings != nullptr)
+        if (m_connectionSettings != nullptr)
         {
             WirelessSetting::Ptr wirelessSetting = m_connectionSettings->setting(Setting::Wireless).dynamicCast<WirelessSetting>();
             ui->connectionName->setText(wirelessSetting->ssid());
@@ -91,8 +92,8 @@ void ConnectionNameWidget::showSettings(ConnectionSettings::ConnectionType conne
         }
         else
         {
-//            ui->connectionName->setEnabled(true);
-//            m_autoConnection->setChecked(true);
+            //            ui->connectionName->setEnabled(true);
+            //            m_autoConnection->setChecked(true);
         }
     }
 }
@@ -173,11 +174,16 @@ void ConnectionNameWidget::clearPtr()
 
 bool ConnectionNameWidget::isInputValid()
 {
-    bool valid = true;
     QString nameStr = ui->connectionName->text();
     if (nameStr.isEmpty())
     {
+        QString error = QString(tr("Connection name can not be empty"));
+        KiranMessageBox::KiranStandardButton btn = KiranMessageBox::message(this, tr("Error"),
+                                                                            error,
+                                                                            KiranMessageBox::Yes | KiranMessageBox::No);
+
+        KLOG_DEBUG() << "Connection name cannot be empty";
         return false;
     }
-    return valid;
+    return true;
 }

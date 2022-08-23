@@ -40,25 +40,22 @@ WiredManager::~WiredManager()
 
 void WiredManager::initUI()
 {
-    ui->connectionShowPage->setConnectionType(ConnectionSettings::Wired);
-    ui->connectionShowPage->setDevicePath(m_devicePath);
-    ui->connectionShowPage->setItemWidgetType(ITEM_WIDGET_TYPE_PLUGIN);
+    ui->connectionShowPage->init(ConnectionSettings::Wired, m_devicePath);
     ui->connectionShowPage->setTitle(tr("Wired Network Adapter"));
     ui->connectionShowPage->setSwitchButtonVisible(false);
-    ui->connectionShowPage->showConnectionLists(ConnectionSettings::ConnectionType::Wired);
     Kiran::StylePropertyHelper::setButtonType(ui->saveButton, Kiran::BUTTON_Default);
 }
 
 void WiredManager::initConnection()
 {
-    connect(ui->connectionShowPage, &ConnectionShowPage::requestCreatConnection, [=]()
+    connect(ui->connectionShowPage, &ConnectionShowPage::requestCreatConnection, this, [this]()
             {
                 ui->wiredSettingPage->showSettingPage();
                 QPointer<QScrollBar> scrollBar = ui->scrollArea->verticalScrollBar();
                 scrollBar->setValue(0);
                 ui->stackedWidget->setCurrentIndex(PAGE_SETTING); });
 
-    connect(ui->connectionShowPage, &ConnectionShowPage::requestEditConnection, [=](const QString &uuid, QString activeConnectionPath)
+    connect(ui->connectionShowPage, &ConnectionShowPage::requestEditConnection, this, [this](const QString &uuid, QString activeConnectionPath)
             {
                 ui->wiredSettingPage->initConnectionSettings(ConnectionSettings::ConnectionType::Wired, uuid);
                 ui->wiredSettingPage->initSettingPage();
@@ -73,7 +70,7 @@ void WiredManager::initConnection()
 
     connect(ui->wiredSettingPage, &WiredSettingPage::returnPreviousPage, this, &WiredManager::handleReturnPreviousPage);
 
-    connect(ui->connectionShowPage, &ConnectionShowPage::connectionUpdated, this,&WiredManager::handleConnectionUpdated);
+    connect(ui->connectionShowPage, &ConnectionShowPage::connectionUpdated, this, &WiredManager::handleConnectionUpdated);
 
     connect(ui->connectionShowPage, &ConnectionShowPage::requestActivateCurrentItemConnection,
             this, &WiredManager::handleRequestActivateConnection);
@@ -183,7 +180,9 @@ void WiredManager::handleSaveButtonClicked()
         handleReturnPreviousPage();
     }
     else
+    {
         KLOG_DEBUG() << "Invalid input exists";
+    }
 }
 
 void WiredManager::handleConnectionUpdated(const QString &path)

@@ -37,7 +37,6 @@ public:
     void initConnecton();
     void initSettingPage() override;
     void initSpecificSettings() override;
-    void initWidgets() override;
     void clearPtr() override;
 
 public slots:
@@ -50,4 +49,4 @@ private:
     KiranSwitchButton *m_security;
 };
 
-#endif  //KIRAN_CPANEL_NETWORK_WIRED_SETTING_PAGE_H
+#endif  // KIRAN_CPANEL_NETWORK_WIRED_SETTING_PAGE_H

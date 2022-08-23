@@ -15,10 +15,10 @@
 #ifndef KIRAN_CPANEL_NETWORK_WIRELESS_SETTING_PAGE_H
 #define KIRAN_CPANEL_NETWORK_WIRELESS_SETTING_PAGE_H
 
+#include <NetworkManagerQt/WirelessSecuritySetting>
+#include <NetworkManagerQt/WirelessSetting>
 #include <QWidget>
 #include "setting-page.h"
-#include <NetworkManagerQt/WirelessSetting>
-#include <NetworkManagerQt/WirelessSecuritySetting>
 QT_BEGIN_NAMESPACE
 namespace Ui
 {
@@ -36,16 +36,16 @@ public:
     void initConnection();
     void initSettingPage() override;
     void initSpecificSettings() override;
-    void initWidgets() override;
     void clearPtr() override;
 
 public slots:
     void saveSettingPage() override;
     void showSettingPage(QString activeConnectionPath = "");
+
 private:
     Ui::WirelessSettingPage *ui;
     NetworkManager::WirelessSetting::Ptr m_wirelessSetting;
     NetworkManager::WirelessSecuritySetting::Ptr m_wirelessSecuritySetting;
 };
 
-#endif  //KIRAN_CPANEL_NETWORK_WIRELESS_SETTING_PAGE_H
+#endif  // KIRAN_CPANEL_NETWORK_WIRELESS_SETTING_PAGE_H

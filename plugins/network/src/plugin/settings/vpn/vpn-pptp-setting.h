@@ -15,9 +15,9 @@
 #ifndef KIRAN_CPANEL_NETWORK_VPN_PPTP_SETTING_H
 #define KIRAN_CPANEL_NETWORK_VPN_PPTP_SETTING_H
 
+#include <NetworkManagerQt/VpnSetting>
 #include <QWidget>
 #include "setting-page.h"
-#include <NetworkManagerQt/VpnSetting>
 QT_BEGIN_NAMESPACE
 namespace Ui
 {
@@ -34,7 +34,6 @@ public:
     ~VpnPptpSetting() override;
     void initSettingPage() override;
     void initSpecificSettings() override;
-    void initWidgets() override;
     void clearPtr() override;
 
 public slots:
@@ -47,4 +46,4 @@ private:
     NetworkManager::VpnSetting::Ptr m_vpnSetting;
 };
 
-#endif  //KIRAN_CPANEL_NETWORK_VPN_PPTP_SETTING_H
+#endif  // KIRAN_CPANEL_NETWORK_VPN_PPTP_SETTING_H

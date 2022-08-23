@@ -15,11 +15,11 @@
 #ifndef KIRAN_CPANEL_NETWORK_CPANEL_NETWORK_WIDGET_H
 #define KIRAN_CPANEL_NETWORK_CPANEL_NETWORK_WIDGET_H
 
-#include <QWidget>
 #include <NetworkManagerQt/Device>
+#include <QTimer>
+#include <QWidget>
 #include "kiran-sidebar-widget.h"
 #include "style-palette.h"
-#include <QTimer>
 
 QT_BEGIN_NAMESPACE
 namespace Ui
@@ -51,6 +51,9 @@ public slots:
     void handleDeviceRemoved(const QString &devicePath);
     void handleThemeChanged(Kiran::PaletteType paletteType);
     void handleSideBarItemClicked(QListWidgetItem *item);
+    void handleManagedChanged();
+    void handleWirelessEnabledChanged(bool enable);
+    void handleNetworkingEnabledChanged(bool enable);
 
 signals:
     void subItemsChanged();
@@ -63,7 +66,7 @@ private:
 
     QTimer m_Timer;
     QString m_addDevicePath;
-    int waitCounts;
+    int m_waitCounts;
 };
 
-#endif  //KIRAN_CPANEL_NETWORK_CPANEL_NETWORK_WIDGET_H
+#endif  // KIRAN_CPANEL_NETWORK_CPANEL_NETWORK_WIDGET_H

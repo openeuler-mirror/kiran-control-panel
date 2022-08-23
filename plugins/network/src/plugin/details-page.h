@@ -39,7 +39,7 @@ public:
     void reload();
 
 public slots:
-    void handleActivatedConnectionComboBoxChanged(int index);
+    void handleActivatedConnectionComboBoxActivated(int index);
     void handleDeviceAdded(const QString &devicePath);
     void handleDeviceRemoved(const QString &devicePath);
     void handleActiveConnectionAdded(const QString &activeConnectionPath);

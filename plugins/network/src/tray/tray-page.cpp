@@ -33,11 +33,15 @@ TrayPage::~TrayPage()
 
 void TrayPage::init()
 {
-    Device::Type deviceType = m_deviceList.at(0)->type();
-    initUI(deviceType);
-    initConnection();
+    if (m_deviceList.count() != 0)
+    {
+        Device::Type deviceType = m_deviceList.value(0)->type();
+        initUI(deviceType);
+        initConnection();
+    }
 }
 
+// XXX:修改初始化
 void TrayPage::initUI(Device::Type deviceType)
 {
     setFixedWidth(240);
@@ -50,7 +54,7 @@ void TrayPage::initUI(Device::Type deviceType)
     // {
     //     setSingleDeviceWidget(deviceType);
     // }
-    if(m_deviceList.count() != 0)
+    if (m_deviceList.count() != 0)
     {
         setMultiDeviceWidget(deviceType);
     }
@@ -133,12 +137,9 @@ void TrayPage::handleDeviceComboBoxChanged(int index)
 QStringList TrayPage::devicePathList()
 {
     QStringList devicePathList;
-    KLOG_DEBUG() << "m_deviceList:" << m_deviceList;
     for (Device::Ptr device : m_deviceList)
     {
-        if (device == nullptr)
-            KLOG_DEBUG() << "device == nullptr";
-        else
+        if (device != nullptr)
             devicePathList << device->uni();
     }
     KLOG_DEBUG() << "devicePathList:" << devicePathList;

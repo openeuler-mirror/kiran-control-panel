@@ -13,9 +13,9 @@
  */
 
 #include "vpn-l2tp-setting.h"
-#include "ui_vpn-l2tp-setting.h"
-#include <NetworkManagerQt/Settings>
 #include <qt5-log-i.h>
+#include <NetworkManagerQt/Settings>
+#include "ui_vpn-l2tp-setting.h"
 #define ServiceTypeL2TP "org.freedesktop.NetworkManager.l2tp"
 using namespace NetworkManager;
 
@@ -33,25 +33,24 @@ VpnL2tpSetting::~VpnL2tpSetting()
 
 void VpnL2tpSetting::initConnection()
 {
-    connect(ui->disconnectAndDeleteWidget,&DisconnectAndDeleteButton::disconnectButtonClicked,this,&VpnL2tpSetting::returnPreviousPage);
-    connect(ui->disconnectAndDeleteWidget,&DisconnectAndDeleteButton::deleteButtonClicked,this,&VpnL2tpSetting::returnPreviousPage);
+    connect(ui->disconnectAndDeleteWidget, &DisconnectAndDeleteButton::disconnectButtonClicked, this, &VpnL2tpSetting::returnPreviousPage);
+    connect(ui->disconnectAndDeleteWidget, &DisconnectAndDeleteButton::deleteButtonClicked, this, &VpnL2tpSetting::returnPreviousPage);
 }
 
 void VpnL2tpSetting::initSettingPage()
 {
     initSpecificSettings();
-    initWidgets();
 }
 
 void VpnL2tpSetting::initSpecificSettings()
 {
     m_vpnSetting = m_connectionSettings->setting(Setting::SettingType::Vpn).dynamicCast<VpnSetting>();
     m_ipv4Setting = m_connectionSettings->setting(Setting::SettingType::Ipv4).dynamicCast<Ipv4Setting>();
-    m_vpnSetting->setServiceType(ServiceTypeL2TP);
-}
 
-void VpnL2tpSetting::initWidgets()
-{
+    m_vpnSetting->setServiceType(ServiceTypeL2TP);
+    m_vpnSetting->setInitialized(true);
+    m_ipv4Setting->setInitialized(true);
+
     ui->connectioNameWidget->setConnectionSettings(m_connectionSettings);
     ui->vpnWidget->setVpnSetting(m_vpnSetting);
     ui->vpnPpp->setVpnSetting(m_vpnSetting);
@@ -80,7 +79,7 @@ void VpnL2tpSetting::showSettingPage(QString activeConnectionPath)
         if (activeConnectionPath.isEmpty())
             ui->disconnectAndDeleteWidget->initButton(SETTING_CONNECTION_STATUS_DEACTIVATED);
         else
-            ui->disconnectAndDeleteWidget->initButton(SETTING_CONNECTION_STATUS_ACTIVATED,activeConnectionPath);
+            ui->disconnectAndDeleteWidget->initButton(SETTING_CONNECTION_STATUS_ACTIVATED, activeConnectionPath);
     }
 }
 
@@ -108,5 +107,5 @@ void VpnL2tpSetting::clearPtr()
 
 bool VpnL2tpSetting::isInputValid()
 {
-    return ui->vpnWidget->isInputValid() || ui->connectioNameWidget->isInputValid();
+    return ui->vpnWidget->isInputValid() && ui->connectioNameWidget->isInputValid();
 }

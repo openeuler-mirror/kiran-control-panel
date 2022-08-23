@@ -13,6 +13,7 @@
  */
 
 #include "ipv6-widget.h"
+#include <kiran-message-box.h>
 #include <qt5-log-i.h>
 #include "ui_ipv6-widget.h"
 using namespace NetworkManager;
@@ -80,7 +81,6 @@ void Ipv6Widget::saveSettings()
         {
             m_ipv6Setting->setMethod(method);
             m_ipv6Setting->setAddresses(QList<NetworkManager::IpAddress>());
-            return;
         }
         else if (method == Ipv6Setting::ConfigMethod::Automatic)
         {
@@ -118,11 +118,13 @@ void Ipv6Widget::showSettings()
     {
         if (m_ipv6Setting->method() == Ipv6Setting::ConfigMethod::Ignored)
         {
-            resetSettings();
+            int ipv6MethodIndex = ui->ipv6Method->findData(Ipv6Setting::ConfigMethod::Ignored);
+            ui->ipv6Method->setCurrentIndex(ipv6MethodIndex);
         }
         else if (m_ipv6Setting->method() == Ipv6Setting::ConfigMethod::Automatic)
         {
-            resetSettings();
+            int ipv6MethodIndex = ui->ipv6Method->findData(Ipv6Setting::ConfigMethod::Automatic);
+            ui->ipv6Method->setCurrentIndex(ipv6MethodIndex);
         }
         else if (m_ipv6Setting->method() == Ipv6Setting::ConfigMethod::Manual)
         {
@@ -134,24 +136,24 @@ void Ipv6Widget::showSettings()
             QString ip = ipv6Address.ip().toString();
             int prefix = ipv6Address.prefixLength();
             QString gateway = ipv6Address.gateway().toString();
-            QString preferredDNS = "";
-            QString alternateDNS = "";
 
             ui->ipv6Address->setText(ip);
             ui->ipv6Prefix->setValue(prefix);
             ui->ipv6Gateway->setText(gateway);
-
-            if (!m_ipv6Setting->dns().isEmpty())
-            {
-                preferredDNS = m_ipv6Setting->dns().at(0).toString();
-                if (m_ipv6Setting->dns().count() >= 2)
-                {
-                    alternateDNS = m_ipv6Setting->dns().at(1).toString();
-                }
-            }
-            ui->ipv6PreferredDNS->setText(preferredDNS);
-            ui->ipv6AlternateDNS->setText(alternateDNS);
         }
+
+        QString preferredDNS = "";
+        QString alternateDNS = "";
+        if (!m_ipv6Setting->dns().isEmpty())
+        {
+            preferredDNS = m_ipv6Setting->dns().at(0).toString();
+            if (m_ipv6Setting->dns().count() >= 2)
+            {
+                alternateDNS = m_ipv6Setting->dns().at(1).toString();
+            }
+        }
+        ui->ipv6PreferredDNS->setText(preferredDNS);
+        ui->ipv6AlternateDNS->setText(alternateDNS);
     }
     else
         resetSettings();
@@ -177,7 +179,7 @@ void Ipv6Widget::clearPtr()
 bool Ipv6Widget::isInputValid()
 {
     Ipv6Setting::ConfigMethod configMethod = ui->ipv6Method->currentData().value<Ipv6Setting::ConfigMethod>();
-    bool valid = true;
+
     if (configMethod == Ipv6Setting::ConfigMethod::Ignored)
     {
     }
@@ -189,24 +191,71 @@ bool Ipv6Widget::isInputValid()
         QString ipv6 = ui->ipv6Address->text();
         if (ipv6.isEmpty())
         {
-            valid = false;
+            QString error = QString(tr("Ipv6 address can not be empty"));
+            KiranMessageBox::KiranStandardButton btn = KiranMessageBox::message(this, tr("Error"),
+                                                                                error,
+                                                                                KiranMessageBox::Yes | KiranMessageBox::No);
+
             KLOG_DEBUG() << "Ipv6 Address cannot be empty";
+            return false;
         }
         else
         {
             if (!isIpv6AddressValid(ipv6))
             {
-                valid = false;
+                QString error = QString(tr("Ipv6 address invalid"));
+                KiranMessageBox::KiranStandardButton btn = KiranMessageBox::message(this, tr("Error"),
+                                                                                    error,
+                                                                                    KiranMessageBox::Yes | KiranMessageBox::No);
                 KLOG_DEBUG() << "Ipv6Address invalid";
+                return false;
             }
         }
 
-        isIpv6AddressValid(ui->ipv6Gateway->text());
-        isIpv6AddressValid(ui->ipv6AlternateDNS->text());
-        isIpv6AddressValid(ui->ipv6PreferredDNS->text());
+        QString ipv6Gateway = ui->ipv6Gateway->text();
+        if (!ipv6Gateway.isEmpty())
+        {
+            if (!isIpv6AddressValid(ipv6Gateway))
+            {
+                QString error = QString(tr("Ipv6 Gateway invalid"));
+                KiranMessageBox::KiranStandardButton btn = KiranMessageBox::message(this, tr("Error"),
+                                                                                    error,
+                                                                                    KiranMessageBox::Yes | KiranMessageBox::No);
+                KLOG_DEBUG() << "Ipv6 Netmask invalid";
+                return false;
+            }
+        }
     }
 
-    return valid;
+    QString preferredDNS = ui->ipv6PreferredDNS->text();
+    if (!preferredDNS.isEmpty())
+    {
+        if (!isIpv6AddressValid(preferredDNS))
+        {
+            QString error = QString(tr("Ipv6 Preferred DNS invalid"));
+            KiranMessageBox::KiranStandardButton btn = KiranMessageBox::message(this, tr("Error"),
+                                                                                error,
+                                                                                KiranMessageBox::Yes | KiranMessageBox::No);
+            KLOG_DEBUG() << "Ipv6 Preferred DNS invalid";
+            return false;
+        }
+    }
+
+    QString alternateDNS = ui->ipv6AlternateDNS->text();
+    if (!alternateDNS.isEmpty())
+    {
+        if (!isIpv6AddressValid(alternateDNS))
+        {
+            QString error = QString(tr("Ipv6 Alternate DNS invalid"));
+            KiranMessageBox::KiranStandardButton btn = KiranMessageBox::message(this, tr("Error"),
+                                                                                error,
+                                                                                KiranMessageBox::Yes | KiranMessageBox::No);
+            KLOG_DEBUG() << "Ipv6 Alternate DNS invalid";
+            return false;
+        }
+    }
+
+    return true;
 }
 
 bool Ipv6Widget::isIpv6AddressValid(const QString &address)
