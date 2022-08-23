@@ -37,7 +37,6 @@ WiredSettingPage::~WiredSettingPage()
 void WiredSettingPage::initSettingPage()
 {
     initSpecificSettings();
-    initWidgets();
 }
 
 void WiredSettingPage::initConnecton()
@@ -51,11 +50,11 @@ void WiredSettingPage::initSpecificSettings()
     m_ipv4Setting = m_connectionSettings->setting(Setting::SettingType::Ipv4).dynamicCast<Ipv4Setting>();
     m_ipv6Setting = m_connectionSettings->setting(Setting::SettingType::Ipv6).dynamicCast<Ipv6Setting>();
     m_wiredSetting = m_connectionSettings->setting(Setting::SettingType::Wired).dynamicCast<WiredSetting>();
-}
 
-// TODO:修改命名
-void WiredSettingPage::initWidgets()
-{
+    m_ipv4Setting->setInitialized(true);
+    m_ipv6Setting->setInitialized(true);
+    m_wiredSetting->setInitialized(true);
+
     ui->connectionNameWidget->setConnectionSettings(m_connectionSettings);
     ui->ipv4Widget->setIpv4Setting(m_ipv4Setting);
     ui->ipv6Widget->setIpv6Setting(m_ipv6Setting);

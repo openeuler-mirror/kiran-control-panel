@@ -81,7 +81,7 @@ void SettingPage::handleSaveButtonClicked(ConnectionSettings::ConnectionType con
         initConnectionSettings(connectionType);
         initSettingPage();
         saveSettingPage();
-        KLOG_DEBUG() << " m_connectionSettings->toMap():" << m_connectionSettings->toMap();
+
         QDBusPendingReply<QDBusObjectPath> replyAdd = NetworkManager::addConnection(m_connectionSettings->toMap());
         replyAdd.waitForFinished();
         if (replyAdd.isError())
@@ -98,7 +98,6 @@ void SettingPage::handleSaveButtonClicked(ConnectionSettings::ConnectionType con
         saveSettingPage();
         //只有无线网络使用自定义settingUpdated信号，因为未连接无线网络前不存在本地Setting，无法在初始化时监听信号
         connect(m_connection.data(), &NetworkManager::Connection::updated, this, &SettingPage::settingUpdated, Qt::UniqueConnection);
-        KLOG_DEBUG() << "m_connectionSettings->toMap():" << m_connectionSettings->toMap();
         QDBusPendingReply<> replyUpdate = m_connection->update(m_connectionSettings->toMap());
         replyUpdate.waitForFinished();
         if (replyUpdate.isError())
@@ -111,7 +110,6 @@ void SettingPage::handleSaveButtonClicked(ConnectionSettings::ConnectionType con
 void SettingPage::initSettingPage()
 {
     initSpecificSettings();
-    initWidgets();
 }
 
 bool SettingPage::isInputValid()

@@ -81,7 +81,6 @@ void Ipv6Widget::saveSettings()
         {
             m_ipv6Setting->setMethod(method);
             m_ipv6Setting->setAddresses(QList<NetworkManager::IpAddress>());
-            return;
         }
         else if (method == Ipv6Setting::ConfigMethod::Automatic)
         {
@@ -119,11 +118,13 @@ void Ipv6Widget::showSettings()
     {
         if (m_ipv6Setting->method() == Ipv6Setting::ConfigMethod::Ignored)
         {
-            resetSettings();
+            int ipv6MethodIndex = ui->ipv6Method->findData(Ipv6Setting::ConfigMethod::Ignored);
+            ui->ipv6Method->setCurrentIndex(ipv6MethodIndex);
         }
         else if (m_ipv6Setting->method() == Ipv6Setting::ConfigMethod::Automatic)
         {
-            resetSettings();
+            int ipv6MethodIndex = ui->ipv6Method->findData(Ipv6Setting::ConfigMethod::Automatic);
+            ui->ipv6Method->setCurrentIndex(ipv6MethodIndex);
         }
         else if (m_ipv6Setting->method() == Ipv6Setting::ConfigMethod::Manual)
         {
@@ -135,24 +136,24 @@ void Ipv6Widget::showSettings()
             QString ip = ipv6Address.ip().toString();
             int prefix = ipv6Address.prefixLength();
             QString gateway = ipv6Address.gateway().toString();
-            QString preferredDNS = "";
-            QString alternateDNS = "";
 
             ui->ipv6Address->setText(ip);
             ui->ipv6Prefix->setValue(prefix);
             ui->ipv6Gateway->setText(gateway);
-
-            if (!m_ipv6Setting->dns().isEmpty())
-            {
-                preferredDNS = m_ipv6Setting->dns().at(0).toString();
-                if (m_ipv6Setting->dns().count() >= 2)
-                {
-                    alternateDNS = m_ipv6Setting->dns().at(1).toString();
-                }
-            }
-            ui->ipv6PreferredDNS->setText(preferredDNS);
-            ui->ipv6AlternateDNS->setText(alternateDNS);
         }
+
+        QString preferredDNS = "";
+        QString alternateDNS = "";
+        if (!m_ipv6Setting->dns().isEmpty())
+        {
+            preferredDNS = m_ipv6Setting->dns().at(0).toString();
+            if (m_ipv6Setting->dns().count() >= 2)
+            {
+                alternateDNS = m_ipv6Setting->dns().at(1).toString();
+            }
+        }
+        ui->ipv6PreferredDNS->setText(preferredDNS);
+        ui->ipv6AlternateDNS->setText(alternateDNS);
     }
     else
         resetSettings();

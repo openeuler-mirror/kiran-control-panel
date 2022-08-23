@@ -13,8 +13,8 @@
  */
 
 #include "vpn-pptp-setting.h"
-#include "ui_vpn-pptp-setting.h"
 #include <qt5-log-i.h>
+#include "ui_vpn-pptp-setting.h"
 #define ServiceTypePPTP "org.freedesktop.NetworkManager.pptp"
 using namespace NetworkManager;
 
@@ -22,8 +22,8 @@ VpnPptpSetting::VpnPptpSetting(QWidget *parent) : SettingPage(parent), ui(new Ui
 {
     ui->setupUi(this);
     ui->generalWidget->setNameLabel(tr("VPN name"));
-    connect(ui->generalButton,&DisconnectAndDeleteButton::disconnectButtonClicked,this,&VpnPptpSetting::returnPreviousPage);
-    connect(ui->generalButton,&DisconnectAndDeleteButton::deleteButtonClicked,this,&VpnPptpSetting::returnPreviousPage);
+    connect(ui->generalButton, &DisconnectAndDeleteButton::disconnectButtonClicked, this, &VpnPptpSetting::returnPreviousPage);
+    connect(ui->generalButton, &DisconnectAndDeleteButton::deleteButtonClicked, this, &VpnPptpSetting::returnPreviousPage);
 }
 
 VpnPptpSetting::~VpnPptpSetting()
@@ -34,19 +34,17 @@ VpnPptpSetting::~VpnPptpSetting()
 void VpnPptpSetting::initSettingPage()
 {
     initSpecificSettings();
-    initWidgets();
 }
-
 
 void VpnPptpSetting::initSpecificSettings()
 {
     m_vpnSetting = m_connectionSettings->setting(Setting::SettingType::Vpn).dynamicCast<VpnSetting>();
     m_ipv4Setting = m_connectionSettings->setting(Setting::SettingType::Ipv4).dynamicCast<Ipv4Setting>();
-    m_vpnSetting->setServiceType(ServiceTypePPTP);
-}
 
-void VpnPptpSetting::initWidgets()
-{
+    m_vpnSetting->setServiceType(ServiceTypePPTP);
+    m_vpnSetting->setInitialized(true);
+    m_ipv4Setting->setInitialized(true);
+
     ui->generalWidget->setConnectionSettings(m_connectionSettings);
     ui->vpnWidget->setVpnSetting(m_vpnSetting);
     ui->vpnPpp->setVpnSetting(m_vpnSetting);
@@ -81,13 +79,13 @@ void VpnPptpSetting::showSettingPage(QString activeConnectionPath)
         if (activeConnectionPath.isEmpty())
             ui->generalButton->initButton(SETTING_CONNECTION_STATUS_DEACTIVATED);
         else
-            ui->generalButton->initButton(SETTING_CONNECTION_STATUS_ACTIVATED,activeConnectionPath);
+            ui->generalButton->initButton(SETTING_CONNECTION_STATUS_ACTIVATED, activeConnectionPath);
     }
 }
 
 void VpnPptpSetting::clearPtr()
 {
-    KLOG_DEBUG() << "VpnPptpSetting::clearPtr" ;
+    KLOG_DEBUG() << "VpnPptpSetting::clearPtr";
     m_vpnSetting.clear();
     SettingPage::clearPtr();
 

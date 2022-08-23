@@ -39,7 +39,6 @@ public:
 
     virtual void initSettingPage();
     virtual void initSpecificSettings() = 0;
-    virtual void initWidgets() = 0;
     virtual void saveSettingPage() = 0;
     virtual bool isInputValid();
 
@@ -52,7 +51,6 @@ signals:
     void returnPreviousPage();
     void settingChanged();
     void settingUpdated();
-
 
 protected:
     NetworkManager::Connection::Ptr m_connection = nullptr;
@@ -68,4 +66,4 @@ private:
     bool m_isNewConnection;
 };
 
-#endif  //KIRAN_CPANEL_NETWORK_SETTINGPAGE_H
+#endif  // KIRAN_CPANEL_NETWORK_SETTINGPAGE_H
