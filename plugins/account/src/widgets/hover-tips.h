@@ -45,9 +45,7 @@ public:
     ~HoverTips();
 
     void setTimeout(quint32 ms);
-
     void setIcon(HoverTipsTypeEnum typeEnum, const QString &icon);
-
     void show(HoverTipsTypeEnum typeEnum, const QString &msg);
     void hide();
 

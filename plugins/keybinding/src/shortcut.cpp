@@ -101,6 +101,7 @@ void Shortcut::initUI()
     QHBoxLayout *hLayoutCustomApp = new QHBoxLayout(ui->lineEdit_custom_app);
     m_btnCustomApp = new QToolButton;
     m_btnCustomApp->setObjectName("btn_custom_app");
+    m_btnCustomApp->setAccessibleName("ButtonAddCustomApp");
     m_btnCustomApp->setText(tr("Add"));
     m_btnCustomApp->setFixedSize(56, 30);
     m_btnCustomApp->setCursor(Qt::PointingHandCursor);
@@ -112,6 +113,7 @@ void Shortcut::initUI()
     QHBoxLayout *hLayoutModifyApp = new QHBoxLayout(ui->lineEdit_modify_app);
     m_btnModifyApp = new QToolButton;
     m_btnModifyApp->setObjectName("btn_modify_app");
+    m_btnModifyApp->setAccessibleName("ButtonModifyApp");
     m_btnModifyApp->setText(tr("Add"));
     m_btnModifyApp->setFixedSize(56, 30);
     m_btnModifyApp->setCursor(Qt::PointingHandCursor);
@@ -122,12 +124,14 @@ void Shortcut::initUI()
 
     m_lECustomKey = new CustomLineEdit;
     m_lECustomKey->setPlaceholderText(tr("Please press the new shortcut key"));
+    m_lECustomKey->setAccessibleName("EditCustomPressNewShotcut");
     m_lECustomKey->installEventFilter(this);
     ui->vlayout_custom_key->addWidget(m_lECustomKey);
     connect(m_lECustomKey, &CustomLineEdit::inputKeyCodes, this, &Shortcut::handleInputKeycode);
 
     m_lEModifyKey = new CustomLineEdit;
     m_lEModifyKey->setPlaceholderText(tr("Please press the new shortcut key"));
+    m_lEModifyKey->setAccessibleName("EditPressNewShotcut");
     m_lEModifyKey->installEventFilter(this);
     ui->vlayout_modify_key->addWidget(m_lEModifyKey);
     connect(m_lEModifyKey, &CustomLineEdit::inputKeyCodes, this, &Shortcut::handleInputKeycode);

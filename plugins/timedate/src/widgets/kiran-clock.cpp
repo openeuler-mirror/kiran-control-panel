@@ -18,6 +18,7 @@ KiranClock::KiranClock(QWidget *parent)
 {
     loadPixmap();
     initShadow();
+    setAccessibleName("Clock");
     m_updateTimerID = startTimer(1000);
 }
 

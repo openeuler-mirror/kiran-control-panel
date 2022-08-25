@@ -30,7 +30,7 @@ KiranTimeZoneList::KiranTimeZoneList(QWidget *parent) :
     m_timeoutSearchTaskID(0)
 {
     ui->setupUi(this);
-
+    setAccessibleName("TimeZoneList");
     setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Fixed);
 }
 
@@ -53,6 +53,7 @@ bool KiranTimeZoneList::initAllTimeZone()
         iter!=globalData->allTimeZoneListEndIter();
         iter++){
         item = new KiranTimeZoneItem(*iter,ui->timezone);
+        item->setAccessibleName(QString("TimeZone::%1").arg(iter->zone_city));
         if(iter->zone_id==m_seletedZoneID){
             item->setisSelected(true);
         }
@@ -115,6 +116,7 @@ void KiranTimeZoneList::search()
         iter++){
         if(iter->zone_city.contains(m_keyword) ){
             item = new KiranTimeZoneItem(*iter,ui->filter_timezone);
+            item->setAccessibleName(QString("FilterTimeZone::%1").arg(iter->zone_city));
             item->setHeightLightKeyword(m_keyword);
             if(iter->zone_id==m_seletedZoneID){
                 item->setisSelected(true);

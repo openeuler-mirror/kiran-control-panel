@@ -145,6 +145,9 @@
              </item>
              <item>
               <widget class="QLabel" name="label_CPU_info">
+               <property name="accessibleName">
+                <string>LabelCpuInfo</string>
+               </property>
                <property name="text">
                 <string>TextLabel</string>
                </property>
@@ -205,6 +208,9 @@
              </item>
              <item>
               <widget class="QLabel" name="label_memory_info">
+               <property name="accessibleName">
+                <string>LabelMemoryInfo</string>
+               </property>
                <property name="text">
                 <string>TextLabel</string>
                </property>

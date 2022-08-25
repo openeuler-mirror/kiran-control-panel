@@ -36,6 +36,7 @@ KiranTimeZone::KiranTimeZone(QWidget *parent) :
 {
     ui->setupUi(this);
     setAttribute(Qt::WA_TranslucentBackground);
+    setAccessibleName("TimeZoneWidget");
     ui->edit_search->installEventFilter(this);
     initUI();;
 }

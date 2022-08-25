@@ -19,6 +19,7 @@
 KiranDisplayConfigItem::KiranDisplayConfigItem(QWidget *parent) : QPushButton(parent), m_mousePress(false), m_mouseDrag(false),
     m_statusType(QEvent::None), m_enabled(true), m_anchorByBtn(NULL), m_rotateDrect(DISPLAY_ROTATION_0), m_displayReflectType(DISPLAY_REFLECT_NORMAL)
 {
+    setAccessibleName("KiranDisplayConfigItem");
     setCheckable(true);
     setAttribute(Qt::WA_Hover,true);
     installEventFilter(this);

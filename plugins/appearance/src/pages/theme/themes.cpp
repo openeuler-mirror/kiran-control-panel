@@ -293,6 +293,7 @@ void Themes::createThemeWidget()
     for (int i = 0; i < SETTING_THEME_NUM; i++)
     {
         ThemeWidget *themeWidget = new ThemeWidget(m_themesName.at(i), m_currentTheme, this);
+        themeWidget->setAccessibleName(QString("ThemeWidget::%1").arg(m_themesName.at(i)));
         if (m_themesName.at(i) == m_currentTheme)
             m_themeWidgetGroup->setCurrentWidget(themeWidget);
 

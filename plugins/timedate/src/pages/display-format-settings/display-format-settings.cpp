@@ -37,6 +37,7 @@ void DisplayFormatSettings::init()
     KiranTimeDateGlobalData* globalData = KiranTimeDateGlobalData::instance();
 
     m_showSecondSwitch = new KiranSwitchButton(this);
+    m_showSecondSwitch->setAccessibleName("SwitchShowSeconds");
     ui->layout_timeSeconds->addWidget(m_showSecondSwitch);
 
     /* ComboBox填充数据 */

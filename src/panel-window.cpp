@@ -51,6 +51,7 @@ void PanelWindow::initUI()
 
     //添加搜索框
     auto *searchBox = new SearchEdit(this);
+    searchBox->setAccessibleName("ControlPanelSearchEdit");
     searchBox->setFixedSize(352, 30);
     getTitlebarCustomLayout()->addWidget(searchBox);
     setTitlebarCustomLayoutAlignHCenter(true);

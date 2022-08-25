@@ -63,6 +63,9 @@
      </item>
      <item>
       <widget class="KiranSwitchButton" name="switch_repeatKey">
+       <property name="accessibleName">
+        <string>SwitchRepeatKey</string>
+       </property>
        <property name="text">
         <string/>
        </property>
@@ -101,6 +104,9 @@
      </item>
      <item>
       <widget class="QSlider" name="hslider_delay">
+       <property name="accessibleName">
+        <string>SliderRepeatDelay</string>
+       </property>
        <property name="minimum">
         <number>100</number>
        </property>
@@ -182,6 +188,9 @@
      </item>
      <item>
       <widget class="QSlider" name="hslider_interval">
+       <property name="accessibleName">
+        <string>SliderRepeatInterval</string>
+       </property>
        <property name="minimum">
         <number>0</number>
        </property>
@@ -260,6 +269,9 @@
          <width>16777215</width>
          <height>40</height>
         </size>
+       </property>
+       <property name="accessibleName">
+        <string>EditTestRepeatKey</string>
        </property>
       </widget>
      </item>

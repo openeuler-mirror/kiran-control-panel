@@ -10,7 +10,9 @@ class YearSpinBox:public QSpinBox
 {
 Q_OBJECT
 public:
-    explicit YearSpinBox(QWidget* parent=nullptr):QSpinBox(parent){}
+    explicit YearSpinBox(QWidget* parent=nullptr):QSpinBox(parent){
+        setAccessibleName("SpinBoxYear");
+    }
     ~YearSpinBox(){}
 protected:
     virtual QString textFromValue(int val) const Q_DECL_OVERRIDE{
@@ -24,7 +26,9 @@ class MonthSpinBox:public QSpinBox
 {
 Q_OBJECT
 public:
-    explicit MonthSpinBox(QWidget* parent=nullptr):QSpinBox(parent){}
+    explicit MonthSpinBox(QWidget* parent=nullptr):QSpinBox(parent){
+        setAccessibleName("SpinBoxMonth");
+    }
     ~MonthSpinBox(){}
 protected:
     virtual QString textFromValue(int val) const Q_DECL_OVERRIDE{
@@ -38,7 +42,9 @@ class DaySpinBox:public QSpinBox
 {
 Q_OBJECT
 public:
-    explicit DaySpinBox(QWidget* parent=nullptr):QSpinBox(parent){}
+    explicit DaySpinBox(QWidget* parent=nullptr):QSpinBox(parent){
+        setAccessibleName("SpinBoxDay");
+    }
     ~DaySpinBox(){}
 protected:
     virtual QString textFromValue(int val) const Q_DECL_OVERRIDE{

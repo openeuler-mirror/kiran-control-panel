@@ -32,7 +32,7 @@
    <item>
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="page_shortcut">
       <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -73,6 +73,9 @@
          </property>
          <property name="focusPolicy">
           <enum>Qt::ClickFocus</enum>
+         </property>
+         <property name="accessibleName">
+          <string>EditSearch</string>
          </property>
          <property name="placeholderText">
           <string/>
@@ -336,6 +339,9 @@
              <height>40</height>
             </size>
            </property>
+           <property name="accessibleName">
+            <string>ButtonAddShortcut</string>
+           </property>
            <property name="text">
             <string>Add</string>
            </property>
@@ -370,6 +376,9 @@
              <width>110</width>
              <height>40</height>
             </size>
+           </property>
+           <property name="accessibleName">
+            <string>ButtonReset</string>
            </property>
            <property name="text">
             <string>Reset</string>
@@ -436,6 +445,9 @@
              <height>40</height>
             </size>
            </property>
+           <property name="accessibleName">
+            <string>EditCustomShortcutName</string>
+           </property>
           </widget>
          </item>
         </layout>
@@ -465,6 +477,9 @@
              <width>16777215</width>
              <height>40</height>
             </size>
+           </property>
+           <property name="accessibleName">
+            <string>EditShortcutApp</string>
            </property>
           </widget>
          </item>
@@ -529,6 +544,9 @@
              <height>40</height>
             </size>
            </property>
+           <property name="accessibleName">
+            <string>ButtonAdd</string>
+           </property>
            <property name="text">
             <string>Add</string>
            </property>
@@ -563,6 +581,9 @@
              <width>110</width>
              <height>40</height>
             </size>
+           </property>
+           <property name="accessibleName">
+            <string>ButtonCancel</string>
            </property>
            <property name="text">
             <string>Cancel</string>
@@ -629,6 +650,9 @@
              <height>40</height>
             </size>
            </property>
+           <property name="accessibleName">
+            <string>EditShortcutName</string>
+           </property>
           </widget>
          </item>
         </layout>
@@ -671,6 +695,9 @@
               <width>16777215</width>
               <height>40</height>
              </size>
+            </property>
+            <property name="accessibleName">
+             <string>EditShortcutApp</string>
             </property>
            </widget>
           </item>
@@ -736,6 +763,9 @@
              <height>40</height>
             </size>
            </property>
+           <property name="accessibleName">
+            <string>ButtonSave</string>
+           </property>
            <property name="text">
             <string>Save</string>
            </property>
@@ -770,6 +800,9 @@
              <width>110</width>
              <height>40</height>
             </size>
+           </property>
+           <property name="accessibleName">
+            <string>ButtonReturn</string>
            </property>
            <property name="text">
             <string>return</string>

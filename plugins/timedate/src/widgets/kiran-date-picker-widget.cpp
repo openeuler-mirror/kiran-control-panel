@@ -7,6 +7,7 @@ KiranDatePickerWidget::KiranDatePickerWidget(QWidget *parent) :
 {
     ui->setupUi(this);
     initUI();
+    setAccessibleName("DatePicker");
 }
 
 KiranDatePickerWidget::~KiranDatePickerWidget()
