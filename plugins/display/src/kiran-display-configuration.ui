@@ -88,6 +88,9 @@
             <height>30</height>
            </size>
           </property>
+          <property name="accessibleName">
+           <string>ButtonCopyDisplay</string>
+          </property>
           <property name="styleSheet">
            <string notr="true">
 QPushButton {
@@ -136,6 +139,9 @@ QPushButton {
             <width>120</width>
             <height>30</height>
            </size>
+          </property>
+          <property name="accessibleName">
+           <string>ButtonExtendedDisplay</string>
           </property>
           <property name="styleSheet">
            <string notr="true">
@@ -235,7 +241,7 @@ QPushButton {
        <item>
         <widget class="QStackedWidget" name="stackedWidget">
          <property name="currentIndex">
-          <number>1</number>
+          <number>0</number>
          </property>
          <widget class="QWidget" name="stackedWidgetPage1">
           <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -280,6 +286,9 @@ QPushButton {
                  <height>36</height>
                 </size>
                </property>
+               <property name="accessibleName">
+                <string>ComboResolutionRatio</string>
+               </property>
                <property name="styleSheet">
                 <string notr="true"/>
                </property>
@@ -313,6 +322,9 @@ QPushButton {
                  <height>36</height>
                 </size>
                </property>
+               <property name="accessibleName">
+                <string>ComboRefreshRate</string>
+               </property>
               </widget>
              </item>
             </layout>
@@ -342,6 +354,9 @@ QPushButton {
                  <width>16777215</width>
                  <height>36</height>
                 </size>
+               </property>
+               <property name="accessibleName">
+                <string>ComboZoomRate</string>
                </property>
                <item>
                 <property name="text">
@@ -413,6 +428,9 @@ QPushButton {
                  <height>40</height>
                 </size>
                </property>
+               <property name="accessibleName">
+                <string>ButtonApply</string>
+               </property>
                <property name="styleSheet">
                 <string notr="true"/>
                </property>
@@ -434,6 +452,9 @@ QPushButton {
                  <width>110</width>
                  <height>40</height>
                 </size>
+               </property>
+               <property name="accessibleName">
+                <string>ButtonClose</string>
                </property>
                <property name="styleSheet">
                 <string notr="true"/>
@@ -583,6 +604,9 @@ QPushButton {
                        <height>0</height>
                       </size>
                      </property>
+                     <property name="accessibleName">
+                      <string>SwitchExtraPrimary</string>
+                     </property>
                     </widget>
                    </item>
                   </layout>
@@ -621,6 +645,9 @@ QPushButton {
                  <height>36</height>
                 </size>
                </property>
+               <property name="accessibleName">
+                <string>ComboExtraResolutionRatio</string>
+               </property>
                <property name="styleSheet">
                 <string notr="true"/>
                </property>
@@ -654,6 +681,9 @@ QPushButton {
                  <height>36</height>
                 </size>
                </property>
+               <property name="accessibleName">
+                <string>ComboExtraRefreshRate</string>
+               </property>
               </widget>
              </item>
             </layout>
@@ -683,6 +713,9 @@ QPushButton {
                  <width>16777215</width>
                  <height>36</height>
                 </size>
+               </property>
+               <property name="accessibleName">
+                <string>ComboExtraZoomRate</string>
                </property>
                <item>
                 <property name="text">
@@ -751,6 +784,9 @@ QPushButton {
                  <height>40</height>
                 </size>
                </property>
+               <property name="accessibleName">
+                <string>ButtonExtraApply</string>
+               </property>
                <property name="styleSheet">
                 <string notr="true"/>
                </property>
@@ -772,6 +808,9 @@ QPushButton {
                  <width>110</width>
                  <height>40</height>
                 </size>
+               </property>
+               <property name="accessibleName">
+                <string>ButtonExtraCancel</string>
                </property>
                <property name="styleSheet">
                 <string notr="true"/>

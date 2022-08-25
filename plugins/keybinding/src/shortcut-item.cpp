@@ -27,6 +27,7 @@ ShortcutItem::ShortcutItem(int type, ShortcutInfoPtr shortcutInfo, QWidget *pare
       ui(new Ui::ShortcutItem)
 {
     ui->setupUi(this);
+    setAccessibleName("ShortcutItem");
     m_shortcutInfo = shortcutInfo;
     m_type = type;
 

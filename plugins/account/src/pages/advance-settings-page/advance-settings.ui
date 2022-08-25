@@ -71,6 +71,9 @@
        <property name="contextMenuPolicy">
         <enum>Qt::NoContextMenu</enum>
        </property>
+       <property name="accessibleName">
+        <string>EditLoginShell</string>
+       </property>
       </widget>
      </item>
     </layout>
@@ -140,6 +143,9 @@
         <property name="contextMenuPolicy">
          <enum>Qt::NoContextMenu</enum>
         </property>
+        <property name="accessibleName">
+         <string>EditSpecifyUserID</string>
+        </property>
        </widget>
       </item>
      </layout>
@@ -200,6 +206,9 @@
        <property name="contextMenuPolicy">
         <enum>Qt::NoContextMenu</enum>
        </property>
+       <property name="accessibleName">
+        <string>EditSpecifyUserHome</string>
+       </property>
       </widget>
      </item>
     </layout>
@@ -258,6 +267,9 @@
          <height>40</height>
         </size>
        </property>
+       <property name="accessibleName">
+        <string>ButtonConfirm</string>
+       </property>
        <property name="text">
         <string>confirm</string>
        </property>
@@ -298,6 +310,9 @@
          <width>110</width>
          <height>40</height>
         </size>
+       </property>
+       <property name="accessibleName">
+        <string>ButtonCancel</string>
        </property>
        <property name="text">
         <string>cancel</string>

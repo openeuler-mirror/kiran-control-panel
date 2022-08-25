@@ -11,6 +11,7 @@
 
 KylinsecLogo::KylinsecLogo(QWidget *parent)
 {
+    setAccessibleName("KylinsecLogo");
 }
 
 KylinsecLogo::~KylinsecLogo()

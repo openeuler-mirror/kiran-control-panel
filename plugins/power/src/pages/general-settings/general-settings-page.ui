@@ -49,7 +49,11 @@
       <number>10</number>
      </property>
      <item>
-      <widget class="QComboBox" name="combo_powerButton"/>
+      <widget class="QComboBox" name="combo_powerButton">
+       <property name="accessibleName">
+        <string>ComboPowerButtonAction</string>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>
@@ -73,7 +77,11 @@
       <number>10</number>
      </property>
      <item>
-      <widget class="QComboBox" name="combo_suspendButton"/>
+      <widget class="QComboBox" name="combo_suspendButton">
+       <property name="accessibleName">
+        <string>ComboSuspendAction</string>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>
@@ -137,6 +145,9 @@
           <height>40</height>
          </size>
         </property>
+        <property name="accessibleName">
+         <string>ComboCloseLidAction</string>
+        </property>
        </widget>
       </item>
      </layout>
@@ -183,6 +194,9 @@
      </property>
      <item>
       <widget class="QSlider" name="slider_brightness">
+       <property name="accessibleName">
+        <string>SliderDisplayBrightness</string>
+       </property>
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
@@ -197,6 +211,9 @@
      </property>
      <item>
       <widget class="QLabel" name="label_5">
+       <property name="accessibleName">
+        <string/>
+       </property>
        <property name="text">
         <string>Regard computer as idle after</string>
        </property>
@@ -243,6 +260,9 @@
      </property>
      <item>
       <widget class="QSlider" name="slider_idleTime">
+       <property name="accessibleName">
+        <string>SliderComputerIdleTime</string>
+       </property>
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>

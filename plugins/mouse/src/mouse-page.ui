@@ -99,6 +99,9 @@
            <height>36</height>
           </size>
          </property>
+         <property name="accessibleName">
+          <string>ComboSelectMouseHand</string>
+         </property>
         </widget>
        </item>
        <item>
@@ -126,6 +129,9 @@
        </item>
        <item>
         <widget class="QSlider" name="slider_speed">
+         <property name="accessibleName">
+          <string>SliderMouseMotionAcceleration</string>
+         </property>
          <property name="minimum">
           <number>0</number>
          </property>
@@ -226,6 +232,9 @@
          </item>
          <item>
           <widget class="KiranSwitchButton" name="checkBox_natural_scroll">
+           <property name="accessibleName">
+            <string>SwitchMouseNatturalScroll</string>
+           </property>
            <property name="text">
             <string/>
            </property>
@@ -276,6 +285,9 @@
          </item>
          <item>
           <widget class="KiranSwitchButton" name="checkBox_middle_emulation">
+           <property name="accessibleName">
+            <string>SwitchMiddleEmulation</string>
+           </property>
            <property name="text">
             <string/>
            </property>

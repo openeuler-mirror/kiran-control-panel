@@ -32,7 +32,8 @@ KiranDisplayConfigurationPanel::KiranDisplayConfigurationPanel(QWidget *parent) 
     ui(new Ui::KiranDisplayConfigurationPanel)
 {
     ui->setupUi(this);
-
+    setAccessibleName("KiranDisplayConfigurationPanel");
+    
     ui->pushButton_left->setThemeIcon(QPixmap(":/kcp-display/images/rotation-left.svg"),PALETTE_DARK);
     ui->pushButton_right->setThemeIcon(QPixmap(":/kcp-display/images/rotation-right.svg"),PALETTE_DARK);
     ui->pushButton_horizontal->setThemeIcon(QPixmap(":/kcp-display/images/flip-h.svg"),PALETTE_DARK);
