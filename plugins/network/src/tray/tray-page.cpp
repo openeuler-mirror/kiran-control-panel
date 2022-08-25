@@ -35,28 +35,33 @@ void TrayPage::init()
 {
     if (m_deviceList.count() != 0)
     {
-        Device::Type deviceType = m_deviceList.value(0)->type();
-        initUI(deviceType);
+        initUI();
         initConnection();
     }
 }
 
 // XXX:修改初始化
-void TrayPage::initUI(Device::Type deviceType)
+void TrayPage::initUI()
 {
     setFixedWidth(240);
     setMaximumHeight(434);
     ui->stackedWidget->setContentsMargins(0, 0, 0, 0);
 
     // if (m_deviceList.count() > 1)
-    //     setMultiDeviceWidget(deviceType);
+    //     setMultiDeviceWidget();
     // else if (m_deviceList.count() == 1)
     // {
-    //     setSingleDeviceWidget(deviceType);
+    //     setSingleDeviceWidget();
     // }
+    // else
+    // {
+    //     // m_deviceeList.count == 0
+    //     return;
+    // }
+
     if (m_deviceList.count() != 0)
     {
-        setMultiDeviceWidget(deviceType);
+        setMultiDeviceWidget();
     }
     else
     {
@@ -69,12 +74,13 @@ void TrayPage::initConnection()
 {
 }
 
-void TrayPage::setMultiDeviceWidget(Device::Type deviceType)
+void TrayPage::setMultiDeviceWidget()
 {
     for (Device::Ptr dev : m_deviceList)
     {
         QString devicePath = dev->uni();
         QString deviceName = dev->interfaceName();
+        Device::Type deviceType = dev->type();
         ui->deviceComboBox->addItem(deviceName, devicePath);
 
         if (deviceType == Device::Ethernet)
@@ -111,10 +117,11 @@ void TrayPage::setMultiDeviceWidget(Device::Type deviceType)
     ui->selectDevicewidget->setVisible(true);
 }
 
-void TrayPage::setSingleDeviceWidget(Device::Type deviceType)
+void TrayPage::setSingleDeviceWidget()
 {
     ui->selectDevicewidget->setVisible(false);
-    QString devicePath = m_deviceList.at(0)->uni();
+    QString devicePath = m_deviceList.value(0)->uni();
+    Device::Type deviceType = m_deviceList.value(0)->type();
     if (deviceType == Device::Ethernet)
     {
         WiredTrayWidget *wiredTrayWidget = new WiredTrayWidget(devicePath, this);

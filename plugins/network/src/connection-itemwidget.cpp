@@ -14,14 +14,14 @@
 
 #include "connection-itemwidget.h"
 #include <qt5-log-i.h>
+#include <QApplication>
+#include <QLineEdit>
 #include <QPainter>
 #include <QSvgRenderer>
-#include <QLineEdit>
 #include "animation-loading-label.h"
-#include <QApplication>
 
 // 使用默认析构函数，父对象被释放时，会释放子对象
-ConnectionItemWidget::ConnectionItemWidget( QWidget* parent) : KiranFrame(parent)
+ConnectionItemWidget::ConnectionItemWidget(QWidget* parent) : KiranFrame(parent)
 {
     initUI();
 }
@@ -32,7 +32,7 @@ void ConnectionItemWidget::initUI()
     initPluginItemWidget();
     setDrawBroder(false);
     setAttribute(Qt::WA_Hover);
-    connect(Kiran::StylePalette::instance(),&Kiran::StylePalette::themeChanged,this,&ConnectionItemWidget::handleThemeChanged);
+    connect(Kiran::StylePalette::instance(), &Kiran::StylePalette::themeChanged, this, &ConnectionItemWidget::handleThemeChanged);
     connect(m_editButton, &QPushButton::clicked, this, &ConnectionItemWidget::editButtonClicked);
 }
 
@@ -47,10 +47,10 @@ void ConnectionItemWidget::initPluginItemWidget()
     m_connectionTypeIcon->setVisible(false);
     m_activatedLabel->setVisible(false);
 
-//    auto pixmap = QApplication::style()->standardPixmap(QStyle::SP_ArrowRight);
+    //    auto pixmap = QApplication::style()->standardPixmap(QStyle::SP_ArrowRight);
     m_editButton->setIcon(trayIconColorSwitch(":/kcp-network-images/details-info.svg"));
-    m_editButton->setIconSize(QSize(16,16));
-    m_editButton->setFixedSize(30,36);
+    m_editButton->setIconSize(QSize(16, 16));
+    m_editButton->setFixedSize(30, 36);
     m_editButton->setFlat(true);
 
     m_horizonLayout->addWidget(m_connectionTypeIcon);
@@ -61,10 +61,10 @@ void ConnectionItemWidget::initPluginItemWidget()
     m_horizonLayout->setMargin(0);
 
     this->setLayout(m_horizonLayout);
-    this->setContentsMargins(10,0,3,0);
+    this->setContentsMargins(10, 0, 3, 0);
 }
 
-//TODO:名称过长进行缩略
+// TODO:名称过长进行缩略
 void ConnectionItemWidget::setName(const QString& name)
 {
     QString nameStr = name;
@@ -75,6 +75,7 @@ void ConnectionItemWidget::setName(const QString& name)
     //    }
     //    KLOG_DEBUG() << "elidedText:" << nameStr;
     m_connectionName->setText(nameStr);
+    m_editButton->setAccessibleName(QString("ButtonEditConnectionName::%1").arg(nameStr));
 }
 
 QString ConnectionItemWidget::getName()
@@ -82,7 +83,7 @@ QString ConnectionItemWidget::getName()
     return m_connectionName->text();
 }
 
-//TODO:其他状态信息的显示，以及优化
+// TODO:其他状态信息的显示，以及优化
 void ConnectionItemWidget::activatedStatus()
 {
     QPixmap pixmap(":/kcp-network-images/correct.png");
@@ -164,7 +165,7 @@ void ConnectionItemWidget::setOtherNetworkIcon()
 
 void ConnectionItemWidget::handleThemeChanged(Kiran::PaletteType paletteType)
 {
-    if(m_connectionTypeIcon->pixmap() != nullptr)
+    if (m_connectionTypeIcon->pixmap() != nullptr)
     {
         QImage image = m_connectionTypeIcon->pixmap()->toImage();
         image.invertPixels(QImage::InvertRgb);
@@ -174,12 +175,12 @@ void ConnectionItemWidget::handleThemeChanged(Kiran::PaletteType paletteType)
     m_editButton->setIcon(trayIconColorSwitch(":/kcp-network-images/details-info.svg"));
 }
 
-QPixmap ConnectionItemWidget::trayIconColorSwitch(const QString &iconPath)
+QPixmap ConnectionItemWidget::trayIconColorSwitch(const QString& iconPath)
 {
-    //icon原本为浅色
+    // icon原本为浅色
     QIcon icon(iconPath);
-    QPixmap pixmap = icon.pixmap(16,16);
-    if( Kiran::StylePalette::instance()->paletteType() != Kiran::PALETTE_DARK )
+    QPixmap pixmap = icon.pixmap(16, 16);
+    if (Kiran::StylePalette::instance()->paletteType() != Kiran::PALETTE_DARK)
     {
         QImage image = pixmap.toImage();
         image.invertPixels(QImage::InvertRgb);

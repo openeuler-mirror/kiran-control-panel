@@ -55,6 +55,9 @@
          <height>36</height>
         </size>
        </property>
+       <property name="accessibleName">
+        <string>ComboBoxWirelessSecurityOption</string>
+       </property>
       </widget>
      </item>
     </layout>
@@ -104,6 +107,9 @@
              <height>36</height>
             </size>
            </property>
+           <property name="accessibleName">
+            <string>ComboBoxWirelessPasswordOption</string>
+           </property>
           </widget>
          </item>
         </layout>
@@ -149,10 +155,16 @@
                 <height>36</height>
                </size>
               </property>
+              <property name="accessibleName">
+               <string>EditWirelessPassword</string>
+              </property>
              </widget>
             </item>
             <item>
              <widget class="QPushButton" name="passwordVisual">
+              <property name="accessibleName">
+               <string>ButtonWirelessPasswordVisual</string>
+              </property>
               <property name="text">
                <string>PushButton</string>
               </property>

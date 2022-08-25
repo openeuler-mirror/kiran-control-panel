@@ -73,6 +73,9 @@
          <height>36</height>
         </size>
        </property>
+       <property name="accessibleName">
+        <string>EditConnectionName</string>
+       </property>
       </widget>
      </item>
     </layout>

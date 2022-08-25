@@ -36,6 +36,7 @@ ConnectionNameWidget::~ConnectionNameWidget()
 void ConnectionNameWidget::initUI()
 {
     m_autoConnection = new KiranSwitchButton(this);
+    m_autoConnection->setAccessibleName(QString("SwitchAutoConnection"));
     ui->autoConnectionLayout->addWidget(m_autoConnection);
     m_autoConnection->setChecked(true);
     ui->connectionName->setPlaceholderText(tr("Required"));

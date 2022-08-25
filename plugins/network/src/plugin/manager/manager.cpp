@@ -31,17 +31,14 @@ Manager::~Manager()
 void Manager::initNotifierConnection()
 {
     //该信号并不能判断连接是否真正Connected/Activated,只能判断一个连接被加入到激活容器中
-    connect(notifier(), &Notifier::activeConnectionAdded, this, &Manager::handleActiveConnectionAdded,Qt::UniqueConnection);
-    connect(notifier(), &Notifier::activeConnectionRemoved, this, &Manager::handleActiveConnectionRemoved,Qt::UniqueConnection);
+    connect(notifier(), &Notifier::activeConnectionAdded, this, &Manager::handleActiveConnectionAdded, Qt::UniqueConnection);
+    connect(notifier(), &Notifier::activeConnectionRemoved, this, &Manager::handleActiveConnectionRemoved, Qt::UniqueConnection);
 
     //连接Wired时触发，而连接VPN时没有触发该信号，暂时不使用该信号
-    //    connect(notifier(), &Notifier::statusChanged, [=](NetworkManager::Status status) {
-    //      KLOG_DEBUG() << "NetworkManager::Status:" << status;
-    //
-    //    });
+    // connect(notifier(), &Notifier::statusChanged, this, [this](NetworkManager::Status status) {});
 
-    connect(settingsNotifier(), &SettingsNotifier::connectionAdded, this, &Manager::handleNotifierConnectionAdded,Qt::UniqueConnection);
-    connect(settingsNotifier(), &SettingsNotifier::connectionRemoved, this,&Manager::handleNotifierConnectionRemoved,Qt::UniqueConnection);
+    connect(settingsNotifier(), &SettingsNotifier::connectionAdded, this, &Manager::handleNotifierConnectionAdded, Qt::UniqueConnection);
+    connect(settingsNotifier(), &SettingsNotifier::connectionRemoved, this, &Manager::handleNotifierConnectionRemoved, Qt::UniqueConnection);
 }
 
 void Manager::refreshConnectionLists()
@@ -71,7 +68,7 @@ void Manager::handleActiveConnectionRemoved(const QString &activepath)
 
 void Manager::handleActiveConnectionStateChanged(ActiveConnection::State state)
 {
-    auto activeConnection = qobject_cast<ActiveConnection* >(sender());
+    auto activeConnection = qobject_cast<ActiveConnection *>(sender());
     QString path = activeConnection->path();
     switch (state)
     {
@@ -106,7 +103,6 @@ void Manager::handleStateDeactivated(const QString &deactivatedPath)
 {
 }
 
-//XXX:可以优化
 void Manager::getDeviceList(Device::Type deviceType)
 {
     const Device::List deviceList = networkInterfaces();
@@ -126,10 +122,8 @@ void Manager::getDeviceList(Device::Type deviceType)
 
 void Manager::handleStateActivating(const QString &activatedPath)
 {
-
 }
 
 void Manager::handleDeviceStateChanged(NetworkManager::Device::State newstate, NetworkManager::Device::State oldstate, NetworkManager::Device::StateChangeReason reason)
 {
-
 }

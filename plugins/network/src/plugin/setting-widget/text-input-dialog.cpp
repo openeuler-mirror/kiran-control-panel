@@ -12,8 +12,8 @@
  * Author:     luoqing <luoqing@kylinos.com.cn>
  */
 
-#include <qt5-log-i.h>
 #include "text-input-dialog.h"
+#include <qt5-log-i.h>
 
 TextInputDialog::TextInputDialog(QWidget *parent) : KiranMessageBox(parent)
 {
@@ -34,38 +34,39 @@ void TextInputDialog::init()
 void TextInputDialog::initUI()
 {
     m_lineEdit = new QLineEdit(this);
-    addWidgetToDialog(m_lineEdit,Qt::AlignVCenter);
-    m_lineEdit->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
+    addWidgetToDialog(m_lineEdit, Qt::AlignVCenter);
+    m_lineEdit->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 
     setTitle(tr("Tips"));
-//    setText(tr("Please input password"));
+    //    setText(tr("Please input password"));
 
-    m_confirmButton =  new QPushButton(tr("Yes"));
+    m_confirmButton = new QPushButton(tr("Yes"));
     m_cancelButton = new QPushButton(tr("Cancel"));
-    addButton(m_confirmButton,QDialogButtonBox::AcceptRole);
-    addButton(m_cancelButton,QDialogButtonBox::RejectRole);
-}  
+    m_confirmButton->setAccessibleName(QString("ButtonConfirm"));
+    m_cancelButton->setAccessibleName(QString("ButtonCancel"));
+    addButton(m_confirmButton, QDialogButtonBox::AcceptRole);
+    addButton(m_cancelButton, QDialogButtonBox::RejectRole);
+}
 
 void TextInputDialog::initConnection()
 {
-    connect(m_lineEdit,&QLineEdit::textEdited,[=](){
+    connect(m_lineEdit, &QLineEdit::textEdited, [=]()
+            {
         if(m_lineEdit->text().isEmpty())
             m_confirmButton->setEnabled(false);
         else
-            m_confirmButton->setEnabled(true);
-    });
+            m_confirmButton->setEnabled(true); });
 
-    connect(m_confirmButton,&QPushButton::clicked,[=](){
+    connect(m_confirmButton, &QPushButton::clicked, [=]()
+            {
         if(m_lineEdit->echoMode() == QLineEdit::Password)
             emit password(m_lineEdit->text());
         else
             emit ssid(m_lineEdit->text());
-        this->close();
-    });
+        this->close(); });
 
-    connect(m_cancelButton,&QPushButton::clicked,[=](){
-        this->close();
-    });
+    connect(m_cancelButton, &QPushButton::clicked, [=]()
+            { this->close(); });
 }
 
 void TextInputDialog::setlineEditEchoMode(QLineEdit::EchoMode echoMode)

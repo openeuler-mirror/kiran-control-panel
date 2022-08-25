@@ -61,6 +61,9 @@
          <height>36</height>
         </size>
        </property>
+       <property name="accessibleName">
+        <string>EditVPNGateway</string>
+       </property>
       </widget>
      </item>
     </layout>
@@ -97,6 +100,9 @@
          <height>36</height>
         </size>
        </property>
+       <property name="accessibleName">
+        <string>EditVPNUserName</string>
+       </property>
       </widget>
      </item>
     </layout>
@@ -129,6 +135,9 @@
        </property>
        <property name="focusPolicy">
         <enum>Qt::WheelFocus</enum>
+       </property>
+       <property name="accessibleName">
+        <string>ComboBoxVPNPasswordOptions</string>
        </property>
       </widget>
      </item>
@@ -175,10 +184,16 @@
             <height>36</height>
            </size>
           </property>
+          <property name="accessibleName">
+           <string>EditVPNPassword</string>
+          </property>
          </widget>
         </item>
         <item>
          <widget class="QPushButton" name="passwordVisual">
+          <property name="accessibleName">
+           <string>ButtonPasswordVisual</string>
+          </property>
           <property name="text">
            <string>PushButton</string>
           </property>
@@ -211,6 +226,9 @@
          <width>16777215</width>
          <height>36</height>
         </size>
+       </property>
+       <property name="accessibleName">
+        <string>EditNTDomain</string>
        </property>
       </widget>
      </item>

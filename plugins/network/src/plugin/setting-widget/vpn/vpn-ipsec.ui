@@ -103,6 +103,9 @@
             <height>36</height>
            </size>
           </property>
+          <property name="accessibleName">
+           <string>EditGroupName</string>
+          </property>
          </widget>
         </item>
        </layout>
@@ -132,6 +135,9 @@
             <width>16777215</width>
             <height>36</height>
            </size>
+          </property>
+          <property name="accessibleName">
+           <string>EditGroupId</string>
           </property>
          </widget>
         </item>
@@ -163,6 +169,9 @@
             <height>36</height>
            </size>
           </property>
+          <property name="accessibleName">
+           <string>EditPreSharedKey</string>
+          </property>
          </widget>
         </item>
        </layout>
@@ -193,6 +202,9 @@
             <height>36</height>
            </size>
           </property>
+          <property name="accessibleName">
+           <string>EditIpsecIKE</string>
+          </property>
          </widget>
         </item>
        </layout>
@@ -222,6 +234,9 @@
             <width>16777215</width>
             <height>36</height>
            </size>
+          </property>
+          <property name="accessibleName">
+           <string>EditIpsecESP</string>
           </property>
          </widget>
         </item>

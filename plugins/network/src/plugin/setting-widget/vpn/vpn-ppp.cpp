@@ -33,7 +33,10 @@ VpnPpp::~VpnPpp()
 void VpnPpp::initUI()
 {
     m_useMPPE = new KiranSwitchButton(this);
+    m_useMPPE->setAccessibleName(QString("SwitchUseMPPE"));
     m_statefulMPPE = new KiranSwitchButton(this);
+    m_statefulMPPE->setAccessibleName(QString("SwitchStatefulMPPE"));
+
     ui->useMPPELayout->addWidget(m_useMPPE);
     ui->statefulMPPELayout->addWidget(m_statefulMPPE);
 
@@ -61,6 +64,7 @@ void VpnPpp::initOptionsButton(const QStringList &supportOptions)
             QLabel *strLabel = new QLabel(str, this);
             KiranSwitchButton *switchButton = new KiranSwitchButton(this);
             switchButton->setProperty("option", option);
+            switchButton->setAccessibleName(str);
             m_optionsButtonMap[option] = switchButton;
 
             QHBoxLayout *horizontalLayout = new QHBoxLayout();

@@ -36,6 +36,7 @@ EthernetWidget::~EthernetWidget()
 void EthernetWidget::initUI()
 {
     m_mtuButton = new KiranSwitchButton(this);
+    m_mtuButton->setAccessibleName(QString("SwitchMTUButton"));
     ui->mtuLayout->addWidget(m_mtuButton);
     ui->customMTU->setVisible(false);
     ui->customMTU->setMinimum(0);
