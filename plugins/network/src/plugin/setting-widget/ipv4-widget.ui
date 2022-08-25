@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>706</width>
-    <height>493</height>
+    <height>498</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -51,6 +51,9 @@
          <width>16777215</width>
          <height>36</height>
         </size>
+       </property>
+       <property name="accessibleName">
+        <string>ComboBoxIpv4Method</string>
        </property>
       </widget>
      </item>
@@ -100,6 +103,9 @@
             <height>36</height>
            </size>
           </property>
+          <property name="accessibleName">
+           <string>EditIpv4Address</string>
+          </property>
          </widget>
         </item>
        </layout>
@@ -130,6 +136,9 @@
             <height>36</height>
            </size>
           </property>
+          <property name="accessibleName">
+           <string>EditIpv4Netmask</string>
+          </property>
          </widget>
         </item>
        </layout>
@@ -159,6 +168,9 @@
             <width>16777215</width>
             <height>36</height>
            </size>
+          </property>
+          <property name="accessibleName">
+           <string>EditIpv4Gateway</string>
           </property>
          </widget>
         </item>
@@ -193,6 +205,9 @@
          <height>36</height>
         </size>
        </property>
+       <property name="accessibleName">
+        <string>EditIpv4PreferredDNS</string>
+       </property>
       </widget>
      </item>
     </layout>
@@ -222,6 +237,9 @@
          <width>16777215</width>
          <height>36</height>
         </size>
+       </property>
+       <property name="accessibleName">
+        <string>EditIpv4AlternateDNS</string>
        </property>
       </widget>
      </item>

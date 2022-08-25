@@ -97,7 +97,7 @@ void ConnectionLists::handleConnectionItemClicked(QListWidgetItem* item)
 
                 QWidget* widget = this->itemWidget(item);
                 TrayItemWidget* trayItemWidget = qobject_cast<TrayItemWidget*>(widget);
-                
+
                 if (isWireless)
                 {
                     // Note:signalStrength == -1 对应连接隐藏网络
@@ -249,6 +249,8 @@ void ConnectionLists::addConnectionToLists(Connection::Ptr ptr, const QString& d
     var.setValue(connectionInfo);
     // item中保存connection的相关信息
     item->setData(Qt::UserRole, var);
+    item->setData(Qt::AccessibleTextRole, QString("WiredConnectionItem::%1").arg(connectionInfo.id));
+
     if (m_itemShowType == ITEM_WIDGET_TYPE_PLUGIN)
     {
         this->setItemWidget(item, connectionItemWidget);
@@ -411,6 +413,7 @@ void ConnectionLists::addWirelessNetworkToLists(WirelessNetwork::Ptr network, co
     QVariant var;
     var.setValue(connectionInfo);
     item->setData(Qt::UserRole, var);
+    item->setData(Qt::AccessibleTextRole, QString("WirelessConnectionItem::%1").arg(connectionInfo.id));
     this->addItem(item);
 
     if (m_itemShowType == ITEM_WIDGET_TYPE_PLUGIN)
@@ -467,6 +470,7 @@ void ConnectionLists::showOtherWirelessItem()
     QVariant var;
     var.setValue(connectionInfo);
     item->setData(Qt::UserRole, var);
+    item->setData(Qt::AccessibleTextRole, QString("ShowOtherWireless"));
     this->addItem(item);
 
     if (m_itemShowType == ITEM_WIDGET_TYPE_PLUGIN)
@@ -668,7 +672,7 @@ void ConnectionLists::showInputPasswordWidgetOfItem(QListWidgetItem* item)
     QWidget* widget = itemWidget(item);
     TrayItemWidget* trayItemWidget = qobject_cast<TrayItemWidget*>(widget);
     trayItemWidget->showInputPasswordWidget();
-    connect(trayItemWidget, &TrayItemWidget::sendPassword, this, &ConnectionLists::handleSendPassword,Qt::UniqueConnection);
+    connect(trayItemWidget, &TrayItemWidget::sendPassword, this, &ConnectionLists::handleSendPassword, Qt::UniqueConnection);
 }
 
 void ConnectionLists::handleSendPassword(const QString& password)

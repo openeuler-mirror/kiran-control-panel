@@ -52,6 +52,9 @@
          <height>36</height>
         </size>
        </property>
+       <property name="accessibleName">
+        <string>ComboBoxVPNIpv4Method</string>
+       </property>
       </widget>
      </item>
     </layout>
@@ -109,6 +112,9 @@
          <height>36</height>
         </size>
        </property>
+       <property name="accessibleName">
+        <string>EditVPNIpv4PreferredDNS</string>
+       </property>
       </widget>
      </item>
     </layout>
@@ -141,6 +147,9 @@
          <width>16777215</width>
          <height>36</height>
         </size>
+       </property>
+       <property name="accessibleName">
+        <string>EditIpv4AlternateDNS</string>
        </property>
       </widget>
      </item>

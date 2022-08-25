@@ -136,6 +136,9 @@
           <height>36</height>
          </size>
         </property>
+        <property name="accessibleName">
+         <string>ComboBoxDetailsSelectConnection</string>
+        </property>
        </widget>
       </item>
      </layout>

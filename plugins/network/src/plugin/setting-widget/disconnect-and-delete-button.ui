@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>357</width>
-    <height>94</height>
+    <height>138</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -31,6 +31,9 @@
    </property>
    <item>
     <widget class="QPushButton" name="disconnectButton">
+     <property name="accessibleName">
+      <string>ButtonDisconnect</string>
+     </property>
      <property name="text">
       <string>Disconnect</string>
      </property>
@@ -38,6 +41,9 @@
    </item>
    <item>
     <widget class="QPushButton" name="deleteButton">
+     <property name="accessibleName">
+      <string>ButtonDelete</string>
+     </property>
      <property name="text">
       <string>Delete</string>
      </property>
@@ -45,6 +51,9 @@
    </item>
    <item>
     <widget class="QPushButton" name="ignoreButton">
+     <property name="accessibleName">
+      <string>ButtonIgnore</string>
+     </property>
      <property name="text">
       <string>Ignore</string>
      </property>

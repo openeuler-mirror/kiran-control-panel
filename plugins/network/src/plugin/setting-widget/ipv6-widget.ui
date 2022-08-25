@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>616</width>
-    <height>481</height>
+    <height>510</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -54,6 +54,9 @@
          <width>16777215</width>
          <height>36</height>
         </size>
+       </property>
+       <property name="accessibleName">
+        <string>ComboBoxIpv6Method</string>
        </property>
       </widget>
      </item>
@@ -103,6 +106,9 @@
             <height>36</height>
            </size>
           </property>
+          <property name="accessibleName">
+           <string>EditIpv6Address</string>
+          </property>
          </widget>
         </item>
        </layout>
@@ -133,6 +139,9 @@
             <height>36</height>
            </size>
           </property>
+          <property name="accessibleName">
+           <string>SpinBoxIpv6Prefix</string>
+          </property>
          </widget>
         </item>
        </layout>
@@ -162,6 +171,9 @@
             <width>16777215</width>
             <height>36</height>
            </size>
+          </property>
+          <property name="accessibleName">
+           <string>EditIpv6Gateway</string>
           </property>
          </widget>
         </item>
@@ -196,6 +208,9 @@
          <height>36</height>
         </size>
        </property>
+       <property name="accessibleName">
+        <string>EditIpv6PreferredDNS</string>
+       </property>
       </widget>
      </item>
     </layout>
@@ -225,6 +240,9 @@
          <width>16777215</width>
          <height>36</height>
         </size>
+       </property>
+       <property name="accessibleName">
+        <string>EditIpv6AlternateDNS</string>
        </property>
       </widget>
      </item>

@@ -13,8 +13,8 @@
  */
 #include "vpn-ipvx.h"
 #include <kiran-switch-button.h>
-#include "ui_vpn-ipvx.h"
 #include <qt5-log-i.h>
+#include "ui_vpn-ipvx.h"
 using namespace NetworkManager;
 
 Q_DECLARE_METATYPE(NetworkManager::Ipv4Setting::ConfigMethod)
@@ -36,6 +36,7 @@ void VpnIpvx::initUI()
     ui->ipv4Method->addItem(tr("Auto"), Ipv4Setting::ConfigMethod::Automatic);
 
     m_neverDefault = new KiranSwitchButton(this);
+    m_neverDefault->setAccessibleName(QString("SwitchOnlyAppliedInCorrespondingResources"));
     ui->neverDefaultLayout->addWidget(m_neverDefault);
 }
 
@@ -65,11 +66,11 @@ void VpnIpvx::saveSettings()
         m_ipv4Setting->setNeverDefault(m_neverDefault->isChecked());
 
         QList<QHostAddress> ipv4DNS;
-        if(!ui->ipv4PreferredDNS->text().isEmpty())
+        if (!ui->ipv4PreferredDNS->text().isEmpty())
         {
             ipv4DNS << QHostAddress(ui->ipv4PreferredDNS->text());
         }
-        if(!ui->ipv4AlternateDNS->text().isEmpty())
+        if (!ui->ipv4AlternateDNS->text().isEmpty())
         {
             ipv4DNS << QHostAddress(ui->ipv4AlternateDNS->text());
         }
@@ -79,15 +80,15 @@ void VpnIpvx::saveSettings()
 
 void VpnIpvx::showSeittngs()
 {
-    if(m_ipv4Setting != nullptr)
+    if (m_ipv4Setting != nullptr)
     {
-        if(m_ipv4Setting->method() == Ipv4Setting::ConfigMethod::Automatic)
+        if (m_ipv4Setting->method() == Ipv4Setting::ConfigMethod::Automatic)
         {
             int ipv4MethodIndex = ui->ipv4Method->findData(Ipv4Setting::ConfigMethod::Automatic);
             ui->ipv4Method->setCurrentIndex(ipv4MethodIndex);
         }
         else
-        {//预留
+        {  //预留
         }
         m_neverDefault->setChecked(m_ipv4Setting->neverDefault());
 

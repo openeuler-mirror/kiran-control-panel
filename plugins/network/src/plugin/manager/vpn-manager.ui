@@ -13,6 +13,9 @@
   <property name="windowTitle">
    <string>VpnManager</string>
   </property>
+  <property name="accessibleName">
+   <string>VpnManager</string>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout_7">
    <property name="leftMargin">
     <number>0</number>
@@ -83,8 +86,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>658</width>
-            <height>754</height>
+            <width>153</width>
+            <height>115</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_5">

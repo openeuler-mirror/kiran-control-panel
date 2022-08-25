@@ -55,7 +55,7 @@ void VpnManager::initUI()
 // XXX:是否使用模板提升通用性
 void VpnManager::initConnection()
 {
-    connect(ui->connectionShowPage, &ConnectionShowPage::requestCreatConnection, [=]()
+    connect(ui->connectionShowPage, &ConnectionShowPage::requestCreatConnection, this, [this]()
             {
         //默认创建vpn类型：L2TP
         ui->vpnTypeWidget->setVisible(true);
@@ -71,7 +71,7 @@ void VpnManager::initConnection()
     connect(ui->connectionShowPage, &ConnectionShowPage::requestEditConnection, this, &VpnManager::handleRequestEditConnection);
     connect(ui->connectionShowPage, &ConnectionShowPage::requestActivateCurrentItemConnection, this, &VpnManager::handleRequestActivateConnection);
 
-    connect(ui->vpnType, QOverload<int>::of(&QComboBox::currentIndexChanged), [=](int index)
+    connect(ui->vpnType, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [this](int index)
             {
         VpnType type = ui->vpnType->currentData().value<VpnType>();
         ui->vpnTypeStacked->setCurrentIndex(type);
@@ -91,7 +91,7 @@ void VpnManager::initConnection()
     connect(ui->l2tpSetting, &VpnL2tpSetting::returnPreviousPage, this, &VpnManager::handleReturnPreviousPage);
     connect(ui->pptpSetting, &VpnPptpSetting::returnPreviousPage, this, &VpnManager::handleReturnPreviousPage);
 
-    connect(ui->saveButton, &QPushButton::clicked, [=]()
+    connect(ui->saveButton, &QPushButton::clicked, this, [this]()
             {
                 int index = ui->vpnTypeStacked->currentIndex();
                 switch (index)
@@ -114,7 +114,7 @@ void VpnManager::initConnection()
                     break;
                 } });
 
-    connect(ui->connectionShowPage, &ConnectionShowPage::connectionUpdated, [=](const QString &path)
+    connect(ui->connectionShowPage, &ConnectionShowPage::connectionUpdated, this, [this](const QString &path)
             {
                 KLOG_DEBUG() << "Connection::updated:" << path;
                 //移除后再加载进来以更新信息

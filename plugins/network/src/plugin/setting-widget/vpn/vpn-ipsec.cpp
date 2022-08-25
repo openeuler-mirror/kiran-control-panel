@@ -13,9 +13,9 @@
  */
 
 #include "vpn-ipsec.h"
-#include "ui_vpn-ipsec.h"
 #include <kiran-switch-button.h>
 #include <qt5-log-i.h>
+#include "ui_vpn-ipsec.h"
 using namespace NetworkManager;
 
 VpnIPsec::VpnIPsec(QWidget *parent) : QWidget(parent), ui(new Ui::VpnIPsec)
@@ -33,6 +33,7 @@ VpnIPsec::~VpnIPsec()
 void VpnIPsec::initUI()
 {
     m_enableIPsec = new KiranSwitchButton(this);
+    m_enableIPsec->setAccessibleName(QString("SwitchEnableIPsec"));
     ui->enableIPsecLayout->addWidget(m_enableIPsec);
     m_enableIPsec->setChecked(false);
     ui->IPsecWidget->setVisible(false);
@@ -40,9 +41,8 @@ void VpnIPsec::initUI()
 
 void VpnIPsec::initConnection()
 {
-    connect(m_enableIPsec,&QAbstractButton::toggled,[=](bool checked){
-        ui->IPsecWidget->setVisible(checked);
-    });
+    connect(m_enableIPsec, &QAbstractButton::toggled, [=](bool checked)
+            { ui->IPsecWidget->setVisible(checked); });
 }
 
 void VpnIPsec::setVpnSetting(const VpnSetting::Ptr &vpnSetting)
@@ -54,14 +54,17 @@ void VpnIPsec::saveSettings()
 {
     m_dataMap = m_vpnSetting->data();
 
-    if (m_enableIPsec->isChecked()) {
+    if (m_enableIPsec->isChecked())
+    {
         m_dataMap.insert("ipsec-enabled", "yes");
         m_dataMap.insert("ipsec-group-name", ui->groupName->text());
         m_dataMap.insert("ipsec-gateway-id", ui->groupId->text());
         m_dataMap.insert("ipsec-psk", ui->preSharedKey->text());
         m_dataMap.insert("ipsec-ike", ui->ipsecIKE->text());
         m_dataMap.insert("ipsec-esp", ui->ipsecESP->text());
-    } else {
+    }
+    else
+    {
         m_dataMap.remove("ipsec-enabled");
         m_dataMap.remove("ipsec-group-name");
         m_dataMap.remove("ipsec-gateway-id");
@@ -77,7 +80,7 @@ void VpnIPsec::saveSettings()
 
 void VpnIPsec::showSettings()
 {
-    if(m_vpnSetting != nullptr)
+    if (m_vpnSetting != nullptr)
     {
         NMStringMap dataMap = m_vpnSetting->data();
         m_enableIPsec->setChecked(dataMap.value("ipsec-enabled") == "yes");

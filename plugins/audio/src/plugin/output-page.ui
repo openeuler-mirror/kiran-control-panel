@@ -80,6 +80,9 @@
          <height>36</height>
         </size>
        </property>
+       <property name="accessibleName">
+        <string>ComboBoxOutputDevices</string>
+       </property>
       </widget>
      </item>
     </layout>
@@ -169,6 +172,9 @@
        <property name="focusPolicy">
         <enum>Qt::NoFocus</enum>
        </property>
+       <property name="accessibleName">
+        <string>SlilderVolumeSetting</string>
+       </property>
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
@@ -235,6 +241,9 @@
        </property>
        <property name="focusPolicy">
         <enum>Qt::NoFocus</enum>
+       </property>
+       <property name="accessibleName">
+        <string>SliderVolumeBalance</string>
        </property>
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
