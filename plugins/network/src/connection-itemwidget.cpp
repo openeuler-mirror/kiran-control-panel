@@ -19,6 +19,7 @@
 #include <QPainter>
 #include <QSvgRenderer>
 #include "animation-loading-label.h"
+#include "utils.h"
 
 // 使用默认析构函数，父对象被释放时，会释放子对象
 ConnectionItemWidget::ConnectionItemWidget(QWidget* parent) : KiranFrame(parent)
@@ -48,7 +49,7 @@ void ConnectionItemWidget::initPluginItemWidget()
     m_activatedLabel->setVisible(false);
 
     //    auto pixmap = QApplication::style()->standardPixmap(QStyle::SP_ArrowRight);
-    m_editButton->setIcon(trayIconColorSwitch(":/kcp-network-images/details-info.svg"));
+    m_editButton->setIcon(NetworkUtils::trayIconColorSwitch(":/kcp-network-images/details-info.svg"));
     m_editButton->setIconSize(QSize(16, 16));
     m_editButton->setFixedSize(30, 36);
     m_editButton->setFlat(true);
@@ -132,7 +133,7 @@ void ConnectionItemWidget::setWirelessStatusIcon(bool security, int signal)
         else if (75 <= signal && signal <= 100)
             svgPath = ":/kcp-network-images/wireless-4.svg";
     }
-    QPixmap pixmap = trayIconColorSwitch(svgPath);
+    QPixmap pixmap = NetworkUtils::trayIconColorSwitch(svgPath);
     KLOG_DEBUG() << "svgPath:" << svgPath;
     m_connectionTypeIcon->setPixmap(pixmap);
     m_connectionTypeIcon->setAlignment(Qt::AlignCenter);
@@ -143,7 +144,7 @@ void ConnectionItemWidget::setWiredStatusIcon()
 {
     // TODO:图标跟随网络状态改变
     QString svgPath = ":/kcp-network-images/wired-connection.svg";
-    QPixmap pixmap = trayIconColorSwitch(svgPath);
+    QPixmap pixmap = NetworkUtils::trayIconColorSwitch(svgPath);
     m_connectionTypeIcon->setPixmap(pixmap);
     m_connectionTypeIcon->setAlignment(Qt::AlignCenter);
     m_connectionTypeIcon->setVisible(true);
@@ -157,7 +158,7 @@ void ConnectionItemWidget::setEditButtonVisible(bool isVisible)
 void ConnectionItemWidget::setOtherNetworkIcon()
 {
     QString svgPath = ":/kcp-network-images/wireless-other-network.svg";
-    QPixmap pixmap = trayIconColorSwitch(svgPath);
+    QPixmap pixmap = NetworkUtils::trayIconColorSwitch(svgPath);
     m_connectionTypeIcon->setPixmap(pixmap);
     m_connectionTypeIcon->setAlignment(Qt::AlignCenter);
     m_connectionTypeIcon->setVisible(true);
@@ -172,19 +173,5 @@ void ConnectionItemWidget::handleThemeChanged(Kiran::PaletteType paletteType)
         QPixmap pixmap = QPixmap::fromImage(image);
         m_connectionTypeIcon->setPixmap(pixmap);
     }
-    m_editButton->setIcon(trayIconColorSwitch(":/kcp-network-images/details-info.svg"));
-}
-
-QPixmap ConnectionItemWidget::trayIconColorSwitch(const QString& iconPath)
-{
-    // icon原本为浅色
-    QIcon icon(iconPath);
-    QPixmap pixmap = icon.pixmap(16, 16);
-    if (Kiran::StylePalette::instance()->paletteType() != Kiran::PALETTE_DARK)
-    {
-        QImage image = pixmap.toImage();
-        image.invertPixels(QImage::InvertRgb);
-        pixmap = QPixmap::fromImage(image);
-    }
-    return pixmap;
+    m_editButton->setIcon(NetworkUtils::trayIconColorSwitch(":/kcp-network-images/details-info.svg"));
 }

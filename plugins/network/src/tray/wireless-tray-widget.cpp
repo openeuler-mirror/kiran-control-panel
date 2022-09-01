@@ -17,6 +17,7 @@
 #include <NetworkManagerQt/Ipv4Setting>
 #include <NetworkManagerQt/Settings>
 #include <NetworkManagerQt/Utils>
+#include "status-notification.h"
 using namespace NetworkManager;
 
 WirelessTrayWidget::WirelessTrayWidget(const QString &devicePath, QWidget *parent) : TrayWidget(parent)

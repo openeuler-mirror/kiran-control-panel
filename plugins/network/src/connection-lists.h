@@ -25,7 +25,6 @@
 #include <QPushButton>
 #include <QWidget>
 #include "connection-itemwidget.h"
-#include "status-notification.h"
 
 enum ItemWidgetType
 {
@@ -138,7 +137,6 @@ private:
     ItemWidgetType m_itemShowType;
     QString m_currentDevicePath;
     QMap<QWidget *, QListWidgetItem *> m_itemWidgetMap;
-    StatusNotification m_statusNotification;
 };
 
 class ConnectionSortListItem : public QListWidgetItem
