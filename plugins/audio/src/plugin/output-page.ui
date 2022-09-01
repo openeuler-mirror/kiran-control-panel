@@ -45,12 +45,6 @@
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
-       <property name="font">
-        <font>
-         <family>Sans Serif</family>
-         <pointsize>9</pointsize>
-        </font>
-       </property>
        <property name="text">
         <string>Output devices</string>
        </property>
@@ -103,12 +97,6 @@
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
-       <property name="font">
-        <font>
-         <family>Sans Serif</family>
-         <pointsize>9</pointsize>
-        </font>
-       </property>
        <property name="text">
         <string>Output volume</string>
        </property>
@@ -121,12 +109,6 @@
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
-       </property>
-       <property name="font">
-        <font>
-         <family>Sans Serif</family>
-         <pointsize>9</pointsize>
-        </font>
        </property>
        <property name="styleSheet">
         <string notr="true"/>
@@ -198,12 +180,6 @@
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
-       <property name="font">
-        <font>
-         <family>Sans Serif</family>
-         <pointsize>9</pointsize>
-        </font>
-       </property>
        <property name="text">
         <string>Left/right balance</string>
        </property>
@@ -256,12 +232,6 @@
     <layout class="QHBoxLayout" name="horizontalLayout_4">
      <item>
       <widget class="QLabel" name="label_6">
-       <property name="font">
-        <font>
-         <family>Sans Serif</family>
-         <pointsize>9</pointsize>
-        </font>
-       </property>
        <property name="text">
         <string>Left</string>
        </property>
@@ -287,12 +257,6 @@
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
-       </property>
-       <property name="font">
-        <font>
-         <family>Sans Serif</family>
-         <pointsize>9</pointsize>
-        </font>
        </property>
        <property name="text">
         <string>Right</string>

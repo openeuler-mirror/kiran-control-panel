@@ -49,7 +49,8 @@ void NetworkTray::init()
     initMenu();
     initConnect();
 
-    NetworkManager::Connection::List listConnections();
+    // XXX:现将widget移到屏幕外，防止第一次显示页面，由于没指定位置而闪现在左上角，之后统一修改页面显示逻辑
+    this->move(-1000, -1000);
 }
 
 void NetworkTray::initUI()
