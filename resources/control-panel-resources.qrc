@@ -12,14 +12,14 @@
         <file>images/trash-hover.svg</file>
         <file>images/trash-pressed.svg</file>
         <file>images/indicator-selected.png</file>
+        <file alias="images/success-indicator.svg">images/current-avatar-indicator.svg</file>
+        <file>images/error-indicator.svg</file>
     </qresource>
 
     <qresource prefix="/kcp-account">
         <file>images/create-user-avatar.png</file>
         <file>images/change-user-avatar.png</file>
         <file>images/current-avatar-indicator.svg</file>
-        <file alias="images/success-indicator.svg">images/current-avatar-indicator.svg</file>
-        <file>images/error-indicator.svg</file>
         <file>images/finger-0.svg</file>
         <file>images/finger-25.svg</file>
         <file>images/finger-50.svg</file>

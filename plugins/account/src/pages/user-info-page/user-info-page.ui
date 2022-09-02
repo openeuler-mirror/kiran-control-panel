@@ -868,7 +868,7 @@
   <customwidget>
    <class>LineEditWithCheckIcon</class>
    <extends>QWidget</extends>
-   <header location="global">lineedit-with-checkicon.h</header>
+   <header location="global">lineedit-with-checkicon/lineedit-with-checkicon.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>

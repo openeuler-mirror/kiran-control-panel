@@ -15,7 +15,7 @@
 #ifndef USERINFOPAGE_H
 #define USERINFOPAGE_H
 
-#include "kiran-tips.h"
+#include "kiran-tips/kiran-tips.h"
 
 #include <QWidget>
 
