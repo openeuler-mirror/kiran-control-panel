@@ -55,10 +55,18 @@
       <number>10</number>
      </property>
      <item>
-      <widget class="QComboBox" name="combo_idleTime"/>
+      <widget class="QComboBox" name="combo_idleTime">
+       <property name="accessibleName">
+        <string>ComboIdleTime</string>
+       </property>
+      </widget>
      </item>
      <item>
-      <widget class="QComboBox" name="combo_idleAction"/>
+      <widget class="QComboBox" name="combo_idleAction">
+       <property name="accessibleName">
+        <string>ComboIdleAction</string>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>
@@ -88,7 +96,11 @@
       <number>10</number>
      </property>
      <item>
-      <widget class="QComboBox" name="combo_displayOffTime"/>
+      <widget class="QComboBox" name="combo_displayOffTime">
+       <property name="accessibleName">
+        <string>ComboMonitorTrunOffIdleTime</string>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>

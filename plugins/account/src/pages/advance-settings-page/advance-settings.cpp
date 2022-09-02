@@ -17,7 +17,7 @@
 #include "global-defines.h"
 #include "ui_advance-settings.h"
 #include "uid-validator.h"
-#include "kiran-tips.h"
+#include "kiran-tips/kiran-tips.h"
 
 #include <QDebug>
 #include <QDir>

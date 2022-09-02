@@ -96,6 +96,9 @@
                  <height>40</height>
                 </size>
                </property>
+               <property name="accessibleName">
+                <string>ComboAppFontName</string>
+               </property>
                <property name="maxVisibleItems">
                 <number>10</number>
                </property>
@@ -117,6 +120,9 @@
                  <width>16777215</width>
                  <height>40</height>
                 </size>
+               </property>
+               <property name="accessibleName">
+                <string>ComboAppFontSize</string>
                </property>
                <property name="maxVisibleItems">
                 <number>5</number>
@@ -172,6 +178,9 @@
                  <height>40</height>
                 </size>
                </property>
+               <property name="accessibleName">
+                <string>ComboTitleFontName</string>
+               </property>
               </widget>
              </item>
              <item>
@@ -187,6 +196,9 @@
                  <width>16777215</width>
                  <height>40</height>
                 </size>
+               </property>
+               <property name="accessibleName">
+                <string>ComboTitleFontSize</string>
                </property>
                <property name="maxVisibleItems">
                 <number>5</number>
@@ -242,6 +254,9 @@
                  <height>40</height>
                 </size>
                </property>
+               <property name="accessibleName">
+                <string>ComboMonospaceFontName</string>
+               </property>
               </widget>
              </item>
              <item>
@@ -257,6 +272,9 @@
                  <width>16777215</width>
                  <height>40</height>
                 </size>
+               </property>
+               <property name="accessibleName">
+                <string>ComboMonospaceFontSize</string>
                </property>
                <property name="maxVisibleItems">
                 <number>5</number>

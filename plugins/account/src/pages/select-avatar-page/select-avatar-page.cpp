@@ -143,6 +143,7 @@ void SelectAvatarPage::initUI()
 
     btn = new QPushButton(this);
     btn->setObjectName("btn_confirm");
+    btn->setAccessibleName("ButtonConfirm");
     btn->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     btn->setFixedSize(110, 40);
     btn->setText(tr("Confirm"));
@@ -156,6 +157,7 @@ void SelectAvatarPage::initUI()
 
     btn = new QPushButton(this);
     btn->setObjectName("btn_return");
+    btn->setAccessibleName("ButtonReturn");
     btn->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     btn->setFixedSize(110, 40);
     btn->setText(tr("Return"));
@@ -168,6 +170,7 @@ void SelectAvatarPage::initUI()
 
     loadAvatar();
     m_addButton = addAvatar(":/kcp-account/images/create-user-avatar.png", AVATAR_ADD, false);
+    m_addButton->setAccessibleName("ButtonAddAvatar");
     connect(m_addButton, &AvatarItemButton::clicked, [this]()
             {
         //1.选择图片
@@ -221,6 +224,7 @@ AvatarItemButton *SelectAvatarPage::addAvatar(const QString &iconPath, AvatarTyp
     }
     btn->setIcon(iconPath);
     btn->setFixedSize(80, 80);
+    btn->setAccessibleName(QString("AvatarItemButton::%1").arg(iconPath));
     if (type != AVATAR_ADD)
     {
         btn->setCheckable(true);

@@ -96,6 +96,7 @@ void BatterySettingsPage::initUI()
 
     ///空闲时减少屏幕亮度
     m_reduceBrightnessSwitch = new KiranSwitchButton(this);
+    m_reduceBrightnessSwitch->setAccessibleName("SwitchReduceBrightness");
     ui->layout_reduceBrightness->insertWidget(ui->layout_reduceBrightness->count(), m_reduceBrightnessSwitch);
 }
 

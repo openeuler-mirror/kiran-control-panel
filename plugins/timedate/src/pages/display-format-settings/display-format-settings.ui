@@ -50,7 +50,11 @@
     </layout>
    </item>
    <item>
-    <widget class="QComboBox" name="combo_longDateFormat"/>
+    <widget class="QComboBox" name="combo_longDateFormat">
+     <property name="accessibleName">
+      <string>ComboLongDateDisplayFormat</string>
+     </property>
+    </widget>
    </item>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -73,7 +77,11 @@
     </layout>
    </item>
    <item>
-    <widget class="QComboBox" name="combo_shortDateFormat"/>
+    <widget class="QComboBox" name="combo_shortDateFormat">
+     <property name="accessibleName">
+      <string>ComboShortDateDisplayFormat</string>
+     </property>
+    </widget>
    </item>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_3">
@@ -93,7 +101,11 @@
     </layout>
    </item>
    <item>
-    <widget class="QComboBox" name="combo_timeFormat"/>
+    <widget class="QComboBox" name="combo_timeFormat">
+     <property name="accessibleName">
+      <string>ComboTimeFormat</string>
+     </property>
+    </widget>
    </item>
    <item>
     <layout class="QHBoxLayout" name="layout_timeSeconds">

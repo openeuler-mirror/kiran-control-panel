@@ -162,6 +162,7 @@ void GeneralSettingsPage::initUI()
 
     //空闲时是否锁定屏幕及屏保
     m_btn_lockScreen = new KiranSwitchButton(this);
+    m_btn_lockScreen->setAccessibleName("ButtonIdleLockScreen");
     ui->layout_sliderLabel->addWidget(m_btn_lockScreen);
 
     //NOTE: 根据#48515缺陷单所做修改,隐藏挂起按钮相关配置项，后续若有需要再进行打开

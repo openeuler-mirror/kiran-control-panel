@@ -28,6 +28,7 @@ using namespace Kiran;
 SettingBriefWidget::SettingBriefWidget(QString title, int type, QWidget *parent) : QWidget(parent),
                                                                          ui(new Ui::SettingBriefWidget)
 {
+    setAccessibleName("SettingBriefWidget");
     ui->setupUi(this);
     initUI(title);
     setAttribute(Qt::WA_Hover);

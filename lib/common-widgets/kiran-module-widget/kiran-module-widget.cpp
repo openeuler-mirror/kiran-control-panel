@@ -101,6 +101,7 @@ void KiranModuleWidget::setPlugins(const PluginHelperPtrList &plugins)
             }
             item->setData(ROLE_PLUGIN_HELPER_INDEX, i);
             item->setData(ROLE_SUBITEM_ID, subItem.id);
+            item->setData(Qt::AccessibleTextRole,QString("ControlPanelSubItem::%1").arg(subItem.name));
             ui->list_subItems->addItem(item);
         }
     }

@@ -31,6 +31,8 @@ CategoryWidget::~CategoryWidget()
 
 void CategoryWidget::init()
 {
+    setAccessibleName("ControlPanelCategory");
+
     //初始化阴影
     QColor shadowColor(0,0,0,255*0.9);
     m_dropShadowEffect = new QGraphicsDropShadowEffect(this);
@@ -152,6 +154,7 @@ void CategoryWidget::loadCategories()
         auto category = categories.at(i);
         auto categoryInfo = category->getCategoryDesktopInfo();
         auto categoryItem = new CategoryItem();
+        categoryItem->setAccessibleName(QString("ControlPanelCategory::%1").arg(categoryInfo.categoryName));
         categoryItem->setText(categoryInfo.name);
         categoryItem->setIcon(QIcon(categoryInfo.icon));
         categoryItem->setFixedHeight(50);
