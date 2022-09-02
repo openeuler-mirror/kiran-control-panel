@@ -70,6 +70,9 @@
          <height>150</height>
         </size>
        </property>
+       <property name="accessibleName">
+        <string>UserAvatarWidget</string>
+       </property>
       </widget>
      </item>
      <item>
@@ -129,6 +132,9 @@
        <property name="contextMenuPolicy">
         <enum>Qt::NoContextMenu</enum>
        </property>
+       <property name="accessibleName">
+        <string>EditUserName</string>
+       </property>
       </widget>
      </item>
     </layout>
@@ -171,6 +177,9 @@
          <width>16777215</width>
          <height>36</height>
         </size>
+       </property>
+       <property name="accessibleName">
+        <string>ComboUserType</string>
        </property>
       </widget>
      </item>
@@ -221,6 +230,9 @@
          <height>36</height>
         </size>
        </property>
+       <property name="accessibleName">
+        <string>EditPasswd</string>
+       </property>
       </widget>
      </item>
     </layout>
@@ -270,6 +282,9 @@
          <height>36</height>
         </size>
        </property>
+       <property name="accessibleName">
+        <string>EditPasswdConfirm</string>
+       </property>
       </widget>
      </item>
     </layout>
@@ -287,6 +302,9 @@
      </property>
      <item>
       <widget class="QPushButton" name="btn_advanceSetting">
+       <property name="accessibleName">
+        <string>ButtonAdvanceSetting</string>
+       </property>
        <property name="autoFillBackground">
         <bool>true</bool>
        </property>
@@ -385,6 +403,9 @@
          <height>60</height>
         </size>
        </property>
+       <property name="accessibleName">
+        <string>ButtonConfirm</string>
+       </property>
        <property name="text">
         <string>Confirm</string>
        </property>
@@ -432,6 +453,9 @@
          <height>60</height>
         </size>
        </property>
+       <property name="accessibleName">
+        <string>ButtonCancel</string>
+       </property>
        <property name="text">
         <string>Cancel</string>
        </property>
@@ -464,7 +488,7 @@
   <customwidget>
    <class>LineEditWithCheckIcon</class>
    <extends>QWidget</extends>
-   <header location="global">lineedit-with-checkicon.h</header>
+   <header location="global">lineedit-with-checkicon/lineedit-with-checkicon.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>

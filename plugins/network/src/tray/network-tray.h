@@ -23,7 +23,6 @@
 #include <QWidget>
 #include "kiran-rounded-tray-popup/kiran-rounded-tray-popup.h"
 
-
 class WiredTrayWidget;
 class WirelessTrayWidget;
 class StatusNotifierManagerInterface;
@@ -65,6 +64,7 @@ public slots:
                                   NetworkManager::Device::State oldstate,
                                   NetworkManager::Device::StateChangeReason reason);
     void handleDeviceManagedChanged();
+    void handleWirelessEnabledChanged(bool enable);
 
     void handleAdjustedTraySize(QSize sizeHint);
 

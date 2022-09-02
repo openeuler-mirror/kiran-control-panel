@@ -121,6 +121,9 @@
           <property name="toolTip">
            <string>Rotate left 90 degrees</string>
           </property>
+          <property name="accessibleName">
+           <string>ButtonLeft</string>
+          </property>
           <property name="styleSheet">
            <string notr="true"/>
           </property>
@@ -152,6 +155,9 @@
           <property name="toolTip">
            <string>Rotate right 90 degrees</string>
           </property>
+          <property name="accessibleName">
+           <string>ButtonRight</string>
+          </property>
           <property name="styleSheet">
            <string notr="true"/>
           </property>
@@ -182,6 +188,9 @@
           </property>
           <property name="toolTip">
            <string>Turn left and right</string>
+          </property>
+          <property name="accessibleName">
+           <string>ButtonHorizontal</string>
           </property>
           <property name="styleSheet">
            <string notr="true"/>
@@ -217,6 +226,9 @@
           <property name="toolTip">
            <string>upside down</string>
           </property>
+          <property name="accessibleName">
+           <string>ButtonVertical</string>
+          </property>
           <property name="styleSheet">
            <string notr="true"/>
           </property>
@@ -250,6 +262,9 @@
           </property>
           <property name="toolTip">
            <string>Identification display</string>
+          </property>
+          <property name="accessibleName">
+           <string>ButtonIdentifying</string>
           </property>
           <property name="styleSheet">
            <string notr="true"/>

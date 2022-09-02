@@ -1,0 +1,18 @@
+# This configuration file changes NetworkManager's behavior to
+# what's expected on "traditional UNIX server" type deployments.
+#
+# See "man NetworkManager.conf" for more information about these
+# and other keys.
+
+#NetworkManager会先读取/etc/NetworkManager/NetworkManager.conf，然后是/usr/lib/NetworkManager/conf.d/下的配置
+#最后读取/etc/NetworkManager/conf.d，后读取的文件将覆盖先读取的同名文件配置
+#在/etc/NetworkManager/conf.d目录添加该文件，用以覆盖/usr/lib/NetworkManager/conf.d下的同名文件的配置
+#https://gitee.com/src-openeuler/kiran-desktop/issues/I5I0AA
+[main]
+# Do not do automatic (DHCP/SLAAC) configuration on ethernet devices
+# with no other matching connections.
+no-auto-default=*
+
+# Ignore the carrier (cable plugged in) state when attempting to
+# activate static-IP connections.
+#ignore-carrier=*

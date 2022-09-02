@@ -55,10 +55,18 @@
       <number>10</number>
      </property>
      <item>
-      <widget class="QComboBox" name="combo_idleTimeout"/>
+      <widget class="QComboBox" name="combo_idleTimeout">
+       <property name="accessibleName">
+        <string>ComboIdleTime</string>
+       </property>
+      </widget>
      </item>
      <item>
-      <widget class="QComboBox" name="combo_idleAction"/>
+      <widget class="QComboBox" name="combo_idleAction">
+       <property name="accessibleName">
+        <string>ComboIdleAction</string>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>
@@ -72,6 +80,9 @@
      </property>
      <item>
       <widget class="QLabel" name="label_2">
+       <property name="accessibleName">
+        <string/>
+       </property>
        <property name="text">
         <string>When the battery is lit up, it will be executed</string>
        </property>
@@ -88,7 +99,11 @@
       <number>10</number>
      </property>
      <item>
-      <widget class="QComboBox" name="combo_noPowerAction"/>
+      <widget class="QComboBox" name="combo_noPowerAction">
+       <property name="accessibleName">
+        <string>ComboLowBatteryAction</string>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>
@@ -118,7 +133,11 @@
       <number>10</number>
      </property>
      <item>
-      <widget class="QComboBox" name="combo_monitorOffTimeout"/>
+      <widget class="QComboBox" name="combo_monitorOffTimeout">
+       <property name="accessibleName">
+        <string>ComboMonitorTurnOffIdleTime</string>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>

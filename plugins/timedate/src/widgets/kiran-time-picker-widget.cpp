@@ -17,6 +17,7 @@ KiranTimePickerWidget::KiranTimePickerWidget(QWidget *parent) :
 {
     ui->setupUi(this);
     initUI();
+    setAccessibleName("TimePicker");
 }
 
 KiranTimePickerWidget::KiranTimePickerWidget(KiranTimePickerWidget::TimePickerType type, QWidget *parent) :

@@ -102,6 +102,9 @@
           </item>
           <item>
            <widget class="KiranSwitchButton" name="checkBox_tp_disable_touchpad">
+            <property name="accessibleName">
+             <string>SwitchTouchPadEnable</string>
+            </property>
             <property name="text">
              <string/>
             </property>
@@ -148,6 +151,9 @@
               <width>16777215</width>
               <height>36</height>
              </size>
+            </property>
+            <property name="accessibleName">
+             <string>ComboTouchPadHand</string>
             </property>
            </widget>
           </item>
@@ -201,6 +207,9 @@
           </item>
           <item>
            <widget class="QSlider" name="slider_tp_speed">
+            <property name="accessibleName">
+             <string>SliderTouchPadMotionAcceleration</string>
+            </property>
             <property name="singleStep">
              <number>50</number>
             </property>
@@ -291,6 +300,9 @@
               <height>36</height>
              </size>
             </property>
+            <property name="accessibleName">
+             <string>ComboClickMethod</string>
+            </property>
            </widget>
           </item>
          </layout>
@@ -334,6 +346,9 @@
               <width>16777215</width>
               <height>36</height>
              </size>
+            </property>
+            <property name="accessibleName">
+             <string>ComboScrollMethod</string>
             </property>
            </widget>
           </item>
@@ -380,6 +395,9 @@
           </item>
           <item>
            <widget class="KiranSwitchButton" name="checkBox_tp_natural_scroll">
+            <property name="accessibleName">
+             <string>ComboNaturalScroll</string>
+            </property>
             <property name="text">
              <string/>
             </property>
@@ -428,6 +446,9 @@
           </item>
           <item>
            <widget class="KiranSwitchButton" name="checkBox_disable_while_typing">
+            <property name="accessibleName">
+             <string>SwitchTypingEnable</string>
+            </property>
             <property name="text">
              <string/>
             </property>
@@ -476,6 +497,9 @@
           </item>
           <item>
            <widget class="KiranSwitchButton" name="checkBox_tap_to_click">
+            <property name="accessibleName">
+             <string>SwtichTapToClick</string>
+            </property>
             <property name="text">
              <string/>
             </property>

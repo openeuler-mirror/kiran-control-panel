@@ -39,23 +39,24 @@ public:
 public slots:
     void clearVpnSetting();
     void handleRequestEditConnection(const QString &uuid, QString activeConnectionPath);
-    void handleRequestActivateConnection(const QString &connectionPath,const QString &connectionParameter);
+    void handleRequestActivateConnection(const QString &connectionPath, const QString &connectionParameter);
 
     void handleNotifierConnectionAdded(const QString &path) override;
     void handleNotifierConnectionRemoved(const QString &path) override;
-    void activateVPNConnection(const QString &connectionPath,const QString &connectionParameter);
+    void activateVPNConnection(const QString &connectionPath, const QString &connectionParameter);
 
     void handleActiveConnectionAdded(const QString &activePath) override;
     void handleActiveConnectionRemoved(const QString &activePath) override;
 
-    void handleVpnConnectionStateChanged(NetworkManager::VpnConnection::State state, NetworkManager::VpnConnection::StateChangeReason reason,const QString &activePath);
+    void handleVpnConnectionStateChanged(NetworkManager::VpnConnection::State state, NetworkManager::VpnConnection::StateChangeReason reason, const QString &activePath);
     void handleVpnStateActivated(const QString &activePath);
     void handleVpnStateDisconnected(const QString &activePath);
     void handleVpnStateFailed(const QString &activePath);
 
     void handleReturnPreviousPage();
+
 private:
     Ui::VpnManager *ui;
 };
 
-#endif  //KIRAN_CPANEL_NETWORK_VPN_MANAGER_H
+#endif  // KIRAN_CPANEL_NETWORK_VPN_MANAGER_H

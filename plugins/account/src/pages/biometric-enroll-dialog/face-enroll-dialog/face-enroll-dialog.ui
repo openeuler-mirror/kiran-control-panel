@@ -47,6 +47,9 @@
        <height>274</height>
       </size>
      </property>
+     <property name="accessibleName">
+      <string>EnrollProgressBar</string>
+     </property>
     </widget>
    </item>
    <item>
@@ -59,6 +62,9 @@
      </property>
      <item alignment="Qt::AlignHCenter">
       <widget class="QLabel" name="label_msg">
+       <property name="accessibleName">
+        <string>LabelEnrollTips</string>
+       </property>
        <property name="text">
         <string>balabalalbala...</string>
        </property>
@@ -120,6 +126,9 @@
          <height>40</height>
         </size>
        </property>
+       <property name="accessibleName">
+        <string>ButtonSave</string>
+       </property>
        <property name="text">
         <string>save</string>
        </property>
@@ -157,6 +166,9 @@
          <width>110</width>
          <height>40</height>
         </size>
+       </property>
+       <property name="accessibleName">
+        <string>ButtonCancel</string>
        </property>
        <property name="text">
         <string>cancel</string>

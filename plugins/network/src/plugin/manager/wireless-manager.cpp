@@ -11,6 +11,7 @@
  *
  * Author:     luoqing <luoqing@kylinos.com.cn>
  */
+#include "wireless-manager.h"
 #include <qt5-log-i.h>
 #include <style-property.h>
 #include <NetworkManagerQt/Settings>
@@ -20,7 +21,6 @@
 #include <QScrollBar>
 #include "text-input-dialog.h"
 #include "ui_wireless-manager.h"
-#include "wireless-manager.h"
 
 using namespace NetworkManager;
 
@@ -41,14 +41,10 @@ WirelessManager::~WirelessManager()
 
 void WirelessManager::initUI()
 {
-    ui->connectionShowPage->setConnectionType(ConnectionSettings::Wireless);
-    ui->connectionShowPage->setDevicePath(m_devicePath);
-    ui->connectionShowPage->setItemWidgetType(ITEM_WIDGET_TYPE_PLUGIN);
+    ui->connectionShowPage->init(ConnectionSettings::Wireless, m_devicePath);
     ui->connectionShowPage->setTitle(tr("Wireless Network Adapter"));
-    ui->connectionShowPage->initSwitchButton();
     ui->connectionShowPage->setSwitchButtonVisible(true);
     ui->connectionShowPage->setCreateButtonVisible(false);
-    ui->connectionShowPage->showWirelessNetworkLists();
     Kiran::StylePropertyHelper::setButtonType(ui->saveButton, Kiran::BUTTON_Default);
 
     // XXX:由于存在switchButton，所以特别修改一下topMargin
@@ -57,38 +53,38 @@ void WirelessManager::initUI()
 
 void WirelessManager::initConnection()
 {
-    connect(ui->connectionShowPage, &ConnectionShowPage::requestCreatConnection, [=]()
+    connect(ui->connectionShowPage, &ConnectionShowPage::requestCreatConnection, this, [this]()
             {
-        ui->wirelessSettingPage->showSettingPage();
-        QPointer<QScrollBar> scrollBar = ui->scrollArea->verticalScrollBar();
-        scrollBar->setValue(0);
-        ui->stackedWidget->setCurrentIndex(PAGE_SETTING); });
+                ui->wirelessSettingPage->showSettingPage();
+                QPointer<QScrollBar> scrollBar = ui->scrollArea->verticalScrollBar();
+                scrollBar->setValue(0);
+                ui->stackedWidget->setCurrentIndex(PAGE_SETTING); });
 
-    connect(ui->connectionShowPage, &ConnectionShowPage::requestEditConnection, [=](const QString &uuid, QString activeConnectionPath)
+    connect(ui->connectionShowPage, &ConnectionShowPage::requestEditConnection, this, [this](const QString &uuid, QString activeConnectionPath)
             {
-        ActiveConnection::Ptr activeConnection = findActiveConnection(activeConnectionPath);
-        ConnectionSettings::Ptr connectionSettings = activeConnection->connection()->settings();
-        ui->wirelessSettingPage->setConnection(activeConnection->connection());
-        ui->wirelessSettingPage->setConnectionSettings(connectionSettings);
-        ui->wirelessSettingPage->initSettingPage();
-        ui->wirelessSettingPage->showSettingPage(activeConnectionPath);
-        QPointer<QScrollBar> scrollBar = ui->scrollArea->verticalScrollBar();
-        scrollBar->setValue(0);
-        ui->stackedWidget->setCurrentIndex(PAGE_SETTING); });
+                ActiveConnection::Ptr activeConnection = findActiveConnection(activeConnectionPath);
+                ConnectionSettings::Ptr connectionSettings = activeConnection->connection()->settings();
+                ui->wirelessSettingPage->setConnection(activeConnection->connection());
+                ui->wirelessSettingPage->setConnectionSettings(connectionSettings);
+                ui->wirelessSettingPage->initSettingPage();
+                ui->wirelessSettingPage->showSettingPage(activeConnectionPath);
+                QPointer<QScrollBar> scrollBar = ui->scrollArea->verticalScrollBar();
+                scrollBar->setValue(0);
+                ui->stackedWidget->setCurrentIndex(PAGE_SETTING); });
 
     connect(ui->returnButton, &QPushButton::clicked, this, &WirelessManager::handleReturnPreviousPage);
-    connect(ui->saveButton, &QPushButton::clicked, [=]()
+    connect(ui->saveButton, &QPushButton::clicked, this, [this]()
             {
-        ui->wirelessSettingPage->handleSaveButtonClicked(ConnectionSettings::ConnectionType::Wireless);
-        handleReturnPreviousPage(); });
+                ui->wirelessSettingPage->handleSaveButtonClicked(ConnectionSettings::ConnectionType::Wireless);
+                handleReturnPreviousPage(); });
 
     connect(ui->wirelessSettingPage, &WirelessSettingPage::returnPreviousPage, this, &WirelessManager::handleReturnPreviousPage);
     // XXX:更改信号
-    connect(ui->wirelessSettingPage, &WirelessSettingPage::settingUpdated, [=]()
+    connect(ui->wirelessSettingPage, &WirelessSettingPage::settingUpdated, this, [this]()
             {
-        KLOG_DEBUG() << "WiredSettingPage::settingUpdated";
-        handleReturnPreviousPage();
-        refreshConnectionLists(); });
+                KLOG_DEBUG() << "WiredSettingPage::settingUpdated";
+                handleReturnPreviousPage();
+                refreshConnectionLists(); });
 
     connect(ui->connectionShowPage, &ConnectionShowPage::requestConnectWirelessNetwork,
             this, &WirelessManager::handleRequestConnectWirelessNetwork);
@@ -99,8 +95,8 @@ void WirelessManager::initConnection()
     connect(m_wirelessDevice.data(), &WirelessDevice::networkDisappeared, this, &WirelessManager::handleNetworkDisappeared, Qt::QueuedConnection);
     connect(m_wirelessDevice.data(), &WirelessDevice::networkAppeared, this, &WirelessManager::handleNetworkAppeared);
 
-    //Note:插件与托盘都对该设备的信号进行了连接，容易干扰重复，因此，插件暂未实现该函数
-    connect(m_devicePtr.data(), &Device::stateChanged, this, &WirelessManager::handleDeviceStateChanged,Qt::UniqueConnection);
+    // Note:插件与托盘都对该设备的信号进行了连接，容易干扰重复，因此，插件暂未实现该函数
+    connect(m_devicePtr.data(), &Device::stateChanged, this, &WirelessManager::handleDeviceStateChanged, Qt::UniqueConnection);
 }
 
 //在已存在WirelessSetting配置的情况下，激活连接．（连接过一次后会创建WirelessSetting配置）
@@ -203,7 +199,7 @@ void WirelessManager::handleActiveConnectionAdded(const QString &path)
             auto item = ui->connectionShowPage->item(row);
             ui->connectionShowPage->itemSimpleStatus(item);
         }
-        connect(activatedConnection.data(), &ActiveConnection::stateChanged, this, &WirelessManager::handleActiveConnectionStateChanged,Qt::UniqueConnection);
+        connect(activatedConnection.data(), &ActiveConnection::stateChanged, this, &WirelessManager::handleActiveConnectionStateChanged, Qt::UniqueConnection);
     }
 }
 

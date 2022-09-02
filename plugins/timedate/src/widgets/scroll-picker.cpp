@@ -30,6 +30,7 @@ ScrollPicker::ScrollPicker(QWidget *parent)
       m_hoverIncreaseFont(3)
 {
     setAttribute(Qt::WA_Hover);
+    setAccessibleName("ScrollPicker");
     init();
 }
 

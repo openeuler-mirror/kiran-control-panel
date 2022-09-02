@@ -58,7 +58,7 @@ void DetailsPage::initUI()
         QWidget *widget = new ConnectionDetailsWidget(m_deviceList.at(0), this);
         ui->stackedWidget->addWidget(widget);
     }
-    else if(m_deviceList.count() == 0)
+    else if (m_deviceList.count() == 0)
     {
         QWidget *widget = new ConnectionDetailsWidget(nullptr, this);
         ui->stackedWidget->addWidget(widget);
@@ -75,11 +75,11 @@ void DetailsPage::initMultiConnectionDetailsWidget()
         QWidget *widget = new ConnectionDetailsWidget(device, this);
         ui->stackedWidget->addWidget(widget);
     }
-    connect(ui->activatedConnectionComboBox, QOverload<int>::of(&QComboBox::currentIndexChanged), this,
-            &DetailsPage::handleActivatedConnectionComboBoxChanged);
+    connect(ui->activatedConnectionComboBox, QOverload<int>::of(&QComboBox::activated), this,
+            &DetailsPage::handleActivatedConnectionComboBoxActivated, Qt::UniqueConnection);
 }
 
-void DetailsPage::handleActivatedConnectionComboBoxChanged(int index)
+void DetailsPage::handleActivatedConnectionComboBoxActivated(int index)
 {
     ui->stackedWidget->setCurrentIndex(index);
 }
@@ -105,12 +105,13 @@ void DetailsPage::handleDeviceRemoved(const QString &devicePath)
 
 void DetailsPage::handleActiveConnectionChanged()
 {
+    reload();
 }
 
 void DetailsPage::handleActiveConnectionAdded(const QString &activeConnectionPath)
 {
     ActiveConnection::Ptr activeConnection = findActiveConnection(activeConnectionPath);
-    connect(activeConnection.data(), &ActiveConnection::stateChanged, this, &DetailsPage::handleActiveConnectionStateChanged);
+    connect(activeConnection.data(), &ActiveConnection::stateChanged, this, &DetailsPage::handleActiveConnectionStateChanged, Qt::UniqueConnection);
 }
 
 void DetailsPage::handleActiveConnectionRemoved(const QString &activeConnectionPath)
@@ -130,10 +131,12 @@ void DetailsPage::clear()
 {
     m_deviceList.clear();
     ui->activatedConnectionComboBox->clear();
-    for (int i = 0; i < ui->stackedWidget->count(); ++i)
+    int count = ui->stackedWidget->count();
+    for (int i = 0; i < count; i++)
     {
         QWidget *widget = ui->stackedWidget->currentWidget();
         ui->stackedWidget->removeWidget(widget);
+        widget->deleteLater();
     }
 }
 

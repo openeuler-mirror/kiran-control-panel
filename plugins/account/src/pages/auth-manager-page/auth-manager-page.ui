@@ -210,6 +210,9 @@
          <height>40</height>
         </size>
        </property>
+       <property name="accessibleName">
+        <string>ButtonSave</string>
+       </property>
        <property name="text">
         <string>save</string>
        </property>
@@ -250,6 +253,9 @@
          <width>110</width>
          <height>40</height>
         </size>
+       </property>
+       <property name="accessibleName">
+        <string>ButtonReturn</string>
        </property>
        <property name="text">
         <string>return</string>

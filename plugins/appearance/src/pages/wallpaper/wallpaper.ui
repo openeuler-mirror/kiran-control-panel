@@ -85,6 +85,9 @@
                <height>112</height>
               </size>
              </property>
+             <property name="accessibleName">
+              <string>FrameLockScreenPreview</string>
+             </property>
              <layout class="QVBoxLayout" name="verticalLayout_8">
               <property name="spacing">
                <number>0</number>
@@ -111,6 +114,9 @@
                <width>282</width>
                <height>112</height>
               </size>
+             </property>
+             <property name="accessibleName">
+              <string>FrameDesktopPreivew</string>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_7">
               <property name="spacing">

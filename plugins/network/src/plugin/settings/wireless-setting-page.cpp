@@ -13,8 +13,8 @@
  */
 
 #include "wireless-setting-page.h"
-#include "ui_wireless-setting-page.h"
 #include <qt5-log-i.h>
+#include "ui_wireless-setting-page.h"
 using namespace NetworkManager;
 
 WirelessSettingPage::WirelessSettingPage(QWidget *parent) : SettingPage(parent), ui(new Ui::WirelessSettingPage)
@@ -32,14 +32,13 @@ WirelessSettingPage::~WirelessSettingPage()
 
 void WirelessSettingPage::initConnection()
 {
-    connect(ui->disconnectAndDeleteButton,&DisconnectAndDeleteButton::disconnectButtonClicked,this,&WirelessSettingPage::returnPreviousPage);
-    connect(ui->disconnectAndDeleteButton,&DisconnectAndDeleteButton::deleteButtonClicked,this,&WirelessSettingPage::returnPreviousPage);
+    connect(ui->disconnectAndDeleteButton, &DisconnectAndDeleteButton::disconnectButtonClicked, this, &WirelessSettingPage::returnPreviousPage);
+    connect(ui->disconnectAndDeleteButton, &DisconnectAndDeleteButton::deleteButtonClicked, this, &WirelessSettingPage::returnPreviousPage);
 }
 
 void WirelessSettingPage::initSettingPage()
 {
     initSpecificSettings();
-    initWidgets();
 }
 
 void WirelessSettingPage::initSpecificSettings()
@@ -48,10 +47,12 @@ void WirelessSettingPage::initSpecificSettings()
     m_ipv6Setting = m_connectionSettings->setting(Setting::SettingType::Ipv6).dynamicCast<Ipv6Setting>();
     m_wirelessSetting = m_connectionSettings->setting(Setting::SettingType::Wireless).dynamicCast<WirelessSetting>();
     m_wirelessSecuritySetting = m_connectionSettings->setting(Setting::SettingType::WirelessSecurity).dynamicCast<WirelessSecuritySetting>();
-}
 
-void WirelessSettingPage::initWidgets()
-{
+    m_ipv4Setting->setInitialized(true);
+    m_ipv6Setting->setInitialized(true);
+    m_wirelessSetting->setInitialized(true);
+    m_wirelessSecuritySetting->setInitialized(true);
+
     ui->generalWidget->setConnectionSettings(m_connectionSettings);
     ui->ipv4Widget->setIpv4Setting(m_ipv4Setting);
     ui->ipv6Widget->setIpv6Setting(m_ipv6Setting);
@@ -81,7 +82,7 @@ void WirelessSettingPage::showSettingPage(QString activeConnectionPath)
         if (activeConnectionPath.isEmpty())
             ui->disconnectAndDeleteButton->initButton(SETTING_CONNECTION_STATUS_DEACTIVATED);
         else
-            ui->disconnectAndDeleteButton->initButton(SETTING_CONNECTION_STATUS_ACTIVATED,activeConnectionPath);
+            ui->disconnectAndDeleteButton->initButton(SETTING_CONNECTION_STATUS_ACTIVATED, activeConnectionPath);
     }
 }
 
@@ -109,5 +110,3 @@ void WirelessSettingPage::clearPtr()
     ui->wirelessSecurity->clearPtr();
     ui->wireless->clearPtr();
 }
-
-
