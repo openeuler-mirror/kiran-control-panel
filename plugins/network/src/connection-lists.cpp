@@ -21,8 +21,8 @@
 #include <QPainter>
 #include <QSvgRenderer>
 #include "animation-loading-label.h"
+#include "src/tray/tray-itemwidget.h"
 #include "text-input-dialog.h"
-#include "tray-itemwidget.h"
 
 #define LIST_MAX_HEIGHT 358
 #define TRAY_ITEM_NORAML_SIZE QSize(240, 50)
