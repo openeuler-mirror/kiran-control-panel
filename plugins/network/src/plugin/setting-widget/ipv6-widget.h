@@ -26,6 +26,7 @@ QT_END_NAMESPACE
 
 Q_DECLARE_METATYPE(NetworkManager::Ipv6Setting::ConfigMethod)
 
+class KiranTips;
 class Ipv6Widget : public QWidget
 {
     Q_OBJECT
@@ -36,7 +37,7 @@ public:
     void initUI();
     void initConnection();
     void setIpv6Setting(const NetworkManager::Ipv6Setting::Ptr &ipv6Setting);
-
+    void setErrorTips(KiranTips *errorTips);
     bool isIpv6AddressValid(const QString &address);
 
 public slots:
@@ -50,6 +51,7 @@ public slots:
 private:
     Ui::Ipv6Widget *ui;
     NetworkManager::Ipv6Setting::Ptr m_ipv6Setting;
+    KiranTips *m_errorTip = nullptr;
 };
 
 #endif  // KIRAN_CPANEL_NETWORK_IPV6_WIDGET_H

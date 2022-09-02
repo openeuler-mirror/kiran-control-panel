@@ -14,8 +14,8 @@
 #ifndef KIRAN_CPANEL_NETWORK_IPV4_WIDGET_H
 #define KIRAN_CPANEL_NETWORK_IPV4_WIDGET_H
 
-#include <QWidget>
 #include <NetworkManagerQt/Ipv4Setting>
+#include <QWidget>
 
 QT_BEGIN_NAMESPACE
 namespace Ui
@@ -26,6 +26,7 @@ QT_END_NAMESPACE
 
 Q_DECLARE_METATYPE(NetworkManager::Ipv4Setting::ConfigMethod)
 
+class KiranTips;
 class Ipv4Widget : public QWidget
 {
     Q_OBJECT
@@ -36,6 +37,7 @@ public:
     void initUI();
     void initConnection();
     void setIpv4Setting(const NetworkManager::Ipv4Setting::Ptr &ipv4Setting);
+    void setErrorTips(KiranTips *errorTips);
     bool isIpv4AddressValid(const QString &address);
     bool isIpv4NetmaskValid(const QString &address);
 
@@ -50,6 +52,7 @@ public slots:
 private:
     Ui::Ipv4Widget *ui;
     NetworkManager::Ipv4Setting::Ptr m_ipv4Setting;
+    KiranTips *m_errorTip = nullptr;
 };
 
-#endif  //KIRAN_CPANEL_NETWORK_IPV4_WIDGET_H
+#endif  // KIRAN_CPANEL_NETWORK_IPV4_WIDGET_H

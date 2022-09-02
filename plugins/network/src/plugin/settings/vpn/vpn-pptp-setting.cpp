@@ -14,7 +14,9 @@
 
 #include "vpn-pptp-setting.h"
 #include <qt5-log-i.h>
+#include "kiran-tips/kiran-tips.h"
 #include "ui_vpn-pptp-setting.h"
+
 #define ServiceTypePPTP "org.freedesktop.NetworkManager.pptp"
 using namespace NetworkManager;
 
@@ -24,6 +26,11 @@ VpnPptpSetting::VpnPptpSetting(QWidget *parent) : SettingPage(parent), ui(new Ui
     ui->generalWidget->setNameLabel(tr("VPN name"));
     connect(ui->generalButton, &DisconnectAndDeleteButton::disconnectButtonClicked, this, &VpnPptpSetting::returnPreviousPage);
     connect(ui->generalButton, &DisconnectAndDeleteButton::deleteButtonClicked, this, &VpnPptpSetting::returnPreviousPage);
+
+    m_errorTip = new KiranTips(this);
+    m_errorTip->setAnimationEnable(true);
+    m_errorTip->setShowPosition(KiranTips::POSITION_BOTTM);
+    ui->vpnWidget->setErrorTips(m_errorTip);
 }
 
 VpnPptpSetting::~VpnPptpSetting()
