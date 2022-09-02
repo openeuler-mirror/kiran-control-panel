@@ -14,7 +14,7 @@
 
 #include "user-info-page.h"
 #include "accounts-global-info.h"
-#include "hover-tips.h"
+#include "hover-tips/hover-tips.h"
 #include "ksd_accounts_user_proxy.h"
 #include "passwd-helper.h"
 #include "ui_user-info-page.h"

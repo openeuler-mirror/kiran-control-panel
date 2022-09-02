@@ -14,7 +14,7 @@
 
 #include "create-user-page.h"
 #include "accounts-global-info.h"
-#include "kiran-tips.h"
+#include "kiran-tips/kiran-tips.h"
 #include "passwd-helper.h"
 #include "src/pages/advance-settings-page/advance-settings.h"
 #include "ui_create-user-page.h"

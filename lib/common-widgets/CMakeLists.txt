@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.2)
 
 set (TARGET_NAME common-widgets)
 
-find_package(Qt5 COMPONENTS Core Widgets LinguistTools)
+find_package(Qt5 COMPONENTS Core Widgets LinguistTools Svg)
 pkg_search_module(KLOG_QT5 REQUIRED klog-qt5)
 pkg_search_module(KIRAN_WIDGETS_QT5 REQUIRED kiranwidgets-qt5)
 pkg_search_module(KIRAN_STYLE_HELPER REQUIRED kiran-style-helper)
@@ -27,6 +27,7 @@ target_include_directories(${TARGET_NAME} PRIVATE
 target_link_libraries(${TARGET_NAME}
         Qt5::Core
         Qt5::Widgets
+        Qt5::Svg
         plugin-info
         ${KIRAN_WIDGETS_QT5_LIBRARIES}
         ${KIRAN_STYLE_HELPER_LIBRARIES})
