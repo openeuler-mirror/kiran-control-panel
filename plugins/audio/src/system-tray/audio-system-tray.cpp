@@ -22,7 +22,6 @@
 
 #include <kiran-session-daemon/audio-i.h>
 #include <qt5-log-i.h>
-
 #include <QGuiApplication>
 #include <QMenu>
 #include <QMouseEvent>
@@ -30,6 +29,7 @@
 #include <QScreen>
 #include <QSvgRenderer>
 
+#include <style-palette.h>
 
 #define STATUS_NOTIFIER_MANAGER "org.kde.StatusNotifierManager"
 #define STATUS_NOTIFIER_MANAGER_OBJECT_NAME "/StatusNotifierManager"
@@ -65,7 +65,6 @@ void AudioSystemTray::initVolumeSettingPage(QString objectPath)
     m_volumenPopup->setContentWidget(m_volumeSettingPage);
 }
 
-
 void AudioSystemTray::initMixedSettingPage()
 {
     m_mixedSettingPage = new MixedSettingPage();
@@ -73,10 +72,9 @@ void AudioSystemTray::initMixedSettingPage()
     m_mixedSettingPage->setWindowFlags(Qt::Popup | Qt::BypassWindowManagerHint);
     m_mixedSettingPage->setAttribute(Qt::WA_TranslucentBackground);
 
-    connect(m_mixedSettingPage,&MixedSettingPage::adjustedMixedSettingPageSize,this,&AudioSystemTray::handleAdjustedMixedSettingPageSize);
+    connect(m_mixedSettingPage, &MixedSettingPage::adjustedMixedSettingPageSize, this, &AudioSystemTray::handleAdjustedMixedSettingPageSize);
     m_mixedPopup = new KiranRoundedTrayPopup();
     m_mixedPopup->setContentWidget(m_mixedSettingPage);
-
 }
 
 void AudioSystemTray::initTrayIcon()
@@ -140,7 +138,7 @@ void AudioSystemTray::setVolumeSettingPos()
     int pageWidth = 300;
     int pageHeight = 66;
 
-    m_volumenPopup->setGeometry(xTray - pageWidth / 2, yTray - pageHeight - offset, pageWidth, pageHeight); 
+    m_volumenPopup->setGeometry(xTray - pageWidth / 2, yTray - pageHeight - offset, pageWidth, pageHeight);
 }
 
 void AudioSystemTray::handleMixedSettingClicked()
@@ -148,7 +146,6 @@ void AudioSystemTray::handleMixedSettingClicked()
     setMixedSettingPos();
     m_mixedPopup->show();
 }
-
 
 // XXX:弹出MixedSetting界面调整
 void AudioSystemTray::setMixedSettingPos()
@@ -158,39 +155,30 @@ void AudioSystemTray::setMixedSettingPos()
     int height = m_mixedSettingPage->getHeight();
     int width = m_mixedPopup->sizeHint().width();
 
-    m_mixedPopup->setFixedHeight(height + offset*2);
+    m_mixedPopup->setFixedHeight(height + offset * 2);
     m_mixedPopup->move(xTray - width / 2, yTray - height - offset);
 }
 
-
 void AudioSystemTray::handleAdjustedMixedSettingPageSize()
 {
-    if(m_mixedPopup->isVisible())
+    if (m_mixedPopup->isVisible())
     {
         setMixedSettingPos();
     }
 }
 
-void AudioSystemTray::trayIconColorSwitch(QString svgPath, QString color)
+QPixmap AudioSystemTray::trayIconColorSwitch(const QString &iconPath, const int iconSize)
 {
-    QFile file(svgPath);
-    file.open(QIODevice::ReadOnly);
-
-    QRegExp rx("fill: #[0-9a-f]*");
-    QByteArray data = file.readAll();
-    QString svg(data);
-    QByteArray svgModifed = svg.replace(rx, "fill: " + color).toUtf8();
-    QSvgRenderer svgRenderer(svgModifed);
-
-    QPixmap pixmap(QSize(16, 16));
-    pixmap.fill(Qt::transparent);
-    QPainter painter(&pixmap);
-    svgRenderer.render(&painter);
-    QIcon icon(pixmap);
-    qInfo() << "icon.isNull() :" << icon.isNull();
-
-    m_systemTray->setIcon(icon);
-    m_systemTray->show();
+    // icon原本为浅色
+    QIcon icon(iconPath);
+    QPixmap pixmap = icon.pixmap(iconSize, iconSize);
+    if (Kiran::StylePalette::instance()->paletteType() != Kiran::PALETTE_DARK)
+    {
+        QImage image = pixmap.toImage();
+        image.invertPixels(QImage::InvertRgb);
+        pixmap = QPixmap::fromImage(image);
+    }
+    return pixmap;
 }
 
 void AudioSystemTray::getTrayGeometry()
@@ -230,22 +218,29 @@ void AudioSystemTray::getTrayGeometry()
 // XXX:频繁调用函数,需要优化
 void AudioSystemTray::setTrayIcon(int value)
 {
+    QIcon icon;
     if (value == 0)
     {
-        trayIconColorSwitch(":/kcp-audio-images/kcp-audio-mute.svg", m_colorTheme);
+        icon.addPixmap(trayIconColorSwitch(":/kcp-audio-images/kcp-audio-mute.svg"));
+        icon.addPixmap(trayIconColorSwitch(":/kcp-audio-images/kcp-audio-mute.svg", 64));
     }
     else if (0 < value && value <= 33)
     {
-        trayIconColorSwitch(":/kcp-audio-images/kcp-audio-low.svg", m_colorTheme);
+        icon.addPixmap(trayIconColorSwitch(":/kcp-audio-images/kcp-audio-low.svg"));
+        icon.addPixmap(trayIconColorSwitch(":/kcp-audio-images/kcp-audio-low.svg", 64));
     }
     else if (33 < value && value <= 66)
     {
-        trayIconColorSwitch(":/kcp-audio-images/kcp-audio-medium.svg", m_colorTheme);
+        icon.addPixmap(trayIconColorSwitch(":/kcp-audio-images/kcp-audio-medium.svg"));
+        icon.addPixmap(trayIconColorSwitch(":/kcp-audio-images/kcp-audio-medium.svg", 64));
     }
     else
     {
-        trayIconColorSwitch(":/kcp-audio-images/kcp-audio-loud.svg", m_colorTheme);
+        icon.addPixmap(trayIconColorSwitch(":/kcp-audio-images/kcp-audio-loud.svg"));
+        icon.addPixmap(trayIconColorSwitch(":/kcp-audio-images/kcp-audio-loud.svg", 64));
     }
+    m_systemTray->setIcon(icon);
+    m_systemTray->show();
 }
 
 void AudioSystemTray::handleVolumeSettingClicked()
@@ -254,6 +249,7 @@ void AudioSystemTray::handleVolumeSettingClicked()
     process.startDetached("kiran-control-panel -c audio -s OutputPage");
 }
 
+//暂时不使用，改成从平台主题中获取颜色
 void AudioSystemTray::getTrayIconStyle()
 {
     QDBusPendingReply<QString> getStyle = m_statusNotifierManager->GetStyle();
@@ -282,4 +278,3 @@ void AudioSystemTray::getTrayIconStyle()
     m_colorTheme = QString("rgb(%1,%2,%3)").arg(red * 255).arg(green * 255).arg(blue * 255);
     KLOG_DEBUG() << "getTrayIconStyle:" << m_colorTheme;
 }
-
