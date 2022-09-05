@@ -21,8 +21,8 @@
 #include <QPainter>
 #include <QSvgRenderer>
 #include "animation-loading-label.h"
+#include "src/tray/tray-itemwidget.h"
 #include "text-input-dialog.h"
-#include "tray-itemwidget.h"
 
 #define LIST_MAX_HEIGHT 358
 #define TRAY_ITEM_NORAML_SIZE QSize(240, 50)
@@ -144,22 +144,26 @@ void ConnectionLists::showConnectionLists(ConnectionSettings::ConnectionType typ
     else
         this->setGridSize(QSize(240, 46));
 
-    Device::Ptr device = findNetworkInterface(m_currentDevicePath);
+    Connection::List connectionList = NetworkManager::listConnections();
     if (type == ConnectionSettings::Wired)
     {
-        WiredDevice::Ptr wiredDevice = qobject_cast<WiredDevice*>(device);
-        Connection::List availableConnections = wiredDevice->availableConnections();
-        QString devicePath = wiredDevice->uni();
-        KLOG_DEBUG() << "deviceName:" << wiredDevice->interfaceName();
-        for (Connection::Ptr conn : availableConnections)
+        Device::Ptr device = findNetworkInterface(m_currentDevicePath);
+        QString devicePath = device->uni();
+        for (Connection::Ptr conn : connectionList)
         {
-            addConnectionToLists(conn, devicePath);
+            KLOG_DEBUG() << "connection->name():" << conn->name();
+            KLOG_DEBUG() << "connection->settings()->connectionType():" << conn->settings()->connectionType();
+            if (conn->settings()->connectionType() == ConnectionSettings::Wired)
+            {
+                KLOG_DEBUG() << "deviceName:" << device->interfaceName();
+                addConnectionToLists(conn, devicePath);
+            }
         }
     }
     else if (type == ConnectionSettings::Vpn)
     {
         // VPN的设备不明,VPN暂不指定设备
-        Connection::List connectionList = listConnections();
+        Connection::List connectionList = NetworkManager::listConnections();
         for (Connection::Ptr conn : connectionList)
         {
             if (conn->settings()->connectionType() == ConnectionSettings::Vpn)

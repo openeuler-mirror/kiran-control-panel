@@ -15,8 +15,8 @@
 #ifndef KIRAN_CPANEL_NETWORK_ETHERNET_WIDGET_H
 #define KIRAN_CPANEL_NETWORK_ETHERNET_WIDGET_H
 
-#include <QWidget>
 #include <NetworkManagerQt/WiredSetting>
+#include <QWidget>
 
 QT_BEGIN_NAMESPACE
 namespace Ui
@@ -25,7 +25,7 @@ class EthernetWidget;
 }
 QT_END_NAMESPACE
 class KiranSwitchButton;
-
+class KiranTips;
 class EthernetWidget : public QWidget
 {
     Q_OBJECT
@@ -37,6 +37,7 @@ public:
     void initEthernetMacComboBox();
     void initConnection();
     void setWiredSetting(const NetworkManager::WiredSetting::Ptr &wiredSetting);
+    void setErrorTips(KiranTips *errorTips);
     bool isCloneMacValid(const QString &cloneMac);
 
 public slots:
@@ -51,6 +52,7 @@ private:
     Ui::EthernetWidget *ui;
     NetworkManager::WiredSetting::Ptr m_wiredSetting;
     KiranSwitchButton *m_mtuButton;
+    KiranTips *m_errorTip = nullptr;
 };
 
-#endif  //KIRAN_CPANEL_NETWORK_ETHERNET_WIDGET_H
+#endif  // KIRAN_CPANEL_NETWORK_ETHERNET_WIDGET_H

@@ -11,17 +11,17 @@
  *
  * Author:     luoqing <luoqing@kylinos.com.cn>
  */
-
+// clang-format off
 #include <qt5-log-i.h>
 #include <NetworkManagerQt/Manager>
 #include <NetworkManagerQt/Settings>
 #include <NetworkManagerQt/WiredDevice>
 #include <NetworkManagerQt/WirelessSetting>
+#include "status-notification.h"
 #include "connection-lists.h"
 #include "connection-show-page.h"
-#include "status-notification.h"
 #include "tray-widget.h"
-
+// clang-format on
 using namespace NetworkManager;
 
 TrayWidget::TrayWidget(QWidget *parent) : QWidget(parent)
@@ -96,9 +96,10 @@ void TrayWidget::handleActiveConnectionStateChanged(ActiveConnection::State stat
         break;
     case ActiveConnection::State::Deactivated:
         KLOG_DEBUG() << "ActiveConnection::State::Deactivated id:" << id;
-        KLOG_DEBUG()  << "device path:" << m_devicePtr->uni();
+        KLOG_DEBUG() << "device path:" << m_devicePtr->uni();
         if (deviceList.contains(m_devicePtr->uni()))
         {
+            // test
             if (!id.isEmpty())
                 StatusNotification::ActiveConnectionDeactivatedNotify(id);
             handleStateDeactivated(m_activatedPath);

@@ -17,10 +17,11 @@
 #include <style-palette.h>
 #include <style-property.h>
 #include <QPainter>
+#include <QPainterPath>
 #include <QStyleOption>
 #include <QSvgRenderer>
-#include <QPainterPath>
 #include "ui_tray-itemwidget.h"
+#include "utils.h"
 
 TrayItemWidget::TrayItemWidget(QWidget *parent) : QWidget(parent), ui(new Ui::TrayItemWidget)
 {
@@ -64,7 +65,7 @@ void TrayItemWidget::initConnection()
                 else
                     ui->inputTextConnectButton->setEnabled(true); });
 
-    connect(Kiran::StylePalette::instance(),&Kiran::StylePalette::themeChanged,this,&TrayItemWidget::handleThemeChanged);
+    connect(Kiran::StylePalette::instance(), &Kiran::StylePalette::themeChanged, this, &TrayItemWidget::handleThemeChanged);
 }
 
 void TrayItemWidget::setWidgetsInDifferentStatus(TrayItemWidgetStatus WidgetStatus)
@@ -106,7 +107,7 @@ void TrayItemWidget::setWirelessStatusIcon(bool security, int signal)
         else if (75 <= signal && signal <= 100)
             svgPath = ":/kcp-network-images/wireless-4.svg";
     }
-    QPixmap pixmap = trayIconColorSwitch(svgPath);
+    QPixmap pixmap = NetworkUtils::trayIconColorSwitch(svgPath);
     ui->connectionTypeIcon->setPixmap(pixmap);
     ui->connectionTypeIcon->setAlignment(Qt::AlignCenter);
     ui->connectionTypeIcon->setVisible(true);
@@ -115,7 +116,7 @@ void TrayItemWidget::setWirelessStatusIcon(bool security, int signal)
 void TrayItemWidget::setWiredStatusIcon()
 {
     QString svgPath = ":/kcp-network-images/wired-connection.svg";
-    QPixmap pixmap = trayIconColorSwitch(svgPath);
+    QPixmap pixmap = NetworkUtils::trayIconColorSwitch(svgPath);
     ui->connectionTypeIcon->setPixmap(pixmap);
     ui->connectionTypeIcon->setAlignment(Qt::AlignCenter);
     ui->connectionTypeIcon->setVisible(true);
@@ -124,7 +125,7 @@ void TrayItemWidget::setWiredStatusIcon()
 void TrayItemWidget::setOtherNetworkIcon()
 {
     QString svgPath = ":/kcp-network-images/wireless-other-network.svg";
-    QPixmap pixmap = trayIconColorSwitch(svgPath);
+    QPixmap pixmap = NetworkUtils::trayIconColorSwitch(svgPath);
     ui->connectionTypeIcon->setPixmap(pixmap);
     ui->connectionTypeIcon->setAlignment(Qt::AlignCenter);
     ui->connectionTypeIcon->setVisible(true);
@@ -243,7 +244,6 @@ TrayItemWidgetStatus TrayItemWidget::itemWidgetStatus()
     return m_currentItemWidgetStatus;
 }
 
-
 void TrayItemWidget::paintEvent(QPaintEvent *event)
 {
     QStyleOption opt;
@@ -279,7 +279,7 @@ void TrayItemWidget::paintEvent(QPaintEvent *event)
     borderColor = kiranPalette->color(Kiran::StylePalette::Normal,
                                       Kiran::StylePalette::Widget,
                                       Kiran::StylePalette::Border);
-    
+
     auto pen = painter.pen();
     pen.setWidth(1);
     pen.setColor(borderColor);
@@ -288,7 +288,6 @@ void TrayItemWidget::paintEvent(QPaintEvent *event)
 
     painter.setPen(pen);
     painter.drawLine(frect.topLeft(), frect.topRight());
-
 
     QWidget::paintEvent(event);
 }
@@ -299,18 +298,4 @@ void TrayItemWidget::handleThemeChanged(Kiran::PaletteType paletteType)
     image.invertPixels(QImage::InvertRgb);
     QPixmap pixmap = QPixmap::fromImage(image);
     ui->connectionTypeIcon->setPixmap(pixmap);
-}
-
-QPixmap TrayItemWidget::trayIconColorSwitch(const QString &iconPath)
-{
-    //icon原本为浅色
-    QIcon icon(iconPath);
-    QPixmap pixmap = icon.pixmap(16,16);
-    if( Kiran::StylePalette::instance()->paletteType() != Kiran::PALETTE_DARK )
-    {
-        QImage image = pixmap.toImage();
-        image.invertPixels(QImage::InvertRgb);
-        pixmap = QPixmap::fromImage(image);
-    }
-    return pixmap;
 }

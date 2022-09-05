@@ -91,6 +91,9 @@ void WiredManager::handleRequestActivateConnection(const QString &connectionPath
     {
         // 此处处理进入激活流程失败的原因，并不涉及流程中某个具体阶段失败的原因
         KLOG_ERROR() << "activate connection failed:" << reply.error();
+        QString errorMessage = reply.error().message();
+        if (errorMessage.contains("device has no carrier"))
+            StatusNotification::connectitonFailedNotifyByReason(tr("The carrier is pulled out"));
         StatusNotification::connectitonFailedNotify(connectionPath);
     }
     else
@@ -108,7 +111,8 @@ void WiredManager::handleActiveConnectionAdded(const QString &path)
     {
         QString uuid = activatedConnection->uuid();
         QListWidgetItem *activeItem = ui->connectionShowPage->findItemByUuid(uuid);
-        ui->connectionShowPage->updateItemActivatedPath(activeItem, path);
+        if (activeItem != nullptr)
+            ui->connectionShowPage->updateItemActivatedPath(activeItem, path);
         connect(activatedConnection.data(), &ActiveConnection::stateChanged, this, &WiredManager::handleActiveConnectionStateChanged);
     }
 }
@@ -123,7 +127,8 @@ void WiredManager::handleStateActivating(const QString &activatedPath)
     {
         // 加载等待动画
         auto item = ui->connectionShowPage->findItemByActivatedPath(activatedPath);
-        ui->connectionShowPage->updateItemActivatingStatus(item);
+        if (item != nullptr)
+            ui->connectionShowPage->updateItemActivatingStatus(item);
     }
 }
 

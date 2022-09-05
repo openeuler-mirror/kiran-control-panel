@@ -21,8 +21,6 @@
 #include <QTimer>
 #include <QWidget>
 
-class ConnectionLists;
-class StatusNotification;
 Q_DECLARE_METATYPE(NetworkManager::ActiveConnection::State);
 
 class TrayWidget : public QWidget
@@ -57,7 +55,6 @@ public slots:
 protected:
     QList<NetworkManager::Device::Ptr> m_deviceList;
     NetworkManager::Device::Ptr m_devicePtr;
-    StatusNotification m_statusNotification;
 
 private:
     QTimer m_connectionRemovedTimer;

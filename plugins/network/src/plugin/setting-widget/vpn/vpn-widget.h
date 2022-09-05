@@ -24,6 +24,8 @@ class VpnWidget;
 
 QT_END_NAMESPACE
 Q_DECLARE_METATYPE(NetworkManager::Setting::SecretFlagType);
+
+class KiranTips;
 class VpnWidget : public QWidget
 {
     Q_OBJECT
@@ -34,6 +36,7 @@ public:
     void initUI();
     void initConnection();
     void setVpnSetting(const NetworkManager::VpnSetting::Ptr &vpnSetting);
+    void setErrorTips(KiranTips *errorTips);
     bool isIpv4AddressValid(const QString &address);
 
 public slots:
@@ -51,6 +54,7 @@ private:
     NetworkManager::VpnSetting::Ptr m_vpnSetting;
     NMStringMap m_dataMap;
     NMStringMap m_secretMap;
+    KiranTips *m_errorTip = nullptr;
 };
 
-#endif  //KIRAN_CPANEL_NETWORK_VPN_WIDGET_H
+#endif  // KIRAN_CPANEL_NETWORK_VPN_WIDGET_H

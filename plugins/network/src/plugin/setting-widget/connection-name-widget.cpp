@@ -19,6 +19,7 @@
 #include <NetworkManagerQt/Connection>
 #include <NetworkManagerQt/Settings>
 #include <NetworkManagerQt/WirelessSetting>
+#include "kiran-tips/kiran-tips.h"
 #include "ui_connection-name-widget.h"
 using namespace NetworkManager;
 
@@ -45,6 +46,11 @@ void ConnectionNameWidget::initUI()
 void ConnectionNameWidget::setConnectionSettings(const ConnectionSettings::Ptr &connectionSettings)
 {
     m_connectionSettings = connectionSettings;
+}
+
+void ConnectionNameWidget::setErrorTips(KiranTips *errorTips)
+{
+    m_errorTip = errorTips;
 }
 
 void ConnectionNameWidget::setNameLabel(const QString &name)
@@ -179,10 +185,8 @@ bool ConnectionNameWidget::isInputValid()
     if (nameStr.isEmpty())
     {
         QString error = QString(tr("Connection name can not be empty"));
-        KiranMessageBox::KiranStandardButton btn = KiranMessageBox::message(this, tr("Error"),
-                                                                            error,
-                                                                            KiranMessageBox::Yes | KiranMessageBox::No);
-
+        m_errorTip->setText(error);
+        m_errorTip->showTipAroundWidget(ui->connectionName);
         KLOG_DEBUG() << "Connection name cannot be empty";
         return false;
     }

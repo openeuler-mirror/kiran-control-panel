@@ -23,6 +23,7 @@
 #include <QObject>
 #include <QWidget>
 
+class KiranTips;
 class SettingPage : public QWidget
 {
     Q_OBJECT
@@ -61,6 +62,7 @@ protected:
     NetworkManager::ConnectionSettings::ConnectionType m_connectionType;
     QString m_connectionUuid;
     QString m_activeConnectionPath = "";
+    KiranTips *m_errorTip = nullptr;
 
 private:
     bool m_isNewConnection;

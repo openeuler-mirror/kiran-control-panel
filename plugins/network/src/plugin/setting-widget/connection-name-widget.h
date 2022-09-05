@@ -16,15 +16,14 @@
 #define KIRAN_CPANEL_NETWORK_CONNECTION_NAME_WIDGET_H
 
 #include <NetworkManagerQt/ConnectionSettings>
-#include <QWidget>
 #include <QComboBox>
+#include <QWidget>
 QT_BEGIN_NAMESPACE
 namespace Ui
 {
 class ConnectionNameWidget;
 }
 QT_END_NAMESPACE
-
 
 enum VpnType
 {
@@ -33,6 +32,7 @@ enum VpnType
 };
 
 class KiranSwitchButton;
+class KiranTips;
 class ConnectionNameWidget : public QWidget
 {
     Q_OBJECT
@@ -42,6 +42,7 @@ public:
     ~ConnectionNameWidget() override;
     void initUI();
     void setConnectionSettings(const NetworkManager::ConnectionSettings::Ptr &connectionSettings);
+    void setErrorTips(KiranTips *errorTips);
     void setNameLabel(const QString &name);
     int connectionSuffixNum(QString &connName);
 public slots:
@@ -50,11 +51,12 @@ public slots:
     void showVpnSettings(VpnType vpnType);
     void clearPtr();
     bool isInputValid();
+
 private:
     Ui::ConnectionNameWidget *ui;
     KiranSwitchButton *m_autoConnection;
     NetworkManager::ConnectionSettings::Ptr m_connectionSettings;
     NetworkManager::ConnectionSettings::ConnectionType m_connectionType;
-
+    KiranTips *m_errorTip = nullptr;
 };
-#endif  //KIRAN_CPANEL_NETWORK_CONNECTION_NAME_WIDGET_H
+#endif  // KIRAN_CPANEL_NETWORK_CONNECTION_NAME_WIDGET_H

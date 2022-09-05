@@ -15,7 +15,9 @@
 #include "vpn-l2tp-setting.h"
 #include <qt5-log-i.h>
 #include <NetworkManagerQt/Settings>
+#include "kiran-tips/kiran-tips.h"
 #include "ui_vpn-l2tp-setting.h"
+
 #define ServiceTypeL2TP "org.freedesktop.NetworkManager.l2tp"
 using namespace NetworkManager;
 
@@ -24,6 +26,10 @@ VpnL2tpSetting::VpnL2tpSetting(QWidget *parent) : SettingPage(parent), ui(new Ui
     ui->setupUi(this);
     ui->connectioNameWidget->setNameLabel(tr("VPN name"));
     initConnection();
+    m_errorTip = new KiranTips(this);
+    m_errorTip->setAnimationEnable(true);
+    m_errorTip->setShowPosition(KiranTips::POSITION_BOTTM);
+    ui->vpnWidget->setErrorTips(m_errorTip);
 }
 
 VpnL2tpSetting::~VpnL2tpSetting()

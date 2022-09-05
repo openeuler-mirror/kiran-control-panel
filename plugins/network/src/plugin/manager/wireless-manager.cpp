@@ -19,6 +19,7 @@
 #include <QEventLoop>
 #include <QPointer>
 #include <QScrollBar>
+#include "status-notification.h"
 #include "text-input-dialog.h"
 #include "ui_wireless-manager.h"
 

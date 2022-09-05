@@ -22,9 +22,9 @@
 #include <QVBoxLayout>
 #include "status-notifier-manager.h"
 #include "tray-page.h"
+#include "utils.h"
 #include "wired-tray-widget.h"
 #include "wireless-tray-widget.h"
-
 using namespace NetworkManager;
 
 #define STATUS_NOTIFIER_MANAGER "org.kde.StatusNotifierManager"
@@ -49,7 +49,8 @@ void NetworkTray::init()
     initMenu();
     initConnect();
 
-    NetworkManager::Connection::List listConnections();
+    // XXX:现将widget移到屏幕外，防止第一次显示页面，由于没指定位置而闪现在左上角，之后统一修改页面显示逻辑
+    this->move(-1000, -1000);
 }
 
 void NetworkTray::initUI()
@@ -184,6 +185,7 @@ void NetworkTray::initTrayPage()
         m_wirelessTrayPage = new TrayPage(m_wirelessDeviceList, this);
 }
 
+// TODO:目前包含了不可用的设备，需要修改
 void NetworkTray::getAvailableDeviceList()
 {
     const Device::List deviceList = networkInterfaces();
@@ -320,12 +322,12 @@ void NetworkTray::setTrayIcon(NetworkManager::Status status)
                 // WirelessNetwork::Ptr wirelessNetwork = wirelessDevice->findNetwork(ssid);
                 // int signalStrength = wirelessNetwork->signalStrength();
 
-                m_systemTray->setIcon(trayIconColorSwitch(":/kcp-network-images/wireless-4.svg"));
+                m_systemTray->setIcon(NetworkUtils::trayIconColorSwitch(":/kcp-network-images/wireless-4.svg"));
                 KLOG_DEBUG() << "setIcon kcp-network-images/wireless-4.svg";
             }
             else
             {
-                m_systemTray->setIcon(trayIconColorSwitch(":/kcp-network-images/wired-connection.svg"));
+                m_systemTray->setIcon(NetworkUtils::trayIconColorSwitch(":/kcp-network-images/wired-connection.svg"));
                 KLOG_DEBUG() << "setIcon kcp-network-images/wireless-connection.svg";
             }
         }
@@ -333,11 +335,11 @@ void NetworkTray::setTrayIcon(NetworkManager::Status status)
     else if ((status == NetworkManager::Status::Disconnecting) || (status == NetworkManager::Status::Connecting))
     {
         // TODO:加载动画
-        KLOG_DEBUG() << "setIcon null";
+        m_systemTray->setIcon(NetworkUtils::trayIconColorSwitch(":/kcp-network-images/wired-disconnected.svg"));
     }
     else
     {
-        m_systemTray->setIcon(trayIconColorSwitch(":/kcp-network-images/wired-disconnected.svg"));
+        m_systemTray->setIcon(NetworkUtils::trayIconColorSwitch(":/kcp-network-images/wired-disconnected.svg"));
         KLOG_DEBUG() << "setIcon kcp-network-images/wireless-disconnected.svg";
     }
 }
@@ -504,21 +506,6 @@ void NetworkTray::handleAdjustedTraySize(QSize sizeHint)
 void NetworkTray::handleThemeChanged(Kiran::PaletteType paletteType)
 {
     setTrayIcon(NetworkManager::status());
-}
-
-QPixmap NetworkTray::trayIconColorSwitch(const QString &iconPath)
-{
-    // icon原本为浅色
-    QIcon icon(iconPath);
-    QPixmap pixmap = icon.pixmap(16, 16);
-    if (Kiran::StylePalette::instance()->paletteType() != Kiran::PALETTE_DARK)
-    {
-        QImage image = pixmap.toImage();
-        image.invertPixels(QImage::InvertRgb);
-        pixmap = QPixmap::fromImage(image);
-    }
-
-    return pixmap;
 }
 
 void NetworkTray::paintEvent(QPaintEvent *event)

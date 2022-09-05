@@ -48,6 +48,12 @@ public:
     void handleActiveConnectionAdded(const QString &path) override;
     void handleActiveConnectionRemoved(const QString &path) override;
 
+    void initUnavailableWidget();
+
+public slots:
+    void handleCarrierChanged(bool plugged);
+    void handleStateChanged(NetworkManager::Device::State newstate, NetworkManager::Device::State oldstate, NetworkManager::Device::StateChangeReason reason);
+
 signals:
     void adjustedTraySize(QSize sizeHint);
 
@@ -56,6 +62,7 @@ private:
     QString m_devicePath;
     QVBoxLayout *m_verticalLayout;
     QPointer<ConnectionLists> m_connectionLists;
+    QWidget *m_unavailableWidget;
 };
 
 #endif  // KIRAN_CPANEL_NETWORK_WIRED_TRAY_WIDGET_H
