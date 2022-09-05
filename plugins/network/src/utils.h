@@ -20,8 +20,8 @@
 namespace NetworkUtils
 {
 
-QPixmap trayIconColorSwitch(const QString &iconPath);
+QPixmap trayIconColorSwitch(const QString &iconPath, const int iconSize = 16);
 
-}
+}  // namespace NetworkUtils
 
 #endif  // KIRAN_CPANEL_NETWORK_UTILS_H

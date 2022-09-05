@@ -14,13 +14,12 @@
 
 #include "utils.h"
 #include <style-palette.h>
-#include <style-property.h>
 #include <QIcon>
-QPixmap NetworkUtils::trayIconColorSwitch(const QString &iconPath)
+QPixmap NetworkUtils::trayIconColorSwitch(const QString &iconPath, const int iconSize)
 {
     // icon原本为浅色
     QIcon icon(iconPath);
-    QPixmap pixmap = icon.pixmap(16, 16);
+    QPixmap pixmap = icon.pixmap(iconSize, iconSize);
     if (Kiran::StylePalette::instance()->paletteType() != Kiran::PALETTE_DARK)
     {
         QImage image = pixmap.toImage();

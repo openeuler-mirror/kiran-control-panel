@@ -302,6 +302,7 @@ void NetworkTray::getTrayGeometry()
 // TODO:增加其他状态图标
 void NetworkTray::setTrayIcon(NetworkManager::Status status)
 {
+    QIcon icon;
     if (status == NetworkManager::Status::Connected)
     {
         // 判断主连接类型，托盘网络图标以主连接类型为准
@@ -312,36 +313,28 @@ void NetworkTray::setTrayIcon(NetworkManager::Status status)
             auto primaryConnectionType = primaryActiveConnection->connection()->settings()->connectionType();
             if (primaryConnectionType == ConnectionSettings::Wireless)
             {
-                // ActiveConnection::Ptr primaryActiveConnection  = primaryConnection();
-                // WirelessSetting::Ptr wirelessSetting = primaryActiveConnection->connection()->settings()->setting(Setting::Wireless).dynamicCast<WirelessSetting>();
-                // QString ssid = QString(wirelessSetting->ssid());
-
-                // QString devicePath = primaryActiveConnection->devices().value(0);
-                // Device::Ptr device = findNetworkInterface(devicePath);
-                // WirelessDevice::Ptr wirelessDevice = qobject_cast<WirelessDevice*>(device);
-                // WirelessNetwork::Ptr wirelessNetwork = wirelessDevice->findNetwork(ssid);
-                // int signalStrength = wirelessNetwork->signalStrength();
-
-                m_systemTray->setIcon(NetworkUtils::trayIconColorSwitch(":/kcp-network-images/wireless-4.svg"));
-                KLOG_DEBUG() << "setIcon kcp-network-images/wireless-4.svg";
+                icon.addPixmap(NetworkUtils::trayIconColorSwitch(":/kcp-network-images/wireless-4.svg"));
+                icon.addPixmap(NetworkUtils::trayIconColorSwitch(":/kcp-network-images/wireless-4.svg", 64));
             }
             else
             {
-                m_systemTray->setIcon(NetworkUtils::trayIconColorSwitch(":/kcp-network-images/wired-connection.svg"));
-                KLOG_DEBUG() << "setIcon kcp-network-images/wireless-connection.svg";
+                icon.addPixmap(NetworkUtils::trayIconColorSwitch(":/kcp-network-images/wired-connection.svg"));
+                icon.addPixmap(NetworkUtils::trayIconColorSwitch(":/kcp-network-images/wired-connection.svg", 64));
             }
         }
     }
     else if ((status == NetworkManager::Status::Disconnecting) || (status == NetworkManager::Status::Connecting))
     {
         // TODO:加载动画
-        m_systemTray->setIcon(NetworkUtils::trayIconColorSwitch(":/kcp-network-images/wired-disconnected.svg"));
+        icon.addPixmap(NetworkUtils::trayIconColorSwitch(":/kcp-network-images/wired-disconnected.svg"));
+        icon.addPixmap(NetworkUtils::trayIconColorSwitch(":/kcp-network-images/wired-disconnected.svg", 64));
     }
     else
     {
-        m_systemTray->setIcon(NetworkUtils::trayIconColorSwitch(":/kcp-network-images/wired-disconnected.svg"));
-        KLOG_DEBUG() << "setIcon kcp-network-images/wireless-disconnected.svg";
+        icon.addPixmap(NetworkUtils::trayIconColorSwitch(":/kcp-network-images/wired-disconnected.svg"));
+        icon.addPixmap(NetworkUtils::trayIconColorSwitch(":/kcp-network-images/wired-disconnected.svg", 64));
     }
+    m_systemTray->setIcon(icon);
 }
 
 // 重新获取device、初始化，刷新
