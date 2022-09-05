@@ -15,15 +15,16 @@
 #include "network-tray.h"
 #include <qt5-log-i.h>
 #include <style-palette.h>
+#include <NetworkManagerQt/Settings>
 #include <QMenu>
 #include <QPainter>
 #include <QPainterPath>
 #include <QVBoxLayout>
 #include "status-notifier-manager.h"
 #include "tray-page.h"
+#include "utils.h"
 #include "wired-tray-widget.h"
 #include "wireless-tray-widget.h"
-
 using namespace NetworkManager;
 
 #define STATUS_NOTIFIER_MANAGER "org.kde.StatusNotifierManager"
@@ -47,6 +48,9 @@ void NetworkTray::init()
     initUI();
     initMenu();
     initConnect();
+
+    // XXX:现将widget移到屏幕外，防止第一次显示页面，由于没指定位置而闪现在左上角，之后统一修改页面显示逻辑
+    this->move(-1000, -1000);
 }
 
 void NetworkTray::initUI()
@@ -127,6 +131,7 @@ void NetworkTray::initConnect()
                 } });
 
     connect(notifier(), &Notifier::deviceRemoved, this, &NetworkTray::handleDeviceRemoved);
+
     connect(notifier(), &Notifier::statusChanged, this, &NetworkTray::handleNetworkManagerStatusChanged);
 
     connect(notifier(), &Notifier::primaryConnectionChanged, this, &NetworkTray::handlePrimaryConnectionChanged);
@@ -152,6 +157,7 @@ void NetworkTray::initTrayIcon()
 {
     m_systemTray = new QSystemTrayIcon();
     setTrayIcon(NetworkManager::status());
+    KLOG_DEBUG() << " NetworkManager::status():" << NetworkManager::status();
     m_systemTray->show();
 }
 
@@ -179,6 +185,7 @@ void NetworkTray::initTrayPage()
         m_wirelessTrayPage = new TrayPage(m_wirelessDeviceList, this);
 }
 
+// TODO:目前包含了不可用的设备，需要修改
 void NetworkTray::getAvailableDeviceList()
 {
     const Device::List deviceList = networkInterfaces();
@@ -187,9 +194,8 @@ void NetworkTray::getAvailableDeviceList()
         KLOG_DEBUG() << "dev->interfaceName():" << dev->interfaceName();
         KLOG_DEBUG() << "dev->state():" << dev->state();
         KLOG_DEBUG() << "dev->isValid():" << dev->isValid();
+        KLOG_DEBUG() << "dev->managed():" << dev->managed();
 
-        if (dev->state() == Device::Unavailable)
-            continue;
         if (dev->state() == Device::Unmanaged)
             continue;
 
@@ -296,6 +302,7 @@ void NetworkTray::getTrayGeometry()
 // TODO:增加其他状态图标
 void NetworkTray::setTrayIcon(NetworkManager::Status status)
 {
+    QIcon icon;
     if (status == NetworkManager::Status::Connected)
     {
         // 判断主连接类型，托盘网络图标以主连接类型为准
@@ -306,33 +313,28 @@ void NetworkTray::setTrayIcon(NetworkManager::Status status)
             auto primaryConnectionType = primaryActiveConnection->connection()->settings()->connectionType();
             if (primaryConnectionType == ConnectionSettings::Wireless)
             {
-                // ActiveConnection::Ptr primaryActiveConnection  = primaryConnection();
-                // WirelessSetting::Ptr wirelessSetting = primaryActiveConnection->connection()->settings()->setting(Setting::Wireless).dynamicCast<WirelessSetting>();
-                // QString ssid = QString(wirelessSetting->ssid());
-
-                // QString devicePath = primaryActiveConnection->devices().value(0);
-                // Device::Ptr device = findNetworkInterface(devicePath);
-                // WirelessDevice::Ptr wirelessDevice = qobject_cast<WirelessDevice*>(device);
-                // WirelessNetwork::Ptr wirelessNetwork = wirelessDevice->findNetwork(ssid);
-                // int signalStrength = wirelessNetwork->signalStrength();
-
-                m_systemTray->setIcon(trayIconColorSwitch(":/kcp-network-images/wireless-4.svg"));
+                icon.addPixmap(NetworkUtils::trayIconColorSwitch(":/kcp-network-images/wireless-4.svg"));
+                icon.addPixmap(NetworkUtils::trayIconColorSwitch(":/kcp-network-images/wireless-4.svg", 64));
+            }
+            else
+            {
+                icon.addPixmap(NetworkUtils::trayIconColorSwitch(":/kcp-network-images/wired-connection.svg"));
+                icon.addPixmap(NetworkUtils::trayIconColorSwitch(":/kcp-network-images/wired-connection.svg", 64));
             }
         }
-        else
-        {
-            // 可用
-            m_systemTray->setIcon(trayIconColorSwitch(":/kcp-network-images/wired-connection.svg"));
-        }
     }
-    else if (status == NetworkManager::Status::Disconnecting || NetworkManager::Status::Connecting)
+    else if ((status == NetworkManager::Status::Disconnecting) || (status == NetworkManager::Status::Connecting))
     {
         // TODO:加载动画
+        icon.addPixmap(NetworkUtils::trayIconColorSwitch(":/kcp-network-images/wired-disconnected.svg"));
+        icon.addPixmap(NetworkUtils::trayIconColorSwitch(":/kcp-network-images/wired-disconnected.svg", 64));
     }
     else
     {
-        m_systemTray->setIcon(trayIconColorSwitch(":/kcp-network-images/wired-disconnected.svg"));
+        icon.addPixmap(NetworkUtils::trayIconColorSwitch(":/kcp-network-images/wired-disconnected.svg"));
+        icon.addPixmap(NetworkUtils::trayIconColorSwitch(":/kcp-network-images/wired-disconnected.svg", 64));
     }
+    m_systemTray->setIcon(icon);
 }
 
 // 重新获取device、初始化，刷新
@@ -396,8 +398,6 @@ void NetworkTray::handleDeviceManagedChanged()
  * XXX:由于在禁用和开启wifi时，并没有发出Wireless设备的deviceRemoved和deviceAdded信号
  * 并且当WirelessEnabledChanged信号发送时，device state 还处在unavailbel 不可用状态，需要处理
  */
-
-// TODO:托盘对不可用状态进行提示
 void NetworkTray::handleWirelessEnabledChanged(bool enable)
 {
     KLOG_DEBUG() << "-----------------------handleWirelessEnabledChanged:" << enable;
@@ -499,21 +499,6 @@ void NetworkTray::handleAdjustedTraySize(QSize sizeHint)
 void NetworkTray::handleThemeChanged(Kiran::PaletteType paletteType)
 {
     setTrayIcon(NetworkManager::status());
-}
-
-QPixmap NetworkTray::trayIconColorSwitch(const QString &iconPath)
-{
-    // icon原本为浅色
-    QIcon icon(iconPath);
-    QPixmap pixmap = icon.pixmap(16, 16);
-    if (Kiran::StylePalette::instance()->paletteType() != Kiran::PALETTE_DARK)
-    {
-        QImage image = pixmap.toImage();
-        image.invertPixels(QImage::InvertRgb);
-        pixmap = QPixmap::fromImage(image);
-    }
-
-    return pixmap;
 }
 
 void NetworkTray::paintEvent(QPaintEvent *event)

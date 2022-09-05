@@ -18,8 +18,8 @@
 #include <qt5-log-i.h>
 #include <NetworkManagerQt/Manager>
 #include <NetworkManagerQt/WiredDevice>
+#include "kiran-tips/kiran-tips.h"
 #include "ui_ethernet-widget.h"
-
 using namespace NetworkManager;
 
 EthernetWidget::EthernetWidget(QWidget *parent) : QWidget(parent), ui(new Ui::EthernetWidget)
@@ -36,6 +36,7 @@ EthernetWidget::~EthernetWidget()
 void EthernetWidget::initUI()
 {
     m_mtuButton = new KiranSwitchButton(this);
+    m_mtuButton->setAccessibleName(QString("SwitchMTUButton"));
     ui->mtuLayout->addWidget(m_mtuButton);
     ui->customMTU->setVisible(false);
     ui->customMTU->setMinimum(0);
@@ -73,6 +74,11 @@ void EthernetWidget::initConnection()
 void EthernetWidget::setWiredSetting(const WiredSetting::Ptr &wiredSetting)
 {
     m_wiredSetting = wiredSetting;
+}
+
+void EthernetWidget::setErrorTips(KiranTips *errorTips)
+{
+    m_errorTip = errorTips;
 }
 
 void EthernetWidget::saveSettings()
@@ -137,10 +143,8 @@ bool EthernetWidget::isInputValid()
     if (!isCloneMacValid(ui->cloneDeviceMac->text()))
     {
         QString error = QString(tr("Clone Mac invalid"));
-        KiranMessageBox::KiranStandardButton btn = KiranMessageBox::message(this, tr("Error"),
-                                                                            error,
-                                                                            KiranMessageBox::Yes | KiranMessageBox::No);
-
+        m_errorTip->setText(error);
+        m_errorTip->showTipAroundWidget(ui->cloneDeviceMac);
         KLOG_DEBUG() << "Clone Mac invalid";
         return false;
     }

@@ -24,7 +24,6 @@ class TrayPage;
 }
 QT_END_NAMESPACE
 
-
 class TrayPage : public QWidget
 {
     Q_OBJECT
@@ -34,11 +33,11 @@ public:
     ~TrayPage() override;
 
     void init();
-    void initUI(NetworkManager::Device::Type deviceType);
+    void initUI();
     void initConnection();
 
-    void setMultiDeviceWidget(NetworkManager::Device::Type deviceType);
-    void setSingleDeviceWidget(NetworkManager::Device::Type deviceType);
+    void setMultiDeviceWidget();
+    void setSingleDeviceWidget();
     QStringList devicePathList();
 
 public slots:

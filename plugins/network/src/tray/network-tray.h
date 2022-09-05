@@ -68,8 +68,6 @@ public slots:
 
     void handleAdjustedTraySize(QSize sizeHint);
 
-    QPixmap trayIconColorSwitch(const QString &iconPath);
-
     void handleThemeChanged(Kiran::PaletteType paletteType);
 
 protected:

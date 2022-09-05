@@ -45,12 +45,6 @@
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
-       <property name="font">
-        <font>
-         <family>Sans Serif</family>
-         <pointsize>9</pointsize>
-        </font>
-       </property>
        <property name="text">
         <string>Output devices</string>
        </property>
@@ -80,6 +74,9 @@
          <height>36</height>
         </size>
        </property>
+       <property name="accessibleName">
+        <string>ComboBoxOutputDevices</string>
+       </property>
       </widget>
      </item>
     </layout>
@@ -100,12 +97,6 @@
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
-       <property name="font">
-        <font>
-         <family>Sans Serif</family>
-         <pointsize>9</pointsize>
-        </font>
-       </property>
        <property name="text">
         <string>Output volume</string>
        </property>
@@ -118,12 +109,6 @@
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
-       </property>
-       <property name="font">
-        <font>
-         <family>Sans Serif</family>
-         <pointsize>9</pointsize>
-        </font>
        </property>
        <property name="styleSheet">
         <string notr="true"/>
@@ -169,6 +154,9 @@
        <property name="focusPolicy">
         <enum>Qt::NoFocus</enum>
        </property>
+       <property name="accessibleName">
+        <string>SlilderVolumeSetting</string>
+       </property>
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
@@ -191,12 +179,6 @@
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
-       </property>
-       <property name="font">
-        <font>
-         <family>Sans Serif</family>
-         <pointsize>9</pointsize>
-        </font>
        </property>
        <property name="text">
         <string>Left/right balance</string>
@@ -236,6 +218,9 @@
        <property name="focusPolicy">
         <enum>Qt::NoFocus</enum>
        </property>
+       <property name="accessibleName">
+        <string>SliderVolumeBalance</string>
+       </property>
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
@@ -247,12 +232,6 @@
     <layout class="QHBoxLayout" name="horizontalLayout_4">
      <item>
       <widget class="QLabel" name="label_6">
-       <property name="font">
-        <font>
-         <family>Sans Serif</family>
-         <pointsize>9</pointsize>
-        </font>
-       </property>
        <property name="text">
         <string>Left</string>
        </property>
@@ -278,12 +257,6 @@
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
-       </property>
-       <property name="font">
-        <font>
-         <family>Sans Serif</family>
-         <pointsize>9</pointsize>
-        </font>
        </property>
        <property name="text">
         <string>Right</string>

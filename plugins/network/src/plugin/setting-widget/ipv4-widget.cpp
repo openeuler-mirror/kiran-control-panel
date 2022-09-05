@@ -16,6 +16,7 @@
 #include <kiran-message-box.h>
 #include <kiran-switch-button.h>
 #include <qt5-log-i.h>
+#include "kiran-tips/kiran-tips.h"
 #include "ui_ipv4-widget.h"
 using namespace NetworkManager;
 
@@ -64,6 +65,11 @@ void Ipv4Widget::handleIpv4MethodChanged(NetworkManager::Ipv4Setting::ConfigMeth
 void Ipv4Widget::setIpv4Setting(const Ipv4Setting::Ptr &ipv4Setting)
 {
     m_ipv4Setting = ipv4Setting;
+}
+
+void Ipv4Widget::setErrorTips(KiranTips *errorTips)
+{
+    m_errorTip = errorTips;
 }
 
 void Ipv4Widget::saveSettings()
@@ -193,8 +199,6 @@ void Ipv4Widget::clearPtr()
     m_ipv4Setting.clear();
 }
 
-// TODO:验证功能待完善
-// XXX:输入验证提示暂时先用弹框，之后修改
 bool Ipv4Widget::isInputValid()
 {
     Ipv4Setting::ConfigMethod configMethod = ui->ipv4Method->currentData().value<Ipv4Setting::ConfigMethod>();
@@ -211,10 +215,8 @@ bool Ipv4Widget::isInputValid()
         if (ipv4.isEmpty())
         {
             QString error = QString(tr("Ipv4 address can not be empty"));
-            KiranMessageBox::KiranStandardButton btn = KiranMessageBox::message(this, tr("Error"),
-                                                                                error,
-                                                                                KiranMessageBox::Yes | KiranMessageBox::No);
-
+            m_errorTip->setText(error);
+            m_errorTip->showTipAroundWidget(ui->ipv4Address);
             KLOG_DEBUG() << "Ipv4 address can not be empty";
             return false;
         }
@@ -223,9 +225,8 @@ bool Ipv4Widget::isInputValid()
             if (!isIpv4AddressValid(ipv4))
             {
                 QString error = QString(tr("Ipv4 Address invalid"));
-                KiranMessageBox::KiranStandardButton btn = KiranMessageBox::message(this, tr("Error"),
-                                                                                    error,
-                                                                                    KiranMessageBox::Yes | KiranMessageBox::No);
+                m_errorTip->setText(error);
+                m_errorTip->showTipAroundWidget(ui->ipv4Address);
                 KLOG_DEBUG() << "Ipv4 Address invalid";
                 return false;
             }
@@ -234,9 +235,8 @@ bool Ipv4Widget::isInputValid()
         if (netMask.isEmpty())
         {
             QString error = QString(tr("NetMask can not be empty"));
-            KiranMessageBox::KiranStandardButton btn = KiranMessageBox::message(this, tr("Error"),
-                                                                                error,
-                                                                                KiranMessageBox::Yes | KiranMessageBox::No);
+            m_errorTip->setText(error);
+            m_errorTip->showTipAroundWidget(ui->ipv4Netmask);
             KLOG_DEBUG() << "NetMask cannot be empty";
             return false;
         }
@@ -245,9 +245,8 @@ bool Ipv4Widget::isInputValid()
             if (!isIpv4NetmaskValid(netMask))
             {
                 QString error = QString(tr("Netmask invalid"));
-                KiranMessageBox::KiranStandardButton btn = KiranMessageBox::message(this, tr("Error"),
-                                                                                    error,
-                                                                                    KiranMessageBox::Yes | KiranMessageBox::No);
+                m_errorTip->setText(error);
+                m_errorTip->showTipAroundWidget(ui->ipv4Netmask);
                 KLOG_DEBUG() << "Netmask invalid";
                 return false;
             }
@@ -258,10 +257,8 @@ bool Ipv4Widget::isInputValid()
             if (!isIpv4AddressValid(ipv4Gateway))
             {
                 QString error = QString(tr("Ipv4 Gateway invalid"));
-                KiranMessageBox::KiranStandardButton btn = KiranMessageBox::message(this, tr("Error"),
-                                                                                    error,
-                                                                                    KiranMessageBox::Yes | KiranMessageBox::No);
-                KLOG_DEBUG() << "Ipv4 Netmask invalid";
+                m_errorTip->setText(error);
+                m_errorTip->showTipAroundWidget(ui->ipv4Gateway);
                 return false;
             }
         }
@@ -273,9 +270,8 @@ bool Ipv4Widget::isInputValid()
         if (!isIpv4AddressValid(preferredDNS))
         {
             QString error = QString(tr("Ipv4 Preferred DNS invalid"));
-            KiranMessageBox::KiranStandardButton btn = KiranMessageBox::message(this, tr("Error"),
-                                                                                error,
-                                                                                KiranMessageBox::Yes | KiranMessageBox::No);
+            m_errorTip->setText(error);
+            m_errorTip->showTipAroundWidget(ui->ipv4PreferredDNS);
             KLOG_DEBUG() << "Ipv4 Preferred DNS invalid";
             return false;
         }
@@ -287,9 +283,8 @@ bool Ipv4Widget::isInputValid()
         if (!isIpv4AddressValid(alternateDNS))
         {
             QString error = QString(tr("Ipv4 Alternate DNS invalid"));
-            KiranMessageBox::KiranStandardButton btn = KiranMessageBox::message(this, tr("Error"),
-                                                                                error,
-                                                                                KiranMessageBox::Yes | KiranMessageBox::No);
+            m_errorTip->setText(error);
+            m_errorTip->showTipAroundWidget(ui->ipv4AlternateDNS);
             KLOG_DEBUG() << "Ipv4 Alternate DNS invalid";
             return false;
         }

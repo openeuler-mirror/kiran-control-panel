@@ -55,6 +55,9 @@
          <height>36</height>
         </size>
        </property>
+       <property name="accessibleName">
+        <string>EditSsid</string>
+       </property>
       </widget>
      </item>
     </layout>
@@ -87,6 +90,9 @@
          <width>16777215</width>
          <height>36</height>
         </size>
+       </property>
+       <property name="accessibleName">
+        <string>ComboBoxWirelessMacAddress</string>
        </property>
       </widget>
      </item>
@@ -134,6 +140,9 @@
          <width>16777215</width>
          <height>36</height>
         </size>
+       </property>
+       <property name="accessibleName">
+        <string>SpinBoxWirelessCustomMTU</string>
        </property>
       </widget>
      </item>

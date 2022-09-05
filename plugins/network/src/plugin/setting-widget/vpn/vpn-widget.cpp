@@ -16,6 +16,7 @@
 #include <kiran-message-box.h>
 #include <qt5-log-i.h>
 #include <QHostAddress>
+#include "kiran-tips/kiran-tips.h"
 #include "ui_vpn-widget.h"
 using namespace NetworkManager;
 
@@ -54,6 +55,11 @@ void VpnWidget::initConnection()
 void VpnWidget::setVpnSetting(const VpnSetting::Ptr &vpnSetting)
 {
     m_vpnSetting = vpnSetting;
+}
+
+void VpnWidget::setErrorTips(KiranTips *errorTips)
+{
+    m_errorTip = errorTips;
 }
 
 void VpnWidget::handlePasswordOptionsChanged(Setting::SecretFlagType secretFlagType)
@@ -155,9 +161,8 @@ bool VpnWidget::isInputValid()
     if (gatewayStr.isEmpty())
     {
         QString error = QString(tr("Gateway can not be empty"));
-        KiranMessageBox::KiranStandardButton btn = KiranMessageBox::message(this, tr("Error"),
-                                                                            error,
-                                                                            KiranMessageBox::Yes | KiranMessageBox::No);
+        m_errorTip->setText(error);
+        m_errorTip->showTipAroundWidget(ui->gateway);
         KLOG_DEBUG() << "Gateway cannot be empty";
         return false;
     }
@@ -166,9 +171,8 @@ bool VpnWidget::isInputValid()
         if (!isIpv4AddressValid(gatewayStr))
         {
             QString error = QString(tr("Gateway invalid"));
-            KiranMessageBox::KiranStandardButton btn = KiranMessageBox::message(this, tr("Error"),
-                                                                                error,
-                                                                                KiranMessageBox::Yes | KiranMessageBox::No);
+            m_errorTip->setText(error);
+            m_errorTip->showTipAroundWidget(ui->gateway);
             KLOG_DEBUG() << "Gateway invalid";
             return false;
         }
@@ -177,10 +181,8 @@ bool VpnWidget::isInputValid()
     if (ui->userName->text().isEmpty())
     {
         QString error = QString(tr("user name can not be empty"));
-        KiranMessageBox::KiranStandardButton btn = KiranMessageBox::message(this, tr("Error"),
-                                                                            error,
-                                                                            KiranMessageBox::Yes | KiranMessageBox::No);
-
+        m_errorTip->setText(error);
+        m_errorTip->showTipAroundWidget(ui->userName);
         KLOG_DEBUG() << "user name can not be empty";
         return false;
     }
@@ -189,10 +191,8 @@ bool VpnWidget::isInputValid()
         ui->password->text().isEmpty())
     {
         QString error = QString(tr("password can not be empty"));
-        KiranMessageBox::KiranStandardButton btn = KiranMessageBox::message(this, tr("Error"),
-                                                                            error,
-                                                                            KiranMessageBox::Yes | KiranMessageBox::No);
-
+        m_errorTip->setText(error);
+        m_errorTip->showTipAroundWidget(ui->password);
         KLOG_DEBUG() << "password can not be empty";
         return false;
     }

@@ -40,7 +40,7 @@ public:
     void initConnect();
     void setVolumeSettingPos();
     void setMixedSettingPos();
-    void trayIconColorSwitch(QString svgPath, QString color);
+    QPixmap trayIconColorSwitch(const QString& iconPath, const int iconSize = 16);
     void getTrayGeometry();
 public slots:
 
@@ -74,4 +74,4 @@ private:
     int xTray, yTray, heightTray, widthTray;
 };
 
-#endif  //KIRAN_CPANEL_AUDIO_AUDIOSYSTEMTRAY_H
+#endif  // KIRAN_CPANEL_AUDIO_AUDIOSYSTEMTRAY_H

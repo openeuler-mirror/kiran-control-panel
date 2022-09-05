@@ -20,18 +20,10 @@
 #include "connection-lists.h"
 using namespace NetworkManager;
 
-StatusNotification::StatusNotification(QObject* parent) : QObject(parent)
-{
-    notify_init("StatusNotification");
-}
-
-StatusNotification::~StatusNotification()
-{
-    notify_uninit();
-}
-
 void StatusNotification::connectitonFailedNotify()
 {
+    notify_init("StatusNotification");
+
     QString summary, body, icon;
     summary = tr("Connection Failed");
     body = tr("the network not found");
@@ -39,10 +31,13 @@ void StatusNotification::connectitonFailedNotify()
     NotifyNotification* notify = notify_notification_new(summary.toStdString().c_str(), body.toStdString().c_str(), icon.toStdString().c_str());
     notify_notification_show(notify, nullptr);
     g_object_unref(G_OBJECT(notify));
+    notify_uninit();
 }
 
 void StatusNotification::connectitonHiddenNetworkFailedNotify(const QString& ssid)
 {
+    notify_init("StatusNotification");
+
     QString summary, body, bodyStr, icon;
     summary = tr("Connection Failed");
     body = tr("The hidden network \"%1\" to be connected has been detected and exists in the network list");
@@ -51,10 +46,13 @@ void StatusNotification::connectitonHiddenNetworkFailedNotify(const QString& ssi
     NotifyNotification* notify = notify_notification_new(summary.toStdString().c_str(), bodyStr.toStdString().c_str(), icon.toStdString().c_str());
     notify_notification_show(notify, nullptr);
     g_object_unref(G_OBJECT(notify));
+    notify_uninit();
 }
 
 void StatusNotification::connectitonFailedNotify(const QString& connectionPath)
 {
+    notify_init("StatusNotification");
+
     Connection::Ptr connection = findConnection(connectionPath);
 
     QString summary, body, bodyStr, icon;
@@ -65,10 +63,13 @@ void StatusNotification::connectitonFailedNotify(const QString& connectionPath)
     NotifyNotification* notify = notify_notification_new(summary.toStdString().c_str(), bodyStr.toStdString().c_str(), icon.toStdString().c_str());
     notify_notification_show(notify, nullptr);
     g_object_unref(G_OBJECT(notify));
+    notify_uninit();
 }
 
 void StatusNotification::connectitonFailedNotifyByName(const QString& connectionName)
 {
+    notify_init("StatusNotification");
+
     QString summary, body, bodyStr, icon;
     summary = tr("Connection Failed");
     body = tr("Failed to connect to the network \"%1\"");
@@ -77,20 +78,26 @@ void StatusNotification::connectitonFailedNotifyByName(const QString& connection
     NotifyNotification* notify = notify_notification_new(summary.toStdString().c_str(), bodyStr.toStdString().c_str(), icon.toStdString().c_str());
     notify_notification_show(notify, nullptr);
     g_object_unref(G_OBJECT(notify));
+    notify_uninit();
 }
 
-void StatusNotification::connectitonFailedNotifyByReason(const QString &reason)
+void StatusNotification::connectitonFailedNotifyByReason(const QString& reason)
 {
-    QString summary,icon;
+    notify_init("StatusNotification");
+
+    QString summary, icon;
     summary = tr("Connection Failed");
 
     NotifyNotification* notify = notify_notification_new(summary.toStdString().c_str(), reason.toStdString().c_str(), icon.toStdString().c_str());
     notify_notification_show(notify, nullptr);
     g_object_unref(G_OBJECT(notify));
+    notify_uninit();
 }
 
 void StatusNotification::ActiveConnectionActivatedNotify(NetworkConnectionInfo connectionInfo)
 {
+    notify_init("StatusNotification");
+
     KLOG_DEBUG() << "ActiveConnectionStateNotify";
     QString id = connectionInfo.id;
     QString ssid = connectionInfo.wirelessInfo.ssid;
@@ -101,15 +108,6 @@ void StatusNotification::ActiveConnectionActivatedNotify(NetworkConnectionInfo c
     if (connectionInfo.isWireless)
     {
         bodyStr = body.replace("the", "WIFI").arg(ssid);
-        //        int signal = connectionInfo.wirelessInfo.signalStrength;
-        //        if (0 <= signal && signal < 25)
-        //            icon = "/home/lq/git/kiran-cpanel-network/resources/kcp-network-images/wireless-1.svg";
-        //        else if (25 <= signal && signal < 50)
-        //            icon = "/home/lq/git/kiran-cpanel-network/resources/kcp-network-images/wireless-2.svg";
-        //        else if (50 <= signal && signal < 75)
-        //            icon = "/home/lq/git/kiran-cpanel-network/resources/kcp-network-images/wireless-3.svg";
-        //        else if (75 <= signal && signal <= 100)
-        //            icon = "/home/lq/git/kiran-cpanel-network/resources/kcp-network-images/wireless-4.svg";
     }
     else
     {
@@ -120,11 +118,14 @@ void StatusNotification::ActiveConnectionActivatedNotify(NetworkConnectionInfo c
     NotifyNotification* notify = notify_notification_new(summary.toStdString().c_str(), bodyStr.toStdString().c_str(), icon.toStdString().c_str());
     notify_notification_show(notify, nullptr);
     g_object_unref(G_OBJECT(notify));
+    notify_uninit();
 }
 
 // xxx:deactivated时的通知待优化
 void StatusNotification::ActiveConnectionDeactivatedNotify(const QString& connectionName)
 {
+    notify_init("StatusNotification");
+
     QString summary, body, bodyStr, icon;
     summary = tr("Connection deactivated");
     body = tr("You have now disconnected the network \"%1\"");
@@ -134,10 +135,13 @@ void StatusNotification::ActiveConnectionDeactivatedNotify(const QString& connec
     NotifyNotification* notify = notify_notification_new(summary.toStdString().c_str(), bodyStr.toStdString().c_str(), icon.toStdString().c_str());
     notify_notification_show(notify, nullptr);
     g_object_unref(G_OBJECT(notify));
+    notify_uninit();
 }
 
 void StatusNotification::connectionDeleteNotify(const QString& connectionName)
 {
+    notify_init("StatusNotification");
+
     QString summary, body, bodyStr, icon;
     summary = tr("Connection deleted");
     body = tr("The connection has been deleted \"%1\"");
@@ -146,6 +150,7 @@ void StatusNotification::connectionDeleteNotify(const QString& connectionName)
     NotifyNotification* notify = notify_notification_new(summary.toStdString().c_str(), bodyStr.toStdString().c_str(), icon.toStdString().c_str());
     notify_notification_show(notify, nullptr);
     g_object_unref(G_OBJECT(notify));
+    notify_uninit();
 }
 
 void StatusNotification::deviceStateNotify(Device::State newstate)
@@ -154,5 +159,4 @@ void StatusNotification::deviceStateNotify(Device::State newstate)
 
 void StatusNotification::deviceStateChangeReasonNotify(NetworkManager::Device::StateChangeReason reason)
 {
-
 }

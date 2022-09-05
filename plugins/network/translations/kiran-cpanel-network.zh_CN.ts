@@ -25,41 +25,56 @@
         <translation type="vanished">无线连接</translation>
     </message>
     <message>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="67"/>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="151"/>
+        <location filename="../src/plugin/cpanel-network-widget.cpp" line="66"/>
+        <location filename="../src/plugin/cpanel-network-widget.cpp" line="162"/>
         <source>Wired Network %1</source>
         <translation>有线网络 %1</translation>
     </message>
     <message>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="72"/>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="159"/>
+        <location filename="../src/plugin/cpanel-network-widget.cpp" line="71"/>
+        <location filename="../src/plugin/cpanel-network-widget.cpp" line="170"/>
         <source>Wired Network</source>
         <translation>有线网络</translation>
     </message>
     <message>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="92"/>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="167"/>
+        <location filename="../src/plugin/cpanel-network-widget.cpp" line="94"/>
+        <location filename="../src/plugin/cpanel-network-widget.cpp" line="178"/>
         <source>Wireless Network %1</source>
         <translation>无线网络  %1</translation>
     </message>
     <message>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="97"/>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="175"/>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="319"/>
+        <location filename="../src/plugin/cpanel-network-widget.cpp" line="99"/>
+        <location filename="../src/plugin/cpanel-network-widget.cpp" line="186"/>
+        <location filename="../src/plugin/cpanel-network-widget.cpp" line="341"/>
         <source>Wireless Network</source>
         <translation>无线网络</translation>
     </message>
     <message>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="110"/>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="181"/>
+        <location filename="../src/plugin/cpanel-network-widget.cpp" line="119"/>
+        <location filename="../src/plugin/cpanel-network-widget.cpp" line="192"/>
         <source>VPN</source>
         <translation>VPN</translation>
     </message>
     <message>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="117"/>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="182"/>
+        <location filename="../src/plugin/cpanel-network-widget.cpp" line="127"/>
+        <location filename="../src/plugin/cpanel-network-widget.cpp" line="193"/>
         <source>Network Details</source>
         <translation>网络详情</translation>
+    </message>
+    <message>
+        <location filename="../src/plugin/cpanel-network-widget.cpp" line="292"/>
+        <source>Connected</source>
+        <translation>已连接</translation>
+    </message>
+    <message>
+        <location filename="../src/plugin/cpanel-network-widget.cpp" line="296"/>
+        <source>Unavailable</source>
+        <translation>已禁用</translation>
+    </message>
+    <message>
+        <location filename="../src/plugin/cpanel-network-widget.cpp" line="300"/>
+        <source>Disconnected</source>
+        <translation>已断开</translation>
     </message>
 </context>
 <context>
@@ -161,8 +176,8 @@
         <translation>请输入网络名称</translation>
     </message>
     <message>
-        <location filename="../src/connection-lists.cpp" line="449"/>
-        <location filename="../src/connection-lists.cpp" line="457"/>
+        <location filename="../src/connection-lists.cpp" line="456"/>
+        <location filename="../src/connection-lists.cpp" line="464"/>
         <source>Other WiFi networks</source>
         <translation>其它WIFI网络</translation>
     </message>
@@ -180,37 +195,42 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/plugin/setting-widget/connection-name-widget.ui" line="85"/>
+        <location filename="../src/plugin/setting-widget/connection-name-widget.ui" line="77"/>
+        <source>EditConnectionName</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/plugin/setting-widget/connection-name-widget.ui" line="88"/>
         <source>Auto Connection</source>
         <translation>自动连接</translation>
     </message>
     <message>
-        <location filename="../src/plugin/setting-widget/connection-name-widget.cpp" line="41"/>
+        <location filename="../src/plugin/setting-widget/connection-name-widget.cpp" line="42"/>
         <source>Required</source>
         <translation>必填</translation>
     </message>
     <message>
-        <location filename="../src/plugin/setting-widget/connection-name-widget.cpp" line="77"/>
+        <location filename="../src/plugin/setting-widget/connection-name-widget.cpp" line="78"/>
         <source>Wired Connection %1</source>
         <translation>有线网络%1</translation>
     </message>
     <message>
-        <location filename="../src/plugin/setting-widget/connection-name-widget.cpp" line="116"/>
+        <location filename="../src/plugin/setting-widget/connection-name-widget.cpp" line="117"/>
         <source>VPN L2TP %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/plugin/setting-widget/connection-name-widget.cpp" line="119"/>
+        <location filename="../src/plugin/setting-widget/connection-name-widget.cpp" line="120"/>
         <source>VPN PPTP %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/plugin/setting-widget/connection-name-widget.cpp" line="180"/>
+        <location filename="../src/plugin/setting-widget/connection-name-widget.cpp" line="181"/>
         <source>Connection name can not be empty</source>
         <translation>网络名称不能为空</translation>
     </message>
     <message>
-        <location filename="../src/plugin/setting-widget/connection-name-widget.cpp" line="181"/>
+        <location filename="../src/plugin/setting-widget/connection-name-widget.cpp" line="182"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>
@@ -225,6 +245,11 @@
     <message>
         <location filename="../src/connection-show-page.ui" line="62"/>
         <source>TextLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/connection-show-page.ui" line="118"/>
+        <source>ButtonCreateConnection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -249,6 +274,11 @@
         <source>Please select a connection</source>
         <translation>请选择连接</translation>
     </message>
+    <message>
+        <location filename="../src/plugin/details-page.ui" line="140"/>
+        <source>ComboBoxDetailsSelectConnection</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DisconnectAndDeleteButton</name>
@@ -259,16 +289,31 @@
     </message>
     <message>
         <location filename="../src/plugin/setting-widget/disconnect-and-delete-button.ui" line="35"/>
+        <source>ButtonDisconnect</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/plugin/setting-widget/disconnect-and-delete-button.ui" line="38"/>
         <source>Disconnect</source>
         <translation>断开</translation>
     </message>
     <message>
-        <location filename="../src/plugin/setting-widget/disconnect-and-delete-button.ui" line="42"/>
+        <location filename="../src/plugin/setting-widget/disconnect-and-delete-button.ui" line="45"/>
+        <source>ButtonDelete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/plugin/setting-widget/disconnect-and-delete-button.ui" line="48"/>
         <source>Delete</source>
         <translation>删除</translation>
     </message>
     <message>
-        <location filename="../src/plugin/setting-widget/disconnect-and-delete-button.ui" line="49"/>
+        <location filename="../src/plugin/setting-widget/disconnect-and-delete-button.ui" line="55"/>
+        <source>ButtonIgnore</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/plugin/setting-widget/disconnect-and-delete-button.ui" line="58"/>
         <source>Ignore</source>
         <translation>忽略</translation>
     </message>
@@ -345,27 +390,42 @@
         <translation>设备MAC地址</translation>
     </message>
     <message>
-        <location filename="../src/plugin/setting-widget/ethernet-widget.ui" line="73"/>
+        <location filename="../src/plugin/setting-widget/ethernet-widget.ui" line="59"/>
+        <source>ComboBoxDeviceMac</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/plugin/setting-widget/ethernet-widget.ui" line="76"/>
         <source>Ethernet Clone MAC Address</source>
         <translation>克隆MAC地址</translation>
     </message>
     <message>
-        <location filename="../src/plugin/setting-widget/ethernet-widget.ui" line="111"/>
+        <location filename="../src/plugin/setting-widget/ethernet-widget.ui" line="95"/>
+        <source>EditDeviceMac</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/plugin/setting-widget/ethernet-widget.ui" line="117"/>
         <source>Custom MTU</source>
         <translation>自定义MTU</translation>
     </message>
     <message>
-        <location filename="../src/plugin/setting-widget/ethernet-widget.cpp" line="44"/>
+        <location filename="../src/plugin/setting-widget/ethernet-widget.ui" line="151"/>
+        <source>SpinBoxCustomMTU</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/plugin/setting-widget/ethernet-widget.cpp" line="45"/>
         <source>No device specified</source>
         <translation>不指定设备</translation>
     </message>
     <message>
-        <location filename="../src/plugin/setting-widget/ethernet-widget.cpp" line="139"/>
+        <location filename="../src/plugin/setting-widget/ethernet-widget.cpp" line="140"/>
         <source>Clone Mac invalid</source>
         <translation>无效的克隆MAC地址</translation>
     </message>
     <message>
-        <location filename="../src/plugin/setting-widget/ethernet-widget.cpp" line="140"/>
+        <location filename="../src/plugin/setting-widget/ethernet-widget.cpp" line="141"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>
@@ -383,29 +443,59 @@
         <translation>IPV4方法</translation>
     </message>
     <message>
-        <location filename="../src/plugin/setting-widget/ipv4-widget.ui" line="85"/>
+        <location filename="../src/plugin/setting-widget/ipv4-widget.ui" line="56"/>
+        <source>ComboBoxIpv4Method</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/plugin/setting-widget/ipv4-widget.ui" line="88"/>
         <source>IP Address</source>
         <translation>IP地址</translation>
     </message>
     <message>
-        <location filename="../src/plugin/setting-widget/ipv4-widget.ui" line="115"/>
+        <location filename="../src/plugin/setting-widget/ipv4-widget.ui" line="107"/>
+        <source>EditIpv4Address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/plugin/setting-widget/ipv4-widget.ui" line="121"/>
         <source>Net Mask</source>
         <translation>子网掩码</translation>
     </message>
     <message>
-        <location filename="../src/plugin/setting-widget/ipv4-widget.ui" line="145"/>
+        <location filename="../src/plugin/setting-widget/ipv4-widget.ui" line="140"/>
+        <source>EditIpv4Netmask</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/plugin/setting-widget/ipv4-widget.ui" line="154"/>
         <source>Gateway</source>
         <translation>网关</translation>
     </message>
     <message>
-        <location filename="../src/plugin/setting-widget/ipv4-widget.ui" line="178"/>
+        <location filename="../src/plugin/setting-widget/ipv4-widget.ui" line="173"/>
+        <source>EditIpv4Gateway</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/plugin/setting-widget/ipv4-widget.ui" line="190"/>
         <source>Preferred DNS</source>
         <translation>首选DNS</translation>
     </message>
     <message>
-        <location filename="../src/plugin/setting-widget/ipv4-widget.ui" line="208"/>
+        <location filename="../src/plugin/setting-widget/ipv4-widget.ui" line="209"/>
+        <source>EditIpv4PreferredDNS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/plugin/setting-widget/ipv4-widget.ui" line="223"/>
         <source>Alternate DNS</source>
         <translation>备选DNS</translation>
+    </message>
+    <message>
+        <location filename="../src/plugin/setting-widget/ipv4-widget.ui" line="242"/>
+        <source>EditIpv4AlternateDNS</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/plugin/setting-widget/ipv4-widget.cpp" line="36"/>
@@ -483,29 +573,59 @@
         <translation>IPV6方法</translation>
     </message>
     <message>
-        <location filename="../src/plugin/setting-widget/ipv6-widget.ui" line="88"/>
+        <location filename="../src/plugin/setting-widget/ipv6-widget.ui" line="59"/>
+        <source>ComboBoxIpv6Method</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/plugin/setting-widget/ipv6-widget.ui" line="91"/>
         <source>IP Address</source>
         <translation>IP地址</translation>
     </message>
     <message>
-        <location filename="../src/plugin/setting-widget/ipv6-widget.ui" line="118"/>
+        <location filename="../src/plugin/setting-widget/ipv6-widget.ui" line="110"/>
+        <source>EditIpv6Address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/plugin/setting-widget/ipv6-widget.ui" line="124"/>
         <source>Prefix</source>
         <translation>前缀</translation>
     </message>
     <message>
-        <location filename="../src/plugin/setting-widget/ipv6-widget.ui" line="148"/>
+        <location filename="../src/plugin/setting-widget/ipv6-widget.ui" line="143"/>
+        <source>SpinBoxIpv6Prefix</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/plugin/setting-widget/ipv6-widget.ui" line="157"/>
         <source>Gateway</source>
         <translation>网关</translation>
     </message>
     <message>
-        <location filename="../src/plugin/setting-widget/ipv6-widget.ui" line="181"/>
+        <location filename="../src/plugin/setting-widget/ipv6-widget.ui" line="176"/>
+        <source>EditIpv6Gateway</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/plugin/setting-widget/ipv6-widget.ui" line="193"/>
         <source>Preferred DNS</source>
         <translation>首选DNS</translation>
     </message>
     <message>
-        <location filename="../src/plugin/setting-widget/ipv6-widget.ui" line="211"/>
+        <location filename="../src/plugin/setting-widget/ipv6-widget.ui" line="212"/>
+        <source>EditIpv6PreferredDNS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/plugin/setting-widget/ipv6-widget.ui" line="226"/>
         <source>Alternate DNS</source>
         <translation>备选DNS</translation>
+    </message>
+    <message>
+        <location filename="../src/plugin/setting-widget/ipv6-widget.ui" line="245"/>
+        <source>EditIpv6AlternateDNS</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/plugin/setting-widget/ipv6-widget.cpp" line="35"/>
@@ -572,7 +692,7 @@
 <context>
     <name>NetworkTray</name>
     <message>
-        <location filename="../src/tray/network-tray.cpp" line="164"/>
+        <location filename="../src/tray/network-tray.cpp" line="166"/>
         <source>Network settings</source>
         <translation>网络设置</translation>
     </message>
@@ -580,11 +700,11 @@
 <context>
     <name>StatusNotification</name>
     <message>
-        <location filename="../src/status-notification.cpp" line="36"/>
-        <location filename="../src/status-notification.cpp" line="47"/>
-        <location filename="../src/status-notification.cpp" line="61"/>
-        <location filename="../src/status-notification.cpp" line="73"/>
-        <location filename="../src/status-notification.cpp" line="85"/>
+        <location filename="../src/status-notification.cpp" line="28"/>
+        <location filename="../src/status-notification.cpp" line="42"/>
+        <location filename="../src/status-notification.cpp" line="59"/>
+        <location filename="../src/status-notification.cpp" line="74"/>
+        <location filename="../src/status-notification.cpp" line="89"/>
         <source>Connection Failed</source>
         <translation>连接失败</translation>
     </message>
@@ -593,48 +713,48 @@
         <translation type="vanished">无法连接到网络</translation>
     </message>
     <message>
-        <location filename="../src/status-notification.cpp" line="37"/>
+        <location filename="../src/status-notification.cpp" line="29"/>
         <source>the network not found</source>
         <translation>未找到网络</translation>
     </message>
     <message>
-        <location filename="../src/status-notification.cpp" line="48"/>
+        <location filename="../src/status-notification.cpp" line="43"/>
         <source>The hidden network &quot;%1&quot; to be connected has been detected and exists in the network list</source>
         <translation>要连接的隐藏网络“%1”已经被探测到，并存在于网络列表中</translation>
     </message>
     <message>
-        <location filename="../src/status-notification.cpp" line="62"/>
-        <location filename="../src/status-notification.cpp" line="74"/>
+        <location filename="../src/status-notification.cpp" line="60"/>
+        <location filename="../src/status-notification.cpp" line="75"/>
         <source>Failed to connect to the network &quot;%1&quot;</source>
         <translation>无法连接到网络 &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../src/status-notification.cpp" line="99"/>
+        <location filename="../src/status-notification.cpp" line="106"/>
         <source>Connection activated</source>
         <translation>网络已连接</translation>
     </message>
     <message>
-        <location filename="../src/status-notification.cpp" line="100"/>
+        <location filename="../src/status-notification.cpp" line="107"/>
         <source>You are now connected to the network &quot;%1&quot;</source>
         <translation>您已连接到网络 &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../src/status-notification.cpp" line="129"/>
+        <location filename="../src/status-notification.cpp" line="130"/>
         <source>Connection deactivated</source>
         <translation>连接断开</translation>
     </message>
     <message>
-        <location filename="../src/status-notification.cpp" line="130"/>
+        <location filename="../src/status-notification.cpp" line="131"/>
         <source>You have now disconnected the network &quot;%1&quot;</source>
         <translation>您已断开网络连接 &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../src/status-notification.cpp" line="142"/>
+        <location filename="../src/status-notification.cpp" line="146"/>
         <source>Connection deleted</source>
         <translation>连接已删除</translation>
     </message>
     <message>
-        <location filename="../src/status-notification.cpp" line="143"/>
+        <location filename="../src/status-notification.cpp" line="147"/>
         <source>The connection has been deleted &quot;%1&quot;</source>
         <translation>已删除连接 &quot;%1&quot;</translation>
     </message>
@@ -702,22 +822,22 @@
         <translation>连接</translation>
     </message>
     <message>
-        <location filename="../src/tray-itemwidget.cpp" line="143"/>
+        <location filename="../src/tray-itemwidget.cpp" line="144"/>
         <source>Connected</source>
         <translation>已连接</translation>
     </message>
     <message>
-        <location filename="../src/tray-itemwidget.cpp" line="154"/>
+        <location filename="../src/tray-itemwidget.cpp" line="155"/>
         <source>Unconnected</source>
         <translation>未连接</translation>
     </message>
     <message>
-        <location filename="../src/tray-itemwidget.cpp" line="188"/>
+        <location filename="../src/tray-itemwidget.cpp" line="189"/>
         <source>Please input password</source>
         <translation>请输入密码</translation>
     </message>
     <message>
-        <location filename="../src/tray-itemwidget.cpp" line="197"/>
+        <location filename="../src/tray-itemwidget.cpp" line="198"/>
         <source>Please input a network name</source>
         <translation>请输入网络名称</translation>
     </message>
@@ -730,7 +850,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/tray/tray-page.ui" line="98"/>
+        <location filename="../src/tray/tray-page.ui" line="95"/>
         <source>TextLabel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -763,24 +883,49 @@
         <translation>组名</translation>
     </message>
     <message>
-        <location filename="../src/plugin/setting-widget/vpn/vpn-ipsec.ui" line="118"/>
+        <location filename="../src/plugin/setting-widget/vpn/vpn-ipsec.ui" line="107"/>
+        <source>EditGroupName</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/plugin/setting-widget/vpn/vpn-ipsec.ui" line="121"/>
         <source>Group ID</source>
         <translation>组ID</translation>
     </message>
     <message>
-        <location filename="../src/plugin/setting-widget/vpn/vpn-ipsec.ui" line="148"/>
+        <location filename="../src/plugin/setting-widget/vpn/vpn-ipsec.ui" line="140"/>
+        <source>EditGroupId</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/plugin/setting-widget/vpn/vpn-ipsec.ui" line="154"/>
         <source>Pre-Shared Key</source>
         <translation>预共享密钥</translation>
     </message>
     <message>
-        <location filename="../src/plugin/setting-widget/vpn/vpn-ipsec.ui" line="178"/>
+        <location filename="../src/plugin/setting-widget/vpn/vpn-ipsec.ui" line="173"/>
+        <source>EditPreSharedKey</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/plugin/setting-widget/vpn/vpn-ipsec.ui" line="187"/>
         <source>Internet Key Exchange Protocol</source>
         <translation>密钥交换协议</translation>
     </message>
     <message>
-        <location filename="../src/plugin/setting-widget/vpn/vpn-ipsec.ui" line="208"/>
+        <location filename="../src/plugin/setting-widget/vpn/vpn-ipsec.ui" line="206"/>
+        <source>EditIpsecIKE</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/plugin/setting-widget/vpn/vpn-ipsec.ui" line="220"/>
         <source>Encapsulating Security Payload</source>
         <translation>安全封装协议</translation>
+    </message>
+    <message>
+        <location filename="../src/plugin/setting-widget/vpn/vpn-ipsec.ui" line="239"/>
+        <source>EditIpsecESP</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -796,19 +941,34 @@
         <translation>IPV4方法</translation>
     </message>
     <message>
-        <location filename="../src/plugin/setting-widget/vpn/vpn-ipvx.ui" line="64"/>
+        <location filename="../src/plugin/setting-widget/vpn/vpn-ipvx.ui" line="56"/>
+        <source>ComboBoxVPNIpv4Method</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/plugin/setting-widget/vpn/vpn-ipvx.ui" line="67"/>
         <source>Only applied in corresponding resources</source>
         <translation>仅用于相对应的网络上的资源</translation>
     </message>
     <message>
-        <location filename="../src/plugin/setting-widget/vpn/vpn-ipvx.ui" line="94"/>
+        <location filename="../src/plugin/setting-widget/vpn/vpn-ipvx.ui" line="97"/>
         <source>Preferred DNS</source>
         <translation>首选DNS</translation>
     </message>
     <message>
-        <location filename="../src/plugin/setting-widget/vpn/vpn-ipvx.ui" line="127"/>
+        <location filename="../src/plugin/setting-widget/vpn/vpn-ipvx.ui" line="116"/>
+        <source>EditVPNIpv4PreferredDNS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/plugin/setting-widget/vpn/vpn-ipvx.ui" line="133"/>
         <source>Alternate DNS</source>
         <translation>备选DNS</translation>
+    </message>
+    <message>
+        <location filename="../src/plugin/setting-widget/vpn/vpn-ipvx.ui" line="152"/>
+        <source>EditIpv4AlternateDNS</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/plugin/setting-widget/vpn/vpn-ipvx.cpp" line="36"/>
@@ -833,21 +993,22 @@
     <name>VpnManager</name>
     <message>
         <location filename="../src/plugin/manager/vpn-manager.ui" line="14"/>
+        <location filename="../src/plugin/manager/vpn-manager.ui" line="17"/>
         <source>VpnManager</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/plugin/manager/vpn-manager.ui" line="130"/>
+        <location filename="../src/plugin/manager/vpn-manager.ui" line="133"/>
         <source>VPN type</source>
         <translation>VPN类型</translation>
     </message>
     <message>
-        <location filename="../src/plugin/manager/vpn-manager.ui" line="241"/>
+        <location filename="../src/plugin/manager/vpn-manager.ui" line="244"/>
         <source>Save</source>
         <translation>保存</translation>
     </message>
     <message>
-        <location filename="../src/plugin/manager/vpn-manager.ui" line="282"/>
+        <location filename="../src/plugin/manager/vpn-manager.ui" line="285"/>
         <source>Return</source>
         <translation>返回</translation>
     </message>
@@ -890,77 +1051,82 @@
         <translation>安全</translation>
     </message>
     <message>
-        <location filename="../src/plugin/setting-widget/vpn/vpn-ppp.ui" line="118"/>
+        <location filename="../src/plugin/setting-widget/vpn/vpn-ppp.ui" line="110"/>
+        <source>ComboBoxMppeSecurity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/plugin/setting-widget/vpn/vpn-ppp.ui" line="121"/>
         <source>Stateful MPPE</source>
         <translation>使用带状态的MPPE</translation>
     </message>
     <message>
-        <location filename="../src/plugin/setting-widget/vpn/vpn-ppp.cpp" line="42"/>
+        <location filename="../src/plugin/setting-widget/vpn/vpn-ppp.cpp" line="45"/>
         <source>All available (default)</source>
         <translation>都可用（默认）</translation>
     </message>
     <message>
-        <location filename="../src/plugin/setting-widget/vpn/vpn-ppp.cpp" line="43"/>
+        <location filename="../src/plugin/setting-widget/vpn/vpn-ppp.cpp" line="46"/>
         <source>40-bit (less secure)</source>
         <translation>40位（较安全）</translation>
     </message>
     <message>
-        <location filename="../src/plugin/setting-widget/vpn/vpn-ppp.cpp" line="44"/>
+        <location filename="../src/plugin/setting-widget/vpn/vpn-ppp.cpp" line="47"/>
         <source>128-bit (most secure)</source>
         <translation>128位（最安全）</translation>
     </message>
     <message>
-        <location filename="../src/plugin/setting-widget/vpn/vpn-ppp.cpp" line="87"/>
+        <location filename="../src/plugin/setting-widget/vpn/vpn-ppp.cpp" line="91"/>
         <source>Refuse EAP Authentication</source>
         <translation>拒绝EAP认证</translation>
     </message>
     <message>
-        <location filename="../src/plugin/setting-widget/vpn/vpn-ppp.cpp" line="88"/>
+        <location filename="../src/plugin/setting-widget/vpn/vpn-ppp.cpp" line="92"/>
         <source>Refuse PAP Authentication</source>
         <translation>拒绝PAP认证</translation>
     </message>
     <message>
-        <location filename="../src/plugin/setting-widget/vpn/vpn-ppp.cpp" line="89"/>
+        <location filename="../src/plugin/setting-widget/vpn/vpn-ppp.cpp" line="93"/>
         <source>Refuse CHAP Authentication</source>
         <translation>拒绝CHAP认证</translation>
     </message>
     <message>
-        <location filename="../src/plugin/setting-widget/vpn/vpn-ppp.cpp" line="90"/>
+        <location filename="../src/plugin/setting-widget/vpn/vpn-ppp.cpp" line="94"/>
         <source>Refuse MSCHAP Authentication</source>
         <translation>拒绝MSCHAP认证</translation>
     </message>
     <message>
-        <location filename="../src/plugin/setting-widget/vpn/vpn-ppp.cpp" line="91"/>
+        <location filename="../src/plugin/setting-widget/vpn/vpn-ppp.cpp" line="95"/>
         <source>Refuse MSCHAPv2 Authentication</source>
         <translation>拒绝MSCHAPv2认证</translation>
     </message>
     <message>
-        <location filename="../src/plugin/setting-widget/vpn/vpn-ppp.cpp" line="92"/>
+        <location filename="../src/plugin/setting-widget/vpn/vpn-ppp.cpp" line="96"/>
         <source>No BSD Data Compression</source>
         <translation>无BSD数据压缩</translation>
     </message>
     <message>
-        <location filename="../src/plugin/setting-widget/vpn/vpn-ppp.cpp" line="93"/>
+        <location filename="../src/plugin/setting-widget/vpn/vpn-ppp.cpp" line="97"/>
         <source>No Deflate Data Compression</source>
         <translation>无Deflate数据压缩</translation>
     </message>
     <message>
-        <location filename="../src/plugin/setting-widget/vpn/vpn-ppp.cpp" line="94"/>
+        <location filename="../src/plugin/setting-widget/vpn/vpn-ppp.cpp" line="98"/>
         <source>No TCP Header Compression</source>
         <translation>无TCP头压缩</translation>
     </message>
     <message>
-        <location filename="../src/plugin/setting-widget/vpn/vpn-ppp.cpp" line="95"/>
+        <location filename="../src/plugin/setting-widget/vpn/vpn-ppp.cpp" line="99"/>
         <source>No Protocol Field Compression</source>
         <translation>无协议字段压缩</translation>
     </message>
     <message>
-        <location filename="../src/plugin/setting-widget/vpn/vpn-ppp.cpp" line="96"/>
+        <location filename="../src/plugin/setting-widget/vpn/vpn-ppp.cpp" line="100"/>
         <source>No Address/Control Compression</source>
         <translation>无地址/控制压缩</translation>
     </message>
     <message>
-        <location filename="../src/plugin/setting-widget/vpn/vpn-ppp.cpp" line="97"/>
+        <location filename="../src/plugin/setting-widget/vpn/vpn-ppp.cpp" line="101"/>
         <source>Send PPP Echo Packets</source>
         <translation>发送PPP回响包</translation>
     </message>
@@ -991,29 +1157,59 @@
         <translation>网关</translation>
     </message>
     <message>
-        <location filename="../src/plugin/setting-widget/vpn/vpn-widget.ui" line="82"/>
+        <location filename="../src/plugin/setting-widget/vpn/vpn-widget.ui" line="65"/>
+        <source>EditVPNGateway</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/plugin/setting-widget/vpn/vpn-widget.ui" line="85"/>
         <source>User Name</source>
         <translation>用户名</translation>
     </message>
     <message>
-        <location filename="../src/plugin/setting-widget/vpn/vpn-widget.ui" line="112"/>
+        <location filename="../src/plugin/setting-widget/vpn/vpn-widget.ui" line="104"/>
+        <source>EditVPNUserName</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/plugin/setting-widget/vpn/vpn-widget.ui" line="118"/>
         <source>Password Options</source>
         <translation>密码选项</translation>
     </message>
     <message>
-        <location filename="../src/plugin/setting-widget/vpn/vpn-widget.ui" line="158"/>
+        <location filename="../src/plugin/setting-widget/vpn/vpn-widget.ui" line="140"/>
+        <source>ComboBoxVPNPasswordOptions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/plugin/setting-widget/vpn/vpn-widget.ui" line="167"/>
         <source>Password</source>
         <translation>密码</translation>
     </message>
     <message>
-        <location filename="../src/plugin/setting-widget/vpn/vpn-widget.ui" line="183"/>
+        <location filename="../src/plugin/setting-widget/vpn/vpn-widget.ui" line="188"/>
+        <source>EditVPNPassword</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/plugin/setting-widget/vpn/vpn-widget.ui" line="195"/>
+        <source>ButtonPasswordVisual</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/plugin/setting-widget/vpn/vpn-widget.ui" line="198"/>
         <source>PushButton</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/plugin/setting-widget/vpn/vpn-widget.ui" line="197"/>
+        <location filename="../src/plugin/setting-widget/vpn/vpn-widget.ui" line="212"/>
         <source>NT Domain</source>
         <translation>NT域</translation>
+    </message>
+    <message>
+        <location filename="../src/plugin/setting-widget/vpn/vpn-widget.ui" line="231"/>
+        <source>EditNTDomain</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/plugin/setting-widget/vpn/vpn-widget.cpp" line="27"/>
@@ -1075,11 +1271,21 @@
     </message>
     <message>
         <location filename="../src/plugin/manager/wired-manager.ui" line="152"/>
+        <source>ButtonSave</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/plugin/manager/wired-manager.ui" line="155"/>
         <source>Save</source>
         <translation>保存</translation>
     </message>
     <message>
-        <location filename="../src/plugin/manager/wired-manager.ui" line="193"/>
+        <location filename="../src/plugin/manager/wired-manager.ui" line="196"/>
+        <source>ButtonReturn</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/plugin/manager/wired-manager.ui" line="199"/>
         <source>Return</source>
         <translation>返回</translation>
     </message>
@@ -1087,6 +1293,11 @@
         <location filename="../src/plugin/manager/wired-manager.cpp" line="44"/>
         <source>Wired Network Adapter</source>
         <translation>有线网卡</translation>
+    </message>
+    <message>
+        <location filename="../src/plugin/manager/wired-manager.cpp" line="96"/>
+        <source>The carrier is pulled out</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1100,6 +1311,14 @@
         <location filename="../src/plugin/settings/wired-setting-page.cpp" line="67"/>
         <source>Network name</source>
         <translation>网络名称</translation>
+    </message>
+</context>
+<context>
+    <name>WiredTrayWidget</name>
+    <message>
+        <location filename="../src/tray/wired-tray-widget.cpp" line="129"/>
+        <source>Wired network unavailable</source>
+        <translation>有线网络不可用</translation>
     </message>
 </context>
 <context>
@@ -1120,17 +1339,17 @@
         <translation>返回</translation>
     </message>
     <message>
-        <location filename="../src/plugin/manager/wireless-manager.cpp" line="45"/>
+        <location filename="../src/plugin/manager/wireless-manager.cpp" line="46"/>
         <source>Wireless Network Adapter</source>
         <translation>无线网卡</translation>
     </message>
     <message>
-        <location filename="../src/plugin/manager/wireless-manager.cpp" line="365"/>
+        <location filename="../src/plugin/manager/wireless-manager.cpp" line="366"/>
         <source>Tips</source>
         <translation>提示</translation>
     </message>
     <message>
-        <location filename="../src/plugin/manager/wireless-manager.cpp" line="366"/>
+        <location filename="../src/plugin/manager/wireless-manager.cpp" line="367"/>
         <source>Password required to connect to %1.</source>
         <translation>连接网络 &quot;%1&quot; 需要密码</translation>
     </message>
@@ -1152,17 +1371,37 @@
         <translation>安全</translation>
     </message>
     <message>
-        <location filename="../src/plugin/setting-widget/wireless-security-widget.ui" line="89"/>
+        <location filename="../src/plugin/setting-widget/wireless-security-widget.ui" line="59"/>
+        <source>ComboBoxWirelessSecurityOption</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/plugin/setting-widget/wireless-security-widget.ui" line="92"/>
         <source>Password Options</source>
         <translation>密码选项</translation>
     </message>
     <message>
-        <location filename="../src/plugin/setting-widget/wireless-security-widget.ui" line="132"/>
+        <location filename="../src/plugin/setting-widget/wireless-security-widget.ui" line="111"/>
+        <source>ComboBoxWirelessPasswordOption</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/plugin/setting-widget/wireless-security-widget.ui" line="138"/>
         <source>Password</source>
         <translation>密码</translation>
     </message>
     <message>
-        <location filename="../src/plugin/setting-widget/wireless-security-widget.ui" line="157"/>
+        <location filename="../src/plugin/setting-widget/wireless-security-widget.ui" line="159"/>
+        <source>EditWirelessPassword</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/plugin/setting-widget/wireless-security-widget.ui" line="166"/>
+        <source>ButtonWirelessPasswordVisual</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/plugin/setting-widget/wireless-security-widget.ui" line="169"/>
         <source>PushButton</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1213,7 +1452,7 @@
 <context>
     <name>WirelessTrayWidget</name>
     <message>
-        <location filename="../src/tray/wireless-tray-widget.cpp" line="491"/>
+        <location filename="../src/tray/wireless-tray-widget.cpp" line="492"/>
         <source>the network &quot;%1&quot; not found</source>
         <translation>未找到网络 &quot;%1&quot;</translation>
     </message>
@@ -1231,14 +1470,29 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/plugin/setting-widget/wireless-widget.ui" line="73"/>
+        <location filename="../src/plugin/setting-widget/wireless-widget.ui" line="59"/>
+        <source>EditSsid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/plugin/setting-widget/wireless-widget.ui" line="76"/>
         <source>MAC Address Of Device</source>
         <translation>设备MAC地址</translation>
     </message>
     <message>
-        <location filename="../src/plugin/setting-widget/wireless-widget.ui" line="105"/>
+        <location filename="../src/plugin/setting-widget/wireless-widget.ui" line="95"/>
+        <source>ComboBoxWirelessMacAddress</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/plugin/setting-widget/wireless-widget.ui" line="111"/>
         <source>Custom MTU</source>
         <translation>自定义MTU</translation>
+    </message>
+    <message>
+        <location filename="../src/plugin/setting-widget/wireless-widget.ui" line="145"/>
+        <source>SpinBoxWirelessCustomMTU</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/plugin/setting-widget/wireless-widget.cpp" line="37"/>
@@ -1246,7 +1500,7 @@
         <translation>必填</translation>
     </message>
     <message>
-        <location filename="../src/plugin/setting-widget/wireless-widget.cpp" line="45"/>
+        <location filename="../src/plugin/setting-widget/wireless-widget.cpp" line="46"/>
         <source>No device specified</source>
         <translation>不指定设备</translation>
     </message>

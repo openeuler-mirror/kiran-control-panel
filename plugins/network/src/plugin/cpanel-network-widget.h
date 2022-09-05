@@ -28,6 +28,7 @@ class CPanelNetworkWidget;
 }
 QT_END_NAMESPACE
 
+class KiranSidebarItem;
 class CPanelNetworkWidget : public QWidget
 {
     Q_OBJECT
@@ -42,9 +43,9 @@ public:
     void getAvailableDeviceList();
     void initPage();
     void initConnect();
+    void setSidebarItemStatus(KiranSidebarItem *sidebarItem, NetworkManager::Device::State state);
 
     void reload();
-    QPixmap trayIconColorSwitch(const QString &iconPath);
 
 public slots:
     void handleDeviceAdded(const QString &devicePath);
@@ -54,6 +55,7 @@ public slots:
     void handleManagedChanged();
     void handleWirelessEnabledChanged(bool enable);
     void handleNetworkingEnabledChanged(bool enable);
+    void handleStateChanged(NetworkManager::Device::State newstate, NetworkManager::Device::State oldstate, NetworkManager::Device::StateChangeReason reason);
 
 signals:
     void subItemsChanged();
@@ -63,7 +65,7 @@ private:
     QList<NetworkManager::Device::Ptr> m_wiredDeviceList;
     QList<NetworkManager::Device::Ptr> m_wirelessDeviceList;
     QStringList m_subItemsList;
-
+    QMap<QString, KiranSidebarItem *> m_deviceToSidebarItem;
     QTimer m_Timer;
     QString m_addDevicePath;
     int m_waitCounts;

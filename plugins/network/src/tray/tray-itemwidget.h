@@ -15,8 +15,8 @@
 #ifndef KIRAN_CPANEL_NETWORK_TRAY_ITEMWIDGET_H
 #define KIRAN_CPANEL_NETWORK_TRAY_ITEMWIDGET_H
 
-#include <QWidget>
 #include <style-palette.h>
+#include <QWidget>
 QT_BEGIN_NAMESPACE
 namespace Ui
 {
@@ -71,15 +71,13 @@ public:
     void showInputSsidWidget();
     TrayItemWidgetStatus itemWidgetStatus();
 
-    QPixmap trayIconColorSwitch(const QString &iconPath);
-
 public slots:
     void handleInputText();
     QString getPassword();
-    void handleThemeChanged(Kiran::PaletteType paletteType );
+    void handleThemeChanged(Kiran::PaletteType paletteType);
 
 protected:
-    void paintEvent(QPaintEvent* event) override;
+    void paintEvent(QPaintEvent *event) override;
 
 signals:
     void sendPassword(const QString &password);

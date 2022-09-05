@@ -13,11 +13,11 @@
  */
 
 #include "wireless-widget.h"
-#include "ui_wireless-widget.h"
-#include "kiran-switch-button.h"
+#include <qt5-log-i.h>
 #include <NetworkManagerQt/Manager>
 #include <NetworkManagerQt/WirelessDevice>
-#include <qt5-log-i.h>
+#include "kiran-switch-button.h"
+#include "ui_wireless-widget.h"
 using namespace NetworkManager;
 
 WirelessWidget::WirelessWidget(QWidget *parent) : QWidget(parent), ui(new Ui::WirelessWidget)
@@ -37,11 +37,12 @@ void WirelessWidget::initUI()
     ui->ssidEdit->setPlaceholderText(tr("Required"));
     ui->ssidEdit->setEnabled(false);
     m_mtuButton = new KiranSwitchButton(this);
+    m_mtuButton->setAccessibleName(QString("ButtonWirelessMTU"));
     ui->mtuLayout->addWidget(m_mtuButton);
     ui->customMTU->setVisible(false);
     ui->customMTU->setMinimum(0);
     ui->customMTU->setMaximum(10000);
-    //UserData设为空""，为了匹配不指定设备的情况
+    // UserData设为空""，为了匹配不指定设备的情况
     ui->deviceMac->addItem(tr("No device specified"), "");
     initMacComboBox();
 }
@@ -59,7 +60,7 @@ void WirelessWidget::setWirelessSetting(const WirelessSetting::Ptr &wirelessSett
 //区分连接隐藏网络和已存在网络的Setting
 void WirelessWidget::saveSettings()
 {
-    if(m_wirelessSetting != nullptr)
+    if (m_wirelessSetting != nullptr)
     {
         QString macAddress = ui->deviceMac->currentData().toString();
         KLOG_DEBUG() << "macAddress:" << macAddress;
@@ -70,7 +71,7 @@ void WirelessWidget::saveSettings()
 
 void WirelessWidget::showSettings()
 {
-    if(m_wirelessSetting != nullptr)
+    if (m_wirelessSetting != nullptr)
     {
         QString deviceMac = m_wirelessSetting->macAddress().toHex(':').toUpper();
         quint32 mtu = m_wirelessSetting->mtu();
@@ -90,7 +91,6 @@ void WirelessWidget::showSettings()
 
 void WirelessWidget::setOtherWirelessSetting()
 {
-
 }
 
 void WirelessWidget::resetSettings()
@@ -100,7 +100,6 @@ void WirelessWidget::resetSettings()
     ui->deviceMac->setCurrentIndex(deviceMacIndex);
     ui->customMTU->setVisible(false);
 }
-
 
 void WirelessWidget::clearPtr()
 {
@@ -115,7 +114,6 @@ void WirelessWidget::handleCustomMTUChanged(bool checked)
     }
     ui->customMTU->setVisible(checked);
 }
-
 
 void WirelessWidget::initMacComboBox()
 {
@@ -136,4 +134,3 @@ void WirelessWidget::initMacComboBox()
         }
     }
 }
-

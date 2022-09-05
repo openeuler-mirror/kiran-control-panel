@@ -114,6 +114,9 @@
      </item>
      <item>
       <widget class="QPushButton" name="createConnectionButton">
+       <property name="accessibleName">
+        <string>ButtonCreateConnection</string>
+       </property>
        <property name="text">
         <string/>
        </property>

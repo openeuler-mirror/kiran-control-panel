@@ -19,6 +19,7 @@
 #include <NetworkManagerQt/Ipv4Setting>
 #include <NetworkManagerQt/Manager>
 #include <NetworkManagerQt/Settings>
+#include "kiran-tips/kiran-tips.h"
 #include "ui_wired-setting-page.h"
 
 using namespace NetworkManager;
@@ -27,6 +28,13 @@ WiredSettingPage::WiredSettingPage(QWidget *parent) : SettingPage(parent), ui(ne
 {
     ui->setupUi(this);
     initConnecton();
+    m_errorTip = new KiranTips(this);
+    m_errorTip->setAnimationEnable(true);
+    m_errorTip->setShowPosition(KiranTips::POSITION_BOTTM);
+    ui->connectionNameWidget->setErrorTips(m_errorTip);
+    ui->ipv4Widget->setErrorTips(m_errorTip);
+    ui->ipv6Widget->setErrorTips(m_errorTip);
+    ui->ethernetWidget->setErrorTips(m_errorTip);
 }
 
 WiredSettingPage::~WiredSettingPage()

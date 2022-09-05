@@ -55,6 +55,7 @@ void ConnectionShowPage::initUI()
 {
     // switchButton Checked 默认为false
     m_switchButton = new KiranSwitchButton(this);
+    m_switchButton->setAccessibleName(QString("SwitchEnableWireless"));
     initSwitchButton();
 
     ui->titleLayout->addWidget(m_switchButton);
