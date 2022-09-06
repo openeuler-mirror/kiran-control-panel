@@ -37,17 +37,26 @@ void VpnIPsec::initUI()
     ui->enableIPsecLayout->addWidget(m_enableIPsec);
     m_enableIPsec->setChecked(false);
     ui->IPsecWidget->setVisible(false);
+    ui->preSharedKey->setEchoMode(QLineEdit::Password);
+    ui->passwordVisual->setVisible(true);
 }
 
 void VpnIPsec::initConnection()
 {
-    connect(m_enableIPsec, &QAbstractButton::toggled, [=](bool checked)
+    connect(m_enableIPsec, &QAbstractButton::toggled, this, [this](bool checked)
             { ui->IPsecWidget->setVisible(checked); });
+
+    connect(ui->passwordVisual, &QPushButton::clicked, this, &VpnIPsec::enablePasswordVisual);
 }
 
 void VpnIPsec::setVpnSetting(const VpnSetting::Ptr &vpnSetting)
 {
     m_vpnSetting = vpnSetting;
+}
+
+void VpnIPsec::setConnectionPtr(const Connection::Ptr &connection)
+{
+    m_connection = connection;
 }
 
 void VpnIPsec::saveSettings()
@@ -87,9 +96,27 @@ void VpnIPsec::showSettings()
 
         ui->groupName->setText(dataMap.value("ipsec-group-name"));
         ui->groupId->setText(dataMap.value("ipsec-gateway-id"));
-        ui->preSharedKey->setText(dataMap.value("ipsec-psk"));
+        // ui->preSharedKey->setText(dataMap.value("ipsec-psk"));
         ui->ipsecIKE->setText(dataMap.value("ipsec-ike"));
         ui->ipsecESP->setText(dataMap.value("ipsec-esp"));
+
+        // XXX:调用m_connection->secrets，会触发Connection::update，有待更改
+        QDBusPendingReply<NMVariantMapMap> reply = m_connection->secrets("vpn");
+        reply.waitForFinished();
+        if (reply.isError() || !reply.isValid())
+        {
+            qDebug() << "get secrets error for connection:" << reply.error();
+        }
+        NMVariantMapMap NMVariantMap = reply.value();
+        QVariantMap variantMap = NMVariantMap.value("vpn");
+        QVariant secretsValue = variantMap.value("secrets");
+
+        auto dbusArg = secretsValue.value<QDBusArgument>();
+        KLOG_DEBUG() << dbusArg.currentType() << dbusArg.currentSignature();
+
+        NMStringMap dbusMap = qdbus_cast<NMStringMap>(dbusArg);
+        KLOG_DEBUG() << "dbusMap " << dbusMap;
+        ui->preSharedKey->setText(dbusMap.value("ipsec-psk"));
     }
     else
         resetSettings();
@@ -109,4 +136,16 @@ void VpnIPsec::resetSettings()
 void VpnIPsec::clearPtr()
 {
     m_vpnSetting.clear();
+}
+
+void VpnIPsec::enablePasswordVisual()
+{
+    if (ui->preSharedKey->echoMode() == QLineEdit::Password)
+    {
+        ui->preSharedKey->setEchoMode(QLineEdit::Normal);
+    }
+    else
+    {
+        ui->preSharedKey->setEchoMode(QLineEdit::Password);
+    }
 }

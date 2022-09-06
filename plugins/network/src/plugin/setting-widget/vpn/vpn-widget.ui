@@ -195,7 +195,7 @@
            <string>ButtonPasswordVisual</string>
           </property>
           <property name="text">
-           <string>PushButton</string>
+           <string>Show Password</string>
           </property>
          </widget>
         </item>

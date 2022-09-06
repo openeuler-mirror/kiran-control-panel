@@ -14,6 +14,7 @@
 #ifndef KIRAN_CPANEL_NETWORK_VPN_WIDGET_H
 #define KIRAN_CPANEL_NETWORK_VPN_WIDGET_H
 
+#include <NetworkManagerQt/Connection>
 #include <NetworkManagerQt/VpnSetting>
 #include <QWidget>
 QT_BEGIN_NAMESPACE
@@ -36,6 +37,7 @@ public:
     void initUI();
     void initConnection();
     void setVpnSetting(const NetworkManager::VpnSetting::Ptr &vpnSetting);
+    void setConnectionPtr(const NetworkManager::Connection::Ptr &connection);
     void setErrorTips(KiranTips *errorTips);
     bool isIpv4AddressValid(const QString &address);
 
@@ -52,6 +54,7 @@ public slots:
 private:
     Ui::VpnWidget *ui;
     NetworkManager::VpnSetting::Ptr m_vpnSetting;
+    NetworkManager::Connection::Ptr m_connection;
     NMStringMap m_dataMap;
     NMStringMap m_secretMap;
     KiranTips *m_errorTip = nullptr;
