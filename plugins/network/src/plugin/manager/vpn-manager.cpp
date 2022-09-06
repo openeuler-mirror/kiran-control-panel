@@ -91,37 +91,9 @@ void VpnManager::initConnection()
     connect(ui->l2tpSetting, &VpnL2tpSetting::returnPreviousPage, this, &VpnManager::handleReturnPreviousPage);
     connect(ui->pptpSetting, &VpnPptpSetting::returnPreviousPage, this, &VpnManager::handleReturnPreviousPage);
 
-    connect(ui->saveButton, &QPushButton::clicked, this, [this]()
-            {
-                int index = ui->vpnTypeStacked->currentIndex();
-                switch (index)
-                {
-                case VPN_TYPE_L2TP:
-                    if(ui->l2tpSetting->isInputValid())
-                    {
-                        ui->l2tpSetting->handleSaveButtonClicked(ConnectionSettings::ConnectionType::Vpn);
-                        handleReturnPreviousPage();
-                    }
-                    break;
-                case VPN_TYPE_PPTP:
-                    if(ui->pptpSetting->isInputValid())
-                    {
-                        ui->pptpSetting->handleSaveButtonClicked(ConnectionSettings::ConnectionType::Vpn);
-                        handleReturnPreviousPage();
-                    }
-                    break;
-                default:
-                    break;
-                } });
+    connect(ui->saveButton, &QPushButton::clicked, this, &VpnManager::handleSaveButtonClicked);
 
-    connect(ui->connectionShowPage, &ConnectionShowPage::connectionUpdated, this, [this](const QString &path)
-            {
-                KLOG_DEBUG() << "Connection::updated:" << path;
-                //移除后再加载进来以更新信息
-                ui->connectionShowPage->removeConnectionFromLists(path);
-                Connection::Ptr updateConnection = findConnection(path);
-                ui->connectionShowPage->addConnectionToLists(updateConnection,"");
-                handleReturnPreviousPage(); });
+    connect(ui->connectionShowPage, &ConnectionShowPage::connectionUpdated, this, &VpnManager::handleConnectionUpdated);
 
     initNotifierConnection();
 }
@@ -143,7 +115,7 @@ void VpnManager::handleRequestEditConnection(const QString &uuid, QString active
         ui->l2tpSetting->setConnectionSettings(connectionSettings);
 
         ui->l2tpSetting->initSettingPage();
-        ui->l2tpSetting->showSettingPage();
+        ui->l2tpSetting->showSettingPage(activeConnectionPath);
     }
     else if (serviceType.contains("pptp"))
     {
@@ -152,7 +124,7 @@ void VpnManager::handleRequestEditConnection(const QString &uuid, QString active
         ui->pptpSetting->setConnectionSettings(connectionSettings);
 
         ui->pptpSetting->initSettingPage();
-        ui->pptpSetting->showSettingPage();
+        ui->pptpSetting->showSettingPage(activeConnectionPath);
     }
     else
     {
@@ -164,7 +136,32 @@ void VpnManager::handleRequestEditConnection(const QString &uuid, QString active
     ui->stackedWidget->setCurrentIndex(PAGE_SETTING);
 }
 
+void VpnManager::handleSaveButtonClicked()
+{
+    int index = ui->vpnTypeStacked->currentIndex();
+    switch (index)
+    {
+    case VPN_TYPE_L2TP:
+        if (ui->l2tpSetting->isInputValid())
+        {
+            ui->l2tpSetting->handleSaveButtonClicked(ConnectionSettings::ConnectionType::Vpn);
+            handleReturnPreviousPage();
+        }
+        break;
+    case VPN_TYPE_PPTP:
+        if (ui->pptpSetting->isInputValid())
+        {
+            ui->pptpSetting->handleSaveButtonClicked(ConnectionSettings::ConnectionType::Vpn);
+            handleReturnPreviousPage();
+        }
+        break;
+    default:
+        break;
+    }
+}
+
 //考虑弹窗输入密码的情况
+// TODO: AgentOwned的作用
 void VpnManager::handleRequestActivateConnection(const QString &connectionPath, const QString &connectionParameter)
 {
     Connection::Ptr connection = findConnection(connectionPath);
@@ -173,16 +170,25 @@ void VpnManager::handleRequestActivateConnection(const QString &connectionPath, 
     NMStringMap dataMap = vpnSetting->data();
 
     int passwordFlags = dataMap.value("password-flags").toInt();
-    if (passwordFlags == Setting::SecretFlagType::None)
+    /**
+     * None - 已保存的 Save password for all users
+     * NotRequired - 不要求
+     * NotSaved - 总是询问
+     * AgentOwned - 暂时不使用，Save password for this user
+     */
+    if (passwordFlags == Setting::SecretFlagType::None || passwordFlags == Setting::SecretFlagType::AgentOwned)
     {
         activateVPNConnection(connectionPath, connectionParameter);
+        KLOG_DEBUG() << "passwordFlags None";
     }
     else if (passwordFlags == Setting::SecretFlagType::NotRequired)
     {
         activateVPNConnection(connectionPath, connectionParameter);
+        KLOG_DEBUG() << "passwordFlags NotRequired";
     }
     else if (passwordFlags == Setting::SecretFlagType::NotSaved)
     {
+        KLOG_DEBUG() << "passwordFlags NotSaved";
         TextInputDialog inputDialog;
         inputDialog.setTitle(tr("Tips"));
         QString tips = QString(tr("Password required to connect to %1.")).arg(settings->id());
@@ -246,12 +252,13 @@ void VpnManager::handleActiveConnectionAdded(const QString &activePath)
         QString uuid = vpnConnection->uuid();
         KLOG_DEBUG() << "vpn uuid:" << uuid;
         QListWidgetItem *activeItem = ui->connectionShowPage->findItemByUuid(uuid);
-        ui->connectionShowPage->updateItemActivatedPath(activeItem, activePath);
-        connect(vpnConnection.data(), &VpnConnection::stateChanged, [=](VpnConnection::State state, VpnConnection::StateChangeReason reason)
-                { handleVpnConnectionStateChanged(state, reason, activePath); });
-        //加载等待动画
-        auto item = ui->connectionShowPage->findItemByActivatedPath(activePath);
-        ui->connectionShowPage->updateItemActivatingStatus(item);
+        KLOG_DEBUG() << "-----------activeItem:" << activeItem;
+        if (activeItem != nullptr)
+        {
+            KLOG_DEBUG() << "---------vpn updateItemActivatedPath";
+            ui->connectionShowPage->updateItemActivatedPath(activeItem, activePath);
+        }
+        connect(vpnConnection.data(), &VpnConnection::stateChanged, this, &VpnManager::handleVpnConnectionStateChanged, Qt::UniqueConnection);
     }
 }
 
@@ -260,13 +267,17 @@ void VpnManager::handleActiveConnectionRemoved(const QString &activePath)
 }
 
 // TODO:若没有安装VPN插件则需要提示
-void VpnManager::handleVpnConnectionStateChanged(VpnConnection::State state, VpnConnection::StateChangeReason reason, const QString &activePath)
+void VpnManager::handleVpnConnectionStateChanged(VpnConnection::State state, VpnConnection::StateChangeReason reason)
 {
-    auto activeConnection = findActiveConnection(activePath);
-    KLOG_DEBUG() << " activeConnection->id():" << activeConnection->id();
+    // auto activeConnection = findActiveConnection(activePath);
+    // auto activeConnection = qobject_cast<ActiveConnection *>(sender());
+
+    auto activeVpnConnection = qobject_cast<VpnConnection *>(sender());
+    QString activePath = activeVpnConnection->path();
+    KLOG_DEBUG() << " activeConnection->id():" << activeVpnConnection->id();
     QString id = "";
-    if (activeConnection != nullptr)
-        id = activeConnection->id();
+    if (activeVpnConnection != nullptr)
+        id = activeVpnConnection->id();
     switch (state)
     {
     case VpnConnection::State::Unknown:
@@ -279,6 +290,7 @@ void VpnManager::handleVpnConnectionStateChanged(VpnConnection::State state, Vpn
         KLOG_DEBUG() << "VpnConnection::State::NeedAuth";
         break;
     case VpnConnection::State::Connecting:
+        handleStateActivating(activePath);
         KLOG_DEBUG() << "VpnConnection::State::Connecting";
         break;
     case VpnConnection::State::GettingIpConfig:
@@ -356,10 +368,30 @@ void VpnManager::handleVpnStateActivated(const QString &activePath)
     {
         ui->connectionShowPage->updateItemActivatedStatus(activePath);
         auto item = ui->connectionShowPage->findItemByActivatedPath(activePath);
-        NetworkConnectionInfo connectionInfo = item->data(Qt::UserRole).value<NetworkConnectionInfo>();
-        StatusNotification::ActiveConnectionActivatedNotify(connectionInfo);
+        if (item != nullptr)
+        {
+            NetworkConnectionInfo connectionInfo = item->data(Qt::UserRole).value<NetworkConnectionInfo>();
+            StatusNotification::ActiveConnectionActivatedNotify(connectionInfo);
+            ui->connectionShowPage->update();
+        }
+    }
+}
 
-        ui->connectionShowPage->update();
+void VpnManager::handleStateActivating(const QString &activatedPath)
+{
+    ActiveConnection::Ptr activatedConnection = findActiveConnection(activatedPath);
+    if (activatedConnection.isNull())
+        return;
+
+    if (activatedConnection->type() == ConnectionSettings::ConnectionType::Vpn)
+    {
+        // 加载等待动画
+        auto item = ui->connectionShowPage->findItemByActivatedPath(activatedPath);
+        KLOG_DEBUG() << "item:" << item;
+        if (item != nullptr)
+        {
+            ui->connectionShowPage->updateItemActivatingStatus(item);
+        }
     }
 }
 
@@ -392,5 +424,23 @@ void VpnManager::clearVpnSetting()
         break;
     default:
         break;
+    }
+}
+
+// TODO:更新列表逻辑需要修改
+void VpnManager::handleConnectionUpdated(const QString &path)
+{
+    KLOG_DEBUG() << "Connection::updated:" << path;
+    Connection::Ptr updateConnection = findConnection(path);
+    if (updateConnection->settings()->connectionType() == ConnectionSettings::Vpn)
+    {
+        //移除后再加载进来以更新信息
+        ui->connectionShowPage->removeConnectionFromLists(path);
+        ui->connectionShowPage->addConnectionToLists(updateConnection, "");
+        if (ui->stackedWidget->currentIndex() == PAGE_SETTING)
+        {
+        }
+        else
+            handleReturnPreviousPage();
     }
 }

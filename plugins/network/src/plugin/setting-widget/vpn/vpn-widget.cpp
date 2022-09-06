@@ -43,7 +43,7 @@ void VpnWidget::initUI()
 
     ui->passwordOptions->setFocusPolicy(Qt::NoFocus);
     ui->password->setEchoMode(QLineEdit::Password);
-    ui->passwordVisual->setVisible(false);
+    ui->passwordVisual->setVisible(true);
 }
 
 void VpnWidget::initConnection()
@@ -57,6 +57,11 @@ void VpnWidget::setVpnSetting(const VpnSetting::Ptr &vpnSetting)
     m_vpnSetting = vpnSetting;
 }
 
+void VpnWidget::setConnectionPtr(const Connection::Ptr &connection)
+{
+    m_connection = connection;
+}
+
 void VpnWidget::setErrorTips(KiranTips *errorTips)
 {
     m_errorTip = errorTips;
@@ -67,6 +72,9 @@ void VpnWidget::handlePasswordOptionsChanged(Setting::SecretFlagType secretFlagT
     switch (secretFlagType)
     {
     case Setting::SecretFlagType::None:
+        ui->passwordWidget->setVisible(true);
+        break;
+    case Setting::SecretFlagType::AgentOwned:
         ui->passwordWidget->setVisible(true);
         break;
     case Setting::SecretFlagType::NotSaved:
@@ -123,17 +131,49 @@ void VpnWidget::showSettings()
     if (m_vpnSetting != nullptr)
     {
         NMStringMap dataMap = m_vpnSetting->data();
-        NMStringMap secretMap = m_vpnSetting->secrets();
+
         ui->gateway->setText(dataMap.value("gateway"));
         ui->userName->setText(dataMap.value("user"));
-
         KLOG_DEBUG() << "password-flags:" << dataMap.value("password-flags");
         int index = ui->passwordOptions->findData(dataMap.value("password-flags"));
-        ui->passwordOptions->setCurrentIndex(index);
+        if (index == -1)
+        {
+            // 代表password-flags为Setting::SecretFlagType::AgentOwned （0x01）
+            // XXX:暂时不使用AgentOwned，统一改为None
+            if (dataMap.value("password-flags") == 1)
+            {
+                int newIndex = ui->passwordOptions->findData(Setting::SecretFlagType::None);
+                ui->passwordOptions->setCurrentIndex(newIndex);
+            }
+        }
+        else
+            ui->passwordOptions->setCurrentIndex(index);
 
-        KLOG_DEBUG() << "password:" << secretMap.value("password");
-        ui->password->setText(secretMap.value("password"));
+        // 通过m_vpnSetting->secrets()获取到的map为空
+        // NMStringMap secretMap = m_vpnSetting->secrets();
+        // KLOG_DEBUG() << "vpn secretMap:" << secretMap;
+        // KLOG_DEBUG() << "password:" << secretMap.value("password");
+        // ui->password->setText(secretMap.value("password"));
+
         ui->ntDomain->setText(dataMap.value("domain"));
+
+        // XXX:调用m_connection->secrets，会触发Connection::update，有待更改
+        QDBusPendingReply<NMVariantMapMap> reply = m_connection->secrets("vpn");
+        reply.waitForFinished();
+        if (reply.isError() || !reply.isValid())
+        {
+            qDebug() << "get secrets error for connection:" << reply.error();
+        }
+        NMVariantMapMap NMVariantMap = reply.value();
+        QVariantMap variantMap = NMVariantMap.value("vpn");
+        QVariant secretsValue = variantMap.value("secrets");
+
+        auto dbusArg = secretsValue.value<QDBusArgument>();
+        KLOG_DEBUG() << dbusArg.currentType() << dbusArg.currentSignature();
+
+        NMStringMap dbusMap = qdbus_cast<NMStringMap>(dbusArg);
+        KLOG_DEBUG() << "dbusMap " << dbusMap;
+        ui->password->setText(dbusMap.value("password"));
     }
     else
         resetSettings();

@@ -177,6 +177,7 @@ void ConnectionLists::showConnectionLists(ConnectionSettings::ConnectionType typ
 }
 
 // TODO:优化代码
+// Note:vpn connection 的devicePath目前暂时置为空
 void ConnectionLists::addConnectionToLists(Connection::Ptr ptr, const QString& devicePath)
 {
     if (ptr == nullptr)
@@ -213,7 +214,8 @@ void ConnectionLists::addConnectionToLists(Connection::Ptr ptr, const QString& d
     for (ActiveConnection::Ptr activeConnection : activeConnectionList)
     {
         QStringList deviceList = activeConnection->devices();
-        if (activeConnection->uuid() == ptr->uuid() && deviceList.contains(devicePath))
+        if (activeConnection->uuid() == ptr->uuid() &&
+            (deviceList.contains(devicePath) || devicePath.isEmpty()))
         {
             connectionInfo.activeConnectionPath = activeConnection->path();
             switch (activeConnection->state())
