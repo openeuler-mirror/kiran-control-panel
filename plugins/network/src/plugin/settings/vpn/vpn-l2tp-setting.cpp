@@ -63,6 +63,10 @@ void VpnL2tpSetting::initSpecificSettings()
     ui->vpnIPsec->setVpnSetting(m_vpnSetting);
     ui->vpnIpvx->setIpv4Setting(m_ipv4Setting);
     ui->disconnectAndDeleteWidget->setConnectionPtr(m_connection);
+
+    // XXX:暂时转入ConnectionPtr，之后优化
+    ui->vpnWidget->setConnectionPtr(m_connection);
+    ui->vpnIPsec->setConnectionPtr(m_connection);
 }
 
 void VpnL2tpSetting::showSettingPage(QString activeConnectionPath)

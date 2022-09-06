@@ -15,15 +15,15 @@
 #ifndef KIRAN_CPANEL_NETWORK_VPN_IPSEC_H
 #define KIRAN_CPANEL_NETWORK_VPN_IPSEC_H
 
-#include <QWidget>
+#include <NetworkManagerQt/Connection>
 #include <NetworkManagerQt/VpnSetting>
+#include <QWidget>
 QT_BEGIN_NAMESPACE
 namespace Ui
 {
 class VpnIPsec;
 }
 QT_END_NAMESPACE
-
 
 class KiranSwitchButton;
 class VpnIPsec : public QWidget
@@ -37,18 +37,21 @@ public:
     void initUI();
     void initConnection();
     void setVpnSetting(const NetworkManager::VpnSetting::Ptr &vpnSetting);
+    void setConnectionPtr(const NetworkManager::Connection::Ptr &connection);
 
 public slots:
     void saveSettings();
     void showSettings();
     void resetSettings();
     void clearPtr();
+    void enablePasswordVisual();
 
 private:
     Ui::VpnIPsec *ui;
     NetworkManager::VpnSetting::Ptr m_vpnSetting;
+    NetworkManager::Connection::Ptr m_connection;
     NMStringMap m_dataMap;
     KiranSwitchButton *m_enableIPsec;
 };
 
-#endif  //KIRAN_CPANEL_NETWORK_VPN_IPSEC_H
+#endif  // KIRAN_CPANEL_NETWORK_VPN_IPSEC_H
