@@ -3,15 +3,21 @@
 //
 
 #include "kiran-rounded-tray-popup.h"
+#include "kiran-rounded-window-frame.h"
+
 #include <QBoxLayout>
 #include <QGraphicsDropShadowEffect>
-#include "kiran-rounded-window-frame.h"
+#include <QEvent>
+#include <QBitmap>
+#include <QPainter>
+#include <QPainterPath>
 
 KiranRoundedTrayPopup::KiranRoundedTrayPopup(QWidget *parent)
     : QWidget(parent)
 {
     setAttribute(Qt::WA_TranslucentBackground);
     setWindowFlags(Qt::Popup | Qt::BypassWindowManagerHint);
+    setWindowFlags(Qt::BypassWindowManagerHint);
     init();
 }
 
@@ -19,9 +25,43 @@ KiranRoundedTrayPopup::~KiranRoundedTrayPopup()
 {
 }
 
+void KiranRoundedTrayPopup::updateContentMask(QWidget* widget)
+{
+    QBitmap bitMap(widget->size());
+    bitMap.fill();
+
+    QPainterPath painterPath;
+    QRectF rectf = widget->rect();
+
+    QPainter painter(&bitMap);
+    painterPath.addRoundRect(rectf,KiranRoundedWindowFrame::radius,KiranRoundedWindowFrame::radius);
+    painter.fillPath(painterPath,Qt::black);
+    painter.end();
+
+    widget->setMask(bitMap);
+}
+
+bool KiranRoundedTrayPopup::eventFilter(QObject *watched, QEvent *event)
+{
+    if( watched == m_contentWidget && event->type()==QEvent::Resize )
+    {
+        updateContentMask(m_contentWidget);
+    }
+    return QWidget::eventFilter(watched,event);
+}
+
 void KiranRoundedTrayPopup::setContentWidget(QWidget *widget)
 {
-    m_contentLayout->addWidget(widget);
+    if( m_contentWidget!=nullptr )
+    {
+        m_contentWidget->removeEventFilter(this);
+        m_contentLayout->removeWidget(m_contentWidget);
+        m_contentWidget = nullptr;
+    }
+
+    m_contentWidget = widget;
+    m_contentWidget->installEventFilter(this);
+    m_contentLayout->addWidget(m_contentWidget);
 }
 
 void KiranRoundedTrayPopup::init()
@@ -39,7 +79,7 @@ void KiranRoundedTrayPopup::init()
     auto roundedFrame = new KiranRoundedWindowFrame(this);
     m_contentLayout = new QVBoxLayout(roundedFrame);
     m_contentLayout->setSpacing(0);
-    m_contentLayout->setMargin(0);
+    m_contentLayout->setMargin(1);
 
     layout->addWidget(roundedFrame);
 }
