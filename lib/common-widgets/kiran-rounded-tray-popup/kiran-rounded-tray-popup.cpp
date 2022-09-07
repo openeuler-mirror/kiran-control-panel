@@ -17,7 +17,6 @@ KiranRoundedTrayPopup::KiranRoundedTrayPopup(QWidget *parent)
 {
     setAttribute(Qt::WA_TranslucentBackground);
     setWindowFlags(Qt::Popup | Qt::BypassWindowManagerHint);
-    setWindowFlags(Qt::BypassWindowManagerHint);
     init();
 }
 
