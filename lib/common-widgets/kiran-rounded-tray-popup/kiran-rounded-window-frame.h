@@ -14,6 +14,7 @@ public:
     explicit KiranRoundedWindowFrame(QWidget* parent = nullptr);
     ~KiranRoundedWindowFrame();
 
+    static const int radius;
 protected:
     void paintEvent(QPaintEvent* event) override;
 };
