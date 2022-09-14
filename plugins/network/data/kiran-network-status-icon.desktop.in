@@ -148,3 +148,4 @@ Keywords=KIRAN;wired;control;wireless;settings;vpn;network;
 NoDisplay=false
 OnlyShowIn=KIRAN;
 X-KIRAN-Autostart-Notify=true
+X-KIRAN-AutoRestart=true
