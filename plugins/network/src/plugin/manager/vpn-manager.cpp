@@ -55,47 +55,49 @@ void VpnManager::initUI()
 // XXX:是否使用模板提升通用性
 void VpnManager::initConnection()
 {
-    connect(ui->connectionShowPage, &ConnectionShowPage::requestCreatConnection, this, [this]()
-            {
-        //默认创建vpn类型：L2TP
-        ui->vpnTypeWidget->setVisible(true);
-        ui->vpnType->setCurrentIndex(VPN_TYPE_L2TP);
-        ui->vpnTypeStacked->setCurrentIndex(VPN_TYPE_L2TP);
-        ui->l2tpSetting->showSettingPage();
-        // ui->vpnType->setCurrentIndex(0);
-
-        QPointer<QScrollBar> scrollBar = ui->scrollArea->verticalScrollBar();
-        scrollBar->setValue(0);
-        ui->stackedWidget->setCurrentIndex(PAGE_SETTING); });
-
+    connect(ui->connectionShowPage, &ConnectionShowPage::requestCreatConnection, this, &VpnManager::handleRequestCreatConnection);
     connect(ui->connectionShowPage, &ConnectionShowPage::requestEditConnection, this, &VpnManager::handleRequestEditConnection);
     connect(ui->connectionShowPage, &ConnectionShowPage::requestActivateCurrentItemConnection, this, &VpnManager::handleRequestActivateConnection);
 
     connect(ui->vpnType, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [this](int index)
             {
-        VpnType type = ui->vpnType->currentData().value<VpnType>();
-        ui->vpnTypeStacked->setCurrentIndex(type);
-        switch (type)
-        {
-        case VPN_TYPE_L2TP:
-            ui->l2tpSetting->showSettingPage();
-            break;
-        case VPN_TYPE_PPTP:
-            ui->pptpSetting->showSettingPage();
-            break;
-        default:
-            break;
-        } });
+                VpnType type = ui->vpnType->currentData().value<VpnType>();
+                ui->vpnTypeStacked->setCurrentIndex(type);
+                switch (type)
+                {
+                case VPN_TYPE_L2TP:
+                    ui->l2tpSetting->showSettingPage();
+                    break;
+                case VPN_TYPE_PPTP:
+                    ui->pptpSetting->showSettingPage();
+                    break;
+                default:
+                    break;
+                } });
 
     connect(ui->returnButton, &QPushButton::clicked, this, &VpnManager::handleReturnPreviousPage);
+    connect(ui->saveButton, &QPushButton::clicked, this, &VpnManager::handleSaveButtonClicked);
+
     connect(ui->l2tpSetting, &VpnL2tpSetting::returnPreviousPage, this, &VpnManager::handleReturnPreviousPage);
     connect(ui->pptpSetting, &VpnPptpSetting::returnPreviousPage, this, &VpnManager::handleReturnPreviousPage);
-
-    connect(ui->saveButton, &QPushButton::clicked, this, &VpnManager::handleSaveButtonClicked);
 
     connect(ui->connectionShowPage, &ConnectionShowPage::connectionUpdated, this, &VpnManager::handleConnectionUpdated);
 
     initNotifierConnection();
+}
+
+void VpnManager::handleRequestCreatConnection()
+{
+    //默认创建vpn类型：L2TP
+    ui->vpnTypeWidget->setVisible(true);
+    ui->vpnType->setCurrentIndex(VPN_TYPE_L2TP);
+    ui->vpnTypeStacked->setCurrentIndex(VPN_TYPE_L2TP);
+    ui->l2tpSetting->showSettingPage();
+    // ui->vpnType->setCurrentIndex(0);
+
+    QPointer<QScrollBar> scrollBar = ui->scrollArea->verticalScrollBar();
+    scrollBar->setValue(0);
+    ui->stackedWidget->setCurrentIndex(PAGE_SETTING);
 }
 
 void VpnManager::handleRequestEditConnection(const QString &uuid, QString activeConnectionPath)
@@ -252,10 +254,8 @@ void VpnManager::handleActiveConnectionAdded(const QString &activePath)
         QString uuid = vpnConnection->uuid();
         KLOG_DEBUG() << "vpn uuid:" << uuid;
         QListWidgetItem *activeItem = ui->connectionShowPage->findItemByUuid(uuid);
-        KLOG_DEBUG() << "-----------activeItem:" << activeItem;
         if (activeItem != nullptr)
         {
-            KLOG_DEBUG() << "---------vpn updateItemActivatedPath";
             ui->connectionShowPage->updateItemActivatedPath(activeItem, activePath);
         }
         connect(vpnConnection.data(), &VpnConnection::stateChanged, this, &VpnManager::handleVpnConnectionStateChanged, Qt::UniqueConnection);
@@ -269,7 +269,6 @@ void VpnManager::handleActiveConnectionRemoved(const QString &activePath)
 // TODO:若没有安装VPN插件则需要提示
 void VpnManager::handleVpnConnectionStateChanged(VpnConnection::State state, VpnConnection::StateChangeReason reason)
 {
-    // auto activeConnection = findActiveConnection(activePath);
     // auto activeConnection = qobject_cast<ActiveConnection *>(sender());
 
     auto activeVpnConnection = qobject_cast<VpnConnection *>(sender());
@@ -298,7 +297,7 @@ void VpnManager::handleVpnConnectionStateChanged(VpnConnection::State state, Vpn
         break;
     case VpnConnection::State::Activated:
         KLOG_DEBUG() << "VpnConnection::State::Activated";
-        handleVpnStateActivated(activePath);
+        handleStateActivated(activePath);
         break;
     case VpnConnection::State::Failed:
         KLOG_DEBUG() << "VpnConnection::State::Failed";
@@ -359,7 +358,7 @@ void VpnManager::handleVpnConnectionStateChanged(VpnConnection::State state, Vpn
     }
 }
 
-void VpnManager::handleVpnStateActivated(const QString &activePath)
+void VpnManager::handleStateActivated(const QString &activePath)
 {
     ActiveConnection::Ptr activeConnection = findActiveConnection(activePath);
     if (activeConnection.isNull())
@@ -437,10 +436,7 @@ void VpnManager::handleConnectionUpdated(const QString &path)
         //移除后再加载进来以更新信息
         ui->connectionShowPage->removeConnectionFromLists(path);
         ui->connectionShowPage->addConnectionToLists(updateConnection, "");
-        if (ui->stackedWidget->currentIndex() == PAGE_SETTING)
-        {
-        }
-        else
+        if (ui->stackedWidget->currentIndex() != PAGE_SETTING)
             handleReturnPreviousPage();
     }
 }

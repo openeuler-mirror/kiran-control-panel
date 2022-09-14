@@ -48,24 +48,10 @@ void WiredManager::initUI()
 
 void WiredManager::initConnection()
 {
-    connect(ui->connectionShowPage, &ConnectionShowPage::requestCreatConnection, this, [this]()
-            {
-                ui->wiredSettingPage->showSettingPage();
-                QPointer<QScrollBar> scrollBar = ui->scrollArea->verticalScrollBar();
-                scrollBar->setValue(0);
-                ui->stackedWidget->setCurrentIndex(PAGE_SETTING); });
-
-    connect(ui->connectionShowPage, &ConnectionShowPage::requestEditConnection, this, [this](const QString &uuid, QString activeConnectionPath)
-            {
-                ui->wiredSettingPage->initConnectionSettings(ConnectionSettings::ConnectionType::Wired, uuid);
-                ui->wiredSettingPage->initSettingPage();
-                ui->wiredSettingPage->showSettingPage(activeConnectionPath);
-                QPointer<QScrollBar> scrollBar = ui->scrollArea->verticalScrollBar();
-                scrollBar->setValue(0);
-                ui->stackedWidget->setCurrentIndex(PAGE_SETTING); });
+    connect(ui->connectionShowPage, &ConnectionShowPage::requestCreatConnection, this, &WiredManager::handleRequestCreatConnection);
+    connect(ui->connectionShowPage, &ConnectionShowPage::requestEditConnection, this, &WiredManager::handleRequestEditConnection);
 
     connect(ui->returnButton, &QPushButton::clicked, this, &WiredManager::handleReturnPreviousPage);
-
     connect(ui->saveButton, &QPushButton::clicked, this, &WiredManager::handleSaveButtonClicked);
 
     connect(ui->wiredSettingPage, &WiredSettingPage::returnPreviousPage, this, &WiredManager::handleReturnPreviousPage);
@@ -79,6 +65,24 @@ void WiredManager::initConnection()
             this, &WiredManager::handleStateDeactivated);
 
     initNotifierConnection();
+}
+
+void WiredManager::handleRequestCreatConnection()
+{
+    ui->wiredSettingPage->showSettingPage();
+    QPointer<QScrollBar> scrollBar = ui->scrollArea->verticalScrollBar();
+    scrollBar->setValue(0);
+    ui->stackedWidget->setCurrentIndex(PAGE_SETTING);
+}
+
+void WiredManager::handleRequestEditConnection(const QString &uuid, QString activeConnectionPath)
+{
+    ui->wiredSettingPage->initConnectionSettings(ConnectionSettings::ConnectionType::Wired, uuid);
+    ui->wiredSettingPage->initSettingPage();
+    ui->wiredSettingPage->showSettingPage(activeConnectionPath);
+    QPointer<QScrollBar> scrollBar = ui->scrollArea->verticalScrollBar();
+    scrollBar->setValue(0);
+    ui->stackedWidget->setCurrentIndex(PAGE_SETTING);
 }
 
 void WiredManager::handleRequestActivateConnection(const QString &connectionPath, const QString &connectionParameter)
@@ -199,7 +203,8 @@ void WiredManager::handleConnectionUpdated(const QString &path)
         //移除后再加载进来以更新信息
         ui->connectionShowPage->removeConnectionFromLists(path);
         ui->connectionShowPage->addConnectionToLists(updateConnection, "");
-        handleReturnPreviousPage();
+        if (ui->stackedWidget->currentIndex() != PAGE_SETTING)
+            handleReturnPreviousPage();
 
         QString updateConnectionPath = updateConnection->path();
         ActiveConnection::List activeConnectionLists = activeConnections();

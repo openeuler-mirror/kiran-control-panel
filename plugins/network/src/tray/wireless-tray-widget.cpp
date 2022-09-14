@@ -71,7 +71,7 @@ void WirelessTrayWidget::initConnection()
     connect(m_connectionLists, &ConnectionLists::sendSsidToWireless, this, &WirelessTrayWidget::handleRequestConnectHiddenNetwork);
 
     connect(m_devicePtr.data(), &Device::stateChanged, this, &WirelessTrayWidget::handleDeviceStateChanged, Qt::UniqueConnection);
-    connect(m_connectionLists, &ConnectionLists::adjustedTraySize, this, &WirelessTrayWidget::adjustedTraySize);
+    connect(m_connectionLists, &ConnectionLists::sizeChanged, this, &WirelessTrayWidget::sizeChanged);
 }
 
 void WirelessTrayWidget::handleRequestConnectWirelessNetwork(const NetworkConnectionInfo &connectionInfo)

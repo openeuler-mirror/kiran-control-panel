@@ -19,7 +19,6 @@
 #include <QWidget>
 #include "manager.h"
 
-
 QT_BEGIN_NAMESPACE
 namespace Ui
 {
@@ -39,6 +38,8 @@ public:
     void initConnection();
 
 public slots:
+    void handleRequestCreatConnection();
+    void handleRequestEditConnection(const QString &uuid, QString activeConnectionPath);
     void handleRequestActivateConnection(const QString &connectionPath, const QString &connectionParameter);
 
     void handleStateDeactivated(const QString &deactivatedPath) override;

@@ -38,6 +38,7 @@ public:
 
 public slots:
     void clearVpnSetting();
+    void handleRequestCreatConnection();
     void handleRequestEditConnection(const QString &uuid, QString activeConnectionPath);
     void handleRequestActivateConnection(const QString &connectionPath, const QString &connectionParameter);
 
@@ -49,7 +50,7 @@ public slots:
     void handleActiveConnectionRemoved(const QString &activePath) override;
 
     void handleVpnConnectionStateChanged(NetworkManager::VpnConnection::State state, NetworkManager::VpnConnection::StateChangeReason reason);
-    void handleVpnStateActivated(const QString &activePath);
+    void handleStateActivated(const QString &activePath);
     void handleStateActivating(const QString &activatedPath) override;
 
     void handleVpnStateDisconnected(const QString &activePath);

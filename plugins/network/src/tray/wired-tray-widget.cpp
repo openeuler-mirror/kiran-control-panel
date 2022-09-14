@@ -20,7 +20,6 @@
 using namespace NetworkManager;
 
 WiredTrayWidget::WiredTrayWidget(const QString &devicePath, QWidget *parent) : TrayWidget(parent),
-                                                                               m_connectionLists(nullptr),
                                                                                m_unavailableWidget(nullptr)
 {
     m_devicePath = devicePath;
@@ -45,25 +44,18 @@ void WiredTrayWidget::init()
 
 void WiredTrayWidget::initConnection()
 {
-    connect(m_connectionLists, &ConnectionLists::connectionUpdated, this, [this](const QString &path)
-            {
-        m_connectionLists->removeConnectionFromLists(path);
-        Connection::Ptr updateConnection = findConnection(path);
-        m_connectionLists->addConnectionToLists(updateConnection,""); });
-
-    connect(m_connectionLists, &ConnectionLists::trayRequestConnect, this, &WiredTrayWidget::handleRequestActivateConnection);
-    connect(m_connectionLists, &ConnectionLists::trayRequestDisconnect, this, &WiredTrayWidget::handleRequestDisconnect);
-    connect(m_connectionLists, &ConnectionLists::trayRequestCancel, this, &WiredTrayWidget::handleRequestCancel);
-    connect(m_connectionLists, &ConnectionLists::adjustedTraySize, this, &WiredTrayWidget::adjustedTraySize);
+    connect(m_connectionLists, &ConnectionLists::connectionUpdated, this, &WiredTrayWidget::handleConnectionUpdated, Qt::UniqueConnection);
+    connect(m_connectionLists, &ConnectionLists::trayRequestConnect, this, &WiredTrayWidget::handleRequestActivateConnection, Qt::UniqueConnection);
+    connect(m_connectionLists, &ConnectionLists::trayRequestDisconnect, this, &WiredTrayWidget::handleRequestDisconnect, Qt::UniqueConnection);
+    connect(m_connectionLists, &ConnectionLists::trayRequestCancel, this, &WiredTrayWidget::handleRequestCancel, Qt::UniqueConnection);
+    connect(m_connectionLists, &ConnectionLists::sizeChanged, this, &WiredTrayWidget::sizeChanged, Qt::UniqueConnection);
 
     connect(m_wiredDevice.data(), &WiredDevice::carrierChanged, this, &WiredTrayWidget::handleCarrierChanged, Qt::UniqueConnection);
     connect(m_wiredDevice.data(), &Device::stateChanged, this, &WiredTrayWidget::handleStateChanged, Qt::UniqueConnection);
 
     //在插拔网线时，deviceAdded和deviceRemoved信号失效
-    connect(notifier(), &Notifier::deviceAdded, this, [=](const QString &uni)
-            { KLOG_DEBUG() << "-----------WiredTrayWidget::deviceAdded:" << uni; });
-    connect(notifier(), &Notifier::deviceRemoved, this, [=](const QString &uni)
-            { KLOG_DEBUG() << "-----------WiredTrayWidget::deviceRemoved:" << uni; });
+    // connect(notifier(), &Notifier::deviceAdded, this, [=](const QString &uni) {});
+    // connect(notifier(), &Notifier::deviceRemoved, this, [=](const QString &uni) {});
 }
 
 void WiredTrayWidget::initUI()
@@ -76,24 +68,19 @@ void WiredTrayWidget::initUI()
 
     // m_wiredDevice->state(); 设备状态在最开始初始化托盘页面时已经判断过了
     KLOG_DEBUG() << "m_wiredDevice->carrier():" << m_wiredDevice->carrier();
-
-    m_connectionLists = new ConnectionLists(this);
-    m_verticalLayout->addWidget(m_connectionLists);
-
-    initUnavailableWidget();
-    m_verticalLayout->addWidget(m_unavailableWidget);
-
     if (m_wiredDevice->carrier())
     {
-        m_unavailableWidget->setVisible(false);
-        m_connectionLists->setVisible(true);
+        m_connectionLists = new ConnectionLists(this);
+        m_verticalLayout->addWidget(m_connectionLists);
         showWiredConnectionLists();
     }
     else
     {
-        m_unavailableWidget->setVisible(true);
-        m_connectionLists->setVisible(false);
+        initUnavailableWidget();
+        m_verticalLayout->addWidget(m_unavailableWidget);
     }
+
+    m_verticalLayout->setSizeConstraint(QLayout::SetMinAndMaxSize);
 }
 
 void WiredTrayWidget::showWiredConnectionLists()
@@ -119,7 +106,9 @@ void WiredTrayWidget::handleCarrierChanged(bool plugged)
 
 void WiredTrayWidget::initUnavailableWidget()
 {
-    m_unavailableWidget = new QWidget();
+    m_unavailableWidget = new QWidget(this);
+    m_unavailableWidget->setFixedSize(QSize(240, 50));
+
     QLabel *icon = new QLabel(m_unavailableWidget);
     QLabel *text = new QLabel(m_unavailableWidget);
     QHBoxLayout *hLayout = new QHBoxLayout(m_unavailableWidget);
@@ -142,43 +131,37 @@ void WiredTrayWidget::handleStateChanged(NetworkManager::Device::State newstate,
 
     //对应拔出网线后再插入网线的情况
     if ((oldstate == Device::State::Unavailable) &&
-        ((newstate != Device::State::Unmanaged) && (newstate != Device::State::Unmanaged)) &&
+        ((newstate != Device::State::Unmanaged) && (newstate != Device::State::UnknownState)) &&
         (reason == Device::StateChangeReason::CarrierReason))
     {
-        // if (!m_connectionLists.isNull())
-        // {
-        //     m_verticalLayout->removeWidget(m_unavailableWidget);
-        //     m_unavailableWidget->deleteLater();
-
-        //     m_connectionLists = new ConnectionLists(this);
-        //     m_verticalLayout->addWidget(m_connectionLists);
-        //     showWiredConnectionLists();
-        //     KLOG_DEBUG() << "---------------available wired connnection";
-        // }
-
-        if (!m_connectionLists->isVisible())
+        if (m_connectionLists.isNull())
         {
-            m_connectionLists->setVisible(true);
-            m_unavailableWidget->setVisible(false);
+            KLOG_DEBUG() << "--------------------- 插入网线";
+            m_verticalLayout->removeWidget(m_unavailableWidget);
+            m_unavailableWidget->deleteLater();
+            m_unavailableWidget = nullptr;
+
+            m_connectionLists = new ConnectionLists(this);
+            m_verticalLayout->addWidget(m_connectionLists);
+            initConnection();
+            showWiredConnectionLists();
+            m_connectionLists->adjustTraySize();
         }
     }
 
     //对应拔出网线
     if ((newstate == Device::State::Unavailable) && (reason == Device::StateChangeReason::CarrierReason))
     {
-        // if (m_unavailableWidget == nullptr)
-        // {
-        //     m_verticalLayout->removeWidget(m_connectionLists);
-        //     m_connectionLists->deleteLater();
-
-        //     initUnavailableWidget();
-        //     m_verticalLayout->addWidget(m_unavailableWidget);
-        // }
-
-        if (!m_unavailableWidget->isVisible())
+        if (m_unavailableWidget == nullptr)
         {
-            m_connectionLists->setVisible(false);
-            m_unavailableWidget->setVisible(true);
+            KLOG_DEBUG() << "--------------------- 拔出 网线";
+            m_verticalLayout->removeWidget(m_connectionLists);
+            m_connectionLists->deleteLater();
+            m_connectionLists = nullptr;
+
+            initUnavailableWidget();
+            m_verticalLayout->addWidget(m_unavailableWidget);
+            emit sizeChanged(QSize(240, 50));
         }
     }
 
@@ -188,19 +171,9 @@ void WiredTrayWidget::handleStateChanged(NetworkManager::Device::State newstate,
     {
         if (m_wiredDevice->carrier())
         {
-            if (!m_connectionLists->isVisible())
-            {
-                m_connectionLists->setVisible(true);
-                m_unavailableWidget->setVisible(false);
-            }
         }
         else
         {
-            if (!m_unavailableWidget->isVisible())
-            {
-                m_connectionLists->setVisible(false);
-                m_unavailableWidget->setVisible(true);
-            }
         }
     }
 }
@@ -325,4 +298,11 @@ void WiredTrayWidget::handleRequestCancel(const QString &activatedConnectionPath
         KLOG_INFO() << "Disconnect failed:" << reply.error();
     else
         KLOG_INFO() << "deactivateConnection:" << reply.reply();
+}
+
+void WiredTrayWidget::handleConnectionUpdated(const QString &path)
+{
+    m_connectionLists->removeConnectionFromLists(path);
+    Connection::Ptr updateConnection = findConnection(path);
+    m_connectionLists->addConnectionToLists(updateConnection, "");
 }

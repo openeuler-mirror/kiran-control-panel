@@ -68,16 +68,11 @@ public slots:
 
     void requireInputPassword(const QString &ssid);
 
-signals:
-    void adjustedTraySize(QSize sizeHint);
-
 private:
     QMap<QString, NetworkManager::Connection::Ptr> m_wirelssConnectionMap;
     NetworkManager::WirelessDevice::Ptr m_wirelessDevice;
     NetworkManager::ConnectionSettings::Ptr m_connectionSettings;
-    QString m_devicePath;
     QVBoxLayout *m_verticalLayout;
-    QPointer<ConnectionLists> m_connectionLists;
     NetworkConnectionInfo m_connectionInfo;
 };
 

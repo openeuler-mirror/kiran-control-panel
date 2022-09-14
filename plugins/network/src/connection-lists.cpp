@@ -849,19 +849,17 @@ void ConnectionLists::adjustTraySize()
     {
         totalheight += item(i)->sizeHint().height();
     }
-    if (totalheight <= LIST_MAX_HEIGHT)
-        setFixedHeight(totalheight);
-    else
-        setFixedHeight(LIST_MAX_HEIGHT);
-    // KLOG_DEBUG() << "this->size():" << this->size();
-    // KLOG_DEBUG() << "this->sizeHint():" << this->sizeHint();
+    if (totalheight > LIST_MAX_HEIGHT)
+        totalheight = LIST_MAX_HEIGHT;
+    setFixedHeight(totalheight);
 
     int newHeight = this->size().height();
     int changedHeight = newHeight - oldHeight;
 
-    QSize(this->sizeHint().width(), changedHeight);
+    // KLOG_DEBUG() << "this->sizeHint().height():" << this->sizeHint().height();
+    KLOG_DEBUG() << "totalheight:" << totalheight;
 
-    emit adjustedTraySize(QSize(this->sizeHint().width(), changedHeight));
+    emit sizeChanged(QSize(this->sizeHint().width(), totalheight));
 }
 
 void ConnectionLists::hideEvent(QHideEvent* event)

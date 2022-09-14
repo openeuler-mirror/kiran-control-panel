@@ -23,8 +23,10 @@
 #include "tray-widget.h"
 // clang-format on
 using namespace NetworkManager;
+#define TRAY_ITEM_NORAML_HIEGHT 50
 
-TrayWidget::TrayWidget(QWidget *parent) : QWidget(parent)
+TrayWidget::TrayWidget(QWidget *parent) : QWidget(parent),
+                                          m_connectionLists(nullptr)
 {
     init();
 }
@@ -141,4 +143,14 @@ void TrayWidget::getDeviceList(Device::Type deviceType)
 
 void TrayWidget::handleDeviceStateChanged(Device::State newstate, Device::State oldstate, Device::StateChangeReason reason)
 {
+}
+
+int TrayWidget::getHeight()
+{
+    if (!m_connectionLists.isNull())
+    {
+        return m_connectionLists->height();
+    }
+    else
+        return TRAY_ITEM_NORAML_HIEGHT;
 }

@@ -36,6 +36,7 @@ public:
     void initConnection();
 
     void getDeviceList(NetworkManager::Device::Type deviceType);
+    virtual int getHeight();
 
 public slots:
     virtual void handleNotifierConnectionAdded(const QString &path);
@@ -52,9 +53,14 @@ public slots:
 
     void distributeNotifeir();
 
+signals:
+    void sizeChanged(QSize sizeHint);
+
 protected:
     QList<NetworkManager::Device::Ptr> m_deviceList;
     NetworkManager::Device::Ptr m_devicePtr;
+    QPointer<ConnectionLists> m_connectionLists;
+    QString m_devicePath;
 
 private:
     QTimer m_connectionRemovedTimer;

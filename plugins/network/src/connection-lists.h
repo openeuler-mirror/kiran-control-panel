@@ -131,7 +131,7 @@ signals:
     void sendPasswordToWirelessSetting(const QString &password);
     void sendSsidToWireless(const QString &ssid);
 
-    void adjustedTraySize(QSize size);
+    void sizeChanged(QSize size);
 
 private:
     ItemWidgetType m_itemShowType;

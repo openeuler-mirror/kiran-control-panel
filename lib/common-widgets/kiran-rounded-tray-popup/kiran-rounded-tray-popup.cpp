@@ -5,10 +5,10 @@
 #include "kiran-rounded-tray-popup.h"
 #include "kiran-rounded-window-frame.h"
 
-#include <QBoxLayout>
-#include <QGraphicsDropShadowEffect>
-#include <QEvent>
 #include <QBitmap>
+#include <QBoxLayout>
+#include <QEvent>
+#include <QGraphicsDropShadowEffect>
 #include <QPainter>
 #include <QPainterPath>
 
@@ -24,7 +24,7 @@ KiranRoundedTrayPopup::~KiranRoundedTrayPopup()
 {
 }
 
-void KiranRoundedTrayPopup::updateContentMask(QWidget* widget)
+void KiranRoundedTrayPopup::updateContentMask(QWidget *widget)
 {
     QBitmap bitMap(widget->size());
     bitMap.fill();
@@ -33,8 +33,8 @@ void KiranRoundedTrayPopup::updateContentMask(QWidget* widget)
     QRectF rectf = widget->rect();
 
     QPainter painter(&bitMap);
-    painterPath.addRoundRect(rectf,KiranRoundedWindowFrame::radius,KiranRoundedWindowFrame::radius);
-    painter.fillPath(painterPath,Qt::black);
+    painterPath.addRoundRect(rectf, KiranRoundedWindowFrame::radius, KiranRoundedWindowFrame::radius);
+    painter.fillPath(painterPath, Qt::black);
     painter.end();
 
     widget->setMask(bitMap);
@@ -42,16 +42,16 @@ void KiranRoundedTrayPopup::updateContentMask(QWidget* widget)
 
 bool KiranRoundedTrayPopup::eventFilter(QObject *watched, QEvent *event)
 {
-    if( watched == m_contentWidget && event->type()==QEvent::Resize )
+    if (watched == m_contentWidget && event->type() == QEvent::Resize)
     {
         updateContentMask(m_contentWidget);
     }
-    return QWidget::eventFilter(watched,event);
+    return QWidget::eventFilter(watched, event);
 }
 
 void KiranRoundedTrayPopup::setContentWidget(QWidget *widget)
 {
-    if( m_contentWidget!=nullptr )
+    if (m_contentWidget != nullptr)
     {
         m_contentWidget->removeEventFilter(this);
         m_contentLayout->removeWidget(m_contentWidget);
@@ -71,14 +71,16 @@ void KiranRoundedTrayPopup::init()
     shadowEffect->setColor("#111111");
     setGraphicsEffect(shadowEffect);
 
-    QVBoxLayout* layout = new QVBoxLayout(this);
+    QVBoxLayout *layout = new QVBoxLayout(this);
     layout->setSpacing(0);
     layout->setMargin(8);
+    layout->setSizeConstraint(QLayout::SetMinAndMaxSize);
 
     auto roundedFrame = new KiranRoundedWindowFrame(this);
     m_contentLayout = new QVBoxLayout(roundedFrame);
     m_contentLayout->setSpacing(0);
     m_contentLayout->setMargin(1);
+    m_contentLayout->setSizeConstraint(QLayout::SetMinAndMaxSize);
 
     layout->addWidget(roundedFrame);
 }

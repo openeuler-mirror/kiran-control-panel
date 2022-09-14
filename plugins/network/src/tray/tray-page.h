@@ -34,6 +34,8 @@ public:
 
     void init();
     void initUI();
+    void initWiredTrayWidget(const QString &devicePath);
+    void initWirelessTrayWidget(const QString &devicePath);
     void initConnection();
 
     void setMultiDeviceWidget();
@@ -42,9 +44,10 @@ public:
 
 public slots:
     void handleDeviceComboBoxChanged(int index);
+    void handleAdjustedTraySize(QSize sizeHint);
 
 signals:
-    void adjustedTraySize(QSize sizeHint);
+    void sizeChanged(QSize sizeHint);
 
 private:
     Ui::TrayPage *ui;
