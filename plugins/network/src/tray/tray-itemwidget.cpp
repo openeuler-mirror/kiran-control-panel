@@ -58,12 +58,14 @@ void TrayItemWidget::initConnection()
     connect(ui->ignoreButton, &QPushButton::clicked, this, &TrayItemWidget::ignoreButtonClicked);
     connect(ui->cancelButton, &QPushButton::clicked, this, &TrayItemWidget::cancelButtonClicked);
 
-    connect(ui->inputTextEdit, &QLineEdit::textEdited, [=]()
+    connect(ui->inputTextEdit, &QLineEdit::textEdited, this, [this]()
             {
                 if(ui->inputTextEdit->text().isEmpty())
                     ui->inputTextConnectButton->setEnabled(false);
                 else
                     ui->inputTextConnectButton->setEnabled(true); });
+
+    connect(ui->inputTextEdit, &QLineEdit::returnPressed, this, &TrayItemWidget::handleInputText);
 
     connect(Kiran::StylePalette::instance(), &Kiran::StylePalette::themeChanged, this, &TrayItemWidget::handleThemeChanged);
 }
