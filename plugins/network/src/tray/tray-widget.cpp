@@ -21,6 +21,7 @@
 #include "connection-lists.h"
 #include "connection-show-page.h"
 #include "tray-widget.h"
+#include "signal-forward.h"
 // clang-format on
 using namespace NetworkManager;
 #define TRAY_ITEM_NORAML_HIEGHT 50
@@ -37,6 +38,7 @@ TrayWidget::~TrayWidget()
 
 void TrayWidget::init()
 {
+    m_signalForward = SignalForward::instance();
     initUI();
     initConnection();
 }
@@ -47,9 +49,10 @@ void TrayWidget::initUI()
 
 void TrayWidget::initConnection()
 {
-    connect(notifier(), &Notifier::activeConnectionAdded, this, &TrayWidget::handleActiveConnectionAdded, Qt::UniqueConnection);
+    connect(notifier(), &Notifier::activeConnectionAdded, m_signalForward, &SignalForward::handleActiveConnectionAdded, Qt::UniqueConnection);
+    connect(settingsNotifier(), &SettingsNotifier::connectionAdded, m_signalForward, &SignalForward::handleNotifierConnectionAdded, Qt::UniqueConnection);
+
     connect(notifier(), &Notifier::activeConnectionRemoved, this, &TrayWidget::handleActiveConnectionRemoved, Qt::UniqueConnection);
-    connect(settingsNotifier(), &SettingsNotifier::connectionAdded, this, &TrayWidget::handleNotifierConnectionAdded, Qt::UniqueConnection);
     connect(settingsNotifier(), &SettingsNotifier::connectionRemoved, this, &TrayWidget::handleNotifierConnectionRemoved, Qt::UniqueConnection);
 }
 

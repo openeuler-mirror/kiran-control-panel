@@ -23,6 +23,7 @@
 
 Q_DECLARE_METATYPE(NetworkManager::ActiveConnection::State);
 
+class SignalForward;
 class TrayWidget : public QWidget
 {
     Q_OBJECT
@@ -61,6 +62,7 @@ protected:
     NetworkManager::Device::Ptr m_devicePtr;
     QPointer<ConnectionLists> m_connectionLists;
     QString m_devicePath;
+    SignalForward *m_signalForward;
 
 private:
     QTimer m_connectionRemovedTimer;

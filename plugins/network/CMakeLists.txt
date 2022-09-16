@@ -15,8 +15,10 @@ qt5_create_translation(NETWORK_QM_FILES ${CMAKE_CURRENT_SOURCE_DIR} translations
 
 file(GLOB_RECURSE PLUGIN_SRC "src/plugin/*.cpp" "src/plugin/*.h" "src/plugin/*.ui")
 file(GLOB_RECURSE TRAY_SRC "src/tray/*.cpp" "src/tray/*.h" "src/tray/*.ui")
-file(GLOB_RECURSE COMMON_SRC "src/animation-loading-label*" "src/connection-itemwidget*" "src/connection-lists*"
-        "src/connection-show-page*" "src/status-notification*" "src/tray-itemwidget*" "src/utils*")
+# XXX:此处对tray-itemwidget*的引入不合理，需要先修改ConnectionShowPage后，在修改此处
+file(GLOB_RECURSE COMMON_SRC "src/animation-loading-label*" "src/tray-itemwidget*" "src/connection-lists*"
+"src/connection-show-page*" "src/status-notification*" "src/utils*" "src/signal-forward*")
+
 file(GLOB_RECURSE QRC "resources/*.qrc")
 
 add_library(${TARGET_NAME} SHARED

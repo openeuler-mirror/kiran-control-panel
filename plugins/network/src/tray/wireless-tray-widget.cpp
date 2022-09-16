@@ -17,6 +17,7 @@
 #include <NetworkManagerQt/Ipv4Setting>
 #include <NetworkManagerQt/Settings>
 #include <NetworkManagerQt/Utils>
+#include "signal-forward.h"
 #include "status-notification.h"
 using namespace NetworkManager;
 
@@ -72,6 +73,9 @@ void WirelessTrayWidget::initConnection()
 
     connect(m_devicePtr.data(), &Device::stateChanged, this, &WirelessTrayWidget::handleDeviceStateChanged, Qt::UniqueConnection);
     connect(m_connectionLists, &ConnectionLists::sizeChanged, this, &WirelessTrayWidget::sizeChanged);
+
+    connect(m_signalForward, &SignalForward::wirelessConnectionAdded, this, &WirelessTrayWidget::handleNotifierConnectionAdded);
+    connect(m_signalForward, &SignalForward::wirelessActiveConnectionAdded, this, &WirelessTrayWidget::handleActiveConnectionAdded);
 }
 
 void WirelessTrayWidget::handleRequestConnectWirelessNetwork(const NetworkConnectionInfo &connectionInfo)
@@ -277,7 +281,7 @@ void WirelessTrayWidget::handleActiveConnectionAdded(const QString &path)
     }
 
     QStringList deviceList = activatedConnection->devices();
-    if ((activatedConnection->type() == ConnectionSettings::ConnectionType::Wireless) && deviceList.contains(m_devicePath))
+    if (deviceList.contains(m_devicePath))
     {
         ConnectionSettings::Ptr settings = activatedConnection->connection()->settings();
         WirelessSetting::Ptr wirelessSetting = settings->setting(Setting::Wireless).dynamicCast<WirelessSetting>();

@@ -16,14 +16,15 @@
 #define KIRAN_CPANEL_NETWORK_MANAGER_H
 #include <NetworkManagerQt/Device>
 #include <NetworkManagerQt/Manager>
-#include <QWidget>
 #include <QTimer>
+#include <QWidget>
 enum EditPages
 {
     PAGE_SHOW,
     PAGE_SETTING
 };
 
+class SignalForward;
 class Manager : public QWidget
 {
     Q_OBJECT
@@ -54,10 +55,11 @@ protected:
     QList<NetworkManager::Device::Ptr> m_deviceList;
     QString m_devicePath;
     NetworkManager::Device::Ptr m_devicePtr;
+    SignalForward *m_signalForward;
 
 private:
     QTimer m_connectionTimer;
     QString m_connectionRemovePath;
 };
 
-#endif  //KIRAN_CPANEL_NETWORK_MANAGER_H
+#endif  // KIRAN_CPANEL_NETWORK_MANAGER_H

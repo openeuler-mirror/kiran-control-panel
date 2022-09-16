@@ -15,6 +15,7 @@
 #include "wired-tray-widget.h"
 #include <qt5-log-i.h>
 #include <NetworkManagerQt/Settings>
+#include "signal-forward.h"
 #include "status-notification.h"
 #include "utils.h"
 using namespace NetworkManager;
@@ -52,6 +53,9 @@ void WiredTrayWidget::initConnection()
 
     connect(m_wiredDevice.data(), &WiredDevice::carrierChanged, this, &WiredTrayWidget::handleCarrierChanged, Qt::UniqueConnection);
     connect(m_wiredDevice.data(), &Device::stateChanged, this, &WiredTrayWidget::handleStateChanged, Qt::UniqueConnection);
+
+    connect(m_signalForward, &SignalForward::wiredConnectionAdded, this, &WiredTrayWidget::handleNotifierConnectionAdded);
+    connect(m_signalForward, &SignalForward::wiredActiveConnectionAdded, this, &WiredTrayWidget::handleActiveConnectionAdded);
 
     //在插拔网线时，deviceAdded和deviceRemoved信号失效
     // connect(notifier(), &Notifier::deviceAdded, this, [=](const QString &uni) {});
@@ -205,10 +209,7 @@ void WiredTrayWidget::handleRequestActivateConnection(const NetworkConnectionInf
 void WiredTrayWidget::handleNotifierConnectionAdded(const QString &path)
 {
     Connection::Ptr connection = findConnection(path);
-    if ((connection->settings()->connectionType() == ConnectionSettings::ConnectionType::Wired) && (!connection->name().isEmpty()))
-    {
-        m_connectionLists->addConnectionToLists(connection, m_devicePath);
-    }
+    m_connectionLists->addConnectionToLists(connection, m_devicePath);
 }
 
 void WiredTrayWidget::handleNotifierConnectionRemoved(const QString &path)
@@ -248,7 +249,7 @@ void WiredTrayWidget::handleActiveConnectionAdded(const QString &path)
     if (activatedConnection.isNull())
         return;
     QStringList deviceList = activatedConnection->devices();
-    if (activatedConnection->type() == ConnectionSettings::ConnectionType::Wired && deviceList.contains(m_devicePath))
+    if (deviceList.contains(m_devicePath))
     {
         QString uuid = activatedConnection->uuid();
         QListWidgetItem *activeItem = m_connectionLists->findItemByUuid(uuid);

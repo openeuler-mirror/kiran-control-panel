@@ -15,8 +15,8 @@
 #ifndef KIRAN_CPANEL_NETWORK_WIRELESS_MANAGER_H
 #define KIRAN_CPANEL_NETWORK_WIRELESS_MANAGER_H
 
-#include <NetworkManagerQt/WirelessDevice>
 #include <NetworkManagerQt/Device>
+#include <NetworkManagerQt/WirelessDevice>
 #include <NetworkManagerQt/WirelessSecuritySetting>
 #include <NetworkManagerQt/WirelessSetting>
 #include <QWidget>
@@ -42,6 +42,9 @@ public:
     void requireInputPassword(const QString &ssid);
 
 public slots:
+    void handleRequestCreatConnection();
+    void handleRequestEditConnection(const QString &uuid, QString activeConnectionPath);
+
     void handleRequestConnectWirelessNetwork(const NetworkConnectionInfo &connectionInfo);
     void getWirelessAvailableConnections(const QString &devicePath);
     void activateWirelessConnection(const QString &connectionPath, const QString &devicePath, const QString &accessPointPath);
@@ -66,7 +69,6 @@ public slots:
     void handleNetworkAppeared(const QString &ssid);
 
     void handleDeviceStateChanged(NetworkManager::Device::State newstate, NetworkManager::Device::State oldstate, NetworkManager::Device::StateChangeReason reason) override;
-
 
     void handleReturnPreviousPage();
     void refreshConnectionLists() override;

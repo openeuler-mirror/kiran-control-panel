@@ -20,6 +20,7 @@
 #include <NetworkManagerQt/Settings>
 #include <QPointer>
 #include <QScrollBar>
+#include "signal-forward.h"
 #include "status-notification.h"
 #include "ui_wired-manager.h"
 using namespace NetworkManager;
@@ -57,14 +58,11 @@ void WiredManager::initConnection()
     connect(ui->wiredSettingPage, &WiredSettingPage::returnPreviousPage, this, &WiredManager::handleReturnPreviousPage);
 
     connect(ui->connectionShowPage, &ConnectionShowPage::connectionUpdated, this, &WiredManager::handleConnectionUpdated);
+    connect(ui->connectionShowPage, &ConnectionShowPage::requestActivateCurrentItemConnection, this, &WiredManager::handleRequestActivateConnection);
+    connect(ui->connectionShowPage, &ConnectionShowPage::deactivatedItemConnection, this, &WiredManager::handleStateDeactivated);
 
-    connect(ui->connectionShowPage, &ConnectionShowPage::requestActivateCurrentItemConnection,
-            this, &WiredManager::handleRequestActivateConnection);
-
-    connect(ui->connectionShowPage, &ConnectionShowPage::deactivatedItemConnection,
-            this, &WiredManager::handleStateDeactivated);
-
-    initNotifierConnection();
+    connect(m_signalForward, &SignalForward::wiredConnectionAdded, this, &WiredManager::handleNotifierConnectionAdded);
+    connect(m_signalForward, &SignalForward::wiredActiveConnectionAdded, this, &WiredManager::handleActiveConnectionAdded);
 }
 
 void WiredManager::handleRequestCreatConnection()
@@ -111,7 +109,7 @@ void WiredManager::handleActiveConnectionAdded(const QString &path)
     if (activatedConnection.isNull())
         return;
     QStringList deviceList = activatedConnection->devices();
-    if (activatedConnection->type() == ConnectionSettings::ConnectionType::Wired && deviceList.contains(m_devicePath))
+    if (deviceList.contains(m_devicePath))
     {
         QString uuid = activatedConnection->uuid();
         QListWidgetItem *activeItem = ui->connectionShowPage->findItemByUuid(uuid);
@@ -168,10 +166,7 @@ void WiredManager::handleNotifierConnectionAdded(const QString &path)
 {
     KLOG_DEBUG() << "WiredManager::handleNotifierConnectionAdded";
     Connection::Ptr connection = findConnection(path);
-    if ((connection->settings()->connectionType() == ConnectionSettings::ConnectionType::Wired) && (!connection->name().isEmpty()))
-    {
-        ui->connectionShowPage->addConnectionToLists(connection, m_devicePath);
-    }
+    ui->connectionShowPage->addConnectionToLists(connection, m_devicePath);
 }
 
 // Note:当connection被移除时，由于连接可能已经被删除，所有并不能通过findConnection(path)找到该连接对象，进而知道连接类型

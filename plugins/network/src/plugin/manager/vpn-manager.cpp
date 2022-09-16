@@ -22,6 +22,7 @@
 #include <QPointer>
 #include <QScrollBar>
 #include "connection-name-widget.h"
+#include "signal-forward.h"
 #include "status-notification.h"
 #include "text-input-dialog.h"
 #include "ui_vpn-manager.h"
@@ -83,7 +84,8 @@ void VpnManager::initConnection()
 
     connect(ui->connectionShowPage, &ConnectionShowPage::connectionUpdated, this, &VpnManager::handleConnectionUpdated);
 
-    initNotifierConnection();
+    connect(m_signalForward, &SignalForward::vpnConnectionAdded, this, &VpnManager::handleNotifierConnectionAdded);
+    connect(m_signalForward, &SignalForward::vpnActiveConnectionAdded, this, &VpnManager::handleActiveConnectionAdded);
 }
 
 void VpnManager::handleRequestCreatConnection()
@@ -229,10 +231,7 @@ void VpnManager::activateVPNConnection(const QString &connectionPath, const QStr
 void VpnManager::handleNotifierConnectionAdded(const QString &path)
 {
     Connection::Ptr connection = findConnection(path);
-    if ((connection->settings()->connectionType() == ConnectionSettings::ConnectionType::Vpn) && (!connection->name().isEmpty()))
-    {
-        ui->connectionShowPage->addConnectionToLists(connection, "");
-    }
+    ui->connectionShowPage->addConnectionToLists(connection, "");
 }
 
 void VpnManager::handleNotifierConnectionRemoved(const QString &path)
@@ -248,18 +247,16 @@ void VpnManager::handleActiveConnectionAdded(const QString &activePath)
         KLOG_DEBUG() << "activatedConnection == nullptr";
         return;
     }
-    if (activatedConnection->type() == ConnectionSettings::ConnectionType::Vpn)
+
+    VpnConnection::Ptr vpnConnection = findActiveConnection(activePath).dynamicCast<VpnConnection>();
+    QString uuid = vpnConnection->uuid();
+    KLOG_DEBUG() << "vpn uuid:" << uuid;
+    QListWidgetItem *activeItem = ui->connectionShowPage->findItemByUuid(uuid);
+    if (activeItem != nullptr)
     {
-        VpnConnection::Ptr vpnConnection = findActiveConnection(activePath).dynamicCast<VpnConnection>();
-        QString uuid = vpnConnection->uuid();
-        KLOG_DEBUG() << "vpn uuid:" << uuid;
-        QListWidgetItem *activeItem = ui->connectionShowPage->findItemByUuid(uuid);
-        if (activeItem != nullptr)
-        {
-            ui->connectionShowPage->updateItemActivatedPath(activeItem, activePath);
-        }
-        connect(vpnConnection.data(), &VpnConnection::stateChanged, this, &VpnManager::handleVpnConnectionStateChanged, Qt::UniqueConnection);
+        ui->connectionShowPage->updateItemActivatedPath(activeItem, activePath);
     }
+    connect(vpnConnection.data(), &VpnConnection::stateChanged, this, &VpnManager::handleVpnConnectionStateChanged, Qt::UniqueConnection);
 }
 
 void VpnManager::handleActiveConnectionRemoved(const QString &activePath)
