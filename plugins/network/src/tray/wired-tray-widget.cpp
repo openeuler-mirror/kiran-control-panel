@@ -15,15 +15,19 @@
 #include "wired-tray-widget.h"
 #include <qt5-log-i.h>
 #include <NetworkManagerQt/Settings>
+#include <QLabel>
 #include "signal-forward.h"
 #include "status-notification.h"
 #include "utils.h"
 using namespace NetworkManager;
 
 WiredTrayWidget::WiredTrayWidget(const QString &devicePath, QWidget *parent) : TrayWidget(parent),
+                                                                               m_connectionList(nullptr),
                                                                                m_unavailableWidget(nullptr)
 {
     m_devicePath = devicePath;
+    m_devicePtr = findNetworkInterface(m_devicePath);
+    m_wiredDevice = qobject_cast<WiredDevice *>(m_devicePtr);
     init();
 }
 
@@ -33,9 +37,6 @@ WiredTrayWidget::~WiredTrayWidget()
 
 void WiredTrayWidget::init()
 {
-    m_devicePtr = findNetworkInterface(m_devicePath);
-    m_wiredDevice = qobject_cast<WiredDevice *>(m_devicePtr);
-
     initUI();
     initConnection();
     ActiveConnection::Ptr activatedConnection = m_devicePtr->activeConnection();
@@ -43,57 +44,46 @@ void WiredTrayWidget::init()
         connect(activatedConnection.data(), &ActiveConnection::stateChanged, this, &WiredTrayWidget::handleActiveConnectionStateChanged, Qt::UniqueConnection);
 }
 
+void WiredTrayWidget::initUI()
+{
+    // m_wiredDevice->state(); 设备状态在最开始初始化托盘页面时已经判断过了
+    KLOG_DEBUG() << "m_wiredDevice->carrier():" << m_wiredDevice->carrier();
+    if (m_wiredDevice->carrier())
+    {
+        m_connectionList = new TrayConnectionList(this);
+        addWidget(m_connectionList);
+        showWiredConnectionLists();
+    }
+    else
+    {
+        initUnavailableWidget();
+        addWidget(m_unavailableWidget);
+    }
+}
+
 void WiredTrayWidget::initConnection()
 {
-    connect(m_connectionLists, &ConnectionLists::connectionUpdated, this, &WiredTrayWidget::handleConnectionUpdated, Qt::UniqueConnection);
-    connect(m_connectionLists, &ConnectionLists::trayRequestConnect, this, &WiredTrayWidget::handleRequestActivateConnection, Qt::UniqueConnection);
-    connect(m_connectionLists, &ConnectionLists::trayRequestDisconnect, this, &WiredTrayWidget::handleRequestDisconnect, Qt::UniqueConnection);
-    connect(m_connectionLists, &ConnectionLists::trayRequestCancel, this, &WiredTrayWidget::handleRequestCancel, Qt::UniqueConnection);
-    connect(m_connectionLists, &ConnectionLists::sizeChanged, this, &WiredTrayWidget::sizeChanged, Qt::UniqueConnection);
+    connect(m_connectionList, &TrayConnectionList::connectionUpdated, this, &WiredTrayWidget::handleConnectionUpdated, Qt::UniqueConnection);
+    connect(m_connectionList, &TrayConnectionList::activateSelectedConnection, this, &WiredTrayWidget::handleActivateSelectedConnection, Qt::UniqueConnection);
+    connect(m_connectionList, &TrayConnectionList::disconnect, this, &WiredTrayWidget::handleDisconnect, Qt::UniqueConnection);
+    connect(m_connectionList, &TrayConnectionList::cancelConnection, this, &WiredTrayWidget::handleCancelConnection, Qt::UniqueConnection);
+    connect(m_connectionList, &TrayConnectionList::sizeChanged, this, &WiredTrayWidget::sizeChanged, Qt::UniqueConnection);
 
     connect(m_wiredDevice.data(), &WiredDevice::carrierChanged, this, &WiredTrayWidget::handleCarrierChanged, Qt::UniqueConnection);
     connect(m_wiredDevice.data(), &Device::stateChanged, this, &WiredTrayWidget::handleStateChanged, Qt::UniqueConnection);
 
-    connect(m_signalForward, &SignalForward::wiredConnectionAdded, this, &WiredTrayWidget::handleNotifierConnectionAdded);
-    connect(m_signalForward, &SignalForward::wiredActiveConnectionAdded, this, &WiredTrayWidget::handleActiveConnectionAdded);
+    connect(SignalForward::instance(), &SignalForward::wiredConnectionAdded, this, &WiredTrayWidget::handleNotifierConnectionAdded);
+    connect(SignalForward::instance(), &SignalForward::wiredActiveConnectionAdded, this, &WiredTrayWidget::handleActiveConnectionAdded);
 
     //在插拔网线时，deviceAdded和deviceRemoved信号失效
     // connect(notifier(), &Notifier::deviceAdded, this, [=](const QString &uni) {});
     // connect(notifier(), &Notifier::deviceRemoved, this, [=](const QString &uni) {});
 }
 
-void WiredTrayWidget::initUI()
-{
-    setFixedWidth(240);
-    setContentsMargins(0, 0, 0, 0);
-    m_verticalLayout = new QVBoxLayout(this);
-    m_verticalLayout->setSpacing(0);
-    m_verticalLayout->setContentsMargins(0, 0, 0, 0);
-
-    // m_wiredDevice->state(); 设备状态在最开始初始化托盘页面时已经判断过了
-    KLOG_DEBUG() << "m_wiredDevice->carrier():" << m_wiredDevice->carrier();
-    if (m_wiredDevice->carrier())
-    {
-        m_connectionLists = new ConnectionLists(this);
-        m_verticalLayout->addWidget(m_connectionLists);
-        showWiredConnectionLists();
-    }
-    else
-    {
-        initUnavailableWidget();
-        m_verticalLayout->addWidget(m_unavailableWidget);
-    }
-
-    m_verticalLayout->setSizeConstraint(QLayout::SetMinAndMaxSize);
-}
-
 void WiredTrayWidget::showWiredConnectionLists()
 {
-    m_connectionLists->setDevicePath(m_devicePath);
-    m_connectionLists->setItemWidgetType(ITEM_WIDGET_TYPE_TRAY);
-    m_connectionLists->showConnectionLists(ConnectionSettings::Wired);
-    m_connectionLists->showWiredStatusIcon();
-    m_connectionLists->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
+    m_connectionList->setDevicePath(m_devicePath);
+    m_connectionList->showConnectionList(ConnectionSettings::Wired);
 }
 
 //网线插入后，wiredDevice state 还处在不可用状态,因此无法立即显示出可用连接
@@ -138,18 +128,18 @@ void WiredTrayWidget::handleStateChanged(NetworkManager::Device::State newstate,
         ((newstate != Device::State::Unmanaged) && (newstate != Device::State::UnknownState)) &&
         (reason == Device::StateChangeReason::CarrierReason))
     {
-        if (m_connectionLists.isNull())
+        if (m_connectionList.isNull())
         {
             KLOG_DEBUG() << "--------------------- 插入网线";
-            m_verticalLayout->removeWidget(m_unavailableWidget);
+            removeWidget(m_unavailableWidget);
             m_unavailableWidget->deleteLater();
             m_unavailableWidget = nullptr;
 
-            m_connectionLists = new ConnectionLists(this);
-            m_verticalLayout->addWidget(m_connectionLists);
+            m_connectionList = new TrayConnectionList(this);
+            addWidget(m_connectionList);
             initConnection();
             showWiredConnectionLists();
-            m_connectionLists->adjustTraySize();
+            m_connectionList->adjustTraySize();
         }
     }
 
@@ -159,12 +149,12 @@ void WiredTrayWidget::handleStateChanged(NetworkManager::Device::State newstate,
         if (m_unavailableWidget == nullptr)
         {
             KLOG_DEBUG() << "--------------------- 拔出 网线";
-            m_verticalLayout->removeWidget(m_connectionLists);
-            m_connectionLists->deleteLater();
-            m_connectionLists = nullptr;
+            removeWidget(m_connectionList);
+            m_connectionList->deleteLater();
+            m_connectionList = nullptr;
 
             initUnavailableWidget();
-            m_verticalLayout->addWidget(m_unavailableWidget);
+            addWidget(m_unavailableWidget);
             emit sizeChanged(QSize(240, 50));
         }
     }
@@ -182,13 +172,10 @@ void WiredTrayWidget::handleStateChanged(NetworkManager::Device::State newstate,
     }
 }
 
-void WiredTrayWidget::handleRequestActivateConnection(const NetworkConnectionInfo &connectionInfo)
+void WiredTrayWidget::handleActivateSelectedConnection(const QString &connectionPath, const QString &connectionParameter)
 {
-    QString devicePath = "";
-    QString connectionParameter = "";
-    QString connectionPath = connectionInfo.connectionPath;
-
-    // m_devicePath 可以未空，即不指定设备
+    KLOG_DEBUG() << "Activate Selected Connection:" << connectionPath;
+    // m_devicePath 可以为空，即不指定设备
     QDBusPendingReply<QDBusObjectPath> reply =
         NetworkManager::activateConnection(connectionPath, m_devicePath, connectionParameter);
 
@@ -209,36 +196,33 @@ void WiredTrayWidget::handleRequestActivateConnection(const NetworkConnectionInf
 void WiredTrayWidget::handleNotifierConnectionAdded(const QString &path)
 {
     Connection::Ptr connection = findConnection(path);
-    m_connectionLists->addConnectionToLists(connection, m_devicePath);
+    m_connectionList->addConnection(connection, m_devicePath);
 }
 
 void WiredTrayWidget::handleNotifierConnectionRemoved(const QString &path)
 {
-    if (!m_connectionLists.isNull())
-        m_connectionLists->removeConnectionFromLists(path);
+    if (!m_connectionList.isNull())
+        m_connectionList->removeConnectionFromList(path);
 }
 
 // XXX:可以优化
-void WiredTrayWidget::handleStateDeactivated(const QString &activatedPath)
+void WiredTrayWidget::handleStateDeactivated(const QString &activePath)
 {
-    if (!m_connectionLists.isNull())
-        m_connectionLists->handleActiveStateDeactivated(activatedPath);
+    if (!m_connectionList.isNull())
+    {
+        m_connectionList->handleActiveStateDeactivated(activePath);
+    }
 }
 
-void WiredTrayWidget::handleStateActivated(const QString &activatedPath)
+void WiredTrayWidget::handleStateActivated(const QString &activePath)
 {
     KLOG_DEBUG() << "Wired  handleStateActivated";
-    ActiveConnection::Ptr activeConnection = findActiveConnection(activatedPath);
+    ActiveConnection::Ptr activeConnection = findActiveConnection(activePath);
     QStringList deviceList = activeConnection->devices();
     if (deviceList.contains(m_devicePath) && (activeConnection->type() == ConnectionSettings::Wired))
     {
-        m_connectionLists->updateItemActivatedStatus(activatedPath);
-        auto item = m_connectionLists->findItemByActivatedPath(activatedPath);
-        if (item != nullptr)
-        {
-            NetworkConnectionInfo connectionInfo = item->data(Qt::UserRole).value<NetworkConnectionInfo>();
-            StatusNotification::ActiveConnectionActivatedNotify(connectionInfo);
-        }
+        m_connectionList->setItemWidgetStatus(activePath, ActiveConnection::Activated);
+        m_connectionList->sort();
     }
 }
 
@@ -252,58 +236,55 @@ void WiredTrayWidget::handleActiveConnectionAdded(const QString &path)
     if (deviceList.contains(m_devicePath))
     {
         QString uuid = activatedConnection->uuid();
-        QListWidgetItem *activeItem = m_connectionLists->findItemByUuid(uuid);
-        if (activeItem != nullptr)
-            m_connectionLists->updateItemActivatedPath(activeItem, path);
+        auto *activeItemWidget = m_connectionList->findItemWidgetByUuid(uuid);
+        if (activeItemWidget != nullptr)
+            m_connectionList->updateItemWidgetActivePath(activeItemWidget, path);
         connect(activatedConnection.data(), &ActiveConnection::stateChanged, this, &WiredTrayWidget::handleActiveConnectionStateChanged, Qt::UniqueConnection);
     }
 }
 
 //需要做判断
-void WiredTrayWidget::handleStateActivating(const QString &activatedPath)
+void WiredTrayWidget::handleStateActivating(const QString &activePath)
 {
-    ActiveConnection::Ptr activatedConnection = findActiveConnection(activatedPath);
+    ActiveConnection::Ptr activatedConnection = findActiveConnection(activePath);
     if (activatedConnection.isNull())
         return;
     QStringList deviceList = activatedConnection->devices();
     if (activatedConnection->type() == ConnectionSettings::ConnectionType::Wired && deviceList.contains(m_devicePath))
     {
-        auto item = m_connectionLists->findItemByActivatedPath(activatedPath);
-        if (item != nullptr)
-            m_connectionLists->updateItemActivatingStatus(item);
-        m_connectionLists->update();
+        m_connectionList->setItemWidgetStatus(activePath, ActiveConnection::Activating);
     }
 }
 
 void WiredTrayWidget::handleActiveConnectionRemoved(const QString &path)
 {
-    if (!m_connectionLists.isNull())
-        m_connectionLists->handleActiveStateDeactivated(path);
+    if (!m_connectionList.isNull())
+        m_connectionList->handleActiveStateDeactivated(path);
 }
 
-void WiredTrayWidget::handleRequestDisconnect(const QString &activatedConnectionPath)
+void WiredTrayWidget::handleDisconnect(const QString &activatedConnectionPath)
 {
     QDBusPendingReply<> reply = NetworkManager::deactivateConnection(activatedConnectionPath);
     reply.waitForFinished();
     if (reply.isError())
         KLOG_INFO() << "Disconnect failed:" << reply.error();
     else
-        KLOG_INFO() << "deactivateConnection:" << reply.reply();
+        KLOG_INFO() << "deactivate Connection:" << reply.reply();
 }
 
-void WiredTrayWidget::handleRequestCancel(const QString &activatedConnectionPath)
+void WiredTrayWidget::handleCancelConnection(const QString &activatedConnectionPath)
 {
     QDBusPendingReply<> reply = NetworkManager::deactivateConnection(activatedConnectionPath);
     reply.waitForFinished();
     if (reply.isError())
         KLOG_INFO() << "Disconnect failed:" << reply.error();
     else
-        KLOG_INFO() << "deactivateConnection:" << reply.reply();
+        KLOG_INFO() << "deactivate Connection:" << reply.reply();
 }
 
 void WiredTrayWidget::handleConnectionUpdated(const QString &path)
 {
-    m_connectionLists->removeConnectionFromLists(path);
+    m_connectionList->removeConnectionFromList(path);
     Connection::Ptr updateConnection = findConnection(path);
-    m_connectionLists->addConnectionToLists(updateConnection, "");
+    m_connectionList->addConnection(updateConnection, "");
 }

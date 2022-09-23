@@ -17,7 +17,7 @@
 #include <qt5-log-i.h>
 #include <NetworkManagerQt/ActiveConnection>
 #include <NetworkManagerQt/Settings>
-#include "connection-lists.h"
+#include "connection-list.h"
 using namespace NetworkManager;
 
 void StatusNotification::connectitonFailedNotify()

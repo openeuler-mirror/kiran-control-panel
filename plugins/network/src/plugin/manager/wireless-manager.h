@@ -20,7 +20,7 @@
 #include <NetworkManagerQt/WirelessSecuritySetting>
 #include <NetworkManagerQt/WirelessSetting>
 #include <QWidget>
-#include "connection-lists.h"
+#include "connection-list.h"
 #include "manager.h"
 QT_BEGIN_NAMESPACE
 namespace Ui
@@ -42,10 +42,10 @@ public:
     void requireInputPassword(const QString &ssid);
 
 public slots:
-    void handleRequestCreatConnection();
-    void handleRequestEditConnection(const QString &uuid, QString activeConnectionPath);
+    void handleCreatConnection();
+    void handleEditConnection(const QString &uuid, QString activeConnectionPath);
 
-    void handleRequestConnectWirelessNetwork(const NetworkConnectionInfo &connectionInfo);
+    void handleActivateSelectedWirelessNetwork(const NetworkConnectionInfo &connectionInfo);
     void getWirelessAvailableConnections(const QString &devicePath);
     void activateWirelessConnection(const QString &connectionPath, const QString &devicePath, const QString &accessPointPath);
     void addAndActivateWirelessConnection(NetworkManager::ConnectionSettings::Ptr connectionSettings);
@@ -53,12 +53,12 @@ public slots:
     void createConnectionSettings(const QString &ssid, const QString &accessPointPath);
     void setSecurityPskAndActivateWirelessConnection(const QString &password);
 
-    void handleRequestConnectHiddenNetwork(const QString &ssid);
+    void handleActivateHiddenNetwork(const QString &ssid);
 
     void handleActiveConnectionAdded(const QString &path) override;
     void handleActiveConnectionRemoved(const QString &path) override;
 
-    void handleStateActivating(const QString &activatedPath) override;
+    void handleStateActivating(const QString &activePath) override;
     void handleStateActivated(const QString &activatedPath) override;
     void handleStateDeactivated(const QString &deactivatedPath) override;
 
@@ -73,15 +73,13 @@ public slots:
     void handleReturnPreviousPage();
     void refreshConnectionLists() override;
 
-signals:
-    void requestPasswordFromTray(const QString &ssid);
-
 private:
     Ui::WirelessManager *ui;
     QMap<QString, NetworkManager::Connection::Ptr> m_wirelssConnectionMap;
     NetworkManager::WirelessDevice::Ptr m_wirelessDevice;
     NetworkManager::ConnectionSettings::Ptr m_connectionSettings;
     NetworkConnectionInfo m_connectionInfo;
+    QString m_devicePath;
 };
 
 #endif  // KIRAN_CPANEL_NETWORK_WIRELESS_MANAGER_H

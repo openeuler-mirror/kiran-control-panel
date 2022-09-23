@@ -38,13 +38,13 @@ public:
     void initConnection();
 
 public slots:
-    void handleRequestCreatConnection();
-    void handleRequestEditConnection(const QString &uuid, QString activeConnectionPath);
-    void handleRequestActivateConnection(const QString &connectionPath, const QString &connectionParameter);
+    void handleCreatConnection();
+    void handleEditConnection(const QString &uuid, QString activeConnectionPath);
+    void handleActivateSelectedConnection(const QString &connectionPath, const QString &connectionParameter);
 
     void handleStateDeactivated(const QString &deactivatedPath) override;
     void handleStateActivated(const QString &activatedPath) override;
-    void handleStateActivating(const QString &activatedPath) override;
+    void handleStateActivating(const QString &activePath) override;
     void handleReturnPreviousPage();
 
     void handleNotifierConnectionAdded(const QString &path) override;
@@ -59,6 +59,7 @@ public slots:
 private:
     Ui::WiredManager *ui;
     NetworkManager::WiredDevice::Ptr m_wiredDevice;
+    QString m_devicePath;
 };
 
 #endif  // KIRAN_CPANEL_NETWORK_WIRED_MANAGER_H

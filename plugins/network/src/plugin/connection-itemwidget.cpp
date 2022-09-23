@@ -16,6 +16,7 @@
 #include <qt5-log-i.h>
 #include <QApplication>
 #include <QLineEdit>
+#include <QMouseEvent>
 #include <QPainter>
 #include <QSvgRenderer>
 #include "animation-loading-label.h"
@@ -174,4 +175,13 @@ void ConnectionItemWidget::handleThemeChanged(Kiran::PaletteType paletteType)
         m_connectionTypeIcon->setPixmap(pixmap);
     }
     m_editButton->setIcon(NetworkUtils::trayIconColorSwitch(":/kcp-network-images/details-info.svg"));
+}
+
+void ConnectionItemWidget::mousePressEvent(QMouseEvent* event)
+{
+    if (event->button() == Qt::LeftButton)
+    {
+        emit clicked();
+    }
+    QWidget::mousePressEvent(event);
 }

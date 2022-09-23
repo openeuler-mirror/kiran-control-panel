@@ -85,32 +85,7 @@
       <number>0</number>
      </property>
      <item>
-      <widget class="ConnectionLists" name="connectionLists">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="frameShape">
-        <enum>QFrame::NoFrame</enum>
-       </property>
-       <property name="lineWidth">
-        <number>0</number>
-       </property>
-       <property name="sizeAdjustPolicy">
-        <enum>QAbstractScrollArea::AdjustToContents</enum>
-       </property>
-       <property name="autoScrollMargin">
-        <number>16</number>
-       </property>
-      </widget>
+      <widget class="PluginConnectionList" name="connectionList" native="true"/>
      </item>
      <item>
       <widget class="QPushButton" name="createConnectionButton">
@@ -141,9 +116,10 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>ConnectionLists</class>
-   <extends>QListWidget</extends>
-   <header location="global">connection-lists.h</header>
+   <class>PluginConnectionList</class>
+   <extends>QWidget</extends>
+   <header location="global">plugin-connection-list.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>

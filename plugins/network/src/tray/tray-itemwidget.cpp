@@ -16,6 +16,7 @@
 #include <qt5-log-i.h>
 #include <style-palette.h>
 #include <style-property.h>
+#include <QMouseEvent>
 #include <QPainter>
 #include <QPainterPath>
 #include <QStyleOption>
@@ -300,4 +301,13 @@ void TrayItemWidget::handleThemeChanged(Kiran::PaletteType paletteType)
     image.invertPixels(QImage::InvertRgb);
     QPixmap pixmap = QPixmap::fromImage(image);
     ui->connectionTypeIcon->setPixmap(pixmap);
+}
+
+void TrayItemWidget::mousePressEvent(QMouseEvent *event)
+{
+    if (event->button() == Qt::LeftButton)
+    {
+        emit clicked();
+    }
+    QWidget::mousePressEvent(event);
 }

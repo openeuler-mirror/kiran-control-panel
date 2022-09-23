@@ -15,10 +15,9 @@
 #include "network-plugin.h"
 #include <qt5-log-i.h>
 #include <QCoreApplication>
-#include "details-page.h"
-#include "cpanel-network-widget.h"
-//#include "network-config.h"
 #include "config.h"
+#include "cpanel-network-widget.h"
+#include "details-page/details-page.h"
 using namespace NetworkManager;
 
 NetworkPlugin::NetworkPlugin()
@@ -39,7 +38,7 @@ void NetworkPlugin::uninit()
 {
 }
 
-QWidget *NetworkPlugin::getSubItemWidget(QString subItemName)
+QWidget* NetworkPlugin::getSubItemWidget(QString subItemName)
 {
     QWidget* widget = nullptr;
     if (subItemName == "Network")
@@ -57,7 +56,7 @@ bool NetworkPlugin::haveUnsavedOptions()
 
 QStringList NetworkPlugin::visibleSubItems()
 {
-    return QStringList() << "Network";;
+    return QStringList() << "Network";
 }
 
 void NetworkPlugin::loadTranslator()
@@ -85,4 +84,3 @@ void NetworkPlugin::loadTranslator()
         qApp->installTranslator(m_translator);
     }
 }
-

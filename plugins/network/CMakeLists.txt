@@ -15,9 +15,9 @@ qt5_create_translation(NETWORK_QM_FILES ${CMAKE_CURRENT_SOURCE_DIR} translations
 
 file(GLOB_RECURSE PLUGIN_SRC "src/plugin/*.cpp" "src/plugin/*.h" "src/plugin/*.ui")
 file(GLOB_RECURSE TRAY_SRC "src/tray/*.cpp" "src/tray/*.h" "src/tray/*.ui")
-# XXX:此处对tray-itemwidget*的引入不合理，需要先修改ConnectionShowPage后，在修改此处
-file(GLOB_RECURSE COMMON_SRC "src/animation-loading-label*" "src/tray-itemwidget*" "src/connection-lists*"
-"src/connection-show-page*" "src/status-notification*" "src/utils*" "src/signal-forward*")
+
+file(GLOB_RECURSE COMMON_SRC "src/animation-loading-label*" "src/connection-list*"
+ "src/status-notification*" "src/utils*" "src/signal-forward*" "src/general.h")
 
 file(GLOB_RECURSE QRC "resources/*.qrc")
 
@@ -45,6 +45,7 @@ target_include_directories(${TARGET_NAME} PRIVATE
         src/plugin/settings/vpn
         src/plugin/setting-widget
         src/plugin/setting-widget/vpn
+        src/plugin/details-page
         resources
         data
         ${KCP_PLUGIN_INCLUDE_DIR}
@@ -64,7 +65,7 @@ target_link_libraries(${TARGET_NAME}
         ${KIRAN_STYLE_HELPER_LIBRARIES}
         KF5::NetworkManagerQt
         )
-
+      
 set(TRAY_PROCESS kiran-network-status-icon)
 
 add_executable(${TRAY_PROCESS}

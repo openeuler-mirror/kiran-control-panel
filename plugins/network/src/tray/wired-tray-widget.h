@@ -17,10 +17,10 @@
 
 #include <NetworkManagerQt/WiredDevice>
 #include <QWidget>
-#include "connection-lists.h"
+#include "tray-connection-list.h"
 #include "tray-widget.h"
 
-class ConnectionLists;
+class TrayConnectionList;
 class WiredTrayWidget : public TrayWidget
 {
     Q_OBJECT
@@ -34,9 +34,9 @@ public:
     void initUI();
 
     void showWiredConnectionLists();
-    void handleRequestActivateConnection(const NetworkConnectionInfo &connectionInfo);
-    void handleRequestDisconnect(const QString &activatedConnectionPath);
-    void handleRequestCancel(const QString &activatedConnectionPath);
+    void handleActivateSelectedConnection(const QString &connectionPath, const QString &connectionParameter);
+    void handleDisconnect(const QString &activatedConnectionPath);
+    void handleCancelConnection(const QString &activatedConnectionPath);
 
     void handleNotifierConnectionAdded(const QString &path) override;
     void handleNotifierConnectionRemoved(const QString &path) override;
@@ -58,8 +58,9 @@ public slots:
 
 private:
     NetworkManager::WiredDevice::Ptr m_wiredDevice;
-    QVBoxLayout *m_verticalLayout;
     QWidget *m_unavailableWidget;
+    QString m_devicePath;
+    QPointer<TrayConnectionList> m_connectionList;
 };
 
 #endif  // KIRAN_CPANEL_NETWORK_WIRED_TRAY_WIDGET_H

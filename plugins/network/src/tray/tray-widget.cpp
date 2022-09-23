@@ -18,7 +18,7 @@
 #include <NetworkManagerQt/WiredDevice>
 #include <NetworkManagerQt/WirelessSetting>
 #include "status-notification.h"
-#include "connection-lists.h"
+#include "connection-list.h"
 #include "connection-show-page.h"
 #include "tray-widget.h"
 #include "signal-forward.h"
@@ -26,8 +26,8 @@
 using namespace NetworkManager;
 #define TRAY_ITEM_NORAML_HIEGHT 50
 
-TrayWidget::TrayWidget(QWidget *parent) : QWidget(parent),
-                                          m_connectionLists(nullptr)
+TrayWidget::TrayWidget(QWidget *parent) : QWidget(parent)
+
 {
     init();
 }
@@ -45,6 +45,22 @@ void TrayWidget::init()
 
 void TrayWidget::initUI()
 {
+    setFixedWidth(240);
+    setContentsMargins(0, 0, 0, 0);
+    m_verticalLayout = new QVBoxLayout(this);
+    m_verticalLayout->setSpacing(0);
+    m_verticalLayout->setContentsMargins(0, 0, 0, 0);
+    // m_verticalLayout->setSizeConstraint(QLayout::SetMinAndMaxSize);
+}
+
+void TrayWidget::addWidget(QWidget *widget)
+{
+    m_verticalLayout->addWidget(widget);
+}
+
+void TrayWidget::removeWidget(QWidget *widget)
+{
+    m_verticalLayout->removeWidget(widget);
 }
 
 void TrayWidget::initConnection()
@@ -82,7 +98,6 @@ void TrayWidget::handleActiveConnectionStateChanged(ActiveConnection::State stat
     m_activatedPath = activeConnection->path();
     QString id = activeConnection->id();
     QStringList deviceList = activeConnection->devices();
-    m_devicePtr->uni();
     switch (state)
     {
     case ActiveConnection::State::Unknown:
@@ -127,33 +142,16 @@ void TrayWidget::handleStateDeactivated(const QString &activatedPath)
 {
 }
 
-void TrayWidget::getDeviceList(Device::Type deviceType)
-{
-    const Device::List deviceList = networkInterfaces();
-    for (Device::Ptr dev : deviceList)
-    {
-        if (dev->type() == deviceType)
-        {
-            m_deviceList << dev;
-        }
-    }
-    KLOG_DEBUG() << "m_deviceList:" << m_deviceList;
-    if (m_deviceList.isEmpty())
-    {
-        KLOG_DEBUG() << "No available devices were found";
-    }
-}
-
 void TrayWidget::handleDeviceStateChanged(Device::State newstate, Device::State oldstate, Device::StateChangeReason reason)
 {
 }
 
 int TrayWidget::getHeight()
 {
-    if (!m_connectionLists.isNull())
-    {
-        return m_connectionLists->height();
-    }
-    else
-        return TRAY_ITEM_NORAML_HIEGHT;
+    // if (!m_connectionLists.isNull())
+    // {
+    //     return m_connectionLists->height();
+    // }
+    // else
+    //     return TRAY_ITEM_NORAML_HIEGHT;
 }
