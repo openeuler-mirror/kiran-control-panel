@@ -10,7 +10,6 @@ pkg_search_module(KLOG_QT5 REQUIRED klog-qt5)
 pkg_search_module(KIRAN_CC_DAEMON REQUIRED kiran-cc-daemon)
 pkg_search_module(KIRAN_STYLE_HELPER REQUIRED kiran-style-helper)
 
-set(APPEARANCE_TRANSLATIONS_DIR ${INSTALL_DATADIR}/${TARGET_NAME}/translations/)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/appearance-config.h.in ${CMAKE_CURRENT_BINARY_DIR}/appearance-config.h)
 
 kiran_qt5_add_dbus_interface_ex(APPEARANCE_PROXY
@@ -51,7 +50,7 @@ install(TARGETS ${TARGET_NAME}
         DESTINATION ${PLUGIN_LIBS_INSTALL_DIR}/)
 
 install(FILES ${APPEARANCE_QM_FILES}
-        DESTINATION ${APPEARANCE_TRANSLATIONS_DIR})
+        DESTINATION ${TRANSLATION_INSTALL_DIR})
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/kiran-cpanel-appearance.desktop.in ${CMAKE_CURRENT_BINARY_DIR}/kiran-cpanel-appearance.desktop @ONLY)
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/kiran-cpanel-appearance.desktop DESTINATION ${PLUGIN_DESKTOP_INSTALL_DIR}/)

@@ -202,7 +202,10 @@ void WiredTrayWidget::handleNotifierConnectionAdded(const QString &path)
 void WiredTrayWidget::handleNotifierConnectionRemoved(const QString &path)
 {
     if (!m_connectionList.isNull())
+    {
         m_connectionList->removeConnectionFromList(path);
+        m_connectionList->adjustTraySize();
+    }
 }
 
 // XXX:可以优化

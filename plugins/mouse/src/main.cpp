@@ -1,30 +1,30 @@
 /**
-* Copyright (c) 2021 ~ 2022 KylinSec Co., Ltd.
-* kiran-cpanel-mouse is licensed under Mulan PSL v2.
-* You can use this software according to the terms and conditions of the Mulan PSL v2.
-* You may obtain a copy of Mulan PSL v2 at:
-*          http://license.coscl.org.cn/MulanPSL2
-* THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
-* EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
-* MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
-* See the Mulan PSL v2 for more details.
-*
-* Author:     liuxinhao <liuxinhao@kylinos.com.cn>
-*/
+ * Copyright (c) 2021 ~ 2022 KylinSec Co., Ltd.
+ * kiran-cpanel-mouse is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *          http://license.coscl.org.cn/MulanPSL2
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ *
+ * Author:     liuxinhao <liuxinhao@kylinos.com.cn>
+ */
 #include "kcm-manager.h"
 #include "mouse-page.h"
-#include "touchpad-page.h"
 #include "touchPad_backEnd_proxy.h"
+#include "touchpad-page.h"
 
 #include <kcp-plugin-interface.h>
 #include <kiran-session-daemon/mouse-i.h>
 #include <kiran-session-daemon/touchpad-i.h>
 #include <qt5-log-i.h>
 
-#include <QTranslator>
 #include <QApplication>
 #include <QDBusConnection>
 #include <QDBusConnectionInterface>
+#include <QTranslator>
 
 class KcpMouse : public QObject, public KcpPluginInterface
 {
@@ -33,7 +33,7 @@ class KcpMouse : public QObject, public KcpPluginInterface
     Q_INTERFACES(KcpPluginInterface)
 
 public:
-    KcpMouse(): QObject(){};
+    KcpMouse() : QObject(){};
     ~KcpMouse(){};
 
 public:
@@ -65,7 +65,7 @@ public:
         if (!m_translator->load(QLocale(),
                                 "kiran-cpanel-mouse",
                                 ".",
-                                "/usr/share/kiran-cpanel-mouse/translations/",
+                                "/usr/share/kiran-control-panel/translations/",
                                 ".qm"))
         {
             KLOG_DEBUG() << "Kiran cpanel mouse load translation failed";

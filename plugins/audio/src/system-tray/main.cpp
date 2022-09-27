@@ -21,10 +21,10 @@
 #include <QDBusConnection>
 #include <QDBusConnectionInterface>
 #include <QDBusReply>
+#include <QDateTime>
 #include <QFile>
 #include <QTimer>
 #include <QTranslator>
-#include <QDateTime>
 
 #define MAX_WAIT_COUNTS 10
 
@@ -36,7 +36,7 @@ int main(int argc, char *argv[])
     KLOG_INFO() << "autostart!";
 
     QTranslator translator;
-    if (translator.load(QLocale(), "kiran-cpanel-audio", ".", AUDIO_TRANSLATION_DIR_INSTALL_PATH, ".qm"))
+    if (translator.load(QLocale(), "kiran-cpanel-audio", ".", TRANSLATION_DIR_INSTALL_PATH, ".qm"))
     {
         a.installTranslator(&translator);
         KLOG_INFO() << "installTranslator load:" << a.installTranslator(&translator);
@@ -49,7 +49,8 @@ int main(int argc, char *argv[])
     QTimer timer;
     timer.setInterval(1000);
     int waitCounts = 0;
-    QObject::connect(&timer, &QTimer::timeout, [&]() {
+    QObject::connect(&timer, &QTimer::timeout, [&]()
+                     {
         if (QDBusConnection::sessionBus().interface()->isServiceRegistered("org.kde.StatusNotifierWatcher"))
         {
             KLOG_INFO() << "org.kde.StatusNotifierWatcher isServiceRegistered" << QDBusConnection::sessionBus().interface()->isServiceRegistered("org.kde.StatusNotifierWatcher");
@@ -71,8 +72,7 @@ int main(int argc, char *argv[])
                 KLOG_INFO() << "超过等待次数，程序退出";
                 return QApplication::quit();
             }
-        }
-    });
+        } });
 
     if (QDBusConnection::sessionBus().interface()->isServiceRegistered("org.kde.StatusNotifierWatcher"))
     {
@@ -88,7 +88,7 @@ int main(int argc, char *argv[])
     {
         timer.start();
         KLOG_INFO() << "start wait loop";
-        KLOG_INFO() << "currentDateTime:" <<  QDateTime::currentDateTime();
+        KLOG_INFO() << "currentDateTime:" << QDateTime::currentDateTime();
     }
     return QApplication::exec();
 }
