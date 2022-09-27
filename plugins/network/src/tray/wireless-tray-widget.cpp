@@ -385,6 +385,7 @@ void WirelessTrayWidget::handleNetworkDisappeared(const QString &ssid)
 {
     KLOG_DEBUG() << "NetworkDisappeared ssid:" << ssid;
     m_connectionList->removeWirelessNetworkFromList(ssid);
+    m_connectionList->adjustTraySize();
 }
 
 void WirelessTrayWidget::handleNetworkAppeared(const QString &ssid)
