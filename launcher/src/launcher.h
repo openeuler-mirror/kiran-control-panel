@@ -15,21 +15,19 @@
 #ifndef KIRANCONTROLCENTERSINGLEPLUGIN_H
 #define KIRANCONTROLCENTERSINGLEPLUGIN_H
 
-#include "kiranwidgets-qt5/kiran-titlebar-window.h"
 #include <QWidget>
-#include "plugin-info.h"
+#include "kcp-plugin-subitem.h"
+#include "kiranwidgets-qt5/kiran-titlebar-window.h"
 
 class KiranModuleWidget;
 class Launcher : public KiranTitlebarWindow
 {
     Q_OBJECT
-
 public:
     explicit Launcher(QWidget *parent = nullptr);
     ~Launcher();
 
-    void setPlugins(const QList<QSharedPointer<PluginHelper>>& plugins );
-    void setPlugin(QSharedPointer<PluginHelper> plguins);
+    void setSubItems(QVector<KcpPluginSubItemPtr> subitems);
 
 public:
     virtual QSize sizeHint() const override;

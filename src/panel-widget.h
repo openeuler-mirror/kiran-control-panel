@@ -17,7 +17,7 @@
 
 #include <QWidget>
 
-class CategoryWidget;
+class CategorySideBar;
 namespace Ui
 {
 class PanelWidget;
@@ -30,18 +30,20 @@ public:
     explicit PanelWidget(QWidget *parent = 0);
     ~PanelWidget();
 
-    void jumpTo(const QString& categoryName,const QString& subItem);
+    void jumpTo(const QString& categoryID, const QString& subItemID, const QString& customKey);
+
 private:
     void init();
 
 private slots:
-    void handleCurrentCategoryChanged(int curCategoryIdx,
-                                      int prevCategoryIdx);
+    void handleCurrentCategoryChanged(const QString& prev,
+                                      const QString& cur);
 
 private:
     Ui::PanelWidget *ui;
-    CategoryWidget *m_categoryWidget;
-    int m_currentCategoryIndex = -1;
+    CategorySideBar* m_categorySideBar;
+    /// @brief 缓存当前ModelWidget之中显示的分类ID
+    QString m_currentCategoryID;
 };
 
 #endif  //__PANEL_CONTENT_WIDGET_H__

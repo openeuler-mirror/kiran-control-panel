@@ -20,8 +20,8 @@
 #include <QListWidgetItem>
 #include <QTimer>
 
-#include "category-widget.h"
-#include "plugin-manager.h"
+#include "category-manager.h"
+#include "category-side-bar.h"
 #include "ui_panel-widget.h"
 
 PanelWidget::PanelWidget(QWidget *parent) : QWidget(parent),
@@ -39,66 +39,41 @@ PanelWidget::~PanelWidget()
 void PanelWidget::init()
 {
     // 左侧分类窗口，不加入布局，浮于窗口上层
-    m_categoryWidget = new CategoryWidget(this);
-    m_categoryWidget->move(0, 0);
+    m_categorySideBar = new CategorySideBar(this);
+    m_categorySideBar->move(0, 0);
 
-    connect(m_categoryWidget, &CategoryWidget::currentCategoryIndexChanged,
+    connect(m_categorySideBar, &CategorySideBar::currentCategoryIndexChanged,
             this, &PanelWidget::handleCurrentCategoryChanged, Qt::QueuedConnection);
 
     // 内容窗口，右边预留出左侧分类图标模式的宽度
-    ui->module_widget->setLeftContentsMargins(CategoryWidget::reduce_width);
+    ui->module_widget->setLeftContentsMargins(CategorySideBar::reduce_width);
 }
 
-void PanelWidget::handleCurrentCategoryChanged(int curCategoryIdx, int prevCategoryIdx)
+void PanelWidget::handleCurrentCategoryChanged(const QString& prev, const QString& cur)
 {
-    if ((m_currentCategoryIndex != curCategoryIdx) &&
-        (m_currentCategoryIndex != -1))
+    if (m_currentCategoryID == cur)
     {
-        if (ui->module_widget->checkHasUnSaved())
-        {
-            KLOG_DEBUG() << "switch category reject," << prevCategoryIdx << "->" << curCategoryIdx;
-            m_categoryWidget->setCurrentCategoryIdx(m_currentCategoryIndex);
-            return;
-        }
-    }
-
-    if (m_currentCategoryIndex != curCategoryIdx)
-    {
-        KLOG_DEBUG() << "update current category Idx" << curCategoryIdx;
-        m_currentCategoryIndex = curCategoryIdx;
-
-        auto categorys = PluginManager::getInstance()->getCategorys();
-        auto category = categorys.at(m_currentCategoryIndex);
-        KLOG_DEBUG() << "update module widget for category:" << (category ? category->getCategoryDesktopInfo().name : "null");
-        ui->module_widget->setPlugins(category ? category->getPlugins() : QList<QSharedPointer<PluginHelper>>());
-    }
-}
-
-void PanelWidget::jumpTo(const QString &categoryName, const QString &subItem)
-{
-    auto categorys = PluginManager::getInstance()->getCategorys();
-
-    int categoryIdx = -1;
-
-    for (int i = 0; i < categorys.count(); i++)
-    {
-        const auto& category = categorys.at(i);
-        if (category->getCategoryDesktopInfo().categoryName == categoryName)
-        {
-            categoryIdx = i;
-            break;
-        }
-    }
-
-    if (categoryIdx == -1)
-    {
-        KLOG_ERROR() << QString("can't jump to category <%1>,not find!").arg(categoryName);
         return;
     }
 
-    m_categoryWidget->setCurrentCategoryIdx(categoryIdx);
+    auto camanager = CategoryManager::instance();
 
-    QTimer::singleShot(0, [this,subItem]() {
-        ui->module_widget->jumpTo(subItem);
-    });
+    if (ui->module_widget->checkHasUnSaved())
+    {
+        KLOG_DEBUG() << "switch category reject," << prev << "->" << cur;
+        m_categorySideBar->setCurrentCategoryID(prev);
+        return;
+    }
+
+    KLOG_DEBUG() << "switch to category:" << cur;
+    m_currentCategoryID = cur;
+    Category* category = camanager->getCategory(m_currentCategoryID);
+    ui->module_widget->setCategory(category);
+}
+
+void PanelWidget::jumpTo(const QString& categoryID, const QString& subItemID, const QString& customKey)
+{
+    m_categorySideBar->setCurrentCategoryID(categoryID);
+    QTimer::singleShot(0, [this, subItemID, customKey]()
+                       { ui->module_widget->jumpTo(subItemID, customKey); });
 }

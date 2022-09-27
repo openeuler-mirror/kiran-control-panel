@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.2)
 
-set (TARGET_NAME plugin-info)
+set (TARGET_NAME plugin-framework)
 
 find_package(Qt5 COMPONENTS Core Widgets LinguistTools)
 pkg_search_module(KLOG_QT5 REQUIRED klog-qt5)
@@ -26,4 +26,3 @@ target_link_libraries(${TARGET_NAME} PRIVATE
         Qt5::Widgets
         ${KLOG_QT5_LIBRARIES}
         ${GLIB_2_LIBRARIES})
-

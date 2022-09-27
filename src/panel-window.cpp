@@ -88,10 +88,10 @@ void PanelWindow::handleReceivedMessage(quint32 instanceId, QByteArray message)
     jump(category,subItem);
 }
 
-void PanelWindow::jump(const QString& categoryName,const QString& subItem)
+void PanelWindow::jump(const QString& categoryID, const QString& subItemID, const QString& customKey)
 {
-    KLOG_DEBUG() << "jump to" << categoryName << subItem;
-    m_panelWidget->jumpTo(categoryName,subItem);
+    KLOG_DEBUG() << "jump to" << categoryID << subItemID << customKey;
+    m_panelWidget->jumpTo(categoryID, subItemID, customKey);
 }
 
 #include <QResizeEvent>

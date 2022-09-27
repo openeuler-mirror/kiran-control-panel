@@ -40,7 +40,7 @@ private:
     void setSearchPopupVisible(bool searchPopupVisible);
 
 signals:
-    void requestJumpTo(const QString& categoryID,const QString& subItemID);
+    void requestJumpTo(const QString& categoryID, const QString& subItemID, const QString& customKey = QString());
 
 private:
     SearchModel* m_searchModel = nullptr;

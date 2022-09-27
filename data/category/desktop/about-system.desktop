@@ -1,12 +1,14 @@
-[Desktop Entry]
+[Kiran Control Panel Category]
 Name=About System
 Name[zh_CN]=关于系统
+
+Category=about-system
+
 Comment=About System
 Comment[zh_CN]=关于系统
+
 Icon=about-system.png
 
-[Kiran Control Panel Category]
-Category=about-system
 Weight=10
 Keywords[zh_CN]=关于系统
 Keywords=About System

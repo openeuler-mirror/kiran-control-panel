@@ -31,7 +31,7 @@ protected:
     void resizeEvent(QResizeEvent* event) override;
 
 public slots:
-    void jump(const QString& categoryName,const QString& subItem);
+    void jump(const QString& categoryID, const QString& subItemID, const QString& customKey = QString());
 
 private:
     void initUI();

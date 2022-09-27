@@ -20,6 +20,16 @@ CategoryItem::~CategoryItem()
 {
 }
 
+void CategoryItem::setCategoryID(const QString &id)
+{
+    m_categoryID = id;
+}
+
+QString CategoryItem::getCategoryID()
+{
+    return m_categoryID;
+}
+
 void CategoryItem::paintEvent(QPaintEvent *e)
 {
     QPainter p(this);

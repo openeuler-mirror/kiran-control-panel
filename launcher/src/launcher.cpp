@@ -42,15 +42,9 @@ Launcher::~Launcher()
 
 }
 
-void Launcher::setPlugins(const QList<QSharedPointer<PluginHelper>> &plugins)
+void Launcher::setSubItems(QVector<KcpPluginSubItemPtr> subitems)
 {
-    m_moduleWidget->setPlugins(plugins);
-}
-
-void Launcher::setPlugin(QSharedPointer<PluginHelper> plugin)
-{
-    QList<QSharedPointer<PluginHelper>> plugins = {plugin};
-    m_moduleWidget->setPlugins(plugins);
+    m_moduleWidget->setSubItems(subitems);
 }
 
 QSize Launcher::sizeHint() const

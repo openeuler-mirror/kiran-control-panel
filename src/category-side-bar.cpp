@@ -2,42 +2,42 @@
 // Created by liuxinhao on 2022/5/26.
 //
 
-#include "category-widget.h"
+#include "category-side-bar.h"
 #include "category-item.h"
-#include "plugin-manager.h"
+#include "category-manager.h"
 
 #include <style-palette.h>
 
+#include <QBoxLayout>
 #include <QButtonGroup>
 #include <QEvent>
+#include <QGraphicsDropShadowEffect>
 #include <QPainter>
 #include <QResizeEvent>
 #include <QScrollArea>
-#include <QBoxLayout>
-#include <QGraphicsDropShadowEffect>
 
-const int shadow_width=10;
-const int CategoryWidget::reduce_width = 88;
-const int CategoryWidget::expand_width = 244;
+const int shadow_width = 10;
+const int CategorySideBar::reduce_width = 88;
+const int CategorySideBar::expand_width = 244;
 
-CategoryWidget::CategoryWidget(QWidget *parent) : QWidget(parent)
+CategorySideBar::CategorySideBar(QWidget *parent) : QWidget(parent)
 {
     init();
 }
 
-CategoryWidget::~CategoryWidget()
+CategorySideBar::~CategorySideBar()
 {
 }
 
-void CategoryWidget::init()
+void CategorySideBar::init()
 {
     setAccessibleName("ControlPanelCategory");
 
     //初始化阴影
-    QColor shadowColor(0,0,0,255*0.9);
+    QColor shadowColor(0, 0, 0, 255 * 0.9);
     m_dropShadowEffect = new QGraphicsDropShadowEffect(this);
     m_dropShadowEffect->setBlurRadius(20);
-    m_dropShadowEffect->setOffset(-4,0);
+    m_dropShadowEffect->setOffset(-4, 0);
     m_dropShadowEffect->setColor(shadowColor);
     m_dropShadowEffect->setEnabled(false);
     this->setGraphicsEffect(m_dropShadowEffect);
@@ -54,7 +54,7 @@ void CategoryWidget::init()
     //布局
     auto layout = new QHBoxLayout(this);
     layout->setSpacing(0);
-    layout->setContentsMargins(0,0,shadow_width,0);
+    layout->setContentsMargins(0, 0, shadow_width, 0);
 
     //滚动区域
     auto pScrollArea = new QScrollArea(this);
@@ -74,20 +74,20 @@ void CategoryWidget::init()
     //分隔线条
     m_splitLine = new QFrame(this);
     m_splitLine->setFrameShape(QFrame::VLine);
-    m_splitLine->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Expanding);
+    m_splitLine->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
     m_splitLine->setFixedWidth(1);
     layout->addWidget(m_splitLine);
 
     m_categoryBtnGroup = new QButtonGroup(this);
     m_categoryBtnGroup->setExclusive(true);
-    connect(m_categoryBtnGroup,QOverload<QAbstractButton*,bool>::of(&QButtonGroup::buttonToggled),
-            this,&CategoryWidget::handleCategoryItemToggled);
+    connect(m_categoryBtnGroup, QOverload<QAbstractButton *, bool>::of(&QButtonGroup::buttonToggled),
+            this, &CategorySideBar::handleCategoryItemToggled);
 
     loadCategories();
-    resize(reduce_width+shadow_width,0);
+    resize(reduce_width + shadow_width, 0);
 }
 
-bool CategoryWidget::eventFilter(QObject *watched, QEvent *event)
+bool CategorySideBar::eventFilter(QObject *watched, QEvent *event)
 {
     if (watched == parent() && event->type() == QEvent::Resize)
     {
@@ -97,7 +97,7 @@ bool CategoryWidget::eventFilter(QObject *watched, QEvent *event)
     return QObject::eventFilter(watched, event);
 }
 
-bool CategoryWidget::event(QEvent *event)
+bool CategorySideBar::event(QEvent *event)
 {
     switch (event->type())
     {
@@ -111,76 +111,86 @@ bool CategoryWidget::event(QEvent *event)
     return QWidget::event(event);
 }
 
-void CategoryWidget::expand()
+void CategorySideBar::expand()
 {
-    m_isExpaned=true;
+    m_isExpaned = true;
     m_dropShadowEffect->setEnabled(true);
-    m_propertyAnimation.setStartValue(QRect(0, 0, reduce_width+shadow_width, this->height()));
-    m_propertyAnimation.setEndValue(QRect(0, 0, expand_width+shadow_width, this->height()));
+    m_propertyAnimation.setStartValue(QRect(0, 0, reduce_width + shadow_width, this->height()));
+    m_propertyAnimation.setEndValue(QRect(0, 0, expand_width + shadow_width, this->height()));
     m_propertyAnimation.setEasingCurve(QEasingCurve::InCubic);
     m_propertyAnimation.start();
 }
 
-void CategoryWidget::reduce()
+void CategorySideBar::reduce()
 {
-    m_isExpaned=false;
+    m_isExpaned = false;
     m_dropShadowEffect->setEnabled(false);
-    m_propertyAnimation.setStartValue(QRect(0, 0, expand_width+shadow_width, this->height()));
-    m_propertyAnimation.setEndValue(QRect(0, 0, reduce_width+shadow_width, this->height()));
+    m_propertyAnimation.setStartValue(QRect(0, 0, expand_width + shadow_width, this->height()));
+    m_propertyAnimation.setEndValue(QRect(0, 0, reduce_width + shadow_width, this->height()));
     m_propertyAnimation.setEasingCurve(QEasingCurve::OutCubic);
     m_propertyAnimation.start();
 }
 
-void CategoryWidget::handleCategoryItemToggled(QAbstractButton *btn, bool checked)
+void CategorySideBar::handleCategoryItemToggled(QAbstractButton *btn, bool checked)
 {
-    if( !checked )
+    if (!checked)
         return;
 
-    int checkedIdx = m_categoryBtnGroup->id(btn);
-    if( checkedIdx == m_currentCategoryIdx )
+    CategoryItem *item = qobject_cast<CategoryItem *>(btn);
+    QString categoryID = item->getCategoryID();
+
+    if (categoryID == m_curCategoryID)
         return;
 
-    int prevIdx = m_currentCategoryIdx;
-    m_currentCategoryIdx = checkedIdx;
+    emit currentCategoryIndexChanged(m_curCategoryID, categoryID);
 
-    emit currentCategoryIndexChanged(m_currentCategoryIdx,prevIdx);
+    m_curCategoryID = categoryID;
 }
 
-void CategoryWidget::loadCategories()
+void CategorySideBar::loadCategories()
 {
-    auto categories = PluginManager::getInstance()->getCategorys();
-    for( int i=0;i<categories.count();i++)
+    auto cmanager = CategoryManager::instance();
+    QList<Category *> categorys = cmanager->getCategorys();
+
+    int idx = 0;
+    for (auto category : categorys)
     {
-        auto category = categories.at(i);
-        auto categoryInfo = category->getCategoryDesktopInfo();
         auto categoryItem = new CategoryItem();
-        categoryItem->setAccessibleName(QString("ControlPanelCategory::%1").arg(categoryInfo.categoryName));
-        categoryItem->setText(categoryInfo.name);
-        categoryItem->setIcon(QIcon(categoryInfo.icon));
+        categoryItem->setAccessibleName(QString("ControlPanelCategory::%1").arg(category->getID()));
+        categoryItem->setText(category->getName());
+        categoryItem->setIcon(QIcon(category->getIcon()));
+        categoryItem->setCategoryID(category->getID());
+
         categoryItem->setFixedHeight(50);
         categoryItem->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
-        m_categoryBtnGroup->addButton(categoryItem, i);
+
+        m_categoryBtnGroup->addButton(categoryItem, idx);
         m_contentLayout->addWidget(categoryItem);
+
+        m_categorysIDMap[category->getID()] = idx;
+        idx++;
     }
 
     auto categorySpaceItem = new QSpacerItem(20, 20, QSizePolicy::Minimum, QSizePolicy::Expanding);
     m_contentLayout->addItem(categorySpaceItem);
 }
 
-int CategoryWidget::getCurrentCateogryIdx()
+QString CategorySideBar::getCurrentCateogryID()
 {
-    return m_currentCategoryIdx;
+    return m_curCategoryID;
 }
 
-void CategoryWidget::setCurrentCategoryIdx(int idx)
+void CategorySideBar::setCurrentCategoryID(const QString &categoryID)
 {
-    if( idx == m_currentCategoryIdx )
+    if (categoryID == m_curCategoryID)
         return;
+
+    int idx = m_categorysIDMap[categoryID];
     auto btn = m_categoryBtnGroup->button(idx);
     btn->setChecked(true);
 }
 
-void CategoryWidget::paintEvent(QPaintEvent *event)
+void CategorySideBar::paintEvent(QPaintEvent *event)
 {
     QPainter p(this);
     QWidget::paintEvent(event);

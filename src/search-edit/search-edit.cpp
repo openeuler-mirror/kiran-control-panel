@@ -61,11 +61,13 @@ void SearchEdit::init()
         {
             return ;
         }
-        QString categoryID,subItemID;
+        QString categoryID,subItemID,customSearchKey;
         auto filterModel = m_completer->completionModel();
         categoryID = filterModel->data(index,SearchModel::roleCategoryID).toString();
         subItemID = filterModel->data(index,SearchModel::roleSubItemID).toString();
-        emit requestJumpTo(categoryID,subItemID);
+        customSearchKey = filterModel->data(index,SearchModel::roleSearchKey).toString();
+
+        emit requestJumpTo(categoryID,subItemID,customSearchKey);
         QTimer::singleShot(0,this,&QLineEdit::clear);
     });
     connect(this,&QLineEdit::returnPressed,[this](){
@@ -87,9 +89,11 @@ void SearchEdit::init()
         auto item = items.at(0);
         auto categoryID = item->data(SearchModel::roleCategoryID).toString();
         auto subItemID = item->data(SearchModel::roleSubItemID).toString();
+        auto customSearchKey = item->data(SearchModel::roleSearchKey).toString();
+
         clear();
         
-        emit requestJumpTo(categoryID,subItemID);
+        emit requestJumpTo(categoryID,subItemID,customSearchKey);
     });
     // clang-format on
 }

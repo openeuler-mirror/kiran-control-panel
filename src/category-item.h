@@ -15,8 +15,14 @@ public:
     CategoryItem(QWidget* parent = nullptr);
     ~CategoryItem();
 
+    void setCategoryID(const QString& id);
+    QString getCategoryID();
+
 protected:
     void paintEvent(QPaintEvent *e) override;
+
+private:
+    QString m_categoryID;
 };
 
 

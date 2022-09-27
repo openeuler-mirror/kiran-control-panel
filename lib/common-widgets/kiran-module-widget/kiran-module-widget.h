@@ -15,15 +15,17 @@
 #ifndef KIRANMODULEWIDGET_H
 #define KIRANMODULEWIDGET_H
 
+#include <QMap>
 #include <QWidget>
-#include "plugin-info.h"
-
+#include "kcp-plugin-subitem.h"
 namespace Ui
 {
 class KiranModuleWidget;
 }
 
 class QListWidgetItem;
+class Category;
+class KcpPluginSubItem;
 class KiranModuleWidget : public QWidget
 {
     Q_OBJECT
@@ -34,23 +36,35 @@ public:
     void setLeftContentsMargins(const int &leftmargin);
 
     void clear();
-    void setPlugins(const PluginHelperPtrList &plugins);
-    bool checkHasUnSaved();
-    void jumpTo(const QString& subItemID);
 
-    bool eventFilter(QObject *watched, QEvent *event) override;
+    void setCategory(Category *c);
+    void setSubItems(QVector<KcpPluginSubItemPtr> subitems);
+
+    bool checkHasUnSaved();
+    void jumpTo(const QString &subItemID, const QString &customKey);
+
 private slots:
     void handleCurrentItemChanged();
-    void handlePluginVisibleSubItemsChanged();
+    void handleCategorySubItemAdded(const QString &id);
+    void handleCategorySubItemDeleted(const QString &id);
+    void handleCategorySubItemInfoChanged(const QString &subitemID);
 
 private:
     void init();
+    void removeListWidgetItem(KcpPluginSubItemPtr subitem);
+    void appendListWidgetItem(KcpPluginSubItemPtr subitem);
 
 private:
-    PluginHelperPtrList m_plugins;
     Ui::KiranModuleWidget *ui;
-    int m_currentSubItemIdx = -1;
+
     QWidget *m_subItemWidget = nullptr;
+    Category *m_category = nullptr;
+
+    QVector<KcpPluginSubItemPtr> m_subitems;
+    /// 保存当前选中的功能项信息
+    QPair<QListWidgetItem *, KcpPluginSubItemPtr> m_currentSubItem;
+    /// 维系功能项目界面显示条目与功能项目关联的字典
+    QMap<QListWidgetItem *, KcpPluginSubItemPtr> m_subItemsMap;
 };
 
 #endif  // KIRANMODULEWIDGET_H
