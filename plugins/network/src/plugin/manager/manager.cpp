@@ -17,11 +17,14 @@
 #include <NetworkManagerQt/Settings>
 #include <NetworkManagerQt/WiredDevice>
 #include <NetworkManagerQt/WirelessDevice>
+#include "signal-forward.h"
 
 using namespace NetworkManager;
 
 Manager::Manager(QWidget *parent) : QWidget(parent)
 {
+    m_signalForward = SignalForward::instance();
+    initNotifierConnection();
 }
 
 Manager::~Manager()
@@ -30,15 +33,15 @@ Manager::~Manager()
 
 void Manager::initNotifierConnection()
 {
-    //该信号并不能判断连接是否真正Connected/Activated,只能判断一个连接被加入到激活容器中
-    connect(notifier(), &Notifier::activeConnectionAdded, this, &Manager::handleActiveConnectionAdded, Qt::UniqueConnection);
-    connect(notifier(), &Notifier::activeConnectionRemoved, this, &Manager::handleActiveConnectionRemoved, Qt::UniqueConnection);
-
     //连接Wired时触发，而连接VPN时没有触发该信号，暂时不使用该信号
     // connect(notifier(), &Notifier::statusChanged, this, [this](NetworkManager::Status status) {});
 
-    connect(settingsNotifier(), &SettingsNotifier::connectionAdded, this, &Manager::handleNotifierConnectionAdded, Qt::UniqueConnection);
+    // activeConnectionAdded信号并不能判断连接是否真正Connected/Activated,只能判断一个连接被加入到激活容器中
+    connect(notifier(), &Notifier::activeConnectionAdded, m_signalForward, &SignalForward::handleActiveConnectionAdded, Qt::UniqueConnection);
+    connect(settingsNotifier(), &SettingsNotifier::connectionAdded, m_signalForward, &SignalForward::handleNotifierConnectionAdded, Qt::UniqueConnection);
+
     connect(settingsNotifier(), &SettingsNotifier::connectionRemoved, this, &Manager::handleNotifierConnectionRemoved, Qt::UniqueConnection);
+    connect(notifier(), &Notifier::activeConnectionRemoved, this, &Manager::handleActiveConnectionRemoved, Qt::UniqueConnection);
 }
 
 void Manager::refreshConnectionLists()

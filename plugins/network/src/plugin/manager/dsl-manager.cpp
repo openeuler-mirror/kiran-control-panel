@@ -36,7 +36,6 @@ void DslManager::initUI()
 
 void DslManager::initConnection()
 {
-    connect(ui->connectionShowPage, &ConnectionShowPage::requestCreatConnection, [=]() {
-        ui->stackedWidget->setCurrentIndex(PAGE_SETTING);
-    });
+    connect(ui->connectionShowPage, &ConnectionShowPage::creatConnection, [=]()
+            { ui->stackedWidget->setCurrentIndex(PAGE_SETTING); });
 }

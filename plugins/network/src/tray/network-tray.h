@@ -70,9 +70,6 @@ public slots:
 
     void handleThemeChanged(Kiran::PaletteType paletteType);
 
-protected:
-    void paintEvent(QPaintEvent *event) override;
-
 private:
     QSystemTrayIcon *m_systemTray;
     QMenu *m_menu;

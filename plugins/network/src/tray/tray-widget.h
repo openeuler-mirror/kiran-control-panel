@@ -23,6 +23,7 @@
 
 Q_DECLARE_METATYPE(NetworkManager::ActiveConnection::State);
 
+class SignalForward;
 class TrayWidget : public QWidget
 {
     Q_OBJECT
@@ -34,8 +35,9 @@ public:
     void init();
     void initUI();
     void initConnection();
-
-    void getDeviceList(NetworkManager::Device::Type deviceType);
+    void addWidget(QWidget *widget);
+    void removeWidget(QWidget *widget);
+    virtual int getHeight();
 
 public slots:
     virtual void handleNotifierConnectionAdded(const QString &path);
@@ -52,8 +54,10 @@ public slots:
 
     void distributeNotifeir();
 
+signals:
+    void sizeChanged(QSize sizeHint);
+
 protected:
-    QList<NetworkManager::Device::Ptr> m_deviceList;
     NetworkManager::Device::Ptr m_devicePtr;
 
 private:
@@ -61,6 +65,8 @@ private:
     QTimer m_StateActivatedTimer;
     QString m_connectionRemovePath;
     QString m_activatedPath;
+    QVBoxLayout *m_verticalLayout;
+    SignalForward *m_signalForward;
 };
 
 #endif  // TRAYPAGE_H

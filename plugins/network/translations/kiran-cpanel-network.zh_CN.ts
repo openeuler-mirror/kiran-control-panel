@@ -80,85 +80,85 @@
 <context>
     <name>ConnectionDetailsWidget</name>
     <message>
-        <location filename="../src/plugin/connection-details-widget.ui" line="14"/>
+        <location filename="../src/plugin/details-page/connection-details-widget.ui" line="14"/>
         <source>ConnectionDetailsWidget</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/plugin/connection-details-widget.ui" line="89"/>
+        <location filename="../src/plugin/details-page/connection-details-widget.ui" line="89"/>
         <source>Security type</source>
         <translation>安全类型</translation>
     </message>
     <message>
-        <location filename="../src/plugin/connection-details-widget.ui" line="109"/>
-        <location filename="../src/plugin/connection-details-widget.ui" line="175"/>
-        <location filename="../src/plugin/connection-details-widget.ui" line="241"/>
-        <location filename="../src/plugin/connection-details-widget.ui" line="315"/>
-        <location filename="../src/plugin/connection-details-widget.ui" line="381"/>
-        <location filename="../src/plugin/connection-details-widget.ui" line="447"/>
-        <location filename="../src/plugin/connection-details-widget.ui" line="513"/>
-        <location filename="../src/plugin/connection-details-widget.ui" line="579"/>
-        <location filename="../src/plugin/connection-details-widget.ui" line="645"/>
-        <location filename="../src/plugin/connection-details-widget.ui" line="711"/>
-        <location filename="../src/plugin/connection-details-widget.ui" line="777"/>
-        <location filename="../src/plugin/connection-details-widget.ui" line="843"/>
-        <location filename="../src/plugin/connection-details-widget.ui" line="909"/>
+        <location filename="../src/plugin/details-page/connection-details-widget.ui" line="109"/>
+        <location filename="../src/plugin/details-page/connection-details-widget.ui" line="175"/>
+        <location filename="../src/plugin/details-page/connection-details-widget.ui" line="241"/>
+        <location filename="../src/plugin/details-page/connection-details-widget.ui" line="315"/>
+        <location filename="../src/plugin/details-page/connection-details-widget.ui" line="381"/>
+        <location filename="../src/plugin/details-page/connection-details-widget.ui" line="447"/>
+        <location filename="../src/plugin/details-page/connection-details-widget.ui" line="513"/>
+        <location filename="../src/plugin/details-page/connection-details-widget.ui" line="579"/>
+        <location filename="../src/plugin/details-page/connection-details-widget.ui" line="645"/>
+        <location filename="../src/plugin/details-page/connection-details-widget.ui" line="711"/>
+        <location filename="../src/plugin/details-page/connection-details-widget.ui" line="777"/>
+        <location filename="../src/plugin/details-page/connection-details-widget.ui" line="843"/>
+        <location filename="../src/plugin/details-page/connection-details-widget.ui" line="909"/>
         <source>TextLabel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/plugin/connection-details-widget.ui" line="155"/>
+        <location filename="../src/plugin/details-page/connection-details-widget.ui" line="155"/>
         <source>Frequency band</source>
         <translation>频段</translation>
     </message>
     <message>
-        <location filename="../src/plugin/connection-details-widget.ui" line="221"/>
+        <location filename="../src/plugin/details-page/connection-details-widget.ui" line="221"/>
         <source>Channel</source>
         <translation>网络通道</translation>
     </message>
     <message>
-        <location filename="../src/plugin/connection-details-widget.ui" line="295"/>
+        <location filename="../src/plugin/details-page/connection-details-widget.ui" line="295"/>
         <source>Interface</source>
         <translation>接口</translation>
     </message>
     <message>
-        <location filename="../src/plugin/connection-details-widget.ui" line="361"/>
+        <location filename="../src/plugin/details-page/connection-details-widget.ui" line="361"/>
         <source>MAC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/plugin/connection-details-widget.ui" line="427"/>
+        <location filename="../src/plugin/details-page/connection-details-widget.ui" line="427"/>
         <source>IPv4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/plugin/connection-details-widget.ui" line="493"/>
-        <location filename="../src/plugin/connection-details-widget.ui" line="757"/>
+        <location filename="../src/plugin/details-page/connection-details-widget.ui" line="493"/>
+        <location filename="../src/plugin/details-page/connection-details-widget.ui" line="757"/>
         <source>Gateway</source>
         <translation>网关</translation>
     </message>
     <message>
-        <location filename="../src/plugin/connection-details-widget.ui" line="559"/>
+        <location filename="../src/plugin/details-page/connection-details-widget.ui" line="559"/>
         <source>Preferred DNS</source>
         <translation>首选DNS</translation>
     </message>
     <message>
-        <location filename="../src/plugin/connection-details-widget.ui" line="625"/>
+        <location filename="../src/plugin/details-page/connection-details-widget.ui" line="625"/>
         <source>Subnet mask</source>
         <translation>子网掩码</translation>
     </message>
     <message>
-        <location filename="../src/plugin/connection-details-widget.ui" line="691"/>
+        <location filename="../src/plugin/details-page/connection-details-widget.ui" line="691"/>
         <source>IPv6</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/plugin/connection-details-widget.ui" line="823"/>
+        <location filename="../src/plugin/details-page/connection-details-widget.ui" line="823"/>
         <source>Prefix</source>
         <translation>前缀</translation>
     </message>
     <message>
-        <location filename="../src/plugin/connection-details-widget.ui" line="889"/>
+        <location filename="../src/plugin/details-page/connection-details-widget.ui" line="889"/>
         <source>Rate</source>
         <translation>速率</translation>
     </message>
@@ -259,22 +259,22 @@
 <context>
     <name>DetailsPage</name>
     <message>
-        <location filename="../src/plugin/details-page.ui" line="14"/>
+        <location filename="../src/plugin/details-page/details-page.ui" line="14"/>
         <source>DetailsPage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/plugin/details-page.ui" line="62"/>
+        <location filename="../src/plugin/details-page/details-page.ui" line="62"/>
         <source>Network Details</source>
         <translation>网络详情</translation>
     </message>
     <message>
-        <location filename="../src/plugin/details-page.ui" line="121"/>
+        <location filename="../src/plugin/details-page/details-page.ui" line="121"/>
         <source>Please select a connection</source>
         <translation>请选择连接</translation>
     </message>
     <message>
-        <location filename="../src/plugin/details-page.ui" line="140"/>
+        <location filename="../src/plugin/details-page/details-page.ui" line="140"/>
         <source>ComboBoxDetailsSelectConnection</source>
         <translation type="unfinished"></translation>
     </message>
@@ -808,22 +808,22 @@
         <translation>连接</translation>
     </message>
     <message>
-        <location filename="../src/tray/tray-itemwidget.cpp" line="144"/>
+        <location filename="../src/tray/tray-itemwidget.cpp" line="146"/>
         <source>Connected</source>
         <translation>已连接</translation>
     </message>
     <message>
-        <location filename="../src/tray/tray-itemwidget.cpp" line="155"/>
+        <location filename="../src/tray/tray-itemwidget.cpp" line="157"/>
         <source>Unconnected</source>
         <translation>未连接</translation>
     </message>
     <message>
-        <location filename="../src/tray/tray-itemwidget.cpp" line="189"/>
+        <location filename="../src/tray/tray-itemwidget.cpp" line="191"/>
         <source>Please input password</source>
         <translation>请输入密码</translation>
     </message>
     <message>
-        <location filename="../src/tray/tray-itemwidget.cpp" line="198"/>
+        <location filename="../src/tray/tray-itemwidget.cpp" line="200"/>
         <source>Please input a network name</source>
         <translation>请输入网络名称</translation>
     </message>
@@ -836,17 +836,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/tray/tray-page.ui" line="95"/>
+        <location filename="../src/tray/tray-page.ui" line="98"/>
         <source>TextLabel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/tray/tray-page.cpp" line="88"/>
+        <location filename="../src/tray/tray-page.cpp" line="78"/>
         <source>Select wired network card</source>
         <translation>请选择有线网卡</translation>
     </message>
     <message>
-        <location filename="../src/tray/tray-page.cpp" line="103"/>
+        <location filename="../src/tray/tray-page.cpp" line="83"/>
         <source>Select wireless network card</source>
         <translation>请选择无线网卡</translation>
     </message>
@@ -1004,22 +1004,22 @@
         <translation>返回</translation>
     </message>
     <message>
-        <location filename="../src/plugin/manager/vpn-manager.cpp" line="47"/>
+        <location filename="../src/plugin/manager/vpn-manager.cpp" line="48"/>
         <source>VPN</source>
         <translation type="unfinished">VPN</translation>
     </message>
     <message>
-        <location filename="../src/plugin/manager/vpn-manager.cpp" line="50"/>
+        <location filename="../src/plugin/manager/vpn-manager.cpp" line="51"/>
         <source>L2TP</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/plugin/manager/vpn-manager.cpp" line="193"/>
+        <location filename="../src/plugin/manager/vpn-manager.cpp" line="197"/>
         <source>Tips</source>
         <translation>提示</translation>
     </message>
     <message>
-        <location filename="../src/plugin/manager/vpn-manager.cpp" line="194"/>
+        <location filename="../src/plugin/manager/vpn-manager.cpp" line="198"/>
         <source>Password required to connect to %1.</source>
         <translation>连接网络 &quot;%1&quot; 需要密码</translation>
     </message>
@@ -1277,12 +1277,12 @@
         <translation>返回</translation>
     </message>
     <message>
-        <location filename="../src/plugin/manager/wired-manager.cpp" line="44"/>
+        <location filename="../src/plugin/manager/wired-manager.cpp" line="45"/>
         <source>Wired Network Adapter</source>
         <translation>有线网卡</translation>
     </message>
     <message>
-        <location filename="../src/plugin/manager/wired-manager.cpp" line="96"/>
+        <location filename="../src/plugin/manager/wired-manager.cpp" line="98"/>
         <source>The carrier is pulled out</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1303,7 +1303,7 @@
 <context>
     <name>WiredTrayWidget</name>
     <message>
-        <location filename="../src/tray/wired-tray-widget.cpp" line="129"/>
+        <location filename="../src/tray/wired-tray-widget.cpp" line="122"/>
         <source>Wired network unavailable</source>
         <translation>有线网络不可用</translation>
     </message>
@@ -1326,17 +1326,17 @@
         <translation>返回</translation>
     </message>
     <message>
-        <location filename="../src/plugin/manager/wireless-manager.cpp" line="46"/>
+        <location filename="../src/plugin/manager/wireless-manager.cpp" line="47"/>
         <source>Wireless Network Adapter</source>
         <translation>无线网卡</translation>
     </message>
     <message>
-        <location filename="../src/plugin/manager/wireless-manager.cpp" line="366"/>
+        <location filename="../src/plugin/manager/wireless-manager.cpp" line="372"/>
         <source>Tips</source>
         <translation>提示</translation>
     </message>
     <message>
-        <location filename="../src/plugin/manager/wireless-manager.cpp" line="367"/>
+        <location filename="../src/plugin/manager/wireless-manager.cpp" line="373"/>
         <source>Password required to connect to %1.</source>
         <translation>连接网络 &quot;%1&quot; 需要密码</translation>
     </message>
@@ -1439,7 +1439,7 @@
 <context>
     <name>WirelessTrayWidget</name>
     <message>
-        <location filename="../src/tray/wireless-tray-widget.cpp" line="492"/>
+        <location filename="../src/tray/wireless-tray-widget.cpp" line="496"/>
         <source>the network &quot;%1&quot; not found</source>
         <translation>未找到网络 &quot;%1&quot;</translation>
     </message>

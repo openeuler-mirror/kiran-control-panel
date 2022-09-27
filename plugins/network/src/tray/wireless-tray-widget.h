@@ -20,7 +20,7 @@
 #include <NetworkManagerQt/WirelessSecuritySetting>
 #include <NetworkManagerQt/WirelessSetting>
 #include <QWidget>
-#include "connection-lists.h"
+#include "tray-connection-list.h"
 #include "tray-widget.h"
 
 class WirelessTrayWidget : public TrayWidget
@@ -36,12 +36,12 @@ public:
     void initConnection();
 
 public slots:
-    void handleRequestConnectWirelessNetwork(const NetworkConnectionInfo &connectionInfo);
-    void handleRequestConnectHiddenNetwork(const QString &ssid);
+    void handleActivateSelectedWirelessNetwork(const NetworkConnectionInfo &connectionInfo);
+    void handleActivateHiddenNetwork(const QString &ssid);
 
-    void handleRequestDisconnect(const QString &activatedConnectionPath);
-    void handleRequestCancel(const QString &activatedConnectionPath);
-    void handleRequestIgnore(const QString &activatedConnectionPath);
+    void handleDisconnect(const QString &activatedConnectionPath);
+    void handleCancelConnection(const QString &activatedConnectionPath);
+    void handleIgnoreConnection(const QString &activatedConnectionPath);
 
     void getWirelessAvailableConnections(const QString &devicePath);
     void activateWirelessConnection(const QString &connectionPath, const QString &devicePath, const QString &accessPointPath);
@@ -68,17 +68,13 @@ public slots:
 
     void requireInputPassword(const QString &ssid);
 
-signals:
-    void adjustedTraySize(QSize sizeHint);
-
 private:
     QMap<QString, NetworkManager::Connection::Ptr> m_wirelssConnectionMap;
     NetworkManager::WirelessDevice::Ptr m_wirelessDevice;
     NetworkManager::ConnectionSettings::Ptr m_connectionSettings;
-    QString m_devicePath;
-    QVBoxLayout *m_verticalLayout;
-    QPointer<ConnectionLists> m_connectionLists;
     NetworkConnectionInfo m_connectionInfo;
+    QString m_devicePath;
+    QPointer<TrayConnectionList> m_connectionList;
 };
 
 #endif  // KIRAN_CPANEL_NETWORK_WIRELESS_TRAY_WIDGET_H
