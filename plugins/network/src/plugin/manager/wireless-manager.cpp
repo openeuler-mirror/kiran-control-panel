@@ -81,8 +81,11 @@ void WirelessManager::initConnection()
     // Note:插件与托盘都对该设备的信号进行了连接，容易干扰重复，因此，插件暂未实现该函数
     connect(m_devicePtr.data(), &Device::stateChanged, this, &WirelessManager::handleDeviceStateChanged, Qt::UniqueConnection);
 
-    connect(m_signalForward, &SignalForward::wirelessConnectionAdded, this, &WirelessManager::handleNotifierConnectionAdded);
-    connect(m_signalForward, &SignalForward::wirelessActiveConnectionAdded, this, &WirelessManager::handleActiveConnectionAdded);
+    connect(SignalForward::instance(), &SignalForward::wirelessConnectionAdded, this, &WirelessManager::handleNotifierConnectionAdded);
+    connect(SignalForward::instance(), &SignalForward::wirelessActiveConnectionAdded, this, &WirelessManager::handleActiveConnectionAdded);
+
+    connect(SignalForward::instance(), &SignalForward::connectionRemoved, this, &WirelessManager::handleNotifierConnectionRemoved);
+    connect(SignalForward::instance(), &SignalForward::activeConnectionRemoved, this, &WirelessManager::handleActiveConnectionRemoved);
 }
 
 //在已存在WirelessSetting配置的情况下，激活连接．（连接过一次后会创建WirelessSetting配置）

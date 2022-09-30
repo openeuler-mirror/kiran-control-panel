@@ -167,13 +167,9 @@ void ConnectionItemWidget::setOtherNetworkIcon()
 
 void ConnectionItemWidget::handleThemeChanged(Kiran::PaletteType paletteType)
 {
-    if (m_connectionTypeIcon->pixmap() != nullptr)
-    {
-        QImage image = m_connectionTypeIcon->pixmap()->toImage();
-        image.invertPixels(QImage::InvertRgb);
-        QPixmap pixmap = QPixmap::fromImage(image);
+    QPixmap pixmap = NetworkUtils::trayIconColorSwitch(m_connectionTypeIcon->pixmap(Qt::ReturnByValue));
+    if (!pixmap.isNull())
         m_connectionTypeIcon->setPixmap(pixmap);
-    }
     m_editButton->setIcon(NetworkUtils::trayIconColorSwitch(":/kcp-network-images/details-info.svg"));
 }
 

@@ -68,6 +68,9 @@ void NetworkTray::initUI()
     m_verticalLayout->setSpacing(0);
     m_verticalLayout->setSizeConstraint(QLayout::SetMinAndMaxSize);
 
+    // QBoxLayout *layout = new QHBoxLayout(this);
+    // layout->addWidget(widget);
+
     setContentWidget(widget);
     setMaximumHeight(868);
 }
@@ -148,7 +151,7 @@ void NetworkTray::initConnect()
     connect(&m_wirelessTimer, &QTimer::timeout, this, [this]()
             { handleAdjustedTraySize(m_wirelessTraySizeHint); });
 
-    connect(m_wiredTrayPage, &TrayPage::sizeChanged, this, &NetworkTray::handleAdjustedTraySize);
+    connect(m_wiredTrayPage, &TrayPage::sizeChanged, this, &NetworkTray::handleAdjustedTraySize, Qt::UniqueConnection);
 
     connect(Kiran::StylePalette::instance(), &Kiran::StylePalette::themeChanged, this, &NetworkTray::handleThemeChanged);
 }
@@ -245,28 +248,30 @@ void NetworkTray::handleTrayClicked(QSystemTrayIcon::ActivationReason reason)
 void NetworkTray::handleNetworkSettingClicked()
 {
     QProcess process(this);
-    process.startDetached("kiran-control-panel -c network");
+    QStringList arguments;
+    arguments << "-c"
+              << "network";
+    process.startDetached("kiran-control-panel", arguments);
 }
 
 void NetworkTray::showTrayPage()
 {
     // XXX:托盘界面在不可见的情况，不方便去修改size和位置，暂时先显示后在调整大小和位置
+    // this->setFixedSize(258, 258);
     this->show();
     QTimer::singleShot(50, this, [=]()
                        {
-                           KLOG_DEBUG() << "--------------this->sizeHint():" << this->sizeHint();
-                           KLOG_DEBUG() << "--------------this->size():" << this->size();
-                            /**
-                             * 1、当同时存在有线和无线网络托盘页面时，使用adjustSize已经能够得到较好的伸缩效果
-                             * 2、当有线或无线只有其一时，最小sizeHint height为50,但adjustSize调整的window尺寸最小为（200,100）
-                             *    此时则指定页面size大小
-                             */
-                            //TODO:需要继续优化界面伸缩
-                            if(m_wiredTrayPage && m_wirelessTrayPage)
-                                adjustSize();
-                            else
-                                this->resize(this->sizeHint());
-                           setTrayPagePos(); });
+                                /**
+                                 * 1、当同时存在有线和无线网络托盘页面时，使用adjustSize已经能够得到较好的伸缩效果
+                                 * 2、当有线或无线只有其一时，最小sizeHint height为50,但adjustSize调整的window尺寸最小为（200,100）
+                                 *    此时则指定页面size大小
+                                 */
+                                //TODO:需要继续优化界面伸缩
+                                if(m_wiredTrayPage && m_wirelessTrayPage)
+                                    adjustSize();
+                                else
+                                    this->resize(this->sizeHint());
+                               setTrayPagePos(); });
 }
 
 void NetworkTray::setTrayPagePos()
@@ -468,6 +473,7 @@ void NetworkTray::handlePrimaryConnectionChanged(const QString &uni)
 void NetworkTray::reloadWiredTrayPage()
 {
     m_verticalLayout->removeWidget(m_wiredTrayPage);
+    m_wiredTrayPage->disconnect();
     delete m_wiredTrayPage;
     m_wiredTrayPage = nullptr;
     m_wiredDeviceList.clear();
@@ -478,7 +484,7 @@ void NetworkTray::reloadWiredTrayPage()
         m_wiredTrayPage = new TrayPage(m_wiredDeviceList, this);
         m_verticalLayout->insertWidget(0, m_wiredTrayPage);
         m_verticalLayout->setMargin(0);
-        connect(m_wiredTrayPage, &TrayPage::sizeChanged, this, &NetworkTray::handleAdjustedTraySize);
+        connect(m_wiredTrayPage, &TrayPage::sizeChanged, this, &NetworkTray::handleAdjustedTraySize, Qt::UniqueConnection);
         update();
     }
 }
@@ -486,6 +492,7 @@ void NetworkTray::reloadWiredTrayPage()
 void NetworkTray::reloadWirelessTrayPage()
 {
     m_verticalLayout->removeWidget(m_wirelessTrayPage);
+    m_wiredTrayPage->disconnect();
     delete m_wirelessTrayPage;
     m_wirelessTrayPage = nullptr;
     m_wirelessDeviceList.clear();
@@ -514,7 +521,6 @@ void NetworkTray::reloadWirelessTrayPage()
 #define OFFSET_MARGIN 18
 void NetworkTray::handleAdjustedTraySize(QSize sizeHint)
 {
-    KLOG_DEBUG() << "sizeHint.height():" << sizeHint.height();
     // this->sizeHint() 更新不及时，需要等一段时间
     QTimer::singleShot(100, this, [=]()
                        {

@@ -23,7 +23,6 @@
 
 Q_DECLARE_METATYPE(NetworkManager::ActiveConnection::State);
 
-class SignalForward;
 class TrayWidget : public QWidget
 {
     Q_OBJECT
@@ -37,22 +36,21 @@ public:
     void initConnection();
     void addWidget(QWidget *widget);
     void removeWidget(QWidget *widget);
-    virtual int getHeight();
+    virtual int getHeight() = 0;
 
 public slots:
-    virtual void handleNotifierConnectionAdded(const QString &path);
-    virtual void handleNotifierConnectionRemoved(const QString &path);
-    virtual void handleActiveConnectionAdded(const QString &activepath);
-    virtual void handleActiveConnectionRemoved(const QString &activepath);
+    virtual void handleNotifierConnectionAdded(const QString &path) = 0;
+    virtual void handleNotifierConnectionRemoved(const QString &path) = 0;
+    virtual void handleActiveConnectionAdded(const QString &activepath) = 0;
+    virtual void handleActiveConnectionRemoved(const QString &activepath) = 0;
+
+    virtual void handleStateActivating(const QString &activatedPath) = 0;
+    virtual void handleStateActivated(const QString &activatedPath) = 0;
+    virtual void handleStateDeactivated(const QString &activatedPath) = 0;
 
     virtual void handleActiveConnectionStateChanged(NetworkManager::ActiveConnection::State state);
-    virtual void handleStateActivating(const QString &activatedPath);
-    virtual void handleStateActivated(const QString &activatedPath);
-    virtual void handleStateDeactivated(const QString &activatedPath);
 
     virtual void handleDeviceStateChanged(NetworkManager::Device::State newstate, NetworkManager::Device::State oldstate, NetworkManager::Device::StateChangeReason reason);
-
-    void distributeNotifeir();
 
 signals:
     void sizeChanged(QSize sizeHint);
@@ -66,7 +64,6 @@ private:
     QString m_connectionRemovePath;
     QString m_activatedPath;
     QVBoxLayout *m_verticalLayout;
-    SignalForward *m_signalForward;
 };
 
 #endif  // TRAYPAGE_H

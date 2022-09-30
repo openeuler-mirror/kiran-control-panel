@@ -70,7 +70,9 @@ void WirelessTrayWidget::initConnection()
     connect(m_connectionList, &TrayConnectionList::sizeChanged, this, &WirelessTrayWidget::sizeChanged);
 
     connect(SignalForward::instance(), &SignalForward::wirelessConnectionAdded, this, &WirelessTrayWidget::handleNotifierConnectionAdded);
+    connect(SignalForward::instance(), &SignalForward::connectionRemoved, this, &WirelessTrayWidget::handleNotifierConnectionRemoved);
     connect(SignalForward::instance(), &SignalForward::wirelessActiveConnectionAdded, this, &WirelessTrayWidget::handleActiveConnectionAdded);
+    connect(SignalForward::instance(), &SignalForward::activeConnectionRemoved, this, &WirelessTrayWidget::handleActiveConnectionRemoved);
 }
 
 void WirelessTrayWidget::handleActivateSelectedWirelessNetwork(const NetworkConnectionInfo &connectionInfo)
@@ -493,4 +495,14 @@ void WirelessTrayWidget::handleDeviceStateChanged(Device::State newstate, Device
         bodyStr = body.arg(m_connectionInfo.wirelessInfo.ssid);
         // StatusNotification::connectitonFailedNotifyByReason(bodyStr);
     }
+}
+
+int WirelessTrayWidget::getHeight()
+{
+    if (!m_connectionList.isNull())
+    {
+        return m_connectionList->height();
+    }
+    else
+        return TRAY_ITEM_NORAML_HIEGHT;
 }

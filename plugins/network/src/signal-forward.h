@@ -27,9 +27,13 @@ public:
     static SignalForward *instance();
     ~SignalForward();
 
+    void initConnect();
 public slots:
     void handleActiveConnectionAdded(const QString &activepath);
     void handleNotifierConnectionAdded(const QString &path);
+
+    void handleNotifierConnectionRemoved(const QString &path);
+    void handleActiveConnectionRemoved(const QString &activepath);
 
 signals:
     void wiredConnectionAdded(const QString &path);
@@ -39,6 +43,7 @@ signals:
     void wiredConnectionRemoved(const QString &path);
     void vpnConnectionRemoved(const QString &path);
     void wirelessConnectionRemoved(const QString &path);
+    void connectionRemoved(const QString &path);
 
     void wiredActiveConnectionAdded(const QString &activepath);
     void vpnActiveConnectionAdded(const QString &activepath);
@@ -47,6 +52,7 @@ signals:
     void wiredActiveConnectionRemoved(const QString &activepath);
     void vpnActiveConnectionRemoved(const QString &activepath);
     void wirelessActiveConnectionRemoved(const QString &activepath);
+    void activeConnectionRemoved(const QString &activepath);
 };
 
 #endif  // KIRAN_CPANEL_SIGNAL_FORWARD_H
