@@ -84,8 +84,11 @@ void VpnManager::initConnection()
 
     connect(ui->connectionShowPage, &ConnectionShowPage::connectionUpdated, this, &VpnManager::handleConnectionUpdated);
 
-    connect(m_signalForward, &SignalForward::vpnConnectionAdded, this, &VpnManager::handleNotifierConnectionAdded);
-    connect(m_signalForward, &SignalForward::vpnActiveConnectionAdded, this, &VpnManager::handleActiveConnectionAdded);
+    connect(SignalForward::instance(), &SignalForward::vpnConnectionAdded, this, &VpnManager::handleNotifierConnectionAdded);
+    connect(SignalForward::instance(), &SignalForward::vpnActiveConnectionAdded, this, &VpnManager::handleActiveConnectionAdded);
+
+    connect(SignalForward::instance(), &SignalForward::connectionRemoved, this, &VpnManager::handleNotifierConnectionRemoved);
+    connect(SignalForward::instance(), &SignalForward::activeConnectionRemoved, this, &VpnManager::handleActiveConnectionRemoved);
 }
 
 void VpnManager::handleCreatConnection()
@@ -385,6 +388,10 @@ void VpnManager::handleStateActivating(const QString &activePath)
         // 加载等待动画
         ui->connectionShowPage->setItemWidgetStatus(activePath, ActiveConnection::State::Activating);
     }
+}
+
+void VpnManager::handleStateDeactivated(const QString &deactivatedPath)
+{
 }
 
 void VpnManager::handleVpnStateDisconnected(const QString &activePath)

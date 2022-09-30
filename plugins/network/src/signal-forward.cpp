@@ -37,10 +37,23 @@ SignalForward *SignalForward::instance()
 
 SignalForward::SignalForward(QObject *parent)
 {
-}
+    initConnect();
+};
 
 SignalForward::~SignalForward()
 {
+}
+
+void SignalForward::initConnect()
+{
+    //连接Wired时触发，而连接VPN时没有触发该信号，暂时不使用该信号
+    // connect(notifier(), &Notifier::statusChanged, this, [this](NetworkManager::Status status) {});
+
+    // activeConnectionAdded信号并不能判断连接是否真正Connected/Activated,只能判断一个连接被加入到激活容器中
+    connect(notifier(), &Notifier::activeConnectionAdded, this, &SignalForward::handleActiveConnectionAdded, Qt::UniqueConnection);
+    connect(notifier(), &Notifier::activeConnectionRemoved, this, &SignalForward::handleActiveConnectionRemoved, Qt::UniqueConnection);
+    connect(settingsNotifier(), &SettingsNotifier::connectionAdded, this, &SignalForward::handleNotifierConnectionAdded, Qt::UniqueConnection);
+    connect(settingsNotifier(), &SettingsNotifier::connectionRemoved, this, &SignalForward::handleNotifierConnectionRemoved, Qt::UniqueConnection);
 }
 
 void SignalForward::handleActiveConnectionAdded(const QString &activePath)
@@ -87,4 +100,14 @@ void SignalForward::handleNotifierConnectionAdded(const QString &path)
             break;
         }
     }
+}
+
+void SignalForward::handleNotifierConnectionRemoved(const QString &path)
+{
+    Q_EMIT connectionRemoved(path);
+}
+
+void SignalForward::handleActiveConnectionRemoved(const QString &activepath)
+{
+    Q_EMIT activeConnectionRemoved(activepath);
 }

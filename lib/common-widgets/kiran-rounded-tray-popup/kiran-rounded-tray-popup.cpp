@@ -55,6 +55,7 @@ void KiranRoundedTrayPopup::setContentWidget(QWidget *widget)
     {
         m_contentWidget->removeEventFilter(this);
         m_contentLayout->removeWidget(m_contentWidget);
+        delete m_contentWidget;
         m_contentWidget = nullptr;
     }
 

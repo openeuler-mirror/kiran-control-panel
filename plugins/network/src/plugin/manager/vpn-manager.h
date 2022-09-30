@@ -50,8 +50,9 @@ public slots:
     void handleActiveConnectionRemoved(const QString &activePath) override;
 
     void handleVpnConnectionStateChanged(NetworkManager::VpnConnection::State state, NetworkManager::VpnConnection::StateChangeReason reason);
-    void handleStateActivated(const QString &activePath);
+    void handleStateActivated(const QString &activePath) override;
     void handleStateActivating(const QString &activePath) override;
+    void handleStateDeactivated(const QString &deactivatedPath) override;
 
     void handleVpnStateDisconnected(const QString &activePath);
     void handleVpnStateFailed(const QString &activePath);

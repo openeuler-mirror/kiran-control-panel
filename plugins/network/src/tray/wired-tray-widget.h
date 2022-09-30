@@ -52,6 +52,8 @@ public:
 
     void initUnavailableWidget();
 
+    int getHeight() override;
+
 public slots:
     void handleCarrierChanged(bool plugged);
     void handleStateChanged(NetworkManager::Device::State newstate, NetworkManager::Device::State oldstate, NetworkManager::Device::StateChangeReason reason);

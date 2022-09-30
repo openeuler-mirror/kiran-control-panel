@@ -37,8 +37,6 @@ TrayConnectionList::~TrayConnectionList()
 
 void TrayConnectionList::initUI()
 {
-    // setWidgetContentsSpacing(0);
-    // setWidgetContentsMargins(0,0,0,0);
 }
 
 void TrayConnectionList::initConnect()
@@ -63,12 +61,6 @@ void TrayConnectionList::addConnection(NetworkManager::Connection::Ptr ptr, cons
     trayItemWidget->setName(ptr->name());
     trayItemWidget->setWiredStatusIcon();
     trayItemWidget->setFixedSize(TRAY_ITEM_NORAML_SIZE);
-
-    QVariant var;
-    var.setValue(connectionInfo);
-    // item中保存connection的相关信息
-    trayItemWidget->setProperty(PROPERTY_NETWORK_CONNECTION_INFO, var);
-    trayItemWidget->setAccessibleName(QString("WiredConnectionItem::%1").arg(connectionInfo.id));
     trayItemWidget->setWiredStatusIcon();
 
     ActiveConnection::List activeConnectionList = activeConnections();
@@ -83,19 +75,23 @@ void TrayConnectionList::addConnection(NetworkManager::Connection::Ptr ptr, cons
             {
             case ActiveConnection::Activating:
                 trayItemWidget->setFixedSize(TRAY_ITEM_EXTENDED_SIZE);
-                adjustTraySize();
                 trayItemWidget->activatingStatus();
                 break;
             case ActiveConnection::Activated:
-                trayItemWidget->activatedStatus();
                 trayItemWidget->setFixedSize(TRAY_ITEM_EXTENDED_SIZE);
-                adjustTraySize();
+                trayItemWidget->activatedStatus();
                 break;
             default:
                 break;
             }
         }
     }
+
+    QVariant var;
+    var.setValue(connectionInfo);
+    // item中保存connection的相关信息
+    trayItemWidget->setProperty(PROPERTY_NETWORK_CONNECTION_INFO, var);
+    trayItemWidget->setAccessibleName(QString("WiredConnectionItem::%1").arg(connectionInfo.id));
 
     this->addWidget(trayItemWidget);
     this->sort();
@@ -149,12 +145,10 @@ void TrayConnectionList::addWirelessNetwork(NetworkManager::WirelessNetwork::Ptr
                 {
                 case ActiveConnection::Activating:
                     trayItemWidget->setFixedSize(TRAY_ITEM_EXTENDED_SIZE);
-                    adjustTraySize();
                     trayItemWidget->activatingStatus();
                     break;
                 case ActiveConnection::Activated:
                     trayItemWidget->setFixedSize(TRAY_ITEM_EXTENDED_SIZE);
-                    adjustTraySize();
                     trayItemWidget->activatedStatus();
                     trayItemWidget->setIgnoreButtonVisible(true);
                     break;
@@ -264,23 +258,17 @@ void TrayConnectionList::clearItemWidgetActiveConnectionInfo(QWidget* itemWidget
 
 void TrayConnectionList::adjustTraySize()
 {
-    int oldHeight = this->size().height();
-
     // 由于托盘每一项都可以伸缩扩展，遍历所有widget以计算高度
     int totalheight = 0;
     QList<QWidget*> widgetList = itemWidgetList();
     for (auto widget : widgetList)
     {
-        KLOG_DEBUG() << "widget->height():" << widget->height();
         totalheight += widget->height();
     }
 
     if (totalheight > LIST_MAX_HEIGHT)
         totalheight = LIST_MAX_HEIGHT;
     setFixedHeight(totalheight);
-
-    int newHeight = this->size().height();
-    int changedHeight = newHeight - oldHeight;
 
     KLOG_DEBUG() << "totalheight:" << totalheight;
     emit sizeChanged(QSize(this->sizeHint().width(), totalheight));

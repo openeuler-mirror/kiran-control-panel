@@ -16,6 +16,7 @@
 #include <qt5-log-i.h>
 #include <NetworkManagerQt/Settings>
 #include <QLabel>
+#include "general.h"
 #include "signal-forward.h"
 #include "status-notification.h"
 #include "utils.h"
@@ -47,7 +48,7 @@ void WiredTrayWidget::init()
 void WiredTrayWidget::initUI()
 {
     // m_wiredDevice->state(); 设备状态在最开始初始化托盘页面时已经判断过了
-    KLOG_DEBUG() << "m_wiredDevice->carrier():" << m_wiredDevice->carrier();
+    KLOG_DEBUG() << "wiredDevice carrier :" << m_wiredDevice->carrier();
     if (m_wiredDevice->carrier())
     {
         m_connectionList = new TrayConnectionList(this);
@@ -73,7 +74,9 @@ void WiredTrayWidget::initConnection()
     connect(m_wiredDevice.data(), &Device::stateChanged, this, &WiredTrayWidget::handleStateChanged, Qt::UniqueConnection);
 
     connect(SignalForward::instance(), &SignalForward::wiredConnectionAdded, this, &WiredTrayWidget::handleNotifierConnectionAdded);
+    connect(SignalForward::instance(), &SignalForward::connectionRemoved, this, &WiredTrayWidget::handleNotifierConnectionRemoved);
     connect(SignalForward::instance(), &SignalForward::wiredActiveConnectionAdded, this, &WiredTrayWidget::handleActiveConnectionAdded);
+    connect(SignalForward::instance(), &SignalForward::activeConnectionRemoved, this, &WiredTrayWidget::handleActiveConnectionRemoved);
 
     //在插拔网线时，deviceAdded和deviceRemoved信号失效
     // connect(notifier(), &Notifier::deviceAdded, this, [=](const QString &uni) {});
@@ -95,7 +98,7 @@ void WiredTrayWidget::showWiredConnectionLists()
  */
 void WiredTrayWidget::handleCarrierChanged(bool plugged)
 {
-    KLOG_DEBUG() << "CarrierChanged plugged: " << plugged;
+    KLOG_DEBUG() << "Carrier Changed plugged: " << plugged;
 }
 
 void WiredTrayWidget::initUnavailableWidget()
@@ -290,4 +293,14 @@ void WiredTrayWidget::handleConnectionUpdated(const QString &path)
     m_connectionList->removeConnectionFromList(path);
     Connection::Ptr updateConnection = findConnection(path);
     m_connectionList->addConnection(updateConnection, "");
+}
+
+int WiredTrayWidget::getHeight()
+{
+    if (!m_connectionList.isNull())
+    {
+        return m_connectionList->height();
+    }
+    else
+        return TRAY_ITEM_NORAML_HIEGHT;
 }

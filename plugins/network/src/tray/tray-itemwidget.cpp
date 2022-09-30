@@ -297,7 +297,7 @@ void TrayItemWidget::paintEvent(QPaintEvent *event)
 
 void TrayItemWidget::handleThemeChanged(Kiran::PaletteType paletteType)
 {
-    QImage image = ui->connectionTypeIcon->pixmap()->toImage();
+    QImage image = ui->connectionTypeIcon->pixmap(Qt::ReturnByValue).toImage();
     image.invertPixels(QImage::InvertRgb);
     QPixmap pixmap = QPixmap::fromImage(image);
     ui->connectionTypeIcon->setPixmap(pixmap);

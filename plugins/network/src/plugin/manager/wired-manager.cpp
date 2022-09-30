@@ -60,8 +60,11 @@ void WiredManager::initConnection()
     connect(ui->connectionShowPage, &ConnectionShowPage::connectionUpdated, this, &WiredManager::handleConnectionUpdated);
     connect(ui->connectionShowPage, &ConnectionShowPage::activateSelectedConnection, this, &WiredManager::handleActivateSelectedConnection);
 
-    connect(m_signalForward, &SignalForward::wiredConnectionAdded, this, &WiredManager::handleNotifierConnectionAdded);
-    connect(m_signalForward, &SignalForward::wiredActiveConnectionAdded, this, &WiredManager::handleActiveConnectionAdded);
+    connect(SignalForward::instance(), &SignalForward::wiredConnectionAdded, this, &WiredManager::handleNotifierConnectionAdded);
+    connect(SignalForward::instance(), &SignalForward::wiredActiveConnectionAdded, this, &WiredManager::handleActiveConnectionAdded);
+
+    connect(SignalForward::instance(), &SignalForward::connectionRemoved, this, &WiredManager::handleNotifierConnectionRemoved);
+    connect(SignalForward::instance(), &SignalForward::activeConnectionRemoved, this, &WiredManager::handleActiveConnectionRemoved);
 }
 
 void WiredManager::handleCreatConnection()

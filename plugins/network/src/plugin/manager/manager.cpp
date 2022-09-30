@@ -23,50 +23,15 @@ using namespace NetworkManager;
 
 Manager::Manager(QWidget *parent) : QWidget(parent)
 {
-    m_signalForward = SignalForward::instance();
-    initNotifierConnection();
 }
 
 Manager::~Manager()
 {
 }
 
-void Manager::initNotifierConnection()
-{
-    //连接Wired时触发，而连接VPN时没有触发该信号，暂时不使用该信号
-    // connect(notifier(), &Notifier::statusChanged, this, [this](NetworkManager::Status status) {});
-
-    // activeConnectionAdded信号并不能判断连接是否真正Connected/Activated,只能判断一个连接被加入到激活容器中
-    connect(notifier(), &Notifier::activeConnectionAdded, m_signalForward, &SignalForward::handleActiveConnectionAdded, Qt::UniqueConnection);
-    connect(settingsNotifier(), &SettingsNotifier::connectionAdded, m_signalForward, &SignalForward::handleNotifierConnectionAdded, Qt::UniqueConnection);
-
-    connect(settingsNotifier(), &SettingsNotifier::connectionRemoved, this, &Manager::handleNotifierConnectionRemoved, Qt::UniqueConnection);
-    connect(notifier(), &Notifier::activeConnectionRemoved, this, &Manager::handleActiveConnectionRemoved, Qt::UniqueConnection);
-}
-
 void Manager::refreshConnectionLists()
 {
     KLOG_DEBUG() << "Manager::refreshConnectionLists()";
-}
-
-void Manager::handleNotifierConnectionAdded(const QString &path)
-{
-    KLOG_DEBUG() << "Manager::handleNotifierConnectionAdded()";
-}
-
-void Manager::handleNotifierConnectionRemoved(const QString &path)
-{
-    KLOG_DEBUG() << "Manager::handleNotifierConnectionRemoved()";
-}
-
-void Manager::handleActiveConnectionAdded(const QString &activepath)
-{
-    KLOG_DEBUG() << "activeConnectionAdded:" << activepath;
-}
-
-void Manager::handleActiveConnectionRemoved(const QString &activepath)
-{
-    KLOG_DEBUG() << "activeConnectionRemoved:" << activepath;
 }
 
 void Manager::handleActiveConnectionStateChanged(ActiveConnection::State state)
@@ -96,35 +61,6 @@ void Manager::handleActiveConnectionStateChanged(ActiveConnection::State state)
     default:
         break;
     }
-}
-
-void Manager::handleStateActivated(const QString &activatedPath)
-{
-}
-
-void Manager::handleStateDeactivated(const QString &deactivatedPath)
-{
-}
-
-void Manager::getDeviceList(Device::Type deviceType)
-{
-    const Device::List deviceList = networkInterfaces();
-    for (Device::Ptr dev : deviceList)
-    {
-        if (dev->type() == deviceType)
-        {
-            m_deviceList << dev;
-        }
-    }
-    KLOG_DEBUG() << "m_deviceList:" << m_deviceList;
-    if (m_deviceList.isEmpty())
-    {
-        KLOG_DEBUG() << "No available devices were found";
-    }
-}
-
-void Manager::handleStateActivating(const QString &activatedPath)
-{
 }
 
 void Manager::handleDeviceStateChanged(NetworkManager::Device::State newstate, NetworkManager::Device::State oldstate, NetworkManager::Device::StateChangeReason reason)

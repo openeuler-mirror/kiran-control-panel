@@ -68,6 +68,8 @@ public slots:
 
     void requireInputPassword(const QString &ssid);
 
+    int getHeight() override;
+
 private:
     QMap<QString, NetworkManager::Connection::Ptr> m_wirelssConnectionMap;
     NetworkManager::WirelessDevice::Ptr m_wirelessDevice;

@@ -30,7 +30,6 @@ class TrayPage;
 class NetworkTray : public KiranRoundedTrayPopup
 {
     Q_OBJECT
-
 public:
     explicit NetworkTray(QWidget *parent = nullptr);
     ~NetworkTray() override;

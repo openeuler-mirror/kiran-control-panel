@@ -21,7 +21,6 @@
 #include "connection-list.h"
 #include "connection-show-page.h"
 #include "tray-widget.h"
-#include "signal-forward.h"
 // clang-format on
 using namespace NetworkManager;
 #define TRAY_ITEM_NORAML_HIEGHT 50
@@ -38,7 +37,6 @@ TrayWidget::~TrayWidget()
 
 void TrayWidget::init()
 {
-    m_signalForward = SignalForward::instance();
     initUI();
     initConnection();
 }
@@ -50,7 +48,6 @@ void TrayWidget::initUI()
     m_verticalLayout = new QVBoxLayout(this);
     m_verticalLayout->setSpacing(0);
     m_verticalLayout->setContentsMargins(0, 0, 0, 0);
-    // m_verticalLayout->setSizeConstraint(QLayout::SetMinAndMaxSize);
 }
 
 void TrayWidget::addWidget(QWidget *widget)
@@ -64,31 +61,6 @@ void TrayWidget::removeWidget(QWidget *widget)
 }
 
 void TrayWidget::initConnection()
-{
-    connect(notifier(), &Notifier::activeConnectionAdded, m_signalForward, &SignalForward::handleActiveConnectionAdded, Qt::UniqueConnection);
-    connect(settingsNotifier(), &SettingsNotifier::connectionAdded, m_signalForward, &SignalForward::handleNotifierConnectionAdded, Qt::UniqueConnection);
-
-    connect(notifier(), &Notifier::activeConnectionRemoved, this, &TrayWidget::handleActiveConnectionRemoved, Qt::UniqueConnection);
-    connect(settingsNotifier(), &SettingsNotifier::connectionRemoved, this, &TrayWidget::handleNotifierConnectionRemoved, Qt::UniqueConnection);
-}
-
-void TrayWidget::distributeNotifeir()
-{
-}
-
-void TrayWidget::handleNotifierConnectionAdded(const QString &path)
-{
-}
-
-void TrayWidget::handleNotifierConnectionRemoved(const QString &path)
-{
-}
-
-void TrayWidget::handleActiveConnectionAdded(const QString &activepath)
-{
-}
-
-void TrayWidget::handleActiveConnectionRemoved(const QString &activepath)
 {
 }
 
@@ -130,28 +102,6 @@ void TrayWidget::handleActiveConnectionStateChanged(ActiveConnection::State stat
     }
 }
 
-void TrayWidget::handleStateActivating(const QString &activatedPath)
-{
-}
-
-void TrayWidget::handleStateActivated(const QString &activatedPath)
-{
-}
-
-void TrayWidget::handleStateDeactivated(const QString &activatedPath)
-{
-}
-
 void TrayWidget::handleDeviceStateChanged(Device::State newstate, Device::State oldstate, Device::StateChangeReason reason)
 {
-}
-
-int TrayWidget::getHeight()
-{
-    // if (!m_connectionLists.isNull())
-    // {
-    //     return m_connectionLists->height();
-    // }
-    // else
-    //     return TRAY_ITEM_NORAML_HIEGHT;
 }
