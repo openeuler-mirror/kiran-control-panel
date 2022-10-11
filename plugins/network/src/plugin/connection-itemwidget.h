@@ -50,6 +50,10 @@ public slots:
 
 signals:
     void editButtonClicked();
+    void clicked();
+
+protected:
+    void mousePressEvent(QMouseEvent *event) override;
 
 private:
     QLabel *m_connectionTypeIcon;

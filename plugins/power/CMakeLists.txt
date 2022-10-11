@@ -49,9 +49,8 @@ target_link_libraries(${TARGET_NAME}
         ${UPOWER_GLIB_LIBRARIES})
 
 # 安装插件翻译
-set(KIRAN_POWER_MANAGER_TRANSLATIONS_DIR ${INSTALL_DATADIR}/${TARGET_NAME}/translations)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config/config.h.in ${CMAKE_CURRENT_BINARY_DIR}/config.h)
-install(FILES ${POWER_QM_FILES} DESTINATION ${KIRAN_POWER_MANAGER_TRANSLATIONS_DIR})
+install(FILES ${POWER_QM_FILES} DESTINATION ${TRANSLATION_INSTALL_DIR})
 
 # 安装插件desktop文件
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config/kiran-cpanel-power.desktop.in ${CMAKE_CURRENT_BINARY_DIR}/kiran-cpanel-power.desktop @ONLY)

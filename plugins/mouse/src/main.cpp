@@ -14,18 +14,18 @@
 
 #include "kcm-manager.h"
 #include "mouse-page.h"
-#include "touchpad-page.h"
 #include "touchPad_backEnd_proxy.h"
+#include "touchpad-page.h"
 
 #include <kcp-plugin-interface.h>
 #include <kiran-session-daemon/mouse-i.h>
 #include <kiran-session-daemon/touchpad-i.h>
 #include <qt5-log-i.h>
 
-#include <QTranslator>
 #include <QApplication>
 #include <QDBusConnection>
 #include <QDBusConnectionInterface>
+#include <QTranslator>
 
 class KcpMouse : public QObject, public KcpPluginInterface
 {
@@ -34,7 +34,7 @@ class KcpMouse : public QObject, public KcpPluginInterface
     Q_INTERFACES(KcpPluginInterface)
 
 public:
-    KcpMouse(): QObject(){};
+    KcpMouse() : QObject(){};
     ~KcpMouse(){};
 
 public:
@@ -66,7 +66,7 @@ public:
         if (!m_translator->load(QLocale(),
                                 "kiran-cpanel-mouse",
                                 ".",
-                                "/usr/share/kiran-cpanel-mouse/translations/",
+                                "/usr/share/kiran-control-panel/translations/",
                                 ".qm"))
         {
             KLOG_DEBUG() << "Kiran cpanel mouse load translation failed";

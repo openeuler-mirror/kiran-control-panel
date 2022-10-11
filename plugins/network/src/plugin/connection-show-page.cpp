@@ -24,6 +24,8 @@
 #include "ui_connection-show-page.h"
 using namespace NetworkManager;
 
+#define PLUGIN_ITEM_WIDGET_HEIGHT 36
+
 ConnectionShowPage::ConnectionShowPage(QWidget* parent) : QWidget(parent), ui(new Ui::ConnectionShowPage)
 {
     ui->setupUi(this);
@@ -43,8 +45,7 @@ void ConnectionShowPage::init(NetworkManager::ConnectionSettings::ConnectionType
 {
     m_connectionType = connectionType;
     m_devicePath = devicePath;
-    ui->connectionLists->setDevicePath(devicePath);
-    ui->connectionLists->setItemWidgetType(ITEM_WIDGET_TYPE_PLUGIN);
+    ui->connectionList->setDevicePath(devicePath);
 
     initUI();
     initConnect();
@@ -59,32 +60,34 @@ void ConnectionShowPage::initUI()
     initSwitchButton();
 
     ui->titleLayout->addWidget(m_switchButton);
-    ui->connectionLists->setMaximumHeight(ui->connectionLists->sizeHintForRow(0) * ui->connectionLists->count() + (2 * ui->connectionLists->frameWidth()));
+
+    ui->connectionList->setMaximumHeight((ui->connectionList->widgetContentsSpacing() + PLUGIN_ITEM_WIDGET_HEIGHT) *
+                                         ui->connectionList->count());
+
     Kiran::StylePropertyHelper::setButtonType(ui->createConnectionButton, Kiran::BUTTON_Default);
     ui->createConnectionButton->setIcon(QIcon(":/kcp-network-images/connection-add.svg"));
 
     if (m_connectionType == ConnectionSettings::Wireless)
     {
-        ui->connectionLists->showWirelessNetworkLists();
-        ui->connectionLists->setVisible(isWirelessEnabled());
+        ui->connectionList->showWirelessNetworkList();
+        ui->connectionList->setVisible(isWirelessEnabled());
     }
     else
-        ui->connectionLists->showConnectionLists(m_connectionType);
+        ui->connectionList->showConnectionList(m_connectionType);
 }
 
 void ConnectionShowPage::initConnect()
 {
     connect(ui->createConnectionButton, &QPushButton::clicked, [=]()
-            { emit requestCreatConnection(); });
-    connect(ui->connectionLists, &ConnectionLists::requestCreatConnection, this, &ConnectionShowPage::requestCreatConnection);
+            { emit creatConnection(); });
 
-    connect(ui->connectionLists, &ConnectionLists::requestEditConnection, this, &ConnectionShowPage::requestEditConnection);
-    connect(ui->connectionLists, &ConnectionLists::requestActivateCurrentItemConnection, this, &ConnectionShowPage::requestActivateCurrentItemConnection);
-    connect(ui->connectionLists, &ConnectionLists::requestConnectWirelessNetwork, this, &ConnectionShowPage::requestConnectWirelessNetwork);
-    connect(ui->connectionLists, &ConnectionLists::deactivatedItemConnection, this, &ConnectionShowPage::deactivatedItemConnection);
-    connect(ui->connectionLists, &ConnectionLists::connectionUpdated, this, &ConnectionShowPage::connectionUpdated);
+    connect(ui->connectionList, &PluginConnectionList::creatConnection, this, &ConnectionShowPage::creatConnection);
+    connect(ui->connectionList, &PluginConnectionList::editConnection, this, &ConnectionShowPage::editConnection);
+    connect(ui->connectionList, &PluginConnectionList::activateSelectedConnection, this, &ConnectionShowPage::activateSelectedConnection);
+    connect(ui->connectionList, &PluginConnectionList::activateSelectedWirelessNetwork, this, &ConnectionShowPage::activateSelectedWirelessNetwork);
+    connect(ui->connectionList, &PluginConnectionList::connectionUpdated, this, &ConnectionShowPage::connectionUpdated);
 
-    connect(ui->connectionLists, &ConnectionLists::sendSsidToWireless, this, &ConnectionShowPage::sendSsidToWireless);
+    connect(ui->connectionList, &PluginConnectionList::sendSsidToWireless, this, &ConnectionShowPage::sendSsidToWireless);
 
     connect(m_switchButton, &KiranSwitchButton::toggled, this, &ConnectionShowPage::handleToggledSwitchButton, Qt::UniqueConnection);
 
@@ -109,12 +112,6 @@ void ConnectionShowPage::initConnect()
     connect(notifier(), &Notifier::networkingEnabledChanged, [=]() {});
 }
 
-//弃用
-void ConnectionShowPage::setConnectionType(ConnectionSettings::ConnectionType connectionType)
-{
-    m_connectionType = connectionType;
-}
-
 void ConnectionShowPage::initSwitchButton()
 {
     switch (m_connectionType)
@@ -133,11 +130,10 @@ void ConnectionShowPage::initSwitchButton()
 
 void ConnectionShowPage::handleToggledSwitchButton(bool toggled)
 {
-    KLOG_DEBUG() << "--------------------------------handleToggledSwitchButton:" << toggled;
     switch (m_connectionType)
     {
     case ConnectionSettings::Wired:
-        ui->connectionLists->setVisible(toggled);
+        ui->connectionList->setVisible(toggled);
         // ui->createConnectionButton->setVisible(toggled);
         break;
     case ConnectionSettings::Wireless:
@@ -149,22 +145,15 @@ void ConnectionShowPage::handleToggledSwitchButton(bool toggled)
         break;
     }
 }
-
+#define PLUGIN_ITEM_WIDGET_HEIGHT 36
 void ConnectionShowPage::handleWirelessEnabledChanged(bool enabled)
 {
-    KLOG_DEBUG() << "*****************************handleWirelessEnabledChanged:" << enabled;
+    KLOG_DEBUG() << "Wireless Enabled Changed:" << enabled;
     //处理通过命令行等其他方式禁用无线网络的情况
     m_switchButton->blockSignals(true);
     m_switchButton->setChecked(enabled);
     m_switchButton->blockSignals(false);
-    ui->connectionLists->setVisible(enabled);
-}
-
-//弃用
-void ConnectionShowPage::setDevicePath(const QString& devicePath)
-{
-    m_devicePath = devicePath;
-    ui->connectionLists->setDevicePath(devicePath);
+    ui->connectionList->setVisible(enabled);
 }
 
 void ConnectionShowPage::setSwitchButtonVisible(bool visible)
@@ -177,96 +166,77 @@ void ConnectionShowPage::setCreateButtonVisible(bool visible)
     ui->createConnectionButton->setVisible(visible);
 }
 
-void ConnectionShowPage::showConnectionLists(ConnectionSettings::ConnectionType type)
+void ConnectionShowPage::showConnectionList(ConnectionSettings::ConnectionType type)
 {
-    ui->connectionLists->showConnectionLists(type);
+    ui->connectionList->showConnectionList(type);
 }
 
-void ConnectionShowPage::addConnectionToLists(Connection::Ptr ptr, const QString& devicePath)
+void ConnectionShowPage::addConnection(Connection::Ptr ptr, const QString& devicePath)
 {
-    ui->connectionLists->addConnectionToLists(ptr, devicePath);
+    ui->connectionList->addConnection(ptr, devicePath);
 }
 
-void ConnectionShowPage::showWirelessNetworkLists()
+void ConnectionShowPage::showWirelessNetworkList()
 {
-    ui->connectionLists->showWirelessNetworkLists();
+    ui->connectionList->showWirelessNetworkList();
 }
 
-void ConnectionShowPage::addWirelessNetworkToLists(WirelessNetwork::Ptr network, const QString& devicePath)
+void ConnectionShowPage::addWirelessNetwork(WirelessNetwork::Ptr network, const QString& devicePath)
 {
-    ui->connectionLists->addWirelessNetworkToLists(network, devicePath);
+    ui->connectionList->addWirelessNetwork(network, devicePath);
 }
 
-void ConnectionShowPage::removeConnectionFromLists(const QString& path)
+void ConnectionShowPage::removeConnectionFromList(const QString& path)
 {
-    ui->connectionLists->removeConnectionFromLists(path);
+    ui->connectionList->removeConnectionFromList(path);
+    ui->connectionList->setMaximumHeight((ui->connectionList->widgetContentsSpacing() + PLUGIN_ITEM_WIDGET_HEIGHT) * ui->connectionList->count());
 }
 
-void ConnectionShowPage::removeWirelessNetworkFromLists(const QString& ssid)
+void ConnectionShowPage::removeWirelessNetworkFromList(const QString& ssid)
 {
-    ui->connectionLists->removeWirelessNetworkFromLists(ssid);
+    ui->connectionList->removeWirelessNetworkFromList(ssid);
 }
 
-void ConnectionShowPage::clearConnectionLists()
+void ConnectionShowPage::clearConnectionList()
 {
-    ui->connectionLists->clearConnectionLists();
+    ui->connectionList->clearConnectionList();
 }
 
-QListWidgetItem* ConnectionShowPage::findItemByUuid(const QString& uuid)
+QWidget* ConnectionShowPage::findItemWidgetByUuid(const QString& uuid)
 {
-    return ui->connectionLists->findItemByUuid(uuid);
+    return ui->connectionList->findItemWidgetByUuid(uuid);
 }
 
-QListWidgetItem* ConnectionShowPage::findItemBySsid(const QString& ssid)
+QWidget* ConnectionShowPage::findItemWidgetBySsid(const QString& ssid)
 {
-    return ui->connectionLists->findItemBySsid(ssid);
+    return ui->connectionList->findItemWidgetBySsid(ssid);
 }
 
-QListWidgetItem* ConnectionShowPage::findItemByActivatedPath(const QString& activatedPath)
+QWidget* ConnectionShowPage::findItemWidgetByActivePath(const QString& activePath)
 {
-    return ui->connectionLists->findItemByActivatedPath(activatedPath);
+    return ui->connectionList->findItemWidgetByActivePath(activePath);
 }
 
-void ConnectionShowPage::updateItemActivatingStatus(QListWidgetItem* item)
+void ConnectionShowPage::setItemWidgetStatus(const QString& activePath, NetworkManager::ActiveConnection::State state)
 {
-    ui->connectionLists->updateItemActivatingStatus(item);
-}
-
-void ConnectionShowPage::updateItemActivatedStatus(const QString& activatedPath)
-{
-    ui->connectionLists->updateItemActivatedStatus(activatedPath);
-}
-
-//弃用
-void ConnectionShowPage::setItemWidgetType(ItemWidgetType itemType)
-{
-    ui->connectionLists->setItemWidgetType(itemType);
+    ui->connectionList->setItemWidgetStatus(activePath, state);
 }
 
 void ConnectionShowPage::handleActiveStateDeactivated(const QString& activatedConnectionPath)
 {
-    ui->connectionLists->handleActiveStateDeactivated(activatedConnectionPath);
+    ui->connectionList->handleActiveStateDeactivated(activatedConnectionPath);
 }
-void ConnectionShowPage::sortItems()
+void ConnectionShowPage::sort()
 {
-    ui->connectionLists->sortItems();
+    ui->connectionList->sort();
 }
 
-void ConnectionShowPage::updateItemActivatedPath(QListWidgetItem* item, QString activatedPath)
+void ConnectionShowPage::updateItemWidgetActivePath(QWidget* widget, QString activatedPath)
 {
-    ui->connectionLists->updateItemActivatedPath(item, activatedPath);
+    ui->connectionList->updateItemWidgetActivePath(widget, activatedPath);
 }
 
-void ConnectionShowPage::itemSimpleStatus(QListWidgetItem* item)
-{
-    ui->connectionLists->itemSimpleStatus(item);
-}
-
-QListWidgetItem* ConnectionShowPage::item(int row)
-{
-    return ui->connectionLists->item(row);
-}
 int ConnectionShowPage::count()
 {
-    return ui->connectionLists->count();
+    return ui->connectionList->count();
 }

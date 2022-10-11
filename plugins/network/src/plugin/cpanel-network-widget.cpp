@@ -15,7 +15,7 @@
 #include "cpanel-network-widget.h"
 #include <kiran-sidebar-item.h>
 #include <qt5-log-i.h>
-#include "plugin/details-page.h"
+#include "details-page/details-page.h"
 #include "ui_cpanel-network-widget.h"
 #include "utils.h"
 #include "vpn-manager.h"

@@ -28,3 +28,14 @@ QPixmap NetworkUtils::trayIconColorSwitch(const QString &iconPath, const int ico
     }
     return pixmap;
 }
+
+QPixmap NetworkUtils::trayIconColorSwitch(QPixmap pixmap)
+{
+    if (!pixmap.isNull())
+    {
+        QImage image = pixmap.toImage();
+        image.invertPixels(QImage::InvertRgb);
+        return QPixmap::fromImage(image);
+    }
+    return QPixmap();
+}

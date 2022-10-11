@@ -78,6 +78,7 @@ public slots:
 
 protected:
     void paintEvent(QPaintEvent *event) override;
+    void mousePressEvent(QMouseEvent *event) override;
 
 signals:
     void sendPassword(const QString &password);
@@ -86,6 +87,7 @@ signals:
     void disconnectButttonClicked();
     void ignoreButtonClicked();
     void cancelButtonClicked();
+    void clicked();
 
 private:
     Ui::TrayItemWidget *ui;

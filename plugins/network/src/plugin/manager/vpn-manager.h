@@ -38,8 +38,9 @@ public:
 
 public slots:
     void clearVpnSetting();
-    void handleRequestEditConnection(const QString &uuid, QString activeConnectionPath);
-    void handleRequestActivateConnection(const QString &connectionPath, const QString &connectionParameter);
+    void handleCreatConnection();
+    void handleEditConnection(const QString &uuid, QString activeConnectionPath);
+    void handleActivateSelectedConnection(const QString &connectionPath, const QString &connectionParameter);
 
     void handleNotifierConnectionAdded(const QString &path) override;
     void handleNotifierConnectionRemoved(const QString &path) override;
@@ -49,8 +50,9 @@ public slots:
     void handleActiveConnectionRemoved(const QString &activePath) override;
 
     void handleVpnConnectionStateChanged(NetworkManager::VpnConnection::State state, NetworkManager::VpnConnection::StateChangeReason reason);
-    void handleVpnStateActivated(const QString &activePath);
-    void handleStateActivating(const QString &activatedPath) override;
+    void handleStateActivated(const QString &activePath) override;
+    void handleStateActivating(const QString &activePath) override;
+    void handleStateDeactivated(const QString &deactivatedPath) override;
 
     void handleVpnStateDisconnected(const QString &activePath);
     void handleVpnStateFailed(const QString &activePath);
@@ -62,6 +64,7 @@ public slots:
 
 private:
     Ui::VpnManager *ui;
+    QString m_devicePath;
 };
 
 #endif  // KIRAN_CPANEL_NETWORK_VPN_MANAGER_H

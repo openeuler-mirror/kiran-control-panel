@@ -51,4 +51,4 @@ install(FILES data/kiran-cpanel-keyboard.desktop
         DESTINATION ${PLUGIN_DESKTOP_INSTALL_DIR}/)
 
 install(FILES ${KEYBOARD_QM}
-        DESTINATION ${INSTALL_DATADIR}/kiran-cpanel-keyboard/translations/)
+        DESTINATION ${TRANSLATION_INSTALL_DIR}/)

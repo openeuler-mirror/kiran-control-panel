@@ -15,8 +15,8 @@
 #ifndef KIRAN_CPANEL_NETWORK_INPUT_DIALOG_H
 #define KIRAN_CPANEL_NETWORK_INPUT_DIALOG_H
 
-#include <QDialog>
 #include <kiran-message-box.h>
+#include <QDialog>
 #include <QLineEdit>
 #include <QPushButton>
 
@@ -32,6 +32,10 @@ public:
     void initUI();
     void initConnection();
     void setlineEditEchoMode(QLineEdit::EchoMode);
+
+public slots:
+    void handleConfirmButtonClicked();
+
 signals:
     void password(const QString &password);
     void ssid(const QString &ssid);
@@ -42,4 +46,4 @@ private:
     QPushButton *m_cancelButton;
 };
 
-#endif  //KIRAN_CPANEL_NETWORK_INPUT_DIALOG_H
+#endif  // KIRAN_CPANEL_NETWORK_INPUT_DIALOG_H

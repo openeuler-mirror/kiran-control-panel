@@ -246,7 +246,12 @@ void AudioSystemTray::setTrayIcon(int value)
 void AudioSystemTray::handleVolumeSettingClicked()
 {
     QProcess process(this);
-    process.startDetached("kiran-control-panel -c audio -s OutputPage");
+    QStringList arguments;
+    arguments << "-c"
+              << "audio"
+              << "-s"
+              << "OutputPage";
+    process.startDetached("kiran-control-panel", arguments);
 }
 
 //暂时不使用，改成从平台主题中获取颜色

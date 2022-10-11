@@ -60,4 +60,4 @@ private:
     AudioNode audioNode;
 };
 
-#endif  //KIRAN_CPANEL_AUDIO_VOLUME_SETTING_PAGE_H
+#endif  // KIRAN_CPANEL_AUDIO_VOLUME_SETTING_PAGE_H

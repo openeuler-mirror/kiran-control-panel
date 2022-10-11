@@ -45,8 +45,6 @@ private:
     QPropertyAnimation *m_animation;
 };
 
-
-
 inline void AnimationLoadingLabel::setAngle(int angle)
 {
     m_angle = angle;
@@ -58,4 +56,4 @@ inline int AnimationLoadingLabel::angle() const
     return m_angle;
 }
 
-#endif  //KIRAN_CPANEL_NETWORK_ANIMATION_LOADING_LABEL_H
+#endif  // KIRAN_CPANEL_NETWORK_ANIMATION_LOADING_LABEL_H

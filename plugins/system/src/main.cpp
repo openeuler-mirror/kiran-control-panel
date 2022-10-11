@@ -12,20 +12,20 @@
  * Author:     liuxinhao <liuxinhao@kylinsec.com.cn>
  */
 
-#include "kcp-plugin-interface.h"
 #include "dbus-wrapper/system-info-dbus.h"
-#include "pages/system-information/system-information.h"
+#include "kcp-plugin-interface.h"
 #include "pages/hardware-information/hardware-information.h"
+#include "pages/system-information/system-information.h"
 
 #include <kiran-log/qt5-log-i.h>
 #include <kiranwidgets-qt5/kiran-message-box.h>
 
-#include <QTranslator>
 #include <QCoreApplication>
+#include <QTranslator>
 
-#define TRANSLATION_DIR "/usr/share/kiran-cpanel-system/translations"
+#define TRANSLATION_DIR "/usr/share/kiran-control-panel/translations"
 
-class KcpSystemInformation : public  QObject,public  KcpPluginInterface
+class KcpSystemInformation : public QObject, public KcpPluginInterface
 {
     Q_OBJECT
     Q_PLUGIN_METADATA(IID KcpPluginInterface_iid)
@@ -89,21 +89,20 @@ public:
         return m_currentWidget;
     }
 
-    virtual bool haveUnsavedOptions()  override
+    virtual bool haveUnsavedOptions() override
     {
         return false;
     }
 
     QStringList visibleSubItems() override
     {
-        return QStringList() << "SystemInformation" << "HardwareInformation";
+        return QStringList() << "SystemInformation"
+                             << "HardwareInformation";
     }
 
 private:
     QWidget* m_currentWidget = nullptr;
     QTranslator* m_translator = nullptr;
 };
-
-
 
 #include "main.moc"

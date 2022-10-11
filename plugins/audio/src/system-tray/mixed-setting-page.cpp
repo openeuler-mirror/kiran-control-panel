@@ -33,11 +33,11 @@ MixedSettingPage::MixedSettingPage(QWidget *parent) : QWidget(parent)
     m_vboxLayout->setMargin(0);
     m_vboxLayout->setSpacing(0);
 
-    //TODO:增加scrollArea
-    
+    // TODO:增加scrollArea
+
     // m_scrollArea = new QScrollArea(this);
     // m_scrollArea->setWidgetResizable(true);
-    
+
     // m_scrollAreaWidgetContents = new QWidget();
     // m_vboxScrollAreaLayout = new QVBoxLayout(m_scrollAreaWidgetContents);
     // m_vboxScrollAreaLayout->setMargin(0);
@@ -64,8 +64,8 @@ MixedSettingPage::MixedSettingPage(QWidget *parent) : QWidget(parent)
     this->layout()->setSizeConstraint(QLayout::SetFixedSize);
     ensurePolished();
 
-    connect(m_audioInterface, &AudioInterface::SinkInputAdded, this,&MixedSettingPage::handleSinkInputAdded);
-    connect(m_audioInterface, &AudioInterface::SinkInputDelete, this,&MixedSettingPage::handleSinkInputDelete);
+    connect(m_audioInterface, &AudioInterface::SinkInputAdded, this, &MixedSettingPage::handleSinkInputAdded);
+    connect(m_audioInterface, &AudioInterface::SinkInputDelete, this, &MixedSettingPage::handleSinkInputDelete);
 }
 
 MixedSettingPage::~MixedSettingPage()
@@ -128,7 +128,7 @@ int MixedSettingPage::getHeight()
     // KLOG_DEBUG() << "m_vboxLayout->sizeHint():" << m_vboxLayout->sizeHint();
     int height = 66 * (m_sinkInputsMap.count() + 1);
 
-    if(height > 198)
+    if (height > 198)
         height = 198;
 
     return height;
@@ -158,14 +158,14 @@ void MixedSettingPage::paintEvent(QPaintEvent* event)
     backgroundColor = kiranPalette->color(Kiran::StylePalette::Normal,
                                             Kiran::StylePalette::Window,
                                             Kiran::StylePalette::Background);
-    
+
     painter.fillRect(frect, backgroundColor);
 
     QColor borderColor;
     borderColor = kiranPalette->color(Kiran::StylePalette::Normal,
                                       Kiran::StylePalette::Widget,
                                       Kiran::StylePalette::Border);
-    
+
     auto pen = painter.pen();
     pen.setWidth(1);
     pen.setColor(borderColor);

@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2022 KylinSec Co., Ltd.
- * kiran-control-panel is licensed under Mulan PSL v2.
+ * kiran-cpanel-network is licensed under Mulan PSL v2.
  * You can use this software according to the terms and conditions of the Mulan PSL v2.
  * You may obtain a copy of Mulan PSL v2 at:
  *          http://license.coscl.org.cn/MulanPSL2
@@ -12,18 +12,10 @@
  * Author:     luoqing <luoqing@kylinsec.com.cn>
  */
 
-#ifndef KIRAN_CPANEL_NETWORK_UTILS_H
-#define KIRAN_CPANEL_NETWORK_UTILS_H
+#ifndef KIRAN_CPANEL_NETWORK_GENERAL_H
+#define KIRAN_CPANEL_NETWORK_GENERAL_H
 
-#include <QWidget>
+#define PROPERTY_NETWORK_CONNECTION_INFO "NetworkConnectionInfo"
+#define TRAY_ITEM_NORAML_HIEGHT 50
 
-namespace NetworkUtils
-{
-
-QPixmap trayIconColorSwitch(const QString &iconPath, const int iconSize = 16);
-
-QPixmap trayIconColorSwitch(QPixmap pixmap);
-
-}  // namespace NetworkUtils
-
-#endif  // KIRAN_CPANEL_NETWORK_UTILS_H
+#endif  // KIRAN_CPANEL_NETWORK_GENERAL_H

@@ -18,13 +18,15 @@
 #include <NetworkManagerQt/WiredDevice>
 #include <NetworkManagerQt/WirelessSetting>
 #include "status-notification.h"
-#include "connection-lists.h"
+#include "connection-list.h"
 #include "connection-show-page.h"
 #include "tray-widget.h"
 // clang-format on
 using namespace NetworkManager;
+#define TRAY_ITEM_NORAML_HIEGHT 50
 
 TrayWidget::TrayWidget(QWidget *parent) : QWidget(parent)
+
 {
     init();
 }
@@ -41,33 +43,24 @@ void TrayWidget::init()
 
 void TrayWidget::initUI()
 {
+    setFixedWidth(240);
+    setContentsMargins(0, 0, 0, 0);
+    m_verticalLayout = new QVBoxLayout(this);
+    m_verticalLayout->setSpacing(0);
+    m_verticalLayout->setContentsMargins(0, 0, 0, 0);
+}
+
+void TrayWidget::addWidget(QWidget *widget)
+{
+    m_verticalLayout->addWidget(widget);
+}
+
+void TrayWidget::removeWidget(QWidget *widget)
+{
+    m_verticalLayout->removeWidget(widget);
 }
 
 void TrayWidget::initConnection()
-{
-    connect(notifier(), &Notifier::activeConnectionAdded, this, &TrayWidget::handleActiveConnectionAdded, Qt::UniqueConnection);
-    connect(notifier(), &Notifier::activeConnectionRemoved, this, &TrayWidget::handleActiveConnectionRemoved, Qt::UniqueConnection);
-    connect(settingsNotifier(), &SettingsNotifier::connectionAdded, this, &TrayWidget::handleNotifierConnectionAdded, Qt::UniqueConnection);
-    connect(settingsNotifier(), &SettingsNotifier::connectionRemoved, this, &TrayWidget::handleNotifierConnectionRemoved, Qt::UniqueConnection);
-}
-
-void TrayWidget::distributeNotifeir()
-{
-}
-
-void TrayWidget::handleNotifierConnectionAdded(const QString &path)
-{
-}
-
-void TrayWidget::handleNotifierConnectionRemoved(const QString &path)
-{
-}
-
-void TrayWidget::handleActiveConnectionAdded(const QString &activepath)
-{
-}
-
-void TrayWidget::handleActiveConnectionRemoved(const QString &activepath)
 {
 }
 
@@ -77,7 +70,6 @@ void TrayWidget::handleActiveConnectionStateChanged(ActiveConnection::State stat
     m_activatedPath = activeConnection->path();
     QString id = activeConnection->id();
     QStringList deviceList = activeConnection->devices();
-    m_devicePtr->uni();
     switch (state)
     {
     case ActiveConnection::State::Unknown:
@@ -107,35 +99,6 @@ void TrayWidget::handleActiveConnectionStateChanged(ActiveConnection::State stat
         break;
     default:
         break;
-    }
-}
-
-void TrayWidget::handleStateActivating(const QString &activatedPath)
-{
-}
-
-void TrayWidget::handleStateActivated(const QString &activatedPath)
-{
-}
-
-void TrayWidget::handleStateDeactivated(const QString &activatedPath)
-{
-}
-
-void TrayWidget::getDeviceList(Device::Type deviceType)
-{
-    const Device::List deviceList = networkInterfaces();
-    for (Device::Ptr dev : deviceList)
-    {
-        if (dev->type() == deviceType)
-        {
-            m_deviceList << dev;
-        }
-    }
-    KLOG_DEBUG() << "m_deviceList:" << m_deviceList;
-    if (m_deviceList.isEmpty())
-    {
-        KLOG_DEBUG() << "No available devices were found";
     }
 }
 

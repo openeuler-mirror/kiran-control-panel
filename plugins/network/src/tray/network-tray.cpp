@@ -66,9 +66,12 @@ void NetworkTray::initUI()
         m_verticalLayout->addWidget(m_wirelessTrayPage);
     m_verticalLayout->setMargin(0);
     m_verticalLayout->setSpacing(0);
-    m_verticalLayout->addStretch();
+    m_verticalLayout->setSizeConstraint(QLayout::SetMinAndMaxSize);
+
+    // QBoxLayout *layout = new QHBoxLayout(this);
+    // layout->addWidget(widget);
+
     setContentWidget(widget);
-    setContentsMargins(0, 0, 0, 0);
     setMaximumHeight(868);
 }
 
@@ -141,14 +144,14 @@ void NetworkTray::initConnect()
     // 无线网络如果一下消失多个网络，短时间会触发多次SizeHint变更的信号
     m_wirelessTimer.setInterval(100);
     m_wirelessTimer.setSingleShot(true);
-    connect(m_wirelessTrayPage, &TrayPage::adjustedTraySize, [this](QSize sizeHint)
+    connect(m_wirelessTrayPage, &TrayPage::sizeChanged, this, [this](QSize sizeHint)
             {
                 m_wirelessTraySizeHint = sizeHint;
                 m_wirelessTimer.start(); });
-    connect(&m_wirelessTimer, &QTimer::timeout, [this]()
+    connect(&m_wirelessTimer, &QTimer::timeout, this, [this]()
             { handleAdjustedTraySize(m_wirelessTraySizeHint); });
 
-    connect(m_wiredTrayPage, &TrayPage::adjustedTraySize, this, &NetworkTray::handleAdjustedTraySize);
+    connect(m_wiredTrayPage, &TrayPage::sizeChanged, this, &NetworkTray::handleAdjustedTraySize, Qt::UniqueConnection);
 
     connect(Kiran::StylePalette::instance(), &Kiran::StylePalette::themeChanged, this, &NetworkTray::handleThemeChanged);
 }
@@ -245,25 +248,41 @@ void NetworkTray::handleTrayClicked(QSystemTrayIcon::ActivationReason reason)
 void NetworkTray::handleNetworkSettingClicked()
 {
     QProcess process(this);
-    process.startDetached("kiran-control-panel -c network");
+    QStringList arguments;
+    arguments << "-c"
+              << "network";
+    process.startDetached("kiran-control-panel", arguments);
 }
 
 void NetworkTray::showTrayPage()
 {
     // XXX:托盘界面在不可见的情况，不方便去修改size和位置，暂时先显示后在调整大小和位置
+    // this->setFixedSize(258, 258);
     this->show();
     QTimer::singleShot(50, this, [=]()
                        {
-                           adjustSize();
-                           setTrayPagePos(); });
+                                /**
+                                 * 1、当同时存在有线和无线网络托盘页面时，使用adjustSize已经能够得到较好的伸缩效果
+                                 * 2、当有线或无线只有其一时，最小sizeHint height为50,但adjustSize调整的window尺寸最小为（200,100）
+                                 *    此时则指定页面size大小
+                                 */
+                                //TODO:需要继续优化界面伸缩
+                                if(m_wiredTrayPage && m_wirelessTrayPage)
+                                    adjustSize();
+                                else
+                                    this->resize(this->sizeHint());
+                               setTrayPagePos(); });
 }
 
 void NetworkTray::setTrayPagePos()
 {
-    getTrayGeometry();
+    KLOG_DEBUG() << "this->sizeHint():" << this->sizeHint();
+    KLOG_DEBUG() << "this->size():" << this->size();
+
     int pageHeight = this->size().height();
     int pageWidth = this->size().width();
-    KLOG_DEBUG() << "this->sizeHint():" << this->sizeHint();
+
+    getTrayGeometry();
     // 抵消KiranRoundedTrayPopup的margin
     int offset = 8;
     this->move(m_xTray - pageWidth / 2, m_yTray - pageHeight + offset);
@@ -341,7 +360,7 @@ void NetworkTray::setTrayIcon(NetworkManager::Status status)
 // XXX:可以优化
 void NetworkTray::handleDeviceAdded(const QString &devicePath)
 {
-    KLOG_DEBUG() << "---------------------handleDeviceAdded:" << devicePath;
+    KLOG_DEBUG() << "Device Added:" << devicePath;
     Device::Ptr device = findNetworkInterface(devicePath);
     if (device->type() == Device::Ethernet)
     {
@@ -356,7 +375,7 @@ void NetworkTray::handleDeviceAdded(const QString &devicePath)
 // XXX:当device被移除时，由于设备对象可能已经被删除，所以并不能通过findNetworkInterface(path)找到该设备接口，进而知道被删除的设备类型
 void NetworkTray::handleDeviceRemoved(const QString &devicePath)
 {
-    KLOG_DEBUG() << "handle Device Removed :" << devicePath;
+    KLOG_DEBUG() << "Device Removed :" << devicePath;
     if (m_wiredTrayPage != nullptr)
     {
         if (m_wiredTrayPage->devicePathList().contains(devicePath))
@@ -371,6 +390,7 @@ void NetworkTray::handleDeviceRemoved(const QString &devicePath)
 }
 
 // TODO:处理Unmanaged和Unavailable的情况
+//一般来说使用deviceAdded/Removed信号即可，但是当出现Unavailable状态变化时，并没有发出deviceAdded/Removed信号
 void NetworkTray::handleDeviceStateChanged(NetworkManager::Device::State newstate,
                                            NetworkManager::Device::State oldstate,
                                            NetworkManager::Device::StateChangeReason reason)
@@ -383,9 +403,6 @@ void NetworkTray::handleDeviceStateChanged(NetworkManager::Device::State newstat
     if (newstate == Device::State::Unavailable)
     {
         Device *device = qobject_cast<Device *>(sender());
-        // KLOG_DEBUG() << "Device::State::Unavailable";
-        // KLOG_DEBUG() << "device->uni():" << device->uni();
-        // KLOG_DEBUG() << "device->interfaceName():" << device->interfaceName();
     }
 }
 
@@ -400,7 +417,7 @@ void NetworkTray::handleDeviceManagedChanged()
  */
 void NetworkTray::handleWirelessEnabledChanged(bool enable)
 {
-    KLOG_DEBUG() << "-----------------------handleWirelessEnabledChanged:" << enable;
+    KLOG_DEBUG() << " Wireless Enabled Changed:" << enable;
 
     if (m_wirelessTrayPage != nullptr)
     {
@@ -456,6 +473,7 @@ void NetworkTray::handlePrimaryConnectionChanged(const QString &uni)
 void NetworkTray::reloadWiredTrayPage()
 {
     m_verticalLayout->removeWidget(m_wiredTrayPage);
+    m_wiredTrayPage->disconnect();
     delete m_wiredTrayPage;
     m_wiredTrayPage = nullptr;
     m_wiredDeviceList.clear();
@@ -466,6 +484,7 @@ void NetworkTray::reloadWiredTrayPage()
         m_wiredTrayPage = new TrayPage(m_wiredDeviceList, this);
         m_verticalLayout->insertWidget(0, m_wiredTrayPage);
         m_verticalLayout->setMargin(0);
+        connect(m_wiredTrayPage, &TrayPage::sizeChanged, this, &NetworkTray::handleAdjustedTraySize, Qt::UniqueConnection);
         update();
     }
 }
@@ -473,6 +492,7 @@ void NetworkTray::reloadWiredTrayPage()
 void NetworkTray::reloadWirelessTrayPage()
 {
     m_verticalLayout->removeWidget(m_wirelessTrayPage);
+    m_wiredTrayPage->disconnect();
     delete m_wirelessTrayPage;
     m_wirelessTrayPage = nullptr;
     m_wirelessDeviceList.clear();
@@ -483,46 +503,42 @@ void NetworkTray::reloadWirelessTrayPage()
         m_wirelessTrayPage = new TrayPage(m_wirelessDeviceList, this);
         m_verticalLayout->insertWidget(-1, m_wirelessTrayPage);
         m_verticalLayout->setMargin(0);
+
+        // 无线网络如果一下消失多个网络，短时间会触发多次SizeHint变更的信号
+        m_wirelessTimer.setInterval(100);
+        m_wirelessTimer.setSingleShot(true);
+        connect(m_wirelessTrayPage, &TrayPage::sizeChanged, this, [this](QSize sizeHint)
+                {
+                    m_wirelessTraySizeHint = sizeHint;
+                    m_wirelessTimer.start(); });
+        connect(&m_wirelessTimer, &QTimer::timeout, this, [this]()
+                { handleAdjustedTraySize(m_wirelessTraySizeHint); });
         update();
     }
 }
 
+// TODO:修改，重构
+#define OFFSET_MARGIN 18
 void NetworkTray::handleAdjustedTraySize(QSize sizeHint)
 {
     // this->sizeHint() 更新不及时，需要等一段时间
     QTimer::singleShot(100, this, [=]()
                        {
-                            adjustSize();
+                            if(m_wiredTrayPage && m_wirelessTrayPage)
+                                adjustSize();
+                            else
+                            {
+                                KLOG_DEBUG() << "resize before this->size():" << this->size();
+                                QSize newSize(this->sizeHint().width(),sizeHint.height() + OFFSET_MARGIN);
+                                KLOG_DEBUG() << "newSize:" << newSize;
+                                this->resize(newSize);
+                                // this->setFixedSize(newSize);
+                                KLOG_DEBUG() << "resize after this->size():" << this->size();
+                            }
                             setTrayPagePos(); });
 }
 
 void NetworkTray::handleThemeChanged(Kiran::PaletteType paletteType)
 {
     setTrayIcon(NetworkManager::status());
-}
-
-void NetworkTray::paintEvent(QPaintEvent *event)
-{
-    auto stylePalette = Kiran::StylePalette::instance();
-    auto borderColor = stylePalette->color(Kiran::StylePalette::Normal, Kiran::StylePalette::Window, Kiran::StylePalette::Border);
-
-    QPainter painter(this);
-    painter.setRenderHint(QPainter::Antialiasing);
-
-    QPainterPath painterPath;
-    // 抵消KiranRoundedTrayPopup的margin
-    int offset = 8;
-
-    QRectF frect(rect().adjusted(8, 8, -8, -8));
-    painterPath.addRoundedRect(frect, 4, 4);
-
-    painter.setPen(borderColor);
-    painter.drawPath(painterPath);
-
-    // auto pen = painter.pen();
-    // pen.setWidth(1);
-    // pen.setColor(borderColor);
-    // painter.strokePath(painterPath, pen);
-
-    QWidget::paintEvent(event);
 }

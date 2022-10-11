@@ -30,7 +30,6 @@ class TrayPage;
 class NetworkTray : public KiranRoundedTrayPopup
 {
     Q_OBJECT
-
 public:
     explicit NetworkTray(QWidget *parent = nullptr);
     ~NetworkTray() override;
@@ -69,9 +68,6 @@ public slots:
     void handleAdjustedTraySize(QSize sizeHint);
 
     void handleThemeChanged(Kiran::PaletteType paletteType);
-
-protected:
-    void paintEvent(QPaintEvent *event) override;
 
 private:
     QSystemTrayIcon *m_systemTray;

@@ -16,6 +16,7 @@
 #include <qt5-log-i.h>
 #include <QApplication>
 #include <QLineEdit>
+#include <QMouseEvent>
 #include <QPainter>
 #include <QSvgRenderer>
 #include "animation-loading-label.h"
@@ -166,12 +167,17 @@ void ConnectionItemWidget::setOtherNetworkIcon()
 
 void ConnectionItemWidget::handleThemeChanged(Kiran::PaletteType paletteType)
 {
-    if (m_connectionTypeIcon->pixmap() != nullptr)
-    {
-        QImage image = m_connectionTypeIcon->pixmap()->toImage();
-        image.invertPixels(QImage::InvertRgb);
-        QPixmap pixmap = QPixmap::fromImage(image);
+    QPixmap pixmap = NetworkUtils::trayIconColorSwitch(m_connectionTypeIcon->pixmap(Qt::ReturnByValue));
+    if (!pixmap.isNull())
         m_connectionTypeIcon->setPixmap(pixmap);
-    }
     m_editButton->setIcon(NetworkUtils::trayIconColorSwitch(":/kcp-network-images/details-info.svg"));
+}
+
+void ConnectionItemWidget::mousePressEvent(QMouseEvent* event)
+{
+    if (event->button() == Qt::LeftButton)
+    {
+        emit clicked();
+    }
+    QWidget::mousePressEvent(event);
 }
