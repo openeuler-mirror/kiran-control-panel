@@ -28,6 +28,6 @@ target_link_libraries(${TARGET_NAME}
         Qt5::Core
         Qt5::Widgets
         Qt5::Svg
-        plugin-info
+        plugin-framework
         ${KIRAN_WIDGETS_QT5_LIBRARIES}
         ${KIRAN_STYLE_HELPER_LIBRARIES})

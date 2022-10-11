@@ -1,17 +1,16 @@
 /**
- * Copyright (c) 2020 ~ 2021 KylinSec Co., Ltd. 
+ * Copyright (c) 2020 ~ 2021 KylinSec Co., Ltd.
  * kiran-control-panel is licensed under Mulan PSL v2.
- * You can use this software according to the terms and conditions of the Mulan PSL v2. 
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
  * You may obtain a copy of Mulan PSL v2 at:
- *          http://license.coscl.org.cn/MulanPSL2 
- * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND, 
- * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT, 
- * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.  
- * See the Mulan PSL v2 for more details.  
- * 
- * Author:     yangxiaoqing <yangxiaoqing@kylinos.com.cn>
+ *          http://license.coscl.org.cn/MulanPSL2
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ *
+ * Author:     yangxiaoqing <yangxiaoqing@kylinsec.com.cn>
  */
-
 
 #include "launcher.h"
 #include "kiran-module-widget/kiran-module-widget.h"
@@ -42,15 +41,9 @@ Launcher::~Launcher()
 
 }
 
-void Launcher::setPlugins(const QList<QSharedPointer<PluginHelper>> &plugins)
+void Launcher::setSubItems(QVector<KcpPluginSubItemPtr> subitems)
 {
-    m_moduleWidget->setPlugins(plugins);
-}
-
-void Launcher::setPlugin(QSharedPointer<PluginHelper> plugin)
-{
-    QList<QSharedPointer<PluginHelper>> plugins = {plugin};
-    m_moduleWidget->setPlugins(plugins);
+    m_moduleWidget->setSubItems(subitems);
 }
 
 QSize Launcher::sizeHint() const

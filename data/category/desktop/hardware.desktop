@@ -1,12 +1,15 @@
-[Desktop Entry]
-Name=Hardware
-Name[zh_CN]=设备
-Comment=Hardware
-Comment[zh_CN]=设备
-Icon=hardware.png
-
 [Kiran Control Panel Category]
 Category=hardware
+
+Name=Hardware
+Name[zh_CN]=设备
+
+Comment=Hardware
+Comment[zh_CN]=设备
+
+Icon=hardware.png
+
 Weight=8
+
 Keywords[zh_CN]=设备
 Keywords=Hardware

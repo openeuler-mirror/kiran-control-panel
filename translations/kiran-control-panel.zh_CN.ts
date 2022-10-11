@@ -4,14 +4,12 @@
 <context>
     <name>KiranModuleWidget</name>
     <message>
-        <location filename="../lib/common-widgets/kiran-module-widget/kiran-module-widget.cpp" line="140"/>
         <source>Warning</source>
-        <translation>警告</translation>
+        <translation type="vanished">警告</translation>
     </message>
     <message>
-        <location filename="../lib/common-widgets/kiran-module-widget/kiran-module-widget.cpp" line="141"/>
         <source>The edited content in %1 is not saved. After switching, the edited content will be lost. Are you sure you want to save？</source>
-        <translation>%1中编辑的内容未保存，切换后编辑的内容将会丢失。您确定要保存吗?</translation>
+        <translation type="vanished">%1中编辑的内容未保存，切换后编辑的内容将会丢失。您确定要保存吗?</translation>
     </message>
 </context>
 <context>
@@ -25,7 +23,7 @@
 <context>
     <name>PanelWindow</name>
     <message>
-        <location filename="../src/panel-window.cpp" line="46"/>
+        <location filename="../src/panel-window.cpp" line="45"/>
         <source>Control Panel</source>
         <translation>控制面板</translation>
     </message>
@@ -33,12 +31,12 @@
 <context>
     <name>SearchEdit</name>
     <message>
-        <location filename="../src/search-edit/search-edit.cpp" line="81"/>
+        <location filename="../src/search-edit/search-edit.cpp" line="83"/>
         <source>Info</source>
         <translation>提示</translation>
     </message>
     <message>
-        <location filename="../src/search-edit/search-edit.cpp" line="81"/>
+        <location filename="../src/search-edit/search-edit.cpp" line="83"/>
         <source>Failed to find related items, please re-enter!</source>
         <translation>未能搜索到相关项，请重新输入!</translation>
     </message>

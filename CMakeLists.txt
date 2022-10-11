@@ -17,7 +17,7 @@ find_package(Qt5 COMPONENTS Widgets X11Extras Svg LinguistTools)
 pkg_search_module(KLOG_QT5 REQUIRED klog-qt5)
 pkg_search_module(KIRAN_WIDGETS_QT5 REQUIRED kiranwidgets-qt5)
 pkg_search_module(KIRAN_STYLE_HELPER REQUIRED kiran-style-helper)
-#pkg_search_module(GLIB_2 REQUIRED glib-2.0)
+pkg_search_module(GLIB_2 REQUIRED glib-2.0)
 
 include(kcp_variables.cmake)
 include(kcp-qdbus-wrapper.cmake)
@@ -47,11 +47,12 @@ target_include_directories(${PROJECT_NAME} PRIVATE
         src
         ${KLOG_QT5_INCLUDE_DIRS}
         ${KIRAN_WIDGETS_QT5_INCLUDE_DIRS}
-        ${KIRAN_STYLE_HELPER_INCLUDE_DIRS})
+        ${KIRAN_STYLE_HELPER_INCLUDE_DIRS}
+        ${GLIB_2_INCLUDE_DIRS})
 
 target_link_libraries(${PROJECT_NAME}
         common-widgets
-        plugin-info
+        plugin-framework
         Qt5::Core
         Qt5::Gui
         Qt5::Svg
@@ -61,7 +62,8 @@ target_link_libraries(${PROJECT_NAME}
         pthread
         ${KLOG_QT5_LIBRARIES}
         ${KIRAN_WIDGETS_QT5_LIBRARIES}
-        ${KIRAN_STYLE_HELPER_LIBRARIES})
+        ${KIRAN_STYLE_HELPER_LIBRARIES}
+        ${GLIB_2_LIBRARIES})
 
 #安装kiran-control-panel
 install(TARGETS ${PROJECT_NAME} DESTINATION ${INSTALL_BINDIR}/)
