@@ -125,27 +125,42 @@
         <translation>主机名:</translation>
     </message>
     <message>
-        <location filename="../src/pages/system-information/change-host-name-widget.ui" line="154"/>
+        <location filename="../src/pages/system-information/change-host-name-widget.ui" line="117"/>
+        <source>EditHostName</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/system-information/change-host-name-widget.ui" line="170"/>
+        <source>ButtonSaveHostName</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/system-information/change-host-name-widget.ui" line="173"/>
         <source>Save</source>
         <translation>保存</translation>
     </message>
     <message>
-        <location filename="../src/pages/system-information/change-host-name-widget.ui" line="173"/>
+        <location filename="../src/pages/system-information/change-host-name-widget.ui" line="208"/>
+        <source>ButtonCancelChangeHostName</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/system-information/change-host-name-widget.ui" line="211"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="../src/pages/system-information/change-host-name-widget.cpp" line="55"/>
+        <location filename="../src/pages/system-information/change-host-name-widget.cpp" line="58"/>
         <source>Host Name</source>
         <translation>主机名</translation>
     </message>
     <message>
-        <location filename="../src/pages/system-information/change-host-name-widget.cpp" line="72"/>
+        <location filename="../src/pages/system-information/change-host-name-widget.cpp" line="75"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="../src/pages/system-information/change-host-name-widget.cpp" line="73"/>
+        <location filename="../src/pages/system-information/change-host-name-widget.cpp" line="76"/>
         <source>Change host name failed! Please check the Dbus service!</source>
         <translation>修改主机名失败！请 检查Dbus服务!</translation>
     </message>
@@ -164,27 +179,37 @@
     </message>
     <message>
         <location filename="../src/pages/hardware-information/hardware-information.ui" line="149"/>
-        <location filename="../src/pages/hardware-information/hardware-information.ui" line="209"/>
+        <source>LabelCpuInfo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/hardware-information/hardware-information.ui" line="152"/>
+        <location filename="../src/pages/hardware-information/hardware-information.ui" line="215"/>
         <source>TextLabel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/pages/hardware-information/hardware-information.ui" line="189"/>
+        <location filename="../src/pages/hardware-information/hardware-information.ui" line="192"/>
         <source>Memory:</source>
         <translation>内存:</translation>
     </message>
     <message>
-        <location filename="../src/pages/hardware-information/hardware-information.ui" line="249"/>
+        <location filename="../src/pages/hardware-information/hardware-information.ui" line="212"/>
+        <source>LabelMemoryInfo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/hardware-information/hardware-information.ui" line="255"/>
         <source>Hard disk:</source>
         <translation>硬盘:</translation>
     </message>
     <message>
-        <location filename="../src/pages/hardware-information/hardware-information.ui" line="327"/>
+        <location filename="../src/pages/hardware-information/hardware-information.ui" line="333"/>
         <source>Graphics card:</source>
         <translation>显卡:</translation>
     </message>
     <message>
-        <location filename="../src/pages/hardware-information/hardware-information.ui" line="402"/>
+        <location filename="../src/pages/hardware-information/hardware-information.ui" line="408"/>
         <source>Network card:</source>
         <translation>网卡:</translation>
     </message>
@@ -256,12 +281,12 @@
 <context>
     <name>KylinsecLogo</name>
     <message>
-        <location filename="../src/kylinsec-logo.cpp" line="25"/>
+        <location filename="../src/kylinsec-logo.cpp" line="35"/>
         <source>Copyright ©</source>
         <translation type="unfinished">版权所有 ©</translation>
     </message>
     <message>
-        <location filename="../src/kylinsec-logo.cpp" line="25"/>
+        <location filename="../src/kylinsec-logo.cpp" line="35"/>
         <source>KylinSec. All rights reserved.</source>
         <translation type="unfinished">KylinSec.保留所有权利.</translation>
     </message>
@@ -274,7 +299,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/pages/system-information/license-agreement.ui" line="76"/>
+        <location filename="../src/pages/system-information/license-agreement.ui" line="70"/>
+        <source>BrowserLicense</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/system-information/license-agreement.ui" line="79"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -283,22 +313,32 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/pages/system-information/license-agreement.ui" line="110"/>
+        <location filename="../src/pages/system-information/license-agreement.ui" line="126"/>
+        <source>ButtonExportLicense</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/system-information/license-agreement.ui" line="129"/>
         <source>Export</source>
         <translation>导出</translation>
     </message>
     <message>
-        <location filename="../src/pages/system-information/license-agreement.ui" line="148"/>
+        <location filename="../src/pages/system-information/license-agreement.ui" line="170"/>
+        <source>ButtonCloseLicense</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/system-information/license-agreement.ui" line="173"/>
         <source>Close</source>
         <translation>关闭</translation>
     </message>
     <message>
-        <location filename="../src/pages/system-information/license-agreement.cpp" line="80"/>
+        <location filename="../src/pages/system-information/license-agreement.cpp" line="79"/>
         <source>Save</source>
         <translation>保存</translation>
     </message>
     <message>
-        <location filename="../src/pages/system-information/license-agreement.cpp" line="82"/>
+        <location filename="../src/pages/system-information/license-agreement.cpp" line="81"/>
         <source>PDF(*.pdf)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -311,12 +351,12 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">导出最终用户许可协议失败!</translation>
     </message>
     <message>
-        <location filename="../src/pages/system-information/license-agreement.cpp" line="91"/>
+        <location filename="../src/pages/system-information/license-agreement.cpp" line="90"/>
         <source>Export License</source>
         <translation>导出协议</translation>
     </message>
     <message>
-        <location filename="../src/pages/system-information/license-agreement.cpp" line="92"/>
+        <location filename="../src/pages/system-information/license-agreement.cpp" line="91"/>
         <source>Export License failed!</source>
         <translation>导出协议失败!</translation>
     </message>
@@ -471,59 +511,94 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/pages/system-information/system-information.ui" line="149"/>
+        <location filename="../src/pages/system-information/system-information.ui" line="152"/>
         <source>Host Name:</source>
         <translation>主机名:</translation>
     </message>
     <message>
-        <location filename="../src/pages/system-information/system-information.ui" line="169"/>
-        <location filename="../src/pages/system-information/system-information.ui" line="260"/>
-        <location filename="../src/pages/system-information/system-information.ui" line="335"/>
-        <location filename="../src/pages/system-information/system-information.ui" line="398"/>
+        <location filename="../src/pages/system-information/system-information.ui" line="172"/>
+        <source>LabelHostName</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/system-information/system-information.ui" line="175"/>
+        <location filename="../src/pages/system-information/system-information.ui" line="272"/>
+        <location filename="../src/pages/system-information/system-information.ui" line="350"/>
+        <location filename="../src/pages/system-information/system-information.ui" line="416"/>
         <source>TextLabel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/pages/system-information/system-information.ui" line="240"/>
+        <location filename="../src/pages/system-information/system-information.ui" line="206"/>
+        <source>ButtonChangeHostName</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/system-information/system-information.ui" line="249"/>
         <source>System Version:</source>
         <translation>系统版本:</translation>
     </message>
     <message>
-        <location filename="../src/pages/system-information/system-information.ui" line="315"/>
+        <location filename="../src/pages/system-information/system-information.ui" line="269"/>
+        <source>LabelSystemVersion</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/system-information/system-information.ui" line="327"/>
         <source>Kernel Version:</source>
         <translation>内核版本:</translation>
     </message>
     <message>
-        <location filename="../src/pages/system-information/system-information.ui" line="378"/>
+        <location filename="../src/pages/system-information/system-information.ui" line="347"/>
+        <source>LabelKernelVersion</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/system-information/system-information.ui" line="393"/>
         <source>System Architecture:</source>
         <translation>系统架构:</translation>
     </message>
     <message>
-        <location filename="../src/pages/system-information/system-information.ui" line="441"/>
+        <location filename="../src/pages/system-information/system-information.ui" line="413"/>
+        <source>LabelSystemArch</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/system-information/system-information.ui" line="459"/>
         <source>EULA:</source>
         <translation>最终用户许可协议:</translation>
     </message>
     <message>
-        <location filename="../src/pages/system-information/system-information.ui" line="513"/>
+        <location filename="../src/pages/system-information/system-information.ui" line="491"/>
+        <source>ButtonShowEULA</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/system-information/system-information.ui" line="534"/>
         <source>Version License:</source>
         <translation>版本协议:</translation>
     </message>
     <message>
-        <location filename="../src/pages/system-information/system-information.ui" line="200"/>
+        <location filename="../src/pages/system-information/system-information.ui" line="566"/>
+        <source>ButtonShowVersionLicense</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/system-information/system-information.ui" line="209"/>
         <source>Change</source>
         <translation>更改</translation>
     </message>
     <message>
-        <location filename="../src/pages/system-information/system-information.ui" line="473"/>
-        <location filename="../src/pages/system-information/system-information.ui" line="545"/>
+        <location filename="../src/pages/system-information/system-information.ui" line="494"/>
+        <location filename="../src/pages/system-information/system-information.ui" line="569"/>
         <source>Show</source>
         <translation>查看</translation>
     </message>
     <message>
+        <location filename="../src/pages/system-information/system-information.cpp" line="92"/>
+        <location filename="../src/pages/system-information/system-information.cpp" line="93"/>
         <location filename="../src/pages/system-information/system-information.cpp" line="94"/>
         <location filename="../src/pages/system-information/system-information.cpp" line="95"/>
-        <location filename="../src/pages/system-information/system-information.cpp" line="96"/>
-        <location filename="../src/pages/system-information/system-information.cpp" line="97"/>
         <source>Unknow</source>
         <translation>未知</translation>
     </message>
