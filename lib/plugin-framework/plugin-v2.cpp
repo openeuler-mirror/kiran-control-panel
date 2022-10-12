@@ -64,7 +64,7 @@ bool PluginV2::load(const QString& path)
         return false;
     }
 
-    KcpPluginInterfaceV2* pInterface = qobject_cast<KcpPluginInterfaceV2*>(m_pluginLoader.instance());
+    KiranControlPanel::PluginInterfaceV2* pInterface = qobject_cast<KiranControlPanel::PluginInterfaceV2*>(m_pluginLoader.instance());
     if (!pInterface)
     {
         KLOG_ERROR() << "can't convert to plugin interface v2!" << m_pluginLoader.errorString();
@@ -97,9 +97,9 @@ void PluginV2::unload()
     m_isValid = false;
 }
 
-QVector<KcpPluginSubItemPtr> PluginV2::getSubItems()
+QVector<KiranControlPanel::SubItemPtr> PluginV2::getSubItems()
 {
-    RETURN_VAL_IF_IVALID(QVector<KcpPluginSubItemPtr>{});
+    RETURN_VAL_IF_IVALID(QVector<KiranControlPanel::SubItemPtr>{});
     return m_interfaceV2->getSubItems();
 }
 

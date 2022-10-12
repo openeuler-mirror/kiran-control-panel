@@ -17,7 +17,7 @@
 
 #include <QMap>
 #include <QWidget>
-#include "kcp-plugin-subitem.h"
+#include "plugin-subitem-interface.h"
 namespace Ui
 {
 class KiranModuleWidget;
@@ -25,7 +25,7 @@ class KiranModuleWidget;
 
 class QListWidgetItem;
 class Category;
-class KcpPluginSubItem;
+class PluginSubitemInterface;
 class KiranModuleWidget : public QWidget
 {
     Q_OBJECT
@@ -38,7 +38,7 @@ public:
     void clear();
 
     void setCategory(Category *c);
-    void setSubItems(QVector<KcpPluginSubItemPtr> subitems);
+    void setSubItems(QVector<KiranControlPanel::SubItemPtr> subitems);
 
     bool checkHasUnSaved();
     void jumpTo(const QString &subItemID, const QString &customKey);
@@ -51,8 +51,8 @@ private slots:
 
 private:
     void init();
-    void removeListWidgetItem(KcpPluginSubItemPtr subitem);
-    void appendListWidgetItem(KcpPluginSubItemPtr subitem);
+    void removeListWidgetItem(KiranControlPanel::SubItemPtr subitem);
+    void appendListWidgetItem(KiranControlPanel::SubItemPtr subitem);
 
 private:
     Ui::KiranModuleWidget *ui;
@@ -60,11 +60,11 @@ private:
     QWidget *m_subItemWidget = nullptr;
     Category *m_category = nullptr;
 
-    QVector<KcpPluginSubItemPtr> m_subitems;
+    QVector<KiranControlPanel::SubItemPtr> m_subitems;
     /// 保存当前选中的功能项信息
-    QPair<QListWidgetItem *, KcpPluginSubItemPtr> m_currentSubItem;
+    QPair<QListWidgetItem *, KiranControlPanel::SubItemPtr> m_currentSubItem;
     /// 维系功能项目界面显示条目与功能项目关联的字典
-    QMap<QListWidgetItem *, KcpPluginSubItemPtr> m_subItemsMap;
+    QMap<QListWidgetItem *, KiranControlPanel::SubItemPtr> m_subItemsMap;
 };
 
 #endif  // KIRANMODULEWIDGET_H

@@ -41,7 +41,7 @@ Launcher::~Launcher()
 
 }
 
-void Launcher::setSubItems(QVector<KcpPluginSubItemPtr> subitems)
+void Launcher::setSubItems(QVector<KiranControlPanel::SubItemPtr> subitems)
 {
     m_moduleWidget->setSubItems(subitems);
 }

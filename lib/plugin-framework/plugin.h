@@ -16,7 +16,7 @@
 #include <QObject>
 #include <QPluginLoader>
 
-#include "kcp-plugin-subitem.h"
+#include "plugin-subitem-interface.h"
 class Plugin : public QObject
 {
     Q_OBJECT
@@ -53,7 +53,7 @@ public:
 
     /// @brief 获取插件中的功能项
     /// @return 功能项指针数组，此数组会发生改变，不能缓存
-    virtual QVector<KcpPluginSubItemPtr> getSubItems() = 0;
+    virtual QVector<KiranControlPanel::SubItemPtr> getSubItems() = 0;
 
 signals:
     /// @brief 插件内的功能项信息变更信号
@@ -66,5 +66,4 @@ protected:
     QString m_id;
     QString m_name;
     QString m_icon;
-    QPluginLoader m_pluginLoader;
 };

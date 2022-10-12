@@ -76,7 +76,7 @@ void KiranModuleWidget::init()
             this, &KiranModuleWidget::handleCurrentItemChanged, Qt::QueuedConnection);
 }
 
-void KiranModuleWidget::removeListWidgetItem(KcpPluginSubItemPtr subitem)
+void KiranModuleWidget::removeListWidgetItem(KiranControlPanel::SubItemPtr subitem)
 {
     auto listwidgetItem = m_subItemsMap.key(subitem);
     int row = ui->list_subItems->row(listwidgetItem);
@@ -85,7 +85,7 @@ void KiranModuleWidget::removeListWidgetItem(KcpPluginSubItemPtr subitem)
     m_subitems.removeAll(subitem);
 }
 
-void KiranModuleWidget::appendListWidgetItem(KcpPluginSubItemPtr subitem)
+void KiranModuleWidget::appendListWidgetItem(KiranControlPanel::SubItemPtr subitem)
 {
     QString name = subitem->getName();
     QString desc = subitem->getDesc();
@@ -121,7 +121,7 @@ void KiranModuleWidget::setCategory(Category *c)
     connect(m_category, &Category::subItemInfoChanged, this, &KiranModuleWidget::handleCategorySubItemInfoChanged);
 }
 
-void KiranModuleWidget::setSubItems(QVector<KcpPluginSubItemPtr> subitems)
+void KiranModuleWidget::setSubItems(QVector<KiranControlPanel::SubItemPtr> subitems)
 {
     clear();
 
@@ -170,11 +170,11 @@ void KiranModuleWidget::handleCurrentItemChanged()
     auto mapIter = m_subItemsMap.find(selectedItem);
     if (mapIter == m_subItemsMap.end())
     {
-        KLOG_WARNING() << "can't find KcpPluginSubItemPtr by QListWidgetItem," << selectedItem->text();
+        KLOG_WARNING() << "can't find KiranControlPanel::SubItemPtr by QListWidgetItem," << selectedItem->text();
         return;
     }
 
-    KcpPluginSubItemPtr pluginSubitem = *mapIter;
+    KiranControlPanel::SubItemPtr pluginSubitem = *mapIter;
     if (checkHasUnSaved())
     {
         KLOG_DEBUG() << "switch subitem to:" << pluginSubitem->getName() << "reject";

@@ -76,19 +76,19 @@ QStringList Category::getSubItemIDs()
     return subitemIds;
 }
 
-QVector<KcpPluginSubItemPtr> Category::getSubItems()
+QVector<KiranControlPanel::SubItemPtr> Category::getSubItems()
 {
     return m_subitems;
 }
 
-KcpPluginSubItemPtr Category::getSubItem(const QString& subitemID)
+KiranControlPanel::SubItemPtr Category::getSubItem(const QString& subitemID)
 {
     auto iter = m_subitemIDMap.find(subitemID);
     if (iter == m_subitemIDMap.end())
     {
         KLOG_WARNING() << "Category:" << getName()
                        << "can't find subitem:" << subitemID;
-        return KcpPluginSubItemPtr();
+        return KiranControlPanel::SubItemPtr();
     }
     else
     {
@@ -96,7 +96,7 @@ KcpPluginSubItemPtr Category::getSubItem(const QString& subitemID)
     }
 }
 
-void Category::appendSubItem(KcpPluginSubItemPtr subitem)
+void Category::appendSubItem(KiranControlPanel::SubItemPtr subitem)
 {
     int weight = subitem->getWeight();
 
@@ -120,7 +120,7 @@ void Category::appendSubItem(KcpPluginSubItemPtr subitem)
     emit subItemAdded(subitem->getID());
 }
 
-void Category::appendSubItems(QVector<KcpPluginSubItemPtr> pluginSubItem)
+void Category::appendSubItems(QVector<KiranControlPanel::SubItemPtr> pluginSubItem)
 {
     for (auto subitem : pluginSubItem)
     {
@@ -128,7 +128,7 @@ void Category::appendSubItems(QVector<KcpPluginSubItemPtr> pluginSubItem)
     }
 }
 
-void Category::removeSubItem(KcpPluginSubItemPtr pluginSubItem)
+void Category::removeSubItem(KiranControlPanel::SubItemPtr pluginSubItem)
 {
     int idx = m_subitems.indexOf(pluginSubItem);
     m_subitems.removeAt(idx);

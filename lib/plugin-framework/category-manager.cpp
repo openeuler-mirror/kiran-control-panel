@@ -251,7 +251,7 @@ void CategoryManager::connectToPluginsSubItemChanged()
 /// @brief 添加功能项，进入功能项所属的分类之中
 /// @param plugin   功能项所在的插件
 /// @param subitem  功能项共享指针
-void CategoryManager::addSubItemToCategory(Plugin* plugin, KcpPluginSubItemPtr subitem)
+void CategoryManager::addSubItemToCategory(Plugin* plugin, KiranControlPanel::SubItemPtr subitem)
 {
     QString categoryID = subitem->getCategory();
     QString subitemID = subitem->getID();

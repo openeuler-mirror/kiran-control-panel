@@ -14,4 +14,4 @@ add_subdirectory(keybinding)
 add_subdirectory(appearance)
 
 
-add_subdirectory(test)
+#add_subdirectory(test)

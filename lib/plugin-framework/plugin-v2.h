@@ -11,12 +11,12 @@
  *
  * Author:     liuxinhao <liuxinhao@kylinsec.com.cn>
  */
-#include "kcp-plugin-interface-v2.h"
+#include "plugin-interface-v2.h"
 #include "plugin.h"
 
 #include <QReadWriteLock>
 
-class PluginV2 : public Plugin, public KcpInterface
+class PluginV2 : public Plugin, public KiranControlPanel::PanelInterface
 {
     Q_OBJECT
 public:
@@ -31,7 +31,7 @@ public:
     void unload() override;
     /// @brief 获取插件的功能项
     /// @return 功能项列表
-    QVector<KcpPluginSubItemPtr> getSubItems() override;
+    QVector<KiranControlPanel::SubItemPtr> getSubItems() override;
 
     /// @brief 提供给插件实现回调的接口，插件通知该插件包装类向外发出信号
     /// @param subItemID 功能项ID
@@ -39,5 +39,6 @@ public:
     void handlePluginSubItemChanged() override;
 
 private:
-    KcpPluginInterfaceV2* m_interfaceV2 = nullptr;
+    KiranControlPanel::PluginInterfaceV2* m_interfaceV2 = nullptr;
+    QPluginLoader m_pluginLoader;
 };

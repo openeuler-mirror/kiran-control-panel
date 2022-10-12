@@ -63,14 +63,12 @@ bool PluginV1::load(const QString& desktopPath)
         KLOG_ERROR() << "can't load plugin," << desktopPath << ",file isn't exist!";
         return false;
     }
-
     m_libraryPath = getLibraryPathFromDesktop(desktopPath);
     m_pluginLoader.setFileName(m_libraryPath);
     if (!m_pluginLoader.load())
     {
         KLOG_ERROR() << "can't load plugin," << m_pluginLoader.errorString();
     }
-
     if (!m_pluginLoader.isLoaded())
     {
         KLOG_ERROR() << "can't load plugin,"
@@ -78,7 +76,6 @@ bool PluginV1::load(const QString& desktopPath)
                      << "," << m_libraryPath;
         return false;
     }
-
     m_interface = qobject_cast<KcpPluginInterface*>(m_pluginLoader.instance());
     if (!m_interface)
     {
@@ -132,7 +129,7 @@ void PluginV1::unload()
     m_pluginLoader.unload();
 }
 
-QVector<KcpPluginSubItemPtr> PluginV1::getSubItems()
+QVector<KiranControlPanel::SubItemPtr> PluginV1::getSubItems()
 {
     return m_subItemVec;
 }
@@ -169,6 +166,7 @@ QString PluginV1::getLibraryPathFromDesktop(const QString& desktopPath)
     {
         res.insert(0, QString(PLUGIN_LIBRARY_DIR) + "/");
     }
+    g_key_file_free(keyFile);
     g_free(library);
     return res;
 }
@@ -291,7 +289,7 @@ bool PluginV1::parseDesktopInfo(const QString& desktopPath)
 
             subitemPointer->setWeight(weight);
             subitemPointer->setCategory(categoryStr);
-            m_subItemVec.append(KcpPluginSubItemPtr(subitemPointer.take()));
+            m_subItemVec.append(KiranControlPanel::SubItemPtr(subitemPointer.take()));
         }
     }
 
