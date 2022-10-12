@@ -30,6 +30,7 @@ using namespace NetworkManager;
 #define STATUS_NOTIFIER_MANAGER "org.kde.StatusNotifierManager"
 #define STATUS_NOTIFIER_MANAGER_OBJECT_NAME "/StatusNotifierManager"
 #define MAX_WAIT_COUNTS 10
+#define MAX_HEIGHT 868
 
 NetworkTray::NetworkTray(QWidget *parent) : KiranRoundedTrayPopup(parent),
                                             m_wiredTrayPage(nullptr),
@@ -72,7 +73,7 @@ void NetworkTray::initUI()
     // layout->addWidget(widget);
 
     setContentWidget(widget);
-    setMaximumHeight(868);
+    setMaximumHeight(MAX_HEIGHT);
 }
 
 void NetworkTray::initConnect()
@@ -142,7 +143,7 @@ void NetworkTray::initConnect()
     connect(notifier(), &Notifier::wirelessEnabledChanged, this, &NetworkTray::handleWirelessEnabledChanged, Qt::UniqueConnection);
 
     // 无线网络如果一下消失多个网络，短时间会触发多次SizeHint变更的信号
-    m_wirelessTimer.setInterval(100);
+    m_wirelessTimer.setInterval(10);
     m_wirelessTimer.setSingleShot(true);
     connect(m_wirelessTrayPage, &TrayPage::sizeChanged, this, [this](QSize sizeHint)
             {
@@ -188,7 +189,7 @@ void NetworkTray::initTrayPage()
         m_wirelessTrayPage = new TrayPage(m_wirelessDeviceList, this);
 }
 
-// TODO:目前包含了不可用的设备，需要修改
+// NOTE:不包含未管理设备
 void NetworkTray::getAvailableDeviceList()
 {
     const Device::List deviceList = networkInterfaces();
@@ -276,8 +277,8 @@ void NetworkTray::showTrayPage()
 
 void NetworkTray::setTrayPagePos()
 {
-    KLOG_DEBUG() << "this->sizeHint():" << this->sizeHint();
-    KLOG_DEBUG() << "this->size():" << this->size();
+    // KLOG_DEBUG() << "this->sizeHint():" << this->sizeHint();
+    // KLOG_DEBUG() << "this->size():" << this->size();
 
     int pageHeight = this->size().height();
     int pageWidth = this->size().width();
@@ -528,12 +529,14 @@ void NetworkTray::handleAdjustedTraySize(QSize sizeHint)
                                 adjustSize();
                             else
                             {
-                                KLOG_DEBUG() << "resize before this->size():" << this->size();
+                                // KLOG_DEBUG() << "resize before this->size():" << this->size();
                                 QSize newSize(this->sizeHint().width(),sizeHint.height() + OFFSET_MARGIN);
-                                KLOG_DEBUG() << "newSize:" << newSize;
+                                // KLOG_DEBUG() << "newSize:" << newSize;
                                 this->resize(newSize);
+
                                 // this->setFixedSize(newSize);
-                                KLOG_DEBUG() << "resize after this->size():" << this->size();
+
+                                // KLOG_DEBUG() << "resize after this->size():" << this->size();
                             }
                             setTrayPagePos(); });
 }

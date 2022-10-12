@@ -223,13 +223,8 @@ void WiredTrayWidget::handleStateDeactivated(const QString &activePath)
 void WiredTrayWidget::handleStateActivated(const QString &activePath)
 {
     KLOG_DEBUG() << "Wired  handleStateActivated";
-    ActiveConnection::Ptr activeConnection = findActiveConnection(activePath);
-    QStringList deviceList = activeConnection->devices();
-    if (deviceList.contains(m_devicePath) && (activeConnection->type() == ConnectionSettings::Wired))
-    {
-        m_connectionList->setItemWidgetStatus(activePath, ActiveConnection::Activated);
-        m_connectionList->sort();
-    }
+    m_connectionList->setItemWidgetStatus(activePath, ActiveConnection::Activated);
+    m_connectionList->sort();
 }
 
 void WiredTrayWidget::handleActiveConnectionAdded(const QString &path)
@@ -244,7 +239,20 @@ void WiredTrayWidget::handleActiveConnectionAdded(const QString &path)
         QString uuid = activatedConnection->uuid();
         auto *activeItemWidget = m_connectionList->findItemWidgetByUuid(uuid);
         if (activeItemWidget != nullptr)
+        {
             m_connectionList->updateItemWidgetActivePath(activeItemWidget, path);
+            switch (activatedConnection->state())
+            {
+            case ActiveConnection::State::Activating:
+                handleStateActivating(m_devicePath);
+                break;
+            case ActiveConnection::State::Activated:
+                handleStateActivated(m_devicePath);
+                break;
+            default:
+                break;
+            }
+        }
         connect(activatedConnection.data(), &ActiveConnection::stateChanged, this, &WiredTrayWidget::handleActiveConnectionStateChanged, Qt::UniqueConnection);
     }
 }
@@ -252,14 +260,7 @@ void WiredTrayWidget::handleActiveConnectionAdded(const QString &path)
 //需要做判断
 void WiredTrayWidget::handleStateActivating(const QString &activePath)
 {
-    ActiveConnection::Ptr activatedConnection = findActiveConnection(activePath);
-    if (activatedConnection.isNull())
-        return;
-    QStringList deviceList = activatedConnection->devices();
-    if (activatedConnection->type() == ConnectionSettings::ConnectionType::Wired && deviceList.contains(m_devicePath))
-    {
-        m_connectionList->setItemWidgetStatus(activePath, ActiveConnection::Activating);
-    }
+    m_connectionList->setItemWidgetStatus(activePath, ActiveConnection::Activating);
 }
 
 void WiredTrayWidget::handleActiveConnectionRemoved(const QString &path)

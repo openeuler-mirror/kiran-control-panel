@@ -121,8 +121,8 @@ void ConnectionList::showWirelessNetworkList()
         {
             addWirelessNetwork(network, devicePath);
         }
+        addHiddenNetworkItemWidget();
     }
-    addHiddenNetworkItemWidget();
 }
 
 void ConnectionList::addHiddenNetworkItemWidget()
