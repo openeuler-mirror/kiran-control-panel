@@ -45,7 +45,7 @@ private:
     void connectToPluginsSubItemChanged();
 
     // 在分类下统一添加和删除功能项的接口，便于统一更新缓存所有的功能项关联关系
-    void addSubItemToCategory(Plugin* plugin, KcpPluginSubItemPtr subitem);
+    void addSubItemToCategory(Plugin* plugin, KiranControlPanel::SubItemPtr subitem);
     void removeSubItem(const QString& categoryID, Plugin* plugin, const QString& subitemID);
 
 private slots:

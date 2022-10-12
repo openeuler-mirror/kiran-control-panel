@@ -16,9 +16,13 @@
 
 #include <QString>
 
-class KcpInterface
+namespace KiranControlPanel
+{
+//控制面板接口，控制面板提供给插件使用的接口
+class PanelInterface
 {
 public:
     virtual void handlePluginSubItemInfoChanged(const QString& subItemID) = 0;
     virtual void handlePluginSubItemChanged() = 0;
 };
+}  // namespace KiranControlPanel

@@ -16,8 +16,8 @@
 #define KIRANCONTROLCENTERSINGLEPLUGIN_H
 
 #include <QWidget>
-#include "kcp-plugin-subitem.h"
 #include "kiranwidgets-qt5/kiran-titlebar-window.h"
+#include "plugin-subitem-interface.h"
 
 class KiranModuleWidget;
 class Launcher : public KiranTitlebarWindow
@@ -27,7 +27,7 @@ public:
     explicit Launcher(QWidget *parent = nullptr);
     ~Launcher();
 
-    void setSubItems(QVector<KcpPluginSubItemPtr> subitems);
+    void setSubItems(QVector<KiranControlPanel::SubItemPtr> subitems);
 
 public:
     virtual QSize sizeHint() const override;

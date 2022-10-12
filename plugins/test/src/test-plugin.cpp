@@ -44,7 +44,7 @@ void TestPlugin::uninit()
 {
 }
 
-QVector<KcpPluginSubItemPtr> TestPlugin::getSubItems()
+QVector<KiranControlPanel::SubItemPtr> TestPlugin::getSubItems()
 {
     return m_subitems;
 }

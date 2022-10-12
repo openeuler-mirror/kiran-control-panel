@@ -15,9 +15,9 @@
 #pragma once
 
 #include <QWidget>
-#include "kcp-plugin-subitem.h"
+#include "plugin-subitem-interface.h"
 
-class TestSubItem : public KcpPluginSubItem
+class TestSubItem : public PluginSubitemInterface
 {
 public:
     TestSubItem(){};

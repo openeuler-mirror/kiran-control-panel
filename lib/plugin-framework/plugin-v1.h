@@ -14,7 +14,7 @@
 #pragma once
 
 #include "kcp-plugin-interface.h"
-#include "kcp-plugin-subitem.h"
+#include "plugin-subitem-interface.h"
 #include "plugin.h"
 
 class PluginSubItemWrapper;
@@ -35,7 +35,7 @@ public:
 
     /// @brief 获取插件中的功能项
     /// @return 功能项指针数组，此数组会发生改变，不能缓存
-    virtual QVector<KcpPluginSubItemPtr> getSubItems() override;
+    virtual QVector<KiranControlPanel::SubItemPtr> getSubItems() override;
 
     QString getLibraryPath();
 
@@ -53,6 +53,7 @@ private:
 private:
     KcpPluginInterface* m_interface = nullptr;
     QStringList m_visiableSubItems;
-    QVector<KcpPluginSubItemPtr> m_subItemVec;
+    QVector<KiranControlPanel::SubItemPtr> m_subItemVec;
     QString m_libraryPath;
+    QPluginLoader m_pluginLoader;
 };

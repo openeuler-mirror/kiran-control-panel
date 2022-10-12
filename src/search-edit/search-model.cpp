@@ -114,7 +114,7 @@ void SearchModel::handleSubItemsChanged()
 void SearchModel::handleSubItemAdded(const QString &id)
 {
     Category *category = qobject_cast<Category *>(sender());
-    KcpPluginSubItemPtr subitem = category->getSubItem(id);
+    KiranControlPanel::SubItemPtr subitem = category->getSubItem(id);
 
     qDebug() << "search model subitem added:" << category->getName() << subitem->getName();
     loadSearchModel();
@@ -124,7 +124,7 @@ void SearchModel::handleSubItemAdded(const QString &id)
 void SearchModel::handleSubItemDeleted(const QString &id)
 {
     Category *category = qobject_cast<Category *>(sender());
-    KcpPluginSubItemPtr subitem = category->getSubItem(id);
+    KiranControlPanel::SubItemPtr subitem = category->getSubItem(id);
 
     qDebug() << "search model subitem deleted:" << category->getName() << subitem->getName();
     loadSearchModel();

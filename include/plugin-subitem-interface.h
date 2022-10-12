@@ -18,8 +18,10 @@
 
 class QWidget;
 
+namespace KiranControlPanel
+{
 /// @brief 控制中心新版本功能项接口
-class KcpPluginSubItem
+class PluginSubitemInterface
 {
 public:
     virtual QString getID() = 0;
@@ -36,4 +38,5 @@ public:
     virtual bool jumpToSearchEntry(const QString& key) = 0;
     virtual bool haveUnSavedOptions() = 0;
 };
-typedef QSharedPointer<KcpPluginSubItem> KcpPluginSubItemPtr;
+typedef QSharedPointer<PluginSubitemInterface> SubItemPtr;
+}  // namespace KiranControlPanel

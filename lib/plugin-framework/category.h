@@ -18,7 +18,7 @@
 #include <QObject>
 #include <QReadWriteLock>
 
-#include "kcp-plugin-subitem.h"
+#include "plugin-subitem-interface.h"
 
 // 继承于QObject
 class Category : public QObject
@@ -36,8 +36,8 @@ public:
     int getWeight() const;
 
     QStringList getSubItemIDs();
-    QVector<KcpPluginSubItemPtr> getSubItems();
-    KcpPluginSubItemPtr getSubItem(const QString& subitemID);
+    QVector<KiranControlPanel::SubItemPtr> getSubItems();
+    KiranControlPanel::SubItemPtr getSubItem(const QString& subitemID);
 
 signals:
     void subItemAdded(const QString& id);
@@ -54,13 +54,13 @@ private:
     /// @brief 追加多个功能项
     /// @param plugin 功能项所在的插件
     /// @param pluginSubItem 功能项指针
-    void appendSubItems(QVector<KcpPluginSubItemPtr> pluginSubItem);
+    void appendSubItems(QVector<KiranControlPanel::SubItemPtr> pluginSubItem);
 
     /// @brief 追加功能项
     /// @param plugin  该功能项所在的插件
     /// @param subitem 功能项指针
-    void appendSubItem(KcpPluginSubItemPtr subitem);
-    void removeSubItem(KcpPluginSubItemPtr pluginSubItem);
+    void appendSubItem(KiranControlPanel::SubItemPtr subitem);
+    void removeSubItem(KiranControlPanel::SubItemPtr pluginSubItem);
     void removeSubItem(const QString& subitem);
 
 private:
@@ -71,7 +71,7 @@ private:
     int m_weight;
 
     // 功能项数组，未经排序，后续在KiranModuleWidget之中的QListWidget进行sortItems排序
-    QVector<KcpPluginSubItemPtr> m_subitems;
+    QVector<KiranControlPanel::SubItemPtr> m_subitems;
     // 维系子功能项ID和功能项之前的映射关键
-    QMap<QString, KcpPluginSubItemPtr> m_subitemIDMap;
+    QMap<QString, KiranControlPanel::SubItemPtr> m_subitemIDMap;
 };

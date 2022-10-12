@@ -18,10 +18,10 @@
 #include <QPair>
 
 #include "kcp-plugin-interface.h"
-#include "kcp-plugin-subitem.h"
+#include "plugin-subitem-interface.h"
 
 /// @brief 该处是对老版本接口通过Desktop拿功能项信息的一个封装，用于给上层提供统一的接口
-class PluginSubItemWrapper : public KcpPluginSubItem
+class PluginSubItemWrapper : public KiranControlPanel::PluginSubitemInterface
 {
 public:
     PluginSubItemWrapper(KcpPluginInterface* pluginInterface);
