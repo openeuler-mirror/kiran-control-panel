@@ -1,21 +1,21 @@
 /**
- * Copyright (c) 2020 ~ 2021 KylinSec Co., Ltd. 
+ * Copyright (c) 2020 ~ 2021 KylinSec Co., Ltd.
  * kiran-control-panel is licensed under Mulan PSL v2.
- * You can use this software according to the terms and conditions of the Mulan PSL v2. 
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
  * You may obtain a copy of Mulan PSL v2 at:
- *          http://license.coscl.org.cn/MulanPSL2 
- * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND, 
- * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT, 
- * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.  
- * See the Mulan PSL v2 for more details.  
- * 
- * Author:     liuxinhao <liuxinhao@kylinos.com.cn>
+ *          http://license.coscl.org.cn/MulanPSL2
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ *
+ * Author:     liuxinhao <liuxinhao@kylinsec.com.cn>
  */
-
 
 #include "config.h"
 #include "launcher.h"
-#include "plugin-info.h"
+#include "plugin-v1-subitem-wrapper.h"
+#include "plugin-v1.h"
 
 #include <kiran-single-application.h>
 #include <qt5-log-i.h>
@@ -40,7 +40,7 @@ int main(int argc, char *argv[])
         arguments << argv[i];
     }
     QString pluginDesktopName;
-    QCommandLineOption pluginOption("cpanel-plugin", "plugin library path or name list", "plugin", "");
+    QCommandLineOption pluginOption("cpanel-plugin", "plugin desktop filename", "plugin", "");
     QCommandLineParser parser;
     parser.setApplicationDescription("kiran control panel module runalone");
     parser.addOption(pluginOption);
@@ -107,38 +107,17 @@ int main(int argc, char *argv[])
         KLOG_CERR("kiran log init error");
     }
 
-    auto pluginHelper = PluginHelper::loadPlugin(pluginDesktopPath);
-    if (!pluginHelper)
+    PluginV1 plugin;
+    if (!plugin.load(pluginDesktopPath))
     {
         exit(EXIT_FAILURE);
     }
 
-    //输出调试信息
-    auto pluginDesktopInfo = pluginHelper->getPluginDesktopInfo();
-    KLOG_DEBUG() << "plugin info: "<< "\n"
-                   << "\tdesktop  :" << pluginDesktopPath          << "\n"
-                   << "\tName:    "  << pluginDesktopInfo.name     << "\n"
-                   << "\tIcon:    "  << pluginDesktopInfo.Icon     << "\n"
-                   << "\tComment: "  << pluginDesktopInfo.comment  << "\n"
-                   << "\tCategory:"  << pluginDesktopInfo.category << "\n"
-                   << "\tLibrary: "  << pluginDesktopInfo.library;
-
-    KLOG_DEBUG() << "subItem info:";
-    for (int i = 0; i < pluginDesktopInfo.subItems.size(); i++)
-    {
-        auto subItemInfo = pluginDesktopInfo.subItems.at(i);
-        KLOG_DEBUG() << "item" << i << "\n"
-                       << "\tID:      " << subItemInfo.id << "\n"
-                       << "\tName:    " << subItemInfo.name << "\n"
-                       << "\tIcon:    " << subItemInfo.icon << "\n"
-                       << "\tKeywords:" << subItemInfo.keywords;
-    }
-
     Launcher w;
-    w.setTitle(pluginHelper->getPluginDesktopInfo().name);
-    QIcon titleIcon = QIcon::fromTheme(pluginDesktopInfo.Icon);
+    w.setTitle(plugin.getName());
+    QIcon titleIcon = QIcon::fromTheme(plugin.getIcon());
     w.setIcon(titleIcon);
-    w.setPlugin(pluginHelper);
+    w.setSubItems(plugin.getSubItems());
     w.resize(w.sizeHint());
     KLOG_DEBUG() << "sizeHint:" << w.sizeHint();
 

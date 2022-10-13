@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2021 ~ 2022 KylinSec Co., Ltd.
- * kiran-cpanel-mouse is licensed under Mulan PSL v2.
+ * kiran-control-panel is licensed under Mulan PSL v2.
  * You can use this software according to the terms and conditions of the Mulan PSL v2.
  * You may obtain a copy of Mulan PSL v2 at:
  *          http://license.coscl.org.cn/MulanPSL2
@@ -9,8 +9,9 @@
  * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
  * See the Mulan PSL v2 for more details.
  *
- * Author:     liuxinhao <liuxinhao@kylinos.com.cn>
+ * Author:     liuxinhao <liuxinhao@kylinsec.com.cn>
  */
+
 #include "kcm-manager.h"
 #include "mouse-page.h"
 #include "touchPad_backEnd_proxy.h"

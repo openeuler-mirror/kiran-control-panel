@@ -28,7 +28,7 @@ target_include_directories(${TARGET_NAME} PRIVATE
 
 target_link_libraries(${TARGET_NAME}
         common-widgets
-        plugin-info
+        plugin-framework
         Qt5::Core
         Qt5::Gui
         Qt5::Svg
