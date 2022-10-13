@@ -40,7 +40,7 @@ public:
 
     void init();
     void initSubItemsList();
-    void getAvailableDeviceList();
+    void getManagedDeviceList();
     void initPage();
     void initConnect();
     void setSidebarItemStatus(KiranSidebarItem *sidebarItem, NetworkManager::Device::State state);

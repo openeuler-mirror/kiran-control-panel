@@ -42,24 +42,32 @@ void WiredTrayWidget::init()
     initConnection();
     ActiveConnection::Ptr activatedConnection = m_devicePtr->activeConnection();
     if (!activatedConnection.isNull())
+    {
         connect(activatedConnection.data(), &ActiveConnection::stateChanged, this, &WiredTrayWidget::handleActiveConnectionStateChanged, Qt::UniqueConnection);
+    }
+       
 }
 
+//NOTE:设备状态 Device::State::Unavailable和Unmanaged 统一初始化为UnavailableWidget
 void WiredTrayWidget::initUI()
 {
     // m_wiredDevice->state(); 设备状态在最开始初始化托盘页面时已经判断过了
     KLOG_DEBUG() << "wiredDevice carrier :" << m_wiredDevice->carrier();
-    if (m_wiredDevice->carrier())
-    {
-        m_connectionList = new TrayConnectionList(this);
-        addWidget(m_connectionList);
-        showWiredConnectionLists();
-    }
-    else
-    {
-        initUnavailableWidget();
-        addWidget(m_unavailableWidget);
-    }
+//    if (m_wiredDevice->carrier())
+//    {
+//        m_connectionList = new TrayConnectionList(this);
+//        addWidget(m_connectionList);
+//        showWiredConnectionLists();
+//    }
+//    else
+//    {
+//        initUnavailableWidget();
+//        addWidget(m_unavailableWidget);
+//    }
+
+    m_connectionList = new TrayConnectionList(this);
+    addWidget(m_connectionList);
+    showWiredConnectionLists();
 }
 
 void WiredTrayWidget::initConnection()
@@ -73,14 +81,10 @@ void WiredTrayWidget::initConnection()
     connect(m_wiredDevice.data(), &WiredDevice::carrierChanged, this, &WiredTrayWidget::handleCarrierChanged, Qt::UniqueConnection);
     connect(m_wiredDevice.data(), &Device::stateChanged, this, &WiredTrayWidget::handleStateChanged, Qt::UniqueConnection);
 
-    connect(SignalForward::instance(), &SignalForward::wiredConnectionAdded, this, &WiredTrayWidget::handleNotifierConnectionAdded);
-    connect(SignalForward::instance(), &SignalForward::connectionRemoved, this, &WiredTrayWidget::handleNotifierConnectionRemoved);
-    connect(SignalForward::instance(), &SignalForward::wiredActiveConnectionAdded, this, &WiredTrayWidget::handleActiveConnectionAdded);
-    connect(SignalForward::instance(), &SignalForward::activeConnectionRemoved, this, &WiredTrayWidget::handleActiveConnectionRemoved);
-
-    //在插拔网线时，deviceAdded和deviceRemoved信号失效
-    // connect(notifier(), &Notifier::deviceAdded, this, [=](const QString &uni) {});
-    // connect(notifier(), &Notifier::deviceRemoved, this, [=](const QString &uni) {});
+    connect(SignalForward::instance(), &SignalForward::wiredConnectionAdded, this, &WiredTrayWidget::handleNotifierConnectionAdded,Qt::UniqueConnection);
+    connect(SignalForward::instance(), &SignalForward::connectionRemoved, this, &WiredTrayWidget::handleNotifierConnectionRemoved,Qt::UniqueConnection);
+    connect(SignalForward::instance(), &SignalForward::wiredActiveConnectionAdded, this, &WiredTrayWidget::handleActiveConnectionAdded,Qt::UniqueConnection);
+    connect(SignalForward::instance(), &SignalForward::activeConnectionRemoved, this, &WiredTrayWidget::handleActiveConnectionRemoved,Qt::UniqueConnection);
 }
 
 void WiredTrayWidget::showWiredConnectionLists()
@@ -122,10 +126,11 @@ void WiredTrayWidget::initUnavailableWidget()
 
 void WiredTrayWidget::handleStateChanged(NetworkManager::Device::State newstate, NetworkManager::Device::State oldstate, NetworkManager::Device::StateChangeReason reason)
 {
-    KLOG_DEBUG() << "---------newstate:" << newstate;
-    KLOG_DEBUG() << "---------oldstate:" << oldstate;
-    KLOG_DEBUG() << "---------reason:" << reason;
+    // KLOG_DEBUG() << "---------newstate:" << newstate;
+    // KLOG_DEBUG() << "---------oldstate:" << oldstate;
+    // KLOG_DEBUG() << "---------reason:" << reason;
 
+    /*
     //对应拔出网线后再插入网线的情况
     if ((oldstate == Device::State::Unavailable) &&
         ((newstate != Device::State::Unmanaged) && (newstate != Device::State::UnknownState)) &&
@@ -161,6 +166,7 @@ void WiredTrayWidget::handleStateChanged(NetworkManager::Device::State newstate,
             emit sizeChanged(QSize(240, 50));
         }
     }
+    */
 
     // XXX:此处是对网线插拔的冗余操作，
     //因为偶现过一次，StateChanged信号丢失Device::Unavailable的情况
@@ -232,7 +238,11 @@ void WiredTrayWidget::handleActiveConnectionAdded(const QString &path)
     KLOG_DEBUG() << "handleActiveConnectionAdded path:" << path;
     ActiveConnection::Ptr activatedConnection = findActiveConnection(path);
     if (activatedConnection.isNull())
+    {
+        KLOG_DEBUG() << "activatedConnection is null";
         return;
+    }
+
     QStringList deviceList = activatedConnection->devices();
     if (deviceList.contains(m_devicePath))
     {
@@ -241,13 +251,14 @@ void WiredTrayWidget::handleActiveConnectionAdded(const QString &path)
         if (activeItemWidget != nullptr)
         {
             m_connectionList->updateItemWidgetActivePath(activeItemWidget, path);
+            KLOG_DEBUG() << "activatedConnection->state():" << activatedConnection->state();
             switch (activatedConnection->state())
             {
             case ActiveConnection::State::Activating:
-                handleStateActivating(m_devicePath);
+                handleStateActivating(path);
                 break;
             case ActiveConnection::State::Activated:
-                handleStateActivated(m_devicePath);
+                handleStateActivated(path);
                 break;
             default:
                 break;
@@ -257,7 +268,6 @@ void WiredTrayWidget::handleActiveConnectionAdded(const QString &path)
     }
 }
 
-//需要做判断
 void WiredTrayWidget::handleStateActivating(const QString &activePath)
 {
     m_connectionList->setItemWidgetStatus(activePath, ActiveConnection::Activating);

@@ -53,11 +53,6 @@ void TrayPage::initUI()
     {
         setSingleDeviceWidget();
     }
-    else
-    {
-        // m_deviceeList.count == 0
-        return;
-    }
 }
 
 void TrayPage::initConnection()

@@ -87,8 +87,7 @@ void ConnectionList::showConnectionList(NetworkManager::ConnectionSettings::Conn
         QString devicePath = device->uni();
         for (Connection::Ptr conn : connectionList)
         {
-            KLOG_DEBUG() << "connection->name():" << conn->name();
-            KLOG_DEBUG() << "connection->settings()->connectionType():" << conn->settings()->connectionType();
+            KLOG_DEBUG() << "connection name:" << conn->name();
             if (conn->settings()->connectionType() == ConnectionSettings::Wired)
             {
                 KLOG_DEBUG() << "deviceName:" << device->interfaceName();

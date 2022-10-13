@@ -209,6 +209,7 @@ void TrayConnectionList::addHiddenNetworkItemWidget()
 
 void TrayConnectionList::setItemWidgetStatus(const QString& activePath, NetworkManager::ActiveConnection::State state)
 {
+    KLOG_DEBUG() << "activePath:" << activePath;
     auto itemWidget = findItemWidgetByActivePath(activePath);
     if (itemWidget == nullptr)
     {
