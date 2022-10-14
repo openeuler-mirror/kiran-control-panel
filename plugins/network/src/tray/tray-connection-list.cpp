@@ -109,14 +109,14 @@ void TrayConnectionList::addWirelessNetwork(NetworkManager::WirelessNetwork::Ptr
                                             const QString& devicePath)
 
 {
-    KLOG_DEBUG() << "network->ssid():" << network->ssid();
+    // KLOG_DEBUG() << "network ssid:" << network->ssid();
     AccessPoint::Ptr accessPoint = network->referenceAccessPoint();
     NetworkConnectionInfo connectionInfo;
     connectionInfo.isWireless = true;
     connectionInfo.wirelessInfo.ssid = network->ssid();
     connectionInfo.wirelessInfo.accessPointPath = accessPoint->uni();
     connectionInfo.wirelessInfo.signalStrength = accessPoint->signalStrength();
-    KLOG_DEBUG() << "accessPoint->signalStrength():" << connectionInfo.wirelessInfo.signalStrength;
+    // KLOG_DEBUG() << "accessPoint signalStrength:" << connectionInfo.wirelessInfo.signalStrength;
     connectionInfo.devicePath = devicePath;
     if (accessPoint->capabilities() == AccessPoint::Capability::None)
         connectionInfo.wirelessInfo.securitySetting = false;
@@ -186,7 +186,6 @@ void TrayConnectionList::addHiddenNetworkItemWidget()
     trayItemWidget->setName(tr("Other WiFi networks"));
     trayItemWidget->setOtherNetworkIcon();
     trayItemWidget->setFixedSize(TRAY_ITEM_NORAML_SIZE);
-    adjustTraySize();
 
     NetworkConnectionInfo connectionInfo;
     connectionInfo.isWireless = true;
@@ -198,6 +197,7 @@ void TrayConnectionList::addHiddenNetworkItemWidget()
     trayItemWidget->setAccessibleName(QString("ShowOtherWireless"));
 
     this->addWidget(trayItemWidget);
+    adjustTraySize();
 
     connect(trayItemWidget, &TrayItemWidget::connectButtonClicked, this, &TrayConnectionList::handleConnectButtonClicked);
     connect(trayItemWidget, &TrayItemWidget::cancelButtonClicked, this, &TrayConnectionList::handleCancelButtonClicked);
@@ -209,6 +209,7 @@ void TrayConnectionList::addHiddenNetworkItemWidget()
 
 void TrayConnectionList::setItemWidgetStatus(const QString& activePath, NetworkManager::ActiveConnection::State state)
 {
+    KLOG_DEBUG() << "activePath:" << activePath;
     auto itemWidget = findItemWidgetByActivePath(activePath);
     if (itemWidget == nullptr)
     {
@@ -270,7 +271,7 @@ void TrayConnectionList::adjustTraySize()
         totalheight = LIST_MAX_HEIGHT;
     setFixedHeight(totalheight);
 
-    KLOG_DEBUG() << "totalheight:" << totalheight;
+    // KLOG_DEBUG() << "totalheight:" << totalheight;
     emit sizeChanged(QSize(this->sizeHint().width(), totalheight));
 }
 

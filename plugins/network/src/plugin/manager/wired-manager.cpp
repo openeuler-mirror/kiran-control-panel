@@ -87,21 +87,31 @@ void WiredManager::handleEditConnection(const QString &uuid, QString activeConne
 
 void WiredManager::handleActivateSelectedConnection(const QString &connectionPath, const QString &connectionParameter)
 {
-    QDBusPendingReply<QDBusObjectPath> reply =
-        NetworkManager::activateConnection(connectionPath, m_devicePath, connectionParameter);
+    Device::Ptr device = NetworkManager::findNetworkInterface(m_devicePath);
 
-    reply.waitForFinished();
-    if (reply.isError())
+    auto devicestate = device->state();
+    KLOG_DEBUG() << "device state:" << devicestate ;
+    if(devicestate != Device::Unavailable)
     {
-        // 此处处理进入激活流程失败的原因，并不涉及流程中某个具体阶段失败的原因
-        KLOG_ERROR() << "activate connection failed:" << reply.error();
-        QString errorMessage = reply.error().message();
-        if (errorMessage.contains("device has no carrier"))
-            StatusNotification::connectitonFailedNotifyByReason(tr("The carrier is pulled out"));
-        StatusNotification::connectitonFailedNotify(connectionPath);
+        QDBusPendingReply<QDBusObjectPath> reply =
+            NetworkManager::activateConnection(connectionPath, m_devicePath, connectionParameter);
+
+        reply.waitForFinished();
+        if (reply.isError())
+        {
+            // 此处处理进入激活流程失败的原因，并不涉及流程中某个具体阶段失败的原因
+            KLOG_ERROR() << "activate connection failed:" << reply.error();
+            QString errorMessage = reply.error().message();
+            if (errorMessage.contains("device has no carrier"))
+                StatusNotification::connectitonFailedNotifyByReason(tr("The carrier is pulled out"));
+            else
+                StatusNotification::connectitonFailedNotify(connectionPath);
+        }
+        else
+            KLOG_DEBUG() << "activateConnection reply:" << reply.reply();
     }
     else
-        KLOG_DEBUG() << "activateConnection reply:" << reply.reply();
+        StatusNotification::connectitonFailedNotifyByReason(tr("The current device is not available"));
 }
 
 // 获取到当前激活对象后，开启等待动画，判断完激活状态后停止等待动画
@@ -116,22 +126,29 @@ void WiredManager::handleActiveConnectionAdded(const QString &path)
         QString uuid = activatedConnection->uuid();
         auto *activeItemWidget = ui->connectionShowPage->findItemWidgetByUuid(uuid);
         if (activeItemWidget != nullptr)
+        {
             ui->connectionShowPage->updateItemWidgetActivePath(activeItemWidget, path);
+            KLOG_DEBUG() << "activatedConnection->state():" << activatedConnection->state();
+            switch (activatedConnection->state())
+            {
+            case ActiveConnection::State::Activating:
+                handleStateActivating(path);
+                break;
+            case ActiveConnection::State::Activated:
+                handleStateActivated(path);
+                break;
+            default:
+                break;
+            }
+        }
         connect(activatedConnection.data(), &ActiveConnection::stateChanged, this, &WiredManager::handleActiveConnectionStateChanged);
     }
 }
 
 void WiredManager::handleStateActivating(const QString &activePath)
 {
-    ActiveConnection::Ptr activatedConnection = findActiveConnection(activePath);
-    if (activatedConnection.isNull())
-        return;
-    QStringList deviceList = activatedConnection->devices();
-    if (activatedConnection->type() == ConnectionSettings::ConnectionType::Wired && deviceList.contains(m_devicePath))
-    {
-        // 加载等待动画
-        ui->connectionShowPage->setItemWidgetStatus(activePath, ActiveConnection::State::Activating);
-    }
+          // 加载等待动画
+    ui->connectionShowPage->setItemWidgetStatus(activePath, ActiveConnection::State::Activating);
 }
 
 void WiredManager::handleActiveConnectionRemoved(const QString &path)

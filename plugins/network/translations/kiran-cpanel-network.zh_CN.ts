@@ -166,20 +166,16 @@
 <context>
     <name>ConnectionLists</name>
     <message>
-        <location filename="../src/connection-lists.cpp" line="123"/>
         <source>Tips</source>
-        <translation type="unfinished">提示</translation>
+        <translation type="obsolete">提示</translation>
     </message>
     <message>
-        <location filename="../src/connection-lists.cpp" line="124"/>
         <source>Please input a network name</source>
-        <translation>请输入网络名称</translation>
+        <translation type="vanished">请输入网络名称</translation>
     </message>
     <message>
-        <location filename="../src/connection-lists.cpp" line="458"/>
-        <location filename="../src/connection-lists.cpp" line="466"/>
         <source>Other WiFi networks</source>
-        <translation>其它WIFI网络</translation>
+        <translation type="vanished">其它WIFI网络</translation>
     </message>
 </context>
 <context>
@@ -247,7 +243,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/plugin/connection-show-page.ui" line="118"/>
+        <location filename="../src/plugin/connection-show-page.ui" line="93"/>
         <source>ButtonCreateConnection</source>
         <translation type="unfinished"></translation>
     </message>
@@ -678,9 +674,32 @@
 <context>
     <name>NetworkTray</name>
     <message>
-        <location filename="../src/tray/network-tray.cpp" line="167"/>
+        <location filename="../src/tray/network-tray.cpp" line="170"/>
         <source>Network settings</source>
         <translation>网络设置</translation>
+    </message>
+    <message>
+        <location filename="../src/tray/network-tray.cpp" line="232"/>
+        <source>Network unavailable</source>
+        <translation>网络不可用</translation>
+    </message>
+</context>
+<context>
+    <name>PluginConnectionList</name>
+    <message>
+        <location filename="../src/plugin/plugin-connection-list.cpp" line="178"/>
+        <source>Other WiFi networks</source>
+        <translation type="unfinished">其它WIFI网络</translation>
+    </message>
+    <message>
+        <location filename="../src/plugin/plugin-connection-list.cpp" line="286"/>
+        <source>Tips</source>
+        <translation type="unfinished">提示</translation>
+    </message>
+    <message>
+        <location filename="../src/plugin/plugin-connection-list.cpp" line="287"/>
+        <source>Please input a network name</source>
+        <translation type="unfinished">请输入网络名称</translation>
     </message>
 </context>
 <context>
@@ -764,6 +783,14 @@
     </message>
 </context>
 <context>
+    <name>TrayConnectionList</name>
+    <message>
+        <location filename="../src/tray/tray-connection-list.cpp" line="186"/>
+        <source>Other WiFi networks</source>
+        <translation type="unfinished">其它WIFI网络</translation>
+    </message>
+</context>
+<context>
     <name>TrayItemWidget</name>
     <message>
         <location filename="../src/tray/tray-itemwidget.ui" line="32"/>
@@ -808,22 +835,22 @@
         <translation>连接</translation>
     </message>
     <message>
-        <location filename="../src/tray/tray-itemwidget.cpp" line="146"/>
+        <location filename="../src/tray/tray-itemwidget.cpp" line="147"/>
         <source>Connected</source>
         <translation>已连接</translation>
     </message>
     <message>
-        <location filename="../src/tray/tray-itemwidget.cpp" line="157"/>
+        <location filename="../src/tray/tray-itemwidget.cpp" line="158"/>
         <source>Unconnected</source>
         <translation>未连接</translation>
     </message>
     <message>
-        <location filename="../src/tray/tray-itemwidget.cpp" line="191"/>
+        <location filename="../src/tray/tray-itemwidget.cpp" line="192"/>
         <source>Please input password</source>
         <translation>请输入密码</translation>
     </message>
     <message>
-        <location filename="../src/tray/tray-itemwidget.cpp" line="200"/>
+        <location filename="../src/tray/tray-itemwidget.cpp" line="201"/>
         <source>Please input a network name</source>
         <translation>请输入网络名称</translation>
     </message>
@@ -841,12 +868,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/tray/tray-page.cpp" line="78"/>
+        <location filename="../src/tray/tray-page.cpp" line="73"/>
         <source>Select wired network card</source>
         <translation>请选择有线网卡</translation>
     </message>
     <message>
-        <location filename="../src/tray/tray-page.cpp" line="83"/>
+        <location filename="../src/tray/tray-page.cpp" line="78"/>
         <source>Select wireless network card</source>
         <translation>请选择无线网卡</translation>
     </message>
@@ -1014,12 +1041,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/plugin/manager/vpn-manager.cpp" line="197"/>
+        <location filename="../src/plugin/manager/vpn-manager.cpp" line="200"/>
         <source>Tips</source>
         <translation>提示</translation>
     </message>
     <message>
-        <location filename="../src/plugin/manager/vpn-manager.cpp" line="198"/>
+        <location filename="../src/plugin/manager/vpn-manager.cpp" line="201"/>
         <source>Password required to connect to %1.</source>
         <translation>连接网络 &quot;%1&quot; 需要密码</translation>
     </message>
@@ -1282,9 +1309,14 @@
         <translation>有线网卡</translation>
     </message>
     <message>
-        <location filename="../src/plugin/manager/wired-manager.cpp" line="98"/>
+        <location filename="../src/plugin/manager/wired-manager.cpp" line="106"/>
         <source>The carrier is pulled out</source>
-        <translation type="unfinished"></translation>
+        <translation>网线被拔出</translation>
+    </message>
+    <message>
+        <location filename="../src/plugin/manager/wired-manager.cpp" line="114"/>
+        <source>The current device is not available</source>
+        <translation>当前设备不可用</translation>
     </message>
 </context>
 <context>
@@ -1303,7 +1335,7 @@
 <context>
     <name>WiredTrayWidget</name>
     <message>
-        <location filename="../src/tray/wired-tray-widget.cpp" line="122"/>
+        <location filename="../src/tray/wired-tray-widget.cpp" line="120"/>
         <source>Wired network unavailable</source>
         <translation>有线网络不可用</translation>
     </message>
@@ -1329,6 +1361,11 @@
         <location filename="../src/plugin/manager/wireless-manager.cpp" line="47"/>
         <source>Wireless Network Adapter</source>
         <translation>无线网卡</translation>
+    </message>
+    <message>
+        <location filename="../src/plugin/manager/wireless-manager.cpp" line="118"/>
+        <source>The current device is not available</source>
+        <translation>当前设备不可用</translation>
     </message>
     <message>
         <location filename="../src/plugin/manager/wireless-manager.cpp" line="372"/>
@@ -1439,7 +1476,7 @@
 <context>
     <name>WirelessTrayWidget</name>
     <message>
-        <location filename="../src/tray/wireless-tray-widget.cpp" line="496"/>
+        <location filename="../src/tray/wireless-tray-widget.cpp" line="487"/>
         <source>the network &quot;%1&quot; not found</source>
         <translation>未找到网络 &quot;%1&quot;</translation>
     </message>

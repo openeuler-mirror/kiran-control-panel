@@ -96,20 +96,26 @@ void WirelessManager::activateWirelessConnection(const QString &connectionPath, 
     KLOG_DEBUG() << "accessPointPath:" << accessPointPath;
     if (!connectionPath.isEmpty())
     {
-        QDBusPendingReply<QDBusObjectPath> reply =
-            NetworkManager::activateConnection(connectionPath, devicePath, accessPointPath);
-
-        reply.waitForFinished();
-        if (reply.isError())
+        Device::Ptr device = findNetworkInterface(devicePath);
+        if(device->state() != Device::Unavailable)
         {
-            KLOG_ERROR() << "activate connection failed:" << reply.error();
-            StatusNotification::connectitonFailedNotify(connectionPath);
+            QDBusPendingReply<QDBusObjectPath> reply =
+                NetworkManager::activateConnection(connectionPath, devicePath, accessPointPath);
+
+            reply.waitForFinished();
+            if (reply.isError())
+            {
+                KLOG_ERROR() << "activate connection failed:" << reply.error();
+                StatusNotification::connectitonFailedNotify(connectionPath);
+            }
+            else
+            {
+                KLOG_DEBUG() << "reply.reply():" << reply.reply();
+                QString activatedPath = reply.value().path();
+            }
         }
         else
-        {
-            KLOG_DEBUG() << "reply.reply():" << reply.reply();
-            QString activatedPath = reply.value().path();
-        }
+            StatusNotification::connectitonFailedNotifyByReason(tr("The current device is not available"));
     }
 }
 
@@ -201,6 +207,17 @@ void WirelessManager::handleActiveConnectionAdded(const QString &path)
         {
             //更新item信息
             ui->connectionShowPage->updateItemWidgetActivePath(activeItemWidget, path);
+            switch (activatedConnection->state())
+            {
+            case ActiveConnection::State::Activating:
+                handleStateActivating(path);
+                break;
+            case ActiveConnection::State::Activated:
+                handleStateActivated(path);
+                break;
+            default:
+                break;
+            }
         }
         connect(activatedConnection.data(), &ActiveConnection::stateChanged, this, &WirelessManager::handleActiveConnectionStateChanged, Qt::UniqueConnection);
     }
@@ -214,19 +231,8 @@ void WirelessManager::handleActiveConnectionRemoved(const QString &path)
 
 void WirelessManager::handleStateActivating(const QString &activePath)
 {
-    ActiveConnection::Ptr activatedConnection = findActiveConnection(activePath);
-    if (activatedConnection == nullptr)
-    {
-        //连接一个不存在的无线网络时，activatedConnection为空
-        KLOG_DEBUG() << "activatedConnection == nullptr";
-        return;
-    }
-    QStringList deviceList = activatedConnection->devices();
-    if ((activatedConnection->type() == ConnectionSettings::ConnectionType::Wireless) && deviceList.contains(m_devicePath))
-    {
-        //加载等待动画
-        ui->connectionShowPage->setItemWidgetStatus(activePath, ActiveConnection::State::Activating);
-    }
+    //加载等待动画
+    ui->connectionShowPage->setItemWidgetStatus(activePath, ActiveConnection::State::Activating);
 }
 
 void WirelessManager::handleStateActivated(const QString &activePath)

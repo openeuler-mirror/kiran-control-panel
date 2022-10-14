@@ -41,6 +41,8 @@ public:
     void initMenu();
     void initTrayPage();
 
+    void initUnavailableWidget();
+
     void getAvailableDeviceList();
     void getTrayGeometry();
     void setTrayPagePos();
@@ -76,6 +78,8 @@ private:
 
     TrayPage *m_wiredTrayPage;
     TrayPage *m_wirelessTrayPage;
+    QWidget *m_unavailableWidget;
+
     StatusNotifierManagerInterface *m_statusNotifierManager;
 
     QList<NetworkManager::Device::Ptr> m_wiredDeviceList;

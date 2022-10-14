@@ -39,6 +39,8 @@ void TrayWidget::init()
 {
     initUI();
     initConnection();
+    m_StateActivatedTimer.setInterval(100);
+    m_StateActivatedTimer.setSingleShot(true);
 }
 
 void TrayWidget::initUI()
@@ -60,16 +62,27 @@ void TrayWidget::removeWidget(QWidget *widget)
     m_verticalLayout->removeWidget(widget);
 }
 
+//XXX: 同一个ActiveConnection StateChanged的信号中会发送两次 ActiveConnection::State::Activated
+//原因未知，暂时用定时器处理
 void TrayWidget::initConnection()
 {
+    connect(&m_StateActivatedTimer, &QTimer::timeout, this, [this](){
+        handleStateActivated(m_activatedPath);
+    });
 }
 
+//TODO:缓存一份ActiveConnection，进行对比，状态为Activated的连接就不再重复进行相应状态改变
 void TrayWidget::handleActiveConnectionStateChanged(ActiveConnection::State state)
 {
     auto activeConnection = qobject_cast<ActiveConnection *>(sender());
+
+    // KLOG_DEBUG() << "sender:" << activeConnection;
+    // KLOG_DEBUG() << "activeConnection->type():" << activeConnection->type();
+    
     m_activatedPath = activeConnection->path();
     QString id = activeConnection->id();
     QStringList deviceList = activeConnection->devices();
+
     switch (state)
     {
     case ActiveConnection::State::Unknown:
@@ -81,7 +94,11 @@ void TrayWidget::handleActiveConnectionStateChanged(ActiveConnection::State stat
         break;
     case ActiveConnection::State::Activated:
         KLOG_DEBUG() << "ActiveConnection::State::Activated";
-        handleStateActivated(m_activatedPath);
+        KLOG_DEBUG() << "id:" << id;
+        KLOG_DEBUG() << "deviceList:" << deviceList; 
+        m_StateActivatedTimer.start();
+        KLOG_DEBUG() << "m_StateActivatedTimer start";
+        // handleStateActivated(m_activatedPath);
         break;
     case ActiveConnection::State::Deactivating:
         KLOG_DEBUG() << "ActiveConnection::State::Deactivating";
@@ -91,7 +108,6 @@ void TrayWidget::handleActiveConnectionStateChanged(ActiveConnection::State stat
         KLOG_DEBUG() << "device path:" << m_devicePtr->uni();
         if (deviceList.contains(m_devicePtr->uni()))
         {
-            // test
             if (!id.isEmpty())
                 StatusNotification::ActiveConnectionDeactivatedNotify(id);
             handleStateDeactivated(m_activatedPath);

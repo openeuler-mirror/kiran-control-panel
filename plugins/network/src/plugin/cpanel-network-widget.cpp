@@ -53,7 +53,7 @@ void CPanelNetworkWidget::init()
 // ui->stackedWidget与ui->sidebar的index对应
 void CPanelNetworkWidget::initPage()
 {
-    getAvailableDeviceList();
+    getManagedDeviceList();
     int row = 0;
     for (int i = 0; i < m_wiredDeviceList.count(); i++)
     {
@@ -132,7 +132,7 @@ void CPanelNetworkWidget::initPage()
     ui->sidebar->setCurrentRow(0);
 }
 
-void CPanelNetworkWidget::getAvailableDeviceList()
+void CPanelNetworkWidget::getManagedDeviceList()
 {
     const Device::List deviceList = networkInterfaces();
     for (Device::Ptr dev : deviceList)
