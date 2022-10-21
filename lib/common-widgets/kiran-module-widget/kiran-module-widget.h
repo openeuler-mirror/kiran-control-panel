@@ -33,8 +33,6 @@ public:
     explicit KiranModuleWidget(QWidget *parent = 0);
     ~KiranModuleWidget();
 
-    void setLeftContentsMargins(const int &leftmargin);
-
     void clear();
 
     void setCategory(Category *c);

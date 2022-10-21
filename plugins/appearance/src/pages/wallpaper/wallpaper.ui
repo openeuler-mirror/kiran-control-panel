@@ -81,7 +81,7 @@
             <widget class="KiranFrame" name="widget_lockscreen_preview" native="true">
              <property name="minimumSize">
               <size>
-               <width>282</width>
+               <width>230</width>
                <height>112</height>
               </size>
              </property>
@@ -93,13 +93,13 @@
                <number>0</number>
               </property>
               <property name="leftMargin">
-               <number>51</number>
+               <number>41</number>
               </property>
               <property name="topMargin">
                <number>11</number>
               </property>
               <property name="rightMargin">
-               <number>51</number>
+               <number>41</number>
               </property>
               <property name="bottomMargin">
                <number>11</number>
@@ -111,7 +111,7 @@
             <widget class="KiranFrame" name="widget_desktop_preview" native="true">
              <property name="minimumSize">
               <size>
-               <width>282</width>
+               <width>230</width>
                <height>112</height>
               </size>
              </property>
@@ -123,13 +123,13 @@
                <number>0</number>
               </property>
               <property name="leftMargin">
-               <number>51</number>
+               <number>41</number>
               </property>
               <property name="topMargin">
                <number>11</number>
               </property>
               <property name="rightMargin">
-               <number>51</number>
+               <number>41</number>
               </property>
               <property name="bottomMargin">
                <number>11</number>

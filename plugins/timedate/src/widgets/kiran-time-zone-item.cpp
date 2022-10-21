@@ -31,8 +31,7 @@ KiranTimeZoneItem::KiranTimeZoneItem(const ZoneInfo zoneInfo, QWidget *parent)
 {
     ui->setupUi(this);
 
-    QImage selectedImage(":/kiran-control-panel/images/selected.png");
-    selectedImage = selectedImage.scaled(11, 8);
+    QImage selectedImage(":/kiran-control-panel/images/indicator-selected.png");
     m_selectedIcon = QPixmap::fromImage(selectedImage);
 
     setAttribute(Qt::WA_Hover);

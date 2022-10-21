@@ -86,6 +86,10 @@ private:
     ///@brief 移动添加自定义头像到最后
     void moveAddButtonToEnd();
 
+private slots:
+    ///@brief 根据当前主题更新添加图标按钮的图标
+    void updateAddAvatarIcon();
+
 private:
     QLayout *m_mainLayout;
     FlowLayout *m_flowLayout;

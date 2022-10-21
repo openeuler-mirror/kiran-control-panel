@@ -43,7 +43,7 @@ void KiranRoundedTrayPopup::updateContentMask(QWidget *widget)
     QRectF rectf = widget->rect();
 
     QPainter painter(&bitMap);
-    painterPath.addRoundRect(rectf, KiranRoundedWindowFrame::radius, KiranRoundedWindowFrame::radius);
+    painterPath.addRoundedRect(rectf, KiranRoundedWindowFrame::radius, KiranRoundedWindowFrame::radius);
     painter.fillPath(painterPath, Qt::black);
     painter.end();
 

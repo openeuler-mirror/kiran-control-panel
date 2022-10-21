@@ -40,11 +40,6 @@ KiranModuleWidget::~KiranModuleWidget()
     delete ui;
 }
 
-void KiranModuleWidget::setLeftContentsMargins(const int &leftmargin)
-{
-    ui->horizontalLayout->setContentsMargins(leftmargin, 0, 0, 0);
-}
-
 void KiranModuleWidget::clear()
 {
     qDebug() << disconnect(m_category, &Category::subItemAdded, this, &KiranModuleWidget::handleCategorySubItemAdded);
@@ -72,6 +67,7 @@ void KiranModuleWidget::init()
     ui->list_subItems->setInvertIconPixelsEnable(true);
     ui->list_subItems->setFrameShape(QFrame::NoFrame);
     ui->list_subItems->setSelectionMode(QListWidget::SingleSelection);
+    ui->list_subItems->viewport()->setAutoFillBackground(false);
     connect(ui->list_subItems, &QListWidget::itemSelectionChanged,
             this, &KiranModuleWidget::handleCurrentItemChanged, Qt::QueuedConnection);
 }
@@ -131,6 +127,8 @@ void KiranModuleWidget::setSubItems(QVector<KiranControlPanel::SubItemPtr> subit
     }
 
     ui->widget_siderbar->setVisible(ui->list_subItems->count() > 1);
+    ui->widget->setDrawBackground(ui->list_subItems->count() > 1);
+
     ui->list_subItems->sortItems(Qt::DescendingOrder);
 
     if (ui->list_subItems->count() > 0)

@@ -34,6 +34,7 @@ public:
 
     void initUI();
 private:
+    QString elideText(const QString &src);
     bool parseHardwareInfoJson(const QString &json,
                                QString &memory,
                                QString &cpu,

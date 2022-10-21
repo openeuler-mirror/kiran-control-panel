@@ -183,7 +183,7 @@ void IconThemes::createIconWidgets()
                 if (!showIconsList.isEmpty())
                 {
                     //new theme-widget
-                    ThemeWidget *themeWidget = new ThemeWidget(QSize(48, 48), m_currentIconTheme,
+                    ThemeWidget *themeWidget = new ThemeWidget(QSize(40, 40), m_currentIconTheme,
                                                                m_iconThemes.at(i), showIconsList);
                     vLayout->addWidget(themeWidget, Qt::AlignRight);
 
@@ -224,7 +224,7 @@ void IconThemes::createIconWidgets()
                 //new theme-widget
                 if (!showIconsList.isEmpty())
                 {
-                    ThemeWidget *themeWidget = new ThemeWidget(QSize(48, 48), m_currentIconTheme,
+                    ThemeWidget *themeWidget = new ThemeWidget(QSize(40, 40), m_currentIconTheme,
                                                                m_iconThemes.at(i), showIconsList);
                     vLayout->addWidget(themeWidget, Qt::AlignRight);
 
