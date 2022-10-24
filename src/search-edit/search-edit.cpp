@@ -42,6 +42,7 @@ SearchEdit::~SearchEdit()
 
 void SearchEdit::init()
 {
+    setPlaceholderText(tr("Enter keywords to search"));
     m_searchModel = new SearchModel(this);
     m_searchDelegate = new SearchDelegate(this);
 

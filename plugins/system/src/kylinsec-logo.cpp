@@ -38,9 +38,12 @@ void KylinsecLogo::paintEvent(QPaintEvent *event)
     QFont font = QFont("Noto Sans CJK SC regular", 46);
     QRect drawRecLogo = QRect( 24, 16, this->width(), 157 - 16);
 
+    QTextOption textOption(Qt::AlignLeft);
+    textOption.setWrapMode(QTextOption::NoWrap);
+
     painter.setPen(QColor(46, 179, 255));  //#2eb3FF
     painter.setFont(font);
-    painter.drawText(drawRecLogo, SYSTEM_LOGO);
+    painter.drawText(drawRecLogo, SYSTEM_LOGO, textOption);
 
     QFontMetrics fm = painter.fontMetrics();
     int heightText = fm.height();
@@ -51,5 +54,5 @@ void KylinsecLogo::paintEvent(QPaintEvent *event)
     font.setWeight(QFont::Normal);
     painter.setPen(QColor(145, 145, 145));
     painter.setFont(font);
-    painter.drawText(drawRecCopyright, copyright);
+    painter.drawText(drawRecCopyright, copyright, textOption);
 }

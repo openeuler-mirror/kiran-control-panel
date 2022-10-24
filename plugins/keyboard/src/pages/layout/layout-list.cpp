@@ -32,9 +32,11 @@ LayoutList::LayoutList(QWidget* parent) : QWidget(parent),
     m_timer = new QTimer(this);
     ui->stackedWidget->setCurrentWidget(ui->page_list);
     ui->lineEdit_search->installEventFilter(this);
-
+    ui->listWidget_filter->viewport()->setAutoFillBackground(false);
+    ui->listWidget_list->viewport()->setAutoFillBackground(false);
     connect(m_timer, &QTimer::timeout,
-            [this] {
+            [this]
+            {
                 search();
                 m_timer->stop();
             });

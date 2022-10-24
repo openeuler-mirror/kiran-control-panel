@@ -22,7 +22,7 @@
 
 PreviewLabel::PreviewLabel(int wallpaperType, QString imgPath, QWidget *parent) : QLabel(parent)
 {
-    setFixedSize(180, 90);
+    setFixedSize(148, 90);
     setAlignment(Qt::AlignHCenter);
     loadPixmap(imgPath);
     m_wallpaperType = wallpaperType;
@@ -141,7 +141,7 @@ void PreviewLabel::drawLockScreenPreview(QPainter *painter)
 bool PreviewLabel::loadPixmap(QString imagePath)
 {
     QPixmap pixmap;
-    QSize size(180, 90);
+    QSize size(148, 90);
     if (!pixmap.load(imagePath))
         return false;
 

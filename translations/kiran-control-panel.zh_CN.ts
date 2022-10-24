@@ -13,17 +13,9 @@
     </message>
 </context>
 <context>
-    <name>PanelWidget</name>
-    <message>
-        <location filename="../src/panel-widget.ui" line="14"/>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>PanelWindow</name>
     <message>
-        <location filename="../src/panel-window.cpp" line="45"/>
+        <location filename="../src/panel-window.cpp" line="46"/>
         <source>Control Panel</source>
         <translation>控制面板</translation>
     </message>
@@ -31,12 +23,17 @@
 <context>
     <name>SearchEdit</name>
     <message>
-        <location filename="../src/search-edit/search-edit.cpp" line="83"/>
+        <location filename="../src/search-edit/search-edit.cpp" line="45"/>
+        <source>Enter keywords to search</source>
+        <translation>输入关键词进行搜索</translation>
+    </message>
+    <message>
+        <location filename="../src/search-edit/search-edit.cpp" line="84"/>
         <source>Info</source>
         <translation>提示</translation>
     </message>
     <message>
-        <location filename="../src/search-edit/search-edit.cpp" line="83"/>
+        <location filename="../src/search-edit/search-edit.cpp" line="84"/>
         <source>Failed to find related items, please re-enter!</source>
         <translation>未能搜索到相关项，请重新输入!</translation>
     </message>

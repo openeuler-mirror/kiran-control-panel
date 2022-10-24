@@ -46,7 +46,7 @@
     <widget class="YearSpinBox" name="spinbox_year">
      <property name="minimumSize">
       <size>
-       <width>178</width>
+       <width>145</width>
        <height>36</height>
       </size>
      </property>
@@ -87,7 +87,7 @@
     <widget class="MonthSpinBox" name="spinbox_month">
      <property name="minimumSize">
       <size>
-       <width>178</width>
+       <width>145</width>
        <height>36</height>
       </size>
      </property>
@@ -131,7 +131,7 @@
     <widget class="DaySpinBox" name="spinbox_day">
      <property name="minimumSize">
       <size>
-       <width>178</width>
+       <width>145</width>
        <height>36</height>
       </size>
      </property>

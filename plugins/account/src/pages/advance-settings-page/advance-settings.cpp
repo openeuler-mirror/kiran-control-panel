@@ -115,6 +115,7 @@ void AdvanceSettings::initUI()
     setTitle(tr("Advance Settings"));
     setIcon(QIcon::fromTheme("user-admin"));
     setResizeable(false);  ///不可重置大小
+    setTitlebarColorBlockEnable(true);
 
     m_editTip = new KiranTips(this);
     m_editTip->setAnimationEnable(true);

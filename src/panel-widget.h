@@ -18,11 +18,7 @@
 #include <QWidget>
 
 class CategorySideBar;
-namespace Ui
-{
-class PanelWidget;
-}
-
+class KiranModuleWidget;
 class PanelWidget : public QWidget
 {
     Q_OBJECT
@@ -40,8 +36,8 @@ private slots:
                                       const QString& cur);
 
 private:
-    Ui::PanelWidget *ui;
     CategorySideBar* m_categorySideBar;
+    KiranModuleWidget* m_moduleWidget;
     /// @brief 缓存当前ModelWidget之中显示的分类ID
     QString m_currentCategoryID;
 };

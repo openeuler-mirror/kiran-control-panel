@@ -80,6 +80,7 @@ void FaceEnrollDialog::initUI()
     setWindowFlag(Qt::WindowStaysOnTopHint);
     setFixedSize(444, 555);
     setButtonHints(KiranTitlebarWindow::TitlebarCloseButtonHint);
+    setTitlebarColorBlockEnable(true);
 }
 
 void FaceEnrollDialog::closeEvent(QCloseEvent *event)
