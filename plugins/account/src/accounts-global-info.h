@@ -30,6 +30,7 @@ public:
     ~AccountsGlobalInfo();
 
     static AccountsGlobalInfo *instance();
+    static QString rsaPublicKey();
 
     /**
      * @brief 初始化，加载用户列表
@@ -71,6 +72,7 @@ private:
     QMap<QString,KSDAccountsUserProxy*> m_usersMap; // QMap<DBus对象路径,用户相关接口>
     QString m_curUserName;
     bool m_showRoot =  false;
+    QString m_pubkey;
 };
 
 #endif  // ACCOUNTSGLOBALINFO_H

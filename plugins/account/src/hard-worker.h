@@ -48,6 +48,7 @@ public slots:
     /// \param encryptedPasswd  加密之后的密码
     void doUpdatePasswd(QString objPath,
                         QString userName,
+                        QString encryptedCurPasswd,
                         QString encryptedPasswd);
 
     /// 通过AccountServices更新用户属性
