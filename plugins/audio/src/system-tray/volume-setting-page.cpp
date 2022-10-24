@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2020 ~ 2021 KylinSec Co., Ltd.
- * kiran-cpanel-audio is licensed under Mulan PSL v2.
+ * kiran-control-panel is licensed under Mulan PSL v2.
  * You can use this software according to the terms and conditions of the Mulan PSL v2.
  * You may obtain a copy of Mulan PSL v2 at:
  *          http://license.coscl.org.cn/MulanPSL2
@@ -9,22 +9,22 @@
  * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
  * See the Mulan PSL v2 for more details.
  *
- * Author:     luoqing <luoqing@kylinos.com.cn>
+ * Author:     luoqing <luoqing@kylinsec.com.cn>
  */
 #include "volume-setting-page.h"
-#include "ui_volume-setting-page.h"
 #include "dbus/audio-device-interface.h"
 #include "dbus/audio-interface.h"
 #include "dbus/audio-stream-interface.h"
+#include "ui_volume-setting-page.h"
 
 #include <kiran-session-daemon/audio-i.h>
 #include <qt5-log-i.h>
 
+#include <style-palette.h>
 #include <QMouseEvent>
 #include <QPainter>
 #include <QStyleOption>
 #include <QSvgRenderer>
-#include <style-palette.h>
 
 VolumeSettingPage::VolumeSettingPage(enum AudioNode audio, QString objectPath, QWidget *parent) : QWidget(parent), ui(new Ui::VolumeSettingPage)
 {
@@ -57,20 +57,18 @@ void VolumeSettingPage::initAudioDevice()
 {
     initSettings(m_sink);
     ui->volumeName->setText(tr("Volume"));
-    connect(m_sink, &AudioDeviceInterface::volumeChanged,this,&VolumeSettingPage::handleVolumeChanged);
-    connect(m_sink, &AudioDeviceInterface::muteChanged, [=](bool value) {
-        KLOG_DEBUG() << "m_sink  muteChanged:" << value;
-    });
+    connect(m_sink, &AudioDeviceInterface::volumeChanged, this, &VolumeSettingPage::handleVolumeChanged);
+    connect(m_sink, &AudioDeviceInterface::muteChanged, [=](bool value)
+            { KLOG_DEBUG() << "m_sink  muteChanged:" << value; });
 }
 
 void VolumeSettingPage::initAudioStream()
 {
     initSettings(m_sinkInput);
     ui->volumeName->setText(m_sinkInput->GetProperty("application.name"));
-    connect(m_sinkInput, &AudioStreamInterface::volumeChanged, this,&VolumeSettingPage::handleVolumeChanged);
-    connect(m_sinkInput, &AudioStreamInterface::muteChanged, [=](bool value) {
-        KLOG_DEBUG() << "m_sinkInput muteChanged:" << value;
-    });
+    connect(m_sinkInput, &AudioStreamInterface::volumeChanged, this, &VolumeSettingPage::handleVolumeChanged);
+    connect(m_sinkInput, &AudioStreamInterface::muteChanged, [=](bool value)
+            { KLOG_DEBUG() << "m_sinkInput muteChanged:" << value; });
 }
 
 template <class Audio>
@@ -87,10 +85,10 @@ void VolumeSettingPage::initSettings(Audio *audio)
     ui->volumeSetting->setValue(currentVolume);
     ui->volume->setText(QString::number(currentVolume) + "%");
 
-    connect(ui->volumeSetting, &QSlider::valueChanged, [=](int value) {
-        double volumeValue = static_cast<double>(value) / static_cast<double>(100);
-        audio->SetVolume(volumeValue);
-    });
+    connect(ui->volumeSetting, &QSlider::valueChanged, [=](int value)
+            {
+                double volumeValue = static_cast<double>(value) / static_cast<double>(100);
+                audio->SetVolume(volumeValue); });
 }
 
 void VolumeSettingPage::handleVolumeChanged(double value)
@@ -139,7 +137,7 @@ void VolumeSettingPage::clickMuteButton(Audio *audio)
     }
 }
 
-//XXX:频繁调用函数,需要优化
+// XXX:频繁调用函数,需要优化
 void VolumeSettingPage::setVolumeIcon(int value)
 {
     if (value == 0)
@@ -162,10 +160,10 @@ void VolumeSettingPage::setVolumeIcon(int value)
 
 QPixmap VolumeSettingPage::trayIconColorSwitch(const QString &iconPath)
 {
-    //icon原本为浅色
+    // icon原本为浅色
     QIcon icon(iconPath);
-    QPixmap pixmap = icon.pixmap(16,16);
-    if( Kiran::StylePalette::instance()->paletteType() != Kiran::PALETTE_DARK )
+    QPixmap pixmap = icon.pixmap(16, 16);
+    if (Kiran::StylePalette::instance()->paletteType() != Kiran::PALETTE_DARK)
     {
         QImage image = pixmap.toImage();
         image.invertPixels(QImage::InvertRgb);

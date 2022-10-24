@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2022 KylinSec Co., Ltd.
- * kiran-cpanel-network is licensed under Mulan PSL v2.
+ * kiran-control-panel is licensed under Mulan PSL v2.
  * You can use this software according to the terms and conditions of the Mulan PSL v2.
  * You may obtain a copy of Mulan PSL v2 at:
  *          http://license.coscl.org.cn/MulanPSL2
@@ -27,4 +27,15 @@ QPixmap NetworkUtils::trayIconColorSwitch(const QString &iconPath, const int ico
         pixmap = QPixmap::fromImage(image);
     }
     return pixmap;
+}
+
+QPixmap NetworkUtils::trayIconColorSwitch(QPixmap pixmap)
+{
+    if (!pixmap.isNull())
+    {
+        QImage image = pixmap.toImage();
+        image.invertPixels(QImage::InvertRgb);
+        return QPixmap::fromImage(image);
+    }
+    return QPixmap();
 }

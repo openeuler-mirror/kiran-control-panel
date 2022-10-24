@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2020 ~ 2021 KylinSec Co., Ltd.
- * kiran-cpanel-keybinding is licensed under Mulan PSL v2.
+ * kiran-control-panel is licensed under Mulan PSL v2.
  * You can use this software according to the terms and conditions of the Mulan PSL v2.
  * You may obtain a copy of Mulan PSL v2 at:
  *          http://license.coscl.org.cn/MulanPSL2
@@ -9,7 +9,7 @@
  * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
  * See the Mulan PSL v2 for more details.
  *
- * Author:     yuanxing <yuanxing@kylinos.com.cn>
+ * Author:     yuanxing <yuanxing@kylinsec.com.cn>
  */
 
 #include "kcp-plugin-interface.h"
@@ -19,9 +19,9 @@
 #include <kiran-session-daemon/keybinding-i.h>
 
 #include <QApplication>
-#include <QTranslator>
 #include <QDBusConnection>
 #include <QDBusConnectionInterface>
+#include <QTranslator>
 
 class kcpKeybinding : public QObject, public KcpPluginInterface
 {
@@ -30,7 +30,7 @@ class kcpKeybinding : public QObject, public KcpPluginInterface
     Q_INTERFACES(KcpPluginInterface)
 
 public:
-    kcpKeybinding()=default;
+    kcpKeybinding() = default;
     ~kcpKeybinding(){};
 
 public:
@@ -47,10 +47,10 @@ public:
         }
         m_translator = new QTranslator;
         if (!m_translator->load(QLocale(),
-                            "kiran-cpanel-keybinding",
-                            ".",
-                            "/usr/share/kiran-cpanel-keybinding/translations/",
-                            ".qm"))
+                                "kiran-cpanel-keybinding",
+                                ".",
+                                "/usr/share/kiran-control-panel/translations/",
+                                ".qm"))
         {
             KLOG_DEBUG() << "Kiran cpanel keybinding load translation failed";
             m_translator->deleteLater();
@@ -84,19 +84,19 @@ public:
         }
         m_currentWidget = widget;
 
-//        //加载样式表
-//        QFile file(":/style/style.qss");
-//        if (file.open(QFile::ReadOnly))
-//        {
-//            QString styleSheet = QLatin1String(file.readAll());
-//
-//            m_currentWidget->setStyleSheet(styleSheet);
-//            file.close();
-//        }
-//        else
-//        {
-//            KiranMessageBox::message(nullptr, tr("Warning"), tr("Load qss failed"), KiranMessageBox::Ok);
-//        }
+        //        //加载样式表
+        //        QFile file(":/style/style.qss");
+        //        if (file.open(QFile::ReadOnly))
+        //        {
+        //            QString styleSheet = QLatin1String(file.readAll());
+        //
+        //            m_currentWidget->setStyleSheet(styleSheet);
+        //            file.close();
+        //        }
+        //        else
+        //        {
+        //            KiranMessageBox::message(nullptr, tr("Warning"), tr("Load qss failed"), KiranMessageBox::Ok);
+        //        }
         return m_currentWidget;
     }
 

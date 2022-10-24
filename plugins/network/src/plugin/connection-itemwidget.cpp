@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2022 KylinSec Co., Ltd.
- * kiran-cpanel-network is licensed under Mulan PSL v2.
+ * kiran-control-panel is licensed under Mulan PSL v2.
  * You can use this software according to the terms and conditions of the Mulan PSL v2.
  * You may obtain a copy of Mulan PSL v2 at:
  *          http://license.coscl.org.cn/MulanPSL2
@@ -9,13 +9,14 @@
  * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
  * See the Mulan PSL v2 for more details.
  *
- * Author:     luoqing <luoqing@kylinos.com.cn>
+ * Author:     luoqing <luoqing@kylinsec.com.cn>
  */
 
 #include "connection-itemwidget.h"
 #include <qt5-log-i.h>
 #include <QApplication>
 #include <QLineEdit>
+#include <QMouseEvent>
 #include <QPainter>
 #include <QSvgRenderer>
 #include "animation-loading-label.h"
@@ -166,12 +167,17 @@ void ConnectionItemWidget::setOtherNetworkIcon()
 
 void ConnectionItemWidget::handleThemeChanged(Kiran::PaletteType paletteType)
 {
-    if (m_connectionTypeIcon->pixmap() != nullptr)
-    {
-        QImage image = m_connectionTypeIcon->pixmap()->toImage();
-        image.invertPixels(QImage::InvertRgb);
-        QPixmap pixmap = QPixmap::fromImage(image);
+    QPixmap pixmap = NetworkUtils::trayIconColorSwitch(m_connectionTypeIcon->pixmap(Qt::ReturnByValue));
+    if (!pixmap.isNull())
         m_connectionTypeIcon->setPixmap(pixmap);
-    }
     m_editButton->setIcon(NetworkUtils::trayIconColorSwitch(":/kcp-network-images/details-info.svg"));
+}
+
+void ConnectionItemWidget::mousePressEvent(QMouseEvent* event)
+{
+    if (event->button() == Qt::LeftButton)
+    {
+        emit clicked();
+    }
+    QWidget::mousePressEvent(event);
 }

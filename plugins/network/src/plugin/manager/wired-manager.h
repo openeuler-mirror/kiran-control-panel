@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2022 KylinSec Co., Ltd.
- * kiran-cpanel-network is licensed under Mulan PSL v2.
+ * kiran-control-panel is licensed under Mulan PSL v2.
  * You can use this software according to the terms and conditions of the Mulan PSL v2.
  * You may obtain a copy of Mulan PSL v2 at:
  *          http://license.coscl.org.cn/MulanPSL2
@@ -9,7 +9,7 @@
  * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
  * See the Mulan PSL v2 for more details.
  *
- * Author:     luoqing <luoqing@kylinos.com.cn>
+ * Author:     luoqing <luoqing@kylinsec.com.cn>
  */
 
 #ifndef KIRAN_CPANEL_NETWORK_WIRED_MANAGER_H
@@ -18,7 +18,6 @@
 #include <NetworkManagerQt/WiredDevice>
 #include <QWidget>
 #include "manager.h"
-
 
 QT_BEGIN_NAMESPACE
 namespace Ui
@@ -39,11 +38,13 @@ public:
     void initConnection();
 
 public slots:
-    void handleRequestActivateConnection(const QString &connectionPath, const QString &connectionParameter);
+    void handleCreatConnection();
+    void handleEditConnection(const QString &uuid, QString activeConnectionPath);
+    void handleActivateSelectedConnection(const QString &connectionPath, const QString &connectionParameter);
 
     void handleStateDeactivated(const QString &deactivatedPath) override;
     void handleStateActivated(const QString &activatedPath) override;
-    void handleStateActivating(const QString &activatedPath) override;
+    void handleStateActivating(const QString &activePath) override;
     void handleReturnPreviousPage();
 
     void handleNotifierConnectionAdded(const QString &path) override;
@@ -58,6 +59,7 @@ public slots:
 private:
     Ui::WiredManager *ui;
     NetworkManager::WiredDevice::Ptr m_wiredDevice;
+    QString m_devicePath;
 };
 
 #endif  // KIRAN_CPANEL_NETWORK_WIRED_MANAGER_H

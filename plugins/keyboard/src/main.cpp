@@ -1,27 +1,27 @@
 /**
-* Copyright (c) 2020 ~ 2021 KylinSec Co., Ltd.
-* kiran-cpanel-keyboard is licensed under Mulan PSL v2.
-* You can use this software according to the terms and conditions of the Mulan PSL v2.
-* You may obtain a copy of Mulan PSL v2 at:
-*          http://license.coscl.org.cn/MulanPSL2
-* THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
-* EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
-* MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
-* See the Mulan PSL v2 for more details.
-*
-* Author:     yuanxing <yuanxing@kylinos.com.cn>
-*/
+ * Copyright (c) 2020 ~ 2021 KylinSec Co., Ltd.
+ * kiran-control-panel is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *          http://license.coscl.org.cn/MulanPSL2
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ *
+ * Author:     yuanxing <yuanxing@kylinsec.com.cn>
+ */
 
 #include <kcp-plugin-interface.h>
-#include <kiran-session-daemon/keyboard-i.h>
 #include <kiran-message-box.h>
+#include <kiran-session-daemon/keyboard-i.h>
 #include <qt5-log-i.h>
 
+#include <QApplication>
 #include <QDBusConnection>
 #include <QDBusConnectionInterface>
-#include <QApplication>
-#include <QTranslator>
 #include <QFile>
+#include <QTranslator>
 
 #include "general-page.h"
 #include "layout-page.h"
@@ -32,7 +32,7 @@ class KcpKeyboard : public QObject, public KcpPluginInterface
     Q_PLUGIN_METADATA(IID KcpPluginInterface_iid)
     Q_INTERFACES(KcpPluginInterface)
 public:
-    KcpKeyboard():QObject(){};
+    KcpKeyboard() : QObject(){};
     ~KcpKeyboard(){};
 
 public:
@@ -56,7 +56,7 @@ public:
         if (!m_translator->load(QLocale(),
                                 "kiran-cpanel-keyboard",
                                 ".",
-                                "/usr/share/kiran-cpanel-keyboard/translations/",
+                                "/usr/share/kiran-control-panel/translations/",
                                 ".qm"))
         {
             KLOG_DEBUG() << "Kiran cpanel keyboard load translation failed";
@@ -104,8 +104,10 @@ public:
 
     QStringList visibleSubItems() override
     {
-        return QStringList() << "KeyboardGeneralOptions" << "KeyboardLayout";
+        return QStringList() << "KeyboardGeneralOptions"
+                             << "KeyboardLayout";
     }
+
 private:
     QWidget* m_currentWidget = nullptr;
     QTranslator* m_translator = nullptr;

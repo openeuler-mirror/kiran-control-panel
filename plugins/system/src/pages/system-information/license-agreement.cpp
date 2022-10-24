@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2020 ~ 2021 KylinSec Co., Ltd.
- * kiran-cpanel-system is licensed under Mulan PSL v2.
+ * kiran-control-panel is licensed under Mulan PSL v2.
  * You can use this software according to the terms and conditions of the Mulan PSL v2.
  * You may obtain a copy of Mulan PSL v2 at:
  *          http://license.coscl.org.cn/MulanPSL2
@@ -9,7 +9,7 @@
  * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
  * See the Mulan PSL v2 for more details.
  *
- * Author:     yuanxing <yuanxing@kylinos.com.cn>
+ * Author:     yuanxing <yuanxing@kylinsec.com.cn>
  */
 #include "license-agreement.h"
 #include "ui_license-agreement.h"
@@ -44,14 +44,19 @@ LicenseAgreement::LicenseAgreement(QWidget *parent, Qt::WindowFlags windowFlags)
       ui(new Ui::LicenseAgreement)
 {
     ui->setupUi(getWindowContentWidget());
+
     setIcon(QIcon(":/images/kylin-about.png"));
     setButtonHints(TitlebarMinimizeButtonHint | TitlebarCloseButtonHint);
     setResizeable(false);
-    StylePropertyHelper::setButtonType(ui->btn_license_close,BUTTON_Default);
-    StylePropertyHelper::setButtonType(ui->btn_license_export, BUTTON_Normal);
-    setWindowModality(Qt::ApplicationModal);
-    connect(ui->btn_license_close, &QPushButton::clicked, this, &LicenseAgreement::close);
+    setTitlebarColorBlockEnable(true);
+    ui->text_license->viewport()->setAutoFillBackground(false);
 
+    StylePropertyHelper::setButtonType(ui->btn_license_close, BUTTON_Default);
+    StylePropertyHelper::setButtonType(ui->btn_license_export, BUTTON_Normal);
+
+    setWindowModality(Qt::ApplicationModal);
+
+    connect(ui->btn_license_close, &QPushButton::clicked, this, &LicenseAgreement::close);
     connect(ui->btn_license_export, &QPushButton::clicked, this, &LicenseAgreement::exportLicense);
 }
 

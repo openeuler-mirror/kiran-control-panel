@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2020 ~ 2021 KylinSec Co., Ltd.
- * kiran-cpanel-appearance is licensed under Mulan PSL v2.
+ * kiran-control-panel is licensed under Mulan PSL v2.
  * You can use this software according to the terms and conditions of the Mulan PSL v2.
  * You may obtain a copy of Mulan PSL v2 at:
  *          http://license.coscl.org.cn/MulanPSL2
@@ -9,7 +9,7 @@
  * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
  * See the Mulan PSL v2 for more details.
  *
- * Author:     yuanxing <yuanxing@kylinos.com.cn>
+ * Author:     yuanxing <yuanxing@kylinsec.com.cn>
  */
 
 #include "theme-widget.h"
@@ -43,7 +43,7 @@ ThemeWidget::ThemeWidget(QSize iconSize, QString currentIconTheme,
                          QString iconThemeName, QStringList iconStringList, QWidget *parent) : QWidget(parent)
 {
     //TODO:后续修改尺寸限制
-    setMinimumWidth(587);
+    setMinimumWidth(455);
 
     QVBoxLayout *mainVLayout = new QVBoxLayout(this);
     mainVLayout->setSpacing(4);
@@ -77,7 +77,8 @@ ThemeWidget::ThemeWidget(QSize iconSize, QString currentIconTheme,
     {
         QLabel *label = new QLabel(m_iconImgWidget);
         label->setFixedSize(iconSize);
-        label->setPixmap(QPixmap(icon));
+        QPixmap pixmap(icon);
+        label->setPixmap(pixmap.scaled(iconSize, Qt::KeepAspectRatio, Qt::SmoothTransformation));
         hLayout->addWidget(label, Qt::AlignLeft);
     }
 
@@ -114,7 +115,7 @@ ThemeWidget::ThemeWidget(QString name, QString currentTheme, QWidget *parent) : 
 
     m_themeImgWidget = new KiranFrame(this);
     m_themeImgWidget->setFixedHeight(60);
-    m_themeImgWidget->setMinimumWidth(282);
+    m_themeImgWidget->setMinimumWidth(230);
     m_themeImgWidget->setDrawBroder(false);
     m_themeImgWidget->setFixedBorderState(StylePalette::Checked);
     m_themeImgWidget->installEventFilter(this);
@@ -139,14 +140,24 @@ ThemeWidget::ThemeWidget(QString name, QString currentTheme, QWidget *parent) : 
     QLabel *img = new QLabel(m_themeImgWidget);
     img->setObjectName("img");
     img->setAlignment(Qt::AlignCenter);
+
+    auto scaleAdjustSizeFunc = [](const QString &path) -> QPixmap
+    {
+        QPixmap pixmap(path);
+        if (pixmap.isNull())
+        {
+            return pixmap;
+        }
+        return pixmap.scaled(QSize(166, 37), Qt::KeepAspectRatio, Qt::SmoothTransformation);
+    };
     if (name == DARK_THEME)
     {
-        img->setPixmap(QPixmap(":/kcp-appearance/images/dark-theme.png"));
+        img->setPixmap(scaleAdjustSizeFunc(":/kcp-appearance/images/dark-theme.png"));
         themeName->setText(tr("Dark Theme"));
     }
     else if (name == LIGHT_THEME)
     {
-        img->setPixmap(QPixmap(":/kcp-appearance/images/light-theme.png"));
+        img->setPixmap(scaleAdjustSizeFunc(":/kcp-appearance/images/light-theme.png"));
         themeName->setText(tr("Light Theme"));
     }
 
@@ -176,7 +187,7 @@ ThemeWidget::ThemeWidget(QSize cursorSize, QString currentCursorTheme,
                          QString cursorThemeName, const QList<QPixmap> &cursorListMap, QWidget *parent) : QWidget(parent)
 {
     //TODO:后续修改尺寸限制
-    setMinimumWidth(587);
+    setMinimumWidth(455);
 
     QVBoxLayout *mainVLayout = new QVBoxLayout(this);
     mainVLayout->setMargin(0);
@@ -209,7 +220,7 @@ ThemeWidget::ThemeWidget(QSize cursorSize, QString currentCursorTheme,
     QWidget *cursorImgWidget = new QWidget(m_cursorWidget);
     cursorImgWidget->setObjectName("cursorImgWidget");
     QHBoxLayout *hLayout2 = new QHBoxLayout(cursorImgWidget);
-    hLayout2->setSpacing(60);
+    hLayout2->setSpacing(35);
     hLayout2->setMargin(0);
     for (QPixmap pixmap : cursorListMap)
     {

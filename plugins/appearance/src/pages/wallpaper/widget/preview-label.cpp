@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2020 ~ 2021 KylinSec Co., Ltd.
- * kiran-cpanel-appearance is licensed under Mulan PSL v2.
+ * kiran-control-panel is licensed under Mulan PSL v2.
  * You can use this software according to the terms and conditions of the Mulan PSL v2.
  * You may obtain a copy of Mulan PSL v2 at:
  *          http://license.coscl.org.cn/MulanPSL2
@@ -9,7 +9,7 @@
  * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
  * See the Mulan PSL v2 for more details.
  *
- * Author:     yuanxing <yuanxing@kylinos.com.cn>
+ * Author:     yuanxing <yuanxing@kylinsec.com.cn>
  */
 
 #include "preview-label.h"
@@ -22,7 +22,7 @@
 
 PreviewLabel::PreviewLabel(int wallpaperType, QString imgPath, QWidget *parent) : QLabel(parent)
 {
-    setFixedSize(180, 90);
+    setFixedSize(148, 90);
     setAlignment(Qt::AlignHCenter);
     loadPixmap(imgPath);
     m_wallpaperType = wallpaperType;
@@ -141,7 +141,7 @@ void PreviewLabel::drawLockScreenPreview(QPainter *painter)
 bool PreviewLabel::loadPixmap(QString imagePath)
 {
     QPixmap pixmap;
-    QSize size(180, 90);
+    QSize size(148, 90);
     if (!pixmap.load(imagePath))
         return false;
 

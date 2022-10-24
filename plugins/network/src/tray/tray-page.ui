@@ -19,7 +19,7 @@
   <property name="minimumSize">
    <size>
     <width>240</width>
-    <height>0</height>
+    <height>50</height>
    </size>
   </property>
   <property name="maximumSize">
@@ -38,6 +38,9 @@
    <property name="spacing">
     <number>0</number>
    </property>
+   <property name="sizeConstraint">
+    <enum>QLayout::SetMinAndMaxSize</enum>
+   </property>
    <property name="leftMargin">
     <number>0</number>
    </property>
@@ -48,12 +51,12 @@
     <number>0</number>
    </property>
    <property name="bottomMargin">
-    <number>4</number>
+    <number>0</number>
    </property>
    <item>
     <widget class="QWidget" name="selectDevicewidget" native="true">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
@@ -61,13 +64,13 @@
      <property name="minimumSize">
       <size>
        <width>0</width>
-       <height>0</height>
+       <height>76</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
        <width>16777215</width>
-       <height>16777215</height>
+       <height>76</height>
       </size>
      </property>
      <property name="styleSheet">
@@ -75,13 +78,13 @@
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
       <property name="spacing">
-       <number>8</number>
+       <number>6</number>
       </property>
       <property name="leftMargin">
        <number>10</number>
       </property>
       <property name="topMargin">
-       <number>8</number>
+       <number>4</number>
       </property>
       <property name="rightMargin">
        <number>10</number>

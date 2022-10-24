@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2022 KylinSec Co., Ltd.
- * kiran-cpanel-network is licensed under Mulan PSL v2.
+ * kiran-control-panel is licensed under Mulan PSL v2.
  * You can use this software according to the terms and conditions of the Mulan PSL v2.
  * You may obtain a copy of Mulan PSL v2 at:
  *          http://license.coscl.org.cn/MulanPSL2
@@ -9,7 +9,7 @@
  * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
  * See the Mulan PSL v2 for more details.
  *
- * Author:     luoqing <luoqing@kylinos.com.cn>
+ * Author:     luoqing <luoqing@kylinsec.com.cn>
  */
 
 #include "text-input-dialog.h"
@@ -50,26 +50,30 @@ void TextInputDialog::initUI()
 
 void TextInputDialog::initConnection()
 {
-    connect(m_lineEdit, &QLineEdit::textEdited, [=]()
+    connect(m_lineEdit, &QLineEdit::textEdited, this, [this]()
             {
-        if(m_lineEdit->text().isEmpty())
-            m_confirmButton->setEnabled(false);
-        else
-            m_confirmButton->setEnabled(true); });
+                if(m_lineEdit->text().isEmpty())
+                    m_confirmButton->setEnabled(false);
+                else
+                    m_confirmButton->setEnabled(true); });
 
-    connect(m_confirmButton, &QPushButton::clicked, [=]()
-            {
-        if(m_lineEdit->echoMode() == QLineEdit::Password)
-            emit password(m_lineEdit->text());
-        else
-            emit ssid(m_lineEdit->text());
-        this->close(); });
+    connect(m_lineEdit, &QLineEdit::returnPressed, this, &TextInputDialog::handleConfirmButtonClicked);
+    connect(m_confirmButton, &QPushButton::clicked, this, &TextInputDialog::handleConfirmButtonClicked);
 
-    connect(m_cancelButton, &QPushButton::clicked, [=]()
+    connect(m_cancelButton, &QPushButton::clicked, this, [this]()
             { this->close(); });
 }
 
 void TextInputDialog::setlineEditEchoMode(QLineEdit::EchoMode echoMode)
 {
     m_lineEdit->setEchoMode(echoMode);
+}
+
+void TextInputDialog::handleConfirmButtonClicked()
+{
+    if (m_lineEdit->echoMode() == QLineEdit::Password)
+        emit password(m_lineEdit->text());
+    else
+        emit ssid(m_lineEdit->text());
+    this->close();
 }

@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2020 ~ 2021 KylinSec Co., Ltd.
- * kiran-cpanel-appearance is licensed under Mulan PSL v2.
+ * kiran-control-panel is licensed under Mulan PSL v2.
  * You can use this software according to the terms and conditions of the Mulan PSL v2.
  * You may obtain a copy of Mulan PSL v2 at:
  *          http://license.coscl.org.cn/MulanPSL2
@@ -9,7 +9,7 @@
  * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
  * See the Mulan PSL v2 for more details.
  *
- * Author:     yuanxing <yuanxing@kylinos.com.cn>
+ * Author:     yuanxing <yuanxing@kylinsec.com.cn>
  */
 
 #include "icon-themes.h"
@@ -183,7 +183,7 @@ void IconThemes::createIconWidgets()
                 if (!showIconsList.isEmpty())
                 {
                     //new theme-widget
-                    ThemeWidget *themeWidget = new ThemeWidget(QSize(48, 48), m_currentIconTheme,
+                    ThemeWidget *themeWidget = new ThemeWidget(QSize(40, 40), m_currentIconTheme,
                                                                m_iconThemes.at(i), showIconsList);
                     vLayout->addWidget(themeWidget, Qt::AlignRight);
 
@@ -224,7 +224,7 @@ void IconThemes::createIconWidgets()
                 //new theme-widget
                 if (!showIconsList.isEmpty())
                 {
-                    ThemeWidget *themeWidget = new ThemeWidget(QSize(48, 48), m_currentIconTheme,
+                    ThemeWidget *themeWidget = new ThemeWidget(QSize(40, 40), m_currentIconTheme,
                                                                m_iconThemes.at(i), showIconsList);
                     vLayout->addWidget(themeWidget, Qt::AlignRight);
 

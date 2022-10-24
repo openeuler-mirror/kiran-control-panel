@@ -1,21 +1,31 @@
-//
-// Created by liuxinhao on 2022/5/30.
-//
+/**
+ * Copyright (c) 2020 ~ 2022 KylinSec Co., Ltd.
+ * kiran-control-panel is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *          http://license.coscl.org.cn/MulanPSL2
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ *
+ * Author:     liuxinhao <liuxinhao@kylinsec.com.cn>
+ */
 
-#include "kcp-plugin-interface.h"
 #include "dbus-wrapper/system-info-dbus.h"
-#include "pages/system-information/system-information.h"
+#include "kcp-plugin-interface.h"
 #include "pages/hardware-information/hardware-information.h"
+#include "pages/system-information/system-information.h"
 
 #include <kiran-log/qt5-log-i.h>
 #include <kiranwidgets-qt5/kiran-message-box.h>
 
-#include <QTranslator>
 #include <QCoreApplication>
+#include <QTranslator>
 
-#define TRANSLATION_DIR "/usr/share/kiran-cpanel-system/translations"
+#define TRANSLATION_DIR "/usr/share/kiran-control-panel/translations"
 
-class KcpSystemInformation : public  QObject,public  KcpPluginInterface
+class KcpSystemInformation : public QObject, public KcpPluginInterface
 {
     Q_OBJECT
     Q_PLUGIN_METADATA(IID KcpPluginInterface_iid)
@@ -79,21 +89,20 @@ public:
         return m_currentWidget;
     }
 
-    virtual bool haveUnsavedOptions()  override
+    virtual bool haveUnsavedOptions() override
     {
         return false;
     }
 
     QStringList visibleSubItems() override
     {
-        return QStringList() << "SystemInformation" << "HardwareInformation";
+        return QStringList() << "SystemInformation"
+                             << "HardwareInformation";
     }
 
 private:
     QWidget* m_currentWidget = nullptr;
     QTranslator* m_translator = nullptr;
 };
-
-
 
 #include "main.moc"

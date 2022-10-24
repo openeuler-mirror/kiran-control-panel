@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2020 ~ 2021 KylinSec Co., Ltd.
- * kiran-cpanel-audio is licensed under Mulan PSL v2.
+ * kiran-control-panel is licensed under Mulan PSL v2.
  * You can use this software according to the terms and conditions of the Mulan PSL v2.
  * You may obtain a copy of Mulan PSL v2 at:
  *          http://license.coscl.org.cn/MulanPSL2
@@ -9,7 +9,7 @@
  * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
  * See the Mulan PSL v2 for more details.
  *
- * Author:     luoqing <luoqing@kylinos.com.cn>
+ * Author:     luoqing <luoqing@kylinsec.com.cn>
  */
 
 #include "audio-system-tray.h"
@@ -246,7 +246,12 @@ void AudioSystemTray::setTrayIcon(int value)
 void AudioSystemTray::handleVolumeSettingClicked()
 {
     QProcess process(this);
-    process.startDetached("kiran-control-panel -c audio -s OutputPage");
+    QStringList arguments;
+    arguments << "-c"
+              << "audio"
+              << "-s"
+              << "OutputPage";
+    process.startDetached("kiran-control-panel", arguments);
 }
 
 //暂时不使用，改成从平台主题中获取颜色

@@ -18,6 +18,7 @@
 
     <qresource prefix="/kcp-account">
         <file>images/create-user-avatar.png</file>
+        <file>images/create-user-avatar-black.png</file>
         <file>images/change-user-avatar.png</file>
         <file>images/current-avatar-indicator.svg</file>
         <file>images/finger-0.svg</file>

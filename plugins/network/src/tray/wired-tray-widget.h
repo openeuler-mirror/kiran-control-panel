@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2022 KylinSec Co., Ltd.
- * kiran-cpanel-network is licensed under Mulan PSL v2.
+ * kiran-control-panel is licensed under Mulan PSL v2.
  * You can use this software according to the terms and conditions of the Mulan PSL v2.
  * You may obtain a copy of Mulan PSL v2 at:
  *          http://license.coscl.org.cn/MulanPSL2
@@ -9,7 +9,7 @@
  * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
  * See the Mulan PSL v2 for more details.
  *
- * Author:     luoqing <luoqing@kylinos.com.cn>
+ * Author:     luoqing <luoqing@kylinsec.com.cn>
  */
 
 #ifndef KIRAN_CPANEL_NETWORK_WIRED_TRAY_WIDGET_H
@@ -17,10 +17,10 @@
 
 #include <NetworkManagerQt/WiredDevice>
 #include <QWidget>
-#include "connection-lists.h"
+#include "tray-connection-list.h"
 #include "tray-widget.h"
 
-class ConnectionLists;
+class TrayConnectionList;
 class WiredTrayWidget : public TrayWidget
 {
     Q_OBJECT
@@ -34,9 +34,9 @@ public:
     void initUI();
 
     void showWiredConnectionLists();
-    void handleRequestActivateConnection(const NetworkConnectionInfo &connectionInfo);
-    void handleRequestDisconnect(const QString &activatedConnectionPath);
-    void handleRequestCancel(const QString &activatedConnectionPath);
+    void handleActivateSelectedConnection(const QString &connectionPath, const QString &connectionParameter);
+    void handleDisconnect(const QString &activatedConnectionPath);
+    void handleCancelConnection(const QString &activatedConnectionPath);
 
     void handleNotifierConnectionAdded(const QString &path) override;
     void handleNotifierConnectionRemoved(const QString &path) override;
@@ -48,21 +48,21 @@ public:
     void handleActiveConnectionAdded(const QString &path) override;
     void handleActiveConnectionRemoved(const QString &path) override;
 
+    void handleConnectionUpdated(const QString &path);
+
     void initUnavailableWidget();
+
+    int getHeight() override;
 
 public slots:
     void handleCarrierChanged(bool plugged);
     void handleStateChanged(NetworkManager::Device::State newstate, NetworkManager::Device::State oldstate, NetworkManager::Device::StateChangeReason reason);
 
-signals:
-    void adjustedTraySize(QSize sizeHint);
-
 private:
     NetworkManager::WiredDevice::Ptr m_wiredDevice;
-    QString m_devicePath;
-    QVBoxLayout *m_verticalLayout;
-    QPointer<ConnectionLists> m_connectionLists;
     QWidget *m_unavailableWidget;
+    QString m_devicePath;
+    QPointer<TrayConnectionList> m_connectionList;
 };
 
 #endif  // KIRAN_CPANEL_NETWORK_WIRED_TRAY_WIDGET_H

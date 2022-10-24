@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2022 KylinSec Co., Ltd.
- * kiran-cpanel-network is licensed under Mulan PSL v2.
+ * kiran-control-panel is licensed under Mulan PSL v2.
  * You can use this software according to the terms and conditions of the Mulan PSL v2.
  * You may obtain a copy of Mulan PSL v2 at:
  *          http://license.coscl.org.cn/MulanPSL2
@@ -9,14 +9,14 @@
  * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
  * See the Mulan PSL v2 for more details.
  *
- * Author:     luoqing <luoqing@kylinos.com.cn>
+ * Author:     luoqing <luoqing@kylinsec.com.cn>
  */
 
 #ifndef KIRAN_CPANEL_NETWORK_INPUT_DIALOG_H
 #define KIRAN_CPANEL_NETWORK_INPUT_DIALOG_H
 
-#include <QDialog>
 #include <kiran-message-box.h>
+#include <QDialog>
 #include <QLineEdit>
 #include <QPushButton>
 
@@ -32,6 +32,10 @@ public:
     void initUI();
     void initConnection();
     void setlineEditEchoMode(QLineEdit::EchoMode);
+
+public slots:
+    void handleConfirmButtonClicked();
+
 signals:
     void password(const QString &password);
     void ssid(const QString &ssid);
@@ -42,4 +46,4 @@ private:
     QPushButton *m_cancelButton;
 };
 
-#endif  //KIRAN_CPANEL_NETWORK_INPUT_DIALOG_H
+#endif  // KIRAN_CPANEL_NETWORK_INPUT_DIALOG_H

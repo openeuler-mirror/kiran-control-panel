@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2020 ~ 2021 KylinSec Co., Ltd.
- * kiran-cpanel-system is licensed under Mulan PSL v2.
+ * kiran-control-panel is licensed under Mulan PSL v2.
  * You can use this software according to the terms and conditions of the Mulan PSL v2.
  * You may obtain a copy of Mulan PSL v2 at:
  *          http://license.coscl.org.cn/MulanPSL2
@@ -9,7 +9,7 @@
  * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
  * See the Mulan PSL v2 for more details.
  *
- * Author:     yuanxing <yuanxing@kylinos.com.cn>
+ * Author:     yuanxing <yuanxing@kylinsec.com.cn>
  */
 
 #include "change-host-name-widget.h"
@@ -33,7 +33,9 @@ ChangeHostNameWidget::ChangeHostNameWidget(QWidget* parent)
     setButtonHints(TitlebarMinimizeButtonHint | TitlebarCloseButtonHint);
     setContentWrapperMarginBottom(0);
     setResizeable(false);
-    StylePropertyHelper::setButtonType(ui->btn_save,Kiran::BUTTON_Default);
+    setTitlebarColorBlockEnable(true);
+
+    StylePropertyHelper::setButtonType(ui->btn_save, Kiran::BUTTON_Default);
     initUI();
     connect(ui->btn_cancel, SIGNAL(clicked()), this, SLOT(close()));
     connect(ui->btn_save, SIGNAL(clicked()), this, SLOT(setNewHostName()));
@@ -55,7 +57,7 @@ bool ChangeHostNameWidget::getLineEditStatus()
 
 void ChangeHostNameWidget::initUI()
 {
-    setTitle(tr("Host Name"));
+    setTitle("");
     setIcon(QIcon(":/images/kylin-about.png"));
 
     ui->btn_save->setEnabled(false);

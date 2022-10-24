@@ -1,3 +1,16 @@
+/**
+ * Copyright (c) 2020 ~ 2021 KylinSec Co., Ltd.
+ * kiran-control-panel is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *          http://license.coscl.org.cn/MulanPSL2
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ *
+ * Author:     liuxinhao <liuxinhao@kylinsec.com.cn>
+ */
 #include "kiran-time-zone-item.h"
 #include "ui_kiran-time-zone-item.h"
 
@@ -18,8 +31,7 @@ KiranTimeZoneItem::KiranTimeZoneItem(const ZoneInfo zoneInfo, QWidget *parent)
 {
     ui->setupUi(this);
 
-    QImage selectedImage(":/kiran-control-panel/images/selected.png");
-    selectedImage = selectedImage.scaled(11, 8);
+    QImage selectedImage(":/kiran-control-panel/images/indicator-selected.png");
     m_selectedIcon = QPixmap::fromImage(selectedImage);
 
     setAttribute(Qt::WA_Hover);

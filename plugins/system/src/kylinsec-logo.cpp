@@ -1,7 +1,16 @@
-//
-// Created by liuxinhao on 2022/5/30.
-//
-
+/**
+ * Copyright (c) 2020 ~ 2022 KylinSec Co., Ltd.
+ * kiran-control-panel is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *          http://license.coscl.org.cn/MulanPSL2
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ *
+ * Author:     liuxinhao <liuxinhao@kylinsec.com.cn>
+ */
 #include "kylinsec-logo.h"
 
 #include <QDate>
@@ -29,9 +38,12 @@ void KylinsecLogo::paintEvent(QPaintEvent *event)
     QFont font = QFont("Noto Sans CJK SC regular", 46);
     QRect drawRecLogo = QRect( 24, 16, this->width(), 157 - 16);
 
+    QTextOption textOption(Qt::AlignLeft);
+    textOption.setWrapMode(QTextOption::NoWrap);
+
     painter.setPen(QColor(46, 179, 255));  //#2eb3FF
     painter.setFont(font);
-    painter.drawText(drawRecLogo, SYSTEM_LOGO);
+    painter.drawText(drawRecLogo, SYSTEM_LOGO, textOption);
 
     QFontMetrics fm = painter.fontMetrics();
     int heightText = fm.height();
@@ -42,5 +54,5 @@ void KylinsecLogo::paintEvent(QPaintEvent *event)
     font.setWeight(QFont::Normal);
     painter.setPen(QColor(145, 145, 145));
     painter.setFont(font);
-    painter.drawText(drawRecCopyright, copyright);
+    painter.drawText(drawRecCopyright, copyright, textOption);
 }

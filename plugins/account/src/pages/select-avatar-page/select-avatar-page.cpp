@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2020 ~ 2021 KylinSec Co., Ltd.
- * kiran-cpanel-account is licensed under Mulan PSL v2.
+ * kiran-control-panel is licensed under Mulan PSL v2.
  * You can use this software according to the terms and conditions of the Mulan PSL v2.
  * You may obtain a copy of Mulan PSL v2 at:
  *          http://license.coscl.org.cn/MulanPSL2
@@ -9,7 +9,7 @@
  * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
  * See the Mulan PSL v2 for more details.
  *
- * Author:     liuxinhao <liuxinhao@kylinos.com.cn>
+ * Author:     liuxinhao <liuxinhao@kylinsec.com.cn>
  */
 
 #include "select-avatar-page.h"
@@ -19,14 +19,15 @@
 #include "scrollarea-container.h"
 #include "tools/avatar-editor-wrapper.h"
 
+#include <qt5-log-i.h>
+#include <style-palette.h>
+#include <style-property.h>
 #include <QButtonGroup>
 #include <QDir>
 #include <QFileDialog>
 #include <QHBoxLayout>
 #include <QPushButton>
 #include <QScrollArea>
-#include <qt5-log-i.h>
-#include <style-property.h>
 
 #define SYSTEM_AVATAR_OBJ_NAME "avatar_button_system"
 #define USER_AVATAR_OBJ_NAME "avatar_button_user"
@@ -113,7 +114,7 @@ void SelectAvatarPage::initUI()
 
     m_mainLayout = new QVBoxLayout(this);
     m_mainLayout->setContentsMargins(16, 25, 16, 0);
-    m_mainLayout->setSpacing(0);
+    m_mainLayout->setSpacing(10);
 
     m_scrollArea = new QScrollArea;
     m_scrollArea->setFrameShape(QFrame::NoFrame);
@@ -169,8 +170,11 @@ void SelectAvatarPage::initUI()
     m_btnLayout->addItem(item);
 
     loadAvatar();
+
     m_addButton = addAvatar(":/kcp-account/images/create-user-avatar.png", AVATAR_ADD, false);
     m_addButton->setAccessibleName("ButtonAddAvatar");
+    updateAddAvatarIcon();
+    connect(Kiran::StylePalette::instance(), &Kiran::StylePalette::themeChanged, this, &SelectAvatarPage::updateAddAvatarIcon);
     connect(m_addButton, &AvatarItemButton::clicked, [this]()
             {
         //1.选择图片
@@ -257,4 +261,26 @@ void SelectAvatarPage::moveAddButtonToEnd()
 {
     m_flowLayout->removeWidget(m_addButton);
     m_flowLayout->addWidget(m_addButton);
+}
+
+void SelectAvatarPage::updateAddAvatarIcon()
+{
+    QString iconPath;
+
+    Kiran::PaletteType paletteType = Kiran::StylePalette::instance()->paletteType();
+    if (paletteType == Kiran::PALETTE_LIGHT)
+    {
+        iconPath = ":/kcp-account/images/create-user-avatar-black.png";
+    }
+    else
+    {
+        iconPath = ":/kcp-account/images/create-user-avatar.png";
+    }
+
+    if (iconPath == m_addButton->iconPath())
+    {
+        return;
+    }
+
+    m_addButton->setIcon(iconPath);
 }

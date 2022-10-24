@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2020 ~ 2021 KylinSec Co., Ltd.
- * kiran-cpanel-timedate is licensed under Mulan PSL v2.
+ * kiran-control-panel is licensed under Mulan PSL v2.
  * You can use this software according to the terms and conditions of the Mulan PSL v2.
  * You may obtain a copy of Mulan PSL v2 at:
  *          http://license.coscl.org.cn/MulanPSL2
@@ -9,7 +9,7 @@
  * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
  * See the Mulan PSL v2 for more details.
  *
- * Author:     liuxinhao <liuxinhao@kylinos.com.cn>
+ * Author:     liuxinhao <liuxinhao@kylinsec.com.cn>
  */
 
 #include "kiran-timedate-widget.h"
@@ -66,6 +66,7 @@ void KiranTimeDateWidget::initUI()
     /// 自动同步
     m_autoSyncSwitch = new KiranSwitchButton(this);
     ui->widget_autoSync->layout()->addWidget(m_autoSyncSwitch);
+    ui->widget_autoSync->layout()->addItem(new QSpacerItem(10, 20, QSizePolicy::Fixed, QSizePolicy::Minimum));
 
     // 自动同步开关的触发，设置"手动设置时间"标签的enable,判断当前页并切换
     connect(m_autoSyncSwitch, &KiranSwitchButton::toggled,
@@ -78,6 +79,7 @@ void KiranTimeDateWidget::initUI()
 
     /* 初始化侧边栏Tab列表 */
     ui->tabList->setInvertIconPixelsEnable(true);
+    ui->tabList->viewport()->setAutoFillBackground(false);
     ui->tabList->setIconSize(QSize(16, 16));
     connect(ui->tabList, &KiranSidebarWidget::itemSelectionChanged,
             this, &KiranTimeDateWidget::handleSidebarSelectionChanged);

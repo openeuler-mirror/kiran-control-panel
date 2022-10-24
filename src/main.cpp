@@ -9,7 +9,7 @@
  * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
  * See the Mulan PSL v2 for more details.
  *
- * Author:     liuxinhao <liuxinhao@kylinos.com.cn>
+ * Author:     liuxinhao <liuxinhao@kylinsec.com.cn>
  */
 
 #include <kiran-single-application.h>
@@ -23,6 +23,7 @@
 #include <QJsonDocument>
 #include <QScreen>
 
+#include "category-manager.h"
 #include "config.h"
 #include "panel-window.h"
 #include "plugin-manager.h"
@@ -95,6 +96,7 @@ void processCommandLine()
 
 void dumpPluginManagerInfo()
 {
+#if 0
     auto pluginManager = PluginManager::getInstance();
     for(auto category:pluginManager->getCategorys())
     {
@@ -118,6 +120,7 @@ void dumpPluginManagerInfo()
             }
         }
     }
+#endif
 }
 
 int main(int argc, char *argv[])
@@ -128,7 +131,11 @@ int main(int argc, char *argv[])
                              KiranSingleApplication::Mode::User | KiranSingleApplication::Mode::SecondaryNotification);
 
     // 初始化日志库
-    klog_qt5_init("","kylinsec-session","kiran-control-panel","kiran-control-panel");
+    int iret = klog_qt5_init("", "kylinsec-session", "kiran-control-panel", "kiran-control-panel");
+    if (iret != 0)
+    {
+        fprintf(stderr, "klog_qt5_init faield,res:%d\n", iret);
+    }
 
     // 处理命令行参数
     processCommandLine();
@@ -137,13 +144,18 @@ int main(int argc, char *argv[])
         exit(EXIT_SUCCESS);
     }
 
-    // 加载相关插件的信息
-    PluginManager::getInstance()->loadAll();
+    PluginManager* pManager = PluginManager::instance();
+    pManager->init();
+
+    CategoryManager* cManager = CategoryManager::instance();
+    cManager->init();
+
+    cManager->dump();
 
     // 输出所有插件，所有功能子项的信息
     if( listAllPluginInfo )
     {
-        dumpPluginManagerInfo();
+        cManager->dump();
         exit(EXIT_SUCCESS);
     }
 
@@ -155,16 +167,12 @@ int main(int argc, char *argv[])
 
     auto screen = QApplication::screenAt(QCursor::pos());
     QRect screenGeometry = screen->geometry();
-    w.resize(993, 711);
+    w.resize(1031, 742);
     w.move(screenGeometry.x() + (screenGeometry.width() - w.width()) / 2,
            screenGeometry.y() + (screenGeometry.height() - w.height()) / 2);
     w.show();
     w.setContentWrapperMarginBottom(0);
 
     int execRet = app.exec();
-
-    // 销毁插件相关信息
-    PluginManager::getInstance()->deleteInstance();
-
     return execRet;
 }

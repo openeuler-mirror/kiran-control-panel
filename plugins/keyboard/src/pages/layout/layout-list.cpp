@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2020 ~ 2021 KylinSec Co., Ltd.
- * kiran-cpanel-keyboard is licensed under Mulan PSL v2.
+ * kiran-control-panel is licensed under Mulan PSL v2.
  * You can use this software according to the terms and conditions of the Mulan PSL v2.
  * You may obtain a copy of Mulan PSL v2 at:
  *          http://license.coscl.org.cn/MulanPSL2
@@ -9,7 +9,7 @@
  * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
  * See the Mulan PSL v2 for more details.
  *
- * Author:     yuanxing <yuanxing@kylinos.com.cn>
+ * Author:     yuanxing <yuanxing@kylinsec.com.cn>
  */
 
 #include "layout-list.h"
@@ -32,9 +32,11 @@ LayoutList::LayoutList(QWidget* parent) : QWidget(parent),
     m_timer = new QTimer(this);
     ui->stackedWidget->setCurrentWidget(ui->page_list);
     ui->lineEdit_search->installEventFilter(this);
-
+    ui->listWidget_filter->viewport()->setAutoFillBackground(false);
+    ui->listWidget_list->viewport()->setAutoFillBackground(false);
     connect(m_timer, &QTimer::timeout,
-            [this] {
+            [this]
+            {
                 search();
                 m_timer->stop();
             });

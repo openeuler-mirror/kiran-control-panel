@@ -1,21 +1,22 @@
 /**
- * Copyright (c) 2020 ~ 2021 KylinSec Co., Ltd. 
- * kiran-cpanel-account is licensed under Mulan PSL v2.
- * You can use this software according to the terms and conditions of the Mulan PSL v2. 
+ * Copyright (c) 2020 ~ 2021 KylinSec Co., Ltd.
+ * kiran-control-panel is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
  * You may obtain a copy of Mulan PSL v2 at:
- *          http://license.coscl.org.cn/MulanPSL2 
- * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND, 
- * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT, 
- * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.  
- * See the Mulan PSL v2 for more details.  
- * 
- * Author:     liuxinhao <liuxinhao@kylinos.com.cn>
+ *          http://license.coscl.org.cn/MulanPSL2
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ *
+ * Author:     liuxinhao <liuxinhao@kylinsec.com.cn>
  */
 #include <QApplication>
 #include <QMessageBox>
 #include <QPushButton>
 #include <QVBoxLayout>
 
+#include <kiran-color-block.h>
 #include <style-property.h>
 
 #include "exit-code-defines.h"
@@ -42,11 +43,18 @@ void KiranAvatarEditor::initUI(const QString &srcImagePath,
     setResizeable(false);
     setFixedSize(500, 570);
     setButtonHints(TitlebarMinimizeButtonHint | TitlebarCloseButtonHint);
+    setTitlebarColorBlockEnable(true);
 
     //主布局
     m_layout = new QVBoxLayout(getWindowContentWidget());
     m_layout->setSpacing(0);
-    m_layout->setMargin(0);
+    m_layout->setMargin(4);
+
+    KiranColorBlock *colorBlock = new KiranColorBlock(this);
+    m_layout->addWidget(colorBlock);
+    auto layout = new QVBoxLayout(colorBlock);
+    layout->setContentsMargins(6, 6, 6, 6);
+    layout->setSpacing(10);
 
     //预览图片
     m_imagePreview = new ImagePreviewWidget(this);
@@ -54,25 +62,20 @@ void KiranAvatarEditor::initUI(const QString &srcImagePath,
                                   QSizePolicy::Expanding);
     m_imagePreview->setSrcImagePath(srcImagePath);
     m_imagePreview->setDstImagePath(dstImagePath);
-    m_layout->addWidget(m_imagePreview);
-
-    ///重新上传
-    auto *toolBtnWidget = new QWidget(this);
-    toolBtnWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
-    QHBoxLayout *toolBtnLayout = new QHBoxLayout(toolBtnWidget);
+    layout->addWidget(m_imagePreview);
 
     //分割线
     auto *dividingLine = new QWidget(this);
     dividingLine->setObjectName("dividingLine");
     dividingLine->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
     dividingLine->setFixedHeight(1);
-    m_layout->addWidget(dividingLine);
+    layout->addWidget(dividingLine);
 
     //按钮
     m_buttonWidget = new QWidget(getWindowContentWidget());
     m_buttonWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
     m_buttonWidget->setContentsMargins(-1, 15, -1, 15);
-    m_layout->addWidget(m_buttonWidget);
+    layout->addWidget(m_buttonWidget);
     auto *buttonLayout = new QHBoxLayout(m_buttonWidget);
     buttonLayout->setSpacing(0);
     buttonLayout->setContentsMargins(-1, -1, -1, -1);

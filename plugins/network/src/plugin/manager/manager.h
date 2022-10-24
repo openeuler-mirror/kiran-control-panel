@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2022 KylinSec Co., Ltd.
- * kiran-cpanel-network is licensed under Mulan PSL v2.
+ * kiran-control-panel is licensed under Mulan PSL v2.
  * You can use this software according to the terms and conditions of the Mulan PSL v2.
  * You may obtain a copy of Mulan PSL v2 at:
  *          http://license.coscl.org.cn/MulanPSL2
@@ -9,15 +9,15 @@
  * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
  * See the Mulan PSL v2 for more details.
  *
- * Author:     luoqing <luoqing@kylinos.com.cn>
+ * Author:     luoqing <luoqing@kylinsec.com.cn>
  */
 
 #ifndef KIRAN_CPANEL_NETWORK_MANAGER_H
 #define KIRAN_CPANEL_NETWORK_MANAGER_H
 #include <NetworkManagerQt/Device>
 #include <NetworkManagerQt/Manager>
-#include <QWidget>
 #include <QTimer>
+#include <QWidget>
 enum EditPages
 {
     PAGE_SHOW,
@@ -31,23 +31,19 @@ public:
     explicit Manager(QWidget *parent = nullptr);
     ~Manager();
 
-    void initNotifierConnection();
-
 public slots:
     virtual void refreshConnectionLists();
-    virtual void handleNotifierConnectionAdded(const QString &path);
-    virtual void handleNotifierConnectionRemoved(const QString &path);
-    virtual void handleActiveConnectionAdded(const QString &activepath);
-    virtual void handleActiveConnectionRemoved(const QString &activepath);
+    virtual void handleNotifierConnectionAdded(const QString &path) = 0;
+    virtual void handleNotifierConnectionRemoved(const QString &path) = 0;
+    virtual void handleActiveConnectionAdded(const QString &activepath) = 0;
+    virtual void handleActiveConnectionRemoved(const QString &activepath) = 0;
 
+    virtual void handleStateActivated(const QString &activatedPath) = 0;
+    virtual void handleStateActivating(const QString &activatedPath) = 0;
+    virtual void handleStateDeactivated(const QString &deactivatedPath) = 0;
     virtual void handleActiveConnectionStateChanged(NetworkManager::ActiveConnection::State state);
-    virtual void handleStateActivated(const QString &activatedPath);
-    virtual void handleStateActivating(const QString &activatedPath);
-    virtual void handleStateDeactivated(const QString &deactivatedPath);
 
     virtual void handleDeviceStateChanged(NetworkManager::Device::State newstate, NetworkManager::Device::State oldstate, NetworkManager::Device::StateChangeReason reason);
-
-    void getDeviceList(NetworkManager::Device::Type deviceType);
 
 protected:
     QMap<QString, QString> m_deviceMap;
@@ -60,4 +56,4 @@ private:
     QString m_connectionRemovePath;
 };
 
-#endif  //KIRAN_CPANEL_NETWORK_MANAGER_H
+#endif  // KIRAN_CPANEL_NETWORK_MANAGER_H
