@@ -67,7 +67,7 @@ void HardWorker::doCreateUser(QString userName,
                                            userObjPath,
                                            QDBusConnection::systemBus());
         ///step2. 设置密码
-        QDBusPendingReply<> setpwdRep = userInterface.SetPassword(encryptedPasswd, "");
+        QDBusPendingReply<> setpwdRep = userInterface.SetPasswordByPasswd("", encryptedPasswd);
         setpwdRep.waitForFinished();
         if (setpwdRep.isError())
         {
@@ -136,15 +136,17 @@ failed:
 
 void HardWorker::doUpdatePasswd(QString objPath,
                                 QString userName,
+                                QString encryptedCurPasswd,
                                 QString encryptedPasswd)
 {
     KSDAccountsUserProxy userProxy(ACCOUNTS_DBUS_NAME, objPath, QDBusConnection::systemBus());
-    QDBusPendingReply<> reply = userProxy.SetPassword(encryptedPasswd, "");
+    QDBusPendingReply<> reply = userProxy.SetPasswordByPasswd(encryptedCurPasswd, encryptedPasswd);
     reply.waitForFinished();
     if (reply.isError())
     {
         KLOG_WARNING() << "set passwd failed," << reply.error();
-        emit sigUpdatePasswdDone(tr(" update password failed"));
+        QString errMsg = QString("%1,%2").arg(tr(" update password failed")).arg(reply.error().message());
+        emit sigUpdatePasswdDone(errMsg);
     }
     else
     {
