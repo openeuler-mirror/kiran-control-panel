@@ -15,14 +15,23 @@
 #include "passwd-helper.h"
 
 #include <crypt.h>
+#include <cryptopp/base64.h>
+#include <cryptopp/cryptlib.h>
+#include <cryptopp/hex.h>
+#include <cryptopp/randpool.h>
+#include <cryptopp/rsa.h>
+
 #include <errno.h>
 #include <error.h>
 #include <security/pam_appl.h>
+#include <random>
+
+#include <qt5-log-i.h>
 #include <QByteArray>
 #include <QDebug>
 #include <QString>
-#include <random>
-#include <qt5-log-i.h>
+
+using namespace CryptoPP;
 
 bool PasswdHelper::encryptPassword(const QString &pwd, QString &encrypted)
 {
@@ -78,6 +87,24 @@ bool PasswdHelper::encryptPassword(const QString &pwd, QString &encrypted)
         encrypted = cryptedResult;
 
     return cryptedResult != nullptr;
+}
+
+bool PasswdHelper::encryptPasswordByRsa(const QString &publicKey, const QString &pwd, QString &encrypted)
+{
+    CryptoPP::RandomPool random_pool;
+    StringSource public_source(publicKey.toStdString(), true, new Base64Decoder(new HexDecoder));
+    RSAES_OAEP_SHA_Encryptor rsa_encryptor(public_source);
+    if (pwd.size() > rsa_encryptor.FixedMaxPlaintextLength())
+    {
+        KLOG_WARNING("The length(%d) of message is greater than the value(%d) which FixedMaxPlaintextLength return.",
+                     pwd.size(),
+                     rsa_encryptor.FixedMaxPlaintextLength());
+        return false;
+    }
+    std::string result;
+    StringSource(pwd.toStdString(), true, new PK_EncryptorFilter(random_pool, rsa_encryptor, new HexEncoder(new StringSink(result))));
+    encrypted = QString::fromStdString(result);
+    return true;
 }
 
 int conv_func(int num_msg, const struct pam_message **msg,

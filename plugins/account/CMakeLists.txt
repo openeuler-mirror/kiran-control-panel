@@ -25,6 +25,7 @@ pkg_search_module(KIRAN_STYLE_HELPER REQUIRED kiran-style-helper)
 pkg_search_module(KIRAN_CC_DAEMON REQUIRED kiran-cc-daemon)
 pkg_search_module(ZERO_MQ REQUIRED libzmq)
 pkg_search_module(KLOG_QT5 REQUIRED klog-qt5)
+pkg_search_module(CRYPTOPP REQUIRED cryptopp)
 
 qt5_create_translation(QM_FILES ${CMAKE_CURRENT_SOURCE_DIR} translations/kiran-cpanel-account.zh_CN.ts)
 
@@ -73,7 +74,8 @@ target_include_directories(${TARGET_NAME} PRIVATE
         ${KIRAN_CC_DAEMON_INCLUDE_DIRS}
         ${ZERO_MQ_INCLUDE_DIRS}
         ${KLOG_QT5_INCLUDE_DIRS}
-        ${KIRAN_STYLE_HELPER_INCLUDE_DIRS})
+        ${KIRAN_STYLE_HELPER_INCLUDE_DIRS}
+        ${CRYPTOPP_INCLUDE_DIRS})
 
 target_link_libraries(${TARGET_NAME}
         common-widgets
@@ -87,7 +89,8 @@ target_link_libraries(${TARGET_NAME}
         ${KIRAN_CC_DAEMON_LIBRARIES}
         ${ZERO_MQ_LIBRARIES}
         ${KLOG_QT5_LIBRARIES}
-        ${KIRAN_STYLE_HELPER_LIBRARIES})
+        ${KIRAN_STYLE_HELPER_LIBRARIES}
+        ${CRYPTOPP_LIBRARIES})
 
 if (PASSWD_EXPIRATION_POLICY_VISIBLE)
     add_definitions(-DPASSWD_EXPIRATION_POLICY)

@@ -19,6 +19,7 @@ class QString;
 namespace PasswdHelper
 {
 bool encryptPassword(const QString &pwd, QString &encrypted);
+bool encryptPasswordByRsa(const QString &publicKey, const QString &pwd, QString &encrypted);
 bool checkUserPassword(const QString &user, const QString &pwd);
 }  // namespace PasswdHelper
 

@@ -84,6 +84,7 @@ signals:
     /// \param encryptedPasswd  加密过的密码
     void sigUpdatePasswd(QString objPath,
                          QString userName,
+                         QString encryptedCurPasswd,
                          QString encryptedPasswd);
 
     /// 当用户点击删除用户时发出的删除用户信号，请求工作线程处理
