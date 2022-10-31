@@ -17,9 +17,9 @@
 
 #include <kiran-log/qt5-log-i.h>
 
-#include "kcp-plugin-interface.h"
 #include "config.h"
-#include "kiran-display-configuration.h"
+#include "display-page.h"
+#include "kcp-plugin-interface.h"
 
 class QTranslator;
 class KcpDisplay : public QObject, public KcpPluginInterface
@@ -63,13 +63,13 @@ public:
         }
     }
 
-    QWidget *getSubItemWidget(QString id) override
+    QWidget* getSubItemWidget(QString id) override
     {
         QWidget* widget = nullptr;
 
         if (id == "Display")
         {
-            widget = new KiranDisplayConfiguration();
+            widget = new DisplayPage();
         }
 
         return widget;

@@ -12,45 +12,45 @@
  * Author:     yangxiaoqing <yangxiaoqing@kylinsec.com.cn>
  */
 
-#include "kiran-display-config-identifying.h"
+#include "screen-identifying.h"
+#include <QEvent>
 #include <QEventLoop>
 #include <QPainter>
-#include <QEvent>
 #include <QTimer>
 
-KiranDisplayConfigIdentifying::KiranDisplayConfigIdentifying(QWidget *parent) :
-    QWidget(parent)
+ScreenIdentifying::ScreenIdentifying(QWidget *parent) : QWidget(parent)
 {
     m_loop = new QEventLoop(this);
-    setWindowFlags(Qt::FramelessWindowHint|Qt::Dialog/*|Qt::WindowStaysOnTopHint|Qt::Popup*/);
+    setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog /*|Qt::WindowStaysOnTopHint|Qt::Popup*/);
     setAttribute(Qt::WA_TranslucentBackground, true);
 
     setMouseTracking(true);
     setFixedSize(400, 300);
     installEventFilter(this);
 
-    QTimer::singleShot(3000, this, [=](){this->hide();});
+    QTimer::singleShot(3000, this, [=]()
+                       { this->hide(); });
 }
 
-KiranDisplayConfigIdentifying::~KiranDisplayConfigIdentifying()
+ScreenIdentifying::~ScreenIdentifying()
 {
 }
 
-void KiranDisplayConfigIdentifying::exec(const QPoint &pos)
+void ScreenIdentifying::exec(const QPoint &pos)
 {
-    move(pos+QPoint(6, 6));
+    move(pos + QPoint(6, 6));
     show();
 
     m_loop->exec();
 }
 
-void KiranDisplayConfigIdentifying::hideEvent(QHideEvent *event)
+void ScreenIdentifying::hideEvent(QHideEvent *event)
 {
     m_loop->quit();
     QWidget::hideEvent(event);
 }
 
-void KiranDisplayConfigIdentifying::paintEvent(QPaintEvent *)
+void ScreenIdentifying::paintEvent(QPaintEvent *)
 {
     QPainter painter(this);
     painter.fillRect(this->rect(), QBrush(QColor(34, 34, 34)));
@@ -69,14 +69,14 @@ void KiranDisplayConfigIdentifying::paintEvent(QPaintEvent *)
     pen.setWidth(1);
     pen.setColor("#ffffff");
     painter.setPen(pen);
-    painter.drawText(this->rect(), Qt::TextWrapAnywhere|Qt::AlignCenter, m_text);
+    painter.drawText(this->rect(), Qt::TextWrapAnywhere | Qt::AlignCenter, m_text);
 }
 
-bool KiranDisplayConfigIdentifying::eventFilter(QObject *object, QEvent *event)
+bool ScreenIdentifying::eventFilter(QObject *object, QEvent *event)
 {
-    if(object == this)
+    if (object == this)
     {
-        if(event->type() == QEvent::WindowDeactivate)
+        if (event->type() == QEvent::WindowDeactivate)
         {
             hide();
         }
@@ -85,8 +85,7 @@ bool KiranDisplayConfigIdentifying::eventFilter(QObject *object, QEvent *event)
     return QWidget::eventFilter(object, event);
 }
 
-void KiranDisplayConfigIdentifying::setText(const QString &text)
+void ScreenIdentifying::setText(const QString &text)
 {
     m_text = text;
 }
-

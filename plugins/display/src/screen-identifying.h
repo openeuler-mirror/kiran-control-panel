@@ -12,18 +12,17 @@
  * Author:     yangxiaoqing <yangxiaoqing@kylinsec.com.cn>
  */
 
-#ifndef KIRANDISPLAYCONFIGIDENTIFYING_H
-#define KIRANDISPLAYCONFIGIDENTIFYING_H
+#pragma once
 
 #include <QWidget>
 
 class QEventLoop;
-class  KiranDisplayConfigIdentifying : public QWidget
+class ScreenIdentifying : public QWidget
 {
     Q_OBJECT
 public:
-    explicit KiranDisplayConfigIdentifying(QWidget *parent = 0);
-    ~KiranDisplayConfigIdentifying();
+    explicit ScreenIdentifying(QWidget *parent = 0);
+    ~ScreenIdentifying();
 
     void exec(const QPoint &pos);
 
@@ -38,6 +37,3 @@ private:
     QEventLoop *m_loop;
     QString m_text;
 };
-
-
-#endif // KIRANDISPLAYCONFIGIDENTIFYING_H
