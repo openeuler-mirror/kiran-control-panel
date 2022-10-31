@@ -19,7 +19,7 @@
 #include "ui_display-format-settings.h"
 
 #include <kiran-switch-button.h>
-#include <kiran-system-daemon/timedate_i.h>
+#include <kiran-system-daemon/timedate-i.h>
 
 DisplayFormatSettings::DisplayFormatSettings(QWidget* parent) : QWidget(parent), ui(new Ui::DisplayFormatSettings)
 {
