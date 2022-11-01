@@ -167,7 +167,7 @@ int main(int argc, char *argv[])
 
     auto screen = QApplication::screenAt(QCursor::pos());
     QRect screenGeometry = screen->geometry();
-    w.resize(993, 711);
+    w.resize(1031, 742);
     w.move(screenGeometry.x() + (screenGeometry.width() - w.width()) / 2,
            screenGeometry.y() + (screenGeometry.height() - w.height()) / 2);
     w.show();

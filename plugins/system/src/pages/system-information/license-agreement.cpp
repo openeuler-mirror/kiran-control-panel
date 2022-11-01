@@ -44,14 +44,19 @@ LicenseAgreement::LicenseAgreement(QWidget *parent, Qt::WindowFlags windowFlags)
       ui(new Ui::LicenseAgreement)
 {
     ui->setupUi(getWindowContentWidget());
+
     setIcon(QIcon(":/images/kylin-about.png"));
     setButtonHints(TitlebarMinimizeButtonHint | TitlebarCloseButtonHint);
     setResizeable(false);
-    StylePropertyHelper::setButtonType(ui->btn_license_close,BUTTON_Default);
-    StylePropertyHelper::setButtonType(ui->btn_license_export, BUTTON_Normal);
-    setWindowModality(Qt::ApplicationModal);
-    connect(ui->btn_license_close, &QPushButton::clicked, this, &LicenseAgreement::close);
+    setTitlebarColorBlockEnable(true);
+    ui->text_license->viewport()->setAutoFillBackground(false);
 
+    StylePropertyHelper::setButtonType(ui->btn_license_close, BUTTON_Default);
+    StylePropertyHelper::setButtonType(ui->btn_license_export, BUTTON_Normal);
+
+    setWindowModality(Qt::ApplicationModal);
+
+    connect(ui->btn_license_close, &QPushButton::clicked, this, &LicenseAgreement::close);
     connect(ui->btn_license_export, &QPushButton::clicked, this, &LicenseAgreement::exportLicense);
 }
 

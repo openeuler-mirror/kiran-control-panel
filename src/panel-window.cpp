@@ -41,6 +41,7 @@ void PanelWindow::initUI()
     //初始化窗口相关
     setTitleBarHeight(40);
     setButtonHints(KiranTitlebarWindow::TitlebarMinMaxCloseHints);
+    setTitlebarColorBlockEnable(true);
     setIcon(QIcon::fromTheme("kiran-control-panel"));
     setTitle(tr("Control Panel"));
 

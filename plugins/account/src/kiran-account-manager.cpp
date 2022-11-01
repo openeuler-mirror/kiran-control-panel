@@ -18,13 +18,14 @@
 #include "kcp-account-config.h"
 #include "hard-worker.h"
 
-#include "mask-widget.h"
-#include "select-avatar-page/select-avatar-page.h"
 #include "auth-manager-page/auth-manager-page.h"
 #include "create-user-page/create-user-page.h"
-#include "user-info-page/user-info-page.h"
+#include "mask-widget.h"
 #include "passwd-expiration-policy/password-expiration-policy-page.h"
+#include "select-avatar-page/select-avatar-page.h"
+#include "user-info-page/user-info-page.h"
 
+#include <kiran-color-block.h>
 #include <kiran-sidebar-widget.h>
 #include <kiran-style-public-define.h>
 #include <qt5-log-i.h>
@@ -132,13 +133,14 @@ void KiranAccountManager::initUI()
     auto contentLayout = new QHBoxLayout(this);
     contentLayout->setObjectName("AccountContentLayout");
     contentLayout->setContentsMargins(0, 0, 0, 0);
+    contentLayout->setSpacing(4);
 
     /* 侧边栏 */
-    auto siderbar = new QWidget(this);
+    auto siderbar = new KiranColorBlock(this);
     contentLayout->addWidget(siderbar);
     siderbar->setObjectName("siderWidget");
     siderbar->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
-    siderbar->setFixedWidth(280);
+    siderbar->setFixedWidth(272);
 
     auto vLayout = new QVBoxLayout(siderbar);
     vLayout->setSpacing(0);
@@ -146,20 +148,12 @@ void KiranAccountManager::initUI()
     vLayout->setObjectName("SiderbarVLayout");
 
     m_tabList = new KiranSidebarWidget(siderbar);
+    m_tabList->viewport()->setAutoFillBackground(false);
     m_tabList->setFrameShape(QFrame::NoFrame);
     m_tabList->setObjectName("tabList");
     m_tabList->setIconSize(QSize(40, 40));
-    m_tabList->setFixedWidth(280);
     vLayout->addWidget(m_tabList);
     initUserList();
-
-    /* 分隔线 */
-    QFrame* spiliteLine = new QFrame(this);
-    spiliteLine->setFixedWidth(1);
-    spiliteLine->setFrameShape(QFrame::VLine);
-    spiliteLine->setFrameShadow(QFrame::Plain);
-    contentLayout->addWidget(spiliteLine);
-    spiliteLine->setSizePolicy(QSizePolicy::Minimum,QSizePolicy::Expanding);
 
     /* 内容区域 */
 #if 0
@@ -172,14 +166,17 @@ void KiranAccountManager::initUI()
     scrollAreaContentLayout->setMargin(0);
     scrollAreaContentWidget->setLayout(scrollAreaContentLayout);
 #endif
+    KiranColorBlock *stackedColorBlock = new KiranColorBlock(this);
+    contentLayout->addWidget(stackedColorBlock);
+    QHBoxLayout *stackedColorBlockLayout = new QHBoxLayout(stackedColorBlock);
 
     m_stackWidget = new QStackedWidget(this);
     m_stackWidget->setObjectName("StackWidget");
 //    scrollAreaContentLayout->addWidget(m_stackWidget);
-    contentLayout->addWidget(m_stackWidget);
+    stackedColorBlockLayout->addWidget(m_stackWidget);
 
-//    scrollArea->setWidget(scrollAreaContentWidget);
-//    contentLayout->addWidget(scrollArea);
+    //    scrollArea->setWidget(scrollAreaContentWidget);
+    //    contentLayout->addWidget(scrollArea);
 
     m_page_createUser = new CreateUserPage(m_stackWidget);
     m_stackWidget->insertWidget(PAGE_CREATE_USER, m_page_createUser);

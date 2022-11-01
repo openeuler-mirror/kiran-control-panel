@@ -26,8 +26,9 @@
 #include <QLabel>
 #include <QPainter>
 
-HardwareInformation::HardwareInformation(QWidget *parent) : QWidget(parent),
-                                                            ui(new Ui::HardwareInformation)
+HardwareInformation::HardwareInformation(QWidget *parent)
+    : QWidget(parent),
+      ui(new Ui::HardwareInformation)
 {
     ui->setupUi(this);
     initUI();
@@ -61,9 +62,11 @@ void HardwareInformation::initUI(void)
             ui->label_network_card->setFixedHeight(36 * eths.count());
         }
 
-        ui->label_memory_info->setText(memory);
+        ui->label_memory_info->setText(elideText(memory));
+        ui->label_memory_info->setToolTip(memory);
 
-        ui->label_CPU_info->setText(cpu);
+        ui->label_CPU_info->setText(elideText(cpu));
+        ui->label_CPU_info->setToolTip(cpu);
 
         QList<std::tuple<QStringList, QGridLayout *> > hardwareMap = {
             {disks, ui->gridLayout_hard_disk},
@@ -75,7 +78,8 @@ void HardwareInformation::initUI(void)
             QGridLayout *layout = std::get<1>(hardwareInitTuple);
             for (const QString &hardwareItem : infos)
             {
-                auto label = new QLabel(hardwareItem);
+                auto label = new QLabel(elideText(hardwareItem));
+                label->setToolTip(hardwareItem);
                 layout->addWidget(label, layout->count(), 0, Qt::AlignRight);
             }
         }
@@ -216,4 +220,10 @@ bool HardwareInformation::parseHardwareInfoJson(const QString &json,
     }
 
     return true;
+}
+
+QString HardwareInformation::elideText(const QString &src)
+{
+    QFontMetrics fontMetrics(QFont("Noto Sans CJK SC regular"));
+    return fontMetrics.elidedText(src, Qt::ElideRight, 300);
 }

@@ -49,6 +49,7 @@ void FingerprintEnrollDialog::init()
     setTitle(tr("Finger Enroll"));
     setFixedSize(444, 555);
     setButtonHints(KiranTitlebarWindow::TitlebarCloseButtonHint);
+    setTitlebarColorBlockEnable(true);
 
     connect(&m_worker, &FingerprintInputWorker::sigShowStatus, this, &FingerprintEnrollDialog::slotShowStatus);
     connect(&m_worker, &FingerprintInputWorker::sigEnrollComplete, this, &FingerprintEnrollDialog::slotEnrollComplete);

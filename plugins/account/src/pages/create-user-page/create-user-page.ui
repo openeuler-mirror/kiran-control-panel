@@ -306,7 +306,7 @@
         <string>ButtonAdvanceSetting</string>
        </property>
        <property name="autoFillBackground">
-        <bool>true</bool>
+        <bool>false</bool>
        </property>
        <property name="text">
         <string>Advance setting</string>

@@ -62,6 +62,8 @@ bool AccountsGlobalInfo::init()
     connect(&m_accountsInterface, &KSDAccountsProxy::UserDeleted, [this](const QDBusObjectPath &user) {
         deleteUserFromMap(user);
     });
+    connect(&m_accountsInterface, &KSDAccountsProxy::rsa_public_keyChanged, [this](const QString &publicKey)
+            { m_pubkey = publicKey; });
 
     ///判断是否显示ROOT用户
     QSettings settings(CONFIG_FILE_PATH, QSettings::IniFormat);
@@ -130,6 +132,7 @@ bool AccountsGlobalInfo::init()
         m_curUserName = userInterface.user_name();
     }
 
+    m_pubkey = m_accountsInterface.rsa_public_key();
     return true;
 }
 
@@ -164,6 +167,11 @@ bool AccountsGlobalInfo::checkUserNameAvaliable(const QString &userName)
 QString AccountsGlobalInfo::getCurrentUser()
 {
     return m_curUserName;
+}
+
+QString AccountsGlobalInfo::rsaPublicKey()
+{
+    return AccountsGlobalInfo::instance()->m_pubkey;
 }
 
 void AccountsGlobalInfo::addUserToMap(const QDBusObjectPath &user)

@@ -194,7 +194,7 @@ void CreateUserPage::handlerCreateNewUser()
     //step3.调用crypt密码加密
     KLOG_INFO() << "start encrypted passwd";
     QString encryptedPasswd;
-    if (!PasswdHelper::encryptPassword(passwd, encryptedPasswd))
+    if (!PasswdHelper::encryptPasswordByRsa(AccountsGlobalInfo::rsaPublicKey(), passwd, encryptedPasswd))
     {
         QMessageBox::warning(this, tr("Error"), tr("Password encryption failed"));
         return;

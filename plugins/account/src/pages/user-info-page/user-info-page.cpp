@@ -237,6 +237,7 @@ void UserInfoPage::handlerUpdatePasswd()
         m_errorTip->showTipAroundWidget(ui->editcheck_confirmPasswd);
         return;
     }
+    QString encryptedCurPasswd;
     //当前密码校验
     if (ui->passwd_row_1->isVisible() && ui->passwd_row_2->isVisible())
     {
@@ -261,10 +262,15 @@ void UserInfoPage::handlerUpdatePasswd()
             m_errorTip->showTipAroundWidget(ui->editcheck_newPasswd);
             return;
         }
+        if (!PasswdHelper::encryptPasswordByRsa(AccountsGlobalInfo::rsaPublicKey(), curpasswd, encryptedCurPasswd))
+        {
+            QMessageBox::warning(this, tr("Error"), tr("Password encryption failed"));
+            return;
+        }
     }
     //密码加密
     QString encryptedPasswd;
-    if (!PasswdHelper::encryptPassword(newpasswd, encryptedPasswd))
+    if (!PasswdHelper::encryptPasswordByRsa(AccountsGlobalInfo::rsaPublicKey(), newpasswd, encryptedPasswd))
     {
         QMessageBox::warning(this, tr("Error"), tr("Password encryption failed"));
         return;
@@ -273,6 +279,7 @@ void UserInfoPage::handlerUpdatePasswd()
     emit sigIsBusyChanged(true);
     emit sigUpdatePasswd(getCurrentShowUserPath(),
                          getCurrentShowUserName(),
+                         encryptedCurPasswd,
                          encryptedPasswd);
 }
 
