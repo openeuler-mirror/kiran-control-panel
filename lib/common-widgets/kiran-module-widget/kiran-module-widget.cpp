@@ -42,9 +42,9 @@ KiranModuleWidget::~KiranModuleWidget()
 
 void KiranModuleWidget::clear()
 {
-    qDebug() << disconnect(m_category, &Category::subItemAdded, this, &KiranModuleWidget::handleCategorySubItemAdded);
-    qDebug() << disconnect(m_category, &Category::subItemDeleted, this, &KiranModuleWidget::handleCategorySubItemDeleted);
-    qDebug() << disconnect(m_category, &Category::subItemInfoChanged, this, &KiranModuleWidget::handleCategorySubItemInfoChanged);
+    disconnect(m_category, &Category::subItemAdded, this, &KiranModuleWidget::handleCategorySubItemAdded);
+    disconnect(m_category, &Category::subItemDeleted, this, &KiranModuleWidget::handleCategorySubItemDeleted);
+    disconnect(m_category, &Category::subItemInfoChanged, this, &KiranModuleWidget::handleCategorySubItemInfoChanged);
 
     ui->list_subItems->clear();
     ui->widget_siderbar->hide();
@@ -58,6 +58,7 @@ void KiranModuleWidget::clear()
 
     m_category = nullptr;
     m_subitems.clear();
+    m_subItemsMap.clear();
     m_currentSubItem.first = nullptr;
     m_currentSubItem.second.clear();
 }
@@ -230,8 +231,6 @@ void KiranModuleWidget::handleCategorySubItemInfoChanged(const QString &subitemI
 
 void KiranModuleWidget::jumpTo(const QString &subItemID, const QString &customKey)
 {
-    QListWidgetItem *item = nullptr;
-
     QListWidgetItem *widgetItem = nullptr;
     for (auto subitem : m_subitems)
     {
@@ -242,11 +241,15 @@ void KiranModuleWidget::jumpTo(const QString &subItemID, const QString &customKe
         }
     }
 
-    if (item != nullptr)
+    if (widgetItem != nullptr)
     {
-        item->setSelected(true);
+        widgetItem->setSelected(true);
+
+        // 先执行完QListWidgetItem::setSelected的槽函数,再等下个事件循环跳转至SearchEntry
+        QCoreApplication::processEvents();
+
         // clang-format off
-        QTimer::singleShot(0, [this,customKey]{
+        QTimer::singleShot(0, [=]{
             if ( m_currentSubItem.second != nullptr )
             {
                 m_currentSubItem.second->jumpToSearchEntry(customKey);    
