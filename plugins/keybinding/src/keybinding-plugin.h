@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020 ~ 2021 KylinSec Co., Ltd.
+ * Copyright (c) 2020 ~ 2022 KylinSec Co., Ltd.
  * kiran-control-panel is licensed under Mulan PSL v2.
  * You can use this software according to the terms and conditions of the Mulan PSL v2.
  * You may obtain a copy of Mulan PSL v2 at:
@@ -9,18 +9,18 @@
  * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
  * See the Mulan PSL v2 for more details.
  *
- * Author:     luoqing <luoqing@kylinsec.com.cn>
+ * Author:     liuxinhao <liuxinhao@kylinsec.com.cn>
  */
 
-#ifndef KIRAN_CPANEL_AUDIO_AUDIO_PLUGIN_H
-#define KIRAN_CPANEL_AUDIO_AUDIO_PLUGIN_H
+#ifndef __KEYBINDING_PLUGIN_H__
+#define __KEYBINDING_PLUGIN_H__
 
 #include "panel-interface.h"
 #include "plugin-interface-v2.h"
 #include "plugin-subitem-interface.h"
 
 class QTranslator;
-class AudioPlugin
+class KeybindingPlugin
     : public QObject,
       public KiranControlPanel::PluginInterfaceV2
 {
@@ -29,8 +29,8 @@ class AudioPlugin
     Q_INTERFACES(KiranControlPanel::PluginInterfaceV2)
 
 public:
-    AudioPlugin(QObject* parent = nullptr);
-    ~AudioPlugin();
+    KeybindingPlugin(QObject* parent = nullptr);
+    ~KeybindingPlugin();
 
     // 主面板调用该接口初始化该插件，插件可在其中进行部分初始化操作，例如安装翻译等操作
     // 成功返回0
@@ -45,7 +45,7 @@ public:
 
 private:
     QTranslator* m_translator = nullptr;
-    QVector<KiranControlPanel::SubItemPtr> m_subitems;
+    KiranControlPanel::SubItemPtr m_subitem;
 };
 
-#endif  //KIRAN_CPANEL_AUDIO_AUDIO_PLUGIN_H
+#endif

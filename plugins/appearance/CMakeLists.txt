@@ -51,6 +51,3 @@ install(TARGETS ${TARGET_NAME}
 
 install(FILES ${APPEARANCE_QM_FILES}
         DESTINATION ${TRANSLATION_INSTALL_DIR})
-
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/kiran-cpanel-appearance.desktop.in ${CMAKE_CURRENT_BINARY_DIR}/kiran-cpanel-appearance.desktop @ONLY)
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/kiran-cpanel-appearance.desktop DESTINATION ${PLUGIN_DESKTOP_INSTALL_DIR}/)

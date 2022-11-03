@@ -52,7 +52,4 @@ target_link_libraries(${TARGET_NAME}
 install(TARGETS ${TARGET_NAME}
         DESTINATION ${PLUGIN_LIBS_INSTALL_DIR}/)
 
-install(FILES ./data/kiran-cpanel-mouse.desktop
-        DESTINATION ${PLUGIN_DESKTOP_INSTALL_DIR}/)
-
 install(FILES ${MOUSE_QM_FILES} DESTINATION ${TRANSLATION_INSTALL_DIR}/)

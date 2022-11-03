@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020 ~ 2021 KylinSec Co., Ltd.
+ * Copyright (c) 2020 ~ 2022 KylinSec Co., Ltd.
  * kiran-control-panel is licensed under Mulan PSL v2.
  * You can use this software according to the terms and conditions of the Mulan PSL v2.
  * You may obtain a copy of Mulan PSL v2 at:
@@ -9,29 +9,30 @@
  * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
  * See the Mulan PSL v2 for more details.
  *
- * Author:     luoqing <luoqing@kylinsec.com.cn>
+ * Author:     liuxinhao <liuxinhao@kylinsec.com.cn>
  */
 
-#include "audio-plugin.h"
+#include "power-plugin.h"
+#include "battery-subitem.h"
 #include "config.h"
-#include "volume-input-subitem.h"
-#include "volume-output-subitem.h"
+#include "general-settings-subitem.h"
+#include "power-subitem.h"
+#include "upower-interface.h"
 
-#include <qt5-log-i.h>
+#include <kiran-log/qt5-log-i.h>
 #include <QCoreApplication>
-#include <QFile>
 #include <QTranslator>
 
-AudioPlugin::AudioPlugin(QObject* parent)
+PowerPlugin::PowerPlugin(QObject* parent)
     : QObject(parent)
 {
 }
 
-AudioPlugin::~AudioPlugin()
+PowerPlugin::~PowerPlugin()
 {
 }
 
-int AudioPlugin::init(KiranControlPanel::PanelInterface* interface)
+int PowerPlugin::init(KiranControlPanel::PanelInterface* interface)
 {
     if (m_translator != nullptr)
     {
@@ -42,9 +43,9 @@ int AudioPlugin::init(KiranControlPanel::PanelInterface* interface)
 
     m_translator = new QTranslator(qApp);
     if (!m_translator->load(QLocale(),
-                            "kiran-cpanel-audio",
+                            "kiran-cpanel-power",
                             ".",
-                            TRANSLATION_DIR_INSTALL_PATH,
+                            KIRAN_POWER_MANAGER_TRANSLATIONS_DIR,
                             ".qm"))
     {
         KLOG_ERROR() << "can't load translator";
@@ -56,14 +57,17 @@ int AudioPlugin::init(KiranControlPanel::PanelInterface* interface)
         qApp->installTranslator(m_translator);
     }
 
-    auto inputSubitem = new VolumeIntputSubItem;
-    auto outputSubitem = new VolumeOutputSubItem;
-    m_subitems.append({KiranControlPanel::SubItemPtr(inputSubitem), KiranControlPanel::SubItemPtr(outputSubitem)});
+    m_subitems.append(KiranControlPanel::SubItemPtr(new GeneralSettingsSubItem()));
+    m_subitems.append(KiranControlPanel::SubItemPtr(new PowerSubItem()));
+    if (UPowerInterface::haveBattery())
+    {
+        m_subitems.append(KiranControlPanel::SubItemPtr(new BatterySubItem()));
+    }
 
     return 0;
 }
 
-void AudioPlugin::uninit()
+void PowerPlugin::uninit()
 {
     if (m_translator != nullptr)
     {
@@ -73,7 +77,7 @@ void AudioPlugin::uninit()
     }
 }
 
-QVector<KiranControlPanel::SubItemPtr> AudioPlugin::getSubItems()
+QVector<KiranControlPanel::SubItemPtr> PowerPlugin::getSubItems()
 {
     return m_subitems;
 }

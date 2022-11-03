@@ -46,10 +46,6 @@ target_link_libraries(${TARGET_NAME}
         ${KLOG_QT5_LIBRARIES}
         ${KIRAN_STYLE_HELPER_LIBRARIES})
 
-#安装插件Desktop
-configure_file(config/kiran-cpanel-timedate.desktop.in ${CMAKE_CURRENT_BINARY_DIR}/kiran-cpanel-timedate.desktop @ONLY)
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/kiran-cpanel-timedate.desktop DESTINATION ${PLUGIN_DESKTOP_INSTALL_DIR}/ )
-
 #安装插件
 install(TARGETS ${TARGET_NAME} DESTINATION ${PLUGIN_LIBS_INSTALL_DIR})
 

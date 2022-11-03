@@ -43,6 +43,3 @@ install(TARGETS ${TARGET_NAME}
 
 install(FILES ${KEYBINDING_QM_FILES}
         DESTINATION ${TRANSLATION_INSTALL_DIR}/)
-
-configure_file (${CMAKE_CURRENT_SOURCE_DIR}/data/kiran-cpanel-keybinding.desktop.in ${CMAKE_CURRENT_BINARY_DIR}/kiran-cpanel-keybinding.desktop)
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/kiran-cpanel-keybinding.desktop DESTINATION ${PLUGIN_DESKTOP_INSTALL_DIR}/)

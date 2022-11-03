@@ -238,7 +238,7 @@ void KiranAccountManager::initUserList()
 
     //加载非系统用户
     QList<QString> userObjList;
-    userObjList = AccountsGlobalInfo::instance()->getUserList();
+    userObjList = AccountsGlobalInfo::instance()->getUserObjectPathList();
     for (auto &iter : userObjList)
     {
         appendSiderbarItem(iter);
@@ -477,4 +477,19 @@ void KiranAccountManager::initPagePasswdExpirationPolicy()
     connect(m_page_passwdExpirationPolicy, &PasswordExpirationPolicyPage::sigReturn, [this]() {
       m_stackWidget->setCurrentIndex(PAGE_USER_INFO);
     });
+}
+
+void KiranAccountManager::jumpToUser(const QString &user)
+{
+    auto items = m_tabList->findItems(user, Qt::MatchCaseSensitive);
+    if (items.size() == 1)
+    {
+        auto item = items.at(0);
+        m_tabList->setCurrentRow(m_tabList->row(item));
+    }
+}
+
+void KiranAccountManager::jumpToAddUser()
+{
+    m_tabList->setCurrentRow(0);
 }

@@ -27,40 +27,68 @@
         <translation>(按住某一键时重复该键)</translation>
     </message>
     <message>
-        <location filename="../src/pages/general/general-page.ui" line="83"/>
+        <location filename="../src/pages/general/general-page.ui" line="67"/>
+        <source>SwitchRepeatKey</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/general/general-page.ui" line="86"/>
         <source>Delay</source>
         <translation>延时</translation>
     </message>
     <message>
-        <location filename="../src/pages/general/general-page.ui" line="126"/>
+        <location filename="../src/pages/general/general-page.ui" line="108"/>
+        <source>SliderRepeatDelay</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/general/general-page.ui" line="132"/>
         <source>Short</source>
         <translation>短</translation>
     </message>
     <message>
-        <location filename="../src/pages/general/general-page.ui" line="146"/>
+        <location filename="../src/pages/general/general-page.ui" line="152"/>
         <source>Long</source>
         <translation>长</translation>
     </message>
     <message>
-        <location filename="../src/pages/general/general-page.ui" line="164"/>
+        <location filename="../src/pages/general/general-page.ui" line="170"/>
         <source>Interval</source>
         <translation>速度</translation>
     </message>
     <message>
-        <location filename="../src/pages/general/general-page.ui" line="210"/>
+        <location filename="../src/pages/general/general-page.ui" line="192"/>
+        <source>SliderRepeatInterval</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/general/general-page.ui" line="219"/>
         <source>Slow</source>
         <translation>慢</translation>
     </message>
     <message>
-        <location filename="../src/pages/general/general-page.ui" line="230"/>
+        <location filename="../src/pages/general/general-page.ui" line="239"/>
         <source>Fast</source>
         <translation>快</translation>
     </message>
     <message>
-        <location filename="../src/pages/general/general-page.ui" line="246"/>
+        <location filename="../src/pages/general/general-page.ui" line="255"/>
         <location filename="../src/pages/general/general-page.cpp" line="51"/>
         <source>Enter characters to test the settings</source>
         <translation>输入字符来测试设置</translation>
+    </message>
+    <message>
+        <location filename="../src/pages/general/general-page.ui" line="274"/>
+        <source>EditTestRepeatKey</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>GeneralSubItem</name>
+    <message>
+        <location filename="../src/general-subitem.h" line="46"/>
+        <source>Keyboard General Option</source>
+        <translation>键盘通用选项</translation>
     </message>
 </context>
 <context>
@@ -105,11 +133,21 @@
     </message>
     <message>
         <location filename="../src/pages/layout/layout-page.ui" line="297"/>
+        <source>ButtonAddLayout</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/layout/layout-page.ui" line="300"/>
         <source>Addition</source>
         <translation>添加</translation>
     </message>
     <message>
-        <location filename="../src/pages/layout/layout-page.ui" line="338"/>
+        <location filename="../src/pages/layout/layout-page.ui" line="341"/>
+        <source>ButtonReturn</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/layout/layout-page.ui" line="344"/>
         <source>Return</source>
         <translation>返回</translation>
     </message>
@@ -153,9 +191,17 @@
     </message>
 </context>
 <context>
+    <name>LayoutSubItem</name>
+    <message>
+        <location filename="../src/layout-subitem.h" line="46"/>
+        <source>Keyboard Layout</source>
+        <translation>键盘布局</translation>
+    </message>
+</context>
+<context>
     <name>QObject</name>
     <message>
-        <location filename="../src/pages/layout/layout-list.cpp" line="140"/>
+        <location filename="../src/pages/layout/layout-list.cpp" line="142"/>
         <source>No search results, please search again...</source>
         <translation>无搜索结果，请重新搜索...</translation>
     </message>

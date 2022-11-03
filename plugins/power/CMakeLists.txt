@@ -21,7 +21,6 @@ file(GLOB_RECURSE QRC
         "resources/*.qrc")
 
 set( POWER_TS_FILES "translations/kiran-cpanel-power.zh_CN.ts" )
-
 qt5_create_translation( POWER_QM_FILES ${CMAKE_CURRENT_SOURCE_DIR} ${POWER_TS_FILES} )
 
 add_library(${TARGET_NAME} SHARED
@@ -51,10 +50,6 @@ target_link_libraries(${TARGET_NAME}
 # 安装插件翻译
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config/config.h.in ${CMAKE_CURRENT_BINARY_DIR}/config.h)
 install(FILES ${POWER_QM_FILES} DESTINATION ${TRANSLATION_INSTALL_DIR})
-
-# 安装插件desktop文件
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config/kiran-cpanel-power.desktop.in ${CMAKE_CURRENT_BINARY_DIR}/kiran-cpanel-power.desktop @ONLY)
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/kiran-cpanel-power.desktop DESTINATION ${PLUGIN_DESKTOP_INSTALL_DIR}/)
 
 # 安装插件
 install(TARGETS ${TARGET_NAME} DESTINATION ${PLUGIN_LIBS_INSTALL_DIR}/)

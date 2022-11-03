@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020 ~ 2021 KylinSec Co., Ltd.
+ * Copyright (c) 2020 ~ 2022 KylinSec Co., Ltd.
  * kiran-control-panel is licensed under Mulan PSL v2.
  * You can use this software according to the terms and conditions of the Mulan PSL v2.
  * You may obtain a copy of Mulan PSL v2 at:
@@ -9,43 +9,37 @@
  * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
  * See the Mulan PSL v2 for more details.
  *
- * Author:     luoqing <luoqing@kylinsec.com.cn>
+ * Author:     liuxinhao <liuxinhao@kylinsec.com.cn>
  */
+#ifndef __SYSTEMINFO_PLUGIN_H__
+#define __SYSTEMINFO_PLUGIN_H__
 
-#ifndef KIRAN_CPANEL_AUDIO_AUDIO_PLUGIN_H
-#define KIRAN_CPANEL_AUDIO_AUDIO_PLUGIN_H
+#include <QObject>
+#include <QTranslator>
 
 #include "panel-interface.h"
 #include "plugin-interface-v2.h"
 #include "plugin-subitem-interface.h"
 
-class QTranslator;
-class AudioPlugin
-    : public QObject,
-      public KiranControlPanel::PluginInterfaceV2
+class SystemInfoPlugin : public QObject,
+                         public KiranControlPanel::PluginInterfaceV2
 {
     Q_OBJECT
     Q_PLUGIN_METADATA(IID KiranControlPanel_PluginInterfaceV2_iid)
     Q_INTERFACES(KiranControlPanel::PluginInterfaceV2)
-
 public:
-    AudioPlugin(QObject* parent = nullptr);
-    ~AudioPlugin();
+    SystemInfoPlugin(QObject* parent = nullptr);
+    ~SystemInfoPlugin();
 
-    // 主面板调用该接口初始化该插件，插件可在其中进行部分初始化操作，例如安装翻译等操作
-    // 成功返回0
     int init(KiranControlPanel::PanelInterface* interface) override;
-
-    // 主面板调用该接口取消掉该插件初始化做的操作并卸载该插件
     void uninit() override;
 
-    // 功能项数组，生存周期由插件维护
-    // 功能项发生变更时，应调用init时传入KcpInterface接口，通知主面板相关信息变更,及时加载新的功能项信息
     QVector<KiranControlPanel::SubItemPtr> getSubItems() override;
 
 private:
+    KiranControlPanel::PanelInterface* m_panelInterface = nullptr;
     QTranslator* m_translator = nullptr;
     QVector<KiranControlPanel::SubItemPtr> m_subitems;
 };
 
-#endif  //KIRAN_CPANEL_AUDIO_AUDIO_PLUGIN_H
+#endif

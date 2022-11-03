@@ -14,71 +14,90 @@
         <translation>空闲超过以下时间后，计算机将执行</translation>
     </message>
     <message>
-        <location filename="../src/pages/battery-settings/battery-settings-page.ui" line="76"/>
+        <location filename="../src/pages/battery-settings/battery-settings-page.ui" line="60"/>
+        <source>ComboIdleTime</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/battery-settings/battery-settings-page.ui" line="67"/>
+        <source>ComboIdleAction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/battery-settings/battery-settings-page.ui" line="87"/>
         <source>When the battery is lit up, it will be executed</source>
         <translation>电池电量将用尽时</translation>
     </message>
     <message>
-        <location filename="../src/pages/battery-settings/battery-settings-page.ui" line="106"/>
+        <location filename="../src/pages/battery-settings/battery-settings-page.ui" line="104"/>
+        <source>ComboLowBatteryAction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/battery-settings/battery-settings-page.ui" line="121"/>
         <source>The monitor will turn off when it is idle</source>
         <translation>显示器空闲以下时间关闭</translation>
     </message>
     <message>
-        <location filename="../src/pages/battery-settings/battery-settings-page.ui" line="136"/>
+        <location filename="../src/pages/battery-settings/battery-settings-page.ui" line="138"/>
+        <source>ComboMonitorTurnOffIdleTime</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/battery-settings/battery-settings-page.ui" line="155"/>
         <source>Reduce screen brightness when idle</source>
         <translation>空闲时减少亮度</translation>
     </message>
     <message>
-        <location filename="../src/pages/battery-settings/battery-settings-page.cpp" line="68"/>
         <source>Display Off</source>
-        <translation>关闭显示器</translation>
+        <translation type="vanished">关闭显示器</translation>
     </message>
     <message>
-        <location filename="../src/pages/battery-settings/battery-settings-page.cpp" line="69"/>
-        <location filename="../src/pages/battery-settings/battery-settings-page.cpp" line="85"/>
+        <location filename="../src/pages/battery-settings/battery-settings-page.cpp" line="67"/>
+        <location filename="../src/pages/battery-settings/battery-settings-page.cpp" line="83"/>
         <source>Suspend</source>
         <translation>待机</translation>
     </message>
     <message>
-        <location filename="../src/pages/battery-settings/battery-settings-page.cpp" line="70"/>
-        <location filename="../src/pages/battery-settings/battery-settings-page.cpp" line="86"/>
+        <location filename="../src/pages/battery-settings/battery-settings-page.cpp" line="68"/>
+        <location filename="../src/pages/battery-settings/battery-settings-page.cpp" line="84"/>
         <source>Shutdown</source>
         <translation>关机</translation>
     </message>
     <message>
-        <location filename="../src/pages/battery-settings/battery-settings-page.cpp" line="71"/>
-        <location filename="../src/pages/battery-settings/battery-settings-page.cpp" line="87"/>
+        <location filename="../src/pages/battery-settings/battery-settings-page.cpp" line="69"/>
+        <location filename="../src/pages/battery-settings/battery-settings-page.cpp" line="85"/>
         <source>Hibernate</source>
         <translation>休眠</translation>
     </message>
     <message>
-        <location filename="../src/pages/battery-settings/battery-settings-page.cpp" line="72"/>
-        <location filename="../src/pages/battery-settings/battery-settings-page.cpp" line="88"/>
+        <location filename="../src/pages/battery-settings/battery-settings-page.cpp" line="70"/>
+        <location filename="../src/pages/battery-settings/battery-settings-page.cpp" line="86"/>
         <source>Do nothing</source>
         <translation>不执行操作</translation>
     </message>
 </context>
 <context>
-    <name>CPanelPowerWidget</name>
+    <name>BatterySubItem</name>
     <message>
-        <location filename="../src/cpanel-power-widget.ui" line="14"/>
-        <source>CPanelPowerWidget</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../src/cpanel-power-widget.cpp" line="65"/>
-        <source>General Settings</source>
-        <translation>通用设置</translation>
-    </message>
-    <message>
-        <location filename="../src/cpanel-power-widget.cpp" line="76"/>
-        <source>Power Settings</source>
-        <translation>电源设置</translation>
-    </message>
-    <message>
-        <location filename="../src/cpanel-power-widget.cpp" line="89"/>
+        <location filename="../src/battery-subitem.h" line="46"/>
         <source>Battery Settings</source>
         <translation>电池设置</translation>
+    </message>
+</context>
+<context>
+    <name>CPanelPowerWidget</name>
+    <message>
+        <source>General Settings</source>
+        <translation type="vanished">通用设置</translation>
+    </message>
+    <message>
+        <source>Power Settings</source>
+        <translation type="vanished">电源设置</translation>
+    </message>
+    <message>
+        <source>Battery Settings</source>
+        <translation type="vanished">电池设置</translation>
     </message>
 </context>
 <context>
@@ -101,32 +120,57 @@
         <translation>按下电源按钮时</translation>
     </message>
     <message>
-        <location filename="../src/pages/general-settings/general-settings-page.ui" line="64"/>
+        <location filename="../src/pages/general-settings/general-settings-page.ui" line="54"/>
+        <source>ComboPowerButtonAction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/general-settings/general-settings-page.ui" line="68"/>
         <source>When the suspend button is pressed</source>
         <translation>按下挂起按钮时</translation>
     </message>
     <message>
-        <location filename="../src/pages/general-settings/general-settings-page.ui" line="92"/>
+        <location filename="../src/pages/general-settings/general-settings-page.ui" line="82"/>
+        <source>ComboSuspendAction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/general-settings/general-settings-page.ui" line="100"/>
         <source>When closing the lid</source>
         <translation>合上盖子操作</translation>
     </message>
     <message>
-        <location filename="../src/pages/general-settings/general-settings-page.ui" line="153"/>
+        <location filename="../src/pages/general-settings/general-settings-page.ui" line="149"/>
+        <source>ComboCloseLidAction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/general-settings/general-settings-page.ui" line="164"/>
         <source>Display brightness setting</source>
         <translation>显示亮度设置</translation>
     </message>
     <message>
-        <location filename="../src/pages/general-settings/general-settings-page.ui" line="173"/>
+        <location filename="../src/pages/general-settings/general-settings-page.ui" line="184"/>
         <source>0%</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/pages/general-settings/general-settings-page.ui" line="201"/>
+        <location filename="../src/pages/general-settings/general-settings-page.ui" line="198"/>
+        <source>SliderDisplayBrightness</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/general-settings/general-settings-page.ui" line="218"/>
         <source>Regard computer as idle after</source>
         <translation>于此时间后视计算机为空闲</translation>
     </message>
     <message>
         <location filename="../src/pages/general-settings/general-settings-page.ui" line="264"/>
+        <source>SliderComputerIdleTime</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/general-settings/general-settings-page.ui" line="284"/>
         <source>Lock screen when idle</source>
         <translation>计算机空闲时锁定屏幕</translation>
     </message>
@@ -168,7 +212,7 @@
         <translation>不执行操作</translation>
     </message>
     <message>
-        <location filename="../src/pages/general-settings/general-settings-page.cpp" line="188"/>
+        <location filename="../src/pages/general-settings/general-settings-page.cpp" line="189"/>
         <source>ERROR</source>
         <translation>错误</translation>
     </message>
@@ -177,14 +221,22 @@
         <translation type="vanished">亮度调整不可用</translation>
     </message>
     <message>
-        <location filename="../src/pages/general-settings/general-settings-page.cpp" line="367"/>
+        <location filename="../src/pages/general-settings/general-settings-page.cpp" line="368"/>
         <source>%1hour</source>
         <translation>%1小时</translation>
     </message>
     <message>
-        <location filename="../src/pages/general-settings/general-settings-page.cpp" line="371"/>
+        <location filename="../src/pages/general-settings/general-settings-page.cpp" line="372"/>
         <source>%1minute</source>
         <translation>%1分钟</translation>
+    </message>
+</context>
+<context>
+    <name>GeneralSettingsSubItem</name>
+    <message>
+        <location filename="../src/general-settings-subitem.h" line="46"/>
+        <source>General Settings</source>
+        <translation>通用设置</translation>
     </message>
 </context>
 <context>
@@ -200,34 +252,56 @@
         <translation>空闲超过以下时间后，计算机将执行</translation>
     </message>
     <message>
-        <location filename="../src/pages/power-settings/power-settings-page.ui" line="76"/>
+        <location filename="../src/pages/power-settings/power-settings-page.ui" line="60"/>
+        <source>ComboIdleTime</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/power-settings/power-settings-page.ui" line="67"/>
+        <source>ComboIdleAction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/power-settings/power-settings-page.ui" line="84"/>
         <source>The monitor will turn off when it is idle</source>
         <translation>显示器空闲以下时间关闭</translation>
     </message>
     <message>
-        <location filename="../src/pages/power-settings/power-settings-page.cpp" line="63"/>
-        <source>Display Off</source>
-        <translation>关闭显示器</translation>
+        <location filename="../src/pages/power-settings/power-settings-page.ui" line="101"/>
+        <source>ComboMonitorTrunOffIdleTime</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/pages/power-settings/power-settings-page.cpp" line="64"/>
+        <source>Display Off</source>
+        <translation type="vanished">关闭显示器</translation>
+    </message>
+    <message>
+        <location filename="../src/pages/power-settings/power-settings-page.cpp" line="63"/>
         <source>Suspend</source>
         <translation>待机</translation>
     </message>
     <message>
-        <location filename="../src/pages/power-settings/power-settings-page.cpp" line="65"/>
+        <location filename="../src/pages/power-settings/power-settings-page.cpp" line="64"/>
         <source>Shutdown</source>
         <translation>关机</translation>
     </message>
     <message>
-        <location filename="../src/pages/power-settings/power-settings-page.cpp" line="66"/>
+        <location filename="../src/pages/power-settings/power-settings-page.cpp" line="65"/>
         <source>Hibernate</source>
         <translation>休眠</translation>
     </message>
     <message>
-        <location filename="../src/pages/power-settings/power-settings-page.cpp" line="67"/>
+        <location filename="../src/pages/power-settings/power-settings-page.cpp" line="66"/>
         <source>Do nothing</source>
         <translation>不执行操作</translation>
+    </message>
+</context>
+<context>
+    <name>PowerSubItem</name>
+    <message>
+        <location filename="../src/power-subitem.h" line="46"/>
+        <source>Power Settings</source>
+        <translation>电源设置</translation>
     </message>
 </context>
 <context>

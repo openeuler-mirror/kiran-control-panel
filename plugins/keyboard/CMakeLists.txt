@@ -47,8 +47,5 @@ target_link_libraries(${TARGET_NAME}
 install(TARGETS ${TARGET_NAME}
         DESTINATION ${PLUGIN_LIBS_INSTALL_DIR}/)
 
-install(FILES data/kiran-cpanel-keyboard.desktop
-        DESTINATION ${PLUGIN_DESKTOP_INSTALL_DIR}/)
-
 install(FILES ${KEYBOARD_QM}
         DESTINATION ${TRANSLATION_INSTALL_DIR}/)

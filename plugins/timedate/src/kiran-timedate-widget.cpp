@@ -31,14 +31,6 @@
 #include <QMessageBox>
 #include <QTimerEvent>
 
-enum KiranTimeDateStackPageEnum
-{
-    PAGE_TIMEZONE_SETTING,
-    PAGE_DATETIME_SETTING,
-    PAGE_DISPLAY_FORMAT_SETTING,
-    PAGE_END
-};
-
 KiranTimeDateWidget::KiranTimeDateWidget(QWidget* parent)
     : QWidget(parent),
       ui(new Ui::KiranTimeDateWidget),
@@ -117,8 +109,9 @@ void KiranTimeDateWidget::initUI()
     /// 时区更改时，修改时间文本和时区显示
     connect(globalData, &KiranTimeDateGlobalData::systemTimeZoneChanged, this, &KiranTimeDateWidget::handleSystemTimeZoneChanged);
     updateTimeLabel();
+
     /// 设置默认页
-    ui->tabList->setCurrentRow(0);
+    ui->tabList->item(0)->setSelected(true);
 }
 
 void KiranTimeDateWidget::initTimeZoneSettingsPage()
@@ -236,7 +229,6 @@ void KiranTimeDateWidget::handleSidebarSelectionChanged()
     QList<QListWidgetItem*> selecteds = ui->tabList->selectedItems();
     if (selecteds.size() != 1)
     {
-        qFatal("tabList: selecteds size != 1");
         return;
     }
 
@@ -280,7 +272,7 @@ void KiranTimeDateWidget::handleAutoSyncToggled(bool checked)
         dateTimeItem->setFlags(dateTimeItem->flags() & (~Qt::ItemIsEnabled));
         if (ui->tabList->currentRow() == PAGE_DATETIME_SETTING)
         {
-            ui->tabList->setCurrentRow(PAGE_TIMEZONE_SETTING);
+            ui->tabList->item(PAGE_TIMEZONE_SETTING)->setSelected(true);
         }
     }
     else
@@ -325,4 +317,9 @@ void KiranTimeDateWidget::handleSystemHourFormatChanged(TimedateHourFormat hourF
 QSize KiranTimeDateWidget::sizeHint() const
 {
     return {780, 650};
+}
+
+void KiranTimeDateWidget::jumpToSubPage(KiranTimeDateStackPageEnum pageEnum)
+{
+    ui->tabList->item(pageEnum)->setSelected(true);
 }
