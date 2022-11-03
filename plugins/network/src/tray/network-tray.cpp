@@ -56,7 +56,6 @@ void NetworkTray::init()
     // XXX:现将widget移到屏幕外，防止第一次显示页面，由于没指定位置而闪现在左上角，之后统一修改页面显示逻辑
     this->move(-1000, -1000);
 
-
     //跟踪所有设备的状态变化
     const Device::List deviceList = networkInterfaces();
     for (Device::Ptr dev : deviceList)
@@ -181,8 +180,6 @@ void NetworkTray::initMenu()
 // 初始化条件：设备存在且被管理
 void NetworkTray::initTrayPage()
 {
-//     getAvailableDeviceList();
-
     m_wiredDeviceList = NetworkUtils::getAvailableDeviceList(Device::Ethernet);
     m_wirelessDeviceList = NetworkUtils::getAvailableDeviceList(Device::Wifi);
 
@@ -194,8 +191,11 @@ void NetworkTray::initTrayPage()
     m_verticalLayout = new QVBoxLayout(widget);
     if(wiredCount == 0 && wirelessCount == 0)
     {
-        initUnavailableWidget();
-        m_verticalLayout->addWidget(m_unavailableWidget);
+        if(m_unavailableWidget == nullptr)
+        {
+            initUnavailableWidget();
+            m_verticalLayout->addWidget(m_unavailableWidget);
+        }
     }
     else
     {
@@ -235,34 +235,6 @@ void NetworkTray::initUnavailableWidget()
     hLayout->setSpacing(10);
     hLayout->setContentsMargins(10, 0, 0, 0);
     hLayout->addStretch();
-}
-
-// NOTE:不包含未管理设备
-void NetworkTray::getAvailableDeviceList()
-{
-    const Device::List deviceList = networkInterfaces();
-    for (Device::Ptr dev : deviceList)
-    {
-        KLOG_DEBUG() << "dev->interfaceName():" << dev->interfaceName();
-        KLOG_DEBUG() << "dev->state():" << dev->state();
-        KLOG_DEBUG() << "dev->isValid():" << dev->isValid();
-        KLOG_DEBUG() << "dev->managed():" << dev->managed();
-
-        if (dev->state() == Device::Unmanaged)
-            continue;
-
-        switch (dev->type())
-        {
-        case Device::Ethernet:
-            m_wiredDeviceList << dev;
-            break;
-        case Device::Wifi:
-            m_wirelessDeviceList << dev;
-            break;
-        default:
-            break;
-        }
-    }
 }
 
 // Note:点击托盘显示页面的同时,让所有无线设备扫描一次网络
@@ -308,7 +280,7 @@ void NetworkTray::showTrayPage()
     // XXX:托盘界面在不可见的情况，不方便去修改size和位置，暂时先显示后在调整大小和位置
     // this->setFixedSize(258, 258);
     this->show();
-    QTimer::singleShot(50, this, [=]()
+    QTimer::singleShot(50, this, [this]()
                        {
                                 /**
                                  * 1、当同时存在有线和无线网络托盘页面时，使用adjustSize已经能够得到较好的伸缩效果
@@ -319,7 +291,9 @@ void NetworkTray::showTrayPage()
                                 if(m_wiredTrayPage && m_wirelessTrayPage)
                                     adjustSize();
                                 else
+                                {
                                     this->resize(this->sizeHint());
+                                }
                                setTrayPagePos(); });
 }
 
@@ -636,9 +610,8 @@ void NetworkTray::handleAdjustedTraySize(QSize sizeHint)
                                 QSize newSize(this->sizeHint().width(),sizeHint.height() + OFFSET_MARGIN);
                                 // KLOG_DEBUG() << "newSize:" << newSize;
                                 this->resize(newSize);
-
+                                KLOG_DEBUG() << "handleAdjustedTraySize";
                                 // this->setFixedSize(newSize);
-
                                 // KLOG_DEBUG() << "resize after this->size():" << this->size();
                             }
                             setTrayPagePos(); });

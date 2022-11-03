@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2022 KylinSec Co., Ltd.
+ * Copyright (c) 2020 ~ 2021 KylinSec Co., Ltd.
  * kiran-control-panel is licensed under Mulan PSL v2.
  * You can use this software according to the terms and conditions of the Mulan PSL v2.
  * You may obtain a copy of Mulan PSL v2 at:
@@ -11,26 +11,26 @@
  *
  * Author:     luoqing <luoqing@kylinsec.com.cn>
  */
-#ifndef KIRAN_CPANEL_NETWORK_NETWORKPLUGIN_H
-#define KIRAN_CPANEL_NETWORK_NETWORKPLUGIN_H
 
-#include <QTranslator>
+#ifndef __DISPLAYPLUGIN_H__
+#define __DISPLAYPLUGIN_H__
+
+#include <QObject>
 #include "panel-interface.h"
 #include "plugin-interface-v2.h"
 #include "plugin-subitem-interface.h"
 
 class QTranslator;
-class NetworkPlugin
-    : public QObject,
-      public KiranControlPanel::PluginInterfaceV2
+class DisplayPlugin : public QObject,
+                      public KiranControlPanel::PluginInterfaceV2
 {
     Q_OBJECT
     Q_PLUGIN_METADATA(IID KiranControlPanel_PluginInterfaceV2_iid)
     Q_INTERFACES(KiranControlPanel::PluginInterfaceV2)
 
 public:
-    NetworkPlugin(QObject* parent = nullptr);
-    ~NetworkPlugin();
+    explicit DisplayPlugin(QObject *parent = nullptr);
+    ~DisplayPlugin();
 
     // 主面板调用该接口初始化该插件，插件可在其中进行部分初始化操作，例如安装翻译等操作
     // 成功返回0
@@ -46,6 +46,7 @@ public:
 private:
     QTranslator* m_translator = nullptr;
     KiranControlPanel::SubItemPtr m_subitem;
+
 };
 
-#endif  // KIRAN_CPANEL_NETWORK_NETWORKPLUGIN_H
+#endif // DISPLAYPLUGIN_H

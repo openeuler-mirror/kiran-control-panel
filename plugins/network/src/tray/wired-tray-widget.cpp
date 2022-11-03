@@ -23,8 +23,7 @@
 using namespace NetworkManager;
 
 WiredTrayWidget::WiredTrayWidget(const QString &devicePath, QWidget *parent) : TrayWidget(parent),
-                                                                               m_connectionList(nullptr),
-                                                                               m_unavailableWidget(nullptr)
+                                                                               m_connectionList(nullptr)
 {
     m_devicePath = devicePath;
     m_devicePtr = findNetworkInterface(m_devicePath);
@@ -53,18 +52,6 @@ void WiredTrayWidget::initUI()
 {
     // m_wiredDevice->state(); 设备状态在最开始初始化托盘页面时已经判断过了
     KLOG_DEBUG() << "wiredDevice carrier :" << m_wiredDevice->carrier();
-//    if (m_wiredDevice->carrier())
-//    {
-//        m_connectionList = new TrayConnectionList(this);
-//        addWidget(m_connectionList);
-//        showWiredConnectionLists();
-//    }
-//    else
-//    {
-//        initUnavailableWidget();
-//        addWidget(m_unavailableWidget);
-//    }
-
     m_connectionList = new TrayConnectionList(this);
     addWidget(m_connectionList);
     showWiredConnectionLists();
@@ -105,69 +92,8 @@ void WiredTrayWidget::handleCarrierChanged(bool plugged)
     KLOG_DEBUG() << "Carrier Changed plugged: " << plugged;
 }
 
-void WiredTrayWidget::initUnavailableWidget()
-{
-    m_unavailableWidget = new QWidget(this);
-    m_unavailableWidget->setFixedSize(QSize(240, 50));
-
-    QLabel *icon = new QLabel(m_unavailableWidget);
-    QLabel *text = new QLabel(m_unavailableWidget);
-    QHBoxLayout *hLayout = new QHBoxLayout(m_unavailableWidget);
-
-    QPixmap pixmap = NetworkUtils::trayIconColorSwitch(":/kcp-network-images/wired-disconnected.svg");
-    icon->setPixmap(pixmap);
-    text->setText(tr("Wired network unavailable"));
-    hLayout->addWidget(icon);
-    hLayout->addWidget(text);
-    hLayout->setSpacing(10);
-    hLayout->setContentsMargins(10, 0, 0, 0);
-    hLayout->addStretch();
-}
-
 void WiredTrayWidget::handleStateChanged(NetworkManager::Device::State newstate, NetworkManager::Device::State oldstate, NetworkManager::Device::StateChangeReason reason)
 {
-    // KLOG_DEBUG() << "---------newstate:" << newstate;
-    // KLOG_DEBUG() << "---------oldstate:" << oldstate;
-    // KLOG_DEBUG() << "---------reason:" << reason;
-
-    /*
-    //对应拔出网线后再插入网线的情况
-    if ((oldstate == Device::State::Unavailable) &&
-        ((newstate != Device::State::Unmanaged) && (newstate != Device::State::UnknownState)) &&
-        (reason == Device::StateChangeReason::CarrierReason))
-    {
-        if (m_connectionList.isNull())
-        {
-            KLOG_DEBUG() << "--------------------- 插入网线";
-            removeWidget(m_unavailableWidget);
-            m_unavailableWidget->deleteLater();
-            m_unavailableWidget = nullptr;
-
-            m_connectionList = new TrayConnectionList(this);
-            addWidget(m_connectionList);
-            initConnection();
-            showWiredConnectionLists();
-            m_connectionList->adjustTraySize();
-        }
-    }
-
-    //对应拔出网线
-    if ((newstate == Device::State::Unavailable) && (reason == Device::StateChangeReason::CarrierReason))
-    {
-        if (m_unavailableWidget == nullptr)
-        {
-            KLOG_DEBUG() << "--------------------- 拔出 网线";
-            removeWidget(m_connectionList);
-            m_connectionList->deleteLater();
-            m_connectionList = nullptr;
-
-            initUnavailableWidget();
-            addWidget(m_unavailableWidget);
-            emit sizeChanged(QSize(240, 50));
-        }
-    }
-    */
-
     // XXX:此处是对网线插拔的冗余操作，
     //因为偶现过一次，StateChanged信号丢失Device::Unavailable的情况
     if (!m_wiredDevice.isNull())

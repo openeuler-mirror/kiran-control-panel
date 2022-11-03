@@ -43,7 +43,6 @@ public:
 
     void initUnavailableWidget();
 
-    void getAvailableDeviceList();
     void getTrayGeometry();
     void setTrayPagePos();
 

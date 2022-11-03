@@ -25,54 +25,50 @@
         <translation type="vanished">无线连接</translation>
     </message>
     <message>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="66"/>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="162"/>
+        <location filename="../src/plugin/cpanel-network-widget.cpp" line="71"/>
         <source>Wired Network %1</source>
         <translation>有线网络 %1</translation>
     </message>
     <message>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="71"/>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="170"/>
+        <location filename="../src/plugin/cpanel-network-widget.cpp" line="77"/>
         <source>Wired Network</source>
         <translation>有线网络</translation>
     </message>
     <message>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="94"/>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="178"/>
+        <location filename="../src/plugin/cpanel-network-widget.cpp" line="105"/>
         <source>Wireless Network %1</source>
         <translation>无线网络  %1</translation>
     </message>
     <message>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="99"/>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="186"/>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="341"/>
+        <location filename="../src/plugin/cpanel-network-widget.cpp" line="111"/>
+        <location filename="../src/plugin/cpanel-network-widget.cpp" line="318"/>
         <source>Wireless Network</source>
         <translation>无线网络</translation>
     </message>
     <message>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="119"/>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="192"/>
+        <location filename="../src/plugin/cpanel-network-widget.cpp" line="137"/>
+        <location filename="../src/plugin/cpanel-network-widget.cpp" line="141"/>
         <source>VPN</source>
         <translation>VPN</translation>
     </message>
     <message>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="127"/>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="193"/>
+        <location filename="../src/plugin/cpanel-network-widget.cpp" line="146"/>
+        <location filename="../src/plugin/cpanel-network-widget.cpp" line="149"/>
         <source>Network Details</source>
         <translation>网络详情</translation>
     </message>
     <message>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="292"/>
+        <location filename="../src/plugin/cpanel-network-widget.cpp" line="255"/>
         <source>Connected</source>
         <translation>已连接</translation>
     </message>
     <message>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="296"/>
+        <location filename="../src/plugin/cpanel-network-widget.cpp" line="259"/>
         <source>Unavailable</source>
         <translation>已禁用</translation>
     </message>
     <message>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="300"/>
+        <location filename="../src/plugin/cpanel-network-widget.cpp" line="263"/>
         <source>Disconnected</source>
         <translation>已断开</translation>
     </message>
@@ -672,6 +668,39 @@
     </message>
 </context>
 <context>
+    <name>NetworkSubItem</name>
+    <message>
+        <location filename="../src/plugin/network-subitem.cpp" line="113"/>
+        <source>Wired Network %1</source>
+        <translation>有线网络 %1</translation>
+    </message>
+    <message>
+        <location filename="../src/plugin/network-subitem.cpp" line="117"/>
+        <source>Wired Network</source>
+        <translation>有线网络</translation>
+    </message>
+    <message>
+        <location filename="../src/plugin/network-subitem.cpp" line="126"/>
+        <source>Wireless Network %1</source>
+        <translation>无线网络  %1</translation>
+    </message>
+    <message>
+        <location filename="../src/plugin/network-subitem.cpp" line="131"/>
+        <source>Wireless Network</source>
+        <translation>无线网络</translation>
+    </message>
+    <message>
+        <location filename="../src/plugin/network-subitem.cpp" line="138"/>
+        <source>VPN</source>
+        <translation>VPN</translation>
+    </message>
+    <message>
+        <location filename="../src/plugin/network-subitem.cpp" line="139"/>
+        <source>Network Details</source>
+        <translation>网络详情</translation>
+    </message>
+</context>
+<context>
     <name>NetworkTray</name>
     <message>
         <location filename="../src/tray/network-tray.cpp" line="170"/>
@@ -689,17 +718,17 @@
     <message>
         <location filename="../src/plugin/plugin-connection-list.cpp" line="178"/>
         <source>Other WiFi networks</source>
-        <translation type="unfinished">其它WIFI网络</translation>
+        <translation>其它WIFI网络</translation>
+    </message>
+    <message>
+        <location filename="../src/plugin/plugin-connection-list.cpp" line="285"/>
+        <source>Tips</source>
+        <translation>提示</translation>
     </message>
     <message>
         <location filename="../src/plugin/plugin-connection-list.cpp" line="286"/>
-        <source>Tips</source>
-        <translation type="unfinished">提示</translation>
-    </message>
-    <message>
-        <location filename="../src/plugin/plugin-connection-list.cpp" line="287"/>
         <source>Please input a network name</source>
-        <translation type="unfinished">请输入网络名称</translation>
+        <translation>请输入网络名称</translation>
     </message>
 </context>
 <context>
@@ -787,7 +816,7 @@
     <message>
         <location filename="../src/tray/tray-connection-list.cpp" line="186"/>
         <source>Other WiFi networks</source>
-        <translation type="unfinished">其它WIFI网络</translation>
+        <translation>其它WIFI网络</translation>
     </message>
 </context>
 <context>
@@ -1335,7 +1364,7 @@
 <context>
     <name>WiredTrayWidget</name>
     <message>
-        <location filename="../src/tray/wired-tray-widget.cpp" line="120"/>
+        <location filename="../src/tray/wired-tray-widget.cpp" line="119"/>
         <source>Wired network unavailable</source>
         <translation>有线网络不可用</translation>
     </message>

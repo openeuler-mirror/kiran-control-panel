@@ -76,3 +76,20 @@ Device::List NetworkUtils::getAvailableDeviceList(NetworkManager::Device::Type t
     }
     return list;
 }
+
+Device::List NetworkUtils::getManagedDeviceList(NetworkManager::Device::Type type)
+{
+    const Device::List deviceList = networkInterfaces();
+    Device::List list;
+    for (Device::Ptr dev : deviceList)
+    {
+        if(dev->type() == type)
+        {
+            if (dev->state() == Device::Unmanaged)
+                continue;
+
+            list << dev;
+        }
+    }
+    return list;
+}

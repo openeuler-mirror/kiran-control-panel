@@ -39,13 +39,14 @@ public:
     ~CPanelNetworkWidget() override;
 
     void init();
-    void initSubItemsList();
-    void getManagedDeviceList();
+
     void initPage();
     void initConnect();
     void setSidebarItemStatus(KiranSidebarItem *sidebarItem, NetworkManager::Device::State state);
 
     void reload();
+    QStringList subItemNameList();
+    void setCurrentSubItem(int index);
 
 public slots:
     void handleDeviceAdded(const QString &devicePath);
