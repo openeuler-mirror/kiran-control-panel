@@ -4,17 +4,17 @@
 <context>
     <name>AppearancePlugin</name>
     <message>
-        <location filename="../src/appearance-plugin.cpp" line="105"/>
+        <location filename="../src/appearance-plugin.cpp" line="103"/>
         <source>Theme</source>
         <translation>主题</translation>
     </message>
     <message>
-        <location filename="../src/appearance-plugin.cpp" line="112"/>
+        <location filename="../src/appearance-plugin.cpp" line="110"/>
         <source>Wallpaper</source>
         <translation>壁纸</translation>
     </message>
     <message>
-        <location filename="../src/appearance-plugin.cpp" line="119"/>
+        <location filename="../src/appearance-plugin.cpp" line="117"/>
         <source>Font</source>
         <translation>字体</translation>
     </message>

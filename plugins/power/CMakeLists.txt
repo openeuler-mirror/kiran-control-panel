@@ -21,6 +21,7 @@ file(GLOB_RECURSE QRC
         "resources/*.qrc")
 
 set( POWER_TS_FILES "translations/kiran-cpanel-power.zh_CN.ts" )
+
 qt5_create_translation( POWER_QM_FILES ${CMAKE_CURRENT_SOURCE_DIR} ${POWER_TS_FILES} )
 
 add_library(${TARGET_NAME} SHARED
@@ -29,6 +30,7 @@ add_library(${TARGET_NAME} SHARED
         ${POWER_QM_FILES})
 
 target_include_directories(${TARGET_NAME} PRIVATE
+        ${CMAKE_BINARY_DIR}
         ${CMAKE_CURRENT_SOURCE_DIR}/src
         ${KIRAN_WIDGETS_QT5_INCLUDE_DIRS}
         ${KIRAN_CC_DAEMON_INCLUDE_DIRS}
@@ -48,7 +50,6 @@ target_link_libraries(${TARGET_NAME}
         ${UPOWER_GLIB_LIBRARIES})
 
 # 安装插件翻译
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config/config.h.in ${CMAKE_CURRENT_BINARY_DIR}/config.h)
 install(FILES ${POWER_QM_FILES} DESTINATION ${TRANSLATION_INSTALL_DIR})
 
 # 安装插件

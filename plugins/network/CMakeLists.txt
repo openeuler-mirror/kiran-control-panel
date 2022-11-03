@@ -10,7 +10,6 @@ set(QT_VERSION 5)
 set(REQUIRED_LIBS Core Gui Widgets DBus Network Svg LinguistTools)
 set(REQUIRED_LIBS_QUALIFIED Qt5::Core Qt5::Gui Qt5::Widgets Qt5::DBus Qt5::Network Qt5::Svg)
 
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/data/network-config.h.in ${CMAKE_CURRENT_BINARY_DIR}/data/network-config.h)
 qt5_create_translation(NETWORK_QM_FILES ${CMAKE_CURRENT_SOURCE_DIR} translations/kiran-cpanel-network.zh_CN.ts)
 
 file(GLOB_RECURSE PLUGIN_SRC "src/plugin/*.cpp" "src/plugin/*.h" "src/plugin/*.ui")
@@ -110,13 +109,8 @@ install(FILES ${NETWORK_QM_FILES} DESTINATION ${TRANSLATION_INSTALL_DIR}/)
 
 set(AUTOSTART_DESKTOP_DIR /etc/xdg/autostart)
 #安装插件desktop文件
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/data/kiran-cpanel-network.desktop.in ${CMAKE_CURRENT_BINARY_DIR}/kiran-cpanel-network.desktop @ONLY)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/data/kiran-network-status-icon.desktop.in ${CMAKE_CURRENT_BINARY_DIR}/kiran-network-status-icon.desktop @ONLY)
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/kiran-cpanel-network.desktop DESTINATION ${PLUGIN_DESKTOP_INSTALL_DIR}/)
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/kiran-network-status-icon.desktop DESTINATION ${AUTOSTART_DESKTOP_DIR}/)
-
-SET(link_source ${PLUGIN_DESKTOP_INSTALL_DIR}/${TARGET_NAME}.desktop)
-SET(link_target ${CMAKE_CURRENT_BINARY_DIR}/${TARGET_NAME}-link.desktop)
 
 set(NETWORK_SERVER_CONF /etc/NetworkManager/conf.d)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/data/00-server.conf.in ${CMAKE_CURRENT_BINARY_DIR}/00-server.conf @ONLY)

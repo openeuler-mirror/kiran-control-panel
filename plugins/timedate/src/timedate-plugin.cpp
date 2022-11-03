@@ -14,6 +14,7 @@
 #include "timedate-plugin.h"
 #include "kiran-timedate-global-data.h"
 #include "timedate-subitem.h"
+#include "config.h"
 
 #include <kiran-log/qt5-log-i.h>
 #include <QCoreApplication>
@@ -42,7 +43,7 @@ int TimeDatePlugin::init(KiranControlPanel::PanelInterface* interface)
     if (!m_translator->load(QLocale(),
                             "kiran-cpanel-timedate",
                             ".",
-                            "/usr/share/kiran-cpanel-timedate/translations/",
+                            TRANSLATE_PREFIX,
                             ".qm"))
     {
         m_translator->deleteLater();

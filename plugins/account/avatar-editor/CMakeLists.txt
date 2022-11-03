@@ -18,6 +18,7 @@ qt5_create_translation( AVATAR_EDITOR_QM_FILES ${CMAKE_CURRENT_SOURCE_DIR} trans
 add_executable(kiran-avatar-editor ${SOURCES} ${HEADERS} ${RESOURCES} ${AVATAR_EDITOR_QM_FILES})
 
 target_include_directories(kiran-avatar-editor PRIVATE
+        ${CMAKE_BINARY_DIR}
         ${CMAKE_CURRENT_BINARY_DIR}
         ${CMAKE_CURRENT_BINARY_DIR}/..
         ../include

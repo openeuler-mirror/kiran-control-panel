@@ -50,5 +50,4 @@ target_link_libraries(${TARGET_NAME}
 install(TARGETS ${TARGET_NAME} DESTINATION ${PLUGIN_LIBS_INSTALL_DIR})
 
 #安装翻译文件
-configure_file(./config/config.h.in ${CMAKE_CURRENT_BINARY_DIR}/kcp-timedate-config.h @ONLY)
 install(FILES ${TIMEDATE_QM_FILES} DESTINATION ${TRANSLATION_INSTALL_DIR} )

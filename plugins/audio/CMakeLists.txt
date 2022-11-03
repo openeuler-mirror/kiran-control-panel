@@ -26,6 +26,7 @@ add_library(${TARGET_NAME} SHARED
         ${AUDIO_QM_FILES})
 
 target_include_directories(${TARGET_NAME} PRIVATE
+        ${CMAKE_BINARY_DIR}
         src
         src/plugin
         src/dbus
@@ -73,7 +74,6 @@ target_link_libraries(${TRAY_PROCESS}
         ${KIRAN_STYLE_HELPER_LIBRARIES})
 
 #安装翻译
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config/config.h.in ${CMAKE_CURRENT_BINARY_DIR}/config.h)
 install(FILES ${AUDIO_QM_FILES} DESTINATION ${TRANSLATION_INSTALL_DIR})
 
 set(AUTOSTART_DESKTOP_DIR /etc/xdg/autostart)

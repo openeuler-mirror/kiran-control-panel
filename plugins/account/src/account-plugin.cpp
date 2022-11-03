@@ -14,7 +14,7 @@
 
 #include "account-plugin.h"
 #include "accounts-global-info.h"
-#include "kcp-account-config.h"
+#include "config.h"
 #include "temporary-dir-manager.h"
 
 #include <qt5-log-i.h>
@@ -50,7 +50,7 @@ int AccountPlugin::init(KiranControlPanel::PanelInterface* interface)
     if (!m_translator->load(QLocale(),
                             "kiran-cpanel-account",
                             ".",
-                            TRANSLATION_DIR_PATH,
+                            TRANSLATE_PREFIX,
                             ".qm"))
     {
         m_translator->deleteLater();
