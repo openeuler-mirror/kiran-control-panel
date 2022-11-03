@@ -31,7 +31,7 @@ int DisplayPlugin::init(KiranControlPanel::PanelInterface *interface)
     if (!m_translator->load(QLocale(),
                             "kiran-cpanel-display",
                             ".",
-                            TRANSLATION_DIR_PATH,
+                            TRANSLATE_PREFIX,
                             ".qm"))
     {
         m_translator->deleteLater();

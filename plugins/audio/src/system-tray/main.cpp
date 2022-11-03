@@ -36,7 +36,7 @@ int main(int argc, char *argv[])
     KLOG_INFO() << "autostart!";
 
     QTranslator translator;
-    if (translator.load(QLocale(), "kiran-cpanel-audio", ".", TRANSLATION_DIR_INSTALL_PATH, ".qm"))
+    if (translator.load(QLocale(), "kiran-cpanel-audio", ".", TRANSLATE_PREFIX, ".qm"))
     {
         a.installTranslator(&translator);
         KLOG_INFO() << "installTranslator load:" << a.installTranslator(&translator);

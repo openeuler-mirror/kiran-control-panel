@@ -1,6 +1,6 @@
 #include "appearance-plugin.h"
-#include "appearance-config.h"
 #include "appearance-subitem.h"
+#include "config.h"
 
 #include "pages/font/fonts.h"
 #include "pages/theme/themes.h"
@@ -12,8 +12,6 @@
 #include <QDBusConnection>
 #include <QDBusConnectionInterface>
 #include <tuple>
-
-#define TRANSLATION_DIR TRANSLATIONS_FILE_DIR
 
 AppearancePlugin::AppearancePlugin(QObject* parent)
     : QObject(parent)
@@ -44,7 +42,7 @@ int AppearancePlugin::init(KiranControlPanel::PanelInterface* interface)
     if (!m_translator->load(QLocale(),
                             "kiran-cpanel-appearance",
                             ".",
-                            TRANSLATION_DIR,
+                            TRANSLATE_PREFIX,
                             ".qm"))
     {
         KLOG_DEBUG() << "Kiran cpanel appearance load translation failed";

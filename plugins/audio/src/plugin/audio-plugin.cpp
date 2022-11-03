@@ -44,7 +44,7 @@ int AudioPlugin::init(KiranControlPanel::PanelInterface* interface)
     if (!m_translator->load(QLocale(),
                             "kiran-cpanel-audio",
                             ".",
-                            TRANSLATION_DIR_INSTALL_PATH,
+                            TRANSLATE_PREFIX,
                             ".qm"))
     {
         KLOG_ERROR() << "can't load translator";

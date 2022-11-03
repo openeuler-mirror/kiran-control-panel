@@ -47,6 +47,7 @@ add_library(${TARGET_NAME} SHARED
         )
 
 target_include_directories(${TARGET_NAME} PRIVATE
+        ${CMAKE_BINARY_DIR}
         src/
         ${KIRAN_CC_DAEMON_INCLUDE_DIRS}
         ${KLOG_QT5_INCLUDE_DIRS}
@@ -72,5 +73,4 @@ configure_file(data/kiran-cpanel-display.desktop.in ${CMAKE_CURRENT_BINARY_DIR}/
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/kiran-cpanel-display.desktop DESTINATION ${PLUGIN_DESKTOP_INSTALL_DIR}/ )
 
 #安装翻译文件
-configure_file( ${CMAKE_CURRENT_SOURCE_DIR}/data/config.h.in ${CMAKE_CURRENT_BINARY_DIR}/config.h)
 install(FILES ${QM_FILES} DESTINATION ${TRANSLATION_INSTALL_DIR} )

@@ -10,7 +10,6 @@ set(QT_VERSION 5)
 set(REQUIRED_LIBS Core Gui Widgets DBus Network Svg LinguistTools)
 set(REQUIRED_LIBS_QUALIFIED Qt5::Core Qt5::Gui Qt5::Widgets Qt5::DBus Qt5::Network Qt5::Svg)
 
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/data/network-config.h.in ${CMAKE_CURRENT_BINARY_DIR}/data/network-config.h)
 qt5_create_translation(NETWORK_QM_FILES ${CMAKE_CURRENT_SOURCE_DIR} translations/kiran-cpanel-network.zh_CN.ts)
 
 file(GLOB_RECURSE PLUGIN_SRC "src/plugin/*.cpp" "src/plugin/*.h" "src/plugin/*.ui")

@@ -45,7 +45,7 @@ int PowerPlugin::init(KiranControlPanel::PanelInterface* interface)
     if (!m_translator->load(QLocale(),
                             "kiran-cpanel-power",
                             ".",
-                            KIRAN_POWER_MANAGER_TRANSLATIONS_DIR,
+                            TRANSLATE_PREFIX,
                             ".qm"))
     {
         KLOG_ERROR() << "can't load translator";
