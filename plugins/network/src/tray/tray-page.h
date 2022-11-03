@@ -42,6 +42,8 @@ public:
     void setSingleDeviceWidget();
     QStringList devicePathList();
 
+    QSize trayPageSize();
+
 public slots:
     void handleDeviceComboBoxChanged(int index);
     void handleAdjustedTraySize(QSize sizeHint);
@@ -52,6 +54,7 @@ signals:
 private:
     Ui::TrayPage *ui;
     QList<NetworkManager::Device::Ptr> m_deviceList;
+    QSize m_size;
 };
 
 #endif  // KIRAN_CPANEL_NETWORK_TRAY_PAGE_H

@@ -12,31 +12,49 @@
  * Author:     yangxiaoqing <yangxiaoqing@kylinsec.com.cn>
  */
 
-#include "kiran-display-config-item.h"
+#include "device-panel-item.h"
 #include <QMouseEvent>
 #include <QPainter>
 
-KiranDisplayConfigItem::KiranDisplayConfigItem(QWidget *parent) : QPushButton(parent), m_mousePress(false), m_mouseDrag(false),
-    m_statusType(QEvent::None), m_enabled(true), m_anchorByBtn(NULL), m_rotateDrect(DISPLAY_ROTATION_0), m_displayReflectType(DISPLAY_REFLECT_NORMAL)
+DevicePanelItem::DevicePanelItem(const QString &monitorPath, QWidget *parent) : QPushButton(parent), m_mousePress(false), m_mouseDrag(false), m_statusType(QEvent::None), m_enabled(true), m_anchorByBtn(NULL), m_rotateDrect(DISPLAY_ROTATION_0), m_displayReflectType(DISPLAY_REFLECT_NORMAL)
 {
-    setAccessibleName("KiranDisplayConfigItem");
+    setAccessibleName("DevicePanelItem");
     setCheckable(true);
-    setAttribute(Qt::WA_Hover,true);
+    setAttribute(Qt::WA_Hover, true);
     installEventFilter(this);
     setStyleSheet("QToolTip{color:#000000;border: 0px solid #ffffff;background:#b3b3b3;}");
     setCursor(Qt::OpenHandCursor);
+
+    m_monitorPath = monitorPath;
+    m_monitorConfigData = DisplayConfig::instance()->getMonitorConfigData(m_monitorPath);
+    init();
+
+    connect(m_monitorConfigData.data(), &MonitorConfigData::resolvingChanged, this, &DevicePanelItem::handleBufferResolvingChanged);
 }
 
-void KiranDisplayConfigItem::paintEvent(QPaintEvent *)
+void DevicePanelItem::init()
+{
+    setText(m_monitorConfigData->name());
+    setToolTip(m_monitorConfigData->name());
+
+    QRectF rect(m_monitorConfigData->x(), m_monitorConfigData->y(), m_monitorConfigData->w(), m_monitorConfigData->h());
+    m_screenGeometryF = rect;
+    m_enabled = m_monitorConfigData->enabled();
+
+    initRotateDrect(m_monitorConfigData->rotation());
+    setDisplayReflectType(m_monitorConfigData->reflect());
+}
+
+void DevicePanelItem::paintEvent(QPaintEvent *)
 {
     QPainter painter(this);
-    if(m_mouseDrag) painter.setOpacity(0.7);
+    if (m_mouseDrag) painter.setOpacity(0.7);
     QRect rect = this->rect();
     rect.adjust(1, 1, -1, -1);
 
     //QFontMetrics fm = painter.fontMetrics();
     //float zoom = rect.width() / fm.width(text());
-    float pixsize = 22;//zoom*15.0;
+    float pixsize = 22;  //zoom*15.0;
     pixsize = pixsize > 10.0 ? pixsize : 10.0;
     pixsize = pixsize < 60.0 ? pixsize : 60.0;
     QFont font;
@@ -44,13 +62,13 @@ void KiranDisplayConfigItem::paintEvent(QPaintEvent *)
     painter.setFont(font);
 
     QPen pen;
-    if(m_enabled)
+    if (m_enabled)
         pen.setColor("#ffffff");
     else
-        pen.setColor(QColor(255,255,255,60));
+        pen.setColor(QColor(255, 255, 255, 60));
 
     QBrush brush;
-    if(isChecked())
+    if (isChecked())
     {
         pen.setWidth(1);
         brush = QBrush("#2eb3ff");
@@ -61,16 +79,17 @@ void KiranDisplayConfigItem::paintEvent(QPaintEvent *)
     }
     else
     {
-        switch (m_statusType) {
-        case QEvent::HoverEnter://hover
+        switch (m_statusType)
+        {
+        case QEvent::HoverEnter:  //hover
             brush = QBrush(QColor(121, 195, 255));
             break;
-        case QEvent::FocusIn://checked
+        case QEvent::FocusIn:  //checked
             brush = QBrush("#2eb3ff");
             break;
         default:
             brush = QBrush("#b3b3b3");
-            if(m_enabled) pen.setColor("#000000");
+            if (m_enabled) pen.setColor("#000000");
             break;
         }
 
@@ -80,20 +99,20 @@ void KiranDisplayConfigItem::paintEvent(QPaintEvent *)
 
     //矩形绘制完成后，再处理文字旋转、镜像问题。缩小旋转、镜像的影响范围。
     //先旋转
-    int flag = 0;//以X轴翻转。
-    int flag2 = 0; //以Y轴翻转。
-    switch (m_rotateDrect) {
-    case DISPLAY_ROTATION_0://含义逆时针
+    int flag = 0;   //以X轴翻转。
+    int flag2 = 0;  //以Y轴翻转。
+    switch (m_rotateDrect)
     {
-
+    case DISPLAY_ROTATION_0:  //含义逆时针
+    {
         rect.moveTo(0, 0);
         flag = -1;
         flag2 = -1;
     }
-        break;
-    case DISPLAY_ROTATION_90://含义逆时针
+    break;
+    case DISPLAY_ROTATION_90:  //含义逆时针
     {
-        painter.rotate(270);//顺时针旋转
+        painter.rotate(270);  //顺时针旋转
         int height = rect.height();
         rect.setHeight(rect.width());
         rect.setWidth(height);
@@ -101,7 +120,7 @@ void KiranDisplayConfigItem::paintEvent(QPaintEvent *)
         flag = -1;
         flag2 = 1;
     }
-        break;
+    break;
     case DISPLAY_ROTATION_180:
     {
         painter.rotate(180);
@@ -109,7 +128,7 @@ void KiranDisplayConfigItem::paintEvent(QPaintEvent *)
         flag = 1;
         flag2 = 1;
     }
-        break;
+    break;
     case DISPLAY_ROTATION_270:
     {
         painter.rotate(90);
@@ -120,34 +139,35 @@ void KiranDisplayConfigItem::paintEvent(QPaintEvent *)
         flag = 1;
         flag2 = -1;
     }
-        break;
+    break;
     default:
         break;
     }
 
     //x,y轴翻转。
     qreal sx = 1, sy = 1;
-    if(m_displayReflectType & DISPLAY_REFLECT_Y)
+    if (m_displayReflectType & DISPLAY_REFLECT_Y)
     {
         int textHeight = painter.fontMetrics().ascent() - painter.fontMetrics().descent();
-        rect.moveTo(rect.x(), rect.y() + flag*rect.height() - textHeight/5);//防止文字翻转之后，位置变动。为什么是除以5
+        rect.moveTo(rect.x(), rect.y() + flag * rect.height() - textHeight / 5);  //防止文字翻转之后，位置变动。为什么是除以5
         sy = -1;
     }
-    if(m_displayReflectType & DISPLAY_REFLECT_X)
+    if (m_displayReflectType & DISPLAY_REFLECT_X)
     {
-        rect.moveTo(rect.x() + flag2*rect.width(), rect.y());
+        rect.moveTo(rect.x() + flag2 * rect.width(), rect.y());
         sx = -1;
     }
     painter.scale(sx, sy);
 
-    painter.drawText(rect, Qt::TextWrapAnywhere|Qt::AlignCenter, text());
+    painter.drawText(rect, Qt::TextWrapAnywhere | Qt::AlignCenter, text());
 }
 
-bool KiranDisplayConfigItem::eventFilter(QObject * obj, QEvent * event)
+bool DevicePanelItem::eventFilter(QObject *obj, QEvent *event)
 {
-    if(Q_LIKELY(obj == this))
+    if (Q_LIKELY(obj == this))
     {
-        switch (event->type()) {
+        switch (event->type())
+        {
         case QEvent::HoverEnter:
         case QEvent::HoverLeave:
         case QEvent::FocusIn:
@@ -162,19 +182,15 @@ bool KiranDisplayConfigItem::eventFilter(QObject * obj, QEvent * event)
     return QPushButton::eventFilter(obj, event);
 }
 
-DisplayRotationType KiranDisplayConfigItem::rotateDrect() const
-{
-    return m_rotateDrect;
-}
-
-void KiranDisplayConfigItem::alterRotateDrect(const int &step)
+void DevicePanelItem::alterRotateDrect(const int &step)
 {
     DisplayRotationType rotateDrect = rotationType(m_rotateDrect, step);
-    switch (rotateDrect) {
+    switch (rotateDrect)
+    {
     case DISPLAY_ROTATION_90:
     case DISPLAY_ROTATION_270:
     {
-        if(m_rotateDrect == DISPLAY_ROTATION_0 || m_rotateDrect == DISPLAY_ROTATION_180)
+        if (m_rotateDrect == DISPLAY_ROTATION_0 || m_rotateDrect == DISPLAY_ROTATION_180)
         {
             QRectF t = m_screenGeometryF;
             m_screenGeometryF.setWidth(t.height());
@@ -183,11 +199,11 @@ void KiranDisplayConfigItem::alterRotateDrect(const int &step)
             emit sigEndDrag(this);
         }
     }
-        break;
+    break;
     case DISPLAY_ROTATION_0:
     case DISPLAY_ROTATION_180:
     {
-        if(m_rotateDrect == DISPLAY_ROTATION_90 || m_rotateDrect == DISPLAY_ROTATION_270)
+        if (m_rotateDrect == DISPLAY_ROTATION_90 || m_rotateDrect == DISPLAY_ROTATION_270)
         {
             QRectF t = m_screenGeometryF;
             m_screenGeometryF.setWidth(t.height());
@@ -196,17 +212,19 @@ void KiranDisplayConfigItem::alterRotateDrect(const int &step)
             emit sigEndDrag(this);
         }
     }
-        break;
+    break;
     default:
         break;
     }
 
     m_rotateDrect = rotateDrect;
+    m_monitorConfigData->setRotation(rotateDrect);
 }
 
-void KiranDisplayConfigItem::initRotateDrect(const DisplayRotationType &rotateDrect)
+void DevicePanelItem::initRotateDrect(const DisplayRotationType &rotateDrect)
 {
-    switch (rotateDrect) {
+    switch (rotateDrect)
+    {
     case DISPLAY_ROTATION_90:
     case DISPLAY_ROTATION_270:
     {
@@ -214,7 +232,7 @@ void KiranDisplayConfigItem::initRotateDrect(const DisplayRotationType &rotateDr
         m_screenGeometryF.setWidth(t.height());
         m_screenGeometryF.setHeight(t.width());
     }
-        break;
+    break;
     default:
         break;
     }
@@ -222,84 +240,81 @@ void KiranDisplayConfigItem::initRotateDrect(const DisplayRotationType &rotateDr
     m_rotateDrect = rotateDrect;
 }
 
-DisplayReflectTypes KiranDisplayConfigItem::displayReflectType() const
-{
-    return m_displayReflectType;
-}
-
-void KiranDisplayConfigItem::setDisplayReflectType(const DisplayReflectTypes &displayReflectType)
+void DevicePanelItem::setDisplayReflectType(const DisplayReflectTypes &displayReflectType)
 {
     m_displayReflectType = displayReflectType;
+    m_monitorConfigData->setReflect(displayReflectType);
     update();
 }
 
-QPair<int, int> KiranDisplayConfigItem::zoomPair() const
+QPair<int, int> DevicePanelItem::zoomPair() const
 {
     return m_zoomPair;
 }
 
-void KiranDisplayConfigItem::setZoomPair(const QPair<int, int> &zoomPair)
+void DevicePanelItem::setZoomPair(const QPair<int, int> &zoomPair)
 {
     m_zoomPair = zoomPair;
 }
 
-void KiranDisplayConfigItem::removeAnchoredChildBtn(KiranDisplayConfigItem *childBtn)
+void DevicePanelItem::removeAnchoredChildBtn(DevicePanelItem *childBtn)
 {
     m_childAnchorBtns.removeAll(childBtn);
 }
 
-void KiranDisplayConfigItem::appendAnchoredChildBtn(KiranDisplayConfigItem *childBtn)
+void DevicePanelItem::appendAnchoredChildBtn(DevicePanelItem *childBtn)
 {
     m_childAnchorBtns.append(childBtn);
 }
 
-void KiranDisplayConfigItem::clearAnchorByBtn()
+void DevicePanelItem::clearAnchorByBtn()
 {
     m_anchorByBtn = NULL;
 }
 
-void KiranDisplayConfigItem::clearAnchoredChildBtns()
+void DevicePanelItem::clearAnchoredChildBtns()
 {
-    foreach (KiranDisplayConfigItem *item, m_childAnchorBtns) {
+    foreach (DevicePanelItem *item, m_childAnchorBtns)
+    {
         item->clearAnchorByBtn();
     }
     m_childAnchorBtns.clear();
 }
 
-bool KiranDisplayConfigItem::hasIntersects(KiranDisplayConfigItem *item)
+bool DevicePanelItem::hasIntersects(DevicePanelItem *item)
 {
     QRectF geometry = item->screenGeometryF();
-    if(this->screenGeometryF().intersects(geometry)) return true;
+    if (this->screenGeometryF().intersects(geometry)) return true;
 
     return false;
 }
 
-KiranDisplayConfigItem::AnchorByDrect KiranDisplayConfigItem::anchorByDrect() const
+DevicePanelItem::AnchorByDrect DevicePanelItem::anchorByDrect() const
 {
     return m_anchorByDrect;
 }
 
-void KiranDisplayConfigItem::setAnchorByDrect(const AnchorByDrect &anchorByDrect)
+void DevicePanelItem::setAnchorByDrect(const AnchorByDrect &anchorByDrect)
 {
     m_anchorByDrect = anchorByDrect;
 }
 
-KiranDisplayConfigItem *KiranDisplayConfigItem::anchorByBtn() const
+DevicePanelItem *DevicePanelItem::anchorByBtn() const
 {
     return m_anchorByBtn;
 }
 
-void KiranDisplayConfigItem::setAnchorByBtn(KiranDisplayConfigItem *anchorByBtn, const KiranDisplayConfigItem::AnchorByDrect &anchorByDrect)
+void DevicePanelItem::setAnchorByBtn(DevicePanelItem *anchorByBtn, const DevicePanelItem::AnchorByDrect &anchorByDrect)
 {
     //
-    if(m_anchorByBtn)
+    if (m_anchorByBtn)
     {
         m_anchorByBtn->removeAnchoredChildBtn(this);
     }
     //now
     m_anchorByBtn = anchorByBtn;
     m_anchorByDrect = anchorByDrect;
-    if(anchorByBtn) anchorByBtn->appendAnchoredChildBtn(this);
+    if (anchorByBtn) anchorByBtn->appendAnchoredChildBtn(this);
     //update pos
     updateOffset(anchorByBtn, anchorByDrect, m_mouseDrag);
     updateScreenGeometry();
@@ -307,75 +322,79 @@ void KiranDisplayConfigItem::setAnchorByBtn(KiranDisplayConfigItem *anchorByBtn,
     clearAnchoredChildBtns();
 }
 
-void KiranDisplayConfigItem::updateScreenGeometry()
+void DevicePanelItem::updateScreenGeometry()
 {
-    if(!m_anchorByBtn) return;
+    if (!m_anchorByBtn) return;
     const QRectF &anchorScreenGeometry = m_anchorByBtn->screenGeometryF();
-    switch (m_anchorByDrect) {
-    case KiranDisplayConfigItem::PosLeft:
+    switch (m_anchorByDrect)
+    {
+    case DevicePanelItem::PosLeft:
         m_screenGeometryF.moveRight(anchorScreenGeometry.left());
         m_screenGeometryF.moveTop(anchorScreenGeometry.top() + m_screenOffset.y());
         break;
-    case KiranDisplayConfigItem::PosTop:
+    case DevicePanelItem::PosTop:
         m_screenGeometryF.moveBottom(anchorScreenGeometry.top());
         m_screenGeometryF.moveLeft(anchorScreenGeometry.left() + m_screenOffset.x());
         break;
-    case KiranDisplayConfigItem::PosRight:
+    case DevicePanelItem::PosRight:
         m_screenGeometryF.moveLeft(anchorScreenGeometry.right());
         m_screenGeometryF.moveTop(anchorScreenGeometry.top() + m_screenOffset.y());
         break;
-    case KiranDisplayConfigItem::PosBottom:
+    case DevicePanelItem::PosBottom:
         m_screenGeometryF.moveTop(anchorScreenGeometry.bottom());
         m_screenGeometryF.moveLeft(anchorScreenGeometry.left() + m_screenOffset.x());
         break;
-    case KiranDisplayConfigItem::PosTopLeft:
+    case DevicePanelItem::PosTopLeft:
         m_screenGeometryF.moveBottomRight(anchorScreenGeometry.topLeft());
         break;
-    case KiranDisplayConfigItem::PosTopRight:
+    case DevicePanelItem::PosTopRight:
         m_screenGeometryF.moveBottomLeft(anchorScreenGeometry.topRight());
         break;
-    case KiranDisplayConfigItem::PosBottomLeft:
+    case DevicePanelItem::PosBottomLeft:
         m_screenGeometryF.moveTopRight(anchorScreenGeometry.bottomLeft());
         break;
-    case KiranDisplayConfigItem::PosBottomRight:
+    case DevicePanelItem::PosBottomRight:
         m_screenGeometryF.moveTopLeft(anchorScreenGeometry.bottomRight());
     default:
         break;
     }
+    m_monitorConfigData->setX(m_screenGeometryF.x());
+    m_monitorConfigData->setY(m_screenGeometryF.y());
 }
 
-void KiranDisplayConfigItem::updateOffset(KiranDisplayConfigItem *anchorByBtn, const KiranDisplayConfigItem::AnchorByDrect &anchorByDrect, const bool &isDrag)
+void DevicePanelItem::updateOffset(DevicePanelItem *anchorByBtn, const DevicePanelItem::AnchorByDrect &anchorByDrect, const bool &isDrag)
 {
-    if(!anchorByBtn) return;
+    if (!anchorByBtn) return;
 
     const QRectF &screenGeometryF = this->screenGeometryF();
     const QRectF &anchorScreenGeometry = anchorByBtn->screenGeometryF();
-    switch (anchorByDrect) {
-    case KiranDisplayConfigItem::PosLeft:
-    case KiranDisplayConfigItem::PosRight:
-        if(isDrag)
+    switch (anchorByDrect)
+    {
+    case DevicePanelItem::PosLeft:
+    case DevicePanelItem::PosRight:
+        if (isDrag)
             m_screenOffset = QPointF(0, anchorScreenGeometry.height() * m_zoomPair.first / m_zoomPair.second);
         else
             m_screenOffset = QPointF(0, screenGeometryF.top() - anchorScreenGeometry.top());
         break;
-    case KiranDisplayConfigItem::PosTop:
-    case KiranDisplayConfigItem::PosBottom:
-        if(isDrag)
+    case DevicePanelItem::PosTop:
+    case DevicePanelItem::PosBottom:
+        if (isDrag)
             m_screenOffset = QPointF(anchorScreenGeometry.width() * m_zoomPair.first / m_zoomPair.second, 0);
         else
             m_screenOffset = QPointF(screenGeometryF.left() - anchorScreenGeometry.left(), 0);
         break;
-    case KiranDisplayConfigItem::PosTopLeft:
-    case KiranDisplayConfigItem::PosTopRight:
-    case KiranDisplayConfigItem::PosBottomLeft:
-    case KiranDisplayConfigItem::PosBottomRight:
+    case DevicePanelItem::PosTopLeft:
+    case DevicePanelItem::PosTopRight:
+    case DevicePanelItem::PosBottomLeft:
+    case DevicePanelItem::PosBottomRight:
         m_screenOffset = QPointF(0, 0);
     default:
         break;
     }
 }
 
-DisplayRotationType KiranDisplayConfigItem::rotationType(const DisplayRotationType &curType, const int &step)
+DisplayRotationType DevicePanelItem::rotationType(const DisplayRotationType &curType, const int &step)
 {
     QList<DisplayRotationType> list;
     list << DISPLAY_ROTATION_0 << DISPLAY_ROTATION_90 << DISPLAY_ROTATION_180 << DISPLAY_ROTATION_270;
@@ -383,64 +402,65 @@ DisplayRotationType KiranDisplayConfigItem::rotationType(const DisplayRotationTy
     int index = list.indexOf(curType);
     index += step;
     index %= 4;
-    if(index < 0) index += 4;
+    if (index < 0) index += 4;
 
-    if(index<0 || index >3) return DISPLAY_ROTATION_0;
+    if (index < 0 || index > 3) return DISPLAY_ROTATION_0;
     return list.at(index);
 }
 
-bool KiranDisplayConfigItem::enabled() const
+bool DevicePanelItem::enabled() const
 {
     return m_enabled;
 }
+
+void DevicePanelItem::handleBufferResolvingChanged(const QSize &size)
+{
+    m_screenGeometryF.setWidth(m_monitorConfigData->w());
+    m_screenGeometryF.setHeight(m_monitorConfigData->h());
+
+    emit screenGeometryChanged();
+}
+
 /*!
- * \brief KiranDisplayConfigItem::setEnabled setData函数中调用了此函数，如果在这里发送按钮禁用信号，外部再调用contain，可能此时item还未加入contain中，从而导致异常。
+ * \brief DevicePanelItem::setEnabled setData函数中调用了此函数，如果在这里发送按钮禁用信号，外部再调用contain，可能此时item还未加入contain中，从而导致异常。
  * \param enabled
  */
-void KiranDisplayConfigItem::setEnabled(bool enabled)
+void DevicePanelItem::setEnabled(bool enabled)
 {
     m_enabled = enabled;
 }
 
-void KiranDisplayConfigItem::changeEnabled(const bool &enabled)
+void DevicePanelItem::changeEnabled(const bool &enabled)
 {
     m_enabled = enabled;
     update();
 }
 
-QString KiranDisplayConfigItem::monitorPath() const
+QString DevicePanelItem::monitorPath() const
 {
     return m_monitorPath;
 }
 
-void KiranDisplayConfigItem::setMonitorPath(const QString &monitorPath)
-{
-    m_monitorPath = monitorPath;
-}
-
-QRectF KiranDisplayConfigItem::screenGeometryF() const
+QRectF DevicePanelItem::screenGeometryF() const
 {
     return m_screenGeometryF;
 }
 
-QRectF &KiranDisplayConfigItem::screenGeometryF2()
-{
-    return m_screenGeometryF;
-}
-
-void KiranDisplayConfigItem::setScreenGeometryF(const QRectF &screenGeometryF)
+void DevicePanelItem::setScreenGeometryF(const QRectF &screenGeometryF)
 {
     m_screenGeometryF = screenGeometryF;
 }
 
-void KiranDisplayConfigItem::moveScreenGeometryFOffset(const QPointF &offsetF)
+void DevicePanelItem::moveScreenGeometryFOffset(const QPointF &offsetF)
 {
     m_screenGeometryF.moveTopLeft(m_screenGeometryF.topLeft() + offsetF);
+    m_monitorConfigData->setX(m_screenGeometryF.x());
+    m_monitorConfigData->setY(m_screenGeometryF.y());
 }
 
-void KiranDisplayConfigItem::mousePressEvent(QMouseEvent *e)
+void DevicePanelItem::mousePressEvent(QMouseEvent *e)
 {
-    if(e->button() == Qt::LeftButton)
+    if (e->button() == Qt::LeftButton)
     {
         raise();
         m_mousePress = true;
@@ -450,24 +470,24 @@ void KiranDisplayConfigItem::mousePressEvent(QMouseEvent *e)
     QPushButton::mousePressEvent(e);
 }
 
-void KiranDisplayConfigItem::mouseMoveEvent(QMouseEvent *e)
+void DevicePanelItem::mouseMoveEvent(QMouseEvent *e)
 {
-    if(m_mousePress)
+    if (m_mousePress)
     {
         m_mouseDrag = true;
-        move(mapTo(parentWidget(), e->pos())- m_pressPos);
+        move(mapTo(parentWidget(), e->pos()) - m_pressPos);
         emit sigDrag(this);
     }
 
     QPushButton::mouseMoveEvent(e);
 }
 
-void KiranDisplayConfigItem::mouseReleaseEvent(QMouseEvent *e)
+void DevicePanelItem::mouseReleaseEvent(QMouseEvent *e)
 {
-    if(e->button() == Qt::LeftButton)
+    if (e->button() == Qt::LeftButton)
     {
         m_mousePress = false;
-        if(m_mouseDrag)
+        if (m_mouseDrag)
         {
             emit sigEndDrag(this);
             m_mouseDrag = false;

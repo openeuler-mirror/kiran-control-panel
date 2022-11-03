@@ -29,6 +29,8 @@ NetworkManager::Device::List getDeviceList(NetworkManager::Device::Type type);
 
 NetworkManager::Device::List getAvailableDeviceList(NetworkManager::Device::Type type);
 
+NetworkManager::Device::List getManagedDeviceList(NetworkManager::Device::Type type);
+
 }  // namespace NetworkUtils
 
 #endif  // KIRAN_CPANEL_NETWORK_UTILS_H

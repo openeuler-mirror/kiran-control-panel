@@ -17,10 +17,9 @@
 #include <QCoreApplication>
 #include "config.h"
 #include "cpanel-network-widget.h"
-#include "details-page/details-page.h"
-using namespace NetworkManager;
+#include "network-subitem.h"
 
-NetworkPlugin::NetworkPlugin()
+NetworkPlugin::NetworkPlugin(QObject* parent) : QObject(parent)
 {
 }
 
@@ -28,38 +27,7 @@ NetworkPlugin::~NetworkPlugin()
 {
 }
 
-int NetworkPlugin::init()
-{
-    loadTranslator();
-    return 0;
-}
-
-void NetworkPlugin::uninit()
-{
-}
-
-QWidget* NetworkPlugin::getSubItemWidget(QString subItemName)
-{
-    QWidget* widget = nullptr;
-    if (subItemName == "Network")
-    {
-        widget = new CPanelNetworkWidget;
-    }
-    m_currentWidget = widget;
-    return m_currentWidget;
-}
-
-bool NetworkPlugin::haveUnsavedOptions()
-{
-    return false;
-}
-
-QStringList NetworkPlugin::visibleSubItems()
-{
-    return QStringList() << "Network";
-}
-
-void NetworkPlugin::loadTranslator()
+int NetworkPlugin::init(KiranControlPanel::PanelInterface* interface)
 {
     if (m_translator != nullptr)
     {
@@ -83,4 +51,24 @@ void NetworkPlugin::loadTranslator()
     {
         qApp->installTranslator(m_translator);
     }
+
+    auto networkSubItem = new NetworkSubItem(interface,this);
+    m_subitem.reset(networkSubItem);
+
+    return 0;
+}
+
+void NetworkPlugin::uninit()
+{
+    if (m_translator != nullptr)
+    {
+        QCoreApplication::removeTranslator(m_translator);
+        delete m_translator;
+        m_translator = nullptr;
+    }
+}
+
+QVector<KiranControlPanel::SubItemPtr> NetworkPlugin::getSubItems()
+{
+    return {m_subitem};
 }

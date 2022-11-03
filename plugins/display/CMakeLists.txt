@@ -23,7 +23,28 @@ file(GLOB_RECURSE SRC "src/*.cpp" "src/*.h" "src/*.ui")
 
 qt5_create_translation(QM_FILES ${CMAKE_CURRENT_SOURCE_DIR} translations/kiran-cpanel-display.zh_CN.ts)
 
-add_library(${TARGET_NAME} SHARED ${SRC} ${QM_FILES})
+kiran_qt5_add_dbus_interface_ex(DISPLAY_PROXY
+        data/com.kylinsec.Kiran.SessionDaemon.Display.xml
+        display_backEnd_proxy
+        DisplayBackEndProxy
+        )
+
+set(INTERFACE_MONITOR_XML_FILES data/com.kylinsec.Kiran.SessionDaemon.Display.Monitor.xml)
+
+set_property(SOURCE ${INTERFACE_MONITOR_XML_FILES} PROPERTY INCLUDE generic-types.h)
+
+kiran_qt5_add_dbus_interface_ex(MONITOR_PROXY
+        ${INTERFACE_MONITOR_XML_FILES}
+        monitor_backEnd_proxy
+        MonitorBackEndProxy
+)
+
+add_library(${TARGET_NAME} SHARED 
+        ${SRC} 
+        ${QM_FILES} 
+        ${DISPLAY_PROXY} 
+        ${MONITOR_PROXY}
+        )
 
 target_include_directories(${TARGET_NAME} PRIVATE
         src/

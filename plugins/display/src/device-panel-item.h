@@ -12,69 +12,75 @@
  * Author:     yangxiaoqing <yangxiaoqing@kylinsec.com.cn>
  */
 
-#ifndef KIRANDISPLAYCONFIGITEM_H
-#define KIRANDISPLAYCONFIGITEM_H
+#pragma once
 
-#include "kiran-session-daemon/display-i.h"
-#include <QPushButton>
 #include <QEvent>
+#include <QPushButton>
+#include "display-config.h"
+#include "kiran-session-daemon/display-i.h"
 
-Q_DECLARE_FLAGS(DisplayReflectTypes, DisplayReflectType)
-Q_DECLARE_OPERATORS_FOR_FLAGS(DisplayReflectTypes)
-
-class KiranDisplayConfigItem : public QPushButton
+class DevicePanelItem : public QPushButton
 {
     Q_OBJECT
 public:
-    explicit KiranDisplayConfigItem(QWidget *parent = nullptr);
+    explicit DevicePanelItem(const QString &monitorPath, QWidget *parent = nullptr);
 
-    enum AnchorByDrect{PosLeft=0,PosRight,PosTop,PosBottom,PosTopLeft,PosTopRight,PosBottomLeft,PosBottomRight};
+    enum AnchorByDrect
+    {
+        PosLeft = 0,
+        PosRight,
+        PosTop,
+        PosBottom,
+        PosTopLeft,
+        PosTopRight,
+        PosBottomLeft,
+        PosBottomRight
+    };
 
+    void init();
     QRectF screenGeometryF() const;
-    QRectF &screenGeometryF2();
     void setScreenGeometryF(const QRectF &screenGeometryF);
 
     void moveScreenGeometryFOffset(const QPointF &offsetF);
 
-    KiranDisplayConfigItem *anchorByBtn() const;
-    void setAnchorByBtn(KiranDisplayConfigItem *anchorByBtn, const AnchorByDrect &anchorByDrect);
+    DevicePanelItem *anchorByBtn() const;
+    void setAnchorByBtn(DevicePanelItem *anchorByBtn, const AnchorByDrect &anchorByDrect);
 
     AnchorByDrect anchorByDrect() const;
     void setAnchorByDrect(const AnchorByDrect &anchorByDrect);
 
-    void removeAnchoredChildBtn(KiranDisplayConfigItem *childBtn);
-    void appendAnchoredChildBtn(KiranDisplayConfigItem *childBtn);
+    void removeAnchoredChildBtn(DevicePanelItem *childBtn);
+    void appendAnchoredChildBtn(DevicePanelItem *childBtn);
     void clearAnchorByBtn();
     void clearAnchoredChildBtns();
 
-    bool hasIntersects(KiranDisplayConfigItem *item);
+    bool hasIntersects(DevicePanelItem *item);
 
     QPair<int, int> zoomPair() const;
     void setZoomPair(const QPair<int, int> &zoomPair);
 
-    DisplayRotationType rotateDrect() const;
     /**
      * @brief alterRotateDrect 旋转角度修改之后，需要通知item容器重新计算位置，要发送信号出去。
      * @param rotateDrect
      */
-    void alterRotateDrect(const int &step=1);
+    void alterRotateDrect(const int &step = 1);
     void initRotateDrect(const DisplayRotationType &rotateDrect);
 
-    DisplayReflectTypes displayReflectType() const;
     void setDisplayReflectType(const DisplayReflectTypes &displayReflectType);
 
     QString monitorPath() const;
-    void setMonitorPath(const QString &monitorPath);
 
     void setEnabled(bool enabled);
     void changeEnabled(const bool &enabled);
     bool enabled() const;
 
 signals:
-    void sigDrag(QAbstractButton* btn);
-    void sigEndDrag(QAbstractButton* btn);
+    void sigDrag(QAbstractButton *btn);
+    void sigEndDrag(QAbstractButton *btn);
+    void screenGeometryChanged();
 
-public slots:
+private slots:
+    void handleBufferResolvingChanged(const QSize &size);
 
 private:
     void paintEvent(QPaintEvent *event);
@@ -84,7 +90,7 @@ private:
     bool eventFilter(QObject *obj, QEvent *event);
 
     void updateScreenGeometry();
-    void updateOffset(KiranDisplayConfigItem *anchorByBtn, const AnchorByDrect &anchorByDrect, const bool &isDrag);
+    void updateOffset(DevicePanelItem *anchorByBtn, const AnchorByDrect &anchorByDrect, const bool &isDrag);
     DisplayRotationType rotationType(const DisplayRotationType &curType, const int &step);
 
 private:
@@ -93,7 +99,7 @@ private:
     QPoint m_pressPos;
     QEvent::Type m_statusType;
     //desktop invented data
-    KiranDisplayConfigItem *m_anchorByBtn;
+    DevicePanelItem *m_anchorByBtn;
     QPair<int, int> m_zoomPair;
     //reality data
     bool m_enabled;
@@ -104,7 +110,7 @@ private:
     DisplayRotationType m_rotateDrect;
     DisplayReflectTypes m_displayReflectType;
 
-    QList<KiranDisplayConfigItem *> m_childAnchorBtns;
-};
+    QList<DevicePanelItem *> m_childAnchorBtns;
 
-#endif // KIRANDISPLAYCONFIGITEM_H
+    MonitorConfigDataPtr m_monitorConfigData;
+};

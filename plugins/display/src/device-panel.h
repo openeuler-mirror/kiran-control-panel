@@ -12,26 +12,23 @@
  * Author:     yangxiaoqing <yangxiaoqing@kylinsec.com.cn>
  */
 
-#ifndef KIRANDISPLAYCONFIGURATIONPANEL_H
-#define KIRANDISPLAYCONFIGURATIONPANEL_H
+#pragma once
 
 #include <QFrame>
-#include <QMap>
 
-namespace Ui {
-class KiranDisplayConfigurationPanel;
+namespace Ui
+{
+class DevicePanel;
 }
 
-class KiranDisplayConfigurationPanel : public QFrame
+class DevicePanel : public QFrame
 {
     Q_OBJECT
 
 public:
-    explicit KiranDisplayConfigurationPanel(QWidget *parent = 0);
-    ~KiranDisplayConfigurationPanel();
+    explicit DevicePanel(QWidget *parent = nullptr);
+    ~DevicePanel();
 
-    QVariantMap getData();
-    void setData(const QVariantList &list, const bool &clearChecked=false);
     void changeItemDisabled(const bool &disabled);
 
 protected:
@@ -41,7 +38,6 @@ Q_SIGNALS:
     void buttonChecked(QString monitorPath);
 
 private slots:
-    //void paintEvent(QPaintEvent *event);
     void on_pushButton_left_clicked();
     void on_pushButton_horizontal_clicked(bool checked);
     void on_pushButton_vertical_clicked(bool checked);
@@ -49,9 +45,7 @@ private slots:
     void on_pushButton_identifying_clicked();
 
 private:
-    Ui::KiranDisplayConfigurationPanel *ui;
-   //QVariantList m_textList;
-   // QMap<QString, QSize> m_textSize;
+    Ui::DevicePanel *ui;
+    //QVariantList m_textList;
+    // QMap<QString, QSize> m_textSize;
 };
-
-#endif // KIRANDISPLAYCONFIGURATIONPANEL_H
