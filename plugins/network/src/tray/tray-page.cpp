@@ -159,5 +159,5 @@ void TrayPage::handleAdjustedTraySize(QSize sizeHint)
 
 QSize TrayPage::trayPageSize()
 {
-    m_size;
+    return m_size;
 }
