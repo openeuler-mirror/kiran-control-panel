@@ -98,9 +98,6 @@ endif ()
 
 install(TARGETS ${TARGET_NAME} DESTINATION ${PLUGIN_LIBS_INSTALL_DIR}/)
 
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/data/kiran-cpanel-account.desktop.in ${CMAKE_CURRENT_BINARY_DIR}/kiran-cpanel-account.desktop @ONLY)
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/kiran-cpanel-account.desktop DESTINATION ${PLUGIN_DESKTOP_INSTALL_DIR}/)
-
 install(FILES ${QM_FILES} DESTINATION ${TRANSLATION_INSTALL_DIR})
 
 install(FILES ./data/kiran-account-manager.conf DESTINATION ${KCP_ACCOUNT_CONF_DIR})

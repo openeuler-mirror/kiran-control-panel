@@ -14,25 +14,38 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/widgets/account-itemwidget.cpp" line="36"/>
+        <location filename="../src/widgets/account-itemwidget.cpp" line="31"/>
         <source>Create new user</source>
         <translation>创建新用户</translation>
     </message>
     <message>
-        <location filename="../src/widgets/account-itemwidget.cpp" line="108"/>
+        <location filename="../src/widgets/account-itemwidget.cpp" line="103"/>
         <source>disable</source>
         <translation>禁用</translation>
     </message>
     <message>
-        <location filename="../src/widgets/account-itemwidget.cpp" line="112"/>
+        <location filename="../src/widgets/account-itemwidget.cpp" line="107"/>
         <source>enable</source>
         <translation>启用</translation>
     </message>
 </context>
 <context>
+    <name>AccountSubItem</name>
+    <message>
+        <location filename="../src/account-subitem.cpp" line="33"/>
+        <source>account</source>
+        <translation>帐户</translation>
+    </message>
+    <message>
+        <location filename="../src/account-subitem.cpp" line="59"/>
+        <source>New User</source>
+        <translation>创建新用户</translation>
+    </message>
+</context>
+<context>
     <name>AdvanceSettings</name>
     <message>
-        <location filename="../src/pages/advance-settings-page/advance-settings.cpp" line="116"/>
+        <location filename="../src/pages/advance-settings-page/advance-settings.cpp" line="115"/>
         <source>Advance Settings</source>
         <translation>高级设置</translation>
     </message>
@@ -42,26 +55,51 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/pages/advance-settings-page/advance-settings.ui" line="43"/>
+        <location filename="../src/pages/advance-settings-page/advance-settings.ui" line="61"/>
         <source>Login shell</source>
         <translation>登录Shell</translation>
     </message>
     <message>
-        <location filename="../src/pages/advance-settings-page/advance-settings.ui" line="89"/>
+        <location filename="../src/pages/advance-settings-page/advance-settings.ui" line="93"/>
+        <source>EditLoginShell</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/advance-settings-page/advance-settings.ui" line="110"/>
         <source>Specify user id (needs to be greater than 1000)</source>
         <translation>指定用户ID（需大于或等于1000）</translation>
+    </message>
+    <message>
+        <location filename="../src/pages/advance-settings-page/advance-settings.ui" line="165"/>
+        <source>EditSpecifyUserID</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/advance-settings-page/advance-settings.ui" line="228"/>
+        <source>EditSpecifyUserHome</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/advance-settings-page/advance-settings.ui" line="289"/>
+        <source>ButtonConfirm</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Specify user id</source>
         <translation type="vanished">指定用户ID</translation>
     </message>
     <message>
-        <location filename="../src/pages/advance-settings-page/advance-settings.ui" line="262"/>
+        <location filename="../src/pages/advance-settings-page/advance-settings.ui" line="292"/>
         <source>confirm</source>
         <translation>确认</translation>
     </message>
     <message>
-        <location filename="../src/pages/advance-settings-page/advance-settings.ui" line="303"/>
+        <location filename="../src/pages/advance-settings-page/advance-settings.ui" line="333"/>
+        <source>ButtonCancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/advance-settings-page/advance-settings.ui" line="336"/>
         <source>cancel</source>
         <translation>取消</translation>
     </message>
@@ -72,7 +110,7 @@
         <translation>由系统自动生成</translation>
     </message>
     <message>
-        <location filename="../src/pages/advance-settings-page/advance-settings.ui" line="159"/>
+        <location filename="../src/pages/advance-settings-page/advance-settings.ui" line="183"/>
         <source>Specify user home</source>
         <translation>指定用户目录</translation>
     </message>
@@ -121,11 +159,21 @@
     </message>
     <message>
         <location filename="../src/pages/auth-manager-page/auth-manager-page.ui" line="214"/>
+        <source>ButtonSave</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/auth-manager-page/auth-manager-page.ui" line="217"/>
         <source>save</source>
         <translation>保存</translation>
     </message>
     <message>
-        <location filename="../src/pages/auth-manager-page/auth-manager-page.ui" line="255"/>
+        <location filename="../src/pages/auth-manager-page/auth-manager-page.ui" line="258"/>
+        <source>ButtonReturn</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/auth-manager-page/auth-manager-page.ui" line="261"/>
         <source>return</source>
         <translation>返回</translation>
     </message>
@@ -202,37 +250,77 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/pages/create-user-page/create-user-page.ui" line="101"/>
+        <location filename="../src/pages/create-user-page/create-user-page.ui" line="74"/>
+        <source>UserAvatarWidget</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/create-user-page/create-user-page.ui" line="104"/>
         <source>User name</source>
         <translation>用户名</translation>
     </message>
     <message>
-        <location filename="../src/pages/create-user-page/create-user-page.ui" line="147"/>
+        <location filename="../src/pages/create-user-page/create-user-page.ui" line="136"/>
+        <source>EditUserName</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/create-user-page/create-user-page.ui" line="153"/>
         <source>User type</source>
         <translation>用户类型</translation>
     </message>
     <message>
-        <location filename="../src/pages/create-user-page/create-user-page.ui" line="190"/>
+        <location filename="../src/pages/create-user-page/create-user-page.ui" line="182"/>
+        <source>ComboUserType</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/create-user-page/create-user-page.ui" line="199"/>
         <source>Password</source>
         <translation>用户密码</translation>
     </message>
     <message>
-        <location filename="../src/pages/create-user-page/create-user-page.ui" line="239"/>
+        <location filename="../src/pages/create-user-page/create-user-page.ui" line="234"/>
+        <source>EditPasswd</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/create-user-page/create-user-page.ui" line="251"/>
         <source>Confirm password</source>
         <translation>确认密码</translation>
     </message>
     <message>
-        <location filename="../src/pages/create-user-page/create-user-page.ui" line="294"/>
+        <location filename="../src/pages/create-user-page/create-user-page.ui" line="286"/>
+        <source>EditPasswdConfirm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/create-user-page/create-user-page.ui" line="306"/>
+        <source>ButtonAdvanceSetting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/create-user-page/create-user-page.ui" line="312"/>
         <source>Advance setting</source>
         <translation>高级设置</translation>
     </message>
     <message>
-        <location filename="../src/pages/create-user-page/create-user-page.ui" line="389"/>
+        <location filename="../src/pages/create-user-page/create-user-page.ui" line="407"/>
+        <source>ButtonConfirm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/create-user-page/create-user-page.ui" line="410"/>
         <source>Confirm</source>
         <translation>创建</translation>
     </message>
     <message>
-        <location filename="../src/pages/create-user-page/create-user-page.ui" line="436"/>
+        <location filename="../src/pages/create-user-page/create-user-page.ui" line="457"/>
+        <source>ButtonCancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/create-user-page/create-user-page.ui" line="460"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
@@ -318,17 +406,37 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/pages/biometric-enroll-dialog/face-enroll-dialog/face-enroll-dialog.ui" line="63"/>
+        <location filename="../src/pages/biometric-enroll-dialog/face-enroll-dialog/face-enroll-dialog.ui" line="84"/>
+        <source>EnrollProgressBar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/biometric-enroll-dialog/face-enroll-dialog/face-enroll-dialog.ui" line="99"/>
+        <source>LabelEnrollTips</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/biometric-enroll-dialog/face-enroll-dialog/face-enroll-dialog.ui" line="102"/>
         <source>balabalalbala...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/pages/biometric-enroll-dialog/face-enroll-dialog/face-enroll-dialog.ui" line="124"/>
+        <location filename="../src/pages/biometric-enroll-dialog/face-enroll-dialog/face-enroll-dialog.ui" line="163"/>
+        <source>ButtonSave</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/biometric-enroll-dialog/face-enroll-dialog/face-enroll-dialog.ui" line="166"/>
         <source>save</source>
         <translation>保存</translation>
     </message>
     <message>
-        <location filename="../src/pages/biometric-enroll-dialog/face-enroll-dialog/face-enroll-dialog.ui" line="162"/>
+        <location filename="../src/pages/biometric-enroll-dialog/face-enroll-dialog/face-enroll-dialog.ui" line="204"/>
+        <source>ButtonCancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/biometric-enroll-dialog/face-enroll-dialog/face-enroll-dialog.ui" line="207"/>
         <source>cancel</source>
         <translation>取消</translation>
     </message>
@@ -338,13 +446,13 @@
         <translation>正在初始化人脸采集环境，请稍后</translation>
     </message>
     <message>
-        <location filename="../src/pages/biometric-enroll-dialog/face-enroll-dialog/face-enroll-dialog.cpp" line="119"/>
+        <location filename="../src/pages/biometric-enroll-dialog/face-enroll-dialog/face-enroll-dialog.cpp" line="120"/>
         <source>failed to initialize face collection environment!</source>
         <translation>初始化人脸采集环境失败!</translation>
     </message>
     <message>
-        <location filename="../src/pages/biometric-enroll-dialog/face-enroll-dialog/face-enroll-dialog.cpp" line="130"/>
-        <location filename="../src/pages/biometric-enroll-dialog/face-enroll-dialog/face-enroll-dialog.cpp" line="141"/>
+        <location filename="../src/pages/biometric-enroll-dialog/face-enroll-dialog/face-enroll-dialog.cpp" line="131"/>
+        <location filename="../src/pages/biometric-enroll-dialog/face-enroll-dialog/face-enroll-dialog.cpp" line="142"/>
         <source>Failed to start collection</source>
         <translation>开始采集失败</translation>
     </message>
@@ -380,17 +488,37 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/pages/biometric-enroll-dialog/fingerprint-enroll-dialog/fingerprint-enroll-dialog.ui" line="70"/>
+        <location filename="../src/pages/biometric-enroll-dialog/fingerprint-enroll-dialog/fingerprint-enroll-dialog.ui" line="84"/>
+        <source>EnrollProgressBar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/biometric-enroll-dialog/fingerprint-enroll-dialog/fingerprint-enroll-dialog.ui" line="106"/>
+        <source>EnrollTips</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/biometric-enroll-dialog/fingerprint-enroll-dialog/fingerprint-enroll-dialog.ui" line="109"/>
         <source>balabalalbala...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/pages/biometric-enroll-dialog/fingerprint-enroll-dialog/fingerprint-enroll-dialog.ui" line="134"/>
+        <location filename="../src/pages/biometric-enroll-dialog/fingerprint-enroll-dialog/fingerprint-enroll-dialog.ui" line="173"/>
+        <source>ButtonSave</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/biometric-enroll-dialog/fingerprint-enroll-dialog/fingerprint-enroll-dialog.ui" line="176"/>
         <source>save</source>
         <translation>保存</translation>
     </message>
     <message>
-        <location filename="../src/pages/biometric-enroll-dialog/fingerprint-enroll-dialog/fingerprint-enroll-dialog.ui" line="172"/>
+        <location filename="../src/pages/biometric-enroll-dialog/fingerprint-enroll-dialog/fingerprint-enroll-dialog.ui" line="214"/>
+        <source>ButtonCancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/biometric-enroll-dialog/fingerprint-enroll-dialog/fingerprint-enroll-dialog.ui" line="217"/>
         <source>cancel</source>
         <translation>取消</translation>
     </message>
@@ -400,17 +528,17 @@
         <translation>指纹录入</translation>
     </message>
     <message>
-        <location filename="../src/pages/biometric-enroll-dialog/fingerprint-enroll-dialog/fingerprint-enroll-dialog.cpp" line="127"/>
+        <location filename="../src/pages/biometric-enroll-dialog/fingerprint-enroll-dialog/fingerprint-enroll-dialog.cpp" line="128"/>
         <source>This fingerprint is bound to the user(%1)</source>
         <translation>该指纹已绑定用户(%1)</translation>
     </message>
     <message>
-        <location filename="../src/pages/biometric-enroll-dialog/fingerprint-enroll-dialog/fingerprint-enroll-dialog.cpp" line="129"/>
+        <location filename="../src/pages/biometric-enroll-dialog/fingerprint-enroll-dialog/fingerprint-enroll-dialog.cpp" line="130"/>
         <source>Info</source>
         <translation>提示</translation>
     </message>
     <message>
-        <location filename="../src/pages/biometric-enroll-dialog/fingerprint-enroll-dialog/fingerprint-enroll-dialog.cpp" line="154"/>
+        <location filename="../src/pages/biometric-enroll-dialog/fingerprint-enroll-dialog/fingerprint-enroll-dialog.cpp" line="155"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>
@@ -470,17 +598,17 @@
         <translation type="vanished">设置用户属性失败</translation>
     </message>
     <message>
-        <location filename="../src/hard-worker.cpp" line="147"/>
+        <location filename="../src/hard-worker.cpp" line="148"/>
         <source> update password failed</source>
         <translation>更新密码失败</translation>
     </message>
     <message>
-        <location filename="../src/hard-worker.cpp" line="173"/>
+        <location filename="../src/hard-worker.cpp" line="175"/>
         <source>icon file</source>
         <translation>头像</translation>
     </message>
     <message>
-        <location filename="../src/hard-worker.cpp" line="184"/>
+        <location filename="../src/hard-worker.cpp" line="186"/>
         <source>userName type</source>
         <translation>用户名</translation>
     </message>
@@ -489,12 +617,12 @@
         <translation type="vanished">帐户类型</translation>
     </message>
     <message>
-        <location filename="../src/hard-worker.cpp" line="195"/>
+        <location filename="../src/hard-worker.cpp" line="197"/>
         <source>locked</source>
         <translation>启用状态</translation>
     </message>
     <message>
-        <location filename="../src/hard-worker.cpp" line="203"/>
+        <location filename="../src/hard-worker.cpp" line="205"/>
         <source>Failed to update user properties,%1</source>
         <translation>更新用户属性失败，%1</translation>
     </message>
@@ -503,7 +631,7 @@
         <translation type="vanished">更新用户属性失败(%1)</translation>
     </message>
     <message>
-        <location filename="../src/hard-worker.cpp" line="226"/>
+        <location filename="../src/hard-worker.cpp" line="228"/>
         <source>Failed to delete user,%1</source>
         <translation>删除用户失败，%1</translation>
     </message>
@@ -523,18 +651,18 @@
     <name>KiranAccountManager</name>
     <message>
         <location filename="../src/kiran-account-manager.cpp" line="101"/>
-        <location filename="../src/kiran-account-manager.cpp" line="432"/>
+        <location filename="../src/kiran-account-manager.cpp" line="428"/>
         <source>disable</source>
         <translation>禁用</translation>
     </message>
     <message>
         <location filename="../src/kiran-account-manager.cpp" line="101"/>
-        <location filename="../src/kiran-account-manager.cpp" line="432"/>
+        <location filename="../src/kiran-account-manager.cpp" line="428"/>
         <source>enable</source>
         <translation>启用</translation>
     </message>
     <message>
-        <location filename="../src/kiran-account-manager.cpp" line="238"/>
+        <location filename="../src/kiran-account-manager.cpp" line="234"/>
         <source>Create new user</source>
         <translation>创建新用户</translation>
     </message>
@@ -550,17 +678,17 @@
 <context>
     <name>KiranAvatarEditor</name>
     <message>
-        <location filename="../avatar-editor/src/kiran-avatar-editor.cpp" line="41"/>
+        <location filename="../avatar-editor/src/kiran-avatar-editor.cpp" line="42"/>
         <source>Avatar Editor</source>
         <translation>头像编辑器</translation>
     </message>
     <message>
-        <location filename="../avatar-editor/src/kiran-avatar-editor.cpp" line="88"/>
+        <location filename="../avatar-editor/src/kiran-avatar-editor.cpp" line="91"/>
         <source>Confirm</source>
         <translation>确认</translation>
     </message>
     <message>
-        <location filename="../avatar-editor/src/kiran-avatar-editor.cpp" line="109"/>
+        <location filename="../avatar-editor/src/kiran-avatar-editor.cpp" line="112"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
@@ -570,14 +698,6 @@
     <message>
         <source>Warning</source>
         <translation type="obsolete">警告</translation>
-    </message>
-</context>
-<context>
-    <name>KiranTips</name>
-    <message>
-        <location filename="../src/widgets/kiran-tips.ui" line="29"/>
-        <source>Form</source>
-        <translation></translation>
     </message>
 </context>
 <context>
@@ -601,41 +721,76 @@
     </message>
     <message>
         <location filename="../src/pages/passwd-expiration-policy/password-expiration-policy-page.ui" line="67"/>
+        <source>SpinBoxUserExpires</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/passwd-expiration-policy/password-expiration-policy-page.ui" line="70"/>
         <source>yyyy-MM-dd</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/pages/passwd-expiration-policy/password-expiration-policy-page.ui" line="84"/>
+        <location filename="../src/pages/passwd-expiration-policy/password-expiration-policy-page.ui" line="87"/>
         <source>Last password change</source>
         <translation>最近一次密码修改时间</translation>
     </message>
     <message>
-        <location filename="../src/pages/passwd-expiration-policy/password-expiration-policy-page.ui" line="108"/>
+        <location filename="../src/pages/passwd-expiration-policy/password-expiration-policy-page.ui" line="111"/>
+        <source>LabelLastPasswdChange</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/passwd-expiration-policy/password-expiration-policy-page.ui" line="114"/>
         <source>1990-01-01</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/pages/passwd-expiration-policy/password-expiration-policy-page.ui" line="125"/>
+        <location filename="../src/pages/passwd-expiration-policy/password-expiration-policy-page.ui" line="131"/>
         <source>Maximum vaild days of password</source>
         <translation>密码最大有限天数</translation>
     </message>
     <message>
-        <location filename="../src/pages/passwd-expiration-policy/password-expiration-policy-page.ui" line="162"/>
+        <location filename="../src/pages/passwd-expiration-policy/password-expiration-policy-page.ui" line="155"/>
+        <source>SpinBoxMaximumValidDays</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/passwd-expiration-policy/password-expiration-policy-page.ui" line="172"/>
         <source>Prompt time before password expiration</source>
         <translation>密码过期之前提醒的天数</translation>
     </message>
     <message>
-        <location filename="../src/pages/passwd-expiration-policy/password-expiration-policy-page.ui" line="199"/>
+        <location filename="../src/pages/passwd-expiration-policy/password-expiration-policy-page.ui" line="196"/>
+        <source>SpinBoxPromptBeforeExpiration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/passwd-expiration-policy/password-expiration-policy-page.ui" line="213"/>
         <source>how many days after password expires will become inactive</source>
         <translation>密码过期多少天认定为失效</translation>
     </message>
     <message>
-        <location filename="../src/pages/passwd-expiration-policy/password-expiration-policy-page.ui" line="280"/>
+        <location filename="../src/pages/passwd-expiration-policy/password-expiration-policy-page.ui" line="237"/>
+        <source>SpinBoxPasswdInactiveTime</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/passwd-expiration-policy/password-expiration-policy-page.ui" line="298"/>
+        <source>ButtonSave</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/passwd-expiration-policy/password-expiration-policy-page.ui" line="301"/>
         <source>save</source>
         <translation>保存</translation>
     </message>
     <message>
-        <location filename="../src/pages/passwd-expiration-policy/password-expiration-policy-page.ui" line="321"/>
+        <location filename="../src/pages/passwd-expiration-policy/password-expiration-policy-page.ui" line="342"/>
+        <source>ButtonReturn</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/passwd-expiration-policy/password-expiration-policy-page.ui" line="345"/>
         <source>return</source>
         <translation>返回</translation>
     </message>
@@ -664,22 +819,22 @@
 <context>
     <name>SelectAvatarPage</name>
     <message>
-        <location filename="../src/pages/select-avatar-page/select-avatar-page.cpp" line="148"/>
+        <location filename="../src/pages/select-avatar-page/select-avatar-page.cpp" line="150"/>
         <source>Confirm</source>
         <translation>确认</translation>
     </message>
     <message>
-        <location filename="../src/pages/select-avatar-page/select-avatar-page.cpp" line="161"/>
+        <location filename="../src/pages/select-avatar-page/select-avatar-page.cpp" line="164"/>
         <source>Return</source>
         <translation>返回</translation>
     </message>
     <message>
-        <location filename="../src/pages/select-avatar-page/select-avatar-page.cpp" line="174"/>
+        <location filename="../src/pages/select-avatar-page/select-avatar-page.cpp" line="181"/>
         <source>select picture</source>
         <translation>选择图片</translation>
     </message>
     <message>
-        <location filename="../src/pages/select-avatar-page/select-avatar-page.cpp" line="176"/>
+        <location filename="../src/pages/select-avatar-page/select-avatar-page.cpp" line="183"/>
         <source>image files(*.bmp *.jpg *.png *.tif *.gif *.pcx *.tga *.exif *.fpx *.svg *.psd *.cdr *.pcd *.dxf *.ufo *.eps *.ai *.raw *.WMF *.webp)</source>
         <translation>图片文件(*.bmp *.jpg *.png *.tif *.gif *.pcx *.tga *.exif *.fpx *.svg *.psd *.cdr *.pcd *.dxf *.ufo *.eps *.ai *.raw *.WMF *.webp)</translation>
     </message>
@@ -776,22 +931,47 @@
         <translation>当前密码</translation>
     </message>
     <message>
-        <location filename="../src/pages/user-info-page/user-info-page.ui" line="638"/>
+        <location filename="../src/pages/user-info-page/user-info-page.ui" line="623"/>
+        <source>EditCurrentPasswd</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/user-info-page/user-info-page.ui" line="641"/>
         <source>New password</source>
         <translation>新密码</translation>
     </message>
     <message>
-        <location filename="../src/pages/user-info-page/user-info-page.ui" line="687"/>
+        <location filename="../src/pages/user-info-page/user-info-page.ui" line="676"/>
+        <source>EditNewPasswd</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/user-info-page/user-info-page.ui" line="693"/>
         <source>Enter the new password again</source>
         <translation>再次输入新密码</translation>
     </message>
     <message>
-        <location filename="../src/pages/user-info-page/user-info-page.ui" line="780"/>
+        <location filename="../src/pages/user-info-page/user-info-page.ui" line="728"/>
+        <source>EditNewPasswdAgain</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/user-info-page/user-info-page.ui" line="789"/>
+        <source>EditPasswdSave</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/user-info-page/user-info-page.ui" line="792"/>
         <source>Save</source>
         <translation>保存</translation>
     </message>
     <message>
-        <location filename="../src/pages/user-info-page/user-info-page.ui" line="821"/>
+        <location filename="../src/pages/user-info-page/user-info-page.ui" line="833"/>
+        <source>EditPasswdCancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/user-info-page/user-info-page.ui" line="836"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
@@ -810,17 +990,17 @@
         <translation type="vanished">帐户信息更新成功</translation>
     </message>
     <message>
-        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="331"/>
+        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="338"/>
         <source>Password updated successfully</source>
         <translation>密码更新成功</translation>
     </message>
     <message>
-        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="337"/>
+        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="344"/>
         <source>The directory and files under the user&apos;s home directory are deleted with the user.Are you sure you want to delete the user(%1)?</source>
         <translation>用户目录下的目录和文件会随用户一起删除，确定要删除%1用户吗？</translation>
     </message>
     <message>
-        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="340"/>
+        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="347"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
@@ -840,35 +1020,37 @@
         <translation>两次密码不相同，请核对后，再次输入</translation>
     </message>
     <message>
-        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="247"/>
+        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="248"/>
         <source>Please enter the current user password</source>
         <translation>请输入当前密码</translation>
     </message>
     <message>
-        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="253"/>
+        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="254"/>
         <source>The current password is incorrect</source>
         <translation>当前密码错误，请再次输入</translation>
     </message>
     <message>
-        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="260"/>
+        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="261"/>
         <source>The new password cannot be the same as the current password</source>
         <translation>新密码不能和旧密码相同，请重新输入</translation>
     </message>
     <message>
-        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="269"/>
-        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="306"/>
-        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="325"/>
-        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="359"/>
+        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="267"/>
+        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="275"/>
+        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="313"/>
+        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="332"/>
+        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="366"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="269"/>
+        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="267"/>
+        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="275"/>
         <source>Password encryption failed</source>
         <translation>密码加密失败</translation>
     </message>
     <message>
-        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="311"/>
+        <location filename="../src/pages/user-info-page/user-info-page.cpp" line="318"/>
         <source>user information updated successfully</source>
         <translation>用户信息更新成功</translation>
     </message>

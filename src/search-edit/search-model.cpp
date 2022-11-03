@@ -41,6 +41,8 @@ void SearchModel::init()
 void SearchModel::loadSearchModel()
 {
     clear();
+
+    static bool needConnect = true;
     auto categorys = CategoryManager::instance()->getCategorys();
     for (auto category : categorys)
     {
@@ -84,15 +86,16 @@ void SearchModel::loadSearchModel()
             }
         }
 
-        static bool needConnect = true;
+        // 第一次加载搜索模型,连接到每一个分类下
         if (needConnect)
         {
             connect(category, &Category::subItemAdded, this, &SearchModel::handleSubItemAdded);
             connect(category, &Category::subItemDeleted, this, &SearchModel::handleSubItemDeleted);
             connect(category, &Category::subItemInfoChanged, this, &SearchModel::handleSubItemInfoChanged);
-            needConnect = false;
         }
     }
+
+    needConnect = false;
 }
 
 void SearchModel::appendItem(const QString &text, const QString &category, const QString &subItem, const QString &searchKey)

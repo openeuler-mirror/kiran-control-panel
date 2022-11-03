@@ -15,9 +15,10 @@
 #ifndef KIRANDATETIMEWIDGET_H
 #define KIRANDATETIMEWIDGET_H
 
-#include <QWidget>
-#include <QGSettings>
 #include <kiran-system-daemon/timedate-i.h>
+#include <QGSettings>
+#include <QTimer>
+#include <QWidget>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class KiranTimeDateWidget; }
@@ -30,6 +31,14 @@ class QListWidgetItem;
 class TimezoneSettings;
 class DisplayFormatSettings;
 class DateTimeSettings;
+
+enum KiranTimeDateStackPageEnum
+{
+    PAGE_TIMEZONE_SETTING,
+    PAGE_DATETIME_SETTING,
+    PAGE_DISPLAY_FORMAT_SETTING,
+    PAGE_END
+};
 class KiranTimeDateWidget : public QWidget
 {
     Q_OBJECT
@@ -39,6 +48,9 @@ public:
     ~KiranTimeDateWidget();
 
     QSize sizeHint() const override;
+
+    void jumpToSubPage(KiranTimeDateStackPageEnum pageEnum);
+
 private:
     void initUI();
     void initTimeZoneSettingsPage();
