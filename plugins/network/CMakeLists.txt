@@ -109,13 +109,8 @@ install(FILES ${NETWORK_QM_FILES} DESTINATION ${TRANSLATION_INSTALL_DIR}/)
 
 set(AUTOSTART_DESKTOP_DIR /etc/xdg/autostart)
 #安装插件desktop文件
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/data/kiran-cpanel-network.desktop.in ${CMAKE_CURRENT_BINARY_DIR}/kiran-cpanel-network.desktop @ONLY)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/data/kiran-network-status-icon.desktop.in ${CMAKE_CURRENT_BINARY_DIR}/kiran-network-status-icon.desktop @ONLY)
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/kiran-cpanel-network.desktop DESTINATION ${PLUGIN_DESKTOP_INSTALL_DIR}/)
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/kiran-network-status-icon.desktop DESTINATION ${AUTOSTART_DESKTOP_DIR}/)
-
-SET(link_source ${PLUGIN_DESKTOP_INSTALL_DIR}/${TARGET_NAME}.desktop)
-SET(link_target ${CMAKE_CURRENT_BINARY_DIR}/${TARGET_NAME}-link.desktop)
 
 set(NETWORK_SERVER_CONF /etc/NetworkManager/conf.d)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/data/00-server.conf.in ${CMAKE_CURRENT_BINARY_DIR}/00-server.conf @ONLY)
