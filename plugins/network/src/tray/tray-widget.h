@@ -59,7 +59,6 @@ protected:
     NetworkManager::Device::Ptr m_devicePtr;
 
 private:
-    QTimer m_connectionRemovedTimer;
     QTimer m_StateActivatedTimer;
     QString m_connectionRemovePath;
     QString m_activatedPath;

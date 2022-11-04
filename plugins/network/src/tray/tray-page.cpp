@@ -53,11 +53,6 @@ void TrayPage::initUI()
     {
         setSingleDeviceWidget();
     }
-    else
-    {
-        // m_deviceeList.count == 0
-        return;
-    }
 }
 
 void TrayPage::initConnection()
@@ -155,7 +150,14 @@ void TrayPage::handleAdjustedTraySize(QSize sizeHint)
     ui->stackedWidget->setFixedHeight(height);
 
     if (ui->selectDevicewidget->isVisible())
-        emit sizeChanged(QSize(this->sizeHint().width(), ui->selectDevicewidget->size().height() + height));
+        m_size = QSize(this->sizeHint().width(), ui->selectDevicewidget->size().height() + height);
     else
-        emit sizeChanged(QSize(this->sizeHint().width(), height));
+        m_size = QSize(this->sizeHint().width(), height);
+       
+     emit sizeChanged(m_size);
+}
+
+QSize TrayPage::trayPageSize()
+{
+    return m_size;
 }

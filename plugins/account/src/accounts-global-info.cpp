@@ -136,7 +136,7 @@ bool AccountsGlobalInfo::init()
     return true;
 }
 
-QList<QString> AccountsGlobalInfo::getUserList()
+QList<QString> AccountsGlobalInfo::getUserObjectPathList()
 {
     QList<QString> userObjPathList;
     for (auto iter = m_usersMap.begin();
@@ -146,6 +146,18 @@ QList<QString> AccountsGlobalInfo::getUserList()
         userObjPathList.append((*iter)->path());
     }
     return userObjPathList;
+}
+
+QList<QString> AccountsGlobalInfo::getUserNameList()
+{
+    QList<QString> userlist;
+    for (auto iter = m_usersMap.begin();
+         iter != m_usersMap.end();
+         iter++)
+    {
+        userlist.append((*iter)->user_name());
+    }
+    return userlist;
 }
 
 bool AccountsGlobalInfo::checkUserNameAvaliable(const QString &userName)

@@ -195,6 +195,7 @@ void ConnectionShowPage::removeConnectionFromList(const QString& path)
 void ConnectionShowPage::removeWirelessNetworkFromList(const QString& ssid)
 {
     ui->connectionList->removeWirelessNetworkFromList(ssid);
+    ui->connectionList->setMaximumHeight((ui->connectionList->widgetContentsSpacing() + PLUGIN_ITEM_WIDGET_HEIGHT) * ui->connectionList->count());
 }
 
 void ConnectionShowPage::clearConnectionList()

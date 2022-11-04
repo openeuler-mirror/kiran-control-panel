@@ -15,48 +15,37 @@
 #ifndef KIRAN_CPANEL_AUDIO_AUDIO_PLUGIN_H
 #define KIRAN_CPANEL_AUDIO_AUDIO_PLUGIN_H
 
-#include <kcp-plugin-interface.h>
-#include <QTranslator>
+#include "panel-interface.h"
+#include "plugin-interface-v2.h"
+#include "plugin-subitem-interface.h"
 
-class AudioPlugin : public QObject, public KcpPluginInterface
+class QTranslator;
+class AudioPlugin
+    : public QObject,
+      public KiranControlPanel::PluginInterfaceV2
 {
     Q_OBJECT
-    Q_PLUGIN_METADATA(IID KcpPluginInterface_iid)
-    Q_INTERFACES(KcpPluginInterface)
+    Q_PLUGIN_METADATA(IID KiranControlPanel_PluginInterfaceV2_iid)
+    Q_INTERFACES(KiranControlPanel::PluginInterfaceV2)
 
 public:
-    AudioPlugin();
+    AudioPlugin(QObject* parent = nullptr);
     ~AudioPlugin();
 
-    /**
-     * 插件需提供的初始化方法，在其中加载翻译文件或做其他初始化操作
-     * \return 初始化返回值 返回0标志成功，其他值标志失败！
-     */
-    virtual int init() override;
+    // 主面板调用该接口初始化该插件，插件可在其中进行部分初始化操作，例如安装翻译等操作
+    // 成功返回0
+    int init(KiranControlPanel::PanelInterface* interface) override;
 
-    /**
-     * 插件需提供取消初始化的操作，在其中对翻译文件进行卸载或取消其他初始化操作
-     */
-    virtual void uninit() override;
+    // 主面板调用该接口取消掉该插件初始化做的操作并卸载该插件
+    void uninit() override;
 
-    /**
-     * \brief 通过插件功能项名称(PluginSubItem->name)获取显示控件
-     * \param id 功能项ID
-     * \return 该功能项的显示控件
-     */
-    virtual QWidget* getSubItemWidget(QString subItemName) override;
-
-    /**
-     * 插件实现该方法用于判断是否存在未保存的设置项,用于提供切换页面时做检查
-     * \return 是否存在未保存项
-     */
-    virtual bool haveUnsavedOptions() override;
-
-    QStringList visibleSubItems() override;
+    // 功能项数组，生存周期由插件维护
+    // 功能项发生变更时，应调用init时传入KcpInterface接口，通知主面板相关信息变更,及时加载新的功能项信息
+    QVector<KiranControlPanel::SubItemPtr> getSubItems() override;
 
 private:
-    QWidget* m_currentWidget;
     QTranslator* m_translator = nullptr;
+    QVector<KiranControlPanel::SubItemPtr> m_subitems;
 };
 
 #endif  //KIRAN_CPANEL_AUDIO_AUDIO_PLUGIN_H

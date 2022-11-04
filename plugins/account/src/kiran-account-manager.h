@@ -39,6 +39,8 @@ public:
 
     QSize sizeHint() const override;
 
+    void jumpToUser(const QString &user);
+    void jumpToAddUser();
 private Q_SLOTS:
     void setCurrentUser(const QString &userPath);
     void setMaskVisible(bool visible);

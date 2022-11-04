@@ -94,6 +94,7 @@ void PluginConnectionList::addConnection(NetworkManager::Connection::Ptr ptr, co
 
     this->addWidget(connectionItemWidget);
     this->setMaximumHeight((this->widgetContentsSpacing() + PLUGIN_ITEM_WIDGET_HEIGHT) * this->count());
+//    this->setFixedHeight((this->widgetContentsSpacing() + PLUGIN_ITEM_WIDGET_HEIGHT) * this->count());
     //根据名称自定义排序
     this->sort();
 
@@ -162,6 +163,7 @@ void PluginConnectionList::addWirelessNetwork(NetworkManager::WirelessNetwork::P
 
     this->addWidget(connectionItemWidget);
     this->setMaximumHeight((this->widgetContentsSpacing() + PLUGIN_ITEM_WIDGET_HEIGHT) * this->count());
+    //this->setFixedHeight((this->widgetContentsSpacing() + PLUGIN_ITEM_WIDGET_HEIGHT) * this->count());
 
     connect(connectionItemWidget, &ConnectionItemWidget::editButtonClicked, this, &PluginConnectionList::handleEditButtonClicked);
     connect(connectionItemWidget, &ConnectionItemWidget::clicked, this, &PluginConnectionList::handleConnectionItemClicked);
@@ -189,6 +191,7 @@ void PluginConnectionList::addHiddenNetworkItemWidget()
 
     this->addWidget(connectionItemWidget);
     this->setMaximumHeight((this->widgetContentsSpacing() + PLUGIN_ITEM_WIDGET_HEIGHT) * this->count());
+    //this->setFixedHeight((this->widgetContentsSpacing() + PLUGIN_ITEM_WIDGET_HEIGHT) * this->count());
 
     connect(connectionItemWidget, &ConnectionItemWidget::editButtonClicked, this, &PluginConnectionList::handleEditButtonClicked);
     connect(connectionItemWidget, &ConnectionItemWidget::clicked, this, &PluginConnectionList::handleConnectionItemClicked);
@@ -231,7 +234,6 @@ void PluginConnectionList::setItemWidgetStatus(const QString& activePath, Networ
     switch (state)
     {
     case ActiveConnection::State::Unknown:
-
         break;
     case ActiveConnection::State::Activating:
         connectionItemWidget->setLoadingStatus(true);

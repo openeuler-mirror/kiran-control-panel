@@ -1,5 +1,7 @@
 set(TARGET_NAME kiran-cpanel-audio)
 
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
+
 ## 控制中心-音量插件
 find_package(Qt5 COMPONENTS Widgets DBus Svg Multimedia)
 pkg_search_module(KIRAN_CC_DAEMON REQUIRED kiran-cc-daemon)
@@ -7,7 +9,8 @@ pkg_search_module(KIRAN_WIDGETS_QT5 REQUIRED kiranwidgets-qt5)
 pkg_search_module(KLOG_QT5 REQUIRED klog-qt5)
 pkg_search_module(KIRAN_STYLE_HELPER REQUIRED kiran-style-helper)
 
-qt5_create_translation(AUDIO_QM_FILES ${CMAKE_CURRENT_SOURCE_DIR} translations/kiran-cpanel-audio.zh_CN.ts)
+file(GLOB_RECURSE AUDIO_TRANSLATION_SRC ./*.cpp ./*.h ./*.ui)
+qt5_create_translation(AUDIO_QM_FILES ${CMAKE_CURRENT_SOURCE_DIR} ./translations/kiran-cpanel-audio.zh_CN.ts ${AUDIO_TRANSLATION_SRC})
 
 file(GLOB_RECURSE COMMON_SRC "src/audio-node.h" "src/volume-slider.cpp" "src/volume-slider.h")
 file(GLOB_RECURSE DBUS_SRC "src/dbus/*.cpp" "src/dbus/*.h")
@@ -23,12 +26,13 @@ add_library(${TARGET_NAME} SHARED
         ${AUDIO_QM_FILES})
 
 target_include_directories(${TARGET_NAME} PRIVATE
+        ${CMAKE_BINARY_DIR}
         src
         src/plugin
         src/dbus
         config
         resources
-        ${CMAKE_BINARY_DIR}
+        ${CMAKE_CURRENT_BINARY_DIR}
         ${KCP_PLUGIN_INCLUDE_DIR}
         ${KIRAN_WIDGETS_QT5_INCLUDE_DIRS}
         ${KIRAN_CC_DAEMON_INCLUDE_DIRS}
@@ -70,22 +74,12 @@ target_link_libraries(${TRAY_PROCESS}
         ${KIRAN_STYLE_HELPER_LIBRARIES})
 
 #安装翻译
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config/config.h.in ${CMAKE_CURRENT_BINARY_DIR}/config.h)
 install(FILES ${AUDIO_QM_FILES} DESTINATION ${TRANSLATION_INSTALL_DIR})
 
 set(AUTOSTART_DESKTOP_DIR /etc/xdg/autostart)
 #安装插件desktop文件
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config/kiran-cpanel-audio.desktop.in ${CMAKE_CURRENT_BINARY_DIR}/kiran-cpanel-audio.desktop @ONLY)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config/kiran-audio-status-icon.desktop.in ${CMAKE_CURRENT_BINARY_DIR}/kiran-audio-status-icon.desktop @ONLY)
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/kiran-cpanel-audio.desktop DESTINATION ${PLUGIN_DESKTOP_INSTALL_DIR}/)
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/kiran-audio-status-icon.desktop DESTINATION ${AUTOSTART_DESKTOP_DIR}/)
-
-SET(link_source ${PLUGIN_DESKTOP_INSTALL_DIR}/${TARGET_NAME}.desktop)
-SET(link_target ${CMAKE_CURRENT_BINARY_DIR}/${TARGET_NAME}-link.desktop)
-add_custom_target(kcp-applications-desktop ALL COMMAND ln -sf ${link_source} ${link_target})
-install(FILES ${link_target}
-        DESTINATION ${INSTALL_DATADIR}/applications/
-        RENAME ${TARGET_NAME}.desktop)
 
 #安装插件和二进制文件
 install(TARGETS ${TARGET_NAME} DESTINATION ${PLUGIN_LIBS_INSTALL_DIR}/)

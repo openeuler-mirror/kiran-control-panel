@@ -2,6 +2,14 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="zh_CN">
 <context>
+    <name>KeybindingSubItem</name>
+    <message>
+        <location filename="../src/keybinding-subitem.h" line="46"/>
+        <source>Keybinding</source>
+        <translation>快捷键</translation>
+    </message>
+</context>
+<context>
     <name>KeycodeTranslator</name>
     <message>
         <location filename="../src/keycode-translator.cpp" line="138"/>

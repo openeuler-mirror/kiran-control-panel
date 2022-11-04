@@ -42,8 +42,9 @@ public:
      * @brief  获取排序之后的用户列表
      * @return QList<QString> 用户DBusObjectPath列表
      */
-    QList<QString> getUserList();
+    QList<QString> getUserObjectPathList();
 
+    QList<QString> getUserNameList();
     /**
      * @brief 检查是否存在重名用户
      * @param account 需检查的用户名

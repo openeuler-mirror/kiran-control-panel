@@ -166,7 +166,7 @@ void WirelessTrayWidget::activateWirelessConnection(const QString &connectionPat
             StatusNotification::connectitonFailedNotify(connectionPath);
         }
         else
-            KLOG_DEBUG() << "reply.reply():" << reply.reply();
+            KLOG_DEBUG() << "reply QDBusObjectPath:" << reply.reply();
     }
 }
 
@@ -261,6 +261,7 @@ void WirelessTrayWidget::handleDisconnect(const QString &activatedConnectionPath
         KLOG_INFO() << "Disconnect failed:" << reply.error();
 }
 
+// Note:目前已知连接一个不存在的无线网络时，activatedConnection为空
 /*FIX:
  *由于ActiveConnection为空，暂时无法获得有效的连接信息
  *存在多个网卡时，由于无法确定是那个该ActiveConnection来自那个设备，则多个设备都会发送通知
@@ -277,10 +278,11 @@ void WirelessTrayWidget::handleActiveConnectionAdded(const QString &path)
         KLOG_DEBUG() << "new add activatedConnection is nullptr";
         return;
     }
-
+    
     QStringList deviceList = activatedConnection->devices();
     if (deviceList.contains(m_devicePath))
     {
+
         ConnectionSettings::Ptr settings = activatedConnection->connection()->settings();
         WirelessSetting::Ptr wirelessSetting = settings->setting(Setting::Wireless).dynamicCast<WirelessSetting>();
         QString ssid = QString(wirelessSetting->ssid());
@@ -290,6 +292,17 @@ void WirelessTrayWidget::handleActiveConnectionAdded(const QString &path)
         {
             //更新item信息
             m_connectionList->updateItemWidgetActivePath(activeItemWidget, path);
+            switch (activatedConnection->state())
+            {
+            case ActiveConnection::State::Activating:
+                handleStateActivating(path);
+                break;
+            case ActiveConnection::State::Activated:
+                handleStateActivated(path);
+                break;
+            default:
+                break;
+            }
         }
         else
         {
@@ -310,19 +323,7 @@ void WirelessTrayWidget::handleActiveConnectionRemoved(const QString &path)
 
 void WirelessTrayWidget::handleStateActivating(const QString &activePath)
 {
-    ActiveConnection::Ptr activatedConnection = findActiveConnection(activePath);
-    if (activatedConnection == nullptr)
-    {
-        // Note:目前已知连接一个不存在的无线网络时，activatedConnection为空
-        StatusNotification::connectitonFailedNotify();
-        KLOG_DEBUG() << "activatedConnection == nullptr";
-        return;
-    }
-    QStringList deviceList = activatedConnection->devices();
-    if ((activatedConnection->type() == ConnectionSettings::ConnectionType::Wireless) && deviceList.contains(m_devicePath))
-    {
-        m_connectionList->setItemWidgetStatus(activePath, ActiveConnection::State::Activating);
-    }
+    m_connectionList->setItemWidgetStatus(activePath, ActiveConnection::State::Activating);
 
     QDBusPendingReply<> replyRequestScan = m_wirelessDevice->requestScan();
     replyRequestScan.waitForFinished();
@@ -340,32 +341,24 @@ void WirelessTrayWidget::handleStateActivating(const QString &activePath)
 void WirelessTrayWidget::handleStateActivated(const QString &activePath)
 {
     KLOG_DEBUG() << "Wireless State: Activated";
-    ActiveConnection::Ptr activeConnection = findActiveConnection(activePath);
-    if (activeConnection.isNull())
-        return;
-    QStringList deviceList = activeConnection->devices();
-    if (deviceList.contains(m_devicePath) && (activeConnection->type() == ConnectionSettings::Wireless))
+    KLOG_DEBUG() << "handleStateActivated activePath:" << activePath;
+    m_connectionList->setItemWidgetStatus(activePath, ActiveConnection::State::Activated);
+
+    auto itemWidget = m_connectionList->findItemWidgetByActivePath(activePath);
+    NetworkConnectionInfo connectionInfo = itemWidget->property(PROPERTY_NETWORK_CONNECTION_INFO).value<NetworkConnectionInfo>();
+    m_connectionList->sort();
+    m_connectionList->update();
+
+    //连接成功后手动rescan
+    QDBusPendingReply<> replyRequestScan = m_wirelessDevice->requestScan();
+    replyRequestScan.waitForFinished();
+    if (replyRequestScan.isError())
     {
-        KLOG_DEBUG() << "handleStateActivated activePath:" << activePath;
-        m_connectionList->setItemWidgetStatus(activePath, ActiveConnection::State::Activated);
-
-        auto itemWidget = m_connectionList->findItemWidgetByActivePath(activePath);
-        NetworkConnectionInfo connectionInfo = itemWidget->property(PROPERTY_NETWORK_CONNECTION_INFO).value<NetworkConnectionInfo>();
-        StatusNotification::ActiveConnectionActivatedNotify(connectionInfo);
-        m_connectionList->sort();
-        m_connectionList->update();
-
-        //连接成功后手动rescan
-        QDBusPendingReply<> replyRequestScan = m_wirelessDevice->requestScan();
-        replyRequestScan.waitForFinished();
-        if (replyRequestScan.isError())
-        {
-            KLOG_DEBUG() << "StateActivated requestScan error:" << replyRequestScan.error();
-        }
-        else
-        {
-            KLOG_DEBUG() << "StateActivated requestScan reply:" << replyRequestScan.reply();
-        }
+        KLOG_DEBUG() << "StateActivated requestScan error:" << replyRequestScan.error();
+    }
+    else
+    {
+        KLOG_DEBUG() << "StateActivated requestScan reply:" << replyRequestScan.reply();
     }
 }
 

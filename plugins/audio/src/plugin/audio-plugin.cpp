@@ -14,14 +14,16 @@
 
 #include "audio-plugin.h"
 #include "config.h"
-#include "input-page.h"
-#include "output-page.h"
+#include "volume-input-subitem.h"
+#include "volume-output-subitem.h"
 
 #include <qt5-log-i.h>
 #include <QCoreApplication>
 #include <QFile>
+#include <QTranslator>
 
-AudioPlugin::AudioPlugin()
+AudioPlugin::AudioPlugin(QObject* parent)
+    : QObject(parent)
 {
 }
 
@@ -29,7 +31,7 @@ AudioPlugin::~AudioPlugin()
 {
 }
 
-int AudioPlugin::init()
+int AudioPlugin::init(KiranControlPanel::PanelInterface* interface)
 {
     if (m_translator != nullptr)
     {
@@ -42,7 +44,7 @@ int AudioPlugin::init()
     if (!m_translator->load(QLocale(),
                             "kiran-cpanel-audio",
                             ".",
-                            TRANSLATION_DIR_INSTALL_PATH,
+                            TRANSLATE_PREFIX,
                             ".qm"))
     {
         KLOG_ERROR() << "can't load translator";
@@ -54,34 +56,24 @@ int AudioPlugin::init()
         qApp->installTranslator(m_translator);
     }
 
+    auto inputSubitem = new VolumeIntputSubItem;
+    auto outputSubitem = new VolumeOutputSubItem;
+    m_subitems.append({KiranControlPanel::SubItemPtr(inputSubitem), KiranControlPanel::SubItemPtr(outputSubitem)});
+
     return 0;
 }
 
 void AudioPlugin::uninit()
 {
-}
-
-QWidget* AudioPlugin::getSubItemWidget(QString subItemName)
-{
-    QWidget* widget = nullptr;
-    if (subItemName == "OutputPage")
+    if (m_translator != nullptr)
     {
-        widget = new OutputPage;
+        QCoreApplication::removeTranslator(m_translator);
+        delete m_translator;
+        m_translator = nullptr;
     }
-    if (subItemName == "InputPage")
-    {
-        widget = new InputPage;
-    }
-    return widget;
 }
 
-bool AudioPlugin::haveUnsavedOptions()
+QVector<KiranControlPanel::SubItemPtr> AudioPlugin::getSubItems()
 {
-    return false;
-}
-
-QStringList AudioPlugin::visibleSubItems()
-{
-    return QStringList() << "OutputPage"
-                         << "InputPage";
+    return m_subitems;
 }

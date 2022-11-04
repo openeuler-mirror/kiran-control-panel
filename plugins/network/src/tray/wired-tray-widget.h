@@ -50,8 +50,6 @@ public:
 
     void handleConnectionUpdated(const QString &path);
 
-    void initUnavailableWidget();
-
     int getHeight() override;
 
 public slots:
@@ -60,7 +58,6 @@ public slots:
 
 private:
     NetworkManager::WiredDevice::Ptr m_wiredDevice;
-    QWidget *m_unavailableWidget;
     QString m_devicePath;
     QPointer<TrayConnectionList> m_connectionList;
 };

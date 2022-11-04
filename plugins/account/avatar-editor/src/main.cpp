@@ -27,6 +27,7 @@
 #include "kcp-account-config.h"
 #include "exit-code-defines.h"
 #include "kiran-avatar-editor.h"
+#include "config.h"
 
 //预览图像路径
 QString prewview_image;
@@ -130,7 +131,7 @@ int main(int argc, char* argv[])
     tsor.load(QLocale(),
               qAppName() /*filename*/,
               "." /*prefix*/,
-              TRANSLATION_DIR_PATH,
+              TRANSLATE_PREFIX,
               ".qm" /*suffix*/);
     QApplication::installTranslator(&tsor);
 

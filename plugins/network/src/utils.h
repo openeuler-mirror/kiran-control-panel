@@ -16,6 +16,7 @@
 #define KIRAN_CPANEL_NETWORK_UTILS_H
 
 #include <QWidget>
+#include <NetworkManagerQt/Manager>
 
 namespace NetworkUtils
 {
@@ -23,6 +24,12 @@ namespace NetworkUtils
 QPixmap trayIconColorSwitch(const QString &iconPath, const int iconSize = 16);
 
 QPixmap trayIconColorSwitch(QPixmap pixmap);
+
+NetworkManager::Device::List getDeviceList(NetworkManager::Device::Type type);
+
+NetworkManager::Device::List getAvailableDeviceList(NetworkManager::Device::Type type);
+
+NetworkManager::Device::List getManagedDeviceList(NetworkManager::Device::Type type);
 
 }  // namespace NetworkUtils
 

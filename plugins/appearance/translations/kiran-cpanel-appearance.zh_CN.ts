@@ -2,6 +2,24 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="zh_CN">
 <context>
+    <name>AppearancePlugin</name>
+    <message>
+        <location filename="../src/appearance-plugin.cpp" line="103"/>
+        <source>Theme</source>
+        <translation>主题</translation>
+    </message>
+    <message>
+        <location filename="../src/appearance-plugin.cpp" line="110"/>
+        <source>Wallpaper</source>
+        <translation>壁纸</translation>
+    </message>
+    <message>
+        <location filename="../src/appearance-plugin.cpp" line="117"/>
+        <source>Font</source>
+        <translation>字体</translation>
+    </message>
+</context>
+<context>
     <name>CursorThemes</name>
     <message>
         <location filename="../src/pages/theme/cursor-themes/cursor-themes.cpp" line="53"/>
@@ -32,14 +50,44 @@
         <translation>应用程序字体设置</translation>
     </message>
     <message>
-        <location filename="../src/pages/font/fonts.ui" line="152"/>
+        <location filename="../src/pages/font/fonts.ui" line="100"/>
+        <source>ComboAppFontName</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/font/fonts.ui" line="125"/>
+        <source>ComboAppFontSize</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/font/fonts.ui" line="158"/>
         <source>Titlebar Font Settings</source>
         <translation>窗口标题字体设置</translation>
     </message>
     <message>
-        <location filename="../src/pages/font/fonts.ui" line="222"/>
+        <location filename="../src/pages/font/fonts.ui" line="182"/>
+        <source>ComboTitleFontName</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/font/fonts.ui" line="201"/>
+        <source>ComboTitleFontSize</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/font/fonts.ui" line="234"/>
         <source>Monospace Font Settings</source>
         <translation>等宽字体设置</translation>
+    </message>
+    <message>
+        <location filename="../src/pages/font/fonts.ui" line="258"/>
+        <source>ComboMonospaceFontName</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/font/fonts.ui" line="277"/>
+        <source>ComboMonospaceFontSize</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -164,12 +212,12 @@
 <context>
     <name>ThemeWidget</name>
     <message>
-        <location filename="../src/pages/theme/theme-widget.cpp" line="145"/>
+        <location filename="../src/pages/theme/theme-widget.cpp" line="156"/>
         <source>Dark Theme</source>
         <translation>深色主题</translation>
     </message>
     <message>
-        <location filename="../src/pages/theme/theme-widget.cpp" line="150"/>
+        <location filename="../src/pages/theme/theme-widget.cpp" line="161"/>
         <source>Light Theme</source>
         <translation>浅色主题</translation>
     </message>
@@ -226,22 +274,32 @@
         <translation>壁纸设置</translation>
     </message>
     <message>
-        <location filename="../src/pages/wallpaper/wallpaper.ui" line="137"/>
+        <location filename="../src/pages/wallpaper/wallpaper.ui" line="89"/>
+        <source>FrameLockScreenPreview</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/wallpaper/wallpaper.ui" line="119"/>
+        <source>FrameDesktopPreivew</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/wallpaper/wallpaper.ui" line="143"/>
         <source>Desktop Wallpaper Preview</source>
         <translation>桌面壁纸预览</translation>
     </message>
     <message>
-        <location filename="../src/pages/wallpaper/wallpaper.ui" line="147"/>
+        <location filename="../src/pages/wallpaper/wallpaper.ui" line="153"/>
         <source>Lock Screen WallPaper Preview</source>
         <translation>锁屏壁纸预览</translation>
     </message>
     <message>
-        <location filename="../src/pages/wallpaper/wallpaper.ui" line="166"/>
+        <location filename="../src/pages/wallpaper/wallpaper.ui" line="172"/>
         <source>Select wallpaper</source>
         <translation>选择壁纸</translation>
     </message>
     <message>
-        <location filename="../src/pages/wallpaper/wallpaper.ui" line="220"/>
+        <location filename="../src/pages/wallpaper/wallpaper.ui" line="226"/>
         <source>Select Wallpaper</source>
         <translation>选择壁纸</translation>
     </message>
