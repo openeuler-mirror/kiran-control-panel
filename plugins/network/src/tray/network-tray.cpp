@@ -180,6 +180,7 @@ void NetworkTray::initMenu()
 // 初始化条件：设备存在且被管理
 void NetworkTray::initTrayPage()
 {
+    KLOG_DEBUG() << "init Tray Page";
     m_wiredDeviceList = NetworkUtils::getAvailableDeviceList(Device::Ethernet);
     m_wirelessDeviceList = NetworkUtils::getAvailableDeviceList(Device::Wifi);
 
@@ -432,25 +433,18 @@ void NetworkTray::handleDeviceStateChanged(NetworkManager::Device::State newstat
                                            NetworkManager::Device::State oldstate,
                                            NetworkManager::Device::StateChangeReason reason)
 {
-
-    // KLOG_DEBUG() << "newstate:" << newstate;
-    // KLOG_DEBUG() << "oldstate:" << oldstate;
-    // KLOG_DEBUG() << "reason:" << reason;
     Device *device = qobject_cast<Device *>(sender());
     auto deviceType = device->type();
+    KLOG_DEBUG() << "Device interfaceName:" << device->interfaceName();
+    KLOG_DEBUG() << "Device newstate:" << newstate;
+    KLOG_DEBUG() << "Device oldstate:" << oldstate;
+    KLOG_DEBUG() << "Device reason:" << reason;
 
     //设备变为可用
-    if ((oldstate == Device::Unavailable || oldstate == Device::Unmanaged)
+    if ((oldstate == Device::Unavailable || oldstate == Device::Unmanaged || oldstate == Device::UnknownState)
         &&
         (newstate != Device::Unmanaged && newstate != Device::Unavailable && newstate != Device::UnknownState))
     {
-        if(m_unavailableWidget != nullptr)
-        {
-            m_verticalLayout->removeWidget(m_unavailableWidget);
-            m_unavailableWidget->deleteLater();
-            m_unavailableWidget = nullptr;
-        }
-
         if (deviceType == Device::Ethernet)
         {
             reloadWiredTrayPage();
@@ -459,12 +453,24 @@ void NetworkTray::handleDeviceStateChanged(NetworkManager::Device::State newstat
         {
             reloadWirelessTrayPage();
         }
+
+        if((m_wiredTrayPage != nullptr) || (m_wirelessTrayPage != nullptr))
+        {
+            if(m_unavailableWidget != nullptr)
+            {
+                m_verticalLayout->removeWidget(m_unavailableWidget);
+                m_unavailableWidget->deleteLater();
+                m_unavailableWidget = nullptr;
+                KLOG_DEBUG() << "remove unavailable widget";
+            }
+        }
     }
 
     //设备变为不可用时，如果无线和有线均不可用则显示网络不可用的提示
     if(newstate == Device::Unavailable || newstate == Device::Unmanaged
         || newstate == Device::UnknownState)
     {
+        KLOG_DEBUG() << "device is unavailable";
         if (deviceType == Device::Ethernet)
         {
             reloadWiredTrayPage();
@@ -476,10 +482,13 @@ void NetworkTray::handleDeviceStateChanged(NetworkManager::Device::State newstat
 
         if(m_wiredTrayPage == nullptr && m_wirelessTrayPage == nullptr)
         {
-            initUnavailableWidget();
-            m_verticalLayout->addWidget(m_unavailableWidget);
+            if(m_unavailableWidget == nullptr)
+            {
+                initUnavailableWidget();
+                m_verticalLayout->addWidget(m_unavailableWidget);
+                KLOG_DEBUG() << "add unavailable widget";
+            }
         }
-
     }
 }
 
@@ -550,12 +559,14 @@ void NetworkTray::handlePrimaryConnectionChanged(const QString &uni)
 void NetworkTray::reloadWiredTrayPage()
 {
     KLOG_DEBUG() << "reloadWiredTrayPage";
-    m_verticalLayout->removeWidget(m_wiredTrayPage);
-    m_wiredTrayPage->disconnect();
-    delete m_wiredTrayPage;
-    m_wiredTrayPage = nullptr;
+    if(m_wiredTrayPage != nullptr)
+    {
+        m_verticalLayout->removeWidget(m_wiredTrayPage);
+        delete m_wiredTrayPage;
+        m_wiredTrayPage = nullptr;
+    }
+    
     m_wiredDeviceList.clear();
-
     m_wiredDeviceList = NetworkUtils::getAvailableDeviceList(Device::Ethernet);
     if (m_wiredDeviceList.count() != 0)
     {
@@ -569,12 +580,15 @@ void NetworkTray::reloadWiredTrayPage()
 
 void NetworkTray::reloadWirelessTrayPage()
 {
-    m_verticalLayout->removeWidget(m_wirelessTrayPage);
-    m_wiredTrayPage->disconnect();
-    delete m_wirelessTrayPage;
-    m_wirelessTrayPage = nullptr;
-    m_wirelessDeviceList.clear();
+    KLOG_DEBUG() << "reloadWirelessTrayPage";
+    if(m_wirelessTrayPage != nullptr)
+    {
+        m_verticalLayout->removeWidget(m_wirelessTrayPage);
+        delete m_wirelessTrayPage;
+        m_wirelessTrayPage = nullptr;
+    }
 
+    m_wirelessDeviceList.clear();
     m_wirelessDeviceList = NetworkUtils::getAvailableDeviceList(Device::Wifi);
     if (m_wirelessDeviceList.count() != 0)
     {
