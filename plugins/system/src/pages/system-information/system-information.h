@@ -43,9 +43,13 @@ private:
                                QString &systemVersion,
                                QString &kernelVersion);
 
-private slots :
-        void handleChangeHostName(void);
+    bool checkLicensEnable();
+    bool getLicenseDesc(QString& licenseStatus);
+
+private slots:
+    void handleChangeHostName(void);
     void updateHostName(bool isChanged, QString name);
+    void handleShowLicenseDialog();
 
 protected:
     bool eventFilter(QObject *obj, QEvent *event);

@@ -14,11 +14,14 @@
 
 #include "system-information.h"
 #include "dbus-wrapper/system-info-dbus.h"
+#include "dbus_license_dbus.h"
 #include "license-agreement.h"
 #include "ui_system-information.h"
 
-
 #include <kiran-log/qt5-log-i.h>
+#include <style-property.h>
+#include <QDBusConnection>
+#include <QDBusConnectionInterface>
 #include <QDateTime>
 #include <QDesktopWidget>
 #include <QFont>
@@ -26,7 +29,10 @@
 #include <QJsonObject>
 #include <QJsonValue>
 #include <QPainter>
-#include <style-property.h>
+#include <QDateTime>
+#include <QProcess>
+#include <kiran-message-box.h>
+
 #define HOST_NAME "host_name"
 #define ARCH "arch"
 #define KERNEL_VERSION "kernel_version"
@@ -34,7 +40,7 @@
 #define KERNEL_RELEASE "kernel_release"
 #define PRODUCT_RELEASE "product_release"
 
-SystemInformation::SystemInformation(QWidget *parent)
+SystemInformation::SystemInformation(QWidget* parent)
     : QWidget(parent), ui(new Ui::SystemInformation), hostNameWidget(nullptr), licenseAgreement(nullptr)
 {
     ui->setupUi(this);
@@ -78,9 +84,10 @@ void SystemInformation::init()
     });
     // clang-format on
     connect(ui->btn_change_name, &QPushButton::clicked, this, &SystemInformation::handleChangeHostName);
-    Kiran::StylePropertyHelper::setButtonType(ui->btn_change_name,Kiran::BUTTON_Default);
-    Kiran::StylePropertyHelper::setButtonType(ui->btn_EULA,Kiran::BUTTON_Default);
-    Kiran::StylePropertyHelper::setButtonType(ui->btn_version_license,Kiran::BUTTON_Default);
+    Kiran::StylePropertyHelper::setButtonType(ui->btn_change_name, Kiran::BUTTON_Default);
+    Kiran::StylePropertyHelper::setButtonType(ui->btn_EULA, Kiran::BUTTON_Default);
+    Kiran::StylePropertyHelper::setButtonType(ui->btn_version_license, Kiran::BUTTON_Default);
+    Kiran::StylePropertyHelper::setButtonType(ui->btn_license_show, Kiran::BUTTON_Default);
 }
 
 bool SystemInformation::initUI()
@@ -97,7 +104,7 @@ bool SystemInformation::initUI()
     }
     else
     {
-        QString hostname,arch,systemVersion,kernelVersion;
+        QString hostname, arch, systemVersion, kernelVersion;
         parseSoftwareInfoJson(systemInfoJson,
                               hostname,
                               arch,
@@ -108,16 +115,26 @@ bool SystemInformation::initUI()
         ui->lab_system_arch_info->setText(arch);
         ui->lab_system_version_info->setText(systemVersion);
         ui->lab_core_version_info->setText(kernelVersion);
-
     }
 
-    QList<QLabel *> labels = {ui->lab_name_info,ui->lab_core_version_info, ui->lab_system_arch_info,ui->lab_system_version_info};
-    for (auto label : labels)
+    QString licenseDesc;
+    if (!checkLicensEnable() || !getLicenseDesc(licenseDesc))
+    {
+        ui->widget_license->setVisible(false);
+    }
+    else
+    {
+        ui->lab_license_status->setText(licenseDesc);
+        connect(ui->btn_license_show, &QPushButton::clicked, this, &SystemInformation::handleShowLicenseDialog);
+    }
+
+    QList<QLabel*> labels = {ui->lab_name_info, ui->lab_core_version_info, ui->lab_system_arch_info, ui->lab_system_version_info, ui->lab_license_status};
+    for (QLabel* label : labels)
     {
         label->setStyleSheet("color:#919191;font-family: \"Noto Sans CJK SC regular\";");
     }
 
-    auto kiranFrames = findChildren<KiranFrame *>();
+    auto kiranFrames = findChildren<KiranFrame*>();
     for (auto frame : kiranFrames)
     {
         frame->setRadius(6);
@@ -151,23 +168,88 @@ void SystemInformation::parseSoftwareInfoJson(QString jsonString,
         return;
     }
     QJsonObject rootObject = jsonDocument.object();
-    if( rootObject.contains("host_name") && rootObject["host_name"].isString() )
+    if (rootObject.contains("host_name") && rootObject["host_name"].isString())
     {
         hostName = rootObject["host_name"].toString();
     }
-    if( rootObject.contains("arch") && rootObject["arch"].isString() )
+    if (rootObject.contains("arch") && rootObject["arch"].isString())
     {
         arch = rootObject["arch"].toString();
     }
-    if( rootObject.contains("product_release") && rootObject["product_release"].isString() )
+    if (rootObject.contains("product_release") && rootObject["product_release"].isString())
     {
         systemVersion = rootObject["product_release"].toString();
     }
-    if( rootObject.contains("kernal_name") && rootObject["kernal_name"].isString() &&
-        rootObject.contains("kernel_release") && rootObject["kernel_release"].isString() )
+    if (rootObject.contains("kernal_name") && rootObject["kernal_name"].isString() &&
+        rootObject.contains("kernel_release") && rootObject["kernel_release"].isString())
     {
         kernelVersion = rootObject["kernal_name"].toString() + " " + rootObject["kernel_release"].toString();
     }
+}
+
+bool SystemInformation::checkLicensEnable()
+{
+    QDBusConnection dbusConn = QDBusConnection::systemBus();
+    return dbusConn.interface()->isServiceRegistered("com.kylinsec.Kiran.LicenseManager");
+}
+
+bool SystemInformation::getLicenseDesc(QString& licenseStatus)
+{
+    DBusLicenseObject dBusLicenseObject("com.kylinsec.Kiran.LicenseManager",
+                                        "/com/kylinsec/Kiran/LicenseObject/KylinSecOS",
+                                        QDBusConnection::systemBus());
+    auto reply = dBusLicenseObject.GetLicense();
+    reply.waitForFinished();
+    if (reply.isError())
+    {
+        KLOG_ERROR() << "KylinSecOS GetLicense failed:" << reply.error();
+        return false;
+    }
+
+    QString licenseJson = reply.value();
+    QJsonDocument jsonDocument = QJsonDocument::fromJson(licenseJson.toUtf8());
+    QJsonObject rootObj = jsonDocument.object();
+    QStringList keys = rootObj.keys();
+
+    QSet<QString> keySet = {"expired_time","activation_status"};
+    for( auto key:keySet )
+    {
+        if( !keys.contains(key) )
+        {
+            KLOG_ERROR() << "KylinSecOS GetLicense missing key:" << key;
+            return false;
+        }
+    }
+
+    QVariant expiredTimeVar = rootObj["expired_time"].toVariant();
+    qlonglong expiredTimeSinceEpoch = expiredTimeVar.toULongLong();
+
+    QVariant activationStatusVar = rootObj["activation_status"].toVariant();
+    qulonglong activationStatus = activationStatusVar.toULongLong();
+
+    QDateTime expiredTime = QDateTime::fromSecsSinceEpoch(expiredTimeSinceEpoch);
+    if (activationStatus == 0) //未激活
+    {
+        licenseStatus = tr("UnActivated");
+    }
+    else
+    {
+        QDateTime currentDateTime = QDateTime::currentDateTime();
+
+        if( currentDateTime > expiredTime  ) //激活码已过期
+        {
+            licenseStatus = tr("Activation code has expired");
+        }
+        else if( expiredTime.date().year() >= 2100 ) //永久激活
+        {
+            licenseStatus = tr("Permanently activated");
+        }
+        else //已激活
+        {
+            licenseStatus = tr("Activated");
+        }
+    }
+    return true;
 }
 
 /**
@@ -200,13 +282,21 @@ void SystemInformation::updateHostName(bool isChanged, QString name)
     }
 }
 
+void SystemInformation::handleShowLicenseDialog()
+{
+    if( !QProcess::startDetached("/usr/bin/ksl-os-gui") )
+    {
+        KiranMessageBox::message(this, tr("Error"), tr("Failed to open the license activator"),KiranMessageBox::Ok);
+    }
+}
+
 /**
  * @brief 事件监听，当收到激活向导窗口或者授权信息窗口的关闭事件时，释放窗口内存
  * @param  obj  事件对象
  * @param  obj  事件
  * @return 是否过滤
  */
-bool SystemInformation::eventFilter(QObject *obj, QEvent *event)
+bool SystemInformation::eventFilter(QObject* obj, QEvent* event)
 {
     if (obj == hostNameWidget && event->type() == QEvent::Close)
     {
@@ -218,5 +308,5 @@ bool SystemInformation::eventFilter(QObject *obj, QEvent *event)
 
 QSize SystemInformation::sizeHint() const
 {
-    return {500,657};
+    return {500, 657};
 }
