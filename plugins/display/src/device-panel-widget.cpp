@@ -85,7 +85,7 @@ void DevicePanelWidget::changeItemEnabled(const bool &enbled)
 
     DevicePanelItem *item = static_cast<DevicePanelItem *>(m_btnGroup->checkedButton());
     item->changeEnabled(enbled);
-    emit sigItemEnableChanged(item->enabled());
+    emit screenItemEnableChanged(item->enabled());
 }
 
 QString DevicePanelWidget::getCurMonitorText()
@@ -94,7 +94,7 @@ QString DevicePanelWidget::getCurMonitorText()
     return m_curCheckedItem->text();
 }
 
-void DevicePanelWidget::updatePri()
+void DevicePanelWidget::updatePreview()
 {
     QButtonGroup *btnGroup = m_btnGroup;
     if (Q_UNLIKELY(!btnGroup)) return;
@@ -185,7 +185,7 @@ QString DevicePanelWidget::getCurMonitorPath() const
     return m_curCheckedItem->monitorPath();
 }
 
-void DevicePanelWidget::onBtnDraging(QAbstractButton *b)
+void DevicePanelWidget::onItemDraging(QAbstractButton *b)
 {
     if (Q_UNLIKELY(!m_btnGroup)) return;
     m_anchorPos = getMinDisGeometry(b, m_btnGroup->buttons());
@@ -193,21 +193,18 @@ void DevicePanelWidget::onBtnDraging(QAbstractButton *b)
     update();
 }
 
-void DevicePanelWidget::onBtnEndDrag(QAbstractButton *btn)
+void DevicePanelWidget::onItemEndDrag(QAbstractButton *btn)
 {
     if (Q_UNLIKELY(!m_btnGroup) || Q_UNLIKELY(!btn)) return;
-    //
     DevicePanelItem *item = static_cast<DevicePanelItem *>(btn);
     item->setZoomPair(m_anchorPos.zoomPair);
     item->clearAnchoredChildBtns();
     item->setAnchorByBtn(m_anchorPos.anchorByBtn, m_anchorPos.drect);
-    //
     insertItem(btn, m_anchorPos, m_btnGroup->buttons());
-    //
     QList<QAbstractButton *> childs;
     mainCluster(item, m_btnGroup->buttons(), childs);
     gatherItems(childs);
-    updatePri();
+    updatePreview();
 
     m_isDrag = false;
     update();
@@ -220,8 +217,8 @@ void DevicePanelWidget::onItemClicked(QAbstractButton *btn, bool isChecked)
     if (isChecked)
     {
         m_curCheckedItem = static_cast<DevicePanelItem *>(btn);
-        emit sigButtonChecked(m_curCheckedItem->monitorPath());
-        emit sigItemEnableChanged(m_curCheckedItem->enabled());
+        emit screenItemChecked(m_curCheckedItem->monitorPath());
+        emit screenItemEnableChanged(m_curCheckedItem->enabled());
     }
 }
 
@@ -232,25 +229,25 @@ void DevicePanelWidget::handleConfigModeChanged(ConfigMode mode)
 
     clear();
 
-    MonitorConfigDataList bufferDataList;
+    MonitorConfigDataList configDataList;
     if (mode == ConfigMode::CONFIG_MODE_COPY)
     {
-        MonitorConfigDataPtr bufferData = DisplayConfig::instance()->initCopyMode();
-        bufferDataList << bufferData;
+        MonitorConfigDataPtr configData = DisplayConfig::instance()->initCopyMode();
+        configDataList << configData;
     }
     else
-        bufferDataList = DisplayConfig::instance()->initExtraMode();
+        configDataList = DisplayConfig::instance()->initExtraMode();
 
-    int count = bufferDataList.count();
+    int count = configDataList.count();
     DevicePanelItem *checkedBtn = NULL;
     for (int i = 0; i < count; i++)
     {
-        auto bufferData = bufferDataList.value(i);
+        auto bufferData = configDataList.value(i);
         DevicePanelItem *btn = new DevicePanelItem(bufferData->path(), this);
         m_btnGroup->addButton(btn, i);
         btn->show();
-        connect(btn, &DevicePanelItem::sigDrag, this, &DevicePanelWidget::onBtnDraging);
-        connect(btn, &DevicePanelItem::sigEndDrag, this, &DevicePanelWidget::onBtnEndDrag);
+        connect(btn, &DevicePanelItem::drag, this, &DevicePanelWidget::onItemDraging);
+        connect(btn, &DevicePanelItem::endDrag, this, &DevicePanelWidget::onItemEndDrag);
         connect(btn, &DevicePanelItem::screenGeometryChanged, this, &DevicePanelWidget::updateScreenGeometry);
 
         if (checkedBtn)
@@ -264,7 +261,7 @@ void DevicePanelWidget::handleConfigModeChanged(ConfigMode mode)
     }
 
     gatherItemsFixPos(m_btnGroup->buttons());
-    updatePri();
+    updatePreview();
 
     if (!checkedBtn) return;
     checkedBtn->setChecked(true);
@@ -273,12 +270,12 @@ void DevicePanelWidget::handleConfigModeChanged(ConfigMode mode)
 void DevicePanelWidget::updateScreenGeometry()
 {
     QAbstractButton *btn = static_cast<QAbstractButton *>(sender());
-    onBtnEndDrag(btn);
+    onItemEndDrag(btn);
 }
 
 void DevicePanelWidget::resizeEvent(QResizeEvent *event)
 {
-    updatePri();
+    updatePreview();
     QWidget::resizeEvent(event);
 }
 

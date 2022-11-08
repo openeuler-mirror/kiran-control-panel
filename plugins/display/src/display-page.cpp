@@ -61,11 +61,8 @@ void DisplayPage::init()
 
 void DisplayPage::initConnect()
 {
-    //    connect(m_displayConfig, &DisplayConfig::saved, this, []() {});
-    //    connect(m_displayConfig, &DisplayConfig::canceled, this, []() {});
-
     connect(m_btnGroup, QOverload<int, bool>::of(&QButtonGroup::buttonToggled), this, &DisplayPage::switchDisplayConfigMode);
-    connect(ui->panel, &DevicePanel::buttonChecked, this, &DisplayPage::onScreenItemChecked);
+    connect(ui->panel, &DevicePanel::screenItemChecked, this, &DisplayPage::onScreenItemChecked);
 
     connect(m_displayConfig, &DisplayConfig::dbusPropertyChanged, this, &DisplayPage::handleDbusPropertiesChanged);
 
