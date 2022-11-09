@@ -134,9 +134,10 @@ bool SystemInformation::initUI()
         label->setStyleSheet("color:#919191;font-family: \"Noto Sans CJK SC regular\";");
     }
 
-    auto kiranFrames = findChildren<KiranFrame*>();
-    for (auto frame : kiranFrames)
+    QList<KiranFrame*> kiranFrames = findChildren<KiranFrame*>();
+    for (int i = 0; i < kiranFrames.count();i++)
     {
+        KiranFrame* frame = kiranFrames.at(i);
         frame->setRadius(6);
         frame->setDrawBroder(false);
     }

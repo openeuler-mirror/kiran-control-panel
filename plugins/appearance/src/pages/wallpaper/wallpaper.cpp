@@ -69,6 +69,7 @@ Wallpaper::~Wallpaper()
     delete ui;
     m_thread->quit();
     m_thread->wait();
+    delete m_thread;
 }
 
 void Wallpaper::initUI()

@@ -44,15 +44,15 @@ protected:
     virtual bool eventFilter(QObject* watched, QEvent* event);
 
 private:
-    QLabel* m_iconSelectLabel;
-    KiranFrame* m_iconImgWidget;
-    QWidget* m_currIconTheme;
+    QLabel* m_iconSelectLabel = nullptr;
+    KiranFrame* m_iconImgWidget = nullptr;
+    QWidget* m_currIconTheme = nullptr;
 
-    QLabel* m_selectLabel;
-    KiranFrame* m_themeImgWidget;
+    QLabel* m_selectLabel = nullptr;
+    KiranFrame* m_themeImgWidget = nullptr;
 
-    QLabel* m_cursorSelectLabel;
-    KiranFrame* m_cursorWidget;
+    QLabel* m_cursorSelectLabel = nullptr;
+    KiranFrame* m_cursorWidget = nullptr;
 
     QString m_theme;
 };
