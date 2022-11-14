@@ -364,6 +364,12 @@ bool Shortcut::getExecFromDesktop(QString fileName, QString &exec)
     if (str.isNull())
         return false;
 
+    //移除掉无用的%f,%u,%F,%U
+    //https://specifications.freedesktop.org/desktop-entry-spec/1.1/ar01s06.html
+
+    str = str.replace("%f","",Qt::CaseInsensitive);
+    str = str.replace("%u","",Qt::CaseInsensitive);
+
     exec = str;
     return true;
 }
