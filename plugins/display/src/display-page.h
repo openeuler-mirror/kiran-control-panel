@@ -65,7 +65,7 @@ private:
 
     void confirmSaveMessageBox();
 
-    void showExtraModeDataFromBuffer(const QString &monitorPath);
+    void showExtraModeData(const QString &monitorPath);
 
     void initComboBoxResolution(QComboBox *comboBox, const QMap<int, modeInfoPair> &map);
     void initComboBoxRefreshRate(QComboBox *comboBox, const QList<double> &refreshRateList);

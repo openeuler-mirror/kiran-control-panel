@@ -167,7 +167,7 @@ void DisplayPage::onScreenItemChecked(QString monitorPath)
         m_curMonitorPath = monitorPath;
         m_currentMonitorData.clear();
         m_currentMonitorData = m_displayConfig->getMonitorConfigData(monitorPath);
-        showExtraModeDataFromBuffer(monitorPath);
+        showExtraModeData(monitorPath);
         ui->comboBox_extra_windowScalingFactor->setCurrentIndex(windowScalingFactor);
     }
 }
@@ -304,7 +304,7 @@ void DisplayPage::selectRefreshRateComboboxItem(QComboBox *comboBox, const doubl
     int count = comboBox->count();
     for (int i = 0; i < count; ++i)
     {
-        double t_r = comboBox->itemData(i).toInt();
+        double t_r = comboBox->itemData(i).toDouble();
         if (r == t_r)
         {
             comboBox->setCurrentIndex(i);
@@ -415,7 +415,7 @@ void DisplayPage::confirmSaveMessageBox()
     }
 }
 
-void DisplayPage::showExtraModeDataFromBuffer(const QString &monitorPath)
+void DisplayPage::showExtraModeData(const QString &monitorPath)
 {
     QList<DisplayModesStu> list = m_displayConfig->listModes(monitorPath);
     QMap<int, modeInfoPair> map = getResolutionFromModes(list);
@@ -424,8 +424,8 @@ void DisplayPage::showExtraModeDataFromBuffer(const QString &monitorPath)
     //----------
     ui->comboBox_extra_resolving->blockSignals(true);
     initExtraComboBoxResolution(ui->comboBox_extra_resolving, map);
-    QSize bufferResolving = m_currentMonitorData->resolving();
-    selectResolutionComboboxItem(ui->comboBox_extra_resolving, bufferResolving.width(), bufferResolving.height());
+    QSize resolving = m_currentMonitorData->resolving();
+    selectResolutionComboboxItem(ui->comboBox_extra_resolving, resolving.width(), resolving.height());
     ui->comboBox_extra_resolving->blockSignals(false);
 
     ui->comboBox_extra_refreshRate->blockSignals(true);

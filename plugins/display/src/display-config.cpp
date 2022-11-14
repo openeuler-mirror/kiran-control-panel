@@ -78,7 +78,6 @@ void DisplayConfig::initConnect()
         connect(monitorInterface.data(), &MonitorBackEndProxy::dbusPropertyChanged, this, [this](const QString &name, const QVariant &value)
                 {
                     m_timer.start();
-
                 });
         m_monitorInterfaceList << monitorInterface;
     }
@@ -86,7 +85,6 @@ void DisplayConfig::initConnect()
     connect(m_displayInterface.data(), &DisplayBackEndProxy::dbusPropertyChanged, this, [this](const QString &name, const QVariant &value)
             {
                 m_timer.start();
-
             });
     connect(&m_timer, &QTimer::timeout, this, &DisplayConfig::handleDbusPropertiesChanged);
 
