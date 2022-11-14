@@ -311,7 +311,7 @@ void UserInfoPage::handlerUpdateUserPropertyDone(QString errMsg)
     {
         KiranMessageBox::message(nullptr,
                                  tr("Error"), errMsg,
-                                 KiranMessageBox::Yes | KiranMessageBox::No);
+                                 KiranMessageBox::Ok);
     }
     else
     {
@@ -330,7 +330,7 @@ void UserInfoPage::handlerUpdatePasswdDone(QString errMsg)
     {
         KiranMessageBox::message(nullptr,
                                  tr("Error"), errMsg,
-                                 KiranMessageBox::Yes | KiranMessageBox::No);
+                                 KiranMessageBox::Ok);
     }
     else
     {
@@ -363,7 +363,7 @@ void UserInfoPage::handlerDeleteUserDone(QString errMsg)
     emit sigIsBusyChanged(false);
     if (!errMsg.isEmpty())
     {
-        KiranMessageBox::message(this, tr("Error"), errMsg, KiranMessageBox::Yes | KiranMessageBox::No);
+        KiranMessageBox::message(this, tr("Error"), errMsg, KiranMessageBox::Ok);
     }
 }
 

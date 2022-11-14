@@ -232,7 +232,7 @@ void CreateUserPage::handlerCreateNewUserIsDone(QString userPath,
     if (!errMsg.isEmpty())
     {
         KiranMessageBox::message(nullptr, tr("Error"),
-                                 errMsg, KiranMessageBox::Yes | KiranMessageBox::No);
+                                 errMsg, KiranMessageBox::Ok);
     }
     if (!userPath.isEmpty())
     {
