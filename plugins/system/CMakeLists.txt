@@ -18,9 +18,15 @@ file(GLOB_RECURSE SYSTEM_SRC ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp
 
 qt5_create_translation(SYSTEM_QM ${CMAKE_CURRENT_SOURCE_DIR} .//translations/kiran-cpanel-system.zh_CN.ts)
 
+kiran_qt5_add_dbus_interface_ex(LICENSE_DBUS_SRC
+        data/com.kylinsec.Kiran.LicenseObject.xml
+        dbus_license_dbus
+        DBusLicenseObject)
+
 add_library(${TARGET_NAME} SHARED
         ${SYSTEM_SRC}
         ${SYSTEM_QM}
+        ${LICENSE_DBUS_SRC}
         ${CMAKE_CURRENT_SOURCE_DIR}/data/res.qrc)
 
 target_include_directories(${TARGET_NAME} PRIVATE

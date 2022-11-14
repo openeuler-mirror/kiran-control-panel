@@ -42,9 +42,12 @@ KiranModuleWidget::~KiranModuleWidget()
 
 void KiranModuleWidget::clear()
 {
-    disconnect(m_category, &Category::subItemAdded, this, &KiranModuleWidget::handleCategorySubItemAdded);
-    disconnect(m_category, &Category::subItemDeleted, this, &KiranModuleWidget::handleCategorySubItemDeleted);
-    disconnect(m_category, &Category::subItemInfoChanged, this, &KiranModuleWidget::handleCategorySubItemInfoChanged);
+    if (m_category != nullptr)
+    {
+        disconnect(m_category, &Category::subItemAdded, this, &KiranModuleWidget::handleCategorySubItemAdded);
+        disconnect(m_category, &Category::subItemDeleted, this, &KiranModuleWidget::handleCategorySubItemDeleted);
+        disconnect(m_category, &Category::subItemInfoChanged, this, &KiranModuleWidget::handleCategorySubItemInfoChanged);
+    }
 
     ui->list_subItems->clear();
     ui->widget_siderbar->hide();
@@ -96,7 +99,7 @@ void KiranModuleWidget::appendListWidgetItem(KiranControlPanel::SubItemPtr subit
     item->setWeight(subitem->getWeight());
     if (icon.isNull())
     {
-        KLOG_WARNING() << "can't find subitem icon:" << name << icon;
+        KLOG_WARNING() << "KiranModuleWidget: can't find subitem icon:" << name << icon;
     }
     else
     {
@@ -154,7 +157,7 @@ void KiranModuleWidget::handleCurrentItemChanged()
     auto selectedItems = ui->list_subItems->selectedItems();
     if (selectedItems.size() != 1)
     {
-        KLOG_ERROR() << "sider bar size != 1";
+        KLOG_ERROR() << "KiranModuleWidget: sider bar size != 1";
         return;
     }
 
@@ -162,21 +165,21 @@ void KiranModuleWidget::handleCurrentItemChanged()
 
     if (m_currentSubItem.first == selectedItem)
     {
-        KLOG_DEBUG() << "subitem not changed,ignore 'itemSelectionChanged' signal!";
+        KLOG_DEBUG() << "KiranModuleWidget: subitem not changed,ignore 'itemSelectionChanged' signal!";
         return;
     }
 
     auto mapIter = m_subItemsMap.find(selectedItem);
     if (mapIter == m_subItemsMap.end())
     {
-        KLOG_WARNING() << "can't find KiranControlPanel::SubItemPtr by QListWidgetItem," << selectedItem->text();
+        KLOG_WARNING() << "KiranModuleWidget: can't find KiranControlPanel::SubItemPtr by QListWidgetItem," << selectedItem->text();
         return;
     }
 
     KiranControlPanel::SubItemPtr pluginSubitem = *mapIter;
     if (checkHasUnSaved())
     {
-        KLOG_DEBUG() << "switch subitem to:" << pluginSubitem->getName() << "reject";
+        KLOG_DEBUG() << "KiranModuleWidget: switch subitem to:" << pluginSubitem->getName() << "reject";
         m_currentSubItem.first->setSelected(true);
         return;
     }
@@ -194,12 +197,12 @@ void KiranModuleWidget::handleCurrentItemChanged()
     QWidget *widget = pluginSubitem->createWidget();
     if (widget)
     {
-        KLOG_DEBUG() << "sub item widget sizeHint:" << widget->sizeHint();
+        KLOG_DEBUG() << "KiranModuleWidget: sub item widget sizeHint:" << widget->sizeHint();
         ui->centerLayout->addWidget(widget);
     }
     else
     {
-        KLOG_ERROR() << "can't get subitem widget:" << pluginSubitem->getName() << pluginSubitem->getID();
+        KLOG_ERROR() << "KiranModuleWidget: can't get subitem widget:" << pluginSubitem->getName() << pluginSubitem->getID();
     }
 
     m_subItemWidget = widget;

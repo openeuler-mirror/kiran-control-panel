@@ -22,6 +22,7 @@
 //给控制中心组件提供色块的控件,用于突出显示
 class KiranFrame : public QWidget
 {
+    Q_OBJECT
 public:
     explicit KiranFrame(QWidget* parent = nullptr, Qt::WindowFlags f = Qt::WindowFlags());
 
