@@ -19,6 +19,7 @@
 #define SYSTEM_LOGO "KylinSec OS"
 
 KylinsecLogo::KylinsecLogo(QWidget *parent)
+    :QWidget(parent)
 {
     setAccessibleName("KylinsecLogo");
 }

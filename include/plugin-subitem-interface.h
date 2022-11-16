@@ -46,7 +46,7 @@ public:
     // QVector< 显示文本(已翻译)，搜索跳转标识ID >
     virtual QVector<QPair<QString, QString>> getSearchKeys() = 0;
 
-    //创建显示控件
+    //创建该功能项显示控件,释放由控制中心主面板决定
     virtual QWidget* createWidget() = 0;
 
     //跳转至自定义搜索项

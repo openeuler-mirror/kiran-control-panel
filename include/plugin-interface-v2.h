@@ -38,8 +38,8 @@ public:
     //主面板调用该接口取消掉该插件初始化做的操作并卸载该插件
     virtual void uninit() = 0;
 
-    // 功能项数组，生存周期由插件维护
-    // 功能项发生变更时，应调用init时传入KcpInterface接口，通知主面板相关信息变更,及时加载新的功能项信息
+    // 功能项数组
+    // 功能项发生变更时，应调用init时传入KcpInterface接口，通知主面板功能项发生变更,及时同步功能项
     virtual QVector<KiranControlPanel::SubItemPtr> getSubItems() = 0;
 };
 }  // namespace KiranControlPanel

@@ -35,7 +35,7 @@ protected:
     void paintEvent(QPaintEvent *event) override;
 
 Q_SIGNALS:
-    void buttonChecked(QString monitorPath);
+    void screenItemChecked(QString monitorPath);
 
 private slots:
     void on_pushButton_left_clicked();
@@ -46,6 +46,4 @@ private slots:
 
 private:
     Ui::DevicePanel *ui;
-    //QVariantList m_textList;
-    // QMap<QString, QSize> m_textSize;
 };

@@ -34,7 +34,7 @@ public:
     void updateIconTheme(QString newIconTheme);
 
 private:
-    bool getIconThemes(int themeType);
+    bool getIconThemes();
     int getJsonValueFromString(QString jsonString);
     void createIconWidgets();
 

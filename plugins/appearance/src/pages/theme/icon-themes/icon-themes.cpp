@@ -13,9 +13,11 @@
  */
 
 #include "icon-themes.h"
+
 #include <kiran-log/qt5-log-i.h>
 #include <kiran-session-daemon/appearance-i.h>
 #include <kiranwidgets-qt5/kiran-message-box.h>
+
 #include <QDir>
 #include <QIcon>
 #include <QJsonArray>
@@ -23,6 +25,7 @@
 #include <QJsonObject>
 #include <QJsonParseError>
 #include <QVBoxLayout>
+
 #include "../theme-widget-group.h"
 #include "../theme-widget.h"
 #include "dbus-interface/appearance-global-info.h"
@@ -49,7 +52,7 @@ IconThemes::~IconThemes()
 
 bool IconThemes::initUI()
 {
-    if (!getIconThemes(APPEARANCE_THEME_TYPE_ICON))
+    if (!getIconThemes())
     {
         return false;
     }
@@ -84,10 +87,10 @@ void IconThemes::updateIconTheme(QString newIconTheme)
  * @return true 成功
  *         false 失败
  */
-bool IconThemes::getIconThemes(int themeType)
+bool IconThemes::getIconThemes()
 {
     QString iconThemesJson = nullptr;
-    if (!AppearanceGlobalInfo::instance()->getAllThemes(themeType, iconThemesJson))
+    if (!AppearanceGlobalInfo::instance()->getAllThemes(APPEARANCE_THEME_TYPE_ICON, iconThemesJson))
     {
         return false;
     }
@@ -103,44 +106,51 @@ int IconThemes::getJsonValueFromString(QString jsonString)
 {
     QJsonParseError jsonError;
     QJsonDocument jsonDocument = QJsonDocument::fromJson(jsonString.toLocal8Bit().data(), &jsonError);
+
     if (jsonDocument.isNull() || jsonError.error != QJsonParseError::NoError)
     {
-        KLOG_ERROR() << " please check the string " << jsonString.toLocal8Bit().data();
+        KLOG_ERROR() << "parse icon theme json failed," << jsonString << jsonError.errorString() << jsonError.error;
         return -1;
     }
-    if (jsonDocument.isArray())
+
+    if( !jsonDocument.isArray() )
     {
-        QJsonArray array = jsonDocument.array();
-        int iconThemesNum = array.size();
-        if (iconThemesNum < 1)
-            return -1;
-        for (int i = 0; i < iconThemesNum; i++)
-        {
-            QJsonValue value = array.at(i);
-            if (value.type() == QJsonValue::Object)
-            {
-                QJsonObject themeInfoObj = value.toObject();
-                if (themeInfoObj.contains("name"))
-                {
-                    QJsonValue themeValue = themeInfoObj.value("name");
-                    if (themeValue.isString())
-                    {
-                        QString name = themeValue.toVariant().toString();
-                        m_iconThemes.insert(i, name);
-                    }
-                }
-                if (themeInfoObj.contains("path"))
-                {
-                    QJsonValue themeValue = themeInfoObj.value("path");
-                    if (themeValue.isString())
-                    {
-                        QString path = themeValue.toVariant().toString();
-                        m_iconThemesPath.insert(i, path);
-                    }
-                }
-            }
-        }
+        return 0;
     }
+
+    QJsonArray array = jsonDocument.array();
+    if( array.size() < 1 )
+    {
+        return -1;
+    }
+
+    for (int i = 0; i < array.size();i++)
+    {
+        QJsonValue value = array.at(i);
+        if( value.type() != QJsonValue::Object )
+        {
+            continue;
+        }
+
+        QJsonObject themeInfoObj = value.toObject();
+        if( !themeInfoObj.contains("name") || !themeInfoObj.contains("path") )
+        {
+            KLOG_WARNING() << "parse getAllThemes json failed,Missing specific key(name/path)";
+            continue;
+        }
+        if( !themeInfoObj["name"].isString() || !themeInfoObj["path"].isString() )
+        {
+            KLOG_WARNING() << "parse getAllThemes json failed,Wrong key format(name/path)";
+            continue;
+        }
+        
+        QString name = themeInfoObj["name"].toString();
+        m_iconThemes.append(name);
+
+        QString path = themeInfoObj["path"].toString();
+        m_iconThemesPath.append(path);
+    }
+
     return m_iconThemes.size();
 }
 
@@ -153,8 +163,10 @@ void IconThemes::createIconWidgets()
     QVBoxLayout *vLayout = new QVBoxLayout(ui->widget_icon);
     vLayout->setMargin(0);
     vLayout->setSpacing(4);
+
     for (int i = 0; i < m_iconThemes.size(); i++)
     {
+        
         if (m_iconThemes.at(i).startsWith("Kiran", Qt::CaseInsensitive))
         {
             QString path = m_iconThemesPath.at(i) + "/apps/scalable/";
@@ -238,6 +250,7 @@ void IconThemes::createIconWidgets()
                 continue;
         }
     }
+
     connect(m_iconThemeWidgetGroup, &ThemeWidgetGroup::themeWidgetChange,
             [=](ThemeWidget *preWidget, ThemeWidget *currWidget) {
                 if (currWidget->getTheme() == m_currentIconTheme)

@@ -119,7 +119,6 @@ int main(int argc, char *argv[])
     w.setIcon(titleIcon);
     w.setSubItems(plugin.getSubItems());
     w.resize(w.sizeHint());
-    KLOG_DEBUG() << "sizeHint:" << w.sizeHint();
 
     QScreen* screen = QApplication::screenAt(QCursor::pos());
     QRect screenGeometry = screen->geometry();
