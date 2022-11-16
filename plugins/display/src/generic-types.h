@@ -47,10 +47,7 @@ struct DisplayModesStu
         return argument;
     }
 
-    // static void registerMetaType();
 };
 typedef QList<DisplayModesStu> ListDisplayModesStu;
 Q_DECLARE_METATYPE(DisplayModesStu)
 Q_DECLARE_METATYPE(ListDisplayModesStu)
-// qDBusRegisterMetaType<DisplayModesStu>();
-// qDBusRegisterMetaType<ListDisplayModesStu>();

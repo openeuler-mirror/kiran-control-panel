@@ -29,7 +29,7 @@ DevicePanelItem::DevicePanelItem(const QString &monitorPath, QWidget *parent) : 
     m_monitorConfigData = DisplayConfig::instance()->getMonitorConfigData(m_monitorPath);
     init();
 
-    connect(m_monitorConfigData.data(), &MonitorConfigData::resolvingChanged, this, &DevicePanelItem::handleBufferResolvingChanged);
+    connect(m_monitorConfigData.data(), &MonitorConfigData::resolvingChanged, this, &DevicePanelItem::handleConfigResolvingChanged);
 }
 
 void DevicePanelItem::init()
@@ -195,8 +195,8 @@ void DevicePanelItem::alterRotateDrect(const int &step)
             QRectF t = m_screenGeometryF;
             m_screenGeometryF.setWidth(t.height());
             m_screenGeometryF.setHeight(t.width());
-            emit sigDrag(this);
-            emit sigEndDrag(this);
+            emit drag(this);
+            emit endDrag(this);
         }
     }
     break;
@@ -208,8 +208,8 @@ void DevicePanelItem::alterRotateDrect(const int &step)
             QRectF t = m_screenGeometryF;
             m_screenGeometryF.setWidth(t.height());
             m_screenGeometryF.setHeight(t.width());
-            emit sigDrag(this);
-            emit sigEndDrag(this);
+            emit drag(this);
+            emit endDrag(this);
         }
     }
     break;
@@ -413,7 +413,7 @@ bool DevicePanelItem::enabled() const
     return m_enabled;
 }
 
-void DevicePanelItem::handleBufferResolvingChanged(const QSize &size)
+void DevicePanelItem::handleConfigResolvingChanged(const QSize &size)
 {
     m_screenGeometryF.setWidth(m_monitorConfigData->w());
     m_screenGeometryF.setHeight(m_monitorConfigData->h());
@@ -476,7 +476,7 @@ void DevicePanelItem::mouseMoveEvent(QMouseEvent *e)
     {
         m_mouseDrag = true;
         move(mapTo(parentWidget(), e->pos()) - m_pressPos);
-        emit sigDrag(this);
+        emit drag(this);
     }
 
     QPushButton::mouseMoveEvent(e);
@@ -489,7 +489,7 @@ void DevicePanelItem::mouseReleaseEvent(QMouseEvent *e)
         m_mousePress = false;
         if (m_mouseDrag)
         {
-            emit sigEndDrag(this);
+            emit endDrag(this);
             m_mouseDrag = false;
         }
     }
