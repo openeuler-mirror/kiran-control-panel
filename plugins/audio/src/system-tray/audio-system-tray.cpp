@@ -125,8 +125,13 @@ void AudioSystemTray::handleAudioTrayClicked(QSystemTrayIcon::ActivationReason r
     switch (reason)
     {
     case QSystemTrayIcon::Trigger:
-        setVolumeSettingPos();
-        m_volumenPopup->show();
+        if(m_volumenPopup->isVisible())
+            m_volumenPopup->hide();
+        else
+        {
+            setVolumeSettingPos();
+            m_volumenPopup->show();
+        }
         break;
     }
 }
