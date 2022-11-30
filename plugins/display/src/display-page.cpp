@@ -437,8 +437,10 @@ void DisplayPage::showExtraModeData(const QString &monitorPath)
     //--------
     QString clickedName = m_currentMonitorData->name();
     QString primaryName = m_displayConfigData->primary();
-    ui->pushButton_extra_primary->setChecked(primaryName == clickedName);
+
     ui->enabledButton->setChecked(m_currentMonitorData->enabled());
+    if(ui->enabledButton->isChecked())
+        ui->pushButton_extra_primary->setChecked(primaryName == clickedName);
 
     //多屏幕扩展模式，只有一个屏幕可用时，该屏幕不现实‘关闭’‘设为主屏幕’两项。
     QStringList enablePaths;  //可用的屏幕的路径集合
@@ -450,8 +452,9 @@ void DisplayPage::showExtraModeData(const QString &monitorPath)
     }
     if (enablePaths.count() <= 1 && enablePaths.contains(m_curMonitorPath))
     {
-        ui->enabledButton->setEnabled(false);
-        ui->pushButton_extra_primary->setEnabled(extraPrimaryBtnStatus(true, ui->enabledButton->isChecked()));
+        // 当只剩一个开启的显示器时，选择为主显示器 
+        if(ui->enabledButton->isChecked())
+            ui->pushButton_extra_primary->setChecked(true);
     }
     else
     {
@@ -523,7 +526,10 @@ void DisplayPage::handleDbusPropertiesChanged()
 void DisplayPage::handleEnabledButtonToggled(bool checked)
 {
     m_currentMonitorData->setEnabled(checked);
+    if(checked == false)
+        ui->pushButton_extra_primary->setChecked(false);
     ui->pushButton_extra_primary->setEnabled(extraPrimaryBtnStatus(!ui->enabledButton->isEnabled(), checked));
+    
     ui->comboBox_extra_resolving->setEnabled((checked));
     ui->comboBox_extra_refreshRate->setEnabled(checked);
     ui->comboBox_extra_windowScalingFactor->setEnabled(checked);
