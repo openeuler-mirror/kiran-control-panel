@@ -221,11 +221,16 @@
         <translation type="vanished">KylinSec.保留所有权利.</translation>
     </message>
     <message>
+        <location filename="../src/pages/hardware-information/hardware-information.cpp" line="88"/>
         <location filename="../src/pages/hardware-information/hardware-information.cpp" line="89"/>
-        <location filename="../src/pages/hardware-information/hardware-information.cpp" line="90"/>
-        <location filename="../src/pages/hardware-information/hardware-information.cpp" line="98"/>
+        <location filename="../src/pages/hardware-information/hardware-information.cpp" line="97"/>
         <source>Unknow</source>
         <translation>未知</translation>
+    </message>
+    <message>
+        <location filename="../src/pages/hardware-information/hardware-information.cpp" line="156"/>
+        <source>%1 GB (%2 GB available)</source>
+        <translation>%1 GB (%2 GB 可用)</translation>
     </message>
 </context>
 <context>
@@ -288,12 +293,12 @@
 <context>
     <name>KylinsecLogo</name>
     <message>
-        <location filename="../src/kylinsec-logo.cpp" line="35"/>
+        <location filename="../src/kylinsec-logo.cpp" line="36"/>
         <source>Copyright ©</source>
         <translation type="unfinished">版权所有 ©</translation>
     </message>
     <message>
-        <location filename="../src/kylinsec-logo.cpp" line="35"/>
+        <location filename="../src/kylinsec-logo.cpp" line="36"/>
         <source>KylinSec. All rights reserved.</source>
         <translation type="unfinished">KylinSec.保留所有权利.</translation>
     </message>
@@ -540,6 +545,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/pages/system-information/system-information.ui" line="272"/>
         <location filename="../src/pages/system-information/system-information.ui" line="350"/>
         <location filename="../src/pages/system-information/system-information.ui" line="416"/>
+        <location filename="../src/pages/system-information/system-information.ui" line="479"/>
         <source>TextLabel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -580,21 +586,26 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/pages/system-information/system-information.ui" line="459"/>
+        <source>Activation status:</source>
+        <translation type="unfinished">激活状态:</translation>
+    </message>
+    <message>
+        <location filename="../src/pages/system-information/system-information.ui" line="544"/>
         <source>EULA:</source>
         <translation>最终用户许可协议:</translation>
     </message>
     <message>
-        <location filename="../src/pages/system-information/system-information.ui" line="491"/>
+        <location filename="../src/pages/system-information/system-information.ui" line="576"/>
         <source>ButtonShowEULA</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/pages/system-information/system-information.ui" line="534"/>
+        <location filename="../src/pages/system-information/system-information.ui" line="619"/>
         <source>Version License:</source>
         <translation>版本协议:</translation>
     </message>
     <message>
-        <location filename="../src/pages/system-information/system-information.ui" line="566"/>
+        <location filename="../src/pages/system-information/system-information.ui" line="651"/>
         <source>ButtonShowVersionLicense</source>
         <translation type="unfinished"></translation>
     </message>
@@ -604,18 +615,49 @@ p, li { white-space: pre-wrap; }
         <translation>更改</translation>
     </message>
     <message>
-        <location filename="../src/pages/system-information/system-information.ui" line="494"/>
-        <location filename="../src/pages/system-information/system-information.ui" line="569"/>
+        <location filename="../src/pages/system-information/system-information.ui" line="504"/>
+        <location filename="../src/pages/system-information/system-information.ui" line="579"/>
+        <location filename="../src/pages/system-information/system-information.ui" line="654"/>
         <source>Show</source>
         <translation>查看</translation>
     </message>
     <message>
-        <location filename="../src/pages/system-information/system-information.cpp" line="92"/>
-        <location filename="../src/pages/system-information/system-information.cpp" line="93"/>
-        <location filename="../src/pages/system-information/system-information.cpp" line="94"/>
-        <location filename="../src/pages/system-information/system-information.cpp" line="95"/>
+        <location filename="../src/pages/system-information/system-information.cpp" line="99"/>
+        <location filename="../src/pages/system-information/system-information.cpp" line="100"/>
+        <location filename="../src/pages/system-information/system-information.cpp" line="101"/>
+        <location filename="../src/pages/system-information/system-information.cpp" line="102"/>
         <source>Unknow</source>
         <translation>未知</translation>
+    </message>
+    <message>
+        <location filename="../src/pages/system-information/system-information.cpp" line="234"/>
+        <source>UnActivated</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/system-information/system-information.cpp" line="242"/>
+        <source>Activation code has expired</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/system-information/system-information.cpp" line="246"/>
+        <source>Permanently activated</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/system-information/system-information.cpp" line="250"/>
+        <source>Activated</source>
+        <translation type="unfinished">已激活</translation>
+    </message>
+    <message>
+        <location filename="../src/pages/system-information/system-information.cpp" line="290"/>
+        <source>Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pages/system-information/system-information.cpp" line="290"/>
+        <source>Failed to open the license activator</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Copyright ©</source>

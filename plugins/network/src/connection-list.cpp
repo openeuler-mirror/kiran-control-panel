@@ -17,6 +17,7 @@
 #include <NetworkManagerQt/WirelessDevice>
 #include <QCollator>
 #include "general.h"
+#include <QEvent>
 
 using namespace NetworkManager;
 
@@ -25,6 +26,8 @@ ConnectionList::ConnectionList(QWidget *parent) : QWidget(parent)
     qRegisterMetaType<NetworkConnectionInfo>("NetworkConnectionInfo");
     initUI();
     initConnect();
+
+    m_scrollArea->installEventFilter(this);
 }
 
 ConnectionList::~ConnectionList()
@@ -55,6 +58,19 @@ void ConnectionList::initUI()
 
 void ConnectionList::initConnect()
 {
+}
+
+bool ConnectionList::eventFilter(QObject *watched, QEvent *event)
+{
+    if(watched == m_scrollArea)
+    {
+        if(event->type() == QEvent::Resize)
+        {
+            m_scrollAreaWidgetContents->setMaximumWidth(this->size().width());
+            return true;
+        }
+    }
+    return QWidget::eventFilter(watched,event);
 }
 
 void ConnectionList::setDevicePath(const QString &devicePath)

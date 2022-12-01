@@ -61,7 +61,6 @@ void HardwareInformation::initUI(void)
         {
             ui->label_network_card->setFixedHeight(36 * eths.count());
         }
-
         ui->label_memory_info->setText(elideText(memory));
         ui->label_memory_info->setToolTip(memory);
 
@@ -147,11 +146,15 @@ bool HardwareInformation::parseHardwareInfoJson(const QString &json,
     if (rootObj.contains("mem") && rootObj["mem"].isObject())
     {
         QJsonObject memObj = rootObj["mem"].toObject();
-        if (memObj.contains("total_size"))
+        if (memObj.contains("total_size")  && memObj.contains("available_size"))
         {
             double totalSize = memObj["total_size"].toDouble();
-            double memorySize = totalSize / 1024 / 1024 / 1024;
-            memory = QString("%1G").arg(QString::number(memorySize, 'f', 2));
+            double availableSize = memObj["available_size"].toDouble();
+            double totalMemory = totalSize / 1024 / 1024 / 1024;
+            double availableMemory = availableSize / 1024 / 1024 / 1024;
+
+            memory = tr("%1 GB (%2 GB available)").arg(QString::number(totalMemory, 'f', 2))
+                                                        .arg(QString::number(availableMemory, 'f', 2));
         }
     }
 

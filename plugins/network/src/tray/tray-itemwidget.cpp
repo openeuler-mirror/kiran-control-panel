@@ -40,7 +40,7 @@ void TrayItemWidget::initUI()
 {
     ui->activeStatusWidget->setVisible(false);
     ui->inputTextWidget->setVisible(false);
-
+    ui->connectionName->setElideMode(Qt::TextElideMode::ElideRight);
     ui->connectionStatus->setStyleSheet("color:#919191;font-family: \"Noto Sans CJK SC Regular\";");
     Kiran::StylePropertyHelper::setButtonType(ui->connectButton, Kiran::BUTTON_Default);
     Kiran::StylePropertyHelper::setButtonType(ui->inputTextConnectButton, Kiran::BUTTON_Default);
