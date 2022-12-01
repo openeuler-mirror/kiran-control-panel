@@ -94,7 +94,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="connectionName">
+       <widget class="KiranLabel" name="connectionName">
         <property name="text">
          <string>Name</string>
         </property>
@@ -515,6 +515,11 @@
    <class>AnimationLoadingLabel</class>
    <extends>QLabel</extends>
    <header location="global">animation-loading-label.h</header>
+  </customwidget>
+  <customwidget>
+   <class>KiranLabel</class>
+   <extends>QLabel</extends>
+   <header location="global">kiran-label.h</header>
   </customwidget>
  </customwidgets>
  <resources/>
