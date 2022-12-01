@@ -41,11 +41,12 @@ void ConnectionItemWidget::initUI()
 void ConnectionItemWidget::initPluginItemWidget()
 {
     m_connectionTypeIcon = new QLabel(this);
-    m_connectionName = new QLabel(this);
+    m_connectionName = new KiranLabel(this);
     m_horizonLayout = new QHBoxLayout(this);
     m_editButton = new QPushButton(this);
     m_activatedLabel = new AnimationLoadingLabel(this);
 
+    m_connectionName->setElideMode(Qt::TextElideMode::ElideRight);
     m_connectionTypeIcon->setVisible(false);
     m_activatedLabel->setVisible(false);
 

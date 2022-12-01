@@ -25,6 +25,8 @@
 #include <QJsonObject>
 #include <QLabel>
 #include <QPainter>
+#include <QEvent>
+#include <QResizeEvent>
 
 HardwareInformation::HardwareInformation(QWidget *parent)
     : QWidget(parent),
@@ -32,11 +34,28 @@ HardwareInformation::HardwareInformation(QWidget *parent)
 {
     ui->setupUi(this);
     initUI();
+
+    ui->scrollArea->setWidgetResizable(true);
+    ui->scrollArea->viewport()->installEventFilter(this);
 }
 
 HardwareInformation::~HardwareInformation()
 {
     delete ui;
+}
+
+bool HardwareInformation::eventFilter(QObject *watched, QEvent *event)
+{
+    if( watched==ui->scrollArea->viewport() && event->type()==QEvent::Resize )
+    {
+        QResizeEvent* resizeEvent = static_cast<QResizeEvent *>(event);
+        QWidget *contentWidget = ui->scrollArea->widget();
+        if (contentWidget)
+        {
+            contentWidget->setFixedWidth(resizeEvent->size().width());
+        }
+    }
+    return false;
 }
 
 void HardwareInformation::initUI(void)
@@ -62,10 +81,10 @@ void HardwareInformation::initUI(void)
             ui->label_network_card->setFixedHeight(36 * eths.count());
         }
 
-        ui->label_memory_info->setText(elideText(memory));
+        ui->label_memory_info->setText(memory);
         ui->label_memory_info->setToolTip(memory);
 
-        ui->label_CPU_info->setText(elideText(cpu));
+        ui->label_CPU_info->setText(cpu);
         ui->label_CPU_info->setToolTip(cpu);
 
         QList<std::tuple<QStringList, QGridLayout *> > hardwareMap = {
@@ -78,8 +97,9 @@ void HardwareInformation::initUI(void)
             QGridLayout *layout = std::get<1>(hardwareInitTuple);
             for (const QString &hardwareItem : infos)
             {
-                auto label = new QLabel(elideText(hardwareItem));
+                auto label = new KiranLabel(hardwareItem);
                 label->setToolTip(hardwareItem);
+                label->setElideMode(Qt::ElideRight);
                 layout->addWidget(label, layout->count(), 0, Qt::AlignRight);
             }
         }
@@ -147,11 +167,15 @@ bool HardwareInformation::parseHardwareInfoJson(const QString &json,
     if (rootObj.contains("mem") && rootObj["mem"].isObject())
     {
         QJsonObject memObj = rootObj["mem"].toObject();
-        if (memObj.contains("total_size"))
+        if (memObj.contains("total_size")  && memObj.contains("available_size"))
         {
             double totalSize = memObj["total_size"].toDouble();
-            double memorySize = totalSize / 1024 / 1024 / 1024;
-            memory = QString("%1G").arg(QString::number(memorySize, 'f', 2));
+            double availableSize = memObj["available_size"].toDouble();
+            double totalMemory = totalSize / 1024 / 1024 / 1024;
+            double availableMemory = availableSize / 1024 / 1024 / 1024;
+
+            memory = tr("%1 GB (%2 GB available)").arg(QString::number(totalMemory, 'f', 2))
+                                                        .arg(QString::number(availableMemory, 'f', 2));
         }
     }
 

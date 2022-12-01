@@ -97,6 +97,7 @@ void KiranAccountManager::appendSiderbarItem(const QString &userPath)
     }
 
     auto item = new QListWidgetItem(interface.user_name(), m_tabList);
+    item->setSizeHint(QSize(240, 50));
     item->setIcon(QPixmap(iconFile));
     item->setData(Kiran::ItemStatus_Role, interface.locked() ? tr("disable") : tr("enable"));
     item->setData(Kiran::ItemStatusColor_Role, interface.locked() ? QColor("#fa4949") : QColor("#43a3f2"));

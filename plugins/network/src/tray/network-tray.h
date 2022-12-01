@@ -51,7 +51,7 @@ public:
 
 public slots:
     void handleTrayClicked(QSystemTrayIcon::ActivationReason reason);
-    void showTrayPage();
+    void showOrHideTrayPage();
     void setTrayIcon(NetworkManager::Status status);
     void handleNetworkSettingClicked();
 
