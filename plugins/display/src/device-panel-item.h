@@ -75,12 +75,12 @@ public:
     bool enabled() const;
 
 signals:
-    void sigDrag(QAbstractButton *btn);
-    void sigEndDrag(QAbstractButton *btn);
+    void drag(QAbstractButton *btn);
+    void endDrag(QAbstractButton *btn);
     void screenGeometryChanged();
 
 private slots:
-    void handleBufferResolvingChanged(const QSize &size);
+    void handleConfigResolvingChanged(const QSize &size);
 
 private:
     void paintEvent(QPaintEvent *event);

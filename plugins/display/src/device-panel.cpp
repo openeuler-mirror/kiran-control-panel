@@ -38,13 +38,13 @@ DevicePanel::DevicePanel(QWidget *parent) : QFrame(parent),
     ui->pushButton_identifying->setThemeIcon(QPixmap(":/kcp-display/images/identification.svg"), PALETTE_DARK);
     ui->btns_widget->setAttribute(Qt::WA_TranslucentBackground, true);
 
-    connect(ui->contain, &DevicePanelWidget::sigButtonChecked, this, [this](QString monitorPath)
+    connect(ui->contain, &DevicePanelWidget::screenItemChecked, this, [this](QString monitorPath)
             {
                 ui->pushButton_horizontal->setChecked(ui->contain->getHorizontalDisplayReflectType());
                 ui->pushButton_vertical->setChecked(ui->contain->getVerticalDisplayReflectType());
-                emit buttonChecked(monitorPath);
+                emit screenItemChecked(monitorPath);
             });
-    connect(ui->contain, &DevicePanelWidget::sigItemEnableChanged, this, [=](const bool &enabled)
+    connect(ui->contain, &DevicePanelWidget::screenItemEnableChanged, this, [=](const bool &enabled)
             { ui->btns_widget->setEnabled(enabled); });
 
     connect(DisplayConfig::instance(), &DisplayConfig::configModeChanged, this, [this](ConfigMode configMode)

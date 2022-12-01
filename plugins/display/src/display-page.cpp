@@ -61,11 +61,8 @@ void DisplayPage::init()
 
 void DisplayPage::initConnect()
 {
-    //    connect(m_displayConfig, &DisplayConfig::saved, this, []() {});
-    //    connect(m_displayConfig, &DisplayConfig::canceled, this, []() {});
-
     connect(m_btnGroup, QOverload<int, bool>::of(&QButtonGroup::buttonToggled), this, &DisplayPage::switchDisplayConfigMode);
-    connect(ui->panel, &DevicePanel::buttonChecked, this, &DisplayPage::onScreenItemChecked);
+    connect(ui->panel, &DevicePanel::screenItemChecked, this, &DisplayPage::onScreenItemChecked);
 
     connect(m_displayConfig, &DisplayConfig::dbusPropertyChanged, this, &DisplayPage::handleDbusPropertiesChanged);
 
@@ -170,7 +167,7 @@ void DisplayPage::onScreenItemChecked(QString monitorPath)
         m_curMonitorPath = monitorPath;
         m_currentMonitorData.clear();
         m_currentMonitorData = m_displayConfig->getMonitorConfigData(monitorPath);
-        showExtraModeDataFromBuffer(monitorPath);
+        showExtraModeData(monitorPath);
         ui->comboBox_extra_windowScalingFactor->setCurrentIndex(windowScalingFactor);
     }
 }
@@ -307,7 +304,7 @@ void DisplayPage::selectRefreshRateComboboxItem(QComboBox *comboBox, const doubl
     int count = comboBox->count();
     for (int i = 0; i < count; ++i)
     {
-        double t_r = comboBox->itemData(i).toInt();
+        double t_r = comboBox->itemData(i).toDouble();
         if (r == t_r)
         {
             comboBox->setCurrentIndex(i);
@@ -418,7 +415,7 @@ void DisplayPage::confirmSaveMessageBox()
     }
 }
 
-void DisplayPage::showExtraModeDataFromBuffer(const QString &monitorPath)
+void DisplayPage::showExtraModeData(const QString &monitorPath)
 {
     QList<DisplayModesStu> list = m_displayConfig->listModes(monitorPath);
     QMap<int, modeInfoPair> map = getResolutionFromModes(list);
@@ -427,8 +424,8 @@ void DisplayPage::showExtraModeDataFromBuffer(const QString &monitorPath)
     //----------
     ui->comboBox_extra_resolving->blockSignals(true);
     initExtraComboBoxResolution(ui->comboBox_extra_resolving, map);
-    QSize bufferResolving = m_currentMonitorData->resolving();
-    selectResolutionComboboxItem(ui->comboBox_extra_resolving, bufferResolving.width(), bufferResolving.height());
+    QSize resolving = m_currentMonitorData->resolving();
+    selectResolutionComboboxItem(ui->comboBox_extra_resolving, resolving.width(), resolving.height());
     ui->comboBox_extra_resolving->blockSignals(false);
 
     ui->comboBox_extra_refreshRate->blockSignals(true);
@@ -440,8 +437,10 @@ void DisplayPage::showExtraModeDataFromBuffer(const QString &monitorPath)
     //--------
     QString clickedName = m_currentMonitorData->name();
     QString primaryName = m_displayConfigData->primary();
-    ui->pushButton_extra_primary->setChecked(primaryName == clickedName);
+
     ui->enabledButton->setChecked(m_currentMonitorData->enabled());
+    if(ui->enabledButton->isChecked())
+        ui->pushButton_extra_primary->setChecked(primaryName == clickedName);
 
     //多屏幕扩展模式，只有一个屏幕可用时，该屏幕不现实‘关闭’‘设为主屏幕’两项。
     QStringList enablePaths;  //可用的屏幕的路径集合
@@ -453,8 +452,9 @@ void DisplayPage::showExtraModeDataFromBuffer(const QString &monitorPath)
     }
     if (enablePaths.count() <= 1 && enablePaths.contains(m_curMonitorPath))
     {
-        ui->enabledButton->setEnabled(false);
-        ui->pushButton_extra_primary->setEnabled(extraPrimaryBtnStatus(true, ui->enabledButton->isChecked()));
+        // 当只剩一个开启的显示器时，选择为主显示器 
+        if(ui->enabledButton->isChecked())
+            ui->pushButton_extra_primary->setChecked(true);
     }
     else
     {
@@ -526,7 +526,10 @@ void DisplayPage::handleDbusPropertiesChanged()
 void DisplayPage::handleEnabledButtonToggled(bool checked)
 {
     m_currentMonitorData->setEnabled(checked);
+    if(checked == false)
+        ui->pushButton_extra_primary->setChecked(false);
     ui->pushButton_extra_primary->setEnabled(extraPrimaryBtnStatus(!ui->enabledButton->isEnabled(), checked));
+    
     ui->comboBox_extra_resolving->setEnabled((checked));
     ui->comboBox_extra_refreshRate->setEnabled(checked);
     ui->comboBox_extra_windowScalingFactor->setEnabled(checked);

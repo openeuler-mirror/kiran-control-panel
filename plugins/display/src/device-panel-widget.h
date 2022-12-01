@@ -59,16 +59,16 @@ public:
     QString getCurMonitorPath() const;
 
 Q_SIGNALS:
-    void sigButtonChecked(QString monitorPath);
+    void screenItemChecked(QString monitorPath);
     /*!
-     * \brief sigEnableChanged 状态更新信号与点击信号分开，两者需要执行的内容流程不能完全一致。
+     * \brief screenItemEnableChanged 状态更新信号与点击信号分开，两者需要执行的内容流程不能完全一致。
      * \param enabled
      */
-    void sigItemEnableChanged(const bool &enabled);
+    void screenItemEnableChanged(const bool &enabled);
 
 protected slots:
-    void onBtnDraging(QAbstractButton *b);
-    void onBtnEndDrag(QAbstractButton *btn);
+    void onItemDraging(QAbstractButton *b);
+    void onItemEndDrag(QAbstractButton *btn);
     void onItemClicked(QAbstractButton *btn, bool isChecked);
     void handleConfigModeChanged(ConfigMode mode);
     void updateScreenGeometry();
@@ -88,7 +88,7 @@ private:
     void gatherItems(QList<QAbstractButton *> &items);
     void mainCluster(DevicePanelItem *dragBtn, const QList<QAbstractButton *> &list, QList<QAbstractButton *> &ret);
 
-    void updatePri();
+    void updatePreview();
     void clear();
 
 private:

@@ -103,6 +103,9 @@ public slots:
     void handleConnectionUpdated();
     virtual void handleActiveStateDeactivated(const QString &activatedConnectionPath);
 
+protected:
+    bool eventFilter(QObject *watched, QEvent *event) override;
+
 signals:
     void connectionUpdated(const QString &path);
     void activateSelectedConnection(const QString &connectionPath,

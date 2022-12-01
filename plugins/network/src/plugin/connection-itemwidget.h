@@ -22,6 +22,7 @@
 #include <QPushButton>
 #include <QWidget>
 #include "kiran-frame/kiran-frame.h"
+#include <kiran-label.h>
 
 class AnimationLoadingLabel;
 class ConnectionItemWidget : public KiranFrame
@@ -57,7 +58,7 @@ protected:
 
 private:
     QLabel *m_connectionTypeIcon;
-    QLabel *m_connectionName;
+    KiranLabel *m_connectionName;
     QLabel *m_connectionStatus;
     QHBoxLayout *m_horizonLayout;
     QHBoxLayout *m_horizonIconAndNameLayout;
