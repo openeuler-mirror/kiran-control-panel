@@ -25,6 +25,8 @@
 #include <QJsonObject>
 #include <QLabel>
 #include <QPainter>
+#include <QEvent>
+#include <QResizeEvent>
 
 HardwareInformation::HardwareInformation(QWidget *parent)
     : QWidget(parent),
@@ -32,11 +34,28 @@ HardwareInformation::HardwareInformation(QWidget *parent)
 {
     ui->setupUi(this);
     initUI();
+
+    ui->scrollArea->setWidgetResizable(true);
+    ui->scrollArea->viewport()->installEventFilter(this);
 }
 
 HardwareInformation::~HardwareInformation()
 {
     delete ui;
+}
+
+bool HardwareInformation::eventFilter(QObject *watched, QEvent *event)
+{
+    if( watched==ui->scrollArea->viewport() && event->type()==QEvent::Resize )
+    {
+        QResizeEvent* resizeEvent = static_cast<QResizeEvent *>(event);
+        QWidget *contentWidget = ui->scrollArea->widget();
+        if (contentWidget)
+        {
+            contentWidget->setFixedWidth(resizeEvent->size().width());
+        }
+    }
+    return false;
 }
 
 void HardwareInformation::initUI(void)
@@ -61,10 +80,11 @@ void HardwareInformation::initUI(void)
         {
             ui->label_network_card->setFixedHeight(36 * eths.count());
         }
-        ui->label_memory_info->setText(elideText(memory));
+
+        ui->label_memory_info->setText(memory);
         ui->label_memory_info->setToolTip(memory);
 
-        ui->label_CPU_info->setText(elideText(cpu));
+        ui->label_CPU_info->setText(cpu);
         ui->label_CPU_info->setToolTip(cpu);
 
         QList<std::tuple<QStringList, QGridLayout *> > hardwareMap = {
@@ -77,8 +97,9 @@ void HardwareInformation::initUI(void)
             QGridLayout *layout = std::get<1>(hardwareInitTuple);
             for (const QString &hardwareItem : infos)
             {
-                auto label = new QLabel(elideText(hardwareItem));
+                auto label = new KiranLabel(hardwareItem);
                 label->setToolTip(hardwareItem);
+                label->setElideMode(Qt::ElideRight);
                 layout->addWidget(label, layout->count(), 0, Qt::AlignRight);
             }
         }
