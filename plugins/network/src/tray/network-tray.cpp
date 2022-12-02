@@ -244,7 +244,7 @@ void NetworkTray::handleTrayClicked(QSystemTrayIcon::ActivationReason reason)
     switch (reason)
     {
     case QSystemTrayIcon::Trigger:
-        showTrayPage();
+        showOrHideTrayPage();
         break;
     default:
         break;
@@ -276,26 +276,31 @@ void NetworkTray::handleNetworkSettingClicked()
     process.startDetached("kiran-control-panel", arguments);
 }
 
-void NetworkTray::showTrayPage()
+void NetworkTray::showOrHideTrayPage()
 {
-    // XXX:托盘界面在不可见的情况，不方便去修改size和位置，暂时先显示后在调整大小和位置
-    // this->setFixedSize(258, 258);
-    this->show();
-    QTimer::singleShot(50, this, [this]()
-                       {
-                                /**
-                                 * 1、当同时存在有线和无线网络托盘页面时，使用adjustSize已经能够得到较好的伸缩效果
-                                 * 2、当有线或无线只有其一时，最小sizeHint height为50,但adjustSize调整的window尺寸最小为（200,100）
-                                 *    此时则指定页面size大小
-                                 */
-                                //TODO:需要继续优化界面伸缩
-                                if(m_wiredTrayPage && m_wirelessTrayPage)
-                                    adjustSize();
-                                else
-                                {
-                                    this->resize(this->sizeHint());
-                                }
-                               setTrayPagePos(); });
+    if(this->isVisible())
+        this->hide();
+    else
+    {
+        // XXX:托盘界面在不可见的情况，不方便去修改size和位置，暂时先显示后在调整大小和位置
+        // this->setFixedSize(258, 258);
+        this->show();
+        QTimer::singleShot(50, this, [this]()
+                        {
+                                    /**
+                                     * 1、当同时存在有线和无线网络托盘页面时，使用adjustSize已经能够得到较好的伸缩效果
+                                     * 2、当有线或无线只有其一时，最小sizeHint height为50,但adjustSize调整的window尺寸最小为（200,100）
+                                     *    此时则指定页面size大小
+                                     */
+                                    //TODO:需要继续优化界面伸缩
+                                    if(m_wiredTrayPage && m_wirelessTrayPage)
+                                        adjustSize();
+                                    else
+                                    {
+                                        this->resize(this->sizeHint());
+                                    }
+                                setTrayPagePos(); });
+    }
 }
 
 void NetworkTray::setTrayPagePos()

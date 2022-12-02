@@ -31,6 +31,7 @@ class HardwareInformation : public QWidget
 public:
     explicit HardwareInformation(QWidget *parent = nullptr);
     ~HardwareInformation();
+    bool eventFilter(QObject *watched, QEvent *event) override;
 
     void initUI();
 private:
