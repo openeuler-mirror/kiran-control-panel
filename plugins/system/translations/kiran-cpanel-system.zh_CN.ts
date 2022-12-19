@@ -587,7 +587,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/pages/system-information/system-information.ui" line="459"/>
         <source>Activation status:</source>
-        <translation type="unfinished">激活状态:</translation>
+        <translation>激活状态:</translation>
     </message>
     <message>
         <location filename="../src/pages/system-information/system-information.ui" line="544"/>
@@ -632,32 +632,32 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/pages/system-information/system-information.cpp" line="234"/>
         <source>UnActivated</source>
-        <translation type="unfinished"></translation>
+        <translation>未激活</translation>
     </message>
     <message>
         <location filename="../src/pages/system-information/system-information.cpp" line="242"/>
         <source>Activation code has expired</source>
-        <translation type="unfinished"></translation>
+        <translation>激活码已过期</translation>
     </message>
     <message>
         <location filename="../src/pages/system-information/system-information.cpp" line="246"/>
         <source>Permanently activated</source>
-        <translation type="unfinished"></translation>
+        <translation>永久激活</translation>
     </message>
     <message>
         <location filename="../src/pages/system-information/system-information.cpp" line="250"/>
         <source>Activated</source>
-        <translation type="unfinished">已激活</translation>
+        <translation>已激活</translation>
     </message>
     <message>
         <location filename="../src/pages/system-information/system-information.cpp" line="290"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>错误</translation>
     </message>
     <message>
         <location filename="../src/pages/system-information/system-information.cpp" line="290"/>
         <source>Failed to open the license activator</source>
-        <translation type="unfinished"></translation>
+        <translation>启动激活许可证弹窗失败</translation>
     </message>
     <message>
         <source>Copyright ©</source>
