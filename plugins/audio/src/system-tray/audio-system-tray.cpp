@@ -47,8 +47,10 @@ AudioSystemTray::AudioSystemTray(QWidget *parent) : QWidget(parent)
 
     initTrayIcon();
     initMenu();
+    initDbusServiceWatcher();
     initConnect();
 }
+
 AudioSystemTray::~AudioSystemTray()
 {
 }
@@ -97,6 +99,18 @@ void AudioSystemTray::initMenu()
 
     connect(m_volumeSetting, &QAction::triggered, this, &AudioSystemTray::handleVolumeSettingClicked);
     connect(m_mixedSetting, &QAction::triggered, this, &AudioSystemTray::handleMixedSettingClicked);
+}
+
+void AudioSystemTray::initDbusServiceWatcher()
+{
+    m_dbusServiceWatcher = new QDBusServiceWatcher();
+    m_dbusServiceWatcher->setConnection(QDBusConnection::sessionBus());
+    m_dbusServiceWatcher->addWatchedService(AUDIO_DBUS_NAME);
+    m_dbusServiceWatcher->setWatchMode(QDBusServiceWatcher::WatchForUnregistration);
+    connect(m_dbusServiceWatcher, &QDBusServiceWatcher::serviceUnregistered, [this](const QString &service)
+            {
+                setTrayIcon(0);
+            });
 }
 
 void AudioSystemTray::initConnect()

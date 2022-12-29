@@ -17,8 +17,7 @@
 
 #include <QSystemTrayIcon>
 #include <QWidget>
-// #include <QVBoxLayout>
-// #include <QScrollArea>
+#include <QDBusServiceWatcher>
 
 class VolumeSettingPage;
 class MixedSettingPage;
@@ -38,12 +37,13 @@ public:
     void initTrayIcon();
     void initMenu();
     void initConnect();
+    void initDbusServiceWatcher();
     void setVolumeSettingPos();
     void setMixedSettingPos();
     QPixmap trayIconColorSwitch(const QString& iconPath, const int iconSize = 16);
     void getTrayGeometry();
-public slots:
 
+public slots:
     void handleAudioTrayClicked(QSystemTrayIcon::ActivationReason reason);
     void handleMixedSettingClicked();
     void handleVolumeSettingClicked();
@@ -72,6 +72,8 @@ private:
 
     QString m_colorTheme;
     int xTray, yTray, heightTray, widthTray;
+
+    QDBusServiceWatcher *m_dbusServiceWatcher;
 };
 
 #endif  // KIRAN_CPANEL_AUDIO_AUDIOSYSTEMTRAY_H

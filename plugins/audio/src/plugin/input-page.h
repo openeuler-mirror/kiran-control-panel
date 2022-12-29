@@ -62,10 +62,14 @@ public:
     explicit InputPage(QWidget *parent = nullptr);
     ~InputPage() override;
     QSize sizeHint() const override;
+
+private:
+    void init();
     void initInputDevice();
     void initInputSettins();
     void initActivedPort();
     void initConnet();
+    void disableSettings(); 
 
     void initVoulumeFeedBack();
     void initAudioFormat();

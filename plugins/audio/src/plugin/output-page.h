@@ -16,6 +16,7 @@
 
 #include <QMap>
 #include <QWidget>
+#include <QDBusServiceWatcher>
 
 QT_BEGIN_NAMESPACE
 namespace Ui
@@ -35,12 +36,7 @@ public:
     explicit OutputPage(QWidget *parent = nullptr);
     ~OutputPage() override;
     QSize sizeHint() const override;
-    void initOutputDevice();
-    void initOutputSettins();
-    void initConnect();
-    void initActivedPort();
-    void initVolumeSetting();
-    void initBalanceSetting();
+
 public slots:
     void handleDefaultSinkChanged(int index);
     void handleSinkAdded(int index);
@@ -50,12 +46,24 @@ public slots:
     void handleBalanceChanged(double value);
 
 private:
+    void init();
+    void initOutputDevice();
+    void initOutputSettins();
+    void initConnect();
+    void initActivedPort();
+    void initVolumeValue();
+    void initBalanceValue();
+
+    void disableSettings();
+
+private:
     Ui::OutputPage *ui;
     AudioInterface *m_audioInterface;
     QMap<int, AudioDeviceInterface *> m_outputDevicesMap;
     AudioDeviceInterface *m_defaultSink;
-    int m_defaultSinkIndex;
     int m_defaultDeviceIndex;
+    QDBusServiceWatcher *m_dbusServiceWatcher;
 };
+
 
 #endif  //KIRAN_CPANEL_AUDIO_OUTPUT_PAGE_H
