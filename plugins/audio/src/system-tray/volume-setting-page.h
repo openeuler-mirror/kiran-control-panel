@@ -17,6 +17,7 @@
 
 #include <QWidget>
 #include "common/audio-node.h"
+#include <QDBusServiceWatcher>
 
 QT_BEGIN_NAMESPACE
 namespace Ui
@@ -36,17 +37,26 @@ public:
     explicit VolumeSettingPage(enum AudioNode audio, const QString objectPath, QWidget *parent = nullptr);
     ~VolumeSettingPage() override;
 
+    QPixmap trayIconColorSwitch(const QString &iconPath);
+    void disableSettings();
+
+private:
+    void initDbusServiceWatcher();
     void initAudioDevice();
     void initAudioStream();
     template <class Audio>
     void initSettings(Audio *audio);
     template <class Audio>
     void clickMuteButton(Audio *audio);
-    QPixmap trayIconColorSwitch(const QString &iconPath);
+   
 
 public slots:
     void handleVolumeChanged(double value);
     void handleMuteButtonClicked();
+    void handleDefaultSinkChanged(int index);
+    void handleSinkAdded(int index);
+    void handleSinkDelete(int index);
+
     void setVolumeIcon(int value);
     void hideLine();
 
@@ -56,8 +66,10 @@ private:
     AudioDeviceInterface *m_sink;
     AudioStreamInterface *m_sinkInput;
 
-    int volumeBeforeMute;
-    AudioNode audioNode;
+    int m_volumeBeforeMute;
+    AudioNode m_audioNode;
+
+    QDBusServiceWatcher *m_dbusServiceWatcher;
 };
 
 #endif  // KIRAN_CPANEL_AUDIO_VOLUME_SETTING_PAGE_H
