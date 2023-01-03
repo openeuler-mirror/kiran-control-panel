@@ -167,6 +167,16 @@ qint64 AudioInfo::writeData(const char *data, qint64 len)
 InputPage::InputPage(QWidget *parent) : QWidget(parent), ui(new Ui::InputPage)
 {
     ui->setupUi(this);
+    init();
+}
+
+InputPage::~InputPage()
+{
+    delete ui;
+}
+
+void InputPage::init()
+{
     m_audioInterface = AudioInterface::instance();
     ui->inputVolume->setStyleSheet("color:#2eb3ff;");
     initInputDevice();
@@ -176,16 +186,8 @@ InputPage::InputPage(QWidget *parent) : QWidget(parent), ui(new Ui::InputPage)
     initConnet();
 }
 
-InputPage::~InputPage()
-{
-    delete ui;
-}
-
 void InputPage::initInputDevice()
 {
-    QDBusPendingReply<QStringList> getSources = m_audioInterface->GetSources();
-    QStringList sourcesList = getSources.value();
-
     QDBusPendingReply<QString> defaultSourcePath = m_audioInterface->GetDefaultSource();
     KLOG_DEBUG() << "defaultSourcePath" << defaultSourcePath;
 
@@ -236,11 +238,7 @@ void InputPage::initActivedPort()
     else
     {
         KLOG_DEBUG() << "ports is null";
-        m_isValidPort = false;
-        ui->inputDevices->insertItem(0, tr("No input device detected"));
-        ui->inputDevices->setEnabled(false);
-        ui->volumeSetting->setValue(0);
-        ui->volumeSetting->setEnabled(false);
+        disableSettings();
     }
 }
 
@@ -292,6 +290,15 @@ void InputPage::initConnet()
     connect(m_audioInterface, &AudioInterface::SourceAdded, this, &InputPage::handleSourceAdded);
     connect(m_audioInterface, &AudioInterface::SourceDelete, this, &InputPage::handleSourceDelete);
     connect(m_audioInterface, &AudioInterface::DefaultSourceChange, this, &InputPage::handleDefaultSourceChanged, Qt::QueuedConnection);
+}
+
+void InputPage::disableSettings()
+{
+    m_isValidPort = false;
+    ui->inputDevices->insertItem(0, tr("No input device detected"));
+    ui->inputDevices->setEnabled(false);
+    ui->volumeSetting->setValue(0);
+    ui->volumeSetting->setEnabled(false);
 }
 
 void InputPage::handleActivePortChanged(const QString &value)
