@@ -89,8 +89,28 @@ void EthernetWidget::saveSettings()
         QString cloneMac = ui->cloneDeviceMac->text();
         KLOG_DEBUG() << "macAddress:" << macAddress;
         KLOG_DEBUG() << "cloneMac:" << cloneMac;
+
         m_wiredSetting->setMacAddress(QByteArray::fromHex(macAddress.toUtf8()));
-        m_wiredSetting->setClonedMacAddress(QByteArray::fromHex(cloneMac.toUtf8()));
+
+        if(cloneMac.isEmpty())
+        {      
+            /**
+             * assigned-mac-address:
+             * The new field for the cloned MAC address. 
+             * It can be either a hardware address in ASCII representation, 
+             * or one of the special values "preserve", "permanent", "random" or "stable". 
+             * This field replaces the deprecated "cloned-mac-address" on D-Bus, 
+             * which can only contain explicit hardware addresses. 
+             * Note that this property only exists in D-Bus API. 
+             * libnm and nmcli continue to call this property "cloned-mac-address".
+            */      
+            m_wiredSetting->setAssignedMacAddress(QString());
+            m_wiredSetting->setClonedMacAddress(QByteArray());
+        }
+        else
+        {
+            m_wiredSetting->setClonedMacAddress(QByteArray::fromHex(cloneMac.toUtf8()));
+        }
         m_wiredSetting->setMtu(ui->customMTU->value());
     }
 }
