@@ -19,6 +19,7 @@
 #include "ui_system-information.h"
 
 #include <kiran-log/qt5-log-i.h>
+#include <kiran-message-box.h>
 #include <style-property.h>
 #include <QDBusConnection>
 #include <QDBusConnectionInterface>
@@ -29,9 +30,7 @@
 #include <QJsonObject>
 #include <QJsonValue>
 #include <QPainter>
-#include <QDateTime>
 #include <QProcess>
-#include <kiran-message-box.h>
 
 #define HOST_NAME "host_name"
 #define ARCH "arch"
@@ -135,7 +134,7 @@ bool SystemInformation::initUI()
     }
 
     QList<KiranFrame*> kiranFrames = findChildren<KiranFrame*>();
-    for (int i = 0; i < kiranFrames.count();i++)
+    for (int i = 0; i < kiranFrames.count(); i++)
     {
         KiranFrame* frame = kiranFrames.at(i);
         frame->setRadius(6);
@@ -212,15 +211,18 @@ bool SystemInformation::getLicenseDesc(QString& licenseStatus)
     QJsonObject rootObj = jsonDocument.object();
     QStringList keys = rootObj.keys();
 
-    QSet<QString> keySet = {"expired_time","activation_status"};
-    for( auto key:keySet )
+    QSet<QString> keySet = {"expired_time", "activation_status"};
+    for (auto key : keySet)
     {
-        if( !keys.contains(key) )
+        if (!keys.contains(key))
         {
             KLOG_ERROR() << "KylinSecOS GetLicense missing key:" << key;
             return false;
         }
     }
+
+    bool expired = false;
+    QString statusDesc("");
 
     QVariant expiredTimeVar = rootObj["expired_time"].toVariant();
     qlonglong expiredTimeSinceEpoch = expiredTimeVar.toULongLong();
@@ -229,27 +231,33 @@ bool SystemInformation::getLicenseDesc(QString& licenseStatus)
     qulonglong activationStatus = activationStatusVar.toULongLong();
 
     QDateTime expiredTime = QDateTime::fromSecsSinceEpoch(expiredTimeSinceEpoch);
-    if (activationStatus == 0) //未激活
+    if (activationStatus == 0)  // 未激活
     {
-        licenseStatus = tr("UnActivated");
+        statusDesc = tr("UnActivated");
+        expired = true;
     }
     else
     {
         QDateTime currentDateTime = QDateTime::currentDateTime();
 
-        if( currentDateTime > expiredTime  ) //激活码已过期
+        if (currentDateTime > expiredTime)  // 激活码已过期
         {
-            licenseStatus = tr("Activation code has expired");
+            statusDesc = tr("Activation code has expired");
+            expired = true;
         }
-        else if( expiredTime.date().year() >= 2100 ) //永久激活
+        else if (expiredTime.date().year() >= 2100)  // 永久激活
         {
-            licenseStatus = tr("Permanently activated");
+            statusDesc = tr("Permanently activated");
+            expired = false;
         }
-        else //已激活
+        else  // 已激活
         {
-            licenseStatus = tr("Activated");
+            statusDesc = tr("Activated");
+            expired = false;
         }
     }
+
+    licenseStatus = QString("<font color=%1>%2</font>").arg(expired?"#ff3838":"#5ab940").arg(statusDesc);
     return true;
 }
 
@@ -285,9 +293,9 @@ void SystemInformation::updateHostName(bool isChanged, QString name)
 
 void SystemInformation::handleShowLicenseDialog()
 {
-    if( !QProcess::startDetached("/usr/bin/ksl-os-gui") )
+    if (!QProcess::startDetached("/usr/bin/ksl-os-gui"))
     {
-        KiranMessageBox::message(this, tr("Error"), tr("Failed to open the license activator"),KiranMessageBox::Ok);
+        KiranMessageBox::message(this, tr("Error"), tr("Failed to open the license activator"), KiranMessageBox::Ok);
     }
 }
 
