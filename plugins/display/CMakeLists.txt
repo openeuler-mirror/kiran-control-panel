@@ -1,27 +1,8 @@
-cmake_minimum_required(VERSION 3.0)
-
 set(TARGET_NAME kiran-cpanel-display)
 
-set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
+file(GLOB_RECURSE DISPLAY_SRC "src/*.cpp" "src/*.h" "src/*.ui")
 
-set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTOUIC ON)
-set(CMAKE_AUTORCC ON)
-
-include(GNUInstallDirs)
-
-find_package(PkgConfig REQUIRED)
-find_package(Qt5 COMPONENTS Widgets DBus X11Extras Svg LinguistTools)
-pkg_search_module(KIRAN_CC_DAEMON REQUIRED kiran-cc-daemon)
-pkg_search_module(KLOG_QT5 REQUIRED klog-qt5)
-pkg_search_module(KIRANWIDGETS_QT5 REQUIRED kiranwidgets-qt5)
-pkg_search_module(KIRAN_STYLE_HELPER REQUIRED kiran-style-helper)
-
-file(GLOB_RECURSE SRC "src/*.cpp" "src/*.h" "src/*.ui")
-
-qt5_create_translation(QM_FILES ${CMAKE_CURRENT_SOURCE_DIR} translations/kiran-cpanel-display.zh_CN.ts)
+qt5_create_translation(DISPLAY_QM_FILES ${CMAKE_CURRENT_SOURCE_DIR} translations/kiran-cpanel-display.zh_CN.ts)
 
 kiran_qt5_add_dbus_interface_ex(DISPLAY_PROXY
         data/com.kylinsec.Kiran.SessionDaemon.Display.xml
@@ -30,9 +11,7 @@ kiran_qt5_add_dbus_interface_ex(DISPLAY_PROXY
         )
 
 set(INTERFACE_MONITOR_XML_FILES data/com.kylinsec.Kiran.SessionDaemon.Display.Monitor.xml)
-
 set_property(SOURCE ${INTERFACE_MONITOR_XML_FILES} PROPERTY INCLUDE generic-types.h)
-
 kiran_qt5_add_dbus_interface_ex(MONITOR_PROXY
         ${INTERFACE_MONITOR_XML_FILES}
         monitor_backEnd_proxy
@@ -40,22 +19,21 @@ kiran_qt5_add_dbus_interface_ex(MONITOR_PROXY
 )
 
 add_library(${TARGET_NAME} SHARED 
-        ${SRC} 
-        ${QM_FILES} 
+        ${DISPLAY_SRC} 
+        ${DISPLAY_QM_FILES} 
         ${DISPLAY_PROXY} 
         ${MONITOR_PROXY}
         )
 
 target_include_directories(${TARGET_NAME} PRIVATE
-        ${CMAKE_BINARY_DIR}
+        ${PROJECT_BINARY_DIR}
+        ${CMAKE_CURRENT_BINARY_DIR}
         src/
         ${KIRAN_CC_DAEMON_INCLUDE_DIRS}
-        ${KLOG_QT5_INCLUDE_DIRS}
-        ${KIRANWIDGETS_QT5_INCLUDE_DIRS}
-        ${KIRAN_CONTROL_PANEL_INCLUDE_DIRS}
-        ${CMAKE_CURRENT_BINARY_DIR}
+        ${KLOG_INCLUDE_DIRS}
+        ${KIRAN_WIDGETS_INCLUDE_DIRS}
         ${KCP_PLUGIN_INCLUDE_DIR}
-        ${KIRAN_STYLE_HELPER_INCLUDE_DIRS})
+        ${KIRAN_STYLE_INCLUDE_DIRS})
 
 target_link_libraries(${TARGET_NAME}
         common-widgets
@@ -63,7 +41,9 @@ target_link_libraries(${TARGET_NAME}
         Qt5::DBus
         Qt5::X11Extras
         Qt5::Svg
-        ${KIRAN_STYLE_HELPER_LIBRARIES})
+        ${KIRAN_STYLE_LIBRARIES}
+        ${KIRAN_WIDGETS_LIBRARIES}
+        ${KLOG_LIBRARIES})
 
 #安装插件到指定目录
 install(TARGETS ${TARGET_NAME} DESTINATION ${PLUGIN_LIBS_INSTALL_DIR}/)

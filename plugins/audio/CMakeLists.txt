@@ -1,14 +1,5 @@
 set(TARGET_NAME kiran-cpanel-audio)
 
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
-
-## 控制中心-音量插件
-find_package(Qt5 COMPONENTS Widgets DBus Svg Multimedia)
-pkg_search_module(KIRAN_CC_DAEMON REQUIRED kiran-cc-daemon)
-pkg_search_module(KIRAN_WIDGETS_QT5 REQUIRED kiranwidgets-qt5)
-pkg_search_module(KLOG_QT5 REQUIRED klog-qt5)
-pkg_search_module(KIRAN_STYLE_HELPER REQUIRED kiran-style-helper)
-
 file(GLOB_RECURSE AUDIO_TRANSLATION_SRC ./*.cpp ./*.h ./*.ui)
 qt5_create_translation(AUDIO_QM_FILES ${CMAKE_CURRENT_SOURCE_DIR} ./translations/kiran-cpanel-audio.zh_CN.ts ${AUDIO_TRANSLATION_SRC})
 
@@ -34,15 +25,15 @@ target_include_directories(${TARGET_NAME} PRIVATE
         resources
         ${CMAKE_CURRENT_BINARY_DIR}
         ${KCP_PLUGIN_INCLUDE_DIR}
-        ${KIRAN_WIDGETS_QT5_INCLUDE_DIRS}
+        ${KIRAN_WIDGETS_INCLUDE_DIRS}
         ${KIRAN_CC_DAEMON_INCLUDE_DIRS}
-        ${KLOG_QT5_INCLUDE_DIRS})
+        ${KLOG_INCLUDE_DIRS})
 
 target_link_libraries(${TARGET_NAME}
         Qt5::Widgets Qt5::DBus Qt5::Svg Qt5::Multimedia
-        ${KIRAN_WIDGETS_QT5_LIBRARIES}
+        ${KIRAN_WIDGETS_LIBRARIES}
         ${KIRAN_CC_DAEMON_LIBRARIES}
-        ${KLOG_QT5_LIBRARIES})
+        ${KLOG_LIBRARIES})
 
 ## 托盘区域-音量托盘
 set(TRAY_PROCESS kiran-audio-status-icon)
@@ -60,18 +51,18 @@ target_include_directories(${TRAY_PROCESS} PRIVATE
         src/system-tray
         src/dbus
         config
-        ${KIRAN_WIDGETS_QT5_INCLUDE_DIRS}
+        ${KIRAN_WIDGETS_INCLUDE_DIRS}
         ${KIRAN_CC_DAEMON_INCLUDE_DIRS}
-        ${KLOG_QT5_INCLUDE_DIRS}
+        ${KLOG_INCLUDE_DIRS}
         ${KIRAN_STYLE_HELPER_DIRS})
 
 target_link_libraries(${TRAY_PROCESS}
         common-widgets
         Qt5::Widgets Qt5::DBus Qt5::Svg Qt5::Multimedia
-        ${KIRAN_WIDGETS_QT5_LIBRARIES}
+        ${KIRAN_WIDGETS_LIBRARIES}
         ${KIRAN_CC_DAEMON_LIBRARIES}
-        ${KLOG_QT5_LIBRARIES}
-        ${KIRAN_STYLE_HELPER_LIBRARIES})
+        ${KLOG_LIBRARIES}
+        ${KIRAN_STYLE_LIBRARIES})
 
 #安装翻译
 install(FILES ${AUDIO_QM_FILES} DESTINATION ${TRANSLATION_INSTALL_DIR})

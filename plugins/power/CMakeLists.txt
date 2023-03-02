@@ -4,20 +4,14 @@ set(TARGET_NAME kiran-cpanel-power)
 
 #add_definitions(-DTEST)
 
-find_package(PkgConfig REQUIRED)
-find_package(Qt5 COMPONENTS Widgets Svg DBus LinguistTools)
-pkg_search_module(KIRAN_WIDGETS_QT5 REQUIRED kiranwidgets-qt5)
-pkg_search_module(KIRAN_CC_DAEMON REQUIRED kiran-cc-daemon)
-pkg_search_module(KLOG_QT5 REQUIRED klog-qt5)
-pkg_search_module(QGSETTINGS REQUIRED gsettings-qt)
 pkg_search_module(UPOWER_GLIB REQUIRED upower-glib)
 
-file(GLOB_RECURSE SRC
+file(GLOB_RECURSE POWER_SRC
         "src/*.cpp"
         "src/*.h"
         "src/*.ui")
 
-file(GLOB_RECURSE QRC
+file(GLOB_RECURSE POWER_QRC
         "resources/*.qrc")
 
 set( POWER_TS_FILES "translations/kiran-cpanel-power.zh_CN.ts" )
@@ -25,16 +19,16 @@ set( POWER_TS_FILES "translations/kiran-cpanel-power.zh_CN.ts" )
 qt5_create_translation( POWER_QM_FILES ${CMAKE_CURRENT_SOURCE_DIR} ${POWER_TS_FILES} )
 
 add_library(${TARGET_NAME} SHARED
-        ${SRC}
-        ${QRC}
+        ${POWER_SRC}
+        ${POWER_QRC}
         ${POWER_QM_FILES})
 
 target_include_directories(${TARGET_NAME} PRIVATE
         ${CMAKE_BINARY_DIR}
         ${CMAKE_CURRENT_SOURCE_DIR}/src
-        ${KIRAN_WIDGETS_QT5_INCLUDE_DIRS}
+        ${KIRAN_WIDGETS_INCLUDE_DIRS}
         ${KIRAN_CC_DAEMON_INCLUDE_DIRS}
-        ${KLOG_QT5_INCLUDE_DIRS}
+        ${KLOG_INCLUDE_DIRS}
         ${KIRAN_CONTROL_PANEL_PKG_INCLUDE_DIRS}
         ${QGSETTINGS_INCLUDE_DIRS}
         ${UPOWER_GLIB_INCLUDE_DIRS}
@@ -43,9 +37,9 @@ target_include_directories(${TARGET_NAME} PRIVATE
 target_link_libraries(${TARGET_NAME}
         Qt5::Widgets
         Qt5::DBus
-        ${KIRAN_WIDGETS_QT5_LIBRARIES}
+        ${KIRAN_WIDGETS_LIBRARIES}
         ${KIRAN_CC_DAEMON_LIBRARIES}
-        ${KLOG_QT5_LIBRARIES}
+        ${KLOG_LIBRARIES}
         ${QGSETTINGS_LIBRARIES}
         ${UPOWER_GLIB_LIBRARIES})
 

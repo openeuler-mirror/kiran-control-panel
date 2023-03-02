@@ -1,14 +1,4 @@
-cmake_minimum_required(VERSION 3.0)
-
 set(TARGET_NAME kiran-cpanel-mouse)
-
-find_package(PkgConfig REQUIRED)
-find_package(Qt5 COMPONENTS Widgets Svg DBus LinguistTools Network)
-find_package(KiranDBusGenerate REQUIRED)
-pkg_search_module(KIRAN_WIDGETS_QT5 REQUIRED kiranwidgets-qt5)
-pkg_search_module(KLOG_QT5 REQUIRED klog-qt5)
-pkg_search_module(KIRAN_CC_DAEMON REQUIRED kiran-cc-daemon)
-
 
 file(GLOB_RECURSE MOUSE_SRC "./*.cpp" "./*.h" "./*.ui" "./*.qrc" )
 
@@ -36,9 +26,8 @@ target_include_directories(${TARGET_NAME} PRIVATE
         ./src
         ${KCP_PLUGIN_INCLUDE_DIR}
         ${CMAKE_CURRENT_BINARY_DIR}
-        ${KCP_PLUGIN_INCLUDE_DIR}
-        ${KLOG_QT5_INCLUDE_DIRS}
-        ${KIRAN_WIDGETS_QT5_INCLUDE_DIRS}
+        ${KLOG_INCLUDE_DIRS}
+        ${KIRAN_WIDGETS_INCLUDE_DIRS}
         ${KIRAN_CC_DAEMON_INCLUDE_DIRS})
 
 target_link_libraries(${TARGET_NAME}
@@ -46,8 +35,8 @@ target_link_libraries(${TARGET_NAME}
         Qt5::DBus
         Qt5::Svg
         Qt5::Core
-        ${KIRANWIDGETS_QT5_LIBRARIES}
-        ${KLOG_QT5_LIBRARIES})
+        ${KIRANWIDGETS_LIBRARIES}
+        ${KLOG_LIBRARIES})
 
 install(TARGETS ${TARGET_NAME}
         DESTINATION ${PLUGIN_LIBS_INSTALL_DIR}/)
