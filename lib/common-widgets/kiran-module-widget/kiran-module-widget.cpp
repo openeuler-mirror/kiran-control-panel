@@ -165,7 +165,6 @@ void KiranModuleWidget::handleCurrentItemChanged()
 
     if (m_currentSubItem.first == selectedItem)
     {
-        KLOG_DEBUG() << "KiranModuleWidget: subitem not changed,ignore 'itemSelectionChanged' signal!";
         return;
     }
 

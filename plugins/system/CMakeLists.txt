@@ -33,10 +33,10 @@ target_include_directories(${TARGET_NAME} PRIVATE
         ${CMAKE_CURRENT_BINARY_DIR}
         ${CMAKE_CURRENT_SOURCE_DIR}/src
         ${KCP_PLUGIN_INCLUDE_DIR}
-        ${KLOG_QT5_INCLUDE_DIRS}
-        ${KIRAN_WIDGETS_QT5_INCLUDE_DIRS}
+        ${KLOG_INCLUDE_DIRS}
+        ${KIRAN_WIDGETS_INCLUDE_DIRS}
         ${KIRAN_CC_DAEMON_INCLUDE_DIRS}
-        ${KIRAN_STYLE_HELPER_INCLUDE_DIRS})
+        ${KIRAN_STYLE_INCLUDE_DIRS})
 
 target_link_libraries(${TARGET_NAME}
         common-widgets
@@ -44,8 +44,8 @@ target_link_libraries(${TARGET_NAME}
         Qt5::DBus
         Qt5::Svg
         Qt5::PrintSupport
-        ${KIRAN_WIDGETS_QT5_LIBRARIES}
-        ${KLOG_QT5_LIBRARIES}
+        ${KIRAN_WIDGETS_LIBRARIES}
+        ${KLOG_LIBRARIES}
         ${KIRAN_STYLE_HELPER_LIBRARIES})
 
 install(TARGETS ${TARGET_NAME} DESTINATION ${PLUGIN_LIBS_INSTALL_DIR})

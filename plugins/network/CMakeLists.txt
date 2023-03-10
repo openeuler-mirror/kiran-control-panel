@@ -1,40 +1,20 @@
-cmake_minimum_required(VERSION 3.2)
 set(TARGET_NAME kiran-cpanel-network)
 
-set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTORCC ON)
-set(CMAKE_AUTOUIC ON)
-
-set(QT_VERSION 5)
-set(REQUIRED_LIBS Core Gui Widgets DBus Network Svg LinguistTools)
-set(REQUIRED_LIBS_QUALIFIED Qt5::Core Qt5::Gui Qt5::Widgets Qt5::DBus Qt5::Network Qt5::Svg)
-
 qt5_create_translation(NETWORK_QM_FILES ${CMAKE_CURRENT_SOURCE_DIR} translations/kiran-cpanel-network.zh_CN.ts)
-
 file(GLOB_RECURSE PLUGIN_SRC "src/plugin/*.cpp" "src/plugin/*.h" "src/plugin/*.ui")
 file(GLOB_RECURSE TRAY_SRC "src/tray/*.cpp" "src/tray/*.h" "src/tray/*.ui")
-
 file(GLOB_RECURSE COMMON_SRC "src/animation-loading-label*" "src/connection-list*"
  "src/status-notification*" "src/utils*" "src/signal-forward*" "src/general.h")
-
 file(GLOB_RECURSE QRC "resources/*.qrc")
 
 add_library(${TARGET_NAME} SHARED
         ${PLUGIN_SRC}
         ${COMMON_SRC}
         ${QRC}
-        ${NETWORK_QM_FILES}
-        )
+        ${NETWORK_QM_FILES})
 
-find_package(Qt${QT_VERSION} COMPONENTS ${REQUIRED_LIBS} REQUIRED)
 find_package(KF5NetworkManagerQt REQUIRED)
-
-find_package(PkgConfig REQUIRED)
-pkg_search_module(KIRAN_WIDGETS_QT5 REQUIRED kiranwidgets-qt5)
-pkg_search_module(KLOG_QT5 REQUIRED klog-qt5)
 pkg_search_module(LIBNOTIFY REQUIRED libnotify)
-pkg_search_module(KIRAN_STYLE_HELPER REQUIRED kiran-style-helper)
 
 target_include_directories(${TARGET_NAME} PRIVATE
         src
@@ -49,10 +29,10 @@ target_include_directories(${TARGET_NAME} PRIVATE
         data
         ${KCP_PLUGIN_INCLUDE_DIR}
         ${CMAKE_BINARY_DIR}
-        ${KIRAN_WIDGETS_QT5_INCLUDE_DIRS}
-        ${KLOG_QT5_INCLUDE_DIRS}
+        ${KIRAN_WIDGETS_INCLUDE_DIRS}
+        ${KLOG_INCLUDE_DIRS}
         ${LIBNOTIFY_INCLUDE_DIRS}
-        ${KIRAN_STYLE_HELPER_INCLUDE_DIRS}
+        ${KIRAN_STYLE_INCLUDE_DIRS}
         )
 
 target_link_libraries(${TARGET_NAME}
@@ -96,9 +76,9 @@ target_include_directories(${TRAY_PROCESS} PRIVATE
 
 target_link_libraries(${TRAY_PROCESS}
         common-widgets
-        ${REQUIRED_LIBS_QUALIFIED}
-        ${KIRAN_WIDGETS_QT5_LIBRARIES}
-        ${KLOG_QT5_LIBRARIES}
+        Qt5::Core Qt5::Gui Qt5::Widgets Qt5::DBus Qt5::Network Qt5::Svg
+        ${KIRAN_WIDGETS_LIBRARIES}
+        ${KLOG_LIBRARIES}
         ${LIBNOTIFY_LIBRARIES}
         ${KIRAN_STYLE_HELPER_LIBRARIES}
         KF5::NetworkManagerQt

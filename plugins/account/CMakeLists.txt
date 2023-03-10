@@ -1,65 +1,53 @@
-cmake_minimum_required(VERSION 3.2)
-
 set(TARGET_NAME kiran-cpanel-account)
 
 #账户信息页面，密码过期策略是否显示
 option(PASSWD_EXPIRATION_POLICY_VISIBLE "Is password expiration policy visible" OFF)
 
 set(KCP_ACCOUNT_CONF_DIR ${SYSCONFDIR}/${TARGET_NAME})
-
 set(KCP_ACCOUNT_DATA_DIR ${INSTALL_DATADIR}/${TARGET_NAME})
 set(KCP_ACCOUNT_BUILDIN_AVATAR_DIR ${KCP_ACCOUNT_DATA_DIR}/account-icons)
-
 set(KCP_ACCOUNT_AVATAR_EDITOR ${INSTALL_LIBEXEC})
 set(KCP_ACCOUNT_AVATAR_EDITOR_PATH ${KCP_ACCOUNT_AVATAR_EDITOR}/kiran-avatar-editor)
-
 set(KCP_ACCOUNT_CONFIG_PATH ${KCP_ACCOUNT_DATA_DIR}/kiran-account-manager.conf)
 set(KCP_ACCOUNT_DEFAULT_AVATAR_PATH ${KCP_ACCOUNT_BUILDIN_AVATAR_DIR}/0.face)
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/data/config.h.in ${CMAKE_CURRENT_BINARY_DIR}/kcp-account-config.h @ONLY)
 
-find_package(PkgConfig REQUIRED)
-find_package(Qt5 COMPONENTS Widgets Svg DBus LinguistTools)
-pkg_search_module(KIRAN_WIDGETS_QT5 REQUIRED kiranwidgets-qt5)
-pkg_search_module(KIRAN_STYLE_HELPER REQUIRED kiran-style-helper)
-pkg_search_module(KIRAN_CC_DAEMON REQUIRED kiran-cc-daemon)
-pkg_search_module(ZERO_MQ REQUIRED libzmq)
-pkg_search_module(KLOG_QT5 REQUIRED klog-qt5)
 pkg_search_module(CRYPTOPP REQUIRED cryptopp)
+pkg_search_module(ZERO_MQ REQUIRED libzmq)
 
-qt5_create_translation(QM_FILES ${CMAKE_CURRENT_SOURCE_DIR} translations/kiran-cpanel-account.zh_CN.ts)
+qt5_create_translation(ACCOUNT_QM_FILES ${CMAKE_CURRENT_SOURCE_DIR} translations/kiran-cpanel-account.zh_CN.ts)
 
-file(GLOB_RECURSE ALL_SOURCES
+file(GLOB_RECURSE ACCOUNT_SRC
         "src/*.cpp"
         "src/*.h"
         "src/*.ui"
         "tools/*.cpp"
         "tools/*.h")
 
-#DBus代理代码生成
-set(DBUS_SRC_LIST "")
+set(ACCOUNT_DBUS_SRC_LIST "")
 kiran_qt5_add_dbus_interface_ex(KSD_ACCOUNTS_SRC
         data/com.kylinsec.Kiran.SystemDaemon.Accounts.xml
         ksd_accounts_proxy
         KSDAccountsProxy)
-list(APPEND DBUS_SRC_LIST ${KSD_ACCOUNTS_SRC})
+list(APPEND ACCOUNT_DBUS_SRC_LIST ${KSD_ACCOUNTS_SRC})
 
 kiran_qt5_add_dbus_interface_ex(KSD_ACCOUNTS_USER_SRC
         data/com.kylinsec.Kiran.SystemDaemon.Accounts.User.xml
         ksd_accounts_user_proxy
         KSDAccountsUserProxy)
-list(APPEND DBUS_SRC_LIST ${KSD_ACCOUNTS_USER_SRC})
+list(APPEND ACCOUNT_DBUS_SRC_LIST ${KSD_ACCOUNTS_USER_SRC})
 
 kiran_qt5_add_dbus_interface_ex(KSD_BIOMETRICS_SRC
         data/com.kylinsec.Kiran.SystemDaemon.Biometrics.xml
         ksd_biometrics_proxy
         KSDBiometricsProxy)
-list(APPEND DBUS_SRC_LIST ${KSD_BIOMETRICS_SRC})
+list(APPEND ACCOUNT_DBUS_SRC_LIST ${KSD_BIOMETRICS_SRC})
 
 add_library(${TARGET_NAME} SHARED
-        ${ALL_SOURCES}
-        ${QM_FILES}
-        ${DBUS_SRC_LIST})
+        ${ACCOUNT_SRC}
+        ${ACCOUNT_QM_FILES}
+        ${ACCOUNT_DBUS_SRC_LIST})
 
 target_include_directories(${TARGET_NAME} PRIVATE
         ${KCP_PLUGIN_INCLUDE_DIR}
@@ -70,11 +58,11 @@ target_include_directories(${TARGET_NAME} PRIVATE
         src/pages
         src/widgets
         tools
-        ${KIRAN_WIDGETS_QT5_INCLUDE_DIRS}
+        ${KIRAN_WIDGETS_INCLUDE_DIRS}
         ${KIRAN_CC_DAEMON_INCLUDE_DIRS}
         ${ZERO_MQ_INCLUDE_DIRS}
-        ${KLOG_QT5_INCLUDE_DIRS}
-        ${KIRAN_STYLE_HELPER_INCLUDE_DIRS}
+        ${KLOG_INCLUDE_DIRS}
+        ${KIRAN_STYLE_INCLUDE_DIRS}
         ${CRYPTOPP_INCLUDE_DIRS})
 
 target_link_libraries(${TARGET_NAME}
@@ -84,12 +72,11 @@ target_link_libraries(${TARGET_NAME}
         Qt5::Svg
         pam
         crypt
-        kiranwidgets-qt5
-        ${KIRAN_WIDGETS_QT5_LIBRARIES}
+        ${KIRAN_WIDGETS_LIBRARIES}
         ${KIRAN_CC_DAEMON_LIBRARIES}
         ${ZERO_MQ_LIBRARIES}
-        ${KLOG_QT5_LIBRARIES}
-        ${KIRAN_STYLE_HELPER_LIBRARIES}
+        ${KLOG_LIBRARIES}
+        ${KIRAN_STYLE_LIBRARIES}
         ${CRYPTOPP_LIBRARIES})
 
 if (PASSWD_EXPIRATION_POLICY_VISIBLE)

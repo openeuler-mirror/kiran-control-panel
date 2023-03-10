@@ -12,6 +12,7 @@ add_subdirectory(network)
 add_subdirectory(display)
 add_subdirectory(keybinding)
 add_subdirectory(appearance)
+add_subdirectory(authentication)
 
 
 #add_subdirectory(test)

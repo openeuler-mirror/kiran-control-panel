@@ -1,0 +1,17 @@
+[Kiran Control Panel Category]
+Name=Authentication Manager
+Name[zh_CN]=认证管理
+
+Category=authentication-manager
+
+Comment=Authentication Manager
+Comment[zh_CN]=认证管理
+
+Icon=authentication-manager
+
+Weight=10
+Keywords[zh_CN]=认证管理
+Keywords=Authentication Manager
+
+[Desktop Entry]
+Name[zh_CN]=authentication-manager.desktop
