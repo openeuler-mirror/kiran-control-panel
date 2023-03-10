@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE node PUBLIC "-//freedesktop//DTD D-BUS Object Introspection 1.0//EN" "http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd">
+<node xmlns:doc="http://www.freedesktop.org/dbus/1.0/doc.dtd">
+    <interface name="com.kylinsec.Kiran.Authentication.User">
+
+        <method name="DeleteIdentification">
+            <arg type="s" name="iid" direction="in">
+                <description>Delete an identification by identification ID.</description>
+            </arg>
+        </method>
+
+        <method name="RenameIdentification">
+            <arg type="s" name="iid" direction="in">
+                <description>Rename an identification by identification ID.</description>
+            </arg>
+            <arg type="s" name="name" direction="in">
+                <description>The identification name. For example fingerprint 1, fingerprint 2, etc.</description>
+            </arg>
+        </method>
+
+        <method name="GetIdentifications">
+            <arg type="i" name="auth_type" direction="in" />
+            <arg type="s" name="identifications" direction="out">
+                <description>The json string is an array that every item contains identification name, data_id and iid.</description>
+            </arg>
+        </method>
+
+        <method name="EnrollStart">
+            <arg name="authtype" direction="in" type="i">
+                <description>The authentication type being or to be performed. Refer to enum AuthType in file kas-authentication-i.h.</description>
+            </arg>
+            <arg name="name" direction="in" type="s">
+                <description>The identification name. For example fingerprint 1, fingerprint 2, etc.</description>
+            </arg>
+            <arg name="extra_info" direction="in" type="s">
+                <description>For additional information, use JSON format, such as Ukey with PIN code information</description>
+            </arg>
+            <description>Use the selected default device to enroll.</description>
+        </method>
+
+        <method name="EnrollStop">
+            <description>Stop an on-going fingerprint enrollment.</description>
+        </method>
+
+        <method name="ResetFailures">
+            <description>Reset the failed record.</description>
+        </method>
+
+        <property name="UserName" type="s" access="read">
+            <description>The username of the user.</description>
+        </property>
+
+        <property name="Failures" type="i" access="read">
+            <description>The auth failed count.</description>
+        </property>
+
+        <signal name="EnrollStatus">
+            <arg name="iid" type="s">
+                <description>identification ID,It is only valid if the entry is completed and successful</description>
+            </arg>
+            <arg name="isComplete" type="b">
+                <description>Complete or not</description>
+            </arg>
+            <arg name="progress" type="i">
+                <description>A number between 1 and 100 to describe the progress of enrolling fingerprint.</description>
+            </arg>
+            <arg name="message" type="s">
+                <description>Status description information.</description>
+            </arg>
+        </signal>
+
+        <signal name="IdentificationChanged">
+            <arg name="iid" type="s" />
+            <description>Send this signal when the authentication is changed.</description>
+        </signal>
+
+        <signal name="IdentificationAdded">
+            <arg name="iid" type="s" />
+            <description>Send this signal when the authentication is added.</description>
+        </signal>
+
+        <signal name="IdentificationDeleted">
+            <arg name="iid" type="s" />
+            <description>Send this signal when the authentication is deleted.</description>
+        </signal>
+
+    </interface>
+</node>
