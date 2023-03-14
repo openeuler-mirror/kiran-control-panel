@@ -59,6 +59,7 @@ private slots:
 private:
     FingerAuthType m_type;
     KADAuthType m_authType;
+    QString m_authDesc;
 
     QSet<QString> m_featureNameSet;
 
