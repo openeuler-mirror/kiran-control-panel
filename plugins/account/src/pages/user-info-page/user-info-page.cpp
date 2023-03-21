@@ -182,6 +182,8 @@ void UserInfoPage::initUI()
         ui->stackedWidget->setCurrentIndex(PAGE_USER_INFO);
     });
 
+    // 不启用老版本认证管理,新版本认证管理已移入到认证管理分类下
+#if 0
     QSettings biometricsSettings("/etc/kiran-biometrics/settings.conf", QSettings::IniFormat);
     bool supportFinger = biometricsSettings.value("SupportFinger", QVariant(false)).toBool();
     bool supportFace = biometricsSettings.value("SupportFace", QVariant(false)).toBool();
@@ -193,6 +195,7 @@ void UserInfoPage::initUI()
         });
     }
     else
+#endif
     {
         ui->btn_authManager->setVisible(false);
     }
