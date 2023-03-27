@@ -256,7 +256,7 @@ void InputPage::initInputSettins()
 
 void InputPage::initConnet()
 {
-    connect(ui->inputDevices, static_cast<void (QComboBox::*)(int)>(&QComboBox::activated), [=](int index)
+    connect(ui->inputDevices, static_cast<void (QComboBox::*)(int)>(&QComboBox::activated), [this](int index)
             {
                 QString namePort = ui->inputDevices->itemData(index, Qt::UserRole).toString();
                 if (!namePort.isNull())
@@ -272,7 +272,7 @@ void InputPage::initConnet()
                 else
                     KLOG_DEBUG() << "namePort is null"; });
 
-    connect(ui->volumeSetting, &QSlider::valueChanged, [=](int value)
+    connect(ui->volumeSetting, &QSlider::valueChanged, [this](int value)
             {
                 double volumeValue = static_cast<double>(value) / static_cast<double>(100);
                 if (m_defaultSource != nullptr)
