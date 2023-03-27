@@ -3,13 +3,28 @@ Category=network
 
 Name=Network
 Name[zh_CN]=网络
+Name[bo_CN]=དྲ་རྒྱ།
+Name[kk_KG]=Интернет
+Name[kk_KZ]=Интернет
+Name[mn_MN]=Интернэт
+Name[ug_CN]=تور 
 
 Comment=Network
 Comment[zh_CN]=网络
+Comment[bo_CN]=དྲ་རྒྱ།
+Comment[kk_KG]=Интернет
+Comment[kk_KZ]=Интернет
+Comment[mn_MN]=Интернэт
+Comment[ug_CN]=تور 
 
 Icon=network.png
 
 Weight=3
 
 Keywords[zh_CN]=网络
+Keywords[bo_CN]=དྲ་རྒྱ།
+Keywords[kk_KG]=Интернет
+Keywords[kk_KZ]=Интернет
+Keywords[mn_MN]=Интернэт
+Keywords[ug_CN]=تور 
 keywords=Network

@@ -16,7 +16,8 @@ file(GLOB_RECURSE SYSTEM_SRC ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp
                              ${CMAKE_CURRENT_SOURCE_DIR}/*.h
                              ${CMAKE_CURRENT_SOURCE_DIR}/*.ui)
 
-qt5_create_translation(SYSTEM_QM ${CMAKE_CURRENT_SOURCE_DIR} .//translations/kiran-cpanel-system.zh_CN.ts)
+file(GLOB TS_FILES "translations/*.ts")
+qt5_create_translation(SYSTEM_QM ${CMAKE_CURRENT_SOURCE_DIR} ${TS_FILES})
 
 kiran_qt5_add_dbus_interface_ex(LICENSE_DBUS_SRC
         data/com.kylinsec.Kiran.LicenseObject.xml

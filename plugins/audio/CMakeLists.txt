@@ -1,7 +1,8 @@
 set(TARGET_NAME kiran-cpanel-audio)
 
 file(GLOB_RECURSE AUDIO_TRANSLATION_SRC ./*.cpp ./*.h ./*.ui)
-qt5_create_translation(AUDIO_QM_FILES ${CMAKE_CURRENT_SOURCE_DIR} ./translations/kiran-cpanel-audio.zh_CN.ts ${AUDIO_TRANSLATION_SRC})
+file(GLOB TS_FILES "translations/*.ts")
+qt5_create_translation(AUDIO_QM_FILES ${CMAKE_CURRENT_SOURCE_DIR} ${TS_FILES} ${AUDIO_TRANSLATION_SRC})
 
 file(GLOB_RECURSE COMMON_SRC "src/audio-node.h" "src/volume-slider.cpp" "src/volume-slider.h")
 file(GLOB_RECURSE DBUS_SRC "src/dbus/*.cpp" "src/dbus/*.h")

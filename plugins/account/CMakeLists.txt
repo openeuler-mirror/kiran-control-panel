@@ -16,7 +16,8 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/data/config.h.in ${CMAKE_CURRENT_BINA
 pkg_search_module(CRYPTOPP REQUIRED cryptopp)
 pkg_search_module(ZERO_MQ REQUIRED libzmq)
 
-qt5_create_translation(ACCOUNT_QM_FILES ${CMAKE_CURRENT_SOURCE_DIR} translations/kiran-cpanel-account.zh_CN.ts)
+file(GLOB TS_FILES "translations/*.ts")
+qt5_create_translation(ACCOUNT_QM_FILES ${CMAKE_CURRENT_SOURCE_DIR} ${TS_FILES})
 
 file(GLOB_RECURSE ACCOUNT_SRC
         "src/*.cpp"
@@ -85,7 +86,7 @@ endif ()
 
 install(TARGETS ${TARGET_NAME} DESTINATION ${PLUGIN_LIBS_INSTALL_DIR}/)
 
-install(FILES ${QM_FILES} DESTINATION ${TRANSLATION_INSTALL_DIR})
+install(FILES ${ACCOUNT_QM_FILES} DESTINATION ${TRANSLATION_INSTALL_DIR})
 
 install(FILES ./data/kiran-account-manager.conf DESTINATION ${KCP_ACCOUNT_CONF_DIR})
 

@@ -3,13 +3,28 @@ Category=account-management
 
 Name=Account Management
 Name[zh_CN]=帐户
+Name[bo_CN]=ཐོ་ཁོངས།
+Name[kk_KG]=эсептери
+Name[kk_KZ]=шоттар
+Name[mn_MN]=данс
+Name[ug_CN]=ھېسابات 
 
 Comment=Account Management
 Comment[zh_CN]=帐户管理
+Comment[bo_CN]=རྩིས་ཐོའི་དོ་དམ།
+Comment[kk_KG]=Эсепти башкаруу
+Comment[kk_KZ]=Тіркелгіні басқару
+Comment[mn_MN]=Шилэн дансны удирдлага
+Comment[ug_CN]=ھېسابات باشقۇرۇش 
 
 Icon=account-management.png
 
 Weight=6
 
 Keywords[zh_CN]=帐户
+Keywords[bo_CN]=ཐོ་ཁོངས།
+Keywords[kk_KG]=эсептери
+Keywords[kk_KZ]=шоттар
+Keywords[mn_MN]=данс
+Keywords[ug_CN]=ھېسابات 
 Keywords=Account Management

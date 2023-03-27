@@ -3,13 +3,28 @@ Category=power-management
 
 Name=Power Management
 Name[zh_CN]=电源
+Name[bo_CN]=གློག་ཁུངས།
+Name[kk_KG]=электр менен камсыз кылуу
+Name[kk_KZ]=электрмен жабдықтау
+Name[mn_MN]=эрчим хүчний хангамж
+Name[ug_CN]=توك مەنبەسى 
 
 Comment=Power Management
 Comment[zh_CN]=电源管理
+Comment[bo_CN]=གློག་ཁུངས་དོ་དམ།
+Comment[kk_KG]=электр башкаруу
+Comment[kk_KZ]=қуатты басқару
+Comment[mn_MN]=эрчим хүчний менежмент
+Comment[ug_CN]=توك مەنبەسىنى باشقۇرۇش 
 
 Icon=power-management.png
 
 Weight=9
 
 Keywords[zh_CN]=电源管理
+Keywords[bo_CN]=གློག་ཁུངས་དོ་དམ།
+Keywords[kk_KG]=электр башкаруу
+Keywords[kk_KZ]=қуатты басқару
+Keywords[mn_MN]=эрчим хүчний менежмент
+Keywords[ug_CN]=توك مەنبەسىنى باشقۇرۇش 
 Keywords=Power Management

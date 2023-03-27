@@ -3,8 +3,10 @@
 Encoding=UTF-8
 Name=Control Center
 Name[zh_CN]=控制中心
+Name[bo_CN]=ཚོད་འཛིན་ལྟེ་གནས།
 Comment=kiran control center
 Comment=Kiran桌面控制中心
+Comment=kiranཅོག་ངོས་ཚོད་འཛིན་ལྟེ་གནས།
 Exec=kiran-control-panel
 Icon=kiran-control-panel.png
 Terminal=false

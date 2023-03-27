@@ -3,6 +3,11 @@ Category=timedate
 
 Name=TimeDate
 Name[zh_CN]=日期时间
+Name[bo_CN]=ཚེས་གྲངས་ཀྱི་དུས་ཚོད།
+Name[kk_KG]=Дата убактысы
+Name[kk_KZ]=Күндізгі уақыт
+Name[mn_MN]=Огноо
+Name[ug_CN]=ۋاقىت ۋاقتى 
 
 Comment=TimeDate
 Comment[zh_CN]=日期时间
@@ -12,4 +17,9 @@ Icon=timedate.png
 Weight=4
 
 Keywords[zh_CN]=日期时间
+Keywords[bo_CN]=ཚེས་གྲངས་ཀྱི་དུས་ཚོད།
+Keywords[kk_KG]=Дата убактысы
+Keywords[kk_KZ]=Күндізгі уақыт
+Keywords[mn_MN]=Огноо
+Keywords[ug_CN]=ۋاقىت ۋاقتى 
 Keywords=timedate

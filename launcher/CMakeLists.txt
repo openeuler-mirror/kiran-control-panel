@@ -2,7 +2,9 @@ set(TARGET_NAME kiran-cpanel-launcher)
 
 file(GLOB_RECURSE LAUNCHER_SRC "./src/*.cpp" "./src/*.h")
 set(CONTROL_PANEL_QRC ../resources/control-panel-resources.qrc)
-qt5_create_translation(LAUNCHER_QM ${CMAKE_SOURCE_DIR} translations/kiran-cpanel-launcher.zh_CN.ts)
+
+file(GLOB TS_FILES "translations/*.ts")
+qt5_create_translation(LAUNCHER_QM ${CMAKE_SOURCE_DIR} ${TS_FILES})
 
 add_executable(${TARGET_NAME}
         ${LAUNCHER_SRC}
