@@ -19,6 +19,8 @@
 #include <QObject>
 #include <QWidget>
 
+#define THEME_AUTO_NAME "Kiran-auto"
+
 class KiranFrame;
 //TODO:此处之后需要重构ThemeSettingPreviewWidget
 class ThemeWidget : public QWidget

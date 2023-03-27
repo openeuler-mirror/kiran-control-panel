@@ -30,7 +30,6 @@ using namespace Kiran;
 
 #define DARK_THEME "Kiran-dark"
 #define LIGHT_THEME "Kiran"
-
 /**
  * @brief ThemeWidget::ThemeWidget :创建单个图标主题控件
  * @param iconSize:显示的图标大小
@@ -42,7 +41,7 @@ using namespace Kiran;
 ThemeWidget::ThemeWidget(QSize iconSize, QString currentIconTheme,
                          QString iconThemeName, QStringList iconStringList, QWidget *parent) : QWidget(parent)
 {
-    //TODO:后续修改尺寸限制
+    // TODO:后续修改尺寸限制
     setMinimumWidth(455);
 
     QVBoxLayout *mainVLayout = new QVBoxLayout(this);
@@ -85,7 +84,7 @@ ThemeWidget::ThemeWidget(QSize iconSize, QString currentIconTheme,
     m_iconSelectLabel = new QLabel(this);
     m_iconSelectLabel->setFixedSize(QSize(16, 16));
 
-    //hLayout->addSpacerItem();
+    // hLayout->addSpacerItem();
     hLayout->addWidget(m_iconSelectLabel, Qt::AlignRight);
 
     m_iconImgWidget->setLayout(hLayout);
@@ -114,11 +113,12 @@ ThemeWidget::ThemeWidget(QString name, QString currentTheme, QWidget *parent) : 
     this->setSizePolicy(scSizePolicy);
 
     m_themeImgWidget = new KiranFrame(this);
-    m_themeImgWidget->setFixedHeight(60);
-    m_themeImgWidget->setMinimumWidth(230);
+    m_themeImgWidget->setFixedHeight(80);
+    m_themeImgWidget->setFixedWidth(140);
     m_themeImgWidget->setDrawBroder(false);
     m_themeImgWidget->setFixedBorderState(StylePalette::Checked);
     m_themeImgWidget->installEventFilter(this);
+    m_themeImgWidget->setBorderWidth(2);
 
     QLabel *themeName = new QLabel(this);
     themeName->setObjectName("themeName");
@@ -134,8 +134,8 @@ ThemeWidget::ThemeWidget(QString name, QString currentTheme, QWidget *parent) : 
 
     QHBoxLayout *hLayout = new QHBoxLayout(m_themeImgWidget);
     hLayout->setMargin(0);
-    hLayout->setContentsMargins(QMargins(0, 0, 15, 0));
-    hLayout->setSpacing(10);
+    hLayout->setContentsMargins(QMargins(0, 0, 0, 0));
+    hLayout->setSpacing(0);
 
     QLabel *img = new QLabel(m_themeImgWidget);
     img->setObjectName("img");
@@ -148,25 +148,30 @@ ThemeWidget::ThemeWidget(QString name, QString currentTheme, QWidget *parent) : 
         {
             return pixmap;
         }
-        return pixmap.scaled(QSize(166, 37), Qt::KeepAspectRatio, Qt::SmoothTransformation);
+        return pixmap.scaled(QSize(136, 76), Qt::KeepAspectRatio, Qt::SmoothTransformation);
     };
     if (name == DARK_THEME)
     {
-        img->setPixmap(scaleAdjustSizeFunc(":/kcp-appearance/images/dark-theme.png"));
+        img->setPixmap(scaleAdjustSizeFunc(":/kcp-appearance/images/theme-dark.png"));
         themeName->setText(tr("Dark Theme"));
     }
     else if (name == LIGHT_THEME)
     {
-        img->setPixmap(scaleAdjustSizeFunc(":/kcp-appearance/images/light-theme.png"));
+        img->setPixmap(scaleAdjustSizeFunc(":/kcp-appearance/images/theme-light.png"));
         themeName->setText(tr("Light Theme"));
     }
+    else if (name == THEME_AUTO_NAME)
+    {
+        img->setPixmap(scaleAdjustSizeFunc(":/kcp-appearance/images/theme-auto.png"));
+        themeName->setText(tr("Auto"));
+    }
 
-    m_selectLabel = new QLabel(m_themeImgWidget);
-    m_selectLabel->setAlignment(Qt::AlignLeft);
-    m_selectLabel->setFixedSize(QSize(16, 16));
+    // m_selectLabel = new QLabel(m_themeImgWidget);
+    // m_selectLabel->setAlignment(Qt::AlignLeft);
+    // m_selectLabel->setFixedSize(QSize(16, 16));
 
     hLayout->addWidget(img);
-    hLayout->addWidget(m_selectLabel);
+    // hLayout->addWidget(m_selectLabel);
     m_themeImgWidget->setLayout(hLayout);
 
     if (name == currentTheme)
@@ -186,7 +191,7 @@ ThemeWidget::ThemeWidget(QString name, QString currentTheme, QWidget *parent) : 
 ThemeWidget::ThemeWidget(QSize cursorSize, QString currentCursorTheme,
                          QString cursorThemeName, const QList<QPixmap> &cursorListMap, QWidget *parent) : QWidget(parent)
 {
-    //TODO:后续修改尺寸限制
+    // TODO:后续修改尺寸限制
     setMinimumWidth(455);
 
     QVBoxLayout *mainVLayout = new QVBoxLayout(this);
@@ -261,7 +266,6 @@ void ThemeWidget::setSelectStatus(bool selected, int themeType)
         switch (themeType)
         {
         case APPEARANCE_THEME_TYPE_GTK:
-            m_selectLabel->setPixmap(QPixmap(":/kcp-appearance/images/indicator-selected.png"));
             m_themeImgWidget->setDrawBroder(true);
             break;
         case APPEARANCE_THEME_TYPE_ICON:
@@ -281,7 +285,6 @@ void ThemeWidget::setSelectStatus(bool selected, int themeType)
         switch (themeType)
         {
         case APPEARANCE_THEME_TYPE_GTK:
-            m_selectLabel->clear();
             m_themeImgWidget->setDrawBroder(false);
             break;
         case APPEARANCE_THEME_TYPE_ICON:
