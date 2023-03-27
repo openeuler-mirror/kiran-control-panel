@@ -167,7 +167,7 @@ void OutputPage::initConnect()
     connect(m_audioInterface, &AudioInterface::SinkDelete, this, &OutputPage::handleSinkDelete);
     connect(m_audioInterface, &AudioInterface::DefaultSinkChange, this, &OutputPage::handleDefaultSinkChanged, Qt::QueuedConnection);
 
-    connect(ui->outputDevices, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), [=](int index)
+    connect(ui->outputDevices, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), [this](int index)
             {
                 QString namePort = ui->outputDevices->itemData(index, Qt::UserRole).toString();
                 KLOG_DEBUG() << "SetActivePort:" << namePort;
@@ -176,7 +176,7 @@ void OutputPage::initConnect()
                 else
                     KLOG_DEBUG() << "m_defaultSink is null"; });
 
-    connect(ui->volumeSetting, &QSlider::valueChanged, [=](int value)
+    connect(ui->volumeSetting, &QSlider::valueChanged, [this](int value)
             {
                 double volumeValue = static_cast<double>(ui->volumeSetting->sliderPosition()) / static_cast<double>(100);
                 if(m_defaultSink != nullptr)
@@ -187,10 +187,10 @@ void OutputPage::initConnect()
                 else
                     KLOG_DEBUG() << "m_defaultSink is null"; });
 
-    connect(ui->volumeBalance, &QSlider::valueChanged, [=](int value)
+    connect(ui->volumeBalance, &QSlider::valueChanged, [this](int value)
             {
                 double balanceValue = static_cast<double>(value) / static_cast<double>(100);
-                if (m_defaultSink == nullptr)
+                if (m_defaultSink != nullptr)
                 {
                     m_defaultSink->SetBalance(balanceValue);
                     KLOG_DEBUG() << "balanceValue" << balanceValue;
