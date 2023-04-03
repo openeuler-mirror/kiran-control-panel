@@ -1,0 +1,15 @@
+[Kiran Control Panel Category]
+Category=group
+
+Name=Group
+Name[zh_CN]=用户组
+
+Comment=Group
+Comment[zh_CN]=用户组
+
+Icon=group.png
+
+Weight=4
+
+Keywords[zh_CN]=用户组
+Keywords=Group
