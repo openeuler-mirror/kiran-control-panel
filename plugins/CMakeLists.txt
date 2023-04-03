@@ -13,6 +13,8 @@ add_subdirectory(display)
 add_subdirectory(keybinding)
 add_subdirectory(appearance)
 add_subdirectory(authentication)
-
+if(ENABLE_USER_GROUP)
+ add_subdirectory(group)
+endif()
 
 #add_subdirectory(test)

@@ -1,0 +1,15 @@
+<RCC>
+    <qresource prefix="/">
+        <file>kcp-group-images/create_group_icon.png</file>
+        <file>kcp-group-images/group_icon_small.png</file>
+        <file>kcp-group-images/loading.svg</file>
+        <file>kcp-group-images/chosen_icon.svg</file>
+        <file>kcp-group-images/group_icon_large.png</file>
+        <file>kcp-group-images/change_name_icon.svg</file>
+        <file>kcp-group-images/delete_member_icon.svg</file>
+        <file>kcp-group-images/search.svg</file>
+    </qresource>
+    <qresource prefix="/">
+        <file>kcp-group-themes/black_theme.qss</file>
+    </qresource>
+</RCC>
