@@ -14,11 +14,11 @@
 
 #include "finger-page.h"
 #include "auxiliary.h"
+#include "identification-rename-dialog.h"
 #include "utils/kiran-auth-dbus-proxy.h"
 #include "widgets/auth-setting-container.h"
 #include "widgets/auth-setting-item.h"
 #include "widgets/finger-enroll-progressbar.h"
-#include "identification-rename-dialog.h"
 
 #include <kiran-message-box.h>
 #include <qt5-log-i.h>
@@ -46,6 +46,7 @@ FingerPage::FingerPage(KiranAuthDBusProxy* proxy, FingerAuthType type, QWidget* 
     : QWidget(parent),
       m_type(type),
       m_authType(type == FINGER_TYPE_FINGER_PRINT ? KAD_AUTH_TYPE_FINGERPRINT : KAD_AUTH_TYPE_FINGERVEIN),
+      m_authDesc(type == FINGER_TYPE_FINGER_PRINT? tr("fingerprint"):tr("fingervein")),
       m_proxy(proxy),
       m_inEnroll(false)
 {
@@ -61,10 +62,10 @@ FingerPage::FingerPage(KiranAuthDBusProxy* proxy, FingerAuthType type, QWidget* 
 
 FingerPage::~FingerPage()
 {
-    if( m_inEnroll )
+    if (m_inEnroll)
     {
         m_proxy->stopEnroll();
-    } 
+    }
 }
 
 void FingerPage::initUI()
@@ -135,7 +136,7 @@ QWidget* FingerPage::initFeatureManager()
     featureManagerLayout->setSpacing(0);
     featureManagerLayout->setContentsMargins(0, 0, 0, 0);
 
-    auto labelDefaultDevice = new QLabel(tr("default fingerprint device"));
+    auto labelDefaultDevice = new QLabel(tr("default %1 device").arg(m_authDesc));
     featureManagerLayout->addWidget(labelDefaultDevice);
 
     featureManagerLayout->addSpacerItem(new QSpacerItem(10, 10, QSizePolicy::Minimum, QSizePolicy::Fixed));
@@ -147,7 +148,7 @@ QWidget* FingerPage::initFeatureManager()
 
     featureManagerLayout->addSpacerItem(new QSpacerItem(10, 16, QSizePolicy::Minimum, QSizePolicy::Fixed));
 
-    auto labelFingerList = new QLabel(tr("fingerprint list"));
+    auto labelFingerList = new QLabel(tr("%1list").arg(m_authDesc));
     featureManagerLayout->addWidget(labelFingerList);
 
     featureManagerLayout->addSpacerItem(new QSpacerItem(10, 10, QSizePolicy::Minimum, QSizePolicy::Fixed));
@@ -205,14 +206,13 @@ QWidget* FingerPage::initFeatureEnroll()
 QString FingerPage::autoGenerateFeatureName()
 {
     QRandomGenerator randomGenerator;
-    QString prefix = m_authType == KAD_AUTH_TYPE_FINGERPRINT ? tr("Fingerprint") : tr("FingerVein");
 
     for (int i = 0; i <= 10; ++i)
     {
         auto featureNumber = randomGenerator.bounded(1, MAX_FEATURE_NUMBER);
-        auto temp = QString("%1 %2").arg(prefix).arg(featureNumber);
+        auto temp = QString("%1 %2").arg(m_authDesc).arg(featureNumber);
 
-        if( !m_featureNameSet.contains(temp) )
+        if (!m_featureNameSet.contains(temp))
         {
             return temp;
         }
@@ -230,8 +230,8 @@ void FingerPage::onDefaultDeviceCurrentIdxChanged(int idx)
 void FingerPage::onRenameIdentification(const QVariant& userData)
 {
     QString iid = userData.toString();
-    QScopedPointer<IdentificationRenameDialog> renameDialog(new IdentificationRenameDialog(iid,m_proxy,this));
-    if( renameDialog->exec() )
+    QScopedPointer<IdentificationRenameDialog> renameDialog(new IdentificationRenameDialog(iid, m_proxy, this));
+    if (renameDialog->exec())
     {
         refreshAllFeature();
     }

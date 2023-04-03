@@ -30,6 +30,8 @@ public:
     bool getAllThemes(int themeType, QString &themesJson);
     bool setTheme(int themeType, QString themeName);
     bool getTheme(int type, QString &theme);
+    bool getAutoSwitchWindowTheme();
+    void enableAutoSwitchWindowTheme();
 
     QString getDesktopBackground();
     bool setDesktopBackground(QString);
@@ -45,6 +47,7 @@ signals:
     void fontChanged(int type, const QString &fontInfo);
     void desktopBackgroundChanged(const QString &value) const;
     void lockScreenBackgroundChanged(const QString &value) const;
+    void AutoSwitchWindowThemeChanged(bool autoSwitch);
 
 private:
     AppearanceBackEndProxy *m_appearanceInterface;
