@@ -23,7 +23,6 @@ namespace Ui
 class Themes;
 }
 
-class QButtonGroup;
 class IconThemes;
 class ThemeWidgetGroup;
 class SettingBriefWidget;
@@ -47,7 +46,7 @@ private:
     void createThemeWidget();
 
 public slots:
-    void handleThemeChange(int type, QString themeName);
+    void handleThemeChange(int type);
 
 signals:
     void clicked();
@@ -67,6 +66,7 @@ private:
     QStringList m_allThemesName;
     QStringList m_allThemesPath;
 
+    bool m_enableAutoSwitchWindowTheme = false;
     QString m_currentTheme;
     QStringList m_themesName;
     ThemeWidgetGroup *m_themeWidgetGroup;

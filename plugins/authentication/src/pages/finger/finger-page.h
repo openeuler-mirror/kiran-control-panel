@@ -14,7 +14,7 @@
 #pragma once
 #include <QSet>
 #include <QWidget>
-#include "kas-authentication-i.h"
+#include <kiran-authentication-service/kas-authentication-i.h>
 
 QT_BEGIN_NAMESPACE
 class QStackedWidget;
@@ -59,6 +59,7 @@ private slots:
 private:
     FingerAuthType m_type;
     KADAuthType m_authType;
+    QString m_authDesc;
 
     QSet<QString> m_featureNameSet;
 

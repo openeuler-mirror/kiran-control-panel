@@ -1,7 +1,8 @@
 set(TARGET_NAME kiran-cpanel-authentication)
 
-pkg_search_module(KIRAN_AUTH_SERVICE REQUIRED kiran-authentication-service)
-qt5_create_translation(AUTH_QM_FILES ${CMAKE_CURRENT_SOURCE_DIR} translations/kiran-cpanel-authentication.zh_CN.ts)
+#pkg_search_module(KIRAN_AUTH_SERVICE REQUIRED kiran-authentication-service)
+set(AUTH_TS_FILES ${CMAKE_CURRENT_SOURCE_DIR}/translations/kiran-cpanel-authentication.zh_CN.ts)
+qt5_create_translation(AUTH_QM_FILES ${AUTH_TS_FILES} ${CMAKE_CURRENT_SOURCE_DIR})
 
 file(GLOB_RECURSE AUTHENTICATION_SRC
         "src/*.cpp"
@@ -47,3 +48,5 @@ target_link_libraries(${TARGET_NAME}
 
 install(TARGETS ${TARGET_NAME}
         DESTINATION ${PLUGIN_LIBS_INSTALL_DIR}/)
+
+install(FILES ${AUTH_QM_FILES} DESTINATION ${TRANSLATION_INSTALL_DIR})

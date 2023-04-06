@@ -82,6 +82,17 @@ void KiranFrame::setDrawBroder(bool enable)
     update();
 }
 
+void KiranFrame::setBorderWidth(int width)
+{
+    if( width <= 0)
+    {
+        return;
+    }
+
+    m_borderWidth = width;
+    update();
+}
+
 void KiranFrame::setFixedBorderState(Kiran::StylePalette::ColorState state)
 {
     if (m_fixedBorder && m_fixedBorderState == state)
@@ -153,6 +164,7 @@ void KiranFrame::paintEvent(QPaintEvent* event)
                                           StylePalette::Widget,
                                           StylePalette::Border);
         auto pen = painter.pen();
+        pen.setWidth(m_borderWidth);
         pen.setColor(borderColor);
         painter.strokePath(painterPath,pen);
     }
