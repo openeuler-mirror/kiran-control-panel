@@ -44,8 +44,20 @@ Themes::Themes(QWidget *parent) : QWidget(parent),
                                   m_cursorThemes(nullptr)
 {
     ui->setupUi(this);
+
+    m_enableAutoSwitchWindowTheme = AppearanceGlobalInfo::instance()->getAutoSwitchWindowTheme();
+
     initUI();
 
+    connect(AppearanceGlobalInfo::instance(), &AppearanceGlobalInfo::AutoSwitchWindowThemeChanged, this, [this](bool enable)
+            {  
+                if( m_enableAutoSwitchWindowTheme == enable )
+                {
+                    return;
+                }
+
+                m_enableAutoSwitchWindowTheme = enable;
+                handleThemeChange(APPEARANCE_THEME_TYPE_GTK); });
     connect(AppearanceGlobalInfo::instance(), &AppearanceGlobalInfo::themeChanged, this, &Themes::handleThemeChange);
 }
 
@@ -98,18 +110,24 @@ bool Themes::initThemesUI()
         return false;
     }
 
-    //get current  gtk theme
+    // get current  gtk theme
     if (!AppearanceGlobalInfo::instance()->getTheme(APPEARANCE_THEME_TYPE_GTK, m_currentTheme))
     {
         return false;
     }
-    KLOG_INFO() << "Current theme is: " << m_currentTheme;
+
+    if (m_enableAutoSwitchWindowTheme)
+    {
+        m_currentTheme = THEME_AUTO_NAME;
+    }
 
     /*TODO: 待主题包完成后，替换成可供用户设置的主题名,
      *后续根据用户可设置的主题名命名规则，确定是否要根据命名(如kiran*)来检索可设置的主题名*/
-    m_themesName << DARK_THEME << LIGHT_THEME;
+    m_themesName << LIGHT_THEME << THEME_AUTO_NAME << DARK_THEME;
 
     createThemeWidget();
+
+    handleThemeChange(APPEARANCE_THEME_TYPE_GTK);
     return true;
 }
 
@@ -120,7 +138,7 @@ bool Themes::initThemesUI()
  */
 bool Themes::initIconThemesUI()
 {
-    //创建图标选择控件
+    // 创建图标选择控件
     m_chooseIconWidget = new SettingBriefWidget(tr("Choose icon themes"));
     m_chooseIconWidget->setObjectName("chooseIconWidget");
     ui->verticalLayout_choose_widget->addWidget(m_chooseIconWidget);
@@ -146,12 +164,14 @@ bool Themes::initIconThemesUI()
         ui->stackedWidget->addWidget(m_iconThemes);
 
     connect(m_chooseIconWidget, &SettingBriefWidget::clicked,
-            [=] {
+            [=]
+            {
                 ui->stackedWidget->setCurrentWidget(m_iconThemes);
             });
 
     connect(m_iconThemes, &IconThemes::sigSetIconTheme,
-            [=](bool isSuccessful, QString newIconName) {
+            [=](bool isSuccessful, QString newIconName)
+            {
                 m_chooseIconWidget->setName(newIconName);
                 ui->stackedWidget->setCurrentIndex(0);
             });
@@ -166,7 +186,7 @@ bool Themes::initIconThemesUI()
  */
 bool Themes::initCursorThemesUI()
 {
-    //创建光标选择控件
+    // 创建光标选择控件
     m_chooseCursorWidget = new SettingBriefWidget(tr("Choose cursor themes"));
     m_chooseCursorWidget->setObjectName("chooseCursorWidget");
     ui->verticalLayout_choose_widget->addWidget(m_chooseCursorWidget);
@@ -191,12 +211,14 @@ bool Themes::initCursorThemesUI()
         ui->stackedWidget->addWidget(m_cursorThemes);
 
     connect(m_chooseCursorWidget, &SettingBriefWidget::clicked,
-            [=] {
+            [this]
+            {
                 ui->stackedWidget->setCurrentWidget(m_cursorThemes);
             });
 
     connect(m_cursorThemes, &CursorThemes::sigSetCursorTheme,
-            [=](bool isSuccessful, QString newThemeName) {
+            [this](bool isSuccessful, QString newThemeName)
+            {
                 m_chooseCursorWidget->setName(newThemeName);
                 ui->stackedWidget->setCurrentIndex(0);
             });
@@ -290,7 +312,7 @@ void Themes::createThemeWidget()
 {
     m_themeWidgetGroup = new ThemeWidgetGroup(this);
 
-    for (int i = 0; i < SETTING_THEME_NUM; i++)
+    for (int i = 0; i < m_themesName.count(); i++)
     {
         ThemeWidget *themeWidget = new ThemeWidget(m_themesName.at(i), m_currentTheme, this);
         themeWidget->setAccessibleName(QString("ThemeWidget::%1").arg(m_themesName.at(i)));
@@ -298,39 +320,49 @@ void Themes::createThemeWidget()
             m_themeWidgetGroup->setCurrentWidget(themeWidget);
 
         themeWidget->setTheme(m_themesName.at(i));
-        //将依次主题信息控件添加进主题选择布局中，支持动态添加
-        if (i % 2 == 0)
-        {
-            ui->gridLayout_themes->addWidget(themeWidget, i / 2, 0, Qt::AlignHCenter);
-        }
-        else
-        {
-            ui->gridLayout_themes->addWidget(themeWidget, i / 2, 1, Qt::AlignHCenter);
-        }
+        ui->gridLayout_themes->addWidget(themeWidget, 0, i, Qt::AlignHCenter);
         m_themeWidgetGroup->addWidget(themeWidget);
+    }
 
-        connect(m_themeWidgetGroup, &ThemeWidgetGroup::themeWidgetChange,
-                [=](ThemeWidget *preWidget, ThemeWidget *currWidget) {
-                    Q_UNUSED(preWidget);
-                    QString theme = currWidget->getTheme();
-                    if (!QString::compare(m_currentTheme, theme))
-                        return;
+    connect(m_themeWidgetGroup, &ThemeWidgetGroup::themeWidgetChange,
+            [=](ThemeWidget *preWidget, ThemeWidget *currWidget)
+            {
+                Q_UNUSED(preWidget);
+                QString theme = currWidget->getTheme();
+                if (!QString::compare(m_currentTheme, theme))
+                    return;
+
+                if (theme == THEME_AUTO_NAME)
+                {
+                    AppearanceGlobalInfo::instance()->enableAutoSwitchWindowTheme();
+                }
+                else
+                {
                     if (!AppearanceGlobalInfo::instance()->setTheme(APPEARANCE_THEME_TYPE_GTK, theme))
                         return;
                     if (!AppearanceGlobalInfo::instance()->setTheme(APPEARANCE_THEME_TYPE_METACITY, theme))
                         return;
-                    KLOG_INFO() << "set themes successful:" << theme;
-                });
-    }
+                }
+                KLOG_INFO() << "set themes successful:" << theme;
+            });
 }
 
-void Themes::handleThemeChange(int type, QString themeName)
+void Themes::handleThemeChange(int type)
 {
-    KLOG_INFO() << "handleThemeChange" << type << themeName;
     switch (type)
     {
     case APPEARANCE_THEME_TYPE_GTK:
     {
+        QString themeName;
+        if (m_enableAutoSwitchWindowTheme)
+        {
+            themeName = THEME_AUTO_NAME;
+        }
+        else
+        {
+            AppearanceGlobalInfo::instance()->getTheme(APPEARANCE_THEME_TYPE_GTK, themeName);
+        }
+        KLOG_INFO() << __FUNCTION__ << themeName;
         QList<ThemeWidget *> widgets = m_themeWidgetGroup->getThemeWidgetList();
         foreach (ThemeWidget *widget, widgets)
         {
@@ -342,16 +374,21 @@ void Themes::handleThemeChange(int type, QString themeName)
             else
                 widget->setSelectStatus(false, type);
         }
+
         break;
     }
     case APPEARANCE_THEME_TYPE_CURSOR:
     {
-        m_cursorThemes->updateCursorTheme(themeName);
+        QString cursorName;
+        AppearanceGlobalInfo::instance()->getTheme(APPEARANCE_THEME_TYPE_CURSOR, cursorName);
+        m_cursorThemes->updateCursorTheme(cursorName);
         break;
     }
     case APPEARANCE_THEME_TYPE_ICON:
     {
-        m_iconThemes->updateIconTheme(themeName);
+        QString iconName;
+        AppearanceGlobalInfo::instance()->getTheme(APPEARANCE_THEME_TYPE_ICON, iconName);
+        m_iconThemes->updateIconTheme(iconName);
         break;
     }
     default:

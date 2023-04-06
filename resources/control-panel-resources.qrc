@@ -43,6 +43,10 @@
         <file>images/kcp-appearance-font.svg</file>
         <file>images/kcp-appearance-themes.svg</file>
         <file>images/kcp-appearance-wallpaper.svg</file>
+
+        <file>images/theme-light.png</file>
+        <file>images/theme-dark.png</file>
+        <file>images/theme-auto.png</file>
     </qresource>
 
     <qresource prefix="/kcp-display">

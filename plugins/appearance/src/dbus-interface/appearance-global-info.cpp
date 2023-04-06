@@ -44,6 +44,10 @@ AppearanceGlobalInfo::AppearanceGlobalInfo(QObject *parent)
                 KLOG_INFO() << "get FontChanged: " << type << "," << fontInfo;
                 emit fontChanged(type, fontInfo);
             });
+    connect(m_appearanceInterface,&AppearanceBackEndProxy::AutoSwitchWindowThemeChanged,
+            [this](bool enable){
+                emit AutoSwitchWindowThemeChanged(enable);
+            });
 }
 
 AppearanceGlobalInfo::~AppearanceGlobalInfo()
@@ -125,6 +129,17 @@ bool AppearanceGlobalInfo::getTheme(int themeType, QString &theme)
         theme = reply.argumentAt(0).toString();
     }
     return true;
+}
+
+bool AppearanceGlobalInfo::getAutoSwitchWindowTheme()
+{
+    return m_appearanceInterface->autoSwitchWindowTheme();
+}
+
+void AppearanceGlobalInfo::enableAutoSwitchWindowTheme()
+{
+    auto reply = m_appearanceInterface->EnableAutoSwitchWindowTheme();
+    reply.waitForFinished();
 }
 
 QString AppearanceGlobalInfo::getDesktopBackground()

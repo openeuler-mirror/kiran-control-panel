@@ -61,6 +61,12 @@ public:
      * 设置是否绘制边框
      */
     void setDrawBroder(bool enable);
+    
+    /**
+     * 设置边框宽度
+    */
+    void setBorderWidth(int width);
+
     /**
      * 设置绘制背景固定的状态，不根据实际状态从KiranPalette之中取出颜色(除了disable状态，disable将还是从KiranPalette之中取出禁用色)
      * @param state 希望固定的颜色状态
@@ -82,6 +88,7 @@ private:
     Kiran::StylePalette::ColorState m_fixedBackgroundState = Kiran::StylePalette::Normal;
 
     bool m_drawBorder = true;
+    int m_borderWidth = 1;
     bool m_fixedBorder = false;
     Kiran::StylePalette::ColorState m_fixedBorderState = Kiran::StylePalette::Normal;
 };
