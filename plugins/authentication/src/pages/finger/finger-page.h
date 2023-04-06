@@ -14,7 +14,7 @@
 #pragma once
 #include <QSet>
 #include <QWidget>
-#include "kas-authentication-i.h"
+#include <kiran-authentication-service/kas-authentication-i.h>
 
 QT_BEGIN_NAMESPACE
 class QStackedWidget;

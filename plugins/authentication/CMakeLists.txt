@@ -1,6 +1,6 @@
 set(TARGET_NAME kiran-cpanel-authentication)
 
-pkg_search_module(KIRAN_AUTH_SERVICE REQUIRED kiran-authentication-service)
+#pkg_search_module(KIRAN_AUTH_SERVICE REQUIRED kiran-authentication-service)
 set(AUTH_TS_FILES ${CMAKE_CURRENT_SOURCE_DIR}/translations/kiran-cpanel-authentication.zh_CN.ts)
 qt5_create_translation(AUTH_QM_FILES ${AUTH_TS_FILES} ${CMAKE_CURRENT_SOURCE_DIR})
 
