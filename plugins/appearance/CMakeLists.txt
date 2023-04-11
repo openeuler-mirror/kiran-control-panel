@@ -4,7 +4,8 @@ kiran_qt5_add_dbus_interface_ex(APPEARANCE_PROXY
         src/dbus-interface/com.kylinsec.Kiran.SessionDaemon.Appearance.xml
         appearance_backEnd_proxy AppearanceBackEndProxy)
  
-qt5_create_translation( APPEARANCE_QM_FILES ${CMAKE_CURRENT_SOURCE_DIR} "translations/kiran-cpanel-appearance.zh_CN.ts" )
+file(GLOB TS_FILES "translations/*.ts")
+qt5_create_translation(APPEARANCE_QM_FILES ${CMAKE_CURRENT_SOURCE_DIR} ${TS_FILES})
 
 file(GLOB_RECURSE APPEARANCE_SRC
         ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp

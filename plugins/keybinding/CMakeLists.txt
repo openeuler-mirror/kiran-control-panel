@@ -1,6 +1,7 @@
 set(TARGET_NAME kiran-cpanel-keybinding)
 
-qt5_create_translation(KEYBINDING_QM_FILES ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/translation/kiran-cpanel-keybinding.zh_CN.ts)
+file(GLOB TS_FILES "translation/*.ts")
+qt5_create_translation(KEYBINDING_QM_FILES ${CMAKE_CURRENT_SOURCE_DIR} ${TS_FILES})
 kiran_qt5_add_dbus_interface_ex(KEYBINDING_PROXY
         data/com.kylinsec.Kiran.SessionDaemon.Keybinding.xml
         keybinding_backEnd_proxy

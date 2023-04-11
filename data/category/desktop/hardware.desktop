@@ -3,13 +3,28 @@ Category=hardware
 
 Name=Hardware
 Name[zh_CN]=设备
+Name[bo_CN]=སྒྲིག་ཆས།
+Name[kk_KG]=жабдуулар
+Name[kk_KZ]=жабдықпен жабдықта, 10
+Name[mn_MN]=тоног төхөөрөмж
+Name[ug_CN]=ئۈسكۈنىلەر 
 
 Comment=Hardware
 Comment[zh_CN]=设备
+Comment[bo_CN]=སྒྲིག་ཆས།
+Comment[kk_KG]=жабдуулар
+Comment[kk_KZ]=жабдықпен жабдықта, 10
+Comment[mn_MN]=тоног төхөөрөмж
+Comment[ug_CN]=ئۈسكۈنىلەر 
 
 Icon=hardware.png
 
 Weight=8
 
 Keywords[zh_CN]=设备
+Keywords[bo_CN]=སྒྲིག་ཆས།
+Keywords[kk_KG]=жабдуулар
+Keywords[kk_KZ]=жабдықпен жабдықта, 10
+Keywords[mn_MN]=тоног төхөөрөмж
+Keywords[ug_CN]=ئۈسكۈنىلەر 
 Keywords=Hardware

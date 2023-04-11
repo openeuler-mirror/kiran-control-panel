@@ -3,13 +3,28 @@ Category=individuation
 
 Name=Individuation
 Name[zh_CN]=个性化
+Name[bo_CN]=རང་གཤིས་ཅན།
+Name[kk_KG]=жекелештирүү
+Name[kk_KZ]=жекелендіру
+Name[mn_MN]=хувийн шинжтэй
+Name[ug_CN]=خاسلاشتۇرۇش
 
 Comment=Individuation
 Comment[zh_CN]=个性化
+Comment[bo_CN]=རང་གཤིས་ཅན།
+Comment[kk_KG]=жекелештирүү
+Comment[kk_KZ]=жекелендіру
+Comment[mn_MN]=хувийн шинжтэй
+Comment[ug_CN]=خاسلاشتۇرۇش
 
 Icon=individuation.png
 
 Weight=1
 
 Keywords[zh_CN]=个性化
+Keywords[bo_CN]=རང་གཤིས་ཅན།
+Keywords[kk_KG]=жекелештирүү
+Keywords[kk_KZ]=жекелендіру
+Keywords[mn_MN]=хувийн шинжтэй
+Keywords[ug_CN]=خاسلاشتۇرۇش
 Keywords=Individuation

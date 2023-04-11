@@ -14,8 +14,7 @@ file(GLOB_RECURSE POWER_SRC
 file(GLOB_RECURSE POWER_QRC
         "resources/*.qrc")
 
-set( POWER_TS_FILES "translations/kiran-cpanel-power.zh_CN.ts" )
-
+file(GLOB POWER_TS_FILES "translations/*.ts")
 qt5_create_translation( POWER_QM_FILES ${CMAKE_CURRENT_SOURCE_DIR} ${POWER_TS_FILES} )
 
 add_library(${TARGET_NAME} SHARED

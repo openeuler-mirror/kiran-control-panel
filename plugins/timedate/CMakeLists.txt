@@ -14,7 +14,8 @@ file(GLOB_RECURSE SRC
         "src/*.h")
         
 include_directories("${CMAKE_BINARY_DIR}" "src" )
-qt5_create_translation( TIMEDATE_QM_FILES ${CMAKE_CURRENT_SOURCE_DIR} "translations/kiran-cpanel-timedate.zh_CN.ts" )
+file(GLOB TS_FILES "translations/*.ts")
+qt5_create_translation( TIMEDATE_QM_FILES ${CMAKE_CURRENT_SOURCE_DIR} ${TS_FILES} )
 
 add_library(${TARGET_NAME} SHARED
         ${SRC}

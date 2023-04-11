@@ -2,7 +2,8 @@ set(TARGET_NAME kiran-cpanel-display)
 
 file(GLOB_RECURSE DISPLAY_SRC "src/*.cpp" "src/*.h" "src/*.ui")
 
-qt5_create_translation(DISPLAY_QM_FILES ${CMAKE_CURRENT_SOURCE_DIR} translations/kiran-cpanel-display.zh_CN.ts)
+file(GLOB TS_FILES "translations/*.ts")
+qt5_create_translation(DISPLAY_QM_FILES ${CMAKE_CURRENT_SOURCE_DIR} ${TS_FILES})
 
 kiran_qt5_add_dbus_interface_ex(DISPLAY_PROXY
         data/com.kylinsec.Kiran.SessionDaemon.Display.xml
@@ -53,4 +54,4 @@ configure_file(data/kiran-cpanel-display.desktop.in ${CMAKE_CURRENT_BINARY_DIR}/
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/kiran-cpanel-display.desktop DESTINATION ${PLUGIN_DESKTOP_INSTALL_DIR}/ )
 
 #安装翻译文件
-install(FILES ${QM_FILES} DESTINATION ${TRANSLATION_INSTALL_DIR} )
+install(FILES ${DISPLAY_QM_FILES} DESTINATION ${TRANSLATION_INSTALL_DIR} )
