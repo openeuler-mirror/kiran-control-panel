@@ -39,6 +39,14 @@ static QStringList icons{"accessories-calculator",
                          "user-info",
                          "preferences-desktop-wallpaper"};
 
+static QStringList kiranNewIcons{"kc-calculator",
+                                  "smplayer",
+                                  "firefox",
+                                  "thunderbird",
+                                  "utilities-terminal",
+                                  "brasero",
+                                  "accessories-text-editor"};
+
 IconThemes::IconThemes(QWidget *parent) : QWidget(parent),
                                           ui(new Ui::IconThemes)
 {
@@ -167,7 +175,7 @@ void IconThemes::createIconWidgets()
     for (int i = 0; i < m_iconThemes.size(); i++)
     {
         
-        if (m_iconThemes.at(i).startsWith("Kiran", Qt::CaseInsensitive))
+        if (!m_iconThemes.at(i).compare("Kiran", Qt::CaseInsensitive))
         {
             QString path = m_iconThemesPath.at(i) + "/apps/scalable/";
             QDir appsDir = QDir(path);
@@ -208,7 +216,48 @@ void IconThemes::createIconWidgets()
             else
                 continue;
         }
-        else if (m_iconThemes.at(i).startsWith("Adwaita", Qt::CaseInsensitive))
+        else if (!m_iconThemes.at(i).compare("KiranNew", Qt::CaseInsensitive))
+        {
+            QString path = m_iconThemesPath.at(i) + "/48x48/apps/";
+            QDir appsDir = QDir(path);
+            QStringList iconList = appsDir.entryList(QDir::Files);
+            QStringList showIconsList;
+            if (appsDir.exists())
+            {
+                for (int i = 0; i < kiranNewIcons.size(); i++)
+                {
+                    if (iconList.contains(kiranNewIcons.at(i) + ".png"))
+                        showIconsList.append(path + kiranNewIcons.at(i) + ".png");
+                    else
+                    {
+                        KLOG_INFO() << "not contain " << kiranNewIcons.at(i);
+                        foreach (QString icon, iconList)
+                        {
+                            if (icon.startsWith(kiranNewIcons.at(i)))
+                            {
+                                showIconsList.append(path + icon);
+                                break;
+                            }
+                        }
+                    }
+                }
+                if (!showIconsList.isEmpty())
+                {
+                    //new theme-widget
+                    ThemeWidget *themeWidget = new ThemeWidget(QSize(40, 40), m_currentIconTheme,
+                                                               m_iconThemes.at(i), showIconsList);
+                    vLayout->addWidget(themeWidget, Qt::AlignRight);
+
+                    if (m_iconThemes.at(i) == m_currentIconTheme)
+                        m_iconThemeWidgetGroup->setCurrentWidget(themeWidget);
+                    m_iconThemeWidgetGroup->addWidget(themeWidget);
+                    themeWidget->setTheme(m_iconThemes.at(i));
+                }
+            }
+            else
+                continue;
+        }
+        else if (!m_iconThemes.at(i).compare("Adwaita", Qt::CaseInsensitive))
         {
             QString path = m_iconThemesPath.at(i) + "/48x48/apps/";
             QDir appsDir = QDir(path);
