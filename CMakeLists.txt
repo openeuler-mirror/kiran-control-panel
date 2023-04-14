@@ -42,8 +42,9 @@ file(GLOB_RECURSE INCLUDE_SRC "./include/*")
 file(GLOB_RECURSE CONTROL_PANEL_SRC "./src/*")
 set(RESOURCE ./resources/control-panel-resources.qrc) #资源文件名不能与插件资源名相同，否则会导致插件中部分图片无法正常加载显示。
 
+file(GLOB TS_FILES "translations/*.ts")
 set(PANEL_ALL_TRANSLATION_SRC ${INCLUDE_SRC} ${CONTROL_PANEL_SRC} ${LIB_SRC} )
-qt5_create_translation(PANEL_QM_FILES ${PANEL_ALL_TRANSLATION_SRC} "translations/kiran-control-panel.zh_CN.ts")
+qt5_create_translation(PANEL_QM_FILES ${PANEL_ALL_TRANSLATION_SRC} ${TS_FILES})
 
 add_executable(${PROJECT_NAME}
         ${CONTROL_PANEL_SRC}

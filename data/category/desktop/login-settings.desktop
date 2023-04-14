@@ -3,13 +3,28 @@ Category=login-settings
 
 Name=Login Settings
 Name[zh_CN]=登录设置
+Name[bo_CN]=ཐོ་འགོད་བཀོད་སྒྲིག་བཅས་བྱ་དགོས།
+Name[kk_KG]=Кирүү параметрлери
+Name[kk_KZ]=Кіру параметрлері
+Name[mn_MN]=Логин тохиргоо
+Name[ug_CN]=كىرىش تەسىس قىلىش 
 
 Comment=Login Settings
 Comment[zh_CN]=登录设置
+Comment[bo_CN]=ཐོ་འགོད་བཀོད་སྒྲིག་བཅས་བྱ་དགོས།
+Comment[kk_KG]=Кирүү параметрлери
+Comment[kk_KZ]=Кіру параметрлері
+Comment[mn_MN]=Логин тохиргоо
+Comment[ug_CN]=كىرىش تەسىس قىلىش 
 
 Icon=login-settings.png
 
 Weight=7
 
 Keywords[zh_CN]=登录设置
+Keywords[bo_CN]=ཐོ་འགོད་བཀོད་སྒྲིག་བཅས་བྱ་དགོས།
+Keywords[kk_KG]=Кирүү параметрлери
+Keywords[kk_KZ]=Кіру параметрлері
+Keywords[mn_MN]=Логин тохиргоо
+Keywords[ug_CN]=كىرىش تەسىس قىلىش 
 Keywords=Login Settings

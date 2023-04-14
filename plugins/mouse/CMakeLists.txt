@@ -2,7 +2,8 @@ set(TARGET_NAME kiran-cpanel-mouse)
 
 file(GLOB_RECURSE MOUSE_SRC "./*.cpp" "./*.h" "./*.ui" "./*.qrc" )
 
-qt5_create_translation( MOUSE_QM_FILES ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/translations/kiran-cpanel-mouse.zh_CN.ts )
+file(GLOB TS_FILES "translations/*.ts")
+qt5_create_translation( MOUSE_QM_FILES ${CMAKE_CURRENT_SOURCE_DIR} ${TS_FILES})
 
 kiran_qt5_add_dbus_interface_ex(MOUSE_PROXY
         data/com.kylinsec.Kiran.SessionDaemon.Mouse.xml

@@ -1,8 +1,18 @@
 [Desktop Entry]
 Name=Display Settings
 Name[zh_CN]=显示设置
+Name[bo_CN]=བཀོད་སྒྲིག་བྱས་ཚུལ་གསལ་པོར་མངོན་པ།
+Name[kk_KG]=Дисплей параметрлери
+Name[kk_KZ]=Параметрлерді көрсету
+Name[mn_MN]=Тохиргоог харуулах
+Name[ug_CN]=كۆرسىتىش تەسىس قىلىش 
 Comment=Display settings
 Comment=显示设置
+Comment[bo_CN]=བཀོད་སྒྲིག་བྱས་ཚུལ་གསལ་པོར་མངོན་པ།
+Comment[kk_KG]=Дисплей параметрлери
+Comment[kk_KZ]=Параметрлерді көрсету
+Comment[mn_MN]=Тохиргоог харуулах
+Comment[ug_CN]=كۆرسىتىش تەسىس قىلىش 
 Terminal=false
 Type=Application
 Icon=kcp-display
@@ -26,7 +36,17 @@ SubItems=Display
 #插件子项名 该值提供给控制中心形成子项列表
 Name=Display
 Name[zh_CN]=显示设置
+Name[bo_CN]=བཀོད་སྒྲིག་བྱས་ཚུལ་གསལ་པོར་མངོན་པ།
+Name[kk_KG]=Дисплей параметрлери
+Name[kk_KZ]=Параметрлерді көрсету
+Name[mn_MN]=Тохиргоог харуулах
+Name[ug_CN]=كۆرسىتىش تەسىس قىلىش 
 Icon=kcp-display
 #插件关键字 该值提供给控制中心形成搜索列表
 Keywords=display
 Keywords[zh_CN]=显示设置
+Keywords[bo_CN]=བཀོད་སྒྲིག་བྱས་ཚུལ་གསལ་པོར་མངོན་པ།
+Keywords[kk_KG]=Дисплей параметрлери
+Keywords[kk_KZ]=Параметрлерді көрсету
+Keywords[mn_MN]=Тохиргоог харуулах
+Keywords[ug_CN]=كۆرسىتىش تەسىس قىلىش 

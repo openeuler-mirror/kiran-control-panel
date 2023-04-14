@@ -2,8 +2,18 @@
 #插件名
 Name=Kiran Control Panel Plugin Demo
 Name[zh_CN]=控制面板插件demo
+Name[bo_CN]=ངོས་ལེབ་ཀྱི་ལྷུ་ལག་ཚོད་འཛིན་བྱ་དགོས།demo
+Name[kk_KG]=Контролдук панелди туташтырууdemo
+Name[kk_KZ]=Басқару тақтасының қосылатын модуліdemo
+Name[mn_MN]=Хяналтын панелын плагин-инdemo
+Name[ug_CN]=كونترول قىلىش ئېكرانى قىستۇرما دېتال demo
 Comment=Kiran Control Panel Plugin Demo
 Comment[zh_CN]=控制面板插件demo
+Comment[bo_CN]=ངོས་ལེབ་ཀྱི་ལྷུ་ལག་ཚོད་འཛིན་བྱ་དགོས།demo
+Comment[kk_KG]=Контролдук панелди туташтырууdemo
+Comment[kk_KZ]=Басқару тақтасының қосылатын модуліdemo
+Comment[mn_MN]=Хяналтын панелын плагин-инdemo
+Comment[ug_CN]=كونترول قىلىش ئېكرانى قىستۇرما دېتال demo
 #插件图标
 Icon=kcp-demo
 #通过启动器单独执行 <kiran-cpanel-launcher -cpanel-plugin 插件的desktop文件名>
@@ -26,6 +36,11 @@ SubItems=SubItem1,SubItem2
 #插件子项名 该值提供给控制中心形成子项列表
 Name=SubItem1
 Name[zh_CN]=功能项1
+Name[bo_CM]=བྱེད་ལས་ཀྱི་རྣམ་གྲངས།1
+Name[kk_KG]=Өзгөчөлүк элементи1
+Name[kk_KZ]=Мүмкіндік элементі1
+Name[mn_MN]=Онцлог зүйл1
+Name[ug_CN]=ئىقتىدار تۈرى 1
 #插件Icon
 Icon=kcp-demo-subitem-1
 #插件关键字 该值提供给控制中心形成搜索列表
@@ -35,6 +50,11 @@ Keywords[zh_CN]=Dialog,SubItem1,001
 #插件子项名 该值提供给控制中心形成子项列表
 Name=SubItem2
 Name[zh_CN]=功能项2
+Name[bo_CM]=བྱེད་ལས་ཀྱི་རྣམ་གྲངས།2
+Name[kk_KG]=Өзгөчөлүк элементи2
+Name[kk_KZ]=Мүмкіндік элементі2
+Name[mn_MN]=Онцлог зүйл2
+Name[ug_CN]=ئىقتىدار تۈرى 2
 #插件Icon
 Icon=kcp-demo-subitem-2
 #插件关键字 该值提供给控制中心形成搜索列表

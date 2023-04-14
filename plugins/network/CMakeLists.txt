@@ -1,6 +1,8 @@
 set(TARGET_NAME kiran-cpanel-network)
 
-qt5_create_translation(NETWORK_QM_FILES ${CMAKE_CURRENT_SOURCE_DIR} translations/kiran-cpanel-network.zh_CN.ts)
+file(GLOB TS_FILES "translations/*.ts")
+qt5_create_translation(NETWORK_QM_FILES ${CMAKE_CURRENT_SOURCE_DIR} ${TS_FILES})
+
 file(GLOB_RECURSE PLUGIN_SRC "src/plugin/*.cpp" "src/plugin/*.h" "src/plugin/*.ui")
 file(GLOB_RECURSE TRAY_SRC "src/tray/*.cpp" "src/tray/*.h" "src/tray/*.ui")
 file(GLOB_RECURSE COMMON_SRC "src/animation-loading-label*" "src/connection-list*"

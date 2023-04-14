@@ -3,13 +3,28 @@ Category=display
 
 Name=Display
 Name[zh_CN]=显示
+Name[bo_CN]=གསལ་པོར་མངོན་པ།
+Name[kk_KG]=дисплей
+Name[kk_KZ]=дисплей
+Name[mn_MN]=харуулах
+Name[ug_CN]=كۆرسىتىش 
 
 Comment=Display
 Comment[zh_CN]=显示
+Comment[bo_CN]=གསལ་པོར་མངོན་པ།
+Comment[kk_KG]=дисплей
+Comment[kk_KZ]=дисплей
+Comment[mn_MN]=харуулах
+Comment[ug_CN]=كۆرسىتىش 
 
 Icon=display.png
 
 Weight=2
 
 Keywords[zh_CN]=显示
+Keywords[bo_CN]=གསལ་པོར་མངོན་པ།
+Keywords[kk_KG]=дисплей
+Keywords[kk_KZ]=дисплей
+Keywords[mn_MN]=харуулах
+Keywords[ug_CN]=كۆرسىتىش 
 Keywords=Display

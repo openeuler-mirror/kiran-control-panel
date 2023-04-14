@@ -1,14 +1,29 @@
 [Kiran Control Panel Category]
 Name=About System
 Name[zh_CN]=关于系统
+Name[bo_CN]=མ་ལག་སྐོར།
+Name[kk_KG]=система жөнүндө
+Name[kk_KZ]=Жүйе туралы
+Name[mn_MN]=Системийн тухай
+Name[ug_CN]=سىستېمىغا مۇناسىۋەتلىك
 
 Category=about-system
 
 Comment=About System
 Comment[zh_CN]=关于系统
+Comment[bo_CN]=མ་ལག་སྐོར།
+Comment[kk_KG]=система жөнүндө
+Comment[kk_KZ]=Жүйе туралы
+Comment[mn_MN]=Системийн тухай
+Comment[ug_CN]=سىستېمىغا مۇناسىۋەتلىك
 
 Icon=about-system.png
 
 Weight=10
 Keywords[zh_CN]=关于系统
+Keywords[bo_CN]=མ་ལག་སྐོར།
+Keywords[kk_KG]=система жөнүндө
+Keywords[kk_KZ]=Жүйе туралы
+Keywords[mn_MN]=Системийн тухай
+Keywords[ug_CN]=سىستېمىغا مۇناسىۋەتلىك
 Keywords=About System
