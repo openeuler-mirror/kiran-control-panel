@@ -33,6 +33,7 @@ pkg_search_module(QGSETTINGS REQUIRED gsettings-qt)
 
 include(kcp_variables.cmake)
 include(kcp-qdbus-wrapper.cmake)
+include(options.cmake)
 
 configure_file(${CMAKE_SOURCE_DIR}/data/config.h.in ${CMAKE_BINARY_DIR}/config.h)
 configure_file(${CMAKE_SOURCE_DIR}/data/${PROJECT_NAME}.desktop.in ${CMAKE_BINARY_DIR}/${PROJECT_NAME}.desktop)
