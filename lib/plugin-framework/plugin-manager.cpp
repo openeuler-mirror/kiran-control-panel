@@ -15,6 +15,7 @@
 #include "plugin-loader.h"
 
 #include <QMutex>
+#include <QVector>
 
 PluginManager* PluginManager::_instance = nullptr;
 

@@ -17,6 +17,7 @@
 #include <QMap>
 #include <QObject>
 #include <QReadWriteLock>
+#include <QVector>
 
 #include "plugin-subitem-interface.h"
 

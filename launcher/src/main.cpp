@@ -60,7 +60,11 @@ int main(int argc, char *argv[])
     QString lang = qgetenv("LANG");
     if(lang.contains("."))
     {
-        QStringList splitRes = lang.split(".",Qt::SkipEmptyParts);
+#if (QT_VERSION < QT_VERSION_CHECK(5, 14, 0))
+        QStringList splitRes = lang.split(".", QString::SkipEmptyParts);
+#else
+        QStringList splitRes = lang.split(".", Qt::SkipEmptyParts);
+#endif
         if(splitRes.size() == 2 && splitRes.at(1)!="UTF-8" )
         {
             splitRes.replace(1,"UTF-8");
