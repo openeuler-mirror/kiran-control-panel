@@ -2,6 +2,7 @@
 #define __APPEARANCE_SUBITEM_H__
 
 #include <QObject>
+#include <QVector>
 #include "panel-interface.h"
 #include "plugin-subitem-interface.h"
 

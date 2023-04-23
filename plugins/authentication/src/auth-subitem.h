@@ -1,6 +1,8 @@
 #pragma once
 
 #include <QObject>
+#include <functional>
+#include <QVector>
 #include "panel-interface.h"
 #include "plugin-subitem-interface.h"
 
