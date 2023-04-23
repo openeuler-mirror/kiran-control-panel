@@ -146,7 +146,11 @@ QString KeycodeTranslator::backendKeyString2Readable(const QString &keyString)
         QString temp = keyString;
         temp = temp.replace("<","");
         temp = temp.replace(">","-");
+#if (QT_VERSION < QT_VERSION_CHECK(5, 14, 0))
+        QStringList keyList = temp.split("-", QString::SkipEmptyParts);
+#else
         QStringList keyList = temp.split("-",Qt::SkipEmptyParts);
+#endif
         for(int i=0;i<keyList.size();i++)
         {
             if( SpecialKeyMap.contains(keyList.at(i).toLower()) )
