@@ -104,7 +104,7 @@ void EthernetWidget::saveSettings()
              * Note that this property only exists in D-Bus API. 
              * libnm and nmcli continue to call this property "cloned-mac-address".
             */      
-            m_wiredSetting->setAssignedMacAddress(QString());
+            // m_wiredSetting->setAssignedMacAddress(QString());
             m_wiredSetting->setClonedMacAddress(QByteArray());
         }
         else
