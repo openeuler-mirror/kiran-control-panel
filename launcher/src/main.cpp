@@ -16,30 +16,36 @@
 #include "launcher.h"
 #include "plugin-v1-subitem-wrapper.h"
 #include "plugin-v1.h"
+#include "plugin-v2.h"
 
 #include <kiran-single-application.h>
+#include <locale.h>
 #include <qt5-log-i.h>
 #include <QCommandLineParser>
 #include <QDesktopWidget>
 #include <QEvent>
 #include <QIcon>
 #include <QLayout>
+#include <QProcess>
 #include <QLoggingCategory>
+#include <QScreen>
+#include <QStyleFactory>
 #include <QTranslator>
 #include <iostream>
-#include <locale.h>
-#include <QStyleFactory>
-#include <QScreen>
 
-int main(int argc, char *argv[])
+// NOTE:
+// 2.4版本之后，kiran-cpanel-launcher已不提供单独启动控制中心插件的功能
+// 保留launcher只是为了兼容，转发拉起控制中心
+
+int main(int argc, char* argv[])
 {
-    ///先将插件选项从参数中提取出来,作为校验进程单例的一部分
+    /// 先将插件选项从参数中提取出来,作为校验进程单例的一部分
     QStringList arguments;
     for (int i = 0; i < argc; i++)
     {
         arguments << argv[i];
     }
-    QString pluginDesktopName;
+    QString pluginName;
     QCommandLineOption pluginOption("cpanel-plugin", "plugin desktop filename", "plugin", "");
     QCommandLineParser parser;
     parser.setApplicationDescription("kiran control panel module runalone");
@@ -48,17 +54,18 @@ int main(int argc, char *argv[])
     parser.parse(arguments);
     if (parser.isSet(pluginOption))
     {
-        pluginDesktopName = parser.value(pluginOption);
-        KiranSingleApplication::addApplicationIDUserData(pluginDesktopName);
+        pluginName = parser.value(pluginOption);
+        KiranSingleApplication::addApplicationIDUserData(pluginName);
     }
 
-    KiranSingleApplication app(argc, argv,false,
-                               KiranSingleApplication::Mode::User|KiranSingleApplication::Mode::SecondaryNotification);
+    KiranSingleApplication app(argc, argv, false,
+                               KiranSingleApplication::Mode::User |
+                                   KiranSingleApplication::Mode::SecondaryNotification);
 
-    ///NOTE: 由于strftime获取系统locale进行格式化，Qt使用UTF8,若编码设置不为UTF8中文环境下会导致乱码
-    ///所以LANG后面的编码若不为UTF-8,修改成UTF-8,使获取时间都为UTF-8格式
+    /// NOTE: 由于strftime获取系统locale进行格式化，Qt使用UTF8,若编码设置不为UTF8中文环境下会导致乱码
+    /// 所以LANG后面的编码若不为UTF-8,修改成UTF-8,使获取时间都为UTF-8格式
     QString lang = qgetenv("LANG");
-    if(lang.contains("."))
+    if (lang.contains("."))
     {
 #if (QT_VERSION < QT_VERSION_CHECK(5, 14, 0))
         QStringList splitRes = lang.split(".", QString::SkipEmptyParts);
@@ -67,20 +74,20 @@ int main(int argc, char *argv[])
 #endif
         if(splitRes.size() == 2 && splitRes.at(1)!="UTF-8" )
         {
-            splitRes.replace(1,"UTF-8");
+            splitRes.replace(1, "UTF-8");
             QString newLocale = splitRes.join(".");
-            setlocale(LC_TIME,newLocale.toStdString().c_str());
+            setlocale(LC_TIME, newLocale.toStdString().c_str());
         }
     }
 
-    //为了保持插件使用启动器进行启动后，底部面板不堆叠，插件图标显示正常，
-    //设置ApplicationName,更新窗口WM_CLASS属性为插件desktop名称
-    if( !pluginDesktopName.isEmpty() )
+    // 为了保持插件使用启动器进行启动后，底部面板不堆叠，插件图标显示正常，
+    // 设置ApplicationName,更新窗口WM_CLASS属性为插件desktop名称
+    if (!pluginName.isEmpty())
     {
-        QApplication::setApplicationName(pluginDesktopName);
+        QApplication::setApplicationName(pluginName);
     }
 
-    ///再次解析命令行参数是为了处理--help选项得到正确的输出
+    /// 再次解析命令行参数是为了处理--help选项得到正确的输出
     parser.addHelpOption();
     parser.process(app);
 
@@ -100,34 +107,39 @@ int main(int argc, char *argv[])
         KLOG_ERROR() << "can't load translator!" << qmFile;
     }
 
-    QString pluginDesktopPath = QString("%1/%2").arg(PLUGIN_DESKTOP_DIR).arg(pluginDesktopName);
+    QVector<KiranControlPanel::SubItemPtr> pluginSubItems;
+
+
+    //兼容两个版本
+    // plugin v1接口通过desktop文件拿到信息再找so
+    QString pluginDesktopPath = QString("%1/%2").arg(PLUGIN_DESKTOP_DIR).arg(pluginName);
     if (!pluginDesktopPath.endsWith(".desktop"))
     {
         pluginDesktopPath.append(".desktop");
     }
 
-    if (klog_qt5_init("", "kylinsec-session","kiran-cpanel-launcher", pluginDesktopName) != 0)
-    {
-        KLOG_CERR("kiran log init error");
-    }
+    // plugin v2接口直接加载so读取信息
+    QString pluginV2LibraryPath = QString("%1/lib%2.so").arg(PLUGIN_LIBRARY_DIR).arg(pluginName);
 
     PluginV1 plugin;
-    if (!plugin.load(pluginDesktopPath))
+    PluginV2 pluginV2;
+    if (plugin.load(pluginDesktopPath))
+    {
+        pluginSubItems = plugin.getSubItems();
+    }
+    else if (pluginV2.load(pluginV2LibraryPath))
+    {
+        pluginSubItems = pluginV2.getSubItems();
+    }
+
+
+    if( pluginSubItems.isEmpty() )
     {
         exit(EXIT_FAILURE);
     }
 
-    Launcher w;
-    w.setTitle(plugin.getName());
-    QIcon titleIcon = QIcon::fromTheme(plugin.getIcon());
-    w.setIcon(titleIcon);
-    w.setSubItems(plugin.getSubItems());
-    w.resize(w.sizeHint());
-
-    QScreen* screen = QApplication::screenAt(QCursor::pos());
-    QRect screenGeometry = screen->geometry();
-    w.move(screenGeometry.x() + (screenGeometry.width() - w.width()) / 2,
-           screenGeometry.y() + (screenGeometry.height() - w.height()) / 2);
-    w.show();
-    return KiranApplication::exec();
+    auto category = pluginSubItems.at(0)->getCategory();
+    auto subitemName = pluginSubItems.at(0)->getName();
+    QString cmdline = QString("kiran-control-panel -c %1 -s %2").arg(category).arg(subitemName);
+    return QProcess::startDetached(cmdline);
 }
