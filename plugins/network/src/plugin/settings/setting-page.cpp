@@ -96,9 +96,28 @@ void SettingPage::handleSaveButtonClicked(ConnectionSettings::ConnectionType con
     else
     {
         saveSettingPage();
-        //只有无线网络使用自定义settingUpdated信号，因为未连接无线网络前不存在本地Setting，无法在初始化时监听信号
+        // 只有无线网络使用自定义settingUpdated信号，因为未连接无线网络前不存在本地Setting，无法在初始化时监听信号
         connect(m_connection.data(), &NetworkManager::Connection::updated, this, &SettingPage::settingUpdated, Qt::UniqueConnection);
-        QDBusPendingReply<> replyUpdate = m_connection->update(m_connectionSettings->toMap());
+        /**
+         * NOTE:
+         * 这里是为了修复控制中心网络设置克隆MAC地址设置保存之后,再修改清空，清空克隆MAC地址不生效的问题，同时兼容低版本的kf5-networkmanager-qt5
+         * 问题原因：高版本的NetworkManager成功设置克隆MAC地址后会有，两个属性：assigned-mac-addres (新属性)，cloned-mac-address(即将被废弃)
+         * 两个属性作用是一样的，低版本的kf5-networkmanager-qt5只有对cloned-mac-address(即将被废弃)进行设置的接口，
+         * 无法对assigned-mac-addres(新属性)进行操作。需要将这个两个属性都清空才能清空克隆MAC地址
+         * 因此这里手动将assigned-mac-addres相关的设置进行清空。
+        */
+        NMVariantMapMap settingsMap = m_connectionSettings->toMap();
+        if (settingsMap.contains("802-3-ethernet"))
+        {
+            QVariantMap varMap = settingsMap.value("802-3-ethernet");
+            if (!varMap.contains("cloned-mac-address") && varMap.contains("assigned-mac-address"))
+            {
+                varMap.remove("assigned-mac-address");
+                settingsMap.insert("802-3-ethernet", varMap);
+            }
+        }
+
+        QDBusPendingReply<> replyUpdate = m_connection->update(settingsMap);
         replyUpdate.waitForFinished();
         if (replyUpdate.isError())
         {
