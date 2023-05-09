@@ -90,8 +90,6 @@ configure_file(data/kiran-cpanel-group-config.h.in ${CMAKE_CURRENT_BINARY_DIR}/p
 install(TARGETS ${TARGET_NAME} DESTINATION ${PLUGIN_LIBS_INSTALL_DIR}/)
 #安装控制中心插件desktop
 
-install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/group.desktop DESTINATION ${CATEGORY_DESKTOP_INSTALL_DIR})
-install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/resources/kcp-group-images/kcp-group-96.png DESTINATION ${CATEGORY_ICON_INSTALL_DIR})
 
 
 
