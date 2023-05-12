@@ -11,36 +11,31 @@
  *
  * Author:     liuxinhao <liuxinhao@kylinsec.com.cn>
  */
-
 #include "power.h"
-#include <kiran-session-daemon/power-i.h>
-/*
- * Implementation of interface class PowerInterface
- */
+#include "gnome_session_manager_proxy.h"
 
-PowerInterface *PowerInterface::instance()
-{
-    static QMutex mutex;
-    static QScopedPointer<PowerInterface> pInst;
+PowerInterface *PowerInterface::m_instance = nullptr;
 
-    if(Q_UNLIKELY(!pInst)){
-        QMutexLocker locker(&mutex);
-        if(pInst.isNull()){
-            pInst.reset(new PowerInterface(QDBusConnection::sessionBus()));
-        }
-    }
-
-    return pInst.data();
-}
-
-PowerInterface::PowerInterface(const QDBusConnection &connection, QObject *parent)
-    : QDBusAbstractInterface("com.kylinsec.Kiran.SessionDaemon", "/com/kylinsec/Kiran/SessionDaemon/Power", staticInterfaceName(), connection, parent)
+PowerInterface::PowerInterface(const QString &service, const QString &path, const QDBusConnection &connection, QObject *parent)
+    : KSDPowerProxy(service, path, QDBusConnection::sessionBus()),
+    m_gnomeSmProxy(new GnomeSMProxy("org.gnome.SessionManager","/org/gnome/SessionManager",QDBusConnection::sessionBus(),this))
 {
     qRegisterMetaType<IdleAction>("IdleAction");
     qDBusRegisterMetaType<IdleAction>();
 }
 
-PowerInterface::~PowerInterface()
+void PowerInterface::globalInit()
 {
+    m_instance = new PowerInterface("com.kylinsec.Kiran.SessionDaemon.Power", "/com/kylinsec/Kiran/SessionDaemon/Power", QDBusConnection::sessionBus());
+}
 
+bool PowerInterface::screenLockedWhenSuspend()
+{
+    return m_gnomeSmProxy->screenLockedWhenSuspend();
+}
+
+bool PowerInterface::LockScreenWhenSuspend(bool checked)
+{
+    m_gnomeSmProxy->setScreenLockedWhenSuspend(checked);
+    return m_gnomeSmProxy->screenLockedWhenSuspend() == checked;
 }

@@ -18,6 +18,7 @@
 #include "general-settings-subitem.h"
 #include "power-subitem.h"
 #include "upower-interface.h"
+#include "src/dbus/power.h"
 
 #include <kiran-log/qt5-log-i.h>
 #include <QCoreApplication>
@@ -56,10 +57,12 @@ int PowerPlugin::init(KiranControlPanel::PanelInterface* interface)
     {
         qApp->installTranslator(m_translator);
     }
+    
+    PowerInterface::globalInit();
 
     m_subitems.append(KiranControlPanel::SubItemPtr(new GeneralSettingsSubItem()));
     m_subitems.append(KiranControlPanel::SubItemPtr(new PowerSubItem()));
-    if (UPowerInterface::haveBattery())
+    // if (UPowerInterface::haveBattery())
     {
         m_subitems.append(KiranControlPanel::SubItemPtr(new BatterySubItem()));
     }
@@ -75,6 +78,7 @@ void PowerPlugin::uninit()
         delete m_translator;
         m_translator = nullptr;
     }
+    PowerInterface::globalDeinit();
 }
 
 QVector<KiranControlPanel::SubItemPtr> PowerPlugin::getSubItems()

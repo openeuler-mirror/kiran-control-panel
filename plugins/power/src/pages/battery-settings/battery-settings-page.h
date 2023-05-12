@@ -43,14 +43,18 @@ private:
     bool getCurrentIdleAction(IdleAction& idleAction);
 
 private slots:
-    void handleIdleTimeActionCurrentIdxChanged(int idx);
-    void handlePowerRunOutActionCurrentIdxChanged(int idx);
-    void handleMonitorOffTimeoutCurrentIdxChanged(int idx);
-    void handleSwitchReduceBrightnessToggled(bool checked);
+    void onIdleTimeOrActionChanged(int idx);
+    void onBatteryChargeActionChanged(int idx);
+    void onMonitorOffIdleTimeoutChanged(int idx);
+    void onDisplayIdleDimmedToggled(bool checked);
+    void onChargeLowDimmedToggled(bool checked);
+    void onChargeLowSaverToggled(bool checked);
 
 private:
     Ui::BatterySettingsPage *ui;
-    KiranSwitchButton *m_reduceBrightnessSwitch;
+    KiranSwitchButton *m_switchIdleDimmed;
+    KiranSwitchButton *m_switchChargeLowDimmed;
+    KiranSwitchButton *m_chargeLowSaverSwitch;
     PowerInterface *m_powerInterface;
 };
 
