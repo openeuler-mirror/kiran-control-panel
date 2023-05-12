@@ -24,7 +24,7 @@ using namespace Common;
 PowerSettingsPage::PowerSettingsPage(QWidget* parent)
     : QWidget(parent),
       ui(new Ui::PowerSettingsPage),
-      m_powerInterface(PowerInterface::instance())
+      m_powerInterface(PowerInterface::getInstance())
 {
     ui->setupUi(this);
     init();

@@ -17,18 +17,16 @@
 #include "dbus/power.h"
 #include "ui_battery-settings-page.h"
 
-#include <qt5-log-i.h>
 #include <kiran-session-daemon/power-i.h>
 #include <kiran-switch-button.h>
-
-#define LOW_POWER_REDUCE_BRIGHTNESS_SCALE 50
+#include <qt5-log-i.h>
 
 using namespace Common;
 
 BatterySettingsPage::BatterySettingsPage(QWidget* parent)
     : QWidget(parent),
       ui(new Ui::BatterySettingsPage),
-      m_powerInterface(PowerInterface::instance())
+      m_powerInterface(PowerInterface::getInstance())
 {
     ui->setupUi(this);
     init();
@@ -41,7 +39,7 @@ BatterySettingsPage::~BatterySettingsPage()
 
 QSize BatterySettingsPage::sizeHint() const
 {
-    return {500,657};
+    return {500, 657};
 }
 
 void BatterySettingsPage::init()
@@ -53,7 +51,7 @@ void BatterySettingsPage::init()
 
 void BatterySettingsPage::initUI()
 {
-    ///计算机空闲时间设置
+    // 计算机空闲时间设置
     static QList<int> idleTimeouts = {60, 180, 300, 600, 900, 1200, 1800, 2700, 3600, 7200, 10800, 14400, 18000, 0};
     foreach (const int& timeout, idleTimeouts)
     {
@@ -61,7 +59,7 @@ void BatterySettingsPage::initUI()
         ui->combo_monitorOffTimeout->addItem(getTimeDescription(timeout), QVariant::fromValue(timeout));
     }
 
-    ///计算机空闲进行的操作
+    // 计算机空闲进行的操作
     // clang-format off
     QMap<QString, int> computerIdleActionsMap = {
         {tr("Suspend"), POWER_ACTION_COMPUTER_SUSPEND},
@@ -77,7 +75,7 @@ void BatterySettingsPage::initUI()
         ui->combo_idleAction->addItem(iter.key(), QVariant::fromValue(iter.value()));
     }
 
-    ///电池将要耗尽时进行的操作
+    // 电池将要耗尽时进行的操作
     // clang-format off
     QMap<QString,int> powerRunOutActionsMap = {
         {tr("Suspend"), POWER_ACTION_COMPUTER_SUSPEND},
@@ -93,120 +91,131 @@ void BatterySettingsPage::initUI()
         ui->combo_noPowerAction->addItem(iter.key(), iter.value());
     }
 
-    ///空闲时减少屏幕亮度
-    m_reduceBrightnessSwitch = new KiranSwitchButton(this);
-    m_reduceBrightnessSwitch->setAccessibleName("SwitchReduceBrightness");
-    ui->layout_reduceBrightness->insertWidget(ui->layout_reduceBrightness->count(), m_reduceBrightnessSwitch);
+    // 空闲时减少屏幕亮度
+    m_switchIdleDimmed = new KiranSwitchButton(this);
+    m_switchIdleDimmed->setAccessibleName("SwitchIdleReduceBrightness");
+    ui->layout_reduceBrightness->insertWidget(ui->layout_reduceBrightness->count(), m_switchIdleDimmed);
+
+    // 低电亮减少亮度
+    m_switchChargeLowDimmed = new KiranSwitchButton(this);
+    m_switchChargeLowDimmed->setAccessibleName("SwitchNoPowerReduceBrightness");
+    ui->layout_lowPowerReduceBrightness->insertWidget(ui->layout_lowPowerReduceBrightness->count(), m_switchChargeLowDimmed);
+
+    // 低电量节能模式
+    m_chargeLowSaverSwitch = new KiranSwitchButton(this);
+    m_chargeLowSaverSwitch->setAccessibleName("SwitchNoPowerReduceBrightness");
+    ui->layout_lowPowerEco->insertWidget(ui->layout_lowPowerEco->count(), m_chargeLowSaverSwitch);
 }
 
 void BatterySettingsPage::initConnection()
 {
     connect(ui->combo_idleTimeout, QOverload<int>::of(&QComboBox::currentIndexChanged),
-            this, &BatterySettingsPage::handleIdleTimeActionCurrentIdxChanged);
+            this, &BatterySettingsPage::onIdleTimeOrActionChanged);
     connect(ui->combo_idleAction, QOverload<int>::of(&QComboBox::currentIndexChanged),
-            this, &BatterySettingsPage::handleIdleTimeActionCurrentIdxChanged);
+            this, &BatterySettingsPage::onIdleTimeOrActionChanged);
     connect(ui->combo_noPowerAction, QOverload<int>::of(&QComboBox::currentIndexChanged),
-            this, &BatterySettingsPage::handlePowerRunOutActionCurrentIdxChanged);
+            this, &BatterySettingsPage::onBatteryChargeActionChanged);
     connect(ui->combo_monitorOffTimeout, QOverload<int>::of(&QComboBox::currentIndexChanged),
-            this, &BatterySettingsPage::handleMonitorOffTimeoutCurrentIdxChanged);
-    connect(m_reduceBrightnessSwitch, &QAbstractButton::toggled,
-            this, &BatterySettingsPage::handleSwitchReduceBrightnessToggled);
+            this, &BatterySettingsPage::onMonitorOffIdleTimeoutChanged);
+    connect(m_switchIdleDimmed, &QAbstractButton::toggled,
+            this, &BatterySettingsPage::onDisplayIdleDimmedToggled);
+    connect(m_switchChargeLowDimmed, &QAbstractButton::toggled,
+            this, &BatterySettingsPage::onChargeLowDimmedToggled);
+    connect(m_chargeLowSaverSwitch, &QAbstractButton::toggled,
+            this, &BatterySettingsPage::onChargeLowSaverToggled);
 }
 
 void BatterySettingsPage::load()
 {
-    int findComboIdx;
-
-    ///加载计算机空闲超时时间和操作
-    auto getComputerIdleTimeoutReply = m_powerInterface->GetIdleAction(POWER_DEVICE_TYPE_COMPUTER,
-                                                                       POWER_SUPPLY_MODE_BATTERY);
-    getComputerIdleTimeoutReply.waitForFinished();
-    if (getComputerIdleTimeoutReply.isError())
+    auto setComboBoxCurrentData = [this](QComboBox* combo, const QVariant& var) -> bool
     {
-        KLOG_WARNING() << "can't get computer idle timeout!," << getComputerIdleTimeoutReply.error();
+        auto idx = combo->findData(var);
+        if (idx == -1)
+        {
+            return false;
+        }
+        QSignalBlocker signalBlocker(combo);
+        combo->setCurrentIndex(idx);
+        return true;
+    };
+
+    // 空闲超过指定时间，执行指定操作
+    auto computerIdleActionReply = m_powerInterface->GetIdleAction(POWER_DEVICE_TYPE_COMPUTER,
+                                                                   POWER_SUPPLY_MODE_BATTERY);
+    auto computerIdleAction = computerIdleActionReply.value();
+    if (computerIdleActionReply.isError())
+    {
+        KLOG_WARNING() << "can't get computer idle timeout!,"
+                       << computerIdleActionReply.error();
     }
     else
     {
-        IdleAction action = getComputerIdleTimeoutReply.value();
-        findComboIdx = ui->combo_idleTimeout->findData(action.idleTimeout);
-        if (findComboIdx == -1)
-        {
-            KLOG_WARNING("can't find computer timeout(%d),append it to combobox!", action.idleTimeout);
-            ui->combo_idleTimeout->addItem(getTimeDescription(action.idleTimeout), action.idleTimeout);
-            findComboIdx = ui->combo_idleTimeout->findData(action.idleTimeout);
-        }
-        ui->combo_idleTimeout->blockSignals(true);
-        ui->combo_idleTimeout->setCurrentIndex(findComboIdx);
-        ui->combo_idleTimeout->blockSignals(false);
+        auto idleTimeout = computerIdleAction.idleTimeout;
+        auto idleAction = computerIdleAction.idleAction;
 
-        findComboIdx = ui->combo_idleAction->findData(action.idleAction);
-        if (findComboIdx == -1)
+        if (!setComboBoxCurrentData(ui->combo_idleTimeout, idleTimeout))
         {
-            KLOG_WARNING("can't find computer idle action(%d),append it to combobox!", action.idleAction);
-            ui->combo_idleAction->addItem(QString::number(action.idleAction), action.idleAction);
-            findComboIdx = ui->combo_idleAction->findData(action.idleAction);
+            KLOG_WARNING("can't find computer idle timeout index(%d).", idleTimeout);
         }
-        ui->combo_idleAction->blockSignals(true);
-        ui->combo_idleAction->setCurrentIndex(findComboIdx);
-        ui->combo_idleAction->blockSignals(false);
+
+        if (!setComboBoxCurrentData(ui->combo_idleAction, idleAction))
+        {
+            KLOG_WARNING("can't find computer idle action(%d).", idleAction);
+        }
     }
 
-    ///加载显示器空闲熄灭时间
-    auto getMonitorIdleTimeoutReply = m_powerInterface->GetIdleAction(POWER_DEVICE_TYPE_BACKLIGHT,
-                                                                      POWER_SUPPLY_MODE_AC);
-    getMonitorIdleTimeoutReply.waitForFinished();
-    if (getMonitorIdleTimeoutReply.isError())
+    // 电量耗尽执行的操作
+    auto batteryChargeActionReply = m_powerInterface->GetEventAction(POWER_EVENT_BATTERY_CHARGE_ACTION);
+    auto batteryChargeAction = batteryChargeActionReply.value();
+    if (batteryChargeActionReply.isError())
     {
-        KLOG_WARNING() << "can't get monitor idle timeout!," << getMonitorIdleTimeoutReply.error();
+        KLOG_WARNING() << "get lower power action failed," << batteryChargeActionReply.error();
     }
     else
     {
-        IdleAction action = getMonitorIdleTimeoutReply.value();
-        findComboIdx = ui->combo_monitorOffTimeout->findData(action.idleTimeout);
-        if (findComboIdx == -1)
+        if (!setComboBoxCurrentData(ui->combo_noPowerAction, batteryChargeAction))
         {
-            KLOG_WARNING("can't find monitor idle timeout(%d),append it to combobox!", action.idleTimeout);
-            ui->combo_monitorOffTimeout->addItem(getTimeDescription(action.idleTimeout), action.idleTimeout);
-            findComboIdx = ui->combo_monitorOffTimeout->findData(action.idleTimeout);
+            KLOG_WARNING("can't find battery charge action(%d)", batteryChargeAction);
         }
-        ui->combo_monitorOffTimeout->blockSignals(true);
-        ui->combo_monitorOffTimeout->setCurrentIndex(findComboIdx);
-        ui->combo_monitorOffTimeout->blockSignals(false);
     }
 
-    ///电量耗尽执行的操作
-    auto eventActionRep = m_powerInterface->GetEventAction(POWER_EVENT_BATTERY_CHARGE_ACTION);
-    eventActionRep.waitForFinished();
-    if (eventActionRep.isError())
+    // 空闲多久后，显示器将执行关闭
+    auto monitorIdleTimeoutActionReply = m_powerInterface->GetIdleAction(POWER_DEVICE_TYPE_BACKLIGHT,
+                                                                         POWER_SUPPLY_MODE_BATTERY);
+    auto monitorIdleTimeoutAction = monitorIdleTimeoutActionReply.value();
+    if (monitorIdleTimeoutActionReply.isError())
     {
-        KLOG_WARNING() << "get lower power action failed," << eventActionRep.error();
+        KLOG_WARNING() << "can't get monitor idle timeout!," << monitorIdleTimeoutActionReply.error();
     }
     else
     {
-        int action = eventActionRep.value();
-        findComboIdx = ui->combo_noPowerAction->findData(action);
-        if (findComboIdx == -1)
+        auto idleTimeout = monitorIdleTimeoutAction.idleTimeout;
+        if (!setComboBoxCurrentData(ui->combo_monitorOffTimeout, idleTimeout))
         {
-            KLOG_WARNING("can't find no power action(%d),append it to combobox!", action);
-            ui->combo_noPowerAction->addItem(QString::number(action), action);
-            findComboIdx = ui->combo_monitorOffTimeout->findData(action);
+            KLOG_WARNING("can't find monitor off timeout index(%d).", idleTimeout);
         }
-        ui->combo_noPowerAction->blockSignals(true);
-        ui->combo_noPowerAction->setCurrentIndex(findComboIdx);
-        ui->combo_noPowerAction->blockSignals(false);
     }
 
-    ///NOTE:idle dimmed scale (0关闭空闲显示变暗，其余值均为描述变暗的程度)
-    bool idleDimmedEnable = (m_powerInterface->idle_dimmed_scale() != 0);
-    m_reduceBrightnessSwitch->blockSignals(true);
-    m_reduceBrightnessSwitch->setChecked(idleDimmedEnable);
-    m_reduceBrightnessSwitch->blockSignals(false);
+    // 空闲时减少亮度 
+    QSignalBlocker idleDimmedEnabledBlocker(m_switchIdleDimmed);
+    auto idleDimmedEnabled = m_powerInterface->displayIdleDimmedEnabled();
+    m_switchIdleDimmed->setChecked(idleDimmedEnabled);
+
+    // 低电量时减少亮度
+    QSignalBlocker chargeLowDimmedBlocker(m_switchChargeLowDimmed);
+    auto chargeLowDimmedEnabled = m_powerInterface->chargeLowDimmedEnabled();
+    m_switchChargeLowDimmed->setChecked(chargeLowDimmedEnabled);
+
+    // 低电量时自动开启节能模式
+    QSignalBlocker chargeLowSaverBlocker(m_chargeLowSaverSwitch);
+    auto chargeLowSaverEnabled =  m_powerInterface->chargeLowSaverEnabled();
+    m_chargeLowSaverSwitch->setChecked(chargeLowSaverEnabled);
 }
 
-void BatterySettingsPage::handleIdleTimeActionCurrentIdxChanged(int idx)
+void BatterySettingsPage::onIdleTimeOrActionChanged(int idx)
 {
     IdleAction idleAction{};
-    if( !getCurrentIdleAction(idleAction) )
+    if (!getCurrentIdleAction(idleAction))
     {
         return;
     }
@@ -221,20 +230,20 @@ void BatterySettingsPage::handleIdleTimeActionCurrentIdxChanged(int idx)
     }
 }
 
-void BatterySettingsPage::handlePowerRunOutActionCurrentIdxChanged(int idx)
+void BatterySettingsPage::onBatteryChargeActionChanged(int idx)
 {
     int action = ui->combo_noPowerAction->currentData().toInt();
-    auto reply = m_powerInterface->SetEventAction(POWER_EVENT_BATTERY_CHARGE_ACTION,action);
+    auto reply = m_powerInterface->SetEventAction(POWER_EVENT_BATTERY_CHARGE_ACTION, action);
 
     reply.waitForFinished();
 
-    if(reply.isError())
+    if (reply.isError())
     {
         KLOG_WARNING() << "set no power action(" << action << ") failed," << reply.error();
     }
 }
 
-void BatterySettingsPage::handleMonitorOffTimeoutCurrentIdxChanged(int idx)
+void BatterySettingsPage::onMonitorOffIdleTimeoutChanged(int idx)
 {
     bool isOk = false;
     int displayOffTime = ui->combo_monitorOffTimeout->currentData().toInt(&isOk);
@@ -249,13 +258,33 @@ void BatterySettingsPage::handleMonitorOffTimeoutCurrentIdxChanged(int idx)
     }
 }
 
-void BatterySettingsPage::handleSwitchReduceBrightnessToggled(bool checked)
+void BatterySettingsPage::onDisplayIdleDimmedToggled(bool checked)
 {
-    auto reply = m_powerInterface->SetIdleDimmed(checked?LOW_POWER_REDUCE_BRIGHTNESS_SCALE:0);
+    auto reply = m_powerInterface->EnableDisplayIdleDimmed(checked);
     reply.waitForFinished();
-    if(reply.isError())
+    if (reply.isError())
     {
-        KLOG_WARNING() << "set idle dimmed" << checked << "failed," << reply.error();
+        KLOG_WARNING() << "BatterySetting EnableDisplayIdleDimmed" << checked << "failed," << reply.error();
+    }
+}
+
+void BatterySettingsPage::onChargeLowDimmedToggled(bool checked)
+{
+    auto reply = m_powerInterface->EnableChargeLowDimmed(checked);
+    reply.waitForFinished();
+    if (reply.isError())
+    {
+        KLOG_WARNING() << "BatterySetting EnableChargeLowDimmed" << checked << "failed," << reply.error();
+    }
+}
+
+void BatterySettingsPage::onChargeLowSaverToggled(bool checked)
+{
+    auto reply = m_powerInterface->EnableChargeLowSaver(checked);
+    reply.waitForFinished();
+    if (reply.isError())
+    {
+        KLOG_WARNING() << "BatterySetting EnableChargeLowSaver" << checked << "failed," << reply.error();
     }
 }
 
@@ -267,7 +296,7 @@ bool BatterySettingsPage::getCurrentIdleAction(IdleAction& idleAction)
     if (!toIntOk)
     {
         KLOG_WARNING() << "combobox " << ui->combo_idleTimeout->objectName()
-                        << "item data can't convert to int," << ui->combo_idleTimeout->currentData();
+                       << "item data can't convert to int," << ui->combo_idleTimeout->currentData();
         return false;
     }
 
@@ -275,7 +304,7 @@ bool BatterySettingsPage::getCurrentIdleAction(IdleAction& idleAction)
     if (!toIntOk)
     {
         KLOG_WARNING() << "combobox " << ui->combo_idleAction->objectName()
-                        << "imet data can't convert to int," << ui->combo_idleAction->currentData();
+                       << "imet data can't convert to int," << ui->combo_idleAction->currentData();
         return false;
     }
 
