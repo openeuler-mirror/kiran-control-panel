@@ -16,12 +16,12 @@
     <message>
         <location filename="../src/pages/battery-settings/battery-settings-page.ui" line="60"/>
         <source>ComboIdleTime</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/pages/battery-settings/battery-settings-page.ui" line="67"/>
         <source>ComboIdleAction</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/pages/battery-settings/battery-settings-page.ui" line="87"/>
@@ -31,7 +31,7 @@
     <message>
         <location filename="../src/pages/battery-settings/battery-settings-page.ui" line="104"/>
         <source>ComboLowBatteryAction</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/pages/battery-settings/battery-settings-page.ui" line="121"/>
@@ -41,7 +41,7 @@
     <message>
         <location filename="../src/pages/battery-settings/battery-settings-page.ui" line="138"/>
         <source>ComboMonitorTurnOffIdleTime</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/pages/battery-settings/battery-settings-page.ui" line="155"/>
@@ -49,30 +49,36 @@
         <translation>空闲时减少亮度</translation>
     </message>
     <message>
-        <source>Display Off</source>
-        <translation type="vanished">关闭显示器</translation>
+        <location filename="../src/pages/battery-settings/battery-settings-page.ui" line="182"/>
+        <source>Reduce screen brightness when  no power</source>
+        <translation>低点亮时减少亮度</translation>
     </message>
     <message>
-        <location filename="../src/pages/battery-settings/battery-settings-page.cpp" line="67"/>
-        <location filename="../src/pages/battery-settings/battery-settings-page.cpp" line="83"/>
+        <location filename="../src/pages/battery-settings/battery-settings-page.ui" line="212"/>
+        <source>The energy saving mode is enabled when the power is low</source>
+        <translation>低电量时自动开启节能模式</translation>
+    </message>
+    <message>
+        <location filename="../src/pages/battery-settings/battery-settings-page.cpp" line="65"/>
+        <location filename="../src/pages/battery-settings/battery-settings-page.cpp" line="81"/>
         <source>Suspend</source>
         <translation>待机</translation>
     </message>
     <message>
-        <location filename="../src/pages/battery-settings/battery-settings-page.cpp" line="68"/>
-        <location filename="../src/pages/battery-settings/battery-settings-page.cpp" line="84"/>
+        <location filename="../src/pages/battery-settings/battery-settings-page.cpp" line="66"/>
+        <location filename="../src/pages/battery-settings/battery-settings-page.cpp" line="82"/>
         <source>Shutdown</source>
         <translation>关机</translation>
     </message>
     <message>
-        <location filename="../src/pages/battery-settings/battery-settings-page.cpp" line="69"/>
-        <location filename="../src/pages/battery-settings/battery-settings-page.cpp" line="85"/>
+        <location filename="../src/pages/battery-settings/battery-settings-page.cpp" line="67"/>
+        <location filename="../src/pages/battery-settings/battery-settings-page.cpp" line="83"/>
         <source>Hibernate</source>
         <translation>休眠</translation>
     </message>
     <message>
-        <location filename="../src/pages/battery-settings/battery-settings-page.cpp" line="70"/>
-        <location filename="../src/pages/battery-settings/battery-settings-page.cpp" line="86"/>
+        <location filename="../src/pages/battery-settings/battery-settings-page.cpp" line="68"/>
+        <location filename="../src/pages/battery-settings/battery-settings-page.cpp" line="84"/>
         <source>Do nothing</source>
         <translation>不执行操作</translation>
     </message>
@@ -86,28 +92,6 @@
     </message>
 </context>
 <context>
-    <name>CPanelPowerWidget</name>
-    <message>
-        <source>General Settings</source>
-        <translation type="vanished">通用设置</translation>
-    </message>
-    <message>
-        <source>Power Settings</source>
-        <translation type="vanished">电源设置</translation>
-    </message>
-    <message>
-        <source>Battery Settings</source>
-        <translation type="vanished">电池设置</translation>
-    </message>
-</context>
-<context>
-    <name>CPanelPowerWindow</name>
-    <message>
-        <source>Power Manager</source>
-        <translation type="vanished">电源管理</translation>
-    </message>
-</context>
-<context>
     <name>GeneralSettingsPage</name>
     <message>
         <location filename="../src/pages/general-settings/general-settings-page.ui" line="14"/>
@@ -115,118 +99,145 @@
         <translation>通用设置页面</translation>
     </message>
     <message>
-        <location filename="../src/pages/general-settings/general-settings-page.ui" line="40"/>
+        <location filename="../src/pages/general-settings/general-settings-page.ui" line="104"/>
         <source>When the power button is pressed</source>
         <translation>按下电源按钮时</translation>
     </message>
     <message>
-        <location filename="../src/pages/general-settings/general-settings-page.ui" line="54"/>
+        <location filename="../src/pages/general-settings/general-settings-page.ui" line="127"/>
         <source>ComboPowerButtonAction</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../src/pages/general-settings/general-settings-page.ui" line="68"/>
+        <location filename="../src/pages/general-settings/general-settings-page.ui" line="171"/>
         <source>When the suspend button is pressed</source>
         <translation>按下挂起按钮时</translation>
     </message>
     <message>
-        <location filename="../src/pages/general-settings/general-settings-page.ui" line="82"/>
+        <location filename="../src/pages/general-settings/general-settings-page.ui" line="194"/>
         <source>ComboSuspendAction</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../src/pages/general-settings/general-settings-page.ui" line="100"/>
+        <location filename="../src/pages/general-settings/general-settings-page.ui" line="238"/>
         <source>When closing the lid</source>
         <translation>合上盖子操作</translation>
     </message>
     <message>
-        <location filename="../src/pages/general-settings/general-settings-page.ui" line="149"/>
+        <location filename="../src/pages/general-settings/general-settings-page.ui" line="279"/>
         <source>ComboCloseLidAction</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../src/pages/general-settings/general-settings-page.ui" line="164"/>
+        <location filename="../src/pages/general-settings/general-settings-page.ui" line="323"/>
+        <source>Computer Mode</source>
+        <translation>计算机模式</translation>
+    </message>
+    <message>
+        <location filename="../src/pages/general-settings/general-settings-page.ui" line="394"/>
         <source>Display brightness setting</source>
         <translation>显示亮度设置</translation>
     </message>
     <message>
-        <location filename="../src/pages/general-settings/general-settings-page.ui" line="184"/>
+        <location filename="../src/pages/general-settings/general-settings-page.ui" line="414"/>
         <source>0%</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/pages/general-settings/general-settings-page.ui" line="198"/>
+        <location filename="../src/pages/general-settings/general-settings-page.ui" line="444"/>
         <source>SliderDisplayBrightness</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../src/pages/general-settings/general-settings-page.ui" line="218"/>
+        <location filename="../src/pages/general-settings/general-settings-page.ui" line="493"/>
+        <source>Color temperature</source>
+        <translation>色温</translation>
+    </message>
+    <message>
+        <location filename="../src/pages/general-settings/general-settings-page.ui" line="524"/>
+        <source>Automatic color temperature</source>
+        <translation>自动色温</translation>
+    </message>
+    <message>
+        <location filename="../src/pages/general-settings/general-settings-page.ui" line="595"/>
+        <source>cold</source>
+        <translation>冷</translation>
+    </message>
+    <message>
+        <location filename="../src/pages/general-settings/general-settings-page.ui" line="615"/>
+        <source>standard</source>
+        <translation>标准</translation>
+    </message>
+    <message>
+        <location filename="../src/pages/general-settings/general-settings-page.ui" line="635"/>
+        <source>warm</source>
+        <translation>暖</translation>
+    </message>
+    <message>
+        <location filename="../src/pages/general-settings/general-settings-page.ui" line="695"/>
         <source>Regard computer as idle after</source>
         <translation>于此时间后视计算机为空闲</translation>
     </message>
     <message>
-        <location filename="../src/pages/general-settings/general-settings-page.ui" line="264"/>
+        <location filename="../src/pages/general-settings/general-settings-page.ui" line="749"/>
         <source>SliderComputerIdleTime</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../src/pages/general-settings/general-settings-page.ui" line="284"/>
+        <location filename="../src/pages/general-settings/general-settings-page.ui" line="780"/>
         <source>Lock screen when idle</source>
         <translation>计算机空闲时锁定屏幕</translation>
     </message>
     <message>
-        <source>After idle the following time to lock the screen </source>
-        <translation type="vanished">空闲如下时间锁定屏幕</translation>
+        <location filename="../src/pages/general-settings/general-settings-page.ui" line="823"/>
+        <source>password is required to wake up in standby mode</source>
+        <translation>待机时唤醒需要输入密码</translation>
     </message>
     <message>
-        <location filename="../src/pages/general-settings/general-settings-page.cpp" line="116"/>
-        <location filename="../src/pages/general-settings/general-settings-page.cpp" line="129"/>
+        <location filename="../src/pages/general-settings/general-settings-page.cpp" line="118"/>
+        <location filename="../src/pages/general-settings/general-settings-page.cpp" line="131"/>
         <source>shutdown</source>
         <translation>关机</translation>
     </message>
     <message>
-        <location filename="../src/pages/general-settings/general-settings-page.cpp" line="117"/>
-        <location filename="../src/pages/general-settings/general-settings-page.cpp" line="123"/>
-        <location filename="../src/pages/general-settings/general-settings-page.cpp" line="128"/>
+        <location filename="../src/pages/general-settings/general-settings-page.cpp" line="119"/>
+        <location filename="../src/pages/general-settings/general-settings-page.cpp" line="125"/>
+        <location filename="../src/pages/general-settings/general-settings-page.cpp" line="130"/>
         <source>hibernate</source>
         <translation>休眠</translation>
     </message>
     <message>
-        <location filename="../src/pages/general-settings/general-settings-page.cpp" line="118"/>
-        <location filename="../src/pages/general-settings/general-settings-page.cpp" line="122"/>
-        <location filename="../src/pages/general-settings/general-settings-page.cpp" line="127"/>
+        <location filename="../src/pages/general-settings/general-settings-page.cpp" line="120"/>
+        <location filename="../src/pages/general-settings/general-settings-page.cpp" line="124"/>
+        <location filename="../src/pages/general-settings/general-settings-page.cpp" line="129"/>
         <source>suspend</source>
         <translation>待机</translation>
     </message>
     <message>
-        <location filename="../src/pages/general-settings/general-settings-page.cpp" line="119"/>
-        <location filename="../src/pages/general-settings/general-settings-page.cpp" line="124"/>
+        <location filename="../src/pages/general-settings/general-settings-page.cpp" line="121"/>
+        <location filename="../src/pages/general-settings/general-settings-page.cpp" line="126"/>
         <source>display off</source>
         <translation>关闭显示器</translation>
     </message>
     <message>
-        <location filename="../src/pages/general-settings/general-settings-page.cpp" line="120"/>
-        <location filename="../src/pages/general-settings/general-settings-page.cpp" line="125"/>
-        <location filename="../src/pages/general-settings/general-settings-page.cpp" line="130"/>
+        <location filename="../src/pages/general-settings/general-settings-page.cpp" line="122"/>
+        <location filename="../src/pages/general-settings/general-settings-page.cpp" line="127"/>
+        <location filename="../src/pages/general-settings/general-settings-page.cpp" line="132"/>
         <source>do nothing</source>
         <translation>不执行操作</translation>
     </message>
     <message>
-        <location filename="../src/pages/general-settings/general-settings-page.cpp" line="189"/>
+        <location filename="../src/pages/general-settings/general-settings-page.cpp" line="372"/>
         <source>ERROR</source>
         <translation>错误</translation>
     </message>
     <message>
-        <source>brightness adjustment not available</source>
-        <translation type="vanished">亮度调整不可用</translation>
-    </message>
-    <message>
-        <location filename="../src/pages/general-settings/general-settings-page.cpp" line="368"/>
+        <location filename="../src/pages/general-settings/general-settings-page.cpp" line="468"/>
         <source>%1hour</source>
         <translation>%1小时</translation>
     </message>
     <message>
-        <location filename="../src/pages/general-settings/general-settings-page.cpp" line="372"/>
+        <location filename="../src/pages/general-settings/general-settings-page.cpp" line="472"/>
         <source>%1minute</source>
         <translation>%1分钟</translation>
     </message>
@@ -237,6 +248,27 @@
         <location filename="../src/general-settings-subitem.h" line="46"/>
         <source>General Settings</source>
         <translation>通用设置</translation>
+    </message>
+</context>
+<context>
+    <name>PowerProfilesWrapper</name>
+    <message>
+        <location filename="../src/dbus/power-profiles-wrapper.cpp" line="87"/>
+        <location filename="../src/dbus/power-profiles-wrapper.cpp" line="103"/>
+        <source>power-saver</source>
+        <translation>省电模式</translation>
+    </message>
+    <message>
+        <location filename="../src/dbus/power-profiles-wrapper.cpp" line="88"/>
+        <location filename="../src/dbus/power-profiles-wrapper.cpp" line="104"/>
+        <source>balanced</source>
+        <translation>平衡模式</translation>
+    </message>
+    <message>
+        <location filename="../src/dbus/power-profiles-wrapper.cpp" line="89"/>
+        <location filename="../src/dbus/power-profiles-wrapper.cpp" line="105"/>
+        <source>performance</source>
+        <translation>性能模式</translation>
     </message>
 </context>
 <context>
@@ -270,10 +302,6 @@
         <location filename="../src/pages/power-settings/power-settings-page.ui" line="101"/>
         <source>ComboMonitorTrunOffIdleTime</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Display Off</source>
-        <translation type="vanished">关闭显示器</translation>
     </message>
     <message>
         <location filename="../src/pages/power-settings/power-settings-page.cpp" line="63"/>
