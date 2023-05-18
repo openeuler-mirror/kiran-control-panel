@@ -19,6 +19,7 @@
 #include "widgets/auth-setting-container.h"
 #include "widgets/auth-setting-item.h"
 #include "widgets/finger-enroll-progressbar.h"
+#include "widgets/general-bio-page.h"
 
 #include <kiran-message-box.h>
 #include <qt5-log-i.h>
@@ -44,20 +45,14 @@ enum FingerPageIndexEnum
 
 FingerPage::FingerPage(KiranAuthDBusProxy* proxy, FingerAuthType type, QWidget* parent)
     : QWidget(parent),
-      m_type(type),
       m_authType(type == FINGER_TYPE_FINGER_PRINT ? KAD_AUTH_TYPE_FINGERPRINT : KAD_AUTH_TYPE_FINGERVEIN),
-      m_authDesc(type == FINGER_TYPE_FINGER_PRINT ? tr("fingerprint") : tr("fingervein")),
       m_proxy(proxy),
       m_inEnroll(false)
 {
     initUI();
 
     connect(m_proxy, &KiranAuthDBusProxy::EnrollStatus, this, &FingerPage::onEnrollStatusNotify);
-
     m_stackedWidget->setCurrentIndex(FINGER_PAGE_INDEX_MANAGER);
-
-    refreshAllFeature();
-    refreshDeviceComboBox();
 }
 
 FingerPage::~FingerPage()
@@ -81,91 +76,15 @@ void FingerPage::initUI()
     m_stackedWidget->insertWidget(FINGER_PAGE_INDEX_ENROLL, initFeatureEnroll());
 }
 
-void FingerPage::refreshAllFeature()
-{
-    m_settingContainer->clear();
-    m_featureNameSet.clear();
-
-    auto identifications = m_proxy->getUserIdentifications(m_authType);
-    FINGER_DEBUG() << "reload identifications"
-                   << ",count:" << identifications.count();
-
-    for (auto iter : identifications)
-    {
-        auto featureItem = new AuthSettingItem;
-        featureItem->setUserData(iter.IID);
-        featureItem->setText(iter.name);
-        featureItem->setLeftButtonVisible(true, ":/kcp-authentication/images/rename.svg");
-        featureItem->setRightButtonVisible(true, ":/kcp-authentication/images/trash.svg");
-
-        m_settingContainer->addAuthSettingItem(featureItem);
-        m_featureNameSet << iter.name;
-
-        connect(featureItem, &AuthSettingItem::leftButtonClicked, this, &FingerPage::onRenameIdentification);
-        connect(featureItem, &AuthSettingItem::rightButtonClicked, this, &FingerPage::onDeleteIdentification);
-    }
-}
-
-// 若未指定默认设备时，默认使用第一个设备作为默认设备
-void FingerPage::refreshDeviceComboBox()
-{
-    QSignalBlocker blocker(m_defaultDeviceCombobox);
-    m_defaultDeviceCombobox->clear();
-
-    auto devices = m_proxy->getDevicesByType(m_authType);
-    FINGER_DEBUG() << "reload" << m_authType << "devices"
-                   << ",count:" << devices.count();
-
-    auto defaultDevice = m_proxy->getDefaultDeviceID(m_authType);
-    FINGER_DEBUG() << m_authType << "default device id:" << defaultDevice;
-
-    for (auto device : devices)
-    {
-        m_defaultDeviceCombobox->addItem(device.name, device.id);
-        if (!defaultDevice.isEmpty() && defaultDevice == device.id)
-        {
-            m_defaultDeviceCombobox->setCurrentIndex(m_defaultDeviceCombobox->count() - 1);
-        }
-    }
-}
-
 QWidget* FingerPage::initFeatureManager()
 {
-    auto featureManagerWidget = new QWidget(this);
-    auto featureManagerLayout = new QBoxLayout(QBoxLayout::TopToBottom, featureManagerWidget);
-    featureManagerLayout->setSpacing(0);
-    featureManagerLayout->setContentsMargins(0, 0, 0, 0);
-
-    auto labelDefaultDevice = new QLabel(tr("default %1 device").arg(m_authDesc));
-    featureManagerLayout->addWidget(labelDefaultDevice);
-
-    featureManagerLayout->addSpacerItem(new QSpacerItem(10, 10, QSizePolicy::Minimum, QSizePolicy::Fixed));
-
-    m_defaultDeviceCombobox = new QComboBox(this);
-    featureManagerLayout->addWidget(m_defaultDeviceCombobox);
-    connect(m_defaultDeviceCombobox, QOverload<int>::of(&QComboBox::currentIndexChanged),
-            this, &FingerPage::onDefaultDeviceCurrentIdxChanged);
-
-    featureManagerLayout->addSpacerItem(new QSpacerItem(10, 16, QSizePolicy::Minimum, QSizePolicy::Fixed));
-
-    auto labelFingerList = new QLabel(tr("%1list").arg(m_authDesc));
-    featureManagerLayout->addWidget(labelFingerList);
-
-    featureManagerLayout->addSpacerItem(new QSpacerItem(10, 10, QSizePolicy::Minimum, QSizePolicy::Fixed));
-
-    m_settingContainer = new AuthSettingContainer(this);
-    featureManagerLayout->addWidget(m_settingContainer, 1);
-
-    featureManagerLayout->addSpacerItem(new QSpacerItem(10, 10, QSizePolicy::Minimum, QSizePolicy::Fixed));
-
-    auto addButton = new QPushButton(this);
-    featureManagerLayout->addWidget(addButton);
-    addButton->setIcon(QPixmap(":/kcp-keyboard/images/addition.svg"));
-    Kiran::StylePropertyHelper::setButtonType(addButton, Kiran::BUTTON_Default);
-    connect(addButton, &QPushButton::clicked, this, &FingerPage::onAddIdentificationClicked);
-
-    featureManagerLayout->addStretch();
-    return featureManagerWidget;
+    m_featureManager = new GeneralBioPage(m_proxy,m_authType,this);
+    auto desc = m_authType==KAD_AUTH_TYPE_FINGERPRINT?tr("fingerprint"):tr("fingervein");
+    m_featureManager->setFeatureNamePrefix(desc);
+    m_featureManager->setDefaultDeviceLabelDesc(QString(tr("Default %1 device")).arg(desc));
+    m_featureManager->setDeviceFeatureListDesc(QString(tr("%1 list").arg(desc)));
+    connect(m_featureManager, &GeneralBioPage::enrollFeatureClicked, this, &FingerPage::onAddIdentificationClicked);
+    return m_featureManager;
 }
 
 QWidget* FingerPage::initFeatureEnroll()
@@ -203,49 +122,9 @@ QWidget* FingerPage::initFeatureEnroll()
     return featureEnrollWidget;
 }
 
-QString FingerPage::autoGenerateFeatureName()
-{
-    QRandomGenerator randomGenerator;
-
-    for (int i = 0; i <= 10; ++i)
-    {
-        auto featureNumber = randomGenerator.bounded(1, MAX_FEATURE_NUMBER);
-        auto temp = QString("%1 %2").arg(m_authDesc).arg(featureNumber);
-
-        if (!m_featureNameSet.contains(temp))
-        {
-            return temp;
-        }
-    }
-
-    return QString();
-}
-
-void FingerPage::onDefaultDeviceCurrentIdxChanged(int idx)
-{
-    QVariant userData = m_defaultDeviceCombobox->itemData(idx);
-    m_proxy->setDefaultDeviceID(m_authType, userData.toString());
-}
-
-void FingerPage::onRenameIdentification(const QVariant& userData)
-{
-    QString iid = userData.toString();
-    QScopedPointer<IdentificationRenameDialog> renameDialog(new IdentificationRenameDialog(iid, m_proxy, this));
-    if (renameDialog->exec())
-    {
-        refreshAllFeature();
-    }
-}
-
-void FingerPage::onDeleteIdentification(const QVariant& userData)
-{
-    m_proxy->deleteIdentification(userData.toString());
-    refreshAllFeature();
-}
-
 void FingerPage::onAddIdentificationClicked()
 {
-    QString featureName = autoGenerateFeatureName();
+    QString featureName = m_featureManager->autoGenerateFeatureName();
 
     m_enrollProgress->setProgress(0);
     m_enRollTips->setText("");
@@ -296,7 +175,7 @@ void FingerPage::onEnrollComplete(bool isSuccess, const QString& message, const 
     FINGER_DEBUG() << "enroll complete iid:" << iid << "message:" << message;
     if (isSuccess)
     {
-        refreshAllFeature();
+        m_featureManager->refreshFeature();
         QString text = QString(tr("The biometric features were successfully recorded. The feature name is:%1")).arg(m_inErollFeatureName);
         KiranMessageBox::message(this, tr("Tips"), text, KiranMessageBox::Ok);
     }

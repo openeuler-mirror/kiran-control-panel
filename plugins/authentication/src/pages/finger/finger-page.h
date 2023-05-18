@@ -22,9 +22,9 @@ class QLabel;
 class QComboBox;
 QT_END_NAMESPACE
 
-class AuthSettingContainer;
 class FingerEnrollProgressBar;
 class KiranAuthDBusProxy;
+class GeneralBioPage;
 class FingerPage : public QWidget
 {
     Q_OBJECT
@@ -41,16 +41,10 @@ private:
     void initUI();
     QString autoGenerateFeatureName();
 
-    void refreshAllFeature();
-    void refreshDeviceComboBox();
-
     QWidget* initFeatureManager();
     QWidget* initFeatureEnroll();
 
 private slots:
-    void onDefaultDeviceCurrentIdxChanged(int idx);
-    void onRenameIdentification(const QVariant& userData);
-    void onDeleteIdentification(const QVariant& userData);
     void onAddIdentificationClicked();
     void onEnrollCancelClicked();
     void onEnrollStatusNotify(const QString& iid, bool isComplete,
@@ -58,17 +52,12 @@ private slots:
     void onEnrollComplete(bool isSuccess, const QString& message, const QString& iid);
 
 private:
-    FingerAuthType m_type;
     KADAuthType m_authType;
-    QString m_authDesc;
-
-    QSet<QString> m_featureNameSet;
 
     KiranAuthDBusProxy* m_proxy;
 
     QStackedWidget* m_stackedWidget;
-    QComboBox* m_defaultDeviceCombobox;
-    AuthSettingContainer* m_settingContainer;
+    GeneralBioPage* m_featureManager;
     FingerEnrollProgressBar* m_enrollProgress;
     QLabel* m_enRollTips;
 
