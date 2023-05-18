@@ -13,26 +13,25 @@
  */
 #pragma once
 #include <QWidget>
+#include <QSet>
 
-QT_BEGIN_NAMESPACE
-class QBoxLayout;
-QT_END_NAMESPACE
-
-class AuthSettingContainer : public QWidget
+class KiranAuthDBusProxy;
+class GeneralBioPage;
+class IrisPage : public QWidget
 {
     Q_OBJECT
 public:
-    AuthSettingContainer(QWidget* parent = nullptr);
-    virtual ~AuthSettingContainer();
-
-    void addAuthSettingItem(QWidget* widget);
-    void clear();
+    IrisPage(KiranAuthDBusProxy* proxy, QWidget* parent = nullptr);
+    ~IrisPage();
 
 private:
-    void init();
-    void adjustSizeToItmes();
+    void initUI();
+
+private slots:
+    void onEnrollFeatureClicked();
 
 private:
-    QBoxLayout* m_mainLayout;
-    QBoxLayout* m_containerLayout;
+    KiranAuthDBusProxy* m_proxy;
+    QSet<QString> m_featureNameSet;
+    GeneralBioPage* m_featureManager;
 };

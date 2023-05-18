@@ -72,7 +72,10 @@ QWidget* PrefsPage::initAuthTypePage()
 
     std::list<std::tuple<KADAuthType, QString>> authTypes = {
         {KAD_AUTH_TYPE_FINGERPRINT, tr("fingerprint")},
-        {KAD_AUTH_TYPE_FINGERVEIN, tr("fingervein")}};
+        {KAD_AUTH_TYPE_FINGERVEIN, tr("fingervein")},
+        {KAD_AUTH_TYPE_UKEY, tr("ukey")},
+        {KAD_AUTH_TYPE_IRIS, tr("iris")},
+        {KAD_AUTH_TYPE_FACE, tr("face")}};
 
     // fill auth types
     for (auto iter : authTypes)
@@ -85,7 +88,7 @@ QWidget* PrefsPage::initAuthTypePage()
         settingsItem->setClickable(true);
         settingsItem->setRightButtonVisible(true, ":/kcp-authentication/images/arrow.svg");
         settingsItem->setText(std::get<1>(iter));
-        container->addFeatureItem(settingsItem);
+        container->addAuthSettingItem(settingsItem);
 
         auto authTypeClickedSlot = std::bind(&PrefsPage::onAuthTypeClicked, this, authType);
         connect(settingsItem, &AuthSettingItem::clicked, this, authTypeClickedSlot);
@@ -144,7 +147,7 @@ QWidget* PrefsPage::initAuthApplicationPage()
         settingsItem->setUserData(authApp);
         settingsItem->setSwitcherVisible(true);
         settingsItem->setText(std::get<1>(iter));
-        container->addFeatureItem(settingsItem);
+        container->addAuthSettingItem(settingsItem);
 
         auto slot = std::bind(&PrefsPage::onAuthApplicationSwitchToggled, this, authApp, std::placeholders::_2);
         connect(settingsItem,&AuthSettingItem::switchButtonToggled,this,slot);

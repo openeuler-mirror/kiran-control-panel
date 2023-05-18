@@ -20,8 +20,12 @@
 #include <QTranslator>
 
 #include "pages/driver/driver-page.h"
+#include "pages/face/face-page.h"
 #include "pages/finger/finger-page.h"
+#include "pages/iris/iris-page.h"
 #include "pages/prefs/prefs-page.h"
+#include "pages/ukey/ukey-page.h"
+
 #include "utils/kiran-auth-dbus-proxy.h"
 
 AuthPlugin::AuthPlugin(QObject* parent)
@@ -80,11 +84,23 @@ void AuthPlugin::initItems()
 {
     auto FingerprintPageCreator = []() -> QWidget*
     {
-        return new FingerPage(KiranAuthDBusProxy::getInstance(),FingerPage::FINGER_TYPE_FINGER_PRINT);
+        return new FingerPage(KiranAuthDBusProxy::getInstance(), FingerPage::FINGER_TYPE_FINGER_PRINT);
     };
     auto FingerveinPageCreator = []() -> QWidget*
     {
-        return new FingerPage(KiranAuthDBusProxy::getInstance(),FingerPage::FINGER_TYPE_FINGER_VEIN);
+        return new FingerPage(KiranAuthDBusProxy::getInstance(), FingerPage::FINGER_TYPE_FINGER_VEIN);
+    };
+    auto UKeyPageCreator = []() -> QWidget*
+    {
+        return new UKeyPage(KiranAuthDBusProxy::getInstance());
+    };
+    auto IrisPageCreator = []() -> QWidget*
+    {
+        return new IrisPage(KiranAuthDBusProxy::getInstance());
+    };
+    auto FacePageCreator = []() -> QWidget*
+    {
+        return new FacePage(KiranAuthDBusProxy::getInstance());
     };
     auto DriverPageCreator = []() -> QWidget*
     {
@@ -121,6 +137,27 @@ void AuthPlugin::initItems()
          "kcp-authentication-fingervein",
          98,
          FingerveinPageCreator},
+        {"UKey",
+         tr("UKey"),
+         "authentication-manager",
+         "",
+         "kcp-authentication-ukey",
+         98,
+         UKeyPageCreator},
+        {"Iris",
+         tr("Iris"),
+         "authentication-manager",
+         "",
+         "kcp-authentication-iris",
+         98,
+         IrisPageCreator},
+        {"Face",
+         tr("Face"),
+         "authentication-manager",
+         "",
+         "kcp-authentication-face",
+         98,
+         FacePageCreator},
         {"Driver",
          tr("Driver Manager"),
          "authentication-manager",
@@ -134,7 +171,8 @@ void AuthPlugin::initItems()
          "",
          "kcp-authentication-prefs",
          96,
-         PrefsPageCreator}};
+         PrefsPageCreator},
+    };
 
     for (const SubItemStruct& subitemInfo : subitemInfos)
     {
