@@ -12,9 +12,9 @@
  * Author:     liuxinhao <liuxinhao@kylinsec.com.cn>
  */
 #pragma once
+#include <kiran-authentication-service/kas-authentication-i.h>
 #include <QSet>
 #include <QWidget>
-#include <kiran-authentication-service/kas-authentication-i.h>
 
 QT_BEGIN_NAMESPACE
 class QStackedWidget;
@@ -53,7 +53,8 @@ private slots:
     void onDeleteIdentification(const QVariant& userData);
     void onAddIdentificationClicked();
     void onEnrollCancelClicked();
-    void onEnrollStatusNotify(const QString& iid, bool isComplete, int progress, const QString& message);
+    void onEnrollStatusNotify(const QString& iid, bool isComplete,
+                              int progress, const QString& message);
     void onEnrollComplete(bool isSuccess, const QString& message, const QString& iid);
 
 private:

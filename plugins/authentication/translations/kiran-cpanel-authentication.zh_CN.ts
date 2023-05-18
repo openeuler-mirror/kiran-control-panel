@@ -19,6 +19,18 @@
         <source>Prefs</source>
         <translation>配置</translation>
     </message>
+    <message>
+        <source>UKey</source>
+        <translation>UKey</translation>
+    </message>
+    <message>
+        <source>Iris</source>
+        <translation>虹膜</translation>
+    </message>
+    <message>
+        <source>Face</source>
+        <translation>人脸</translation>
+    </message>
 </context>
 <context>
     <name>DriverPage</name>
@@ -36,7 +48,34 @@
     </message>
     <message>
         <source>FingerVein</source>
+        <translation type="vanished">指静脉</translation>
+    </message>
+    <message>
+        <source>Fingervein</source>
         <translation>指静脉</translation>
+    </message>
+    <message>
+        <source>iris</source>
+        <translation>虹膜</translation>
+    </message>
+    <message>
+        <source>ukey</source>
+        <translation>UKey</translation>
+    </message>
+    <message>
+        <source>face</source>
+        <translation>人脸</translation>
+    </message>
+</context>
+<context>
+    <name>FacePage</name>
+    <message>
+        <source>Default face device</source>
+        <translation>默认人脸设备</translation>
+    </message>
+    <message>
+        <source>face feature list</source>
+        <translation>人脸特征列表</translation>
     </message>
 </context>
 <context>
@@ -87,6 +126,17 @@
     </message>
 </context>
 <context>
+    <name>GeneralBioPage</name>
+    <message>
+        <source>default device</source>
+        <translation>默认设备</translation>
+    </message>
+    <message>
+        <source>feature list</source>
+        <translation>特征列表</translation>
+    </message>
+</context>
+<context>
     <name>IdentificationRenameDialog</name>
     <message>
         <source>Rename Feature</source>
@@ -103,6 +153,17 @@
     <message>
         <source>Cancel</source>
         <translation>取消</translation>
+    </message>
+</context>
+<context>
+    <name>IrisPage</name>
+    <message>
+        <source>Default Iris device</source>
+        <translation>默认虹膜设备</translation>
+    </message>
+    <message>
+        <source>Iris feature list</source>
+        <translation>虹膜特征列表</translation>
     </message>
 </context>
 <context>
@@ -142,6 +203,60 @@
     <message>
         <source>Apply the %1 authentication to the following applications</source>
         <translation>启用%1认证在以下的认证应用中</translation>
+    </message>
+    <message>
+        <source>ukey</source>
+        <translation>UKey</translation>
+    </message>
+    <message>
+        <source>iris</source>
+        <translation>虹膜</translation>
+    </message>
+    <message>
+        <source>face</source>
+        <translation>人脸</translation>
+    </message>
+</context>
+<context>
+    <name>UKeyPage</name>
+    <message>
+        <source>Ukey</source>
+        <translation>UKey</translation>
+    </message>
+    <message>
+        <source>Default Ukey device</source>
+        <translation>默认UKey设备</translation>
+    </message>
+    <message>
+        <source>List of devices bound to the Ukey</source>
+        <translation>绑定UKey设备列表</translation>
+    </message>
+    <message>
+        <source>error</source>
+        <translation>错误</translation>
+    </message>
+    <message>
+        <source>No UKey device detected, pelease insert the UKey device and perform operations</source>
+        <translation>未检测到UKey设备，请插入UKey设备再次执行操作</translation>
+    </message>
+</context>
+<context>
+    <name>UKeyPinCodeDialog</name>
+    <message>
+        <source>UKey Enroll</source>
+        <translation>UKey录入</translation>
+    </message>
+    <message>
+        <source>Please enter the ukey pin code</source>
+        <translation>请输入UKey PIN码</translation>
+    </message>
+    <message>
+        <source>Confirm</source>
+        <translation>确认</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>取消</translation>
     </message>
 </context>
 </TS>

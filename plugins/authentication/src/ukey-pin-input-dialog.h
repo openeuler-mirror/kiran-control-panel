@@ -12,27 +12,33 @@
  * Author:     liuxinhao <liuxinhao@kylinsec.com.cn>
  */
 #pragma once
-#include <QWidget>
+#include <kiranwidgets-qt5/kiran-titlebar-window.h>
 
-QT_BEGIN_NAMESPACE
-class QBoxLayout;
-QT_END_NAMESPACE
-
-class AuthSettingContainer : public QWidget
+class KiranAuthDBusProxy;
+class KiranPasswdEdit;
+class UKeyPinCodeDialog : public KiranTitlebarWindow
 {
     Q_OBJECT
 public:
-    AuthSettingContainer(QWidget* parent = nullptr);
-    virtual ~AuthSettingContainer();
+    UKeyPinCodeDialog(QWidget* parent = nullptr);
+    ~UKeyPinCodeDialog();
 
-    void addAuthSettingItem(QWidget* widget);
-    void clear();
+    QString getPinCode();
+    int exec();
+
+signals:
+    void completed(QPrivateSignal);
 
 private:
-    void init();
-    void adjustSizeToItmes();
+    virtual void closeEvent(QCloseEvent* event) override;
+    Q_INVOKABLE void onConfirmClicked();
 
 private:
-    QBoxLayout* m_mainLayout;
-    QBoxLayout* m_containerLayout;
+    void initUI();
+
+private:
+    bool m_success;
+    KiranPasswdEdit* m_edit;
+    QString m_iid;
+    KiranAuthDBusProxy* m_proxy;
 };

@@ -46,7 +46,7 @@ FingerPage::FingerPage(KiranAuthDBusProxy* proxy, FingerAuthType type, QWidget* 
     : QWidget(parent),
       m_type(type),
       m_authType(type == FINGER_TYPE_FINGER_PRINT ? KAD_AUTH_TYPE_FINGERPRINT : KAD_AUTH_TYPE_FINGERVEIN),
-      m_authDesc(type == FINGER_TYPE_FINGER_PRINT? tr("fingerprint"):tr("fingervein")),
+      m_authDesc(type == FINGER_TYPE_FINGER_PRINT ? tr("fingerprint") : tr("fingervein")),
       m_proxy(proxy),
       m_inEnroll(false)
 {
@@ -98,7 +98,7 @@ void FingerPage::refreshAllFeature()
         featureItem->setLeftButtonVisible(true, ":/kcp-authentication/images/rename.svg");
         featureItem->setRightButtonVisible(true, ":/kcp-authentication/images/trash.svg");
 
-        m_settingContainer->addFeatureItem(featureItem);
+        m_settingContainer->addAuthSettingItem(featureItem);
         m_featureNameSet << iter.name;
 
         connect(featureItem, &AuthSettingItem::leftButtonClicked, this, &FingerPage::onRenameIdentification);

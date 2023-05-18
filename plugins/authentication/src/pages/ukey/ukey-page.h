@@ -12,27 +12,30 @@
  * Author:     liuxinhao <liuxinhao@kylinsec.com.cn>
  */
 #pragma once
+#include <QSet>
 #include <QWidget>
 
-QT_BEGIN_NAMESPACE
-class QBoxLayout;
-QT_END_NAMESPACE
-
-class AuthSettingContainer : public QWidget
+class KiranAuthDBusProxy;
+class GeneralBioPage;
+class UKeyPage : public QWidget
 {
     Q_OBJECT
 public:
-    AuthSettingContainer(QWidget* parent = nullptr);
-    virtual ~AuthSettingContainer();
-
-    void addAuthSettingItem(QWidget* widget);
-    void clear();
+    UKeyPage(KiranAuthDBusProxy* proxy, QWidget* parent = nullptr);
+    ~UKeyPage();
 
 private:
-    void init();
-    void adjustSizeToItmes();
+    void initUI();
+    bool doEnroll(bool rebinding = false);
+
+private slots:
+    void onEnrollFeatureClicked();
+    void onEnrollStatusChanged(const QString& iid, bool isComplete,
+                               int progress, const QString& message);
 
 private:
-    QBoxLayout* m_mainLayout;
-    QBoxLayout* m_containerLayout;
+    KiranAuthDBusProxy* m_proxy;
+    QSet<QString> m_featureNameSet;
+    GeneralBioPage* m_featureManager;
+    QString m_pinCode;
 };

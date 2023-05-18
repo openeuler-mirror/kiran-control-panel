@@ -253,7 +253,7 @@ void KiranAuthDBusProxy::init()
 
     m_authUserProxy = new KASAuthUserProxy(KASAuthProxy::staticInterfaceName(),
                                            userObject.path(),
-                                           QDBusConnection::systemBus());
+                                           QDBusConnection::systemBus(),this);
     connect(m_authUserProxy, &KASAuthUserProxy::EnrollStatus, this, &KiranAuthDBusProxy::EnrollStatus);
 }
 

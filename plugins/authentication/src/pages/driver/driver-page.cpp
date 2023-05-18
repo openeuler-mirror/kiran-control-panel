@@ -61,8 +61,19 @@ void DriverPage::initUI()
 
     layout->addStretch();
 
-    m_combobox->addItem(tr("Fingerprint"), KAD_AUTH_TYPE_FINGERPRINT);
-    m_combobox->addItem(tr("FingerVein"), KAD_AUTH_TYPE_FINGERVEIN);
+    QMap<KADAuthType,QString> authTypeMap = {
+        {KAD_AUTH_TYPE_FINGERPRINT,tr("Fingerprint")},
+        {KAD_AUTH_TYPE_FINGERVEIN,tr("Fingervein")},
+        {KAD_AUTH_TYPE_IRIS,tr("iris")},
+        {KAD_AUTH_TYPE_UKEY,tr("ukey")},
+        {KAD_AUTH_TYPE_FACE,tr("face")}
+    };
+    for( auto iter=authTypeMap.begin();iter!=authTypeMap.end();iter++ )
+    {
+        auto authType = iter.key();
+        auto desc = iter.value();
+        m_combobox->addItem(desc,authType);
+    }
 }
 
 void DriverPage::refreshAllDriver()
@@ -80,7 +91,7 @@ void DriverPage::refreshAllDriver()
         featureItem->setSwitcherVisible(true);
         featureItem->setSwitcherChecked(enable);
 
-        m_container->addFeatureItem(featureItem);
+        m_container->addAuthSettingItem(featureItem);
         connect(featureItem, &AuthSettingItem::switchButtonToggled,
                 this, std::bind(&DriverPage::onDriverSwticherToggled, this, name, std::placeholders::_2));
     }
