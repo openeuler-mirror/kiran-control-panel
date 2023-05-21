@@ -18,7 +18,7 @@
 #include "utils/kiran-auth-dbus-proxy.h"
 #include "widgets/auth-setting-container.h"
 #include "widgets/auth-setting-item.h"
-#include "widgets/finger-enroll-progressbar.h"
+#include "widgets/image-enroll-progressbar.h"
 #include "widgets/general-bio-page.h"
 
 #include <kiran-message-box.h>
@@ -42,6 +42,13 @@ enum FingerPageIndexEnum
     FINGER_PAGE_INDEX_MANAGER,
     FINGER_PAGE_INDEX_ENROLL
 };
+
+const std::list<std::tuple<uint, QString>> FingerProgressRangePixmapList = {
+    {0, ":/kcp-authentication/images/finger-0.svg"},
+    {25, ":/kcp-authentication/images/finger-25.svg"},
+    {50, ":/kcp-authentication/images/finger-50.svg"},
+    {75, ":/kcp-authentication/images/finger-75.svg"},
+    {100, ":/kcp-authentication/images/finger-100.svg"}};
 
 FingerPage::FingerPage(KiranAuthDBusProxy* proxy, FingerAuthType type, QWidget* parent)
     : QWidget(parent),
@@ -94,7 +101,8 @@ QWidget* FingerPage::initFeatureEnroll()
     featureEnrollLayout->setSpacing(0);
     featureEnrollLayout->setContentsMargins(0, 0, 0, 16);
 
-    m_enrollProgress = new FingerEnrollProgressBar(featureEnrollWidget);
+    m_enrollProgress = new ImageEnrollProgressBar(featureEnrollWidget);
+    m_enrollProgress->registerPercentImages(FingerProgressRangePixmapList);
     m_enrollProgress->setFixedSize(272, 272);
     m_enrollProgress->setProgress(50);
     featureEnrollLayout->addWidget(m_enrollProgress, 0, Qt::AlignHCenter);

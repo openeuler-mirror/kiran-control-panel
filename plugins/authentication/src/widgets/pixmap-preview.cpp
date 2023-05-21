@@ -16,10 +16,17 @@ PixmapPreview::~PixmapPreview()
 
 void PixmapPreview::setPixmap(const QString& path)
 {
-    if(!m_pixmap.load(path) )
+    if( !m_pixmap.load(path) && !path.isEmpty() )
     {
-        qWarning() << path << "pixmap load failed";
+        qWarning() << path << "pixmap load failed" << path;
     }
+    adjustPixmap(size());
+    update();
+}
+
+void PixmapPreview::setPixmap(const QPixmap& pixmap)
+{
+    m_pixmap = pixmap;
     adjustPixmap(size());
     update();
 }

@@ -12,11 +12,14 @@
  * Author:     liuxinhao <liuxinhao@kylinsec.com.cn>
  */
 #pragma once
-#include <QWidget>
 #include <QSet>
+#include <QWidget>
 
 class KiranAuthDBusProxy;
 class GeneralBioPage;
+class ImageEnrollProgressBar;
+class QLabel;
+class QStackedWidget;
 class IrisPage : public QWidget
 {
     Q_OBJECT
@@ -26,12 +29,24 @@ public:
 
 private:
     void initUI();
+    QWidget* initFeatureManagerPage();
+    QWidget* initFeatureEnrollPage();
 
 private slots:
+    void onEnrollStatusNotify(const QString& iid, bool isComplete,
+                              int progress, const QString& message);
     void onEnrollFeatureClicked();
+    void onEnrollCancelClicked();
+    void onEnrollComplete(bool isSuccess, const QString& message, const QString& iid);
 
 private:
     KiranAuthDBusProxy* m_proxy;
     QSet<QString> m_featureNameSet;
+    QStackedWidget* m_stackedWidget;
     GeneralBioPage* m_featureManager;
+    ImageEnrollProgressBar* m_enrollProgress;
+    QLabel* m_enrollTips;
+
+    bool m_inEnroll = false;
+    QString m_inErollFeatureName;
 };

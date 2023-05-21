@@ -14,15 +14,19 @@
 
 #pragma once
 #include "enroll-progressbar.h"
+#include <list>
 
 class QLabel;
 class PixmapPreview;
-class FingerEnrollProgressBar : public EnrollProgressBar
+class ImageEnrollProgressBar : public EnrollProgressBar
 {
     Q_OBJECT
 public:
-    explicit FingerEnrollProgressBar(QWidget* parent = nullptr);
-    virtual ~FingerEnrollProgressBar();
+    explicit ImageEnrollProgressBar(QWidget* parent = nullptr);
+    virtual ~ImageEnrollProgressBar();
+
+    void registerPercentImage(uint percent,const QString& img);
+    void registerPercentImages(const std::list<std::tuple<uint,QString>>& percentImages);
 
     virtual void setProgress(uint progress);
 
@@ -30,6 +34,6 @@ private:
     void init();
 
 private:
-    static const std::list<std::tuple<uint, QString>> m_progressRangePixmapList;
+    std::list<std::tuple<uint, QString>> m_progressRangePixmapList;
     PixmapPreview* m_fingerWidget = nullptr;
 };

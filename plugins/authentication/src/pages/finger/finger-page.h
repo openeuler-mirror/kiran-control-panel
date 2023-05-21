@@ -22,7 +22,7 @@ class QLabel;
 class QComboBox;
 QT_END_NAMESPACE
 
-class FingerEnrollProgressBar;
+class ImageEnrollProgressBar;
 class KiranAuthDBusProxy;
 class GeneralBioPage;
 class FingerPage : public QWidget
@@ -58,7 +58,7 @@ private:
 
     QStackedWidget* m_stackedWidget;
     GeneralBioPage* m_featureManager;
-    FingerEnrollProgressBar* m_enrollProgress;
+    ImageEnrollProgressBar* m_enrollProgress;
     QLabel* m_enRollTips;
 
     bool m_inEnroll;
