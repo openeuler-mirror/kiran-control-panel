@@ -37,8 +37,6 @@ void GeneralBioPage::setFeatureNamePrefix(const QString& prefix)
 
 QString GeneralBioPage::autoGenerateFeatureName()
 {
-    QRandomGenerator randomGenerator;
-
     if (m_featureNamePrefix.isEmpty())
     {
         KLOG_WARNING() << "feature manager: generate feature name prefix is not set!";
@@ -46,7 +44,7 @@ QString GeneralBioPage::autoGenerateFeatureName()
 
     for (int i = 0; i <= 10; ++i)
     {
-        auto featureNumber = randomGenerator.bounded(1, MAX_FEATURE_NUMBER);
+        auto featureNumber = QRandomGenerator::global()->bounded(1, MAX_FEATURE_NUMBER);
         auto temp = QString("%1 %2").arg(m_featureNamePrefix).arg(featureNumber);
 
         if (!m_featureNameSet.contains(temp))
@@ -96,6 +94,7 @@ void GeneralBioPage::refreshFeature()
     auto identifications = m_proxy->getUserIdentifications(m_authType);
     for (auto iter : identifications)
     {
+        m_featureNameSet << iter.name;
         addFeature(iter.name, iter.IID);
     }
 }
