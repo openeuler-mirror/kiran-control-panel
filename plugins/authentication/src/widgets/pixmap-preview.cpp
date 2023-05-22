@@ -1,9 +1,9 @@
 #include "pixmap-preview.h"
+#include <QDebug>
 #include <QPainter>
 #include <QPainterPath>
 #include <QPixmap>
 #include <QResizeEvent>
-#include <QDebug>
 
 PixmapPreview::PixmapPreview(QWidget* parent)
     : QWidget(parent)
@@ -16,7 +16,7 @@ PixmapPreview::~PixmapPreview()
 
 void PixmapPreview::setPixmap(const QString& path)
 {
-    if( !m_pixmap.load(path) && !path.isEmpty() )
+    if (!m_pixmap.load(path) && !path.isEmpty())
     {
         qWarning() << path << "pixmap load failed" << path;
     }
@@ -33,7 +33,7 @@ void PixmapPreview::setPixmap(const QPixmap& pixmap)
 
 void PixmapPreview::adjustPixmap(QSize size)
 {
-    if( m_pixmap.isNull() )
+    if (m_pixmap.isNull())
     {
         return;
     }
@@ -49,15 +49,27 @@ void PixmapPreview::resizeEvent(QResizeEvent* event)
 
 void PixmapPreview::paintEvent(QPaintEvent* event)
 {
+    QPainter painter(this);
+    painter.setRenderHint(QPainter::Antialiasing);
+
+    int radius = qMin(size().width(), size().height()) / 2;
+    QRect roundedRect(0, 0, radius * 2, radius * 2);
+    roundedRect.moveCenter(rect().center());
+
+    QPainterPath painterPath;
+    painterPath.addRoundedRect(roundedRect.x(), roundedRect.y(),
+                               roundedRect.width(), roundedRect.height(),
+                               radius, radius);
+
+    QBrush backgroundBrush(QColor("#393939"));
+    painter.fillPath(painterPath,backgroundBrush);
+
     if (!m_scaledPixmap.isNull())
     {
-        QPainter painter(this);
-        painter.setRenderHint(QPainter::Antialiasing);
-
         auto pixmapRect = m_scaledPixmap.rect();
         pixmapRect.moveCenter(rect().center());
         painter.drawPixmap(pixmapRect, m_scaledPixmap);
     }
-    
+
     QWidget::paintEvent(event);
 }
