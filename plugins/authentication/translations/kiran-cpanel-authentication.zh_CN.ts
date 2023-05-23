@@ -77,6 +77,34 @@
         <source>face feature list</source>
         <translation>人脸特征列表</translation>
     </message>
+    <message>
+        <source>face</source>
+        <translation>人脸</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>取消</translation>
+    </message>
+    <message>
+        <source>Start enroll failed,%1</source>
+        <translation>开始录入失败,%1</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>错误</translation>
+    </message>
+    <message>
+        <source>The biometric features were successfully recorded. The feature name is:%1</source>
+        <translation>特征已成功录入，特征名为:%1</translation>
+    </message>
+    <message>
+        <source>Tips</source>
+        <translation>提示</translation>
+    </message>
+    <message>
+        <source>Failed to record biometrics(%1), Please try again</source>
+        <translation>录入特征失败(%1),请重试</translation>
+    </message>
 </context>
 <context>
     <name>FingerPage</name>
@@ -94,11 +122,11 @@
     </message>
     <message>
         <source>default %1 device</source>
-        <translation>默认%1设备</translation>
+        <translation type="vanished">默认%1设备</translation>
     </message>
     <message>
         <source>%1 list</source>
-        <translation type="vanished">%1列表</translation>
+        <translation>%1列表</translation>
     </message>
     <message>
         <source>Start enroll failed,%1</source>
@@ -122,7 +150,11 @@
     </message>
     <message>
         <source>%1list</source>
-        <translation>%1列表</translation>
+        <translation type="vanished">%1列表</translation>
+    </message>
+    <message>
+        <source>Default %1 device</source>
+        <translation>默认%1设备</translation>
     </message>
 </context>
 <context>
@@ -134,6 +166,18 @@
     <message>
         <source>feature list</source>
         <translation>特征列表</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to delete the feature called %1, Ensure that the Ukey device is inserted; otherwise the information stored in the Ukey will not be deleted</source>
+        <translation>您确定要删除特征名为%1的UKey绑定吗?请确保已插入Ukey设备;否则存储在Ukey中的信息将不会被删除</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to delete the feature called %1</source>
+        <translation>您确定要删除特征名为%1的特征吗</translation>
+    </message>
+    <message>
+        <source>tips</source>
+        <translation>提示</translation>
     </message>
 </context>
 <context>
@@ -164,6 +208,34 @@
     <message>
         <source>Iris feature list</source>
         <translation>虹膜特征列表</translation>
+    </message>
+    <message>
+        <source>iris</source>
+        <translation>虹膜</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>取消</translation>
+    </message>
+    <message>
+        <source>Start enroll failed,%1</source>
+        <translation>开始录入失败,%1</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>错误</translation>
+    </message>
+    <message>
+        <source>The biometric features were successfully recorded. The feature name is:%1</source>
+        <translation>特征已成功录入，特征名为:%1</translation>
+    </message>
+    <message>
+        <source>Tips</source>
+        <translation>提示</translation>
+    </message>
+    <message>
+        <source>Failed to record biometrics(%1), Please try again</source>
+        <translation>录入特征失败(%1),请重试</translation>
     </message>
 </context>
 <context>
