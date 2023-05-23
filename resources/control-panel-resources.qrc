@@ -80,6 +80,8 @@
         <file>images/finger-50.svg</file>
         <file>images/finger-75.svg</file>
         <file>images/finger-100.svg</file>
+        <file>images/face-0.svg</file>
+        <file>images/iris-0.svg</file>
         <file>images/arrow.svg</file>
     </qresource>
 </RCC>

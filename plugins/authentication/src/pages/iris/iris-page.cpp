@@ -11,58 +11,34 @@
  *
  * Author:     liuxinhao <liuxinhao@kylinsec.com.cn>
  */
-
-#include "finger-page.h"
-#include "auxiliary.h"
-#include "identification-rename-dialog.h"
+#include "iris-page.h"
 #include "utils/kiran-auth-dbus-proxy.h"
 #include "widgets/auth-setting-container.h"
 #include "widgets/auth-setting-item.h"
-#include "widgets/image-enroll-progressbar.h"
 #include "widgets/general-bio-page.h"
+#include "widgets/image-enroll-progressbar.h"
 
 #include <kiran-message-box.h>
 #include <qt5-log-i.h>
-#include <style-property.h>
-#include <sys/types.h>
-#include <unistd.h>
 #include <QBoxLayout>
-#include <QComboBox>
 #include <QLabel>
 #include <QPushButton>
 #include <QRandomGenerator>
+#include <QSpacerItem>
 #include <QStackedWidget>
-#include <QUuid>
 
-#define MAX_FEATURE_NUMBER 1000
-#define FINGER_DEBUG() KLOG_DEBUG() << "auth type:" << this->m_authType
+#define PAGE_INDEX_FEATURE_MANAGER 0
+#define PAGE_INDEX_FEATURE_ENROLL 1
 
-enum FingerPageIndexEnum
-{
-    FINGER_PAGE_INDEX_MANAGER,
-    FINGER_PAGE_INDEX_ENROLL
-};
-
-const std::list<std::tuple<uint, QString>> FingerProgressRangePixmapList = {
-    {0, ":/kcp-authentication/images/finger-0.svg"},
-    {25, ":/kcp-authentication/images/finger-25.svg"},
-    {50, ":/kcp-authentication/images/finger-50.svg"},
-    {75, ":/kcp-authentication/images/finger-75.svg"},
-    {100, ":/kcp-authentication/images/finger-100.svg"}};
-
-FingerPage::FingerPage(KiranAuthDBusProxy* proxy, FingerAuthType type, QWidget* parent)
+IrisPage::IrisPage(KiranAuthDBusProxy* proxy, QWidget* parent)
     : QWidget(parent),
-      m_authType(type == FINGER_TYPE_FINGER_PRINT ? KAD_AUTH_TYPE_FINGERPRINT : KAD_AUTH_TYPE_FINGERVEIN),
-      m_proxy(proxy),
-      m_inEnroll(false)
+      m_proxy(proxy)
 {
     initUI();
-
-    connect(m_proxy, &KiranAuthDBusProxy::EnrollStatus, this, &FingerPage::onEnrollStatusNotify);
-    m_stackedWidget->setCurrentIndex(FINGER_PAGE_INDEX_MANAGER);
+    connect(m_proxy, &KiranAuthDBusProxy::EnrollStatus, this, &IrisPage::onEnrollStatusNotify);
 }
 
-FingerPage::~FingerPage()
+IrisPage::~IrisPage()
 {
     if (m_inEnroll)
     {
@@ -70,7 +46,7 @@ FingerPage::~FingerPage()
     }
 }
 
-void FingerPage::initUI()
+void IrisPage::initUI()
 {
     auto mainLayout = new QBoxLayout(QBoxLayout::TopToBottom, this);
     mainLayout->setContentsMargins(24, 24, 24, 24);
@@ -79,22 +55,22 @@ void FingerPage::initUI()
     m_stackedWidget = new QStackedWidget(this);
     mainLayout->addWidget(m_stackedWidget);
 
-    m_stackedWidget->insertWidget(FINGER_PAGE_INDEX_MANAGER, initFeatureManager());
-    m_stackedWidget->insertWidget(FINGER_PAGE_INDEX_ENROLL, initFeatureEnroll());
+    m_stackedWidget->insertWidget(PAGE_INDEX_FEATURE_MANAGER, initFeatureManagerPage());
+    m_stackedWidget->insertWidget(PAGE_INDEX_FEATURE_ENROLL, initFeatureEnrollPage());
 }
 
-QWidget* FingerPage::initFeatureManager()
+QWidget* IrisPage::initFeatureManagerPage()
 {
-    m_featureManager = new GeneralBioPage(m_proxy,m_authType,this);
-    auto desc = m_authType==KAD_AUTH_TYPE_FINGERPRINT?tr("fingerprint"):tr("fingervein");
-    m_featureManager->setFeatureNamePrefix(desc);
-    m_featureManager->setDefaultDeviceLabelDesc(QString(tr("Default %1 device")).arg(desc));
-    m_featureManager->setDeviceFeatureListDesc(QString(tr("%1 list").arg(desc)));
-    connect(m_featureManager, &GeneralBioPage::enrollFeatureClicked, this, &FingerPage::onAddIdentificationClicked);
+    m_featureManager = new GeneralBioPage(m_proxy, KAD_AUTH_TYPE_IRIS, this);
+    m_featureManager->setFeatureNamePrefix(tr("iris"));
+    m_featureManager->setDefaultDeviceLabelDesc(tr("Default Iris device"));
+    m_featureManager->setDeviceFeatureListDesc(tr("Iris feature list"));
+    connect(m_featureManager, &GeneralBioPage::enrollFeatureClicked, this, &IrisPage::onEnrollFeatureClicked);
+
     return m_featureManager;
 }
 
-QWidget* FingerPage::initFeatureEnroll()
+QWidget* IrisPage::initFeatureEnrollPage()
 {
     auto featureEnrollWidget = new QWidget();
     auto featureEnrollLayout = new QBoxLayout(QBoxLayout::TopToBottom, featureEnrollWidget);
@@ -102,16 +78,16 @@ QWidget* FingerPage::initFeatureEnroll()
     featureEnrollLayout->setContentsMargins(0, 0, 0, 16);
 
     m_enrollProgress = new ImageEnrollProgressBar(featureEnrollWidget);
-    m_enrollProgress->registerPercentImages(FingerProgressRangePixmapList);
+    m_enrollProgress->registerPercentImage(0, ":/kcp-authentication/images/iris-0.svg");
     m_enrollProgress->setFixedSize(272, 272);
     m_enrollProgress->setProgress(50);
     featureEnrollLayout->addWidget(m_enrollProgress, 0, Qt::AlignHCenter);
 
     featureEnrollLayout->addSpacerItem(new QSpacerItem(10, 16, QSizePolicy::Minimum, QSizePolicy::Fixed));
 
-    m_enRollTips = new QLabel;
-    m_enRollTips->setAlignment(Qt::AlignHCenter);
-    featureEnrollLayout->addWidget(m_enRollTips);
+    m_enrollTips = new QLabel;
+    m_enrollTips->setAlignment(Qt::AlignHCenter);
+    featureEnrollLayout->addWidget(m_enrollTips);
 
     featureEnrollLayout->addStretch();
 
@@ -122,7 +98,7 @@ QWidget* FingerPage::initFeatureEnroll()
     cancelButton->setFixedSize(110, 40);
     cancelButton->setText(tr("Cancel"));
     buttonLayout->addWidget(cancelButton);
-    connect(cancelButton, &QPushButton::clicked, this, &FingerPage::onEnrollCancelClicked);
+    connect(cancelButton, &QPushButton::clicked, this, &IrisPage::onEnrollCancelClicked);
 
     buttonLayout->addStretch();
     featureEnrollLayout->addLayout(buttonLayout);
@@ -130,46 +106,14 @@ QWidget* FingerPage::initFeatureEnroll()
     return featureEnrollWidget;
 }
 
-void FingerPage::onAddIdentificationClicked()
+void IrisPage::onEnrollStatusNotify(const QString& iid, bool isComplete,
+                                    int progress, const QString& message)
 {
-    QString featureName = m_featureManager->autoGenerateFeatureName();
-
-    m_enrollProgress->setProgress(0);
-    m_enRollTips->setText("");
-
-    m_inEnroll = true;
-    m_inErollFeatureName = featureName;
-
-    QString errorString;
-    if (!m_proxy->startEnroll(m_authType, featureName, QString(), errorString))
-    {
-        m_inEnroll = false;
-        m_inErollFeatureName.clear();
-        QString text = QString(tr("Start enroll failed,%1").arg(errorString));
-        KiranMessageBox::message(this, tr("Error"), text, KiranMessageBox::Ok);
-        return;
-    }
-
-    m_stackedWidget->setCurrentIndex(FINGER_PAGE_INDEX_ENROLL);
-}
-
-void FingerPage::onEnrollCancelClicked()
-{
-    m_proxy->stopEnroll();
-    m_inEnroll = false;
-    m_inErollFeatureName.clear();
-
-    m_stackedWidget->setCurrentIndex(FINGER_PAGE_INDEX_MANAGER);
-}
-
-void FingerPage::onEnrollStatusNotify(const QString& iid, bool isComplete,
-                                      int progress, const QString& message)
-{
-    FINGER_DEBUG() << "enroll status notify:" << iid << isComplete << progress << message;
+    KLOG_DEBUG() << "enroll status notify:" << iid << isComplete << progress << message;
     m_enrollProgress->setProgress(progress);
     if (!message.isEmpty())
     {
-        m_enRollTips->setText(message);
+        m_enrollTips->setText(message);
     }
 
     if (isComplete)
@@ -178,9 +122,41 @@ void FingerPage::onEnrollStatusNotify(const QString& iid, bool isComplete,
     }
 }
 
-void FingerPage::onEnrollComplete(bool isSuccess, const QString& message, const QString& iid)
+void IrisPage::onEnrollFeatureClicked()
 {
-    FINGER_DEBUG() << "enroll complete iid:" << iid << "message:" << message;
+    QString featureName = m_featureManager->autoGenerateFeatureName();
+
+    m_enrollProgress->setProgress(0);
+    m_enrollTips->setText("");
+
+    m_inEnroll = true;
+    m_inErollFeatureName = featureName;
+
+    QString errorString;
+    if (!m_proxy->startEnroll(KAD_AUTH_TYPE_IRIS, featureName, QString(), errorString))
+    {
+        m_inEnroll = false;
+        m_inErollFeatureName.clear();
+        QString text = QString(tr("Start enroll failed,%1").arg(errorString));
+        KiranMessageBox::message(this, tr("Error"), text, KiranMessageBox::Ok);
+        return;
+    }
+
+    m_stackedWidget->setCurrentIndex(PAGE_INDEX_FEATURE_ENROLL);
+}
+
+void IrisPage::onEnrollCancelClicked()
+{
+    m_proxy->stopEnroll();
+    m_inEnroll = false;
+    m_inErollFeatureName.clear();
+
+    m_stackedWidget->setCurrentIndex(PAGE_INDEX_FEATURE_MANAGER);
+}
+
+void IrisPage::onEnrollComplete(bool isSuccess, const QString& message, const QString& iid)
+{
+    KLOG_DEBUG() << "enroll complete iid:" << iid << "message:" << message;
     if (isSuccess)
     {
         m_featureManager->refreshFeature();
@@ -195,5 +171,5 @@ void FingerPage::onEnrollComplete(bool isSuccess, const QString& message, const 
 
     m_inEnroll = false;
     m_inErollFeatureName.clear();
-    m_stackedWidget->setCurrentIndex(FINGER_PAGE_INDEX_MANAGER);
+    m_stackedWidget->setCurrentIndex(PAGE_INDEX_FEATURE_MANAGER);
 }

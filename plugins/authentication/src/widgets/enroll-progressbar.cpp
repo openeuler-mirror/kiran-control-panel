@@ -124,7 +124,7 @@ void EnrollProgressBar::adjustCenterWidget(QSize size)
 
 void EnrollProgressBar::paintProgressBar(QPainter &painter)
 {
-    QColor normalColor("#2d2d2d");
+    QColor normalColor("#393939");
     QColor activeColor("#2eb3ff");
 
     painter.translate(width() / 2, height() / 2);

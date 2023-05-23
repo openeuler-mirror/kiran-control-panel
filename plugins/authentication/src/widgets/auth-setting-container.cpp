@@ -12,8 +12,8 @@
  */
 
 #include "auth-setting-container.h"
-#include <QBoxLayout>
 #include <QScrollArea>
+#include <QBoxLayout>
 
 void deleteAllItemOfLayout(QLayout* layout)
 {
@@ -45,7 +45,7 @@ AuthSettingContainer::~AuthSettingContainer()
 {
 }
 
-void AuthSettingContainer::addFeatureItem(QWidget* widget)
+void AuthSettingContainer::addAuthSettingItem(QWidget* widget)
 {
     m_containerLayout->addWidget(widget, 0);
     adjustSizeToItmes();
@@ -54,6 +54,7 @@ void AuthSettingContainer::addFeatureItem(QWidget* widget)
 void AuthSettingContainer::clear()
 {
     deleteAllItemOfLayout(m_containerLayout);
+    adjustSizeToItmes();
 }
 
 void AuthSettingContainer::init()

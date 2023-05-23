@@ -23,6 +23,7 @@ public:
     ~PixmapPreview();
 
     void setPixmap(const QString& path);
+    void setPixmap(const QPixmap& pixmap);
 
 private:
     void adjustPixmap(QSize size);

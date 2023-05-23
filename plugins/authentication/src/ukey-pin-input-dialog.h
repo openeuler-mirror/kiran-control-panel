@@ -11,25 +11,34 @@
  *
  * Author:     liuxinhao <liuxinhao@kylinsec.com.cn>
  */
-
 #pragma once
-#include "enroll-progressbar.h"
+#include <kiranwidgets-qt5/kiran-titlebar-window.h>
 
-class QLabel;
-class PixmapPreview;
-class FingerEnrollProgressBar : public EnrollProgressBar
+class KiranAuthDBusProxy;
+class KiranPasswdEdit;
+class UKeyPinCodeDialog : public KiranTitlebarWindow
 {
     Q_OBJECT
 public:
-    explicit FingerEnrollProgressBar(QWidget* parent = nullptr);
-    virtual ~FingerEnrollProgressBar();
+    UKeyPinCodeDialog(QWidget* parent = nullptr);
+    ~UKeyPinCodeDialog();
 
-    virtual void setProgress(uint progress);
+    QString getPinCode();
+    int exec();
+
+signals:
+    void completed(QPrivateSignal);
 
 private:
-    void init();
+    virtual void closeEvent(QCloseEvent* event) override;
+    Q_INVOKABLE void onConfirmClicked();
 
 private:
-    static const std::list<std::tuple<uint, QString>> m_progressRangePixmapList;
-    PixmapPreview* m_fingerWidget = nullptr;
+    void initUI();
+
+private:
+    bool m_success;
+    KiranPasswdEdit* m_edit;
+    QString m_iid;
+    KiranAuthDBusProxy* m_proxy;
 };
