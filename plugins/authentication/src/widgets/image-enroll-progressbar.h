@@ -11,28 +11,29 @@
  *
  * Author:     liuxinhao <liuxinhao@kylinsec.com.cn>
  */
+
 #pragma once
-#include <QWidget>
+#include "enroll-progressbar.h"
+#include <list>
 
-QT_BEGIN_NAMESPACE
-class QBoxLayout;
-QT_END_NAMESPACE
-
-class AuthSettingContainer : public QWidget
+class QLabel;
+class PixmapPreview;
+class ImageEnrollProgressBar : public EnrollProgressBar
 {
     Q_OBJECT
 public:
-    AuthSettingContainer(QWidget* parent = nullptr);
-    virtual ~AuthSettingContainer();
+    explicit ImageEnrollProgressBar(QWidget* parent = nullptr);
+    virtual ~ImageEnrollProgressBar();
 
-    void addAuthSettingItem(QWidget* widget);
-    void clear();
+    void registerPercentImage(uint percent,const QString& img);
+    void registerPercentImages(const std::list<std::tuple<uint,QString>>& percentImages);
+
+    virtual void setProgress(uint progress);
 
 private:
     void init();
-    void adjustSizeToItmes();
 
 private:
-    QBoxLayout* m_mainLayout;
-    QBoxLayout* m_containerLayout;
+    std::list<std::tuple<uint, QString>> m_progressRangePixmapList;
+    PixmapPreview* m_fingerWidget = nullptr;
 };
