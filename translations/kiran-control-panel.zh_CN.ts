@@ -2,6 +2,19 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="zh_CN">
 <context>
+    <name>InputDialog</name>
+    <message>
+        <location filename="../lib/common-widgets/input-dialog/input-dialog.cpp" line="102"/>
+        <source>Confirm</source>
+        <translation>确认</translation>
+    </message>
+    <message>
+        <location filename="../lib/common-widgets/input-dialog/input-dialog.cpp" line="111"/>
+        <source>Cancel</source>
+        <translation>取消</translation>
+    </message>
+</context>
+<context>
     <name>KiranModuleWidget</name>
     <message>
         <source>Warning</source>
@@ -10,6 +23,19 @@
     <message>
         <source>The edited content in %1 is not saved. After switching, the edited content will be lost. Are you sure you want to save？</source>
         <translation type="vanished">%1中编辑的内容未保存，切换后编辑的内容将会丢失。您确定要保存吗?</translation>
+    </message>
+    <message>
+        <location filename="../lib/common-widgets/kiran-module-widget/kiran-module-widget.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>KiranTips</name>
+    <message>
+        <location filename="../lib/common-widgets/kiran-tips/kiran-tips.ui" line="29"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

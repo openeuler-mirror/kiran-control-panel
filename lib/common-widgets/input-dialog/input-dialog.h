@@ -13,21 +13,24 @@
  */
 #pragma once
 #include <kiranwidgets-qt5/kiran-titlebar-window.h>
+#include <QLineEdit>
 
-class KiranAuthDBusProxy;
 class KiranPasswdEdit;
-class UKeyPinCodeDialog : public KiranTitlebarWindow
+class QLabel;
+class InputDialog : public KiranTitlebarWindow
 {
     Q_OBJECT
 public:
-    UKeyPinCodeDialog(QWidget* parent = nullptr);
-    ~UKeyPinCodeDialog();
+    InputDialog(QWidget* parent = nullptr);
+    ~InputDialog();
 
-    QString getPinCode();
-    int exec();
+    void setDesc(const QString&desc);
+    void setInputMode(QLineEdit::EchoMode mode,qint32 maxLength);
+    virtual int exec();
 
+    QString getText();
 signals:
-    void completed(QPrivateSignal);
+    void completed();
 
 private:
     virtual void closeEvent(QCloseEvent* event) override;
@@ -38,7 +41,6 @@ private:
 
 private:
     bool m_success;
+    QLabel* m_labelDesc;
     KiranPasswdEdit* m_edit;
-    QString m_iid;
-    KiranAuthDBusProxy* m_proxy;
 };
