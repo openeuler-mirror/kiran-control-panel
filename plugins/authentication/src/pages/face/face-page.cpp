@@ -65,7 +65,7 @@ QWidget* FacePage::initFeatureManagerPage()
     m_featureManager->setFeatureNamePrefix(tr("face"));
     m_featureManager->setDefaultDeviceLabelDesc(tr("Default face device"));
     m_featureManager->setDeviceFeatureListDesc(tr("face feature list"));
-    connect(m_featureManager, &GeneralBioPage::enrollFeatureClicked, this, &FacePage::onEnrollFeatureClicked);
+    connect(m_featureManager, &GeneralBioPage::enrollFeature, this, &FacePage::onEnrollFeatureClicked);
 
     return m_featureManager;
 }

@@ -12,32 +12,14 @@
  * Author:     liuxinhao <liuxinhao@kylinsec.com.cn>
  */
 #pragma once
-#include <kiranwidgets-qt5/kiran-titlebar-window.h>
+#include "input-dialog/input-dialog.h"
 
-class KiranAuthDBusProxy;
-class QLineEdit;
-class IdentificationRenameDialog : public KiranTitlebarWindow
+class CheckpasswdDialog:public InputDialog
 {
     Q_OBJECT
 public:
-    IdentificationRenameDialog(const QString& iid, KiranAuthDBusProxy* proxy, QWidget* parent = nullptr);
-    ~IdentificationRenameDialog();
+    CheckpasswdDialog(QWidget* parent = nullptr);
+    ~CheckpasswdDialog();
 
-    int exec();
-
-signals:
-    void completed(QPrivateSignal);
-
-private:
-    virtual void closeEvent(QCloseEvent* event) override;
-    Q_INVOKABLE void onConfirmClicked();
-
-private:
-    void initUI();
-
-private:
-    bool m_success;
-    QLineEdit* m_edit;
-    QString m_iid;
-    KiranAuthDBusProxy* m_proxy;
+    static bool checkPasswd(const QString& passwd);
 };
