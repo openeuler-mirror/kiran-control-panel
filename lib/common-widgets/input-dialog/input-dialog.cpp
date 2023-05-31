@@ -1,16 +1,15 @@
-#include "ukey-pin-input-dialog.h"
+#include "input-dialog.h"
 #include <kiran-color-block.h>
-#include <kiran-passwd-edit.h>
 #include <style-property.h>
+#include <kiran-passwd-edit.h>
 #include <QBoxLayout>
 #include <QEventLoop>
 #include <QLabel>
 #include <QLineEdit>
 #include <QPushButton>
 #include <qt5-log-i.h>
-#include "utils/kiran-auth-dbus-proxy.h"
 
-UKeyPinCodeDialog::UKeyPinCodeDialog(QWidget* parent)
+InputDialog::InputDialog(QWidget* parent)
     : KiranTitlebarWindow(parent,Qt::Dialog),
       m_success(false)
 {
@@ -18,31 +17,42 @@ UKeyPinCodeDialog::UKeyPinCodeDialog(QWidget* parent)
     initUI();
 }
 
-UKeyPinCodeDialog::~UKeyPinCodeDialog()
+InputDialog::~InputDialog()
 {
 }
 
-QString UKeyPinCodeDialog::getPinCode()
+QString InputDialog::getText()
 {
     return m_edit->lineEdit()->text();
 }
 
-int UKeyPinCodeDialog::exec()
+void InputDialog::setDesc(const QString&desc)
+{
+    m_labelDesc->setText(desc);
+}
+
+void InputDialog::setInputMode(QLineEdit::EchoMode mode,qint32 maxLength)
+{
+    m_edit->setEchoMode(mode);
+    m_edit->lineEdit()->setMaxLength(maxLength);
+}
+
+int InputDialog::exec()
 {
     QEventLoop loop;
-    connect(this, &UKeyPinCodeDialog::completed, &loop, &QEventLoop::quit);
+    connect(this, &InputDialog::completed, &loop, &QEventLoop::quit);
     this->show();
     loop.exec(QEventLoop::DialogExec);
     return m_success;
 }
 
-void UKeyPinCodeDialog::closeEvent(QCloseEvent* event)
+void InputDialog::closeEvent(QCloseEvent* event)
 {
-    emit completed(QPrivateSignal());
+    emit completed();
     return KiranTitlebarWindow::closeEvent(event);
 }
 
-void UKeyPinCodeDialog::onConfirmClicked()
+void InputDialog::onConfirmClicked()
 {
     QString text = m_edit->lineEdit()->text();
     if (text.isEmpty())
@@ -50,15 +60,14 @@ void UKeyPinCodeDialog::onConfirmClicked()
         return;
     }
     m_success = true;
-    emit completed(QPrivateSignal());
+    emit completed();
 }
 
-void UKeyPinCodeDialog::initUI()
+void InputDialog::initUI()
 {
     setTitlebarColorBlockEnable(true);
     setButtonHints(TitlebarCloseButtonHint);
     setResizeable(false);
-    setTitle(tr("UKey Enroll"));
 
     auto container = new QWidget(this);
     auto containerLayout = new QBoxLayout(QBoxLayout::TopToBottom, container);
@@ -71,8 +80,8 @@ void UKeyPinCodeDialog::initUI()
     auto layout = new QBoxLayout(QBoxLayout::TopToBottom, colorBlock);
     layout->setContentsMargins(24, 24, 24, 24);
 
-    auto label = new QLabel(tr("Please enter the ukey pin code"), this);
-    layout->addWidget(label);
+    m_labelDesc = new QLabel(this);
+    layout->addWidget(m_labelDesc);
 
     layout->addSpacerItem(new QSpacerItem(10, 16, QSizePolicy::Minimum, QSizePolicy::Fixed));
 
@@ -92,7 +101,7 @@ void UKeyPinCodeDialog::initUI()
     confirmButton->setFixedSize(QSize(110, 40));
     confirmButton->setText(tr("Confirm"));
     Kiran::StylePropertyHelper::setButtonType(confirmButton, Kiran::BUTTON_Default);
-    connect(confirmButton, &QPushButton::clicked, this, &UKeyPinCodeDialog::onConfirmClicked);
+    connect(confirmButton, &QPushButton::clicked, this, &InputDialog::onConfirmClicked);
     boxlayout->addWidget(confirmButton);
 
     boxlayout->addSpacerItem(new QSpacerItem(40, 10, QSizePolicy::Fixed, QSizePolicy::Minimum));
@@ -101,7 +110,7 @@ void UKeyPinCodeDialog::initUI()
     cancelButton->setFixedSize(QSize(110, 40));
     cancelButton->setText(tr("Cancel"));
     connect(cancelButton, &QPushButton::clicked, this, [this]()
-            { emit completed(QPrivateSignal()); });
+            { emit completed(); });
     boxlayout->addWidget(cancelButton);
 
     boxlayout->addStretch();

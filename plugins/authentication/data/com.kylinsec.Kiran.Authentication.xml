@@ -51,7 +51,7 @@
             </arg>
         </method>
 
-        <method name="SetDrivereEanbled">
+        <method name="SetDrivereEnabled">
             <arg name="driver_name" direction="in" type="s">
                 <description>driver name</description>
             </arg>
@@ -74,7 +74,7 @@
                 <description>The auth type. Refer to KADAuthType in kas-authentication-i.h</description>
             </arg>
             <arg name="device_id" direction="in" type="s">
-                <description>The device ID.</description>
+                <description>The default device ID.</description>
             </arg>
         </method>
 
@@ -83,37 +83,7 @@
                 <description>The auth type. Refer to KADAuthType in kas-authentication-i.h</description>
             </arg>
             <arg name="device_id" direction="out" type="s">
-                <description>The device ID.</description>
-            </arg>
-        </method>
-
-        <method name="GetAuthTypeEnabled">
-            <arg name="auth_type" direction="in" type="i">
-                <description>The auth type. Refer to KADAuthType in kas-authentication-i.h</description>
-            </arg>
-            <arg name="enabled" direction="out" type="b">
-                <description>Whether the authentication type is enabled</description>
-            </arg>
-        </method>
-
-        <method name="SetAuthTypeEnabled">
-            <arg name="auth_type" direction="in" type="i">
-                <description>The auth type. Refer to KADAuthType in kas-authentication-i.h</description>
-            </arg>
-            <arg name="enabled" direction="in" type="b">
-                <description>Whether the authentication type is enabled</description>
-            </arg>
-        </method>
-
-        <method name="GetAuthTypeEnabledForApp">
-            <arg name="auth_type" direction="in" type="i">
-                <description>The auth type. Refer to KADAuthType in kas-authentication-i.h</description>
-            </arg>
-            <arg name="auth_app" direction="in" type="i">
-                <description>Authentication application, Refer to KADAuthApplication in kas-authentication-i.h</description>
-            </arg>
-            <arg name="enabled" direction="out" type="b">
-                <description>Whether to enable the authentication type in this application</description>
+                <description>The default device ID.</description>
             </arg>
         </method>
 
@@ -145,6 +115,36 @@
             </arg>
             <arg name="auth_app" direction="out" type="i">
                 <description>Authentication application, Refer to KADAuthApplication in kas-authentication-i.h</description>
+            </arg>
+        </method>
+
+        <method name="GetAuthTypeEnabled">
+            <arg name="auth_type" direction="in" type="i">
+                <description>The auth type. Refer to KADAuthType in kas-authentication-i.h</description>
+            </arg>
+            <arg name="enabled" direction="out" type="b">
+                <description>Whether the authentication type is enabled</description>
+            </arg>
+        </method>
+
+        <method name="SetAuthTypeEnabled">
+            <arg name="auth_type" direction="in" type="i">
+                <description>The auth type. Refer to KADAuthType in kas-authentication-i.h</description>
+            </arg>
+            <arg name="enabled" direction="in" type="b">
+                <description>Whether the authentication type is enabled</description>
+            </arg>
+        </method>
+
+        <method name="GetAuthTypeEnabledForApp">
+            <arg name="auth_type" direction="in" type="i">
+                <description>The auth type. Refer to KADAuthType in kas-authentication-i.h</description>
+            </arg>
+            <arg name="auth_app" direction="in" type="i">
+                <description>Authentication application, Refer to KADAuthApplication in kas-authentication-i.h</description>
+            </arg>
+            <arg name="enabled" direction="out" type="b">
+                <description>Whether to enable the authentication type in this application</description>
             </arg>
         </method>
 

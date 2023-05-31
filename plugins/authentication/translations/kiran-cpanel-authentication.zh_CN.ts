@@ -33,6 +33,17 @@
     </message>
 </context>
 <context>
+    <name>CheckpasswdDialog</name>
+    <message>
+        <source>Check password</source>
+        <translation>校验当前用户密码</translation>
+    </message>
+    <message>
+        <source>Check the current password before you enroll the feature</source>
+        <translation>录入特征之前需要校验当前密码</translation>
+    </message>
+</context>
+<context>
     <name>DriverPage</name>
     <message>
         <source>device type</source>
@@ -179,6 +190,14 @@
         <source>tips</source>
         <translation>提示</translation>
     </message>
+    <message>
+        <source>Error</source>
+        <translation>错误</translation>
+    </message>
+    <message>
+        <source> Failed to enroll feature because the password verification failed！</source>
+        <translation>由于密码校验失败，录入特征失败！</translation>
+    </message>
 </context>
 <context>
     <name>IdentificationRenameDialog</name>
@@ -192,11 +211,11 @@
     </message>
     <message>
         <source>Confirm</source>
-        <translation>确认</translation>
+        <translation type="vanished">确认</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>取消</translation>
+        <translation type="vanished">取消</translation>
     </message>
 </context>
 <context>
@@ -324,11 +343,11 @@
     </message>
     <message>
         <source>Confirm</source>
-        <translation>确认</translation>
+        <translation type="vanished">确认</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>取消</translation>
+        <translation type="vanished">取消</translation>
     </message>
 </context>
 </TS>

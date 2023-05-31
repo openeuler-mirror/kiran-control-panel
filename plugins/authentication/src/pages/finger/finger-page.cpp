@@ -14,7 +14,6 @@
 
 #include "finger-page.h"
 #include "auxiliary.h"
-#include "identification-rename-dialog.h"
 #include "utils/kiran-auth-dbus-proxy.h"
 #include "widgets/auth-setting-container.h"
 #include "widgets/auth-setting-item.h"
@@ -90,7 +89,7 @@ QWidget* FingerPage::initFeatureManager()
     m_featureManager->setFeatureNamePrefix(desc);
     m_featureManager->setDefaultDeviceLabelDesc(QString(tr("Default %1 device")).arg(desc));
     m_featureManager->setDeviceFeatureListDesc(QString(tr("%1 list").arg(desc)));
-    connect(m_featureManager, &GeneralBioPage::enrollFeatureClicked, this, &FingerPage::onAddIdentificationClicked);
+    connect(m_featureManager, &GeneralBioPage::enrollFeature, this, &FingerPage::onAddIdentificationClicked);
     return m_featureManager;
 }
 

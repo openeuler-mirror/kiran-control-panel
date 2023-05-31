@@ -151,7 +151,7 @@ KiranAuthDBusProxy::getDriversByType(KADAuthType type)
 
 void KiranAuthDBusProxy::setDriverEnalbe(const QString& driverName,bool enable)
 {
-    auto reply = m_authProxy->SetDrivereEanbled(driverName,enable);
+    auto reply = m_authProxy->SetDrivereEnabled(driverName,enable);
     reply.waitForFinished();
 }
 

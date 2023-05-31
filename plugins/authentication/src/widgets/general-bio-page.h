@@ -38,13 +38,14 @@ public:
     int getDeviceCount();
     
 signals:
-    void enrollFeatureClicked();
+    void enrollFeature();
 
 private slots:
     void onDefaultDeviceComboBoxCurrentIndexChanged(int idx);
     void onFeatureRenameClicked();
     void onFeatureTrashClicked();
-
+    void onEnrollFeatureClicked();
+    
 private:
     void initUI();
     void addFeature(const QString& featureName,const QString& featureIID);

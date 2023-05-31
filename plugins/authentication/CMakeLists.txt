@@ -41,6 +41,7 @@ target_link_libraries(${TARGET_NAME}
         Qt5::Widgets
         Qt5::DBus
         Qt5::Svg
+        pam
         ${KIRAN_WIDGETS_LIBRARIES}
         ${KLOG_LIBRARIES}
         ${KIRAN_STYLE_LIBRARIES}

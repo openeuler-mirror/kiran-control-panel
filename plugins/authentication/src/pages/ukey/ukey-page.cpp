@@ -12,7 +12,7 @@
  * Author:     liuxinhao <liuxinhao@kylinsec.com.cn>
  */
 #include "ukey-page.h"
-#include "ukey-pin-input-dialog.h"
+#include "input-dialog/input-dialog.h"
 #include "utils/kiran-auth-dbus-proxy.h"
 #include "widgets/auth-setting-container.h"
 #include "widgets/auth-setting-item.h"
@@ -52,7 +52,7 @@ void UKeyPage::initUI()
     m_featureManager->setFeatureNamePrefix(tr("Ukey"));
     m_featureManager->setDefaultDeviceLabelDesc(tr("Default Ukey device"));
     m_featureManager->setDeviceFeatureListDesc(tr("List of devices bound to the Ukey"));
-    connect(m_featureManager, &GeneralBioPage::enrollFeatureClicked, this, &UKeyPage::onEnrollFeatureClicked);
+    connect(m_featureManager, &GeneralBioPage::enrollFeature, this, &UKeyPage::onEnrollFeatureClicked);
 
     mainLayout->addWidget(m_featureManager);
 }
@@ -88,13 +88,16 @@ void UKeyPage::onEnrollFeatureClicked()
         return;
     }
 
-    UKeyPinCodeDialog dialog;
+    InputDialog dialog;
+    dialog.setTitle(tr("UKey Enroll"));
+    dialog.setDesc(tr("Please enter the ukey pin code"));
+    dialog.setInputMode(QLineEdit::Password,32);
     if (!dialog.exec())
     {
         return;
     }
 
-    m_pinCode = dialog.getPinCode();
+    m_pinCode = dialog.getText();
     doEnroll(false);
 }
 

@@ -1,7 +1,8 @@
 #include "general-bio-page.h"
 #include "auth-setting-container.h"
 #include "auth-setting-item.h"
-#include "identification-rename-dialog.h"
+#include "checkpasswd-dialog.h"
+#include "input-dialog/input-dialog.h"
 #include "utils/kiran-auth-dbus-proxy.h"
 
 #include <kiran-message-box.h>
@@ -138,11 +139,18 @@ void GeneralBioPage::onFeatureRenameClicked()
     auto iid = settingItem->getUserData().toString();
     auto name = settingItem->getText();
 
-    QScopedPointer<IdentificationRenameDialog> renameDialog(new IdentificationRenameDialog(iid, m_proxy, this));
-    if (renameDialog->exec())
+    InputDialog renameDialog(this);
+    renameDialog.setTitle(tr("Rename Feature"));
+    renameDialog.setDesc(tr("Please enter the renamed feature name"));
+    renameDialog.setInputMode(QLineEdit::Normal,32);
+    if (!renameDialog.exec())
     {
-        refreshFeature();
+        return;
     }
+
+    QString newName = renameDialog.getText();
+    m_proxy->renameIdentification(iid, newName);
+    refreshFeature();
 }
 
 void GeneralBioPage::onFeatureTrashClicked()
@@ -155,8 +163,9 @@ void GeneralBioPage::onFeatureTrashClicked()
     if (m_authType == KAD_AUTH_TYPE_UKEY)
     {
         text = QString(tr("Are you sure you want to delete the feature called %1, "
-                          "Ensure that the Ukey device is inserted; " 
-                          "otherwise the information stored in the Ukey will not be deleted")).arg(name);
+                          "Ensure that the Ukey device is inserted; "
+                          "otherwise the information stored in the Ukey will not be deleted"))
+                   .arg(name);
     }
     else
     {
@@ -170,6 +179,27 @@ void GeneralBioPage::onFeatureTrashClicked()
 
     m_proxy->deleteIdentification(iid);
     refreshFeature();
+}
+
+void GeneralBioPage::onEnrollFeatureClicked()
+{
+    CheckpasswdDialog dialog;
+    if (!dialog.exec())
+    {
+        return;
+    }
+    dialog.hide();
+    
+    auto passwd = dialog.getText();
+    if (!dialog.checkPasswd(passwd))
+    {
+        KiranMessageBox::message(this, tr("Error"),
+                                 tr(" Failed to enroll feature because the password verification failed！"),
+                                 KiranMessageBox::Ok);
+        return;
+    }
+
+    emit enrollFeature();
 }
 
 void GeneralBioPage::initUI()
@@ -204,7 +234,7 @@ void GeneralBioPage::initUI()
     featureManagerLayout->addWidget(addButton);
     addButton->setIcon(QPixmap(":/kcp-keyboard/images/addition.svg"));
     Kiran::StylePropertyHelper::setButtonType(addButton, Kiran::BUTTON_Default);
-    connect(addButton, &QPushButton::clicked, this, &GeneralBioPage::enrollFeatureClicked);
+    connect(addButton, &QPushButton::clicked, this, &GeneralBioPage::onEnrollFeatureClicked);
 
     featureManagerLayout->addStretch();
 }
