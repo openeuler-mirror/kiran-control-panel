@@ -82,7 +82,7 @@
         <number>0</number>
        </property>
        <item>
-        <widget class="QWidget" name="" native="true">
+        <widget class="QWidget" name="widget" native="true">
          <property name="maximumSize">
           <size>
            <width>16777215</width>
@@ -154,7 +154,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QWidget" name="" native="true">
+        <widget class="QWidget" name="widget" native="true">
          <property name="maximumSize">
           <size>
            <width>16777215</width>
@@ -167,6 +167,9 @@
           </property>
           <property name="topMargin">
            <number>16</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
           </property>
           <item>
            <spacer name="horizontalSpacer_5">
@@ -293,7 +296,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QWidget" name="" native="true">
+        <widget class="QWidget" name="widget" native="true">
          <property name="maximumSize">
           <size>
            <width>16777215</width>
@@ -366,7 +369,7 @@
         </spacer>
        </item>
        <item>
-        <widget class="QWidget" name="" native="true">
+        <widget class="QWidget" name="widget" native="true">
          <property name="maximumSize">
           <size>
            <width>16777215</width>
@@ -516,7 +519,7 @@
         <number>0</number>
        </property>
        <item>
-        <widget class="QWidget" name="" native="true">
+        <widget class="QWidget" name="widget" native="true">
          <property name="maximumSize">
           <size>
            <width>16777215</width>
