@@ -65,7 +65,7 @@ QWidget* IrisPage::initFeatureManagerPage()
     m_featureManager->setFeatureNamePrefix(tr("iris"));
     m_featureManager->setDefaultDeviceLabelDesc(tr("Default Iris device"));
     m_featureManager->setDeviceFeatureListDesc(tr("Iris feature list"));
-    connect(m_featureManager, &GeneralBioPage::enrollFeatureClicked, this, &IrisPage::onEnrollFeatureClicked);
+    connect(m_featureManager, &GeneralBioPage::enrollFeature, this, &IrisPage::onEnrollFeatureClicked);
 
     return m_featureManager;
 }
