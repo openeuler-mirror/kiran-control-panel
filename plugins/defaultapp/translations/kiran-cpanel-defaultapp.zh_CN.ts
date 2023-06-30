@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.1" language="zh_CN">
+<context>
+    <name>DefaultappPlugin</name>
+    <message>
+        <source>Browser</source>
+        <translation>网页</translation>
+    </message>
+    <message>
+        <source>Email</source>
+        <translation>邮件</translation>
+    </message>
+    <message>
+        <source>Text</source>
+        <translation>文本</translation>
+    </message>
+    <message>
+        <source>Music</source>
+        <translation>音乐</translation>
+    </message>
+    <message>
+        <source>Video</source>
+        <translation>视频</translation>
+    </message>
+    <message>
+        <source>Image</source>
+        <translation>图片</translation>
+    </message>
+    <message>
+        <source>Document</source>
+        <translation>pdf文档</translation>
+    </message>
+    <message>
+        <source>Word</source>
+        <translation>word文档</translation>
+    </message>
+    <message>
+        <source>Spreadsheet</source>
+        <translation>excel文档</translation>
+    </message>
+</context>
+</TS>
