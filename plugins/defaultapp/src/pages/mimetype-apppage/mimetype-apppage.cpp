@@ -59,10 +59,6 @@ void MimeTypeAppPage::initUI()
         m_mimeApp[QFileInfo(deskInfo->fileName()).fileName()] = settingsItem;
     }
 
-    if (!m_mimeApp.isEmpty())
-    {
-        m_frame->slotTextChanged(m_enumMimeType, appInfos[0]);
-    }
 }
 
 void MimeTypeAppPage::onClickedSlot(EnumMimeType enumMimeType, XdgDesktopFile* desktopFile)

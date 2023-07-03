@@ -39,9 +39,9 @@ XdgDesktopFile* DefaultAppManager::getMimeDefaultApp(EnumMimeType enumMimeType)
 
 #ifdef VERSION_QTXDG331
 
-void DefaultAppManager::setDefaultApp(EnumMimeType enumMimeType, XdgDesktopFile* defaultDesktop)
+void DefaultAppManager::setDefaultApp(EnumMimeType enumMimeTypeChange, XdgDesktopFile* defaultDesktop)
 {
-    QVector<QString> mimeTypes = UTILS::defaultAppEnumToMimeTypes(enumMimeType);
+    QVector<QString> mimeTypes = UTILS::defaultAppEnumToMimeTypes(enumMimeTypeChange);
 
     QString mimeAppsListFile = UTILS::getMimeAppsListFile();
     QFileInfo fileInfo(mimeAppsListFile);
@@ -55,6 +55,13 @@ void DefaultAppManager::setDefaultApp(EnumMimeType enumMimeType, XdgDesktopFile*
             QVector<XdgDesktopFile*> mimeInfoCache = MimeTypeCache::getMimeinfoCache(enumMimeType);
             if (mimeInfoCache.isEmpty())
                 continue;
+            
+            if (enumMimeTypeChange == enumMimeType)
+            {
+                mimeAppsListInfo.insert(enumMimeType, QFileInfo(defaultDesktop->fileName()).fileName());
+                continue;
+            }
+
             mimeAppsListInfo.insert(enumMimeType, QFileInfo(mimeInfoCache[0]->fileName()).fileName());
         }
 
