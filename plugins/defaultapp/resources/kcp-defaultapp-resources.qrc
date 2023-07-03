@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="/">
+        <file>kcp-defaultapp-images/add-icon.svg</file>
+        <file>kcp-defaultapp-images/chosen.png</file>
+        <file>kcp-defaultapp-images/default-program.png</file>
+        <file>kcp-defaultapp-images/email-icon.svg</file>
+        <file>kcp-defaultapp-images/image-icon.svg</file>
+        <file>kcp-defaultapp-images/music-icon.svg</file>
+        <file>kcp-defaultapp-images/terminal-icon.svg</file>
+        <file>kcp-defaultapp-images/text-icon.svg</file>
+        <file>kcp-defaultapp-images/video-icon.svg</file>
+        <file>kcp-defaultapp-images/browser-icon.svg</file>
+    </qresource>
+</RCC>
