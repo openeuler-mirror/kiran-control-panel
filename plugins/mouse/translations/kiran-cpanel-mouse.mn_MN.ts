@@ -1,4 +1,6 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="zh_CN">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.1" language="zh_CN">
 <context>
     <name>KiranCPanelMouse</name>
     <message>
@@ -171,12 +173,120 @@
         <translation type="unfinished">SwitchMiddleEmulation</translation>
     </message>
     <message>
-        <location filename="../src/mouse-page.cpp" line="79"/>
+        <location filename="../src/mouse-page.ui" line="335"/>
+        <source>Test mouse wheel direction</source>
+        <translation>Хулганы дугуйны чиглэлийг шалгах</translation>
+    </message>
+    <message>
+        <location filename="../src/mouse-page.ui" line="372"/>
+        <source>This is line 1 of the test text
+This is line 2 of the test text
+This is line 3 of the test text
+This is line 4 of the test text
+This is line 5 of the test text
+This is line 6 of the test text
+This is line 7 of the test text
+This is line 8 of the test text
+This is line 9 of the test text
+This is line 10 of the test text
+This is line 11 of the test text
+This is line 12 of the test text
+This is line 13 of the test text
+This is line 14 of the test text
+This is line 15 of the test text
+This is line 16 of the test text
+This is line 17 of the test text
+This is line 18 of the test text
+This is line 19 of the test text
+This is line 20 of the test text
+This is line 21 of the test text
+This is line 22 of the test text
+This is line 23 of the test text
+This is line 24 of the test text
+This is line 25 of the test text
+This is line 26 of the test text
+This is line 27 of the test text
+This is line 28 of the test text
+This is line 29 of the test text
+This is line 30 of the test text
+This is line 31 of the test text
+This is line 32 of the test text
+This is line 33 of the test text
+This is line 34 of the test text
+This is line 35 of the test text
+This is line 36 of the test text
+This is line 37 of the test text
+This is line 38 of the test text
+This is line 39 of the test text
+This is line 40 of the test text
+This is line 41 of the test text
+This is line 42 of the test text
+This is line 43 of the test text
+This is line 44 of the test text
+This is line 45 of the test text
+This is line 46 of the test text
+This is line 47 of the test text
+This is line 48 of the test text
+This is line 49 of the test text
+This is line 50 of the test text</source>
+        <translation>Энэ бол туршилтын текстийн эхний мөр юм
+Энэ бол туршилтын текстийн хоёр дахь мөр юм
+Энэ бол туршилтын текстийн 3-р мөр юм
+Энэ бол туршилтын текстийн 4-р мөр юм
+Энэ бол туршилтын текстийн 5-р мөр юм
+Энэ бол туршилтын текстийн 6-р мөр юм
+Энэ бол туршилтын текстийн 7-р мөр юм
+Энэ бол туршилтын текстийн 8-р мөр юм
+Энэ бол туршилтын текстийн 9-р мөр юм
+Энэ бол туршилтын текстийн 10-р мөр юм
+Энэ бол туршилтын текстийн 11-р мөр юм
+Энэ бол туршилтын текстийн 12-р мөр юм
+Энэ бол туршилтын текстийн 13-р мөр юм
+Энэ бол туршилтын текстийн 14-р мөр юм
+Энэ бол туршилтын текстийн 15-р мөр юм
+Энэ бол туршилтын текстийн 16-р мөр юм
+Энэ бол туршилтын текстийн 17-р мөр юм
+Энэ бол туршилтын текстийн 18-р мөр юм
+Энэ бол туршилтын текстийн 19-р мөр юм
+Энэ бол туршилтын текстийн 20-р мөр юм
+Энэ бол туршилтын текстийн 21-р мөр юм
+Энэ бол туршилтын текстийн 22-р мөр юм
+Энэ бол туршилтын текстийн 23-р мөр юм
+Энэ бол туршилтын текстийн 24-р мөр юм
+Энэ бол туршилтын текстийн 25-р мөр юм
+Энэ бол туршилтын текстийн 26-р мөр юм
+Энэ бол туршилтын текстийн 27-р мөр юм
+Энэ бол туршилтын текстийн 28-р мөр юм
+Энэ бол туршилтын текстийн 29-р мөр юм
+Энэ бол туршилтын текстийн 30-р мөр юм
+Энэ бол туршилтын текстийн 31-р мөр юм
+Энэ бол туршилтын текстийн 32-р мөр юм
+Энэ бол туршилтын текстийн 33-р мөр юм
+Энэ бол туршилтын текстийн 34-р мөр юм
+Энэ бол туршилтын текстийн 35-р мөр юм
+Энэ бол туршилтын текстийн 36-р мөр юм
+Энэ бол туршилтын текстийн 37-р мөр юм
+Энэ бол туршилтын текстийн 38-р мөр юм
+Энэ бол туршилтын текстийн 39-р мөр юм
+Энэ бол туршилтын текстийн 40-р мөр юм
+Энэ бол туршилтын текстийн 41-р мөр юм
+Энэ бол туршилтын текстийн 42-р мөр юм
+Энэ бол туршилтын текстийн 43-р мөр юм
+Энэ бол туршилтын текстийн 44-р мөр юм
+Энэ бол туршилтын текстийн 45-р мөр юм
+Энэ бол туршилтын текстийн 46-р мөр юм
+Энэ бол туршилтын текстийн 47-р мөр юм
+Энэ бол туршилтын текстийн 48-р мөр юм
+Энэ бол туршилтын текстийн 49-р мөр юм
+Энэ бол туршилтын текстийн 50-р мөр юм</translation>
+    </message>
+    <message>
+        <location filename="../src/mouse-page.cpp" line="81"/>
         <source>Right Hand Mode</source>
         <translation>Баруун гар горим</translation>
     </message>
     <message>
-        <location filename="../src/mouse-page.cpp" line="79"/>
+        <location filename="../src/mouse-page.cpp" line="81"/>
         <source>Left Hand Mode</source>
         <translation>Зүүн гар</translation>
     </message>

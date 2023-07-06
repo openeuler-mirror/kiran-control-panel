@@ -1,5 +1,7 @@
 set(TARGET_NAME kiran-cpanel-mouse)
 
+option(MOUSE_WHEEL_TEST_VISIBLE "Is mouse wheel direction test visible" OFF)
+
 file(GLOB_RECURSE MOUSE_SRC "./*.cpp" "./*.h" "./*.ui" "./*.qrc" )
 
 file(GLOB TS_FILES "translations/*.ts")
@@ -38,6 +40,10 @@ target_link_libraries(${TARGET_NAME}
         Qt5::Core
         ${KIRANWIDGETS_LIBRARIES}
         ${KLOG_LIBRARIES})
+
+if (MOUSE_WHEEL_TEST_VISIBLE)
+    add_definitions(-DMOUSE_WHEEL_DIRECTION_TEST)
+endif ()
 
 install(TARGETS ${TARGET_NAME}
         DESTINATION ${PLUGIN_LIBS_INSTALL_DIR}/)

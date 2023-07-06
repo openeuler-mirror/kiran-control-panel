@@ -1,4 +1,6 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="zh_CN">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.1" language="zh_CN">
 <context>
     <name>KiranCPanelMouse</name>
     <message>
@@ -171,12 +173,120 @@
         <translation type="unfinished">SwitchMidleEmulomon</translation>
     </message>
     <message>
-        <location filename="../src/mouse-page.cpp" line="79"/>
+        <location filename="../src/mouse-page.ui" line="335"/>
+        <source>Test mouse wheel direction</source>
+        <translation>བྱི་བའི་འཁོར་ལོའི་ཁ་ཕྱོགས་ལ་ཚོད</translation>
+    </message>
+    <message>
+        <location filename="../src/mouse-page.ui" line="372"/>
+        <source>This is line 1 of the test text
+This is line 2 of the test text
+This is line 3 of the test text
+This is line 4 of the test text
+This is line 5 of the test text
+This is line 6 of the test text
+This is line 7 of the test text
+This is line 8 of the test text
+This is line 9 of the test text
+This is line 10 of the test text
+This is line 11 of the test text
+This is line 12 of the test text
+This is line 13 of the test text
+This is line 14 of the test text
+This is line 15 of the test text
+This is line 16 of the test text
+This is line 17 of the test text
+This is line 18 of the test text
+This is line 19 of the test text
+This is line 20 of the test text
+This is line 21 of the test text
+This is line 22 of the test text
+This is line 23 of the test text
+This is line 24 of the test text
+This is line 25 of the test text
+This is line 26 of the test text
+This is line 27 of the test text
+This is line 28 of the test text
+This is line 29 of the test text
+This is line 30 of the test text
+This is line 31 of the test text
+This is line 32 of the test text
+This is line 33 of the test text
+This is line 34 of the test text
+This is line 35 of the test text
+This is line 36 of the test text
+This is line 37 of the test text
+This is line 38 of the test text
+This is line 39 of the test text
+This is line 40 of the test text
+This is line 41 of the test text
+This is line 42 of the test text
+This is line 43 of the test text
+This is line 44 of the test text
+This is line 45 of the test text
+This is line 46 of the test text
+This is line 47 of the test text
+This is line 48 of the test text
+This is line 49 of the test text
+This is line 50 of the test text</source>
+        <translation>འདི་ནི་རྒྱུགས་ལེན་ཡི་གེའི་ཨང་དང་པོ་ཡིན།
+འདི་ནི་རྒྱུགས་ལེན་ཡི་གེའི་ཨང་གཉིས་པ་ཡིན།
+འདི་ནི་རྒྱུགས་ལེན་ཡི་གེའི་ཨང་གསུམ་པ་ཡིན།
+འདི་ནི་རྒྱུགས་ལེན་ཡི་གེའི་ཨང་བཞི་བ་ཡིན།
+འདི་ནི་རྒྱུགས་ལེན་ཡི་གེའི་ཨང་5་པ་ཡིན།
+འདི་ནི་རྒྱུགས་ལེན་ཡི་གེའི་ནང་གི་ཐིག་དྲུག་པ་ཡིན།
+འདི་ནི་རྒྱུགས་ལེན་ཡི་གེའི་ཨང་7པ་ཡིན།
+འདི་ནི་རྒྱུགས་ལེན་ཡི་གེའི་ཨང་8པ་ཡིན།
+འདི་ནི་རྒྱུགས་ལེན་ཡི་གེའི་ཨང་9པ་ཡིན།
+འདི་ནི་རྒྱུགས་ལེན་ཡི་གེའི་ཨང་བཅུ་བ་ཡིན།
+འདི་ནི་རྒྱུགས་ལེན་ཡི་གེའི་ཨང་བཅུ་གཅིག་པ་ཡིན།
+འདི་ནི་རྒྱུགས་ལེན་ཡི་གེའི་ཨང་བཅུ་གཉིས་པ་ཡིན།
+འདི་ནི་རྒྱུགས་ལེན་ཡི་གེའི་ཨང་བཅུ་གསུམ་པ་ཡིན།
+འདི་ནི་རྒྱུགས་ལེན་ཡི་གེའི་ཨང་བཅུ་བཞི་བ་ཡིན།
+འདི་ནི་རྒྱུགས་ལེན་ཡི་གེའི་ཨང་བཅོ་ལྔ་བ་ཡིན།
+འདི་ནི་རྒྱུགས་ལེན་ཡི་གེའི་ཨང་བཅུ་དྲུག་པ་ཡིན།
+འདི་ནི་རྒྱུགས་ལེན་ཡི་གེའི་ཨང་བཅུ་བདུན་པ་ཡིན།
+འདི་ནི་རྒྱུགས་ལེན་ཡི་གེའི་ཨང་བཅོ་བརྒྱད་པ་ཡིན།
+འདི་ནི་རྒྱུགས་ལེན་ཡི་གེའི་ཨང་བཅུ་དགུ་བ་ཡིན།
+འདི་ནི་རྒྱུགས་ལེན་ཡི་གེའི་ཨང་20་་་
+འདི་ནི་རྒྱུགས་ལེན་ཡི་གེའི་ཨང་21་པ་ཡིན།
+འདི་ནི་རྒྱུགས་ལེན་ཡི་གེའི་ཨང་22་པ་ཡིན།
+འདི་ནི་རྒྱུགས་ལེན་ཡི་གེའི་ཨང་23པ་ཡིན།
+འདི་ནི་རྒྱུགས་ལེན་ཡི་གེའི་ཨང་24པ་ཡིན།
+འདི་ནི་རྒྱུགས་ལེན་ཡི་གེའི་ཨང་25་པ་ཡིན།
+འདི་ནི་རྒྱུགས་ལེན་ཡི་གེའི་ཨང་26པ་ཡིན།
+འདི་ནི་རྒྱུགས་ལེན་ཡི་གེའི་ཨང་ཉེར་བདུན་པ་ཡིན།
+འདི་ནི་རྒྱུགས་ལེན་ཡི་གེའི་ཨང་28པ་ཡིན།
+འདི་ནི་རྒྱུགས་ལེན་ཡི་གེའི་ཨང་29པ་ཡིན།
+འདི་ནི་རྒྱུགས་ལེན་ཡི་གེའི་ཨང་30པ་ཡིན།
+འདི་ནི་རྒྱུགས་ལེན་ཡི་གེའི་ཨང་31པ་ཡིན།
+འདི་ནི་རྒྱུགས་ལེན་ཡི་གེའི་ཨང་32པ་ཡིན།
+འདི་ནི་རྒྱུགས་ལེན་ཡི་གེའི་ཨང་33པ་ཡིན།
+འདི་ནི་རྒྱུགས་ལེན་ཡི་གེའི་ཨང་34པ་ཡིན།
+འདི་ནི་རྒྱུགས་ལེན་ཡི་གེའི་ཨང་35པ་ཡིན།
+འདི་ནི་རྒྱུགས་ལེན་ཡི་གེའི་ཨང་36པ་ཡིན།
+འདི་ནི་རྒྱུགས་ལེན་ཡི་གེའི་ཨང་37པ་ཡིན།
+འདི་ནི་རྒྱུགས་ལེན་ཡི་གེའི་ཨང་38པ་ཡིན།
+འདི་ནི་རྒྱུགས་ལེན་ཡི་གེའི་ཨང་39པ་ཡིན།
+འདི་ནི་རྒྱུགས་ལེན་ཡི་གེའི་ཐིག་40ཡིན།
+འདི་ནི་རྒྱུགས་ལེན་ཡི་གེའི་ཨང་41པ་ཡིན།
+འདི་ནི་རྒྱུགས་ལེན་ཡི་གེའི་ཨང་42པ་ཡིན།
+འདི་ནི་རྒྱུགས་ལེན་ཡི་གེའི་ཨང་43པ་ཡིན།
+འདི་ནི་རྒྱུགས་ལེན་ཡི་གེའི་ཨང་44པ་ཡིན།
+འདི་ནི་རྒྱུགས་ལེན་ཡི་གེའི་ཨང་45པ་ཡིན།
+འདི་ནི་རྒྱུགས་ལེན་ཡི་གེའི་ཨང་46པ་ཡིན།
+འདི་ནི་རྒྱུགས་ལེན་ཡི་གེའི་ཨང་47པ་ཡིན།
+འདི་ནི་རྒྱུགས་ལེན་ཡི་གེའི་ཨང་48པ་ཡིན།
+འདི་ནི་རྒྱུགས་ལེན་ཡི་གེའི་ཨང་49པ་ཡིན།
+འདི་ནི་རྒྱུགས་ལེན་ཡི་གེའི་ཨང་50་་་</translation>
+    </message>
+    <message>
+        <location filename="../src/mouse-page.cpp" line="81"/>
         <source>Right Hand Mode</source>
         <translation>གཡས་ལག་རྣམ་པ་</translation>
     </message>
     <message>
-        <location filename="../src/mouse-page.cpp" line="79"/>
+        <location filename="../src/mouse-page.cpp" line="81"/>
         <source>Left Hand Mode</source>
         <translation>ལག་གཡོན་མའི་རྣམ་པ།</translation>
     </message>

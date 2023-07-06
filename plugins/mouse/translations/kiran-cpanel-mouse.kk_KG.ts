@@ -1,4 +1,6 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="zh_CN">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.1" language="zh_CN">
 <context>
     <name>KiranCPanelMouse</name>
     <message>
@@ -171,12 +173,120 @@
         <translation type="unfinished">SwitchMiddleEmulation</translation>
     </message>
     <message>
-        <location filename="../src/mouse-page.cpp" line="79"/>
+        <location filename="../src/mouse-page.ui" line="335"/>
+        <source>Test mouse wheel direction</source>
+        <translation>Сыноо чычкан дөңгөлөк багыты</translation>
+    </message>
+    <message>
+        <location filename="../src/mouse-page.ui" line="372"/>
+        <source>This is line 1 of the test text
+This is line 2 of the test text
+This is line 3 of the test text
+This is line 4 of the test text
+This is line 5 of the test text
+This is line 6 of the test text
+This is line 7 of the test text
+This is line 8 of the test text
+This is line 9 of the test text
+This is line 10 of the test text
+This is line 11 of the test text
+This is line 12 of the test text
+This is line 13 of the test text
+This is line 14 of the test text
+This is line 15 of the test text
+This is line 16 of the test text
+This is line 17 of the test text
+This is line 18 of the test text
+This is line 19 of the test text
+This is line 20 of the test text
+This is line 21 of the test text
+This is line 22 of the test text
+This is line 23 of the test text
+This is line 24 of the test text
+This is line 25 of the test text
+This is line 26 of the test text
+This is line 27 of the test text
+This is line 28 of the test text
+This is line 29 of the test text
+This is line 30 of the test text
+This is line 31 of the test text
+This is line 32 of the test text
+This is line 33 of the test text
+This is line 34 of the test text
+This is line 35 of the test text
+This is line 36 of the test text
+This is line 37 of the test text
+This is line 38 of the test text
+This is line 39 of the test text
+This is line 40 of the test text
+This is line 41 of the test text
+This is line 42 of the test text
+This is line 43 of the test text
+This is line 44 of the test text
+This is line 45 of the test text
+This is line 46 of the test text
+This is line 47 of the test text
+This is line 48 of the test text
+This is line 49 of the test text
+This is line 50 of the test text</source>
+        <translation>Бул сыноо текстинин 1-сап
+Бул сыноо текстинин 2-сап
+Бул сыноо текстинин 3-сап
+Бул сыноо текстинин 4-сызыгы
+Бул сыноо текстинин 5-сап
+Бул сыноо текстинин 6-сызыгы
+Бул сыноо текстинин 7-сап
+Бул сыноо текстинин 8-сап
+Бул сыноо текстинин 9-сызыгы
+Бул сыноо текстинин 10 сап
+Бул сыноо текстинин 11 сап
+Бул сыноо текстинин 12 сап
+Бул сыноо текстинин 13 сап
+Бул сыноо текстинин 14 сап
+Бул сыноо текстинин 15 сап
+Бул сыноо текстинин 16 сап
+Бул сыноо текстинин 17 сап
+Бул сыноо текстинин 18 сап
+Бул сызык 19 сыноо тексти
+Бул сызык 20 сыноо тексти
+Бул сыноо текстинин 21 сап
+Бул сыноо текстинин 22 сап
+Бул сыноо текстинин 23 сап
+Бул сыноо текстинин 24 сап
+Бул сыноо текстинин 25 сап
+Бул сыноо текстинин 26 сап
+Бул сыноо текстинин 27 сап
+Бул сызык 28 сыноо тексти
+Бул сыноо текстинин 29 сап
+Бул сыноо текстинин 30 сап
+Бул сыноо текстинин 31 сап
+Бул сыноо текстинин 32 сап
+Бул сыноо текстинин 33 сап
+Бул сыноо текстинин 34 сап
+Бул сыноо текстинин 35 сап
+Бул сыноо текстинин 36 сап
+Бул сыноо текстинин 37 сап
+Бул сыноо текстинин 38 сап
+Бул сыноо текстинин 39 сап
+Бул сыноо текстинин 40 сап
+Бул сыноо текстинин 41 сап
+Бул сыноо текстинин 42 сап
+Бул сыноо текстинин 43 сап
+Бул сыноо текстинин 44 сап
+Бул сыноо текстинин 45 сап
+Бул сыноо текстинин 46 сап
+Бул сыноо текстинин 47 сап
+Бул сыноо текстинин 48 сап
+Бул сыноо текстинин 49 сап
+Бул сыноо текстинин 50 сап</translation>
+    </message>
+    <message>
+        <location filename="../src/mouse-page.cpp" line="81"/>
         <source>Right Hand Mode</source>
         <translation>Оң кол режими</translation>
     </message>
     <message>
-        <location filename="../src/mouse-page.cpp" line="79"/>
+        <location filename="../src/mouse-page.cpp" line="81"/>
         <source>Left Hand Mode</source>
         <translation>Сол кол режими</translation>
     </message>

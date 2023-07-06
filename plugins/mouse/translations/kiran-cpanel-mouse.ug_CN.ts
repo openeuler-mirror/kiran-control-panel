@@ -1,4 +1,6 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="zh_CN">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.1" language="zh_CN">
 <context>
     <name>KiranCPanelMouse</name>
     <message>
@@ -171,12 +173,120 @@
         <translation type="unfinished">SwitchMiddleEmulation</translation>
     </message>
     <message>
-        <location filename="../src/mouse-page.cpp" line="79"/>
+        <location filename="../src/mouse-page.ui" line="335"/>
+        <source>Test mouse wheel direction</source>
+        <translation>تېستموس خۇير دىلېكېن</translation>
+    </message>
+    <message>
+        <location filename="../src/mouse-page.ui" line="372"/>
+        <source>This is line 1 of the test text
+This is line 2 of the test text
+This is line 3 of the test text
+This is line 4 of the test text
+This is line 5 of the test text
+This is line 6 of the test text
+This is line 7 of the test text
+This is line 8 of the test text
+This is line 9 of the test text
+This is line 10 of the test text
+This is line 11 of the test text
+This is line 12 of the test text
+This is line 13 of the test text
+This is line 14 of the test text
+This is line 15 of the test text
+This is line 16 of the test text
+This is line 17 of the test text
+This is line 18 of the test text
+This is line 19 of the test text
+This is line 20 of the test text
+This is line 21 of the test text
+This is line 22 of the test text
+This is line 23 of the test text
+This is line 24 of the test text
+This is line 25 of the test text
+This is line 26 of the test text
+This is line 27 of the test text
+This is line 28 of the test text
+This is line 29 of the test text
+This is line 30 of the test text
+This is line 31 of the test text
+This is line 32 of the test text
+This is line 33 of the test text
+This is line 34 of the test text
+This is line 35 of the test text
+This is line 36 of the test text
+This is line 37 of the test text
+This is line 38 of the test text
+This is line 39 of the test text
+This is line 40 of the test text
+This is line 41 of the test text
+This is line 42 of the test text
+This is line 43 of the test text
+This is line 44 of the test text
+This is line 45 of the test text
+This is line 46 of the test text
+This is line 47 of the test text
+This is line 48 of the test text
+This is line 49 of the test text
+This is line 50 of the test text</source>
+        <translation>بۇ بىرىنچى قۇر سىناق يېزىقى
+بۇ ئىككىنچى قۇر سىناق يېزىقى
+بۇ ئۈچىنچى قۇر سىناق يېزىقى
+بۇ تۆتىنچى قۇر سىناق يېزىقى
+بۇ بەشىنچى قۇر سىناق يېزىقى
+بۇ ئالتىنچى قۇر سىناق يېزىقى
+بۇ يەتتىنچى قۇر سىناق يېزىقى
+بۇ سەككىزىنچى قۇر سىناق يېزىقى
+بۇ توققۇزىنچى قۇر سىناق يېزىقى
+بۇ 10-قېتىملىق سىناق يېزىقى
+بۇ 11-قۇر سىناق يېزىقى
+بۇ 12-قۇر سىناق يېزىقى
+بۇ 13-قۇر سىناق يېزىقى
+بۇ 14-قۇر سىناق يېزىقى
+بۇ 15-قۇر سىناق يېزىقى
+بۇ 16-قۇر سىناق يېزىقى
+بۇ 17-قۇر سىناق يېزىقى
+بۇ 18-قۇر سىناق يېزىقى
+بۇ 19-قۇر سىناق يېزىقى
+بۇ 20-قېتىملىق سىناق يېزىقى
+بۇ 21-قۇر سىناق خېتى
+بۇ 22-قۇر سىناق يېزىقى
+بۇ 23-قۇر سىناق يېزىقى
+بۇ 24-قۇر سىناق يېزىقى
+بۇ 25-قېتىملىق سىناق يېزىقى
+بۇ 26-قۇر سىناق يېزىقى
+بۇ 27-قېتىملىق سىناق يېزىقى
+بۇ 28-قۇر سىناق يېزىقى
+بۇ 29-قۇر سىناق يېزىقى
+بۇ 30-قېتىملىق سىناق يېزىقى
+بۇ 31-قۇر سىناق يېزىقى
+بۇ 32-قۇر سىناق يېزىقى
+بۇ 33- قۇر سىناق يېزىقى
+بۇ 34-قۇر سىناق يېزىقى
+بۇ 35-قۇر سىناق يېزىقى
+بۇ 36-قۇر سىناق يېزىقى
+بۇ 37-قۇر سىناق يېزىقى
+بۇ 38-قۇر سىناق يېزىقى
+بۇ 39-قۇر سىناق يېزىقى
+بۇ 40-قېتىملىق سىناق يېزىقى
+بۇ 41-قۇر سىناق يېزىقى
+بۇ 42-قۇر سىناق يېزىقى
+بۇ 43- قۇر سىناق يېزىقى
+بۇ 44-قۇر سىناق يېزىقى
+بۇ 45-قۇر سىناق يېزىقى
+بۇ 46-قۇر سىناق يېزىقى
+بۇ 47-قۇر سىناق يېزىقى
+بۇ 48-قۇر سىناق يېزىقى
+بۇ 49-قۇر سىناق يېزىقى
+بۇ 50-قېتىملىق سىناق يېزىقى</translation>
+    </message>
+    <message>
+        <location filename="../src/mouse-page.cpp" line="81"/>
         <source>Right Hand Mode</source>
         <translation>ئوڭ قول ھالىتى</translation>
     </message>
     <message>
-        <location filename="../src/mouse-page.cpp" line="79"/>
+        <location filename="../src/mouse-page.cpp" line="81"/>
         <source>Left Hand Mode</source>
         <translation>سول قول ھالىتى</translation>
     </message>
