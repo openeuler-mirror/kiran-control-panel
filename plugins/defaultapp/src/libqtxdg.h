@@ -15,15 +15,9 @@
 #ifndef __LIBQTXDG_H__
 #define __LIBQTXDG_H__
 
-#ifdef VERSION_QTXDG331
-// 使用Qt5Xdg 3.3.1版本的库和函数
-#include <XdgDesktopFile>
-
-#else
 // 使用Qt5Xdg 3.7.1版本的库和函数
 #include <XdgDesktopFile>
 #include <XdgMimeApps>
 
-#endif
 
 #endif

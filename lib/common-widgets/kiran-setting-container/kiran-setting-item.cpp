@@ -88,7 +88,6 @@ void KiranSettingItem::initUI()
 {
     setDrawBroder(false);
     setFixedHeight(36);
-    setFixedWidth(468);
 
     auto layout = new QBoxLayout(QBoxLayout::LeftToRight, this);
     layout->setContentsMargins(10, 0, 10, 0);

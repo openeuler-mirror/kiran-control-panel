@@ -1,3 +1,17 @@
+/**
+ * Copyright (c) 2023 ~ 2024 KylinSec Co., Ltd.
+ * ks-sc is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *          http://license.coscl.org.cn/MulanPSL2
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ *
+ * Author:     yinhongchang <yinhongchang@kylinsec.com.cn>
+ */
+
 #include "mimetype-cache.h"
 
 MimeTypeCache::MimeTypeCache() : m_IsInitialized(false), m_xdgDesktopFile()
@@ -20,7 +34,7 @@ MimeTypeCache& MimeTypeCache::GetInstance()
     return instance;
 }
 
-QVector<XdgDesktopFile*> MimeTypeCache::getMimeinfoCache(EnumMimeType enumMimeType)
+QVector<XdgDesktopFilePtr> MimeTypeCache::getMimeinfoCache(EnumMimeType enumMimeType)
 {
     return GetInstance().m_xdgDesktopFile.value(enumMimeType);
 }
@@ -28,21 +42,18 @@ QVector<XdgDesktopFile*> MimeTypeCache::getMimeinfoCache(EnumMimeType enumMimeTy
 void MimeTypeCache::loadMimeinfoCache()
 {
     for (EnumMimeType enumMimeType = DA_TYPE_WEB_BROWSER;
-         enumMimeType <= DA_TYPE_SPREADSHEET;
+         enumMimeType < DA_TYPE_LAST;
          enumMimeType = static_cast<EnumMimeType>(enumMimeType + 1))
     {
-        QVector<QString> mimeTypes = UTILS::defaultAppEnumToMimeTypes(enumMimeType);
+        AppMimeTypes mimeTypes = MimeAppsFileManager::defaultAppEnumToMimeTypes(enumMimeType);
         QVector<QString> uniqueFileName;
-        QVector<XdgDesktopFile*> desktopInfo;
+        QVector<XdgDesktopFilePtr> desktopInfo;
 
-        for (auto& iterMimetype : mimeTypes)
+        for (auto& iterMimetype : mimeTypes.mimeTypeForApps)
         {
-#ifdef VERSION_QTXDG331
-            QList<XdgDesktopFile*> desktopFileList = XdgDesktopFileCache::getApps(iterMimetype);
-#else
             XdgMimeApps xdgMimeApps;
             QList<XdgDesktopFile*> desktopFileList = xdgMimeApps.apps(iterMimetype);
-#endif
+
             for (int index = 0; index < desktopFileList.size(); index++)
             {
                 if (uniqueFileName.indexOf(desktopFileList[index]->fileName()) != -1)
@@ -51,7 +62,7 @@ void MimeTypeCache::loadMimeinfoCache()
                 }
 
                 uniqueFileName.push_back(desktopFileList[index]->fileName());
-                desktopInfo.push_back(desktopFileList[index]);
+                desktopInfo.push_back(QSharedPointer<XdgDesktopFile>(desktopFileList[index]));
             }
         }
 

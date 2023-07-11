@@ -12,29 +12,29 @@
  * Author:     yinhongchang <yinhongchang@kylinsec.com.cn>
  */
 
-#ifndef DEFAULTAPPFRAME_H
-#define DEFAULTAPPFRAME_H
+#ifndef APPMANAGER_H
+#define APPMANAGER_H
 
 #include <QFileInfo>
 #include <QWidget>
 #include "libqtxdg.h"
 #include "utils.h"
 
-class DefaultAppFrame
+class AppManager
 {
 public:
-    DefaultAppFrame();
-    ~DefaultAppFrame();
+    AppManager();
+    ~AppManager();
 
     void getAppsForMimeType();
-    QVector<XdgDesktopFile*> getApplications(EnumMimeType enumMimeType);
+    QVector<XdgDesktopFilePtr> getApplications(EnumMimeType enumMimeType);
 
-    void sortApplication(EnumMimeType& enumMimeType, QVector<XdgDesktopFile*>& mimeInfoCache, XdgDesktopFile* defaultApp);
+    void sortApplication(EnumMimeType& enumMimeType, QVector<XdgDesktopFilePtr>& mimeInfoCache, XdgDesktopFile* defaultApp);
 
     void slotTextChanged(EnumMimeType enumMimeType, XdgDesktopFile* desktopFile);
 
 private:
-    QMap<EnumMimeType, QVector<XdgDesktopFile*>> appInfos;
+    QMap<EnumMimeType, QVector<XdgDesktopFilePtr>> m_appInfos;
 };
 
-#endif  // DEFAULTAPPFRAME_H
+#endif  // APPMANAGER_H

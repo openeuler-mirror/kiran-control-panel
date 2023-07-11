@@ -21,7 +21,7 @@
 #include "libqtxdg.h"
 #include "utils.h"
 
-class DefaultAppFrame;
+class AppManager;
 class MimeTypeAppPage : public QWidget
 {
     Q_OBJECT
@@ -32,13 +32,13 @@ public:
     void initUI();
 
 private slots:
-    void onClickedSlot(EnumMimeType enumMimeType, XdgDesktopFile* desktopFile);
+    void onClickedSlot();
 
 private:
-    DefaultAppFrame* m_frame;
+    AppManager* m_appManager;
     EnumMimeType m_enumMimeType;
-    QMap<QString, KiranSettingItem*> m_mimeApp;
-    KiranSettingItem* m_beforeItem;
+    QMap<QString, XdgDesktopFilePtr> m_application;
+    KiranSettingItem* m_beforeItem = nullptr;
 };
 
 #endif  // __MIMETYPE_APPPAGE_H__
