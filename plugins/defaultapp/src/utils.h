@@ -16,6 +16,7 @@
 #define UTILS_H
 
 #include <QVector>
+#include "libqtxdg.h"
 
 enum EnumMimeType
 {
@@ -37,24 +38,24 @@ enum EnumMimeType
     // word文档编辑器支持的MimeType类型
     DA_TYPE_WORD,
     // excel文档编辑器支持的MimeType类型
-    DA_TYPE_SPREADSHEET
+    DA_TYPE_SPREADSHEET,
+
+    DA_TYPE_LAST
 };
 
-class MimeTypes
+struct AppMimeTypes
 {
-public:
-    static QMap<EnumMimeType, QVector<QString>> enumToMimeTypes;
+    QVector<QString> mimeTypeForApps;
+    QVector<QString> mimeTypeForDefaultApps;
 };
 
-class UTILS
+class MimeAppsFileManager
 {
 public:
-    static QVector<QString> defaultAppEnumToMimeTypes(EnumMimeType enumMimeType);
-    static EnumMimeType mimeTypesToDefaultAppEnum(QString mimeType);
+    static AppMimeTypes defaultAppEnumToMimeTypes(EnumMimeType enumMimeType);
     static QString getMimeAppsListFile();
-    static void setMimeAppsList(QString& mimeAppsListFile, QString& mimeType, QString defaultDesktop);
-    static void setMimeAppsListGroupDefault(QString& mimeAppsListFile, QString& mimeType, QString& defaultDesktop);
-    static void createMimeAppsList(QMap<EnumMimeType, QString>& mimeAppsListInfo, QString& mimeAppsListFile);
 };
+
+typedef QSharedPointer<XdgDesktopFile> XdgDesktopFilePtr;
 
 #endif  // UTILS_H

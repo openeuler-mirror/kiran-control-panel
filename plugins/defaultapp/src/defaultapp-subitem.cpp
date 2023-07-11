@@ -14,7 +14,7 @@
 
 #include "defaultapp-subitem.h"
 #include <qt5-log-i.h>
-#include "src/pages/mimetype-apppage/mimetype-apppage.h"
+#include "src/pages/mimetype-apppage.h"
 
 DefaultAppSubItem::DefaultAppSubItem(EnumMimeType enumMimeType, QObject* parent)
     : m_enumMimeType(enumMimeType), QObject(parent)

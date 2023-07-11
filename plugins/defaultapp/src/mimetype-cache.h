@@ -25,7 +25,7 @@ public:
     static MimeTypeCache& GetInstance();
 
     void loadMimeinfoCache();
-    static QVector<XdgDesktopFile*> getMimeinfoCache(EnumMimeType enumMimeType);
+    static QVector<XdgDesktopFilePtr> getMimeinfoCache(EnumMimeType enumMimeType);
 
     MimeTypeCache(MimeTypeCache&&) = delete;
     MimeTypeCache(const MimeTypeCache&) = delete;
@@ -36,7 +36,7 @@ private:
     ~MimeTypeCache();
 
     bool m_IsInitialized;
-    QMap<EnumMimeType, QVector<XdgDesktopFile*>> m_xdgDesktopFile;
+    QMap<EnumMimeType, QVector<XdgDesktopFilePtr>> m_xdgDesktopFile;
 };
 
 #endif  // MIMETYPECACHE_H

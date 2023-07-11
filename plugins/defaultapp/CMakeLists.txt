@@ -27,14 +27,6 @@ file(GLOB_RECURSE QRC "resources/*.qrc")
 set(DEFAULTAPP_INCLUDE_DIRS src src/pages ${CMAKE_SOURCE_DIR}/lib/common-widgets/kiran-setting-container)
 
 
-# 添加宏定义
-if (${Qt5Xdg_VERSION} VERSION_LESS_EQUAL "3.3.1")
-    add_definitions(-DVERSION_QTXDG331)
-else()
-    add_definitions(-DVERSION_QTXDG371)
-endif()
-
-
 add_library(${TARGET_NAME} SHARED
         ${DEFAULT_SRC}
         ${DEFAULT_QM}
