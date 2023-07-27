@@ -1335,7 +1335,7 @@
     <message>
         <location filename="../src/plugin/manager/wired-manager.cpp" line="45"/>
         <source>Wired Network Adapter</source>
-        <translation>有线网卡</translation>
+        <translation>有线网络配置</translation>
     </message>
     <message>
         <location filename="../src/plugin/manager/wired-manager.cpp" line="106"/>
