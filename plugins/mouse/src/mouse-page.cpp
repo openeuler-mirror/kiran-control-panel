@@ -35,7 +35,8 @@ MousePage::MousePage(QWidget *parent) : QWidget(parent),
     //创建定时器，在用户拖动滑动条时，滑动条值停止变化0.1s后才会设置新的鼠标移动速度
     m_timer = new QTimer(this);
     connect(m_timer, &QTimer::timeout,
-            [this] {
+            [this]
+            {
                 int value = ui->slider_speed->value();
                 auto scrollSpeed = (value / (SLIDER_MAXIMUN * 1.0)) * 2.0 - 1.0;
                 m_mouseMotionAcceleration = scrollSpeed;
@@ -84,6 +85,10 @@ void MousePage::initUI()
     ui->slider_speed->setPageStep((SLIDER_MAXIMUN - SLIDER_MINIMUM) / 20);
     ui->slider_speed->setSingleStep((SLIDER_MAXIMUN - SLIDER_MINIMUM) / 20);
 
+#ifndef MOUSE_WHEEL_DIRECTION_TEST
+    ui->testWidget->hide();
+#endif
+
     initComponent();
 }
 
@@ -95,13 +100,15 @@ void MousePage::initComponent()
     m_mouseLeftHand = m_mouseInterface->left_handed();
     ui->comboBox_hand_mode->setCurrentIndex(m_mouseLeftHand);
     connect(ui->comboBox_hand_mode, QOverload<int>::of(&QComboBox::currentIndexChanged),
-            [this](int currentIntex) {
+            [this](int currentIntex)
+            {
                 m_mouseLeftHand = currentIntex;
                 m_mouseInterface->setLeft_handed(m_mouseLeftHand);
             });
     connect(
         m_mouseInterface.data(), &MouseBackEndProxy::left_handedChanged, this,
-        [this](bool value) {
+        [this](bool value)
+        {
             if (m_mouseLeftHand != value)
             {
                 m_mouseLeftHand = value;
@@ -120,7 +127,8 @@ void MousePage::initComponent()
 
     connect(
         m_mouseInterface.data(), &MouseBackEndProxy::motion_accelerationChanged, this,
-        [this](double value) {
+        [this](double value)
+        {
             if (m_mouseMotionAcceleration != value)
             {
                 m_mouseMotionAcceleration = value;
@@ -135,13 +143,15 @@ void MousePage::initComponent()
     m_mouseNaturalScroll = m_mouseInterface->natural_scroll();
     ui->checkBox_natural_scroll->setChecked(m_mouseNaturalScroll);
     connect(ui->checkBox_natural_scroll, &KiranSwitchButton::toggled,
-            [this](bool ischecked) {
+            [this](bool ischecked)
+            {
                 m_mouseNaturalScroll = ischecked;
                 m_mouseInterface->setNatural_scroll(ischecked);
             });
     connect(
         m_mouseInterface.data(), &MouseBackEndProxy::natural_scrollChanged, this,
-        [this](bool value) {
+        [this](bool value)
+        {
             if (m_mouseNaturalScroll != value)
             {
                 m_mouseNaturalScroll = value;
@@ -155,13 +165,15 @@ void MousePage::initComponent()
     m_middleEmulationEnabled = m_mouseInterface->middle_emulation_enabled();
     ui->checkBox_middle_emulation->setChecked(m_middleEmulationEnabled);
     connect(ui->checkBox_middle_emulation, &KiranSwitchButton::toggled,
-            [this](bool ischecked) {
+            [this](bool ischecked)
+            {
                 m_middleEmulationEnabled = ischecked;
                 m_mouseInterface->setMiddle_emulation_enabled(ischecked);
             });
     connect(
         m_mouseInterface.data(), &MouseBackEndProxy::middle_emulation_enabledChanged, this,
-        [this](bool value) {
+        [this](bool value)
+        {
             if (m_middleEmulationEnabled != value)
             {
                 m_middleEmulationEnabled = value;

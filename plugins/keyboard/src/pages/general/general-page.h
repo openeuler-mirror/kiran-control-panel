@@ -38,14 +38,19 @@ private:
 private slots:
     void handleSaverTimerTimeOut();
     void handleSwitchRepeatKeyToggled(bool checked);
+    void handleSwitchCapsLockTipToggled(bool checked);
+    void handleSwitchNumLockTipsToggled(bool checked);
 
 private:
     Ui::GeneralPage *ui;
-    KeyboardBackEndProxy* m_keyboardInterface;
+    KeyboardBackEndProxy *m_keyboardInterface;
     QTimer *m_timer = nullptr;
     bool m_repeateEnabled = false;
     qint32 m_delay;
     qint32 m_interval;
+    bool m_modifierLockEnabled;
+    bool m_capslockTipsEnabled;
+    bool m_numlockTipsEnabled;
 };
 
 #endif  // GENERALPAGE_H

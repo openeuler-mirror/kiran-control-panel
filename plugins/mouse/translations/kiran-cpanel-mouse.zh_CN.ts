@@ -173,12 +173,120 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mouse-page.cpp" line="79"/>
+        <location filename="../src/mouse-page.ui" line="335"/>
+        <source>Test mouse wheel direction</source>
+        <translation>鼠标滚轮方向测试</translation>
+    </message>
+    <message>
+        <location filename="../src/mouse-page.ui" line="372"/>
+        <source>This is line 1 of the test text
+This is line 2 of the test text
+This is line 3 of the test text
+This is line 4 of the test text
+This is line 5 of the test text
+This is line 6 of the test text
+This is line 7 of the test text
+This is line 8 of the test text
+This is line 9 of the test text
+This is line 10 of the test text
+This is line 11 of the test text
+This is line 12 of the test text
+This is line 13 of the test text
+This is line 14 of the test text
+This is line 15 of the test text
+This is line 16 of the test text
+This is line 17 of the test text
+This is line 18 of the test text
+This is line 19 of the test text
+This is line 20 of the test text
+This is line 21 of the test text
+This is line 22 of the test text
+This is line 23 of the test text
+This is line 24 of the test text
+This is line 25 of the test text
+This is line 26 of the test text
+This is line 27 of the test text
+This is line 28 of the test text
+This is line 29 of the test text
+This is line 30 of the test text
+This is line 31 of the test text
+This is line 32 of the test text
+This is line 33 of the test text
+This is line 34 of the test text
+This is line 35 of the test text
+This is line 36 of the test text
+This is line 37 of the test text
+This is line 38 of the test text
+This is line 39 of the test text
+This is line 40 of the test text
+This is line 41 of the test text
+This is line 42 of the test text
+This is line 43 of the test text
+This is line 44 of the test text
+This is line 45 of the test text
+This is line 46 of the test text
+This is line 47 of the test text
+This is line 48 of the test text
+This is line 49 of the test text
+This is line 50 of the test text</source>
+        <translation>这是第1行测试文字
+这是第2行测试文字
+这是第3行测试文字
+这是第4行测试文字
+这是第5行测试文字
+这是第6行测试文字
+这是第7行测试文字
+这是第8行测试文字
+这是第9行测试文字
+这是第10行测试文字
+这是第11行测试文字
+这是第12行测试文字
+这是第13行测试文字
+这是第14行测试文字
+这是第15行测试文字
+这是第16行测试文字
+这是第17行测试文字
+这是第18行测试文字
+这是第19行测试文字
+这是第20行测试文字
+这是第21行测试文字
+这是第22行测试文字
+这是第23行测试文字
+这是第24行测试文字
+这是第25行测试文字
+这是第26行测试文字
+这是第27行测试文字
+这是第28行测试文字
+这是第29行测试文字
+这是第30行测试文字
+这是第31行测试文字
+这是第32行测试文字
+这是第33行测试文字
+这是第34行测试文字
+这是第35行测试文字
+这是第36行测试文字
+这是第37行测试文字
+这是第38行测试文字
+这是第39行测试文字
+这是第40行测试文字
+这是第41行测试文字
+这是第42行测试文字
+这是第43行测试文字
+这是第44行测试文字
+这是第45行测试文字
+这是第46行测试文字
+这是第47行测试文字
+这是第48行测试文字
+这是第49行测试文字
+这是第50行测试文字</translation>
+    </message>
+    <message>
+        <location filename="../src/mouse-page.cpp" line="81"/>
         <source>Right Hand Mode</source>
         <translation>右手模式</translation>
     </message>
     <message>
-        <location filename="../src/mouse-page.cpp" line="79"/>
+        <location filename="../src/mouse-page.cpp" line="81"/>
         <source>Left Hand Mode</source>
         <translation>左手模式</translation>
     </message>

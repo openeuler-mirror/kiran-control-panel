@@ -17,68 +17,78 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/pages/general/general-page.ui" line="40"/>
+        <location filename="../src/pages/general/general-page.ui" line="55"/>
+        <source>Capslock Tip</source>
+        <translation>大写锁定提示</translation>
+    </message>
+    <message>
+        <location filename="../src/pages/general/general-page.ui" line="86"/>
+        <source>Numlock Tip</source>
+        <translation>数字键盘锁定提示</translation>
+    </message>
+    <message>
+        <location filename="../src/pages/general/general-page.ui" line="123"/>
         <source>Repeat Key</source>
         <translation>重复键</translation>
     </message>
     <message>
-        <location filename="../src/pages/general/general-page.ui" line="47"/>
+        <location filename="../src/pages/general/general-page.ui" line="130"/>
         <source>(Repeat a key while holding it down)</source>
         <translation>(按住某一键时重复该键)</translation>
     </message>
     <message>
-        <location filename="../src/pages/general/general-page.ui" line="67"/>
+        <location filename="../src/pages/general/general-page.ui" line="150"/>
         <source>SwitchRepeatKey</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/pages/general/general-page.ui" line="86"/>
+        <location filename="../src/pages/general/general-page.ui" line="169"/>
         <source>Delay</source>
         <translation>延时</translation>
     </message>
     <message>
-        <location filename="../src/pages/general/general-page.ui" line="108"/>
+        <location filename="../src/pages/general/general-page.ui" line="191"/>
         <source>SliderRepeatDelay</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/pages/general/general-page.ui" line="132"/>
+        <location filename="../src/pages/general/general-page.ui" line="215"/>
         <source>Short</source>
         <translation>短</translation>
     </message>
     <message>
-        <location filename="../src/pages/general/general-page.ui" line="152"/>
+        <location filename="../src/pages/general/general-page.ui" line="235"/>
         <source>Long</source>
         <translation>长</translation>
     </message>
     <message>
-        <location filename="../src/pages/general/general-page.ui" line="170"/>
+        <location filename="../src/pages/general/general-page.ui" line="253"/>
         <source>Interval</source>
         <translation>速度</translation>
     </message>
     <message>
-        <location filename="../src/pages/general/general-page.ui" line="192"/>
+        <location filename="../src/pages/general/general-page.ui" line="275"/>
         <source>SliderRepeatInterval</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/pages/general/general-page.ui" line="219"/>
+        <location filename="../src/pages/general/general-page.ui" line="302"/>
         <source>Slow</source>
         <translation>慢</translation>
     </message>
     <message>
-        <location filename="../src/pages/general/general-page.ui" line="239"/>
+        <location filename="../src/pages/general/general-page.ui" line="322"/>
         <source>Fast</source>
         <translation>快</translation>
     </message>
     <message>
-        <location filename="../src/pages/general/general-page.ui" line="255"/>
-        <location filename="../src/pages/general/general-page.cpp" line="51"/>
+        <location filename="../src/pages/general/general-page.ui" line="338"/>
+        <location filename="../src/pages/general/general-page.cpp" line="54"/>
         <source>Enter characters to test the settings</source>
         <translation>输入字符来测试设置</translation>
     </message>
     <message>
-        <location filename="../src/pages/general/general-page.ui" line="274"/>
+        <location filename="../src/pages/general/general-page.ui" line="357"/>
         <source>EditTestRepeatKey</source>
         <translation type="unfinished"></translation>
     </message>
