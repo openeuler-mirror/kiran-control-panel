@@ -67,21 +67,9 @@ void CPanelNetworkWidget::initPage()
         WiredManager *wiredManager = new WiredManager(devicePath, this);
         ui->stackedWidget->insertWidget(row, wiredManager);
 
-        QString subItemName = tr("Wired Network %1");
-        QString subItemNameStr = subItemName.arg(i + 1);
-
         KiranSidebarItem *sidebarItem = new KiranSidebarItem();
-        if (m_wiredDeviceList.count() == 1)
-        {
-            QString name = tr("Wired Network");
-            sidebarItem->setText(name);
-            m_subItemsList << name;
-        }
-        else
-        {
-            sidebarItem->setText(subItemNameStr);
-            m_subItemsList << subItemNameStr;
-        }
+        sidebarItem->setText(deviceName);
+        m_subItemsList << deviceName;
         ui->sidebar->insertItem(row, sidebarItem);
         m_deviceToSidebarItem.insert(devicePath, sidebarItem);
         sidebarItem->setData(Qt::UserRole, row);
@@ -101,22 +89,9 @@ void CPanelNetworkWidget::initPage()
         WirelessManager *wirelessManager = new WirelessManager(devicePath, this);
         ui->stackedWidget->insertWidget(row, wirelessManager);
 
-        QString subItemName = tr("Wireless Network %1");
-        QString subItemNameStr = subItemName.arg(i + 1);
-
         KiranSidebarItem *sidebarItem = new KiranSidebarItem();
-        if (m_wirelessDeviceList.count() == 1)
-        {
-            QString name = tr("Wireless Network");
-            sidebarItem->setText(name);
-            m_subItemsList << name;
-        }
-        else
-        {
-            sidebarItem->setText(subItemNameStr);
-            m_subItemsList << subItemNameStr;
-        }
-
+        sidebarItem->setText(deviceName);
+        m_subItemsList << deviceName;
         ui->sidebar->insertItem(row, sidebarItem);
 
         m_deviceToSidebarItem.insert(devicePath, sidebarItem);
