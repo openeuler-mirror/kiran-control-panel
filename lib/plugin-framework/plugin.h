@@ -15,6 +15,7 @@
 
 #include <QObject>
 #include <QPluginLoader>
+#include <QVector>
 
 #include "plugin-subitem-interface.h"
 class Plugin : public QObject
