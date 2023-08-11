@@ -84,8 +84,8 @@
     <message>
         <location filename="../src/pages/general/general-page.ui" line="338"/>
         <location filename="../src/pages/general/general-page.cpp" line="54"/>
-        <source>Enter characters to test the settings</source>
-        <translation>输入字符来测试设置</translation>
+        <source>Enter repeat characters to test</source>
+        <translation>输入重复字符测试</translation>
     </message>
     <message>
         <location filename="../src/pages/general/general-page.ui" line="357"/>
