@@ -160,6 +160,10 @@ void WiredManager::handleActiveConnectionRemoved(const QString &path)
 void WiredManager::handleStateActivated(const QString &activePath)
 {
     ActiveConnection::Ptr activeConnection = findActiveConnection(activePath);
+    if (activeConnection.isNull())
+    {
+        return;
+    }
     QStringList deviceList = activeConnection->devices();
     if (deviceList.contains(m_devicePath) && (activeConnection->type() == ConnectionSettings::Wired))
     {

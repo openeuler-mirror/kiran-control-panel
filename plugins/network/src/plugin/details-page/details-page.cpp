@@ -111,6 +111,10 @@ void DetailsPage::handleActiveConnectionChanged()
 void DetailsPage::handleActiveConnectionAdded(const QString &activeConnectionPath)
 {
     ActiveConnection::Ptr activeConnection = findActiveConnection(activeConnectionPath);
+    if (activeConnection.isNull())
+    {
+        return;
+    }
     connect(activeConnection.data(), &ActiveConnection::stateChanged, this, &DetailsPage::handleActiveConnectionStateChanged, Qt::UniqueConnection);
 }
 
