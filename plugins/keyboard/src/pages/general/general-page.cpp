@@ -48,7 +48,7 @@ void GeneralPage::init()
     m_timer->setSingleShot(true);
     connect(m_timer, &QTimer::timeout,this,&GeneralPage::handleSaverTimerTimeOut);
 
-    ui->lineEdit_key->setPlaceholderText(tr("Enter characters to test the settings"));
+    ui->lineEdit_key->setPlaceholderText(tr("Enter repeat characters to test"));
 
     // 重复键开关
     m_repeateEnabled = m_keyboardInterface->repeat_enabled();
