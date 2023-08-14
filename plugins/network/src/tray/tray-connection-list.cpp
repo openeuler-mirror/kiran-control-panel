@@ -233,7 +233,6 @@ void TrayConnectionList::setItemWidgetStatus(const QString& activePath, NetworkM
         trayItemWidget->setFixedSize(TRAY_ITEM_EXTENDED_SIZE);
         if (connectionInfo.isWireless)
             trayItemWidget->setIgnoreButtonVisible(true);
-        StatusNotification::ActiveConnectionActivatedNotify(connectionInfo);
         break;
     case ActiveConnection::State::Deactivating:
         break;
@@ -367,6 +366,10 @@ void TrayConnectionList::handleCancelButtonClicked()
             if (activeConnectionPathFromItem == path)
             {
                 ActiveConnection::Ptr activeConnection = findActiveConnection(path);
+                if(activeConnection.isNull())
+                {
+                    break;
+                }
                 if (activeConnection->state() == ActiveConnection::Activating)
                 {
                     emit cancelConnection(path);
