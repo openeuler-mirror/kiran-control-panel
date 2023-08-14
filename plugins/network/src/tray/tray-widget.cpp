@@ -68,6 +68,13 @@ void TrayWidget::initConnection()
 {
     connect(&m_StateActivatedTimer, &QTimer::timeout, this, [this](){
         handleStateActivated(m_activatedPath);
+        auto activeConnection = findActiveConnection(m_activatedPath);
+        if(activeConnection.isNull())
+        {
+            return;
+        }
+        QString id = activeConnection->id();
+        StatusNotification::ActiveConnectionActivatedNotify(id);
     });
 }
 
@@ -75,9 +82,6 @@ void TrayWidget::initConnection()
 void TrayWidget::handleActiveConnectionStateChanged(ActiveConnection::State state)
 {
     auto activeConnection = qobject_cast<ActiveConnection *>(sender());
-
-    // KLOG_DEBUG() << "sender:" << activeConnection;
-    // KLOG_DEBUG() << "activeConnection->type():" << activeConnection->type();
     
     m_activatedPath = activeConnection->path();
     QString id = activeConnection->id();
@@ -97,8 +101,6 @@ void TrayWidget::handleActiveConnectionStateChanged(ActiveConnection::State stat
         KLOG_DEBUG() << "id:" << id;
         KLOG_DEBUG() << "deviceList:" << deviceList; 
         m_StateActivatedTimer.start();
-        KLOG_DEBUG() << "m_StateActivatedTimer start";
-        // handleStateActivated(m_activatedPath);
         break;
     case ActiveConnection::State::Deactivating:
         KLOG_DEBUG() << "ActiveConnection::State::Deactivating";

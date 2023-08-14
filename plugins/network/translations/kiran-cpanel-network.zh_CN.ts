@@ -9,66 +9,34 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Wired Connection %1</source>
-        <translation type="vanished">有线连接%1</translation>
-    </message>
-    <message>
-        <source>Wired Connection</source>
-        <translation type="vanished">有线连接</translation>
-    </message>
-    <message>
-        <source>Wireless Connection %1</source>
-        <translation type="vanished">无线连接%1</translation>
-    </message>
-    <message>
-        <source>Wireless Connection</source>
-        <translation type="vanished">无线连接</translation>
-    </message>
-    <message>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="71"/>
-        <source>Wired Network %1</source>
-        <translation>有线网络 %1</translation>
-    </message>
-    <message>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="77"/>
-        <source>Wired Network</source>
-        <translation>有线网络</translation>
-    </message>
-    <message>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="105"/>
-        <source>Wireless Network %1</source>
-        <translation>无线网络  %1</translation>
-    </message>
-    <message>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="111"/>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="318"/>
+        <location filename="../src/plugin/cpanel-network-widget.cpp" line="291"/>
         <source>Wireless Network</source>
         <translation>无线网络</translation>
     </message>
     <message>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="137"/>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="141"/>
+        <location filename="../src/plugin/cpanel-network-widget.cpp" line="111"/>
+        <location filename="../src/plugin/cpanel-network-widget.cpp" line="115"/>
         <source>VPN</source>
         <translation>VPN</translation>
     </message>
     <message>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="146"/>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="149"/>
+        <location filename="../src/plugin/cpanel-network-widget.cpp" line="120"/>
+        <location filename="../src/plugin/cpanel-network-widget.cpp" line="123"/>
         <source>Network Details</source>
         <translation>网络详情</translation>
     </message>
     <message>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="255"/>
+        <location filename="../src/plugin/cpanel-network-widget.cpp" line="229"/>
         <source>Connected</source>
         <translation>已连接</translation>
     </message>
     <message>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="259"/>
+        <location filename="../src/plugin/cpanel-network-widget.cpp" line="233"/>
         <source>Unavailable</source>
         <translation>已禁用</translation>
     </message>
     <message>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="263"/>
+        <location filename="../src/plugin/cpanel-network-widget.cpp" line="237"/>
         <source>Disconnected</source>
         <translation>已断开</translation>
     </message>
@@ -160,21 +128,6 @@
     </message>
 </context>
 <context>
-    <name>ConnectionLists</name>
-    <message>
-        <source>Tips</source>
-        <translation type="obsolete">提示</translation>
-    </message>
-    <message>
-        <source>Please input a network name</source>
-        <translation type="vanished">请输入网络名称</translation>
-    </message>
-    <message>
-        <source>Other WiFi networks</source>
-        <translation type="vanished">其它WIFI网络</translation>
-    </message>
-</context>
-<context>
     <name>ConnectionNameWidget</name>
     <message>
         <location filename="../src/plugin/setting-widget/connection-name-widget.ui" line="14"/>
@@ -221,10 +174,6 @@
         <source>Connection name can not be empty</source>
         <translation>网络名称不能为空</translation>
     </message>
-    <message>
-        <source>Error</source>
-        <translation type="vanished">错误</translation>
-    </message>
 </context>
 <context>
     <name>ConnectionShowPage</name>
@@ -242,10 +191,6 @@
         <location filename="../src/plugin/connection-show-page.ui" line="93"/>
         <source>ButtonCreateConnection</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Create</source>
-        <translation type="vanished">创建</translation>
     </message>
 </context>
 <context>
@@ -411,13 +356,9 @@
         <translation>不指定设备</translation>
     </message>
     <message>
-        <location filename="../src/plugin/setting-widget/ethernet-widget.cpp" line="145"/>
+        <location filename="../src/plugin/setting-widget/ethernet-widget.cpp" line="165"/>
         <source>Clone Mac invalid</source>
         <translation>无效的克隆MAC地址</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translation type="vanished">错误</translation>
     </message>
 </context>
 <context>
@@ -507,10 +448,6 @@
         <location filename="../src/plugin/setting-widget/ipv4-widget.cpp" line="217"/>
         <source>Ipv4 address can not be empty</source>
         <translation>Ipv4地址不能为空</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translation type="vanished">错误</translation>
     </message>
     <message>
         <location filename="../src/plugin/setting-widget/ipv4-widget.cpp" line="227"/>
@@ -636,10 +573,6 @@
         <translation>Ipv6地址不能为空</translation>
     </message>
     <message>
-        <source>Error</source>
-        <translation type="vanished">错误</translation>
-    </message>
-    <message>
         <location filename="../src/plugin/setting-widget/ipv6-widget.cpp" line="211"/>
         <source>Ipv6 address invalid</source>
         <translation>无效的Ipv6地址</translation>
@@ -661,41 +594,34 @@
     </message>
 </context>
 <context>
-    <name>ManagerTray</name>
-    <message>
-        <source>Network settings</source>
-        <translation type="vanished">网络设置</translation>
-    </message>
-</context>
-<context>
     <name>NetworkSubItem</name>
     <message>
-        <location filename="../src/plugin/network-subitem.cpp" line="113"/>
+        <location filename="../src/plugin/network-subitem.cpp" line="111"/>
         <source>Wired Network %1</source>
         <translation>有线网络 %1</translation>
     </message>
     <message>
-        <location filename="../src/plugin/network-subitem.cpp" line="117"/>
+        <location filename="../src/plugin/network-subitem.cpp" line="115"/>
         <source>Wired Network</source>
         <translation>有线网络</translation>
     </message>
     <message>
-        <location filename="../src/plugin/network-subitem.cpp" line="126"/>
+        <location filename="../src/plugin/network-subitem.cpp" line="124"/>
         <source>Wireless Network %1</source>
         <translation>无线网络  %1</translation>
     </message>
     <message>
-        <location filename="../src/plugin/network-subitem.cpp" line="131"/>
+        <location filename="../src/plugin/network-subitem.cpp" line="129"/>
         <source>Wireless Network</source>
         <translation>无线网络</translation>
     </message>
     <message>
-        <location filename="../src/plugin/network-subitem.cpp" line="138"/>
+        <location filename="../src/plugin/network-subitem.cpp" line="136"/>
         <source>VPN</source>
         <translation>VPN</translation>
     </message>
     <message>
-        <location filename="../src/plugin/network-subitem.cpp" line="139"/>
+        <location filename="../src/plugin/network-subitem.cpp" line="137"/>
         <source>Network Details</source>
         <translation>网络详情</translation>
     </message>
@@ -703,14 +629,35 @@
 <context>
     <name>NetworkTray</name>
     <message>
-        <location filename="../src/tray/network-tray.cpp" line="170"/>
+        <location filename="../src/tray/network-tray.cpp" line="169"/>
         <source>Network settings</source>
         <translation>网络设置</translation>
     </message>
     <message>
-        <location filename="../src/tray/network-tray.cpp" line="232"/>
+        <location filename="../src/tray/network-tray.cpp" line="233"/>
+        <location filename="../src/tray/network-tray.cpp" line="484"/>
         <source>Network unavailable</source>
         <translation>网络不可用</translation>
+    </message>
+    <message>
+        <location filename="../src/tray/network-tray.cpp" line="456"/>
+        <source>Wired network card: %1 available</source>
+        <translation>有线网卡: %1 可用</translation>
+    </message>
+    <message>
+        <location filename="../src/tray/network-tray.cpp" line="461"/>
+        <source>Wireless network card: %1 available</source>
+        <translation>无线网卡: %1 可用</translation>
+    </message>
+    <message>
+        <location filename="../src/tray/network-tray.cpp" line="490"/>
+        <source>Wired network card: %1 unavailable</source>
+        <translation>有线网卡: %1 不可用</translation>
+    </message>
+    <message>
+        <location filename="../src/tray/network-tray.cpp" line="495"/>
+        <source>Wireless network card: %1 unavailable</source>
+        <translation>无线网卡: %1 不可用</translation>
     </message>
 </context>
 <context>
@@ -734,61 +681,57 @@
 <context>
     <name>StatusNotification</name>
     <message>
-        <location filename="../src/status-notification.cpp" line="28"/>
-        <location filename="../src/status-notification.cpp" line="42"/>
-        <location filename="../src/status-notification.cpp" line="59"/>
-        <location filename="../src/status-notification.cpp" line="74"/>
-        <location filename="../src/status-notification.cpp" line="89"/>
+        <location filename="../src/status-notification.cpp" line="26"/>
+        <location filename="../src/status-notification.cpp" line="34"/>
+        <location filename="../src/status-notification.cpp" line="45"/>
+        <location filename="../src/status-notification.cpp" line="54"/>
+        <location filename="../src/status-notification.cpp" line="62"/>
         <source>Connection Failed</source>
         <translation>连接失败</translation>
     </message>
     <message>
-        <source>Failed to connect to the network</source>
-        <translation type="vanished">无法连接到网络</translation>
-    </message>
-    <message>
-        <location filename="../src/status-notification.cpp" line="29"/>
+        <location filename="../src/status-notification.cpp" line="27"/>
         <source>the network not found</source>
         <translation>未找到网络</translation>
     </message>
     <message>
-        <location filename="../src/status-notification.cpp" line="43"/>
+        <location filename="../src/status-notification.cpp" line="35"/>
         <source>The hidden network &quot;%1&quot; to be connected has been detected and exists in the network list</source>
         <translation>要连接的隐藏网络“%1”已经被探测到，并存在于网络列表中</translation>
     </message>
     <message>
-        <location filename="../src/status-notification.cpp" line="60"/>
-        <location filename="../src/status-notification.cpp" line="75"/>
+        <location filename="../src/status-notification.cpp" line="46"/>
+        <location filename="../src/status-notification.cpp" line="55"/>
         <source>Failed to connect to the network &quot;%1&quot;</source>
         <translation>无法连接到网络 &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../src/status-notification.cpp" line="106"/>
+        <location filename="../src/status-notification.cpp" line="73"/>
         <source>Connection activated</source>
         <translation>网络已连接</translation>
     </message>
     <message>
-        <location filename="../src/status-notification.cpp" line="107"/>
+        <location filename="../src/status-notification.cpp" line="74"/>
         <source>You are now connected to the network &quot;%1&quot;</source>
         <translation>您已连接到网络 &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../src/status-notification.cpp" line="130"/>
+        <location filename="../src/status-notification.cpp" line="92"/>
         <source>Connection deactivated</source>
         <translation>连接断开</translation>
     </message>
     <message>
-        <location filename="../src/status-notification.cpp" line="131"/>
+        <location filename="../src/status-notification.cpp" line="93"/>
         <source>You have now disconnected the network &quot;%1&quot;</source>
         <translation>您已断开网络连接 &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../src/status-notification.cpp" line="146"/>
+        <location filename="../src/status-notification.cpp" line="101"/>
         <source>Connection deleted</source>
         <translation>连接已删除</translation>
     </message>
     <message>
-        <location filename="../src/status-notification.cpp" line="147"/>
+        <location filename="../src/status-notification.cpp" line="102"/>
         <source>The connection has been deleted &quot;%1&quot;</source>
         <translation>已删除连接 &quot;%1&quot;</translation>
     </message>
@@ -1286,10 +1229,6 @@
         <translation>网关不能为空</translation>
     </message>
     <message>
-        <source>Error</source>
-        <translation type="vanished">错误</translation>
-    </message>
-    <message>
         <location filename="../src/plugin/setting-widget/vpn/vpn-widget.cpp" line="213"/>
         <source>Gateway invalid</source>
         <translation>无效的网关</translation>
@@ -1362,14 +1301,6 @@
     </message>
 </context>
 <context>
-    <name>WiredTrayWidget</name>
-    <message>
-        <location filename="../src/tray/wired-tray-widget.cpp" line="119"/>
-        <source>Wired network unavailable</source>
-        <translation>有线网络不可用</translation>
-    </message>
-</context>
-<context>
     <name>WirelessManager</name>
     <message>
         <location filename="../src/plugin/manager/wireless-manager.ui" line="14"/>
@@ -1405,10 +1336,6 @@
         <location filename="../src/plugin/manager/wireless-manager.cpp" line="373"/>
         <source>Password required to connect to %1.</source>
         <translation>连接网络 &quot;%1&quot; 需要密码</translation>
-    </message>
-    <message>
-        <source>the network &quot;%1&quot; not found</source>
-        <translation type="vanished">未找到网络 &quot;%1&quot;</translation>
     </message>
 </context>
 <context>
