@@ -61,14 +61,15 @@ void DisconnectAndDeleteButton::initButton(SettingConnectionStatus connectionSta
     m_activeConnectionPath = activeConnectionPath;
 
     auto activeConnectionPtr = NetworkManager::findActiveConnection(m_activeConnectionPath);
-    if(activeConnectionPtr != nullptr)
+    if(activeConnectionPtr.isNull())
     {
-        ConnectionSettings::ConnectionType connectionType = activeConnectionPtr->connection()->settings()->connectionType();
-        if (connectionType == ConnectionSettings::Wireless)
-        {
-            ui->deleteButton->setVisible(false);
-            ui->ignoreButton->setVisible(true);
-        }
+       return;
+    }
+    ConnectionSettings::ConnectionType connectionType = activeConnectionPtr->connection()->settings()->connectionType();
+    if (connectionType == ConnectionSettings::Wireless)
+    {
+        ui->deleteButton->setVisible(false);
+        ui->ignoreButton->setVisible(true);
     }
 }
 
