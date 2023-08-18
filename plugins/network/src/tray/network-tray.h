@@ -46,6 +46,7 @@ public:
     void getTrayGeometry();
     void setTrayPagePos();
 
+    void UnavailableTrayPage();
     void reloadWiredTrayPage();
     void reloadWirelessTrayPage();
 

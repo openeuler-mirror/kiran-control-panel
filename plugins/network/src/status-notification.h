@@ -26,7 +26,7 @@ public:
     explicit StatusNotification(QObject *parent = nullptr){};
     ~StatusNotification(){};
 
-    static void ActiveConnectionActivatedNotify(NetworkConnectionInfo connectionInfo);
+    static void ActiveConnectionActivatedNotify(const QString &connectionName);
     static void ActiveConnectionDeactivatedNotify(const QString &connectionName);
 
     static void connectitonFailedNotify();
@@ -44,6 +44,7 @@ public:
     static void deviceStateNotify(NetworkManager::Device::State newstate);
 
     static void deviceStateChangeReasonNotify(NetworkManager::Device::StateChangeReason reason);
+    static void generalNotify(const QString &summary, const QString &body = QString(), const QString &icon = QString());
 };
 
 #endif  // KIRAN_CPANEL_NETWORK_STATUSNOTIFICATION_H

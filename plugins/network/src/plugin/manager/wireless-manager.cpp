@@ -146,6 +146,10 @@ void WirelessManager::handleCreatConnection()
 void WirelessManager::handleEditConnection(const QString &uuid, QString activeConnectionPath)
 {
     ActiveConnection::Ptr activeConnection = findActiveConnection(activeConnectionPath);
+    if (activeConnection.isNull())
+    {
+        return;
+    }
     ConnectionSettings::Ptr connectionSettings = activeConnection->connection()->settings();
     ui->wirelessSettingPage->setConnection(activeConnection->connection());
     ui->wirelessSettingPage->setConnectionSettings(connectionSettings);
@@ -191,7 +195,7 @@ void WirelessManager::handleActiveConnectionAdded(const QString &path)
 {
     KLOG_DEBUG() << "Active Connection Added:" << path;
     ActiveConnection::Ptr activatedConnection = findActiveConnection(path);
-    if (activatedConnection == nullptr)
+    if (activatedConnection.isNull())
     {
         KLOG_DEBUG() << "new add activatedConnection is nullptr";
         return;

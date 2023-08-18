@@ -252,6 +252,10 @@ void VpnManager::handleActiveConnectionAdded(const QString &activePath)
     }
 
     VpnConnection::Ptr vpnConnection = findActiveConnection(activePath).dynamicCast<VpnConnection>();
+    if (vpnConnection.isNull())
+    {
+        return;
+    }
     QString uuid = vpnConnection->uuid();
     KLOG_DEBUG() << "vpn uuid:" << uuid;
     QWidget *activeItemWidget = ui->connectionShowPage->findItemWidgetByUuid(uuid);
@@ -370,8 +374,7 @@ void VpnManager::handleStateActivated(const QString &activePath)
         auto itemWidget = ui->connectionShowPage->findItemWidgetByActivePath(activePath);
         if (itemWidget != nullptr)
         {
-            NetworkConnectionInfo connectionInfo = itemWidget->property("NetworkConnectionInfo").value<NetworkConnectionInfo>();
-            StatusNotification::ActiveConnectionActivatedNotify(connectionInfo);
+            StatusNotification::ActiveConnectionActivatedNotify(activeConnection->id());
             ui->connectionShowPage->update();
         }
     }
