@@ -263,21 +263,34 @@ void DisplayPage::initExtraComboBoxRefreshRate(QComboBox *comboBox, const QList<
 {
     comboBox->clear();
 
-    QString recommend;
     QList<DisplayModesStu> list = m_displayConfig->listPreferredModes(m_curMonitorPath);
+    double recommendRefreshRate;
     if (!list.isEmpty())
     {
-        double refreshRate = list.first().refreshRate;
-        recommend = QString("%1HZ").arg(QString::asprintf("%.2f", refreshRate));
+        recommendRefreshRate = list.first().refreshRate;
     }
 
+    QString strPostfix = tr(" (recommended)");
     QList<double> t_refreshRateList = refreshRateList;
     std::sort(t_refreshRateList.begin(), t_refreshRateList.end(), std::greater<double>());
     foreach (double r, t_refreshRateList)
     {
         QString text = QString("%1HZ").arg(QString::asprintf("%.2f", r));
-        if (text == recommend) text += tr(" (recommended)");
+        if (QString::asprintf("%.2f", r) == QString::asprintf("%.2f", recommendRefreshRate)) 
+        {
+            text.append(strPostfix);
+        }
         comboBox->addItem(text, r);
+    }
+
+    for (size_t i = 0; i < comboBox->count(); i++)
+    {
+        double refreshRate = comboBox->itemData(i).toDouble();
+        if(QString::asprintf("%.2f", refreshRate) == QString::asprintf("%.2f", recommendRefreshRate))
+        {
+            comboBox->setCurrentIndex(i);
+            break;
+        }
     }
 }
 
