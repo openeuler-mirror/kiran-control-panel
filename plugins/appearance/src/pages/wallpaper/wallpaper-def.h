@@ -30,7 +30,7 @@ enum WallpaperType
 
 #define SYSTEM_BACKGROUND_PATH "/usr/share/backgrounds/kiran/"
 #define LOCAL_WALLPAPER_FILE ".config/kylinsec/kiran-cpanel-appearance/wallpaper.xml"
-#define SYSTEM_WALLPAPER_FILE "/usr/share/mate-background-properties/kiran_background.xml"
+#define SYSTEM_WALLPAPER_FILE "/usr/share/kiran-background-properties/kiran_background.xml"
 #define CACHE_IMAGE_DIR ".config/kylinsec/kiran-cpanel-appearance/"
 
 #define FILENAME "filename"

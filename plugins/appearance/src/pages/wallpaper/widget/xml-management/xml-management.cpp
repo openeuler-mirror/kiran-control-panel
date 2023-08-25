@@ -38,8 +38,8 @@ void XmlManagement::loadXmlFiles()
     if (!file.exists())
     {
         KLOG_DEBUG() << "local xml file no exist";
-        xmlReader(SYSTEM_WALLPAPER_FILE);
-        xmlWriter();
+        if (xmlReader(SYSTEM_WALLPAPER_FILE))
+            xmlWriter();
     }
     xmlReader(localFile);
 }
@@ -209,6 +209,11 @@ void XmlManagement::xmlUpdate(QList<QMap<QString, QString>> updateList)
 {
     QString localFile = QString("%1/%2").arg(QDir::homePath()).arg(LOCAL_WALLPAPER_FILE);
     QFile file(localFile);
+    if (!file.exists())
+    {
+        KLOG_DEBUG() << localFile << " doesn't exists!";
+        return;
+    }
     if (!file.open(QFile::WriteOnly | QFile::Text))
     {
         KLOG_DEBUG() << "open " << localFile << " failed!";
