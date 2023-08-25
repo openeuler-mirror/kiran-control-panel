@@ -162,7 +162,14 @@ void Ipv4Widget::showSettings()
 
             ui->ipv4Address->setText(address);
             ui->ipv4Netmask->setText(netmask);
-            ui->ipv4Gateway->setText(gateway);
+            if(gateway != "0.0.0.0")
+            {
+                ui->ipv4Gateway->setText(gateway);
+            }
+            else
+            {
+                ui->ipv4Gateway->clear();
+            }
         }
         QString preferredDNS = "";
         QString alternateDNS = "";
