@@ -202,7 +202,7 @@ void InputPage::initActivedPort()
     KLOG_DEBUG() << "getPorts:" << getPorts;
     //解析默认source的端口信息
     QJsonParseError jsonParseError;
-    QJsonDocument doc = QJsonDocument::fromJson(getPorts.value().toLatin1(), &jsonParseError);
+    QJsonDocument doc = QJsonDocument::fromJson(getPorts.value().toUtf8(), &jsonParseError);
     if (!doc.isNull() && jsonParseError.error == QJsonParseError::NoError)
     {
         if (doc.isArray() && jsonParseError.error == QJsonParseError::NoError)
