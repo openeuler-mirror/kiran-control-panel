@@ -41,5 +41,5 @@ bool MaskWidget::eventFilter(QObject *watched, QEvent *event)
             break;
         }
     }
-    return QObject::eventFilter(watched, event);
+    return QWidget::eventFilter(watched, event);
 }

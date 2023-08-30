@@ -16,6 +16,7 @@
 #include <QPropertyAnimation>
 #include <QStyleOption>
 #include <qt5-log-i.h>
+#include <QMouseEvent>
 
 #include "animation-push-button.h"
 
@@ -83,6 +84,16 @@ void AnimationPushButton::paintEvent(QPaintEvent *event)
     {
         QPushButton::paintEvent(event);
     }
+}
+
+void AnimationPushButton::mousePressEvent(QMouseEvent *e)
+{
+    if( m_isBusy )
+    {
+        e->ignore();
+        return;
+    }
+    QPushButton::mousePressEvent(e);
 }
 
 void AnimationPushButton::initTimeLine()
