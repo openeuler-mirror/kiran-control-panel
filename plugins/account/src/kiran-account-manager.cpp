@@ -109,14 +109,11 @@ void KiranAccountManager::appendSiderbarItem(const QString &userPath)
 void KiranAccountManager::setDefaultSiderbarItem()
 {
     //设置默认侧边栏项
-    if (m_tabList->count() > 1)
+    auto items = m_tabList->findItems(AccountsGlobalInfo::instance()->getCurrentUser(), Qt::MatchCaseSensitive);
+    if ( items.size() >= 1 )
     {
-        auto items = m_tabList->findItems(AccountsGlobalInfo::instance()->getCurrentUser(), Qt::MatchCaseSensitive);
-        if (items.size() == 1)
-        {
-            auto item = items.at(0);
-            m_tabList->setCurrentRow(m_tabList->row(item));
-        }
+        auto item = items.at(0);
+        m_tabList->setCurrentRow(m_tabList->row(item));
     }
     else
     {
@@ -128,7 +125,7 @@ void KiranAccountManager::initUI()
 {
     /* 遮罩,用于繁忙时屏蔽用户操作 */
     m_maskWidget = new MaskWidget(this);
-    m_maskWidget->setVisible(false);
+    m_maskWidget->setVisible(true);
 
     /* 初始化界面主布局 */
     auto contentLayout = new QHBoxLayout(this);
@@ -444,7 +441,7 @@ void KiranAccountManager::setMaskVisible(bool visible)
 {
     if (visible)
     {
-        this->stackUnder(m_maskWidget);
+        m_maskWidget->raise();
         m_maskWidget->show();
     }
     else
