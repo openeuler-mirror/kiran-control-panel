@@ -38,6 +38,7 @@ private:
 
 protected:
     virtual void paintEvent(QPaintEvent *event) override;
+    virtual void mousePressEvent(QMouseEvent *e) override;
 
 private:
     bool m_isBusy = false;
