@@ -40,16 +40,6 @@ public:
     QPixmap trayIconColorSwitch(const QString &iconPath);
     void disableSettings();
 
-private:
-    void initDbusServiceWatcher();
-    void initAudioDevice();
-    void initAudioStream();
-    template <class Audio>
-    void initSettings(Audio *audio);
-    template <class Audio>
-    void clickMuteButton(Audio *audio);
-   
-
 public slots:
     void handleVolumeChanged(double value);
     void handleMuteButtonClicked();
@@ -59,6 +49,18 @@ public slots:
 
     void setVolumeIcon(int value);
     void hideLine();
+
+private:
+    void initDbusServiceWatcher();
+    void initAudioDevice();
+    void initAudioStream();
+    template <class Audio>
+    void initSettings(Audio *audio);
+    template <class Audio>
+    void clickMuteButton(Audio *audio);
+
+signals:
+    void volumeChanged(double value);
 
 private:
     Ui::VolumeSettingPage *ui;

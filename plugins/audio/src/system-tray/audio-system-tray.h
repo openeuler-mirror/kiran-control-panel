@@ -68,7 +68,6 @@ private:
 
     StatusNotifierManagerInterface* m_statusNotifierManager;
     AudioInterface* m_audioInterface;
-    AudioDeviceInterface* m_sink;
 
     QString m_colorTheme;
     int xTray, yTray, heightTray, widthTray;
