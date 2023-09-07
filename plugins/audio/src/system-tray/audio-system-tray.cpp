@@ -41,7 +41,6 @@ AudioSystemTray::AudioSystemTray(QWidget *parent) : QWidget(parent)
     initVolumeSettingPage(defaultSinkPath);
     initMixedSettingPage();
 
-    m_sink = new AudioDeviceInterface(AUDIO_DBUS_NAME, defaultSinkPath, QDBusConnection::sessionBus());
     m_statusNotifierManager = new StatusNotifierManagerInterface(STATUS_NOTIFIER_MANAGER, STATUS_NOTIFIER_MANAGER_OBJECT_NAME, QDBusConnection::sessionBus(), this);
     m_systemTray = new QSystemTrayIcon();
 
@@ -82,8 +81,11 @@ void AudioSystemTray::initMixedSettingPage()
 void AudioSystemTray::initTrayIcon()
 {
     getTrayIconStyle();
-    double currentVolumeDouble = m_sink->volume() * 100;
-    KLOG_INFO() << "currentVolumeDouble" << round(currentVolumeDouble);
+    
+    QDBusPendingReply<QString> defaultSinkPath = m_audioInterface->GetDefaultSink();
+    AudioDeviceInterface defaultSink (AUDIO_DBUS_NAME, defaultSinkPath, QDBusConnection::sessionBus());
+    double currentVolumeDouble = defaultSink.volume() * 100;
+    KLOG_INFO() << "current Volume Double" << round(currentVolumeDouble);
     setTrayIcon(round(currentVolumeDouble));
 }
 
@@ -117,11 +119,12 @@ void AudioSystemTray::initConnect()
 {
     connect(m_systemTray, &QSystemTrayIcon::activated, this, &AudioSystemTray::handleAudioTrayClicked);
 
-    connect(m_sink, &AudioDeviceInterface::volumeChanged, [=](double value)
-            {
-                int currentVolume = round(value * 100);  //表示数值的时候向上取整
-                KLOG_DEBUG() << "m_sink volumeChanged :" << currentVolume;
-                setTrayIcon(currentVolume); });
+    connect(m_volumeSettingPage,&VolumeSettingPage::volumeChanged,[=](double value)
+    {
+        int currentVolume = round(value * 100);  //表示数值的时候向上取整
+        KLOG_DEBUG() << "m_sink volumeChanged :" << currentVolume;
+        setTrayIcon(currentVolume);
+    });
 
     connect(m_statusNotifierManager, &StatusNotifierManagerInterface::StyleChanged, [=](const QString &style)
             {
@@ -129,9 +132,11 @@ void AudioSystemTray::initConnect()
                 //重新获取style
                 getTrayIconStyle();
                 //获取当前音量值重新设置TrayIcon
-                m_sink->volume();
-                double currentVolumeDouble = m_sink->volume() * 100;
-                setTrayIcon(round(currentVolumeDouble)); });
+                QDBusPendingReply<QString> defaultSinkPath = m_audioInterface->GetDefaultSink();
+                AudioDeviceInterface defaultSink (AUDIO_DBUS_NAME, defaultSinkPath, QDBusConnection::sessionBus());
+                double currentVolumeDouble = defaultSink.volume() * 100;
+                setTrayIcon(round(currentVolumeDouble)); 
+            });
 }
 
 void AudioSystemTray::handleAudioTrayClicked(QSystemTrayIcon::ActivationReason reason)
