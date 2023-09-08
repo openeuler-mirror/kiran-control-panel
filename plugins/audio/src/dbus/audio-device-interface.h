@@ -26,6 +26,13 @@
 #include <QtDBus/QtDBus>
 #include "audio-device-interface.h"
 
+struct AudioPortInfo
+{
+    QString description;
+    QString name;
+    double priority;
+};
+
 /*
  * Proxy class for interface com.kylinsec.Kiran.SessionDaemon.Audio.Device
  */
@@ -102,6 +109,8 @@ public:
     {
         return qvariant_cast<double>(property("volume"));
     }
+
+    QList<AudioPortInfo> getPortsInfo();
 
 public Q_SLOTS:  // METHODS
     inline QDBusPendingReply<QString> GetPorts()
