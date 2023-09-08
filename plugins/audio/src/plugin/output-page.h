@@ -61,7 +61,6 @@ private:
     AudioInterface *m_audioInterface;
     QMap<int, AudioDeviceInterface *> m_outputDevicesMap;
     AudioDeviceInterface *m_defaultSink;
-    int m_defaultDeviceIndex;
     QDBusServiceWatcher *m_dbusServiceWatcher;
 };
 
