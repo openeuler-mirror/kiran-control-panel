@@ -13,6 +13,7 @@
  */
 
 #include "audio-device-interface.h"
+#include <qt5-log-i.h>
 
 /*
  * Implementation of interface class AudioDeviceInterface
@@ -26,6 +27,38 @@ AudioDeviceInterface::AudioDeviceInterface(const QString &service, const QString
 
 AudioDeviceInterface::~AudioDeviceInterface()
 {
+}
+
+QList<AudioPortInfo> AudioDeviceInterface::getPortsInfo()
+{
+    QDBusPendingReply<QString> getPorts = GetPorts();
+    KLOG_DEBUG() << "getPorts:" << getPorts;
+
+    //解析默认sink的端口信息
+    QJsonParseError jsonParseError;
+    QJsonDocument doc = QJsonDocument::fromJson(getPorts.value().toUtf8(), &jsonParseError);
+
+    if((doc.isNull()) || (jsonParseError.error != QJsonParseError::NoError))
+    {
+        return QList<AudioPortInfo>();
+    }
+
+    QList<AudioPortInfo> portInfoList;
+    if (doc.isArray() && jsonParseError.error == QJsonParseError::NoError)
+    {
+        QJsonArray array = doc.array();
+        for (int i = 0; i < array.count(); ++i)
+        {
+            QJsonObject object = array.at(i).toObject();
+            AudioPortInfo portInfo;
+            portInfo.description = object.value("description").toString();
+            portInfo.name = object.value("name").toString();
+            portInfo.priority = object.value("priority").toDouble();
+            portInfoList << portInfo;
+        }
+    }
+
+    return portInfoList;
 }
 
 void sendPropertyChangedDetailSignal(AudioDeviceInterface *ptr, const QString &propertyName, QVariant value)
