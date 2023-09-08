@@ -132,6 +132,7 @@ void VolumeSettingPage::handleVolumeChanged(double value)
     setVolumeIcon(currentVolume);
     ui->volumeSetting->setValue(currentVolume);
     ui->volumeSetting->blockSignals(false);
+    emit volumeChanged(value);
 }
 
 void VolumeSettingPage::handleMuteButtonClicked()
@@ -144,6 +145,7 @@ void VolumeSettingPage::handleMuteButtonClicked()
 
 void VolumeSettingPage::handleDefaultSinkChanged(int index)
 {
+    KLOG_DEBUG() << "Default Sink Changed";
     // delete and restart init defaultSink
     if (m_sink != nullptr)
     {
