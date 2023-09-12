@@ -88,9 +88,9 @@ void HardwareInformation::initUI(void)
         ui->label_CPU_info->setToolTip(cpu);
 
         QList<std::tuple<QStringList, QGridLayout *> > hardwareMap = {
-            {disks, ui->gridLayout_hard_disk},
-            {graphics, ui->gridLayout_graphics_card},
-            {eths, ui->gridLayout_network_card}};
+            std::make_tuple(disks, ui->gridLayout_hard_disk),
+            std::make_tuple(graphics, ui->gridLayout_graphics_card),
+            std::make_tuple(eths, ui->gridLayout_network_card)};
         for (auto hardwareInitTuple : hardwareMap)
         {
             QStringList infos = std::get<0>(hardwareInitTuple);

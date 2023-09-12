@@ -123,6 +123,27 @@ void dumpPluginManagerInfo()
 #endif
 }
 
+#if (QT_VERSION < QT_VERSION_CHECK(5, 10, 0))
+static QScreen *screenAt(const QPoint &point)
+{
+    QVarLengthArray<const QScreen *, 8> visitedScreens;
+    for (const QScreen *screen : QGuiApplication::screens()) {
+        if (visitedScreens.contains(screen))
+            continue;
+
+        // The virtual siblings include the screen itself, so iterate directly
+        for (QScreen *sibling : screen->virtualSiblings()) {
+            if (sibling->geometry().contains(point))
+                return sibling;
+
+            visitedScreens.append(sibling);
+        }
+    }
+
+    return nullptr;
+}
+#endif
+
 int main(int argc, char *argv[])
 {
     KiranSingleApplication app(argc,
@@ -165,7 +186,11 @@ int main(int argc, char *argv[])
     PanelWindow w;
     w.jump(defaultCategory,defaultSubItem);
 
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 10, 0))
     auto screen = QApplication::screenAt(QCursor::pos());
+#else
+    auto screen = screenAt(QCursor::pos());
+#endif
     QRect screenGeometry = screen->geometry();
     w.resize(1031, 742);
     w.move(screenGeometry.x() + (screenGeometry.width() - w.width()) / 2,

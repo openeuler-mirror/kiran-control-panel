@@ -23,7 +23,6 @@
 #include <QBoxLayout>
 #include <QLabel>
 #include <QPushButton>
-#include <QRandomGenerator>
 #include <QSpacerItem>
 #include <QStackedWidget>
 
