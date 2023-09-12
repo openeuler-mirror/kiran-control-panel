@@ -61,11 +61,6 @@ void ChangeHostNameWidget::initUI()
     setIcon(QIcon(":/images/kylin-about.png"));
 
     ui->btn_save->setEnabled(false);
-
-    auto screen = QApplication::screenAt(QCursor::pos());
-    auto screenGeometry = screen->geometry();
-    this->move(screenGeometry.x() + (screenGeometry.width() - this->width()) / 2,
-               screenGeometry.y() + (screenGeometry.height() - this->height()) / 2);
 }
 
 void ChangeHostNameWidget::setNewHostName()

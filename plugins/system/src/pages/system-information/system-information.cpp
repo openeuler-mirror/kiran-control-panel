@@ -268,7 +268,7 @@ void SystemInformation::handleChangeHostName()
 {
     if (hostNameWidget == nullptr)
     {
-        hostNameWidget = new ChangeHostNameWidget;
+        hostNameWidget = new ChangeHostNameWidget(this);
     }
     hostNameWidget->setAttribute(Qt::WA_QuitOnClose, false);
     hostNameWidget->installEventFilter(this);

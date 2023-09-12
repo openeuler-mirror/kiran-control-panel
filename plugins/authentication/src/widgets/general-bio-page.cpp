@@ -12,7 +12,10 @@
 #include <QComboBox>
 #include <QLabel>
 #include <QPushButton>
+#include <QTime>
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 10, 0))
 #include <QRandomGenerator>
+#endif
 
 #define MAX_FEATURE_NUMBER 1000
 
@@ -45,7 +48,12 @@ QString GeneralBioPage::autoGenerateFeatureName()
 
     for (int i = 0; i <= 10; ++i)
     {
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 10, 0))
         auto featureNumber = QRandomGenerator::global()->bounded(1, MAX_FEATURE_NUMBER);
+#else
+        qsrand(QTime(0, 0, 0).secsTo(QTime::currentTime()));
+        auto featureNumber = qrand() % MAX_FEATURE_NUMBER + 1;
+#endif
         auto temp = QString("%1 %2").arg(m_featureNamePrefix).arg(featureNumber);
 
         if (!m_featureNameSet.contains(temp))

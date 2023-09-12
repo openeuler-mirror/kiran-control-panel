@@ -59,11 +59,11 @@ void WiredTrayWidget::initUI()
 
 void WiredTrayWidget::initConnection()
 {
-    connect(m_connectionList, &TrayConnectionList::connectionUpdated, this, &WiredTrayWidget::handleConnectionUpdated, Qt::UniqueConnection);
-    connect(m_connectionList, &TrayConnectionList::activateSelectedConnection, this, &WiredTrayWidget::handleActivateSelectedConnection, Qt::UniqueConnection);
-    connect(m_connectionList, &TrayConnectionList::disconnect, this, &WiredTrayWidget::handleDisconnect, Qt::UniqueConnection);
-    connect(m_connectionList, &TrayConnectionList::cancelConnection, this, &WiredTrayWidget::handleCancelConnection, Qt::UniqueConnection);
-    connect(m_connectionList, &TrayConnectionList::sizeChanged, this, &WiredTrayWidget::sizeChanged, Qt::UniqueConnection);
+    connect(m_connectionList.data(), &TrayConnectionList::connectionUpdated, this, &WiredTrayWidget::handleConnectionUpdated, Qt::UniqueConnection);
+    connect(m_connectionList.data(), &TrayConnectionList::activateSelectedConnection, this, &WiredTrayWidget::handleActivateSelectedConnection, Qt::UniqueConnection);
+    connect(m_connectionList.data(), &TrayConnectionList::disconnect, this, &WiredTrayWidget::handleDisconnect, Qt::UniqueConnection);
+    connect(m_connectionList.data(), &TrayConnectionList::cancelConnection, this, &WiredTrayWidget::handleCancelConnection, Qt::UniqueConnection);
+    connect(m_connectionList.data(), &TrayConnectionList::sizeChanged, this, &WiredTrayWidget::sizeChanged, Qt::UniqueConnection);
 
     connect(m_wiredDevice.data(), &WiredDevice::carrierChanged, this, &WiredTrayWidget::handleCarrierChanged, Qt::UniqueConnection);
     connect(m_wiredDevice.data(), &Device::stateChanged, this, &WiredTrayWidget::handleStateChanged, Qt::UniqueConnection);

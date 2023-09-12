@@ -55,19 +55,19 @@ void WirelessTrayWidget::initUI()
 
 void WirelessTrayWidget::initConnection()
 {
-    connect(m_connectionList, &TrayConnectionList::activateSelectedWirelessNetwork, this, &WirelessTrayWidget::handleActivateSelectedWirelessNetwork);
-    connect(m_connectionList, &TrayConnectionList::disconnect, this, &WirelessTrayWidget::handleDisconnect);
-    connect(m_connectionList, &TrayConnectionList::cancelConnection, this, &WirelessTrayWidget::handleCancelConnection);
-    connect(m_connectionList, &TrayConnectionList::ignoreConnection, this, &WirelessTrayWidget::handleIgnoreConnection);
+    connect(m_connectionList.data(), &TrayConnectionList::activateSelectedWirelessNetwork, this, &WirelessTrayWidget::handleActivateSelectedWirelessNetwork);
+    connect(m_connectionList.data(), &TrayConnectionList::disconnect, this, &WirelessTrayWidget::handleDisconnect);
+    connect(m_connectionList.data(), &TrayConnectionList::cancelConnection, this, &WirelessTrayWidget::handleCancelConnection);
+    connect(m_connectionList.data(), &TrayConnectionList::ignoreConnection, this, &WirelessTrayWidget::handleIgnoreConnection);
 
     connect(m_wirelessDevice.data(), &WirelessDevice::networkDisappeared, this, &WirelessTrayWidget::handleNetworkDisappeared);
     connect(m_wirelessDevice.data(), &WirelessDevice::networkAppeared, this, &WirelessTrayWidget::handleNetworkAppeared);
 
-    connect(m_connectionList, &TrayConnectionList::sendPasswordToWirelessSetting, this, &WirelessTrayWidget::setSecurityPskAndActivateWirelessConnection);
-    connect(m_connectionList, &TrayConnectionList::sendSsidToWireless, this, &WirelessTrayWidget::handleActivateHiddenNetwork);
+    connect(m_connectionList.data(), &TrayConnectionList::sendPasswordToWirelessSetting, this, &WirelessTrayWidget::setSecurityPskAndActivateWirelessConnection);
+    connect(m_connectionList.data(), &TrayConnectionList::sendSsidToWireless, this, &WirelessTrayWidget::handleActivateHiddenNetwork);
 
     connect(m_devicePtr.data(), &Device::stateChanged, this, &WirelessTrayWidget::handleDeviceStateChanged, Qt::UniqueConnection);
-    connect(m_connectionList, &TrayConnectionList::sizeChanged, this, &WirelessTrayWidget::sizeChanged);
+    connect(m_connectionList.data(), &TrayConnectionList::sizeChanged, this, &WirelessTrayWidget::sizeChanged);
 
     connect(SignalForward::instance(), &SignalForward::wirelessConnectionAdded, this, &WirelessTrayWidget::handleNotifierConnectionAdded);
     connect(SignalForward::instance(), &SignalForward::connectionRemoved, this, &WirelessTrayWidget::handleNotifierConnectionRemoved);
