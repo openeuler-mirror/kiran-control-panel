@@ -29,7 +29,6 @@
 #include <QComboBox>
 #include <QLabel>
 #include <QPushButton>
-#include <QRandomGenerator>
 #include <QStackedWidget>
 #include <QUuid>
 
@@ -43,11 +42,11 @@ enum FingerPageIndexEnum
 };
 
 const std::list<std::tuple<uint, QString>> FingerProgressRangePixmapList = {
-    {0, ":/kcp-authentication/images/finger-0.svg"},
-    {25, ":/kcp-authentication/images/finger-25.svg"},
-    {50, ":/kcp-authentication/images/finger-50.svg"},
-    {75, ":/kcp-authentication/images/finger-75.svg"},
-    {100, ":/kcp-authentication/images/finger-100.svg"}};
+    std::make_tuple(0, ":/kcp-authentication/images/finger-0.svg"),
+    std::make_tuple(25, ":/kcp-authentication/images/finger-25.svg"),
+    std::make_tuple(50, ":/kcp-authentication/images/finger-50.svg"),
+    std::make_tuple(75, ":/kcp-authentication/images/finger-75.svg"),
+    std::make_tuple(100, ":/kcp-authentication/images/finger-100.svg")};
 
 FingerPage::FingerPage(KiranAuthDBusProxy* proxy, FingerAuthType type, QWidget* parent)
     : QWidget(parent),

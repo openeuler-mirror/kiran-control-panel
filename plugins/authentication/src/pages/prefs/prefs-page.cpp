@@ -71,11 +71,11 @@ QWidget* PrefsPage::initAuthTypePage()
     authTypeLayout->addStretch();
 
     std::list<std::tuple<KADAuthType, QString>> authTypes = {
-        {KAD_AUTH_TYPE_FINGERPRINT, tr("fingerprint")},
-        {KAD_AUTH_TYPE_FINGERVEIN, tr("fingervein")},
-        {KAD_AUTH_TYPE_UKEY, tr("ukey")},
-        {KAD_AUTH_TYPE_IRIS, tr("iris")},
-        {KAD_AUTH_TYPE_FACE, tr("face")}};
+        std::make_tuple(KAD_AUTH_TYPE_FINGERPRINT, tr("fingerprint")),
+        std::make_tuple(KAD_AUTH_TYPE_FINGERVEIN, tr("fingervein")),
+        std::make_tuple(KAD_AUTH_TYPE_UKEY, tr("ukey")),
+        std::make_tuple(KAD_AUTH_TYPE_IRIS, tr("iris")),
+        std::make_tuple(KAD_AUTH_TYPE_FACE, tr("face"))};
 
     // fill auth types
     for (auto iter : authTypes)
@@ -134,9 +134,9 @@ QWidget* PrefsPage::initAuthApplicationPage()
     authAppLayout->addLayout(buttonLayout);
 
     std::list<std::tuple<KADAuthApplication, QString>> authTypes = {
-        {KAD_AUTH_APPLICATION_LOGIN, tr("login")},
-        {KAD_AUTH_APPLICATION_UNLOCK, tr("unlock")},
-        {KAD_AUTH_APPLICATION_EMPOWERMENT, tr("empowerment")}};
+        std::make_tuple(KAD_AUTH_APPLICATION_LOGIN, tr("login")),
+        std::make_tuple(KAD_AUTH_APPLICATION_UNLOCK, tr("unlock")),
+        std::make_tuple(KAD_AUTH_APPLICATION_EMPOWERMENT, tr("empowerment"))};
 
     // fill auth applications
     for (auto iter : authTypes)

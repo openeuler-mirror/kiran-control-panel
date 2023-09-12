@@ -32,7 +32,11 @@ bool UPowerInterface::haveBattery()
     }
 #endif
 
+#if UP_CHECK_VERSION(0, 99, 8)
     auto devices = up_client_get_devices2(upClient);
+#else
+    auto devices = up_client_get_devices(upClient);
+#endif
     void *device = nullptr;
     UpDeviceKind kind;
     for (int i = 0; i < devices->len; i++)
