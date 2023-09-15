@@ -17,67 +17,52 @@
 #include <QApplication>
 #include <QDBusConnection>
 #include <QDBusConnectionInterface>
-#include <QTimer>
+#include <QDBusServiceWatcher>
 #include <QTranslator>
 #include "config.h"
 #include "network-tray.h"
-#define MAX_WAIT_COUNTS 10
 
-int main(int argc, char *argv[]) {
+#define DBUS_SERVICE_KDE_STATUS_NOTIFIER_WATCHER "org.kde.StatusNotifierWatcher"
+
+int main(int argc, char* argv[])
+{
     KiranApplication a(argc, argv);
     klog_qt5_init("", "kylinsec-session", "kiran-cpanel-network", "kiran-cpanel-network");
 
     KLOG_INFO() << "autostart!";
+
     QTranslator translator;
     if (translator.load(QLocale(), "kiran-cpanel-network", ".", TRANSLATE_PREFIX, ".qm"))
     {
         a.installTranslator(&translator);
-        KLOG_INFO() << "installTranslator load:" << a.installTranslator(&translator);
+        KLOG_DEBUG() << "installTranslator load:" << a.installTranslator(&translator);
     }
     else
-        KLOG_INFO() << "installTranslator failed";
-
-    NetworkTray *tray = nullptr;
-    QTimer timer;
-    timer.setInterval(1000);
-    int waitCounts = 0;
-    QObject::connect(&timer, &QTimer::timeout, [&]() {
-                         if (QDBusConnection::sessionBus().interface()->isServiceRegistered("org.kde.StatusNotifierWatcher"))
-                         {
-                             KLOG_INFO() << "org.kde.StatusNotifierWatcher isServiceRegistered" << QDBusConnection::sessionBus().interface()->isServiceRegistered("org.kde.StatusNotifierWatcher");
-                             KLOG_INFO() << "QSystemTrayIcon::isSystemTrayAvailable():" << QSystemTrayIcon::isSystemTrayAvailable();
-
-                             KLOG_INFO() << "init  NetworkTray";
-                             tray = new NetworkTray;
-                             KLOG_INFO() << "wait loop : new NetworkTray sucess ";
-                             KLOG_INFO() << "currentDateTime:"<<QDateTime::currentDateTime();
-                             timer.stop();
-                         }
-                         else
-                         {
-                             waitCounts++;
-                             KLOG_INFO() << "waitCounts:" << waitCounts;
-                             if (waitCounts > MAX_WAIT_COUNTS)
-                             {
-                                 KLOG_INFO() << "超过等待次数，程序退出";
-                                 return QApplication::quit();
-                             }
-                         }
-                     });
-
-    if (QDBusConnection::sessionBus().interface()->isServiceRegistered("org.kde.StatusNotifierWatcher"))
     {
-        KLOG_INFO() << "org.kde.StatusNotifierWatcher isServiceRegistered" << QDBusConnection::sessionBus().interface()->isServiceRegistered("org.kde.StatusNotifierWatcher");
-        KLOG_INFO() << "QSystemTrayIcon::isSystemTrayAvailable():" << QSystemTrayIcon::isSystemTrayAvailable();
-        KLOG_INFO() << "init  NetworkTray";
+        KLOG_WARNING() << "installTranslator failed";
+    }
+
+    NetworkTray* tray = nullptr;
+    if (QDBusConnection::sessionBus().interface()->isServiceRegistered(DBUS_SERVICE_KDE_STATUS_NOTIFIER_WATCHER))
+    {
+        KLOG_DEBUG() << DBUS_SERVICE_KDE_STATUS_NOTIFIER_WATCHER << "is registered,create network tray icon";
         tray = new NetworkTray;
-        KLOG_INFO() << "new NetworkTray sucess ";
     }
     else
     {
-        timer.start();
-        KLOG_INFO() << "start wait loop";
-        KLOG_INFO() << "currentDateTime:" <<  QDateTime::currentDateTime();
+        KLOG_WARNING() << DBUS_SERVICE_KDE_STATUS_NOTIFIER_WATCHER << "is not registered,wait";
+        QDBusServiceWatcher* dbusServiceWatcher = new QDBusServiceWatcher;
+        dbusServiceWatcher->setConnection(QDBusConnection::sessionBus());
+        dbusServiceWatcher->addWatchedService(DBUS_SERVICE_KDE_STATUS_NOTIFIER_WATCHER);
+        QObject::connect(dbusServiceWatcher, &QDBusServiceWatcher::serviceRegistered,
+                         [&dbusServiceWatcher, &tray](const QString& service)
+                         {
+                             if (service != DBUS_SERVICE_KDE_STATUS_NOTIFIER_WATCHER)
+                                 return;
+                             KLOG_INFO() << DBUS_SERVICE_KDE_STATUS_NOTIFIER_WATCHER << "is registered,create network tray icon";
+                             tray = new NetworkTray;
+                             dbusServiceWatcher->removeWatchedService(DBUS_SERVICE_KDE_STATUS_NOTIFIER_WATCHER);
+                         });
     }
 
     return QApplication::exec();
