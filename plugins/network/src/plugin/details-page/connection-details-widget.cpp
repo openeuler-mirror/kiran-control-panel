@@ -67,7 +67,7 @@ void ConnectionDetailsWidget::init()
 void ConnectionDetailsWidget::initUI()
 {
     QList<KiranFrame *> widgets = {ui->securityTypeWidget, ui->frequencyBandWidget, ui->channelWidget, ui->InterfaceWidget,
-                                   ui->macWidget, ui->ipv4Widget, ui->gatewayWidget, ui->preferredDNSWidget, ui->subnetMaskWidget,
+                                   ui->macWidget, ui->ipv4Widget, ui->gatewayWidget, ui->DNSWidget, ui->subnetMaskWidget,
                                    ui->ipv6Widget, ui->ipv6GatewayWidget, ui->prefixWidget, ui->rateWidget};
 
     for (auto widget : widgets)
@@ -76,7 +76,7 @@ void ConnectionDetailsWidget::initUI()
     }
 
     QList<QLabel *> labels = {ui->securityType, ui->frequencyBand, ui->channel, ui->networkInterface,
-                              ui->mac, ui->ipv4, ui->ipv4Gateway, ui->preferredDNS, ui->subnetMask,
+                              ui->mac, ui->ipv4, ui->ipv4Gateway, ui->DNS, ui->subnetMask,
                               ui->ipv6, ui->ipv6Gateway, ui->prefix, ui->rate};
 
     for (auto label : labels)
@@ -151,25 +151,54 @@ void ConnectionDetailsWidget::setIpDetails()
     ui->subnetMask->setText(netmask);
     ui->ipv4Gateway->setText(gateway);
 
-    QString preferredDNS = "-";
     Dhcp4Config::Ptr dhcp = m_activeConnection->dhcp4Config();
     auto dhcpOptions = dhcp->options();
+    
+    QStringList tmpDNS;
+
+    QStringList dhcpDns;
     if (!dhcpOptions.isEmpty())
     {
         QVariant domainNameServers = dhcpOptions.value("domain_name_servers");
-        // 以空格为分隔
-        QStringList dns = domainNameServers.toString().split(" ");
-        preferredDNS = dns.value(0);
+        dhcpDns = domainNameServers.toString().split(" ");
+    }
+
+    Ipv4Setting::Ptr ipv4Setting = m_connection->settings()->setting(Setting::Ipv4).dynamicCast<Ipv4Setting>();
+    QList<QHostAddress> ipv4SettingDNS = ipv4Setting->dns();
+
+    QStringList manualDNS;
+
+    for(auto &address : ipv4SettingDNS)
+    {
+        manualDNS << address.toString();
+    }
+    /**
+     * NOTE:
+     * 1、自动获取IP（DNS）后，网络详情显示自动获取到的DNS
+     * 2、手动配置DNS，网络详情中DNS服务器仅显示手动配置的DNS
+    */
+
+    QString detailsDNS;
+    manualDNS.isEmpty() ? tmpDNS = dhcpDns : tmpDNS = manualDNS;
+    if(!tmpDNS.isEmpty())
+    {
+        // 以空格为分隔,删除最后一个;
+        for(auto &dns : tmpDNS)
+        {
+            detailsDNS.append(dns);
+            detailsDNS.append(";");
+        }
+        if(detailsDNS.endsWith(";"))
+        {
+            detailsDNS.remove(detailsDNS.size() - 1,1);
+        }
     }
     else
     {
-        Ipv4Setting::Ptr ipv4Setting = m_connection->settings()->setting(Setting::Ipv4).dynamicCast<Ipv4Setting>();
-        if (!ipv4Setting->dns().isEmpty())
-        {
-            preferredDNS = ipv4Setting->dns().value(0).toString();
-        }
+        detailsDNS = "-";
     }
-    ui->preferredDNS->setText(preferredDNS);
+
+    ui->DNS->setText(detailsDNS);
 
     IpConfig ipV6Config = m_activeConnection->ipV6Config();
     IpAddress ipv6Address = ipV6Config.addresses().value(0);
