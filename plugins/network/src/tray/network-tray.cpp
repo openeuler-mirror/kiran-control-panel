@@ -473,9 +473,21 @@ void NetworkTray::handleDeviceStateChanged(NetworkManager::Device::State newstat
         }
     }
 
-    // 设备变为不可用时，如果无线和有线均不可用则显示网络不可用的提示
-    if (newstate == Device::Unavailable || newstate == Device::Unmanaged || newstate == Device::UnknownState)
+    QSet<Device::State> unavailableStates = {
+        Device::Unavailable,
+        Device::Unmanaged,
+        Device::UnknownState
+    };
+
+    // 非休眠的情况下，从可用状态到不可用状态通知
+    if (!unavailableStates.contains(oldstate)
+        && 
+        unavailableStates.contains(newstate)
+        &&
+        reason != Device::SleepingReason
+        )
     {
+        // 设备变为不可用时，如果无线和有线均不可用则显示网络不可用的提示
         KLOG_DEBUG() << "device is unavailable";
         if ((NetworkUtils::getAvailableDeviceList(Device::Ethernet).count() == 0) &&
             (NetworkUtils::getAvailableDeviceList(Device::Wifi).count() == 0))

@@ -518,7 +518,7 @@
       </widget>
      </item>
      <item>
-      <widget class="KiranFrame" name="preferredDNSWidget" native="true">
+      <widget class="KiranFrame" name="DNSWidget" native="true">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -556,7 +556,7 @@
         <item>
          <widget class="QLabel" name="label_15">
           <property name="text">
-           <string>Preferred DNS</string>
+           <string>DNS</string>
           </property>
          </widget>
         </item>
@@ -574,7 +574,7 @@
          </spacer>
         </item>
         <item>
-         <widget class="QLabel" name="preferredDNS">
+         <widget class="QLabel" name="DNS">
           <property name="text">
            <string>TextLabel</string>
           </property>
