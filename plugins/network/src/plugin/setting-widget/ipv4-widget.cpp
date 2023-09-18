@@ -74,65 +74,68 @@ void Ipv4Widget::setErrorTips(KiranTips *errorTips)
 
 void Ipv4Widget::saveSettings()
 {
-    if (m_ipv4Setting != nullptr)
+    if (m_ipv4Setting == nullptr)
     {
-        IpAddress ipv4Address;
-        Ipv4Setting::ConfigMethod method = ui->ipv4Method->currentData().value<NetworkManager::Ipv4Setting::ConfigMethod>();
-        if (method == Ipv4Setting::ConfigMethod::Automatic)
-        {
-            m_ipv4Setting->setMethod(method);
-            ipv4Address.setIp(QHostAddress(""));
-            ipv4Address.setNetmask(QHostAddress(""));
-            ipv4Address.setGateway(QHostAddress(""));
-            m_ipv4Setting->setAddresses(QList<NetworkManager::IpAddress>() << ipv4Address);
-        }
-        else if (method == Ipv4Setting::ConfigMethod::Manual)
-        {
-            m_ipv4Setting->setMethod(method);
+        return;
+    }
 
-            ipv4Address.setIp(QHostAddress(ui->ipv4Address->text()));
-            QString netMask = ui->ipv4Netmask->text();
-            if (!netMask.contains("."))
+    IpAddress ipv4Address;
+    Ipv4Setting::ConfigMethod method = ui->ipv4Method->currentData().value<NetworkManager::Ipv4Setting::ConfigMethod>();
+    if (method == Ipv4Setting::ConfigMethod::Automatic)
+    {
+        m_ipv4Setting->setMethod(method);
+        ipv4Address.setIp(QHostAddress(""));
+        ipv4Address.setNetmask(QHostAddress(""));
+        ipv4Address.setGateway(QHostAddress(""));
+        m_ipv4Setting->setAddresses(QList<NetworkManager::IpAddress>() << ipv4Address);
+    }
+    else if (method == Ipv4Setting::ConfigMethod::Manual)
+    {
+        m_ipv4Setting->setMethod(method);
+
+        ipv4Address.setIp(QHostAddress(ui->ipv4Address->text()));
+        QString netMask = ui->ipv4Netmask->text();
+        if (!netMask.contains("."))
+        {
+            int netPrefix = netMask.toInt();
+            KLOG_DEBUG() << "netMask.toInt():" << netMask.toInt();
+            if ((netPrefix > 0) & (netPrefix < 33))
             {
-                int netPrefix = netMask.toInt();
-                KLOG_DEBUG() << "netMask.toInt():" << netMask.toInt();
-                if ((netPrefix > 0) & (netPrefix < 33))
-                {
-                    ipv4Address.setPrefixLength(netPrefix);
-                }
-                else
-                {
-                    KLOG_DEBUG() << "Net prefix length error";
-                }
+                ipv4Address.setPrefixLength(netPrefix);
             }
             else
             {
-                ipv4Address.setNetmask(QHostAddress(netMask));
+                KLOG_DEBUG() << "Net prefix length error";
             }
-
-            ipv4Address.setGateway(QHostAddress(ui->ipv4Gateway->text()));
-            KLOG_DEBUG() << "ipv4Address.ip():" << ipv4Address.ip();
-            KLOG_DEBUG() << "ipv4Address.netmask():" << ipv4Address.netmask();
-            KLOG_DEBUG() << "ipv4Address.prefixLength():" << ipv4Address.prefixLength();
-            KLOG_DEBUG() << "ipv4Address.gateway():" << ipv4Address.gateway();
-
-            QList<IpAddress> ipv4AddresseList;
-            ipv4AddresseList << ipv4Address;
-            m_ipv4Setting->setAddresses(ipv4AddresseList);
         }
-
-        QList<QHostAddress> ipv4DNS;
-        if (!ui->ipv4PreferredDNS->text().isEmpty())
+        else
         {
-            ipv4DNS << QHostAddress(ui->ipv4PreferredDNS->text());
+            ipv4Address.setNetmask(QHostAddress(netMask));
         }
-        if (!ui->ipv4AlternateDNS->text().isEmpty())
-        {
-            ipv4DNS << QHostAddress(ui->ipv4AlternateDNS->text());
-        }
-        KLOG_DEBUG() << "ipv4DNS:" << ipv4DNS;
-        m_ipv4Setting->setDns(ipv4DNS);
+
+        ipv4Address.setGateway(QHostAddress(ui->ipv4Gateway->text()));
+        KLOG_DEBUG() << "ipv4Address.ip():" << ipv4Address.ip();
+        KLOG_DEBUG() << "ipv4Address.netmask():" << ipv4Address.netmask();
+        KLOG_DEBUG() << "ipv4Address.prefixLength():" << ipv4Address.prefixLength();
+        KLOG_DEBUG() << "ipv4Address.gateway():" << ipv4Address.gateway();
+
+        QList<IpAddress> ipv4AddresseList;
+        ipv4AddresseList << ipv4Address;
+        m_ipv4Setting->setAddresses(ipv4AddresseList);
     }
+
+    QList<QHostAddress> ipv4DNS;
+    if (!ui->ipv4FirstDNS->text().isEmpty())
+    {
+        ipv4DNS << QHostAddress(ui->ipv4FirstDNS->text());
+    }
+    if (!ui->ipv4SecondDNS->text().isEmpty())
+    {
+        ipv4DNS << QHostAddress(ui->ipv4SecondDNS->text());
+    }
+    KLOG_DEBUG() << "ipv4DNS:" << ipv4DNS;
+    m_ipv4Setting->setDns(ipv4DNS);
+    
 }
 
 void Ipv4Widget::showSettings()
@@ -171,20 +174,20 @@ void Ipv4Widget::showSettings()
                 ui->ipv4Gateway->clear();
             }
         }
-        QString preferredDNS = "";
-        QString alternateDNS = "";
+        QString firstDNS = "";
+        QString secondDNS = "";
         if (!m_ipv4Setting->dns().isEmpty())
         {
-            preferredDNS = m_ipv4Setting->dns().at(0).toString();
+            firstDNS = m_ipv4Setting->dns().at(0).toString();
             if (m_ipv4Setting->dns().count() >= 2)
             {
-                alternateDNS = m_ipv4Setting->dns().at(1).toString();
+                secondDNS = m_ipv4Setting->dns().at(1).toString();
             }
         }
-        KLOG_DEBUG() << "preferredDNS:" << preferredDNS;
-        KLOG_DEBUG() << "alternateDNS:" << alternateDNS;
-        ui->ipv4PreferredDNS->setText(preferredDNS);
-        ui->ipv4AlternateDNS->setText(alternateDNS);
+        KLOG_DEBUG() << "firstDNS:" << firstDNS;
+        KLOG_DEBUG() << "secondDNS:" << secondDNS;
+        ui->ipv4FirstDNS->setText(firstDNS);
+        ui->ipv4SecondDNS->setText(secondDNS);
     }
     else
         resetSettings();
@@ -197,8 +200,8 @@ void Ipv4Widget::resetSettings()
     ui->ipv4Address->clear();
     ui->ipv4Netmask->clear();
     ui->ipv4Gateway->clear();
-    ui->ipv4PreferredDNS->clear();
-    ui->ipv4AlternateDNS->clear();
+    ui->ipv4FirstDNS->clear();
+    ui->ipv4SecondDNS->clear();
 }
 
 void Ipv4Widget::clearPtr()
@@ -271,27 +274,27 @@ bool Ipv4Widget::isInputValid()
         }
     }
 
-    QString preferredDNS = ui->ipv4PreferredDNS->text();
-    if (!preferredDNS.isEmpty())
+    QString firstDNS = ui->ipv4FirstDNS->text();
+    if (!firstDNS.isEmpty())
     {
-        if (!isIpv4AddressValid(preferredDNS))
+        if (!isIpv4AddressValid(firstDNS))
         {
             QString error = QString(tr("Ipv4 Preferred DNS invalid"));
             m_errorTip->setText(error);
-            m_errorTip->showTipAroundWidget(ui->ipv4PreferredDNS);
+            m_errorTip->showTipAroundWidget(ui->ipv4FirstDNS);
             KLOG_DEBUG() << "Ipv4 Preferred DNS invalid";
             return false;
         }
     }
 
-    QString alternateDNS = ui->ipv4AlternateDNS->text();
-    if (!alternateDNS.isEmpty())
+    QString secondDNS = ui->ipv4SecondDNS->text();
+    if (!secondDNS.isEmpty())
     {
-        if (!isIpv4AddressValid(alternateDNS))
+        if (!isIpv4AddressValid(secondDNS))
         {
             QString error = QString(tr("Ipv4 Alternate DNS invalid"));
             m_errorTip->setText(error);
-            m_errorTip->showTipAroundWidget(ui->ipv4AlternateDNS);
+            m_errorTip->showTipAroundWidget(ui->ipv4SecondDNS);
             KLOG_DEBUG() << "Ipv4 Alternate DNS invalid";
             return false;
         }
