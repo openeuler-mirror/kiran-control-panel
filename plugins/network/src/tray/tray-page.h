@@ -44,6 +44,9 @@ public:
 
     QSize trayPageSize();
 
+    void repolish(QWidget *w);
+    void updateObjects(const QList<const QObject *>& objects);
+
 public slots:
     void handleDeviceComboBoxChanged(int index);
     void handleAdjustedTraySize(QSize sizeHint);
