@@ -20,9 +20,8 @@
 #include <QDBusServiceWatcher>
 #include <QTranslator>
 #include "config.h"
+#include "dbus-tray-monitor.h"
 #include "network-tray.h"
-
-#define DBUS_SERVICE_KDE_STATUS_NOTIFIER_WATCHER "org.kde.StatusNotifierWatcher"
 
 int main(int argc, char* argv[])
 {
@@ -43,26 +42,24 @@ int main(int argc, char* argv[])
     }
 
     NetworkTray* tray = nullptr;
-    if (QDBusConnection::sessionBus().interface()->isServiceRegistered(DBUS_SERVICE_KDE_STATUS_NOTIFIER_WATCHER))
+    if (KiranControlPanel::isDBusTrayAvailable())
     {
-        KLOG_DEBUG() << DBUS_SERVICE_KDE_STATUS_NOTIFIER_WATCHER << "is registered,create network tray icon";
+        KLOG_DEBUG() << KDE_STATUS_NOTIFIER_HOST << "is registered,create network tray icon";
         tray = new NetworkTray;
     }
     else
     {
-        KLOG_WARNING() << DBUS_SERVICE_KDE_STATUS_NOTIFIER_WATCHER << "is not registered,wait";
-        QDBusServiceWatcher* dbusServiceWatcher = new QDBusServiceWatcher;
-        dbusServiceWatcher->setConnection(QDBusConnection::sessionBus());
-        dbusServiceWatcher->addWatchedService(DBUS_SERVICE_KDE_STATUS_NOTIFIER_WATCHER);
-        QObject::connect(dbusServiceWatcher, &QDBusServiceWatcher::serviceRegistered,
-                         [&dbusServiceWatcher, &tray](const QString& service)
+        KLOG_WARNING() << KDE_STATUS_NOTIFIER_HOST << "is not registered,wait";
+
+        auto dBusTrayMonitor = new KiranControlPanel::DBusTrayMonitor();
+        QObject::connect(dBusTrayMonitor, &KiranControlPanel::DBusTrayMonitor::dbusTrayAvailable, [&tray]()
                          {
-                             if (service != DBUS_SERVICE_KDE_STATUS_NOTIFIER_WATCHER)
-                                 return;
-                             KLOG_INFO() << DBUS_SERVICE_KDE_STATUS_NOTIFIER_WATCHER << "is registered,create network tray icon";
-                             tray = new NetworkTray;
-                             dbusServiceWatcher->removeWatchedService(DBUS_SERVICE_KDE_STATUS_NOTIFIER_WATCHER);
-                         });
+                            if(tray == nullptr)
+                            {
+                                KLOG_DEBUG() << KDE_STATUS_NOTIFIER_HOST << "is registered,create network tray icon";
+                                tray = new NetworkTray;
+                            } 
+                        });
     }
 
     return QApplication::exec();
