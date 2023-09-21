@@ -53,6 +53,41 @@ void TrayPage::initUI()
     {
         setSingleDeviceWidget();
     }
+
+    /**
+     * NOTE:
+     * 此处是修复当存在多个网卡时，stackwidget中当前未显示页面的widget的大小有问题
+     * 推测原因在于，在初始化时，在页面未show的状态下，设置widget的尺寸不生效存在问题。
+    */
+    repolish(this);
+}
+
+void TrayPage::repolish(QWidget *w)
+{
+    QList<const QObject *> children;
+    children.reserve(w->children().size() + 1);
+    for (auto child: qAsConst(w->children()))
+        children.append(child);
+    children.append(w);
+    updateObjects(children);
+}
+
+void TrayPage::updateObjects(const QList<const QObject *>& objects)
+{
+    QEvent event(QEvent::StyleChange);
+    for (const QObject *object : objects) 
+    {
+        if (auto widget = qobject_cast<QWidget*>(const_cast<QObject*>(object))) 
+        {
+            widget->style()->polish(widget);
+            QCoreApplication::sendEvent(widget, &event);
+            QList<const QObject *> children;
+            children.reserve(widget->children().size() + 1);
+            for (auto child: qAsConst(widget->children()))
+                children.append(child);
+            updateObjects(children);
+        }
+    }
 }
 
 void TrayPage::initConnection()

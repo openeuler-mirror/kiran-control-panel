@@ -77,6 +77,7 @@ target_link_libraries(${PROJECT_NAME}
         ${KIRAN_STYLE_LIBRARIES}
         ${GLIB_2_LIBRARIES})
 
+list(FILTER INCLUDE_SRC EXCLUDE REGEX ".*bus-tray-monitor.h$")
 install(FILES "${CMAKE_SOURCE_DIR}/data/kiran-control-panel.svg" DESTINATION ${INSTALL_DATADIR}/icons/hicolor/)
 install(FILES ${INCLUDE_SRC} DESTINATION ${KCP_INSTALL_INCLUDE}/)
 install(FILES "${CMAKE_BINARY_DIR}/${PROJECT_NAME}.desktop" DESTINATION "${INSTALL_DATADIR}/applications/")
