@@ -55,6 +55,7 @@ add_executable(${TRAY_PROCESS}
         ${COMMON_SRC}
         ${QRC}
         ${NETWORK_QM_FILES}
+        ${PROJECT_SOURCE_DIR}/include/dbus-tray-monitor.h
         )
 
 target_include_directories(${TRAY_PROCESS} PRIVATE

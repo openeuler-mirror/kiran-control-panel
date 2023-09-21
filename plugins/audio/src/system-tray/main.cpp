@@ -25,6 +25,7 @@
 #include <QDateTime>
 #include <QFile>
 #include <QTranslator>
+#include "dbus-tray-monitor.h"
 
 #define DBUS_SERVICE_KDE_STATUS_NOTIFIER_WATCHER "org.kde.StatusNotifierWatcher"
 
@@ -47,27 +48,24 @@ int main(int argc, char *argv[])
     }
 
     AudioSystemTray *audioSystemTray = nullptr;
-
-    if (QDBusConnection::sessionBus().interface()->isServiceRegistered(DBUS_SERVICE_KDE_STATUS_NOTIFIER_WATCHER))
+    if (KiranControlPanel::isDBusTrayAvailable())
     {
-        KLOG_DEBUG() << DBUS_SERVICE_KDE_STATUS_NOTIFIER_WATCHER << "is registered,create audio tray icon";
+        KLOG_DEBUG() << KDE_STATUS_NOTIFIER_HOST << "is registered,create network tray icon";
         audioSystemTray = new AudioSystemTray;
     }
     else
     {
-        KLOG_WARNING() << DBUS_SERVICE_KDE_STATUS_NOTIFIER_WATCHER << "is not registered,wait";
-        QDBusServiceWatcher* dbusServiceWatcher = new QDBusServiceWatcher;
-        dbusServiceWatcher->setConnection(QDBusConnection::sessionBus());
-        dbusServiceWatcher->addWatchedService(DBUS_SERVICE_KDE_STATUS_NOTIFIER_WATCHER);
-        QObject::connect(dbusServiceWatcher, &QDBusServiceWatcher::serviceRegistered,
-                         [&dbusServiceWatcher, &audioSystemTray](const QString& service)
+        KLOG_WARNING() << KDE_STATUS_NOTIFIER_HOST << "is not registered,wait";
+
+        auto dBusTrayMonitor = new KiranControlPanel::DBusTrayMonitor();
+        QObject::connect(dBusTrayMonitor, &KiranControlPanel::DBusTrayMonitor::dbusTrayAvailable, [&audioSystemTray]()
                          {
-                             if (service != DBUS_SERVICE_KDE_STATUS_NOTIFIER_WATCHER)
-                                 return;
-                             KLOG_INFO() << DBUS_SERVICE_KDE_STATUS_NOTIFIER_WATCHER << "is registered,create audio tray icon";
-                             audioSystemTray = new AudioSystemTray;
-                             dbusServiceWatcher->removeWatchedService(DBUS_SERVICE_KDE_STATUS_NOTIFIER_WATCHER);
-                         });
+                            if(audioSystemTray == nullptr)
+                            {
+                                KLOG_DEBUG() << KDE_STATUS_NOTIFIER_HOST << "is registered,create network tray icon";
+                                audioSystemTray = new AudioSystemTray;
+                            } 
+                        });
     }
     return QApplication::exec();
 }
