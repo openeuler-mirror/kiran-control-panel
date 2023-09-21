@@ -13,7 +13,7 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
 
 find_package(PkgConfig REQUIRED)
-find_package(Qt5 COMPONENTS Widgets X11Extras Svg LinguistTools)
+find_package(Qt5 COMPONENTS Widgets X11Extras Svg LinguistTools DBus)
 pkg_search_module(KLOG_QT5 REQUIRED klog-qt5)
 pkg_search_module(KIRAN_WIDGETS_QT5 REQUIRED kiranwidgets-qt5)
 pkg_search_module(KIRAN_STYLE_HELPER REQUIRED kiran-style-helper)
@@ -58,12 +58,15 @@ target_link_libraries(${PROJECT_NAME}
         Qt5::Svg
         Qt5::X11Extras
         Qt5::Widgets
+        Qt5::DBus
         dl
         pthread
         ${KLOG_QT5_LIBRARIES}
         ${KIRAN_WIDGETS_QT5_LIBRARIES}
         ${KIRAN_STYLE_HELPER_LIBRARIES}
         ${GLIB_2_LIBRARIES})
+
+list(FILTER INCLUDE_SRC EXCLUDE REGEX ".*bus-tray-monitor.h$")
 
 #安装kiran-control-panel
 install(TARGETS ${PROJECT_NAME} DESTINATION ${INSTALL_BINDIR}/)
