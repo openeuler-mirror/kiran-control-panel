@@ -44,7 +44,8 @@ add_executable(${TRAY_PROCESS}
         ${DBUS_SRC}
         ${SYSTEM_TRAY_SRC}
         ${AUDIO_QM_FILES}
-        ${QRC})
+        ${QRC}
+        ${PROJECT_SOURCE_DIR}/include/dbus-tray-monitor.h)
 
 target_include_directories(${TRAY_PROCESS} PRIVATE
         ${CMAKE_BINARY_DIR}
