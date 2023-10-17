@@ -70,7 +70,7 @@ private:
     AudioInterface* m_audioInterface;
 
     QString m_colorTheme;
-    int xTray, yTray, heightTray, widthTray;
+    int m_xTray, m_yTray, m_heightTray, m_widthTray;
 
     QDBusServiceWatcher *m_dbusServiceWatcher;
 };
