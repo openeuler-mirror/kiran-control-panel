@@ -305,16 +305,24 @@ void NetworkTray::showOrHideTrayPage()
 
 void NetworkTray::setTrayPagePos()
 {
-    // KLOG_DEBUG() << "this->sizeHint():" << this->sizeHint();
-    // KLOG_DEBUG() << "this->size():" << this->size();
-
     int pageHeight = this->size().height();
     int pageWidth = this->size().width();
 
     getTrayGeometry();
     // 抵消KiranRoundedTrayPopup的margin
     int offset = 8;
-    this->move(m_xTray - pageWidth / 2, m_yTray - pageHeight + offset);
+    int showPosY; 
+    // 托盘程序在顶端
+    if(m_yTray == 0)
+    {
+        showPosY  = m_heightTray - offset;
+    }
+    else
+    {
+        //托盘程序在底部
+        showPosY = m_yTray - pageHeight + offset;
+    }
+    this->move(m_xTray - pageWidth / 2, showPosY);
 }
 
 void NetworkTray::getTrayGeometry()
