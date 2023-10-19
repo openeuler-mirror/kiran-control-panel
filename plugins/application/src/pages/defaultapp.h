@@ -1,4 +1,3 @@
-
 /**
  * Copyright (c) 2023 ~ 2024 KylinSec Co., Ltd.
  * ks-sc is licensed under Mulan PSL v2.
@@ -13,32 +12,44 @@
  * Author:     yinhongchang <yinhongchang@kylinsec.com.cn>
  */
 
-#ifndef __MIMETYPE_APPPAGE_H__
-#define __MIMETYPE_APPPAGE_H__
+
+#ifndef __DEFAULTAPP_H__
+#define __DEFAULTAPP_H__
 
 #include <QWidget>
+#include <QComboBox>
 #include "kiran-setting-item.h"
 #include "libqtxdg.h"
 #include "utils.h"
 
+namespace Ui
+{
+class DefaultApp;
+}
+
 class AppManager;
-class MimeTypeAppPage : public QWidget
+class DefaultApp : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit MimeTypeAppPage(EnumMimeType enumMimeType, QWidget* parent = nullptr);
-    ~MimeTypeAppPage();
+    explicit DefaultApp(QWidget* parent = nullptr);
+    ~DefaultApp();
     void initUI();
+    void initConfig();
+    void initConnect();
+
+    void fillDefaultAppComboBox(EnumMimeType enumMimeType);
 
 private slots:
-    void onClickedSlot();
+    void handleCurrentTextChanged(const QString &text);
 
 private:
+    Ui::DefaultApp* ui;
     AppManager* m_appManager;
-    EnumMimeType m_enumMimeType;
-    QMap<QString, XdgDesktopFilePtr> m_application;
-    KiranSettingItem* m_beforeItem = nullptr;
+    QMap<EnumMimeType, QMap<QString,XdgDesktopFilePtr>> m_applications;
+    QMap<EnumMimeType, QComboBox*> m_comboBox;
 };
 
-#endif  // __MIMETYPE_APPPAGE_H__
+
+#endif // __DEFAULTAPP_H__

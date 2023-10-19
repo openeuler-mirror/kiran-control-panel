@@ -28,7 +28,7 @@ class DefaultAppSubItem : public QObject,
 {
     Q_OBJECT
 public:
-    DefaultAppSubItem(EnumMimeType enumMimeType, QObject* parent = nullptr);
+    DefaultAppSubItem(CreateWidgetFunc func, QObject* parent = nullptr);
     ~DefaultAppSubItem();
 
 public:
@@ -76,7 +76,7 @@ private:
     QString m_desc;
     QString m_icon;
     int m_weight;
-    EnumMimeType m_enumMimeType;
+    CreateWidgetFunc m_func;
 };
 
 #endif

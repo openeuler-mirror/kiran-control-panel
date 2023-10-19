@@ -24,10 +24,8 @@ QMap<EnumMimeType, AppMimeTypes> enumToMimeTypes = {
     {DA_TYPE_TEXT, {{"text/plain"}, {"text/plain"}}},
     {DA_TYPE_MEDIA, {{"audio/x-vorbis+ogg"}, {"audio/mpeg", "audio/x-mpegurl", "audio/x-scpls", "audio/x-vorbis+ogg", "audio/x-wav"}}},
     {DA_TYPE_VIDEO, {{"video/x-ogm+ogg"}, {"video/mp4", "video/mpeg", "video/mp2t", "video/msvideo", "video/quicktime", "video/webm", "video/x-avi", "video/x-flv", "video/x-matroska", "video/x-mpeg", "video/x-ogm+ogg"}}},
-    {DA_TYPE_IMAGE, {{"image/png"}, {"image/bmp", "image/gif", "image/jpeg", "image/png", "image/tiff"}}},
-    {DA_TYPE_DOCUMENT, {{"application/pdf"}, {"application/pdf"}}},
-    {DA_TYPE_WORD, {{"application/msword"}, {"application/vnd.oasis.opendocument.text", "application/rtf", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"}}},
-    {DA_TYPE_SPREADSHEET, {{"application/vnd.ms-excel"}, {"application/vnd.oasis.opendocument.spreadsheet", "application/vnd.ms-excel", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"}}}};
+    {DA_TYPE_IMAGE, {{"image/png"}, {"image/bmp", "image/gif", "image/jpeg", "image/png", "image/tiff"}}}
+};
 }
 
 AppMimeTypes MimeAppsFileManager::defaultAppEnumToMimeTypes(EnumMimeType enumMimeType)

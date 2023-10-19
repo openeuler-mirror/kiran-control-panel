@@ -15,6 +15,7 @@
 #include "defaultapp-plugin.h"
 #include "config.h"
 #include "defaultapp-subitem.h"
+#include "defaultapp.h"
 
 #include <kiran-log/qt5-log-i.h>
 #include <kiran-session-daemon/appearance-i.h>
@@ -53,6 +54,10 @@ QVector<KiranControlPanel::SubItemPtr> DefaultappPlugin::getSubItems()
 
 void DefaultappPlugin::initSubItem()
 {
+    auto defaultAppSubItemCreater = []() -> QWidget*
+    {
+        return new DefaultApp();
+    };
     struct SubItemStruct
     {
         QString id;
@@ -61,76 +66,27 @@ void DefaultappPlugin::initSubItem()
         QString desc;
         QString icon;
         int weight;
-        EnumMimeType enumMimeType;
+        CreateWidgetFunc func;
     };
     QList<SubItemStruct> subitemInfos = {
-        {"Browser",
-         tr("Browser"),
-         "defaultapp-manager",
+        {"DefaultApp",
+         tr("DefaultApp"),
+         "app-manager",
          "",
-         ":/kcp-defaultapp-images/browser-icon.svg",
+         ":/kcp-defaultapp-images/defaultapp.svg",
          99,
-         DA_TYPE_WEB_BROWSER},
-        {"Email",
-         tr("Email"),
-         "defaultapp-manager",
+         defaultAppSubItemCreater},
+        {"DefaultApp",
+         tr("DefaultApp"),
+         "app-manager",
          "",
-         ":/kcp-defaultapp-images/email-icon.svg",
+         ":/kcp-defaultapp-images/defaultapp.svg",
          98,
-         DA_TYPE_EMAIL},
-        {"Text",
-         tr("Text"),
-         "defaultapp-manager",
-         "",
-         ":/kcp-defaultapp-images/text-icon.svg",
-         97,
-         DA_TYPE_TEXT},
-        {"Music",
-         tr("Music"),
-         "defaultapp-manager",
-         "",
-         ":/kcp-defaultapp-images/music-icon.svg",
-         96,
-         DA_TYPE_MEDIA},
-        {"Video",
-         tr("Video"),
-         "defaultapp-manager",
-         "",
-         ":/kcp-defaultapp-images/video-icon.svg",
-         95,
-         DA_TYPE_VIDEO},
-        {"Image",
-         tr("Image"),
-         "defaultapp-manager",
-         "",
-         ":/kcp-defaultapp-images/image-icon.svg",
-         94,
-         DA_TYPE_IMAGE},
-        {"Document",
-         tr("Document"),
-         "defaultapp-manager",
-         "",
-         ":/kcp-defaultapp-images/terminal-icon.svg",
-         93,
-         DA_TYPE_DOCUMENT},
-        {"Word",
-         tr("Word"),
-         "defaultapp-manager",
-         "",
-         ":/kcp-defaultapp-images/terminal-icon.svg",
-         92,
-         DA_TYPE_WORD},
-        {"Spreadsheet",
-         tr("Spreadsheet"),
-         "defaultapp-manager",
-         "",
-         ":/kcp-defaultapp-images/terminal-icon.svg",
-         91,
-         DA_TYPE_SPREADSHEET}};
+         defaultAppSubItemCreater}};
 
     for (const SubItemStruct& subitemInfo : subitemInfos)
     {
-        DefaultAppSubItem* subitem = new DefaultAppSubItem(subitemInfo.enumMimeType);
+        DefaultAppSubItem* subitem = new DefaultAppSubItem(subitemInfo.func);
 
         subitem->setID(subitemInfo.id);
         subitem->setName(subitemInfo.name);

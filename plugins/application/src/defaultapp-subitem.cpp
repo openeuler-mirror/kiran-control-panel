@@ -14,10 +14,9 @@
 
 #include "defaultapp-subitem.h"
 #include <qt5-log-i.h>
-#include "src/pages/mimetype-apppage.h"
 
-DefaultAppSubItem::DefaultAppSubItem(EnumMimeType enumMimeType, QObject* parent)
-    : m_enumMimeType(enumMimeType), QObject(parent)
+DefaultAppSubItem::DefaultAppSubItem(CreateWidgetFunc func, QObject* parent)
+    : m_func(func), QObject(parent)
 {
 }
 
@@ -94,5 +93,5 @@ int DefaultAppSubItem::getWeight()
 // 创建显示控件
 QWidget* DefaultAppSubItem::createWidget()
 {
-    return new MimeTypeAppPage(m_enumMimeType);
+    return m_func();
 }
