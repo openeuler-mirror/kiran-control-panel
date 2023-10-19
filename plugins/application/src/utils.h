@@ -33,12 +33,6 @@ enum EnumMimeType
     DA_TYPE_VIDEO,
     // 照片编辑器支持的MimeType类型
     DA_TYPE_IMAGE,
-    // pdf文档编辑器支持的MimeType类型
-    DA_TYPE_DOCUMENT,
-    // word文档编辑器支持的MimeType类型
-    DA_TYPE_WORD,
-    // excel文档编辑器支持的MimeType类型
-    DA_TYPE_SPREADSHEET,
 
     DA_TYPE_LAST
 };
