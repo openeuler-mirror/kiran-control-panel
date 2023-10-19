@@ -162,7 +162,19 @@ void AudioSystemTray::setVolumeSettingPos()
     int pageWidth = 300;
     int pageHeight = 66;
 
-    m_volumenPopup->setGeometry(xTray - pageWidth / 2, yTray - pageHeight - offset, pageWidth, pageHeight);
+    int showPosY; 
+    // 托盘程序在顶端
+    if(m_yTray == 0)
+    {
+        showPosY  = m_heightTray - offset;
+    }
+    else
+    {
+        //托盘程序在底部
+        showPosY = m_yTray - pageHeight - offset;
+    }
+
+    m_volumenPopup->setGeometry(m_xTray - pageWidth / 2, showPosY, pageWidth, pageHeight);
 }
 
 void AudioSystemTray::handleMixedSettingClicked()
@@ -180,7 +192,7 @@ void AudioSystemTray::setMixedSettingPos()
     int width = m_mixedPopup->sizeHint().width();
 
     m_mixedPopup->setFixedHeight(height + offset * 2);
-    m_mixedPopup->move(xTray - width / 2, yTray - height - offset);
+    m_mixedPopup->move(m_xTray - width / 2, m_yTray - height - offset);
 }
 
 void AudioSystemTray::handleAdjustedMixedSettingPageSize()
@@ -228,15 +240,15 @@ void AudioSystemTray::getTrayGeometry()
             }
         }
     }
-    heightTray = static_cast<int>(height);
-    widthTray = static_cast<int>(width);
-    xTray = static_cast<int>(x);
-    yTray = static_cast<int>(y);
+    m_heightTray = static_cast<int>(height);
+    m_widthTray = static_cast<int>(width);
+    m_xTray = static_cast<int>(x);
+    m_yTray = static_cast<int>(y);
     KLOG_DEBUG() << "getTrayGeometry ";
-    KLOG_DEBUG() << "heightTray" << heightTray;
-    KLOG_DEBUG() << "widthTray" << widthTray;
-    KLOG_DEBUG() << "xTray" << xTray;
-    KLOG_DEBUG() << "yTray" << yTray;
+    KLOG_DEBUG() << "heightTray" << m_heightTray;
+    KLOG_DEBUG() << "widthTray" << m_widthTray;
+    KLOG_DEBUG() << "xTray" << m_xTray;
+    KLOG_DEBUG() << "yTray" << m_yTray;
 }
 
 // XXX:频繁调用函数,需要优化
