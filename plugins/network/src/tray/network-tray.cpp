@@ -282,6 +282,7 @@ void NetworkTray::showOrHideTrayPage()
         this->hide();
     else
     {
+        setTrayPagePos();
         // XXX:托盘界面在不可见的情况，不方便去修改size和位置，暂时先显示后在调整大小和位置
         // this->setFixedSize(258, 258);
         this->show();
