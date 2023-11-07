@@ -40,6 +40,7 @@ void Ipv6Widget::initUI()
     ui->ipv6Address->setPlaceholderText(tr("Required"));
     ui->ipv6Prefix->setMaximum(128);
     ui->ipv6Prefix->setMinimum(1);
+    ui->ipv6DNS->setPlaceholderText(tr("Please separate multiple DNS entries by semicolon"));
 }
 
 void Ipv6Widget::initConnection()
@@ -81,89 +82,105 @@ void Ipv6Widget::handleIpv6MethodChanged(NetworkManager::Ipv6Setting::ConfigMeth
 
 void Ipv6Widget::saveSettings()
 {
-    if (m_ipv6Setting != nullptr)
+    if (m_ipv6Setting.isNull())
     {
-        Ipv6Setting::ConfigMethod method = ui->ipv6Method->currentData().value<NetworkManager::Ipv6Setting::ConfigMethod>();
-        if (method == Ipv6Setting::ConfigMethod::Ignored)
+        KLOG_DEBUG() << "ipv6 setting null";
+        return;
+    }
+    
+    Ipv6Setting::ConfigMethod method = ui->ipv6Method->currentData().value<NetworkManager::Ipv6Setting::ConfigMethod>();
+    if (method == Ipv6Setting::ConfigMethod::Ignored)
+    {
+        m_ipv6Setting->setMethod(method);
+        m_ipv6Setting->setAddresses(QList<NetworkManager::IpAddress>());
+    }
+    else if (method == Ipv6Setting::ConfigMethod::Automatic)
+    {
+        m_ipv6Setting->setMethod(method);
+
+        NetworkManager::IpAddress ipAddressAuto;
+        ipAddressAuto.setIp(QHostAddress(""));
+        ipAddressAuto.setPrefixLength(0);
+        ipAddressAuto.setGateway(QHostAddress(""));
+        m_ipv6Setting->setAddresses(QList<NetworkManager::IpAddress>() << ipAddressAuto);
+    }
+    else if (method == Ipv6Setting::ConfigMethod::Manual)
+    {
+        m_ipv6Setting->setMethod(method);
+
+        IpAddress address;
+        address.setIp(QHostAddress(ui->ipv6Address->text()));
+        address.setPrefixLength(ui->ipv6Prefix->value());
+        address.setGateway(QHostAddress(ui->ipv6Gateway->text()));
+
+        QList<IpAddress> addresseList;
+        addresseList << address;
+        m_ipv6Setting->setAddresses(addresseList);
+    }
+
+    QList<QHostAddress> ipv6DNS;
+    if (!ui->ipv6DNS->text().isEmpty())
+    {
+        //多个DNS以分号分隔
+        QString dnsString = ui->ipv6DNS->text();
+        QStringList dnsList = dnsString.split(";",Qt::SkipEmptyParts);
+        for(auto dns : dnsList)
         {
-            m_ipv6Setting->setMethod(method);
-            m_ipv6Setting->setAddresses(QList<NetworkManager::IpAddress>());
-        }
-        else if (method == Ipv6Setting::ConfigMethod::Automatic)
-        {
-            m_ipv6Setting->setMethod(method);
-
-            NetworkManager::IpAddress ipAddressAuto;
-            ipAddressAuto.setIp(QHostAddress(""));
-            ipAddressAuto.setPrefixLength(0);
-            ipAddressAuto.setGateway(QHostAddress(""));
-            m_ipv6Setting->setAddresses(QList<NetworkManager::IpAddress>() << ipAddressAuto);
-        }
-        else if (method == Ipv6Setting::ConfigMethod::Manual)
-        {
-            m_ipv6Setting->setMethod(method);
-
-            IpAddress address;
-            address.setIp(QHostAddress(ui->ipv6Address->text()));
-            address.setPrefixLength(ui->ipv6Prefix->value());
-            address.setGateway(QHostAddress(ui->ipv6Gateway->text()));
-
-            QList<IpAddress> addresseList;
-            addresseList << address;
-            m_ipv6Setting->setAddresses(addresseList);
-
-            QList<QHostAddress> ipv6DNS;
-            ipv6DNS << QHostAddress(ui->ipv6PreferredDNS->text()) << QHostAddress(ui->ipv6AlternateDNS->text());
-            m_ipv6Setting->setDns(ipv6DNS);
+            ipv6DNS << QHostAddress(dns);
         }
     }
+    KLOG_DEBUG() << "ipv6 set DNS:" << ipv6DNS;
+    m_ipv6Setting->setDns(ipv6DNS);
 }
 
 void Ipv6Widget::showSettings()
 {
-    if (m_ipv6Setting != nullptr)
+
+    if(m_ipv6Setting.isNull())
     {
-        if (m_ipv6Setting->method() == Ipv6Setting::ConfigMethod::Ignored)
-        {
-            int ipv6MethodIndex = ui->ipv6Method->findData(Ipv6Setting::ConfigMethod::Ignored);
-            ui->ipv6Method->setCurrentIndex(ipv6MethodIndex);
-        }
-        else if (m_ipv6Setting->method() == Ipv6Setting::ConfigMethod::Automatic)
-        {
-            int ipv6MethodIndex = ui->ipv6Method->findData(Ipv6Setting::ConfigMethod::Automatic);
-            ui->ipv6Method->setCurrentIndex(ipv6MethodIndex);
-        }
-        else if (m_ipv6Setting->method() == Ipv6Setting::ConfigMethod::Manual)
-        {
-            int ipv6MethodIndex = ui->ipv6Method->findData(m_ipv6Setting->method());
-            ui->ipv6Method->setCurrentIndex(ipv6MethodIndex);
-
-            // xxx:取addresses的方式有待改进
-            IpAddress ipv6Address = m_ipv6Setting->addresses().at(0);
-            QString ip = ipv6Address.ip().toString();
-            int prefix = ipv6Address.prefixLength();
-            QString gateway = ipv6Address.gateway().toString();
-
-            ui->ipv6Address->setText(ip);
-            ui->ipv6Prefix->setValue(prefix);
-            ui->ipv6Gateway->setText(gateway);
-        }
-
-        QString preferredDNS = "";
-        QString alternateDNS = "";
-        if (!m_ipv6Setting->dns().isEmpty())
-        {
-            preferredDNS = m_ipv6Setting->dns().at(0).toString();
-            if (m_ipv6Setting->dns().count() >= 2)
-            {
-                alternateDNS = m_ipv6Setting->dns().at(1).toString();
-            }
-        }
-        ui->ipv6PreferredDNS->setText(preferredDNS);
-        ui->ipv6AlternateDNS->setText(alternateDNS);
-    }
-    else
         resetSettings();
+        return;
+    }
+
+    if (m_ipv6Setting->method() == Ipv6Setting::ConfigMethod::Ignored)
+    {
+        int ipv6MethodIndex = ui->ipv6Method->findData(Ipv6Setting::ConfigMethod::Ignored);
+        ui->ipv6Method->setCurrentIndex(ipv6MethodIndex);
+    }
+    else if (m_ipv6Setting->method() == Ipv6Setting::ConfigMethod::Automatic)
+    {
+        int ipv6MethodIndex = ui->ipv6Method->findData(Ipv6Setting::ConfigMethod::Automatic);
+        ui->ipv6Method->setCurrentIndex(ipv6MethodIndex);
+    }
+    else if (m_ipv6Setting->method() == Ipv6Setting::ConfigMethod::Manual)
+    {
+        int ipv6MethodIndex = ui->ipv6Method->findData(m_ipv6Setting->method());
+        ui->ipv6Method->setCurrentIndex(ipv6MethodIndex);
+
+        // xxx:取addresses的方式有待改进
+        IpAddress ipv6Address = m_ipv6Setting->addresses().at(0);
+        QString ip = ipv6Address.ip().toString();
+        int prefix = ipv6Address.prefixLength();
+        QString gateway = ipv6Address.gateway().toString();
+
+        ui->ipv6Address->setText(ip);
+        ui->ipv6Prefix->setValue(prefix);
+        ui->ipv6Gateway->setText(gateway);
+    }
+
+    QString dnsString = "";
+    if (!m_ipv6Setting->dns().isEmpty())
+    {
+        QStringList dnsList;
+        auto hostAddressList = m_ipv6Setting->dns();
+        for(auto address: hostAddressList)
+        {
+            dnsList << address.toString();
+        }
+        dnsString = dnsList.join(";");
+        KLOG_DEBUG() << "current ipv6 DNS:" << dnsString;
+    }
+    ui->ipv6DNS->setText(dnsString);
 }
 
 void Ipv6Widget::resetSettings()
@@ -173,8 +190,7 @@ void Ipv6Widget::resetSettings()
     ui->ipv6Prefix->setValue(64);
     ui->ipv6Address->clear();
     ui->ipv6Gateway->clear();
-    ui->ipv6PreferredDNS->clear();
-    ui->ipv6AlternateDNS->clear();
+    ui->ipv6DNS->clear();
 }
 
 void Ipv6Widget::clearPtr()
@@ -194,68 +210,75 @@ bool Ipv6Widget::isInputValid()
     }
     else if (configMethod == Ipv6Setting::ConfigMethod::Manual)
     {
-        QString ipv6 = ui->ipv6Address->text();
-        if (ipv6.isEmpty())
+        if(!isIpv6ManualConfigValid())
         {
-            QString error = QString(tr("Ipv6 address can not be empty"));
+            return false;
+        }
+    }
+
+    QString dnsString = ui->ipv6DNS->text();
+    if (!dnsString.isEmpty())
+    {
+        bool valid = true;
+        auto dnsList = dnsString.split(";");
+        for(auto dns : dnsList)
+        {
+            if(!isIpv6AddressValid(dns))
+            {
+                valid = false;
+                break;
+            }
+        }
+
+        if (!valid)
+        {
+            QString error = QString(tr("Ipv6 DNS invalid"));
+            m_errorTip->setText(error);
+            m_errorTip->showTipAroundWidget(ui->ipv6DNS);
+            KLOG_DEBUG() << "Ipv6 DNS invalid";
+            return false;
+        }
+    }
+
+    return true;
+}
+
+bool Ipv6Widget::isIpv6ManualConfigValid()
+{
+    QString ipv6 = ui->ipv6Address->text();
+    if (ipv6.isEmpty())
+    {
+        QString error = QString(tr("Ipv6 address can not be empty"));
+        m_errorTip->setText(error);
+        m_errorTip->showTipAroundWidget(ui->ipv6Address);
+
+        KLOG_DEBUG() << "Ipv6 Address cannot be empty";
+        return false;
+    }
+    else
+    {
+        if (!isIpv6AddressValid(ipv6))
+        {
+            QString error = QString(tr("Ipv6 address invalid"));
             m_errorTip->setText(error);
             m_errorTip->showTipAroundWidget(ui->ipv6Address);
-
-            KLOG_DEBUG() << "Ipv6 Address cannot be empty";
+            KLOG_DEBUG() << "Ipv6Address invalid";
             return false;
-        }
-        else
-        {
-            if (!isIpv6AddressValid(ipv6))
-            {
-                QString error = QString(tr("Ipv6 address invalid"));
-                m_errorTip->setText(error);
-                m_errorTip->showTipAroundWidget(ui->ipv6Address);
-                KLOG_DEBUG() << "Ipv6Address invalid";
-                return false;
-            }
-        }
-
-        QString ipv6Gateway = ui->ipv6Gateway->text();
-        if (!ipv6Gateway.isEmpty())
-        {
-            if (!isIpv6AddressValid(ipv6Gateway))
-            {
-                QString error = QString(tr("Ipv6 Gateway invalid"));
-                m_errorTip->setText(error);
-                m_errorTip->showTipAroundWidget(ui->ipv6Gateway);
-                KLOG_DEBUG() << "Ipv6 Netmask invalid";
-                return false;
-            }
         }
     }
 
-    QString preferredDNS = ui->ipv6PreferredDNS->text();
-    if (!preferredDNS.isEmpty())
+    QString ipv6Gateway = ui->ipv6Gateway->text();
+    if (!ipv6Gateway.isEmpty())
     {
-        if (!isIpv6AddressValid(preferredDNS))
+        if (!isIpv6AddressValid(ipv6Gateway))
         {
-            QString error = QString(tr("Ipv6 Preferred DNS invalid"));
+            QString error = QString(tr("Ipv6 Gateway invalid"));
             m_errorTip->setText(error);
-            m_errorTip->showTipAroundWidget(ui->ipv6PreferredDNS);
-            KLOG_DEBUG() << "Ipv6 Preferred DNS invalid";
+            m_errorTip->showTipAroundWidget(ui->ipv6Gateway);
+            KLOG_DEBUG() << "Ipv6 Netmask invalid";
             return false;
         }
     }
-
-    QString alternateDNS = ui->ipv6AlternateDNS->text();
-    if (!alternateDNS.isEmpty())
-    {
-        if (!isIpv6AddressValid(alternateDNS))
-        {
-            QString error = QString(tr("Ipv6 Alternate DNS invalid"));
-            m_errorTip->setText(error);
-            m_errorTip->showTipAroundWidget(ui->ipv6AlternateDNS);
-            KLOG_DEBUG() << "Ipv6 Alternate DNS invalid";
-            return false;
-        }
-    }
-
     return true;
 }
 
