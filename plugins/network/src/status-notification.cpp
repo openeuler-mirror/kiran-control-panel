@@ -22,135 +22,74 @@ using namespace NetworkManager;
 
 void StatusNotification::connectitonFailedNotify()
 {
-    notify_init("StatusNotification");
-
-    QString summary, body, icon;
+    QString summary, body;
     summary = tr("Connection Failed");
     body = tr("the network not found");
-
-    NotifyNotification* notify = notify_notification_new(summary.toStdString().c_str(), body.toStdString().c_str(), icon.toStdString().c_str());
-    notify_notification_show(notify, nullptr);
-    g_object_unref(G_OBJECT(notify));
-    notify_uninit();
+    generalNotify(summary,body);
 }
 
 void StatusNotification::connectitonHiddenNetworkFailedNotify(const QString& ssid)
 {
-    notify_init("StatusNotification");
-
-    QString summary, body, bodyStr, icon;
+    QString summary, body, bodyStr;
     summary = tr("Connection Failed");
     body = tr("The hidden network \"%1\" to be connected has been detected and exists in the network list");
     bodyStr = body.arg(ssid);
-
-    NotifyNotification* notify = notify_notification_new(summary.toStdString().c_str(), bodyStr.toStdString().c_str(), icon.toStdString().c_str());
-    notify_notification_show(notify, nullptr);
-    g_object_unref(G_OBJECT(notify));
-    notify_uninit();
+    generalNotify(summary,bodyStr);
 }
 
 void StatusNotification::connectitonFailedNotify(const QString& connectionPath)
 {
-    notify_init("StatusNotification");
-
     Connection::Ptr connection = findConnection(connectionPath);
 
-    QString summary, body, bodyStr, icon;
+    QString summary, body, bodyStr;
     summary = tr("Connection Failed");
     body = tr("Failed to connect to the network \"%1\"");
     bodyStr = body.arg(connection->name());
-
-    NotifyNotification* notify = notify_notification_new(summary.toStdString().c_str(), bodyStr.toStdString().c_str(), icon.toStdString().c_str());
-    notify_notification_show(notify, nullptr);
-    g_object_unref(G_OBJECT(notify));
-    notify_uninit();
+    generalNotify(summary,bodyStr);
 }
 
 void StatusNotification::connectitonFailedNotifyByName(const QString& connectionName)
 {
-    notify_init("StatusNotification");
-
-    QString summary, body, bodyStr, icon;
+    QString summary, body, bodyStr;
     summary = tr("Connection Failed");
     body = tr("Failed to connect to the network \"%1\"");
     bodyStr = body.arg(connectionName);
-
-    NotifyNotification* notify = notify_notification_new(summary.toStdString().c_str(), bodyStr.toStdString().c_str(), icon.toStdString().c_str());
-    notify_notification_show(notify, nullptr);
-    g_object_unref(G_OBJECT(notify));
-    notify_uninit();
+    generalNotify(summary,bodyStr);
 }
 
 void StatusNotification::connectitonFailedNotifyByReason(const QString& reason)
 {
-    notify_init("StatusNotification");
-
-    QString summary, icon;
-    summary = tr("Connection Failed");
-
-    NotifyNotification* notify = notify_notification_new(summary.toStdString().c_str(), reason.toStdString().c_str(), icon.toStdString().c_str());
-    notify_notification_show(notify, nullptr);
-    g_object_unref(G_OBJECT(notify));
-    notify_uninit();
+    QString summary = tr("Connection Failed");
+    generalNotify(summary,reason);
 }
 
-void StatusNotification::ActiveConnectionActivatedNotify(NetworkConnectionInfo connectionInfo)
+void StatusNotification::ActiveConnectionActivatedNotify(const QString &connectionName)
 {
-    notify_init("StatusNotification");
-
     KLOG_DEBUG() << "ActiveConnectionStateNotify";
-    QString id = connectionInfo.id;
-    QString ssid = connectionInfo.wirelessInfo.ssid;
-    QString summary, body, bodyStr, icon;
-
+    QString summary, body;
     summary = tr("Connection activated");
-    body = tr("You are now connected to the network \"%1\"");
-    if (connectionInfo.isWireless)
-    {
-        bodyStr = body.replace("the", "WIFI").arg(ssid);
-    }
-    else
-    {
-        bodyStr = body.arg(id);
-        //        icon = "/home/lq/git/kiran-cpanel-network/resources/kcp-network-images/wired-connection.svg";
-    }
-    icon = "";
-    NotifyNotification* notify = notify_notification_new(summary.toStdString().c_str(), bodyStr.toStdString().c_str(), icon.toStdString().c_str());
-    notify_notification_show(notify, nullptr);
-    g_object_unref(G_OBJECT(notify));
-    notify_uninit();
+    body = tr("You are now connected to the network \"%1\"").arg(connectionName);
+  
+    generalNotify(summary,body);
 }
 
 // xxx:deactivated时的通知待优化
 void StatusNotification::ActiveConnectionDeactivatedNotify(const QString& connectionName)
 {
-    notify_init("StatusNotification");
-
-    QString summary, body, bodyStr, icon;
+    QString summary, body, bodyStr;
     summary = tr("Connection deactivated");
     body = tr("You have now disconnected the network \"%1\"");
     bodyStr = body.arg(connectionName);
-    icon = "";
-
-    NotifyNotification* notify = notify_notification_new(summary.toStdString().c_str(), bodyStr.toStdString().c_str(), icon.toStdString().c_str());
-    notify_notification_show(notify, nullptr);
-    g_object_unref(G_OBJECT(notify));
-    notify_uninit();
+    generalNotify(summary,bodyStr);
 }
 
 void StatusNotification::connectionDeleteNotify(const QString& connectionName)
 {
-    notify_init("StatusNotification");
-
-    QString summary, body, bodyStr, icon;
+    QString summary, body, bodyStr;
     summary = tr("Connection deleted");
     body = tr("The connection has been deleted \"%1\"");
     bodyStr = body.arg(connectionName);
-
-    NotifyNotification* notify = notify_notification_new(summary.toStdString().c_str(), bodyStr.toStdString().c_str(), icon.toStdString().c_str());
-    notify_notification_show(notify, nullptr);
-    g_object_unref(G_OBJECT(notify));
-    notify_uninit();
+    generalNotify(summary,bodyStr);
 }
 
 void StatusNotification::deviceStateNotify(Device::State newstate)
@@ -159,4 +98,14 @@ void StatusNotification::deviceStateNotify(Device::State newstate)
 
 void StatusNotification::deviceStateChangeReasonNotify(NetworkManager::Device::StateChangeReason reason)
 {
+}
+
+void StatusNotification::generalNotify(const QString& summary, const QString& body, const QString& icon)
+{
+    notify_init("StatusNotification");
+
+    NotifyNotification* notify = notify_notification_new(summary.toStdString().c_str(), body.toStdString().c_str(), icon.toStdString().c_str());
+    notify_notification_show(notify, nullptr);
+    g_object_unref(G_OBJECT(notify));
+    notify_uninit();
 }

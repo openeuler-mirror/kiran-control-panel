@@ -91,27 +91,34 @@ void WiredManager::handleActivateSelectedConnection(const QString &connectionPat
 
     auto devicestate = device->state();
     KLOG_DEBUG() << "device state:" << devicestate ;
-    if(devicestate != Device::Unavailable)
+    if(devicestate == Device::Unavailable)
     {
-        QDBusPendingReply<QDBusObjectPath> reply =
-            NetworkManager::activateConnection(connectionPath, m_devicePath, connectionParameter);
+        StatusNotification::connectitonFailedNotifyByReason(tr("The current device is not available"));
+        return;
+    }
 
-        reply.waitForFinished();
-        if (reply.isError())
+    QDBusPendingReply<QDBusObjectPath> reply =
+        NetworkManager::activateConnection(connectionPath, m_devicePath, connectionParameter);
+
+    reply.waitForFinished();
+    if (reply.isError())
+    {
+        // 此处处理进入激活流程失败的原因，并不涉及流程中某个具体阶段失败的原因
+        KLOG_ERROR() << "activate connection failed:" << reply.error();
+        QString errorMessage = reply.error().message();
+        if (errorMessage.contains("device has no carrier"))
         {
-            // 此处处理进入激活流程失败的原因，并不涉及流程中某个具体阶段失败的原因
-            KLOG_ERROR() << "activate connection failed:" << reply.error();
-            QString errorMessage = reply.error().message();
-            if (errorMessage.contains("device has no carrier"))
-                StatusNotification::connectitonFailedNotifyByReason(tr("The carrier is pulled out"));
-            else
-                StatusNotification::connectitonFailedNotify(connectionPath);
+            StatusNotification::connectitonFailedNotifyByReason(tr("The carrier is pulled out"));
         }
         else
-            KLOG_DEBUG() << "activateConnection reply:" << reply.reply();
+        {
+            StatusNotification::connectitonFailedNotify(connectionPath);
+        }
     }
     else
-        StatusNotification::connectitonFailedNotifyByReason(tr("The current device is not available"));
+    {
+        KLOG_DEBUG() << "activateConnection reply:" << reply.reply();
+    }
 }
 
 // 获取到当前激活对象后，开启等待动画，判断完激活状态后停止等待动画
@@ -141,7 +148,7 @@ void WiredManager::handleActiveConnectionAdded(const QString &path)
                 break;
             }
         }
-        connect(activatedConnection.data(), &ActiveConnection::stateChanged, this, &WiredManager::handleActiveConnectionStateChanged);
+        connect(activatedConnection.data(), &ActiveConnection::stateChanged, this, &WiredManager::handleActiveConnectionStateChanged, Qt::UniqueConnection);
     }
 }
 
@@ -160,6 +167,10 @@ void WiredManager::handleActiveConnectionRemoved(const QString &path)
 void WiredManager::handleStateActivated(const QString &activePath)
 {
     ActiveConnection::Ptr activeConnection = findActiveConnection(activePath);
+    if (activeConnection.isNull())
+    {
+        return;
+    }
     QStringList deviceList = activeConnection->devices();
     if (deviceList.contains(m_devicePath) && (activeConnection->type() == ConnectionSettings::Wired))
     {
@@ -210,28 +221,16 @@ void WiredManager::handleConnectionUpdated(const QString &path)
 {
     KLOG_DEBUG() << "Connection updated:" << path;
     Connection::Ptr updateConnection = findConnection(path);
-    if (updateConnection->settings()->connectionType() == ConnectionSettings::Wired)
+    if (updateConnection->settings()->connectionType() != ConnectionSettings::Wired)
     {
-        //移除后再加载进来以更新信息
-        ui->connectionShowPage->removeConnectionFromList(path);
-        ui->connectionShowPage->addConnection(updateConnection, "");
-        if (ui->stackedWidget->currentIndex() != PAGE_SETTING)
-            handleReturnPreviousPage();
+        return;
+    }
 
-        QString updateConnectionPath = updateConnection->path();
-        ActiveConnection::List activeConnectionLists = activeConnections();
-        //已连接的网络的配置被修改后，点击保存 ，应该重新连接网络，以使配置生效
-        for (auto activeConn : activeConnectionLists)
-        {
-            if (activeConn->connection()->path() == updateConnectionPath)
-            {
-                auto deviceLists = activeConn->devices();
-                if (deviceLists.contains(m_devicePath))
-                {
-                    QDBusPendingReply<> reply = NetworkManager::deactivateConnection(activeConn->connection()->path());
-                    handleActivateSelectedConnection(updateConnectionPath, "");
-                }
-            }
-        }
+    //移除后再加载进来以更新信息
+    ui->connectionShowPage->removeConnectionFromList(path);
+    ui->connectionShowPage->addConnection(updateConnection, "");
+    if (ui->stackedWidget->currentIndex() != PAGE_SETTING)
+    {
+        handleReturnPreviousPage();
     }
 }

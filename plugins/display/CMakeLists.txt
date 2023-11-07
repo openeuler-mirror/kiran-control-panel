@@ -19,10 +19,10 @@ kiran_qt5_add_dbus_interface_ex(MONITOR_PROXY
         MonitorBackEndProxy
 )
 
-add_library(${TARGET_NAME} SHARED 
-        ${DISPLAY_SRC} 
-        ${DISPLAY_QM_FILES} 
-        ${DISPLAY_PROXY} 
+add_library(${TARGET_NAME} SHARED
+        ${DISPLAY_SRC}
+        ${DISPLAY_QM_FILES}
+        ${DISPLAY_PROXY}
         ${MONITOR_PROXY}
         )
 
@@ -47,11 +47,11 @@ target_link_libraries(${TARGET_NAME}
         ${KLOG_LIBRARIES})
 
 #安装插件到指定目录
-install(TARGETS ${TARGET_NAME} DESTINATION ${PLUGIN_LIBS_INSTALL_DIR}/)
+install(TARGETS ${TARGET_NAME} DESTINATION ${PLUGIN_LIBS_DIR}/)
 
 #安装插件desktop
 configure_file(data/kiran-cpanel-display.desktop.in ${CMAKE_CURRENT_BINARY_DIR}/kiran-cpanel-display.desktop @ONLY)
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/kiran-cpanel-display.desktop DESTINATION ${PLUGIN_DESKTOP_INSTALL_DIR}/ )
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/kiran-cpanel-display.desktop DESTINATION ${PLUGIN_DESKTOP_DIR}/ )
 
 #安装翻译文件
-install(FILES ${DISPLAY_QM_FILES} DESTINATION ${TRANSLATION_INSTALL_DIR} )
+install(FILES ${DISPLAY_QM_FILES} DESTINATION ${TRANSLATION_DIR} )

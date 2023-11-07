@@ -1,5 +1,7 @@
 set(TARGET_NAME kiran-cpanel-keyboard)
 
+option(MODIFIER_LOCK_TIPS_VISIBLE "Is modifire lock tips visible" OFF)
+
 file(GLOB TS_FILES "translation/*.ts")
 qt5_create_translation(KEYBOARD_QM ${CMAKE_CURRENT_SOURCE_DIR} ${TS_FILES})
 
@@ -12,13 +14,12 @@ file(GLOB_RECURSE KEYBOARD_SRC "./*.cpp" "./*.h" "./*.ui" "./*.qrc")
 
 add_library(${TARGET_NAME} SHARED
         ${KEYBOARD_SRC}
-        ${KEYBOARD_PROXY}
-        ${KEYBOARD_QM})
+        ${KEYBOARD_PROXY})
 
 target_include_directories(${TARGET_NAME} PRIVATE
-        ./src/
-        ./src/pages/general
-        ./src/pages/layout
+        ${CMAKE_CURRENT_SOURCE_DIR}
+        ${CMAKE_CURRENT_SOURCE_DIR}/pages
+        ${CMAKE_CURRENT_SOURCE_DIR}/utils
         ${CMAKE_CURRENT_BINARY_DIR}
         ${KCP_PLUGIN_INCLUDE_DIR}
         ${KIRAN_WIDGETS_INCLUDE_DIRS}
@@ -36,8 +37,10 @@ target_link_libraries(${TARGET_NAME}
         ${KLOG_LIBRARIES}
         ${KIRAN_STYLE_LIBRARIES})
 
-install(TARGETS ${TARGET_NAME}
-        DESTINATION ${PLUGIN_LIBS_INSTALL_DIR}/)
+if (MODIFIER_LOCK_TIPS_VISIBLE)
+    add_definitions(-DMODIFIER_LOCK_TIPS)
+endif ()
 
-install(FILES ${KEYBOARD_QM}
-        DESTINATION ${TRANSLATION_INSTALL_DIR}/)
+
+install(TARGETS ${TARGET_NAME}
+        DESTINATION ${PLUGIN_LIBS_DIR}/)

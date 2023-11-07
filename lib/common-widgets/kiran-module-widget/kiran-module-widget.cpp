@@ -14,6 +14,7 @@
 
 #include "kiran-module-widget.h"
 #include "category.h"
+#include "logging-category.h"
 
 #include <qt5-log-i.h>
 #include <QDialogButtonBox>
@@ -99,7 +100,7 @@ void KiranModuleWidget::appendListWidgetItem(KiranControlPanel::SubItemPtr subit
     item->setWeight(subitem->getWeight());
     if (icon.isNull())
     {
-        KLOG_WARNING() << "KiranModuleWidget: can't find subitem icon:" << name << icon;
+        KLOG_WARNING(qLcCommonWidget) << "KiranModuleWidget can't find subitem icon:" << name << icon;
     }
     else
     {
@@ -157,7 +158,7 @@ void KiranModuleWidget::handleCurrentItemChanged()
     auto selectedItems = ui->list_subItems->selectedItems();
     if (selectedItems.size() != 1)
     {
-        KLOG_ERROR() << "KiranModuleWidget: sider bar size != 1";
+        KLOG_ERROR(qLcCommonWidget) << "KiranModuleWidget sider bar size != 1";
         return;
     }
 
@@ -171,14 +172,14 @@ void KiranModuleWidget::handleCurrentItemChanged()
     auto mapIter = m_subItemsMap.find(selectedItem);
     if (mapIter == m_subItemsMap.end())
     {
-        KLOG_WARNING() << "KiranModuleWidget: can't find KiranControlPanel::SubItemPtr by QListWidgetItem," << selectedItem->text();
+        KLOG_WARNING(qLcCommonWidget) << "KiranModuleWidget can't find KiranControlPanel::SubItemPtr by QListWidgetItem," << selectedItem->text();
         return;
     }
 
     KiranControlPanel::SubItemPtr pluginSubitem = *mapIter;
     if (checkHasUnSaved())
     {
-        KLOG_DEBUG() << "KiranModuleWidget: switch subitem to:" << pluginSubitem->getName() << "reject";
+        KLOG_DEBUG(qLcCommonWidget) << "KiranModuleWidget switch subitem to:" << pluginSubitem->getName() << "reject";
         m_currentSubItem.first->setSelected(true);
         return;
     }
@@ -196,12 +197,12 @@ void KiranModuleWidget::handleCurrentItemChanged()
     QWidget *widget = pluginSubitem->createWidget();
     if (widget)
     {
-        KLOG_DEBUG() << "KiranModuleWidget: sub item widget sizeHint:" << widget->sizeHint();
+        KLOG_DEBUG(qLcCommonWidget) << "KiranModuleWidget sub item widget sizeHint:" << widget->sizeHint();
         ui->centerLayout->addWidget(widget);
     }
     else
     {
-        KLOG_ERROR() << "KiranModuleWidget: can't get subitem widget:" << pluginSubitem->getName() << pluginSubitem->getID();
+        KLOG_ERROR(qLcCommonWidget) << "KiranModuleWidget can't get subitem widget:" << pluginSubitem->getName() << pluginSubitem->getID();
     }
 
     m_subItemWidget = widget;
@@ -254,8 +255,8 @@ void KiranModuleWidget::jumpTo(const QString &subItemID, const QString &customKe
         QTimer::singleShot(0, [=]{
             if ( m_currentSubItem.second != nullptr )
             {
-                m_currentSubItem.second->jumpToSearchEntry(customKey);    
-            } 
+                m_currentSubItem.second->jumpToSearchEntry(customKey);
+            }
         });
         // clang-format on
     }

@@ -20,13 +20,14 @@
 #include <QApplication>
 #include <QDBusConnection>
 #include <QDBusConnectionInterface>
+#include <QDBusServiceWatcher>
 #include <QDBusReply>
 #include <QDateTime>
 #include <QFile>
-#include <QTimer>
 #include <QTranslator>
+#include "dbus-tray-monitor.h"
 
-#define MAX_WAIT_COUNTS 10
+#define DBUS_SERVICE_KDE_STATUS_NOTIFIER_WATCHER "org.kde.StatusNotifierWatcher"
 
 int main(int argc, char *argv[])
 {
@@ -39,56 +40,32 @@ int main(int argc, char *argv[])
     if (translator.load(QLocale(), "kiran-cpanel-audio", ".", TRANSLATE_PREFIX, ".qm"))
     {
         a.installTranslator(&translator);
-        KLOG_INFO() << "installTranslator load:" << a.installTranslator(&translator);
+        KLOG_DEBUG() << "installTranslator load:" << a.installTranslator(&translator);
     }
     else
-        KLOG_INFO() << "installTranslator failed";
+    {
+        KLOG_WARNING() << "installTranslator failed";
+    }
 
     AudioSystemTray *audioSystemTray = nullptr;
-
-    QTimer timer;
-    timer.setInterval(1000);
-    int waitCounts = 0;
-    QObject::connect(&timer, &QTimer::timeout, [&]()
-                     {
-        if (QDBusConnection::sessionBus().interface()->isServiceRegistered("org.kde.StatusNotifierWatcher"))
-        {
-            KLOG_INFO() << "org.kde.StatusNotifierWatcher isServiceRegistered" << QDBusConnection::sessionBus().interface()->isServiceRegistered("org.kde.StatusNotifierWatcher");
-            KLOG_INFO() << "SessionDaemon.Audio isServiceRegistered " << QDBusConnection::sessionBus().interface()->isServiceRegistered("com.kylinsec.Kiran.SessionDaemon.Audio");
-            KLOG_INFO() << "QSystemTrayIcon::isSystemTrayAvailable():" << QSystemTrayIcon::isSystemTrayAvailable();
-
-            KLOG_INFO() << "init  AudioSystemTray";
-            audioSystemTray = new AudioSystemTray;
-            KLOG_INFO() << "wait loop : new AudioSystemTray sucess ";
-            KLOG_INFO() << "currentDateTime:"<<QDateTime::currentDateTime();
-            timer.stop();
-        }
-        else
-        {
-            waitCounts++;
-            KLOG_INFO() << "waitCounts:" << waitCounts;
-            if (waitCounts > MAX_WAIT_COUNTS)
-            {
-                KLOG_INFO() << "超过等待次数，程序退出";
-                return QApplication::quit();
-            }
-        } });
-
-    if (QDBusConnection::sessionBus().interface()->isServiceRegistered("org.kde.StatusNotifierWatcher"))
+    if (KiranControlPanel::isDBusTrayAvailable())
     {
-        KLOG_INFO() << "org.kde.StatusNotifierWatcher isServiceRegistered" << QDBusConnection::sessionBus().interface()->isServiceRegistered("org.kde.StatusNotifierWatcher");
-        KLOG_INFO() << "SessionDaemon.Audio isServiceRegistered " << QDBusConnection::sessionBus().interface()->isServiceRegistered("com.kylinsec.Kiran.SessionDaemon.Audio");
-        KLOG_INFO() << "QSystemTrayIcon::isSystemTrayAvailable():" << QSystemTrayIcon::isSystemTrayAvailable();
-
-        KLOG_INFO() << "init  AudioSystemTray";
+        KLOG_DEBUG() << KDE_STATUS_NOTIFIER_HOST << "is registered,create network tray icon";
         audioSystemTray = new AudioSystemTray;
-        KLOG_INFO() << "new AudioSystemTray sucess ";
     }
     else
     {
-        timer.start();
-        KLOG_INFO() << "start wait loop";
-        KLOG_INFO() << "currentDateTime:" << QDateTime::currentDateTime();
+        KLOG_WARNING() << KDE_STATUS_NOTIFIER_HOST << "is not registered,wait";
+
+        auto dBusTrayMonitor = new KiranControlPanel::DBusTrayMonitor();
+        QObject::connect(dBusTrayMonitor, &KiranControlPanel::DBusTrayMonitor::dbusTrayAvailable, [&audioSystemTray]()
+                         {
+                            if(audioSystemTray == nullptr)
+                            {
+                                KLOG_DEBUG() << KDE_STATUS_NOTIFIER_HOST << "is registered,create network tray icon";
+                                audioSystemTray = new AudioSystemTray;
+                            } 
+                        });
     }
     return QApplication::exec();
 }

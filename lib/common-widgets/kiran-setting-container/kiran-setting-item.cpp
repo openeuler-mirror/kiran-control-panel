@@ -98,6 +98,8 @@ void KiranSettingItem::initUI()
     m_leftButton->setFlat(true);
     m_leftButton->setVisible(true);
     layout->addWidget(m_leftButton);
+    connect(m_leftButton, &QPushButton::clicked, this, [this]()
+        { emit leftButtonClicked(m_userData); });
 
     m_label = new KiranLabel(this);
     m_label->setAlignment(Qt::AlignVCenter);
@@ -109,12 +111,16 @@ void KiranSettingItem::initUI()
     m_switcher = new KiranSwitchButton(this);
     m_switcher->setVisible(false);
     layout->addWidget(m_switcher, 0, Qt::AlignVCenter);
+    connect(m_switcher, &KiranSwitchButton::toggled, this, [this](bool checked)
+        { emit switchButtonToggled(m_userData, checked); });
 
     m_rightButton = new QPushButton(this);
     m_rightButton->setFixedSize(16, 16);
     m_rightButton->setFlat(true);
     m_rightButton->setVisible(false);
     layout->addWidget(m_rightButton);
+    connect(m_rightButton, &QPushButton::clicked, this, [this]()
+        { emit rightButtonClicked(m_userData); });
 
     connect(Kiran::StylePalette::instance(), &Kiran::StylePalette::themeChanged, this, &KiranSettingItem::updateIcon);
 }

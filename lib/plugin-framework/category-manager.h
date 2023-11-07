@@ -55,7 +55,6 @@ private slots:
 private:
     static CategoryManager* _instance;
     bool m_isInited = false;
-
     // 分类有序列表
     QList<Category*> m_categorys;
     // 分类ID对应分类字典

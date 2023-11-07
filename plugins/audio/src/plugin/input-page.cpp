@@ -198,48 +198,28 @@ void InputPage::initInputDevice()
 
 void InputPage::initActivedPort()
 {
-    QDBusPendingReply<QString> getPorts = m_defaultSource->GetPorts();
-    KLOG_DEBUG() << "getPorts:" << getPorts;
-    //解析默认source的端口信息
-    QJsonParseError jsonParseError;
-    QJsonDocument doc = QJsonDocument::fromJson(getPorts.value().toLatin1(), &jsonParseError);
-    if (!doc.isNull() && jsonParseError.error == QJsonParseError::NoError)
-    {
-        if (doc.isArray() && jsonParseError.error == QJsonParseError::NoError)
-        {
-            QJsonArray array = doc.array();
-            for (int i = 0; i < array.count(); ++i)
-            {
-                KLOG_DEBUG() << "array.at(i)" << array.at(i);
-                QJsonObject object = array.at(i).toObject();
-                QString description = object.value("description").toString();
-                QString name = object.value("name").toString();
-                double priority = object.value("priority").toDouble();
-                KLOG_DEBUG() << "description" << description;
-                KLOG_DEBUG() << "name" << name;
-                KLOG_DEBUG() << "priority" << priority;
-
-                ui->inputDevices->insertItem(i, description);
-                ui->inputDevices->setItemData(i, name, Qt::UserRole);  //激活端口所需信息
-                //获取已激活的端口在comobox中的index
-                if (m_defaultSource->active_port() == name)
-                {
-                    m_defaultDeviceIndex = i;
-                    KLOG_DEBUG() << "m_defaultDeviceIndex" << m_defaultDeviceIndex;
-                }
-            }
-        }
-        //默认选中已激活的端口
-        m_isValidPort = true;
-        ui->inputDevices->setCurrentIndex(m_defaultDeviceIndex);
-        ui->inputDevices->setEnabled(true);
-        ui->volumeSetting->setEnabled(true);
-    }
-    else
+    QList<AudioPortInfo> portsInfo = m_defaultSource->getPortsInfo();
+    
+    if(portsInfo.isEmpty())
     {
         KLOG_DEBUG() << "ports is null";
         disableSettings();
+        return;
     }
+
+    Q_FOREACH (auto portInfo, portsInfo)
+    {
+        if(m_defaultSource->active_port() == portInfo.name)
+        {
+            ui->inputDevices->addItem(portInfo.description,portInfo.name);
+            break;
+        }
+    }
+
+    //默认选中已激活的端口
+    m_isValidPort = true;
+    ui->inputDevices->setEnabled(true);
+    ui->volumeSetting->setEnabled(true);
 }
 
 void InputPage::initInputSettins()
@@ -304,13 +284,16 @@ void InputPage::disableSettings()
 void InputPage::handleActivePortChanged(const QString &value)
 {
     KLOG_DEBUG() << "handleActivePortChanged :" << value;
-    for (int i = 0; i < ui->inputDevices->count(); ++i)
+    
+    QList<AudioPortInfo> portsInfo = m_defaultSource->getPortsInfo();
+    
+    Q_FOREACH (auto portInfo, portsInfo)
     {
-        QString name = ui->inputDevices->itemData(i, Qt::UserRole).toString();
-        if (name == value)
+        if(m_defaultSource->active_port() == portInfo.name)
         {
-            ui->inputDevices->setCurrentIndex(i);
-            KLOG_DEBUG() << "handleActivePortChanged  setCurrentIndex " << i;
+            ui->inputDevices->clear();
+            ui->inputDevices->addItem(portInfo.description,portInfo.name);
+            break;
         }
     }
 }

@@ -24,11 +24,11 @@
 
 DisplayPage::DisplayPage(QWidget *parent)
     : QWidget(parent),
-      m_btnGroup(nullptr),
+      ui(new Ui::DisplayPage),
       m_displayConfig(),
       m_displayConfigData(nullptr),
       m_currentMonitorData(nullptr),
-      ui(new Ui::DisplayPage)
+      m_btnGroup(nullptr)
 {
     ui->setupUi(this);
 
@@ -263,21 +263,34 @@ void DisplayPage::initExtraComboBoxRefreshRate(QComboBox *comboBox, const QList<
 {
     comboBox->clear();
 
-    QString recommend;
     QList<DisplayModesStu> list = m_displayConfig->listPreferredModes(m_curMonitorPath);
+    double recommendRefreshRate;
     if (!list.isEmpty())
     {
-        double refreshRate = list.first().refreshRate;
-        recommend = QString("%1HZ").arg(QString::asprintf("%.2f", refreshRate));
+        recommendRefreshRate = list.first().refreshRate;
     }
 
+    QString strPostfix = tr(" (recommended)");
     QList<double> t_refreshRateList = refreshRateList;
     std::sort(t_refreshRateList.begin(), t_refreshRateList.end(), std::greater<double>());
     foreach (double r, t_refreshRateList)
     {
         QString text = QString("%1HZ").arg(QString::asprintf("%.2f", r));
-        if (text == recommend) text += tr(" (recommended)");
+        if (QString::asprintf("%.2f", r) == QString::asprintf("%.2f", recommendRefreshRate)) 
+        {
+            text.append(strPostfix);
+        }
         comboBox->addItem(text, r);
+    }
+
+    for (size_t i = 0; i < comboBox->count(); i++)
+    {
+        double refreshRate = comboBox->itemData(i).toDouble();
+        if(QString::asprintf("%.2f", refreshRate) == QString::asprintf("%.2f", recommendRefreshRate))
+        {
+            comboBox->setCurrentIndex(i);
+            break;
+        }
     }
 }
 
@@ -452,7 +465,7 @@ void DisplayPage::showExtraModeData(const QString &monitorPath)
     }
     if (enablePaths.count() <= 1 && enablePaths.contains(m_curMonitorPath))
     {
-        // 当只剩一个开启的显示器时，选择为主显示器 
+        // 当只剩一个开启的显示器时，选择为主显示器
         if(ui->enabledButton->isChecked())
             ui->pushButton_extra_primary->setChecked(true);
     }
@@ -529,7 +542,7 @@ void DisplayPage::handleEnabledButtonToggled(bool checked)
     if(checked == false)
         ui->pushButton_extra_primary->setChecked(false);
     ui->pushButton_extra_primary->setEnabled(extraPrimaryBtnStatus(!ui->enabledButton->isEnabled(), checked));
-    
+
     ui->comboBox_extra_resolving->setEnabled((checked));
     ui->comboBox_extra_refreshRate->setEnabled(checked);
     ui->comboBox_extra_windowScalingFactor->setEnabled(checked);

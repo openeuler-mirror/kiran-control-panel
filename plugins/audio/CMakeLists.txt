@@ -18,6 +18,8 @@ add_library(${TARGET_NAME} SHARED
         ${AUDIO_QM_FILES})
 
 target_include_directories(${TARGET_NAME} PRIVATE
+        ${PROJECT_SOURCE_DIR}/common
+        ${PROJECT_SOURCE_DIR}/include
         ${CMAKE_BINARY_DIR}
         src
         src/plugin
@@ -25,7 +27,6 @@ target_include_directories(${TARGET_NAME} PRIVATE
         config
         resources
         ${CMAKE_CURRENT_BINARY_DIR}
-        ${KCP_PLUGIN_INCLUDE_DIR}
         ${KIRAN_WIDGETS_INCLUDE_DIRS}
         ${KIRAN_CC_DAEMON_INCLUDE_DIRS}
         ${KLOG_INCLUDE_DIRS})
@@ -44,7 +45,8 @@ add_executable(${TRAY_PROCESS}
         ${DBUS_SRC}
         ${SYSTEM_TRAY_SRC}
         ${AUDIO_QM_FILES}
-        ${QRC})
+        ${QRC}
+        ${PROJECT_SOURCE_DIR}/include/dbus-tray-monitor.h)
 
 target_include_directories(${TRAY_PROCESS} PRIVATE
         ${CMAKE_BINARY_DIR}
@@ -66,7 +68,7 @@ target_link_libraries(${TRAY_PROCESS}
         ${KIRAN_STYLE_LIBRARIES})
 
 #安装翻译
-install(FILES ${AUDIO_QM_FILES} DESTINATION ${TRANSLATION_INSTALL_DIR})
+install(FILES ${AUDIO_QM_FILES} DESTINATION ${TRANSLATION_DIR})
 
 set(AUTOSTART_DESKTOP_DIR /etc/xdg/autostart)
 #安装插件desktop文件
@@ -74,8 +76,8 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config/kiran-audio-status-icon.deskto
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/kiran-audio-status-icon.desktop DESTINATION ${AUTOSTART_DESKTOP_DIR}/)
 
 #安装插件和二进制文件
-install(TARGETS ${TARGET_NAME} DESTINATION ${PLUGIN_LIBS_INSTALL_DIR}/)
-install(TARGETS ${TRAY_PROCESS} DESTINATION ${INSTALL_BINDIR})
+install(TARGETS ${TARGET_NAME} DESTINATION ${PLUGIN_LIBS_DIR}/)
+install(TARGETS ${TRAY_PROCESS} DESTINATION ${CMAKE_INSTALL_FULL_BINDIR})
 
 file(GLOB SVG_THEME_ICONS "./resources/kcp-audio-images/kcp-audio*.svg")
 install(FILES ${SVG_THEME_ICONS} DESTINATION ${INSTALL_DATADIR}/icons/hicolor/scalable/apps)

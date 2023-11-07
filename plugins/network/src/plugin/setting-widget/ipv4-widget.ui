@@ -187,12 +187,12 @@
      <item>
       <widget class="QLabel" name="label_16">
        <property name="text">
-        <string>Preferred DNS</string>
+        <string>DNS 1</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="ipv4PreferredDNS">
+      <widget class="QLineEdit" name="ipv4FirstDNS">
        <property name="minimumSize">
         <size>
          <width>0</width>
@@ -220,12 +220,12 @@
      <item>
       <widget class="QLabel" name="label_14">
        <property name="text">
-        <string>Alternate DNS</string>
+        <string>DNS 2</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="ipv4AlternateDNS">
+      <widget class="QLineEdit" name="ipv4SecondDNS">
        <property name="minimumSize">
         <size>
          <width>0</width>

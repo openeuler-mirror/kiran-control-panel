@@ -41,7 +41,6 @@ AudioSystemTray::AudioSystemTray(QWidget *parent) : QWidget(parent)
     initVolumeSettingPage(defaultSinkPath);
     initMixedSettingPage();
 
-    m_sink = new AudioDeviceInterface(AUDIO_DBUS_NAME, defaultSinkPath, QDBusConnection::sessionBus());
     m_statusNotifierManager = new StatusNotifierManagerInterface(STATUS_NOTIFIER_MANAGER, STATUS_NOTIFIER_MANAGER_OBJECT_NAME, QDBusConnection::sessionBus(), this);
     m_systemTray = new QSystemTrayIcon();
 
@@ -82,8 +81,11 @@ void AudioSystemTray::initMixedSettingPage()
 void AudioSystemTray::initTrayIcon()
 {
     getTrayIconStyle();
-    double currentVolumeDouble = m_sink->volume() * 100;
-    KLOG_INFO() << "currentVolumeDouble" << round(currentVolumeDouble);
+    
+    QDBusPendingReply<QString> defaultSinkPath = m_audioInterface->GetDefaultSink();
+    AudioDeviceInterface defaultSink (AUDIO_DBUS_NAME, defaultSinkPath, QDBusConnection::sessionBus());
+    double currentVolumeDouble = defaultSink.volume() * 100;
+    KLOG_INFO() << "current Volume Double" << round(currentVolumeDouble);
     setTrayIcon(round(currentVolumeDouble));
 }
 
@@ -117,11 +119,12 @@ void AudioSystemTray::initConnect()
 {
     connect(m_systemTray, &QSystemTrayIcon::activated, this, &AudioSystemTray::handleAudioTrayClicked);
 
-    connect(m_sink, &AudioDeviceInterface::volumeChanged, [=](double value)
-            {
-                int currentVolume = round(value * 100);  //表示数值的时候向上取整
-                KLOG_DEBUG() << "m_sink volumeChanged :" << currentVolume;
-                setTrayIcon(currentVolume); });
+    connect(m_volumeSettingPage,&VolumeSettingPage::volumeChanged,[=](double value)
+    {
+        int currentVolume = round(value * 100);  //表示数值的时候向上取整
+        KLOG_DEBUG() << "m_sink volumeChanged :" << currentVolume;
+        setTrayIcon(currentVolume);
+    });
 
     connect(m_statusNotifierManager, &StatusNotifierManagerInterface::StyleChanged, [=](const QString &style)
             {
@@ -129,9 +132,11 @@ void AudioSystemTray::initConnect()
                 //重新获取style
                 getTrayIconStyle();
                 //获取当前音量值重新设置TrayIcon
-                m_sink->volume();
-                double currentVolumeDouble = m_sink->volume() * 100;
-                setTrayIcon(round(currentVolumeDouble)); });
+                QDBusPendingReply<QString> defaultSinkPath = m_audioInterface->GetDefaultSink();
+                AudioDeviceInterface defaultSink (AUDIO_DBUS_NAME, defaultSinkPath, QDBusConnection::sessionBus());
+                double currentVolumeDouble = defaultSink.volume() * 100;
+                setTrayIcon(round(currentVolumeDouble)); 
+            });
 }
 
 void AudioSystemTray::handleAudioTrayClicked(QSystemTrayIcon::ActivationReason reason)
@@ -157,7 +162,19 @@ void AudioSystemTray::setVolumeSettingPos()
     int pageWidth = 300;
     int pageHeight = 66;
 
-    m_volumenPopup->setGeometry(xTray - pageWidth / 2, yTray - pageHeight - offset, pageWidth, pageHeight);
+    int showPosY; 
+    // 托盘程序在顶端
+    if(m_yTray == 0)
+    {
+        showPosY  = m_heightTray - offset;
+    }
+    else
+    {
+        //托盘程序在底部
+        showPosY = m_yTray - pageHeight - offset;
+    }
+
+    m_volumenPopup->setGeometry(m_xTray - pageWidth / 2, showPosY, pageWidth, pageHeight);
 }
 
 void AudioSystemTray::handleMixedSettingClicked()
@@ -175,7 +192,7 @@ void AudioSystemTray::setMixedSettingPos()
     int width = m_mixedPopup->sizeHint().width();
 
     m_mixedPopup->setFixedHeight(height + offset * 2);
-    m_mixedPopup->move(xTray - width / 2, yTray - height - offset);
+    m_mixedPopup->move(m_xTray - width / 2, m_yTray - height - offset);
 }
 
 void AudioSystemTray::handleAdjustedMixedSettingPageSize()
@@ -223,15 +240,15 @@ void AudioSystemTray::getTrayGeometry()
             }
         }
     }
-    heightTray = static_cast<int>(height);
-    widthTray = static_cast<int>(width);
-    xTray = static_cast<int>(x);
-    yTray = static_cast<int>(y);
+    m_heightTray = static_cast<int>(height);
+    m_widthTray = static_cast<int>(width);
+    m_xTray = static_cast<int>(x);
+    m_yTray = static_cast<int>(y);
     KLOG_DEBUG() << "getTrayGeometry ";
-    KLOG_DEBUG() << "heightTray" << heightTray;
-    KLOG_DEBUG() << "widthTray" << widthTray;
-    KLOG_DEBUG() << "xTray" << xTray;
-    KLOG_DEBUG() << "yTray" << yTray;
+    KLOG_DEBUG() << "heightTray" << m_heightTray;
+    KLOG_DEBUG() << "widthTray" << m_widthTray;
+    KLOG_DEBUG() << "xTray" << m_xTray;
+    KLOG_DEBUG() << "yTray" << m_yTray;
 }
 
 // XXX:频繁调用函数,需要优化

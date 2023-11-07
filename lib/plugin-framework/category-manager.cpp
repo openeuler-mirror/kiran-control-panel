@@ -14,6 +14,7 @@
 
 #include "category-manager.h"
 #include "config.h"
+#include "logging-category.h"
 #include "plugin-manager.h"
 
 #include <glib.h>
@@ -45,14 +46,14 @@ bool parserCategoryDesktop(const QString& desktop, QString& id, QString& name, Q
                                    G_KEY_FILE_KEEP_TRANSLATIONS,
                                    &error))
     {
-        KLOG_ERROR() << "can't parse" << desktopPath.c_str() << (error ? error->message : "");
+        KLOG_ERROR(qLcPluginFramework) << "can't parse" << desktopPath.c_str() << (error ? error->message : "");
         goto out;
     }
 
     cname = g_key_file_get_locale_string(keyFile, GROUP_KIRAN_CONTROL_PANEL_CATEGORY, KEY_NAME, nullptr, &error);
     if (!cname)
     {
-        KLOG_ERROR() << "missing" << GROUP_KIRAN_CONTROL_PANEL_CATEGORY << KEY_NAME << (error ? error->message : "");
+        KLOG_ERROR(qLcPluginFramework) << "missing" << GROUP_KIRAN_CONTROL_PANEL_CATEGORY << KEY_NAME << (error ? error->message : "");
         goto out;
     }
     name = cname;
@@ -61,20 +62,20 @@ bool parserCategoryDesktop(const QString& desktop, QString& id, QString& name, Q
     cicon = g_key_file_get_string(keyFile, GROUP_KIRAN_CONTROL_PANEL_CATEGORY, KEY_ICON, &error);
     if (!cicon)
     {
-        KLOG_ERROR() << "missing" << GROUP_KIRAN_CONTROL_PANEL_CATEGORY << KEY_ICON << (error ? error->message : "");
+        KLOG_ERROR(qLcPluginFramework) << "missing" << GROUP_KIRAN_CONTROL_PANEL_CATEGORY << KEY_ICON << (error ? error->message : "");
         goto out;
     }
     icon = cicon;
     g_free(cicon);
     if (!icon.startsWith('/'))
     {
-        icon.insert(0, CATEGORY_DESKTOP_ICON_DIR "/");
+        icon.insert(0, CATEGORY_ICON_DIR "/");
     }
 
     ccategory = g_key_file_get_string(keyFile, GROUP_KIRAN_CONTROL_PANEL_CATEGORY, KEY_CATEGORY, &error);
     if (!ccategory)
     {
-        KLOG_ERROR() << "missing" << GROUP_KIRAN_CONTROL_PANEL_CATEGORY << KEY_CATEGORY << (error ? error->message : "");
+        KLOG_ERROR(qLcPluginFramework) << "missing" << GROUP_KIRAN_CONTROL_PANEL_CATEGORY << KEY_CATEGORY << (error ? error->message : "");
         goto out;
     }
     id = ccategory;
@@ -83,7 +84,7 @@ bool parserCategoryDesktop(const QString& desktop, QString& id, QString& name, Q
     weight = g_key_file_get_int64(keyFile, GROUP_KIRAN_CONTROL_PANEL_CATEGORY, KEY_WEIGHT, &error);
     if (error)
     {
-        KLOG_ERROR() << "missing" << GROUP_KIRAN_CONTROL_PANEL_CATEGORY << KEY_WEIGHT << error->message;
+        KLOG_ERROR(qLcPluginFramework) << "missing" << GROUP_KIRAN_CONTROL_PANEL_CATEGORY << KEY_WEIGHT << error->message;
         g_error_free(error);
         error = nullptr;
     }
@@ -155,7 +156,7 @@ bool CategoryManager::loadAllCategory()
 
         if (!parserCategoryDesktop(path, id, name, icon, weight))
         {
-            KLOG_ERROR() << "can't parse category:" << path;
+            KLOG_ERROR(qLcPluginFramework) << "can't parse category:" << path;
             continue;
         }
 
@@ -259,9 +260,9 @@ void CategoryManager::addSubItemToCategory(Plugin* plugin, KiranControlPanel::Su
     auto categoryIter = m_categorysMap.find(categoryID);
     if (categoryIter == m_categorysMap.end())
     {
-        KLOG_WARNING() << "plugin:" << plugin->getID() << plugin->getName() << "\n"
-                       << "subitem:" << subitem->getID() << subitem->getName() << "\n"
-                       << "can't find category:" << categoryID;
+        KLOG_WARNING(qLcPluginFramework) << "plugin:" << plugin->getID() << plugin->getName() << "\n"
+                                         << "subitem:" << subitem->getID() << subitem->getName() << "\n"
+                                         << "can't find category:" << categoryID;
         return;
     }
 
@@ -291,7 +292,8 @@ void CategoryManager::handlePluginSubItemInfoChanged(const QString& subiemID)
 {
     Plugin* plugin = qobject_cast<Plugin*>(sender());
 
-    qDebug() << "plugin" << plugin->getID() << plugin->getName() << "subitem" << subiemID << "changed!";
+    KLOG_DEBUG(qLcPluginFramework) << "plugin" << plugin->getID() << plugin->getName()
+                                   << "subitem" << subiemID << "changed!";
 
     for (auto cacheItem : m_subitemInfoCache)
     {
@@ -310,7 +312,7 @@ void CategoryManager::handlePluginSubItemChanged()
     auto newSubItems = plugin->getSubItems();
     QList<SubItemInfoCacheItem> oldSubItems;
 
-    qDebug() << "plugin" << plugin->getID() << plugin->getName() << "subitem changed!";
+    KLOG_DEBUG(qLcPluginFramework) << "plugin" << plugin->getID() << plugin->getName() << "subitem changed!";
 
     // 找到该插件所有的功能项
     for (auto cacheItem : m_subitemInfoCache)

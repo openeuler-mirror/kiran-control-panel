@@ -91,7 +91,6 @@ private:
     AudioDeviceInterface *m_activedSource;
     QMap<int, AudioDeviceInterface *> m_inputDevicesMap;
     int m_defaultSourceIndex;
-    int m_defaultDeviceIndex;
     bool m_isValidPort = false;
 
     QAudioInput *m_audioInput = nullptr;

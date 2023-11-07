@@ -1,4 +1,6 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="zh_CN">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.1" language="zh_CN">
 <context>
     <name>CPanelNetworkWidget</name>
     <message>
@@ -23,50 +25,50 @@
         <translation type="vanished">སྐུད་མེད་འབྲེལ་མཐུད།</translation>
     </message>
     <message>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="71"/>
+        <location filename="../src/plugin/cpanel-network-widget.cpp" line="70"/>
         <source>Wired Network %1</source>
         <translation>སྐུད་ཡོད་དྲ་རྒྱ།1%</translation>
     </message>
     <message>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="77"/>
+        <location filename="../src/plugin/cpanel-network-widget.cpp" line="76"/>
         <source>Wired Network</source>
         <translation>སྐུད་ལྡན་དྲ་རྒྱ་</translation>
     </message>
     <message>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="105"/>
+        <location filename="../src/plugin/cpanel-network-widget.cpp" line="104"/>
         <source>Wireless Network %1</source>
         <translation>སྐུད་མེད་དྲ་རྒྱ།1%</translation>
     </message>
     <message>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="111"/>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="318"/>
+        <location filename="../src/plugin/cpanel-network-widget.cpp" line="110"/>
+        <location filename="../src/plugin/cpanel-network-widget.cpp" line="316"/>
         <source>Wireless Network</source>
         <translation>སྐུད་མེད་དྲ་རྒྱ་</translation>
     </message>
     <message>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="137"/>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="141"/>
+        <location filename="../src/plugin/cpanel-network-widget.cpp" line="136"/>
+        <location filename="../src/plugin/cpanel-network-widget.cpp" line="140"/>
         <source>VPN</source>
         <translation>རྟོག་བཟོས་ཆེད་སྤྱོད་དྲ་བ་</translation>
     </message>
     <message>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="146"/>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="149"/>
+        <location filename="../src/plugin/cpanel-network-widget.cpp" line="145"/>
+        <location filename="../src/plugin/cpanel-network-widget.cpp" line="148"/>
         <source>Network Details</source>
         <translation>དྲ་རྒྱའི་ཞིབ་ཕྲའི་ཆ་འཕྲིན།</translation>
     </message>
     <message>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="255"/>
+        <location filename="../src/plugin/cpanel-network-widget.cpp" line="254"/>
         <source>Connected</source>
         <translation>འབྲེལ་མཐུད་</translation>
     </message>
     <message>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="259"/>
+        <location filename="../src/plugin/cpanel-network-widget.cpp" line="258"/>
         <source>Unavailable</source>
         <translation>སྤྱོད་མི་རུང་བ་</translation>
     </message>
     <message>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="263"/>
+        <location filename="../src/plugin/cpanel-network-widget.cpp" line="262"/>
         <source>Disconnected</source>
         <translation>ཆད་པ་རེད།</translation>
     </message>
@@ -409,7 +411,7 @@
         <translation>དམིགས་འཛུགས་མ་བྱས་པའི་སྒྲིག་ཆས་</translation>
     </message>
     <message>
-        <location filename="../src/plugin/setting-widget/ethernet-widget.cpp" line="145"/>
+        <location filename="../src/plugin/setting-widget/ethernet-widget.cpp" line="165"/>
         <source>Clone Mac invalid</source>
         <translation>རྒྱུད་བཤུས་Macནུས་མེད་།</translation>
     </message>
@@ -668,32 +670,32 @@
 <context>
     <name>NetworkSubItem</name>
     <message>
-        <location filename="../src/plugin/network-subitem.cpp" line="113"/>
+        <location filename="../src/plugin/network-subitem.cpp" line="111"/>
         <source>Wired Network %1</source>
         <translation>སྐུད་ཡོད་དྲ་རྒྱ།1%</translation>
     </message>
     <message>
-        <location filename="../src/plugin/network-subitem.cpp" line="117"/>
+        <location filename="../src/plugin/network-subitem.cpp" line="115"/>
         <source>Wired Network</source>
         <translation>སྐུད་ལྡན་དྲ་རྒྱ་</translation>
     </message>
     <message>
-        <location filename="../src/plugin/network-subitem.cpp" line="126"/>
+        <location filename="../src/plugin/network-subitem.cpp" line="124"/>
         <source>Wireless Network %1</source>
         <translation>སྐུད་མེད་དྲ་རྒྱ།1%</translation>
     </message>
     <message>
-        <location filename="../src/plugin/network-subitem.cpp" line="131"/>
+        <location filename="../src/plugin/network-subitem.cpp" line="129"/>
         <source>Wireless Network</source>
         <translation>སྐུད་མེད་དྲ་རྒྱ་</translation>
     </message>
     <message>
-        <location filename="../src/plugin/network-subitem.cpp" line="138"/>
+        <location filename="../src/plugin/network-subitem.cpp" line="136"/>
         <source>VPN</source>
         <translation>རྟོག་བཟོས་ཆེད་སྤྱོད་དྲ་བ་</translation>
     </message>
     <message>
-        <location filename="../src/plugin/network-subitem.cpp" line="139"/>
+        <location filename="../src/plugin/network-subitem.cpp" line="137"/>
         <source>Network Details</source>
         <translation>དྲ་རྒྱའི་ཞིབ་ཕྲའི་ཆ་འཕྲིན།</translation>
     </message>
@@ -701,12 +703,12 @@
 <context>
     <name>NetworkTray</name>
     <message>
-        <location filename="../src/tray/network-tray.cpp" line="170"/>
+        <location filename="../src/tray/network-tray.cpp" line="169"/>
         <source>Network settings</source>
         <translation>དྲ་རྒྱའི་སྒྲིག་འགོད་</translation>
     </message>
     <message>
-        <location filename="../src/tray/network-tray.cpp" line="232"/>
+        <location filename="../src/tray/network-tray.cpp" line="233"/>
         <source>Network unavailable</source>
         <translation>དྲ་རྒྱ་སྤྱོད་མི་ཆོག</translation>
     </message>
@@ -1362,9 +1364,8 @@
 <context>
     <name>WiredTrayWidget</name>
     <message>
-        <location filename="../src/tray/wired-tray-widget.cpp" line="119"/>
         <source>Wired network unavailable</source>
-        <translation>སྐུད་ཡོད་དྲ་རྒྱ་བཀོལ་མི་རུང་།</translation>
+        <translation type="vanished">སྐུད་ཡོད་དྲ་རྒྱ་བཀོལ་མི་རུང་།</translation>
     </message>
 </context>
 <context>

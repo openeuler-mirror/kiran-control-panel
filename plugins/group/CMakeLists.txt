@@ -87,7 +87,7 @@ set(PLUGIN_TRANSLATION_DIR ${TRANSLATION_INSTALL_DIR}/)
 configure_file(data/kiran-cpanel-group-config.h.in ${CMAKE_CURRENT_BINARY_DIR}/plugin-group-config.h)
 
 #安装控制中心插件
-install(TARGETS ${TARGET_NAME} DESTINATION ${PLUGIN_LIBS_INSTALL_DIR}/)
+install(TARGETS ${TARGET_NAME} DESTINATION ${PLUGIN_LIBS_DIR}/)
 #安装控制中心插件desktop
 
 

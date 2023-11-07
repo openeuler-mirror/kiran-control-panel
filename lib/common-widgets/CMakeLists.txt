@@ -1,10 +1,11 @@
 set (TARGET_NAME common-widgets)
 
 file(GLOB_RECURSE COMMON_WIDGETS_SRC ./*.cpp ./*.h ./*.ui)
-add_library(${TARGET_NAME} STATIC ${COMMON_WIDGETS_SRC})
+add_library(${TARGET_NAME} STATIC ${COMMON_SRC} ${COMMON_WIDGETS_SRC})
 
 target_include_directories(${TARGET_NAME} PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}
+        ${PROJECT_SOURCE_DIR}/common
         ${PROJECT_SOURCE_DIR}/include
         ${KIRAN_STYLE_INCLUDE_DIRS})
 

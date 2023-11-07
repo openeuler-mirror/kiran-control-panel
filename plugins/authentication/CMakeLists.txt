@@ -2,12 +2,11 @@ set(TARGET_NAME kiran-cpanel-authentication)
 
 #pkg_search_module(KIRAN_AUTH_SERVICE REQUIRED kiran-authentication-service)
 set(AUTH_TS_FILES ${CMAKE_CURRENT_SOURCE_DIR}/translations/kiran-cpanel-authentication.zh_CN.ts)
-qt5_create_translation(AUTH_QM_FILES ${AUTH_TS_FILES} ${CMAKE_CURRENT_SOURCE_DIR})
 
 file(GLOB_RECURSE AUTHENTICATION_SRC
-        "src/*.cpp"
-        "src/*.h"
-        "src/*.ui")
+        ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/*.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/*.ui)
 
 kiran_qt5_add_dbus_interface_ex(KRAN_AUTHENTICATION_SRC
         data/com.kylinsec.Kiran.Authentication.xml
@@ -48,6 +47,4 @@ target_link_libraries(${TARGET_NAME}
         ${KIRAN_AUTH_SERVICE_LIBRARIES})
 
 install(TARGETS ${TARGET_NAME}
-        DESTINATION ${PLUGIN_LIBS_INSTALL_DIR}/)
-
-install(FILES ${AUTH_QM_FILES} DESTINATION ${TRANSLATION_INSTALL_DIR})
+        DESTINATION ${PLUGIN_LIBS_DIR}/)

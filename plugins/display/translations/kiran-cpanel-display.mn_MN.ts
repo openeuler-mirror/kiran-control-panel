@@ -1,4 +1,6 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="zh_CN">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.1" language="zh_CN">
 <context>
     <name>DevicePanel</name>
     <message>
@@ -186,28 +188,28 @@
         <translation>Хаах</translation>
     </message>
     <message>
-        <location filename="../src/display-page.cpp" line="258"/>
-        <location filename="../src/display-page.cpp" line="282"/>
+        <location filename="../src/display-page.cpp" line="255"/>
+        <location filename="../src/display-page.cpp" line="279"/>
         <source> (recommended)</source>
         <translation>( санал болгосон )</translation>
     </message>
     <message>
-        <location filename="../src/display-page.cpp" line="354"/>
+        <location filename="../src/display-page.cpp" line="351"/>
         <source>Is the display normal?</source>
         <translation>Дэлгэц хэвийн үү?</translation>
     </message>
     <message>
-        <location filename="../src/display-page.cpp" line="357"/>
+        <location filename="../src/display-page.cpp" line="354"/>
         <source>Save current configuration(K)</source>
         <translation>Одоогийн тохиргоог хадгалах ( K )</translation>
     </message>
     <message>
-        <location filename="../src/display-page.cpp" line="361"/>
+        <location filename="../src/display-page.cpp" line="358"/>
         <source>Restore previous configuration(R)</source>
         <translation>Өмнөх тохиргоог сэргээх ( R )</translation>
     </message>
     <message>
-        <location filename="../src/display-page.cpp" line="369"/>
+        <location filename="../src/display-page.cpp" line="366"/>
         <source>The display will resume the previous configuration in %1 seconds</source>
         <translation>Дэлгэц нь өмнөх тохиргоог% 1 секундын дотор дахин эхлүүлэх болно</translation>
     </message>
@@ -223,28 +225,28 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/display-config.cpp" line="468"/>
+        <location filename="../src/display-config.cpp" line="466"/>
         <location filename="../src/display-config.h" line="134"/>
-        <location filename="../src/display-page.cpp" line="390"/>
-        <location filename="../src/display-page.cpp" line="408"/>
+        <location filename="../src/display-page.cpp" line="387"/>
+        <location filename="../src/display-page.cpp" line="405"/>
         <source>Tips</source>
         <translation>Зөвлөмж</translation>
     </message>
     <message>
-        <location filename="../src/display-config.cpp" line="471"/>
+        <location filename="../src/display-config.cpp" line="469"/>
         <location filename="../src/display-config.h" line="137"/>
-        <location filename="../src/display-page.cpp" line="393"/>
-        <location filename="../src/display-page.cpp" line="411"/>
+        <location filename="../src/display-page.cpp" line="390"/>
+        <location filename="../src/display-page.cpp" line="408"/>
         <source>OK(K)</source>
         <translation>OK ( K )</translation>
     </message>
     <message>
-        <location filename="../src/display-page.cpp" line="397"/>
+        <location filename="../src/display-page.cpp" line="394"/>
         <source>Failed to apply display settings!%1</source>
         <translation>Дэлгэцийн тохиргоог ашиглаж чадсангүй!%1</translation>
     </message>
     <message>
-        <location filename="../src/display-page.cpp" line="415"/>
+        <location filename="../src/display-page.cpp" line="412"/>
         <source>Fallback display setting failed! %1</source>
         <translation>Fallback дэлгэцийн тохиргоо амжилтгүй боллоо! %1</translation>
     </message>

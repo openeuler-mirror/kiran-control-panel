@@ -13,6 +13,7 @@
  */
 
 #include "hover-tips.h"
+#include "logging-category.h"
 
 #include <QDebug>
 #include <QEvent>
@@ -39,7 +40,7 @@ void HoverTips::show(HoverTipsTypeEnum typeEnum, const QString &msg)
     auto iter = m_tipsTypeIconMap.find(typeEnum);
     if (iter == m_tipsTypeIconMap.end())
     {
-        KLOG_WARNING() << "HoverTips: invalid type enum" << typeEnum;
+        KLOG_WARNING(qLcCommonWidget) << "HoverTips invalid type enum" << typeEnum;
         return;
     }
 
@@ -66,7 +67,7 @@ void HoverTips::updatePostion()
 {
     if (parentWidget() == nullptr)
     {
-        KLOG_WARNING() << "HoverTips: parnetwidget is null,don't update position";
+        KLOG_WARNING(qLcCommonWidget) << "HoverTips parnetwidget is null,don't update position";
         return;
     }
 
@@ -98,7 +99,7 @@ void HoverTips::setIcon(HoverTips::HoverTipsTypeEnum typeEnum, const QString &ic
     QPixmap pixmap;
     if (!pixmap.load(icon) || pixmap.isNull())
     {
-        KLOG_WARNING() << "HoverTips: load icon" << icon << "failed.";
+        KLOG_WARNING(qLcCommonWidget) << "HoverTips load icon" << icon << "failed.";
         return;
     }
     m_tipsTypeIconMap[typeEnum] = icon;
