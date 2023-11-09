@@ -33,6 +33,7 @@ using namespace NetworkManager;
 #define STATUS_NOTIFIER_MANAGER_OBJECT_NAME "/StatusNotifierManager"
 #define MAX_WAIT_COUNTS 10
 #define MAX_HEIGHT 868
+#define KIRAN_CPANEL_NETWORK_CONFIG "/etc/kiran-control-panel/plugins/network.conf"
 
 NetworkTray::NetworkTray(QWidget *parent) : KiranRoundedTrayPopup(parent),
                                             m_wiredTrayPage(nullptr),
@@ -49,6 +50,7 @@ NetworkTray::~NetworkTray()
 void NetworkTray::init()
 {
     m_statusNotifierManager = new StatusNotifierManagerInterface(STATUS_NOTIFIER_MANAGER, STATUS_NOTIFIER_MANAGER_OBJECT_NAME, QDBusConnection::sessionBus(), this);
+    initTcpSocket();
     initUI();
     initMenu();
     initConnect();
@@ -158,7 +160,7 @@ void NetworkTray::initConnect()
 void NetworkTray::initTrayIcon()
 {
     m_systemTray = new QSystemTrayIcon();
-    setTrayIcon(NetworkManager::status());
+    updateTrayIcon();
     KLOG_DEBUG() << " NetworkManager::status():" << NetworkManager::status();
     m_systemTray->show();
 }
@@ -312,15 +314,15 @@ void NetworkTray::setTrayPagePos()
     getTrayGeometry();
     // 抵消KiranRoundedTrayPopup的margin
     int offset = 8;
-    int showPosY; 
+    int showPosY;
     // 托盘程序在顶端
-    if(m_yTray == 0)
+    if (m_yTray == 0)
     {
-        showPosY  = m_heightTray - offset;
+        showPosY = m_heightTray - offset;
     }
     else
     {
-        //托盘程序在底部
+        // 托盘程序在底部
         showPosY = m_yTray - pageHeight + offset;
     }
     this->move(m_xTray - pageWidth / 2, showPosY);
@@ -356,42 +358,64 @@ void NetworkTray::getTrayGeometry()
     m_yTray = static_cast<int>(y);
 }
 
-// TODO:增加其他状态图标
-void NetworkTray::setTrayIcon(NetworkManager::Status status)
+void NetworkTray::updateTrayIcon()
 {
-    QIcon icon;
+    auto status = NetworkManager::status();
+    QString iconPath;
+    QString toolTip;
     if (status == NetworkManager::Status::Connected)
     {
         // 判断主连接类型，托盘网络图标以主连接类型为准
         // NetworkManager::primaryConnectionType() 更新不及时，暂时不用
         ActiveConnection::Ptr primaryActiveConnection = primaryConnection();
-        if (primaryActiveConnection != nullptr)
+        if (primaryActiveConnection.isNull())
         {
-            auto primaryConnectionType = primaryActiveConnection->connection()->settings()->connectionType();
-            if (primaryConnectionType == ConnectionSettings::Wireless)
-            {
-                icon.addPixmap(NetworkUtils::trayIconColorSwitch(":/kcp-network-images/wireless-4.svg"));
-                icon.addPixmap(NetworkUtils::trayIconColorSwitch(":/kcp-network-images/wireless-4.svg", 64));
-            }
-            else
-            {
-                icon.addPixmap(NetworkUtils::trayIconColorSwitch(":/kcp-network-images/wired-connection.svg"));
-                icon.addPixmap(NetworkUtils::trayIconColorSwitch(":/kcp-network-images/wired-connection.svg", 64));
-            }
+            return;
         }
+
+        //NetworkManager::connectivity() 不准确，使用checkConnectivity
+        QDBusPendingReply<uint> reply = NetworkManager::checkConnectivity();
+        reply.waitForFinished();
+        uint result = reply.value();
+
+        if (result == NetworkManager::Connectivity::Full)
+        {
+            checkInternetConnectivity();
+            return;
+        }
+
+        if (NetworkManager::primaryConnectionType() == ConnectionSettings::Wireless)
+        {
+            iconPath = ":/kcp-network-images/wireless-error.svg";
+        }
+        else
+        {
+            iconPath = ":/kcp-network-images/wired-error.svg";
+        }
+        toolTip = tr("The network is connected, but you cannot access the Internet");
+        
     }
     else if ((status == NetworkManager::Status::Disconnecting) || (status == NetworkManager::Status::Connecting))
     {
         // TODO:加载动画
-        icon.addPixmap(NetworkUtils::trayIconColorSwitch(":/kcp-network-images/wired-disconnected.svg"));
-        icon.addPixmap(NetworkUtils::trayIconColorSwitch(":/kcp-network-images/wired-disconnected.svg", 64));
+        iconPath = ":/kcp-network-images/wired-disconnected.svg";
+        toolTip = tr("Network not connected");
     }
     else
     {
-        icon.addPixmap(NetworkUtils::trayIconColorSwitch(":/kcp-network-images/wired-disconnected.svg"));
-        icon.addPixmap(NetworkUtils::trayIconColorSwitch(":/kcp-network-images/wired-disconnected.svg", 64));
+        iconPath = ":/kcp-network-images/wired-disconnected.svg";
+        toolTip = tr("Network not connected");
     }
+    setTrayIcon(iconPath,toolTip);
+}
+
+void NetworkTray::setTrayIcon(const QString &iconPath,const QString &toolTip)
+{
+    QIcon icon;
+    icon.addPixmap(NetworkUtils::trayIconColorSwitch(iconPath));
+    icon.addPixmap(NetworkUtils::trayIconColorSwitch(iconPath, 64));
     m_systemTray->setIcon(icon);
+    m_systemTray->setToolTip(toolTip);
 }
 
 // 重新获取device、初始化，刷新
@@ -454,9 +478,8 @@ void NetworkTray::handleDeviceStateChanged(NetworkManager::Device::State newstat
     KLOG_DEBUG() << "Device oldstate:" << oldstate;
     KLOG_DEBUG() << "Device reason:" << reason;
 
-    //设备变为可用
-    if ((oldstate == Device::Unavailable || oldstate == Device::Unmanaged || oldstate == Device::UnknownState)
-        &&
+    // 设备变为可用
+    if ((oldstate == Device::Unavailable || oldstate == Device::Unmanaged || oldstate == Device::UnknownState) &&
         (newstate != Device::Unmanaged && newstate != Device::Unavailable && newstate != Device::UnknownState))
     {
         if (deviceType == Device::Ethernet)
@@ -485,16 +508,12 @@ void NetworkTray::handleDeviceStateChanged(NetworkManager::Device::State newstat
     QSet<Device::State> unavailableStates = {
         Device::Unavailable,
         Device::Unmanaged,
-        Device::UnknownState
-    };
+        Device::UnknownState};
 
     // 非休眠的情况下，从可用状态到不可用状态通知
-    if (!unavailableStates.contains(oldstate)
-        && 
-        unavailableStates.contains(newstate)
-        &&
-        reason != Device::SleepingReason
-        )
+    if (!unavailableStates.contains(oldstate) &&
+        unavailableStates.contains(newstate) &&
+        reason != Device::SleepingReason)
     {
         // 设备变为不可用时，如果无线和有线均不可用则显示网络不可用的提示
         KLOG_DEBUG() << "device is unavailable";
@@ -575,12 +594,13 @@ void NetworkTray::handleWirelessEnabledChanged(bool enable)
 
 void NetworkTray::handleNetworkManagerStatusChanged(NetworkManager::Status status)
 {
-    setTrayIcon(status);
+    KLOG_DEBUG() << "network status changed: " << status;
+    updateTrayIcon();
 }
 
 void NetworkTray::handlePrimaryConnectionChanged(const QString &uni)
 {
-    setTrayIcon(NetworkManager::status());
+    KLOG_DEBUG() << "primary connection changed: " << uni;
 }
 
 void NetworkTray::UnavailableTrayPage()
@@ -599,14 +619,13 @@ void NetworkTray::UnavailableTrayPage()
         m_wirelessTrayPage = nullptr;
     }
 
-    if(m_unavailableWidget != nullptr)
+    if (m_unavailableWidget != nullptr)
     {
         return;
     }
     initUnavailableWidget();
     m_verticalLayout->addWidget(m_unavailableWidget);
     KLOG_DEBUG() << "add unavailable widget";
-
 }
 
 void NetworkTray::reloadWiredTrayPage()
@@ -686,5 +705,63 @@ void NetworkTray::handleAdjustedTraySize(QSize sizeHint)
 
 void NetworkTray::handleThemeChanged(Kiran::PaletteType paletteType)
 {
-    setTrayIcon(NetworkManager::status());
+    updateTrayIcon();
+}
+
+void NetworkTray::initTcpSocket()
+{
+    m_tcpClient = new QTcpSocket(this);
+    connect(m_tcpClient, &QTcpSocket::connected, this, &NetworkTray::internetConnected);
+    connect(m_tcpClient, QOverload<QAbstractSocket::SocketError>::of(&QAbstractSocket::error), this, &NetworkTray::internetError);
+}
+
+void NetworkTray::checkInternetConnectivity()
+{
+    KLOG_DEBUG() << "check Internet Connectivity";
+    QSettings confSettings(KIRAN_CPANEL_NETWORK_CONFIG, QSettings::NativeFormat);
+    QVariant enable = confSettings.value(QString("CheckInternetConnectivity/Enable"));
+    if(!enable.toBool())
+    {
+        internetConnected();
+        return;
+    }
+    QVariant address = confSettings.value(QString("CheckInternetConnectivity/Address"));
+    QVariant port = confSettings.value(QString("CheckInternetConnectivity/Port"));
+    m_tcpClient->connectToHost(address.toString(), port.toInt());
+}
+
+void NetworkTray::internetConnected()
+{
+    KLOG_DEBUG() << "Connectivity check pass";
+    QString iconPath;
+    if (primaryConnectionType() == ConnectionSettings::Wireless)
+    {
+        iconPath = ":/kcp-network-images/wireless-4.svg";
+    }
+    else
+    {
+        iconPath = ":/kcp-network-images/wired-connection.svg";
+    }
+    QString toolTip = tr("Network connected");
+    setTrayIcon(iconPath,toolTip);
+
+    m_tcpClient->abort();
+}
+
+void NetworkTray::internetError(QAbstractSocket::SocketError socketError)
+{
+    KLOG_INFO() << "Connectivity check fail: " << socketError;
+    QString iconPath;
+    if (primaryConnectionType() == ConnectionSettings::Wireless)
+    {
+        iconPath = ":/kcp-network-images/wireless-error.svg";
+    }
+    else
+    {
+        iconPath = ":/kcp-network-images/wired-error.svg";
+    }
+    QString toolTip = tr("The network is connected, but you cannot access the Internet");
+    setTrayIcon(iconPath,toolTip);
+
+    m_tcpClient->abort();
 }

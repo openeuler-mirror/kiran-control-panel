@@ -22,6 +22,7 @@
 #include <QVBoxLayout>
 #include <QWidget>
 #include "kiran-rounded-tray-popup/kiran-rounded-tray-popup.h"
+#include <QTcpSocket>
 
 class WiredTrayWidget;
 class WirelessTrayWidget;
@@ -53,7 +54,6 @@ public:
 public slots:
     void handleTrayClicked(QSystemTrayIcon::ActivationReason reason);
     void showOrHideTrayPage();
-    void setTrayIcon(NetworkManager::Status status);
     void handleNetworkSettingClicked();
 
     void handleDeviceAdded(const QString &devicePath);
@@ -70,6 +70,16 @@ public slots:
     void handleAdjustedTraySize(QSize sizeHint);
 
     void handleThemeChanged(Kiran::PaletteType paletteType);
+
+private:
+    void updateTrayIcon();
+    void setTrayIcon(const QString &iconPath,const QString &toolTip);
+    void initTcpSocket();
+    void checkInternetConnectivity();
+
+private slots:
+    void internetConnected();
+    void internetError(QAbstractSocket::SocketError socketError);
 
 private:
     QSystemTrayIcon *m_systemTray;
@@ -93,6 +103,8 @@ private:
     QString m_addDevicePath;
     int m_waitCounts;
     QSize m_wirelessTraySizeHint;
+
+    QTcpSocket *m_tcpClient;
 };
 
 #endif  // KIRAN_CPANEL_NETWORK_MANAGER_TRAY_H
