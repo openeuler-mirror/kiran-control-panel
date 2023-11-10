@@ -26,9 +26,12 @@ public:
     SettingsContainer(QWidget* parent = nullptr);
     virtual ~SettingsContainer();
 
-    void addKiranSettingItem(QWidget* widget);
+    void addItem(QWidget* widget);
+    void removeItem(QWidget* widget);
+    void insertItem(int pos, QWidget* widget);
     void clear();
     void delAllItemOfLayout(QLayout* layout);
+    int getContainerLayoutSize();
 
 private:
     void init();

@@ -12,8 +12,8 @@
  * Author:     yinhongchang <yinhongchang@kylinsec.com.cn>
  */
 
-#ifndef __DEFAULTAPP_PLUGIN_H__
-#define __DEFAULTAPP_PLUGIN_H__
+#ifndef __APPLICATION_PLUGIN_H__
+#define __APPLICATION_PLUGIN_H__
 
 #include <QObject>
 #include <QTranslator>
@@ -23,7 +23,7 @@
 #include "plugin-subitem-interface.h"
 #include "utils.h"
 
-class DefaultappPlugin : public QObject,
+class ApplicationPlugin : public QObject,
                          public KiranControlPanel::PluginInterfaceV2
 {
     Q_OBJECT
@@ -31,8 +31,8 @@ class DefaultappPlugin : public QObject,
     Q_INTERFACES(KiranControlPanel::PluginInterfaceV2)
 
 public:
-    DefaultappPlugin(QObject* parent = nullptr);
-    ~DefaultappPlugin();
+    ApplicationPlugin(QObject* parent = nullptr);
+    virtual ~ApplicationPlugin();
 
     int init(KiranControlPanel::PanelInterface* interface) override;
     void uninit() override;

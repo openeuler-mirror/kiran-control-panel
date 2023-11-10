@@ -17,7 +17,7 @@
 #include <QFileInfo>
 #include <QSettings>
 #include <QTextStream>
-#include "defaultapp-plugin.h"
+#include "application-plugin.h"
 #include "mimetype-cache.h"
 #include "utils.h"
 

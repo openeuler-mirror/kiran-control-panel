@@ -84,4 +84,12 @@
         <file>images/iris-0.svg</file>
         <file>images/arrow.svg</file>
     </qresource>
+
+    <qresource prefix="/kcp-application">
+        <file>images/addition.svg</file>
+        <file>images/defaultapp.svg</file>
+        <file>images/autostart.svg</file>
+        <file>images/desktop-file.svg</file>
+    </qresource>
+
 </RCC>
