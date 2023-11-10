@@ -12,86 +12,86 @@
  * Author:     yinhongchang <yinhongchang@kylinsec.com.cn>
  */
 
-#include "defaultapp-subitem.h"
+#include "application-subitem.h"
 #include <qt5-log-i.h>
 
-DefaultAppSubItem::DefaultAppSubItem(CreateWidgetFunc func, QObject* parent)
+ApplicationSubItem::ApplicationSubItem(CreateWidgetFunc func, QObject* parent)
     : m_func(func), QObject(parent)
 {
 }
 
-DefaultAppSubItem::~DefaultAppSubItem()
+ApplicationSubItem::~ApplicationSubItem()
 {
 }
 
 // 功能项ID,用于区分功能项,应确保其唯一
-void DefaultAppSubItem::setID(const QString& subitemID)
+void ApplicationSubItem::setID(const QString& subitemID)
 {
     m_id = subitemID;
 }
 
-QString DefaultAppSubItem::getID()
+QString ApplicationSubItem::getID()
 {
     return m_id;
 }
 
 // 功能项名称，用于显示在启动器标题栏之中
-void DefaultAppSubItem::setName(const QString& name)
+void ApplicationSubItem::setName(const QString& name)
 {
     m_name = name;
 }
 
-QString DefaultAppSubItem::getName()
+QString ApplicationSubItem::getName()
 {
     return m_name;
 }
 
 // 获取功能项分类ID，该功能项属于哪个分类
-void DefaultAppSubItem::setCategory(const QString& category)
+void ApplicationSubItem::setCategory(const QString& category)
 {
     m_category = category;
 }
 
-QString DefaultAppSubItem::getCategory()
+QString ApplicationSubItem::getCategory()
 {
     return m_category;
 }
 
 // 获取功能项目状态描述，显示在功能项侧边栏右边状态文本描述
-void DefaultAppSubItem::setDesc(const QString& desc)
+void ApplicationSubItem::setDesc(const QString& desc)
 {
     m_desc = desc;
 }
 
-QString DefaultAppSubItem::getDesc()
+QString ApplicationSubItem::getDesc()
 {
     return m_desc;
 }
 
 // 获取功能项图标显示，用于形成功能项侧边栏的左侧图标
-void DefaultAppSubItem::setIcon(const QString& icon)
+void ApplicationSubItem::setIcon(const QString& icon)
 {
     m_icon = icon;
 }
 
-QString DefaultAppSubItem::getIcon()
+QString ApplicationSubItem::getIcon()
 {
     return m_icon;
 }
 
 // 获取功能项权重，用于多个功能项排序
-void DefaultAppSubItem::setWeight(int weight)
+void ApplicationSubItem::setWeight(int weight)
 {
     m_weight = weight;
 }
 
-int DefaultAppSubItem::getWeight()
+int ApplicationSubItem::getWeight()
 {
     return m_weight;
 }
 
 // 创建显示控件
-QWidget* DefaultAppSubItem::createWidget()
+QWidget* ApplicationSubItem::createWidget()
 {
     return m_func();
 }

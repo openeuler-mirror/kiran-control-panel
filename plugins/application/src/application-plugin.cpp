@@ -12,32 +12,33 @@
  * Author:     yinhongchang <yinhongchang@kylinsec.com.cn>
  */
 
-#include "defaultapp-plugin.h"
+#include "application-plugin.h"
 #include "config.h"
-#include "defaultapp-subitem.h"
+#include "application-subitem.h"
 #include "defaultapp.h"
+#include "autostart-page.h"
 
 #include <kiran-log/qt5-log-i.h>
 #include <kiran-session-daemon/appearance-i.h>
 #include <QCoreApplication>
 #include <tuple>
 
-DefaultappPlugin::DefaultappPlugin(QObject* parent) : QObject(parent)
+ApplicationPlugin::ApplicationPlugin(QObject* parent) : QObject(parent)
 {
 }
 
-DefaultappPlugin::~DefaultappPlugin()
+ApplicationPlugin::~ApplicationPlugin()
 {
 }
 
-int DefaultappPlugin::init(KiranControlPanel::PanelInterface* interface)
+int ApplicationPlugin::init(KiranControlPanel::PanelInterface* interface)
 {
     initTranslator();
     initSubItem();
     return 0;
 }
 
-void DefaultappPlugin::uninit()
+void ApplicationPlugin::uninit()
 {
     if (m_translator)
     {
@@ -47,16 +48,20 @@ void DefaultappPlugin::uninit()
     }
 }
 
-QVector<KiranControlPanel::SubItemPtr> DefaultappPlugin::getSubItems()
+QVector<KiranControlPanel::SubItemPtr> ApplicationPlugin::getSubItems()
 {
     return m_subitems;
 }
 
-void DefaultappPlugin::initSubItem()
+void ApplicationPlugin::initSubItem()
 {
     auto defaultAppSubItemCreater = []() -> QWidget*
     {
         return new DefaultApp();
+    };
+    auto autoStartSubItemCreater = []() -> QWidget*
+    {
+        return new AutostartPage();
     };
     struct SubItemStruct
     {
@@ -73,20 +78,20 @@ void DefaultappPlugin::initSubItem()
          tr("DefaultApp"),
          "app-manager",
          "",
-         ":/kcp-defaultapp-images/defaultapp.svg",
+         ":/kcp-application/images/defaultapp.svg",
          99,
          defaultAppSubItemCreater},
-        {"DefaultApp",
-         tr("DefaultApp"),
+        {"AutoStart",
+         tr("AutoStart"),
          "app-manager",
          "",
-         ":/kcp-defaultapp-images/defaultapp.svg",
+         ":/kcp-application/images/autostart.svg",
          98,
-         defaultAppSubItemCreater}};
+         autoStartSubItemCreater}};
 
     for (const SubItemStruct& subitemInfo : subitemInfos)
     {
-        DefaultAppSubItem* subitem = new DefaultAppSubItem(subitemInfo.func);
+        ApplicationSubItem* subitem = new ApplicationSubItem(subitemInfo.func);
 
         subitem->setID(subitemInfo.id);
         subitem->setName(subitemInfo.name);
@@ -98,7 +103,7 @@ void DefaultappPlugin::initSubItem()
     }
 }
 
-void DefaultappPlugin::initTranslator()
+void ApplicationPlugin::initTranslator()
 {
     if (m_translator != nullptr)
     {
@@ -109,12 +114,12 @@ void DefaultappPlugin::initTranslator()
 
     m_translator = new QTranslator;
     if (!m_translator->load(QLocale(),
-                            "kiran-cpanel-defaultapp",
+                            "kiran-cpanel-application",
                             ".",
                             TRANSLATE_PREFIX,
                             ".qm"))
     {
-        KLOG_DEBUG() << "Kiran cpanel defaultapp load translation failed";
+        KLOG_WARNING() << "Kiran cpanel application load translation failed";
         delete m_translator;
         m_translator = nullptr;
     }

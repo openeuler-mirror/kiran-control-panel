@@ -12,8 +12,8 @@
  * Author:     yinhongchang <yinhongchang@kylinsec.com.cn>
  */
 
-#ifndef __DEFAULTAPP_SUBITEM_H__
-#define __DEFAULTAPP_SUBITEM_H__
+#ifndef __APPLICATION_SUBITEM_H__
+#define __APPLICATION_SUBITEM_H__
 
 #include <QObject>
 #include <QVector>
@@ -23,13 +23,13 @@
 
 typedef QWidget* (*CreateWidgetFunc)();
 
-class DefaultAppSubItem : public QObject,
+class ApplicationSubItem : public QObject,
                           public KiranControlPanel::PluginSubitemInterface
 {
     Q_OBJECT
 public:
-    DefaultAppSubItem(CreateWidgetFunc func, QObject* parent = nullptr);
-    ~DefaultAppSubItem();
+    ApplicationSubItem(CreateWidgetFunc func, QObject* parent = nullptr);
+    ~ApplicationSubItem();
 
 public:
     // 功能项ID,用于区分功能项,应确保其唯一
