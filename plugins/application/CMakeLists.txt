@@ -4,18 +4,15 @@ pkg_search_module(Qt5Xdg REQUIRED Qt5Xdg)
 pkg_search_module(GLIB_2 REQUIRED glib-2.0)
 find_package(KF5Config REQUIRED)
 
-file(GLOB_RECURSE DEFAULT_SRC ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp
-                             ${CMAKE_CURRENT_SOURCE_DIR}/*.h
-                             ${CMAKE_CURRENT_SOURCE_DIR}/*.ui)
+file(GLOB_RECURSE APPLICATION_PLUGIN_SRC
+                  ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/*.h
+                  ${CMAKE_CURRENT_SOURCE_DIR}/*.ui)
 
-file(GLOB_RECURSE QRC "resources/*.qrc")
 set(DEFAULTAPP_INCLUDE_DIRS src src/pages ${CMAKE_SOURCE_DIR}/lib/common-widgets/kiran-setting-container)
 
 add_library(${TARGET_NAME} SHARED
-        ${DEFAULT_SRC}
-        ${GLOB_RECURSE}
-        )
-
+        ${DEFAULT_SRC})
 
 target_include_directories(${TARGET_NAME} PRIVATE
         ${CMAKE_CURRENT_BINARY_DIR}
@@ -37,6 +34,7 @@ target_link_libraries(${TARGET_NAME}
         Qt5::DBus
         Qt5::Svg
         Qt5::PrintSupport
+        KF5::ConfigCore
         KF5::ConfigCore
         ${KIRAN_WIDGETS_LIBRARIES}
         ${KIRAN_WIDGETS_QT5_LIBRARIES}

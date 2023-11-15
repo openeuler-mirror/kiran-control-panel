@@ -124,7 +124,7 @@ void AccountWidget::initUI()
 {
     /* 遮罩,用于繁忙时屏蔽用户操作 */
     m_maskWidget = new MaskWidget(this);
-    m_maskWidget->setVisible(false);
+    m_maskWidget->setVisible(true);
 
     /* 初始化界面主布局 */
     auto contentLayout = new QHBoxLayout(this);
@@ -326,7 +326,7 @@ void AccountWidget::setMaskVisible(bool visible)
 {
     if (visible)
     {
-        this->stackUnder(m_maskWidget);
+        m_maskWidget->raise();
         m_maskWidget->show();
     }
     else
