@@ -10,12 +10,10 @@ pkg_search_module(KIRAN_CC_DAEMON REQUIRED kiran-cc-daemon)
 pkg_search_module(KIRAN_STYLE_HELPER REQUIRED kiran-style-helper)
 
 file(GLOB_RECURSE SRC
-        "src/*.cpp"
-        "src/*.h")
-        
+        ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/*.h)
+
 include_directories("${CMAKE_BINARY_DIR}" "src" )
-file(GLOB TS_FILES "translations/*.ts")
-qt5_create_translation( TIMEDATE_QM_FILES ${CMAKE_CURRENT_SOURCE_DIR} ${TS_FILES} )
 
 add_library(${TARGET_NAME} SHARED
         ${SRC}
@@ -23,13 +21,10 @@ add_library(${TARGET_NAME} SHARED
         ${TIMEDATE_QM_FILES})
 
 target_include_directories(${TARGET_NAME} PRIVATE
-        include
-        src/dbus-api-wrapper
-        src/timezone
-        src/widgets
-        src/tools
-        src/pages
-        ${KCP_PLUGIN_INCLUDE_DIR}
+        ${CMAKE_CURRENT_SOURCE_DIR}
+        ${CMAKE_CURRENT_SOURCE_DIR}/dbus-api-wrapper
+        ${CMAKE_CURRENT_SOURCE_DIR}/pages
+        ${PROJECT_SOURCE_DIR}/include
         ${KIRAN_WIDGETS_QT5_INCLUDE_DIRS}
         ${KLOG_QT5_INCLUDE_DIRS}
         ${KIRAN_CONTROL_PANEL_PKG_INCLUDE_DIRS}
@@ -48,7 +43,4 @@ target_link_libraries(${TARGET_NAME}
         ${KIRAN_STYLE_HELPER_LIBRARIES})
 
 #安装插件
-install(TARGETS ${TARGET_NAME} DESTINATION ${PLUGIN_LIBS_INSTALL_DIR})
-
-#安装翻译文件
-install(FILES ${TIMEDATE_QM_FILES} DESTINATION ${TRANSLATION_INSTALL_DIR} )
+install(TARGETS ${TARGET_NAME} DESTINATION ${PLUGIN_LIBS_DIR})

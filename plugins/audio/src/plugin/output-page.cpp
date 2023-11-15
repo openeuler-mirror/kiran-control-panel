@@ -21,8 +21,8 @@
 #include <qt5-log-i.h>
 #include <QComboBox>
 
-OutputPage::OutputPage(QWidget *parent) : QWidget(parent), 
-                                        ui(new Ui::OutputPage), 
+OutputPage::OutputPage(QWidget *parent) : QWidget(parent),
+                                        ui(new Ui::OutputPage),
                                         m_audioInterface(nullptr),
                                         m_defaultSink(nullptr)
 {
@@ -52,7 +52,7 @@ void OutputPage::init()
     ui->volumeSetting->setRange(0, 100);
     ui->volumeSetting->setSingleStep(1);
     ui->volumeSetting->setPageStep(1);
-    
+
     ui->volumeBalance->setRange(-100, 100);
     ui->volumeBalance->setSingleStep(1);
     ui->volumeBalance->setPageStep(1);
@@ -67,7 +67,7 @@ void OutputPage::initOutputDevice()
     QDBusPendingReply<QString> defaultSinkPath = m_audioInterface->GetDefaultSink();
     KLOG_DEBUG() << "defaultSink" << defaultSinkPath;
     KLOG_DEBUG() << "defaultSinkPath.isValid():" << defaultSinkPath.isValid();
-    
+
     if(defaultSinkPath.isValid())
     {
         QString defaultSinkPathString = defaultSinkPath.value();
@@ -75,7 +75,7 @@ void OutputPage::initOutputDevice()
         {
             m_defaultSink = new AudioDeviceInterface(AUDIO_DBUS_NAME, defaultSinkPath, QDBusConnection::sessionBus(), this);
             initActivedPort();
-            
+
             connect(m_defaultSink, &AudioDeviceInterface::volumeChanged, this, &OutputPage::handleVolumeChanged);
             connect(m_defaultSink, &AudioDeviceInterface::balanceChanged, this, &OutputPage::handleBalanceChanged);
             connect(m_defaultSink, &AudioDeviceInterface::active_portChanged, this, &OutputPage::handleActivePortChanged);
@@ -150,7 +150,7 @@ void OutputPage::initConnect()
                 QString namePort = ui->outputDevices->itemData(index, Qt::UserRole).toString();
                 KLOG_DEBUG() << "SetActivePort:" << namePort;
                 if(m_defaultSink != nullptr)
-                    m_defaultSink->SetActivePort(namePort); 
+                    m_defaultSink->SetActivePort(namePort);
                 else
                     KLOG_DEBUG() << "m_defaultSink is null"; });
 
@@ -159,9 +159,9 @@ void OutputPage::initConnect()
                 double volumeValue = static_cast<double>(ui->volumeSetting->sliderPosition()) / static_cast<double>(100);
                 if(m_defaultSink != nullptr)
                 {
-                    m_defaultSink->SetVolume(volumeValue); 
+                    m_defaultSink->SetVolume(volumeValue);
                     KLOG_DEBUG() << "SetVolume:" << volumeValue;
-                }  
+                }
                 else
                     KLOG_DEBUG() << "m_defaultSink is null"; });
 
@@ -214,11 +214,11 @@ void OutputPage::disableSettings()
 {
     ui->outputDevices->insertItem(0, tr("No output device detected"));
     ui->outputDevices->setEnabled(false);
-    
+
     ui->volumeSetting->setValue(0);
     ui->outputVolume->setText(QString::number(0) + "%");
     ui->volumeSetting->setEnabled(false);
-    
+
     ui->volumeBalance->setValue(0);
     ui->volumeBalance->setEnabled(false);
 }
@@ -257,7 +257,7 @@ void OutputPage::handleSinkAdded(int index)
 }
 
 //当pulseAudio被kill时，会发出SinkDelete和SourceDelete信号
-void OutputPage::handleSinkDelete(int index)
+void OutputPage::handleSinkDelete(uint index)
 {
     KLOG_DEBUG() << "SinkDelete";
     QDBusPendingReply<QStringList> getSinks = m_audioInterface->GetSinks();

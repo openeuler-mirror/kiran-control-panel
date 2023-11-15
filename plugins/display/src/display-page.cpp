@@ -24,11 +24,11 @@
 
 DisplayPage::DisplayPage(QWidget *parent)
     : QWidget(parent),
-      m_btnGroup(nullptr),
+      ui(new Ui::DisplayPage),
       m_displayConfig(),
       m_displayConfigData(nullptr),
       m_currentMonitorData(nullptr),
-      ui(new Ui::DisplayPage)
+      m_btnGroup(nullptr)
 {
     ui->setupUi(this);
 
@@ -465,7 +465,7 @@ void DisplayPage::showExtraModeData(const QString &monitorPath)
     }
     if (enablePaths.count() <= 1 && enablePaths.contains(m_curMonitorPath))
     {
-        // 当只剩一个开启的显示器时，选择为主显示器 
+        // 当只剩一个开启的显示器时，选择为主显示器
         if(ui->enabledButton->isChecked())
             ui->pushButton_extra_primary->setChecked(true);
     }
@@ -542,7 +542,7 @@ void DisplayPage::handleEnabledButtonToggled(bool checked)
     if(checked == false)
         ui->pushButton_extra_primary->setChecked(false);
     ui->pushButton_extra_primary->setEnabled(extraPrimaryBtnStatus(!ui->enabledButton->isEnabled(), checked));
-    
+
     ui->comboBox_extra_resolving->setEnabled((checked));
     ui->comboBox_extra_refreshRate->setEnabled(checked);
     ui->comboBox_extra_windowScalingFactor->setEnabled(checked);

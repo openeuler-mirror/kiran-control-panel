@@ -1,8 +1,0 @@
-/*侧边栏*/
-QWidget#siderbarWidget {
-  border-right: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-QLabel#label_brightnessPercent{
-  color: #2eb3ff;
-}

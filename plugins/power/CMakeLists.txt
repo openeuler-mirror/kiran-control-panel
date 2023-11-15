@@ -11,7 +11,7 @@ set(POWER_PLUGIN_DBUS_SRC_LIST "")
 set(KSD_POWER_XML data/com.kylinsec.Kiran.SessionDaemon.Power.xml)
 set_source_files_properties(${KSD_POWER_XML}
         PROPERTIES
-        INCLUDE src/dbus/idle-action.h)
+        INCLUDE dbus/idle-action.h)
 kiran_qt5_add_dbus_interface_ex(KSD_POWER_SRC
         ${KSD_POWER_XML}
         ksd_power_proxy
@@ -34,32 +34,22 @@ list(APPEND POWER_PLUGIN_DBUS_SRC_LIST ${GNOME_SESSION_MANAGER_SOUCE})
 
 
 file(GLOB_RECURSE POWER_SRC
-        "src/*.cpp"
-        "src/*.h"
-        "src/*.ui")
-
-file(GLOB_RECURSE POWER_QRC
-        "resources/*.qrc")
-
-set( POWER_TS_FILES "translations/kiran-cpanel-power.zh_CN.ts" )
-qt5_create_translation(POWER_QM_FILES 
-        ${CMAKE_CURRENT_SOURCE_DIR} 
-        ${POWER_TS_FILES}
-        OPTIONS -no-obsolete)
+        ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/*.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/*.ui)
 
 add_library(${TARGET_NAME} SHARED
         ${POWER_SRC}
-        ${POWER_QRC}
-        ${POWER_QM_FILES}
         ${POWER_PLUGIN_DBUS_SRC_LIST})
 
 target_include_directories(${TARGET_NAME} PRIVATE
+        ${PROJECT_SOURCE_DIR}/common
+        ${PROJECT_SOURCE_DIR}/include
         ${CMAKE_BINARY_DIR}
-        ${CMAKE_CURRENT_SOURCE_DIR}/src
+        ${CMAKE_CURRENT_SOURCE_DIR}
         ${KIRAN_WIDGETS_INCLUDE_DIRS}
         ${KIRAN_CC_DAEMON_INCLUDE_DIRS}
         ${KLOG_INCLUDE_DIRS}
-        ${KIRAN_CONTROL_PANEL_PKG_INCLUDE_DIRS}
         ${QGSETTINGS_INCLUDE_DIRS}
         ${UPOWER_GLIB_INCLUDE_DIRS}
         ${KCP_PLUGIN_INCLUDE_DIR})
@@ -73,8 +63,5 @@ target_link_libraries(${TARGET_NAME}
         ${QGSETTINGS_LIBRARIES}
         ${UPOWER_GLIB_LIBRARIES})
 
-# 安装插件翻译
-install(FILES ${POWER_QM_FILES} DESTINATION ${TRANSLATION_INSTALL_DIR})
-
 # 安装插件
-install(TARGETS ${TARGET_NAME} DESTINATION ${PLUGIN_LIBS_INSTALL_DIR}/)
+install(TARGETS ${TARGET_NAME} DESTINATION ${PLUGIN_LIBS_DIR}/)

@@ -165,13 +165,14 @@ int main(int argc, char *argv[])
         exit(EXIT_SUCCESS);
     }
 
+    // 安装翻译
+    installTranslator();
+
     PluginManager* pManager = PluginManager::instance();
     pManager->init();
 
     CategoryManager* cManager = CategoryManager::instance();
     cManager->init();
-
-    cManager->dump();
 
     // 输出所有插件，所有功能子项的信息
     if( listAllPluginInfo )
@@ -179,9 +180,6 @@ int main(int argc, char *argv[])
         cManager->dump();
         exit(EXIT_SUCCESS);
     }
-
-    // 安装翻译
-    installTranslator();
 
     PanelWindow w;
     w.jump(defaultCategory,defaultSubItem);

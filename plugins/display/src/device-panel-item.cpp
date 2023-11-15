@@ -16,7 +16,15 @@
 #include <QMouseEvent>
 #include <QPainter>
 
-DevicePanelItem::DevicePanelItem(const QString &monitorPath, QWidget *parent) : QPushButton(parent), m_mousePress(false), m_mouseDrag(false), m_statusType(QEvent::None), m_enabled(true), m_anchorByBtn(NULL), m_rotateDrect(DISPLAY_ROTATION_0), m_displayReflectType(DISPLAY_REFLECT_NORMAL)
+DevicePanelItem::DevicePanelItem(const QString &monitorPath, QWidget *parent)
+    : QPushButton(parent),
+      m_mousePress(false),
+      m_mouseDrag(false),
+      m_statusType(QEvent::None),
+      m_anchorByBtn(NULL),
+      m_enabled(true),
+      m_rotateDrect(DISPLAY_ROTATION_0),
+      m_displayReflectType(DISPLAY_REFLECT_NORMAL)
 {
     setAccessibleName("DevicePanelItem");
     setCheckable(true);
@@ -52,9 +60,9 @@ void DevicePanelItem::paintEvent(QPaintEvent *)
     QRect rect = this->rect();
     rect.adjust(1, 1, -1, -1);
 
-    //QFontMetrics fm = painter.fontMetrics();
-    //float zoom = rect.width() / fm.width(text());
-    float pixsize = 22;  //zoom*15.0;
+    // QFontMetrics fm = painter.fontMetrics();
+    // float zoom = rect.width() / fm.width(text());
+    float pixsize = 22;  // zoom*15.0;
     pixsize = pixsize > 10.0 ? pixsize : 10.0;
     pixsize = pixsize < 60.0 ? pixsize : 60.0;
     QFont font;
@@ -81,10 +89,10 @@ void DevicePanelItem::paintEvent(QPaintEvent *)
     {
         switch (m_statusType)
         {
-        case QEvent::HoverEnter:  //hover
+        case QEvent::HoverEnter:  // hover
             brush = QBrush(QColor(121, 195, 255));
             break;
-        case QEvent::FocusIn:  //checked
+        case QEvent::FocusIn:  // checked
             brush = QBrush("#2eb3ff");
             break;
         default:
@@ -97,22 +105,22 @@ void DevicePanelItem::paintEvent(QPaintEvent *)
         painter.fillRect(rect, brush);
     }
 
-    //矩形绘制完成后，再处理文字旋转、镜像问题。缩小旋转、镜像的影响范围。
-    //先旋转
-    int flag = 0;   //以X轴翻转。
-    int flag2 = 0;  //以Y轴翻转。
+    // 矩形绘制完成后，再处理文字旋转、镜像问题。缩小旋转、镜像的影响范围。
+    // 先旋转
+    int flag = 0;   // 以X轴翻转。
+    int flag2 = 0;  // 以Y轴翻转。
     switch (m_rotateDrect)
     {
-    case DISPLAY_ROTATION_0:  //含义逆时针
+    case DISPLAY_ROTATION_0:  // 含义逆时针
     {
         rect.moveTo(0, 0);
         flag = -1;
         flag2 = -1;
     }
     break;
-    case DISPLAY_ROTATION_90:  //含义逆时针
+    case DISPLAY_ROTATION_90:  // 含义逆时针
     {
-        painter.rotate(270);  //顺时针旋转
+        painter.rotate(270);   // 顺时针旋转
         int height = rect.height();
         rect.setHeight(rect.width());
         rect.setWidth(height);
@@ -144,12 +152,12 @@ void DevicePanelItem::paintEvent(QPaintEvent *)
         break;
     }
 
-    //x,y轴翻转。
+    // x,y轴翻转。
     qreal sx = 1, sy = 1;
     if (m_displayReflectType & DISPLAY_REFLECT_Y)
     {
         int textHeight = painter.fontMetrics().ascent() - painter.fontMetrics().descent();
-        rect.moveTo(rect.x(), rect.y() + flag * rect.height() - textHeight / 5);  //防止文字翻转之后，位置变动。为什么是除以5
+        rect.moveTo(rect.x(), rect.y() + flag * rect.height() - textHeight / 5);  // 防止文字翻转之后，位置变动。为什么是除以5
         sy = -1;
     }
     if (m_displayReflectType & DISPLAY_REFLECT_X)
@@ -311,11 +319,11 @@ void DevicePanelItem::setAnchorByBtn(DevicePanelItem *anchorByBtn, const DeviceP
     {
         m_anchorByBtn->removeAnchoredChildBtn(this);
     }
-    //now
+    // now
     m_anchorByBtn = anchorByBtn;
     m_anchorByDrect = anchorByDrect;
     if (anchorByBtn) anchorByBtn->appendAnchoredChildBtn(this);
-    //update pos
+    // update pos
     updateOffset(anchorByBtn, anchorByDrect, m_mouseDrag);
     updateScreenGeometry();
     //

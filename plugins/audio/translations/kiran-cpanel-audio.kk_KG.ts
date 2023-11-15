@@ -1,13 +1,15 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="zh_CN">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.1" language="zh_CN">
 <context>
     <name>AudioSystemTray</name>
     <message>
-        <location filename="../src/system-tray/audio-system-tray.cpp" line="91"/>
+        <location filename="../src/system-tray/audio-system-tray.cpp" line="95"/>
         <source>Volume Setting</source>
         <translation>Томду орнотуу</translation>
     </message>
     <message>
-        <location filename="../src/system-tray/audio-system-tray.cpp" line="92"/>
+        <location filename="../src/system-tray/audio-system-tray.cpp" line="96"/>
         <source>Mixed Setting</source>
         <translation>Аралаш орнотуу</translation>
     </message>
@@ -63,7 +65,7 @@
         <translation>Пикирлер көлөмү</translation>
     </message>
     <message>
-        <location filename="../src/plugin/input-page.cpp" line="240"/>
+        <location filename="../src/plugin/input-page.cpp" line="278"/>
         <source>No input device detected</source>
         <translation>Кирүү түзмөк табылган жок</translation>
     </message>
@@ -116,7 +118,7 @@
         <translation>Туура</translation>
     </message>
     <message>
-        <location filename="../src/plugin/output-page.cpp" line="96"/>
+        <location filename="../src/plugin/output-page.cpp" line="215"/>
         <source>No output device detected</source>
         <translation>Чыгуу түзмөк табылган жок</translation>
     </message>
@@ -146,7 +148,7 @@
     </message>
     <message>
         <location filename="../src/system-tray/volume-setting-page.ui" line="101"/>
-        <location filename="../src/system-tray/volume-setting-page.cpp" line="59"/>
+        <location filename="../src/system-tray/volume-setting-page.cpp" line="96"/>
         <source>Volume</source>
         <translation>Том</translation>
     </message>

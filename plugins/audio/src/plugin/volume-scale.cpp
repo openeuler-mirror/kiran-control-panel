@@ -41,7 +41,6 @@ void VolumeScale::drawTicks(QPainter *painter)
 {
     painter->setPen(Qt::transparent);
     int posX = 0;
-    int posY = 0;
     int length = geometry().width();
 
     int ticksCount = length / TICK_SPACE;

@@ -1,0 +1,18 @@
+#ifndef __KIRAN_CONFIG_H__
+
+#define SETTINGS_PATH              "@KCP_SETTINGS@"
+#define CATEGORY_DESKTOP_DIR       "@CATEGORY_DESKTOP_DIR@"
+#define CATEGORY_ICON_DIR          "@CATEGORY_ICON_DIR@"
+
+#define PLUGIN_DESKTOP_DIR         "@PLUGIN_DESKTOP_DIR@"
+#define PLUGIN_LIBRARY_DIR         "@PLUGIN_LIBS_DIR@"
+
+#define TRANSLATE_PREFIX           "@TRANSLATION_DIR@"
+#define PANEL_FULL_PATH            "@CMAKE_INSTALL_FULL_BINDIR@/kiran-control-panel"
+
+#define ACCOUNT_AVATAR_EDITOR       "@CMAKE_INSTALL_FULL_LIBEXECDIR@/kiran-avatar-editor"
+#define ACCOUNT_DEFAULT_SHELL       "/bin/bash"
+#define ACCOUNT_BUILDIN_AVATAR_DIR  "@ACCOUNT_BUILDIN_AVATAR_DIR@"
+#define ACCOUNT_DEFAULT_AVATAR      "@ACCOUNT_DEFAULT_AVATAR@"
+
+#endif // __KIRAN_CONFIG_H__
