@@ -1,7 +1,8 @@
 #pragma once
 #include <QWidget>
 
-namespace Ui {
+namespace Ui
+{
 class ListExpansionSpace;
 }
 
@@ -18,7 +19,7 @@ signals:
     void removedListWidgetItem();
 
 public slots:
-    void addListExpansionSpaceItem(QWidget* widget);
+    void addListExpansionSpaceItem(QWidget *widget);
     void removeListExpansionSpaceCurrentItem();
     void removeListExpansionSpaceItem(int index);
 

@@ -1,9 +1,10 @@
-#include <QWidget>
 #include <QPropertyAnimation>
+#include <QWidget>
 
 class QPropertyAnimation;
 
-namespace Ui {
+namespace Ui
+{
 class KiranCollapse;
 }
 
@@ -12,11 +13,11 @@ class KiranCollapse : public QWidget
     Q_OBJECT
 
 public:
-    explicit KiranCollapse(QWidget *parent = nullptr);
-    KiranCollapse(bool defaultIsExpand, const QString& title, QWidget* expandSpaceWidget, QWidget *parent = nullptr);
+    explicit KiranCollapse(QWidget* parent = nullptr);
+    KiranCollapse(bool defaultIsExpand, const QString& title, QWidget* expandSpaceWidget, QWidget* parent = nullptr);
     ~KiranCollapse() override;
 
-    void setTitle(const QString &title);
+    void setTitle(const QString& title);
     void addTopBarWidget(QWidget* widget);
     void setTobBarFixedHeight(int height);
 
@@ -24,7 +25,7 @@ public:
     void setIsExpand(bool isExpanded);
     void setMaximumExpansionHeight(int maxExpandHeight);
     void setExpandSpaceAnimation();
-    void addExpansionSpaceWidget(QWidget *widget);
+    void addExpansionSpaceWidget(QWidget* widget);
     void delExpansionSpaceWidget(int index);
     void delExpansionSpaceWidget(const QString& widgetName);
     void delAllExpansionSpaceWidget();
@@ -47,7 +48,7 @@ private:
     void init();
 
 private:
-    Ui::KiranCollapse *ui;
+    Ui::KiranCollapse* ui;
 
     bool m_isExpanded = false;
     // 展开高度

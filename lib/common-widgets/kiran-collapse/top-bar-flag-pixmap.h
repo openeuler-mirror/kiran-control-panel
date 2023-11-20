@@ -2,7 +2,8 @@
 
 #include <QPixmap>
 
-class FlagPixmap {
+class FlagPixmap
+{
 public:
     // 默认展开图标
     static QPixmap expansionFlagPixmap();

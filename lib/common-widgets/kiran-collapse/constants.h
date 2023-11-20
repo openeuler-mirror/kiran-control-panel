@@ -1,6 +1,7 @@
 #pragma once
 
-namespace Kiran{
+namespace Kiran
+{
 // icon
 #define RIGHT_ARROW ":/kiran-control-panel/images/arrow.svg"
 
