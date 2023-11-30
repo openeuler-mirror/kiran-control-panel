@@ -38,14 +38,24 @@ const QStringList IconThemePage::m_fallbackIcons = {"accessories-calculator",
                                               "preferences-desktop-wallpaper"};
 // 特殊主题展示图标
 const QMap<QString,QStringList> IconThemePage::m_specifyIcons = {
-                                {"KiranNew",
+                                {"Spring",
                                     {"kc-calculator",
                                      "smplayer",
-                                     "firefox",
-                                     "thunderbird",
+                                     "fcitx",
+                                     "engrampa",
                                      "utilities-terminal",
                                      "brasero",
-                                     "accessories-text-editor"
+                                     "org.gnome.Software"
+                                     }
+                                },
+				{"Summer",
+                                    {"kc-calculator",
+                                     "smplayer",
+                                     "fcitx",
+                                     "engrampa",
+                                     "utilities-terminal",
+                                     "brasero",
+                                     "org.gnome.Software"
                                      }
                                 }};
 // clang-format on
@@ -86,7 +96,7 @@ void IconThemePage::loadIconThemes()
     for (auto theme : themeInfos)
     {
         // 过滤非白名单主题
-        static const QStringList iconThemeWhiteList = {"Kiran", "Adwaita", "KiranNew"};
+        static const QStringList iconThemeWhiteList = {"Kiran", "Adwaita", "Spring","Summer"};
         if (!iconThemeWhiteList.contains(theme.name))
         {
             continue;
