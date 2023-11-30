@@ -1,13 +1,15 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="zh_CN">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.1" language="zh_CN">
 <context>
     <name>AudioSystemTray</name>
     <message>
-        <location filename="../src/system-tray/audio-system-tray.cpp" line="91"/>
+        <location filename="../src/system-tray/audio-system-tray.cpp" line="95"/>
         <source>Volume Setting</source>
         <translation>Көлемді белгілеу</translation>
     </message>
     <message>
-        <location filename="../src/system-tray/audio-system-tray.cpp" line="92"/>
+        <location filename="../src/system-tray/audio-system-tray.cpp" line="96"/>
         <source>Mixed Setting</source>
         <translation>Аралас баптау</translation>
     </message>
@@ -63,7 +65,7 @@
         <translation>Кері байланыс көлемі</translation>
     </message>
     <message>
-        <location filename="../src/plugin/input-page.cpp" line="240"/>
+        <location filename="../src/plugin/input-page.cpp" line="278"/>
         <source>No input device detected</source>
         <translation>Кіріс құрылғысы табылмады</translation>
     </message>
@@ -116,7 +118,7 @@
         <translation>Оң</translation>
     </message>
     <message>
-        <location filename="../src/plugin/output-page.cpp" line="96"/>
+        <location filename="../src/plugin/output-page.cpp" line="215"/>
         <source>No output device detected</source>
         <translation>Шығу құрылғысы табылмады</translation>
     </message>
@@ -146,7 +148,7 @@
     </message>
     <message>
         <location filename="../src/system-tray/volume-setting-page.ui" line="101"/>
-        <location filename="../src/system-tray/volume-setting-page.cpp" line="59"/>
+        <location filename="../src/system-tray/volume-setting-page.cpp" line="96"/>
         <source>Volume</source>
         <translation>Көлемі</translation>
     </message>

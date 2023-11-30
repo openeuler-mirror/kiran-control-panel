@@ -45,9 +45,27 @@ SettingsContainer::~SettingsContainer()
 {
 }
 
-void SettingsContainer::addKiranSettingItem(QWidget* widget)
+void SettingsContainer::addItem(QWidget* widget)
 {
     m_containerLayout->addWidget(widget, 0);
+    adjustSizeToItmes();
+}
+
+void SettingsContainer::removeItem(QWidget* widget)
+{
+    widget->close();
+    m_containerLayout->removeWidget(widget);
+    adjustSizeToItmes();
+}
+
+int SettingsContainer::getContainerLayoutSize()
+{
+    return m_containerLayout->count();
+}
+
+void SettingsContainer::insertItem(int pos, QWidget* widget)
+{
+    m_containerLayout->insertWidget(pos, widget);
     adjustSizeToItmes();
 }
 

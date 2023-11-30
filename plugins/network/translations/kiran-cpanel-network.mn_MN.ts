@@ -1,4 +1,6 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="zh_CN">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.1" language="zh_CN">
 <context>
     <name>CPanelNetworkWidget</name>
     <message>
@@ -23,50 +25,50 @@
         <translation type="vanished">Утасгүй холболт</translation>
     </message>
     <message>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="71"/>
+        <location filename="../src/plugin/cpanel-network-widget.cpp" line="70"/>
         <source>Wired Network %1</source>
         <translation>Утастай сүлжээ% 1</translation>
     </message>
     <message>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="77"/>
+        <location filename="../src/plugin/cpanel-network-widget.cpp" line="76"/>
         <source>Wired Network</source>
         <translation>Утастай сүлжээ</translation>
     </message>
     <message>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="105"/>
+        <location filename="../src/plugin/cpanel-network-widget.cpp" line="104"/>
         <source>Wireless Network %1</source>
         <translation>Утасгүй сүлжээ% 1</translation>
     </message>
     <message>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="111"/>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="318"/>
+        <location filename="../src/plugin/cpanel-network-widget.cpp" line="110"/>
+        <location filename="../src/plugin/cpanel-network-widget.cpp" line="316"/>
         <source>Wireless Network</source>
         <translation>Утасгүй</translation>
     </message>
     <message>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="137"/>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="141"/>
+        <location filename="../src/plugin/cpanel-network-widget.cpp" line="136"/>
+        <location filename="../src/plugin/cpanel-network-widget.cpp" line="140"/>
         <source>VPN</source>
         <translation>VPN</translation>
     </message>
     <message>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="146"/>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="149"/>
+        <location filename="../src/plugin/cpanel-network-widget.cpp" line="145"/>
+        <location filename="../src/plugin/cpanel-network-widget.cpp" line="148"/>
         <source>Network Details</source>
         <translation>Сүлжээний дэлгэрэнгүй</translation>
     </message>
     <message>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="255"/>
+        <location filename="../src/plugin/cpanel-network-widget.cpp" line="254"/>
         <source>Connected</source>
         <translation>Холбогдсон</translation>
     </message>
     <message>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="259"/>
+        <location filename="../src/plugin/cpanel-network-widget.cpp" line="258"/>
         <source>Unavailable</source>
         <translation>Боломжгүй</translation>
     </message>
     <message>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="263"/>
+        <location filename="../src/plugin/cpanel-network-widget.cpp" line="262"/>
         <source>Disconnected</source>
         <translation>Холбогдсон</translation>
     </message>
@@ -409,7 +411,7 @@
         <translation>Төхөөрөмж байхгүй</translation>
     </message>
     <message>
-        <location filename="../src/plugin/setting-widget/ethernet-widget.cpp" line="145"/>
+        <location filename="../src/plugin/setting-widget/ethernet-widget.cpp" line="165"/>
         <source>Clone Mac invalid</source>
         <translation>Clone Mac хүчингүй</translation>
     </message>
@@ -668,32 +670,32 @@
 <context>
     <name>NetworkSubItem</name>
     <message>
-        <location filename="../src/plugin/network-subitem.cpp" line="113"/>
+        <location filename="../src/plugin/network-subitem.cpp" line="111"/>
         <source>Wired Network %1</source>
         <translation>Утастай сүлжээ% 1</translation>
     </message>
     <message>
-        <location filename="../src/plugin/network-subitem.cpp" line="117"/>
+        <location filename="../src/plugin/network-subitem.cpp" line="115"/>
         <source>Wired Network</source>
         <translation>Утастай сүлжээ</translation>
     </message>
     <message>
-        <location filename="../src/plugin/network-subitem.cpp" line="126"/>
+        <location filename="../src/plugin/network-subitem.cpp" line="124"/>
         <source>Wireless Network %1</source>
         <translation>Утасгүй сүлжээ% 1</translation>
     </message>
     <message>
-        <location filename="../src/plugin/network-subitem.cpp" line="131"/>
+        <location filename="../src/plugin/network-subitem.cpp" line="129"/>
         <source>Wireless Network</source>
         <translation>Утасгүй</translation>
     </message>
     <message>
-        <location filename="../src/plugin/network-subitem.cpp" line="138"/>
+        <location filename="../src/plugin/network-subitem.cpp" line="136"/>
         <source>VPN</source>
         <translation>VPN</translation>
     </message>
     <message>
-        <location filename="../src/plugin/network-subitem.cpp" line="139"/>
+        <location filename="../src/plugin/network-subitem.cpp" line="137"/>
         <source>Network Details</source>
         <translation>Сүлжээний дэлгэрэнгүй</translation>
     </message>
@@ -701,12 +703,12 @@
 <context>
     <name>NetworkTray</name>
     <message>
-        <location filename="../src/tray/network-tray.cpp" line="170"/>
+        <location filename="../src/tray/network-tray.cpp" line="169"/>
         <source>Network settings</source>
         <translation>Сүлжээний тохиргоо</translation>
     </message>
     <message>
-        <location filename="../src/tray/network-tray.cpp" line="232"/>
+        <location filename="../src/tray/network-tray.cpp" line="233"/>
         <source>Network unavailable</source>
         <translation>Сүлжээ боломжгүй</translation>
     </message>
@@ -1362,9 +1364,8 @@
 <context>
     <name>WiredTrayWidget</name>
     <message>
-        <location filename="../src/tray/wired-tray-widget.cpp" line="119"/>
         <source>Wired network unavailable</source>
-        <translation>Утастай сүлжээ боломжгүй</translation>
+        <translation type="vanished">Утастай сүлжээ боломжгүй</translation>
     </message>
 </context>
 <context>

@@ -135,11 +135,12 @@ int main(int argc, char* argv[])
 
     if( pluginSubItems.isEmpty() )
     {
+        KLOG_CERR("plugin name(%s),can't find plugin subitem",pluginName.toStdString().c_str());
         exit(EXIT_FAILURE);
     }
 
-    auto category = pluginSubItems.at(0)->getCategory();
-    auto subitemName = pluginSubItems.at(0)->getName();
-    QString cmdline = QString("kiran-control-panel -c %1 -s %2").arg(category).arg(subitemName);
-    return QProcess::startDetached(cmdline);
+    QStringList positionArgs;
+    positionArgs << QString("-c %1").arg(pluginSubItems.at(0)->getCategory());
+    positionArgs << QString("-s %2").arg(pluginSubItems.at(0)->getName());
+    return QProcess::startDetached(PANEL_FULL_PATH,positionArgs);
 }

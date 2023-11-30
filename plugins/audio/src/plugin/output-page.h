@@ -40,7 +40,7 @@ public:
 public slots:
     void handleDefaultSinkChanged(int index);
     void handleSinkAdded(int index);
-    void handleSinkDelete(int index);
+    void handleSinkDelete(uint index);
     void handleActivePortChanged(const QString &value);
     void handleVolumeChanged(double value);
     void handleBalanceChanged(double value);

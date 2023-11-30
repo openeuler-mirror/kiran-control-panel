@@ -46,7 +46,7 @@ target_link_libraries(${TARGET_NAME}
         ${KIRAN_STYLE_HELPER_LIBRARIES}
         KF5::NetworkManagerQt
         )
-      
+
 set(TRAY_PROCESS kiran-network-status-icon)
 
 add_executable(${TRAY_PROCESS}
@@ -88,7 +88,7 @@ target_link_libraries(${TRAY_PROCESS}
         )
 
 #安装翻译
-install(FILES ${NETWORK_QM_FILES} DESTINATION ${TRANSLATION_INSTALL_DIR}/)
+install(FILES ${NETWORK_QM_FILES} DESTINATION ${TRANSLATION_DIR}/)
 
 set(AUTOSTART_DESKTOP_DIR /etc/xdg/autostart)
 #安装插件desktop文件
@@ -100,8 +100,8 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/data/00-server.conf.in ${CMAKE_CURREN
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/00-server.conf DESTINATION ${NETWORK_SERVER_CONF}/)
 
 #安装插件和二进制文件
-install(TARGETS ${TARGET_NAME} DESTINATION ${PLUGIN_LIBS_INSTALL_DIR}/)
+install(TARGETS ${TARGET_NAME} DESTINATION ${PLUGIN_LIBS_DIR}/)
 install(TARGETS ${TRAY_PROCESS} DESTINATION ${INSTALL_BINDIR})
 
 file(GLOB SVG_THEME_ICONS "./resources/kcp-network-images/*.svg")
-install(FILES ${SVG_THEME_ICONS} DESTINATION ${INSTALL_DATADIR}/icons/hicolor/scalable/apps)
+install(FILES ${SVG_THEME_ICONS} DESTINATION ${CMAKE_INSTALL_FULL_DATADIR}/icons/hicolor/scalable/apps)

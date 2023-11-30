@@ -14,13 +14,12 @@ file(GLOB_RECURSE KEYBOARD_SRC "./*.cpp" "./*.h" "./*.ui" "./*.qrc")
 
 add_library(${TARGET_NAME} SHARED
         ${KEYBOARD_SRC}
-        ${KEYBOARD_PROXY}
-        ${KEYBOARD_QM})
+        ${KEYBOARD_PROXY})
 
 target_include_directories(${TARGET_NAME} PRIVATE
-        ./src/
-        ./src/pages/general
-        ./src/pages/layout
+        ${CMAKE_CURRENT_SOURCE_DIR}
+        ${CMAKE_CURRENT_SOURCE_DIR}/pages
+        ${CMAKE_CURRENT_SOURCE_DIR}/utils
         ${CMAKE_CURRENT_BINARY_DIR}
         ${KCP_PLUGIN_INCLUDE_DIR}
         ${KIRAN_WIDGETS_INCLUDE_DIRS}
@@ -44,7 +43,4 @@ endif ()
 
 
 install(TARGETS ${TARGET_NAME}
-        DESTINATION ${PLUGIN_LIBS_INSTALL_DIR}/)
-
-install(FILES ${KEYBOARD_QM}
-        DESTINATION ${TRANSLATION_INSTALL_DIR}/)
+        DESTINATION ${PLUGIN_LIBS_DIR}/)

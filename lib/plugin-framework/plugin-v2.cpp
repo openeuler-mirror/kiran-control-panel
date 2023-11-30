@@ -12,6 +12,8 @@
  * Author:     liuxinhao <liuxinhao@kylinsec.com.cn>
  */
 #include "plugin-v2.h"
+#include "logging-category.h"
+
 #include <qt5-log-i.h>
 #include <QFileInfo>
 
@@ -39,35 +41,35 @@ bool PluginV2::load(const QString& path)
 {
     if (isValid())
     {
-        KLOG_WARNING() << "plugin is already loaded!,please unload first!";
+        KLOG_WARNING(qLcPluginFramework) << "plugin is already loaded!,please unload first!";
         return false;
     }
 
     QFileInfo fileInfo(path);
     if (!fileInfo.exists())
     {
-        KLOG_ERROR() << "can't load plugin," << path << ",file isn't exist!";
+        KLOG_ERROR(qLcPluginFramework) << "can't load plugin," << path << ",file isn't exist!";
         return false;
     }
 
     m_pluginLoader.setFileName(path);
     if (!m_pluginLoader.load())
     {
-        KLOG_ERROR() << "can't load plugin," << m_pluginLoader.errorString();
+        KLOG_ERROR(qLcPluginFramework) << "can't load plugin," << m_pluginLoader.errorString();
     }
 
     if (!m_pluginLoader.isLoaded())
     {
-        KLOG_ERROR() << "can't load plugin,"
-                     << m_pluginLoader.errorString()
-                     << "," << path;
+        KLOG_ERROR(qLcPluginFramework) << "can't load plugin,"
+                                       << m_pluginLoader.errorString()
+                                       << "," << path;
         return false;
     }
 
     KiranControlPanel::PluginInterfaceV2* pInterface = qobject_cast<KiranControlPanel::PluginInterfaceV2*>(m_pluginLoader.instance());
     if (!pInterface)
     {
-        KLOG_ERROR() << "can't convert to plugin interface v2!" << m_pluginLoader.errorString();
+        KLOG_ERROR(qLcPluginFramework) << "can't convert to plugin interface v2!" << m_pluginLoader.errorString();
         m_pluginLoader.unload();
         return false;
     }
@@ -75,7 +77,7 @@ bool PluginV2::load(const QString& path)
     int iret = pInterface->init(this);
     if (iret != 0)
     {
-        KLOG_ERROR() << "plugin init failed!" << path << "error code:" << iret;
+        KLOG_ERROR(qLcPluginFramework) << "plugin init failed!" << path << "error code:" << iret;
         m_pluginLoader.unload();
         return false;
     }

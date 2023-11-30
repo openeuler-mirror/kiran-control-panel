@@ -13,6 +13,7 @@
  */
 
 #include "category.h"
+#include "logging-category.h"
 #include "qt5-log-i.h"
 
 Category::Category(QObject* parent)
@@ -86,8 +87,8 @@ KiranControlPanel::SubItemPtr Category::getSubItem(const QString& subitemID)
     auto iter = m_subitemIDMap.find(subitemID);
     if (iter == m_subitemIDMap.end())
     {
-        KLOG_WARNING() << "Category:" << getName()
-                       << "can't find subitem:" << subitemID;
+        KLOG_WARNING(qLcPluginFramework) << "Category:" << getName()
+                                         << "can't find subitem:" << subitemID;
         return KiranControlPanel::SubItemPtr();
     }
     else
@@ -114,8 +115,8 @@ void Category::appendSubItem(KiranControlPanel::SubItemPtr subitem)
     m_subitems.insert(iter.base(), subitem);
     m_subitemIDMap.insert(subitem->getID(), subitem);
 
-    qDebug() << "Category:" << getName() << getID()
-             << "appended subitem:" << subitem->getName() << subitem->getID();
+    KLOG_DEBUG(qLcPluginFramework) << "Category:" << getName() << getID()
+                                   << "appended subitem:" << subitem->getName() << subitem->getID();
 
     emit subItemAdded(subitem->getID());
 }
@@ -134,8 +135,8 @@ void Category::removeSubItem(KiranControlPanel::SubItemPtr pluginSubItem)
     m_subitems.removeAt(idx);
     m_subitemIDMap.remove(pluginSubItem->getID());
 
-    qDebug() << "Category:" << getName() << getID()
-             << "removed subitem:" << pluginSubItem->getName() << pluginSubItem->getID();
+    KLOG_DEBUG(qLcPluginFramework) << "Category:" << getName() << getID()
+                                   << "removed subitem:" << pluginSubItem->getName() << pluginSubItem->getID();
 
     emit subItemDeleted(pluginSubItem->getID());
 }

@@ -188,28 +188,28 @@
         <translation>关闭</translation>
     </message>
     <message>
-        <location filename="../src/display-page.cpp" line="258"/>
-        <location filename="../src/display-page.cpp" line="282"/>
+        <location filename="../src/display-page.cpp" line="255"/>
+        <location filename="../src/display-page.cpp" line="279"/>
         <source> (recommended)</source>
         <translation> (推荐)</translation>
     </message>
     <message>
-        <location filename="../src/display-page.cpp" line="354"/>
+        <location filename="../src/display-page.cpp" line="351"/>
         <source>Is the display normal?</source>
         <translation>显示是否正常?</translation>
     </message>
     <message>
-        <location filename="../src/display-page.cpp" line="357"/>
+        <location filename="../src/display-page.cpp" line="354"/>
         <source>Save current configuration(K)</source>
         <translation>保存当前配置(K)</translation>
     </message>
     <message>
-        <location filename="../src/display-page.cpp" line="361"/>
+        <location filename="../src/display-page.cpp" line="358"/>
         <source>Restore previous configuration(R)</source>
         <translation>恢复之前的配置(R)</translation>
     </message>
     <message>
-        <location filename="../src/display-page.cpp" line="369"/>
+        <location filename="../src/display-page.cpp" line="366"/>
         <source>The display will resume the previous configuration in %1 seconds</source>
         <translation>显示将会在 %1 秒后恢复之前的配置</translation>
     </message>
@@ -225,28 +225,28 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/display-config.cpp" line="468"/>
+        <location filename="../src/display-config.cpp" line="466"/>
         <location filename="../src/display-config.h" line="134"/>
-        <location filename="../src/display-page.cpp" line="390"/>
-        <location filename="../src/display-page.cpp" line="408"/>
+        <location filename="../src/display-page.cpp" line="387"/>
+        <location filename="../src/display-page.cpp" line="405"/>
         <source>Tips</source>
         <translation>提示</translation>
     </message>
     <message>
-        <location filename="../src/display-config.cpp" line="471"/>
+        <location filename="../src/display-config.cpp" line="469"/>
         <location filename="../src/display-config.h" line="137"/>
-        <location filename="../src/display-page.cpp" line="393"/>
-        <location filename="../src/display-page.cpp" line="411"/>
+        <location filename="../src/display-page.cpp" line="390"/>
+        <location filename="../src/display-page.cpp" line="408"/>
         <source>OK(K)</source>
         <translation>确定(K)</translation>
     </message>
     <message>
-        <location filename="../src/display-page.cpp" line="397"/>
+        <location filename="../src/display-page.cpp" line="394"/>
         <source>Failed to apply display settings!%1</source>
         <translation>应用显示设置失败!%1</translation>
     </message>
     <message>
-        <location filename="../src/display-page.cpp" line="415"/>
+        <location filename="../src/display-page.cpp" line="412"/>
         <source>Fallback display setting failed! %1</source>
         <translation>回撤显示设置失败! %1</translation>
     </message>

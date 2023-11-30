@@ -327,7 +327,6 @@ void ConnectionList::sort()
         clearContentsWidget();
         for (auto pair : sorting)
         {
-            pair.first;
             addWidget(pair.first);
         }
     }
@@ -346,7 +345,6 @@ void ConnectionList::sort()
         clearContentsWidget();
         for (auto pair : sortingString)
         {
-            pair.first;
             addWidget(pair.first);
         }
     }

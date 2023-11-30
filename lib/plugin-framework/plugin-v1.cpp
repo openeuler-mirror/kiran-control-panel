@@ -13,6 +13,7 @@
  */
 #include "plugin-v1.h"
 #include "config.h"
+#include "logging-category.h"
 #include "plugin-v1-subitem-wrapper.h"
 
 #include <glib.h>
@@ -53,33 +54,35 @@ bool PluginV1::load(const QString& desktopPath)
 {
     if (isValid())
     {
-        KLOG_WARNING() << "plugin is already loaded!,please unload first!";
+        KLOG_WARNING(qLcPluginFramework) << "plugin is already loaded!,please unload first!";
         return false;
     }
 
     QFileInfo fileInfo(desktopPath);
     if (!fileInfo.exists())
     {
-        KLOG_ERROR() << "can't load plugin," << desktopPath << ",file isn't exist!";
+        KLOG_ERROR(qLcPluginFramework) << "can't load plugin," << desktopPath << ",file isn't exist!";
         return false;
     }
+
     m_libraryPath = getLibraryPathFromDesktop(desktopPath);
     m_pluginLoader.setFileName(m_libraryPath);
     if (!m_pluginLoader.load())
     {
-        KLOG_ERROR() << "can't load plugin," << m_pluginLoader.errorString();
+        KLOG_ERROR(qLcPluginFramework) << "can't load plugin," << m_pluginLoader.errorString();
     }
     if (!m_pluginLoader.isLoaded())
     {
-        KLOG_ERROR() << "can't load plugin,"
-                     << m_pluginLoader.errorString()
-                     << "," << m_libraryPath;
+        KLOG_ERROR(qLcPluginFramework) << "can't load plugin,"
+                                       << m_pluginLoader.errorString()
+                                       << "," << m_libraryPath;
         return false;
     }
+
     m_interface = qobject_cast<KcpPluginInterface*>(m_pluginLoader.instance());
     if (!m_interface)
     {
-        KLOG_ERROR() << "can't convert to plugin interface!" << m_pluginLoader.errorString();
+        KLOG_ERROR(qLcPluginFramework) << "can't convert to plugin interface!" << m_pluginLoader.errorString();
         m_pluginLoader.unload();
         return false;
     }
@@ -87,7 +90,7 @@ bool PluginV1::load(const QString& desktopPath)
     int iret = m_interface->init();
     if (iret != 0)
     {
-        KLOG_ERROR() << "plugin init failed!" << m_libraryPath << "error code:" << iret;
+        KLOG_ERROR(qLcPluginFramework) << "plugin init failed!" << m_libraryPath << "error code:" << iret;
         m_pluginLoader.unload();
         return false;
     }
@@ -97,7 +100,7 @@ bool PluginV1::load(const QString& desktopPath)
     // 加载插件共享库
     if (!parseDesktopInfo(desktopPath))
     {
-        KLOG_ERROR() << "can't parse desktop," << desktopPath;
+        KLOG_ERROR(qLcPluginFramework) << "can't parse desktop," << desktopPath;
         m_visiableSubItems.clear();
         m_interface->uninit();
         m_pluginLoader.unload();
@@ -148,7 +151,7 @@ QString PluginV1::getLibraryPathFromDesktop(const QString& desktopPath)
     gboolean loadRes = g_key_file_load_from_file(keyFile, desktopPath.toStdString().c_str(), G_KEY_FILE_KEEP_TRANSLATIONS, &error);
     if (!loadRes)
     {
-        KLOG_ERROR() << "load" << desktopPath << "failed" << (error ? error->message : "");
+        KLOG_ERROR(qLcPluginFramework) << "load" << desktopPath << "failed" << (error ? error->message : "");
         g_clear_error(&error);
         return "";
     }
@@ -156,7 +159,7 @@ QString PluginV1::getLibraryPathFromDesktop(const QString& desktopPath)
     library = g_key_file_get_string(keyFile, GROUP_KIRAN_CONTROL_PANEL_PLUGIN, KEY_LIBRARY, &error);
     if (!library)
     {
-        KLOG_ERROR() << GROUP_KIRAN_CONTROL_PANEL_PLUGIN << KEY_LIBRARY << (error ? error->message : "");
+        KLOG_ERROR(qLcPluginFramework) << GROUP_KIRAN_CONTROL_PANEL_PLUGIN << KEY_LIBRARY << (error ? error->message : "");
         g_clear_error(&error);
         g_key_file_free(keyFile);
         return "";
@@ -176,16 +179,15 @@ bool PluginV1::parseDesktopInfo(const QString& desktopPath)
     GError* error = nullptr;
     bool bRes = false;
     GKeyFile* keyFile = g_key_file_new();
-    gchar *name = nullptr, *comment = nullptr,
-          *icon = nullptr, *category = nullptr,
-          *library = nullptr, *subItems = nullptr;
+    gchar *name = nullptr, *icon = nullptr,
+          *category = nullptr, *subItems = nullptr;
     int weight;
     QString categoryStr;
 
     gboolean loadRes = g_key_file_load_from_file(keyFile, desktopPath.toStdString().c_str(), G_KEY_FILE_KEEP_TRANSLATIONS, &error);
     if (!loadRes)
     {
-        KLOG_ERROR() << "can't load" << desktopPath << (error ? error->message : "");
+        KLOG_ERROR(qLcPluginFramework) << "can't load" << desktopPath << (error ? error->message : "");
         g_clear_error(&error);
         goto out;
     }
@@ -198,7 +200,7 @@ bool PluginV1::parseDesktopInfo(const QString& desktopPath)
                                         &error);
     if (!name)
     {
-        KLOG_ERROR() << "can't get" << GROUP_DESKTOP_ENTRY << KEY_NAME << (error ? error->message : "");
+        KLOG_ERROR(qLcPluginFramework) << "can't get" << GROUP_DESKTOP_ENTRY << KEY_NAME << (error ? error->message : "");
         g_clear_error(&error);
         goto out;
     }
@@ -212,7 +214,7 @@ bool PluginV1::parseDesktopInfo(const QString& desktopPath)
                                  &error);
     if (!icon)
     {
-        KLOG_ERROR() << "can't get" << GROUP_DESKTOP_ENTRY << KEY_ICON << (error ? error->message : "");
+        KLOG_ERROR(qLcPluginFramework) << "can't get" << GROUP_DESKTOP_ENTRY << KEY_ICON << (error ? error->message : "");
         g_clear_error(&error);
         goto out;
     }
@@ -223,7 +225,7 @@ bool PluginV1::parseDesktopInfo(const QString& desktopPath)
     weight = g_key_file_get_int64(keyFile, GROUP_KIRAN_CONTROL_PANEL_PLUGIN, KEY_WEIGHT, &error);
     if (error)
     {
-        KLOG_ERROR() << GROUP_KIRAN_CONTROL_PANEL_PLUGIN << KEY_WEIGHT << (error ? error->message : "");
+        KLOG_ERROR(qLcPluginFramework) << GROUP_KIRAN_CONTROL_PANEL_PLUGIN << KEY_WEIGHT << (error ? error->message : "");
         g_clear_error(&error);
     }
 
@@ -231,7 +233,7 @@ bool PluginV1::parseDesktopInfo(const QString& desktopPath)
     category = g_key_file_get_string(keyFile, GROUP_KIRAN_CONTROL_PANEL_PLUGIN, KEY_CATEGORY, &error);
     if (!category)
     {
-        KLOG_ERROR() << GROUP_KIRAN_CONTROL_PANEL_PLUGIN << KEY_WEIGHT << (error ? error->message : "");
+        KLOG_ERROR(qLcPluginFramework) << GROUP_KIRAN_CONTROL_PANEL_PLUGIN << KEY_WEIGHT << (error ? error->message : "");
         g_clear_error(&error);
         goto out;
     }
@@ -242,9 +244,9 @@ bool PluginV1::parseDesktopInfo(const QString& desktopPath)
     subItems = g_key_file_get_string(keyFile, GROUP_KIRAN_CONTROL_PANEL_PLUGIN, KEY_SUBITEMS, &error);
     if (!subItems)
     {
-        KLOG_ERROR() << GROUP_KIRAN_CONTROL_PANEL_PLUGIN
-                     << KEY_SUBITEMS
-                     << (error ? error->message : "");
+        KLOG_ERROR(qLcPluginFramework) << GROUP_KIRAN_CONTROL_PANEL_PLUGIN
+                                       << KEY_SUBITEMS
+                                       << (error ? error->message : "");
         g_clear_error(&error);
         goto out;
     }
@@ -268,7 +270,8 @@ bool PluginV1::parseDesktopInfo(const QString& desktopPath)
             gchar* itemName = g_key_file_get_locale_string(keyFile, sItemName.c_str(), KEY_SUBITEM_NAME, nullptr, &error);
             if (!itemName)
             {
-                KLOG_ERROR() << "parse" << desktopPath << subItem << "missing" << KEY_SUBITEM_NAME << error->message;
+                KLOG_ERROR(qLcPluginFramework) << "parse" << desktopPath << subItem
+                                               << "missing" << KEY_SUBITEM_NAME << error->message;
                 g_clear_error(&error);
                 continue;
             }
@@ -278,7 +281,8 @@ bool PluginV1::parseDesktopInfo(const QString& desktopPath)
             gchar* subItemIcon = g_key_file_get_locale_string(keyFile, sItemName.c_str(), KEY_SUBITEM_ICON, nullptr, &error);
             if (!subItemIcon)
             {
-                KLOG_WARNING() << desktopPath << subItem << "missing" << KEY_SUBITEM_ICON << error->message;
+                KLOG_WARNING(qLcPluginFramework) << desktopPath << subItem
+                                                 << "missing" << KEY_SUBITEM_ICON << error->message;
                 g_clear_error(&error);
             }
             else

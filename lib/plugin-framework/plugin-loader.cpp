@@ -16,6 +16,7 @@
 #include "config.h"
 #include "plugin-v1.h"
 #include "plugin-v2.h"
+#include "logging-category.h"
 
 #include <qt5-log-i.h>
 #include <QDir>
@@ -36,12 +37,14 @@ QList<Plugin*> PluginLoader::loadAllPlugins()
         QScopedPointer<PluginV1> pPlugin(new PluginV1());
         if (!pPlugin->load(pluginPath))
         {
-            KLOG_WARNING() << "PluginLoader: can't load" << pluginPath;
+            KLOG_WARNING(qLcPluginFramework) << "can't load plugin v1:" << pluginPath;
             continue;
         }
 
         QString libraryPath = pPlugin->getLibraryPath();
         loadedPluginLibrarys << libraryPath;
+
+        KLOG_DEBUG(qLcPluginFramework) << "loaded plugin v1:" << libraryPath;
         plugins << pPlugin.take();
     }
 
@@ -58,9 +61,11 @@ QList<Plugin*> PluginLoader::loadAllPlugins()
         QScopedPointer<PluginV2> pPlugin(new PluginV2());
         if (!pPlugin->load(libraryPath))
         {
-            KLOG_WARNING() << "PluginLoader: can't load" << libraryPath;
+            KLOG_WARNING(qLcPluginFramework) << "can't load plugin v2:" << libraryPath;
             continue;
         }
+
+        KLOG_DEBUG(qLcPluginFramework) << "loaded plugin v2:" << libraryPath;
         plugins << pPlugin.take();
     }
 
