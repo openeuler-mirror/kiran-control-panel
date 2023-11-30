@@ -16,6 +16,7 @@
 
 #include <NetworkManagerQt/Manager>
 #include <QWidget>
+#include <QTimer>
 
 QT_BEGIN_NAMESPACE
 namespace Ui
@@ -32,25 +33,32 @@ public:
     explicit DetailsPage(QWidget *parent = nullptr);
     ~DetailsPage() override;
 
+private slots:
+    void handleActivatedConnectionComboBoxActivated(int index);
+    void handleActiveConnectionAdded(const QString &activeConnectionPath);
+    void handleActiveConnectionStateChanged(NetworkManager::ActiveConnection::State state);
+
+    void deviceStateChanged(NetworkManager::Device::State newstate, NetworkManager::Device::State oldstate, NetworkManager::Device::StateChangeReason reason);
+    void changeIpV4Config();
+    void changeIpV6Config();
+    void changeDhcp4Config();
+    void changeDhcp6Config();
+
+    void updateDetails();
+
+private:
     void initUI();
     void initMultiConnectionDetailsWidget();
     void initConnect();
     void clear();
     void reload();
-
-public slots:
-    void handleActivatedConnectionComboBoxActivated(int index);
-    void handleDeviceAdded(const QString &devicePath);
-    void handleDeviceRemoved(const QString &devicePath);
-    void handleActiveConnectionAdded(const QString &activeConnectionPath);
-    void handleActiveConnectionRemoved(const QString &activeConnectionPath);
-    void handleActiveConnectionChanged();
-    void handleActiveConnectionStateChanged(NetworkManager::ActiveConnection::State state);
+    void initDeviceConnect();
 
 private:
     Ui::DetailsPage *ui;
     NetworkManager::Device::List m_deviceList;
     NetworkManager::ActiveConnection::List m_activatedConnectionList;
+    QTimer m_reloadTimer;
 };
 
 #endif  // KIRAN_CPANEL_NETWORK_DETAILS_PAGE_H
