@@ -17,6 +17,7 @@
 
 #include <QWidget>
 #include <NetworkManagerQt/Manager>
+#include <QDebug>
 
 namespace NetworkUtils
 {
@@ -30,6 +31,8 @@ NetworkManager::Device::List getDeviceList(NetworkManager::Device::Type type);
 NetworkManager::Device::List getAvailableDeviceList(NetworkManager::Device::Type type);
 
 NetworkManager::Device::List getManagedDeviceList(NetworkManager::Device::Type type);
+
+QDebug operator<<(QDebug dbg, NetworkManager::Device *device);
 
 }  // namespace NetworkUtils
 
