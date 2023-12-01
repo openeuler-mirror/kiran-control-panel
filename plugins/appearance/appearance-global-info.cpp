@@ -254,7 +254,7 @@ bool AppearanceGlobalInfo::getFont(int type, QString &fontName, int &fontSize)
     KLOG_DEBUG(qLcAppearance) << "get font,font type:" << type << "font info:" << fontValue;
 
 #if (QT_VERSION < QT_VERSION_CHECK(5, 14, 0))
-    fontInfoList = fontValue.split(" ", QString::SkipEmptyParts);
+    auto list = fontValue.split(" ", QString::SkipEmptyParts);
 #else
     auto list = fontValue.split(" ", Qt::SkipEmptyParts);
 #endif
