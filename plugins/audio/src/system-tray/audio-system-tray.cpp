@@ -206,7 +206,7 @@ void AudioSystemTray::handleAdjustedMixedSettingPageSize()
 QPixmap AudioSystemTray::trayIconColorSwitch(const QString &iconPath, const int iconSize)
 {
     // icon原本为浅色
-    QIcon icon(iconPath);
+    QIcon icon = QIcon::fromTheme(iconPath);
     QPixmap pixmap = icon.pixmap(iconSize, iconSize);
     if (Kiran::StylePalette::instance()->paletteType() != Kiran::PALETTE_DARK)
     {
@@ -257,23 +257,23 @@ void AudioSystemTray::setTrayIcon(int value)
     QIcon icon;
     if (value == 0)
     {
-        icon.addPixmap(trayIconColorSwitch(":/kcp-audio-images/kcp-audio-mute.svg"));
-        icon.addPixmap(trayIconColorSwitch(":/kcp-audio-images/kcp-audio-mute.svg", 64));
+        icon.addPixmap(trayIconColorSwitch("kcp-audio-mute"));
+        icon.addPixmap(trayIconColorSwitch("kcp-audio-mute", 64));
     }
     else if (0 < value && value <= 33)
     {
-        icon.addPixmap(trayIconColorSwitch(":/kcp-audio-images/kcp-audio-low.svg"));
-        icon.addPixmap(trayIconColorSwitch(":/kcp-audio-images/kcp-audio-low.svg", 64));
+        icon.addPixmap(trayIconColorSwitch("kcp-audio-low"));
+        icon.addPixmap(trayIconColorSwitch("kcp-audio-low", 64));
     }
     else if (33 < value && value <= 66)
     {
-        icon.addPixmap(trayIconColorSwitch(":/kcp-audio-images/kcp-audio-medium.svg"));
-        icon.addPixmap(trayIconColorSwitch(":/kcp-audio-images/kcp-audio-medium.svg", 64));
+        icon.addPixmap(trayIconColorSwitch("kcp-audio-medium"));
+        icon.addPixmap(trayIconColorSwitch("kcp-audio-medium", 64));
     }
     else
     {
-        icon.addPixmap(trayIconColorSwitch(":/kcp-audio-images/kcp-audio-loud.svg"));
-        icon.addPixmap(trayIconColorSwitch(":/kcp-audio-images/kcp-audio-loud.svg", 64));
+        icon.addPixmap(trayIconColorSwitch("kcp-audio-loud"));
+        icon.addPixmap(trayIconColorSwitch("kcp-audio-loud", 64));
     }
     m_systemTray->setIcon(icon);
     m_systemTray->show();
