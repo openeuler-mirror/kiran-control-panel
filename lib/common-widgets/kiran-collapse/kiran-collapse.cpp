@@ -1,30 +1,38 @@
-﻿#include "kiran-collapse.h"
+﻿/**
+ * Copyright (c) 2020 ~ 2022 KylinSec Co., Ltd.
+ * kiran-control-panel is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *          http://license.coscl.org.cn/MulanPSL2
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ *
+ * Author:     youzhengcai <youzhengcai@kylinsec.com.cn>
+ */
+
+#include "kiran-collapse.h"
 #include <kiran-style/style-palette.h>
 #include "ui_kiran-collapse.h"
 
 #include <QDebug>
 #include <QHBoxLayout>
-#include <QLabel>
 #include <QPainter>
 #include <QPropertyAnimation>
 #include <QStyleOption>
 
-KiranCollapse::KiranCollapse(QWidget *parent) : QWidget(parent),
-                                                ui(new Ui::KiranCollapse)
+KiranCollapse::KiranCollapse(QWidget *parent)
+        :KiranCollapse(false, "", nullptr, parent)
 {
-    init();
 }
 
-KiranCollapse::KiranCollapse(bool defaultIsExpand, const QString &title, QWidget *expansionSpaceWidget, QWidget *parent) : QWidget(parent),
-                                                                                                                           ui(new Ui::KiranCollapse)
+KiranCollapse::KiranCollapse(bool defaultIsExpand, const QString &title,
+                             QWidget *expansionSpaceWidget, QWidget *parent)
+        : QWidget(parent), ui(new Ui::KiranCollapse),
+        m_isExpanded(defaultIsExpand), m_topBarTitle(title), m_esWidget(expansionSpaceWidget)
 {
-    m_isExpanded = defaultIsExpand;
     init();
-    // 设定顶栏
-    ui->topBar->setTitle(title);
-
-    // 设定扩展区
-    ui->expansionSpaceContainer->addWidget(expansionSpaceWidget);
 }
 
 KiranCollapse::~KiranCollapse()
@@ -107,7 +115,7 @@ void KiranCollapse::collapse()
     emit expandSpaceCollapsed();
 }
 
-void KiranCollapse::changeExpansionSpaceState()
+void KiranCollapse::changeExpansionState()
 {
     if (m_isExpanded)
     {
@@ -172,15 +180,18 @@ void KiranCollapse::init()
 {
     ui->setupUi(this);
     ui->expansionSpace->setAttribute(Qt::WA_StyledBackground);
-    ui->expansionSpaceContainer->setSpacing(10);
+    ui->expansionSpaceContainer->setSpacing(12);
 
     setIsExpand(m_isExpanded);
-    ui->expansionSpaceContainer->setContentsMargins(m_expansionSpaceContentMarginLeft,
-                                                    m_expansionSpaceContentMarginTop,
-                                                    m_expansionSpaceContentMarginRight,
-                                                    m_expansionSpaceContentMarginBottom);
-    setExpandSpaceAnimation();
-    connect(ui->topBar, &TopBar::clickedBar, this, &KiranCollapse::changeExpansionSpaceState);
+    ui->expansionSpaceContainer->setContentsMargins(m_expansionMarginLeft,
+                                                    m_expansionMarginTop,
+                                                    m_expansionMarginRight,
+                                                    m_expansionMarginBottom);
+    ui->topBar->setTitle(m_topBarTitle);
+    ui->expansionSpaceContainer->addWidget(m_esWidget);
+    m_animationForES = new QPropertyAnimation(ui->expansionSpace, "maximumHeight", this);
+    m_animationForES->setDuration(200);
+    connect(ui->topBar, &TopBar::clickedBar, this, &KiranCollapse::changeExpansionState);
 }
 
 bool KiranCollapse::getIsExpand() const
@@ -205,12 +216,6 @@ void KiranCollapse::addTopBarWidget(QWidget *widget)
     ui->topBar->addWidget(widget);
 }
 
-void KiranCollapse::setExpandSpaceAnimation()
-{
-    m_animationForES = new QPropertyAnimation(ui->expansionSpace, "maximumHeight", this);
-    m_animationForES->setDuration(200);
-}
-
 void KiranCollapse::setTitle(const QString &title)
 {
     ui->topBar->setTitle(title);
@@ -224,5 +229,26 @@ void KiranCollapse::setTobBarFixedHeight(int height)
 void KiranCollapse::setMaximumExpansionHeight(int maxExpandHeight)
 {
     m_maximumExpansionSpaceHeight = maxExpandHeight;
+    int curHeight = ui->expansionSpace->height();
     ui->expansionSpace->setMaximumHeight(maxExpandHeight);
+    ui->expansionSpace->setFixedHeight(curHeight);
+}
+void KiranCollapse::setExpansionMargin(int left, int top, int right, int bottom)
+{
+    m_expansionMarginLeft = left;
+    m_expansionMarginTop = top;
+    m_expansionMarginRight = right;
+    m_expansionMarginBottom = bottom;
+    ui->expansionSpaceContainer->setContentsMargins(m_expansionMarginLeft,
+                                                    m_expansionMarginTop,
+                                                    m_expansionMarginRight,
+                                                    m_expansionMarginBottom);
+}
+void KiranCollapse::setTopBarMargin(int left, int top, int right, int bottom)
+{
+    ui->topBar->setTopBarMargin(left, top, right, bottom);
+}
+void KiranCollapse::setTopBarSpacing(int spacing)
+{
+    ui->topBar->setTopBarSpacing(spacing);
 }
