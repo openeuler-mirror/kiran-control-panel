@@ -54,11 +54,25 @@ QList<AudioPortInfo> AudioDeviceInterface::getPortsInfo()
             portInfo.description = object.value("description").toString();
             portInfo.name = object.value("name").toString();
             portInfo.priority = object.value("priority").toDouble();
+            portInfo.available = object.value("available").toInt();
             portInfoList << portInfo;
         }
     }
 
     return portInfoList;
+}
+
+bool AudioDeviceInterface::isAvailablePorts()
+{
+    QList<AudioPortInfo> portsInfo = getPortsInfo();
+    for(auto port : portsInfo)
+    {
+        if(port.available != PORT_AVAILABLE_NO)
+        {
+            return true;
+        }
+    }
+    return false;
 }
 
 void sendPropertyChangedDetailSignal(AudioDeviceInterface *ptr, const QString &propertyName, QVariant value)
