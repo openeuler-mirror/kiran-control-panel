@@ -42,7 +42,7 @@ int AudioPlugin::init(KiranControlPanel::PanelInterface* interface)
 
     m_translator = new QTranslator(qApp);
     if (!m_translator->load(QLocale(),
-                            "kiran-cpanel-audio",
+                            "kiran-control-panel",
                             ".",
                             TRANSLATE_PREFIX,
                             ".qm"))
