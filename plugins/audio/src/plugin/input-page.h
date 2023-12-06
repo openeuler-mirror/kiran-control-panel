@@ -65,8 +65,9 @@ public:
 
 private:
     void init();
-    void initInputDevice();
-    void initInputSettins();
+    void initSettings();
+    void initCardOptions();
+    void initVolume();
     void initActivedPort();
     void initConnet();
     void disableSettings(); 
@@ -75,12 +76,22 @@ private:
     void initAudioFormat();
     void initAudioInput();
 
-public slots:
-    void handleActivePortChanged(const QString &value);
-    void handleSourceAdded(int index);
-    void handleSourceDelete(int index);
-    void handleDefaultSourceChanged(int index);
-    void handleVolumeChanged(double value);
+    void reload();
+    void clear();
+    void clearFeedBack();
+
+    void setDefaultSource(int sourceIndex);
+
+private slots:
+    void changeDefaultInputCard(int index);
+    void setVolume(int value);
+    void setActivePort(int index);
+    void addSource(int index);
+    void deleteSource(int index);
+    
+    void onActivePortChanged(const QString &value);
+    void onDefaultSourceChanged(int index);
+    void onVolumeChanged(double value);
 
     void refreshFeedBack();
 
@@ -88,9 +99,6 @@ private:
     Ui::InputPage *ui;
     AudioInterface *m_audioInterface;
     AudioDeviceInterface *m_defaultSource;
-    AudioDeviceInterface *m_activedSource;
-    QMap<int, AudioDeviceInterface *> m_inputDevicesMap;
-    int m_defaultSourceIndex;
     bool m_isValidPort = false;
 
     QAudioInput *m_audioInput = nullptr;
