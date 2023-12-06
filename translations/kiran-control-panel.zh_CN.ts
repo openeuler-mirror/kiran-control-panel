@@ -2,6 +2,141 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="zh_CN">
 <context>
+    <name>AudioSystemTray</name>
+    <message>
+        <source>Volume Setting</source>
+        <translation>声音设置</translation>
+    </message>
+    <message>
+        <source>Mixed Setting</source>
+        <translation>混合设置</translation>
+    </message>
+</context>
+<context>
+    <name>CPanelAudioWidget</name>
+    <message>
+        <source>CPanelAudioWidget</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Output</source>
+        <translation>输出</translation>
+    </message>
+    <message>
+        <source>Input</source>
+        <translation>输入</translation>
+    </message>
+</context>
+<context>
+    <name>InputPage</name>
+    <message>
+        <source>InputPage</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../src/plugin/input-page.ui" line="40"/>
+        <source>Input cards</source>
+        <translation>输入声卡</translation>
+    </message>
+    <message>
+        <source>Input devices</source>
+        <translation>输入设备</translation>
+    </message>
+    <message>
+        <source>ComboBoxInputDevices</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Input volume</source>
+        <translation>输入音量</translation>
+    </message>
+    <message>
+        <source>SliderVolumeSetting</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Feedback volume</source>
+        <translation>反馈音量</translation>
+    </message>
+    <message>
+        <source>No input device detected</source>
+        <translation>未检测到输入设备</translation>
+    </message>
+</context>
+<context>
+    <name>OutputPage</name>
+    <message>
+        <source>OutputPage</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../src/plugin/output-page.ui" line="40"/>
+        <source>Output cards</source>
+        <translation>输出声卡</translation>
+    </message>
+    <message>
+        <source>Output devices</source>
+        <translation>输出设备</translation>
+    </message>
+    <message>
+        <source>ComboBoxOutputDevices</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Output volume</source>
+        <translation>输出音量</translation>
+    </message>
+    <message>
+        <source>SlilderVolumeSetting</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Left/right balance</source>
+        <translation>左/右平衡</translation>
+    </message>
+    <message>
+        <source>SliderVolumeBalance</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Left</source>
+        <translation>左</translation>
+    </message>
+    <message>
+        <source>Right</source>
+        <translation>右</translation>
+    </message>
+    <message>
+        <source>No output device detected</source>
+        <translation>未检测到输出设备</translation>
+    </message>
+</context>
+<context>
+    <name>VolumeIntputSubItem</name>
+    <message>
+        <source>VolumeInput</source>
+        <translation>输入</translation>
+    </message>
+</context>
+<context>
+    <name>VolumeOutputSubItem</name>
+    <message>
+        <source>VolumeOutput</source>
+        <translation>输出</translation>
+    </message>
+</context>
+<context>
+    <name>VolumeSettingPage</name>
+    <message>
+        <source>VolumeSettingPage</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Volume</source>
+        <translation>音量</translation>
+    </message>
+</context>
+<context>
     <name>AccountItemWidget</name>
     <message>
         <source>Create new user</source>
@@ -255,17 +390,6 @@
     </message>
 </context>
 <context>
-    <name>AudioSystemTray</name>
-    <message>
-        <source>Volume Setting</source>
-        <translation>声音设置</translation>
-    </message>
-    <message>
-        <source>Mixed Setting</source>
-        <translation>混合设置</translation>
-    </message>
-</context>
-<context>
     <name>AuthManagerPage</name>
     <message>
         <source>Fingerprint Authentication</source>
@@ -496,21 +620,6 @@
     <message>
         <source>add</source>
         <translation type="vanished">添加</translation>
-    </message>
-</context>
-<context>
-    <name>CPanelAudioWidget</name>
-    <message>
-        <source>CPanelAudioWidget</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Output</source>
-        <translation>输出</translation>
-    </message>
-    <message>
-        <source>Input</source>
-        <translation>输入</translation>
     </message>
 </context>
 <context>
@@ -2212,37 +2321,6 @@
     </message>
 </context>
 <context>
-    <name>InputPage</name>
-    <message>
-        <source>InputPage</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Input devices</source>
-        <translation>输入设备</translation>
-    </message>
-    <message>
-        <source>ComboBoxInputDevices</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Input volume</source>
-        <translation>输入音量</translation>
-    </message>
-    <message>
-        <source>SliderVolumeSetting</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Feedback volume</source>
-        <translation>反馈音量</translation>
-    </message>
-    <message>
-        <source>No input device detected</source>
-        <translation>未检测到输入设备</translation>
-    </message>
-</context>
-<context>
     <name>Ipv4Widget</name>
     <message>
         <source>Ipv4Widget</source>
@@ -3392,49 +3470,6 @@ This is line 50 of the test text</source>
     <message>
         <source>Wireless network card: %1 unavailable</source>
         <translation>无线网卡: %1 不可用</translation>
-    </message>
-</context>
-<context>
-    <name>OutputPage</name>
-    <message>
-        <source>OutputPage</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Output devices</source>
-        <translation>输出设备</translation>
-    </message>
-    <message>
-        <source>ComboBoxOutputDevices</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Output volume</source>
-        <translation>输出音量</translation>
-    </message>
-    <message>
-        <source>SlilderVolumeSetting</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Left/right balance</source>
-        <translation>左/右平衡</translation>
-    </message>
-    <message>
-        <source>SliderVolumeBalance</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Left</source>
-        <translation>左</translation>
-    </message>
-    <message>
-        <source>Right</source>
-        <translation>右</translation>
-    </message>
-    <message>
-        <source>No output device detected</source>
-        <translation>未检测到输出设备</translation>
     </message>
 </context>
 <context>
@@ -4973,31 +5008,6 @@ This is line 50 of the test text</source>
     <message>
         <source>None</source>
         <translation type="vanished">暂无</translation>
-    </message>
-</context>
-<context>
-    <name>VolumeIntputSubItem</name>
-    <message>
-        <source>VolumeInput</source>
-        <translation>输入</translation>
-    </message>
-</context>
-<context>
-    <name>VolumeOutputSubItem</name>
-    <message>
-        <source>VolumeOutput</source>
-        <translation>输出</translation>
-    </message>
-</context>
-<context>
-    <name>VolumeSettingPage</name>
-    <message>
-        <source>VolumeSettingPage</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Volume</source>
-        <translation>音量</translation>
     </message>
 </context>
 <context>
