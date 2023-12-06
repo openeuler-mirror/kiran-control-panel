@@ -33,6 +33,8 @@ class ConnectionDetailsWidget : public QWidget
 public:
     explicit ConnectionDetailsWidget(NetworkManager::Device::Ptr device, QWidget *parent = nullptr);
     ~ConnectionDetailsWidget() override;
+    
+private:
     void init();
     void initUI();
     void setWirelessSpecificDetails();

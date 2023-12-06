@@ -93,3 +93,13 @@ Device::List NetworkUtils::getManagedDeviceList(NetworkManager::Device::Type typ
     }
     return list;
 }
+
+QDebug NetworkUtils::operator<<(QDebug dbg, NetworkManager::Device *device)
+{
+    dbg << "device:" << device->interfaceName()
+        << "path:" << device->uni()
+        << "type:" << device->type()
+        << "state:" << device->state();
+    return dbg.maybeSpace();
+}
+
