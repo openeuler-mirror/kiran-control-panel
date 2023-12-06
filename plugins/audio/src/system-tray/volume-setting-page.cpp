@@ -196,18 +196,19 @@ void VolumeSettingPage::clickMuteButton(Audio *audio)
 
     if (currentVolume != 0)
     {
-        KLOG_DEBUG() << "m_sink->mute() :" << audio->mute();
+        m_volumeBeforeMute = currentVolume;
         if (!audio->mute())
         {
-            m_volumeBeforeMute = currentVolume;
             audio->SetMute(true);
         }
+        audio->SetVolume(0);
+        KLOG_DEBUG() << "current sink is mute :" << audio->mute();
     }
     else
     {
         if (m_volumeBeforeMute != 0)
         {
-            KLOG_DEBUG() << "SetVolume m_volumeBeforeMute:" << m_volumeBeforeMute;
+            //重新设置音量时，会自动解除静音状态
             audio->SetVolume(static_cast<double>(m_volumeBeforeMute) / static_cast<double>(100));
             m_volumeBeforeMute = 0;
         }
