@@ -81,12 +81,22 @@ void SystemInformation::init()
         licenseAgreement->setVersionLicnese();
         licenseAgreement->show();
     });
+    connect(ui->btn_privacy_policy, &QPushButton::clicked, [this]
+    {
+        if (licenseAgreement == nullptr) {
+            licenseAgreement = new LicenseAgreement(this);
+        }
+        licenseAgreement->setPrivacyPolicy();
+        licenseAgreement->show();
+    });
+
     // clang-format on
     connect(ui->btn_change_name, &QPushButton::clicked, this, &SystemInformation::handleChangeHostName);
     Kiran::StylePropertyHelper::setButtonType(ui->btn_change_name, Kiran::BUTTON_Default);
     Kiran::StylePropertyHelper::setButtonType(ui->btn_EULA, Kiran::BUTTON_Default);
     Kiran::StylePropertyHelper::setButtonType(ui->btn_version_license, Kiran::BUTTON_Default);
     Kiran::StylePropertyHelper::setButtonType(ui->btn_license_show, Kiran::BUTTON_Default);
+    Kiran::StylePropertyHelper::setButtonType(ui->btn_privacy_policy, Kiran::BUTTON_Default);
 }
 
 bool SystemInformation::initUI()
@@ -257,7 +267,7 @@ bool SystemInformation::getLicenseDesc(QString& licenseStatus)
         }
     }
 
-    licenseStatus = QString("<font color=%1>%2</font>").arg(expired?"#ff3838":"#5ab940").arg(statusDesc);
+    licenseStatus = QString("<font color=%1>%2</font>").arg(expired ? "#ff3838" : "#5ab940").arg(statusDesc);
     return true;
 }
 
@@ -293,7 +303,7 @@ void SystemInformation::updateHostName(bool isChanged, QString name)
 
 void SystemInformation::handleShowLicenseDialog()
 {
-    if (!QProcess::startDetached("/usr/bin/ksl-os-gui",QStringList()))
+    if (!QProcess::startDetached("/usr/bin/ksl-os-gui", QStringList()))
     {
         KiranMessageBox::message(this, tr("Error"), tr("Failed to open the license activator"), KiranMessageBox::Ok);
     }

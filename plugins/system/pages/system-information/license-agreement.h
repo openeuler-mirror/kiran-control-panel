@@ -14,25 +14,25 @@
 #ifndef LICENSEAGREEMENT_H
 #define LICENSEAGREEMENT_H
 
-#include <QWidget>
 #include <kiranwidgets-qt5/kiran-titlebar-window.h>
+#include <QWidget>
 
 namespace Ui
 {
 class LicenseAgreement;
 }
 
-
 class LicenseAgreement : public KiranTitlebarWindow
 {
     Q_OBJECT
 
 public:
-    explicit LicenseAgreement(QWidget *parent, Qt::WindowFlags windowFlags=Qt::Window);
+    explicit LicenseAgreement(QWidget *parent, Qt::WindowFlags windowFlags = Qt::Window);
     ~LicenseAgreement();
     QString getEulaText();
     void setEULA();
     void setVersionLicnese();
+    void setPrivacyPolicy();
     //void setLicenseType(int type);
 
 public slots:
