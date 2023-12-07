@@ -19,6 +19,7 @@
 #include <QDebug>
 #include <QHBoxLayout>
 #include <QPainter>
+#include <QPainterPath>
 #include <QPropertyAnimation>
 #include <QStyleOption>
 
@@ -188,7 +189,11 @@ void KiranCollapse::init()
                                                     m_expansionMarginRight,
                                                     m_expansionMarginBottom);
     ui->topBar->setTitle(m_topBarTitle);
-    ui->expansionSpaceContainer->addWidget(m_esWidget);
+    // 若为扩展区控件为空，则不添加
+    if (m_esWidget)
+    {
+        ui->expansionSpaceContainer->addWidget(m_esWidget);
+    }
     m_animationForES = new QPropertyAnimation(ui->expansionSpace, "maximumHeight", this);
     m_animationForES->setDuration(200);
     connect(ui->topBar, &TopBar::clickedBar, this, &KiranCollapse::changeExpansionState);
@@ -202,12 +207,8 @@ bool KiranCollapse::getIsExpand() const
 void KiranCollapse::setIsExpand(bool isExpanded)
 {
     m_isExpanded = isExpanded;
-
-    // 设置折叠
-    if (!m_isExpanded)
-    {
-        ui->expansionSpace->setMaximumHeight(0);
-    }
+    // 根据展开/折叠设置最大高度
+    ui->expansionSpace->setMaximumHeight(m_isExpanded ? m_maximumExpansionSpaceHeight : 0);
     ui->topBar->refreshFlagPixmap(m_isExpanded);
 }
 
@@ -229,9 +230,14 @@ void KiranCollapse::setTobBarFixedHeight(int height)
 void KiranCollapse::setMaximumExpansionHeight(int maxExpandHeight)
 {
     m_maximumExpansionSpaceHeight = maxExpandHeight;
+    // 缓存设置最大高度之前的原始高度
     int curHeight = ui->expansionSpace->height();
     ui->expansionSpace->setMaximumHeight(maxExpandHeight);
-    ui->expansionSpace->setFixedHeight(curHeight);
+    // 如果设置最大高度时，处于折叠态则依然保持设置前高度 (防止折叠态是设置该值会导致扩展区展开)
+    if (!m_isExpanded)
+    {
+        ui->expansionSpace->setFixedHeight(curHeight);
+    }
 }
 void KiranCollapse::setExpansionMargin(int left, int top, int right, int bottom)
 {
@@ -251,4 +257,12 @@ void KiranCollapse::setTopBarMargin(int left, int top, int right, int bottom)
 void KiranCollapse::setTopBarSpacing(int spacing)
 {
     ui->topBar->setTopBarSpacing(spacing);
+}
+void KiranCollapse::setExpand()
+{
+    expand();
+}
+void KiranCollapse::setCollapse()
+{
+    collapse();
 }
