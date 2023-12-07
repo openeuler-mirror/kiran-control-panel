@@ -370,6 +370,7 @@ void NetworkTray::updateTrayIcon()
         ActiveConnection::Ptr primaryActiveConnection = primaryConnection();
         if (primaryActiveConnection.isNull())
         {
+            KLOG_INFO() << "update tray icon failed, primary active connection is null";
             return;
         }
 
@@ -383,8 +384,7 @@ void NetworkTray::updateTrayIcon()
             checkInternetConnectivity();
             return;
         }
-
-        if (NetworkManager::primaryConnectionType() == ConnectionSettings::Wireless)
+        if (primaryActiveConnection->type() == ConnectionSettings::Wireless)
         {
             iconPath = ":/kcp-network-images/wireless-error.svg";
         }
@@ -601,6 +601,7 @@ void NetworkTray::handleNetworkManagerStatusChanged(NetworkManager::Status statu
 void NetworkTray::handlePrimaryConnectionChanged(const QString &uni)
 {
     KLOG_DEBUG() << "primary connection changed: " << uni;
+    updateTrayIcon();
 }
 
 void NetworkTray::UnavailableTrayPage()
@@ -734,7 +735,8 @@ void NetworkTray::internetConnected()
 {
     KLOG_DEBUG() << "Connectivity check pass";
     QString iconPath;
-    if (primaryConnectionType() == ConnectionSettings::Wireless)
+    ActiveConnection::Ptr primaryActiveConnection = primaryConnection();
+    if (primaryActiveConnection->type() == ConnectionSettings::Wireless)
     {
         iconPath = ":/kcp-network-images/wireless-4.svg";
     }

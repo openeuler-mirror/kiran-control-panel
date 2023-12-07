@@ -52,15 +52,18 @@ void PluginConnectionList::addConnection(NetworkManager::Connection::Ptr ptr, co
     }
 
     // TODO:确定new ConnectionItemWidget() 的parentWidget
-    ConnectionItemWidget* connectionItemWidget = new ConnectionItemWidget();
-    connectionItemWidget->setName(ptr->name());
-    connectionItemWidget->setFixedHeight(PLUGIN_ITEM_WIDGET_HEIGHT);
+
 
     NetworkConnectionInfo connectionInfo;
     connectionInfo.id = ptr->name();
     connectionInfo.uuid = ptr->uuid();
     connectionInfo.connectionPath = ptr->path();
     connectionInfo.devicePath = devicePath;
+    connectionInfo.type = ptr->settings()->connectionType();
+
+    ConnectionItemWidget* connectionItemWidget = new ConnectionItemWidget(connectionInfo);
+    connectionItemWidget->setName(ptr->name());
+    connectionItemWidget->setFixedHeight(PLUGIN_ITEM_WIDGET_HEIGHT);
 
     ActiveConnection::List activeConnectionList = activeConnections();
     for (ActiveConnection::Ptr activeConnection : activeConnectionList)
@@ -243,6 +246,7 @@ void PluginConnectionList::setItemWidgetStatus(const QString& activePath, Networ
         connectionItemWidget->setLoadingStatus(false);
         connectionItemWidget->activatedStatus();
         connectionItemWidget->setEditButtonVisible(true);
+        connectionItemWidget->setActiveConnectionPath(activePath);
         break;
     case ActiveConnection::State::Deactivating:
         break;
