@@ -132,45 +132,46 @@ void WirelessSecurityWidget::saveSettings()
 
 void WirelessSecurityWidget::showSettings()
 {
-    if (m_wirelessSecuritySetting != nullptr)
+    if(m_wirelessSecuritySetting.isNull())
     {
-        WirelessSecuritySetting::KeyMgmt keyMgmt = m_wirelessSecuritySetting->keyMgmt();
-        int index = ui->securityOption->findData(keyMgmt);
-        ui->securityOption->setCurrentIndex(index);
-
-        if (keyMgmt == WirelessSecuritySetting::KeyMgmt::WpaNone)
-            ui->stackedWidget->setVisible(false);
-        else if (WirelessSecuritySetting::KeyMgmt::WpaPsk)
-        {
-            ui->stackedWidget->setVisible(true);
-            //待修改枚举值
-            ui->stackedWidget->setCurrentIndex(0);
-            Setting::SecretFlags pskFlags = m_wirelessSecuritySetting->pskFlags();
-            int secretFlagIndex;
-            if (pskFlags == Setting::SecretFlagType::NotSaved)
-            {
-                secretFlagIndex = ui->passwordOption->findData(Setting::NotSaved);
-                ui->passwordOption->setCurrentIndex(secretFlagIndex);
-                ui->passwordWidget->setVisible(false);
-                return;
-            }
-
-            if (pskFlags == Setting::SecretFlagType::AgentOwned)
-            {
-                secretFlagIndex = ui->passwordOption->findData(Setting::AgentOwned);
-            }
-            else if (pskFlags == Setting::SecretFlagType::NotRequired)
-            {
-                secretFlagIndex = ui->passwordOption->findData(Setting::NotRequired);
-            }
-            //暂时隐藏passwordWidget
-//            ui->passwordWidget->setVisible(true);
-            ui->passwordOption->setCurrentIndex(secretFlagIndex);
-            ui->passwordEdit->setText(m_wirelessSecuritySetting->psk());
-        }
-    }
-    else
         resetSettings();
+        return;
+    }
+
+    WirelessSecuritySetting::KeyMgmt keyMgmt = m_wirelessSecuritySetting->keyMgmt();
+    int index = ui->securityOption->findData(keyMgmt);
+    ui->securityOption->setCurrentIndex(index);
+
+    if (keyMgmt == WirelessSecuritySetting::KeyMgmt::WpaNone)
+        ui->stackedWidget->setVisible(false);
+    else if (keyMgmt == WirelessSecuritySetting::KeyMgmt::WpaPsk)
+    {
+        ui->stackedWidget->setVisible(true);
+        //待修改枚举值
+        ui->stackedWidget->setCurrentIndex(0);
+        Setting::SecretFlags pskFlags = m_wirelessSecuritySetting->pskFlags();
+        int secretFlagIndex;
+        if (pskFlags == Setting::SecretFlagType::NotSaved)
+        {
+            secretFlagIndex = ui->passwordOption->findData(Setting::NotSaved);
+            ui->passwordOption->setCurrentIndex(secretFlagIndex);
+            ui->passwordWidget->setVisible(false);
+            return;
+        }
+
+        if (pskFlags == Setting::SecretFlagType::AgentOwned)
+        {
+            secretFlagIndex = ui->passwordOption->findData(Setting::AgentOwned);
+        }
+        else if (pskFlags == Setting::SecretFlagType::NotRequired)
+        {
+            secretFlagIndex = ui->passwordOption->findData(Setting::NotRequired);
+        }
+        //暂时隐藏passwordWidget
+//            ui->passwordWidget->setVisible(true);
+        ui->passwordOption->setCurrentIndex(secretFlagIndex);
+        ui->passwordEdit->setText(m_wirelessSecuritySetting->psk());
+    }
 }
 
 void WirelessSecurityWidget::clearPtr()

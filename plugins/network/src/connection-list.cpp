@@ -18,6 +18,7 @@
 #include <QCollator>
 #include "general.h"
 #include <QEvent>
+#include "utils.h"
 
 using namespace NetworkManager;
 
@@ -96,9 +97,9 @@ QList<QWidget *> ConnectionList::itemWidgetList()
 
 void ConnectionList::showConnectionList(NetworkManager::ConnectionSettings::ConnectionType type)
 {
-    Connection::List connectionList = NetworkManager::listConnections();
     if (type == ConnectionSettings::Wired)
     {
+        Connection::List connectionList = NetworkUtils::getAvailableWiredConnections(m_devicePath);
         Device::Ptr device = findNetworkInterface(m_devicePath);
         QString devicePath = device->uni();
         for (Connection::Ptr conn : connectionList)

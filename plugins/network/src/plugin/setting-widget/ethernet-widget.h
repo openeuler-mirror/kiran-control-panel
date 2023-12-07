@@ -39,6 +39,7 @@ public:
     void setWiredSetting(const NetworkManager::WiredSetting::Ptr &wiredSetting);
     void setErrorTips(KiranTips *errorTips);
     bool isCloneMacValid(const QString &cloneMac);
+    void setDefaultMacAddress(const QString &macAddress);
 
 public slots:
     void handleCustomMTUChanged(bool checked);

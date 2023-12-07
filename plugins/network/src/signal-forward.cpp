@@ -54,6 +54,34 @@ void SignalForward::initConnect()
     connect(notifier(), &Notifier::activeConnectionRemoved, this, &SignalForward::handleActiveConnectionRemoved, Qt::UniqueConnection);
     connect(settingsNotifier(), &SettingsNotifier::connectionAdded, this, &SignalForward::handleNotifierConnectionAdded, Qt::UniqueConnection);
     connect(settingsNotifier(), &SettingsNotifier::connectionRemoved, this, &SignalForward::handleNotifierConnectionRemoved, Qt::UniqueConnection);
+
+    m_Timer.setInterval(3000);
+    m_Timer.setSingleShot(true);
+    // Note:新设备插入后，需要等待一段时间，Device::List networkInterfaces() 来不及更新
+    // Note:DeviceAdded signal is emitted when a new network interface is available.
+
+    // XXX:当发出deviceAdded信号时，应该已经managed，需要修改并重新测试
+    // deviceAdded信号发出时，根据信号的定义，此时device state为managed，但实际上并为unmanaged
+    connect(notifier(), &Notifier::deviceAdded, this, &SignalForward::addDevice);
+    connect(&m_Timer, &QTimer::timeout, this, [this]()
+            {
+                Device::Ptr device = findNetworkInterface(m_tmpDevicePath);
+                if(device->managed())
+                {
+                    addDevice(m_tmpDevicePath);
+                    m_Timer.stop();
+                }
+                else
+                {
+                    KLOG_INFO() << "this device interface is invalid!";
+                    m_Timer.start();
+                }
+                m_waitCounts++;
+                if(m_waitCounts > MAX_WAIT_COUNTS)
+                {
+                    KLOG_INFO() << "This device is currently invalid by NetworkManager";
+                    m_Timer.stop();
+                } });
 }
 
 void SignalForward::handleActiveConnectionAdded(const QString &activePath)
@@ -110,4 +138,53 @@ void SignalForward::handleNotifierConnectionRemoved(const QString &path)
 void SignalForward::handleActiveConnectionRemoved(const QString &activepath)
 {
     Q_EMIT activeConnectionRemoved(activepath);
+}
+
+//TODO:暂时使用uuid，之后统一使用path进行查询
+//是否考虑可以直接传递Connection::Ptr
+void SignalForward::editConnection(NetworkConnectionInfo &connectionInfo)
+{
+    auto type = connectionInfo.type;
+    switch (type)
+    {
+    case ConnectionSettings::ConnectionType::Wired:
+        emit wiredConnectionEdited(connectionInfo.uuid,connectionInfo.activeConnectionPath);
+        break;
+    case ConnectionSettings::ConnectionType::Wireless:
+        emit wirelessConnectionEdited(connectionInfo.uuid,connectionInfo.activeConnectionPath);
+        break;
+    case ConnectionSettings::ConnectionType::Vpn:
+        emit vpnConnectionEdited();
+        break;
+    default:
+        break;
+    }
+}
+
+void SignalForward::addDevice(const QString &uni)
+{
+    Device::Ptr device = findNetworkInterface(uni);
+    m_tmpDevicePath = uni;
+    if(device->managed())
+    {
+        KLOG_INFO() << "add device:" << uni;
+        switch (device->type())
+        {
+        case Device::Type::Ethernet:
+            emit wiredDeviceAdded(uni);;
+            break;
+        case Device::Type::Wifi:
+            emit wirelessDeviceAdded(uni);;
+            break;
+        default:
+            emit otherDeviceAdded(uni);
+            break;
+        } 
+    }
+    else
+    {
+        KLOG_INFO() << "this device interface is invalid!";
+        m_Timer.start();
+        KLOG_INFO() << "wait device managed counts:" << m_waitCounts;
+    }
 }

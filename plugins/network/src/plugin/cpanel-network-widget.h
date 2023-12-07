@@ -35,41 +35,45 @@ class CPanelNetworkWidget : public QWidget
 
 public:
     explicit CPanelNetworkWidget(QWidget *parent = nullptr);
-
     ~CPanelNetworkWidget() override;
 
-    void init();
-
-    void initPage();
-    void initConnect();
-    void setSidebarItemStatus(KiranSidebarItem *sidebarItem, NetworkManager::Device::State state);
-
-    void reload();
     QStringList subItemNameList();
     void setCurrentSubItem(int index);
 
-public slots:
-    void handleDeviceAdded(const QString &devicePath);
-    void handleDeviceRemoved(const QString &devicePath);
-    void handleThemeChanged(Kiran::PaletteType paletteType);
-    void handleSideBarItemClicked(QListWidgetItem *item);
-    void handleManagedChanged();
+private slots:
+    void removeDevice(const QString &devicePath);
+    void changeTheme(Kiran::PaletteType paletteType);
+
+    void changeSideBarItem(QListWidgetItem *item);
+    void addWirelessDevice(const QString &devicePath);
+    void addWiredDevice(const QString &devicePath);
+
     void handleWirelessEnabledChanged(bool enable);
     void handleNetworkingEnabledChanged(bool enable);
-    void handleStateChanged(NetworkManager::Device::State newstate, NetworkManager::Device::State oldstate, NetworkManager::Device::StateChangeReason reason);
+    void changeDeviceState(NetworkManager::Device::State newstate, NetworkManager::Device::State oldstate, NetworkManager::Device::StateChangeReason reason);
+
+private:
+    void init();
+    void initPage();
+    void initConnect();
+    void initWiredManager();
+    void initWirelessManager();
+
+    void updateSidebarItemStatus(NetworkManager::Device::Type deviceType);
+    void setSidebarItemStatus(KiranSidebarItem *sidebarItem, NetworkManager::Device::State state);
+    void removeSidebarItem(const QString &text,int index);
+
+    bool isExistWiredItem();
+    bool isExistWirelessItem();
 
 signals:
     void subItemsChanged();
 
 private:
     Ui::CPanelNetworkWidget *ui;
-    QList<NetworkManager::Device::Ptr> m_wiredDeviceList;
-    QList<NetworkManager::Device::Ptr> m_wirelessDeviceList;
     QStringList m_subItemsList;
-    QMap<QString, KiranSidebarItem *> m_deviceToSidebarItem;
-    QTimer m_Timer;
+    QList<KiranSidebarItem *> m_kiranSidebarItems;
     QString m_addDevicePath;
-    int m_waitCounts;
 };
 
 #endif  // KIRAN_CPANEL_NETWORK_CPANEL_NETWORK_WIDGET_H

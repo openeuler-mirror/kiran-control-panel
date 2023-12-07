@@ -2,6 +2,1343 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="zh_CN">
 <context>
+    <name>CPanelNetworkWidget</name>
+    <message>
+        <source>CPanelNetworkWidget</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VPN</source>
+        <translation>VPN</translation>
+    </message>
+    <message>
+        <source>Network Details</source>
+        <translation>网络详情</translation>
+    </message>
+    <message>
+        <source>Wired Network</source>
+        <translation>有线网络</translation>
+    </message>
+    <message>
+        <source>Wireless Network</source>
+        <translation>无线网络</translation>
+    </message>
+    <message>
+        <source>Connected</source>
+        <translation>已连接</translation>
+    </message>
+    <message>
+        <source>Unavailable</source>
+        <translation>已禁用</translation>
+    </message>
+    <message>
+        <source>Disconnected</source>
+        <translation>已断开</translation>
+    </message>
+    <message>
+        <source>Wired Network %1</source>
+        <translation type="obsolete">有线网络 %1</translation>
+    </message>
+    <message>
+        <source>Wireless Network %1</source>
+        <translation type="obsolete">无线网络  %1</translation>
+    </message>
+</context>
+<context>
+    <name>ConnectionDetailsWidget</name>
+    <message>
+        <source>ConnectionDetailsWidget</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Security type</source>
+        <translation>安全类型</translation>
+    </message>
+    <message>
+        <source>TextLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Frequency band</source>
+        <translation>频段</translation>
+    </message>
+    <message>
+        <source>Channel</source>
+        <translation>网络通道</translation>
+    </message>
+    <message>
+        <source>Interface</source>
+        <translation>接口</translation>
+    </message>
+    <message>
+        <source>MAC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>IPv4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Gateway</source>
+        <translation>网关</translation>
+    </message>
+    <message>
+        <source>DNS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Subnet mask</source>
+        <translation>子网掩码</translation>
+    </message>
+    <message>
+        <source>IPv6</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Prefix</source>
+        <translation>前缀</translation>
+    </message>
+    <message>
+        <source>Rate</source>
+        <translation>速率</translation>
+    </message>
+    <message>
+        <source>Preferred DNS</source>
+        <translation type="vanished">首选DNS</translation>
+    </message>
+</context>
+<context>
+    <name>ConnectionItemWidget</name>
+    <message>
+        <location filename="../src/plugin/connection-itemwidget.cpp" line="78"/>
+        <source>disconnect</source>
+        <translation>断开</translation>
+    </message>
+    <message>
+        <location filename="../src/plugin/connection-itemwidget.cpp" line="119"/>
+        <source>ignore</source>
+        <translation>忽略</translation>
+    </message>
+    <message>
+        <location filename="../src/plugin/connection-itemwidget.cpp" line="125"/>
+        <source>remove</source>
+        <translation>移除</translation>
+    </message>
+    <message>
+        <location filename="../src/plugin/connection-itemwidget.cpp" line="291"/>
+        <source>The current device:%1 is not available</source>
+        <translation>当前设备：%1 不可用</translation>
+    </message>
+    <message>
+        <location filename="../src/plugin/connection-itemwidget.cpp" line="307"/>
+        <source>The carrier is pulled out</source>
+        <translation>网线被拔出</translation>
+    </message>
+    <message>
+        <location filename="../src/plugin/connection-itemwidget.cpp" line="395"/>
+        <source>Are you sure you want to delete the connection %1</source>
+        <translation>您是否确定要删除连接 &quot;%1&quot;</translation>
+    </message>
+    <message>
+        <location filename="../src/plugin/connection-itemwidget.cpp" line="396"/>
+        <source>Warning</source>
+        <translation>警告</translation>
+    </message>
+    <message>
+        <location filename="../src/plugin/connection-itemwidget.cpp" line="454"/>
+        <location filename="../src/plugin/connection-itemwidget.cpp" line="467"/>
+        <source>Tips</source>
+        <translation>提示</translation>
+    </message>
+    <message>
+        <location filename="../src/plugin/connection-itemwidget.cpp" line="455"/>
+        <source>Password required to connect to %1.</source>
+        <translation>连接网络 &quot;%1&quot; 需要密码</translation>
+    </message>
+    <message>
+        <location filename="../src/plugin/connection-itemwidget.cpp" line="468"/>
+        <source>Please input a network name</source>
+        <translation>请输入网络名称</translation>
+    </message>
+</context>
+<context>
+    <name>ConnectionNameWidget</name>
+    <message>
+        <source>ConnectionNameWidget</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>TextLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>EditConnectionName</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto Connection</source>
+        <translation>自动连接</translation>
+    </message>
+    <message>
+        <source>Required</source>
+        <translation>必填</translation>
+    </message>
+    <message>
+        <source>Wired Connection %1</source>
+        <translation>有线网络%1</translation>
+    </message>
+    <message>
+        <source>VPN L2TP %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VPN PPTP %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Connection name can not be empty</source>
+        <translation>网络名称不能为空</translation>
+    </message>
+</context>
+<context>
+    <name>ConnectionShowPage</name>
+    <message>
+        <source>ConnectionShowPage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>TextLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ButtonCreateConnection</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>DetailsPage</name>
+    <message>
+        <source>DetailsPage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Network Details</source>
+        <translation>网络详情</translation>
+    </message>
+    <message>
+        <source>Please select a connection</source>
+        <translation>请选择连接</translation>
+    </message>
+    <message>
+        <source>ComboBoxDetailsSelectConnection</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>DeviceAvailableConnectionWidget</name>
+    <message>
+        <location filename="../src/plugin/device-available-connection-widget.cpp" line="287"/>
+        <source>Network card: %1</source>
+        <translation>网卡：%1</translation>
+    </message>
+    <message>
+        <location filename="../src/plugin/device-available-connection-widget.cpp" line="418"/>
+        <source>Other WiFi networks</source>
+        <translation>其它WIFI网络</translation>
+    </message>
+</context>
+<context>
+    <name>DeviceList</name>
+    <message>
+        <location filename="../src/plugin/device-list.cpp" line="133"/>
+        <source>Wired Network Adapter</source>
+        <translation>有线网络配置</translation>
+    </message>
+    <message>
+        <location filename="../src/plugin/device-list.cpp" line="137"/>
+        <source>Wireless Network Adapter</source>
+        <translation>无线网络配置</translation>
+    </message>
+</context>
+<context>
+    <name>DisconnectAndDeleteButton</name>
+    <message>
+        <source>DisconnectAndDeleteButton</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ButtonDisconnect</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Disconnect</source>
+        <translation>断开</translation>
+    </message>
+    <message>
+        <source>ButtonDelete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>删除</translation>
+    </message>
+    <message>
+        <source>ButtonIgnore</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ignore</source>
+        <translation>忽略</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to delete the connection %1</source>
+        <translation>您是否确定要删除连接 &quot;%1&quot;</translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation>警告</translation>
+    </message>
+</context>
+<context>
+    <name>DnsWidget</name>
+    <message>
+        <source>DnsWidget</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Preferred DNS</source>
+        <translation>首选DNS</translation>
+    </message>
+    <message>
+        <source>Alternate DNS</source>
+        <translation>备选DNS</translation>
+    </message>
+</context>
+<context>
+    <name>DslManager</name>
+    <message>
+        <source>DslManager</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>DSL</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>DslSettingPage</name>
+    <message>
+        <source>DslSettingPage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>保存</translation>
+    </message>
+    <message>
+        <source>Return</source>
+        <translation>返回</translation>
+    </message>
+</context>
+<context>
+    <name>EthernetWidget</name>
+    <message>
+        <source>EthernetWidget</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MAC Address Of Ethernet Device</source>
+        <translation>设备MAC地址</translation>
+    </message>
+    <message>
+        <source>ComboBoxDeviceMac</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ethernet Clone MAC Address</source>
+        <translation>克隆MAC地址</translation>
+    </message>
+    <message>
+        <source>EditDeviceMac</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Custom MTU</source>
+        <translation>自定义MTU</translation>
+    </message>
+    <message>
+        <source>SpinBoxCustomMTU</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No device specified</source>
+        <translation>不指定设备</translation>
+    </message>
+    <message>
+        <source>Clone Mac invalid</source>
+        <translation>无效的克隆MAC地址</translation>
+    </message>
+</context>
+<context>
+    <name>Ipv4Widget</name>
+    <message>
+        <source>Ipv4Widget</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>IPV4 Method</source>
+        <translation>IPV4方法</translation>
+    </message>
+    <message>
+        <source>ComboBoxIpv4Method</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>IP Address</source>
+        <translation>IP地址</translation>
+    </message>
+    <message>
+        <source>EditIpv4Address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Net Mask</source>
+        <translation>子网掩码</translation>
+    </message>
+    <message>
+        <source>EditIpv4Netmask</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Gateway</source>
+        <translation>网关</translation>
+    </message>
+    <message>
+        <source>EditIpv4Gateway</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/plugin/setting-widget/ipv4-widget.ui" line="190"/>
+        <source>DNS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>EditIpv4PreferredDNS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto</source>
+        <translation>自动</translation>
+    </message>
+    <message>
+        <source>Manual</source>
+        <translation>手动</translation>
+    </message>
+    <message>
+        <source>Required</source>
+        <translation>必填</translation>
+    </message>
+    <message>
+        <location filename="../src/plugin/setting-widget/ipv4-widget.cpp" line="42"/>
+        <source>Please separate multiple DNS entries by semicolon</source>
+        <translation>请用分号分隔多个DNS</translation>
+    </message>
+    <message>
+        <location filename="../src/plugin/setting-widget/ipv4-widget.cpp" line="243"/>
+        <source>Ipv4 DNS invalid</source>
+        <translation>无效的Ipv4 DNS</translation>
+    </message>
+    <message>
+        <source>Ipv4 address can not be empty</source>
+        <translation>Ipv4地址不能为空</translation>
+    </message>
+    <message>
+        <source>Ipv4 Address invalid</source>
+        <translation>无效的Ipv4地址</translation>
+    </message>
+    <message>
+        <source>NetMask can not be empty</source>
+        <translation>子网掩码不能为空</translation>
+    </message>
+    <message>
+        <source>Netmask invalid</source>
+        <translation>无效的子网掩码</translation>
+    </message>
+    <message>
+        <source>Ipv4 Gateway invalid</source>
+        <translation>无效的Ipv4网关</translation>
+    </message>
+    <message>
+        <source>Preferred DNS</source>
+        <translation type="vanished">首选DNS</translation>
+    </message>
+    <message>
+        <source>Alternate DNS</source>
+        <translation type="vanished">备选DNS</translation>
+    </message>
+    <message>
+        <source>EditIpv4AlternateDNS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ipv4 Preferred DNS invalid</source>
+        <translation>无效的Ipv4首选DNS</translation>
+    </message>
+    <message>
+        <source>Ipv4 Alternate DNS invalid</source>
+        <translation>无效的Ipv4备选DNS</translation>
+    </message>
+    <message>
+        <source>DNS 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>DNS 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Ipv6Widget</name>
+    <message>
+        <source>Ipv6Widget</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>IPV6 Method</source>
+        <translation>IPV6方法</translation>
+    </message>
+    <message>
+        <source>ComboBoxIpv6Method</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>IP Address</source>
+        <translation>IP地址</translation>
+    </message>
+    <message>
+        <source>EditIpv6Address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Prefix</source>
+        <translation>前缀</translation>
+    </message>
+    <message>
+        <source>SpinBoxIpv6Prefix</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Gateway</source>
+        <translation>网关</translation>
+    </message>
+    <message>
+        <source>EditIpv6Gateway</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/plugin/setting-widget/ipv6-widget.ui" line="193"/>
+        <source> DNS</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>EditIpv6PreferredDNS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto</source>
+        <translation>自动</translation>
+    </message>
+    <message>
+        <source>Manual</source>
+        <translation>手动</translation>
+    </message>
+    <message>
+        <source>Ignored</source>
+        <translation>忽略</translation>
+    </message>
+    <message>
+        <source>Required</source>
+        <translation>必填</translation>
+    </message>
+    <message>
+        <location filename="../src/plugin/setting-widget/ipv6-widget.cpp" line="43"/>
+        <source>Please separate multiple DNS entries by semicolon</source>
+        <translation>请用分号分隔多个DNS</translation>
+    </message>
+    <message>
+        <location filename="../src/plugin/setting-widget/ipv6-widget.cpp" line="235"/>
+        <source>Ipv6 DNS invalid</source>
+        <translation>无效的Ipv6 DNS</translation>
+    </message>
+    <message>
+        <source>Ipv6 address can not be empty</source>
+        <translation>Ipv6地址不能为空</translation>
+    </message>
+    <message>
+        <source>Ipv6 address invalid</source>
+        <translation>无效的Ipv6地址</translation>
+    </message>
+    <message>
+        <source>Ipv6 Gateway invalid</source>
+        <translation>无效的Ipv6网关</translation>
+    </message>
+    <message>
+        <source>Preferred DNS</source>
+        <translation>首选DNS</translation>
+    </message>
+    <message>
+        <source>Alternate DNS</source>
+        <translation>备选DNS</translation>
+    </message>
+    <message>
+        <source>EditIpv6AlternateDNS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ipv6 Preferred DNS invalid</source>
+        <translation>无效的Ipv6首选DNS</translation>
+    </message>
+    <message>
+        <source>Ipv6 Alternate DNS invalid</source>
+        <translation>无效的Ipv6备选DNS</translation>
+    </message>
+</context>
+<context>
+    <name>NetworkSubItem</name>
+    <message>
+        <source>Wired Network %1</source>
+        <translation>有线网络 %1</translation>
+    </message>
+    <message>
+        <source>Wired Network</source>
+        <translation>有线网络</translation>
+    </message>
+    <message>
+        <source>Wireless Network %1</source>
+        <translation>无线网络  %1</translation>
+    </message>
+    <message>
+        <source>Wireless Network</source>
+        <translation>无线网络</translation>
+    </message>
+    <message>
+        <source>VPN</source>
+        <translation>VPN</translation>
+    </message>
+    <message>
+        <source>Network Details</source>
+        <translation>网络详情</translation>
+    </message>
+</context>
+<context>
+    <name>NetworkTray</name>
+    <message>
+        <source>Network settings</source>
+        <translation>网络设置</translation>
+    </message>
+    <message>
+        <source>Network unavailable</source>
+        <translation>网络不可用</translation>
+    </message>
+    <message>
+        <location filename="../src/tray/network-tray.cpp" line="395"/>
+        <location filename="../src/tray/network-tray.cpp" line="763"/>
+        <source>The network is connected, but you cannot access the Internet</source>
+        <translation>网络已连接，但不能访问互联网</translation>
+    </message>
+    <message>
+        <location filename="../src/tray/network-tray.cpp" line="402"/>
+        <location filename="../src/tray/network-tray.cpp" line="407"/>
+        <source>Network not connected</source>
+        <translation>网络已断开</translation>
+    </message>
+    <message>
+        <source>Wired network card: %1 available</source>
+        <translation>有线网卡: %1 可用</translation>
+    </message>
+    <message>
+        <source>Wireless network card: %1 available</source>
+        <translation>无线网卡: %1 可用</translation>
+    </message>
+    <message>
+        <source>Wired network card: %1 unavailable</source>
+        <translation>有线网卡: %1 不可用</translation>
+    </message>
+    <message>
+        <source>Wireless network card: %1 unavailable</source>
+        <translation>无线网卡: %1 不可用</translation>
+    </message>
+    <message>
+        <location filename="../src/tray/network-tray.cpp" line="745"/>
+        <source>Network connected</source>
+        <translation>网络已连接</translation>
+    </message>
+</context>
+<context>
+    <name>PluginConnectionList</name>
+    <message>
+        <source>Other WiFi networks</source>
+        <translation>其它WIFI网络</translation>
+    </message>
+    <message>
+        <source>Tips</source>
+        <translation>提示</translation>
+    </message>
+    <message>
+        <source>Please input a network name</source>
+        <translation>请输入网络名称</translation>
+    </message>
+</context>
+<context>
+    <name>StatusNotification</name>
+    <message>
+        <source>Connection Failed</source>
+        <translation>连接失败</translation>
+    </message>
+    <message>
+        <source>the network not found</source>
+        <translation>未找到网络</translation>
+    </message>
+    <message>
+        <source>The hidden network &quot;%1&quot; to be connected has been detected and exists in the network list</source>
+        <translation>要连接的隐藏网络“%1”已经被探测到，并存在于网络列表中</translation>
+    </message>
+    <message>
+        <source>Failed to connect to the network &quot;%1&quot;</source>
+        <translation>无法连接到网络 &quot;%1&quot;</translation>
+    </message>
+    <message>
+        <source>Connection activated</source>
+        <translation>网络已连接</translation>
+    </message>
+    <message>
+        <source>You are now connected to the network &quot;%1&quot;</source>
+        <translation>您已连接到网络 &quot;%1&quot;</translation>
+    </message>
+    <message>
+        <source>Connection deactivated</source>
+        <translation>连接断开</translation>
+    </message>
+    <message>
+        <source>You have now disconnected the network &quot;%1&quot;</source>
+        <translation>您已断开网络连接 &quot;%1&quot;</translation>
+    </message>
+    <message>
+        <source>Connection deleted</source>
+        <translation>连接已删除</translation>
+    </message>
+    <message>
+        <source>The connection has been deleted &quot;%1&quot;</source>
+        <translation>已删除连接 &quot;%1&quot;</translation>
+    </message>
+</context>
+<context>
+    <name>TextInputDialog</name>
+    <message>
+        <source>Tips</source>
+        <translation>提示</translation>
+    </message>
+    <message>
+        <source>Yes</source>
+        <translation>确认</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>取消</translation>
+    </message>
+</context>
+<context>
+    <name>TrayConnectionList</name>
+    <message>
+        <source>Other WiFi networks</source>
+        <translation>其它WIFI网络</translation>
+    </message>
+</context>
+<context>
+    <name>TrayItemWidget</name>
+    <message>
+        <source>TrayItemWidget</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Icon</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>名称</translation>
+    </message>
+    <message>
+        <source>Status</source>
+        <translation>状态</translation>
+    </message>
+    <message>
+        <source>Ignore</source>
+        <translation>忽略</translation>
+    </message>
+    <message>
+        <source>Disconnect</source>
+        <translation>断开</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>取消</translation>
+    </message>
+    <message>
+        <source>Connect</source>
+        <translation>连接</translation>
+    </message>
+    <message>
+        <source>Connected</source>
+        <translation>已连接</translation>
+    </message>
+    <message>
+        <source>Unconnected</source>
+        <translation>未连接</translation>
+    </message>
+    <message>
+        <source>Please input password</source>
+        <translation>请输入密码</translation>
+    </message>
+    <message>
+        <source>Please input a network name</source>
+        <translation>请输入网络名称</translation>
+    </message>
+</context>
+<context>
+    <name>TrayPage</name>
+    <message>
+        <source>TrayPage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>TextLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select wired network card</source>
+        <translation>请选择有线网卡</translation>
+    </message>
+    <message>
+        <source>Select wireless network card</source>
+        <translation>请选择无线网卡</translation>
+    </message>
+</context>
+<context>
+    <name>VpnIPsec</name>
+    <message>
+        <source>VpnIPsec</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable IPsec</source>
+        <translation>启用IPsec</translation>
+    </message>
+    <message>
+        <source>Group Name</source>
+        <translation>组名</translation>
+    </message>
+    <message>
+        <source>EditGroupName</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Group ID</source>
+        <translation>组ID</translation>
+    </message>
+    <message>
+        <source>EditGroupId</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pre-Shared Key</source>
+        <translation>预共享密钥</translation>
+    </message>
+    <message>
+        <source>EditPreSharedKey</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show Password</source>
+        <translation>显示密码</translation>
+    </message>
+    <message>
+        <source>Internet Key Exchange Protocol</source>
+        <translation>密钥交换协议</translation>
+    </message>
+    <message>
+        <source>EditIpsecIKE</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Encapsulating Security Payload</source>
+        <translation>安全封装协议</translation>
+    </message>
+    <message>
+        <source>EditIpsecESP</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>VpnIpvx</name>
+    <message>
+        <source>VpnIpvx</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>IPV4 Method</source>
+        <translation>IPV4方法</translation>
+    </message>
+    <message>
+        <source>ComboBoxVPNIpv4Method</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Only applied in corresponding resources</source>
+        <translation>仅用于相对应的网络上的资源</translation>
+    </message>
+    <message>
+        <source>Preferred DNS</source>
+        <translation>首选DNS</translation>
+    </message>
+    <message>
+        <source>EditVPNIpv4PreferredDNS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Alternate DNS</source>
+        <translation>备选DNS</translation>
+    </message>
+    <message>
+        <source>EditIpv4AlternateDNS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto</source>
+        <translation>自动</translation>
+    </message>
+</context>
+<context>
+    <name>VpnL2tpSetting</name>
+    <message>
+        <source>VpnL2tpSetting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VPN name</source>
+        <translation>VPN名称</translation>
+    </message>
+</context>
+<context>
+    <name>VpnManager</name>
+    <message>
+        <source>VpnManager</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VPN type</source>
+        <translation>VPN类型</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>保存</translation>
+    </message>
+    <message>
+        <source>Return</source>
+        <translation>返回</translation>
+    </message>
+    <message>
+        <source>VPN</source>
+        <translation type="unfinished">VPN</translation>
+    </message>
+    <message>
+        <source>L2TP</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tips</source>
+        <translation>提示</translation>
+    </message>
+    <message>
+        <source>Password required to connect to %1.</source>
+        <translation>连接网络 &quot;%1&quot; 需要密码</translation>
+    </message>
+</context>
+<context>
+    <name>VpnPpp</name>
+    <message>
+        <source>VpnPpp</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use MPPE</source>
+        <translation>使用MPPE</translation>
+    </message>
+    <message>
+        <source>Security</source>
+        <translation>安全</translation>
+    </message>
+    <message>
+        <source>ComboBoxMppeSecurity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Stateful MPPE</source>
+        <translation>使用带状态的MPPE</translation>
+    </message>
+    <message>
+        <source>All available (default)</source>
+        <translation>都可用（默认）</translation>
+    </message>
+    <message>
+        <source>40-bit (less secure)</source>
+        <translation>40位（较安全）</translation>
+    </message>
+    <message>
+        <source>128-bit (most secure)</source>
+        <translation>128位（最安全）</translation>
+    </message>
+    <message>
+        <source>Refuse EAP Authentication</source>
+        <translation>拒绝EAP认证</translation>
+    </message>
+    <message>
+        <source>Refuse PAP Authentication</source>
+        <translation>拒绝PAP认证</translation>
+    </message>
+    <message>
+        <source>Refuse CHAP Authentication</source>
+        <translation>拒绝CHAP认证</translation>
+    </message>
+    <message>
+        <source>Refuse MSCHAP Authentication</source>
+        <translation>拒绝MSCHAP认证</translation>
+    </message>
+    <message>
+        <source>Refuse MSCHAPv2 Authentication</source>
+        <translation>拒绝MSCHAPv2认证</translation>
+    </message>
+    <message>
+        <source>No BSD Data Compression</source>
+        <translation>无BSD数据压缩</translation>
+    </message>
+    <message>
+        <source>No Deflate Data Compression</source>
+        <translation>无Deflate数据压缩</translation>
+    </message>
+    <message>
+        <source>No TCP Header Compression</source>
+        <translation>无TCP头压缩</translation>
+    </message>
+    <message>
+        <source>No Protocol Field Compression</source>
+        <translation>无协议字段压缩</translation>
+    </message>
+    <message>
+        <source>No Address/Control Compression</source>
+        <translation>无地址/控制压缩</translation>
+    </message>
+    <message>
+        <source>Send PPP Echo Packets</source>
+        <translation>发送PPP回响包</translation>
+    </message>
+</context>
+<context>
+    <name>VpnPptpSetting</name>
+    <message>
+        <source>VpnPptpSetting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VPN name</source>
+        <translation>VPN名称</translation>
+    </message>
+</context>
+<context>
+    <name>VpnWidget</name>
+    <message>
+        <source>VpnWidget</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Gateway</source>
+        <translation>网关</translation>
+    </message>
+    <message>
+        <source>EditVPNGateway</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>User Name</source>
+        <translation>用户名</translation>
+    </message>
+    <message>
+        <source>EditVPNUserName</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Password Options</source>
+        <translation>密码选项</translation>
+    </message>
+    <message>
+        <source>ComboBoxVPNPasswordOptions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation>密码</translation>
+    </message>
+    <message>
+        <source>EditVPNPassword</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ButtonPasswordVisual</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show Password</source>
+        <translation>显示密码</translation>
+    </message>
+    <message>
+        <source>NT Domain</source>
+        <translation>NT域</translation>
+    </message>
+    <message>
+        <source>EditNTDomain</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Required</source>
+        <translation>必填</translation>
+    </message>
+    <message>
+        <source>Saved</source>
+        <translation>已保存的</translation>
+    </message>
+    <message>
+        <source>Ask</source>
+        <translation>总是询问</translation>
+    </message>
+    <message>
+        <source>Not required</source>
+        <translation>不要求</translation>
+    </message>
+    <message>
+        <source>Gateway can not be empty</source>
+        <translation>网关不能为空</translation>
+    </message>
+    <message>
+        <source>Gateway invalid</source>
+        <translation>无效的网关</translation>
+    </message>
+    <message>
+        <source>user name can not be empty</source>
+        <translation>用户名不能为空</translation>
+    </message>
+    <message>
+        <source>password can not be empty</source>
+        <translation>密码不能为空</translation>
+    </message>
+</context>
+<context>
+    <name>WiredManager</name>
+    <message>
+        <source>WiredManager</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ButtonSave</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>保存</translation>
+    </message>
+    <message>
+        <source>ButtonReturn</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Return</source>
+        <translation>返回</translation>
+    </message>
+    <message>
+        <source>Wired Network Adapter</source>
+        <translation>有线网络配置</translation>
+    </message>
+    <message>
+        <source>The carrier is pulled out</source>
+        <translation>网线被拔出</translation>
+    </message>
+    <message>
+        <source>The current device is not available</source>
+        <translation>当前设备不可用</translation>
+    </message>
+</context>
+<context>
+    <name>WiredSettingPage</name>
+    <message>
+        <source>WiredSettingPage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Network name</source>
+        <translation>网络名称</translation>
+    </message>
+</context>
+<context>
+    <name>WirelessManager</name>
+    <message>
+        <source>WirelessManager</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>保存</translation>
+    </message>
+    <message>
+        <source>Return</source>
+        <translation>返回</translation>
+    </message>
+    <message>
+        <source>Wireless Network Adapter</source>
+        <translation>无线网卡</translation>
+    </message>
+    <message>
+        <source>The current device is not available</source>
+        <translation>当前设备不可用</translation>
+    </message>
+    <message>
+        <source>Tips</source>
+        <translation>提示</translation>
+    </message>
+    <message>
+        <source>Password required to connect to %1.</source>
+        <translation>连接网络 &quot;%1&quot; 需要密码</translation>
+    </message>
+</context>
+<context>
+    <name>WirelessSecurityWidget</name>
+    <message>
+        <source>WirelessSecurityWidget</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Security</source>
+        <translation>安全</translation>
+    </message>
+    <message>
+        <source>ComboBoxWirelessSecurityOption</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Password Options</source>
+        <translation>密码选项</translation>
+    </message>
+    <message>
+        <source>ComboBoxWirelessPasswordOption</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation>密码</translation>
+    </message>
+    <message>
+        <source>EditWirelessPassword</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ButtonWirelessPasswordVisual</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PushButton</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation>无</translation>
+    </message>
+    <message>
+        <source>WPA/WPA2 Personal</source>
+        <translation>WPA/WPA2个人版</translation>
+    </message>
+    <message>
+        <source>Save password for all users</source>
+        <translation>仅为该用户存储密码</translation>
+    </message>
+    <message>
+        <source>Save password for this user</source>
+        <translation>存储所有用户密码</translation>
+    </message>
+    <message>
+        <source>Ask me always</source>
+        <translation>总是询问</translation>
+    </message>
+    <message>
+        <source>Required</source>
+        <translation>必填</translation>
+    </message>
+</context>
+<context>
+    <name>WirelessSettingPage</name>
+    <message>
+        <source>WirelessSettingPage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Wireless name</source>
+        <translation>无线网络名称</translation>
+    </message>
+</context>
+<context>
+    <name>WirelessTrayWidget</name>
+    <message>
+        <source>the network &quot;%1&quot; not found</source>
+        <translation>未找到网络 &quot;%1&quot;</translation>
+    </message>
+</context>
+<context>
+    <name>WirelessWidget</name>
+    <message>
+        <source>WirelessWidget</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SSID</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>EditSsid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MAC Address Of Device</source>
+        <translation>设备MAC地址</translation>
+    </message>
+    <message>
+        <source>ComboBoxWirelessMacAddress</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Custom MTU</source>
+        <translation>自定义MTU</translation>
+    </message>
+    <message>
+        <source>SpinBoxWirelessCustomMTU</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Required</source>
+        <translation>必填</translation>
+    </message>
+    <message>
+        <source>No device specified</source>
+        <translation>不指定设备</translation>
+    </message>
+</context>
+<context>
     <name>AudioSystemTray</name>
     <message>
         <source>Volume Setting</source>
@@ -420,6 +1757,12 @@
         <translation type="vanished">录入人脸数据</translation>
     </message>
     <message>
+        <source>ComboAppFontName</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>ComboAppFontSize</source>
+        <translation></translation>
         <source>error</source>
         <translation type="vanished">错误</translation>
     </message>
@@ -432,6 +1775,8 @@
         <translation type="vanished">指纹_</translation>
     </message>
     <message>
+        <source>ComboTitleFontName</source>
+        <translation></translation>
         <source>face_</source>
         <translation type="vanished">人脸_</translation>
     </message>
@@ -439,6 +1784,8 @@
 <context>
     <name>AuthPlugin</name>
     <message>
+        <source>ComboTitleFontSize</source>
+        <translation></translation>
         <source>Fingerprint</source>
         <translation>指纹</translation>
     </message>
@@ -447,6 +1794,51 @@
         <translation>指静脉</translation>
     </message>
     <message>
+        <source>ComboMonospaceFontName</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>ComboMonospaceFontSize</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Word size</source>
+        <translation>字号</translation>
+    </message>
+    <message>
+        <source>System font</source>
+        <translation>系统字体</translation>
+    </message>
+    <message>
+        <source>Monospaced font</source>
+        <translation>等宽字体</translation>
+    </message>
+</context>
+<context>
+    <name>GeneralBioPage</name>
+    <message>
+        <source>default device</source>
+        <translation>默认设备</translation>
+    </message>
+    <message>
+        <source>feature list</source>
+        <translation>特征列表</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to delete the feature called %1, Ensure that the Ukey device is inserted; otherwise the information stored in the Ukey will not be deleted</source>
+        <translation>您确定要删除特征名为%1的UKey绑定吗?请确保已插入Ukey设备;否则存储在Ukey中的信息将不会被删除</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to delete the feature called %1</source>
+        <translation>您确定要删除特征名为%1的特征吗</translation>
+    </message>
+    <message>
+        <source>tips</source>
+        <translation>提示</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>错误</translation>
         <source>Driver Manager</source>
         <translation>驱动管理</translation>
     </message>
@@ -623,49 +2015,6 @@
     </message>
 </context>
 <context>
-    <name>CPanelNetworkWidget</name>
-    <message>
-        <source>CPanelNetworkWidget</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>VPN</source>
-        <translation>VPN</translation>
-    </message>
-    <message>
-        <source>Network Details</source>
-        <translation>网络详情</translation>
-    </message>
-    <message>
-        <source>Connected</source>
-        <translation>已连接</translation>
-    </message>
-    <message>
-        <source>Unavailable</source>
-        <translation>已禁用</translation>
-    </message>
-    <message>
-        <source>Disconnected</source>
-        <translation>已断开</translation>
-    </message>
-    <message>
-        <source>Wireless Network</source>
-        <translation>无线网络</translation>
-    </message>
-    <message>
-        <source>Wired Network %1</source>
-        <translation type="obsolete">有线网络 %1</translation>
-    </message>
-    <message>
-        <source>Wired Network</source>
-        <translation type="obsolete">有线网络</translation>
-    </message>
-    <message>
-        <source>Wireless Network %1</source>
-        <translation type="obsolete">无线网络  %1</translation>
-    </message>
-</context>
-<context>
     <name>ChangeHostNameWidget</name>
     <message>
         <source>Form</source>
@@ -724,123 +2073,6 @@
     <message>
         <source>Form</source>
         <translation></translation>
-    </message>
-</context>
-<context>
-    <name>ConnectionDetailsWidget</name>
-    <message>
-        <source>ConnectionDetailsWidget</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Security type</source>
-        <translation>安全类型</translation>
-    </message>
-    <message>
-        <source>TextLabel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Frequency band</source>
-        <translation>频段</translation>
-    </message>
-    <message>
-        <source>Channel</source>
-        <translation>网络通道</translation>
-    </message>
-    <message>
-        <source>Interface</source>
-        <translation>接口</translation>
-    </message>
-    <message>
-        <source>MAC</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>IPv4</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Gateway</source>
-        <translation>网关</translation>
-    </message>
-    <message>
-        <source>Preferred DNS</source>
-        <translation type="vanished">首选DNS</translation>
-    </message>
-    <message>
-        <source>Subnet mask</source>
-        <translation>子网掩码</translation>
-    </message>
-    <message>
-        <source>IPv6</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Prefix</source>
-        <translation>前缀</translation>
-    </message>
-    <message>
-        <source>Rate</source>
-        <translation>速率</translation>
-    </message>
-    <message>
-        <source>DNS</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ConnectionNameWidget</name>
-    <message>
-        <source>ConnectionNameWidget</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>TextLabel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>EditConnectionName</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Auto Connection</source>
-        <translation>自动连接</translation>
-    </message>
-    <message>
-        <source>Required</source>
-        <translation>必填</translation>
-    </message>
-    <message>
-        <source>Wired Connection %1</source>
-        <translation>有线网络%1</translation>
-    </message>
-    <message>
-        <source>VPN L2TP %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>VPN PPTP %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Connection name can not be empty</source>
-        <translation>网络名称不能为空</translation>
-    </message>
-</context>
-<context>
-    <name>ConnectionShowPage</name>
-    <message>
-        <source>ConnectionShowPage</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>TextLabel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ButtonCreateConnection</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1132,25 +2364,6 @@
     </message>
 </context>
 <context>
-    <name>DetailsPage</name>
-    <message>
-        <source>DetailsPage</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Network Details</source>
-        <translation>网络详情</translation>
-    </message>
-    <message>
-        <source>Please select a connection</source>
-        <translation>请选择连接</translation>
-    </message>
-    <message>
-        <source>ComboBoxDetailsSelectConnection</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>DevicePanel</name>
     <message>
         <source>Form</source>
@@ -1195,45 +2408,6 @@
     <message>
         <source>ButtonIdentifying</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>DisconnectAndDeleteButton</name>
-    <message>
-        <source>DisconnectAndDeleteButton</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ButtonDisconnect</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Disconnect</source>
-        <translation>断开</translation>
-    </message>
-    <message>
-        <source>ButtonDelete</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation>删除</translation>
-    </message>
-    <message>
-        <source>ButtonIgnore</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ignore</source>
-        <translation>忽略</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to delete the connection %1</source>
-        <translation>您是否确定要删除连接 &quot;%1&quot;</translation>
-    </message>
-    <message>
-        <source>Warning</source>
-        <translation>警告</translation>
     </message>
 </context>
 <context>
@@ -1406,21 +2580,6 @@
     </message>
 </context>
 <context>
-    <name>DnsWidget</name>
-    <message>
-        <source>DnsWidget</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Preferred DNS</source>
-        <translation>首选DNS</translation>
-    </message>
-    <message>
-        <source>Alternate DNS</source>
-        <translation>备选DNS</translation>
-    </message>
-</context>
-<context>
     <name>DriverPage</name>
     <message>
         <source>device type</source>
@@ -1453,71 +2612,6 @@
     <message>
         <source>face</source>
         <translation>人脸</translation>
-    </message>
-</context>
-<context>
-    <name>DslManager</name>
-    <message>
-        <source>DslManager</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>DSL</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>DslSettingPage</name>
-    <message>
-        <source>DslSettingPage</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation>保存</translation>
-    </message>
-    <message>
-        <source>Return</source>
-        <translation>返回</translation>
-    </message>
-</context>
-<context>
-    <name>EthernetWidget</name>
-    <message>
-        <source>EthernetWidget</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>MAC Address Of Ethernet Device</source>
-        <translation>设备MAC地址</translation>
-    </message>
-    <message>
-        <source>ComboBoxDeviceMac</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ethernet Clone MAC Address</source>
-        <translation>克隆MAC地址</translation>
-    </message>
-    <message>
-        <source>EditDeviceMac</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Custom MTU</source>
-        <translation>自定义MTU</translation>
-    </message>
-    <message>
-        <source>SpinBoxCustomMTU</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>No device specified</source>
-        <translation>不指定设备</translation>
-    </message>
-    <message>
-        <source>Clone Mac invalid</source>
-        <translation>无效的克隆MAC地址</translation>
     </message>
 </context>
 <context>
@@ -1721,11 +2815,11 @@
     </message>
     <message>
         <source>ComboAppFontName</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>ComboAppFontSize</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Titlebar Font Settings</source>
@@ -1733,11 +2827,11 @@
     </message>
     <message>
         <source>ComboTitleFontName</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>ComboTitleFontSize</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Monospace Font Settings</source>
@@ -1745,23 +2839,11 @@
     </message>
     <message>
         <source>ComboMonospaceFontName</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>ComboMonospaceFontSize</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Word size</source>
-        <translation>字号</translation>
-    </message>
-    <message>
-        <source>System font</source>
-        <translation>系统字体</translation>
-    </message>
-    <message>
-        <source>Monospaced font</source>
-        <translation>等宽字体</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2318,200 +3400,6 @@
     <message>
         <source>Cancel</source>
         <translation>取消</translation>
-    </message>
-</context>
-<context>
-    <name>Ipv4Widget</name>
-    <message>
-        <source>Ipv4Widget</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>IPV4 Method</source>
-        <translation>IPV4方法</translation>
-    </message>
-    <message>
-        <source>ComboBoxIpv4Method</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>IP Address</source>
-        <translation>IP地址</translation>
-    </message>
-    <message>
-        <source>EditIpv4Address</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Net Mask</source>
-        <translation>子网掩码</translation>
-    </message>
-    <message>
-        <source>EditIpv4Netmask</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Gateway</source>
-        <translation>网关</translation>
-    </message>
-    <message>
-        <source>EditIpv4Gateway</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Preferred DNS</source>
-        <translation type="vanished">首选DNS</translation>
-    </message>
-    <message>
-        <source>EditIpv4PreferredDNS</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Alternate DNS</source>
-        <translation type="vanished">备选DNS</translation>
-    </message>
-    <message>
-        <source>EditIpv4AlternateDNS</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Auto</source>
-        <translation>自动</translation>
-    </message>
-    <message>
-        <source>Manual</source>
-        <translation>手动</translation>
-    </message>
-    <message>
-        <source>Required</source>
-        <translation>必填</translation>
-    </message>
-    <message>
-        <source>Ipv4 address can not be empty</source>
-        <translation>Ipv4地址不能为空</translation>
-    </message>
-    <message>
-        <source>Ipv4 Address invalid</source>
-        <translation>无效的Ipv4地址</translation>
-    </message>
-    <message>
-        <source>NetMask can not be empty</source>
-        <translation>子网掩码不能为空</translation>
-    </message>
-    <message>
-        <source>Netmask invalid</source>
-        <translation>无效的子网掩码</translation>
-    </message>
-    <message>
-        <source>Ipv4 Gateway invalid</source>
-        <translation>无效的Ipv4网关</translation>
-    </message>
-    <message>
-        <source>Ipv4 Preferred DNS invalid</source>
-        <translation>无效的Ipv4首选DNS</translation>
-    </message>
-    <message>
-        <source>Ipv4 Alternate DNS invalid</source>
-        <translation>无效的Ipv4备选DNS</translation>
-    </message>
-    <message>
-        <source>DNS 1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>DNS 2</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>Ipv6Widget</name>
-    <message>
-        <source>Ipv6Widget</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>IPV6 Method</source>
-        <translation>IPV6方法</translation>
-    </message>
-    <message>
-        <source>ComboBoxIpv6Method</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>IP Address</source>
-        <translation>IP地址</translation>
-    </message>
-    <message>
-        <source>EditIpv6Address</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Prefix</source>
-        <translation>前缀</translation>
-    </message>
-    <message>
-        <source>SpinBoxIpv6Prefix</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Gateway</source>
-        <translation>网关</translation>
-    </message>
-    <message>
-        <source>EditIpv6Gateway</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Preferred DNS</source>
-        <translation>首选DNS</translation>
-    </message>
-    <message>
-        <source>EditIpv6PreferredDNS</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Alternate DNS</source>
-        <translation>备选DNS</translation>
-    </message>
-    <message>
-        <source>EditIpv6AlternateDNS</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Auto</source>
-        <translation>自动</translation>
-    </message>
-    <message>
-        <source>Manual</source>
-        <translation>手动</translation>
-    </message>
-    <message>
-        <source>Ignored</source>
-        <translation>忽略</translation>
-    </message>
-    <message>
-        <source>Required</source>
-        <translation>必填</translation>
-    </message>
-    <message>
-        <source>Ipv6 address can not be empty</source>
-        <translation>Ipv6地址不能为空</translation>
-    </message>
-    <message>
-        <source>Ipv6 address invalid</source>
-        <translation>无效的Ipv6地址</translation>
-    </message>
-    <message>
-        <source>Ipv6 Gateway invalid</source>
-        <translation>无效的Ipv6网关</translation>
-    </message>
-    <message>
-        <source>Ipv6 Preferred DNS invalid</source>
-        <translation>无效的Ipv6首选DNS</translation>
-    </message>
-    <message>
-        <source>Ipv6 Alternate DNS invalid</source>
-        <translation>无效的Ipv6备选DNS</translation>
     </message>
 </context>
 <context>
@@ -3419,60 +4307,6 @@ This is line 50 of the test text</source>
     </message>
 </context>
 <context>
-    <name>NetworkSubItem</name>
-    <message>
-        <source>Wired Network %1</source>
-        <translation>有线网络 %1</translation>
-    </message>
-    <message>
-        <source>Wired Network</source>
-        <translation>有线网络</translation>
-    </message>
-    <message>
-        <source>Wireless Network %1</source>
-        <translation>无线网络  %1</translation>
-    </message>
-    <message>
-        <source>Wireless Network</source>
-        <translation>无线网络</translation>
-    </message>
-    <message>
-        <source>VPN</source>
-        <translation>VPN</translation>
-    </message>
-    <message>
-        <source>Network Details</source>
-        <translation>网络详情</translation>
-    </message>
-</context>
-<context>
-    <name>NetworkTray</name>
-    <message>
-        <source>Network settings</source>
-        <translation>网络设置</translation>
-    </message>
-    <message>
-        <source>Network unavailable</source>
-        <translation>网络不可用</translation>
-    </message>
-    <message>
-        <source>Wired network card: %1 available</source>
-        <translation>有线网卡: %1 可用</translation>
-    </message>
-    <message>
-        <source>Wireless network card: %1 available</source>
-        <translation>无线网卡: %1 可用</translation>
-    </message>
-    <message>
-        <source>Wired network card: %1 unavailable</source>
-        <translation>有线网卡: %1 不可用</translation>
-    </message>
-    <message>
-        <source>Wireless network card: %1 unavailable</source>
-        <translation>无线网卡: %1 不可用</translation>
-    </message>
-</context>
-<context>
     <name>PanelWindow</name>
     <message>
         <source>Control Panel</source>
@@ -3552,21 +4386,6 @@ This is line 50 of the test text</source>
     <message>
         <source>day</source>
         <translation>日</translation>
-    </message>
-</context>
-<context>
-    <name>PluginConnectionList</name>
-    <message>
-        <source>Other WiFi networks</source>
-        <translation>其它WIFI网络</translation>
-    </message>
-    <message>
-        <source>Tips</source>
-        <translation>提示</translation>
-    </message>
-    <message>
-        <source>Please input a network name</source>
-        <translation>请输入网络名称</translation>
     </message>
 </context>
 <context>
@@ -4077,49 +4896,6 @@ This is line 50 of the test text</source>
     </message>
 </context>
 <context>
-    <name>StatusNotification</name>
-    <message>
-        <source>Connection Failed</source>
-        <translation>连接失败</translation>
-    </message>
-    <message>
-        <source>the network not found</source>
-        <translation>未找到网络</translation>
-    </message>
-    <message>
-        <source>The hidden network &quot;%1&quot; to be connected has been detected and exists in the network list</source>
-        <translation>要连接的隐藏网络“%1”已经被探测到，并存在于网络列表中</translation>
-    </message>
-    <message>
-        <source>Failed to connect to the network &quot;%1&quot;</source>
-        <translation>无法连接到网络 &quot;%1&quot;</translation>
-    </message>
-    <message>
-        <source>Connection activated</source>
-        <translation>网络已连接</translation>
-    </message>
-    <message>
-        <source>You are now connected to the network &quot;%1&quot;</source>
-        <translation>您已连接到网络 &quot;%1&quot;</translation>
-    </message>
-    <message>
-        <source>Connection deactivated</source>
-        <translation>连接断开</translation>
-    </message>
-    <message>
-        <source>You have now disconnected the network &quot;%1&quot;</source>
-        <translation>您已断开网络连接 &quot;%1&quot;</translation>
-    </message>
-    <message>
-        <source>Connection deleted</source>
-        <translation>连接已删除</translation>
-    </message>
-    <message>
-        <source>The connection has been deleted &quot;%1&quot;</source>
-        <translation>已删除连接 &quot;%1&quot;</translation>
-    </message>
-</context>
-<context>
     <name>SystemInfoSubItem</name>
     <message>
         <source>System Information</source>
@@ -4338,21 +5114,6 @@ This is line 50 of the test text</source>
     <message>
         <source>KylinSec. All rights reserved.</source>
         <translation type="vanished">KylinSec.保留所有权利.</translation>
-    </message>
-</context>
-<context>
-    <name>TextInputDialog</name>
-    <message>
-        <source>Tips</source>
-        <translation>提示</translation>
-    </message>
-    <message>
-        <source>Yes</source>
-        <translation>确认</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>取消</translation>
     </message>
 </context>
 <context>
@@ -4702,83 +5463,6 @@ This is line 50 of the test text</source>
     </message>
 </context>
 <context>
-    <name>TrayConnectionList</name>
-    <message>
-        <source>Other WiFi networks</source>
-        <translation>其它WIFI网络</translation>
-    </message>
-</context>
-<context>
-    <name>TrayItemWidget</name>
-    <message>
-        <source>TrayItemWidget</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Icon</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Name</source>
-        <translation>名称</translation>
-    </message>
-    <message>
-        <source>Status</source>
-        <translation>状态</translation>
-    </message>
-    <message>
-        <source>Ignore</source>
-        <translation>忽略</translation>
-    </message>
-    <message>
-        <source>Disconnect</source>
-        <translation>断开</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>取消</translation>
-    </message>
-    <message>
-        <source>Connect</source>
-        <translation>连接</translation>
-    </message>
-    <message>
-        <source>Connected</source>
-        <translation>已连接</translation>
-    </message>
-    <message>
-        <source>Unconnected</source>
-        <translation>未连接</translation>
-    </message>
-    <message>
-        <source>Please input password</source>
-        <translation>请输入密码</translation>
-    </message>
-    <message>
-        <source>Please input a network name</source>
-        <translation>请输入网络名称</translation>
-    </message>
-</context>
-<context>
-    <name>TrayPage</name>
-    <message>
-        <source>TrayPage</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>TextLabel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select wired network card</source>
-        <translation>请选择有线网卡</translation>
-    </message>
-    <message>
-        <source>Select wireless network card</source>
-        <translation>请选择无线网卡</translation>
-    </message>
-</context>
-<context>
     <name>UKeyPage</name>
     <message>
         <source>Ukey</source>
@@ -5011,323 +5695,6 @@ This is line 50 of the test text</source>
     </message>
 </context>
 <context>
-    <name>VpnIPsec</name>
-    <message>
-        <source>VpnIPsec</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enable IPsec</source>
-        <translation>启用IPsec</translation>
-    </message>
-    <message>
-        <source>Group Name</source>
-        <translation>组名</translation>
-    </message>
-    <message>
-        <source>EditGroupName</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Group ID</source>
-        <translation>组ID</translation>
-    </message>
-    <message>
-        <source>EditGroupId</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pre-Shared Key</source>
-        <translation>预共享密钥</translation>
-    </message>
-    <message>
-        <source>EditPreSharedKey</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Show Password</source>
-        <translation>显示密码</translation>
-    </message>
-    <message>
-        <source>Internet Key Exchange Protocol</source>
-        <translation>密钥交换协议</translation>
-    </message>
-    <message>
-        <source>EditIpsecIKE</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Encapsulating Security Payload</source>
-        <translation>安全封装协议</translation>
-    </message>
-    <message>
-        <source>EditIpsecESP</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>VpnIpvx</name>
-    <message>
-        <source>VpnIpvx</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>IPV4 Method</source>
-        <translation>IPV4方法</translation>
-    </message>
-    <message>
-        <source>ComboBoxVPNIpv4Method</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Only applied in corresponding resources</source>
-        <translation>仅用于相对应的网络上的资源</translation>
-    </message>
-    <message>
-        <source>Preferred DNS</source>
-        <translation>首选DNS</translation>
-    </message>
-    <message>
-        <source>EditVPNIpv4PreferredDNS</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Alternate DNS</source>
-        <translation>备选DNS</translation>
-    </message>
-    <message>
-        <source>EditIpv4AlternateDNS</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Auto</source>
-        <translation>自动</translation>
-    </message>
-</context>
-<context>
-    <name>VpnL2tpSetting</name>
-    <message>
-        <source>VpnL2tpSetting</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>VPN name</source>
-        <translation>VPN名称</translation>
-    </message>
-</context>
-<context>
-    <name>VpnManager</name>
-    <message>
-        <source>VpnManager</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>VPN type</source>
-        <translation>VPN类型</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation>保存</translation>
-    </message>
-    <message>
-        <source>Return</source>
-        <translation>返回</translation>
-    </message>
-    <message>
-        <source>VPN</source>
-        <translation type="unfinished">VPN</translation>
-    </message>
-    <message>
-        <source>L2TP</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Tips</source>
-        <translation>提示</translation>
-    </message>
-    <message>
-        <source>Password required to connect to %1.</source>
-        <translation>连接网络 &quot;%1&quot; 需要密码</translation>
-    </message>
-</context>
-<context>
-    <name>VpnPpp</name>
-    <message>
-        <source>VpnPpp</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Use MPPE</source>
-        <translation>使用MPPE</translation>
-    </message>
-    <message>
-        <source>Security</source>
-        <translation>安全</translation>
-    </message>
-    <message>
-        <source>ComboBoxMppeSecurity</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Stateful MPPE</source>
-        <translation>使用带状态的MPPE</translation>
-    </message>
-    <message>
-        <source>All available (default)</source>
-        <translation>都可用（默认）</translation>
-    </message>
-    <message>
-        <source>40-bit (less secure)</source>
-        <translation>40位（较安全）</translation>
-    </message>
-    <message>
-        <source>128-bit (most secure)</source>
-        <translation>128位（最安全）</translation>
-    </message>
-    <message>
-        <source>Refuse EAP Authentication</source>
-        <translation>拒绝EAP认证</translation>
-    </message>
-    <message>
-        <source>Refuse PAP Authentication</source>
-        <translation>拒绝PAP认证</translation>
-    </message>
-    <message>
-        <source>Refuse CHAP Authentication</source>
-        <translation>拒绝CHAP认证</translation>
-    </message>
-    <message>
-        <source>Refuse MSCHAP Authentication</source>
-        <translation>拒绝MSCHAP认证</translation>
-    </message>
-    <message>
-        <source>Refuse MSCHAPv2 Authentication</source>
-        <translation>拒绝MSCHAPv2认证</translation>
-    </message>
-    <message>
-        <source>No BSD Data Compression</source>
-        <translation>无BSD数据压缩</translation>
-    </message>
-    <message>
-        <source>No Deflate Data Compression</source>
-        <translation>无Deflate数据压缩</translation>
-    </message>
-    <message>
-        <source>No TCP Header Compression</source>
-        <translation>无TCP头压缩</translation>
-    </message>
-    <message>
-        <source>No Protocol Field Compression</source>
-        <translation>无协议字段压缩</translation>
-    </message>
-    <message>
-        <source>No Address/Control Compression</source>
-        <translation>无地址/控制压缩</translation>
-    </message>
-    <message>
-        <source>Send PPP Echo Packets</source>
-        <translation>发送PPP回响包</translation>
-    </message>
-</context>
-<context>
-    <name>VpnPptpSetting</name>
-    <message>
-        <source>VpnPptpSetting</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>VPN name</source>
-        <translation>VPN名称</translation>
-    </message>
-</context>
-<context>
-    <name>VpnWidget</name>
-    <message>
-        <source>VpnWidget</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Gateway</source>
-        <translation>网关</translation>
-    </message>
-    <message>
-        <source>EditVPNGateway</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>User Name</source>
-        <translation>用户名</translation>
-    </message>
-    <message>
-        <source>EditVPNUserName</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Password Options</source>
-        <translation>密码选项</translation>
-    </message>
-    <message>
-        <source>ComboBoxVPNPasswordOptions</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Password</source>
-        <translation>密码</translation>
-    </message>
-    <message>
-        <source>EditVPNPassword</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ButtonPasswordVisual</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Show Password</source>
-        <translation>显示密码</translation>
-    </message>
-    <message>
-        <source>NT Domain</source>
-        <translation>NT域</translation>
-    </message>
-    <message>
-        <source>EditNTDomain</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Required</source>
-        <translation>必填</translation>
-    </message>
-    <message>
-        <source>Saved</source>
-        <translation>已保存的</translation>
-    </message>
-    <message>
-        <source>Ask</source>
-        <translation>总是询问</translation>
-    </message>
-    <message>
-        <source>Not required</source>
-        <translation>不要求</translation>
-    </message>
-    <message>
-        <source>Gateway can not be empty</source>
-        <translation>网关不能为空</translation>
-    </message>
-    <message>
-        <source>Gateway invalid</source>
-        <translation>无效的网关</translation>
-    </message>
-    <message>
-        <source>user name can not be empty</source>
-        <translation>用户名不能为空</translation>
-    </message>
-    <message>
-        <source>password can not be empty</source>
-        <translation>密码不能为空</translation>
-    </message>
-</context>
-<context>
     <name>Wallpaper</name>
     <message>
         <source>Form</source>
@@ -5392,203 +5759,6 @@ This is line 50 of the test text</source>
     <message>
         <source>The image already exists!</source>
         <translation>该壁纸已存在!</translation>
-    </message>
-</context>
-<context>
-    <name>WiredManager</name>
-    <message>
-        <source>WiredManager</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ButtonSave</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation>保存</translation>
-    </message>
-    <message>
-        <source>ButtonReturn</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Return</source>
-        <translation>返回</translation>
-    </message>
-    <message>
-        <source>Wired Network Adapter</source>
-        <translation>有线网络配置</translation>
-    </message>
-    <message>
-        <source>The carrier is pulled out</source>
-        <translation>网线被拔出</translation>
-    </message>
-    <message>
-        <source>The current device is not available</source>
-        <translation>当前设备不可用</translation>
-    </message>
-</context>
-<context>
-    <name>WiredSettingPage</name>
-    <message>
-        <source>WiredSettingPage</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Network name</source>
-        <translation>网络名称</translation>
-    </message>
-</context>
-<context>
-    <name>WirelessManager</name>
-    <message>
-        <source>WirelessManager</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation>保存</translation>
-    </message>
-    <message>
-        <source>Return</source>
-        <translation>返回</translation>
-    </message>
-    <message>
-        <source>Wireless Network Adapter</source>
-        <translation>无线网卡</translation>
-    </message>
-    <message>
-        <source>The current device is not available</source>
-        <translation>当前设备不可用</translation>
-    </message>
-    <message>
-        <source>Tips</source>
-        <translation>提示</translation>
-    </message>
-    <message>
-        <source>Password required to connect to %1.</source>
-        <translation>连接网络 &quot;%1&quot; 需要密码</translation>
-    </message>
-</context>
-<context>
-    <name>WirelessSecurityWidget</name>
-    <message>
-        <source>WirelessSecurityWidget</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Security</source>
-        <translation>安全</translation>
-    </message>
-    <message>
-        <source>ComboBoxWirelessSecurityOption</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Password Options</source>
-        <translation>密码选项</translation>
-    </message>
-    <message>
-        <source>ComboBoxWirelessPasswordOption</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Password</source>
-        <translation>密码</translation>
-    </message>
-    <message>
-        <source>EditWirelessPassword</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ButtonWirelessPasswordVisual</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>PushButton</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation>无</translation>
-    </message>
-    <message>
-        <source>WPA/WPA2 Personal</source>
-        <translation>WPA/WPA2个人版</translation>
-    </message>
-    <message>
-        <source>Save password for all users</source>
-        <translation>仅为该用户存储密码</translation>
-    </message>
-    <message>
-        <source>Save password for this user</source>
-        <translation>存储所有用户密码</translation>
-    </message>
-    <message>
-        <source>Ask me always</source>
-        <translation>总是询问</translation>
-    </message>
-    <message>
-        <source>Required</source>
-        <translation>必填</translation>
-    </message>
-</context>
-<context>
-    <name>WirelessSettingPage</name>
-    <message>
-        <source>WirelessSettingPage</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Wireless name</source>
-        <translation>无线网络名称</translation>
-    </message>
-</context>
-<context>
-    <name>WirelessTrayWidget</name>
-    <message>
-        <source>the network &quot;%1&quot; not found</source>
-        <translation>未找到网络 &quot;%1&quot;</translation>
-    </message>
-</context>
-<context>
-    <name>WirelessWidget</name>
-    <message>
-        <source>WirelessWidget</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>SSID</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>EditSsid</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>MAC Address Of Device</source>
-        <translation>设备MAC地址</translation>
-    </message>
-    <message>
-        <source>ComboBoxWirelessMacAddress</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Custom MTU</source>
-        <translation>自定义MTU</translation>
-    </message>
-    <message>
-        <source>SpinBoxWirelessCustomMTU</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Required</source>
-        <translation>必填</translation>
-    </message>
-    <message>
-        <source>No device specified</source>
-        <translation>不指定设备</translation>
     </message>
 </context>
 <context>

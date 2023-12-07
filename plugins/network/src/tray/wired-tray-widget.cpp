@@ -131,7 +131,10 @@ void WiredTrayWidget::handleActivateSelectedConnection(const QString &connection
 void WiredTrayWidget::handleNotifierConnectionAdded(const QString &path)
 {
     Connection::Ptr connection = findConnection(path);
-    m_connectionList->addConnection(connection, m_devicePath);
+    if(NetworkUtils::isAvailableConnection(m_devicePath,connection))
+    {
+        m_connectionList->addConnection(connection, m_devicePath);
+    }
 }
 
 void WiredTrayWidget::handleNotifierConnectionRemoved(const QString &path)

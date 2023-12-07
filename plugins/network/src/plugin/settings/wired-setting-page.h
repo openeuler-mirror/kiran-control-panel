@@ -39,6 +39,8 @@ public:
     void initSpecificSettings() override;
     void clearPtr() override;
 
+    void createSettingPage(const QString &devicePath);
+
 public slots:
     void saveSettingPage() override;
     bool isInputValid() override;

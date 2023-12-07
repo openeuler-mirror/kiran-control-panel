@@ -1,7 +1,5 @@
 set(TARGET_NAME kiran-cpanel-network)
 
-file(GLOB TS_FILES "translations/*.ts")
-qt5_create_translation(NETWORK_QM_FILES ${CMAKE_CURRENT_SOURCE_DIR} ${TS_FILES})
 
 file(GLOB_RECURSE PLUGIN_SRC "src/plugin/*.cpp" "src/plugin/*.h" "src/plugin/*.ui")
 file(GLOB_RECURSE TRAY_SRC "src/tray/*.cpp" "src/tray/*.h" "src/tray/*.ui")
@@ -13,7 +11,7 @@ add_library(${TARGET_NAME} SHARED
         ${PLUGIN_SRC}
         ${COMMON_SRC}
         ${QRC}
-        ${NETWORK_QM_FILES})
+        )
 
 find_package(KF5NetworkManagerQt REQUIRED)
 pkg_search_module(LIBNOTIFY REQUIRED libnotify)
@@ -54,7 +52,6 @@ add_executable(${TRAY_PROCESS}
         ${PLUGIN_SRC}
         ${COMMON_SRC}
         ${QRC}
-        ${NETWORK_QM_FILES}
         ${PROJECT_SOURCE_DIR}/include/dbus-tray-monitor.h
         )
 
@@ -87,17 +84,19 @@ target_link_libraries(${TRAY_PROCESS}
         KF5::NetworkManagerQt
         )
 
-#安装翻译
-install(FILES ${NETWORK_QM_FILES} DESTINATION ${TRANSLATION_DIR}/)
 
 set(AUTOSTART_DESKTOP_DIR /etc/xdg/autostart)
 #安装插件desktop文件
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/data/kiran-network-status-icon.desktop.in ${CMAKE_CURRENT_BINARY_DIR}/kiran-network-status-icon.desktop @ONLY)
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/kiran-network-status-icon.desktop DESTINATION ${AUTOSTART_DESKTOP_DIR}/)
 
+#安装配置文件
 set(NETWORK_SERVER_CONF /etc/NetworkManager/conf.d)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/data/00-server.conf.in ${CMAKE_CURRENT_BINARY_DIR}/00-server.conf @ONLY)
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/00-server.conf DESTINATION ${NETWORK_SERVER_CONF}/)
+
+set(NETWORK_PLUGIN_CONF /etc/kiran-control-panel/plugins)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/network.conf DESTINATION ${NETWORK_PLUGIN_CONF}/)
 
 #安装插件和二进制文件
 install(TARGETS ${TARGET_NAME} DESTINATION ${PLUGIN_LIBS_DIR}/)
