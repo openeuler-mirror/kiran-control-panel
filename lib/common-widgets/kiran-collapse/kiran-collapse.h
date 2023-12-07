@@ -79,7 +79,7 @@ public:
     bool getIsExpand() const;
 
     /**
-     * @brief 设置 kiran-collapse 是否展开
+     * @brief 设置 kiran-collapse 默认状态是否展开，初始化时使用
      * @param bool
      */
     void setIsExpand(bool isExpanded);
@@ -112,6 +112,16 @@ public:
      * @brief 清除扩展区所有控件
      */
     void delAllExpansionSpaceWidget();
+
+    /**
+     * @brief 将扩展区展开
+     */
+    void setExpand();
+
+    /**
+     * @brief 将扩展区折叠
+     */
+    void setCollapse();
 
 signals:
     void expandSpaceExpanded();
