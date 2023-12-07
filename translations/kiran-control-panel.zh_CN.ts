@@ -383,6 +383,45 @@
     </message>
 </context>
 <context>
+    <name>AutostartPage</name>
+    <message>
+        <source>Boot Setup</source>
+        <translation>开机启动设置</translation>
+    </message>
+    <message>
+        <source>Desktop files(*.desktop)</source>
+        <translation>桌面类型(*.desktop)</translation>
+    </message>
+    <message>
+        <source>select autostart desktop</source>
+        <translation>选择自启动应用</translation>
+    </message>
+    <message>
+        <source>Select</source>
+        <translation>选择</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>取消</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>错误</translation>
+    </message>
+    <message>
+        <source>Desktop has existed</source>
+        <translation>该程序已存在</translation>
+    </message>
+    <message>
+        <source>Desktop cant permit to join</source>
+        <translation>该程序不允许添加</translation>
+    </message>
+    <message>
+        <source>Desktop dont support</source>
+        <translation>不支持该程序</translation>
+    </message>
+</context>
+<context>
     <name>BatterySettingsPage</name>
     <message>
         <source>BatterySettingsPage</source>
@@ -980,7 +1019,7 @@
     </message>
     <message>
         <source>DefaultApp</source>
-        <translation>默认程序</translation>
+        <translation type="vanished">默认程序</translation>
     </message>
 </context>
 <context>
@@ -2606,6 +2645,13 @@
     </message>
 </context>
 <context>
+    <name>KiranCollapse</name>
+    <message>
+        <source>ListExpansionSpace</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>KiranCpanelAppearance</name>
     <message>
         <source>Wallpaper Setting</source>
@@ -2895,6 +2941,10 @@ p, li { white-space: pre-wrap; }
         <source>Export EULA failed!</source>
         <translation type="obsolete">导出最终用户许可协议失败!</translation>
     </message>
+    <message>
+        <source>Privacy Policy</source>
+        <translation>隐私协议</translation>
+    </message>
 </context>
 <context>
     <name>LicenseInfoWidget</name>
@@ -2984,6 +3034,13 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>KylinSec. All rights reserved.</source>
         <translation type="vanished">KylinSec.保留所有权利.</translation>
+    </message>
+</context>
+<context>
+    <name>ListExpansionSpace</name>
+    <message>
+        <source>ListExpansionSpace</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4132,6 +4189,10 @@ This is line 50 of the test text</source>
         <source>KylinSec. All rights reserved.</source>
         <translation type="vanished">KylinSec.保留所有权利.</translation>
     </message>
+    <message>
+        <source>Privacy policy:</source>
+        <translation>隐私协议：</translation>
+    </message>
 </context>
 <context>
     <name>SystemInformationWidget</name>
@@ -4387,6 +4448,21 @@ This is line 50 of the test text</source>
     <message>
         <source>reset</source>
         <translation>重置</translation>
+    </message>
+</context>
+<context>
+    <name>TopBar</name>
+    <message>
+        <source>ListExpansionSpace</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>TITLE</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>FLAG</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5513,45 +5589,6 @@ This is line 50 of the test text</source>
     <message>
         <source>kiran-system-imformation</source>
         <translation type="vanished">系统信息</translation>
-    </message>
-</context>
-<context>
-    <name>AutostartPage</name>
-    <message>
-        <source>Boot Setup</source>
-        <translation>开机启动设置</translation>
-    </message>
-    <message>
-        <source>Desktop files(*.desktop)</source>
-        <translation>桌面类型(*.desktop)</translation>
-    </message>
-    <message>
-        <source>select autostart desktop</source>
-        <translation>选择自启动应用</translation>
-    </message>
-    <message>
-        <source>Select</source>
-        <translation>选择</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>取消</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translation>错误</translation>
-    </message>
-    <message>
-        <source>Desktop has existed</source>
-        <translation>该程序已存在</translation>
-    </message>
-    <message>
-        <source>Desktop cant permit to join</source>
-        <translation>该程序不允许添加</translation>
-    </message>
-    <message>
-        <source>Desktop dont support</source>
-        <translation>不支持该程序</translation>
     </message>
 </context>
 </TS>

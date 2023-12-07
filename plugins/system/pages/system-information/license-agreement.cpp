@@ -30,11 +30,13 @@
 
 #define EULAFILE "/usr/share/kylin-release"
 #define LICENSEFILE "/usr/share/doc/kylin-release/LICENSE"
+#define PRIVACYFILE "/usr/share/kylin-release/privacy_policy"
 
 enum LicenseType
 {
     EULA_LICENSE = 0,
-    VERSION_LICENSE
+    VERSION_LICENSE,
+    PRIVACY_POLICY
 };
 
 using namespace Kiran;
@@ -77,8 +79,10 @@ void LicenseAgreement::exportLicense()
     QString currentHomePath;
     if (m_licenseType == EULA_LICENSE)
         currentHomePath = "/" + QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + "/EULA.pdf";
-    else
+    else if (m_licenseType == VERSION_LICENSE)
         currentHomePath = "/" + QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + "/Version-License.pdf";
+    else
+        currentHomePath = "/" + QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + "/Privacy-Policy.pdf";
 
     QString fileName = QFileDialog::getSaveFileName(this,
                                                     tr("Save"),
@@ -173,6 +177,7 @@ void LicenseAgreement::setEULA()
         }
         textStream.setDevice(&file);
     }
+    textStream.setCodec("UTF-8");
     ui->text_license->setText(textStream.readAll());
     file.close();
 }
@@ -195,6 +200,7 @@ void LicenseAgreement::setVersionLicnese()
             goto LOAD_VERSION_LICENSE_FROM_RES;
         }
         textStream.setDevice(&file);
+        textStream.setCodec("UTF-8");
         ui->text_license->setText(textStream.readAll());
         file.close();
         return;
@@ -239,6 +245,8 @@ LOAD_VERSION_LICENSE_FROM_RES:
     }
     QTextStream textStreamTitle(&fileTitle);
     QTextStream textStreamBody(&fileBody);
+    textStreamTitle.setCodec("UTF-8");
+    textStreamBody.setCodec("UTF-8");
 
     ui->text_license->setAlignment(Qt::AlignHCenter);
     while (!textStreamTitle.atEnd())
@@ -251,4 +259,35 @@ LOAD_VERSION_LICENSE_FROM_RES:
     ui->text_license->moveCursor(QTextCursor::Start);
     fileBody.close();
     fileTitle.close();
+}
+
+void LicenseAgreement::setPrivacyPolicy()
+{
+    m_licenseType = PRIVACY_POLICY;
+    ui->text_license->clear();
+#ifdef DISABLE_KIRANWIDGETS
+    setWindowTitle(LicenseAgreement::tr("Privacy Policy"));
+#else
+    setTitle(LicenseAgreement::tr("Privacy Policy"));
+#endif
+    QFile file(PRIVACYFILE);
+    QTextStream textStream;
+
+    if (!file.exists())
+    {
+        KLOG_INFO() << PRIVACYFILE << " is not exists ";
+        ui->text_license->setText(tr("None"));
+        return;
+    }
+
+    if (!file.open(QFile::ReadOnly | QFile::Text))
+    {
+        KLOG_INFO() << "Can't open " << PRIVACYFILE;
+        ui->text_license->setText(tr("None"));
+        return;
+    }
+    textStream.setDevice(&file);
+    textStream.setCodec("UTF-8");
+    ui->text_license->setText(textStream.readAll());
+    file.close();
 }
