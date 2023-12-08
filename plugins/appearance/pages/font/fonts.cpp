@@ -19,18 +19,23 @@
 #include <kiran-log/qt5-log-i.h>
 #include <kiran-message-box.h>
 #include <kiran-session-daemon/appearance-i.h>
-#include <QDebug>
+#include <QCompleter>
 #include <QFontDatabase>
 
 using namespace std;
 
-QStringList Fonts::fontSizes = {"7", "8", "9", "10", "11", "12", "13", "14"};
+#define MIN_FONT_SIZE 7
+#define MAX_FONT_SIZE 14
 
 Fonts::Fonts(QWidget* parent)
     : QWidget(parent),
       ui(new Ui::Fonts)
 {
     ui->setupUi(this);
+    m_comboFontTypesMap = {
+        {ui->combo_system, {APPEARANCE_FONT_TYPE_APPLICATION, APPEARANCE_FONT_TYPE_WINDOW_TITLE}},
+        {ui->combo_monospace, {APPEARANCE_FONT_TYPE_MONOSPACE}}};
+
     initUI();
 }
 
@@ -41,92 +46,72 @@ Fonts::~Fonts()
 
 bool Fonts::initUI()
 {
+    // 初始化字号选择滑动条
+    ui->slider->setRange(MIN_FONT_SIZE, MAX_FONT_SIZE);
+
+    QList<KiranSlider::MarkPoint> markPoints;
+    for (int i = 0; i <= MAX_FONT_SIZE; i++)
+    {
+        KiranSlider::MarkPoint markPoint(i, QString::number(i));
+        markPoints << markPoint;
+    }
+
+    ui->slider->addMarks(markPoints);
+
     // 统一QComboBox样式，并初始化可选值列表
     QList<QComboBox*> comboBoxList = this->findChildren<QComboBox*>();
     foreach (QComboBox* comboBox, comboBoxList)
     {
-        comboBox->setStyleSheet("QComboBox {combobox-popup: 0;}");
+        // comboBox->setStyleSheet("QComboBox {combobox-popup: 0;}");
+
+        auto complete = new QCompleter(comboBox->model());
+        complete->setFilterMode(Qt::MatchContains);
+
+        comboBox->setCompleter(complete);
     }
 
-    m_fontTypeComboBoxMap = {
-        {APPEARANCE_FONT_TYPE_APPLICATION, {ui->cbox_application_font_name, ui->cbox_application_font_size}},
-        {APPEARANCE_FONT_TYPE_WINDOW_TITLE, {ui->cbox_titlebar_font_name, ui->cbox_titlebar_font_size}},
-        {APPEARANCE_FONT_TYPE_MONOSPACE, {ui->cbox_monospace_font_name, ui->cbox_monospace_font_size}}};
+    // 初始化下拉框字体族列表
+    QFontDatabase fontDatabase;
+    auto fontFamilies = fontDatabase.families();
 
-    QFontDatabase database;
-    auto fontFamilys = database.families();
-    for (auto fontComboBoxs : m_fontTypeComboBoxMap.values())
+    QList<QComboBox*> fillCombos({ui->combo_system, ui->combo_monospace});
+    for (auto combo = fillCombos.begin();
+         combo != fillCombos.end();
+         combo++)
     {
-        fontComboBoxs.first->addItems(fontFamilys);
-        fontComboBoxs.second->addItems(fontSizes);
+        (*combo)->addItems(fontFamilies);
     }
 
-    for (auto fontType : m_fontTypeComboBoxMap.keys())
-    {
-        updateUIFontInfo(fontType);
-    }
-
-    initConnections();
-
-    return true;
-}
-
-void Fonts::updateUIFontInfo(int fontType)
-{
-    QStringList fontInfoList;
+    // 读取一个字体类型的字号作为当前字号滑块值
     auto appearanceInterface = AppearanceGlobalInfo::instance();
-
     QString fontName;
-    int fontSize;
-    if (!appearanceInterface->getFont(fontType, fontName, fontSize))
+    int wordSize = 9;
+    if (!appearanceInterface->getFont(APPEARANCE_FONT_TYPE_APPLICATION, fontName, wordSize))
     {
-        KLOG_WARNING(qLcAppearance) << "update ui font info failed, type:" << fontType;
-        return;
-    }
-
-    KLOG_DEBUG(qLcAppearance) << "update ui font info,type:" << fontType
-                              << ",name:" << fontName
-                              << ",size:" << fontSize;
-
-    setUIFontInfo(fontType, fontName, fontSize);
-}
-
-void Fonts::setUIFontInfo(int fontType, const QString& name, const int size)
-{
-    auto fontComboBoxs = m_fontTypeComboBoxMap.find(fontType);
-    if (fontComboBoxs == m_fontTypeComboBoxMap.end())
-    {
-        KLOG_ERROR(qLcAppearance) << "set ui font info failed,can't find font type:" << fontType;
-        return;
-    }
-
-    auto fontNameComboBox = fontComboBoxs.value().first;
-    auto fontSizeComboBox = fontComboBoxs.value().second;
-
-    int idx = fontNameComboBox->findText(name);
-    if (idx == -1)
-    {
-        KLOG_ERROR(qLcAppearance) << "can't find font name action" << name << "int combobox";
+        KLOG_ERROR(qLcAppearance) << "load current font word size error!";
     }
     else
     {
-        fontNameComboBox->setCurrentIndex(idx);
+        ui->slider->setValue(wordSize);
     }
 
-    idx = fontSizeComboBox->findText(QString::number(size));
-    if (idx == -1)
-    {
-        KLOG_ERROR(qLcAppearance) << "can't find font size action:" << idx << "in combobox";
-    }
-    else
-    {
-        fontSizeComboBox->setCurrentIndex(idx);
-    }
+    // 当前相应的字体类型的字体族作为显示
+    updateUiCurrentFontFamily(ui->combo_system);
+    updateUiCurrentFontFamily(ui->combo_monospace);
+
+    m_updateFontSizeTimer.setInterval(200);
+    m_updateFontSizeTimer.setSingleShot(true);
+    connect(&m_updateFontSizeTimer, &QTimer::timeout, this, &Fonts::updateAllFontWordSize);
+
+    // 初始化连接
+    initConnections();
+    return true;
 }
 
 void Fonts::initConnections()
 {
-    connect(AppearanceGlobalInfo::instance(), &AppearanceGlobalInfo::fontChanged, this, &Fonts::handleFontChanged);
+    connect(AppearanceGlobalInfo::instance(), &AppearanceGlobalInfo::fontChanged,
+            this, &Fonts::onBackendFontChanged);
 
     for (auto fontTypeCombos : m_fontTypeComboBoxMap.values())
     {
@@ -134,55 +119,98 @@ void Fonts::initConnections()
         auto fontSizeComboBox = fontTypeCombos.second;
 
         connect(fontNameComboBox, QOverload<int>::of(&QComboBox::currentIndexChanged),
-                this, &Fonts::onComboBoxIdxChanged);
+                this, &Fonts::onCurrentFontFamilyChanged);
         connect(fontSizeComboBox, QOverload<int>::of(&QComboBox::currentIndexChanged),
-                this, &Fonts::onComboBoxIdxChanged);
+                this, &Fonts::onCurrentFontFamilyChanged);
     }
+
+    connect(ui->slider, &QSlider::valueChanged, this, &Fonts::onSliderValueChanged);
 }
 
-void Fonts::onComboBoxIdxChanged(int idx)
+bool Fonts::updateFontToBackend(int fontType, const QString& fontFamily, int fontSize)
 {
-    auto senderComboBox = qobject_cast<QComboBox*>(sender());
-
-    int fontType = -1;
-    QString fontName;
-    int fontSize = 0;
-    for (auto iter = m_fontTypeComboBoxMap.begin();
-         iter != m_fontTypeComboBoxMap.end();
-         iter++)
+    QString fontInfo = QString("%1 %2").arg(fontFamily).arg(fontSize);
+    bool res = AppearanceGlobalInfo::instance()->setFont(fontType, fontInfo);
+    if (!res)
     {
-        auto pair = iter.value();
-        if (senderComboBox != pair.first && senderComboBox != pair.second)
-        {
-            continue;
-        }
-
-        fontType = iter.key();
-        fontName = pair.first->currentText();
-        fontSize = pair.second->currentText().toInt();
+        KLOG_ERROR(qLcAppearance) << "set font" << fontType << fontInfo << "failed!";
+    }
+    else
+    {
+        KLOG_INFO(qLcAppearance) << "set font" << fontType << fontInfo;
     }
 
-    if (fontType == -1)
+    return res;
+}
+
+void Fonts::onCurrentFontFamilyChanged()
+{
+    auto senderComboBox = qobject_cast<QComboBox*>(sender());
+    int currentFontSize = ui->slider->value();
+
+    if (m_comboFontTypesMap.find(senderComboBox) == m_comboFontTypesMap.end())
     {
-        KLOG_ERROR(qLcAppearance) << "current font combobox idx changed,can't find font type!";
         return;
     }
 
-    QString fontInfo = QString("%1 %2").arg(fontName).arg(fontSize);
-    if (!AppearanceGlobalInfo::instance()->setFont(fontType, fontInfo))
+    auto fontTypes = m_comboFontTypesMap[senderComboBox];
+    for (auto fontType : fontTypes)
     {
-        KLOG_ERROR(qLcAppearance) << "combobox idx changed,set font" << fontType << fontInfo << "failed!";
-        KiranMessageBox::message(nullptr, QObject::tr("Failed"),
-                                 QObject::tr("Set font failed!"),
-                                 KiranMessageBox::Ok);
+        updateFontToBackend(fontType, senderComboBox->currentText(), currentFontSize);
     }
-
-    KLOG_INFO(qLcAppearance) << "ui font settings changed,set font" << fontType << fontInfo;
 }
 
-void Fonts::handleFontChanged(int type, QString fontInfo)
+void Fonts::onSliderValueChanged(int value)
 {
-    updateUIFontInfo(type);
+    m_updateFontSizeTimer.start();
+}
+
+void Fonts::updateUiCurrentFontFamily(QComboBox* combo)
+{
+    if (m_comboFontTypesMap.find(combo) == m_comboFontTypesMap.end())
+    {
+        KLOG_WARNING(qLcAppearance) << "can not find ComboBox in ComboFontTypesMap";
+        ;
+        return;
+    }
+
+    QList<int> fontTypes = m_comboFontTypesMap.find(combo).value();
+    int fontType = fontTypes.at(0);
+
+    QString fontName;
+    int fontSize;
+    if (!AppearanceGlobalInfo::instance()->getFont(fontType, fontName, fontSize))
+    {
+        KLOG_ERROR(qLcAppearance, "get font failed,font type:%d", fontType);
+        return;
+    }
+
+    auto idx = combo->findText(fontName);
+    if (idx == -1)
+    {
+        KLOG_ERROR(qLcAppearance) << "can not find" << fontName << "in" << combo->objectName();
+        return;
+    }
+
+    combo->setCurrentText(fontName);
+}
+
+void Fonts::updateAllFontWordSize()
+{
+    int value = ui->slider->value();
+    for (auto combo : m_comboFontTypesMap.keys())
+    {
+        auto family = combo->currentText();
+        auto wordSize = value;
+        for (auto fontTypeEnum : m_comboFontTypesMap[combo])
+        {
+            updateFontToBackend(fontTypeEnum, family, wordSize);
+        }
+    }
+}
+
+void Fonts::onBackendFontChanged(int type, QString fontInfo)
+{
 }
 
 QSize Fonts::sizeHint() const

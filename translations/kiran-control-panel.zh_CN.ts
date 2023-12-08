@@ -1612,11 +1612,11 @@
     </message>
     <message>
         <source>ComboAppFontName</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>ComboAppFontSize</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Titlebar Font Settings</source>
@@ -1624,11 +1624,11 @@
     </message>
     <message>
         <source>ComboTitleFontName</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>ComboTitleFontSize</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Monospace Font Settings</source>
@@ -1636,11 +1636,23 @@
     </message>
     <message>
         <source>ComboMonospaceFontName</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>ComboMonospaceFontSize</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Word size</source>
+        <translation>字号</translation>
+    </message>
+    <message>
+        <source>System font</source>
+        <translation>系统字体</translation>
+    </message>
+    <message>
+        <source>Monospaced font</source>
+        <translation>等宽字体</translation>
     </message>
 </context>
 <context>

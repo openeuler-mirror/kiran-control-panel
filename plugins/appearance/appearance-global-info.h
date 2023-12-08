@@ -45,7 +45,7 @@ public:
     bool setLockScreenBackground(QString);
 
     bool getFont(int type,QString& fontName,int& fontSize);
-    bool setFont(int fontType, QString fontInfo);
+    bool setFont(int fontType,const QString& fontInfo);
 
 signals:
     void themeChanged(int type, const QString &theme_name);
