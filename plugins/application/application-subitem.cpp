@@ -16,7 +16,7 @@
 #include <qt5-log-i.h>
 
 ApplicationSubItem::ApplicationSubItem(CreateWidgetFunc func, QObject* parent)
-    : m_func(func), QObject(parent)
+    : QObject(parent), m_func(func)
 {
 }
 

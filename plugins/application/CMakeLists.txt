@@ -9,15 +9,14 @@ file(GLOB_RECURSE APPLICATION_PLUGIN_SRC
                   ${CMAKE_CURRENT_SOURCE_DIR}/*.h
                   ${CMAKE_CURRENT_SOURCE_DIR}/*.ui)
 
-set(DEFAULTAPP_INCLUDE_DIRS src src/pages ${CMAKE_SOURCE_DIR}/lib/common-widgets/kiran-setting-container)
+set(DEFAULTAPP_INCLUDE_DIRS ${CMAKE_SOURCE_DIR}/lib/common-widgets/kiran-setting-container)
 
 add_library(${TARGET_NAME} SHARED
-        ${DEFAULT_SRC})
+        ${APPLICATION_PLUGIN_SRC})
 
 target_include_directories(${TARGET_NAME} PRIVATE
         ${CMAKE_CURRENT_BINARY_DIR}
-        ${CMAKE_CURRENT_SOURCE_DIR}/src
-        ${KCP_PLUGIN_INCLUDE_DIR}
+        ${CMAKE_CURRENT_SOURCE_DIR}
         ${KIRAN_WIDGETS_QT5_INCLUDE_DIRS}
         ${KLOG_INCLUDE_DIRS}
         ${KIRAN_WIDGETS_INCLUDE_DIRS}
