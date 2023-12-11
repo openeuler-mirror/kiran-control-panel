@@ -23,7 +23,7 @@
 
 
 DefaultApp::DefaultApp(QWidget* parent)
-    : QWidget(parent), m_appManager(new AppManager), ui(new Ui::DefaultApp)
+    : QWidget(parent), ui(new Ui::DefaultApp), m_appManager(new AppManager)
 {
     ui->setupUi(this);
     initConfig();

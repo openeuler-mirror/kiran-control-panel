@@ -17,6 +17,7 @@
 #define __AUTOSTART_PAGE_H__
 
 #include <QWidget>
+#include <QMap>
 
 enum AutoStartAppFlags
 {

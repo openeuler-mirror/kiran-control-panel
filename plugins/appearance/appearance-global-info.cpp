@@ -272,7 +272,7 @@ bool AppearanceGlobalInfo::getFont(int type, QString &fontName, int &fontSize)
     return true;
 }
 
-bool AppearanceGlobalInfo::setFont(int fontType, QString fontInfo)
+bool AppearanceGlobalInfo::setFont(int fontType,const QString& fontInfo)
 {
     KLOG_DEBUG(qLcAppearance) << "set font,font type:" << fontType << fontInfo;
 
