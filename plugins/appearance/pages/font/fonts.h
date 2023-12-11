@@ -18,6 +18,7 @@
 #include <QWidget>
 #include <QMap>
 #include <QPair>
+#include <QTimer>
 
 namespace Ui
 {
@@ -36,17 +37,20 @@ public:
 
 private:
     bool initUI();
-    void updateUIFontInfo(int fontType);
-    void setUIFontInfo(int fontType,const QString& name,const int size);
     void initConnections();
-    bool setFont(int fontType, QString fontInfo);
+    bool updateFontToBackend(int fontType, const QString& fontFamily,int fontSize);
 
 public slots:
-    void onComboBoxIdxChanged(int idx);
-    void handleFontChanged(int type, QString fontInfo);
+    void onCurrentFontFamilyChanged();
+    void onSliderValueChanged(int value);
+    void updateUiCurrentFontFamily(QComboBox* combo);
+    void updateAllFontWordSize();
+    void onBackendFontChanged(int type, QString fontInfo);
 
 private:
     Ui::Fonts *ui;
+    QMap<QComboBox*,QList<int>> m_comboFontTypesMap;
+    QTimer m_updateFontSizeTimer;
     // QMap<字体类型, <字体类型名称ComboBox,字体类型字号ComboBox>>
     QMap<int,QPair<QComboBox*,QComboBox*>> m_fontTypeComboBoxMap;
     static QStringList fontSizes;
