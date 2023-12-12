@@ -47,7 +47,6 @@ public slots:
     void handleAudioTrayClicked(QSystemTrayIcon::ActivationReason reason);
     void handleMixedSettingClicked();
     void handleVolumeSettingClicked();
-    void getTrayIconStyle();
     void setTrayIcon(int value);
     void handleAdjustedMixedSettingPageSize();
 

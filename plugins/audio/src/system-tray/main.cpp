@@ -26,6 +26,8 @@
 #include <QFile>
 #include <QTranslator>
 #include "dbus-tray-monitor.h"
+#include "logging-category.h"
+
 
 #define DBUS_SERVICE_KDE_STATUS_NOTIFIER_WATCHER "org.kde.StatusNotifierWatcher"
 
@@ -34,13 +36,13 @@ int main(int argc, char *argv[])
     KiranApplication a(argc, argv);
     QApplication::setQuitOnLastWindowClosed(false);
     klog_qt5_init("", "kylinsec-session", "kiran-cpanel-audio", "kiran-cpanel-audio");
-    KLOG_INFO() << "autostart!";
+    KLOG_INFO(qLcAudio) << "audio tray autostart!";
 
     QTranslator translator;
     if (translator.load(QLocale(), "kiran-control-panel", ".", TRANSLATE_PREFIX, ".qm"))
     {
         a.installTranslator(&translator);
-        KLOG_DEBUG() << "installTranslator load:" << a.installTranslator(&translator);
+        KLOG_DEBUG(qLcAudio) << "installTranslator load:" << a.installTranslator(&translator);
     }
     else
     {
@@ -50,7 +52,7 @@ int main(int argc, char *argv[])
     AudioSystemTray *audioSystemTray = nullptr;
     if (KiranControlPanel::isDBusTrayAvailable())
     {
-        KLOG_DEBUG() << KDE_STATUS_NOTIFIER_HOST << "is registered,create network tray icon";
+        KLOG_DEBUG(qLcAudio) << KDE_STATUS_NOTIFIER_HOST << "is registered,create network tray icon";
         audioSystemTray = new AudioSystemTray;
     }
     else
@@ -62,7 +64,7 @@ int main(int argc, char *argv[])
                          {
                             if(audioSystemTray == nullptr)
                             {
-                                KLOG_DEBUG() << KDE_STATUS_NOTIFIER_HOST << "is registered,create network tray icon";
+                                KLOG_DEBUG(qLcAudio) << KDE_STATUS_NOTIFIER_HOST << "is registered,create network tray icon";
                                 audioSystemTray = new AudioSystemTray;
                             } 
                         });
