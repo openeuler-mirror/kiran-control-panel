@@ -14,6 +14,7 @@
 
 #include "audio-device-interface.h"
 #include <qt5-log-i.h>
+#include "logging-category.h"
 
 /*
  * Implementation of interface class AudioDeviceInterface
@@ -32,7 +33,7 @@ AudioDeviceInterface::~AudioDeviceInterface()
 QList<AudioPortInfo> AudioDeviceInterface::getPortsInfo()
 {
     QDBusPendingReply<QString> getPorts = GetPorts();
-    KLOG_DEBUG() << "getPorts:" << getPorts;
+    KLOG_DEBUG(qLcAudio) << "device:" << name() << "ports:" << getPorts;
 
     //解析默认sink的端口信息
     QJsonParseError jsonParseError;
