@@ -20,5 +20,5 @@ target_link_libraries(kiran-avatar-editor
         ${KLOG_LIBRARIES}
         ${KIRAN_STYLE_LIBRARIES})
 
-install(TARGETS kiran-avatar-editor DESTINATION ${KCP_ACCOUNT_AVATAR_EDITOR})
+install(TARGETS kiran-avatar-editor DESTINATION ${CMAKE_INSTALL_FULL_LIBEXECDIR})
 install(FILES ${AVATAR_EDITOR_QM_FILES} DESTINATION ${TRANSLATION_DIR} )
