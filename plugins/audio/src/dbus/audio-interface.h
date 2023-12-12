@@ -26,6 +26,12 @@
 #include <QtDBus/QtDBus>
 #include "audio-interface.h"
 
+struct AudioCardInfo
+{
+    int index;
+    QString name;
+};
+
 /*
  * Proxy class for interface com.kylinsec.Kiran.SessionDaemon.Audio
  */
@@ -52,6 +58,14 @@ public:
     }
 
 public Q_SLOTS:  // METHODS
+    QList<AudioCardInfo> getCards();
+    
+    inline QDBusPendingReply<QString> GetCards()
+    {
+        QList<QVariant> argumentList;
+        return asyncCallWithArgumentList(QStringLiteral("GetCards"), argumentList);
+    }
+
     inline QDBusPendingReply<QString> GetDefaultSink()
     {
         QList<QVariant> argumentList;

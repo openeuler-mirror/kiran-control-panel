@@ -18,6 +18,8 @@
 #include <QCollator>
 #include "general.h"
 #include <QEvent>
+#include "utils.h"
+#include "logging-category.h"
 
 using namespace NetworkManager;
 
@@ -96,17 +98,17 @@ QList<QWidget *> ConnectionList::itemWidgetList()
 
 void ConnectionList::showConnectionList(NetworkManager::ConnectionSettings::ConnectionType type)
 {
-    Connection::List connectionList = NetworkManager::listConnections();
     if (type == ConnectionSettings::Wired)
     {
+        Connection::List connectionList = NetworkUtils::getAvailableWiredConnections(m_devicePath);
         Device::Ptr device = findNetworkInterface(m_devicePath);
         QString devicePath = device->uni();
         for (Connection::Ptr conn : connectionList)
         {
-            KLOG_DEBUG() << "connection name:" << conn->name();
+            KLOG_DEBUG(qLcNetwork) << "connection name:" << conn->name();
             if (conn->settings()->connectionType() == ConnectionSettings::Wired)
             {
-                KLOG_DEBUG() << "deviceName:" << device->interfaceName();
+                KLOG_DEBUG(qLcNetwork) << "deviceName:" << device->interfaceName();
                 addConnection(conn, devicePath);
             }
         }
@@ -128,7 +130,7 @@ void ConnectionList::showWirelessNetworkList()
     Device::Ptr device = findNetworkInterface(m_devicePath);
     if (device->type() == Device::Wifi)
     {
-        KLOG_DEBUG() << "dev->interfaceName():" << device->interfaceName();
+        KLOG_DEBUG(qLcNetwork) << "dev->interfaceName():" << device->interfaceName();
         QSharedPointer<WirelessDevice> wirelessDevice = qobject_cast<WirelessDevice *>(device);
         WirelessNetwork::List wirelessNetworkList = wirelessDevice->networks();
         QString devicePath = wirelessDevice->uni();
@@ -263,7 +265,7 @@ void ConnectionList::handleActiveStateDeactivated(const QString &activeConnectio
     // 没有找到item则直接返回
     if (activeItemWidget == nullptr)
     {
-        KLOG_DEBUG() << "Activated item was no found";
+        KLOG_DEBUG(qLcNetwork) << "Activated item was no found";
         return;
     }
     clearItemWidgetActiveConnectionInfo(activeItemWidget);
@@ -306,7 +308,7 @@ void ConnectionList::sort()
 
     if (m_itemWidgetList.count() == 0)
     {
-        KLOG_DEBUG() << "Sorting failed, connection list cannot be empty.";
+        KLOG_DEBUG(qLcNetwork) << "Sorting failed, connection list cannot be empty.";
         return;
     }
 

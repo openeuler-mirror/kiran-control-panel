@@ -18,6 +18,7 @@
 #include <NetworkManagerQt/WiredDevice>
 #include <QWidget>
 #include "manager.h"
+#include "general.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui
@@ -34,32 +35,19 @@ public:
     explicit WiredManager(const QString &devicePath, QWidget *parent = nullptr);
     ~WiredManager() override;
 
+public slots:
+    void creatConnection(const QString &devicePath);
+    void editConnection(const QString &uuid, QString activeConnectionPath);
+    void returnPreviousPage();
+    void saveConnectionSettings();
+    
+private:
     void initUI();
     void initConnection();
-
-public slots:
-    void handleCreatConnection();
-    void handleEditConnection(const QString &uuid, QString activeConnectionPath);
-    void handleActivateSelectedConnection(const QString &connectionPath, const QString &connectionParameter);
-
-    void handleStateDeactivated(const QString &deactivatedPath) override;
-    void handleStateActivated(const QString &activatedPath) override;
-    void handleStateActivating(const QString &activePath) override;
-    void handleReturnPreviousPage();
-
-    void handleNotifierConnectionAdded(const QString &path) override;
-    void handleNotifierConnectionRemoved(const QString &path) override;
-
-    void handleActiveConnectionAdded(const QString &path) override;
-    void handleActiveConnectionRemoved(const QString &path) override;
-
-    void handleSaveButtonClicked();
-    void handleConnectionUpdated(const QString &path);
 
 private:
     Ui::WiredManager *ui;
     NetworkManager::WiredDevice::Ptr m_wiredDevice;
-    QString m_devicePath;
 };
 
 #endif  // KIRAN_CPANEL_NETWORK_WIRED_MANAGER_H

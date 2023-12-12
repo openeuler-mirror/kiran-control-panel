@@ -17,6 +17,7 @@
 #include "ui_tray-page.h"
 #include "wired-tray-widget.h"
 #include "wireless-tray-widget.h"
+#include "logging-category.h"
 using namespace NetworkManager;
 
 TrayPage::TrayPage(Device::List deviceList, QWidget *parent) : QWidget(parent), ui(new Ui::TrayPage)
@@ -159,10 +160,10 @@ void TrayPage::handleDeviceComboBoxChanged(int index)
     int height = trayWidget->getHeight();
     ui->stackedWidget->setFixedHeight(height);
 
-    KLOG_DEBUG() << "tray widget height:" << height;
-    // KLOG_DEBUG() << "ui->stackedWidget->size():" << ui->stackedWidget->size();
-    // KLOG_DEBUG() << " ui->selectDevicewidget->size():" << ui->selectDevicewidget->size();
-    // KLOG_DEBUG() << "this->size():" << this->size();
+    KLOG_DEBUG(qLcNetwork) << "tray widget height:" << height;
+    // KLOG_DEBUG(qLcNetwork) << "ui->stackedWidget->size():" << ui->stackedWidget->size();
+    // KLOG_DEBUG(qLcNetwork) << " ui->selectDevicewidget->size():" << ui->selectDevicewidget->size();
+    // KLOG_DEBUG(qLcNetwork) << "this->size():" << this->size();
 
     emit sizeChanged(QSize(this->sizeHint().width(), ui->selectDevicewidget->sizeHint().height() + height));
 }
@@ -175,7 +176,7 @@ QStringList TrayPage::devicePathList()
         if (device != nullptr)
             devicePathList << device->uni();
     }
-    KLOG_DEBUG() << "devicePathList:" << devicePathList;
+    KLOG_DEBUG(qLcNetwork) << "devicePathList:" << devicePathList;
     return devicePathList;
 }
 

@@ -20,6 +20,7 @@
 #include "signal-forward.h"
 #include "status-notification.h"
 #include "utils.h"
+#include "logging-category.h"
 using namespace NetworkManager;
 
 WiredTrayWidget::WiredTrayWidget(const QString &devicePath, QWidget *parent) : TrayWidget(parent),
@@ -51,7 +52,7 @@ void WiredTrayWidget::init()
 void WiredTrayWidget::initUI()
 {
     // m_wiredDevice->state(); 设备状态在最开始初始化托盘页面时已经判断过了
-    KLOG_DEBUG() << "wiredDevice carrier :" << m_wiredDevice->carrier();
+    KLOG_DEBUG(qLcNetwork) << "wiredDevice carrier :" << m_wiredDevice->carrier();
     m_connectionList = new TrayConnectionList(this);
     addWidget(m_connectionList);
     showWiredConnectionLists();
@@ -89,7 +90,7 @@ void WiredTrayWidget::showWiredConnectionLists()
  */
 void WiredTrayWidget::handleCarrierChanged(bool plugged)
 {
-    KLOG_DEBUG() << "Carrier Changed plugged: " << plugged;
+    KLOG_DEBUG(qLcNetwork) << "Carrier Changed plugged: " << plugged;
 }
 
 void WiredTrayWidget::handleStateChanged(NetworkManager::Device::State newstate, NetworkManager::Device::State oldstate, NetworkManager::Device::StateChangeReason reason)
@@ -109,7 +110,7 @@ void WiredTrayWidget::handleStateChanged(NetworkManager::Device::State newstate,
 
 void WiredTrayWidget::handleActivateSelectedConnection(const QString &connectionPath, const QString &connectionParameter)
 {
-    KLOG_DEBUG() << "Activate Selected Connection:" << connectionPath;
+    KLOG_DEBUG(qLcNetwork) << "Activate Selected Connection:" << connectionPath;
     // m_devicePath 可以为空，即不指定设备
     QDBusPendingReply<QDBusObjectPath> reply =
         NetworkManager::activateConnection(connectionPath, m_devicePath, connectionParameter);
@@ -118,12 +119,12 @@ void WiredTrayWidget::handleActivateSelectedConnection(const QString &connection
     if (reply.isError())
     {
         // 此处处理进入激活流程失败的原因，并不涉及流程中某个具体阶段失败的原因
-        KLOG_ERROR() << "activate connection failed:" << reply.error();
+        KLOG_ERROR(qLcNetwork) << "activate connection failed:" << reply.error();
         StatusNotification::connectitonFailedNotify(connectionPath);
     }
     else
     {
-        KLOG_DEBUG() << "reply:" << reply.reply();
+        KLOG_DEBUG(qLcNetwork) << "reply:" << reply.reply();
         QString activatedPath = reply.value().path();
     }
 }
@@ -131,7 +132,10 @@ void WiredTrayWidget::handleActivateSelectedConnection(const QString &connection
 void WiredTrayWidget::handleNotifierConnectionAdded(const QString &path)
 {
     Connection::Ptr connection = findConnection(path);
-    m_connectionList->addConnection(connection, m_devicePath);
+    if(NetworkUtils::isAvailableConnection(m_devicePath,connection))
+    {
+        m_connectionList->addConnection(connection, m_devicePath);
+    }
 }
 
 void WiredTrayWidget::handleNotifierConnectionRemoved(const QString &path)
@@ -154,18 +158,18 @@ void WiredTrayWidget::handleStateDeactivated(const QString &activePath)
 
 void WiredTrayWidget::handleStateActivated(const QString &activePath)
 {
-    KLOG_DEBUG() << "Wired  handleStateActivated";
+    KLOG_DEBUG(qLcNetwork) << "Wired  handleStateActivated";
     m_connectionList->setItemWidgetStatus(activePath, ActiveConnection::Activated);
     m_connectionList->sort();
 }
 
 void WiredTrayWidget::handleActiveConnectionAdded(const QString &path)
 {
-    KLOG_DEBUG() << "handleActiveConnectionAdded path:" << path;
+    KLOG_DEBUG(qLcNetwork) << "handleActiveConnectionAdded path:" << path;
     ActiveConnection::Ptr activatedConnection = findActiveConnection(path);
     if (activatedConnection.isNull())
     {
-        KLOG_DEBUG() << "activatedConnection is null";
+        KLOG_DEBUG(qLcNetwork) << "activatedConnection is null";
         return;
     }
 
@@ -177,7 +181,7 @@ void WiredTrayWidget::handleActiveConnectionAdded(const QString &path)
         if (activeItemWidget != nullptr)
         {
             m_connectionList->updateItemWidgetActivePath(activeItemWidget, path);
-            KLOG_DEBUG() << "activatedConnection->state():" << activatedConnection->state();
+            KLOG_DEBUG(qLcNetwork) << "activatedConnection->state():" << activatedConnection->state();
             switch (activatedConnection->state())
             {
             case ActiveConnection::State::Activating:
@@ -210,9 +214,9 @@ void WiredTrayWidget::handleDisconnect(const QString &activatedConnectionPath)
     QDBusPendingReply<> reply = NetworkManager::deactivateConnection(activatedConnectionPath);
     reply.waitForFinished();
     if (reply.isError())
-        KLOG_INFO() << "Disconnect failed:" << reply.error();
+        KLOG_INFO(qLcNetwork) << "Disconnect failed:" << reply.error();
     else
-        KLOG_INFO() << "deactivate Connection:" << reply.reply();
+        KLOG_INFO(qLcNetwork) << "deactivate Connection:" << reply.reply();
 }
 
 void WiredTrayWidget::handleCancelConnection(const QString &activatedConnectionPath)
@@ -220,9 +224,9 @@ void WiredTrayWidget::handleCancelConnection(const QString &activatedConnectionP
     QDBusPendingReply<> reply = NetworkManager::deactivateConnection(activatedConnectionPath);
     reply.waitForFinished();
     if (reply.isError())
-        KLOG_INFO() << "Disconnect failed:" << reply.error();
+        KLOG_INFO(qLcNetwork) << "Disconnect failed:" << reply.error();
     else
-        KLOG_INFO() << "deactivate Connection:" << reply.reply();
+        KLOG_INFO(qLcNetwork) << "deactivate Connection:" << reply.reply();
 }
 
 void WiredTrayWidget::handleConnectionUpdated(const QString &path)

@@ -14,16 +14,22 @@
 
 #include "details-page.h"
 #include <qt5-log-i.h>
-#include <QTimer>
+#include "logging-category.h"
 #include "connection-details-widget.h"
 #include "ui_details-page.h"
+#include "utils.h"
+
 using namespace NetworkManager;
+using namespace NetworkUtils;
 
 DetailsPage::DetailsPage(QWidget *parent) : QWidget(parent), ui(new Ui::DetailsPage)
 {
     ui->setupUi(this);
     initUI();
+    initDeviceConnect();
     initConnect();
+    m_reloadTimer.setInterval(1000);
+    QObject::connect(&m_reloadTimer, &QTimer::timeout, this, &DetailsPage::reload);
 }
 
 DetailsPage::~DetailsPage()
@@ -31,23 +37,28 @@ DetailsPage::~DetailsPage()
     delete ui;
 }
 
+// TODO:消除嵌套
 void DetailsPage::initUI()
 {
     ui->selectConnectionwidget->setVisible(false);
     Device::List deviceList = networkInterfaces();
     for (Device::Ptr device : deviceList)
     {
-        if ((device->type() == Device::Wifi) ||
-            (device->type() == Device::Ethernet))
+        if ((device->type() != Device::Wifi) &&
+            (device->type() != Device::Ethernet))
         {
-            ActiveConnection::Ptr activeConnection = device->activeConnection();
-            if (activeConnection != nullptr)
-            {
-                if (activeConnection->state() == ActiveConnection::Activated)
-                {
-                    m_deviceList << device;
-                }
-            }
+            continue;
+        }
+
+        ActiveConnection::Ptr activeConnection = device->activeConnection();
+        if (activeConnection.isNull())
+        {
+            continue;
+        }
+
+        if (activeConnection->state() == ActiveConnection::Activated)
+        {
+            m_deviceList << device;
         }
     }
 
@@ -86,26 +97,11 @@ void DetailsPage::handleActivatedConnectionComboBoxActivated(int index)
 
 void DetailsPage::initConnect()
 {
-    connect(notifier(), &Notifier::deviceAdded, this, &DetailsPage::handleDeviceAdded);
-    connect(notifier(), &Notifier::deviceRemoved, this, &DetailsPage::handleDeviceRemoved);
+    connect(notifier(), &Notifier::deviceAdded, this, &DetailsPage::updateDetails);
+    connect(notifier(), &Notifier::deviceRemoved, this, &DetailsPage::updateDetails);
     connect(notifier(), &Notifier::activeConnectionAdded, this, &DetailsPage::handleActiveConnectionAdded);
-    connect(notifier(), &Notifier::activeConnectionRemoved, this, &DetailsPage::handleActiveConnectionRemoved);
-    connect(notifier(), &Notifier::activeConnectionsChanged, this, &DetailsPage::handleActiveConnectionChanged);
-}
-
-void DetailsPage::handleDeviceAdded(const QString &devicePath)
-{
-    reload();
-}
-
-void DetailsPage::handleDeviceRemoved(const QString &devicePath)
-{
-    reload();
-}
-
-void DetailsPage::handleActiveConnectionChanged()
-{
-    reload();
+    connect(notifier(), &Notifier::activeConnectionRemoved, this, &DetailsPage::updateDetails);
+    connect(notifier(), &Notifier::activeConnectionsChanged, this, &DetailsPage::updateDetails);
 }
 
 void DetailsPage::handleActiveConnectionAdded(const QString &activeConnectionPath)
@@ -118,17 +114,50 @@ void DetailsPage::handleActiveConnectionAdded(const QString &activeConnectionPat
     connect(activeConnection.data(), &ActiveConnection::stateChanged, this, &DetailsPage::handleActiveConnectionStateChanged, Qt::UniqueConnection);
 }
 
-void DetailsPage::handleActiveConnectionRemoved(const QString &activeConnectionPath)
-{
-    reload();
-}
-
 void DetailsPage::handleActiveConnectionStateChanged(ActiveConnection::State state)
 {
     if (state == ActiveConnection::Activated)
     {
-        reload();
+        updateDetails();
     }
+}
+
+void DetailsPage::deviceStateChanged(NetworkManager::Device::State newstate, NetworkManager::Device::State oldstate, NetworkManager::Device::StateChangeReason reason)
+{
+    if (newstate == Device::State::Activated && oldstate != Device::State::Activated)
+    {
+        updateDetails();
+    }
+}
+
+void DetailsPage::changeIpV4Config()
+{
+    auto device = qobject_cast<Device *>(sender());
+    KLOG_DEBUG(qLcNetwork) << device << "ipV4 Config Changed";
+    updateDetails();
+}
+void DetailsPage::changeIpV6Config()
+{
+    auto device = qobject_cast<Device *>(sender());
+    KLOG_DEBUG(qLcNetwork) << device << "ipV6 Config Changed";
+    updateDetails();
+}
+void DetailsPage::changeDhcp4Config()
+{
+    auto device = qobject_cast<Device *>(sender());
+    KLOG_DEBUG(qLcNetwork) << device << "dhcp4 config changed";
+    updateDetails();
+}
+void DetailsPage::changeDhcp6Config()
+{
+    auto device = qobject_cast<Device *>(sender());
+    KLOG_DEBUG(qLcNetwork) << device << "dhcp6  config changed";
+    updateDetails();
+}
+
+void DetailsPage::updateDetails()
+{
+    m_reloadTimer.start();
 }
 
 void DetailsPage::clear()
@@ -146,8 +175,21 @@ void DetailsPage::clear()
 
 void DetailsPage::reload()
 {
-    QTimer::singleShot(1000, this, [=]()
-                       {
-                           clear();
-                           initUI(); });
+    KLOG_DEBUG(qLcNetwork) << "refresh details page";
+    m_reloadTimer.stop();
+    clear();
+    initUI();
+    initDeviceConnect();
+}
+
+void DetailsPage::initDeviceConnect()
+{
+    for (auto device : m_deviceList)
+    {
+        connect(device.data(), &Device::stateChanged, this, &DetailsPage::deviceStateChanged, Qt::UniqueConnection);
+        connect(device.data(), &Device::ipV4ConfigChanged, this, &DetailsPage::changeIpV4Config, Qt::UniqueConnection);
+        connect(device.data(), &Device::ipV6ConfigChanged, this, &DetailsPage::changeIpV6Config, Qt::UniqueConnection);
+        connect(device.data(), &Device::dhcp4ConfigChanged, this, &DetailsPage::changeDhcp4Config, Qt::UniqueConnection);
+        connect(device.data(), &Device::dhcp6ConfigChanged, this, &DetailsPage::changeDhcp6Config, Qt::UniqueConnection);
+    }
 }

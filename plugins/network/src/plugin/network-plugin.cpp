@@ -29,29 +29,6 @@ NetworkPlugin::~NetworkPlugin()
 
 int NetworkPlugin::init(KiranControlPanel::PanelInterface* interface)
 {
-    if (m_translator != nullptr)
-    {
-        QCoreApplication::removeTranslator(m_translator);
-        delete m_translator;
-        m_translator = nullptr;
-    }
-
-    m_translator = new QTranslator(qApp);
-    if (!m_translator->load(QLocale(),
-                            "kiran-cpanel-network",
-                            ".",
-                            TRANSLATE_PREFIX,
-                            ".qm"))
-    {
-        KLOG_ERROR() << "can't load translator";
-        delete m_translator;
-        m_translator = nullptr;
-    }
-    else
-    {
-        qApp->installTranslator(m_translator);
-    }
-
     auto networkSubItem = new NetworkSubItem(interface,this);
     m_subitem.reset(networkSubItem);
 
@@ -60,12 +37,6 @@ int NetworkPlugin::init(KiranControlPanel::PanelInterface* interface)
 
 void NetworkPlugin::uninit()
 {
-    if (m_translator != nullptr)
-    {
-        QCoreApplication::removeTranslator(m_translator);
-        delete m_translator;
-        m_translator = nullptr;
-    }
 }
 
 QVector<KiranControlPanel::SubItemPtr> NetworkPlugin::getSubItems()

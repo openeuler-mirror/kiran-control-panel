@@ -22,19 +22,20 @@
 #include "config.h"
 #include "dbus-tray-monitor.h"
 #include "network-tray.h"
+#include "logging-category.h"
 
 int main(int argc, char* argv[])
 {
     KiranApplication a(argc, argv);
     klog_qt5_init("", "kylinsec-session", "kiran-cpanel-network", "kiran-cpanel-network");
 
-    KLOG_INFO() << "autostart!";
+    KLOG_INFO(qLcNetwork) << "autostart!";
 
     QTranslator translator;
-    if (translator.load(QLocale(), "kiran-cpanel-network", ".", TRANSLATE_PREFIX, ".qm"))
+    if (translator.load(QLocale(), "kiran-control-panel", ".", TRANSLATE_PREFIX, ".qm"))
     {
         a.installTranslator(&translator);
-        KLOG_DEBUG() << "installTranslator load:" << a.installTranslator(&translator);
+        KLOG_DEBUG(qLcNetwork) << "installTranslator load:" << a.installTranslator(&translator);
     }
     else
     {
@@ -44,7 +45,7 @@ int main(int argc, char* argv[])
     NetworkTray* tray = nullptr;
     if (KiranControlPanel::isDBusTrayAvailable())
     {
-        KLOG_DEBUG() << KDE_STATUS_NOTIFIER_HOST << "is registered,create network tray icon";
+        KLOG_DEBUG(qLcNetwork) << KDE_STATUS_NOTIFIER_HOST << "is registered,create network tray icon";
         tray = new NetworkTray;
     }
     else
@@ -56,7 +57,7 @@ int main(int argc, char* argv[])
                          {
                             if(tray == nullptr)
                             {
-                                KLOG_DEBUG() << KDE_STATUS_NOTIFIER_HOST << "is registered,create network tray icon";
+                                KLOG_DEBUG(qLcNetwork) << KDE_STATUS_NOTIFIER_HOST << "is registered,create network tray icon";
                                 tray = new NetworkTray;
                             } 
                         });
