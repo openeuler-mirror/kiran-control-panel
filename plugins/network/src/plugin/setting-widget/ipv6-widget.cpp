@@ -17,6 +17,7 @@
 #include <qt5-log-i.h>
 #include "kiran-tips/kiran-tips.h"
 #include "ui_ipv6-widget.h"
+#include "logging-category.h"
 using namespace NetworkManager;
 
 Ipv6Widget::Ipv6Widget(QWidget *parent) : QWidget(parent), ui(new Ui::Ipv6Widget)
@@ -65,15 +66,15 @@ void Ipv6Widget::handleIpv6MethodChanged(NetworkManager::Ipv6Setting::ConfigMeth
     {
     case Ipv6Setting::ConfigMethod::Automatic:
         ui->ipv6Manual->setVisible(false);
-        KLOG_DEBUG() << "Automatic";
+        KLOG_DEBUG(qLcNetwork) << "Automatic";
         break;
     case Ipv6Setting::ConfigMethod::Manual:
         ui->ipv6Manual->setVisible(true);
-        KLOG_DEBUG() << "Manual";
+        KLOG_DEBUG(qLcNetwork) << "Manual";
         break;
     case Ipv6Setting::ConfigMethod::Ignored:
         ui->ipv6Manual->setVisible(false);
-        KLOG_DEBUG() << "Ignored";
+        KLOG_DEBUG(qLcNetwork) << "Ignored";
         break;
     default:
         break;
@@ -84,7 +85,7 @@ void Ipv6Widget::saveSettings()
 {
     if (m_ipv6Setting.isNull())
     {
-        KLOG_DEBUG() << "ipv6 setting null";
+        KLOG_DEBUG(qLcNetwork) << "ipv6 setting null";
         return;
     }
     
@@ -129,7 +130,7 @@ void Ipv6Widget::saveSettings()
             ipv6DNS << QHostAddress(dns);
         }
     }
-    KLOG_DEBUG() << "ipv6 set DNS:" << ipv6DNS;
+    KLOG_DEBUG(qLcNetwork) << "ipv6 set DNS:" << ipv6DNS;
     m_ipv6Setting->setDns(ipv6DNS);
 }
 
@@ -178,7 +179,7 @@ void Ipv6Widget::showSettings()
             dnsList << address.toString();
         }
         dnsString = dnsList.join(";");
-        KLOG_DEBUG() << "current ipv6 DNS:" << dnsString;
+        KLOG_DEBUG(qLcNetwork) << "current ipv6 DNS:" << dnsString;
     }
     ui->ipv6DNS->setText(dnsString);
 }
@@ -235,7 +236,7 @@ bool Ipv6Widget::isInputValid()
             QString error = QString(tr("Ipv6 DNS invalid"));
             m_errorTip->setText(error);
             m_errorTip->showTipAroundWidget(ui->ipv6DNS);
-            KLOG_DEBUG() << "Ipv6 DNS invalid";
+            KLOG_DEBUG(qLcNetwork) << "Ipv6 DNS invalid";
             return false;
         }
     }
@@ -252,7 +253,7 @@ bool Ipv6Widget::isIpv6ManualConfigValid()
         m_errorTip->setText(error);
         m_errorTip->showTipAroundWidget(ui->ipv6Address);
 
-        KLOG_DEBUG() << "Ipv6 Address cannot be empty";
+        KLOG_DEBUG(qLcNetwork) << "Ipv6 Address cannot be empty";
         return false;
     }
     else
@@ -262,7 +263,7 @@ bool Ipv6Widget::isIpv6ManualConfigValid()
             QString error = QString(tr("Ipv6 address invalid"));
             m_errorTip->setText(error);
             m_errorTip->showTipAroundWidget(ui->ipv6Address);
-            KLOG_DEBUG() << "Ipv6Address invalid";
+            KLOG_DEBUG(qLcNetwork) << "Ipv6Address invalid";
             return false;
         }
     }
@@ -275,7 +276,7 @@ bool Ipv6Widget::isIpv6ManualConfigValid()
             QString error = QString(tr("Ipv6 Gateway invalid"));
             m_errorTip->setText(error);
             m_errorTip->showTipAroundWidget(ui->ipv6Gateway);
-            KLOG_DEBUG() << "Ipv6 Netmask invalid";
+            KLOG_DEBUG(qLcNetwork) << "Ipv6 Netmask invalid";
             return false;
         }
     }

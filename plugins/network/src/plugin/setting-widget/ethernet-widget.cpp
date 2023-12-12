@@ -20,6 +20,7 @@
 #include <NetworkManagerQt/WiredDevice>
 #include "kiran-tips/kiran-tips.h"
 #include "ui_ethernet-widget.h"
+#include "logging-category.h"
 using namespace NetworkManager;
 
 EthernetWidget::EthernetWidget(QWidget *parent) : QWidget(parent), ui(new Ui::EthernetWidget)
@@ -90,7 +91,7 @@ void EthernetWidget::saveSettings()
 
     QString macAddress = ui->deviceMac->currentData().toString();
     QString cloneMac = ui->cloneDeviceMac->text();
-    KLOG_DEBUG() << "save ethernet setting: macAddress:" << macAddress << "cloneMac:" << cloneMac;
+    KLOG_DEBUG(qLcNetwork) << "save ethernet setting: macAddress:" << macAddress << "cloneMac:" << cloneMac;
 
     m_wiredSetting->setMacAddress(QByteArray::fromHex(macAddress.toUtf8()));
 
@@ -167,7 +168,7 @@ bool EthernetWidget::isInputValid()
         QString error = QString(tr("Clone Mac invalid"));
         m_errorTip->setText(error);
         m_errorTip->showTipAroundWidget(ui->cloneDeviceMac);
-        KLOG_DEBUG() << "Clone Mac invalid";
+        KLOG_DEBUG(qLcNetwork) << "Clone Mac invalid";
         return false;
     }
     return true;

@@ -22,6 +22,7 @@
 #include "vpn-manager.h"
 #include "wired-manager.h"
 #include "wireless-manager.h"
+#include "logging-category.h"
 
 using namespace NetworkManager;
 #define MAX_WAIT_COUNTS 10
@@ -175,13 +176,13 @@ void CPanelNetworkWidget::initWirelessManager()
 
 void CPanelNetworkWidget::changeDeviceState(NetworkManager::Device::State newstate, NetworkManager::Device::State oldstate, NetworkManager::Device::StateChangeReason reason)
 {
-    KLOG_DEBUG() << "new state:" << newstate;
-    KLOG_DEBUG() << "old state:" << oldstate;
-    KLOG_DEBUG() << "reason:" << reason;
+    KLOG_DEBUG(qLcNetwork) << "new state:" << newstate;
+    KLOG_DEBUG(qLcNetwork) << "old state:" << oldstate;
+    KLOG_DEBUG(qLcNetwork) << "reason:" << reason;
     auto device = qobject_cast<NetworkManager::Device *>(sender());
     if (device == nullptr)
     {
-        KLOG_DEBUG() << "device is null";
+        KLOG_DEBUG(qLcNetwork) << "device is null";
         return;
     }
 
@@ -319,7 +320,7 @@ void CPanelNetworkWidget::changeSideBarItem(QListWidgetItem *item)
             replyRequestScan.waitForFinished();
             if (replyRequestScan.isError())
             {
-                KLOG_DEBUG() << "wireless Device name:" << wirelessDevice->interfaceName() << " requestScan error:" << replyRequestScan.error();
+                KLOG_DEBUG(qLcNetwork) << "wireless Device name:" << wirelessDevice->interfaceName() << " requestScan error:" << replyRequestScan.error();
             }
         }
     }
@@ -327,7 +328,7 @@ void CPanelNetworkWidget::changeSideBarItem(QListWidgetItem *item)
 
 void CPanelNetworkWidget::removeDevice(const QString &devicePath)
 {
-    KLOG_DEBUG() << "DeviceRemoved: " << devicePath;
+    KLOG_DEBUG(qLcNetwork) << "DeviceRemoved: " << devicePath;
 
     auto newWiredDeviceList = NetworkUtils::getManagedDeviceList(Device::Ethernet);
     auto newWirelessDeviceList = NetworkUtils::getManagedDeviceList(Device::Wifi);

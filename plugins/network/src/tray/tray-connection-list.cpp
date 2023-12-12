@@ -18,6 +18,7 @@
 #include "general.h"
 #include "status-notification.h"
 #include "tray-itemwidget.h"
+#include "logging-category.h"
 
 #define LIST_MAX_HEIGHT 358
 #define TRAY_ITEM_NORAML_SIZE QSize(240, 50)
@@ -47,7 +48,6 @@ void TrayConnectionList::addConnection(NetworkManager::Connection::Ptr ptr, cons
 {
     if (ptr == nullptr)
     {
-        KLOG_ERROR() << "ptr == null";
         return;
     }
 
@@ -109,14 +109,14 @@ void TrayConnectionList::addWirelessNetwork(NetworkManager::WirelessNetwork::Ptr
                                             const QString& devicePath)
 
 {
-    // KLOG_DEBUG() << "network ssid:" << network->ssid();
+    // KLOG_DEBUG(qLcNetwork) << "network ssid:" << network->ssid();
     AccessPoint::Ptr accessPoint = network->referenceAccessPoint();
     NetworkConnectionInfo connectionInfo;
     connectionInfo.isWireless = true;
     connectionInfo.wirelessInfo.ssid = network->ssid();
     connectionInfo.wirelessInfo.accessPointPath = accessPoint->uni();
     connectionInfo.wirelessInfo.signalStrength = accessPoint->signalStrength();
-    // KLOG_DEBUG() << "accessPoint signalStrength:" << connectionInfo.wirelessInfo.signalStrength;
+    // KLOG_DEBUG(qLcNetwork) << "accessPoint signalStrength:" << connectionInfo.wirelessInfo.signalStrength;
     connectionInfo.devicePath = devicePath;
     if (accessPoint->capabilities() == AccessPoint::Capability::None)
         connectionInfo.wirelessInfo.securitySetting = false;
@@ -209,11 +209,11 @@ void TrayConnectionList::addHiddenNetworkItemWidget()
 
 void TrayConnectionList::setItemWidgetStatus(const QString& activePath, NetworkManager::ActiveConnection::State state)
 {
-    KLOG_DEBUG() << "activePath:" << activePath;
+    KLOG_DEBUG(qLcNetwork) << "activePath:" << activePath;
     auto itemWidget = findItemWidgetByActivePath(activePath);
     if (itemWidget == nullptr)
     {
-        KLOG_DEBUG() << "active ItemWidget was no found";
+        KLOG_DEBUG(qLcNetwork) << "active ItemWidget was no found";
         return;
     }
 
@@ -270,7 +270,7 @@ void TrayConnectionList::adjustTraySize()
         totalheight = LIST_MAX_HEIGHT;
     setFixedHeight(totalheight);
 
-    // KLOG_DEBUG() << "totalheight:" << totalheight;
+    // KLOG_DEBUG(qLcNetwork) << "totalheight:" << totalheight;
     emit sizeChanged(QSize(this->sizeHint().width(), totalheight));
 }
 
@@ -323,7 +323,7 @@ void TrayConnectionList::handleConnectionItemClicked()
         }
     }
     else
-        KLOG_DEBUG() << "this connection is activated";
+        KLOG_DEBUG(qLcNetwork) << "this connection is activated";
 }
 
 void TrayConnectionList::setItemWidgetSimpleStatus(QWidget* itemWidget)
@@ -373,7 +373,7 @@ void TrayConnectionList::handleCancelButtonClicked()
                 if (activeConnection->state() == ActiveConnection::Activating)
                 {
                     emit cancelConnection(path);
-                    KLOG_DEBUG() << "emit cancel Connection";
+                    KLOG_DEBUG(qLcNetwork) << "emit cancel Connection";
                 }
             }
         }

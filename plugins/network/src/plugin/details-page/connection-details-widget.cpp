@@ -22,6 +22,8 @@
 #include <NetworkManagerQt/WirelessSetting>
 #include "ui_connection-details-widget.h"
 #include "utils.h"
+#include "logging-category.h"
+
 using namespace NetworkManager;
 using namespace NetworkUtils;
 
@@ -144,7 +146,7 @@ void ConnectionDetailsWidget::setWirelessSpecificDetails()
 
 void ConnectionDetailsWidget::setIpDetails()
 {
-    KLOG_INFO() << m_device << "ip details";
+    KLOG_INFO(qLcNetwork) << m_device << "ip details";
 
     IpConfig ipV4Config = m_activeConnection->ipV4Config();
     IpAddress ipv4Address = ipV4Config.addresses().value(0);
@@ -211,10 +213,10 @@ void ConnectionDetailsWidget::setIpDetails()
     ui->ipv6->setText(ipv6);
     ui->prefix->setText(QString::number(prefix));
 
-    KLOG_INFO() << "active connection state:" << m_activeConnection->state();
-    KLOG_INFO() << "ipv4:" << address;
-    KLOG_INFO() << "netmask:" << netmask;
-    KLOG_INFO() << "gateway:" << gateway;
-    KLOG_INFO() << "dhcp options:" << dhcpOptions;
-    KLOG_INFO() << "ipv6:" << ipv6;
+    KLOG_INFO(qLcNetwork) << "active connection state:" << m_activeConnection->state();
+    KLOG_INFO(qLcNetwork) << "ipv4:" << address;
+    KLOG_INFO(qLcNetwork) << "netmask:" << netmask;
+    KLOG_INFO(qLcNetwork) << "gateway:" << gateway;
+    KLOG_INFO(qLcNetwork) << "dhcp options:" << dhcpOptions;
+    KLOG_INFO(qLcNetwork) << "ipv6:" << ipv6;
 }

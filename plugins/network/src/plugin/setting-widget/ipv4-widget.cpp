@@ -18,6 +18,7 @@
 #include <qt5-log-i.h>
 #include "kiran-tips/kiran-tips.h"
 #include "ui_ipv4-widget.h"
+#include "logging-category.h"
 using namespace NetworkManager;
 
 Ipv4Widget::Ipv4Widget(QWidget *parent) : QWidget(parent), ui(new Ui::Ipv4Widget)
@@ -106,7 +107,7 @@ void Ipv4Widget::saveSettings()
             }
             else
             {
-                KLOG_DEBUG() << "Net prefix length error";
+                KLOG_DEBUG(qLcNetwork) << "Net prefix length error";
             }
         }
         else
@@ -115,10 +116,10 @@ void Ipv4Widget::saveSettings()
         }
 
         ipv4Address.setGateway(QHostAddress(ui->ipv4Gateway->text()));
-        KLOG_DEBUG() << "ipv4 ip:" << ipv4Address.ip();
-        KLOG_DEBUG() << "ipv4 netmask:" << ipv4Address.netmask();
-        KLOG_DEBUG() << "ipv4 prefix Length:" << ipv4Address.prefixLength();
-        KLOG_DEBUG() << "ipv4 gateway:" << ipv4Address.gateway();
+        KLOG_DEBUG(qLcNetwork) << "ipv4 ip:" << ipv4Address.ip();
+        KLOG_DEBUG(qLcNetwork) << "ipv4 netmask:" << ipv4Address.netmask();
+        KLOG_DEBUG(qLcNetwork) << "ipv4 prefix Length:" << ipv4Address.prefixLength();
+        KLOG_DEBUG(qLcNetwork) << "ipv4 gateway:" << ipv4Address.gateway();
 
         QList<IpAddress> ipv4AddresseList;
         ipv4AddresseList << ipv4Address;
@@ -136,7 +137,7 @@ void Ipv4Widget::saveSettings()
             ipv4DNS << QHostAddress(dns);
         }
     }
-    KLOG_DEBUG() << "ipv4 DNS:" << ipv4DNS;
+    KLOG_DEBUG(qLcNetwork) << "ipv4 DNS:" << ipv4DNS;
     m_ipv4Setting->setDns(ipv4DNS);
 }
 
@@ -148,7 +149,7 @@ void Ipv4Widget::showSettings()
         return;
     }
 
-    KLOG_DEBUG() << "current ipv4 Setting method:" << m_ipv4Setting->method();
+    KLOG_DEBUG(qLcNetwork) << "current ipv4 Setting method:" << m_ipv4Setting->method();
     if (m_ipv4Setting->method() == Ipv4Setting::ConfigMethod::Automatic)
     {
         resetSettings();
@@ -163,9 +164,9 @@ void Ipv4Widget::showSettings()
         QString netmask = ipv4Address.netmask().toString();
         QString gateway = ipv4Address.gateway().toString();
 
-        KLOG_DEBUG() << "address:" << address;
-        KLOG_DEBUG() << "netmask:" << netmask;
-        KLOG_DEBUG() << "gateway:" << gateway;
+        KLOG_DEBUG(qLcNetwork) << "address:" << address;
+        KLOG_DEBUG(qLcNetwork) << "netmask:" << netmask;
+        KLOG_DEBUG(qLcNetwork) << "gateway:" << gateway;
 
         ui->ipv4Address->setText(address);
         ui->ipv4Netmask->setText(netmask);
@@ -189,7 +190,7 @@ void Ipv4Widget::showSettings()
             dnsList << address.toString();
         }
         dnsString = dnsList.join(";");
-        KLOG_DEBUG() << "ipv4 DNS:" << dnsString;
+        KLOG_DEBUG(qLcNetwork) << "ipv4 DNS:" << dnsString;
     }
     ui->ipv4DNS->setText(dnsString);   
 }
@@ -243,7 +244,7 @@ bool Ipv4Widget::isInputValid()
             QString error = QString(tr("Ipv4 DNS invalid"));
             m_errorTip->setText(error);
             m_errorTip->showTipAroundWidget(ui->ipv4DNS);
-            KLOG_DEBUG() << "Ipv4 DNS invalid";
+            KLOG_DEBUG(qLcNetwork) << "Ipv4 DNS invalid";
             return false;    
         }
     }
@@ -262,7 +263,7 @@ bool Ipv4Widget::isIpv4ManualConfigValid()
         QString error = QString(tr("Ipv4 address can not be empty"));
         m_errorTip->setText(error);
         m_errorTip->showTipAroundWidget(ui->ipv4Address);
-        KLOG_DEBUG() << "Ipv4 address can not be empty";
+        KLOG_DEBUG(qLcNetwork) << "Ipv4 address can not be empty";
         return false;
     }
     else
@@ -272,7 +273,7 @@ bool Ipv4Widget::isIpv4ManualConfigValid()
             QString error = QString(tr("Ipv4 Address invalid"));
             m_errorTip->setText(error);
             m_errorTip->showTipAroundWidget(ui->ipv4Address);
-            KLOG_DEBUG() << "Ipv4 Address invalid";
+            KLOG_DEBUG(qLcNetwork) << "Ipv4 Address invalid";
             return false;
         }
     }
@@ -282,7 +283,7 @@ bool Ipv4Widget::isIpv4ManualConfigValid()
         QString error = QString(tr("NetMask can not be empty"));
         m_errorTip->setText(error);
         m_errorTip->showTipAroundWidget(ui->ipv4Netmask);
-        KLOG_DEBUG() << "NetMask cannot be empty";
+        KLOG_DEBUG(qLcNetwork) << "NetMask cannot be empty";
         return false;
     }
     else
@@ -292,7 +293,7 @@ bool Ipv4Widget::isIpv4ManualConfigValid()
             QString error = QString(tr("Netmask invalid"));
             m_errorTip->setText(error);
             m_errorTip->showTipAroundWidget(ui->ipv4Netmask);
-            KLOG_DEBUG() << "Netmask invalid";
+            KLOG_DEBUG(qLcNetwork) << "Netmask invalid";
             return false;
         }
     }

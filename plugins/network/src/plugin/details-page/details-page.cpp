@@ -14,7 +14,7 @@
 
 #include "details-page.h"
 #include <qt5-log-i.h>
-
+#include "logging-category.h"
 #include "connection-details-widget.h"
 #include "ui_details-page.h"
 #include "utils.h"
@@ -37,23 +37,28 @@ DetailsPage::~DetailsPage()
     delete ui;
 }
 
+// TODO:消除嵌套
 void DetailsPage::initUI()
 {
     ui->selectConnectionwidget->setVisible(false);
     Device::List deviceList = networkInterfaces();
     for (Device::Ptr device : deviceList)
     {
-        if ((device->type() == Device::Wifi) ||
-            (device->type() == Device::Ethernet))
+        if ((device->type() != Device::Wifi) &&
+            (device->type() != Device::Ethernet))
         {
-            ActiveConnection::Ptr activeConnection = device->activeConnection();
-            if (activeConnection != nullptr)
-            {
-                if (activeConnection->state() == ActiveConnection::Activated)
-                {
-                    m_deviceList << device;
-                }
-            }
+            continue;
+        }
+
+        ActiveConnection::Ptr activeConnection = device->activeConnection();
+        if (activeConnection.isNull())
+        {
+            continue;
+        }
+
+        if (activeConnection->state() == ActiveConnection::Activated)
+        {
+            m_deviceList << device;
         }
     }
 
@@ -128,25 +133,25 @@ void DetailsPage::deviceStateChanged(NetworkManager::Device::State newstate, Net
 void DetailsPage::changeIpV4Config()
 {
     auto device = qobject_cast<Device *>(sender());
-    KLOG_DEBUG() << device << "ipV4 Config Changed";
+    KLOG_DEBUG(qLcNetwork) << device << "ipV4 Config Changed";
     updateDetails();
 }
 void DetailsPage::changeIpV6Config()
 {
     auto device = qobject_cast<Device *>(sender());
-    KLOG_DEBUG() << device << "ipV6 Config Changed";
+    KLOG_DEBUG(qLcNetwork) << device << "ipV6 Config Changed";
     updateDetails();
 }
 void DetailsPage::changeDhcp4Config()
 {
     auto device = qobject_cast<Device *>(sender());
-    KLOG_DEBUG() << device << "dhcp4 config changed";
+    KLOG_DEBUG(qLcNetwork) << device << "dhcp4 config changed";
     updateDetails();
 }
 void DetailsPage::changeDhcp6Config()
 {
     auto device = qobject_cast<Device *>(sender());
-    KLOG_DEBUG() << device << "dhcp6  config changed";
+    KLOG_DEBUG(qLcNetwork) << device << "dhcp6  config changed";
     updateDetails();
 }
 
@@ -170,7 +175,7 @@ void DetailsPage::clear()
 
 void DetailsPage::reload()
 {
-    KLOG_DEBUG() << "refresh details page";
+    KLOG_DEBUG(qLcNetwork) << "refresh details page";
     m_reloadTimer.stop();
     clear();
     initUI();

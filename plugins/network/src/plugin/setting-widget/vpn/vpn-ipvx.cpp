@@ -15,6 +15,7 @@
 #include <kiran-switch-button.h>
 #include <qt5-log-i.h>
 #include "ui_vpn-ipvx.h"
+#include "logging-category.h"
 using namespace NetworkManager;
 
 Q_DECLARE_METATYPE(NetworkManager::Ipv4Setting::ConfigMethod)
@@ -111,7 +112,7 @@ void VpnIpvx::showSeittngs()
 
 void VpnIpvx::resetSettings()
 {
-    KLOG_DEBUG() << "VpnIpvx::resetSettings";
+    KLOG_DEBUG(qLcNetwork) << "VpnIpvx::resetSettings";
     int ipv4MethodIndex = ui->ipv4Method->findData(Ipv4Setting::ConfigMethod::Automatic);
     ui->ipv4Method->setCurrentIndex(ipv4MethodIndex);
     m_neverDefault->setChecked(false);

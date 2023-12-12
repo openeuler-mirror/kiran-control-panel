@@ -21,6 +21,7 @@
 #include "connection-list.h"
 #include "connection-show-page.h"
 #include "tray-widget.h"
+#include "logging-category.h"
 // clang-format on
 using namespace NetworkManager;
 #define TRAY_ITEM_NORAML_HIEGHT 50
@@ -90,24 +91,24 @@ void TrayWidget::handleActiveConnectionStateChanged(ActiveConnection::State stat
     switch (state)
     {
     case ActiveConnection::State::Unknown:
-        KLOG_DEBUG() << "ActiveConnection::State::Unknown";
+        KLOG_DEBUG(qLcNetwork) << "ActiveConnection::State::Unknown";
         break;
     case ActiveConnection::State::Activating:
-        KLOG_DEBUG() << "ActiveConnection::State::Activating";
+        KLOG_DEBUG(qLcNetwork) << "ActiveConnection::State::Activating";
         handleStateActivating(m_activatedPath);
         break;
     case ActiveConnection::State::Activated:
-        KLOG_DEBUG() << "ActiveConnection::State::Activated";
-        KLOG_DEBUG() << "id:" << id;
-        KLOG_DEBUG() << "deviceList:" << deviceList; 
+        KLOG_DEBUG(qLcNetwork) << "ActiveConnection::State::Activated";
+        KLOG_DEBUG(qLcNetwork) << "id:" << id;
+        KLOG_DEBUG(qLcNetwork) << "deviceList:" << deviceList; 
         m_StateActivatedTimer.start();
         break;
     case ActiveConnection::State::Deactivating:
-        KLOG_DEBUG() << "ActiveConnection::State::Deactivating";
+        KLOG_DEBUG(qLcNetwork) << "ActiveConnection::State::Deactivating";
         break;
     case ActiveConnection::State::Deactivated:
-        KLOG_DEBUG() << "ActiveConnection::State::Deactivated id:" << id;
-        KLOG_DEBUG() << "device path:" << m_devicePtr->uni();
+        KLOG_DEBUG(qLcNetwork) << "ActiveConnection::State::Deactivated id:" << id;
+        KLOG_DEBUG(qLcNetwork) << "device path:" << m_devicePtr->uni();
         if (deviceList.contains(m_devicePtr->uni()))
         {
             if (!id.isEmpty())

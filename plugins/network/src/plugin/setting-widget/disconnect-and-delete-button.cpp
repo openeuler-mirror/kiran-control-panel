@@ -20,6 +20,7 @@
 #include <QTimer>
 #include "status-notification.h"
 #include "ui_disconnect-and-delete-button.h"
+#include "logging-category.h"
 using namespace NetworkManager;
 
 DisconnectAndDeleteButton::DisconnectAndDeleteButton(QWidget *parent) : QWidget(parent), ui(new Ui::DisconnectAndDeleteButton)
@@ -81,10 +82,10 @@ void DisconnectAndDeleteButton::initConnection()
         reply.waitForFinished();
         if (reply.isError())
         {
-            KLOG_INFO() << "Disconnect failed:" << reply.error();
+            KLOG_INFO(qLcNetwork) << "Disconnect failed:" << reply.error();
         }
         else
-            KLOG_DEBUG() << "deactivateConnection reply:" << reply.reply();
+            KLOG_DEBUG(qLcNetwork) << "deactivateConnection reply:" << reply.reply();
         emit disconnectButtonClicked(); });
     connect(ui->deleteButton, &QPushButton::clicked, this, &DisconnectAndDeleteButton::handleDeleteConnection);
     connect(ui->ignoreButton, &QPushButton::clicked, this, &DisconnectAndDeleteButton::handleIgnoreWireless);
@@ -109,7 +110,7 @@ void DisconnectAndDeleteButton::handleDeleteConnection()
         StatusNotification::connectionDeleteNotify(connectionName);
         if (reply.isError())
         {
-            KLOG_INFO() << "Delete the connection failed:" << reply.error();
+            KLOG_INFO(qLcNetwork) << "Delete the connection failed:" << reply.error();
         }
         emit deleteButtonClicked();
     }
@@ -126,7 +127,7 @@ void DisconnectAndDeleteButton::handleIgnoreWireless()
     QDBusPendingReply<> reply = NetworkManager::deactivateConnection(m_activeConnectionPath);
     reply.waitForFinished();
     if (reply.isError())
-        KLOG_DEBUG() << "Disconnect failed:" << reply.error();
+        KLOG_DEBUG(qLcNetwork) << "Disconnect failed:" << reply.error();
 
     /*
      * Note:deactivate后，通过信号发出deactivate的状态通知，通知需要从connection中获取id信息
