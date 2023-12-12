@@ -14,6 +14,7 @@
         <file>images/indicator-selected.png</file>
         <file alias="images/success-indicator.svg">images/current-avatar-indicator.svg</file>
         <file>images/error-indicator.svg</file>
+        <file>images/more-options.svg</file>
     </qresource>
 
     <qresource prefix="/kcp-account">

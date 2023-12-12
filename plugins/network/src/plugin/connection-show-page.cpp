@@ -22,6 +22,7 @@
 #include <NetworkManagerQt/WirelessSetting>
 #include "animation-loading-label.h"
 #include "ui_connection-show-page.h"
+#include "logging-category.h"
 using namespace NetworkManager;
 
 #define PLUGIN_ITEM_WIDGET_HEIGHT 36
@@ -148,7 +149,7 @@ void ConnectionShowPage::handleToggledSwitchButton(bool toggled)
 #define PLUGIN_ITEM_WIDGET_HEIGHT 36
 void ConnectionShowPage::handleWirelessEnabledChanged(bool enabled)
 {
-    KLOG_DEBUG() << "Wireless Enabled Changed:" << enabled;
+    KLOG_DEBUG(qLcNetwork) << "Wireless Enabled Changed:" << enabled;
     //处理通过命令行等其他方式禁用无线网络的情况
     m_switchButton->blockSignals(true);
     m_switchButton->setChecked(enabled);

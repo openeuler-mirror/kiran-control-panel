@@ -21,7 +21,11 @@
 #include <NetworkManagerQt/WirelessSecuritySetting>
 #include <NetworkManagerQt/WirelessSetting>
 #include "ui_connection-details-widget.h"
+#include "utils.h"
+#include "logging-category.h"
+
 using namespace NetworkManager;
+using namespace NetworkUtils;
 
 ConnectionDetailsWidget::ConnectionDetailsWidget(Device::Ptr device, QWidget *parent)
     : QWidget(parent), ui(new Ui::ConnectionDetailsWidget)
@@ -81,7 +85,7 @@ void ConnectionDetailsWidget::initUI()
 
     for (auto label : labels)
     {
-        if(m_device == nullptr)
+        if (m_device == nullptr)
             label->setText("-");
         label->setStyleSheet("color:#919191;font-family: \"Noto Sans CJK SC Light\";");
     }
@@ -142,6 +146,8 @@ void ConnectionDetailsWidget::setWirelessSpecificDetails()
 
 void ConnectionDetailsWidget::setIpDetails()
 {
+    KLOG_INFO(qLcNetwork) << m_device << "ip details";
+
     IpConfig ipV4Config = m_activeConnection->ipV4Config();
     IpAddress ipv4Address = ipV4Config.addresses().value(0);
     QString address = ipv4Address.ip().toString();
@@ -206,4 +212,11 @@ void ConnectionDetailsWidget::setIpDetails()
     int prefix = ipv6Address.prefixLength();
     ui->ipv6->setText(ipv6);
     ui->prefix->setText(QString::number(prefix));
+
+    KLOG_INFO(qLcNetwork) << "active connection state:" << m_activeConnection->state();
+    KLOG_INFO(qLcNetwork) << "ipv4:" << address;
+    KLOG_INFO(qLcNetwork) << "netmask:" << netmask;
+    KLOG_INFO(qLcNetwork) << "gateway:" << gateway;
+    KLOG_INFO(qLcNetwork) << "dhcp options:" << dhcpOptions;
+    KLOG_INFO(qLcNetwork) << "ipv6:" << ipv6;
 }

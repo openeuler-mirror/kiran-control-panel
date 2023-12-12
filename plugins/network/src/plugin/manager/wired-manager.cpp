@@ -23,12 +23,16 @@
 #include "signal-forward.h"
 #include "status-notification.h"
 #include "ui_wired-manager.h"
+#include "device-list.h"
+#include <NetworkManagerQt/Device>
+#include "logging-category.h"
+
 using namespace NetworkManager;
 
 WiredManager::WiredManager(const QString &devicePath, QWidget *parent) : Manager(parent), ui(new Ui::WiredManager)
 {
     ui->setupUi(this);
-    m_devicePath = devicePath;
+    ui->wiredDeviceList->init(Device::Ethernet);
     initUI();
     initConnection();
 }
@@ -41,41 +45,28 @@ WiredManager::~WiredManager()
 
 void WiredManager::initUI()
 {
-    ui->connectionShowPage->init(ConnectionSettings::Wired, m_devicePath);
-    ui->connectionShowPage->setTitle(tr("Wired Network Adapter"));
-    ui->connectionShowPage->setSwitchButtonVisible(false);
     Kiran::StylePropertyHelper::setButtonType(ui->saveButton, Kiran::BUTTON_Default);
 }
 
 void WiredManager::initConnection()
 {
-    connect(ui->connectionShowPage, &ConnectionShowPage::creatConnection, this, &WiredManager::handleCreatConnection);
-    connect(ui->connectionShowPage, &ConnectionShowPage::editConnection, this, &WiredManager::handleEditConnection);
+    connect(ui->returnButton, &QPushButton::clicked, this, &WiredManager::returnPreviousPage);
+    connect(ui->saveButton, &QPushButton::clicked, this, &WiredManager::saveConnectionSettings);
+    connect(ui->wiredSettingPage, &WiredSettingPage::returnPreviousPage, this, &WiredManager::returnPreviousPage);
 
-    connect(ui->returnButton, &QPushButton::clicked, this, &WiredManager::handleReturnPreviousPage);
-    connect(ui->saveButton, &QPushButton::clicked, this, &WiredManager::handleSaveButtonClicked);
-
-    connect(ui->wiredSettingPage, &WiredSettingPage::returnPreviousPage, this, &WiredManager::handleReturnPreviousPage);
-
-    connect(ui->connectionShowPage, &ConnectionShowPage::connectionUpdated, this, &WiredManager::handleConnectionUpdated);
-    connect(ui->connectionShowPage, &ConnectionShowPage::activateSelectedConnection, this, &WiredManager::handleActivateSelectedConnection);
-
-    connect(SignalForward::instance(), &SignalForward::wiredConnectionAdded, this, &WiredManager::handleNotifierConnectionAdded);
-    connect(SignalForward::instance(), &SignalForward::wiredActiveConnectionAdded, this, &WiredManager::handleActiveConnectionAdded);
-
-    connect(SignalForward::instance(), &SignalForward::connectionRemoved, this, &WiredManager::handleNotifierConnectionRemoved);
-    connect(SignalForward::instance(), &SignalForward::activeConnectionRemoved, this, &WiredManager::handleActiveConnectionRemoved);
+    connect(SignalForward::instance(), &SignalForward::wiredConnectionEdited, this, &WiredManager::editConnection);
+    connect(SignalForward::instance(), &SignalForward::createConnection,this, &WiredManager::creatConnection);
 }
 
-void WiredManager::handleCreatConnection()
+void WiredManager::creatConnection(const QString &devicePath)
 {
-    ui->wiredSettingPage->showSettingPage();
+    ui->wiredSettingPage->createSettingPage(devicePath);
     QPointer<QScrollBar> scrollBar = ui->scrollArea->verticalScrollBar();
     scrollBar->setValue(0);
     ui->stackedWidget->setCurrentIndex(PAGE_SETTING);
 }
 
-void WiredManager::handleEditConnection(const QString &uuid, QString activeConnectionPath)
+void WiredManager::editConnection(const QString &uuid, QString activeConnectionPath)
 {
     ui->wiredSettingPage->initConnectionSettings(ConnectionSettings::ConnectionType::Wired, uuid);
     ui->wiredSettingPage->initSettingPage();
@@ -85,152 +76,23 @@ void WiredManager::handleEditConnection(const QString &uuid, QString activeConne
     ui->stackedWidget->setCurrentIndex(PAGE_SETTING);
 }
 
-void WiredManager::handleActivateSelectedConnection(const QString &connectionPath, const QString &connectionParameter)
-{
-    Device::Ptr device = NetworkManager::findNetworkInterface(m_devicePath);
-
-    auto devicestate = device->state();
-    KLOG_DEBUG() << "device state:" << devicestate ;
-    if(devicestate == Device::Unavailable)
-    {
-        StatusNotification::connectitonFailedNotifyByReason(tr("The current device is not available"));
-        return;
-    }
-
-    QDBusPendingReply<QDBusObjectPath> reply =
-        NetworkManager::activateConnection(connectionPath, m_devicePath, connectionParameter);
-
-    reply.waitForFinished();
-    if (reply.isError())
-    {
-        // 此处处理进入激活流程失败的原因，并不涉及流程中某个具体阶段失败的原因
-        KLOG_ERROR() << "activate connection failed:" << reply.error();
-        QString errorMessage = reply.error().message();
-        if (errorMessage.contains("device has no carrier"))
-        {
-            StatusNotification::connectitonFailedNotifyByReason(tr("The carrier is pulled out"));
-        }
-        else
-        {
-            StatusNotification::connectitonFailedNotify(connectionPath);
-        }
-    }
-    else
-    {
-        KLOG_DEBUG() << "activateConnection reply:" << reply.reply();
-    }
-}
-
-// 获取到当前激活对象后，开启等待动画，判断完激活状态后停止等待动画
-void WiredManager::handleActiveConnectionAdded(const QString &path)
-{
-    ActiveConnection::Ptr activatedConnection = findActiveConnection(path);
-    if (activatedConnection.isNull())
-        return;
-    QStringList deviceList = activatedConnection->devices();
-    if (deviceList.contains(m_devicePath))
-    {
-        QString uuid = activatedConnection->uuid();
-        auto *activeItemWidget = ui->connectionShowPage->findItemWidgetByUuid(uuid);
-        if (activeItemWidget != nullptr)
-        {
-            ui->connectionShowPage->updateItemWidgetActivePath(activeItemWidget, path);
-            KLOG_DEBUG() << "activatedConnection->state():" << activatedConnection->state();
-            switch (activatedConnection->state())
-            {
-            case ActiveConnection::State::Activating:
-                handleStateActivating(path);
-                break;
-            case ActiveConnection::State::Activated:
-                handleStateActivated(path);
-                break;
-            default:
-                break;
-            }
-        }
-        connect(activatedConnection.data(), &ActiveConnection::stateChanged, this, &WiredManager::handleActiveConnectionStateChanged, Qt::UniqueConnection);
-    }
-}
-
-void WiredManager::handleStateActivating(const QString &activePath)
-{
-          // 加载等待动画
-    ui->connectionShowPage->setItemWidgetStatus(activePath, ActiveConnection::State::Activating);
-}
-
-void WiredManager::handleActiveConnectionRemoved(const QString &path)
-{
-    ui->connectionShowPage->handleActiveStateDeactivated(path);
-}
-
-// TODO:提升代码，增强复用性
-void WiredManager::handleStateActivated(const QString &activePath)
-{
-    ActiveConnection::Ptr activeConnection = findActiveConnection(activePath);
-    if (activeConnection.isNull())
-    {
-        return;
-    }
-    QStringList deviceList = activeConnection->devices();
-    if (deviceList.contains(m_devicePath) && (activeConnection->type() == ConnectionSettings::Wired))
-    {
-        ui->connectionShowPage->setItemWidgetStatus(activePath, ActiveConnection::State::Activated);
-        ui->connectionShowPage->sort();
-    }
-}
-
-void WiredManager::handleStateDeactivated(const QString &deactivatedPath)
-{
-    ui->connectionShowPage->handleActiveStateDeactivated(deactivatedPath);
-}
-
-void WiredManager::handleReturnPreviousPage()
+void WiredManager::returnPreviousPage()
 {
     ui->wiredSettingPage->clearPtr();
     ui->stackedWidget->setCurrentIndex(PAGE_SHOW);
 }
 
-void WiredManager::handleNotifierConnectionAdded(const QString &path)
-{
-    KLOG_DEBUG() << "Connection Added :" << path;
-    Connection::Ptr connection = findConnection(path);
-    ui->connectionShowPage->addConnection(connection, m_devicePath);
-}
-
-// Note:当connection被移除时，由于连接可能已经被删除，所有并不能通过findConnection(path)找到该连接对象，进而知道连接类型
-void WiredManager::handleNotifierConnectionRemoved(const QString &path)
-{
-    KLOG_DEBUG() << "Connection Removed :" << path;
-    ui->connectionShowPage->removeConnectionFromList(path);
-}
-
-void WiredManager::handleSaveButtonClicked()
+void WiredManager::saveConnectionSettings()
 {
     if (ui->wiredSettingPage->isInputValid())
     {
         ui->wiredSettingPage->handleSaveButtonClicked(ConnectionSettings::ConnectionType::Wired);
-        handleReturnPreviousPage();
+        returnPreviousPage();
     }
     else
     {
-        KLOG_DEBUG() << "Invalid input exists";
+        KLOG_DEBUG(qLcNetwork) << "Invalid input exists";
     }
 }
 
-void WiredManager::handleConnectionUpdated(const QString &path)
-{
-    KLOG_DEBUG() << "Connection updated:" << path;
-    Connection::Ptr updateConnection = findConnection(path);
-    if (updateConnection->settings()->connectionType() != ConnectionSettings::Wired)
-    {
-        return;
-    }
 
-    //移除后再加载进来以更新信息
-    ui->connectionShowPage->removeConnectionFromList(path);
-    ui->connectionShowPage->addConnection(updateConnection, "");
-    if (ui->stackedWidget->currentIndex() != PAGE_SETTING)
-    {
-        handleReturnPreviousPage();
-    }
-}

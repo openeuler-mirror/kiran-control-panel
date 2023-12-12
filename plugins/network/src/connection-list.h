@@ -23,25 +23,7 @@
 #include <QScrollArea>
 #include <QVBoxLayout>
 #include <QWidget>
-
-struct WirelessConnectionInfo
-{
-    int signalStrength;
-    QString accessPointPath;
-    QString ssid;
-    bool securitySetting;
-};
-
-struct NetworkConnectionInfo
-{
-    QString id;
-    QString uuid;
-    QString connectionPath;
-    QString devicePath;
-    QString activeConnectionPath;
-    bool isWireless = false;
-    WirelessConnectionInfo wirelessInfo;
-};
+#include "general.h"
 
 Q_DECLARE_METATYPE(NetworkConnectionInfo)
 Q_DECLARE_METATYPE(NetworkManager::Status)

@@ -18,6 +18,7 @@
 #include <NetworkManagerQt/ActiveConnection>
 #include <NetworkManagerQt/Settings>
 #include "connection-list.h"
+#include "logging-category.h"
 using namespace NetworkManager;
 
 void StatusNotification::connectitonFailedNotify()
@@ -65,7 +66,7 @@ void StatusNotification::connectitonFailedNotifyByReason(const QString& reason)
 
 void StatusNotification::ActiveConnectionActivatedNotify(const QString &connectionName)
 {
-    KLOG_DEBUG() << "ActiveConnectionStateNotify";
+    KLOG_DEBUG(qLcNetwork) << "ActiveConnectionStateNotify";
     QString summary, body;
     summary = tr("Connection activated");
     body = tr("You are now connected to the network \"%1\"").arg(connectionName);

@@ -19,14 +19,17 @@
 #include <NetworkManagerQt/Manager>
 #include <QSystemTrayIcon>
 #include <QTimer>
-#include <QVBoxLayout>
 #include <QWidget>
+#include "general.h"
 #include "kiran-rounded-tray-popup/kiran-rounded-tray-popup.h"
 
 class WiredTrayWidget;
 class WirelessTrayWidget;
 class StatusNotifierManagerInterface;
 class TrayPage;
+class QTcpSocket; 
+class QVBoxLayout;
+
 class NetworkTray : public KiranRoundedTrayPopup
 {
     Q_OBJECT
@@ -53,7 +56,6 @@ public:
 public slots:
     void handleTrayClicked(QSystemTrayIcon::ActivationReason reason);
     void showOrHideTrayPage();
-    void setTrayIcon(NetworkManager::Status status);
     void handleNetworkSettingClicked();
 
     void handleDeviceAdded(const QString &devicePath);
@@ -70,6 +72,17 @@ public slots:
     void handleAdjustedTraySize(QSize sizeHint);
 
     void handleThemeChanged(Kiran::PaletteType paletteType);
+
+private:
+    void updateTrayIcon();
+    void setTrayIcon(NetworkState state);
+    void setTrayIcon(const QString &iconPath, const QString &toolTip);
+    void initTcpSocket();
+    void checkInternetConnectivity();
+
+private slots:
+    void internetConnected();
+    void internetError(QAbstractSocket::SocketError socketError);
 
 private:
     QSystemTrayIcon *m_systemTray;
@@ -93,6 +106,31 @@ private:
     QString m_addDevicePath;
     int m_waitCounts;
     QSize m_wirelessTraySizeHint;
+    QTcpSocket *m_tcpClient;
+
+    // clang-format off
+    QMap<NetworkState, NetworkStateInfo> m_StateInfoMap = {
+        {
+            WIRED_CONNECTED,
+            {":/kcp-network-images/wired-connection.svg",tr("Network connected")}
+        },
+        {
+            WIRED_CONNECTED_BUT_NOT_ACCESS_INTERNET,
+            {":/kcp-network-images/wired-error.svg",tr("The network is connected, but you cannot access the Internet")}
+        },
+        {
+            WIRELESS_CONNECTED,
+            {":/kcp-network-images/wireless-4.svg",tr("Network connected")}
+        },
+        {
+            WIRELESS_CONNECTED_BUT_NOT_ACCESS_INTERNET,
+            {":/kcp-network-images/wireless-error.svg",tr("The network is connected, but you cannot access the Internet")}
+        },
+        {
+            DISCONNECTED,
+            {":/kcp-network-images/wired-disconnected.svg",tr("Network not connected")}
+        }};
+    // clang-format on
 };
 
 #endif  // KIRAN_CPANEL_NETWORK_MANAGER_TRAY_H

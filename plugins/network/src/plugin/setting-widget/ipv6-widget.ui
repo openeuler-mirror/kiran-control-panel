@@ -190,12 +190,12 @@
      <item>
       <widget class="QLabel" name="label_15">
        <property name="text">
-        <string>Preferred DNS</string>
+        <string> DNS</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="ipv6PreferredDNS">
+      <widget class="QLineEdit" name="ipv6DNS">
        <property name="minimumSize">
         <size>
          <width>0</width>
@@ -210,39 +210,6 @@
        </property>
        <property name="accessibleName">
         <string>EditIpv6PreferredDNS</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
-   <item>
-    <layout class="QVBoxLayout" name="verticalLayout_2">
-     <property name="spacing">
-      <number>10</number>
-     </property>
-     <item>
-      <widget class="QLabel" name="label_17">
-       <property name="text">
-        <string>Alternate DNS</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLineEdit" name="ipv6AlternateDNS">
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>36</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>16777215</width>
-         <height>36</height>
-        </size>
-       </property>
-       <property name="accessibleName">
-        <string>EditIpv6AlternateDNS</string>
        </property>
       </widget>
      </item>

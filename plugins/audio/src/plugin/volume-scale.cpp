@@ -13,6 +13,7 @@
  */
 
 #include "volume-scale.h"
+#include "logging-category.h"
 
 #include <QPainter>
 #include <qt5-log-i.h>
@@ -64,5 +65,5 @@ void VolumeScale::setPercent(qreal percent)
 {
     m_percent = percent;
     update();
-    KLOG_DEBUG() << "m_percent:" << m_percent;
+    KLOG_DEBUG(qLcAudio) << "feed back percent:" << m_percent;
 }

@@ -14,6 +14,8 @@
 
 #include "audio-interface.h"
 #include "kiran-session-daemon/audio-i.h"
+#include <qt5-log-i.h>
+#include "logging-category.h"
 /*
  * Implementation of interface class AudioInterface
  */
@@ -41,6 +43,36 @@ AudioInterface::AudioInterface(const QString &service, const QString &path, cons
 
 AudioInterface::~AudioInterface()
 {
+}
+
+QList<AudioCardInfo> AudioInterface::getCards()
+{
+    QDBusPendingReply<QString> cards = GetCards();
+    KLOG_DEBUG(qLcAudio) << "get all audio cards:" << cards;
+
+    //解析默认sink的端口信息
+    QJsonParseError jsonParseError;
+    QJsonDocument doc = QJsonDocument::fromJson(cards.value().toUtf8(), &jsonParseError);
+
+    if( (doc.isNull()) || 
+        (jsonParseError.error != QJsonParseError::NoError) || 
+        (!doc.isArray()))
+    {
+        return QList<AudioCardInfo>();
+    }
+
+    QList<AudioCardInfo> cardInfoList;
+    QJsonArray array = doc.array();
+    for (int i = 0; i < array.count(); ++i)
+    {
+        QJsonObject object = array.at(i).toObject();
+        AudioCardInfo cardInfo;
+        cardInfo.index = object.value("index").toInt();
+        cardInfo.name = object.value("name").toString();
+        cardInfoList << cardInfo;
+    }    
+
+    return cardInfoList;    
 }
 
 void sendPropertyChangedDetailSignal(AudioInterface *ptr, const QString &propertyName, QVariant value)

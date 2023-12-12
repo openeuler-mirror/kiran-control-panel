@@ -16,6 +16,7 @@
 #include "config.h"
 #include "volume-input-subitem.h"
 #include "volume-output-subitem.h"
+#include "logging-category.h"
 
 #include <qt5-log-i.h>
 #include <QCoreApplication>
@@ -33,29 +34,6 @@ AudioPlugin::~AudioPlugin()
 
 int AudioPlugin::init(KiranControlPanel::PanelInterface* interface)
 {
-    if (m_translator != nullptr)
-    {
-        QCoreApplication::removeTranslator(m_translator);
-        delete m_translator;
-        m_translator = nullptr;
-    }
-
-    m_translator = new QTranslator(qApp);
-    if (!m_translator->load(QLocale(),
-                            "kiran-cpanel-audio",
-                            ".",
-                            TRANSLATE_PREFIX,
-                            ".qm"))
-    {
-        KLOG_ERROR() << "can't load translator";
-        delete m_translator;
-        m_translator = nullptr;
-    }
-    else
-    {
-        qApp->installTranslator(m_translator);
-    }
-
     auto inputSubitem = new VolumeIntputSubItem;
     auto outputSubitem = new VolumeOutputSubItem;
     m_subitems.append({KiranControlPanel::SubItemPtr(inputSubitem), KiranControlPanel::SubItemPtr(outputSubitem)});
@@ -65,12 +43,6 @@ int AudioPlugin::init(KiranControlPanel::PanelInterface* interface)
 
 void AudioPlugin::uninit()
 {
-    if (m_translator != nullptr)
-    {
-        QCoreApplication::removeTranslator(m_translator);
-        delete m_translator;
-        m_translator = nullptr;
-    }
 }
 
 QVector<KiranControlPanel::SubItemPtr> AudioPlugin::getSubItems()
