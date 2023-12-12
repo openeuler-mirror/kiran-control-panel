@@ -49,6 +49,8 @@ public slots:
     bool isInputValid();
 
 private:
+    bool isIpv6ManualConfigValid();
+private:
     Ui::Ipv6Widget *ui;
     NetworkManager::Ipv6Setting::Ptr m_ipv6Setting;
     KiranTips *m_errorTip = nullptr;

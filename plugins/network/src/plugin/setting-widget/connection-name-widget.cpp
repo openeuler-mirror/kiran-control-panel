@@ -21,6 +21,7 @@
 #include <NetworkManagerQt/WirelessSetting>
 #include "kiran-tips/kiran-tips.h"
 #include "ui_connection-name-widget.h"
+#include "logging-category.h"
 using namespace NetworkManager;
 
 ConnectionNameWidget::ConnectionNameWidget(QWidget *parent) : QWidget(parent), ui(new Ui::ConnectionNameWidget)
@@ -187,7 +188,7 @@ bool ConnectionNameWidget::isInputValid()
         QString error = QString(tr("Connection name can not be empty"));
         m_errorTip->setText(error);
         m_errorTip->showTipAroundWidget(ui->connectionName);
-        KLOG_DEBUG() << "Connection name cannot be empty";
+        KLOG_DEBUG(qLcNetwork) << "Connection name cannot be empty";
         return false;
     }
     return true;

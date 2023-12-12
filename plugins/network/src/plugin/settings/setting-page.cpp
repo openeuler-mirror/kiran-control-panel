@@ -17,6 +17,7 @@
 #include <qt5-log-i.h>
 #include <NetworkManagerQt/AdslSetting>
 #include <NetworkManagerQt/Settings>
+#include "logging-category.h"
 using namespace NetworkManager;
 
 SettingPage::SettingPage(QWidget* parent) : QWidget(parent)
@@ -34,7 +35,7 @@ void SettingPage::initConnectionSettings(ConnectionSettings::ConnectionType conn
 
     if (m_connectionUuid.isEmpty())
     {
-        KLOG_DEBUG() << "connection uuid is empty, creating new ConnectionSettings";
+        KLOG_DEBUG(qLcNetwork) << "connection uuid is empty, creating new ConnectionSettings";
         createConnectionSettings();
         m_isNewConnection = true;
     }
@@ -43,7 +44,7 @@ void SettingPage::initConnectionSettings(ConnectionSettings::ConnectionType conn
         m_connection = findConnectionByUuid(m_connectionUuid);
         if (!m_connection)
         {
-            KLOG_DEBUG() << "can't find connection by uuid";
+            KLOG_DEBUG(qLcNetwork) << "can't find connection by uuid";
         }
         m_connectionSettings = m_connection->settings();
         m_isNewConnection = false;
@@ -55,7 +56,7 @@ void SettingPage::createConnectionSettings()
     m_connectionSettings = QSharedPointer<ConnectionSettings>(new NetworkManager::ConnectionSettings(m_connectionType));
     m_connectionUuid = m_connectionSettings->createNewUuid();
     m_connectionSettings->setUuid(m_connectionUuid);
-    KLOG_DEBUG() << "create uuid:" << m_connectionSettings->uuid();
+    KLOG_DEBUG(qLcNetwork) << "create uuid:" << m_connectionSettings->uuid();
 }
 
 void SettingPage::clearPtr()
@@ -86,11 +87,11 @@ void SettingPage::handleSaveButtonClicked(ConnectionSettings::ConnectionType con
         replyAdd.waitForFinished();
         if (replyAdd.isError())
         {
-            KLOG_DEBUG() << "add connection failed," << replyAdd.error();
+            KLOG_DEBUG(qLcNetwork) << "add connection failed," << replyAdd.error();
         }
         else
         {
-            KLOG_DEBUG() << "add new connection reply:" << replyAdd.reply();
+            KLOG_DEBUG(qLcNetwork) << "add new connection reply:" << replyAdd.reply();
         }
     }
     else
@@ -121,7 +122,7 @@ void SettingPage::handleSaveButtonClicked(ConnectionSettings::ConnectionType con
         replyUpdate.waitForFinished();
         if (replyUpdate.isError())
         {
-            KLOG_DEBUG() << "error occurred while updating the connection" << replyUpdate.error();
+            KLOG_DEBUG(qLcNetwork) << "error occurred while updating the connection" << replyUpdate.error();
         }
     }
 }

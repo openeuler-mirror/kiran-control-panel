@@ -21,12 +21,17 @@
 #include <QPainter>
 #include <QPainterPath>
 #include <QVBoxLayout>
+#include "config.h"
 #include "status-notification.h"
 #include "status-notifier-manager.h"
 #include "tray-page.h"
 #include "utils.h"
 #include "wired-tray-widget.h"
 #include "wireless-tray-widget.h"
+#include <QTcpSocket>
+#include <QTimer>
+#include "logging-category.h"
+
 using namespace NetworkManager;
 
 #define STATUS_NOTIFIER_MANAGER "org.kde.StatusNotifierManager"
@@ -49,6 +54,7 @@ NetworkTray::~NetworkTray()
 void NetworkTray::init()
 {
     m_statusNotifierManager = new StatusNotifierManagerInterface(STATUS_NOTIFIER_MANAGER, STATUS_NOTIFIER_MANAGER_OBJECT_NAME, QDBusConnection::sessionBus(), this);
+    initTcpSocket();
     initUI();
     initMenu();
     initConnect();
@@ -86,22 +92,22 @@ void NetworkTray::initConnect()
                 Device::Ptr device = findNetworkInterface(m_addDevicePath);
                 if(device.isNull())
                 {
-                    KLOG_DEBUG() << "this device interface is not found";
+                    KLOG_DEBUG(qLcNetwork) << "this device interface is not found";
                     return;
                 }
-                KLOG_DEBUG() << "device->uni():" << device->uni();
-                KLOG_DEBUG() << "device->interfaceName():" << device->interfaceName();
-                KLOG_DEBUG() << "device->state():" << device->state();
-                KLOG_DEBUG() << "device->isValid():" << device->isValid();
+                KLOG_DEBUG(qLcNetwork) << "device->uni():" << device->uni();
+                KLOG_DEBUG(qLcNetwork) << "device->interfaceName():" << device->interfaceName();
+                KLOG_DEBUG(qLcNetwork) << "device->state():" << device->state();
+                KLOG_DEBUG(qLcNetwork) << "device->isValid():" << device->isValid();
                 if(device->isValid())
                 {
                     handleDeviceAdded(m_addDevicePath);
                 }               
                 else
                 {
-                    KLOG_INFO() << "this device interface is invalid!";
+                    KLOG_INFO(qLcNetwork) << "this device interface is invalid!";
                     m_Timer.start();
-                    KLOG_INFO() << "wait counts:" << m_waitCounts;
+                    KLOG_INFO(qLcNetwork) << "wait counts:" << m_waitCounts;
                 } });
 
     m_Timer.setInterval(500);
@@ -112,7 +118,7 @@ void NetworkTray::initConnect()
                 Device::Ptr device = findNetworkInterface(m_addDevicePath);
                 if(device.isNull())
                 {
-                    KLOG_DEBUG() << "this device interface is not found";
+                    KLOG_DEBUG(qLcNetwork) << "this device interface is not found";
                     return ;
                 }
                 if(device->isValid())
@@ -122,13 +128,13 @@ void NetworkTray::initConnect()
                 }
                 else
                 {
-                    KLOG_INFO() << "this device interface is not ready";
+                    KLOG_INFO(qLcNetwork) << "this device interface is not ready";
                     m_Timer.start();
                 }
                 m_waitCounts++;
                 if(m_waitCounts > MAX_WAIT_COUNTS)
                 {
-                    KLOG_INFO() << "This device is not currently managed by NetworkManager";
+                    KLOG_INFO(qLcNetwork) << "This device is not currently managed by NetworkManager";
                     m_Timer.stop();
                 } });
 
@@ -158,8 +164,8 @@ void NetworkTray::initConnect()
 void NetworkTray::initTrayIcon()
 {
     m_systemTray = new QSystemTrayIcon();
-    setTrayIcon(NetworkManager::status());
-    KLOG_DEBUG() << " NetworkManager::status():" << NetworkManager::status();
+    updateTrayIcon();
+    KLOG_DEBUG(qLcNetwork) << " NetworkManager::status():" << NetworkManager::status();
     m_systemTray->show();
 }
 
@@ -180,7 +186,7 @@ void NetworkTray::initMenu()
 // 初始化条件：设备存在且被管理
 void NetworkTray::initTrayPage()
 {
-    KLOG_DEBUG() << "init Tray Page";
+    KLOG_DEBUG(qLcNetwork) << "init Tray Page";
     m_wiredDeviceList = NetworkUtils::getAvailableDeviceList(Device::Ethernet);
     m_wirelessDeviceList = NetworkUtils::getAvailableDeviceList(Device::Wifi);
 
@@ -258,11 +264,11 @@ void NetworkTray::handleTrayClicked(QSystemTrayIcon::ActivationReason reason)
         replyRequestScan.waitForFinished();
         if (replyRequestScan.isError())
         {
-            KLOG_DEBUG() << "wireless Device name:" << wirelessDevice->interfaceName() << " requestScan error:" << replyRequestScan.error();
+            KLOG_DEBUG(qLcNetwork) << "wireless Device name:" << wirelessDevice->interfaceName() << " requestScan error:" << replyRequestScan.error();
         }
         else
         {
-            KLOG_DEBUG() << "wireless Device name:" << wirelessDevice->interfaceName() << " requestScan reply:" << replyRequestScan.reply();
+            KLOG_DEBUG(qLcNetwork) << "wireless Device name:" << wirelessDevice->interfaceName() << " requestScan reply:" << replyRequestScan.reply();
         }
     }
 }
@@ -312,15 +318,15 @@ void NetworkTray::setTrayPagePos()
     getTrayGeometry();
     // 抵消KiranRoundedTrayPopup的margin
     int offset = 8;
-    int showPosY; 
+    int showPosY;
     // 托盘程序在顶端
-    if(m_yTray == 0)
+    if (m_yTray == 0)
     {
-        showPosY  = m_heightTray - offset;
+        showPosY = m_heightTray - offset;
     }
     else
     {
-        //托盘程序在底部
+        // 托盘程序在底部
         showPosY = m_yTray - pageHeight + offset;
     }
     this->move(m_xTray - pageWidth / 2, showPosY);
@@ -330,25 +336,19 @@ void NetworkTray::getTrayGeometry()
 {
     // 名称待修改
     QDBusPendingReply<QString> getGeometry = m_statusNotifierManager->GetGeometry("~04-network");
-    KLOG_DEBUG() << "getGeometry.value():" << getGeometry.value();
+    KLOG_DEBUG(qLcNetwork) << "getGeometry.value():" << getGeometry.value();
 
     double height, width, x, y;
     QJsonParseError jsonParseError;
     QJsonDocument doc = QJsonDocument::fromJson(getGeometry.value().toLatin1(), &jsonParseError);
-    if (!doc.isNull() && jsonParseError.error == QJsonParseError::NoError)
+    if (!doc.isNull() && doc.isObject() && jsonParseError.error == QJsonParseError::NoError)
     {
-        if (doc.isObject() && jsonParseError.error == QJsonParseError::NoError)
-        {
-            if (doc.isObject())
-            {
-                QJsonObject object = doc.object();
-                QStringList list = object.keys();
-                height = object.value("height").toDouble();
-                width = object.value("width").toDouble();
-                x = object.value("x").toDouble();
-                y = object.value("y").toDouble();
-            }
-        }
+        QJsonObject object = doc.object();
+        QStringList list = object.keys();
+        height = object.value("height").toDouble();
+        width = object.value("width").toDouble();
+        x = object.value("x").toDouble();
+        y = object.value("y").toDouble();
     }
     m_heightTray = static_cast<int>(height);
     m_widthTray = static_cast<int>(width);
@@ -356,49 +356,67 @@ void NetworkTray::getTrayGeometry()
     m_yTray = static_cast<int>(y);
 }
 
-// TODO:增加其他状态图标
-void NetworkTray::setTrayIcon(NetworkManager::Status status)
+void NetworkTray::updateTrayIcon()
 {
-    QIcon icon;
-    if (status == NetworkManager::Status::Connected)
+    auto status = NetworkManager::status();
+    if (status != NetworkManager::Status::Connected)
     {
-        // 判断主连接类型，托盘网络图标以主连接类型为准
-        // NetworkManager::primaryConnectionType() 更新不及时，暂时不用
-        ActiveConnection::Ptr primaryActiveConnection = primaryConnection();
-        if (primaryActiveConnection != nullptr)
-        {
-            auto primaryConnectionType = primaryActiveConnection->connection()->settings()->connectionType();
-            if (primaryConnectionType == ConnectionSettings::Wireless)
-            {
-                icon.addPixmap(NetworkUtils::trayIconColorSwitch(":/kcp-network-images/wireless-4.svg"));
-                icon.addPixmap(NetworkUtils::trayIconColorSwitch(":/kcp-network-images/wireless-4.svg", 64));
-            }
-            else
-            {
-                icon.addPixmap(NetworkUtils::trayIconColorSwitch(":/kcp-network-images/wired-connection.svg"));
-                icon.addPixmap(NetworkUtils::trayIconColorSwitch(":/kcp-network-images/wired-connection.svg", 64));
-            }
-        }
+        setTrayIcon(DISCONNECTED);
+        return;
     }
-    else if ((status == NetworkManager::Status::Disconnecting) || (status == NetworkManager::Status::Connecting))
+
+    // 判断主连接类型，托盘网络图标以主连接类型为准
+    // NetworkManager::primaryConnectionType() 更新不及时，暂时不用
+    ActiveConnection::Ptr primaryActiveConnection = primaryConnection();
+    if (primaryActiveConnection.isNull())
     {
-        // TODO:加载动画
-        icon.addPixmap(NetworkUtils::trayIconColorSwitch(":/kcp-network-images/wired-disconnected.svg"));
-        icon.addPixmap(NetworkUtils::trayIconColorSwitch(":/kcp-network-images/wired-disconnected.svg", 64));
+        KLOG_INFO(qLcNetwork) << "update tray icon failed, primary active connection is null";
+        return;
+    }
+
+    // NetworkManager::connectivity() 不准确，使用checkConnectivity
+    QDBusPendingReply<uint> reply = NetworkManager::checkConnectivity();
+    reply.waitForFinished();
+    uint result = reply.value();
+
+    if (result == NetworkManager::Connectivity::Full)
+    {
+        checkInternetConnectivity();
+        return;
+    }
+
+    NetworkState state;
+    if (primaryActiveConnection->type() == ConnectionSettings::Wireless)
+    {
+        state = WIRELESS_CONNECTED_BUT_NOT_ACCESS_INTERNET;
     }
     else
     {
-        icon.addPixmap(NetworkUtils::trayIconColorSwitch(":/kcp-network-images/wired-disconnected.svg"));
-        icon.addPixmap(NetworkUtils::trayIconColorSwitch(":/kcp-network-images/wired-disconnected.svg", 64));
+        state = WIRED_CONNECTED_BUT_NOT_ACCESS_INTERNET;
     }
+    setTrayIcon(state);
+}
+
+void NetworkTray::setTrayIcon(NetworkState state)
+{
+    auto stateInfo = m_StateInfoMap.value(state);
+    setTrayIcon(stateInfo.iconPath, stateInfo.description);
+}
+
+void NetworkTray::setTrayIcon(const QString &iconPath, const QString &toolTip)
+{
+    QIcon icon;
+    icon.addPixmap(NetworkUtils::trayIconColorSwitch(iconPath));
+    icon.addPixmap(NetworkUtils::trayIconColorSwitch(iconPath, 64));
     m_systemTray->setIcon(icon);
+    m_systemTray->setToolTip(toolTip);
 }
 
 // 重新获取device、初始化，刷新
 // XXX:可以优化
 void NetworkTray::handleDeviceAdded(const QString &devicePath)
 {
-    KLOG_DEBUG() << "Device Added:" << devicePath;
+    KLOG_DEBUG(qLcNetwork) << "Device Added:" << devicePath;
     Device::Ptr device = findNetworkInterface(devicePath);
     auto state = device->state();
     auto type = device->type();
@@ -426,7 +444,7 @@ void NetworkTray::handleDeviceAdded(const QString &devicePath)
 // XXX:当device被移除时，由于设备对象可能已经被删除，所以并不能通过findNetworkInterface(path)找到该设备接口，进而知道被删除的设备类型
 void NetworkTray::handleDeviceRemoved(const QString &devicePath)
 {
-    KLOG_DEBUG() << "Device Removed :" << devicePath;
+    KLOG_DEBUG(qLcNetwork) << "Device Removed :" << devicePath;
     if (m_wiredTrayPage != nullptr)
     {
         if (m_wiredTrayPage->devicePathList().contains(devicePath))
@@ -449,14 +467,13 @@ void NetworkTray::handleDeviceStateChanged(NetworkManager::Device::State newstat
 {
     Device *device = qobject_cast<Device *>(sender());
     auto deviceType = device->type();
-    KLOG_DEBUG() << "Device interfaceName:" << device->interfaceName();
-    KLOG_DEBUG() << "Device newstate:" << newstate;
-    KLOG_DEBUG() << "Device oldstate:" << oldstate;
-    KLOG_DEBUG() << "Device reason:" << reason;
+    KLOG_DEBUG(qLcNetwork) << "Device interfaceName:" << device->interfaceName();
+    KLOG_DEBUG(qLcNetwork) << "Device newstate:" << newstate;
+    KLOG_DEBUG(qLcNetwork) << "Device oldstate:" << oldstate;
+    KLOG_DEBUG(qLcNetwork) << "Device reason:" << reason;
 
-    //设备变为可用
-    if ((oldstate == Device::Unavailable || oldstate == Device::Unmanaged || oldstate == Device::UnknownState)
-        &&
+    // 设备变为可用
+    if ((oldstate == Device::Unavailable || oldstate == Device::Unmanaged || oldstate == Device::UnknownState) &&
         (newstate != Device::Unmanaged && newstate != Device::Unavailable && newstate != Device::UnknownState))
     {
         if (deviceType == Device::Ethernet)
@@ -477,7 +494,7 @@ void NetworkTray::handleDeviceStateChanged(NetworkManager::Device::State newstat
                 m_verticalLayout->removeWidget(m_unavailableWidget);
                 m_unavailableWidget->deleteLater();
                 m_unavailableWidget = nullptr;
-                KLOG_DEBUG() << "remove unavailable widget";
+                KLOG_DEBUG(qLcNetwork) << "remove unavailable widget";
             }
         }
     }
@@ -485,19 +502,15 @@ void NetworkTray::handleDeviceStateChanged(NetworkManager::Device::State newstat
     QSet<Device::State> unavailableStates = {
         Device::Unavailable,
         Device::Unmanaged,
-        Device::UnknownState
-    };
+        Device::UnknownState};
 
     // 非休眠的情况下，从可用状态到不可用状态通知
-    if (!unavailableStates.contains(oldstate)
-        && 
-        unavailableStates.contains(newstate)
-        &&
-        reason != Device::SleepingReason
-        )
+    if (!unavailableStates.contains(oldstate) &&
+        unavailableStates.contains(newstate) &&
+        reason != Device::SleepingReason)
     {
         // 设备变为不可用时，如果无线和有线均不可用则显示网络不可用的提示
-        KLOG_DEBUG() << "device is unavailable";
+        KLOG_DEBUG(qLcNetwork) << "device is unavailable";
         if ((NetworkUtils::getAvailableDeviceList(Device::Ethernet).count() == 0) &&
             (NetworkUtils::getAvailableDeviceList(Device::Wifi).count() == 0))
         {
@@ -530,7 +543,7 @@ void NetworkTray::handleDeviceManagedChanged()
  */
 void NetworkTray::handleWirelessEnabledChanged(bool enable)
 {
-    KLOG_DEBUG() << " Wireless Enabled Changed:" << enable;
+    KLOG_DEBUG(qLcNetwork) << " Wireless Enabled Changed:" << enable;
 
     if (m_wirelessTrayPage != nullptr)
     {
@@ -546,9 +559,9 @@ void NetworkTray::handleWirelessEnabledChanged(bool enable)
         const Device::List deviceList = networkInterfaces();
         for (Device::Ptr dev : deviceList)
         {
-            KLOG_DEBUG() << "dev->interfaceName():" << dev->interfaceName();
-            KLOG_DEBUG() << "dev->state():" << dev->state();
-            KLOG_DEBUG() << "dev->isValid():" << dev->isValid();
+            KLOG_DEBUG(qLcNetwork) << "dev->interfaceName():" << dev->interfaceName();
+            KLOG_DEBUG(qLcNetwork) << "dev->state():" << dev->state();
+            KLOG_DEBUG(qLcNetwork) << "dev->isValid():" << dev->isValid();
 
             if ((dev->state() == Device::Unmanaged) || (dev->state() == Device::UnknownState))
                 continue;
@@ -575,12 +588,14 @@ void NetworkTray::handleWirelessEnabledChanged(bool enable)
 
 void NetworkTray::handleNetworkManagerStatusChanged(NetworkManager::Status status)
 {
-    setTrayIcon(status);
+    KLOG_DEBUG(qLcNetwork) << "network status changed: " << status;
+    updateTrayIcon();
 }
 
 void NetworkTray::handlePrimaryConnectionChanged(const QString &uni)
 {
-    setTrayIcon(NetworkManager::status());
+    KLOG_DEBUG(qLcNetwork) << "primary connection changed: " << uni;
+    updateTrayIcon();
 }
 
 void NetworkTray::UnavailableTrayPage()
@@ -599,19 +614,18 @@ void NetworkTray::UnavailableTrayPage()
         m_wirelessTrayPage = nullptr;
     }
 
-    if(m_unavailableWidget != nullptr)
+    if (m_unavailableWidget != nullptr)
     {
         return;
     }
     initUnavailableWidget();
     m_verticalLayout->addWidget(m_unavailableWidget);
-    KLOG_DEBUG() << "add unavailable widget";
-
+    KLOG_DEBUG(qLcNetwork) << "add unavailable widget";
 }
 
 void NetworkTray::reloadWiredTrayPage()
 {
-    KLOG_DEBUG() << "reloadWiredTrayPage";
+    KLOG_DEBUG(qLcNetwork) << "reloadWiredTrayPage";
     if (m_wiredTrayPage != nullptr)
     {
         m_verticalLayout->removeWidget(m_wiredTrayPage);
@@ -633,7 +647,7 @@ void NetworkTray::reloadWiredTrayPage()
 
 void NetworkTray::reloadWirelessTrayPage()
 {
-    KLOG_DEBUG() << "reloadWirelessTrayPage";
+    KLOG_DEBUG(qLcNetwork) << "reloadWirelessTrayPage";
     if (m_wirelessTrayPage != nullptr)
     {
         m_verticalLayout->removeWidget(m_wirelessTrayPage);
@@ -673,18 +687,75 @@ void NetworkTray::handleAdjustedTraySize(QSize sizeHint)
                                 adjustSize();
                             else
                             {
-                                // KLOG_DEBUG() << "resize before this->size():" << this->size();
+                                // KLOG_DEBUG(qLcNetwork) << "resize before this->size():" << this->size();
                                 QSize newSize(this->sizeHint().width(),sizeHint.height() + OFFSET_MARGIN);
-                                // KLOG_DEBUG() << "newSize:" << newSize;
+                                // KLOG_DEBUG(qLcNetwork) << "newSize:" << newSize;
                                 this->resize(newSize);
-                                KLOG_DEBUG() << "handleAdjustedTraySize";
+                                KLOG_DEBUG(qLcNetwork) << "handleAdjustedTraySize";
                                 // this->setFixedSize(newSize);
-                                // KLOG_DEBUG() << "resize after this->size():" << this->size();
+                                // KLOG_DEBUG(qLcNetwork) << "resize after this->size():" << this->size();
                             }
                             setTrayPagePos(); });
 }
 
 void NetworkTray::handleThemeChanged(Kiran::PaletteType paletteType)
 {
-    setTrayIcon(NetworkManager::status());
+    updateTrayIcon();
+}
+
+void NetworkTray::initTcpSocket()
+{
+    m_tcpClient = new QTcpSocket(this);
+    connect(m_tcpClient, &QTcpSocket::connected, this, &NetworkTray::internetConnected);
+    connect(m_tcpClient, QOverload<QAbstractSocket::SocketError>::of(&QAbstractSocket::error), this, &NetworkTray::internetError);
+}
+
+void NetworkTray::checkInternetConnectivity()
+{
+    QSettings confSettings(SETTINGS_PATH, QSettings::NativeFormat);
+    QVariant enable = confSettings.value(QString("Network/CheckInternetConnectivity"));
+    KLOG_DEBUG(qLcNetwork) << "check Internet Connectivity : " << enable;
+    if (!enable.toBool())
+    {
+        internetConnected();
+        return;
+    }
+    QVariant address = confSettings.value(QString("Network/Address"));
+    QVariant port = confSettings.value(QString("Network/Port"));
+    m_tcpClient->connectToHost(address.toString(), port.toInt());
+}
+
+void NetworkTray::internetConnected()
+{
+    KLOG_DEBUG(qLcNetwork) << "Connectivity check pass";
+    ActiveConnection::Ptr primaryActiveConnection = primaryConnection();
+    NetworkState state;
+    if (primaryActiveConnection->type() == ConnectionSettings::Wireless)
+    {
+        state = WIRELESS_CONNECTED;
+    }
+    else
+    {
+        state = WIRED_CONNECTED;
+    }
+    setTrayIcon(state);
+
+    m_tcpClient->abort();
+}
+
+void NetworkTray::internetError(QAbstractSocket::SocketError socketError)
+{
+    KLOG_INFO(qLcNetwork) << "Connectivity check fail: " << socketError;
+    NetworkState state;
+    if (primaryConnectionType() == ConnectionSettings::Wireless)
+    {
+        state = WIRELESS_CONNECTED_BUT_NOT_ACCESS_INTERNET;
+    }
+    else
+    {
+        state = WIRED_CONNECTED_BUT_NOT_ACCESS_INTERNET;
+    }
+    setTrayIcon(state);
+
+    m_tcpClient->abort();
 }

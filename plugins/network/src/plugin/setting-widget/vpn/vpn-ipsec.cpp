@@ -16,6 +16,7 @@
 #include <kiran-switch-button.h>
 #include <qt5-log-i.h>
 #include "ui_vpn-ipsec.h"
+#include "logging-category.h"
 using namespace NetworkManager;
 
 VpnIPsec::VpnIPsec(QWidget *parent) : QWidget(parent), ui(new Ui::VpnIPsec)
@@ -82,7 +83,7 @@ void VpnIPsec::saveSettings()
         m_dataMap.remove("ipsec-esp");
     }
 
-    KLOG_DEBUG() << "m_dataMap:" << m_dataMap;
+    KLOG_DEBUG(qLcNetwork) << "m_dataMap:" << m_dataMap;
     m_vpnSetting->setData(m_dataMap);
     m_vpnSetting->setInitialized(true);
 }
@@ -112,10 +113,10 @@ void VpnIPsec::showSettings()
         QVariant secretsValue = variantMap.value("secrets");
 
         auto dbusArg = secretsValue.value<QDBusArgument>();
-        KLOG_DEBUG() << dbusArg.currentType() << dbusArg.currentSignature();
+        KLOG_DEBUG(qLcNetwork) << dbusArg.currentType() << dbusArg.currentSignature();
 
         NMStringMap dbusMap = qdbus_cast<NMStringMap>(dbusArg);
-        KLOG_DEBUG() << "dbusMap " << dbusMap;
+        KLOG_DEBUG(qLcNetwork) << "dbusMap " << dbusMap;
         ui->preSharedKey->setText(dbusMap.value("ipsec-psk"));
     }
     else

@@ -16,6 +16,9 @@
 #define KIRAN_CPANEL_SIGNAL_FORWARD_H
 
 #include <QObject>
+#include <QTimer>
+#include "general.h"
+
 class SignalForward : public QObject
 {
     Q_OBJECT
@@ -29,11 +32,16 @@ public:
 
     void initConnect();
 public slots:
+    void editConnection(NetworkConnectionInfo &connectionInfo);
+
+private slots:
     void handleActiveConnectionAdded(const QString &activepath);
     void handleNotifierConnectionAdded(const QString &path);
 
     void handleNotifierConnectionRemoved(const QString &path);
     void handleActiveConnectionRemoved(const QString &activepath);
+
+    void addDevice(const QString &uni);
 
 signals:
     void wiredConnectionAdded(const QString &path);
@@ -53,6 +61,23 @@ signals:
     void vpnActiveConnectionRemoved(const QString &activepath);
     void wirelessActiveConnectionRemoved(const QString &activepath);
     void activeConnectionRemoved(const QString &activepath);
+
+    void wiredDeviceAdded(const QString &devicePath);
+    void wirelessDeviceAdded(const QString &devicePath);
+    void otherDeviceAdded(const QString &devicePath);
+
+    void wiredConnectionEdited(const QString &uuid, QString activeConnectionPath);
+    void wirelessConnectionEdited(const QString &uuid, QString activeConnectionPath);
+    void vpnConnectionEdited();
+
+    void createConnection(const QString &devicePath);
+
+    void connectionMacChanged(const QString &connectionPath,const QString &mac);
+
+private:
+    QTimer m_Timer;
+    int m_waitCounts = 1;
+    QString m_tmpDevicePath;
 };
 
 #endif  // KIRAN_CPANEL_SIGNAL_FORWARD_H

@@ -20,6 +20,7 @@
 #include "general.h"
 #include "signal-forward.h"
 #include "status-notification.h"
+#include "logging-category.h"
 using namespace NetworkManager;
 
 WirelessTrayWidget::WirelessTrayWidget(const QString &devicePath, QWidget *parent) : TrayWidget(parent),
@@ -80,7 +81,7 @@ void WirelessTrayWidget::handleActivateSelectedWirelessNetwork(const NetworkConn
     m_connectionInfo = connectionInfo;
     QString ssid = connectionInfo.wirelessInfo.ssid;
     QString accessPointPath = connectionInfo.wirelessInfo.accessPointPath;
-    KLOG_DEBUG() << "handleRequestConnectWirelessNetwork ssid:" << ssid;
+    KLOG_DEBUG(qLcNetwork) << "handleRequestConnectWirelessNetwork ssid:" << ssid;
 
     getWirelessAvailableConnections(m_devicePath);
     if (m_wirelssConnectionMap.contains(ssid))
@@ -109,7 +110,7 @@ void WirelessTrayWidget::handleActivateHiddenNetwork(const QString &ssid)
     //若要连接的隐藏网络已经被显式探测到了，则返回
     if (m_wirelessDevice->findNetwork(ssid) != nullptr)
     {
-        KLOG_DEBUG() << "Hidden networks have been explicitly detected,return";
+        KLOG_DEBUG(qLcNetwork) << "Hidden networks have been explicitly detected,return";
         StatusNotification::connectitonHiddenNetworkFailedNotify(ssid);
         // 将排在最后的隐藏网络item复原
         int row = m_connectionList->count() - 1;
@@ -143,7 +144,7 @@ void WirelessTrayWidget::getWirelessAvailableConnections(const QString &devicePa
         {
             WirelessSetting::Ptr wirelessSetting = conn->settings()->setting(Setting::SettingType::Wireless).dynamicCast<WirelessSetting>();
             QString ssid = QString(wirelessSetting->ssid());
-            KLOG_DEBUG() << "wirelessSetting->ssid():" << ssid;
+            KLOG_DEBUG(qLcNetwork) << "wirelessSetting->ssid():" << ssid;
             m_wirelssConnectionMap.insert(ssid, conn);
         }
     }
@@ -155,18 +156,18 @@ void WirelessTrayWidget::activateWirelessConnection(const QString &connectionPat
 {
     if (!connectionPath.isEmpty())
     {
-        KLOG_DEBUG() << " wireless device path" << devicePath;
+        KLOG_DEBUG(qLcNetwork) << " wireless device path" << devicePath;
         QDBusPendingReply<QDBusObjectPath> reply =
             NetworkManager::activateConnection(connectionPath, devicePath, accessPointPath);
 
         reply.waitForFinished();
         if (reply.isError())
         {
-            KLOG_ERROR() << "activate connection failed:" << reply.error();
+            KLOG_ERROR(qLcNetwork) << "activate connection failed:" << reply.error();
             StatusNotification::connectitonFailedNotify(connectionPath);
         }
         else
-            KLOG_DEBUG() << "reply QDBusObjectPath:" << reply.reply();
+            KLOG_DEBUG(qLcNetwork) << "reply QDBusObjectPath:" << reply.reply();
     }
 }
 
@@ -233,8 +234,8 @@ void WirelessTrayWidget::addAndActivateWirelessConnection(ConnectionSettings::Pt
 {
     const QString ssid = m_connectionInfo.wirelessInfo.ssid;
     const QString accessPointPath = m_connectionInfo.wirelessInfo.accessPointPath;
-    KLOG_DEBUG() << "accessPointPath" << accessPointPath;
-    KLOG_DEBUG() << "wireless device path:" << m_devicePath;
+    KLOG_DEBUG(qLcNetwork) << "accessPointPath" << accessPointPath;
+    KLOG_DEBUG(qLcNetwork) << "wireless device path:" << m_devicePath;
     QDBusPendingReply<QDBusObjectPath, QDBusObjectPath> reply =
         NetworkManager::addAndActivateConnection(connectionSettings->toMap(), m_devicePath, accessPointPath);
 
@@ -242,7 +243,7 @@ void WirelessTrayWidget::addAndActivateWirelessConnection(ConnectionSettings::Pt
     if (reply.isError())
     {
         StatusNotification::connectitonFailedNotifyByName(ssid);
-        KLOG_DEBUG() << "Connection failed: " << reply.error();
+        KLOG_DEBUG(qLcNetwork) << "Connection failed: " << reply.error();
     }
 }
 
@@ -258,7 +259,7 @@ void WirelessTrayWidget::handleDisconnect(const QString &activatedConnectionPath
     QDBusPendingReply<> reply = NetworkManager::deactivateConnection(activatedConnectionPath);
     reply.waitForFinished();
     if (reply.isError())
-        KLOG_INFO() << "Disconnect failed:" << reply.error();
+        KLOG_INFO(qLcNetwork) << "Disconnect failed:" << reply.error();
 }
 
 // Note:目前已知连接一个不存在的无线网络时，activatedConnection为空
@@ -269,13 +270,13 @@ void WirelessTrayWidget::handleDisconnect(const QString &activatedConnectionPath
 void WirelessTrayWidget::handleActiveConnectionAdded(const QString &path)
 {
     //多个网卡，还需要判断设备
-    KLOG_DEBUG() << "handleActiveConnectionAdded :" << path;
+    KLOG_DEBUG(qLcNetwork) << "handleActiveConnectionAdded :" << path;
     ActiveConnection::Ptr activatedConnection = findActiveConnection(path);
     if (activatedConnection.isNull())
     {
         // Note:目前已知连接一个不存在的无线网络时，activatedConnection为空
         StatusNotification::connectitonFailedNotify();
-        KLOG_DEBUG() << "new add activatedConnection is nullptr";
+        KLOG_DEBUG(qLcNetwork) << "new add activatedConnection is nullptr";
         return;
     }
     
@@ -317,7 +318,7 @@ void WirelessTrayWidget::handleActiveConnectionAdded(const QString &path)
 
 void WirelessTrayWidget::handleActiveConnectionRemoved(const QString &path)
 {
-    KLOG_DEBUG() << "ConnectionRemoved";
+    KLOG_DEBUG(qLcNetwork) << "ConnectionRemoved";
     m_connectionList->handleActiveStateDeactivated(path);
 }
 
@@ -327,21 +328,21 @@ void WirelessTrayWidget::handleStateActivating(const QString &activePath)
 
     QDBusPendingReply<> replyRequestScan = m_wirelessDevice->requestScan();
     replyRequestScan.waitForFinished();
-    KLOG_DEBUG() << "State Activating requestScan";
+    KLOG_DEBUG(qLcNetwork) << "State Activating requestScan";
     if (replyRequestScan.isError())
     {
-        KLOG_DEBUG() << "State Activating requestScan error:" << replyRequestScan.error();
+        KLOG_DEBUG(qLcNetwork) << "State Activating requestScan error:" << replyRequestScan.error();
     }
     else
     {
-        KLOG_DEBUG() << "State Activating requestScan reply:" << replyRequestScan.reply();
+        KLOG_DEBUG(qLcNetwork) << "State Activating requestScan reply:" << replyRequestScan.reply();
     }
 }
 
 void WirelessTrayWidget::handleStateActivated(const QString &activePath)
 {
-    KLOG_DEBUG() << "Wireless State: Activated";
-    KLOG_DEBUG() << "handleStateActivated activePath:" << activePath;
+    KLOG_DEBUG(qLcNetwork) << "Wireless State: Activated";
+    KLOG_DEBUG(qLcNetwork) << "handleStateActivated activePath:" << activePath;
     m_connectionList->setItemWidgetStatus(activePath, ActiveConnection::State::Activated);
 
     auto itemWidget = m_connectionList->findItemWidgetByActivePath(activePath);
@@ -354,11 +355,11 @@ void WirelessTrayWidget::handleStateActivated(const QString &activePath)
     replyRequestScan.waitForFinished();
     if (replyRequestScan.isError())
     {
-        KLOG_DEBUG() << "StateActivated requestScan error:" << replyRequestScan.error();
+        KLOG_DEBUG(qLcNetwork) << "StateActivated requestScan error:" << replyRequestScan.error();
     }
     else
     {
-        KLOG_DEBUG() << "StateActivated requestScan reply:" << replyRequestScan.reply();
+        KLOG_DEBUG(qLcNetwork) << "StateActivated requestScan reply:" << replyRequestScan.reply();
     }
 }
 
@@ -372,20 +373,20 @@ void WirelessTrayWidget::handleNotifierConnectionRemoved(const QString &path)
 
 void WirelessTrayWidget::handleStateDeactivated(const QString &activatedPath)
 {
-    KLOG_DEBUG() << "StateDeactivated :" << activatedPath;
+    KLOG_DEBUG(qLcNetwork) << "StateDeactivated :" << activatedPath;
     m_connectionList->handleActiveStateDeactivated(activatedPath);
 }
 
 void WirelessTrayWidget::handleNetworkDisappeared(const QString &ssid)
 {
-    KLOG_DEBUG() << "NetworkDisappeared ssid:" << ssid;
+    KLOG_DEBUG(qLcNetwork) << "NetworkDisappeared ssid:" << ssid;
     m_connectionList->removeWirelessNetworkFromList(ssid);
     m_connectionList->adjustTraySize();
 }
 
 void WirelessTrayWidget::handleNetworkAppeared(const QString &ssid)
 {
-    KLOG_DEBUG() << "NetworkAppeared ssid:" << ssid;
+    KLOG_DEBUG(qLcNetwork) << "NetworkAppeared ssid:" << ssid;
     WirelessNetwork::Ptr network = m_wirelessDevice->findNetwork(ssid);
     QString devicePath = m_wirelessDevice->uni();
     m_connectionList->addWirelessNetwork(network, devicePath);
@@ -409,9 +410,9 @@ void WirelessTrayWidget::handleCancelConnection(const QString &activatedConnecti
     QDBusPendingReply<> reply = NetworkManager::deactivateConnection(activatedConnectionPath);
     reply.waitForFinished();
     if (reply.isError())
-        KLOG_INFO() << "Disconnect failed:" << reply.error();
+        KLOG_INFO(qLcNetwork) << "Disconnect failed:" << reply.error();
     else
-        KLOG_INFO() << "deactivate Connection:" << reply.reply();
+        KLOG_INFO(qLcNetwork) << "deactivate Connection:" << reply.reply();
 }
 
 /**忽略该网络：断开连接并移除该网络配置*/
@@ -425,13 +426,13 @@ void WirelessTrayWidget::handleIgnoreConnection(const QString &activatedConnecti
     Connection::Ptr connection = activeConnection->connection();
     QSharedPointer<WirelessSetting> wirelessSetting = connection->settings()->setting(Setting::Wireless).dynamicCast<WirelessSetting>();
     QString ssid = QString(wirelessSetting->ssid());
-    KLOG_DEBUG() << "Ignore ssid:" << ssid;
+    KLOG_DEBUG(qLcNetwork) << "Ignore ssid:" << ssid;
     m_wirelssConnectionMap.remove(ssid);
 
     QDBusPendingReply<> reply = NetworkManager::deactivateConnection(activatedConnectionPath);
     reply.waitForFinished();
     if (reply.isError())
-        KLOG_INFO() << "Disconnect failed:" << reply.error();
+        KLOG_INFO(qLcNetwork) << "Disconnect failed:" << reply.error();
 
     /*
      * Note:deactivate后，通过信号发出deactivate的状态通知，通知需要从connection中获取id信息
@@ -445,7 +446,7 @@ void WirelessTrayWidget::handleIgnoreConnection(const QString &activatedConnecti
                            QDBusPendingReply<> replyRemove = connection->remove();
                            replyRemove.waitForFinished();
                            if (replyRemove.isError())
-                               KLOG_INFO() << "Remove connection failed:" << replyRemove.error(); });
+                               KLOG_INFO(qLcNetwork) << "Remove connection failed:" << replyRemove.error(); });
 }
 
 void WirelessTrayWidget::setSecurityPskAndActivateWirelessConnection(const QString &password)
@@ -461,7 +462,7 @@ void WirelessTrayWidget::setSecurityPskAndActivateWirelessConnection(const QStri
 
 void WirelessTrayWidget::handleDeviceStateChanged(Device::State newstate, Device::State oldstate, Device::StateChangeReason reason)
 {
-    KLOG_DEBUG() << "Device::StateChangeReason reason" << reason;
+    KLOG_DEBUG(qLcNetwork) << "Device::StateChangeReason reason" << reason;
     //验证失败，删除配置，以便重新配置，避免出现重复的配置文件
     if ((oldstate == Device::NeedAuth) && (newstate == Device::Failed))
     {
@@ -477,7 +478,7 @@ void WirelessTrayWidget::handleDeviceStateChanged(Device::State newstate, Device
                     QDBusPendingReply<> replyRemove = conn->remove();
                     replyRemove.waitForFinished();
                     if (replyRemove.isError())
-                        KLOG_INFO() << "Remove connection failed:" << replyRemove.error();
+                        KLOG_INFO(qLcNetwork) << "Remove connection failed:" << replyRemove.error();
                 }
             }
         }
@@ -486,7 +487,7 @@ void WirelessTrayWidget::handleDeviceStateChanged(Device::State newstate, Device
 
     if (reason == NetworkManager::Device::SsidNotFound)
     {
-        KLOG_DEBUG() << "NetworkManager::Device::SsidNotFound";
+        KLOG_DEBUG(qLcNetwork) << "NetworkManager::Device::SsidNotFound";
         QString body, bodyStr;
         body = tr("the network \"%1\" not found");
         bodyStr = body.arg(m_connectionInfo.wirelessInfo.ssid);

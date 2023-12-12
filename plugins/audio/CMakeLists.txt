@@ -1,8 +1,6 @@
 set(TARGET_NAME kiran-cpanel-audio)
 
 file(GLOB_RECURSE AUDIO_TRANSLATION_SRC ./*.cpp ./*.h ./*.ui)
-file(GLOB TS_FILES "translations/*.ts")
-qt5_create_translation(AUDIO_QM_FILES ${CMAKE_CURRENT_SOURCE_DIR} ${TS_FILES} ${AUDIO_TRANSLATION_SRC})
 
 file(GLOB_RECURSE COMMON_SRC "src/audio-node.h" "src/volume-slider.cpp" "src/volume-slider.h")
 file(GLOB_RECURSE DBUS_SRC "src/dbus/*.cpp" "src/dbus/*.h")
@@ -15,7 +13,7 @@ add_library(${TARGET_NAME} SHARED
         ${DBUS_SRC}
         ${PLUGIN_SRC}
         ${QRC}
-        ${AUDIO_QM_FILES})
+        )
 
 target_include_directories(${TARGET_NAME} PRIVATE
         ${PROJECT_SOURCE_DIR}/common
@@ -44,7 +42,6 @@ add_executable(${TRAY_PROCESS}
         ${COMMON_SRC}
         ${DBUS_SRC}
         ${SYSTEM_TRAY_SRC}
-        ${AUDIO_QM_FILES}
         ${QRC}
         ${PROJECT_SOURCE_DIR}/include/dbus-tray-monitor.h)
 
@@ -67,8 +64,6 @@ target_link_libraries(${TRAY_PROCESS}
         ${KLOG_LIBRARIES}
         ${KIRAN_STYLE_LIBRARIES})
 
-#安装翻译
-install(FILES ${AUDIO_QM_FILES} DESTINATION ${TRANSLATION_DIR})
 
 set(AUTOSTART_DESKTOP_DIR /etc/xdg/autostart)
 #安装插件desktop文件

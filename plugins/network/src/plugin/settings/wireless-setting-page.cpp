@@ -15,19 +15,20 @@
 #include "wireless-setting-page.h"
 #include <qt5-log-i.h>
 #include "ui_wireless-setting-page.h"
+#include "logging-category.h"
 using namespace NetworkManager;
 
 WirelessSettingPage::WirelessSettingPage(QWidget *parent) : SettingPage(parent), ui(new Ui::WirelessSettingPage)
 {
     ui->setupUi(this);
     initConnection();
-    KLOG_DEBUG() << "WirelessSettingPage::WirelessSettingPage";
+    KLOG_DEBUG(qLcNetwork) << "WirelessSettingPage::WirelessSettingPage";
 }
 
 WirelessSettingPage::~WirelessSettingPage()
 {
     delete ui;
-    KLOG_DEBUG() << "WirelessSettingPage::~WirelessSettingPage()";
+    KLOG_DEBUG(qLcNetwork) << "WirelessSettingPage::~WirelessSettingPage()";
 }
 
 void WirelessSettingPage::initConnection()

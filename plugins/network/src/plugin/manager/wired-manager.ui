@@ -40,19 +40,19 @@
         <number>0</number>
        </property>
        <property name="leftMargin">
-        <number>0</number>
+        <number>24</number>
        </property>
        <property name="topMargin">
-        <number>0</number>
+        <number>16</number>
        </property>
        <property name="rightMargin">
-        <number>0</number>
+        <number>24</number>
        </property>
        <property name="bottomMargin">
         <number>0</number>
        </property>
        <item>
-        <widget class="ConnectionShowPage" name="connectionShowPage" native="true"/>
+        <widget class="DeviceList" name="wiredDeviceList" native="true"/>
        </item>
       </layout>
      </widget>
@@ -86,8 +86,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>867</width>
-            <height>562</height>
+            <width>100</width>
+            <height>30</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalScrollAreaWidgetContentsLayout">
@@ -229,9 +229,9 @@
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>ConnectionShowPage</class>
+   <class>DeviceList</class>
    <extends>QWidget</extends>
-   <header location="global">connection-show-page.h</header>
+   <header location="global">device-list.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

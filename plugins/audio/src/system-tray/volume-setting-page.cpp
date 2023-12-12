@@ -16,6 +16,7 @@
 #include "dbus/audio-interface.h"
 #include "dbus/audio-stream-interface.h"
 #include "ui_volume-setting-page.h"
+#include "logging-category.h"
 
 #include <kiran-session-daemon/audio-i.h>
 #include <qt5-log-i.h>
@@ -43,7 +44,7 @@ VolumeSettingPage::VolumeSettingPage(enum AudioNode audio, const QString objectP
         connect(m_sink, &AudioDeviceInterface::volumeChanged, this, &VolumeSettingPage::handleVolumeChanged);
         connect(ui->volumeSetting, &QSlider::valueChanged, [this](int value)
                 {
-                    double volumeValue = static_cast<double>(value) / static_cast<double>(100);
+                    double volumeValue = value / 100.0;
                     m_sink->SetVolume(volumeValue); });
 
         connect(m_audioInterface, &AudioInterface::SinkAdded, this, &VolumeSettingPage::handleSinkAdded);
@@ -73,13 +74,12 @@ void VolumeSettingPage::initDbusServiceWatcher()
     m_dbusServiceWatcher->setWatchMode(QDBusServiceWatcher::WatchForUnregistration);
     connect(m_dbusServiceWatcher, &QDBusServiceWatcher::serviceUnregistered, [this](const QString &service)
             {
-        KLOG_DEBUG() << "serviceUnregistered:" << service;
+        KLOG_DEBUG(qLcAudio) << "dbus service unregistered:" << service;
         disableSettings(); });
 }
 
 void VolumeSettingPage::initAudioDevice()
 {
-    KLOG_DEBUG() << "AUDIO_DEVICE";
     QDBusPendingReply<QString> getPorts = m_sink->GetPorts();
     // 解析默认sink的端口信息
     QJsonParseError jsonParseError;
@@ -98,13 +98,12 @@ void VolumeSettingPage::initAudioDevice()
 
 void VolumeSettingPage::initAudioStream()
 {
-    KLOG_DEBUG() << "AUDIO_STREAM";
     initSettings(m_sinkInput);
     ui->volumeName->setText(m_sinkInput->GetProperty("application.name"));
     connect(m_sinkInput, &AudioStreamInterface::volumeChanged, this, &VolumeSettingPage::handleVolumeChanged);
-    connect(ui->volumeSetting, &QSlider::valueChanged, [=](int value)
+    connect(ui->volumeSetting, &QSlider::valueChanged, [this](int value)
             {
-                double volumeValue = static_cast<double>(value) / static_cast<double>(100);
+                double volumeValue = value / 100.0;
                 m_sinkInput->SetVolume(volumeValue); });
 }
 
@@ -116,7 +115,7 @@ void VolumeSettingPage::initSettings(Audio *audio)
     ui->volumeSetting->setPageStep(1);
     ui->volumeSetting->setEnabled(true);
 
-    KLOG_DEBUG() << "current volume:" << audio->volume();
+    KLOG_DEBUG(qLcAudio) << "current volume:" << audio->volume();
     double currentVolumeDouble = audio->volume() * 100;
     int currentVolume = round(currentVolumeDouble);
     setVolumeIcon(currentVolume);
@@ -126,12 +125,11 @@ void VolumeSettingPage::initSettings(Audio *audio)
 
 void VolumeSettingPage::handleVolumeChanged(double value)
 {
-    ui->volumeSetting->blockSignals(true);   // 为了避免拖动的同时设置位置会出现问题
+    QSignalBlocker blocker(ui->volumeSetting); // 为了避免拖动的同时设置位置会出现问题
     int currentVolume = round(value * 100);  // 表示数值的时候向上取整
     ui->volume->setText(QString::number(currentVolume) + "%");
     setVolumeIcon(currentVolume);
     ui->volumeSetting->setValue(currentVolume);
-    ui->volumeSetting->blockSignals(false);
     emit volumeChanged(value);
 }
 
@@ -145,7 +143,7 @@ void VolumeSettingPage::handleMuteButtonClicked()
 
 void VolumeSettingPage::handleDefaultSinkChanged(int index)
 {
-    KLOG_DEBUG() << "Default Sink Changed";
+    KLOG_DEBUG(qLcAudio) << "Default Sink Changed";
     // delete and restart init defaultSink
     if (m_sink != nullptr)
     {
@@ -161,7 +159,7 @@ void VolumeSettingPage::handleDefaultSinkChanged(int index)
 
 void VolumeSettingPage::handleSinkAdded(int index)
 {
-    KLOG_DEBUG() << "SinkAdded";
+    KLOG_DEBUG(qLcAudio) << "sink added index:" << index;
     // 当已经存在defaultSink时，暂时不处理其他sink的添加
     if (m_sink != nullptr)
     {
@@ -196,19 +194,20 @@ void VolumeSettingPage::clickMuteButton(Audio *audio)
 
     if (currentVolume != 0)
     {
-        KLOG_DEBUG() << "m_sink->mute() :" << audio->mute();
+        m_volumeBeforeMute = currentVolume;
         if (!audio->mute())
         {
-            m_volumeBeforeMute = currentVolume;
             audio->SetMute(true);
         }
+        audio->SetVolume(0);
+        KLOG_DEBUG(qLcAudio) << "current sink is mute :" << audio->mute();
     }
     else
     {
         if (m_volumeBeforeMute != 0)
         {
-            KLOG_DEBUG() << "SetVolume m_volumeBeforeMute:" << m_volumeBeforeMute;
-            audio->SetVolume(static_cast<double>(m_volumeBeforeMute) / static_cast<double>(100));
+            //重新设置音量时，会自动解除静音状态
+            audio->SetVolume(m_volumeBeforeMute / 100.0);
             m_volumeBeforeMute = 0;
         }
     }
@@ -219,26 +218,26 @@ void VolumeSettingPage::setVolumeIcon(int value)
 {
     if (value == 0)
     {
-        ui->muteButton->setIcon(trayIconColorSwitch(":/kcp-audio-images/kcp-audio-mute.svg"));
+        ui->muteButton->setIcon(trayIconColorSwitch("kcp-audio-mute"));
     }
     else if (0 < value && value <= 33)
     {
-        ui->muteButton->setIcon(trayIconColorSwitch(":/kcp-audio-images/kcp-audio-low.svg"));
+        ui->muteButton->setIcon(trayIconColorSwitch("kcp-audio-low"));
     }
     else if (33 < value && value <= 66)
     {
-        ui->muteButton->setIcon(trayIconColorSwitch(":/kcp-audio-images/kcp-audio-medium.svg"));
+        ui->muteButton->setIcon(trayIconColorSwitch("kcp-audio-medium"));
     }
     else
     {
-        ui->muteButton->setIcon(trayIconColorSwitch(":/kcp-audio-images/kcp-audio-loud.svg"));
+        ui->muteButton->setIcon(trayIconColorSwitch("kcp-audio-loud"));
     }
 }
 
 QPixmap VolumeSettingPage::trayIconColorSwitch(const QString &iconPath)
 {
     // icon原本为浅色
-    QIcon icon(iconPath);
+    QIcon icon = QIcon::fromTheme(iconPath);
     QPixmap pixmap = icon.pixmap(16, 16);
     if (Kiran::StylePalette::instance()->paletteType() != Kiran::PALETTE_DARK)
     {

@@ -33,14 +33,14 @@ public:
 
 public slots:
     virtual void refreshConnectionLists();
-    virtual void handleNotifierConnectionAdded(const QString &path) = 0;
-    virtual void handleNotifierConnectionRemoved(const QString &path) = 0;
-    virtual void handleActiveConnectionAdded(const QString &activepath) = 0;
-    virtual void handleActiveConnectionRemoved(const QString &activepath) = 0;
+    virtual void handleNotifierConnectionAdded(const QString &path) {};
+    virtual void handleNotifierConnectionRemoved(const QString &path) {};
+    virtual void handleActiveConnectionAdded(const QString &activepath) {};
+    virtual void handleActiveConnectionRemoved(const QString &activepath) {};
 
-    virtual void handleStateActivated(const QString &activatedPath) = 0;
-    virtual void handleStateActivating(const QString &activatedPath) = 0;
-    virtual void handleStateDeactivated(const QString &deactivatedPath) = 0;
+    virtual void handleStateActivated(const QString &activatedPath) {};
+    virtual void handleStateActivating(const QString &activatedPath) {};
+    virtual void handleStateDeactivated(const QString &deactivatedPath) {};
     virtual void handleActiveConnectionStateChanged(NetworkManager::ActiveConnection::State state);
 
     virtual void handleDeviceStateChanged(NetworkManager::Device::State newstate, NetworkManager::Device::State oldstate, NetworkManager::Device::StateChangeReason reason);

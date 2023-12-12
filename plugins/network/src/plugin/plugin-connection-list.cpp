@@ -19,6 +19,7 @@
 #include "connection-itemwidget.h"
 #include "general.h"
 #include "text-input-dialog.h"
+#include "logging-category.h"
 
 using namespace NetworkManager;
 #define PLUGIN_ITEM_WIDGET_HEIGHT 36
@@ -47,20 +48,22 @@ void PluginConnectionList::addConnection(NetworkManager::Connection::Ptr ptr, co
 {
     if (ptr == nullptr)
     {
-        KLOG_ERROR() << "ptr == null";
         return;
     }
 
     // TODO:确定new ConnectionItemWidget() 的parentWidget
-    ConnectionItemWidget* connectionItemWidget = new ConnectionItemWidget();
-    connectionItemWidget->setName(ptr->name());
-    connectionItemWidget->setFixedHeight(PLUGIN_ITEM_WIDGET_HEIGHT);
+
 
     NetworkConnectionInfo connectionInfo;
     connectionInfo.id = ptr->name();
     connectionInfo.uuid = ptr->uuid();
     connectionInfo.connectionPath = ptr->path();
     connectionInfo.devicePath = devicePath;
+    connectionInfo.type = ptr->settings()->connectionType();
+
+    ConnectionItemWidget* connectionItemWidget = new ConnectionItemWidget(connectionInfo);
+    connectionItemWidget->setName(ptr->name());
+    connectionItemWidget->setFixedHeight(PLUGIN_ITEM_WIDGET_HEIGHT);
 
     ActiveConnection::List activeConnectionList = activeConnections();
     for (ActiveConnection::Ptr activeConnection : activeConnectionList)
@@ -105,14 +108,14 @@ void PluginConnectionList::addConnection(NetworkManager::Connection::Ptr ptr, co
 void PluginConnectionList::addWirelessNetwork(NetworkManager::WirelessNetwork::Ptr network,
                                               const QString& devicePath)
 {
-    KLOG_DEBUG() << "network ssid to be added:" << network->ssid();
+    KLOG_DEBUG(qLcNetwork) << "network ssid to be added:" << network->ssid();
     AccessPoint::Ptr accessPoint = network->referenceAccessPoint();
     NetworkConnectionInfo connectionInfo;
     connectionInfo.isWireless = true;
     connectionInfo.wirelessInfo.ssid = network->ssid();
     connectionInfo.wirelessInfo.accessPointPath = accessPoint->uni();
     connectionInfo.wirelessInfo.signalStrength = accessPoint->signalStrength();
-    KLOG_DEBUG() << "accessPoint signalStrength:" << connectionInfo.wirelessInfo.signalStrength;
+    KLOG_DEBUG(qLcNetwork) << "accessPoint signalStrength:" << connectionInfo.wirelessInfo.signalStrength;
     connectionInfo.devicePath = devicePath;
     if (accessPoint->capabilities() == AccessPoint::Capability::None)
         connectionInfo.wirelessInfo.securitySetting = false;
@@ -209,13 +212,13 @@ void PluginConnectionList::handleEditButtonClicked()
     QString activeConnectionPath = connectionInfo.activeConnectionPath;
     bool isWireless = connectionInfo.isWireless;
 
-    KLOG_DEBUG() << "edit connection path:" << activeConnectionPath;
+    KLOG_DEBUG(qLcNetwork) << "edit connection path:" << activeConnectionPath;
     if (isWireless)
     {
         if (!activeConnectionPath.isEmpty())
             emit editConnection(uuid, activeConnectionPath);
         else
-            KLOG_DEBUG() << "can not edit an unconnected wireless network ";
+            KLOG_DEBUG(qLcNetwork) << "can not edit an unconnected wireless network ";
     }
     else
         emit editConnection(uuid, activeConnectionPath);
@@ -226,7 +229,7 @@ void PluginConnectionList::setItemWidgetStatus(const QString& activePath, Networ
     auto itemWidget = findItemWidgetByActivePath(activePath);
     if (itemWidget == nullptr)
     {
-        KLOG_DEBUG() << "active ItemWidget was no found";
+        KLOG_DEBUG(qLcNetwork) << "active ItemWidget was no found";
         return;
     }
 
@@ -243,6 +246,7 @@ void PluginConnectionList::setItemWidgetStatus(const QString& activePath, Networ
         connectionItemWidget->setLoadingStatus(false);
         connectionItemWidget->activatedStatus();
         connectionItemWidget->setEditButtonVisible(true);
+        connectionItemWidget->setActiveConnectionPath(activePath);
         break;
     case ActiveConnection::State::Deactivating:
         break;
@@ -280,7 +284,7 @@ void PluginConnectionList::handleConnectionItemClicked()
         {
             if (connectionInfo.wirelessInfo.signalStrength == -1)
             {
-                KLOG_DEBUG() << "connect hidden network";
+                KLOG_DEBUG(qLcNetwork) << "connect hidden network";
                 TextInputDialog ssidInputDialog;
                 ssidInputDialog.setTitle(tr("Tips"));
                 QString tips = QString(tr("Please input a network name"));
@@ -295,5 +299,5 @@ void PluginConnectionList::handleConnectionItemClicked()
             emit activateSelectedConnection(connectionPath);
     }
     else
-        KLOG_DEBUG() << "this connection is activated";
+        KLOG_DEBUG(qLcNetwork) << "this connection is activated";
 }

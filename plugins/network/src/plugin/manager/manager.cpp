@@ -18,6 +18,7 @@
 #include <NetworkManagerQt/WiredDevice>
 #include <NetworkManagerQt/WirelessDevice>
 #include "signal-forward.h"
+#include "logging-category.h"
 
 using namespace NetworkManager;
 
@@ -31,7 +32,6 @@ Manager::~Manager()
 
 void Manager::refreshConnectionLists()
 {
-    KLOG_DEBUG() << "Manager::refreshConnectionLists()";
 }
 
 void Manager::handleActiveConnectionStateChanged(ActiveConnection::State state)
@@ -41,21 +41,21 @@ void Manager::handleActiveConnectionStateChanged(ActiveConnection::State state)
     switch (state)
     {
     case ActiveConnection::State::Unknown:
-        KLOG_DEBUG() << "ActiveConnection::State::Unknown";
+        KLOG_DEBUG(qLcNetwork) << "ActiveConnection::State::Unknown";
         break;
     case ActiveConnection::State::Activating:
-        KLOG_DEBUG() << "ActiveConnection::State::Activating";
+        KLOG_DEBUG(qLcNetwork) << "ActiveConnection::State::Activating";
         handleStateActivating(path);
         break;
     case ActiveConnection::State::Activated:
-        KLOG_DEBUG() << "ActiveConnection::State::Activated";
+        KLOG_DEBUG(qLcNetwork) << "ActiveConnection::State::Activated";
         handleStateActivated(path);
         break;
     case ActiveConnection::State::Deactivating:
-        KLOG_DEBUG() << "ActiveConnection::State::Deactivating";
+        KLOG_DEBUG(qLcNetwork) << "ActiveConnection::State::Deactivating";
         break;
     case ActiveConnection::State::Deactivated:
-        KLOG_DEBUG() << "ActiveConnection::State::Deactivated";
+        KLOG_DEBUG(qLcNetwork) << "ActiveConnection::State::Deactivated";
         handleStateDeactivated(path);
         break;
     default:
