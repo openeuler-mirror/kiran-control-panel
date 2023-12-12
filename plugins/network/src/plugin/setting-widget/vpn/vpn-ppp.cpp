@@ -16,6 +16,7 @@
 #include <kiran-switch-button.h>
 #include <qt5-log-i.h>
 #include "ui_vpn-ppp.h"
+#include "logging-category.h"
 using namespace NetworkManager;
 
 VpnPpp::VpnPpp(QWidget *parent) : QWidget(parent), ui(new Ui::VpnPpp)
@@ -76,7 +77,7 @@ void VpnPpp::initOptionsButton(const QStringList &supportOptions)
         }
         else
         {
-            KLOG_DEBUG() << "Unsupport option:" << option;
+            KLOG_DEBUG(qLcNetwork) << "Unsupport option:" << option;
         }
     }
 }
@@ -115,7 +116,7 @@ void VpnPpp::saveSettings()
 {
     m_dataMap = m_vpnSetting->data();
     QString mppeMethod = ui->mppeSecurity->currentData().toString();
-    KLOG_DEBUG() << "mppeMethod:" << mppeMethod;
+    KLOG_DEBUG(qLcNetwork) << "mppeMethod:" << mppeMethod;
     if (m_useMPPE->isChecked())
     {
         m_dataMap.insert(mppeMethod, "yes");
@@ -135,7 +136,7 @@ void VpnPpp::saveSettings()
     for (KiranSwitchButton *button : m_optionsButtonMap)
     {
         QString option = m_optionsButtonMap.key(button);
-        KLOG_DEBUG() << "save option:" << option << "-----" << button->isChecked();
+        KLOG_DEBUG(qLcNetwork) << "save option:" << option << "-----" << button->isChecked();
         if (button->isChecked())
         {
             if (option == "lcp-echo-interval")
@@ -175,8 +176,8 @@ void VpnPpp::showSettings()
         {
             QString option = i.key();
             QString optionValue = i.value();
-            KLOG_DEBUG() << "i.key():" << i.key();
-            KLOG_DEBUG() << "i.value():" << i.value();
+            KLOG_DEBUG(qLcNetwork) << "i.key():" << i.key();
+            KLOG_DEBUG(qLcNetwork) << "i.value():" << i.value();
 
             QList<QString> requireMppeList;
             requireMppeList << "require-mppe"

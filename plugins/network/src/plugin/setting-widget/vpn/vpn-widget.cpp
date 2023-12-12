@@ -17,6 +17,7 @@
 #include <qt5-log-i.h>
 #include <QHostAddress>
 #include "kiran-tips/kiran-tips.h"
+#include "logging-category.h"
 #include "ui_vpn-widget.h"
 using namespace NetworkManager;
 
@@ -134,7 +135,7 @@ void VpnWidget::showSettings()
 
         ui->gateway->setText(dataMap.value("gateway"));
         ui->userName->setText(dataMap.value("user"));
-        KLOG_DEBUG() << "password-flags:" << dataMap.value("password-flags");
+        KLOG_DEBUG(qLcNetwork) << "password-flags:" << dataMap.value("password-flags");
         int index = ui->passwordOptions->findData(dataMap.value("password-flags"));
         if (index == -1)
         {
@@ -151,8 +152,8 @@ void VpnWidget::showSettings()
 
         // 通过m_vpnSetting->secrets()获取到的map为空
         // NMStringMap secretMap = m_vpnSetting->secrets();
-        // KLOG_DEBUG() << "vpn secretMap:" << secretMap;
-        // KLOG_DEBUG() << "password:" << secretMap.value("password");
+        // KLOG_DEBUG(qLcNetwork) << "vpn secretMap:" << secretMap;
+        // KLOG_DEBUG(qLcNetwork) << "password:" << secretMap.value("password");
         // ui->password->setText(secretMap.value("password"));
 
         ui->ntDomain->setText(dataMap.value("domain"));
@@ -169,10 +170,10 @@ void VpnWidget::showSettings()
         QVariant secretsValue = variantMap.value("secrets");
 
         auto dbusArg = secretsValue.value<QDBusArgument>();
-        KLOG_DEBUG() << dbusArg.currentType() << dbusArg.currentSignature();
+        KLOG_DEBUG(qLcNetwork) << dbusArg.currentType() << dbusArg.currentSignature();
 
         NMStringMap dbusMap = qdbus_cast<NMStringMap>(dbusArg);
-        KLOG_DEBUG() << "dbusMap " << dbusMap;
+        KLOG_DEBUG(qLcNetwork) << "dbusMap " << dbusMap;
         ui->password->setText(dbusMap.value("password"));
     }
     else
@@ -203,7 +204,7 @@ bool VpnWidget::isInputValid()
         QString error = QString(tr("Gateway can not be empty"));
         m_errorTip->setText(error);
         m_errorTip->showTipAroundWidget(ui->gateway);
-        KLOG_DEBUG() << "Gateway cannot be empty";
+        KLOG_DEBUG(qLcNetwork) << "Gateway cannot be empty";
         return false;
     }
     else
@@ -213,7 +214,7 @@ bool VpnWidget::isInputValid()
             QString error = QString(tr("Gateway invalid"));
             m_errorTip->setText(error);
             m_errorTip->showTipAroundWidget(ui->gateway);
-            KLOG_DEBUG() << "Gateway invalid";
+            KLOG_DEBUG(qLcNetwork) << "Gateway invalid";
             return false;
         }
     }
@@ -223,7 +224,7 @@ bool VpnWidget::isInputValid()
         QString error = QString(tr("user name can not be empty"));
         m_errorTip->setText(error);
         m_errorTip->showTipAroundWidget(ui->userName);
-        KLOG_DEBUG() << "user name can not be empty";
+        KLOG_DEBUG(qLcNetwork) << "user name can not be empty";
         return false;
     }
 
@@ -233,7 +234,7 @@ bool VpnWidget::isInputValid()
         QString error = QString(tr("password can not be empty"));
         m_errorTip->setText(error);
         m_errorTip->showTipAroundWidget(ui->password);
-        KLOG_DEBUG() << "password can not be empty";
+        KLOG_DEBUG(qLcNetwork) << "password can not be empty";
         return false;
     }
 

@@ -18,6 +18,7 @@
 #include <NetworkManagerQt/Manager>
 #include <NetworkManagerQt/Settings>
 #include <QMutex>
+#include "logging-category.h"
 using namespace NetworkManager;
 
 SignalForward *SignalForward::instance()
@@ -73,13 +74,13 @@ void SignalForward::initConnect()
                 }
                 else
                 {
-                    KLOG_INFO() << "this device interface is invalid!";
+                    KLOG_INFO(qLcNetwork) << "this device interface is invalid!";
                     m_Timer.start();
                 }
                 m_waitCounts++;
                 if(m_waitCounts > MAX_WAIT_COUNTS)
                 {
-                    KLOG_INFO() << "This device is currently invalid by NetworkManager";
+                    KLOG_INFO(qLcNetwork) << "This device is currently invalid by NetworkManager";
                     m_Timer.stop();
                 } });
 }
@@ -167,7 +168,7 @@ void SignalForward::addDevice(const QString &uni)
     m_tmpDevicePath = uni;
     if(device->managed())
     {
-        KLOG_INFO() << "add device:" << uni;
+        KLOG_INFO(qLcNetwork) << "add device:" << uni;
         switch (device->type())
         {
         case Device::Type::Ethernet:
@@ -183,8 +184,8 @@ void SignalForward::addDevice(const QString &uni)
     }
     else
     {
-        KLOG_INFO() << "this device interface is invalid!";
+        KLOG_INFO(qLcNetwork) << "this device interface is invalid!";
         m_Timer.start();
-        KLOG_INFO() << "wait device managed counts:" << m_waitCounts;
+        KLOG_INFO(qLcNetwork) << "wait device managed counts:" << m_waitCounts;
     }
 }

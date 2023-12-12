@@ -26,6 +26,7 @@
 #include "status-notification.h"
 #include "text-input-dialog.h"
 #include "ui_vpn-manager.h"
+#include "logging-category.h"
 using namespace NetworkManager;
 
 Q_DECLARE_METATYPE(VpnType)
@@ -186,16 +187,16 @@ void VpnManager::handleActivateSelectedConnection(const QString &connectionPath,
     if (passwordFlags == Setting::SecretFlagType::None || passwordFlags == Setting::SecretFlagType::AgentOwned)
     {
         activateVPNConnection(connectionPath, connectionParameter);
-        KLOG_DEBUG() << "passwordFlags None";
+        KLOG_DEBUG(qLcNetwork) << "passwordFlags None";
     }
     else if (passwordFlags == Setting::SecretFlagType::NotRequired)
     {
         activateVPNConnection(connectionPath, connectionParameter);
-        KLOG_DEBUG() << "passwordFlags NotRequired";
+        KLOG_DEBUG(qLcNetwork) << "passwordFlags NotRequired";
     }
     else if (passwordFlags == Setting::SecretFlagType::NotSaved)
     {
-        KLOG_DEBUG() << "passwordFlags NotSaved";
+        KLOG_DEBUG(qLcNetwork) << "passwordFlags NotSaved";
         TextInputDialog inputDialog;
         inputDialog.setTitle(tr("Tips"));
         QString tips = QString(tr("Password required to connect to %1.")).arg(settings->id());
@@ -221,12 +222,12 @@ void VpnManager::activateVPNConnection(const QString &connectionPath, const QStr
     reply.waitForFinished();
     if (reply.isError())
     {
-        KLOG_ERROR() << "activate connection failed" << reply.error();
+        KLOG_ERROR(qLcNetwork) << "activate connection failed" << reply.error();
         StatusNotification::connectitonFailedNotify(connectionPath);
     }
     else
     {
-        KLOG_DEBUG() << "reply.reply():" << reply.reply();
+        KLOG_DEBUG(qLcNetwork) << "reply.reply():" << reply.reply();
         QString activatedPath = reply.value().path();
     }
 }
@@ -247,7 +248,7 @@ void VpnManager::handleActiveConnectionAdded(const QString &activePath)
     ActiveConnection::Ptr activatedConnection = findActiveConnection(activePath);
     if (activatedConnection == nullptr)
     {
-        KLOG_DEBUG() << "activatedConnection == nullptr";
+        KLOG_DEBUG(qLcNetwork) << "activatedConnection == nullptr";
         return;
     }
 
@@ -257,7 +258,7 @@ void VpnManager::handleActiveConnectionAdded(const QString &activePath)
         return;
     }
     QString uuid = vpnConnection->uuid();
-    KLOG_DEBUG() << "vpn uuid:" << uuid;
+    KLOG_DEBUG(qLcNetwork) << "vpn uuid:" << uuid;
     QWidget *activeItemWidget = ui->connectionShowPage->findItemWidgetByUuid(uuid);
     if (activeItemWidget != nullptr)
     {
@@ -277,40 +278,40 @@ void VpnManager::handleVpnConnectionStateChanged(VpnConnection::State state, Vpn
 
     auto activeVpnConnection = qobject_cast<VpnConnection *>(sender());
     QString activePath = activeVpnConnection->path();
-    KLOG_DEBUG() << " activeConnection->id():" << activeVpnConnection->id();
+    KLOG_DEBUG(qLcNetwork) << " activeConnection->id():" << activeVpnConnection->id();
     QString id = "";
     if (activeVpnConnection != nullptr)
         id = activeVpnConnection->id();
     switch (state)
     {
     case VpnConnection::State::Unknown:
-        KLOG_DEBUG() << "VpnConnection::State::Unknown";
+        KLOG_DEBUG(qLcNetwork) << "VpnConnection::State::Unknown";
         break;
     case VpnConnection::State::Prepare:
-        KLOG_DEBUG() << "VpnConnection::State::Prepare";
+        KLOG_DEBUG(qLcNetwork) << "VpnConnection::State::Prepare";
         break;
     case VpnConnection::State::NeedAuth:
-        KLOG_DEBUG() << "VpnConnection::State::NeedAuth";
+        KLOG_DEBUG(qLcNetwork) << "VpnConnection::State::NeedAuth";
         break;
     case VpnConnection::State::Connecting:
         handleStateActivating(activePath);
-        KLOG_DEBUG() << "VpnConnection::State::Connecting";
+        KLOG_DEBUG(qLcNetwork) << "VpnConnection::State::Connecting";
         break;
     case VpnConnection::State::GettingIpConfig:
-        KLOG_DEBUG() << "VpnConnection::State::GettingIpConfig";
+        KLOG_DEBUG(qLcNetwork) << "VpnConnection::State::GettingIpConfig";
         break;
     case VpnConnection::State::Activated:
-        KLOG_DEBUG() << "VpnConnection::State::Activated";
+        KLOG_DEBUG(qLcNetwork) << "VpnConnection::State::Activated";
         handleStateActivated(activePath);
         break;
     case VpnConnection::State::Failed:
-        KLOG_DEBUG() << "VpnConnection::State::Failed";
+        KLOG_DEBUG(qLcNetwork) << "VpnConnection::State::Failed";
         if (!id.isEmpty())
             StatusNotification::ActiveConnectionDeactivatedNotify(id);
         handleVpnStateFailed(activePath);
         break;
     case VpnConnection::State::Disconnected:
-        KLOG_DEBUG() << "VpnConnection::State::Disconnected";
+        KLOG_DEBUG(qLcNetwork) << "VpnConnection::State::Disconnected";
         if (!id.isEmpty())
             StatusNotification::ActiveConnectionDeactivatedNotify(id);
         handleVpnStateDisconnected(activePath);
@@ -322,40 +323,40 @@ void VpnManager::handleVpnConnectionStateChanged(VpnConnection::State state, Vpn
     switch (reason)
     {
     case VpnConnection::StateChangeReason::UnknownReason:
-        KLOG_DEBUG() << "VpnConnection::StateChangeReason::UnknownReason";
+        KLOG_DEBUG(qLcNetwork) << "VpnConnection::StateChangeReason::UnknownReason";
         break;
     case VpnConnection::StateChangeReason::NoneReason:
-        KLOG_DEBUG() << "VpnConnection::StateChangeReason::NoneReason";
+        KLOG_DEBUG(qLcNetwork) << "VpnConnection::StateChangeReason::NoneReason";
         break;
     case VpnConnection::StateChangeReason::UserDisconnectedReason:
-        KLOG_DEBUG() << "VpnConnection::StateChangeReason::UserDisconnectedReason";
+        KLOG_DEBUG(qLcNetwork) << "VpnConnection::StateChangeReason::UserDisconnectedReason";
         break;
     case VpnConnection::StateChangeReason::DeviceDisconnectedReason:
-        KLOG_DEBUG() << "VpnConnection::StateChangeReason::DeviceDisconnectedReason";
+        KLOG_DEBUG(qLcNetwork) << "VpnConnection::StateChangeReason::DeviceDisconnectedReason";
         break;
     case VpnConnection::StateChangeReason::ServiceStoppedReason:
-        KLOG_DEBUG() << "VpnConnection::StateChangeReason::ServiceStoppedReason";
+        KLOG_DEBUG(qLcNetwork) << "VpnConnection::StateChangeReason::ServiceStoppedReason";
         break;
     case VpnConnection::StateChangeReason::IpConfigInvalidReason:
-        KLOG_DEBUG() << "VpnConnection::StateChangeReason::IpConfigInvalidReason";
+        KLOG_DEBUG(qLcNetwork) << "VpnConnection::StateChangeReason::IpConfigInvalidReason";
         break;
     case VpnConnection::StateChangeReason::ConnectTimeoutReason:
-        KLOG_DEBUG() << "VpnConnection::StateChangeReason::ConnectTimeoutReason";
+        KLOG_DEBUG(qLcNetwork) << "VpnConnection::StateChangeReason::ConnectTimeoutReason";
         break;
     case VpnConnection::StateChangeReason::ServiceStartTimeoutReason:
-        KLOG_DEBUG() << "VpnConnection::StateChangeReason::ServiceStartTimeoutReason";
+        KLOG_DEBUG(qLcNetwork) << "VpnConnection::StateChangeReason::ServiceStartTimeoutReason";
         break;
     case VpnConnection::StateChangeReason::ServiceStartFailedReason:
-        KLOG_DEBUG() << "VpnConnection::StateChangeReason::ServiceStartFailedReason";
+        KLOG_DEBUG(qLcNetwork) << "VpnConnection::StateChangeReason::ServiceStartFailedReason";
         break;
     case VpnConnection::StateChangeReason::NoSecretsReason:
-        KLOG_DEBUG() << "VpnConnection::StateChangeReason::NoSecretsReason";
+        KLOG_DEBUG(qLcNetwork) << "VpnConnection::StateChangeReason::NoSecretsReason";
         break;
     case VpnConnection::StateChangeReason::LoginFailedReason:
-        KLOG_DEBUG() << "VpnConnection::StateChangeReason::LoginFailedReason";
+        KLOG_DEBUG(qLcNetwork) << "VpnConnection::StateChangeReason::LoginFailedReason";
         break;
     case VpnConnection::StateChangeReason::ConnectionRemovedReason:
-        KLOG_DEBUG() << "VpnConnection::StateChangeReason::ConnectionRemovedReason";
+        KLOG_DEBUG(qLcNetwork) << "VpnConnection::StateChangeReason::ConnectionRemovedReason";
         break;
     default:
         break;
@@ -432,7 +433,7 @@ void VpnManager::clearVpnSetting()
 // TODO:更新列表逻辑需要修改
 void VpnManager::handleConnectionUpdated(const QString &path)
 {
-    KLOG_DEBUG() << "Connection::updated:" << path;
+    KLOG_DEBUG(qLcNetwork) << "Connection::updated:" << path;
     Connection::Ptr updateConnection = findConnection(path);
     if (updateConnection->settings()->connectionType() == ConnectionSettings::Vpn)
     {

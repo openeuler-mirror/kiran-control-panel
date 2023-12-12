@@ -18,6 +18,7 @@
 #include <NetworkManagerQt/WirelessDevice>
 #include "kiran-switch-button.h"
 #include "ui_wireless-widget.h"
+#include "logging-category.h"
 using namespace NetworkManager;
 
 WirelessWidget::WirelessWidget(QWidget *parent) : QWidget(parent), ui(new Ui::WirelessWidget)
@@ -63,7 +64,7 @@ void WirelessWidget::saveSettings()
     if (m_wirelessSetting != nullptr)
     {
         QString macAddress = ui->deviceMac->currentData().toString();
-        KLOG_DEBUG() << "macAddress:" << macAddress;
+        KLOG_DEBUG(qLcNetwork) << "macAddress:" << macAddress;
         m_wirelessSetting->setMacAddress(QByteArray::fromHex(macAddress.toUtf8()));
         m_wirelessSetting->setMtu(ui->customMTU->value());
     }

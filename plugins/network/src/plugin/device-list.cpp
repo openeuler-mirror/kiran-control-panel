@@ -1,3 +1,17 @@
+/**
+ * Copyright (c) 2022 KylinSec Co., Ltd.
+ * kiran-cpanel-network is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *          http://license.coscl.org.cn/MulanPSL2
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ *
+ * Author:     luoqing <luoqing@kylinos.com.cn>
+ */
+
 #include "device-list.h"
 #include <qt5-log-i.h>
 #include <NetworkManagerQt/Manager>
@@ -5,6 +19,7 @@
 #include "device-available-connection-widget.h"
 #include "signal-forward.h"
 #include "utils.h"
+#include "logging-category.h"
 
 using namespace NetworkManager;
 using namespace NetworkUtils;
@@ -40,22 +55,22 @@ void DeviceList::init(NetworkManager::Device::Type type)
     m_verticalSpacer = new QSpacerItem(40, 20, QSizePolicy::Minimum, QSizePolicy::Expanding);
     m_widgetContentsLayout->addItem(m_verticalSpacer);
 
-    if (m_deviceType == Device::Wifi)
+    if (m_deviceType != Device::Wifi)
     {
-        for (auto device : managedDeviceList)
+        return;
+    }
+
+    for (auto device : managedDeviceList)
+    {
+        WirelessDevice::Ptr wirelessDevice = qobject_cast<WirelessDevice *>(device);
+        QDBusPendingReply<> replyRequestScan = wirelessDevice->requestScan();
+        replyRequestScan.waitForFinished();
+        if (replyRequestScan.isError())
         {
-            WirelessDevice::Ptr wirelessDevice = qobject_cast<WirelessDevice *>(device);
-            QDBusPendingReply<> replyRequestScan = wirelessDevice->requestScan();
-            replyRequestScan.waitForFinished();
-            if (replyRequestScan.isError())
-            {
-                KLOG_DEBUG() << "wireless Device name:" << wirelessDevice->interfaceName() << " requestScan error:" << replyRequestScan.error();
-            }
-            else
-            {
-                KLOG_DEBUG() << "wireless Device name:" << wirelessDevice->interfaceName() << " requestScan reply:" << replyRequestScan.reply();
-            }
+            KLOG_DEBUG(qLcNetwork) << "wireless Device:" << wirelessDevice << " requestScan error:" << replyRequestScan.error();
+            continue;
         }
+        KLOG_DEBUG(qLcNetwork) << "wireless Device:" << wirelessDevice << " requestScan reply:" << replyRequestScan.reply();
     }
 }
 
@@ -77,7 +92,7 @@ void DeviceList::addDevice(const QString &devicePath)
     Device::Ptr device = findNetworkInterface(devicePath);
     if(m_deviceType == device->type())
     {
-        KLOG_INFO() << "add new device:" << device;
+        KLOG_INFO(qLcNetwork) << "add new device:" << device;
         auto widget = new DeviceAvailableConnectionWidget(device, m_scrollAreaWidgetContents);
         addWidget(widget);
         m_managedDevicePaths << devicePath;
@@ -94,13 +109,15 @@ void DeviceList::removeDevice(const QString &devicePath)
     for (auto item : m_itemWidgetList)
     {
         auto deviceItem = qobject_cast<DeviceAvailableConnectionWidget *>(item);
-        if (deviceItem->devicePath() == devicePath)
+        if (deviceItem->devicePath() != devicePath)
         {
-            removeWidget(deviceItem);
-            m_managedDevicePaths.removeOne(devicePath);
-            KLOG_INFO() << "removed device:" << devicePath;
-            return;
+            continue;
         }
+
+        removeWidget(deviceItem);
+        m_managedDevicePaths.removeOne(devicePath);
+        KLOG_INFO(qLcNetwork) << "removed device:" << devicePath;
+        return;
     }
 }
 

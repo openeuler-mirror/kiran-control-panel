@@ -32,6 +32,7 @@
 #include "status-notification.h"
 #include "text-input-dialog.h"
 #include "utils.h"
+#include "logging-category.h"
 
 using namespace NetworkManager;
 // 使用默认析构函数，父对象被释放时，会释放子对象
@@ -98,7 +99,7 @@ void ConnectionItemWidget::initPluginItemWidget()
     m_horizonLayout->addWidget(m_connectionName);
     m_horizonLayout->addStretch();
 
-    m_horizonEditAndMoreOptions =  new QHBoxLayout();
+    m_horizonEditAndMoreOptions = new QHBoxLayout();
     m_horizonEditAndMoreOptions->addWidget(m_editButton);
     m_horizonEditAndMoreOptions->addWidget(m_moreOptions);
     m_horizonEditAndMoreOptions->setMargin(0);
@@ -137,7 +138,7 @@ void ConnectionItemWidget::setName(const QString& name)
     //    {
     //        nameStr = fontMetricsF.elidedText(nameStr,Qt::ElideRight,m_connectionName->width());
     //    }
-    //    KLOG_DEBUG() << "elidedText:" << nameStr;
+    //    KLOG_DEBUG(qLcNetwork) << "elidedText:" << nameStr;
     m_connectionName->setText(nameStr);
     m_editButton->setAccessibleName(QString("ButtonEditConnectionName::%1").arg(nameStr));
 }
@@ -277,15 +278,15 @@ void ConnectionItemWidget::activateConnection(const QString& connectionPath, con
         return;
     }
 
-    KLOG_DEBUG() << "Will activate the device:" << m_connectionInfo.devicePath;
+    KLOG_DEBUG(qLcNetwork) << "Will activate the device:" << m_connectionInfo.devicePath;
     QString connectionUni = connectionPath.isEmpty() ? m_connectionInfo.connectionPath : connectionPath;
     QString devicePath = m_connectionInfo.devicePath;
 
-    if(!devicePath.isEmpty())
+    if (!devicePath.isEmpty())
     {
         Device::Ptr device = NetworkManager::findNetworkInterface(devicePath);
         auto devicestate = device->state();
-        KLOG_DEBUG() << "current device state:" << devicestate;
+        KLOG_DEBUG(qLcNetwork) << "current device state:" << devicestate;
         if (devicestate == Device::Unavailable)
         {
             StatusNotification::connectitonFailedNotifyByReason(tr("The current device:%1 is not available").arg(device->interfaceName()));
@@ -300,7 +301,7 @@ void ConnectionItemWidget::activateConnection(const QString& connectionPath, con
     if (reply.isError())
     {
         // 此处处理进入激活流程失败的原因，并不涉及流程中某个具体阶段失败的原因
-        KLOG_ERROR() << "activate connection failed:" << reply.error();
+        KLOG_ERROR(qLcNetwork) << "activate connection failed:" << reply.error();
         QString errorMessage = reply.error().message();
         if (errorMessage.contains("device has no carrier"))
         {
@@ -313,7 +314,7 @@ void ConnectionItemWidget::activateConnection(const QString& connectionPath, con
     }
     else
     {
-        KLOG_DEBUG() << "activateConnection reply:" << reply.reply();
+        KLOG_DEBUG(qLcNetwork) << "activateConnection reply:" << reply.reply();
     }
 }
 
@@ -326,7 +327,7 @@ void ConnectionItemWidget::activateHiddenNetwork(const QString& ssid)
     // 若要连接的隐藏网络已经被显式探测到了，则返回
     if (wirelessDevice->findNetwork(ssid) != nullptr)
     {
-        KLOG_DEBUG() << "Hidden networks have been explicitly detected,return";
+        KLOG_DEBUG(qLcNetwork) << "Hidden networks have been explicitly detected,return";
         StatusNotification::connectitonHiddenNetworkFailedNotify(ssid);
         return;
     }
@@ -362,7 +363,7 @@ void ConnectionItemWidget::updateConnection()
         if (!mac.isEmpty() &&
             (mac != hardwareAddress))
         {
-            KLOG_INFO() << "绑定的设备地址发生改变";
+            KLOG_INFO(qLcNetwork) << "the binding device MAC has changed";
             SignalForward::instance()->connectionMacChanged(connectionPath, hardwareAddress);
             return;
         }
@@ -382,11 +383,11 @@ void ConnectionItemWidget::disconnectConnection()
     reply.waitForFinished();
     if (reply.isError())
     {
-        KLOG_INFO() << "Disconnect failed:" << reply.error();
+        KLOG_INFO(qLcNetwork) << "Disconnect failed:" << reply.error();
     }
     else
     {
-        KLOG_INFO() << "DeactivateConnection reply:" << reply.reply();
+        KLOG_INFO(qLcNetwork) << "DeactivateConnection reply:" << reply.reply();
     }
 }
 
@@ -406,11 +407,11 @@ void ConnectionItemWidget::removeConnection()
     StatusNotification::connectionDeleteNotify(connectionName);
     if (reply.isError())
     {
-        KLOG_INFO() << "Delete the connection failed:" << reply.error();
+        KLOG_INFO(qLcNetwork) << "Delete the connection failed:" << reply.error();
     }
     else
     {
-        KLOG_INFO() << "remove the connection :" << this->connectionPath();
+        KLOG_INFO(qLcNetwork) << "remove the connection :" << this->connectionPath();
     }
 }
 
@@ -425,13 +426,12 @@ void ConnectionItemWidget::setSecurityPskAndActivateWirelessConnection(const QSt
     addAndActivateWirelessConnection(m_connnectionSettings);
 }
 
-
 // NOTE:ignore无线网络会删除配置，功能目前与remove重合
 void ConnectionItemWidget::ignoreWirelessNetwork()
 {
     QString devicePath = m_connectionInfo.devicePath;
     Connection::Ptr connection = NetworkUtils::getAvailableConnectionBySsid(devicePath, ssid());
-    if(connection.isNull())
+    if (connection.isNull())
     {
         return;
     }
@@ -440,11 +440,11 @@ void ConnectionItemWidget::ignoreWirelessNetwork()
     reply.waitForFinished();
     if (reply.isError())
     {
-        KLOG_INFO() << "remove the connection failed:" << reply.error();
+        KLOG_INFO(qLcNetwork) << "remove the connection failed:" << reply.error();
     }
     else
     {
-        KLOG_INFO() << "ignore the wireless network:" << ssid();
+        KLOG_INFO(qLcNetwork) << "ignore the wireless network:" << ssid();
     }
 }
 
@@ -462,7 +462,7 @@ void ConnectionItemWidget::requireInputPassword()
 
 void ConnectionItemWidget::requireHiddenNetworkName()
 {
-    KLOG_DEBUG() << "connect hidden network";
+    KLOG_DEBUG(qLcNetwork) << "connect hidden network";
     TextInputDialog ssidInputDialog;
     ssidInputDialog.setTitle(tr("Tips"));
     QString tips = QString(tr("Please input a network name"));
@@ -476,7 +476,7 @@ void ConnectionItemWidget::addAndActivateWirelessConnection(NetworkManager::Conn
     const QString ssid = m_connectionInfo.wirelessInfo.ssid;
     const QString accessPointPath = m_connectionInfo.wirelessInfo.accessPointPath;
     const QString devicePath = m_connectionInfo.devicePath;
-    KLOG_DEBUG() << "accessPointPath" << accessPointPath;
+    KLOG_DEBUG(qLcNetwork) << "accessPointPath" << accessPointPath;
 
     QDBusPendingReply<QDBusObjectPath, QDBusObjectPath> reply =
         NetworkManager::addAndActivateConnection(connectionSettings->toMap(), devicePath, accessPointPath);
@@ -484,7 +484,7 @@ void ConnectionItemWidget::addAndActivateWirelessConnection(NetworkManager::Conn
     reply.waitForFinished();
     if (reply.isError())
     {
-        KLOG_DEBUG() << "Connection failed: " << reply.error();
+        KLOG_DEBUG(qLcNetwork) << "Connection failed: " << reply.error();
         StatusNotification::connectitonFailedNotifyByName(ssid);
     }
 }
@@ -492,7 +492,7 @@ void ConnectionItemWidget::addAndActivateWirelessConnection(NetworkManager::Conn
 void ConnectionItemWidget::activateWirelessNetwork()
 {
     QString ssid = m_connectionInfo.wirelessInfo.ssid;
-    KLOG_DEBUG() << "Activate Selected Wireless Network:" << ssid;
+    KLOG_DEBUG(qLcNetwork) << "Activate Selected Wireless Network:" << ssid;
     QString accessPointPath = m_connectionInfo.wirelessInfo.accessPointPath;
 
     // 连接隐藏网络
@@ -509,22 +509,19 @@ void ConnectionItemWidget::activateWirelessNetwork()
     if (!connection.isNull())
     {
         activateConnection(connection->path(), accessPointPath);
+        return;
     }
-    else
+
+    m_connnectionSettings = NetworkUtils::createWirelessConnectionSettings(ssid, devicePath, accessPointPath);
+    WirelessSecuritySetting::Ptr wirelessSecurity =
+        m_connnectionSettings->setting(NetworkManager::Setting::WirelessSecurity).dynamicCast<NetworkManager::WirelessSecuritySetting>();
+    WirelessSecuritySetting::KeyMgmt keyMgmt = wirelessSecurity->keyMgmt();
+    if (keyMgmt != WirelessSecuritySetting::KeyMgmt::WpaNone)
     {
-        m_connnectionSettings = NetworkUtils::createWirelessConnectionSettings(ssid, devicePath, accessPointPath);
-        WirelessSecuritySetting::Ptr wirelessSecurity =
-            m_connnectionSettings->setting(NetworkManager::Setting::WirelessSecurity).dynamicCast<NetworkManager::WirelessSecuritySetting>();
-        WirelessSecuritySetting::KeyMgmt keyMgmt = wirelessSecurity->keyMgmt();
-        if (keyMgmt != WirelessSecuritySetting::KeyMgmt::WpaNone)
-        {
-            requireInputPassword();
-        }
-        else
-        {
-            addAndActivateWirelessConnection(m_connnectionSettings);
-        }
+        requireInputPassword();
+        return;
     }
+    addAndActivateWirelessConnection(m_connnectionSettings);
 }
 
 void ConnectionItemWidget::handleThemeChanged(Kiran::PaletteType paletteType)
@@ -544,7 +541,7 @@ void ConnectionItemWidget::mousePressEvent(QMouseEvent* event)
         {
             activateWirelessNetwork();
         }
-        else if(type() == ConnectionSettings::Wired)
+        else if (type() == ConnectionSettings::Wired)
         {
             activateConnection();
         }

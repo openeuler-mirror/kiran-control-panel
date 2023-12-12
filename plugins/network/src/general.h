@@ -22,6 +22,21 @@
 #define MAX_WAIT_COUNTS 10
 #define PLUGIN_ITEM_WIDGET_HEIGHT 36
 
+enum NetworkState
+{
+    WIRED_CONNECTED,
+    WIRED_CONNECTED_BUT_NOT_ACCESS_INTERNET,
+    WIRELESS_CONNECTED,
+    WIRELESS_CONNECTED_BUT_NOT_ACCESS_INTERNET,
+    DISCONNECTED
+};
+
+struct NetworkStateInfo
+{
+    QString iconPath;
+    QString description;
+};
+
 struct WirelessConnectionInfo
 {
     int signalStrength = 0;

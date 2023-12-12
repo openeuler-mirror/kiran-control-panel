@@ -1,8 +1,23 @@
+/**
+ * Copyright (c) 2022 KylinSec Co., Ltd.
+ * kiran-cpanel-network is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *          http://license.coscl.org.cn/MulanPSL2
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ *
+ * Author:     luoqing <luoqing@kylinos.com.cn>
+ */
+
 #include "network-subitem.h"
 #include "cpanel-network-widget.h"
 #include <QEvent>
 #include <qt5-log-i.h>
 #include "utils.h"
+#include "logging-category.h"
 
 NetworkSubItem::NetworkSubItem(KiranControlPanel::PanelInterface* interface, QObject *parent)
     : m_interface(interface),
@@ -68,7 +83,7 @@ QVector<QPair<QString, QString> > NetworkSubItem::getSearchKeys()
 
     foreach(auto subItem,m_subItemsList)
     {
-        KLOG_DEBUG() << "subItem:" << subItem;
+        KLOG_DEBUG(qLcNetwork) << "subItem:" << subItem;
         searchKeys.append({subItem,subItem});
     }
 

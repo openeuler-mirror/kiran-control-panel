@@ -1,2 +1,7 @@
 [Account]
 ShowRoot=false
+
+[Network]
+CheckInternetConnectivity=true
+Address=www.kylinsec.com.cn
+Port=80

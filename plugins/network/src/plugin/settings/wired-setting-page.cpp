@@ -22,6 +22,7 @@
 #include "kiran-tips/kiran-tips.h"
 #include "ui_wired-setting-page.h"
 #include <NetworkManagerQt/WiredDevice>
+#include "logging-category.h"
 
 using namespace NetworkManager;
 
@@ -126,7 +127,7 @@ void WiredSettingPage::createSettingPage(const QString &devicePath)
     {
         macAddress = wiredDevice->hardwareAddress();
     }
-    KLOG_DEBUG() << "binding MAC Address:" << macAddress;
+    KLOG_DEBUG(qLcNetwork) << "binding MAC Address:" << macAddress;
     ui->ethernetWidget->setDefaultMacAddress(macAddress);
 }
 

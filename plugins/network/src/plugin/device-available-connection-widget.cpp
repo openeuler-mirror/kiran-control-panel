@@ -26,6 +26,7 @@
 #include "general.h"
 #include "signal-forward.h"
 #include "utils.h"
+#include "logging-category.h"
 
 using namespace NetworkManager;
 using namespace NetworkUtils;
@@ -39,7 +40,7 @@ DeviceAvailableConnectionWidget::DeviceAvailableConnectionWidget(NetworkManager:
     m_device = device;
     m_devicePath = m_device->uni();
     m_deviceType = m_device->type();
-    KLOG_DEBUG() << m_device;
+    KLOG_DEBUG(qLcNetwork) << m_device;
 
     initUI();
     initConnect();
@@ -93,7 +94,7 @@ void DeviceAvailableConnectionWidget::onAddWirelessNetwork(NetworkManager::Wirel
     connectionInfo.wirelessInfo.ssid = network->ssid();
     connectionInfo.wirelessInfo.accessPointPath = accessPoint->uni();
     connectionInfo.wirelessInfo.signalStrength = accessPoint->signalStrength();
-    KLOG_DEBUG() << "accessPoint signalStrength:" << connectionInfo.wirelessInfo.signalStrength;
+    KLOG_DEBUG(qLcNetwork) << "accessPoint signalStrength:" << connectionInfo.wirelessInfo.signalStrength;
 
     if (accessPoint->capabilities() == AccessPoint::Capability::None)
         connectionInfo.wirelessInfo.securitySetting = false;
@@ -114,7 +115,7 @@ void DeviceAvailableConnectionWidget::onAddWirelessNetwork(NetworkManager::Wirel
 void DeviceAvailableConnectionWidget::addActiveConnection(const QString &activePath)
 {
     ActiveConnection::Ptr activatedConnection = findActiveConnection(activePath);
-    KLOG_DEBUG() << "add activatedConnection id:" << activatedConnection->id();
+    KLOG_DEBUG(qLcNetwork) << "add activatedConnection id:" << activatedConnection->id();
     QStringList deviceList = activatedConnection->devices();
     if (!deviceList.contains(m_devicePath))
     {
@@ -123,24 +124,24 @@ void DeviceAvailableConnectionWidget::addActiveConnection(const QString &activeP
 
     ConnectionItemWidget *activeItem;
     QString uuid = activatedConnection->uuid();
-    KLOG_DEBUG() << "add activatedConnection uuid:" << uuid;
+    KLOG_DEBUG(qLcNetwork) << "add activatedConnection uuid:" << uuid;
     activeItem = findConnectionItemByUuid(uuid);
     if (activeItem == nullptr)
     {
         ConnectionSettings::Ptr settings = activatedConnection->connection()->settings();
         WirelessSetting::Ptr wirelessSetting = settings->setting(Setting::Wireless).dynamicCast<WirelessSetting>();
         QString ssid = wirelessSetting->ssid();
-        KLOG_DEBUG() << "add activatedConnection ssid:" << ssid;
+        KLOG_DEBUG(qLcNetwork) << "add activatedConnection ssid:" << ssid;
         activeItem = findConnectionItemBySsid(ssid);
     }
 
     if (activeItem == nullptr)
     {
-        KLOG_DEBUG() << "no found connection by uuid and ssid";
+        KLOG_DEBUG(qLcNetwork) << "no found connection by uuid and ssid";
         return;
     }
 
-    KLOG_DEBUG() << "Active Connection State:" << activatedConnection->state();
+    KLOG_DEBUG(qLcNetwork) << "Active Connection State:" << activatedConnection->state();
     activeItem->setActiveConnectionPath(activePath);
     activeItem->setActiveStatus(activatedConnection->state());
 
@@ -166,7 +167,7 @@ void DeviceAvailableConnectionWidget::removeActiveConnection(const QString &acti
 void DeviceAvailableConnectionWidget::addConnection(const QString &path)
 {
     Connection::Ptr connection = findConnection(path);
-    KLOG_DEBUG() << "add connection::" << connection->name();
+    KLOG_DEBUG(qLcNetwork) << "add connection::" << connection->name();
 
     if (deviceType() == Device::Ethernet)
     {
@@ -230,7 +231,7 @@ void DeviceAvailableConnectionWidget::disappearNetwork(const QString &ssid)
 
 void DeviceAvailableConnectionWidget::appearNetwork(const QString &ssid)
 {
-    KLOG_DEBUG() << "appear network:" << ssid;
+    KLOG_DEBUG(qLcNetwork) << "appear network:" << ssid;
     WirelessNetwork::Ptr network = m_wirelessDevice->findNetwork(ssid);
     onAddWirelessNetwork(network);
 }
@@ -443,7 +444,7 @@ void DeviceAvailableConnectionWidget::updateConnectionItemStatus(ConnectionItemW
                 item->setActiveConnectionPath(activeConnection->path());
                 item->setActiveStatus(activeConnection->state());
                 m_activateLabel->setText(activeConnection->id());
-                KLOG_DEBUG() << "current activeConnection state:" << activeConnection->state();
+                KLOG_DEBUG(qLcNetwork) << "current activeConnection state:" << activeConnection->state();
                 connect(activeConnection.data(), &ActiveConnection::stateChanged, item, &ConnectionItemWidget::activeConnectionStateChanged, Qt::UniqueConnection);
             }
         }

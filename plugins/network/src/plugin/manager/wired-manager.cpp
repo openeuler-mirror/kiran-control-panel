@@ -25,6 +25,7 @@
 #include "ui_wired-manager.h"
 #include "device-list.h"
 #include <NetworkManagerQt/Device>
+#include "logging-category.h"
 
 using namespace NetworkManager;
 
@@ -90,7 +91,7 @@ void WiredManager::saveConnectionSettings()
     }
     else
     {
-        KLOG_DEBUG() << "Invalid input exists";
+        KLOG_DEBUG(qLcNetwork) << "Invalid input exists";
     }
 }
 

@@ -17,7 +17,6 @@
 
 #include <NetworkManagerQt/Manager>
 #include <QDebug>
-#include <QWidget>
 
 namespace NetworkUtils
 {
