@@ -1,7 +1,7 @@
-includedir=@KCP_INSTALL_INCLUDE@
+includedir=@KCP_INCLUDEDIR@
 
-category_desktop_location=@CATEGORY_DESKTOP_INSTALL_DIR@
-category_icon_location=@CATEGORY_ICON_INSTALL_DIR@
+category_desktop_location=@CATEGORY_DESKTOP_DIR@
+category_icon_location=@CATEGORY_ICON_DIR@
 
 plugin_location=@PLUGIN_LIBS_DIR@
 plugin_desktop_location=@PLUGIN_DESKTOP_DIR@
