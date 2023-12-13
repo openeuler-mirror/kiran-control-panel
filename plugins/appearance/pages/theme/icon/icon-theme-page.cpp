@@ -96,7 +96,6 @@ void IconThemePage::loadIconThemes()
     for (auto theme : themeInfos)
     {
         // 过滤非白名单主题
-        static const QStringList iconThemeWhiteList = {"Kiran", "Adwaita", "Spring","Summer"};
         if (!iconThemeWhiteList.contains(theme.name))
         {
             continue;
@@ -174,11 +173,10 @@ ThemePreviewWidget* IconThemePage::createPreviewWidget(const QString& themeName,
     previewWidget->setSpacingAndMargin(24, QMargins(24, 0, 24, 0));
     previewWidget->setSelectedIndicatorEnable(true);
     previewWidget->setSelected(selected);
-    previewWidget->setThemeInfo(themeName, themeName);
+    previewWidget->setThemeInfo(iconThemeWhiteList.value(themeName, themeName), themeName);
     previewWidget->setPreviewPixmapSize(QSize(40, 40));
     previewWidget->appendPreviewPixmap(pixmaps);
-    connect(previewWidget, &ThemePreviewWidget::pressed, this, [this]()
-            { emit requestReturn(); });
+    connect(previewWidget, &ThemePreviewWidget::pressed, this, [this]() { emit requestReturn(); });
 
     return previewWidget;
 }
