@@ -89,21 +89,19 @@ bool ThemePage::initIconTheme()
         return false;
     }
 
-    m_chooseIconWidget->setName(m_currIconTheme);
+    m_chooseIconWidget->setName(iconThemeWhiteList.value(m_currIconTheme, m_currIconTheme));
 
     m_iconThemePage = new IconThemePage(ui->stackedWidget);
     m_iconThemePage->installEventFilter(this);
     ui->stackedWidget->addWidget(m_iconThemePage);
 
     connect(m_chooseIconWidget, &SettingBriefWidget::clicked, this,
-            [this]
-            {
+            [this] {
                 ui->stackedWidget->setCurrentWidget(m_iconThemePage);
             });
 
     connect(m_iconThemePage, &IconThemePage::requestReturn, this,
-            [&, this]()
-            {
+            [&, this]() {
                 ui->stackedWidget->setCurrentIndex(0);
             });
 
@@ -128,14 +126,12 @@ bool ThemePage::initCursorTheme()
     ui->stackedWidget->addWidget(m_cursorThemePage);
 
     connect(m_chooseCursorWidget, &SettingBriefWidget::clicked,
-            [this]
-            {
+            [this] {
                 ui->stackedWidget->setCurrentWidget(m_cursorThemePage);
             });
 
     connect(m_cursorThemePage, &CursorThemePage::requestReturn,
-            [this]()
-            {
+            [this]() {
                 ui->stackedWidget->setCurrentIndex(0);
             });
 
@@ -154,8 +150,7 @@ void ThemePage::createThemeWidget()
     const QList<UiThemeInfo> uiThemes = {
         {tr("Light Theme"), LIGHT_THEME, ":/kcp-appearance/images/theme-light.png"},
         {tr("Auto"), THEME_AUTO_NAME, ":/kcp-appearance/images/theme-auto.png"},
-        {tr("Dark Theme"), DARK_THEME, ":/kcp-appearance/images/theme-dark.png"}
-    };
+        {tr("Dark Theme"), DARK_THEME, ":/kcp-appearance/images/theme-dark.png"}};
 
     for (int i = 0; i < uiThemes.count(); i++)
     {
@@ -212,7 +207,7 @@ void ThemePage::handleThemeChange(int type)
     {
         QString iconName;
         AppearanceGlobalInfo::instance()->getTheme(APPEARANCE_THEME_TYPE_ICON, iconName);
-        m_chooseIconWidget->setName(iconName);
+        m_chooseIconWidget->setName(iconThemeWhiteList.value(iconName, iconName));
         m_iconThemePage->updateCurrentTheme(iconName);
         break;
     }
@@ -258,5 +253,4 @@ void ThemePage::onCurrentUiThemeChanged()
             KLOG_INFO(qLcAppearance) << "updated ui theme" << currentID;
         }
     }
-
 }
