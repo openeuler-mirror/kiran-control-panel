@@ -16,8 +16,13 @@
 #define ICONTHEMES_H
 
 #include <QList>
-#include <QWidget>
 #include <QMap>
+#include <QWidget>
+
+// 图标主题及对应翻译
+const QMap<QString, QString> iconThemeWhiteList = {
+    {"Spring", QObject::tr("Spring")},
+    {"Summer", QObject::tr("Summer")}};
 
 namespace Ui
 {
