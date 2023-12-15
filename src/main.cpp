@@ -165,6 +165,27 @@ int main(int argc, char *argv[])
         exit(EXIT_SUCCESS);
     }
 
+    /// NOTE: 由于strftime获取系统locale进行格式化，Qt使用UTF8,若编码设置不为UTF8中文环境下会导致乱码
+    /// 所以LANG后面的编码若不为UTF-8,修改成UTF-8,使获取时间都为UTF-8格式
+    QString lang = qgetenv("LANG");
+    if (lang.contains("."))
+    {
+#if (QT_VERSION < QT_VERSION_CHECK(5, 14, 0))
+        QStringList splitRes = lang.split(".", QString::SkipEmptyParts);
+#else
+        QStringList splitRes = lang.split(".", Qt::SkipEmptyParts);
+#endif
+        if(splitRes.size() == 2 && splitRes.at(1)!="UTF-8" )
+        {
+            splitRes.replace(1, "UTF-8");
+            QString newLocale = splitRes.join(".");
+            setlocale(LC_TIME, newLocale.toStdString().c_str());
+        }
+    }
+
+    // 安装翻译
+    installTranslator();
+
     PluginManager* pManager = PluginManager::instance();
     pManager->init();
 
@@ -179,9 +200,6 @@ int main(int argc, char *argv[])
         cManager->dump();
         exit(EXIT_SUCCESS);
     }
-
-    // 安装翻译
-    installTranslator();
 
     PanelWindow w;
     w.jump(defaultCategory,defaultSubItem);
