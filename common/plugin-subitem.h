@@ -32,7 +32,7 @@ public:
           m_pCreateWidget(func)
     {
     }
-    ~PluginSubItem();
+    ~PluginSubItem(){};
 
 public:
     // 功能项ID,用于区分功能项,应确保其唯一
