@@ -131,7 +131,11 @@ void Ipv4Widget::saveSettings()
     {
         //多个DNS以分号分隔
         QString dnsString = ui->ipv4DNS->text();
+#if (QT_VERSION < QT_VERSION_CHECK(5, 14, 0))
+        QStringList dnsList = dnsString.split(";",QString::SkipEmptyParts);
+#else
         QStringList dnsList = dnsString.split(";",Qt::SkipEmptyParts);
+#endif
         for(auto dns : dnsList)
         {
             ipv4DNS << QHostAddress(dns);
