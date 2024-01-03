@@ -126,6 +126,18 @@ void AudioSystemTray::initConnect()
         setTrayIcon(currentVolume);
     });
 
+    connect(m_volumeSettingPage,&VolumeSettingPage::sinkMuteChanged,[this](bool mute,double currentVolume)
+    {
+        if(mute)
+        {
+            setTrayIcon(0);
+        }
+        else
+        {
+            setTrayIcon(currentVolume);
+        }
+    });
+    
     connect(m_statusNotifierManager, &StatusNotifierManagerInterface::StyleChanged, [=](const QString &style)
             {
                 KLOG_DEBUG() << "StyleChanged";
