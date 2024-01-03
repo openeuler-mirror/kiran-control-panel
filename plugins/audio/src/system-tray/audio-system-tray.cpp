@@ -124,6 +124,18 @@ void AudioSystemTray::initConnect()
         setTrayIcon(currentVolume);
     });
 
+    connect(m_volumeSettingPage,&VolumeSettingPage::sinkMuteChanged,[this](bool mute,double currentVolume)
+    {
+        if(mute)
+        {
+            setTrayIcon(0);
+        }
+        else
+        {
+            setTrayIcon(currentVolume);
+        }
+    });
+
     connect(Kiran::StylePalette::instance(), &Kiran::StylePalette::themeChanged, [this](Kiran::PaletteType paletteType)
             {
                 //获取当前音量值重新设置TrayIcon
