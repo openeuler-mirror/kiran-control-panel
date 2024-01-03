@@ -72,6 +72,9 @@ public slots:
     void handleThemeChanged(Kiran::PaletteType paletteType);
 
 private:
+    QString findIconPathByStatus(NetworkManager::Status status);
+
+private:
     QSystemTrayIcon *m_systemTray;
     QMenu *m_menu;
     QAction *m_networkSetting;
