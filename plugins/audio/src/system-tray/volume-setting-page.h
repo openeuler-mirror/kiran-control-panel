@@ -41,6 +41,8 @@ public:
     void disableSettings();
 
 public slots:
+    void changeSinkMute(bool value);
+    void changeSinkInputMute(bool value);
     void handleVolumeChanged(double value);
     void handleMuteButtonClicked();
     void handleDefaultSinkChanged(int index);
@@ -57,10 +59,11 @@ private:
     template <class Audio>
     void initSettings(Audio *audio);
     template <class Audio>
-    void clickMuteButton(Audio *audio);
+    void switchMute(Audio *audio);
 
 signals:
     void volumeChanged(double value);
+    void sinkMuteChanged(bool mute, double currentVolume);
 
 private:
     Ui::VolumeSettingPage *ui;
