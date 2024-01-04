@@ -330,7 +330,6 @@ void NetworkTray::getTrayGeometry()
 {
     // 名称待修改
     QDBusPendingReply<QString> getGeometry = m_statusNotifierManager->GetGeometry("~04-network");
-    KLOG_DEBUG() << "getGeometry.value():" << getGeometry.value();
 
     double height, width, x, y;
     QJsonParseError jsonParseError;
@@ -360,38 +359,69 @@ void NetworkTray::getTrayGeometry()
 void NetworkTray::setTrayIcon(NetworkManager::Status status)
 {
     QIcon icon;
-    if (status == NetworkManager::Status::Connected)
+    QString iconPath = findIconPathByStatus(status);
+    icon.addPixmap(NetworkUtils::trayIconColorSwitch(iconPath));
+    icon.addPixmap(NetworkUtils::trayIconColorSwitch(iconPath, 64));
+    m_systemTray->setIcon(icon);
+}
+
+QString NetworkTray::findIconPathByStatus(NetworkManager::Status status)
+{
+    QString iconPath;
+    if (status >= NetworkManager::Status::ConnectedLinkLocal)
     {
         // 判断主连接类型，托盘网络图标以主连接类型为准
         // NetworkManager::primaryConnectionType() 更新不及时，暂时不用
+        /**
+         * NOTE:
+         * 注意特殊情况，如果当网络状态为已连接，但是没有主连接，则遍历所有已激活的连接，
+         * 按有线优先于无线的原则，如果存在激活的有线连接，则显示有线网络图标;
+         */
         ActiveConnection::Ptr primaryActiveConnection = primaryConnection();
         if (primaryActiveConnection != nullptr)
         {
             auto primaryConnectionType = primaryActiveConnection->connection()->settings()->connectionType();
             if (primaryConnectionType == ConnectionSettings::Wireless)
             {
-                icon.addPixmap(NetworkUtils::trayIconColorSwitch(":/kcp-network-images/wireless-4.svg"));
-                icon.addPixmap(NetworkUtils::trayIconColorSwitch(":/kcp-network-images/wireless-4.svg", 64));
+                iconPath = ":/kcp-network-images/wireless-4.svg";
             }
             else
             {
-                icon.addPixmap(NetworkUtils::trayIconColorSwitch(":/kcp-network-images/wired-connection.svg"));
-                icon.addPixmap(NetworkUtils::trayIconColorSwitch(":/kcp-network-images/wired-connection.svg", 64));
+                iconPath = ":/kcp-network-images/wired-connection.svg";
+            }
+            return iconPath;
+        }
+
+        ActiveConnection::List list = activeConnections();
+        for (auto connection : list)
+        {
+            if (connection->type() == ConnectionSettings::ConnectionType::Wired)
+            {
+                iconPath = ":/kcp-network-images/wired-connection.svg";
+                return iconPath;
+            }
+        }
+
+        for (auto connection : list)
+        {
+            if (connection->type() == ConnectionSettings::ConnectionType::Wireless)
+            {
+                iconPath = ":/kcp-network-images/wireless-4.svg";
+                return iconPath;
             }
         }
     }
     else if ((status == NetworkManager::Status::Disconnecting) || (status == NetworkManager::Status::Connecting))
     {
         // TODO:加载动画
-        icon.addPixmap(NetworkUtils::trayIconColorSwitch(":/kcp-network-images/wired-disconnected.svg"));
-        icon.addPixmap(NetworkUtils::trayIconColorSwitch(":/kcp-network-images/wired-disconnected.svg", 64));
+        iconPath = ":/kcp-network-images/wired-disconnected.svg";
     }
     else
     {
-        icon.addPixmap(NetworkUtils::trayIconColorSwitch(":/kcp-network-images/wired-disconnected.svg"));
-        icon.addPixmap(NetworkUtils::trayIconColorSwitch(":/kcp-network-images/wired-disconnected.svg", 64));
+        iconPath = ":/kcp-network-images/wired-disconnected.svg";
     }
-    m_systemTray->setIcon(icon);
+
+    return iconPath;
 }
 
 // 重新获取device、初始化，刷新
@@ -575,11 +605,13 @@ void NetworkTray::handleWirelessEnabledChanged(bool enable)
 
 void NetworkTray::handleNetworkManagerStatusChanged(NetworkManager::Status status)
 {
+    KLOG_INFO() << "NetworkManager Status Changed:" << status;
     setTrayIcon(status);
 }
 
 void NetworkTray::handlePrimaryConnectionChanged(const QString &uni)
 {
+    KLOG_INFO() << "primary connection changed, current network manager status" << NetworkManager::status();
     setTrayIcon(NetworkManager::status());
 }
 
@@ -606,7 +638,6 @@ void NetworkTray::UnavailableTrayPage()
     initUnavailableWidget();
     m_verticalLayout->addWidget(m_unavailableWidget);
     KLOG_DEBUG() << "add unavailable widget";
-
 }
 
 void NetworkTray::reloadWiredTrayPage()
