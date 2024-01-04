@@ -15,8 +15,8 @@
 #include "dbus/audio-device-interface.h"
 #include "dbus/audio-interface.h"
 #include "dbus/audio-stream-interface.h"
-#include "ui_volume-setting-page.h"
 #include "logging-category.h"
+#include "ui_volume-setting-page.h"
 
 #include <kiran-session-daemon/audio-i.h>
 #include <qt5-log-i.h>
@@ -41,7 +41,9 @@ VolumeSettingPage::VolumeSettingPage(enum AudioNode audio, const QString objectP
         m_sink = new AudioDeviceInterface(AUDIO_DBUS_NAME, defaultSinkPath, QDBusConnection::sessionBus(), this);
         initAudioDevice();
 
-        connect(m_sink, &AudioDeviceInterface::volumeChanged, this, &VolumeSettingPage::handleVolumeChanged);
+        connect(m_sink, &AudioDeviceInterface::volumeChanged, this, &VolumeSettingPage::handleVolumeChanged, Qt::UniqueConnection);
+        connect(m_sink, &AudioDeviceInterface::muteChanged, this, &VolumeSettingPage::changeSinkMute, Qt::UniqueConnection);
+
         connect(ui->volumeSetting, &QSlider::valueChanged, [this](int value)
                 {
                     double volumeValue = value / 100.0;
@@ -101,6 +103,7 @@ void VolumeSettingPage::initAudioStream()
     initSettings(m_sinkInput);
     ui->volumeName->setText(m_sinkInput->GetProperty("application.name"));
     connect(m_sinkInput, &AudioStreamInterface::volumeChanged, this, &VolumeSettingPage::handleVolumeChanged);
+    connect(m_sinkInput, &AudioStreamInterface::muteChanged, this, &VolumeSettingPage::changeSinkInputMute);
     connect(ui->volumeSetting, &QSlider::valueChanged, [this](int value)
             {
                 double volumeValue = value / 100.0;
@@ -123,10 +126,38 @@ void VolumeSettingPage::initSettings(Audio *audio)
     ui->volume->setText(QString::number(currentVolume) + "%");
 }
 
+void VolumeSettingPage::changeSinkMute(bool value)
+{
+    KLOG_DEBUG() << "change sink mute:" << value;
+    double currentVolume = m_sink->volume() * 100;
+    emit sinkMuteChanged(value, currentVolume);
+    if (value)
+    {
+        setVolumeIcon(0);
+    }
+    else
+    {
+        setVolumeIcon(currentVolume);
+    }
+}
+void VolumeSettingPage::changeSinkInputMute(bool value)
+{
+    KLOG_DEBUG() << "change sink input mute:" << value;
+    double currentVolume = m_sinkInput->volume() * 100;
+    if (value)
+    {
+        setVolumeIcon(0);
+    }
+    else
+    {
+        setVolumeIcon(currentVolume);
+    }
+}
+
 void VolumeSettingPage::handleVolumeChanged(double value)
 {
-    QSignalBlocker blocker(ui->volumeSetting); // 为了避免拖动的同时设置位置会出现问题
-    int currentVolume = round(value * 100);  // 表示数值的时候向上取整
+    QSignalBlocker blocker(ui->volumeSetting);  // 为了避免拖动的同时设置位置会出现问题
+    int currentVolume = round(value * 100);     // 表示数值的时候向上取整
     ui->volume->setText(QString::number(currentVolume) + "%");
     setVolumeIcon(currentVolume);
     ui->volumeSetting->setValue(currentVolume);
@@ -136,9 +167,9 @@ void VolumeSettingPage::handleVolumeChanged(double value)
 void VolumeSettingPage::handleMuteButtonClicked()
 {
     if (m_audioNode == AUDIO_DEVICE)
-        clickMuteButton(m_sink);
+        switchMute(m_sink);
     else
-        clickMuteButton(m_sinkInput);
+        switchMute(m_sinkInput);
 }
 
 void VolumeSettingPage::handleDefaultSinkChanged(int index)
@@ -154,7 +185,8 @@ void VolumeSettingPage::handleDefaultSinkChanged(int index)
     QDBusPendingReply<QString> defaultSinkPath = m_audioInterface->GetDefaultSink();
     m_sink = new AudioDeviceInterface(AUDIO_DBUS_NAME, defaultSinkPath, QDBusConnection::sessionBus(), this);
     initAudioDevice();
-    connect(m_sink, &AudioDeviceInterface::volumeChanged, this, &VolumeSettingPage::handleVolumeChanged);
+    connect(m_sink, &AudioDeviceInterface::volumeChanged, this, &VolumeSettingPage::handleVolumeChanged, Qt::UniqueConnection);
+    connect(m_sink, &AudioDeviceInterface::muteChanged, this, &VolumeSettingPage::changeSinkMute, Qt::UniqueConnection);
 }
 
 void VolumeSettingPage::handleSinkAdded(int index)
@@ -187,30 +219,17 @@ void VolumeSettingPage::handleSinkDelete(int index)
 }
 
 template <class Audio>
-void VolumeSettingPage::clickMuteButton(Audio *audio)
+void VolumeSettingPage::switchMute(Audio *audio)
 {
-    double currentVolumeDouble = audio->volume() * 100;
-    int currentVolume = round(currentVolumeDouble);
-
-    if (currentVolume != 0)
+    if (!audio->mute())
     {
-        m_volumeBeforeMute = currentVolume;
-        if (!audio->mute())
-        {
-            audio->SetMute(true);
-        }
-        audio->SetVolume(0);
-        KLOG_DEBUG(qLcAudio) << "current sink is mute :" << audio->mute();
+        audio->SetMute(true);
     }
     else
     {
-        if (m_volumeBeforeMute != 0)
-        {
-            //重新设置音量时，会自动解除静音状态
-            audio->SetVolume(m_volumeBeforeMute / 100.0);
-            m_volumeBeforeMute = 0;
-        }
+        audio->SetMute(false);
     }
+    KLOG_DEBUG() << "current defalut sink mute:" << audio->mute();
 }
 
 // XXX:频繁调用函数,需要优化
