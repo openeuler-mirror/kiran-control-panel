@@ -20,17 +20,17 @@
 #include <QMenu>
 #include <QPainter>
 #include <QPainterPath>
+#include <QTcpSocket>
+#include <QTimer>
 #include <QVBoxLayout>
 #include "config.h"
+#include "logging-category.h"
 #include "status-notification.h"
 #include "status-notifier-manager.h"
 #include "tray-page.h"
 #include "utils.h"
 #include "wired-tray-widget.h"
 #include "wireless-tray-widget.h"
-#include <QTcpSocket>
-#include <QTimer>
-#include "logging-category.h"
 
 using namespace NetworkManager;
 
@@ -359,42 +359,70 @@ void NetworkTray::getTrayGeometry()
 void NetworkTray::updateTrayIcon()
 {
     auto status = NetworkManager::status();
-    if (status != NetworkManager::Status::Connected)
+    if (status < NetworkManager::Status::ConnectedLinkLocal)
     {
         setTrayIcon(DISCONNECTED);
         return;
     }
 
+#define SET_TRAY_ICON_AND_CHECK_CONNECTIVITY_AND_RETURN(state) \
+    if (state != UNKNOWN)                                      \
+    {                                                          \
+        setTrayIcon(state);                                    \
+        checkInternetConnectivity();                           \
+        return;                                                \
+    }
+
+    NetworkState state = UNKNOWN;
     // 判断主连接类型，托盘网络图标以主连接类型为准
     // NetworkManager::primaryConnectionType() 更新不及时，暂时不用
+    /**
+     * NOTE:
+     * 注意特殊情况，如果当网络状态为已连接，但是没有主连接，则遍历所有已激活的连接，
+     * 按有线优先于无线的原则，如果存在激活的有线连接，则显示有线网络图标;其次显示无线网络图标
+     * 如果既不是有线也不是无线，则显示有线网络图标
+     */
     ActiveConnection::Ptr primaryActiveConnection = primaryConnection();
-    if (primaryActiveConnection.isNull())
+    if (!primaryActiveConnection.isNull())
     {
-        KLOG_INFO(qLcNetwork) << "update tray icon failed, primary active connection is null";
-        return;
+        if (primaryActiveConnection->type() == ConnectionSettings::Wireless)
+        {
+            state = WIRELESS_CONNECTED_BUT_NOT_ACCESS_INTERNET;
+        }
+        else
+        {
+            state = WIRED_CONNECTED_BUT_NOT_ACCESS_INTERNET;
+        }
+    }
+    SET_TRAY_ICON_AND_CHECK_CONNECTIVITY_AND_RETURN(state);
+
+    KLOG_INFO(qLcNetwork) << "primary active connection is null";
+    ActiveConnection::List list = activeConnections();
+    for (auto connection : list)
+    {
+        if (connection->type() == ConnectionSettings::ConnectionType::Wired)
+        {
+            state = WIRED_CONNECTED_BUT_NOT_ACCESS_INTERNET;
+            break;
+        }
+    }
+    SET_TRAY_ICON_AND_CHECK_CONNECTIVITY_AND_RETURN(state);
+
+    for (auto connection : list)
+    {
+        if (connection->type() == ConnectionSettings::ConnectionType::Wireless)
+        {
+            state = WIRELESS_CONNECTED_BUT_NOT_ACCESS_INTERNET;
+            break;
+        }
     }
 
-    // NetworkManager::connectivity() 不准确，使用checkConnectivity
-    QDBusPendingReply<uint> reply = NetworkManager::checkConnectivity();
-    reply.waitForFinished();
-    uint result = reply.value();
-
-    if (result == NetworkManager::Connectivity::Full)
-    {
-        checkInternetConnectivity();
-        return;
-    }
-
-    NetworkState state;
-    if (primaryActiveConnection->type() == ConnectionSettings::Wireless)
-    {
-        state = WIRELESS_CONNECTED_BUT_NOT_ACCESS_INTERNET;
-    }
-    else
+    //最后如果既不是有线也不是无线，则显示有线网络图标
+    if (state == UNKNOWN)
     {
         state = WIRED_CONNECTED_BUT_NOT_ACCESS_INTERNET;
     }
-    setTrayIcon(state);
+    SET_TRAY_ICON_AND_CHECK_CONNECTIVITY_AND_RETURN(state);
 }
 
 void NetworkTray::setTrayIcon(NetworkState state)
@@ -712,6 +740,15 @@ void NetworkTray::initTcpSocket()
 
 void NetworkTray::checkInternetConnectivity()
 {
+    // NetworkManager::connectivity() 不准确，使用checkConnectivity
+    QDBusPendingReply<uint> reply = NetworkManager::checkConnectivity();
+    reply.waitForFinished();
+    uint result = reply.value();
+    if (result != NetworkManager::Connectivity::Full)
+    {
+        return;
+    }
+
     QSettings confSettings(SETTINGS_PATH, QSettings::NativeFormat);
     QVariant enable = confSettings.value(QString("Network/CheckInternetConnectivity"));
     KLOG_DEBUG(qLcNetwork) << "check Internet Connectivity : " << enable;
@@ -728,11 +765,18 @@ void NetworkTray::checkInternetConnectivity()
 void NetworkTray::internetConnected()
 {
     KLOG_DEBUG(qLcNetwork) << "Connectivity check pass";
-    ActiveConnection::Ptr primaryActiveConnection = primaryConnection();
     NetworkState state;
-    if (primaryActiveConnection->type() == ConnectionSettings::Wireless)
+    ActiveConnection::Ptr primaryActiveConnection = primaryConnection();
+    if (!primaryActiveConnection.isNull())
     {
-        state = WIRELESS_CONNECTED;
+        if (primaryActiveConnection->type() == ConnectionSettings::Wireless)
+        {
+            state = WIRELESS_CONNECTED;
+        }
+        else
+        {
+            state = WIRED_CONNECTED;
+        }
     }
     else
     {
