@@ -36,6 +36,7 @@ public:
 
     void setLeftButtonVisible(bool visible, const QIcon& icon, bool leftIconChanged = true);
     void setRightButtonVisible(bool visible, const QIcon& icon, bool rightIconChanged = true);
+    void setMidButtonVisible(bool visible, const QIcon& icon, bool midIconChanged = true);
 
     void setSwitcherVisible(bool visible);
     void setSwitcherChecked(bool checked);
@@ -60,15 +61,18 @@ private:
 
     QIcon m_leftIcon;
     QIcon m_rightIcon;
+    QIcon m_midIcon;
 
     QPushButton* m_leftButton;
     KiranLabel* m_label;
     KiranSwitchButton* m_switcher;
     QPushButton* m_rightButton;
+    QPushButton* m_midButton;
 
     bool m_clickable = false;
     bool m_clicked = false;
 
     bool m_leftIconChanged;
     bool m_rightIconChanged;
+    bool m_midIconChanged;
 };

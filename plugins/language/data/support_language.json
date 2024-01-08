@@ -1,0 +1,46 @@
+{
+	"SupportLanguage":[
+		{
+			"Locale": "zh_CN.UTF-8",
+			"Description": "简体中文",
+			"LangCode": "zh_CN",
+			"LanguageName": "Simplified Chinese"
+		},
+		{
+			"Locale": "en_US.UTF-8",
+			"Description": "English",
+			"LangCode": "en",
+			"LanguageName": "English"
+		},
+		{
+			"Locale": "bo_CN",
+			"Description": "বাংলা",
+			"LangCode": "bo",
+			"LanguageName": "Tibetan"
+		},
+		{
+			"Locale": "ky_KG",
+			"Description": "Кыргызча",
+			"LangCode": "ky",
+			"LanguageName": "Kirgiz"
+		},
+		{
+			"Locale": "mn_MN",
+			"Description": "Монгол",
+			"LangCode": "mn",
+			"LanguageName": "Mongolian"
+		},
+		{
+			"Locale": "kk_KZ",
+			"Description": "Қазақша",
+			"LangCode": "kk",
+			"LanguageName": "Kazakh"
+		},
+		{
+			"Locale": "ug_CN",
+			"Description": "Uyghurche",
+			"LangCode": "ug",
+			"LanguageName": "Uighur"
+		}
+    ]
+}

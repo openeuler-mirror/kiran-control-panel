@@ -1,0 +1,30 @@
+[Kiran Control Panel Category]
+Category=language
+
+Name=language
+Name[zh_CN]=语言
+Name[bo_CN]=སྐད་སྒྲ།
+Name[kk_KG]=үн
+Name[kk_KZ]=дыбыс
+Name[mn_MN]=дуу чимээ
+Name[ug_CN]=ئاۋاز 
+
+Comment=language settings
+Comment[zh_CN]=语言设置
+Comment[bo_CN]=སྐད་སྒྲ་སྒྲིག་པ།
+Comment[kk_KG]=Үн параметрлери
+Comment[kk_KZ]=Дыбыс параметрлері
+Comment[mn_MN]=Дуу чимээний тохиргоо
+Comment[ug_CN]=ئاۋاز تەسىس قىلىش 
+
+Icon=language.png
+
+Weight=7
+
+Keywords[zh_CN]=语言
+Keywords[bo_CN]=སྐད་སྒྲ།
+Keywords[kk_KG]=үн
+Keywords[kk_KZ]=дыбыс
+Keywords[mn_MN]=дуу чимээ
+Keywords[ug_CN]=ئاۋاز 
+Keywords=language

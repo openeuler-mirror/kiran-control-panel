@@ -3387,6 +3387,101 @@
     </message>
 </context>
 <context>
+    <name>LangpackInstaller</name>
+    <message>
+        <source>Package Install</source>
+        <translation>语言包下载</translation>
+    </message>
+    <message>
+        <source>Installing...</source>
+        <translation>下载中...</translation>
+    </message>
+    <message>
+        <source>Install Complete!</source>
+        <translation>下载完成!</translation>
+    </message>
+</context>
+<context>
+    <name>LanguageManager</name>
+    <message>
+        <source>Error</source>
+        <translation>错误</translation>
+    </message>
+    <message>
+        <source>set locale failed</source>
+        <translation>设置语言失败</translation>
+    </message>
+    <message>
+        <source>%1 inexistence in system</source>
+        <translation>%1 在系统中不存在</translation>
+    </message>
+</context>
+<context>
+    <name>LanguagePage</name>
+    <message>
+        <source>Language Select(Reboot to take effect)</source>
+        <translation>语言选择(重启生效)</translation>
+    </message>
+    <message>
+        <source>Simplified Chinese</source>
+        <translation>简体中文</translation>
+    </message>
+    <message>
+        <source>English</source>
+        <translation>英语</translation>
+    </message>
+    <message>
+        <source>Tibetan</source>
+        <translation>藏语</translation>
+    </message>
+    <message>
+        <source>Kirgiz</source>
+        <translation>柯尔克孜语</translation>
+    </message>
+    <message>
+        <source>Mongolian</source>
+        <translation>蒙古语</translation>
+    </message>
+    <message>
+        <source>Kazakh</source>
+        <translation>哈萨克语</translation>
+    </message>
+    <message>
+        <source>Uighur</source>
+        <translation>维吾尔语</translation>
+    </message>
+</context>
+<context>
+    <name>LanguagePlugin</name>
+    <message>
+        <source>Language</source>
+        <translation>语言设置</translation>
+    </message>
+</context>
+<context>
+    <name>LanguageSelectDialog</name>
+    <message>
+        <source>Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No</source>
+        <translation>取消</translation>
+    </message>
+    <message>
+        <source>Yes</source>
+        <translation type="unfinished">确认</translation>
+    </message>
+    <message>
+        <source>Add Language</source>
+        <translation type="unfinished">添加语言</translation>
+    </message>
+    <message>
+        <source>Search</source>
+        <translation>输入你想找的内容</translation>
+    </message>
+</context>
+<context>
     <name>LayoutItem</name>
     <message>
         <location filename="../plugins/keyboard/utils/layout-item.ui" line="14"/>
