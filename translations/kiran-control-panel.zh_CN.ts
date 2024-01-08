@@ -533,7 +533,7 @@
     <message>
         <location filename="../plugins/power/pages/battery-settings-page.ui" line="182"/>
         <source>Reduce screen brightness when  no power</source>
-        <translation>低点亮时减少亮度</translation>
+        <translation>低电量时减少亮度</translation>
     </message>
     <message>
         <location filename="../plugins/power/pages/battery-settings-page.ui" line="212"/>
