@@ -14,6 +14,11 @@ endif()
 if(NOT ENABLE_USER_GROUP)
     list(FILTER CATEGORY_DESKTOP EXCLUDE REGEX "group.desktop")
 endif()
+
+if(NOT ENABLE_APPLICATION)
+    list(FILTER CATEGORY_DESKTOP EXCLUDE REGEX "application.desktop")
+endif()
+
 install(FILES ${CATEGORY_DESKTOP} DESTINATION ${CATEGORY_DESKTOP_DIR})
 
 # 安装主分类相关图标文件
