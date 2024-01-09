@@ -6,7 +6,6 @@ endif ()
 
 pkg_search_module(CRYPTOPP REQUIRED cryptopp)
 pkg_search_module(PAM REQUIRED pam)
-pkg_search_module(LIBCRYPT REQUIRED libcrypt)
 
 file(GLOB_RECURSE ACCOUNT_SRC
         ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp
@@ -29,8 +28,7 @@ target_include_directories(${TARGET_NAME} PRIVATE
         ${KIRAN_CC_DAEMON_INCLUDE_DIRS}
         ${KLOG_INCLUDE_DIRS}
         ${KIRAN_STYLE_INCLUDE_DIRS}
-        ${CRYPTOPP_INCLUDE_DIRS}
-	${LIBCRYPT_INCLUDE_DIRS})
+        ${CRYPTOPP_INCLUDE_DIRS})
 
 target_link_libraries(${TARGET_NAME}
         common-widgets
@@ -43,7 +41,6 @@ target_link_libraries(${TARGET_NAME}
         ${KIRAN_CC_DAEMON_LIBRARIES}
         ${KLOG_LIBRARIES}
         ${KIRAN_STYLE_LIBRARIES}
-        ${CRYPTOPP_LIBRARIES}
-	${LIBCRYPT_LIBRARIES})
+        ${CRYPTOPP_LIBRARIES})
 
 install(TARGETS ${TARGET_NAME} DESTINATION ${PLUGIN_LIBS_DIR}/)
