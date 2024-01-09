@@ -113,14 +113,9 @@ void Fonts::initConnections()
     connect(AppearanceGlobalInfo::instance(), &AppearanceGlobalInfo::fontChanged,
             this, &Fonts::onBackendFontChanged);
 
-    for (auto fontTypeCombos : m_fontTypeComboBoxMap.values())
+    for (auto fontTypeCombo : m_comboFontTypesMap.keys())
     {
-        auto fontNameComboBox = fontTypeCombos.first;
-        auto fontSizeComboBox = fontTypeCombos.second;
-
-        connect(fontNameComboBox, QOverload<int>::of(&QComboBox::currentIndexChanged),
-                this, &Fonts::onCurrentFontFamilyChanged);
-        connect(fontSizeComboBox, QOverload<int>::of(&QComboBox::currentIndexChanged),
+        connect(fontTypeCombo, QOverload<int>::of(&QComboBox::currentIndexChanged),
                 this, &Fonts::onCurrentFontFamilyChanged);
     }
 
