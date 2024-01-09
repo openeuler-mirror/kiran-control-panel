@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="zh_CN">
+<TS version="2.0" language="zh_CN">
 <context>
     <name>BatterySettingsPage</name>
     <message>
@@ -51,7 +51,7 @@
     <message>
         <location filename="../src/pages/battery-settings/battery-settings-page.ui" line="182"/>
         <source>Reduce screen brightness when  no power</source>
-        <translation>低点亮时减少亮度</translation>
+        <translation>低电量时减少亮度</translation>
     </message>
     <message>
         <location filename="../src/pages/battery-settings/battery-settings-page.ui" line="212"/>

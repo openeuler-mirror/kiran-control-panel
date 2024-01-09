@@ -72,7 +72,6 @@ target_link_libraries(${TARGET_NAME}
         Qt5::DBus
         Qt5::Svg
         pam
-        crypt
         ${KIRAN_WIDGETS_LIBRARIES}
         ${KIRAN_CC_DAEMON_LIBRARIES}
         ${ZERO_MQ_LIBRARIES}

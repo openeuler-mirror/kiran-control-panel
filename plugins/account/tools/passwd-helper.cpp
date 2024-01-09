@@ -14,7 +14,6 @@
 
 #include "passwd-helper.h"
 
-#include <crypt.h>
 #include <cryptopp/base64.h>
 #include <cryptopp/cryptlib.h>
 #include <cryptopp/hex.h>
@@ -32,62 +31,6 @@
 #include <QString>
 
 using namespace CryptoPP;
-
-bool PasswdHelper::encryptPassword(const QString &pwd, QString &encrypted)
-{
-    QByteArray byteArray = pwd.toLatin1();
-    QString saltChar = "ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvxyz./0123456789";
-
-    QString rand16SaltChar;
-
-    std::default_random_engine randomEngine;
-    std::uniform_int_distribution<int> uniformIntDistribution(0, saltChar.size() - 1);
-    for (int i = 0; i < 16; i++)
-    {
-        char ch = saltChar.at(uniformIntDistribution(randomEngine)).toLatin1();
-        rand16SaltChar.append(ch);
-    }
-
-    QString salt = QString("$6$%1$").arg(rand16SaltChar);
-    QByteArray saltByteArray = salt.toLatin1();
-
-    char *cryptedResult = nullptr;
-    QByteArray cryptedResultBuffer(100, 0);
-
-    //NOTE:兼容低版本libcrypt（不带有crypt_rn接口的版本）
-#if 0
-    forever
-    {
-        cryptedResult = crypt_rn(byteArray.data(),
-                                 saltByteArray.data(),
-                                 cryptedResultBuffer.data(),
-                                 cryptedResultBuffer.size());
-        if (cryptedResult == nullptr)
-        {
-            if (errno == ERANGE)
-            {
-                cryptedResultBuffer.resize(cryptedResultBuffer.size() * 2);
-                continue;
-            }
-            else
-            {
-                KLOG_WARNING() << "encrypt passwd failed," << strerror(errno);
-            }
-        }
-        break;
-    }
-#else
-    crypt_data cryptData{};
-    cryptedResult = crypt_r(byteArray.data(),
-                            saltByteArray.data(),
-                            &cryptData);
-#endif
-
-    if (cryptedResult)
-        encrypted = cryptedResult;
-
-    return cryptedResult != nullptr;
-}
 
 bool PasswdHelper::encryptPasswordByRsa(const QString &publicKey, const QString &pwd, QString &encrypted)
 {
