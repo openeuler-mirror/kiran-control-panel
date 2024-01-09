@@ -65,10 +65,6 @@ public:
 
     void addExclusionItem(ExclusionWidget* widget);
     void removeExclusionItem(ExclusionWidget* widget);
-
-    template <class T,typename = std::enable_if<std::is_base_of<ExclusionWidget, T>::value>>
-    QList<T*> getExclusionItems();
-
 signals:
     void currentItemChanged();
 
