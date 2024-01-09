@@ -125,19 +125,6 @@ void ExclusionGroup::removeExclusionItem(ExclusionWidget* widget)
     m_exclusionItems.remove(widget);
 }
 
-template <class T,typename = std::enable_if<std::is_base_of<ExclusionWidget, T>::value>>
-QList<T*> ExclusionGroup::getExclusionItems()
-{
-    QList<T*>  list;
-
-    for( auto item : m_exclusionItems)
-    {
-        list << qobject_cast<T>(item);
-    }
-
-    return list;
-}
-
 void ExclusionGroup::onItemSelectedChanged(bool selected)
 {
     auto item = qobject_cast<ExclusionWidget*>(sender());
