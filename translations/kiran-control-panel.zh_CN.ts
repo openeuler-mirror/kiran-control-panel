@@ -5303,7 +5303,7 @@ This is line 50 of the test text</source>
     <message>
         <location filename="../plugins/appearance/pages/theme/theme-page.cpp" line="151"/>
         <source>Light Theme</source>
-        <translation>浅色</translation>
+        <translation>冰晶白</translation>
     </message>
     <message>
         <location filename="../plugins/appearance/pages/theme/theme-page.cpp" line="152"/>
@@ -5313,7 +5313,7 @@ This is line 50 of the test text</source>
     <message>
         <location filename="../plugins/appearance/pages/theme/theme-page.cpp" line="153"/>
         <source>Dark Theme</source>
-        <translation>深色</translation>
+        <translation>曜岩黑</translation>
     </message>
     <message>
         <location filename="../plugins/appearance/pages/theme/theme-page.cpp" line="82"/>

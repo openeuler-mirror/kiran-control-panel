@@ -27,7 +27,7 @@
 #include <QPushButton>
 
 #define DARK_THEME "Kiran-dark"
-#define LIGHT_THEME "Kiran"
+#define LIGHT_THEME "Kiran-white"
 #define THEME_AUTO_NAME "Kiran-auto"
 
 #define SETTING_THEME_NUM 2
