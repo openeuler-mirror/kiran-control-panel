@@ -2822,32 +2822,32 @@
         <translation>请用分号分隔多个DNS</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/plugin/setting-widget/ipv4-widget.cpp" line="243"/>
+        <location filename="../plugins/network/src/plugin/setting-widget/ipv4-widget.cpp" line="248"/>
         <source>Ipv4 DNS invalid</source>
         <translation>无效的Ipv4 DNS</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/plugin/setting-widget/ipv4-widget.cpp" line="262"/>
+        <location filename="../plugins/network/src/plugin/setting-widget/ipv4-widget.cpp" line="267"/>
         <source>Ipv4 address can not be empty</source>
         <translation>Ipv4地址不能为空</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/plugin/setting-widget/ipv4-widget.cpp" line="272"/>
+        <location filename="../plugins/network/src/plugin/setting-widget/ipv4-widget.cpp" line="277"/>
         <source>Ipv4 Address invalid</source>
         <translation>无效的Ipv4地址</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/plugin/setting-widget/ipv4-widget.cpp" line="282"/>
+        <location filename="../plugins/network/src/plugin/setting-widget/ipv4-widget.cpp" line="287"/>
         <source>NetMask can not be empty</source>
         <translation>子网掩码不能为空</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/plugin/setting-widget/ipv4-widget.cpp" line="292"/>
+        <location filename="../plugins/network/src/plugin/setting-widget/ipv4-widget.cpp" line="297"/>
         <source>Netmask invalid</source>
         <translation>无效的子网掩码</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/plugin/setting-widget/ipv4-widget.cpp" line="304"/>
+        <location filename="../plugins/network/src/plugin/setting-widget/ipv4-widget.cpp" line="309"/>
         <source>Ipv4 Gateway invalid</source>
         <translation>无效的Ipv4网关</translation>
     </message>
@@ -2951,22 +2951,22 @@
         <translation>请用分号分隔多个DNS</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/plugin/setting-widget/ipv6-widget.cpp" line="234"/>
+        <location filename="../plugins/network/src/plugin/setting-widget/ipv6-widget.cpp" line="240"/>
         <source>Ipv6 DNS invalid</source>
         <translation>无效的Ipv6 DNS</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/plugin/setting-widget/ipv6-widget.cpp" line="250"/>
+        <location filename="../plugins/network/src/plugin/setting-widget/ipv6-widget.cpp" line="256"/>
         <source>Ipv6 address can not be empty</source>
         <translation>Ipv6地址不能为空</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/plugin/setting-widget/ipv6-widget.cpp" line="261"/>
+        <location filename="../plugins/network/src/plugin/setting-widget/ipv6-widget.cpp" line="267"/>
         <source>Ipv6 address invalid</source>
         <translation>无效的Ipv6地址</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/plugin/setting-widget/ipv6-widget.cpp" line="274"/>
+        <location filename="../plugins/network/src/plugin/setting-widget/ipv6-widget.cpp" line="280"/>
         <source>Ipv6 Gateway invalid</source>
         <translation>无效的Ipv6网关</translation>
     </message>
@@ -4048,7 +4048,7 @@ This is line 50 of the test text</source>
     </message>
     <message>
         <location filename="../plugins/network/src/tray/network-tray.cpp" line="239"/>
-        <location filename="../plugins/network/src/tray/network-tray.cpp" line="518"/>
+        <location filename="../plugins/network/src/tray/network-tray.cpp" line="546"/>
         <source>Network unavailable</source>
         <translation>网络不可用</translation>
     </message>
@@ -4064,22 +4064,22 @@ This is line 50 of the test text</source>
         <translation>网络已断开</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/tray/network-tray.cpp" line="482"/>
+        <location filename="../plugins/network/src/tray/network-tray.cpp" line="510"/>
         <source>Wired network card: %1 available</source>
         <translation>有线网卡: %1 可用</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/tray/network-tray.cpp" line="487"/>
+        <location filename="../plugins/network/src/tray/network-tray.cpp" line="515"/>
         <source>Wireless network card: %1 available</source>
         <translation>无线网卡: %1 可用</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/tray/network-tray.cpp" line="524"/>
+        <location filename="../plugins/network/src/tray/network-tray.cpp" line="552"/>
         <source>Wired network card: %1 unavailable</source>
         <translation>有线网卡: %1 不可用</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/tray/network-tray.cpp" line="529"/>
+        <location filename="../plugins/network/src/tray/network-tray.cpp" line="557"/>
         <source>Wireless network card: %1 unavailable</source>
         <translation>无线网卡: %1 不可用</translation>
     </message>
@@ -5271,7 +5271,7 @@ This is line 50 of the test text</source>
     <message>
         <location filename="../plugins/appearance/pages/theme/theme-page.cpp" line="151"/>
         <source>Light Theme</source>
-        <translation>浅色</translation>
+        <translation>冰晶白</translation>
     </message>
     <message>
         <location filename="../plugins/appearance/pages/theme/theme-page.cpp" line="152"/>
@@ -5281,7 +5281,7 @@ This is line 50 of the test text</source>
     <message>
         <location filename="../plugins/appearance/pages/theme/theme-page.cpp" line="153"/>
         <source>Dark Theme</source>
-        <translation>深色</translation>
+        <translation>曜岩黑</translation>
     </message>
     <message>
         <location filename="../plugins/appearance/pages/theme/theme-page.cpp" line="82"/>
@@ -6039,7 +6039,7 @@ This is line 50 of the test text</source>
     </message>
     <message>
         <location filename="../plugins/audio/src/system-tray/volume-setting-page.ui" line="101"/>
-        <location filename="../plugins/audio/src/system-tray/volume-setting-page.cpp" line="96"/>
+        <location filename="../plugins/audio/src/system-tray/volume-setting-page.cpp" line="98"/>
         <source>Volume</source>
         <translation>音量</translation>
     </message>
