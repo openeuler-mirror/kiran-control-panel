@@ -35,6 +35,8 @@ class ShortcutItem;
 class KeyMap;
 class CustomLineEdit;
 class KeybindingBackEndProxy;
+class QLabel;
+
 class Shortcut : public QWidget
 {
     Q_OBJECT
@@ -59,7 +61,7 @@ private:
     ShortcutItem *createShortcutItem(QVBoxLayout *parent, ShortcutInfoPtr shortcutInfo, int type);
     bool isConflict(QString &originName, QString newKeyCombination);
     bool isValidKeycode(QList<int> keycodes);
-    bool getExecFromDesktop(QString fileName, QString &exec);
+    bool extractDesktopInfo(const QString& fileName, QString &exec, QString &icon);
     void updateShorcut(ShortcutInfoPtr newShortcut);
     void insertShortcut(ShortcutInfoPtr shortcutInfo);
     void clearFilterItems();
@@ -72,6 +74,7 @@ public slots:
     void handledShortcutDeleted(QString result);
     void handleShortcutChanged(QString result);
 
+    void handleCustomAppTextChanged(const QString& text);
     void handleInputKeycode(QList<int> keycodes);
 
     void handleItemDeleteClicked(QString uid);
@@ -96,8 +99,13 @@ private:
     QList<ShortcutItem *> m_shortcutItem;
     QList<ShortcutItem *> m_filterItem;
 
+    //记录上次通过应用打开的desktop文件记录的Exec和Icon
+    QString m_lastIconExec;
+    QString m_lastIcon;
+
     QToolButton *m_btnModifyApp;
     QToolButton *m_btnCustomApp;
+    QLabel *m_customAppIcon;
     CustomLineEdit *m_lECustomKey;
     CustomLineEdit *m_lEModifyKey;
 
