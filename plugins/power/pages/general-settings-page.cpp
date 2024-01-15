@@ -19,7 +19,6 @@
 #include <QListView>
 #include <QSignalBlocker>
 #include "dbus/kwin-color-correct.h"
-#include "dbus/power-profiles-wrapper.h"
 #include "dbus/power.h"
 #include "kiran-message-box.h"
 #include "kiran-session-daemon/power-i.h"
@@ -41,8 +40,7 @@ GeneralSettingsPage::GeneralSettingsPage(QWidget* parent)
     : QWidget(parent),
       ui(new Ui::GeneralSettingsPage),
       m_powerInterface(PowerInterface::getInstance()),
-      m_kwinColorCorrect(new KWinColorCorrect(this)),
-      m_powerprofiles(new PowerProfilesWrapper(this))
+      m_kwinColorCorrect(new KWinColorCorrect(this))
 {
     ui->setupUi(this);
     init();
@@ -147,13 +145,18 @@ void GeneralSettingsPage::initUI()
     }
 
     // 初始化计算机模式
-    if (m_powerprofiles->isValid())
+    struct PowerProfileInfo
     {
-        ui->combo_computerMode->addItems(m_powerprofiles->supportedProfiles());
-    }
-    else
+        QString name;
+        int index;
+    };
+    QList<PowerProfileInfo> profiles = {
+        {tr("Energy-saving mode"), POWER_PROFILE_MODE_SAVER},
+        {tr("Balanced mode"), POWER_PROFILE_MODE_BALANCED},
+        {tr("High performance mode"), POWER_PROFILE_MODE_PERFORMANCE}};
+    for (auto profile : profiles)
     {
-        ui->widget_computerMode->setVisible(false);
+        ui->combo_computerMode->addItem(profile.name, profile.index);
     }
 
     /// 初始化QSlider,和延迟设置的Timer
@@ -209,7 +212,7 @@ void GeneralSettingsPage::initConnection()
     connect(ui->combo_closingLid, QOverload<int>::of(&QComboBox::currentIndexChanged),
             this, &GeneralSettingsPage::updateEventAction);
 
-    connect(ui->combo_computerMode, &QComboBox::currentTextChanged,
+    connect(ui->combo_computerMode, QOverload<int>::of(&QComboBox::currentIndexChanged),
             this, &GeneralSettingsPage::updateCurrentComputerMode);
 
     connect(&m_brightnessSettingTimer, &QTimer::timeout,
@@ -271,10 +274,15 @@ void GeneralSettingsPage::load()
     updateEventActionComboCurrent(ui->combo_closingLid, POWER_EVENT_LID_CLOSED);
 
     // 计算机模式
-    if (m_powerprofiles->isValid())
+    QSignalBlocker blocker(ui->combo_computerMode);
+    int activePorfileComboxIdx = ui->combo_computerMode->findData(m_powerInterface->activeProfile());
+    if (activePorfileComboxIdx != -1)
     {
-        QSignalBlocker blocker(ui->combo_computerMode);
-        ui->combo_computerMode->setCurrentText(m_powerprofiles->activeProfile());
+        ui->combo_computerMode->setCurrentIndex(activePorfileComboxIdx);
+    }
+    else
+    {
+        KLOG_ERROR() << "can not fidn current active computer mode in combobox:" << m_powerInterface->activeProfile();
     }
 
     // 显示器亮度调整
@@ -496,9 +504,20 @@ void GeneralSettingsPage::onSliderColorTempValueChanged(int value)
     m_colorTempSettingTimer.start();
 }
 
-void GeneralSettingsPage::updateCurrentComputerMode(const QString& text)
+void GeneralSettingsPage::updateCurrentComputerMode(int idx)
 {
-    m_powerprofiles->setActiveProfile(text);
+    auto computerMode = ui->combo_computerMode->itemData(idx);
+    auto reply = m_powerInterface->SwitchProfile(computerMode.toInt());
+    reply.waitForFinished();
+    if (reply.isError())
+    {
+        KLOG_ERROR() << "set current computer mode" << computerMode.toInt()
+                     << "failed," << reply.error();
+    }
+    else
+    {
+        KLOG_DEBUG() << "set current computer mode" << computerMode.toInt();
+    }
 }
 
 void GeneralSettingsPage::setUiBrightnessPercent(int percent)
