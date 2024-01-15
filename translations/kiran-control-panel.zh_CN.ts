@@ -33,18 +33,18 @@
     <name>AccountWidget</name>
     <message>
         <location filename="../plugins/account/account-widget.cpp" line="100"/>
-        <location filename="../plugins/account/account-widget.cpp" line="420"/>
+        <location filename="../plugins/account/account-widget.cpp" line="418"/>
         <source>disable</source>
         <translation type="unfinished">禁用</translation>
     </message>
     <message>
         <location filename="../plugins/account/account-widget.cpp" line="100"/>
-        <location filename="../plugins/account/account-widget.cpp" line="420"/>
+        <location filename="../plugins/account/account-widget.cpp" line="418"/>
         <source>enable</source>
         <translation type="unfinished">启用</translation>
     </message>
     <message>
-        <location filename="../plugins/account/account-widget.cpp" line="225"/>
+        <location filename="../plugins/account/account-widget.cpp" line="223"/>
         <source>Create new user</source>
         <translation type="unfinished">创建新用户</translation>
     </message>
@@ -2983,22 +2983,22 @@
         <translation>请用分号分隔多个DNS</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/plugin/setting-widget/ipv6-widget.cpp" line="234"/>
+        <location filename="../plugins/network/src/plugin/setting-widget/ipv6-widget.cpp" line="236"/>
         <source>Ipv6 DNS invalid</source>
         <translation>无效的Ipv6 DNS</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/plugin/setting-widget/ipv6-widget.cpp" line="250"/>
+        <location filename="../plugins/network/src/plugin/setting-widget/ipv6-widget.cpp" line="252"/>
         <source>Ipv6 address can not be empty</source>
         <translation>Ipv6地址不能为空</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/plugin/setting-widget/ipv6-widget.cpp" line="261"/>
+        <location filename="../plugins/network/src/plugin/setting-widget/ipv6-widget.cpp" line="263"/>
         <source>Ipv6 address invalid</source>
         <translation>无效的Ipv6地址</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/plugin/setting-widget/ipv6-widget.cpp" line="274"/>
+        <location filename="../plugins/network/src/plugin/setting-widget/ipv6-widget.cpp" line="276"/>
         <source>Ipv6 Gateway invalid</source>
         <translation>无效的Ipv6网关</translation>
     </message>
@@ -4675,8 +4675,8 @@ This is line 50 of the test text</source>
     </message>
     <message>
         <location filename="../plugins/keybinding/shortcut.ui" line="210"/>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="163"/>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="550"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="174"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="580"/>
         <source>Edit</source>
         <translation>编辑</translation>
     </message>
@@ -4688,8 +4688,8 @@ This is line 50 of the test text</source>
     <message>
         <location filename="../plugins/keybinding/shortcut.ui" line="346"/>
         <location filename="../plugins/keybinding/shortcut.ui" line="551"/>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="106"/>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="118"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="116"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="129"/>
         <source>Add</source>
         <translation>添加</translation>
     </message>
@@ -4742,7 +4742,7 @@ This is line 50 of the test text</source>
     <message>
         <location filename="../plugins/keybinding/shortcut.ui" line="589"/>
         <source>Cancel</source>
-        <translation type="unfinished">取消</translation>
+        <translation>取消</translation>
     </message>
     <message>
         <location filename="../plugins/keybinding/shortcut.ui" line="635"/>
@@ -4772,7 +4772,7 @@ This is line 50 of the test text</source>
     <message>
         <location filename="../plugins/keybinding/shortcut.ui" line="770"/>
         <source>Save</source>
-        <translation type="unfinished">保存</translation>
+        <translation>保存</translation>
     </message>
     <message>
         <location filename="../plugins/keybinding/shortcut.ui" line="805"/>
@@ -4782,129 +4782,139 @@ This is line 50 of the test text</source>
     <message>
         <location filename="../plugins/keybinding/shortcut.ui" line="808"/>
         <source>return</source>
-        <translation type="unfinished">返回</translation>
+        <translation>返回</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="87"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="90"/>
         <source>Please enter a search keyword...</source>
         <translation>请输入搜索关键字...</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="99"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="102"/>
         <source>Required</source>
         <translation>必填</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="127"/>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="134"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="138"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="145"/>
         <source>Please press the new shortcut key</source>
         <translation>请输入新快捷键</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="161"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="172"/>
         <source>Finished</source>
         <translation>完成</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="215"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="226"/>
         <source>failed to load shortcut key data!</source>
         <translation>加载快捷键数据失败！</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="257"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="268"/>
         <source>List shortcut failed,error:%1</source>
         <translation>列出快捷键失败，错误:%1</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="300"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="311"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="406"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="301"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="312"/>
         <source>Get shortcut failed,error:</source>
         <translation>获取快捷键失败，错误：</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="379"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="395"/>
         <source>Open File</source>
         <translation>打开文件</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="603"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="397"/>
+        <source>Desktop entries(*.desktop)</source>
+        <translation>桌面文件(*.desktop)</translation>
+    </message>
+    <message>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="633"/>
         <source>System</source>
         <translation>系统</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="605"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="635"/>
         <source>Sound</source>
         <translation>声音</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="655"/>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="705"/>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="726"/>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="761"/>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="782"/>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="805"/>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="825"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="685"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="735"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="756"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="791"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="812"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="845"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="866"/>
         <source>Failed</source>
         <translation>失败</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="656"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="686"/>
         <source>Delete shortcut failed,error:</source>
         <translation>删除快捷键失败，错误：</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="669"/>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="744"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="699"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="774"/>
         <source>Warning</source>
-        <translation type="unfinished">警告</translation>
+        <translation>警告</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="670"/>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="745"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="700"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="775"/>
         <source>Please complete the shortcut information!</source>
         <translation>请完善快捷键信息！</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="679"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="709"/>
         <source>Set shortcut</source>
         <translation>设置快捷键</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="680"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="710"/>
         <source>Are you sure you want to disable this shortcut?</source>
         <translation>是否确定要禁用此快捷键？</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="706"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="736"/>
         <source>Modify system shortcut failed,error:</source>
         <translation>修改系统快捷键失败，错误：</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="727"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="757"/>
         <source>Modify custom shortcut failed,error:</source>
         <translation>修改自定义快捷键失败，错误：</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="762"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="792"/>
         <source>Add custom shortcut failed,error:</source>
         <translation>添加自定义快捷键失败，错误：</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="783"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="813"/>
         <source>Reset shortcut failed,error:</source>
         <translation>重置快捷键失败，错误：</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="806"/>
-        <source>Cannot use shortcut &quot;%1&quot;, Because you cannot enter with this key.Please try again using Ctrl, Alt, or Shift at the same time.</source>
-        <translation>无法使用快捷键&quot;%1&quot;,因为使用此键将无法输入，请同时使用Ctrl，Alt，Shift再试一次。</translation>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="846"/>
+        <source>Cannot use shortcut &quot;%1&quot;,Please keep pressing the modifier keys such as Ctrl,Alt, and Shift before pressing the last key of the shortcut key</source>
+        <translation>无法使用快捷键&quot;%1&quot;, 请保持按压Ctrl、Alt、Shift等修饰键后，再按压快捷键的最后一个键</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="826"/>
+        <source>Cannot use shortcut &quot;%1&quot;, Because you cannot enter with this key.Please try again using Ctrl, Alt, or Shift at the same time.</source>
+        <translation type="vanished">无法使用快捷键&quot;%1&quot;,因为使用此键将无法输入，请同时使用Ctrl，Alt，Shift再试一次。</translation>
+    </message>
+    <message>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="867"/>
         <source>Shortcut keys %1 are already used in %2,Please try again!</source>
         <translation>快捷键%1已用于%2，请再试一次！</translation>
     </message>
