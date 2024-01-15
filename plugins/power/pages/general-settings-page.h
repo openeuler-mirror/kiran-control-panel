@@ -29,7 +29,6 @@ class PowerInterface;
 class KiranSwitchButton;
 class QGSettings;
 class KWinColorCorrect;
-class PowerProfilesWrapper;
 class GeneralSettingsPage : public QWidget
 {
     Q_OBJECT
@@ -62,13 +61,12 @@ private slots:
     void onSwitchAutoColorTempToggoled(bool checked);
     void updateColorTempatureValue();
     void onSliderColorTempValueChanged(int value);
-    void updateCurrentComputerMode(const QString& text);
+    void updateCurrentComputerMode(int idx);
 
 private:
     Ui::GeneralSettingsPage *ui;
     PowerInterface* m_powerInterface;
     KWinColorCorrect* m_kwinColorCorrect;
-    PowerProfilesWrapper* m_powerprofiles;
     QTimer m_brightnessSettingTimer;
     QTimer m_idleTimeSettingTimer;
     QTimer m_colorTempSettingTimer;
