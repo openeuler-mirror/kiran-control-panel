@@ -7,6 +7,7 @@ set(TARGET_NAME kiran-cpanel-power)
 pkg_search_module(UPOWER_GLIB REQUIRED upower-glib)
 
 set(POWER_PLUGIN_DBUS_SRC_LIST "")
+
 # com.kylinsec.Kiran.SessionDaemon.Power
 set(KSD_POWER_XML data/com.kylinsec.Kiran.SessionDaemon.Power.xml)
 set_source_files_properties(${KSD_POWER_XML}
@@ -17,13 +18,7 @@ kiran_qt5_add_dbus_interface_ex(KSD_POWER_SRC
         ksd_power_proxy
         KSDPowerProxy)
 list(APPEND POWER_PLUGIN_DBUS_SRC_LIST ${KSD_POWER_SRC})
-# net.hadess.PowerProfiles
-set(POWERPROFILES_XML data/net.hadess.PowerProfiles.xml)
-kiran_qt5_add_dbus_interface_ex(POWER_PROFILES_SRC
-        ${POWERPROFILES_XML}
-        power_profiles_proxy
-        PowerProfilesProxy)
-list(APPEND POWER_PLUGIN_DBUS_SRC_LIST ${POWER_PROFILES_SRC})
+
 # org.gnome.SessionManager.xml - kiran-session-manager
 set(GNOME_SESSION_MANAGER_XML data/org.gnome.SessionManager.xml)
 kiran_qt5_add_dbus_interface_ex(GNOME_SESSION_MANAGER_SOUCE

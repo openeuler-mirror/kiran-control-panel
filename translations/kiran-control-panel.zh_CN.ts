@@ -2265,50 +2265,65 @@
         <translation>待机时唤醒需要输入密码</translation>
     </message>
     <message>
-        <location filename="../plugins/power/pages/general-settings-page.cpp" line="121"/>
-        <location filename="../plugins/power/pages/general-settings-page.cpp" line="134"/>
+        <location filename="../plugins/power/pages/general-settings-page.cpp" line="119"/>
+        <location filename="../plugins/power/pages/general-settings-page.cpp" line="132"/>
         <source>shutdown</source>
         <translation>关机</translation>
     </message>
     <message>
-        <location filename="../plugins/power/pages/general-settings-page.cpp" line="122"/>
-        <location filename="../plugins/power/pages/general-settings-page.cpp" line="128"/>
-        <location filename="../plugins/power/pages/general-settings-page.cpp" line="133"/>
+        <location filename="../plugins/power/pages/general-settings-page.cpp" line="120"/>
+        <location filename="../plugins/power/pages/general-settings-page.cpp" line="126"/>
+        <location filename="../plugins/power/pages/general-settings-page.cpp" line="131"/>
         <source>hibernate</source>
         <translation>休眠</translation>
     </message>
     <message>
-        <location filename="../plugins/power/pages/general-settings-page.cpp" line="123"/>
-        <location filename="../plugins/power/pages/general-settings-page.cpp" line="127"/>
-        <location filename="../plugins/power/pages/general-settings-page.cpp" line="132"/>
+        <location filename="../plugins/power/pages/general-settings-page.cpp" line="121"/>
+        <location filename="../plugins/power/pages/general-settings-page.cpp" line="125"/>
+        <location filename="../plugins/power/pages/general-settings-page.cpp" line="130"/>
         <source>suspend</source>
         <translation>待机</translation>
     </message>
     <message>
-        <location filename="../plugins/power/pages/general-settings-page.cpp" line="124"/>
-        <location filename="../plugins/power/pages/general-settings-page.cpp" line="129"/>
+        <location filename="../plugins/power/pages/general-settings-page.cpp" line="122"/>
+        <location filename="../plugins/power/pages/general-settings-page.cpp" line="127"/>
         <source>display off</source>
         <translation>关闭显示器</translation>
     </message>
     <message>
-        <location filename="../plugins/power/pages/general-settings-page.cpp" line="125"/>
-        <location filename="../plugins/power/pages/general-settings-page.cpp" line="130"/>
-        <location filename="../plugins/power/pages/general-settings-page.cpp" line="135"/>
+        <location filename="../plugins/power/pages/general-settings-page.cpp" line="123"/>
+        <location filename="../plugins/power/pages/general-settings-page.cpp" line="128"/>
+        <location filename="../plugins/power/pages/general-settings-page.cpp" line="133"/>
         <source>do nothing</source>
         <translation>不执行操作</translation>
     </message>
     <message>
-        <location filename="../plugins/power/pages/general-settings-page.cpp" line="414"/>
+        <location filename="../plugins/power/pages/general-settings-page.cpp" line="154"/>
+        <source>Energy-saving mode</source>
+        <translation>节能模式</translation>
+    </message>
+    <message>
+        <location filename="../plugins/power/pages/general-settings-page.cpp" line="155"/>
+        <source>Balanced mode</source>
+        <translation>平衡模式</translation>
+    </message>
+    <message>
+        <location filename="../plugins/power/pages/general-settings-page.cpp" line="156"/>
+        <source>High performance mode</source>
+        <translation>高性能模式</translation>
+    </message>
+    <message>
+        <location filename="../plugins/power/pages/general-settings-page.cpp" line="422"/>
         <source>ERROR</source>
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../plugins/power/pages/general-settings-page.cpp" line="530"/>
+        <location filename="../plugins/power/pages/general-settings-page.cpp" line="549"/>
         <source>%1hour</source>
         <translation>%1小时</translation>
     </message>
     <message>
-        <location filename="../plugins/power/pages/general-settings-page.cpp" line="534"/>
+        <location filename="../plugins/power/pages/general-settings-page.cpp" line="553"/>
         <source>%1minute</source>
         <translation>%1分钟</translation>
     </message>
@@ -2822,32 +2837,32 @@
         <translation>请用分号分隔多个DNS</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/plugin/setting-widget/ipv4-widget.cpp" line="243"/>
+        <location filename="../plugins/network/src/plugin/setting-widget/ipv4-widget.cpp" line="244"/>
         <source>Ipv4 DNS invalid</source>
         <translation>无效的Ipv4 DNS</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/plugin/setting-widget/ipv4-widget.cpp" line="262"/>
+        <location filename="../plugins/network/src/plugin/setting-widget/ipv4-widget.cpp" line="263"/>
         <source>Ipv4 address can not be empty</source>
         <translation>Ipv4地址不能为空</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/plugin/setting-widget/ipv4-widget.cpp" line="272"/>
+        <location filename="../plugins/network/src/plugin/setting-widget/ipv4-widget.cpp" line="273"/>
         <source>Ipv4 Address invalid</source>
         <translation>无效的Ipv4地址</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/plugin/setting-widget/ipv4-widget.cpp" line="282"/>
+        <location filename="../plugins/network/src/plugin/setting-widget/ipv4-widget.cpp" line="283"/>
         <source>NetMask can not be empty</source>
         <translation>子网掩码不能为空</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/plugin/setting-widget/ipv4-widget.cpp" line="292"/>
+        <location filename="../plugins/network/src/plugin/setting-widget/ipv4-widget.cpp" line="293"/>
         <source>Netmask invalid</source>
         <translation>无效的子网掩码</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/plugin/setting-widget/ipv4-widget.cpp" line="304"/>
+        <location filename="../plugins/network/src/plugin/setting-widget/ipv4-widget.cpp" line="305"/>
         <source>Ipv4 Gateway invalid</source>
         <translation>无效的Ipv4网关</translation>
     </message>
@@ -4297,22 +4312,16 @@ This is line 50 of the test text</source>
 <context>
     <name>PowerProfilesWrapper</name>
     <message>
-        <location filename="../plugins/power/dbus/power-profiles-wrapper.cpp" line="97"/>
-        <location filename="../plugins/power/dbus/power-profiles-wrapper.cpp" line="113"/>
         <source>power-saver</source>
-        <translation>省电模式</translation>
+        <translation type="vanished">省电模式</translation>
     </message>
     <message>
-        <location filename="../plugins/power/dbus/power-profiles-wrapper.cpp" line="98"/>
-        <location filename="../plugins/power/dbus/power-profiles-wrapper.cpp" line="114"/>
         <source>balanced</source>
-        <translation>平衡模式</translation>
+        <translation type="vanished">平衡模式</translation>
     </message>
     <message>
-        <location filename="../plugins/power/dbus/power-profiles-wrapper.cpp" line="99"/>
-        <location filename="../plugins/power/dbus/power-profiles-wrapper.cpp" line="115"/>
         <source>performance</source>
-        <translation>性能模式</translation>
+        <translation type="vanished">性能模式</translation>
     </message>
 </context>
 <context>
