@@ -65,7 +65,11 @@ void processCommandLine()
     cmdParser.process(*singleApp);
 
     QString category = cmdParser.value(categoryOption);
+    category = category.trimmed();
+
     QString subItem = cmdParser.value(subItemOption);
+    subItem = subItem.trimmed();
+
     if( !subItem.isEmpty() && category.isEmpty() )
     {
         std::cerr << "failed to set sub item without category" << std::endl;
