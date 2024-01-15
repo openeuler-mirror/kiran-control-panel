@@ -31,12 +31,15 @@
 #include <QKeyEvent>
 #include <QtConcurrentRun>
 
-Q_DECLARE_METATYPE(QList<ShortcutInfoPtr>)
+#define DEFAULT_APP_ICON "application-script-blank"
+#define APP_ICON_WIDTH 20
 
+Q_DECLARE_METATYPE(QList<ShortcutInfoPtr>)
 using namespace Kiran;
 
-Shortcut::Shortcut(QWidget *parent) : QWidget(parent),
-                                      ui(new Ui::Shortcut)
+Shortcut::Shortcut(QWidget *parent)
+    : QWidget(parent),
+    ui(new Ui::Shortcut)
 {
     ui->setupUi(this);
     init();
@@ -100,16 +103,24 @@ void Shortcut::initUI()
     }
 
     QHBoxLayout *hLayoutCustomApp = new QHBoxLayout(ui->lineEdit_custom_app);
+    m_customAppIcon = new QLabel;
+    m_customAppIcon->setFixedSize(24, 24);
+    m_customAppIcon->setPixmap(QIcon::fromTheme(DEFAULT_APP_ICON).pixmap(20, 20));
+    hLayoutCustomApp->addWidget(m_customAppIcon, 0, Qt::AlignVCenter);
+
+    hLayoutCustomApp->addStretch();
+
     m_btnCustomApp = new QToolButton;
     m_btnCustomApp->setObjectName("btn_custom_app");
     m_btnCustomApp->setAccessibleName("ButtonAddCustomApp");
     m_btnCustomApp->setText(tr("Add"));
     m_btnCustomApp->setFixedSize(56, 30);
     m_btnCustomApp->setCursor(Qt::PointingHandCursor);
-    hLayoutCustomApp->addStretch();
     hLayoutCustomApp->addWidget(m_btnCustomApp);
-    ui->lineEdit_custom_app->setTextMargins(0, 0, m_btnCustomApp->width(), 0);
+
+    ui->lineEdit_custom_app->setTextMargins(25, 0, m_btnCustomApp->width(), 0);
     connect(m_btnCustomApp, &QToolButton::clicked, this, &Shortcut::openFileSys);
+    connect(ui->lineEdit_custom_app,&QLineEdit::textChanged,this,&Shortcut::handleCustomAppTextChanged);
 
     QHBoxLayout *hLayoutModifyApp = new QHBoxLayout(ui->lineEdit_modify_app);
     m_btnModifyApp = new QToolButton;
@@ -354,7 +365,7 @@ bool Shortcut::isValidKeycode(QList<int> keycodes)
     return !pureModifier;
 }
 
-bool Shortcut::getExecFromDesktop(QString fileName, QString &exec)
+bool Shortcut::extractDesktopInfo(const QString &fileName, QString &exec, QString &icon)
 {
     QSettings settings(fileName, QSettings::IniFormat);
     QString str = settings.value("Desktop Entry/Exec").toString();
@@ -368,6 +379,10 @@ bool Shortcut::getExecFromDesktop(QString fileName, QString &exec)
     str = str.replace("%u", "", Qt::CaseInsensitive);
 
     exec = str;
+
+    str = settings.value("Desktop Entry/Icon").toString();
+    icon = str.isEmpty() ? DEFAULT_APP_ICON : str;
+
     return true;
 }
 
@@ -376,23 +391,38 @@ void Shortcut::openFileSys()
     QToolButton *senderbtn = qobject_cast<QToolButton *>(sender());
     QLineEdit *lineEdit = qobject_cast<QLineEdit *>(senderbtn->parent());
 
-    QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"), "/usr/share/applications");
+    QString fileName = QFileDialog::getOpenFileName(this,
+                                                    tr("Open File"),
+                                                    "/usr/share/applications",
+                                                    tr("Desktop entries(*.desktop)"));
     if (fileName.isNull())
         return;
 
-    QString exec = fileName;
-    if (fileName.endsWith(".desktop"))
+    QString cmd;
+    QString icon = DEFAULT_APP_ICON;
+    if (!extractDesktopInfo(fileName, cmd, icon))
     {
-        QString tmp;
-        if (!getExecFromDesktop(fileName, tmp))
-        {
-            KLOG_ERROR(qLcKeybinding) << "cant't get Exec key from " << fileName;
-            return;
-        }
-        exec = tmp;
+        KLOG_ERROR(qLcKeybinding) << "cant't get Exec key from " << fileName;
+        KiranMessageBox::message(this, tr("Error"),
+                                    "Extracting the program to be executed from the application's desktop file failed",
+                                    KiranMessageBox::Ok);
+        return;
     }
 
-    lineEdit->setText(exec);
+    // 缓存该次添加的应用以及图标信息
+    // 后续启动命令修改的时候，应复位图标
+    m_lastIcon = icon;
+    m_lastIconExec = cmd;
+
+    QIcon appIcon = QIcon::fromTheme(icon);
+    if( appIcon.isNull() )
+    {
+        m_lastIcon = DEFAULT_APP_ICON;
+        appIcon = QIcon::fromTheme(DEFAULT_APP_ICON);
+    }
+
+    m_customAppIcon->setPixmap(appIcon.pixmap(QSize(APP_ICON_WIDTH,APP_ICON_WIDTH)));
+    lineEdit->setText(cmd);
 }
 
 void Shortcut::handleSearchTimerTimeout()
@@ -787,6 +817,16 @@ void Shortcut::handleResetClicked()
     }
 }
 
+void Shortcut::handleCustomAppTextChanged(const QString& text)
+{
+    // 直接编辑自定义应用输入框，修改命令
+    // 导致和desktop读取出来的不一致时清空图标
+    if( !text.isEmpty() && text != m_lastIconExec )
+    {
+        m_customAppIcon->setPixmap(QIcon::fromTheme(DEFAULT_APP_ICON).pixmap(20,20));
+    }
+}
+
 void Shortcut::handleInputKeycode(QList<int> keycodes)
 {
     CustomLineEdit *senderLineEdit = qobject_cast<CustomLineEdit *>(sender());
@@ -803,8 +843,9 @@ void Shortcut::handleInputKeycode(QList<int> keycodes)
         {
             KiranMessageBox::message(nullptr,
                                      tr("Failed"),
-                                     QString(tr("Cannot use shortcut \"%1\", Because you cannot enter with this key."
-                                                "Please try again using Ctrl, Alt, or Shift at the same time."))
+                                     QString(tr("Cannot use shortcut \"%1\","
+                                         "Please keep pressing the modifier keys such as Ctrl,"
+                                         "Alt, and Shift before pressing the last key of the shortcut key"))
                                          .arg(keyStr),
                                      KiranMessageBox::Ok);
             return;
