@@ -106,17 +106,15 @@ void AccountWidget::appendUser(const QString &userPath)
 
 void AccountWidget::setDefaultSelectedUser()
 {
-    if (m_tabList->count() <= 1)
+    auto items = m_tabList->findItems(AccountsGlobalInfo::instance()->getCurrentUser(), Qt::MatchCaseSensitive);
+    if (items.size() >= 1)
+    {
+        auto userItem = items.at(0);
+        m_tabList->setCurrentRow(m_tabList->row(userItem));
+    }
+    else
     {
         m_tabList->setCurrentRow(0);
-        return;
-    }
-
-    auto items = m_tabList->findItems(AccountsGlobalInfo::instance()->getCurrentUser(), Qt::MatchCaseSensitive);
-    if (items.size() > 0)
-    {
-        auto item = items.at(0);
-        m_tabList->setCurrentRow(m_tabList->row(item));
     }
 }
 
