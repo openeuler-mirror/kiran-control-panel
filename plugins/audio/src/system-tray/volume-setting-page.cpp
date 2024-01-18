@@ -42,6 +42,7 @@ VolumeSettingPage::VolumeSettingPage(enum AudioNode audio, const QString objectP
 
         connect(m_sink, &AudioDeviceInterface::volumeChanged, this, &VolumeSettingPage::handleVolumeChanged, Qt::UniqueConnection);
         connect(m_sink, &AudioDeviceInterface::muteChanged, this, &VolumeSettingPage::changeSinkMute, Qt::UniqueConnection);
+        connect(m_sink, &AudioDeviceInterface::active_portChanged, this, &VolumeSettingPage::changeSinkActivePort, Qt::UniqueConnection);
 
         connect(ui->volumeSetting, &QSlider::valueChanged, [this](int value)
                 {
@@ -128,6 +129,23 @@ void VolumeSettingPage::initSettings(Audio *audio)
     ui->volume->setText(QString::number(currentVolume) + "%");
 }
 
+void VolumeSettingPage::changeSinkActivePort(const QString &value)
+{
+    KLOG_DEBUG() << "active port changed :" << value;
+    if(value.isEmpty())
+    {
+        disableSettings();
+        return;
+    }
+
+    double currentVolumeDouble = m_sink->volume() * 100;
+    int currentVolume = round(currentVolumeDouble);
+    setVolumeIcon(currentVolume);
+    ui->volumeSetting->setEnabled(true);
+    ui->volumeSetting->setValue(currentVolume);
+    ui->volume->setText(QString::number(currentVolume) + "%");
+}
+
 void VolumeSettingPage::changeSinkMute(bool value)
 {
     KLOG_DEBUG() << "change sink mute:" << value;
@@ -158,6 +176,11 @@ void VolumeSettingPage::changeSinkInputMute(bool value)
 
 void VolumeSettingPage::handleVolumeChanged(double value)
 {
+    if(!ui->volumeSetting->isEnabled())
+    {
+        return;
+    }
+    
     ui->volumeSetting->blockSignals(true);   // 为了避免拖动的同时设置位置会出现问题
     int currentVolume = round(value * 100);  // 表示数值的时候向上取整
     ui->volume->setText(QString::number(currentVolume) + "%");
