@@ -266,12 +266,12 @@ void AudioSystemTray::setTrayIcon(int value)
         icon.addPixmap(trayIconColorSwitch("kcp-audio-mute"));
         icon.addPixmap(trayIconColorSwitch("kcp-audio-mute", 64));
     }
-    else if (0 < value && value <= 33)
+    else if (0 < value && value <= 34)
     {
         icon.addPixmap(trayIconColorSwitch("kcp-audio-low"));
         icon.addPixmap(trayIconColorSwitch("kcp-audio-low", 64));
     }
-    else if (33 < value && value <= 66)
+    else if (33 < value && value <= 67)
     {
         icon.addPixmap(trayIconColorSwitch("kcp-audio-medium"));
         icon.addPixmap(trayIconColorSwitch("kcp-audio-medium", 64));
