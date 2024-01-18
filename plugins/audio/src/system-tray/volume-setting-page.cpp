@@ -239,11 +239,11 @@ void VolumeSettingPage::setVolumeIcon(int value)
     {
         ui->muteButton->setIcon(trayIconColorSwitch("kcp-audio-mute"));
     }
-    else if (0 < value && value <= 33)
+    else if (0 < value && value <= 34)
     {
         ui->muteButton->setIcon(trayIconColorSwitch("kcp-audio-low"));
     }
-    else if (33 < value && value <= 66)
+    else if (33 < value && value <= 67)
     {
         ui->muteButton->setIcon(trayIconColorSwitch("kcp-audio-medium"));
     }
