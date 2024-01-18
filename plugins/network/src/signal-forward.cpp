@@ -172,10 +172,10 @@ void SignalForward::addDevice(const QString &uni)
         switch (device->type())
         {
         case Device::Type::Ethernet:
-            emit wiredDeviceAdded(uni);;
+            emit wiredDeviceAdded(uni);
             break;
         case Device::Type::Wifi:
-            emit wirelessDeviceAdded(uni);;
+            emit wirelessDeviceAdded(uni);
             break;
         default:
             emit otherDeviceAdded(uni);
