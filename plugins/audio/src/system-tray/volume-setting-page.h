@@ -39,8 +39,10 @@ public:
 
     QPixmap trayIconColorSwitch(const QString &iconPath);
     void disableSettings();
+    void hideLine();
 
-public slots:
+private slots:
+    void changeSinkActivePort(const QString &value);
     void changeSinkMute(bool value);
     void changeSinkInputMute(bool value);
     void handleVolumeChanged(double value);
@@ -50,7 +52,6 @@ public slots:
     void handleSinkDelete(int index);
 
     void setVolumeIcon(int value);
-    void hideLine();
 
 private:
     void initDbusServiceWatcher();
