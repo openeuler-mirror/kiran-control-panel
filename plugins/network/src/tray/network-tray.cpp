@@ -359,7 +359,7 @@ void NetworkTray::getTrayGeometry()
 void NetworkTray::updateTrayIcon()
 {
     auto status = NetworkManager::status();
-    if (status < NetworkManager::Status::ConnectedLinkLocal)
+    if (status < NetworkManager::Status::Connected)
     {
         setTrayIcon(DISCONNECTED);
         return;
