@@ -368,7 +368,7 @@ void NetworkTray::setTrayIcon(NetworkManager::Status status)
 QString NetworkTray::findIconPathByStatus(NetworkManager::Status status)
 {
     QString iconPath;
-    if (status >= NetworkManager::Status::ConnectedLinkLocal)
+    if (status == NetworkManager::Status::Connected)
     {
         // 判断主连接类型，托盘网络图标以主连接类型为准
         // NetworkManager::primaryConnectionType() 更新不及时，暂时不用
