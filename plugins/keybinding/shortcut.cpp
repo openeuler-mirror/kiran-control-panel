@@ -633,6 +633,8 @@ void Shortcut::handleShortcutsLoadSuccesed(QList<ShortcutInfoPtr> shortcutInfoLi
                 labKind->setText(tr("System"));
             else if (shortcutInfo->kind == SHORTCUT_KIND_SOUND)
                 labKind->setText(tr("Sound"));
+            else if (shortcutInfo->kind == SHORTCUT_KIND_ACCESSIBILITY)
+                labKind->setText(tr("Accessibility"));
             else
                 labKind->setText(shortcutInfo->kind);
             vLayout->addWidget(labKind);
