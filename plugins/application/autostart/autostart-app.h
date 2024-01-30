@@ -39,9 +39,9 @@ private:
     QString m_desktopName;
     QString m_name;
     QString m_filePath;
-    bool m_shown;
-    bool m_hidden;
-    bool m_noDisplay;
+    bool m_shown = false;
+    bool m_hidden = false;
+    bool m_noDisplay = false;
     QIcon m_icon;
 };
 

@@ -15,6 +15,7 @@ variables:
                    gpgcheck=0
                    gpgkey=http://build.kylinsec.com.cn:82/KylinSec:/3.5.2:/Mainline/standard_x86_64/repodata/repomd.xml.key
                    enabled=1
+  CMAKE_OPTIONS: -DBUILD_EXAMPLE=true
   RPM_BUILD_REQUIRES: 'gcc-c++ cmake glib2-devel upower-devel zeromq-devel libnotify-devel pam-devel cryptopp-devel qt5-qtbase-devel qt5-qtx11extras-devel qt5-qtsvg-devel qt5-qtmultimedia-devel qt5-linguist kf5-networkmanager-qt-devel kiran-log-qt5-devel kiran-widgets-qt5-devel kiran-qt5-integration-devel kiran-qdbusxml2cpp kiran-cc-daemon-devel libqtxdg-devel kf5-kconfig-devel kiran-authentication-service-devel'
 include:
   - project: 'os/ks-devops'

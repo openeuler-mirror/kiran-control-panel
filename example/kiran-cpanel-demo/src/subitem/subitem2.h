@@ -34,7 +34,7 @@ private slots:
     void on_lineEdit_textChanged(const QString &arg1);
 
 private:
-    Ui::SubItem2 *ui;
+    Ui::SubItem2 *ui = nullptr;
     bool m_unsaved = false;
 };
 

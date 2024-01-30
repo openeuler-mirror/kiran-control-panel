@@ -71,7 +71,7 @@ private:
     double m_pixmapScaleFactor = 1.0;
     //图片的左顶点
     QPoint m_pixmapLefttop;
-    bool m_btnIsPressed;
+    bool m_btnIsPressed = false;
     QPoint m_btnPressedPoint;
 };
 

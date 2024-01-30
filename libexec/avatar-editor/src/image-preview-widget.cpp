@@ -25,7 +25,8 @@
 #include "image-preview-widget.h"
 #include "ui-defines.h"
 
-ImagePreviewWidget::ImagePreviewWidget(QWidget *parent) : QWidget(parent)
+ImagePreviewWidget::ImagePreviewWidget(QWidget *parent)
+    : QWidget(parent)
 {
 }
 
@@ -140,7 +141,7 @@ void ImagePreviewWidget::loadSrcImage()
 
     Q_ASSERT(!pixmap.isNull());
 
-    //图片宽或高小于直径，等比例拉伸到至少可以填满整个圆
+    // 图片宽或高小于直径，等比例拉伸到至少可以填满整个圆
     if ((pixmap.width() < diam) || (pixmap.height() < diam))
     {
         pixmap = pixmap.scaled(diam, diam, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
@@ -227,7 +228,7 @@ void ImagePreviewWidget::pixmapEnlarge()
                                              oriSize.height() * scaleFactor,
                                              Qt::KeepAspectRatioByExpanding,
                                              Qt::SmoothTransformation);
-    ///保持缩放之前图片在裁切框中心点的位置不变
+    /// 保持缩放之前图片在裁切框中心点的位置不变
     QPoint lefttop(m_pixmapLefttop.x() - (pixmap.width() - m_scaledPixmap.width()) / 2,
                    m_pixmapLefttop.y() - (pixmap.height() - m_scaledPixmap.height()) / 2);
 

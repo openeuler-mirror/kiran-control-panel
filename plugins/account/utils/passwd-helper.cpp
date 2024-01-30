@@ -86,7 +86,7 @@ failed:
     {
         if (reply[i].resp != nullptr)
         {
-            delete reply[i].resp;
+            delete[] reply[i].resp;
         }
     }
     free(reply);
@@ -110,6 +110,11 @@ bool PasswdHelper::checkUserPassword(const QString &user, const QString &pwd)
     res = pam_start("password-auth", user.toStdString().c_str(),
                     &conv,
                     &handler);
+    if( res != PAM_SUCCESS )
+    {
+        KLOG_ERROR() << "pam_start password-auth Initialization failure!";
+        return false;
+    }
 
     pam_set_item(handler, PAM_FAIL_DELAY, (void *)no_fail_delay);
 
