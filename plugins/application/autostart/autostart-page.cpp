@@ -11,26 +11,26 @@
  *
  * Author:     yinhongchang <yinhongchang@kylinsec.com.cn>
  */
-#include <QWidget>
+#include "autostart-page.h"
+#include <kiran-message-box.h>
+#include <qt5-log-i.h>
+#include <style-property.h>
 #include <QBoxLayout>
-#include <QPushButton>
-#include <QLabel>
 #include <QDir>
+#include <QFileDialog>
+#include <QLabel>
+#include <QMessageBox>
 #include <QPushButton>
 #include <QStandardPaths>
-#include <QFileDialog>
-#include <QMessageBox>
-#include <qt5-log-i.h>
-#include <kiran-message-box.h>
-#include <style-property.h>
+#include <QWidget>
+#include "autostart-app.h"
 #include "kiran-setting-container.h"
 #include "kiran-setting-item.h"
-#include "autostart-page.h"
-#include "autostart-app.h"
 
-#define DESKTOP_DIR  "/usr/share/applications"
+#define DESKTOP_DIR "/usr/share/applications"
 
-AutostartPage::AutostartPage(QWidget* parent) : QWidget(parent)
+AutostartPage::AutostartPage(QWidget *parent)
+    : QWidget(parent)
 {
     initAutoStartApps();
     initAutoStartAppUI();
@@ -40,14 +40,13 @@ AutostartPage::~AutostartPage()
 {
 }
 
-
 void AutostartPage::initAutoStartApps()
 {
     if (!initAutoStartAppsConfig())
     {
         return;
     }
-    
+
     QDir autoStartAppDir(m_localConfigDir);
 
     QStringList filters;
@@ -70,7 +69,6 @@ void AutostartPage::initAutoStartApps()
         }
         m_autoStartApps.insert(fileInfo.fileName(), autoStartApp);
     }
-
 }
 
 bool AutostartPage::initAutoStartAppsConfig()
@@ -119,7 +117,6 @@ void AutostartPage::initAutoStartAppUI()
     initAddBtn();
 }
 
-
 void AutostartPage::initAddBtn()
 {
     m_autoStartButton = new QPushButton(this);
@@ -142,8 +139,7 @@ void AutostartPage::changeAutoStartAppStatus(const QString &desktopName, bool ch
     return;
 }
 
-
-void AutostartPage::deleteAutoStartApp(KiranSettingItem* autoStartAppItem, const QString &desktopName)
+void AutostartPage::deleteAutoStartApp(KiranSettingItem *autoStartAppItem, const QString &desktopName)
 {
     if (autoStartAppItem == nullptr)
     {
@@ -171,7 +167,7 @@ void AutostartPage::deleteAutoStartApp(KiranSettingItem* autoStartAppItem, const
     return;
 }
 
-KiranSettingItem* AutostartPage::createAutoStartAppItem(const QString &desktopName, AutostartApp &autoStartApp)
+KiranSettingItem *AutostartPage::createAutoStartAppItem(const QString &desktopName, AutostartApp &autoStartApp)
 {
     auto autoStartAppItem = new KiranSettingItem(this);
 
@@ -184,13 +180,12 @@ KiranSettingItem* AutostartPage::createAutoStartAppItem(const QString &desktopNa
 
     auto changeAutoStartAppStatusSlot = std::bind(&AutostartPage::changeAutoStartAppStatus, this, desktopName, std::placeholders::_2);
     connect(autoStartAppItem, &KiranSettingItem::switchButtonToggled, this, changeAutoStartAppStatusSlot);
-    
+
     auto deleteAutoStartAppSlot = std::bind(&AutostartPage::deleteAutoStartApp, this, autoStartAppItem, desktopName);
     connect(autoStartAppItem, &KiranSettingItem::rightButtonClicked, this, deleteAutoStartAppSlot);
 
     return autoStartAppItem;
 }
-
 
 AutoStartAppFlags AutostartPage::addAutoStartApp(const QString &path, const QString &desktopName)
 {
@@ -211,7 +206,7 @@ AutoStartAppFlags AutostartPage::addAutoStartApp(const QString &path, const QStr
         return AUTO_START_APP_NOSUPPORT;
     }
 
-    if(!QFile::copy(path, filePath))
+    if (!QFile::copy(path, filePath))
     {
         KLOG_WARNING() << "failed to copy app to autostart";
         return AUTO_START_APP_NOPERMIT;
@@ -241,7 +236,7 @@ void AutostartPage::selectDesktopForAutoStart()
     desktopFileDialog.setLabelText(QFileDialog::Reject, tr("Cancel"));
     if (desktopFileDialog.exec() != QDialog::Accepted)
         return;
-    
+
     QString selectFile = desktopFileDialog.selectedFiles().first();
     QFileInfo fileInfo(selectFile);
     QString desktopName = fileInfo.fileName();

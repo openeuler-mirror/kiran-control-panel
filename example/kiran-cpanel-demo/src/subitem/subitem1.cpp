@@ -12,27 +12,35 @@
  * Author:     liuxinhao <liuxinhao@kylinsec.com.cn>
  */
 
-#include "subitem-2.h"
-#include "ui_subitem-2.h"
+#include "subitem1.h"
+#include "popup.h"
+#include "ui_subitem1.h"
 
-SubItem2::SubItem2(QWidget *parent) :
+SubItem1::SubItem1(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::SubItem2)
+    ui(new Ui::SubItem1)
 {
     ui->setupUi(this);
 }
 
-SubItem2::~SubItem2()
+SubItem1::~SubItem1()
 {
     delete ui;
 }
 
-void SubItem2::on_lineEdit_textChanged(const QString &arg1)
+void SubItem1::on_lineEdit_textChanged(const QString &arg1)
 {
     m_unsaved = true;
+
 }
 
-bool SubItem2::unsaved()
+void SubItem1::on_pushButton_clicked()
+{
+    Popup popup;
+    popup.exec();
+}
+
+bool SubItem1::unsaved()
 {
     return m_unsaved;
 }

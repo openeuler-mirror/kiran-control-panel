@@ -15,7 +15,8 @@
 #include "plugin-v1-subitem-wrapper.h"
 
 PluginSubItemWrapper::PluginSubItemWrapper(KcpPluginInterface* pluginInterface)
-    : m_pluginInterface(pluginInterface)
+    : m_pluginInterface(pluginInterface),
+      m_weight(0)
 {
 }
 

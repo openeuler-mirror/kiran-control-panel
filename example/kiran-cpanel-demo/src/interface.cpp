@@ -13,9 +13,9 @@
  */
 
 #include "interface.h"
-#include "plugin-demo-config.h"
-#include "subitem/subitem-1.h"
-#include "subitem/subitem-2.h"
+#include "subitem/subitem1.h"
+#include "subitem/subitem2.h"
+#include "config.h"
 
 #include <QCoreApplication>
 #include <QList>
@@ -61,7 +61,7 @@ int PluginDemoInterface::init()
     if (!m_translator->load(QLocale(),
                             "kiran-cpanel-demo",
                             ".",
-                             PLUGIN_TRANSLATION_DIR,
+                             TRANSLATE_PREFIX,
                             ".qm"))
     {
         return -1;

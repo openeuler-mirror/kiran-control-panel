@@ -160,11 +160,11 @@ bool XmlManagement::xmlWriter()
         {
             if (i.key() == DELETED || i.key() == "xml:lang" || i.key() == "langName" || i.key() == NAME)
             {
-                i++;
+                ++i;
                 continue;
             }
             writer.writeTextElement(i.key(), QString(i.value()));
-            i++;
+            ++i;
         }
 
         if (map.contains(ARTIST))
@@ -253,11 +253,11 @@ void XmlManagement::xmlUpdate(QList<QMap<QString, QString>> updateList)
         {
             if (i.key() == DELETED || i.key() == "xml:lang" || i.key() == "langName" || i.key() == NAME)
             {
-                i++;
+                ++i;
                 continue;
             }
             writer.writeTextElement(i.key(), QString(i.value()));
-            i++;
+            ++i;
         }
         writer.writeEndElement();
     }
