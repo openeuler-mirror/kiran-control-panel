@@ -20,7 +20,6 @@
 #include "tray-connection-list.h"
 #include "tray-widget.h"
 
-class TrayConnectionList;
 class WiredTrayWidget : public TrayWidget
 {
     Q_OBJECT
@@ -50,7 +49,6 @@ public:
 
     void handleConnectionUpdated(const QString &path);
 
-    int getHeight() override;
 
 public slots:
     void handleCarrierChanged(bool plugged);
@@ -59,7 +57,6 @@ public slots:
 private:
     NetworkManager::WiredDevice::Ptr m_wiredDevice;
     QString m_devicePath;
-    QPointer<TrayConnectionList> m_connectionList;
 };
 
 #endif  // KIRAN_CPANEL_NETWORK_WIRED_TRAY_WIDGET_H
