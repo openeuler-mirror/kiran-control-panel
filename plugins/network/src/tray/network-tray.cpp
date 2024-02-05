@@ -754,6 +754,10 @@ void NetworkTray::checkInternetConnectivity()
     }
     QVariant address = confSettings.value(QString("Network/Address"));
     QVariant port = confSettings.value(QString("Network/Port"));
+    if(m_tcpClient->state() != QAbstractSocket::UnconnectedState)
+    {
+        m_tcpClient->abort();
+    }   
     m_tcpClient->connectToHost(address.toString(), port.toInt());
 }
 

@@ -124,7 +124,7 @@ private:
         },
         {
             WIRELESS_CONNECTED_BUT_NOT_ACCESS_INTERNET,
-            {":/kcp-network-images/wireless-error.svg",tr("The network is connected, but you cannot access the Internet")}
+            {":/kcp-network-images/wired-error.svg",tr("The network is connected, but you cannot access the Internet")}
         },
         {
             DISCONNECTED,
