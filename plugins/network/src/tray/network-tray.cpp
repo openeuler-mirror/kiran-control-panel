@@ -95,10 +95,6 @@ void NetworkTray::initConnect()
                     KLOG_DEBUG(qLcNetwork) << "this device interface is not found";
                     return;
                 }
-                KLOG_DEBUG(qLcNetwork) << "device->uni():" << device->uni();
-                KLOG_DEBUG(qLcNetwork) << "device->interfaceName():" << device->interfaceName();
-                KLOG_DEBUG(qLcNetwork) << "device->state():" << device->state();
-                KLOG_DEBUG(qLcNetwork) << "device->isValid():" << device->isValid();
                 if(device->isValid())
                 {
                     handleDeviceAdded(m_addDevicePath);
@@ -149,14 +145,8 @@ void NetworkTray::initConnect()
     // 无线网络如果一下消失多个网络，短时间会触发多次SizeHint变更的信号
     m_wirelessTimer.setInterval(10);
     m_wirelessTimer.setSingleShot(true);
-    connect(m_wirelessTrayPage, &TrayPage::sizeChanged, this, [this](QSize sizeHint)
-            {
-                m_wirelessTraySizeHint = sizeHint;
-                m_wirelessTimer.start(); });
     connect(&m_wirelessTimer, &QTimer::timeout, this, [this]()
             { handleAdjustedTraySize(m_wirelessTraySizeHint); });
-
-    connect(m_wiredTrayPage, &TrayPage::sizeChanged, this, &NetworkTray::handleAdjustedTraySize, Qt::UniqueConnection);
 
     connect(Kiran::StylePalette::instance(), &Kiran::StylePalette::themeChanged, this, &NetworkTray::handleThemeChanged);
 }
@@ -210,11 +200,17 @@ void NetworkTray::initTrayPage()
         {
             m_wiredTrayPage = new TrayPage(m_wiredDeviceList, this);
             m_verticalLayout->addWidget(m_wiredTrayPage);
+            connect(m_wiredTrayPage, &TrayPage::sizeChanged, this, &NetworkTray::handleAdjustedTraySize, Qt::UniqueConnection);
         }
         if (wirelessCount != 0)
         {
             m_wirelessTrayPage = new TrayPage(m_wirelessDeviceList, this);
             m_verticalLayout->addWidget(m_wirelessTrayPage);
+
+            connect(m_wirelessTrayPage, &TrayPage::sizeChanged, this, [this](QSize sizeHint)
+                    {
+                        m_wirelessTraySizeHint = sizeHint;
+                        m_wirelessTimer.start(); });
         }
     }
     m_verticalLayout->setMargin(0);
@@ -356,10 +352,18 @@ void NetworkTray::getTrayGeometry()
     m_yTray = static_cast<int>(y);
 }
 
+// NOTE:不再跟随NetworkManager的status而显示托盘图标 (#29441)
 void NetworkTray::updateTrayIcon()
 {
+    KLOG_DEBUG(qLcNetwork) << "update tray icon";
     auto status = NetworkManager::status();
     if (status < NetworkManager::Status::Connected)
+    {
+        setTrayIcon(DISCONNECTED);
+        return;
+    }
+
+    if (!NetworkUtils::isExistedActivatedDevice())
     {
         setTrayIcon(DISCONNECTED);
         return;
@@ -417,7 +421,7 @@ void NetworkTray::updateTrayIcon()
         }
     }
 
-    //最后如果既不是有线也不是无线，则显示有线网络图标
+    // 最后如果既不是有线也不是无线，则显示有线网络图标
     if (state == UNKNOWN)
     {
         state = WIRED_CONNECTED_BUT_NOT_ACCESS_INTERNET;
@@ -495,14 +499,19 @@ void NetworkTray::handleDeviceStateChanged(NetworkManager::Device::State newstat
 {
     Device *device = qobject_cast<Device *>(sender());
     auto deviceType = device->type();
-    KLOG_DEBUG(qLcNetwork) << "Device interfaceName:" << device->interfaceName();
-    KLOG_DEBUG(qLcNetwork) << "Device newstate:" << newstate;
-    KLOG_DEBUG(qLcNetwork) << "Device oldstate:" << oldstate;
-    KLOG_DEBUG(qLcNetwork) << "Device reason:" << reason;
+    KLOG_DEBUG(qLcNetwork) << "Device interfaceName:" << device->interfaceName()
+                           << "newstate:" << newstate
+                           << "oldstate:" << oldstate
+                           << "reason:" << reason;
+
+    QSet<Device::State> unavailableStates = {
+        Device::Unavailable,
+        Device::Unmanaged,
+        Device::UnknownState};
 
     // 设备变为可用
-    if ((oldstate == Device::Unavailable || oldstate == Device::Unmanaged || oldstate == Device::UnknownState) &&
-        (newstate != Device::Unmanaged && newstate != Device::Unavailable && newstate != Device::UnknownState))
+    if (unavailableStates.contains(oldstate) &&
+        !unavailableStates.contains(newstate))
     {
         if (deviceType == Device::Ethernet)
         {
@@ -515,22 +524,22 @@ void NetworkTray::handleDeviceStateChanged(NetworkManager::Device::State newstat
             StatusNotification::generalNotify(tr("Wireless network card: %1 available").arg(device->interfaceName()));
         }
 
-        if ((m_wiredTrayPage != nullptr) || (m_wirelessTrayPage != nullptr))
+        if (m_wiredTrayPage == nullptr && m_wirelessTrayPage == nullptr)
         {
-            if (m_unavailableWidget != nullptr)
-            {
-                m_verticalLayout->removeWidget(m_unavailableWidget);
-                m_unavailableWidget->deleteLater();
-                m_unavailableWidget = nullptr;
-                KLOG_DEBUG(qLcNetwork) << "remove unavailable widget";
-            }
+            return;
         }
-    }
 
-    QSet<Device::State> unavailableStates = {
-        Device::Unavailable,
-        Device::Unmanaged,
-        Device::UnknownState};
+        if (m_unavailableWidget == nullptr)
+        {
+            return;
+        }
+
+        m_verticalLayout->removeWidget(m_unavailableWidget);
+        m_unavailableWidget->deleteLater();
+        m_unavailableWidget = nullptr;
+        KLOG_DEBUG(qLcNetwork) << "remove unavailable widget";
+        return;
+    }
 
     // 非休眠的情况下，从可用状态到不可用状态通知
     if (!unavailableStates.contains(oldstate) &&
@@ -557,6 +566,19 @@ void NetworkTray::handleDeviceStateChanged(NetworkManager::Device::State newstat
             StatusNotification::generalNotify(tr("Wireless network card: %1 unavailable").arg(device->interfaceName()));
             reloadWirelessTrayPage();
         }
+        return;
+    }
+
+    if (newstate == Device::State::Activated && oldstate != Device::State::Activated)
+    {
+        updateTrayIcon();
+        return;
+    }
+
+    if (newstate == Device::State::Disconnected && oldstate != Device::State::Disconnected)
+    {
+        updateTrayIcon();
+        return;
     }
 }
 
@@ -691,15 +713,10 @@ void NetworkTray::reloadWirelessTrayPage()
         m_verticalLayout->insertWidget(-1, m_wirelessTrayPage);
         m_verticalLayout->setMargin(0);
 
-        // 无线网络如果一下消失多个网络，短时间会触发多次SizeHint变更的信号
-        m_wirelessTimer.setInterval(10);
-        m_wirelessTimer.setSingleShot(true);
         connect(m_wirelessTrayPage, &TrayPage::sizeChanged, this, [this](QSize sizeHint)
                 {
                     m_wirelessTraySizeHint = sizeHint;
                     m_wirelessTimer.start(); });
-        connect(&m_wirelessTimer, &QTimer::timeout, this, [this]()
-                { handleAdjustedTraySize(m_wirelessTraySizeHint); });
         update();
     }
 }
@@ -759,6 +776,10 @@ void NetworkTray::checkInternetConnectivity()
     }
     QVariant address = confSettings.value(QString("Network/Address"));
     QVariant port = confSettings.value(QString("Network/Port"));
+    if (m_tcpClient->state() != QAbstractSocket::UnconnectedState)
+    {
+        m_tcpClient->abort();
+    }
     m_tcpClient->connectToHost(address.toString(), port.toInt());
 }
 

@@ -36,6 +36,8 @@ class NetworkTray : public KiranRoundedTrayPopup
 public:
     explicit NetworkTray(QWidget *parent = nullptr);
     ~NetworkTray() override;
+
+private:
     void init();
 
     void initConnect();
@@ -53,7 +55,13 @@ public:
     void reloadWiredTrayPage();
     void reloadWirelessTrayPage();
 
-public slots:
+    void updateTrayIcon();
+    void setTrayIcon(NetworkState state);
+    void setTrayIcon(const QString &iconPath, const QString &toolTip);
+    void initTcpSocket();
+    void checkInternetConnectivity();
+
+private slots:
     void handleTrayClicked(QSystemTrayIcon::ActivationReason reason);
     void showOrHideTrayPage();
     void handleNetworkSettingClicked();
@@ -73,14 +81,6 @@ public slots:
 
     void handleThemeChanged(Kiran::PaletteType paletteType);
 
-private:
-    void updateTrayIcon();
-    void setTrayIcon(NetworkState state);
-    void setTrayIcon(const QString &iconPath, const QString &toolTip);
-    void initTcpSocket();
-    void checkInternetConnectivity();
-
-private slots:
     void internetConnected();
     void internetError(QAbstractSocket::SocketError socketError);
 
@@ -124,7 +124,7 @@ private:
         },
         {
             WIRELESS_CONNECTED_BUT_NOT_ACCESS_INTERNET,
-            {":/kcp-network-images/wireless-error.svg",tr("The network is connected, but you cannot access the Internet")}
+            {":/kcp-network-images/wired-error.svg",tr("The network is connected, but you cannot access the Internet")}
         },
         {
             DISCONNECTED,

@@ -68,7 +68,6 @@ public slots:
 
     void requireInputPassword(const QString &ssid);
 
-    int getHeight() override;
 
 private:
     QMap<QString, NetworkManager::Connection::Ptr> m_wirelssConnectionMap;
@@ -76,7 +75,6 @@ private:
     NetworkManager::ConnectionSettings::Ptr m_connectionSettings;
     NetworkConnectionInfo m_connectionInfo;
     QString m_devicePath;
-    QPointer<TrayConnectionList> m_connectionList;
 };
 
 #endif  // KIRAN_CPANEL_NETWORK_WIRELESS_TRAY_WIDGET_H
