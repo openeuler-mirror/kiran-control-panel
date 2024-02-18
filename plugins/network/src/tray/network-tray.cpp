@@ -149,14 +149,8 @@ void NetworkTray::initConnect()
     // 无线网络如果一下消失多个网络，短时间会触发多次SizeHint变更的信号
     m_wirelessTimer.setInterval(10);
     m_wirelessTimer.setSingleShot(true);
-    connect(m_wirelessTrayPage, &TrayPage::sizeChanged, this, [this](QSize sizeHint)
-            {
-                m_wirelessTraySizeHint = sizeHint;
-                m_wirelessTimer.start(); });
     connect(&m_wirelessTimer, &QTimer::timeout, this, [this]()
             { handleAdjustedTraySize(m_wirelessTraySizeHint); });
-
-    connect(m_wiredTrayPage, &TrayPage::sizeChanged, this, &NetworkTray::handleAdjustedTraySize, Qt::UniqueConnection);
 
     connect(Kiran::StylePalette::instance(), &Kiran::StylePalette::themeChanged, this, &NetworkTray::handleThemeChanged);
 }
@@ -210,11 +204,17 @@ void NetworkTray::initTrayPage()
         {
             m_wiredTrayPage = new TrayPage(m_wiredDeviceList, this);
             m_verticalLayout->addWidget(m_wiredTrayPage);
+            connect(m_wiredTrayPage, &TrayPage::sizeChanged, this, &NetworkTray::handleAdjustedTraySize, Qt::UniqueConnection);
         }
         if (wirelessCount != 0)
         {
             m_wirelessTrayPage = new TrayPage(m_wirelessDeviceList, this);
             m_verticalLayout->addWidget(m_wirelessTrayPage);
+
+            connect(m_wirelessTrayPage, &TrayPage::sizeChanged, this, [this](QSize sizeHint)
+                    {
+                        m_wirelessTraySizeHint = sizeHint;
+                        m_wirelessTimer.start(); });
         }
     }
     m_verticalLayout->setMargin(0);
@@ -691,15 +691,10 @@ void NetworkTray::reloadWirelessTrayPage()
         m_verticalLayout->insertWidget(-1, m_wirelessTrayPage);
         m_verticalLayout->setMargin(0);
 
-        // 无线网络如果一下消失多个网络，短时间会触发多次SizeHint变更的信号
-        m_wirelessTimer.setInterval(10);
-        m_wirelessTimer.setSingleShot(true);
         connect(m_wirelessTrayPage, &TrayPage::sizeChanged, this, [this](QSize sizeHint)
                 {
                     m_wirelessTraySizeHint = sizeHint;
                     m_wirelessTimer.start(); });
-        connect(&m_wirelessTimer, &QTimer::timeout, this, [this]()
-                { handleAdjustedTraySize(m_wirelessTraySizeHint); });
         update();
     }
 }
@@ -759,6 +754,10 @@ void NetworkTray::checkInternetConnectivity()
     }
     QVariant address = confSettings.value(QString("Network/Address"));
     QVariant port = confSettings.value(QString("Network/Port"));
+    if(m_tcpClient->state() != QAbstractSocket::UnconnectedState)
+    {
+        m_tcpClient->abort();
+    }   
     m_tcpClient->connectToHost(address.toString(), port.toInt());
 }
 
