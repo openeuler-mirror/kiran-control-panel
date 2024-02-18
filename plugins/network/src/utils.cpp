@@ -16,12 +16,12 @@
 #include <qt5-log-i.h>
 #include <style-palette.h>
 #include <NetworkManagerQt/Ipv4Setting>
-#include <NetworkManagerQt/WirelessSecuritySetting>
-#include <NetworkManagerQt/WirelessSetting>
-#include <NetworkManagerQt/WirelessDevice>
 #include <NetworkManagerQt/Settings>
 #include <NetworkManagerQt/WiredDevice>
 #include <NetworkManagerQt/WiredSetting>
+#include <NetworkManagerQt/WirelessDevice>
+#include <NetworkManagerQt/WirelessSecuritySetting>
+#include <NetworkManagerQt/WirelessSetting>
 
 #include <QIcon>
 using namespace NetworkManager;
@@ -156,7 +156,7 @@ NetworkManager::ConnectionSettings::Ptr NetworkUtils::createWirelessConnectionSe
     else
     {
         auto device = findNetworkInterface(devicePath);
-        WirelessDevice::Ptr  wirelessDevice = qobject_cast<WirelessDevice *>(device);
+        WirelessDevice::Ptr wirelessDevice = qobject_cast<WirelessDevice *>(device);
         AccessPoint::Ptr accessPoint = wirelessDevice->findAccessPoint(accessPointPath);
         AccessPoint::Capabilities capabilities = accessPoint->capabilities();
         AccessPoint::WpaFlags wpaFlags = accessPoint->wpaFlags();
@@ -214,11 +214,10 @@ bool NetworkUtils::isAvailableConnection(const QString &devicePath, NetworkManag
     }
 }
 
-
 NetworkManager::Connection::List NetworkUtils::getAvailableWiredConnections(const QString &devicePath)
 {
     auto device = findNetworkInterface(devicePath);
-    if(device->type() != Device::Ethernet)
+    if (device->type() != Device::Ethernet)
     {
         return NetworkManager::Connection::List();
     }
@@ -249,5 +248,36 @@ NetworkManager::Connection::List NetworkUtils::getAvailableWiredConnections(cons
             }
         }
     }
-    return availableConnections;    
+    return availableConnections;
+}
+
+bool NetworkUtils::isExistedActivatedDevice()
+{
+    auto devices = networkInterfaces();
+    Device::List activatedDeviceList;
+    for (auto device : devices)
+    {
+        if (device->state() == Device::Activated)
+        {
+            activatedDeviceList << device;
+        }
+    }
+
+    bool isExistedSupportedDevice = false;
+    for (auto device : activatedDeviceList)
+    {
+        auto deviceType = device->type();
+        QSet<Device::Type> deviceTypes = {
+            Device::Ethernet,
+            Device::Wifi,
+            Device::Modem,
+            Device::Bluetooth};
+
+        if (deviceTypes.contains(deviceType))
+        {
+            isExistedSupportedDevice = true;
+            break;
+        }
+    }
+    return isExistedSupportedDevice;
 }
