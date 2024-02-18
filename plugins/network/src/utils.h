@@ -39,6 +39,8 @@ bool isAvailableConnection(const QString &devicePath, NetworkManager::Connection
 
 NetworkManager::Connection::List getAvailableWiredConnections(const QString &devicePath);
 
+bool isExistedActivatedDevice();
+
 QDebug operator<<(QDebug dbg, NetworkManager::Device *device);
 
 }  // namespace NetworkUtils
