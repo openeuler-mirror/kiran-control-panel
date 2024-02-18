@@ -102,6 +102,7 @@ void TrayPage::setMultiDeviceWidget()
         QString deviceName = dev->interfaceName();
         Device::Type deviceType = dev->type();
         ui->deviceComboBox->addItem(deviceName, devicePath);
+        KLOG_DEBUG() << "device combo box add item: " << deviceName;
 
         if (deviceType == Device::Ethernet)
         {
@@ -116,6 +117,10 @@ void TrayPage::setMultiDeviceWidget()
     }
     connect(ui->deviceComboBox, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &TrayPage::handleDeviceComboBoxChanged);
     ui->selectDevicewidget->setVisible(true);
+    
+    QWidget *widget = ui->stackedWidget->currentWidget();
+    auto trayWidget = qobject_cast<TrayWidget*>(widget);
+    ui->stackedWidget->setFixedHeight(trayWidget->getHeight());
 }
 
 // XXX:单设备时，指定了stackedWidget的高度，多设备时未指定，因为考虑到多个stacked页面高度不一致的情况
@@ -132,13 +137,15 @@ void TrayPage::setSingleDeviceWidget()
     {
         initWirelessTrayWidget(devicePath);
     }
+    QWidget *widget = ui->stackedWidget->currentWidget();
+    auto trayWidget = qobject_cast<TrayWidget*>(widget);
+    ui->stackedWidget->setFixedHeight(trayWidget->getHeight());
 }
 
 void TrayPage::initWiredTrayWidget(const QString &devicePath)
 {
     WiredTrayWidget *wiredTrayWidget = new WiredTrayWidget(devicePath, this);
     ui->stackedWidget->addWidget(wiredTrayWidget);
-    ui->stackedWidget->setFixedHeight(wiredTrayWidget->getHeight());
     connect(wiredTrayWidget, &WiredTrayWidget::sizeChanged, this, &TrayPage::handleAdjustedTraySize);
 }
 
@@ -146,7 +153,6 @@ void TrayPage::initWirelessTrayWidget(const QString &devicePath)
 {
     WirelessTrayWidget *wirelessTrayWidget = new WirelessTrayWidget(devicePath, this);
     ui->stackedWidget->addWidget(wirelessTrayWidget);
-    ui->stackedWidget->setFixedHeight(wirelessTrayWidget->getHeight());
     connect(wirelessTrayWidget, &WirelessTrayWidget::sizeChanged, this, &TrayPage::handleAdjustedTraySize);
 }
 
@@ -181,6 +187,12 @@ QStringList TrayPage::devicePathList()
 
 void TrayPage::handleAdjustedTraySize(QSize sizeHint)
 {
+    auto sizeChangedWidget = qobject_cast<QWidget *>(sender());
+    if(sizeChangedWidget !=  ui->stackedWidget->currentWidget())
+    {
+        return;
+    }
+
     int height = sizeHint.height();
     ui->stackedWidget->setFixedHeight(height);
 

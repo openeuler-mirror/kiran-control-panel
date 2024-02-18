@@ -22,8 +22,7 @@
 #include "status-notification.h"
 using namespace NetworkManager;
 
-WirelessTrayWidget::WirelessTrayWidget(const QString &devicePath, QWidget *parent) : TrayWidget(parent),
-                                                                                     m_connectionList(nullptr)
+WirelessTrayWidget::WirelessTrayWidget(const QString &devicePath, QWidget *parent) : TrayWidget(parent)
 {
     m_devicePath = devicePath;
     m_devicePtr = findNetworkInterface(m_devicePath);
@@ -492,14 +491,4 @@ void WirelessTrayWidget::handleDeviceStateChanged(Device::State newstate, Device
         bodyStr = body.arg(m_connectionInfo.wirelessInfo.ssid);
         // StatusNotification::connectitonFailedNotifyByReason(bodyStr);
     }
-}
-
-int WirelessTrayWidget::getHeight()
-{
-    if (!m_connectionList.isNull())
-    {
-        return m_connectionList->height();
-    }
-    else
-        return TRAY_ITEM_NORAML_HIEGHT;
 }

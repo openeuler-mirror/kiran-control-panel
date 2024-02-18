@@ -21,11 +21,13 @@
 #include "connection-list.h"
 #include "connection-show-page.h"
 #include "tray-widget.h"
+#include "tray-connection-list.h"
 // clang-format on
 using namespace NetworkManager;
 #define TRAY_ITEM_NORAML_HIEGHT 50
 
-TrayWidget::TrayWidget(QWidget *parent) : QWidget(parent)
+TrayWidget::TrayWidget(QWidget *parent) : QWidget(parent),
+                                          m_connectionList(nullptr)
 
 {
     init();
@@ -60,6 +62,24 @@ void TrayWidget::addWidget(QWidget *widget)
 void TrayWidget::removeWidget(QWidget *widget)
 {
     m_verticalLayout->removeWidget(widget);
+}
+
+int TrayWidget::getHeight()
+{
+    if (!m_connectionList.isNull())
+    {
+        auto items = m_connectionList->itemWidgetList();
+        if (items.count() != 0)
+        {
+            return m_connectionList->height();
+        }
+        else
+        {
+            return 0;
+        }
+    }
+    else
+        return TRAY_ITEM_NORAML_HIEGHT;
 }
 
 //XXX: 同一个ActiveConnection StateChanged的信号中会发送两次 ActiveConnection::State::Activated

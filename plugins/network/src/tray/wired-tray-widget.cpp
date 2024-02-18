@@ -22,8 +22,7 @@
 #include "utils.h"
 using namespace NetworkManager;
 
-WiredTrayWidget::WiredTrayWidget(const QString &devicePath, QWidget *parent) : TrayWidget(parent),
-                                                                               m_connectionList(nullptr)
+WiredTrayWidget::WiredTrayWidget(const QString &devicePath, QWidget *parent) : TrayWidget(parent)
 {
     m_devicePath = devicePath;
     m_devicePtr = findNetworkInterface(m_devicePath);
@@ -230,14 +229,4 @@ void WiredTrayWidget::handleConnectionUpdated(const QString &path)
     m_connectionList->removeConnectionFromList(path);
     Connection::Ptr updateConnection = findConnection(path);
     m_connectionList->addConnection(updateConnection, "");
-}
-
-int WiredTrayWidget::getHeight()
-{
-    if (!m_connectionList.isNull())
-    {
-        return m_connectionList->height();
-    }
-    else
-        return TRAY_ITEM_NORAML_HIEGHT;
 }

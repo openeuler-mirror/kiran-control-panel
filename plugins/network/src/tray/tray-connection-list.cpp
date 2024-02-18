@@ -61,7 +61,6 @@ void TrayConnectionList::addConnection(NetworkManager::Connection::Ptr ptr, cons
     trayItemWidget->setName(ptr->name());
     trayItemWidget->setWiredStatusIcon();
     trayItemWidget->setFixedSize(TRAY_ITEM_NORAML_SIZE);
-    trayItemWidget->setWiredStatusIcon();
 
     ActiveConnection::List activeConnectionList = activeConnections();
     for (ActiveConnection::Ptr activeConnection : activeConnectionList)
