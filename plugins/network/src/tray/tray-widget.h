@@ -23,6 +23,7 @@
 
 Q_DECLARE_METATYPE(NetworkManager::ActiveConnection::State);
 
+class TrayConnectionList;
 class TrayWidget : public QWidget
 {
     Q_OBJECT
@@ -36,7 +37,7 @@ public:
     void initConnection();
     void addWidget(QWidget *widget);
     void removeWidget(QWidget *widget);
-    virtual int getHeight() = 0;
+    virtual int getHeight();
 
 public slots:
     virtual void handleNotifierConnectionAdded(const QString &path) = 0;
@@ -57,6 +58,7 @@ signals:
 
 protected:
     NetworkManager::Device::Ptr m_devicePtr;
+    QPointer<TrayConnectionList> m_connectionList;
 
 private:
     QTimer m_StateActivatedTimer;
