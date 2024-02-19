@@ -150,7 +150,8 @@ qint64 AudioInfo::writeData(const char *data, qint64 len)
                 }
                 else if (m_format.sampleSize() == 32 && m_format.sampleType() == QAudioFormat::Float)
                 {
-                    value = qAbs(*reinterpret_cast<const float *>(ptr) * 0x7fffffff);  // assumes 0-1.0
+                    const float* floatValue = reinterpret_cast<const float *>(ptr);
+                    value = qAbs( (*floatValue) * 0x7fffffff);  // assumes 0-1.0
                 }
 
                 maxValue = qMax(value, maxValue);
@@ -343,7 +344,7 @@ void InputPage::changeDefaultInputCard(int index)
     for (auto source : sourcesList)
     {
         AudioDeviceInterface audioSource(AUDIO_DBUS_NAME, source, QDBusConnection::sessionBus(), this);
-        if ((cardIndex == audioSource.card_index()) && 
+        if ((cardIndex == audioSource.card_index()) &&
             (audioSource.isAvailablePorts()))
         {
             sourceIndex = audioSource.index();
@@ -418,7 +419,7 @@ void InputPage::setActivePort(int index)
     else
     {
         KLOG_INFO(qLcAudio) << QString("set default source active port: %1 failed").arg(portName);
-    }    
+    }
 }
 
 // 暂时没有处理Source增加减少的需求
@@ -500,7 +501,7 @@ void InputPage::clear()
     }
 
     QSignalBlocker inputDevicesBlocker(ui->inputDevices);
-    QSignalBlocker inputCardsBlocker(ui->inputCards); 
+    QSignalBlocker inputCardsBlocker(ui->inputCards);
     ui->inputDevices->clear();
     ui->inputCards->clear();
 

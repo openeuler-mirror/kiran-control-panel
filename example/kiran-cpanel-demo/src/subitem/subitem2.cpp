@@ -12,32 +12,27 @@
  * Author:     liuxinhao <liuxinhao@kylinsec.com.cn>
  */
 
-#ifndef DIALOG001_H
-#define DIALOG001_H
+#include "subitem2.h"
+#include "ui_subitem2.h"
 
-#include <QDialog>
-
-namespace Ui {
-class SubItem1;
+SubItem2::SubItem2(QWidget *parent) :
+    QDialog(parent),
+    ui(new Ui::SubItem2)
+{
+    ui->setupUi(this);
 }
 
-class SubItem1 : public QDialog
+SubItem2::~SubItem2()
 {
-    Q_OBJECT
-    Q_PROPERTY(bool unsaved READ unsaved)
-public:
-    explicit SubItem1(QWidget *parent = 0);
-    ~SubItem1();
+    delete ui;
+}
 
-    bool unsaved();
+void SubItem2::on_lineEdit_textChanged(const QString &arg1)
+{
+    m_unsaved = true;
+}
 
-private slots:
-    void on_lineEdit_textChanged(const QString &arg1);
-    void on_pushButton_clicked();
-
-private:
-    Ui::SubItem1 *ui;
-    bool m_unsaved = false;
-};
-
-#endif // DIALOG001_H
+bool SubItem2::unsaved()
+{
+    return m_unsaved;
+}

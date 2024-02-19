@@ -17,6 +17,7 @@
 #include "qt5-log-i.h"
 
 Category::Category(QObject* parent)
+    : m_weight(0)
 {
 }
 

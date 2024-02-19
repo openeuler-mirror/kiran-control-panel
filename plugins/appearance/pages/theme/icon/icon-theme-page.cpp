@@ -118,7 +118,7 @@ void IconThemePage::loadIconThemes()
             {QString("%1/apps/scalable/").arg(theme.path), {}}};
         for (QMap<QString, QStringList>::iterator iter = dirAndEntrysMap.begin();
              iter != dirAndEntrysMap.end();
-             iter++)
+             ++iter)
         {
             QDir dir(iter.key());
             dirAndEntrysMap[iter.key()] = dir.entryList(QDir::Files);
@@ -131,7 +131,7 @@ void IconThemePage::loadIconThemes()
             QString iconPath;
             for (QMap<QString, QStringList>::iterator iter = dirAndEntrysMap.begin();
                  iter != dirAndEntrysMap.end();
-                 iter++)
+                 ++iter)
             {
                 QStringList entryList = iter.value();
 
