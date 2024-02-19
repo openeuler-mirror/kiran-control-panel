@@ -38,13 +38,14 @@ class AutostartPage : public QWidget
 public:
     explicit AutostartPage(QWidget* parent = nullptr);
     virtual ~AutostartPage();
+
+private:
     void initAutoStartAppUI();
     void initAddBtn();
     void initAutoStartApps();
-    KiranSettingItem* createAutoStartAppItem(const QString &desktopName, AutostartApp &autoStartApp);
-
     bool initAutoStartAppsConfig();
 
+    KiranSettingItem* createAutoStartAppItem(const QString &desktopName, AutostartApp &autoStartApp);
     AutoStartAppFlags addAutoStartApp(const QString &path, const QString &desktopName);
 
 private slots:

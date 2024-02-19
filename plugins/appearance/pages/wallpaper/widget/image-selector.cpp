@@ -199,7 +199,7 @@ void ImageSelector::handlerImageDelete(QString imagePath)
             int deletePosIndex = 0;
             for (QList<ImageItem *>::iterator iter = m_itemList.begin();
                  iter != m_itemList.end();
-                 iter++)
+                 ++iter)
             {
                 if ((*iter)->imagePath() == imagePath)
                 {

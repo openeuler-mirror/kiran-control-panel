@@ -238,7 +238,7 @@ void Wallpaper::handleImageSelector()
                 // 将图片信息存储在xml文件中，若文件不存在则创建
                 for (QList<QMap<QString, QString>>::iterator iter = m_wallpaperMapList.begin();
                      iter != m_wallpaperMapList.end();
-                     iter++)
+                     ++iter)
                 {
                     if ((*iter).value(FILENAME) == storedName)
                     {
@@ -268,7 +268,7 @@ void Wallpaper::handleImageSelector()
             [=](QString deletedPath) {
                 for (QList<QMap<QString, QString>>::iterator iter = m_wallpaperMapList.begin();
                      iter != m_wallpaperMapList.end();
-                     iter++)
+                     ++iter)
                 {
                     if ((*iter).value(FILENAME) == deletedPath)
                     {
