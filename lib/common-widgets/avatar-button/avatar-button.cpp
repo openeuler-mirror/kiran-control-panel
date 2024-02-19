@@ -25,6 +25,7 @@
 
 AvatarButton::AvatarButton(QWidget *parent)
     : QAbstractButton(parent),
+      m_radius(0.0),
       m_mouseEnter(false),
       m_hover(false)
 {
@@ -86,13 +87,13 @@ void AvatarButton::paintEvent(QPaintEvent *event)
     if (isChecked())
     {
         painter.save();
-        ///遮罩
+        /// 遮罩
         QPainterPath painterPath;
         painterPath.addEllipse((this->width() - (m_radius * 2)) / 2, (this->height() - (m_radius * 2)) / 2,
                                m_radius * 2, m_radius * 2);
         painter.fillPath(painterPath, QBrush(QColor(0, 0, 0, 255 * 0.6)));
 
-        ///边框
+        /// 边框
         QPen pen;
         pen.setColor("#12adfb");
         pen.setWidth(3);
@@ -101,7 +102,7 @@ void AvatarButton::paintEvent(QPaintEvent *event)
                             m_radius * 2);
         painter.restore();
 
-        ///画勾
+        /// 画勾
         QSize checkedIconSize(40, 40);
         QPoint checkedIconLeftop((this->width() - checkedIconSize.width()) / 2,
                                  (this->height() - checkedIconSize.height()) / 2);

@@ -103,3 +103,7 @@ add_subdirectory(libexec)
 add_subdirectory(launcher)
 add_subdirectory(plugins)
 add_subdirectory(data)
+
+if(BUILD_EXAMPLE)
+        add_subdirectory(example)
+endif()

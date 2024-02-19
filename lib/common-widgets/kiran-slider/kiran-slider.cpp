@@ -33,9 +33,9 @@ static const int ticknessHeight = 12;
 static const int ticknessWedith = 2;
 
 KiranSlider::MarkPoint::MarkPoint(int value_, QString desc_)
+    : value(value_),
+      desc(desc_)
 {
-    value = value_;
-    desc = desc_;
 }
 
 bool KiranSlider::UpdateContext::operator==(const UpdateContext& other) const
@@ -180,7 +180,7 @@ void KiranSlider::mousePressEvent(QMouseEvent* ev)
     ev->accept();
 
     // 扩大滑动槽触发区域
-    auto grooveTriggerRect = m_grooveRect.adjusted(-1,-1,1,1);
+    auto grooveTriggerRect = m_grooveRect.adjusted(-1, -1, 1, 1);
 
     if (m_handleRect.contains(ev->pos()))
     {
@@ -222,7 +222,7 @@ void KiranSlider::mouseMoveEvent(QMouseEvent* ev)
     ev->accept();
 
     // 扩大滑动槽触发区域
-    auto grooveTriggerRect = m_grooveRect.adjusted(-1,-1,1,1);
+    auto grooveTriggerRect = m_grooveRect.adjusted(-1, -1, 1, 1);
 
     int offset = ev->pos().x() - grooveTriggerRect.left();
     int value = sliderValueFromPosition(minimum(), maximum(), offset, grooveTriggerRect.width(), false);
