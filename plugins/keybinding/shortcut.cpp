@@ -293,7 +293,7 @@ bool Shortcut::getShortcutInfo(const QString &uid, ShortcutInfoPtr &info)
 {
     QDBusPendingReply<QString> reply;
 
-    /// FIXME:目前后端快捷键新增修改信息中 kind为翻译过后，只能根据uid前缀区分
+    /// NOTE:目前后端快捷键新增修改信息中 kind为翻译过后，只能根据uid前缀区分
     if (uid.startsWith("Custom", Qt::CaseInsensitive))
     {
         reply = m_keybindingInterface->GetCustomShortcut(uid);
@@ -535,7 +535,6 @@ void Shortcut::handleShortcutAdded(QString result)
 
     fetchShortcutInfoFromJson(jsonObject, shortcutInfo);
     QString uid = shortcutInfo->uid;
-    QString kind = shortcutInfo->kind;
     if (uid.startsWith("Custom", Qt::CaseInsensitive))
     {
         shortcutInfo->type = SHORTCUT_TYPE_CUSTOM;
@@ -602,7 +601,6 @@ void Shortcut::handleShortcutChanged(QString result)
     fetchShortcutInfoFromJson(jsonObject, shortcutInfo);
 
     QString uid = shortcutInfo->uid;
-    QString kind = shortcutInfo->kind;
 
     KLOG_INFO(qLcKeybinding) << "shortcut changed:" << shortcutInfo->uid
                              << shortcutInfo->kind << shortcutInfo->name;

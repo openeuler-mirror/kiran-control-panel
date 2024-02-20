@@ -80,6 +80,14 @@ private:
     DevicePanelWidget::AnchorRectPos getMinDisGeometry(QAbstractButton *b, QList<QAbstractButton *> btns, const bool &magnet = true);
     QList<DevicePanelWidget::AnchorRectPos> getAvailableGeometrys(const QRect &g1, const QRect &g2, const bool &magnet);
     DevicePanelWidget::AnchorRectPos getAvailableGeometry(const QRect &g1, const QRect &g2, const DevicePanelItem::AnchorByDrect &drect, const bool &magnet);
+    
+    DevicePanelWidget::AnchorRectPos getAnchorRectPosLeft(const QRect &g1, const QRect &g2, const bool &magnet);
+    DevicePanelWidget::AnchorRectPos getAnchorRectPosRight(const QRect &g1, const QRect &g2, const bool &magnet);
+
+    DevicePanelWidget::AnchorRectPos getAnchorRectPosTop(const QRect &g1, const QRect &g2, const bool &magnet);
+    DevicePanelWidget::AnchorRectPos getAnchorRectPosBottom(const QRect &g1, const QRect &g2, const bool &magnet);
+
+
     DevicePanelWidget::AnchorRectPos getMinDisGeometryPrivate(const QList<DevicePanelWidget::AnchorRectPos> &list);
 
     DevicePanelItem::AnchorByDrect insertDrect(const QRectF &r, const QRectF &movedR, const DevicePanelItem::AnchorByDrect &drect);

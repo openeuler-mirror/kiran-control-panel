@@ -24,6 +24,14 @@ PowerInterface::PowerInterface(const QString &service, const QString &path, cons
     qDBusRegisterMetaType<IdleAction>();
 }
 
+PowerInterface::~PowerInterface()
+{
+    if(m_gnomeSmProxy)
+    {
+        m_gnomeSmProxy->deleteLater();
+    }
+}
+
 void PowerInterface::globalInit()
 {
     m_instance = new PowerInterface("com.kylinsec.Kiran.SessionDaemon.Power", "/com/kylinsec/Kiran/SessionDaemon/Power", QDBusConnection::sessionBus());

@@ -32,10 +32,8 @@ class VpnPpp : public QWidget
 public:
     explicit VpnPpp(QWidget *parent = nullptr);
     ~VpnPpp() override;
-    void initUI();
-    void initConnection();
-    void initOptionsButton(const QStringList &supportOptions);
-    void initOptionsStrMap();
+
+public:
     void setVpnSetting(const NetworkManager::VpnSetting::Ptr &vpnSetting);
 
 public slots:
@@ -47,6 +45,12 @@ public slots:
     void handleMPPEChanged(bool checked);
 
 private:
+    void initUI();
+    void initConnection();
+    void initOptionsButton(const QStringList &supportOptions);
+    void initOptionsStrMap();
+
+private:
     Ui::VpnPpp *ui;
     NetworkManager::VpnSetting::Ptr m_vpnSetting;
     NMStringMap m_dataMap;
@@ -55,8 +59,8 @@ private:
     QStringList m_supportOptions;
     QMap<QString,KiranSwitchButton*> m_optionsButtonMap;
 
-    KiranSwitchButton *m_useMPPE;
-    KiranSwitchButton *m_statefulMPPE;
+    KiranSwitchButton *m_useMPPE = nullptr;
+    KiranSwitchButton *m_statefulMPPE = nullptr;
 };
 
 #endif  //KIRAN_CPANEL_NETWORK_VPN_PPP_H

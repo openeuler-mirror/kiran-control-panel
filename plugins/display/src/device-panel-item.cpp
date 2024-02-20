@@ -45,7 +45,8 @@ void DevicePanelItem::init()
     setText(m_monitorConfigData->name());
     setToolTip(m_monitorConfigData->name());
 
-    QRectF rect(m_monitorConfigData->x(), m_monitorConfigData->y(), m_monitorConfigData->w(), m_monitorConfigData->h());
+    QPoint pos = m_monitorConfigData->position();
+    QRectF rect(pos.x(), pos.y(), m_monitorConfigData->width(), m_monitorConfigData->height());
     m_screenGeometryF = rect;
     m_enabled = m_monitorConfigData->enabled();
 
@@ -63,8 +64,6 @@ void DevicePanelItem::paintEvent(QPaintEvent *)
     // QFontMetrics fm = painter.fontMetrics();
     // float zoom = rect.width() / fm.width(text());
     float pixsize = 22;  // zoom*15.0;
-    pixsize = pixsize > 10.0 ? pixsize : 10.0;
-    pixsize = pixsize < 60.0 ? pixsize : 60.0;
     QFont font;
     font.setPixelSize(pixsize);
     painter.setFont(font);
@@ -366,15 +365,14 @@ void DevicePanelItem::updateScreenGeometry()
     default:
         break;
     }
-    m_monitorConfigData->setX(m_screenGeometryF.x());
-    m_monitorConfigData->setY(m_screenGeometryF.y());
+    m_monitorConfigData->setPosition(m_screenGeometryF.x(), m_screenGeometryF.y());
 }
 
 void DevicePanelItem::updateOffset(DevicePanelItem *anchorByBtn, const DevicePanelItem::AnchorByDrect &anchorByDrect, const bool &isDrag)
 {
     if (!anchorByBtn) return;
 
-    const QRectF &screenGeometryF = this->screenGeometryF();
+    const QRectF &screenGeometry = this->screenGeometryF();
     const QRectF &anchorScreenGeometry = anchorByBtn->screenGeometryF();
     switch (anchorByDrect)
     {
@@ -383,14 +381,14 @@ void DevicePanelItem::updateOffset(DevicePanelItem *anchorByBtn, const DevicePan
         if (isDrag)
             m_screenOffset = QPointF(0, anchorScreenGeometry.height() * m_zoomPair.first / m_zoomPair.second);
         else
-            m_screenOffset = QPointF(0, screenGeometryF.top() - anchorScreenGeometry.top());
+            m_screenOffset = QPointF(0, screenGeometry.top() - anchorScreenGeometry.top());
         break;
     case DevicePanelItem::PosTop:
     case DevicePanelItem::PosBottom:
         if (isDrag)
             m_screenOffset = QPointF(anchorScreenGeometry.width() * m_zoomPair.first / m_zoomPair.second, 0);
         else
-            m_screenOffset = QPointF(screenGeometryF.left() - anchorScreenGeometry.left(), 0);
+            m_screenOffset = QPointF(screenGeometry.left() - anchorScreenGeometry.left(), 0);
         break;
     case DevicePanelItem::PosTopLeft:
     case DevicePanelItem::PosTopRight:
@@ -423,8 +421,8 @@ bool DevicePanelItem::enabled() const
 
 void DevicePanelItem::handleConfigResolvingChanged(const QSize &size)
 {
-    m_screenGeometryF.setWidth(m_monitorConfigData->w());
-    m_screenGeometryF.setHeight(m_monitorConfigData->h());
+    m_screenGeometryF.setWidth(m_monitorConfigData->width());
+    m_screenGeometryF.setHeight(m_monitorConfigData->height());
 
     emit screenGeometryChanged();
 }
@@ -462,8 +460,7 @@ void DevicePanelItem::setScreenGeometryF(const QRectF &screenGeometryF)
 void DevicePanelItem::moveScreenGeometryFOffset(const QPointF &offsetF)
 {
     m_screenGeometryF.moveTopLeft(m_screenGeometryF.topLeft() + offsetF);
-    m_monitorConfigData->setX(m_screenGeometryF.x());
-    m_monitorConfigData->setY(m_screenGeometryF.y());
+    m_monitorConfigData->setPosition(m_screenGeometryF.x(), m_screenGeometryF.y());
 }
 
 void DevicePanelItem::mousePressEvent(QMouseEvent *e)

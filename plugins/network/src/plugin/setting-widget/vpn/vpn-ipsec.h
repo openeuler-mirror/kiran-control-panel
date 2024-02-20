@@ -34,8 +34,7 @@ public:
     explicit VpnIPsec(QWidget *parent = nullptr);
     ~VpnIPsec() override;
 
-    void initUI();
-    void initConnection();
+public:
     void setVpnSetting(const NetworkManager::VpnSetting::Ptr &vpnSetting);
     void setConnectionPtr(const NetworkManager::Connection::Ptr &connection);
 
@@ -47,11 +46,15 @@ public slots:
     void enablePasswordVisual();
 
 private:
+    void initUI();
+    void initConnection();
+
+private:
     Ui::VpnIPsec *ui;
     NetworkManager::VpnSetting::Ptr m_vpnSetting;
     NetworkManager::Connection::Ptr m_connection;
     NMStringMap m_dataMap;
-    KiranSwitchButton *m_enableIPsec;
+    KiranSwitchButton *m_enableIPsec = nullptr;
 };
 
 #endif  // KIRAN_CPANEL_NETWORK_VPN_IPSEC_H

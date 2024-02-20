@@ -40,11 +40,12 @@ class ConnectionNameWidget : public QWidget
 public:
     explicit ConnectionNameWidget(QWidget *parent = nullptr);
     ~ConnectionNameWidget() override;
-    void initUI();
+public:
     void setConnectionSettings(const NetworkManager::ConnectionSettings::Ptr &connectionSettings);
     void setErrorTips(KiranTips *errorTips);
     void setNameLabel(const QString &name);
-    int connectionSuffixNum(QString &connName);
+    int connectionSuffixNum(const QString &connName);
+    
 public slots:
     void saveSettings();
     void showSettings(NetworkManager::ConnectionSettings::ConnectionType connectionType);
@@ -53,8 +54,11 @@ public slots:
     bool isInputValid();
 
 private:
+    void initUI();
+
+private:
     Ui::ConnectionNameWidget *ui;
-    KiranSwitchButton *m_autoConnection;
+    KiranSwitchButton *m_autoConnection = nullptr;
     NetworkManager::ConnectionSettings::Ptr m_connectionSettings;
     NetworkManager::ConnectionSettings::ConnectionType m_connectionType;
     KiranTips *m_errorTip = nullptr;

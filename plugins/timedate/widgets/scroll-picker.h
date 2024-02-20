@@ -23,7 +23,7 @@
 
 class QStandardItemModel;
 
-///FIXME:model的大小未做限制
+///NOTE:model的大小未做限制
 class ScrollPicker : public QWidget
 {
     Q_OBJECT

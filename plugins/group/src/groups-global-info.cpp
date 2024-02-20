@@ -74,7 +74,7 @@ bool GroupsGlobalInfo::init()
     //将用户组列表添加到表中
     for (objListIter = objList.begin();
          objListIter != objList.end();
-         objListIter++)
+         ++objListIter)
     {
         addGroupToMap(*objListIter);
     }

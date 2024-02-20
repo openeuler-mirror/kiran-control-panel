@@ -64,7 +64,6 @@ public slots:
 
 private:
     Ui::VpnManager *ui;
-    QString m_devicePath;
 };
 
 #endif  // KIRAN_CPANEL_NETWORK_VPN_MANAGER_H
