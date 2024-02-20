@@ -31,7 +31,6 @@ class DeviceAvailableConnectionWidget : public KiranCollapse
 {
     Q_OBJECT
 public:
-    explicit DeviceAvailableConnectionWidget(const QString &devicePath, QWidget *parent = nullptr);
     explicit DeviceAvailableConnectionWidget(NetworkManager::Device::Ptr device, QWidget *parent = nullptr);
 
     ~DeviceAvailableConnectionWidget();

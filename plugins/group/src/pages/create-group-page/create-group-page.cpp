@@ -141,7 +141,7 @@ void CreateGroupPage::handlerCreateNewGroupIsDone(QString groupPath, QString err
     auto userList = m_userContainter->getAllFeatureItem();
     for (auto &item : userList)
     {
-        auto userListWidget = (UserListWidget *)item;
+        auto userListWidget =  qobject_cast<UserListWidget *>(item);
         if (userListWidget->getRightButtionVisible())
         {
             userNameList.append(userListWidget->getText());

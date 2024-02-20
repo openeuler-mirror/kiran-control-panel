@@ -27,7 +27,7 @@
 #include <QTranslator>
 #include "dbus-tray-monitor.h"
 #include "logging-category.h"
-
+#include <QScopedPointer> 
 
 #define DBUS_SERVICE_KDE_STATUS_NOTIFIER_WATCHER "org.kde.StatusNotifierWatcher"
 
@@ -49,11 +49,11 @@ int main(int argc, char *argv[])
         KLOG_WARNING() << "installTranslator failed";
     }
 
-    AudioSystemTray *audioSystemTray = nullptr;
+     QScopedPointer<AudioSystemTray> audioSystemTray;
     if (KiranControlPanel::isDBusTrayAvailable())
     {
         KLOG_DEBUG(qLcAudio) << KDE_STATUS_NOTIFIER_HOST << "is registered,create network tray icon";
-        audioSystemTray = new AudioSystemTray;
+        audioSystemTray.reset(new AudioSystemTray);
     }
     else
     {
@@ -65,7 +65,7 @@ int main(int argc, char *argv[])
                             if(audioSystemTray == nullptr)
                             {
                                 KLOG_DEBUG(qLcAudio) << KDE_STATUS_NOTIFIER_HOST << "is registered,create network tray icon";
-                                audioSystemTray = new AudioSystemTray;
+                                audioSystemTray.reset(new AudioSystemTray);
                             } 
                         });
     }

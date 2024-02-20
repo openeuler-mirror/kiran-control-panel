@@ -49,6 +49,7 @@ NetworkTray::NetworkTray(QWidget *parent) : KiranRoundedTrayPopup(parent),
 
 NetworkTray::~NetworkTray()
 {
+    m_statusNotifierManager->deleteLater();
 }
 
 void NetworkTray::init()
@@ -334,18 +335,22 @@ void NetworkTray::getTrayGeometry()
     QDBusPendingReply<QString> getGeometry = m_statusNotifierManager->GetGeometry("~04-network");
     KLOG_DEBUG(qLcNetwork) << "getGeometry.value():" << getGeometry.value();
 
-    double height, width, x, y;
     QJsonParseError jsonParseError;
     QJsonDocument doc = QJsonDocument::fromJson(getGeometry.value().toLatin1(), &jsonParseError);
-    if (!doc.isNull() && doc.isObject() && jsonParseError.error == QJsonParseError::NoError)
+
+    if(doc.isNull() || !doc.isObject() || jsonParseError.error != QJsonParseError::NoError)
     {
-        QJsonObject object = doc.object();
-        QStringList list = object.keys();
-        height = object.value("height").toDouble();
-        width = object.value("width").toDouble();
-        x = object.value("x").toDouble();
-        y = object.value("y").toDouble();
+        return;
     }
+
+    double height, width, x, y = 0;
+
+    QJsonObject object = doc.object();
+    height = object.value("height").toDouble();
+    width = object.value("width").toDouble();
+    x = object.value("x").toDouble();
+    y = object.value("y").toDouble();
+
     m_heightTray = static_cast<int>(height);
     m_widthTray = static_cast<int>(width);
     m_xTray = static_cast<int>(x);
@@ -752,7 +757,7 @@ void NetworkTray::initTcpSocket()
 {
     m_tcpClient = new QTcpSocket(this);
     connect(m_tcpClient, &QTcpSocket::connected, this, &NetworkTray::internetConnected);
-    connect(m_tcpClient, QOverload<QAbstractSocket::SocketError>::of(&QAbstractSocket::error), this, &NetworkTray::internetError);
+    connect(m_tcpClient, &QAbstractSocket::errorOccurred, this, &NetworkTray::internetError);
 }
 
 void NetworkTray::checkInternetConnectivity()

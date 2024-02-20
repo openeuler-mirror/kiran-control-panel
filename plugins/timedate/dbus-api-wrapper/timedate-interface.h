@@ -45,13 +45,13 @@ struct ZoneInfo{
     arg.endStructure();
     return arg;
   };
-  bool operator== (ZoneInfo& other) const{
+  bool operator== (const ZoneInfo& other) const{
     if(zone_id==other.zone_id){
       return true;
     }
     return false;
   };
-  bool operator!= (ZoneInfo& other) const{
+  bool operator!= (const ZoneInfo& other) const{
     if(zone_id!=other.zone_id){
       return true;
     }

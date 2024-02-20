@@ -53,6 +53,8 @@ AudioSystemTray::AudioSystemTray(QWidget *parent) : QWidget(parent)
 
 AudioSystemTray::~AudioSystemTray()
 {
+    delete m_volumeSettingPage;
+    delete m_mixedSettingPage;
 }
 
 void AudioSystemTray::initVolumeSettingPage(QString objectPath)
@@ -159,6 +161,8 @@ void AudioSystemTray::handleAudioTrayClicked(QSystemTrayIcon::ActivationReason r
             m_volumenPopup->show();
         }
         break;
+    default:
+        break;
     }
 }
 
@@ -228,24 +232,21 @@ void AudioSystemTray::getTrayGeometry()
 {
     QDBusPendingReply<QString> getGeometry = m_statusNotifierManager->GetGeometry("~02-volume");
 
-    double height, width, x, y;
     QJsonParseError jsonParseError;
     QJsonDocument doc = QJsonDocument::fromJson(getGeometry.value().toLatin1(), &jsonParseError);
-    if (!doc.isNull() && jsonParseError.error == QJsonParseError::NoError)
+
+    if(doc.isNull() || !doc.isObject() || (jsonParseError.error != QJsonParseError::NoError))
     {
-        if (doc.isObject() && jsonParseError.error == QJsonParseError::NoError)
-        {
-            if (doc.isObject())
-            {
-                QJsonObject object = doc.object();
-                QStringList list = object.keys();
-                height = object.value("height").toDouble();
-                width = object.value("width").toDouble();
-                x = object.value("x").toDouble();
-                y = object.value("y").toDouble();
-            }
-        }
+        return;
     }
+    
+    double height, width, x, y = 0;
+    QJsonObject object = doc.object();
+    height = object.value("height").toDouble();
+    width = object.value("width").toDouble();
+    x = object.value("x").toDouble();
+    y = object.value("y").toDouble();
+    
     m_heightTray = static_cast<int>(height);
     m_widthTray = static_cast<int>(width);
     m_xTray = static_cast<int>(x);

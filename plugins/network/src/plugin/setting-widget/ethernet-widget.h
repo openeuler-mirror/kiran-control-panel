@@ -33,9 +33,8 @@ class EthernetWidget : public QWidget
 public:
     explicit EthernetWidget(QWidget *parent = nullptr);
     ~EthernetWidget() override;
-    void initUI();
-    void initEthernetMacComboBox();
-    void initConnection();
+
+public:
     void setWiredSetting(const NetworkManager::WiredSetting::Ptr &wiredSetting);
     void setErrorTips(KiranTips *errorTips);
     bool isCloneMacValid(const QString &cloneMac);
@@ -50,9 +49,14 @@ public slots:
     bool isInputValid();
 
 private:
+    void initUI();
+    void initEthernetMacComboBox();
+    void initConnection();
+
+private:
     Ui::EthernetWidget *ui;
     NetworkManager::WiredSetting::Ptr m_wiredSetting;
-    KiranSwitchButton *m_mtuButton;
+    KiranSwitchButton *m_mtuButton = nullptr;
     KiranTips *m_errorTip = nullptr;
 };
 
