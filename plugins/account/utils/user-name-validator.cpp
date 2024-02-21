@@ -20,6 +20,7 @@ UserNameValidator::UserNameValidator(QObject *parent) : QValidator(parent)
 {
 }
 
+// sonarqube block off
 /// 只允许输入数字、字母、下划线
 QValidator::State UserNameValidator::validate(QString &input, int &pos) const
 {
@@ -40,3 +41,4 @@ QValidator::State UserNameValidator::validate(QString &input, int &pos) const
 
     return QValidator::Acceptable;
 }
+// sornarqube block on

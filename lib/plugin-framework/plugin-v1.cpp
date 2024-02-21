@@ -47,7 +47,7 @@ PluginV1::PluginV1(QObject* parent)
 
 PluginV1::~PluginV1()
 {
-    unload();
+
 }
 
 bool PluginV1::load(const QString& desktopPath)
@@ -225,7 +225,7 @@ bool PluginV1::parseDesktopInfo(const QString& desktopPath)
     weight = g_key_file_get_int64(keyFile, GROUP_KIRAN_CONTROL_PANEL_PLUGIN, KEY_WEIGHT, &error);
     if (error)
     {
-        KLOG_ERROR(qLcPluginFramework) << GROUP_KIRAN_CONTROL_PANEL_PLUGIN << KEY_WEIGHT << (error ? error->message : "");
+        KLOG_ERROR(qLcPluginFramework) << GROUP_KIRAN_CONTROL_PANEL_PLUGIN << KEY_WEIGHT << error->message;
         g_clear_error(&error);
     }
 

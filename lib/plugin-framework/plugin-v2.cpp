@@ -34,7 +34,6 @@ PluginV2::PluginV2(QObject* parent)
 
 PluginV2::~PluginV2()
 {
-    unload();
 }
 
 bool PluginV2::load(const QString& path)
