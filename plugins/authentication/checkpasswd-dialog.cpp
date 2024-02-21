@@ -1,3 +1,16 @@
+/**
+ * Copyright (c) 2020 ~ 2024 KylinSec Co., Ltd.
+ * kiran-control-panel is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *          http://license.coscl.org.cn/MulanPSL2
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ *
+ * Author:     liuxinhao <liuxinhao@kylinsec.com.cn>
+ */
 #include "checkpasswd-dialog.h"
 #include "logging-category.h"
 
@@ -12,10 +25,10 @@ int conv_func(int num_msg, const struct pam_message **msg,
     struct pam_response *reply = NULL;
     int ret;
     int replies;
-    char *passwd = (char *)appdata_ptr;
+    char *passwd = static_cast<char *>(appdata_ptr);
 
     /// 分配回复包
-    reply = (struct pam_response *)calloc(num_msg, sizeof(*reply));
+    reply = static_cast<struct pam_response *> ( calloc(num_msg, sizeof(*reply)));
     if (reply == nullptr)
     {
         return PAM_CONV_ERR;
@@ -30,7 +43,7 @@ int conv_func(int num_msg, const struct pam_message **msg,
             goto failed;
         }
         reply[replies].resp = new char[strlen(passwd) + 1]();
-        strcpy(reply[replies].resp, passwd);
+        strncpy(reply[replies].resp, passwd,strlen(passwd));
         reply[replies].resp_retcode = PAM_SUCCESS;
     }
     *resp = reply;
@@ -42,7 +55,7 @@ failed:
     {
         if (reply[i].resp != nullptr)
         {
-            delete reply[i].resp;
+            delete[] reply[i].resp;
         }
     }
     free(reply);
@@ -60,7 +73,7 @@ bool _checkUserPassword(const QString &user, const QString &pwd)
     std::string sPwd = pwd.toStdString();
     struct pam_conv conv = {
         &conv_func,
-        (void *)sPwd.c_str()};
+        const_cast<void*>(static_cast<const void *>(sPwd.c_str()))};
 
     pam_handle *handler;
     int res;
@@ -68,8 +81,14 @@ bool _checkUserPassword(const QString &user, const QString &pwd)
     res = pam_start("password-auth", user.toStdString().c_str(),
                     &conv,
                     &handler);
+    if (res != PAM_SUCCESS)
+    {
+        KLOG_WARNING(qLcAuthentication) << "check user" << user
+                                << "passwd failed,pam_start failed";
+        return false;
+    }
 
-    pam_set_item(handler, PAM_FAIL_DELAY, (void *)no_fail_delay);
+    pam_set_item(handler, PAM_FAIL_DELAY, reinterpret_cast<const void *>(no_fail_delay));
 
     res = pam_authenticate(handler, 0);
     if (res != PAM_SUCCESS)
