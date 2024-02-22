@@ -120,6 +120,7 @@ void Fonts::initConnections()
     }
 
     connect(ui->slider, &QSlider::valueChanged, this, &Fonts::onSliderValueChanged);
+    connect(ui->btn_resetFontSettings, &QPushButton::clicked, this, &Fonts::resetFontSettings);
 }
 
 bool Fonts::updateFontToBackend(int fontType, const QString& fontFamily, int fontSize)
@@ -204,8 +205,45 @@ void Fonts::updateAllFontWordSize()
     }
 }
 
-void Fonts::onBackendFontChanged(int type, QString fontInfo)
+void Fonts::onBackendFontChanged(int type, const QString& fontFamily, int fontSize)
 {
+    for (QMap<QComboBox*, QList<int>>::Iterator iter = m_comboFontTypesMap.begin();
+         iter != m_comboFontTypesMap.end();
+         iter++)
+    {
+        if (iter.value().contains(type))
+        {
+            KLOG_INFO() << "backend font changed:" << type << fontFamily << fontSize;
+            int fontFamilyIdx = iter.key()->findText(fontFamily);
+            if (fontFamilyIdx != -1)
+            {
+                QSignalBlocker fontFamilyChangedBlocker(iter.key());
+                iter.key()->setCurrentIndex(fontFamilyIdx);
+            }
+            break;
+        }
+    }
+
+    if (type == APPEARANCE_FONT_TYPE_APPLICATION)
+    {
+        if ((fontSize >= MIN_FONT_SIZE) && (fontSize <= MAX_FONT_SIZE))
+        {
+            QSignalBlocker fontSizeSliderBlocker(ui->slider);
+            ui->slider->setValue(fontSize);
+            ui->slider->ensureLayoutUpdated();
+        }
+    }
+}
+
+void Fonts::resetFontSettings()
+{
+    for (auto fontTypeList : m_comboFontTypesMap.values())
+    {
+        for (auto fontType : fontTypeList)
+        {
+            AppearanceGlobalInfo::instance()->resetFont(fontType);
+        }
+    }
 }
 
 QSize Fonts::sizeHint() const

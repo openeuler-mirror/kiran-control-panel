@@ -19,12 +19,12 @@
 <context>
     <name>AccountSubItem</name>
     <message>
-        <location filename="../plugins/account/account-subitem.cpp" line="36"/>
+        <location filename="../plugins/account/account-subitem.cpp" line="49"/>
         <source>account</source>
         <translation>帐户</translation>
     </message>
     <message>
-        <location filename="../plugins/account/account-subitem.cpp" line="62"/>
+        <location filename="../plugins/account/account-subitem.cpp" line="75"/>
         <source>New User</source>
         <translation>创建新用户</translation>
     </message>
@@ -424,49 +424,49 @@
 <context>
     <name>AutostartPage</name>
     <message>
-        <location filename="../plugins/application/autostart/autostart-page.cpp" line="96"/>
+        <location filename="../plugins/application/autostart/autostart-page.cpp" line="94"/>
         <source>Boot Setup</source>
         <translation>开机启动设置</translation>
     </message>
     <message>
-        <location filename="../plugins/application/autostart/autostart-page.cpp" line="231"/>
+        <location filename="../plugins/application/autostart/autostart-page.cpp" line="226"/>
         <source>Desktop files(*.desktop)</source>
         <translation>桌面类型(*.desktop)</translation>
     </message>
     <message>
-        <location filename="../plugins/application/autostart/autostart-page.cpp" line="239"/>
+        <location filename="../plugins/application/autostart/autostart-page.cpp" line="234"/>
         <source>select autostart desktop</source>
         <translation>选择自启动应用</translation>
     </message>
     <message>
-        <location filename="../plugins/application/autostart/autostart-page.cpp" line="240"/>
+        <location filename="../plugins/application/autostart/autostart-page.cpp" line="235"/>
         <source>Select</source>
         <translation>选择</translation>
     </message>
     <message>
-        <location filename="../plugins/application/autostart/autostart-page.cpp" line="241"/>
+        <location filename="../plugins/application/autostart/autostart-page.cpp" line="236"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
     <message>
+        <location filename="../plugins/application/autostart/autostart-page.cpp" line="251"/>
         <location filename="../plugins/application/autostart/autostart-page.cpp" line="256"/>
         <location filename="../plugins/application/autostart/autostart-page.cpp" line="261"/>
-        <location filename="../plugins/application/autostart/autostart-page.cpp" line="266"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../plugins/application/autostart/autostart-page.cpp" line="256"/>
+        <location filename="../plugins/application/autostart/autostart-page.cpp" line="251"/>
         <source>Desktop has existed</source>
         <translation>该程序已存在</translation>
     </message>
     <message>
-        <location filename="../plugins/application/autostart/autostart-page.cpp" line="261"/>
+        <location filename="../plugins/application/autostart/autostart-page.cpp" line="256"/>
         <source>Desktop cant permit to join</source>
         <translation>该程序不允许添加</translation>
     </message>
     <message>
-        <location filename="../plugins/application/autostart/autostart-page.cpp" line="266"/>
+        <location filename="../plugins/application/autostart/autostart-page.cpp" line="261"/>
         <source>Desktop dont support</source>
         <translation>不支持该程序</translation>
     </message>
@@ -702,12 +702,12 @@
 <context>
     <name>CheckpasswdDialog</name>
     <message>
-        <location filename="../plugins/authentication/checkpasswd-dialog.cpp" line="96"/>
+        <location filename="../plugins/authentication/checkpasswd-dialog.cpp" line="115"/>
         <source>Check password</source>
         <translation>校验当前用户密码</translation>
     </message>
     <message>
-        <location filename="../plugins/authentication/checkpasswd-dialog.cpp" line="97"/>
+        <location filename="../plugins/authentication/checkpasswd-dialog.cpp" line="116"/>
         <source>Check the current password before you enroll the feature</source>
         <translation>录入特征之前需要校验当前密码</translation>
     </message>
@@ -2025,51 +2025,56 @@
         <source>Monospaced font</source>
         <translation>等宽字体</translation>
     </message>
+    <message>
+        <location filename="../plugins/appearance/pages/font/fonts.ui" line="188"/>
+        <source>Reset Font Settings</source>
+        <translation>恢复字体默认设置</translation>
+    </message>
 </context>
 <context>
     <name>GeneralBioPage</name>
     <message>
-        <location filename="../plugins/authentication/utils/general-bio-page.cpp" line="235"/>
+        <location filename="../plugins/authentication/utils/general-bio-page.cpp" line="250"/>
         <source>default device</source>
         <translation>默认设备</translation>
     </message>
     <message>
-        <location filename="../plugins/authentication/utils/general-bio-page.cpp" line="247"/>
+        <location filename="../plugins/authentication/utils/general-bio-page.cpp" line="262"/>
         <source>feature list</source>
         <translation>特征列表</translation>
     </message>
     <message>
-        <location filename="../plugins/authentication/utils/general-bio-page.cpp" line="186"/>
+        <location filename="../plugins/authentication/utils/general-bio-page.cpp" line="201"/>
         <source>Are you sure you want to delete the feature called %1, Ensure that the Ukey device is inserted; otherwise the information stored in the Ukey will not be deleted</source>
         <translation>您确定要删除特征名为%1的UKey绑定吗?请确保已插入Ukey设备;否则存储在Ukey中的信息将不会被删除</translation>
     </message>
     <message>
-        <location filename="../plugins/authentication/utils/general-bio-page.cpp" line="193"/>
+        <location filename="../plugins/authentication/utils/general-bio-page.cpp" line="208"/>
         <source>Are you sure you want to delete the feature called %1</source>
         <translation>您确定要删除特征名为%1的特征吗</translation>
     </message>
     <message>
-        <location filename="../plugins/authentication/utils/general-bio-page.cpp" line="196"/>
+        <location filename="../plugins/authentication/utils/general-bio-page.cpp" line="211"/>
         <source>tips</source>
         <translation>提示</translation>
     </message>
     <message>
-        <location filename="../plugins/authentication/utils/general-bio-page.cpp" line="220"/>
+        <location filename="../plugins/authentication/utils/general-bio-page.cpp" line="235"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../plugins/authentication/utils/general-bio-page.cpp" line="221"/>
+        <location filename="../plugins/authentication/utils/general-bio-page.cpp" line="236"/>
         <source> Failed to enroll feature because the password verification failed！</source>
         <translation>由于密码校验失败，录入特征失败！</translation>
     </message>
     <message>
-        <location filename="../plugins/authentication/utils/general-bio-page.cpp" line="156"/>
+        <location filename="../plugins/authentication/utils/general-bio-page.cpp" line="171"/>
         <source>Rename Feature</source>
         <translation type="unfinished">重命名特征值</translation>
     </message>
     <message>
-        <location filename="../plugins/authentication/utils/general-bio-page.cpp" line="157"/>
+        <location filename="../plugins/authentication/utils/general-bio-page.cpp" line="172"/>
         <source>Please enter the renamed feature name</source>
         <translation type="unfinished">请输入特征名</translation>
     </message>
@@ -2705,12 +2710,12 @@
 <context>
     <name>InputDialog</name>
     <message>
-        <location filename="../lib/common-widgets/input-dialog/input-dialog.cpp" line="102"/>
+        <location filename="../lib/common-widgets/input-dialog/input-dialog.cpp" line="116"/>
         <source>Confirm</source>
         <translation>确认</translation>
     </message>
     <message>
-        <location filename="../lib/common-widgets/input-dialog/input-dialog.cpp" line="111"/>
+        <location filename="../lib/common-widgets/input-dialog/input-dialog.cpp" line="125"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
@@ -2753,7 +2758,7 @@
         <translation>反馈音量</translation>
     </message>
     <message>
-        <location filename="../plugins/audio/src/plugin/input-page.cpp" line="294"/>
+        <location filename="../plugins/audio/src/plugin/input-page.cpp" line="295"/>
         <source>No input device detected</source>
         <translation>未检测到输入设备</translation>
     </message>
@@ -4057,13 +4062,13 @@ This is line 50 of the test text</source>
 <context>
     <name>NetworkTray</name>
     <message>
-        <location filename="../plugins/network/src/tray/network-tray.cpp" line="175"/>
+        <location filename="../plugins/network/src/tray/network-tray.cpp" line="165"/>
         <source>Network settings</source>
         <translation>网络设置</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/tray/network-tray.cpp" line="239"/>
-        <location filename="../plugins/network/src/tray/network-tray.cpp" line="546"/>
+        <location filename="../plugins/network/src/tray/network-tray.cpp" line="235"/>
+        <location filename="../plugins/network/src/tray/network-tray.cpp" line="555"/>
         <source>Network unavailable</source>
         <translation>网络不可用</translation>
     </message>
@@ -4079,22 +4084,22 @@ This is line 50 of the test text</source>
         <translation>网络已断开</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/tray/network-tray.cpp" line="510"/>
+        <location filename="../plugins/network/src/tray/network-tray.cpp" line="519"/>
         <source>Wired network card: %1 available</source>
         <translation>有线网卡: %1 可用</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/tray/network-tray.cpp" line="515"/>
+        <location filename="../plugins/network/src/tray/network-tray.cpp" line="524"/>
         <source>Wireless network card: %1 available</source>
         <translation>无线网卡: %1 可用</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/tray/network-tray.cpp" line="552"/>
+        <location filename="../plugins/network/src/tray/network-tray.cpp" line="561"/>
         <source>Wired network card: %1 unavailable</source>
         <translation>有线网卡: %1 不可用</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/tray/network-tray.cpp" line="557"/>
+        <location filename="../plugins/network/src/tray/network-tray.cpp" line="566"/>
         <source>Wireless network card: %1 unavailable</source>
         <translation>无线网卡: %1 不可用</translation>
     </message>
@@ -5664,7 +5669,7 @@ This is line 50 of the test text</source>
 <context>
     <name>TrayConnectionList</name>
     <message>
-        <location filename="../plugins/network/src/tray/tray-connection-list.cpp" line="186"/>
+        <location filename="../plugins/network/src/tray/tray-connection-list.cpp" line="185"/>
         <source>Other WiFi networks</source>
         <translation>其它WIFI网络</translation>
     </message>
@@ -5747,12 +5752,12 @@ This is line 50 of the test text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/tray/tray-page.cpp" line="109"/>
+        <location filename="../plugins/network/src/tray/tray-page.cpp" line="110"/>
         <source>Select wired network card</source>
         <translation>请选择有线网卡</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/tray/tray-page.cpp" line="114"/>
+        <location filename="../plugins/network/src/tray/tray-page.cpp" line="115"/>
         <source>Select wireless network card</source>
         <translation>请选择无线网卡</translation>
     </message>
@@ -6062,7 +6067,7 @@ This is line 50 of the test text</source>
     </message>
     <message>
         <location filename="../plugins/audio/src/system-tray/volume-setting-page.ui" line="101"/>
-        <location filename="../plugins/audio/src/system-tray/volume-setting-page.cpp" line="98"/>
+        <location filename="../plugins/audio/src/system-tray/volume-setting-page.cpp" line="99"/>
         <source>Volume</source>
         <translation>音量</translation>
     </message>
@@ -6727,7 +6732,7 @@ This is line 50 of the test text</source>
 <context>
     <name>WirelessTrayWidget</name>
     <message>
-        <location filename="../plugins/network/src/tray/wireless-tray-widget.cpp" line="492"/>
+        <location filename="../plugins/network/src/tray/wireless-tray-widget.cpp" line="491"/>
         <source>the network &quot;%1&quot; not found</source>
         <translation>未找到网络 &quot;%1&quot;</translation>
     </message>

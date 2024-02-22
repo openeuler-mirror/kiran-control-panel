@@ -54,6 +54,11 @@ bool listAllPluginInfo = false;
 void processCommandLine()
 {
     KiranSingleApplication* singleApp = dynamic_cast<KiranSingleApplication*>(qApp);
+    if( !singleApp )
+    {
+        std::cerr << "cast to KiranSingleApplication failed!" << std::endl;
+        return;
+    }
 
     QCommandLineParser cmdParser;
     QCommandLineOption categoryOption("c","主面板进入哪个分类","category");
