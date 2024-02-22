@@ -63,10 +63,9 @@ bool XmlManagement::xmlReader(QString filePath)
 
     QXmlStreamReader reader;
     reader.setDevice(&file);
-    int tokenType;
     while (!reader.atEnd())
     {
-        tokenType = reader.readNext();
+        int tokenType = reader.readNext();
         switch (tokenType)
         {
         case QXmlStreamReader::StartDocument:
@@ -270,11 +269,10 @@ void XmlManagement::xmlUpdate(QList<QMap<QString, QString>> updateList)
 
 void XmlManagement::parseWallpapers(QXmlStreamReader &reader)
 {
-    int tokenType;
     QMap<QString, QString> bodyMap;
     while (!reader.atEnd())
     {
-        tokenType = reader.readNext();
+        int tokenType = reader.readNext();
         switch (tokenType)
         {
         case QXmlStreamReader::StartElement:

@@ -101,7 +101,7 @@ void DevicePanelWidget::updatePreview()
     QList<QAbstractButton *> btns = btnGroup->buttons();
     int count = btns.count();
     if (count <= 0) return;
-    //用于计算各个屏幕占比
+    // 用于计算各个屏幕占比
     QRectF sumScreenRectF;
     foreach (QAbstractButton *btn, btns)
     {
@@ -121,7 +121,7 @@ void DevicePanelWidget::updatePreview()
 
     if (Q_UNLIKELY(sumScreenSizeWidth == 0 || sumScreenHeight == 0)) return;
 
-    //父窗口总大小
+    // 父窗口总大小
     float width = (float)this->width();
     float height = (float)this->height();
     if (Q_UNLIKELY(width == 0 || height == 0)) return;
@@ -132,7 +132,7 @@ void DevicePanelWidget::updatePreview()
     if (smallHeight)
     {
         curZoom = height / sumScreenHeight;
-        //水平居中
+        // 水平居中
         offset = qAbs(width - curZoom * sumScreenSizeWidth) / 2;
     }
     else
@@ -172,8 +172,8 @@ void DevicePanelWidget::clear()
         foreach (QAbstractButton *btn, btns)
         {
             m_btnGroup->removeButton(btn);
-            delete btn;  //deleteLater() 会导致点击应用弹出MessageBox后，关闭一个显示器，模拟显示器窗刷新不及时的问题。
-            //btn->deleteLater();
+            delete btn;  // deleteLater() 会导致点击应用弹出MessageBox后，关闭一个显示器，模拟显示器窗刷新不及时的问题。
+            // btn->deleteLater();
         }
     }
 }
@@ -252,7 +252,7 @@ void DevicePanelWidget::handleConfigModeChanged(ConfigMode mode)
 
         if (checkedBtn)
         {
-            if (checkedBtn->screenGeometryF().left() > btn->screenGeometryF().left()) checkedBtn = btn;  //选出最左边的一个作为默认选中项。
+            if (checkedBtn->screenGeometryF().left() > btn->screenGeometryF().left()) checkedBtn = btn;  // 选出最左边的一个作为默认选中项。
         }
         else
         {
@@ -297,82 +297,13 @@ DevicePanelWidget::AnchorRectPos DevicePanelWidget::getAvailableGeometry(const Q
     switch (drect)
     {
     case DevicePanelItem::PosLeft:
-        if (g1.bottom() <= g2.top() || g1.top() >= g2.bottom() || g1.left() >= g2.center().x()) return DevicePanelWidget::AnchorRectPos();
-        r.moveRight(g2.left());
-
-        if (magnet)
-        {
-            if (r.top() <= (g2.top() + cAbsorbOffset) && r.top() >= (g2.top() - cAbsorbOffset)) r.moveTop(g2.top());
-            if (r.top() <= (g2.bottom() + cAbsorbOffset) && r.top() >= (g2.bottom() - cAbsorbOffset)) r.moveTop(g2.bottom());
-
-            if (r.bottom() <= (g2.top() + cAbsorbOffset) && r.bottom() >= (g2.top() - cAbsorbOffset)) r.moveBottom(g2.top());
-            if (r.bottom() <= (g2.bottom() + cAbsorbOffset) && r.bottom() >= (g2.bottom() - cAbsorbOffset)) r.moveBottom(g2.bottom());
-        }
-
-        d = qAbs(r.center().x() - g1.center().x());
-        line.setPoints(r.topRight(), r.bottomRight());
-        dashesLine.setLine(line.x1(), -999999, line.x1(), 999999);
-        zoomPair.first = r.top() - g2.top();
-        zoomPair.second = g2.height();
-        break;
+        return getAnchorRectPosLeft(g1, g2, magnet);
     case DevicePanelItem::PosTop:
-        if (g1.right() <= g2.left() || g1.left() >= g2.right() || g1.top() >= g2.center().y()) return DevicePanelWidget::AnchorRectPos();
-        r.moveBottom(g2.top());
-
-        if (magnet)
-        {
-            if (r.left() >= (g2.left() - cAbsorbOffset) && r.left() <= (g2.left() + cAbsorbOffset)) r.moveLeft(g2.left());
-            if (r.left() >= (g2.right() - cAbsorbOffset) && r.left() <= (g2.right() + cAbsorbOffset)) r.moveLeft(g2.right());
-
-            if (r.right() >= (g2.left() - cAbsorbOffset) && r.right() <= (g2.left() + cAbsorbOffset)) r.moveRight(g2.left());
-            if (r.right() >= (g2.right() - cAbsorbOffset) && r.right() <= (g2.right() + cAbsorbOffset)) r.moveRight(g2.right());
-        }
-
-        d = qAbs(r.center().y() - g1.center().y());
-        line.setPoints(r.bottomLeft(), r.bottomRight());
-        dashesLine.setLine(-999999, line.y1(), 999999, line.y1());
-        zoomPair.first = r.left() - g2.left();
-        zoomPair.second = g2.width();
-        break;
+        return getAnchorRectPosTop(g1, g2, magnet);
     case DevicePanelItem::PosRight:
-        if (g1.bottom() <= g2.top() || g1.top() >= g2.bottom() || g1.right() <= g2.center().x()) return DevicePanelWidget::AnchorRectPos();
-        ;
-        r.moveLeft(g2.right());
-
-        if (magnet)
-        {
-            if (r.top() <= (g2.top() + cAbsorbOffset) && r.top() >= (g2.top() - cAbsorbOffset)) r.moveTop(g2.top());
-            if (r.top() <= (g2.bottom() + cAbsorbOffset) && r.top() >= (g2.bottom() - cAbsorbOffset)) r.moveTop(g2.bottom());
-
-            if (r.bottom() <= (g2.top() + cAbsorbOffset) && r.bottom() >= (g2.top() - cAbsorbOffset)) r.moveBottom(g2.top());
-            if (r.bottom() <= (g2.bottom() + cAbsorbOffset) && r.bottom() >= (g2.bottom() - cAbsorbOffset)) r.moveBottom(g2.bottom());
-        }
-
-        d = qAbs(r.center().x() - g1.center().x());
-        line.setPoints(r.topLeft(), r.bottomLeft());
-        dashesLine.setLine(line.x1(), -999999, line.x1(), 999999);
-        zoomPair.first = r.top() - g2.top();
-        zoomPair.second = g2.height();
-        break;
+        return getAnchorRectPosRight(g1, g2, magnet);
     case DevicePanelItem::PosBottom:
-        if (g1.right() <= g2.left() || g1.left() >= g2.right() || g1.bottom() <= g2.center().y()) return DevicePanelWidget::AnchorRectPos();
-        r.moveTop(g2.bottom());
-
-        if (magnet)
-        {
-            if (r.left() >= (g2.left() - cAbsorbOffset) && r.left() <= (g2.left() + cAbsorbOffset)) r.moveLeft(g2.left());
-            if (r.left() >= (g2.right() - cAbsorbOffset) && r.left() <= (g2.right() + cAbsorbOffset)) r.moveLeft(g2.right());
-
-            if (r.right() >= (g2.left() - cAbsorbOffset) && r.right() <= (g2.left() + cAbsorbOffset)) r.moveRight(g2.left());
-            if (r.right() >= (g2.right() - cAbsorbOffset) && r.right() <= (g2.right() + cAbsorbOffset)) r.moveRight(g2.right());
-        }
-
-        d = qAbs(r.center().y() - g1.center().y());
-        line.setPoints(r.topLeft(), r.topRight());
-        dashesLine.setLine(-999999, line.y1(), 999999, line.y1());
-        zoomPair.first = r.left() - g2.left();
-        zoomPair.second = g2.width();
-        break;
+        return getAnchorRectPosBottom(g1, g2, magnet);
     case DevicePanelItem::PosTopLeft:
     {
         if (!(g1.bottom() <= g2.top() && g1.right() <= g2.left())) return DevicePanelWidget::AnchorRectPos();
@@ -422,6 +353,150 @@ DevicePanelWidget::AnchorRectPos DevicePanelWidget::getAvailableGeometry(const Q
     ret.zoomPair = zoomPair;
     return ret;
 }
+
+DevicePanelWidget::AnchorRectPos DevicePanelWidget::getAnchorRectPosLeft(const QRect &g1, const QRect &g2, const bool &magnet)
+{
+    QRect r = g1;
+    int d = 999999;
+    QLine line;
+    QLine dashesLine;
+    QPair<int, int> zoomPair;
+
+    if (g1.bottom() <= g2.top() || g1.top() >= g2.bottom() || g1.left() >= g2.center().x()) return DevicePanelWidget::AnchorRectPos();
+    r.moveRight(g2.left());
+
+    if (magnet)
+    {
+        if (r.top() <= (g2.top() + cAbsorbOffset) && r.top() >= (g2.top() - cAbsorbOffset)) r.moveTop(g2.top());
+        if (r.top() <= (g2.bottom() + cAbsorbOffset) && r.top() >= (g2.bottom() - cAbsorbOffset)) r.moveTop(g2.bottom());
+
+        if (r.bottom() <= (g2.top() + cAbsorbOffset) && r.bottom() >= (g2.top() - cAbsorbOffset)) r.moveBottom(g2.top());
+        if (r.bottom() <= (g2.bottom() + cAbsorbOffset) && r.bottom() >= (g2.bottom() - cAbsorbOffset)) r.moveBottom(g2.bottom());
+    }
+
+    d = qAbs(r.center().x() - g1.center().x());
+    line.setPoints(r.topRight(), r.bottomRight());
+    dashesLine.setLine(line.x1(), -999999, line.x1(), 999999);
+    zoomPair.first = r.top() - g2.top();
+    zoomPair.second = g2.height();
+
+    DevicePanelWidget::AnchorRectPos ret;
+    ret.r = r;
+    ret.d = d;
+    ret.line = line;
+    ret.dashesLine = dashesLine;
+    ret.drect = DevicePanelItem::PosLeft;
+    ret.zoomPair = zoomPair;
+    return ret;
+}
+
+DevicePanelWidget::AnchorRectPos DevicePanelWidget::getAnchorRectPosRight(const QRect &g1, const QRect &g2, const bool &magnet)
+{
+    QRect r = g1;
+    int d = 999999;
+    QLine line;
+    QLine dashesLine;
+    QPair<int, int> zoomPair;
+    if (g1.bottom() <= g2.top() || g1.top() >= g2.bottom() || g1.right() <= g2.center().x()) return DevicePanelWidget::AnchorRectPos();
+
+    r.moveLeft(g2.right());
+
+    if (magnet)
+    {
+        if (r.top() <= (g2.top() + cAbsorbOffset) && r.top() >= (g2.top() - cAbsorbOffset)) r.moveTop(g2.top());
+        if (r.top() <= (g2.bottom() + cAbsorbOffset) && r.top() >= (g2.bottom() - cAbsorbOffset)) r.moveTop(g2.bottom());
+
+        if (r.bottom() <= (g2.top() + cAbsorbOffset) && r.bottom() >= (g2.top() - cAbsorbOffset)) r.moveBottom(g2.top());
+        if (r.bottom() <= (g2.bottom() + cAbsorbOffset) && r.bottom() >= (g2.bottom() - cAbsorbOffset)) r.moveBottom(g2.bottom());
+    }
+
+    d = qAbs(r.center().x() - g1.center().x());
+    line.setPoints(r.topLeft(), r.bottomLeft());
+    dashesLine.setLine(line.x1(), -999999, line.x1(), 999999);
+    zoomPair.first = r.top() - g2.top();
+    zoomPair.second = g2.height();
+
+    DevicePanelWidget::AnchorRectPos ret;
+    ret.r = r;
+    ret.d = d;
+    ret.line = line;
+    ret.dashesLine = dashesLine;
+    ret.drect = DevicePanelItem::PosRight;
+    ret.zoomPair = zoomPair;
+    return ret;
+}
+
+DevicePanelWidget::AnchorRectPos DevicePanelWidget::getAnchorRectPosTop(const QRect &g1, const QRect &g2, const bool &magnet)
+{
+    QRect r = g1;
+    int d = 999999;
+    QLine line;
+    QLine dashesLine;
+    QPair<int, int> zoomPair;
+    if (g1.right() <= g2.left() || g1.left() >= g2.right() || g1.top() >= g2.center().y()) return DevicePanelWidget::AnchorRectPos();
+    r.moveBottom(g2.top());
+
+    if (magnet)
+    {
+        if (r.left() >= (g2.left() - cAbsorbOffset) && r.left() <= (g2.left() + cAbsorbOffset)) r.moveLeft(g2.left());
+        if (r.left() >= (g2.right() - cAbsorbOffset) && r.left() <= (g2.right() + cAbsorbOffset)) r.moveLeft(g2.right());
+
+        if (r.right() >= (g2.left() - cAbsorbOffset) && r.right() <= (g2.left() + cAbsorbOffset)) r.moveRight(g2.left());
+        if (r.right() >= (g2.right() - cAbsorbOffset) && r.right() <= (g2.right() + cAbsorbOffset)) r.moveRight(g2.right());
+    }
+
+    d = qAbs(r.center().y() - g1.center().y());
+    line.setPoints(r.bottomLeft(), r.bottomRight());
+    dashesLine.setLine(-999999, line.y1(), 999999, line.y1());
+    zoomPair.first = r.left() - g2.left();
+    zoomPair.second = g2.width();
+
+    DevicePanelWidget::AnchorRectPos ret;
+    ret.r = r;
+    ret.d = d;
+    ret.line = line;
+    ret.dashesLine = dashesLine;
+    ret.drect = DevicePanelItem::PosTop;
+    ret.zoomPair = zoomPair;
+    return ret;
+}
+
+DevicePanelWidget::AnchorRectPos DevicePanelWidget::getAnchorRectPosBottom(const QRect &g1, const QRect &g2, const bool &magnet)
+{
+    QRect r = g1;
+    int d = 999999;
+    QLine line;
+    QLine dashesLine;
+    QPair<int, int> zoomPair;
+
+    if (g1.right() <= g2.left() || g1.left() >= g2.right() || g1.bottom() <= g2.center().y()) return DevicePanelWidget::AnchorRectPos();
+    r.moveTop(g2.bottom());
+
+    if (magnet)
+    {
+        if (r.left() >= (g2.left() - cAbsorbOffset) && r.left() <= (g2.left() + cAbsorbOffset)) r.moveLeft(g2.left());
+        if (r.left() >= (g2.right() - cAbsorbOffset) && r.left() <= (g2.right() + cAbsorbOffset)) r.moveLeft(g2.right());
+
+        if (r.right() >= (g2.left() - cAbsorbOffset) && r.right() <= (g2.left() + cAbsorbOffset)) r.moveRight(g2.left());
+        if (r.right() >= (g2.right() - cAbsorbOffset) && r.right() <= (g2.right() + cAbsorbOffset)) r.moveRight(g2.right());
+    }
+
+    d = qAbs(r.center().y() - g1.center().y());
+    line.setPoints(r.topLeft(), r.topRight());
+    dashesLine.setLine(-999999, line.y1(), 999999, line.y1());
+    zoomPair.first = r.left() - g2.left();
+    zoomPair.second = g2.width();
+
+    DevicePanelWidget::AnchorRectPos ret;
+    ret.r = r;
+    ret.d = d;
+    ret.line = line;
+    ret.dashesLine = dashesLine;
+    ret.drect = DevicePanelItem::PosBottom;
+    ret.zoomPair = zoomPair;
+    return ret;
+}
+
 /*!
  * \brief DevicePanelWidget::getAvailableGeometrys 获取所有方向的Anchor Rect
  * \param g1
@@ -466,7 +541,7 @@ DevicePanelWidget::AnchorRectPos DevicePanelWidget::getMinDisGeometry(QAbstractB
     QList<DevicePanelWidget::AnchorRectPos> list;
     QRect g = b->geometry();
     foreach (QAbstractButton *btn, btns)
-    {  //must use btns
+    {  // must use btns
         if (btn == b) continue;
         QRect geometry = btn->geometry();
         QList<DevicePanelWidget::AnchorRectPos> anchorList = getAvailableGeometrys(g, geometry, magnet);

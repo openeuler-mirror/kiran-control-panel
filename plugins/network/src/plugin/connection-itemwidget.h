@@ -77,7 +77,7 @@ private slots:
     void activateHiddenNetwork(const QString &ssid);
     void ignoreWirelessNetwork();
 
-    void setSecurityPskAndActivateWirelessConnection(const QString &password);
+    void setPskAndActivateWirelessConnection(const QString &password);
 
 private:
     void requireInputPassword();

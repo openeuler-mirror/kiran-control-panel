@@ -51,16 +51,16 @@ private slots:
 
 private:
     QStringList m_managedDevicePaths;
-    int m_deviceType;
+    int m_deviceType = NetworkManager::Device::UnknownType;
 
-    QScrollArea *m_scrollArea;
-    QVBoxLayout *m_verticalLayout;
-    QWidget *m_scrollAreaWidgetContents;
-    QVBoxLayout *m_widgetContentsLayout;
+    QScrollArea *m_scrollArea = nullptr;
+    QVBoxLayout *m_verticalLayout = nullptr;
+    QWidget *m_scrollAreaWidgetContents = nullptr;
+    QVBoxLayout *m_widgetContentsLayout = nullptr;
     QList<QWidget *> m_itemWidgetList;
-    QLabel *m_title;
-    QWidget *m_titleWidget;
-    QSpacerItem *m_horizontalSpacer;
-    QHBoxLayout *m_horizontalLayout;
-    QSpacerItem *m_verticalSpacer;
+    QLabel *m_title = nullptr;
+    QWidget *m_titleWidget = nullptr;
+    QSpacerItem *m_horizontalSpacer = nullptr;
+    QHBoxLayout *m_horizontalLayout = nullptr;
+    QSpacerItem *m_verticalSpacer = nullptr;
 };

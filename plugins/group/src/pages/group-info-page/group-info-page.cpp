@@ -130,7 +130,7 @@ void GroupInfoPage::initUI()
 
                 for (auto &item : m_usersContainer->getAllFeatureItem())
                 {
-                    auto userListWidget = (UserListWidget *)item;
+                    auto userListWidget = qobject_cast<UserListWidget *>(item);
                     if (userListWidget->getRightButtionVisible())
                     {
                         userNameList.append(userListWidget->getText());

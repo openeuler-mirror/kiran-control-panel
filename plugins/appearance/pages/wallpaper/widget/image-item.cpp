@@ -80,7 +80,6 @@ void ImageItem::paintEvent(QPaintEvent *event)
 {
     QPainter p(this);
     p.setRenderHint(QPainter::Antialiasing);
-    bool imageIsLoaded = false;
 
     if (m_isAdditionImage)
     {
@@ -109,7 +108,7 @@ void ImageItem::paintEvent(QPaintEvent *event)
     else
     {
         //NOTE:ImageItem绘制过程由自己绘制不在Style中绘制的原因是由于不想再次图片在内存中再次拷贝传递给Style
-
+        bool imageIsLoaded = false;
         if (m_previewPixmap.first == QSize(180, 100) && !m_previewPixmap.second.isNull())
         {
             QRect drawTargetRect(rect().x() + 3, rect().y() + 3, rect().width() - 6, rect().height() - 6);

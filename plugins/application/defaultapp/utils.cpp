@@ -23,7 +23,20 @@ QMap<EnumMimeType, AppMimeTypes> enumToMimeTypes = {
     {DA_TYPE_EMAIL, {{"x-scheme-handler/mailto"}, {"x-scheme-handler/mailto", "application/x-extension-eml", "message/rfc822"}}},
     {DA_TYPE_TEXT, {{"text/plain"}, {"text/plain"}}},
     {DA_TYPE_MEDIA, {{"audio/x-vorbis+ogg"}, {"audio/mpeg", "audio/x-mpegurl", "audio/x-scpls", "audio/x-vorbis+ogg", "audio/x-wav"}}},
-    {DA_TYPE_VIDEO, {{"video/x-ogm+ogg"}, {"video/mp4", "video/mpeg", "video/mp2t", "video/msvideo", "video/quicktime", "video/webm", "video/x-avi", "video/x-flv", "video/x-matroska", "video/x-mpeg", "video/x-ogm+ogg"}}},
+    {DA_TYPE_VIDEO, {
+                        {"video/x-ogm+ogg"}, 
+                        {"video/mp4", 
+                        "video/mpeg", 
+                        "video/mp2t", 
+                        "video/msvideo", 
+                        "video/quicktime", 
+                        "video/webm", 
+                        "video/x-avi", 
+                        "video/x-flv", 
+                        "video/x-matroska", 
+                        "video/x-mpeg", 
+                        "video/x-ogm+ogg"}
+                    }},
     {DA_TYPE_IMAGE, {{"image/png"}, {"image/bmp", "image/gif", "image/jpeg", "image/png", "image/tiff"}}}
 };
 }

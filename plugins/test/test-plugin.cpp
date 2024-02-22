@@ -14,6 +14,7 @@
 
 #include "test-plugin.h"
 #include <QDebug>
+#include <QRandomGenerator> 
 
 int TestPlugin::init(KcpInterface* interface)
 {
@@ -55,7 +56,13 @@ void TestPlugin::handleTimerTimeout()
     for (int i = 0; i < 1; i++)
     {
         QSharedPointer<TestSubItem> pointer(new TestSubItem());
+// sonarqube block off
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 10, 0))
+        int rand = QRandomGenerator::global()->generate();
+#else
         int rand = qrand();
+#endif
+// sonarqube block on    
         QString subitemID = QString("%1_%2").arg(QDateTime::currentDateTime().toString()).arg(rand);
         pointer->setID(subitemID);
         pointer->setName(subitemID);

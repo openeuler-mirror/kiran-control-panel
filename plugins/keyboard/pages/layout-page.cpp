@@ -207,7 +207,6 @@ void LayoutPage::updateLayout()
 {
     if (!m_layoutList.isEmpty())
     {
-        QString countryName;
         if (m_layoutList.size() > m_itemList.size())  // add
         {
             for (int i = 0; i < (m_layoutList.size() - m_itemList.size()); i++)
@@ -234,7 +233,7 @@ void LayoutPage::updateLayout()
 
         for (int i = 0; i < m_layoutList.size(); i++)
         {
-            countryName = m_layoutMap.value(m_layoutList.at(i));
+            QString countryName = m_layoutMap.value(m_layoutList.at(i));
             m_itemList.at(i)->setNames(countryName, m_layoutList.at(i));
         }
         m_itemList.first()->setSelected(true);

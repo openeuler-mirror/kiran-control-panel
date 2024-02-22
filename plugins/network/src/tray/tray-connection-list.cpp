@@ -282,7 +282,6 @@ void TrayConnectionList::handleConnectionItemClicked()
     if (activeConnectionPath.isEmpty())
     {
         bool isWireless = connectionInfo.isWireless;
-        QString connectionPath = connectionInfo.connectionPath;
 
         // 若itemWidget的size为EXTENDED_SIZE,说明itemWidget已经展开，并进入了激活操作流程
         if (clickedItemWidget->size() != TRAY_ITEM_EXTENDED_SIZE)

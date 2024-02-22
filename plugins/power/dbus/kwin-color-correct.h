@@ -15,7 +15,7 @@
 
 #include <QObject>
 
-// FIXME: 只适配了KWIN 5.15.4中打入补丁才能支持X11色温功能(#68397)。
+// NOTE: 只适配了KWIN 5.15.4中打入补丁才能支持X11色温功能(#68397)。
 // 一些特定的KWIN版本失效,暂时未对其他KWIN版本做适配
 class KWinColorCorrect: public QObject
 {
