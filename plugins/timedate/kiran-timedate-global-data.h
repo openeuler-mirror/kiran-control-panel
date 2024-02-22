@@ -91,9 +91,9 @@ private:
     TimeZoneList m_allTimeZoneList;
     TimeZoneMap m_timeZoneIDMap;
     QString m_systemTimeZone;
-    bool m_systemLocalRTC;
-    bool m_systemCanNTP;
-    bool m_systemNTP;
+    bool m_systemLocalRTC = false;
+    bool m_systemCanNTP = false;
+    bool m_systemNTP = false;
     int m_longDateFormatIndex = -1;
     QStringList m_longDateFormatList;
     int m_shortDateFormatIndex = -1;

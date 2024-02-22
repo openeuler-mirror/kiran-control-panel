@@ -143,7 +143,7 @@ void SignalForward::handleActiveConnectionRemoved(const QString &activepath)
 
 //TODO:暂时使用uuid，之后统一使用path进行查询
 //是否考虑可以直接传递Connection::Ptr
-void SignalForward::editConnection(NetworkConnectionInfo &connectionInfo)
+void SignalForward::editConnection(const NetworkConnectionInfo &connectionInfo)
 {
     auto type = connectionInfo.type;
     switch (type)

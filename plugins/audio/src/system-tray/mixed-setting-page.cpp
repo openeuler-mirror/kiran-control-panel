@@ -118,7 +118,7 @@ void MixedSettingPage::handleSinkInputDelete(int index)
     KLOG_DEBUG(qLcAudio) << "Sink Input Delete index: " << index;
     delete m_sinkInputsMap[index];
     m_sinkInputsMap[index] = nullptr;
-    int removeNum = m_sinkInputsMap.remove(index);
+    m_sinkInputsMap.remove(index);
     update();
     adjustSize();
     Q_EMIT adjustedMixedSettingPageSize();

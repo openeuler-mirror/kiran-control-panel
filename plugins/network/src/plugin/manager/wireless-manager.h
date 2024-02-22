@@ -48,7 +48,6 @@ private:
 private:
     Ui::WirelessManager *ui;
     NetworkManager::WirelessDevice::Ptr m_wirelessDevice;
-    QString m_devicePath;
 };
 
 #endif  // KIRAN_CPANEL_NETWORK_WIRELESS_MANAGER_H

@@ -13,6 +13,7 @@
  */
 #pragma once
 #include "ksd_power_proxy.h"
+#include <QScopedPointer>
 
 class GnomeSMProxy;
 class PowerInterface : public KSDPowerProxy
@@ -22,6 +23,7 @@ private:
     PowerInterface(const QString &service, const QString &path,
                    const QDBusConnection &connection, QObject *parent = nullptr);
 
+    ~PowerInterface();
 public:
     static PowerInterface *getInstance() { return m_instance; };
     static void globalInit();
@@ -33,5 +35,5 @@ public:
 
 private:
     static PowerInterface *m_instance;
-    GnomeSMProxy *m_gnomeSmProxy;
+    GnomeSMProxy *m_gnomeSmProxy = nullptr;
 };

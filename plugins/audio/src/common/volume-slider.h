@@ -22,7 +22,6 @@ class VolumeSlider : public QSlider
     Q_OBJECT
 public:
     explicit VolumeSlider(QWidget *parent = nullptr);
-    ~VolumeSlider();
 
     void mousePressEvent(QMouseEvent *event) override;
 };

@@ -112,6 +112,6 @@ private:
     QString m_category;
     QString m_desc;
     QString m_icon;
-    int m_weight = 99;
+    int m_weight = 0;
     QVector<QPair<QString, QString>> m_searchKeys;
 };

@@ -87,10 +87,10 @@ void DetailsPage::initMultiConnectionDetailsWidget()
         ui->stackedWidget->addWidget(widget);
     }
     connect(ui->activatedConnectionComboBox, QOverload<int>::of(&QComboBox::activated), this,
-            &DetailsPage::handleActivatedConnectionComboBoxActivated, Qt::UniqueConnection);
+            &DetailsPage::activateComboBox, Qt::UniqueConnection);
 }
 
-void DetailsPage::handleActivatedConnectionComboBoxActivated(int index)
+void DetailsPage::activateComboBox(int index)
 {
     ui->stackedWidget->setCurrentIndex(index);
 }

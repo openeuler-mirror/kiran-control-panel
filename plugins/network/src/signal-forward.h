@@ -32,7 +32,7 @@ public:
 
     void initConnect();
 public slots:
-    void editConnection(NetworkConnectionInfo &connectionInfo);
+    void editConnection(const NetworkConnectionInfo &connectionInfo);
 
 private slots:
     void handleActiveConnectionAdded(const QString &activepath);

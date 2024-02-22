@@ -39,13 +39,9 @@ class ConnectionShowPage : public QWidget
 public:
     explicit ConnectionShowPage(QWidget *parent = nullptr);
     ~ConnectionShowPage() override;
-
     void init(NetworkManager::ConnectionSettings::ConnectionType connectionType, const QString &devicePath);
-    void initUI();
-    void initConnect();
 
-    void initSwitchButton();
-
+public:
     void setTitle(QString title);
     void setSwitchButtonVisible(bool visible);
     void setCreateButtonVisible(bool visible);
@@ -79,6 +75,12 @@ public slots:
     void handleActiveStateDeactivated(const QString &activatedConnectionPath);
     void handleToggledSwitchButton(bool toggled);
     void handleWirelessEnabledChanged(bool enabled);
+
+private:
+    void initUI();
+    void initConnect();
+    void initSwitchButton();
+
 signals:
     void creatConnection();
 
@@ -97,6 +99,7 @@ private:
     QString m_devicePath;
     QTimer m_timer;
     bool m_wirlessNetworkEnable;
+    bool m_initialized = false;
 };
 
 #endif  // KIRAN_CPANEL_NETWORK_CONNECTION_SHOW_PAGE_H
