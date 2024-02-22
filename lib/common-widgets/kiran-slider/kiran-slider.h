@@ -39,15 +39,15 @@ public:
     void addMark(MarkPoint mark, bool needUpdateUI = true);
     void deleteMark(int markValue);
 
+public slots:
+    void ensureLayoutUpdated();
+
 protected:
     void paintEvent(QPaintEvent* event) override;
     void resizeEvent(QResizeEvent* event) override;
     void mousePressEvent(QMouseEvent* ev) override;
     void mouseReleaseEvent(QMouseEvent* ev) override;
     void mouseMoveEvent(QMouseEvent* ev) override;
-
-private slots:
-    void ensureLayoutUpdated();
 
 private:
     struct UpdateContext

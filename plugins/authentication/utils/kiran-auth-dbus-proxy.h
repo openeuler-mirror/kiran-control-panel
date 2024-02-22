@@ -82,6 +82,6 @@ private:
 
 private:
     static KiranAuthDBusProxy* m_instance;
-    KASAuthProxy* m_authProxy;
-    KASAuthUserProxy* m_authUserProxy;
+    KASAuthProxy* m_authProxy = nullptr;
+    KASAuthUserProxy* m_authUserProxy = nullptr;
 };

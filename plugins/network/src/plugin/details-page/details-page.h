@@ -34,7 +34,7 @@ public:
     ~DetailsPage() override;
 
 private slots:
-    void handleActivatedConnectionComboBoxActivated(int index);
+    void activateComboBox(int index);
     void handleActiveConnectionAdded(const QString &activeConnectionPath);
     void handleActiveConnectionStateChanged(NetworkManager::ActiveConnection::State state);
 

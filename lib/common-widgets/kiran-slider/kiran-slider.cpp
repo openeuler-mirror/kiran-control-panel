@@ -76,7 +76,9 @@ QSize KiranSlider::sizeHint() const
 {
     const int sliderLength = 160;
 
-    int w = 2 * sliderMargin, h = 2 * sliderMargin;
+    int w , h;
+    w = h = 2 * sliderMargin;
+
     w += sliderLength;
 
     h += qMax(sliderGrooveHeight, sliderHandleHeight);
@@ -90,7 +92,9 @@ QSize KiranSlider::minimumSizeHint() const
 {
     const int sliderLength = 160;
 
-    int w = 2 * sliderMargin, h = 2 * sliderMargin;
+    int w , h;
+    w = h = 2 * sliderMargin;
+
     w += sliderLength;
 
     h += qMax(sliderGrooveHeight, sliderHandleHeight);
@@ -362,7 +366,14 @@ void KiranSlider::drawTickmark(QPainter& painter,
     ticknessRect.moveLeft(m_grooveRect.left() + offset + ticknessRect.width() / 2);
 
     // 计算tickmark描述位置
-    QRect fontRect(0, 0, metrics.width(point.desc), metrics.height());
+    int descFontWidth=0;
+#if (QT_VERSION < QT_VERSION_CHECK(5, 11, 0))
+    descFontWidth = metrics.width(point.desc);
+#else
+    descFontWidth = metrics.horizontalAdvance(point.desc);
+#endif
+
+    QRect fontRect(0, 0, descFontWidth, metrics.height());
     fontRect.moveCenter(ticknessRect.center());
     fontRect.moveTop(ticknessRect.bottom() + tickSpace);
 

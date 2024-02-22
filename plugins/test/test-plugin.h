@@ -24,6 +24,7 @@ class TestPlugin : public QObject, public KiranControlPanel::PluginInterfaceV2
     Q_INTERFACES(KiranControlPanel::PluginInterfaceV2)
 
 public:
+    TestPlugin() = default;
     ~TestPlugin() = default;
 
     int init(KcpInterface* interface) override;
@@ -35,6 +36,6 @@ private slots:
 
 private:
     QTimer m_timer;
-    KcpInterface* m_controlPanelInterface;
+    KcpInterface* m_controlPanelInterface = nullptr;
     QVector<KiranControlPanel::SubItemPtr> m_subitems;
 };

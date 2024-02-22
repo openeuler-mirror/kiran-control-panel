@@ -111,7 +111,7 @@ bool AccountsGlobalInfo::init()
 
     for (objListIter = objList.begin();
          objListIter != objList.end();
-         objListIter++)
+         ++objListIter)
     {
         addUserToMap(*objListIter);
     }

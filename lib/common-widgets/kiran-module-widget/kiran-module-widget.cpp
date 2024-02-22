@@ -94,6 +94,9 @@ void KiranModuleWidget::appendListWidgetItem(KiranControlPanel::SubItemPtr subit
     QIcon icon = QIcon::fromTheme(iconPath);
     QString id = subitem->getID();
 
+    Q_UNUSED(desc);
+    Q_UNUSED(id);
+
     auto item = new ListWidgetSubItem();
     item->setSizeHint(QSize(item->sizeHint().width(), 60));
     item->setText(name);

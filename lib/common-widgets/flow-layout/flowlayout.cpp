@@ -68,9 +68,8 @@ FlowLayout::FlowLayout(int margin, int hSpacing, int vSpacing)
 //! [2]
 FlowLayout::~FlowLayout()
 {
-    QLayoutItem *item;
-    while ((item = takeAt(0)))
-        delete item;
+    while (!itemList.isEmpty())
+        delete itemList.takeFirst();
 }
 //! [2]
 
@@ -162,9 +161,15 @@ QSize FlowLayout::sizeHint() const
 QSize FlowLayout::minimumSize() const
 {
     QSize        size;
-    QLayoutItem *item;
+    QLayoutItem *item = nullptr;
+
     foreach (item, itemList)
-        size = size.expandedTo(item->minimumSize());
+    {
+        if( item )
+        {
+            size = size.expandedTo(item->minimumSize());
+        }
+    }
 
     size += QSize(2 * margin(), 2 * margin());
     return size;
@@ -183,9 +188,14 @@ int FlowLayout::doLayout(const QRect &rect, bool testOnly) const
     //! [9]
 
     //! [10]
-    QLayoutItem *item;
+    QLayoutItem *item = nullptr;
     foreach (item, itemList)
     {
+        if( item == nullptr )
+        {
+            continue;
+        }
+
         QWidget *wid    = item->widget();
         int      spaceX = horizontalSpacing();
         if (spaceX == -1)

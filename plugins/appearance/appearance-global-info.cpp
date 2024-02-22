@@ -52,7 +52,15 @@ AppearanceGlobalInfo::AppearanceGlobalInfo(QObject *parent)
                 KLOG_DEBUG(qLcAppearance) << "font changed,"
                                           << "font type:" << type
                                           << "font info:" << fontInfo;
-                emit fontChanged(type, fontInfo);
+                QString fontFamily;
+                int fontSize;
+                if( !parseFontInfo(fontInfo,fontFamily,fontSize) )
+                {
+                    KLOG_WARNING(qLcAppearance) << "check font changed value failed,invald format";
+                    return;
+                }
+
+                emit fontChanged(type, fontFamily,fontSize);
             });
     connect(m_appearanceInterface.data(), &KiranAppearanceService::AutoSwitchWindowThemeChanged, this,
             [this](bool enable)
@@ -253,26 +261,16 @@ bool AppearanceGlobalInfo::getFont(int type, QString &fontName, int &fontSize)
     auto fontValue = getFontReply.argumentAt(0).toString();
     KLOG_DEBUG(qLcAppearance) << "get font,font type:" << type << "font info:" << fontValue;
 
-#if (QT_VERSION < QT_VERSION_CHECK(5, 14, 0))
-    auto list = fontValue.split(" ", QString::SkipEmptyParts);
-#else
-    auto list = fontValue.split(" ", Qt::SkipEmptyParts);
-#endif
-    if (list.isEmpty())
+    if( !parseFontInfo(fontValue,fontName,fontSize) )
     {
+        KLOG_WARNING(qLcAppearance) << "parse font value failed,invalid format:" << fontValue;
         return false;
     }
-
-    auto sizeValue = list.takeLast();
-    fontSize = sizeValue.toInt();
-
-    auto nameValue = list.join(" ");
-    fontName = nameValue;
 
     return true;
 }
 
-bool AppearanceGlobalInfo::setFont(int fontType,const QString& fontInfo)
+bool AppearanceGlobalInfo::setFont(int fontType, const QString &fontInfo)
 {
     KLOG_DEBUG(qLcAppearance) << "set font,font type:" << fontType << fontInfo;
 
@@ -284,6 +282,43 @@ bool AppearanceGlobalInfo::setFont(int fontType,const QString& fontInfo)
                                     << "error:" << reply.error().message();
         return false;
     }
+
+    return true;
+}
+
+bool AppearanceGlobalInfo::resetFont(int fontType)
+{
+    KLOG_DEBUG(qLcAppearance) << "reset font,font type:" << fontType;
+
+    QDBusPendingReply<> reply = m_appearanceInterface->ResetFont(fontType);
+    reply.waitForFinished();
+    if (reply.isError() || !reply.isValid())
+    {
+        KLOG_WARNING(qLcAppearance) << "reset font failed,font type:" << fontType
+                                    << "error:" << reply.error().message();
+        return false;
+    }
+
+    return true;
+}
+
+bool AppearanceGlobalInfo::parseFontInfo(const QString &fontInfo, QString &fontFamily, int &fontSize)
+{
+#if (QT_VERSION < QT_VERSION_CHECK(5, 14, 0))
+    auto list = fontInfo.split(" ", QString::SkipEmptyParts);
+#else
+    auto list = fontInfo.split(" ", Qt::SkipEmptyParts);
+#endif
+    if (list.isEmpty())
+    {
+        return false;
+    }
+
+    auto sizeValue = list.takeLast();
+    fontSize = sizeValue.toInt();
+
+    auto nameValue = list.join(" ");
+    fontFamily = nameValue;
 
     return true;
 }

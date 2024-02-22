@@ -21,13 +21,16 @@
 #include <NetworkManagerQt/WirelessDevice>
 #include <NetworkManagerQt/WirelessSetting>
 #include "animation-loading-label.h"
-#include "ui_connection-show-page.h"
 #include "logging-category.h"
+#include "ui_connection-show-page.h"
 using namespace NetworkManager;
 
 #define PLUGIN_ITEM_WIDGET_HEIGHT 36
 
-ConnectionShowPage::ConnectionShowPage(QWidget* parent) : QWidget(parent), ui(new Ui::ConnectionShowPage)
+ConnectionShowPage::ConnectionShowPage(QWidget* parent)
+    : QWidget(parent),
+      ui(new Ui::ConnectionShowPage),
+      m_switchButton(nullptr)
 {
     ui->setupUi(this);
 }
@@ -44,6 +47,12 @@ void ConnectionShowPage::setTitle(QString title)
 
 void ConnectionShowPage::init(NetworkManager::ConnectionSettings::ConnectionType connectionType, const QString& devicePath)
 {
+    if (m_initialized)
+    {
+        return;
+    }
+    m_initialized = true;
+
     m_connectionType = connectionType;
     m_devicePath = devicePath;
     ui->connectionList->setDevicePath(devicePath);
@@ -150,7 +159,7 @@ void ConnectionShowPage::handleToggledSwitchButton(bool toggled)
 void ConnectionShowPage::handleWirelessEnabledChanged(bool enabled)
 {
     KLOG_DEBUG(qLcNetwork) << "Wireless Enabled Changed:" << enabled;
-    //处理通过命令行等其他方式禁用无线网络的情况
+    // 处理通过命令行等其他方式禁用无线网络的情况
     m_switchButton->blockSignals(true);
     m_switchButton->setChecked(enabled);
     m_switchButton->blockSignals(false);

@@ -46,9 +46,9 @@ QPixmap FlagPixmap::collapseFlagPixmapDark()
 
 QImage FlagPixmap::rotateImage(const QImage& image, qreal angle)
 {
-    QMatrix matrix;
-    matrix.rotate(angle);
-    return image.transformed(matrix, Qt::FastTransformation);
+    QTransform transform;
+    transform.rotate(angle);
+    return image.transformed(transform, Qt::FastTransformation);
 }
 
 void FlagPixmap::invertColors(QImage& image)
