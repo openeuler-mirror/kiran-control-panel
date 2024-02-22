@@ -183,8 +183,13 @@ int main(int argc, char *argv[])
     PanelWindow w;
     w.jump(defaultCategory,defaultSubItem);
 
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 10, 0))
     auto screen = QApplication::screenAt(QCursor::pos());
     QRect screenGeometry = screen->geometry();
+#else
+    auto screen = QApplication::desktop()->screenNumber(QCursor::pos());
+    QRect screenGeometry = QApplication::desktop()->screenGeometry(screen);
+#endif
     w.resize(1031, 742);
     w.move(screenGeometry.x() + (screenGeometry.width() - w.width()) / 2,
            screenGeometry.y() + (screenGeometry.height() - w.height()) / 2);

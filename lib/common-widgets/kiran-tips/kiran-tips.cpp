@@ -279,7 +279,11 @@ QSize KiranTips::getRightSize() const
     QFontMetrics fontMetrics(font);
     QMargins layoutContentMargins = this->layout()->contentsMargins();
 
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 11, 0))
     ui->label->setFixedWidth(fontMetrics.horizontalAdvance(ui->label->text()) + 10);
+#else
+    ui->label->setFixedWidth(fontMetrics.width(ui->label->text()) + 10);
+#endif
     ui->label->setFixedHeight(fontMetrics.height());
 
     QSize size;
