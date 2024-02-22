@@ -46,7 +46,7 @@ public slots:
     void getWirelessAvailableConnections(const QString &devicePath);
     void activateWirelessConnection(const QString &connectionPath, const QString &devicePath, const QString &accessPointPath);
     void addAndActivateWirelessConnection(NetworkManager::ConnectionSettings::Ptr connectionSettings);
-    void setSecurityPskAndActivateWirelessConnection(const QString &password);
+    void setPskAndActivateWirelessConnection(const QString &password);
 
     void createConnectionSettings(const QString &ssid, const QString &accessPointPath);
     void setWirelessSecurityPsk(const NetworkManager::WirelessSecuritySetting::Ptr &wirelessSecuritySetting, const QString &psk);

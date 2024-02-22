@@ -40,7 +40,6 @@ KiranTimeZoneList::~KiranTimeZoneList()
 
 bool KiranTimeZoneList::initAllTimeZone()
 {
-    ZoneInfo info;
     KiranTimeZoneItem *item = nullptr;
     KiranTimeDateGlobalData* globalData = KiranTimeDateGlobalData::instance();
 

@@ -20,6 +20,7 @@
 
 #include <kiran-session-daemon/audio-i.h>
 #include <qt5-log-i.h>
+#include <cstring>
 
 AudioInfo::AudioInfo(const QAudioFormat &format, QObject *parent)
     : QIODevice(parent), m_format(format), m_maxAmplitude(0), m_level(0.0)
@@ -150,7 +151,9 @@ qint64 AudioInfo::writeData(const char *data, qint64 len)
                 }
                 else if (m_format.sampleSize() == 32 && m_format.sampleType() == QAudioFormat::Float)
                 {
-                    const float* floatValue = reinterpret_cast<const float *>(ptr);
+                    // const float* floatValue = reinterpret_cast<const float *>(ptr);
+                    float floatValue[1] = {0};
+                    std::memcpy(floatValue, ptr, sizeof(float));
                     value = qAbs( (*floatValue) * 0x7fffffff);  // assumes 0-1.0
                 }
 

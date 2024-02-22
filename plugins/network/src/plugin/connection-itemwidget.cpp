@@ -28,11 +28,11 @@
 #include <QPainter>
 #include <QSvgRenderer>
 #include "animation-loading-label.h"
+#include "logging-category.h"
 #include "signal-forward.h"
 #include "status-notification.h"
 #include "text-input-dialog.h"
 #include "utils.h"
-#include "logging-category.h"
 
 using namespace NetworkManager;
 // 使用默认析构函数，父对象被释放时，会释放子对象
@@ -41,9 +41,10 @@ ConnectionItemWidget::ConnectionItemWidget(QWidget* parent) : KiranFrame(parent)
     initUI();
 }
 
-ConnectionItemWidget::ConnectionItemWidget(NetworkConnectionInfo connectionInfo, QWidget* parent) : KiranFrame(parent)
+ConnectionItemWidget::ConnectionItemWidget(NetworkConnectionInfo connectionInfo, QWidget* parent)
+    : KiranFrame(parent),
+      m_connectionInfo(connectionInfo)
 {
-    m_connectionInfo = connectionInfo;
     initUI();
     if (!m_connectionInfo.connectionPath.isEmpty())
     {
@@ -347,11 +348,9 @@ void ConnectionItemWidget::activateHiddenNetwork(const QString& ssid)
 
 void ConnectionItemWidget::updateConnection()
 {
-    QString connectionPath = m_connectionInfo.connectionPath;
-    Connection::Ptr connection = findConnection(connectionPath);
-    auto type = connection->settings()->connectionType();
+    Connection::Ptr connection = findConnection(connectionPath());
 
-    if (type == ConnectionSettings::ConnectionType::Wired)
+    if (connection->settings()->connectionType() == ConnectionSettings::ConnectionType::Wired)
     {
         WiredSetting::Ptr wiredSetting = connection->settings()->setting(Setting::SettingType::Wired).dynamicCast<WiredSetting>();
         QString mac = wiredSetting->macAddress().toHex(':').toUpper();
@@ -364,7 +363,7 @@ void ConnectionItemWidget::updateConnection()
             (mac != hardwareAddress))
         {
             KLOG_INFO(qLcNetwork) << "the binding device MAC has changed";
-            SignalForward::instance()->connectionMacChanged(connectionPath, hardwareAddress);
+            SignalForward::instance()->connectionMacChanged(connectionPath(), hardwareAddress);
             return;
         }
     }
@@ -415,7 +414,7 @@ void ConnectionItemWidget::removeConnection()
     }
 }
 
-void ConnectionItemWidget::setSecurityPskAndActivateWirelessConnection(const QString& password)
+void ConnectionItemWidget::setPskAndActivateWirelessConnection(const QString& password)
 {
     WirelessSecuritySetting::Ptr wirelessSecurity =
         m_connnectionSettings->setting(Setting::WirelessSecurity).dynamicCast<WirelessSecuritySetting>();
@@ -455,7 +454,7 @@ void ConnectionItemWidget::requireInputPassword()
     QString tips = QString(tr("Password required to connect to %1.")).arg(ssid());
     inputDialog.setText(tips);
     inputDialog.setlineEditEchoMode(QLineEdit::Password);
-    connect(&inputDialog, &TextInputDialog::password, this, &ConnectionItemWidget::setSecurityPskAndActivateWirelessConnection);
+    connect(&inputDialog, &TextInputDialog::password, this, &ConnectionItemWidget::setPskAndActivateWirelessConnection);
 
     inputDialog.exec();
 }
@@ -473,7 +472,6 @@ void ConnectionItemWidget::requireHiddenNetworkName()
 
 void ConnectionItemWidget::addAndActivateWirelessConnection(NetworkManager::ConnectionSettings::Ptr connectionSettings)
 {
-    const QString ssid = m_connectionInfo.wirelessInfo.ssid;
     const QString accessPointPath = m_connectionInfo.wirelessInfo.accessPointPath;
     const QString devicePath = m_connectionInfo.devicePath;
     KLOG_DEBUG(qLcNetwork) << "accessPointPath" << accessPointPath;
@@ -485,25 +483,24 @@ void ConnectionItemWidget::addAndActivateWirelessConnection(NetworkManager::Conn
     if (reply.isError())
     {
         KLOG_DEBUG(qLcNetwork) << "Connection failed: " << reply.error();
-        StatusNotification::connectitonFailedNotifyByName(ssid);
+        StatusNotification::connectitonFailedNotifyByName(ssid());
     }
 }
 
 void ConnectionItemWidget::activateWirelessNetwork()
 {
-    QString ssid = m_connectionInfo.wirelessInfo.ssid;
-    KLOG_DEBUG(qLcNetwork) << "Activate Selected Wireless Network:" << ssid;
+    KLOG_DEBUG(qLcNetwork) << "Activate Selected Wireless Network:" << ssid();
     QString accessPointPath = m_connectionInfo.wirelessInfo.accessPointPath;
 
     // 连接隐藏网络
-    if (ssid.isEmpty() && accessPointPath.isEmpty())
+    if (ssid().isEmpty() && accessPointPath.isEmpty())
     {
         requireHiddenNetworkName();
         return;
     }
 
     QString devicePath = m_connectionInfo.devicePath;
-    Connection::Ptr connection = NetworkUtils::getAvailableConnectionBySsid(devicePath, ssid);
+    Connection::Ptr connection = NetworkUtils::getAvailableConnectionBySsid(devicePath, ssid());
 
     // 在已存在WirelessSetting配置的情况下，激活连接．（连接过一次后会创建WirelessSetting配置）
     if (!connection.isNull())
@@ -512,7 +509,7 @@ void ConnectionItemWidget::activateWirelessNetwork()
         return;
     }
 
-    m_connnectionSettings = NetworkUtils::createWirelessConnectionSettings(ssid, devicePath, accessPointPath);
+    m_connnectionSettings = NetworkUtils::createWirelessConnectionSettings(ssid(), devicePath, accessPointPath);
     WirelessSecuritySetting::Ptr wirelessSecurity =
         m_connnectionSettings->setting(NetworkManager::Setting::WirelessSecurity).dynamicCast<NetworkManager::WirelessSecuritySetting>();
     WirelessSecuritySetting::KeyMgmt keyMgmt = wirelessSecurity->keyMgmt();
@@ -526,7 +523,8 @@ void ConnectionItemWidget::activateWirelessNetwork()
 
 void ConnectionItemWidget::handleThemeChanged(Kiran::PaletteType paletteType)
 {
-    QImage image = m_connectionTypeIcon->pixmap()->toImage();
+    QPixmap pixmap = m_connectionTypeIcon->pixmap(Qt::ReturnByValue);
+    QImage image = pixmap.toImage();
     image.invertPixels(QImage::InvertRgb);
     m_connectionTypeIcon->setPixmap(QPixmap::fromImage(image));
     m_editButton->setIcon(NetworkUtils::trayIconColorSwitch(":/kcp-network-images/details-info.svg"));

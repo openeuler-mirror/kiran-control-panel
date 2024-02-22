@@ -263,8 +263,8 @@ void DisplayPage::initExtraComboBoxRefreshRate(QComboBox *comboBox, const QList<
 {
     comboBox->clear();
 
+    double recommendRefreshRate = 0;
     QList<DisplayModesStu> list = m_displayConfig->listPreferredModes(m_curMonitorPath);
-    double recommendRefreshRate;
     if (!list.isEmpty())
     {
         recommendRefreshRate = list.first().refreshRate;
@@ -458,10 +458,10 @@ void DisplayPage::showExtraModeData(const QString &monitorPath)
     //多屏幕扩展模式，只有一个屏幕可用时，该屏幕不现实‘关闭’‘设为主屏幕’两项。
     QStringList enablePaths;  //可用的屏幕的路径集合
     QStringList listMonitors = m_listMonitors;
-    foreach (QString monitorPath, listMonitors)
+    foreach (QString monitor, listMonitors)
     {
-        MonitorConfigDataPtr monitorBufferData = m_displayConfig->getMonitorConfigData(monitorPath);
-        if (monitorBufferData->enabled()) enablePaths << monitorPath;
+        MonitorConfigDataPtr monitorBufferData = m_displayConfig->getMonitorConfigData(monitor);
+        if (monitorBufferData->enabled()) enablePaths << monitor;
     }
     if (enablePaths.count() <= 1 && enablePaths.contains(m_curMonitorPath))
     {

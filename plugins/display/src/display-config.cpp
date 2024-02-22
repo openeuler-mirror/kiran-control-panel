@@ -239,10 +239,9 @@ MonitorConfigDataPtr DisplayConfig::initCopyMode()
     MonitorConfigDataPtr monitorConfigData = QSharedPointer<MonitorConfigData>(new MonitorConfigData(KIRAN_SCREEN_COPY_MODE_MONITOR_PATH));
 
     monitorConfigData->setName(text);
-    monitorConfigData->setX(0);
-    monitorConfigData->setY(0);
-    monitorConfigData->setW(1920);
-    monitorConfigData->setH(1080);
+    monitorConfigData->setPosition(0,0);
+    monitorConfigData->setWidth(1920);
+    monitorConfigData->setHeight(1080);
     monitorConfigData->setRotation(DisplayRotationType(rotation));
     monitorConfigData->setReflect(DisplayReflectTypes(reflect));
     monitorConfigData->setEnabled(true);
@@ -273,8 +272,7 @@ MonitorConfigDataList DisplayConfig::initExtraMode()
         MonitorConfigDataPtr monitorConfigData = QSharedPointer<MonitorConfigData>(new MonitorConfigData(monitorPath));
 
         monitorConfigData->setName(monitor->name());
-        monitorConfigData->setX(monitor->x() + offset);
-        monitorConfigData->setY(monitor->y());
+        monitorConfigData->setPosition(monitor->x() + offset, monitor->y());
         monitorConfigData->setRotation(DisplayRotationType(monitor->rotation()));
         monitorConfigData->setReflect(DisplayReflectTypes(monitor->reflect()));
         monitorConfigData->setEnabled(monitor->enabled());
@@ -285,18 +283,18 @@ MonitorConfigDataList DisplayConfig::initExtraMode()
             displayModeStu = monitor->GetCurrentMode();
         }
         //当显示器关闭时，大小将为0。
-        if (displayModeStu.w <= 0 || displayModeStu.h <= 0)
+        if (displayModeStu.w == 0 || displayModeStu.h == 0)
         {
             monitorConfigData->setX(99999);  //让x足够大，保证从右侧合并过来。
             displayModeStu.w = 1920;
             displayModeStu.h = 1080;
         }
-        monitorConfigData->setW(displayModeStu.w);
-        monitorConfigData->setH(displayModeStu.h);
+        monitorConfigData->setWidth(displayModeStu.w);
+        monitorConfigData->setHeight(displayModeStu.h);
         monitorConfigData->setRefreshRate(displayModeStu.refreshRate);
 
         if (isCopy)
-            offset += monitorConfigData->w();  //如果点击扩展页面时，当前正处于复制模式，那所有x的值都往右边位移。
+            offset += monitorConfigData->width();  //如果点击扩展页面时，当前正处于复制模式，那所有x的值都往右边位移。
 
         list << monitorConfigData;
 
@@ -345,12 +343,11 @@ bool DisplayConfig::applyChanges()
                 KLOG_DEBUG() << "monitorConfigData enabled:" << monitorConfigData->enabled();
                 KLOG_DEBUG() << "monitorConfigData reflect:" << monitorConfigData->reflect();
                 KLOG_DEBUG() << "monitorConfigData rotation:" << monitorConfigData->rotation();
-                KLOG_DEBUG() << "monitorConfigData x:" << monitorConfigData->x();
-                KLOG_DEBUG() << "monitorConfigData y:" << monitorConfigData->y();
+                KLOG_DEBUG() << "monitorConfigData positon:" << monitorConfigData->position();
 
                 QString monitorPath = monitorConfigData->path();
                 DBusInterface::Monitor<QVariant>(monitorPath, "Enable", QVariantList() << monitorConfigData->enabled());
-                DBusInterface::Monitor<QVariant>(monitorPath, "SetPosition", QVariantList() << monitorConfigData->x() << monitorConfigData->y());
+                DBusInterface::Monitor<QVariant>(monitorPath, "SetPosition", QVariantList() << monitorConfigData->position().x() << monitorConfigData->position().y());
                 QVariant var;
                 var.setValue(QDBusArgument() << ushort(monitorConfigData->rotation()));
                 DBusInterface::Monitor<QVariant>(monitorPath, "SetRotation", QVariantList() << var);
@@ -358,7 +355,10 @@ bool DisplayConfig::applyChanges()
                 var.setValue(QDBusArgument() << ushort(monitorConfigData->reflect()));
                 DBusInterface::Monitor<QVariant>(monitorPath, "SetReflect", QVariantList() << var);
 
-                DBusInterface::Monitor<QVariant>(monitorPath, "SetMode", QVariantList() << uint32_t(monitorConfigData->w()) << uint32_t(monitorConfigData->h()) << monitorConfigData->refreshRate());
+                uint32_t width = uint32_t(monitorConfigData->width());
+                uint32_t height = uint32_t(monitorConfigData->height());
+
+                DBusInterface::Monitor<QVariant>(monitorPath, "SetMode", QVariantList() << width << height << monitorConfigData->refreshRate());
             }
         }
         DBusInterface::Display("SetPrimary", QVariantList() << m_displayConfigData->primary());
@@ -366,9 +366,9 @@ bool DisplayConfig::applyChanges()
     }
     else
     {
-        QStringList listMonitors = m_displayInterface->ListMonitors();
+        QStringList monitors = m_displayInterface->ListMonitors();
         MonitorConfigDataPtr monitorConfigData = m_monitorConfigDataMap.value(KIRAN_SCREEN_COPY_MODE_MONITOR_PATH);
-        foreach (QString monitorPath, listMonitors)
+        foreach (QString monitorPath, monitors)
         {
             //复制模式下，不显示刷新率，保存时，每个显示器使用自身推荐的刷新率，返回列表的第一项为推荐刷新率
             QList<DisplayModesStu> stuList = DBusInterface::Monitor<QList<DisplayModesStu> >(monitorPath, "ListModes");
@@ -382,7 +382,7 @@ bool DisplayConfig::applyChanges()
                 }
             }
             DBusInterface::Monitor<QVariant>(monitorPath, "Enable", QVariantList() << true);
-            DBusInterface::Monitor<QVariant>(monitorPath, "SetPosition", QVariantList() << monitorConfigData->x() << monitorConfigData->y());
+            DBusInterface::Monitor<QVariant>(monitorPath, "SetPosition", QVariantList() << monitorConfigData->position().x() << monitorConfigData->position().y());
             QVariant var;
             var.setValue(QDBusArgument() << ushort(monitorConfigData->rotation()));
             DBusInterface::Monitor<QVariant>(monitorPath, "SetRotation", QVariantList() << var);
@@ -390,7 +390,9 @@ bool DisplayConfig::applyChanges()
             var.setValue(QDBusArgument() << ushort(monitorConfigData->reflect()));
             DBusInterface::Monitor<QVariant>(monitorPath, "SetReflect", QVariantList() << var);
 
-            DBusInterface::Monitor<QVariant>(monitorPath, "SetMode", QVariantList() << uint32_t(monitorConfigData->w()) << uint32_t(monitorConfigData->h()) << monitorConfigData->refreshRate());
+            uint32_t width = uint32_t(monitorConfigData->width());
+            uint32_t height = uint32_t(monitorConfigData->height());
+            DBusInterface::Monitor<QVariant>(monitorPath, "SetMode", QVariantList() << width << height << monitorConfigData->refreshRate());
         }
     }
 

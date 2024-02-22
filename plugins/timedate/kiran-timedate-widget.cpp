@@ -154,7 +154,6 @@ void KiranTimeDateWidget::initDisplayFormatSettingsPage()
 
 void KiranTimeDateWidget::updateTimeLabel()
 {
-    QString dateTime;
     QDateTime curDateTime = QDateTime::currentDateTime();
     std::string curDateFormat = m_curTimeDateFormat.toStdString();
     std::string curTimeFormat = m_hourFormat == TIMEDATE_HOUSR_FORMAT_12_HOURS ? "%I:%M" : "%H:%M";

@@ -24,20 +24,17 @@
 #include <QLabel>
 #include "connection-itemwidget.h"
 #include "general.h"
+#include "logging-category.h"
 #include "signal-forward.h"
 #include "utils.h"
-#include "logging-category.h"
 
 using namespace NetworkManager;
 using namespace NetworkUtils;
 
-DeviceAvailableConnectionWidget::DeviceAvailableConnectionWidget(const QString &devicePath, QWidget *parent) : KiranCollapse(parent)
+DeviceAvailableConnectionWidget::DeviceAvailableConnectionWidget(NetworkManager::Device::Ptr device, QWidget *parent)
+    : KiranCollapse(parent),
+      m_device(device)
 {
-}
-
-DeviceAvailableConnectionWidget::DeviceAvailableConnectionWidget(NetworkManager::Device::Ptr device, QWidget *parent) : KiranCollapse(parent)
-{
-    m_device = device;
     m_devicePath = m_device->uni();
     m_deviceType = m_device->type();
     KLOG_DEBUG(qLcNetwork) << m_device;

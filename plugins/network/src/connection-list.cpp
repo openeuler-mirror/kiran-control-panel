@@ -187,12 +187,12 @@ void ConnectionList::removeWirelessNetworkFromList(const QString &ssid)
 
 void ConnectionList::clearConnectionList()
 {
-    int count = m_itemWidgetList.count();
-    for (int i = 0; i < count; ++i)
+    int itemCount = count();
+    for (int i = 0; i < itemCount; ++i)
     {
-        QWidget *itemWidget = m_itemWidgetList.value(i);
+        QWidget *item = m_itemWidgetList.value(i);
         m_itemWidgetList.removeAt(i);
-        itemWidget->deleteLater();
+        item->deleteLater();
     }
 }
 
@@ -221,11 +221,11 @@ QWidget *ConnectionList::findItemWidgetByUuid(const QString &uuid)
 {
     for (int i = 0; i < m_itemWidgetList.count(); ++i)
     {
-        QWidget *itemWidget = m_itemWidgetList.value(i);
-        QString itemUuid = itemWidget->property(PROPERTY_NETWORK_CONNECTION_INFO).value<NetworkConnectionInfo>().uuid;
+        QWidget *item = m_itemWidgetList.value(i);
+        QString itemUuid = item->property(PROPERTY_NETWORK_CONNECTION_INFO).value<NetworkConnectionInfo>().uuid;
         if (uuid == itemUuid)
         {
-            return itemWidget;
+            return item;
         }
     }
     return nullptr;
@@ -235,11 +235,11 @@ QWidget *ConnectionList::findItemWidgetBySsid(const QString &ssid)
 {
     for (int i = 0; i < m_itemWidgetList.count(); ++i)
     {
-        QWidget *itemWidget = m_itemWidgetList.value(i);
-        QString itemSsid = itemWidget->property(PROPERTY_NETWORK_CONNECTION_INFO).value<NetworkConnectionInfo>().wirelessInfo.ssid;
+        QWidget *item = m_itemWidgetList.value(i);
+        QString itemSsid = item->property(PROPERTY_NETWORK_CONNECTION_INFO).value<NetworkConnectionInfo>().wirelessInfo.ssid;
         if (ssid == itemSsid)
         {
-            return itemWidget;
+            return item;
         }
     }
     return nullptr;
@@ -249,11 +249,11 @@ QWidget *ConnectionList::findItemWidgetByActivePath(const QString &activePath)
 {
     for (int i = 0; i < m_itemWidgetList.count(); ++i)
     {
-        QWidget *itemWidget = m_itemWidgetList.value(i);
-        QString activeConnectionPathFromItem = itemWidget->property(PROPERTY_NETWORK_CONNECTION_INFO).value<NetworkConnectionInfo>().activeConnectionPath;
+        QWidget *item = m_itemWidgetList.value(i);
+        QString activeConnectionPathFromItem = item->property(PROPERTY_NETWORK_CONNECTION_INFO).value<NetworkConnectionInfo>().activeConnectionPath;
         if (activePath == activeConnectionPathFromItem)
         {
-            return itemWidget;
+            return item;
         }
     }
     return nullptr;
@@ -386,8 +386,6 @@ bool ConnectionList::greaterThanString(const QPair<QWidget *, QString> &left, co
 
     if (!right.first->property(PROPERTY_NETWORK_CONNECTION_INFO).value<NetworkConnectionInfo>().activeConnectionPath.isEmpty())
         return 0;
-
-    right.first->property(PROPERTY_NETWORK_CONNECTION_INFO).value<NetworkConnectionInfo>().activeConnectionPath;
 
     QCollator collator;
     collator.setNumericMode(true);
