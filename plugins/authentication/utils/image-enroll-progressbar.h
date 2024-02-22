@@ -28,7 +28,7 @@ public:
     void registerPercentImage(uint percent,const QString& img);
     void registerPercentImages(const std::list<std::tuple<uint,QString>>& percentImages);
 
-    virtual void setProgress(uint progress);
+    virtual void setProgress(uint progress) override;
 
 private:
     void init();

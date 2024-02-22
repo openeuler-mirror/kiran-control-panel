@@ -29,12 +29,11 @@ QString avatarEditorError(int exitCode)
         {EXIT_CODE_BAD_ARG, "bad arg"},
         {EXIT_CODE_SAVE_FAILED, "save failed"},
         {EXIT_CODE_MISSING_PARAMTER, "missing paramter"}};
-    static QString unknowError = "unknow exit code";
 
     auto iter = exitCodeMap.find(exitCode);
     if (iter == exitCodeMap.end())
     {
-        return unknowError;
+        return "unknow exit code";
     }
     else
     {

@@ -1,3 +1,16 @@
+/**
+ * Copyright (c) 2020 ~ 2024 KylinSec Co., Ltd.
+ * kiran-control-panel is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *          http://license.coscl.org.cn/MulanPSL2
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ *
+ * Author:     liuxinhao <liuxinhao@kylinsec.com.cn>
+ */
 #include "general-bio-page.h"
 #include "auth-setting-container.h"
 #include "auth-setting-item.h"
@@ -49,12 +62,14 @@ QString GeneralBioPage::autoGenerateFeatureName()
 
     for (int i = 0; i <= 10; ++i)
     {
+// sonarqube block off
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 10, 0))
         auto featureNumber = QRandomGenerator::global()->bounded(1, MAX_FEATURE_NUMBER);
 #else
         qsrand(QTime(0, 0, 0).secsTo(QTime::currentTime()));
         auto featureNumber = qrand() % MAX_FEATURE_NUMBER + 1;
 #endif
+// sonarqube block on
         auto temp = QString("%1 %2").arg(m_featureNamePrefix).arg(featureNumber);
 
         if (!m_featureNameSet.contains(temp))

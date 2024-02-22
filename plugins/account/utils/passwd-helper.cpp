@@ -22,6 +22,7 @@
 
 #include <errno.h>
 #include <error.h>
+#include <string.h>
 #include <security/pam_appl.h>
 #include <random>
 
@@ -56,10 +57,10 @@ int conv_func(int num_msg, const struct pam_message **msg,
     struct pam_response *reply = NULL;
     int ret;
     int replies;
-    char *passwd = (char *)appdata_ptr;
+    char * passwd = static_cast<char *>(appdata_ptr);
 
     ///分配回复包
-    reply = (struct pam_response *)calloc(num_msg, sizeof(*reply));
+    reply = static_cast<struct pam_response *>( calloc(num_msg, sizeof(*reply)));
     if (reply == nullptr)
     {
         return PAM_CONV_ERR;
@@ -74,7 +75,7 @@ int conv_func(int num_msg, const struct pam_message **msg,
             goto failed;
         }
         reply[replies].resp = new char[strlen(passwd) + 1]();
-        strcpy(reply[replies].resp, passwd);
+        strncpy(reply[replies].resp, passwd,strlen(passwd));
         reply[replies].resp_retcode = PAM_SUCCESS;
     }
     *resp = reply;
@@ -102,7 +103,8 @@ bool PasswdHelper::checkUserPassword(const QString &user, const QString &pwd)
     std::string sPwd = pwd.toStdString();
     struct pam_conv conv = {
         &conv_func,
-        (void *)sPwd.c_str()};
+        const_cast<void*>(static_cast<const void*>(sPwd.c_str()))
+    };
 
     pam_handle *handler;
     int res;
@@ -116,7 +118,7 @@ bool PasswdHelper::checkUserPassword(const QString &user, const QString &pwd)
         return false;
     }
 
-    pam_set_item(handler, PAM_FAIL_DELAY, (void *)no_fail_delay);
+    pam_set_item(handler, PAM_FAIL_DELAY, reinterpret_cast<const void*>(no_fail_delay));
 
     res = pam_authenticate(handler, 0);
     if (res != PAM_SUCCESS)

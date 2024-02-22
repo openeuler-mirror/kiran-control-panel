@@ -167,6 +167,29 @@
     </widget>
    </item>
    <item>
+    <spacer name="verticalSpacer_7">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Fixed</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>16</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item alignment="Qt::AlignLeft">
+    <widget class="QPushButton" name="btn_resetFontSettings">
+     <property name="text">
+      <string>Reset Font Settings</string>
+     </property>
+    </widget>
+   </item>
+   <item>
     <spacer name="verticalSpacer_6">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
