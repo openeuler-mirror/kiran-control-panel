@@ -46,10 +46,14 @@ public:
 
     bool getFont(int type,QString& fontName,int& fontSize);
     bool setFont(int fontType,const QString& fontInfo);
+    bool resetFont(int fontType);
+
+private:
+    bool parseFontInfo(const QString& fontInfo,QString& fontFamily,int& fontSize);
 
 signals:
     void themeChanged(int type, const QString &theme_name);
-    void fontChanged(int type, const QString &fontInfo);
+    void fontChanged(int type, const QString &fontFamily,int fontSize);
     void desktopBackgroundChanged(const QString &value) const;
     void lockScreenBackgroundChanged(const QString &value) const;
     void AutoSwitchWindowThemeChanged(bool autoSwitch);
