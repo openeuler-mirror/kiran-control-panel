@@ -40,12 +40,13 @@ private:
     void initConnections();
     bool updateFontToBackend(int fontType, const QString& fontFamily,int fontSize);
 
-public slots:
+private slots:
     void onCurrentFontFamilyChanged();
     void onSliderValueChanged(int value);
     void updateUiCurrentFontFamily(QComboBox* combo);
     void updateAllFontWordSize();
-    void onBackendFontChanged(int type, QString fontInfo);
+    void onBackendFontChanged(int type, const QString& fontFamily,int fontSize);
+    void resetFontSettings();
 
 private:
     Ui::Fonts *ui;
