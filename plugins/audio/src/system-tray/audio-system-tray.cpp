@@ -84,8 +84,22 @@ void AudioSystemTray::initTrayIcon()
     
     QDBusPendingReply<QString> defaultSinkPath = m_audioInterface->GetDefaultSink();
     AudioDeviceInterface defaultSink (AUDIO_DBUS_NAME, defaultSinkPath, QDBusConnection::sessionBus());
-    double currentVolumeDouble = defaultSink.volume() * 100;
-    KLOG_INFO() << "current Volume Double" << round(currentVolumeDouble);
+    
+    double currentVolumeDouble = 0;
+    /**
+     * NOTE:此处是在判断是否存在实际的声卡设备
+     * 1、在高版本2.6中使用GetCards来判断
+     * 2、即使没有实际的声卡设备，default sink还是会存在，通过是否存在可用端口（port）来判断是否存在可用声卡
+    */
+    QDBusPendingReply<QString> getPorts = defaultSink.GetPorts();
+    // 解析默认sink的端口信息
+    QJsonParseError jsonParseError;
+    QJsonDocument doc = QJsonDocument::fromJson(getPorts.value().toLatin1(), &jsonParseError);
+    if (!doc.isNull() && jsonParseError.error == QJsonParseError::NoError)
+    {        
+        currentVolumeDouble = defaultSink.volume() * 100;
+        KLOG_INFO() << "current Volume Double" << round(currentVolumeDouble);
+    }
     setTrayIcon(round(currentVolumeDouble));
 }
 
