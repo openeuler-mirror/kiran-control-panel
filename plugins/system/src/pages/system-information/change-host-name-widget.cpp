@@ -62,8 +62,13 @@ void ChangeHostNameWidget::initUI()
 
     ui->btn_save->setEnabled(false);
 
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 10, 0))
     auto screen = QApplication::screenAt(QCursor::pos());
     auto screenGeometry = screen->geometry();
+#else
+    auto screen = QApplication::desktop()->screenNumber(QCursor::pos());
+    QRect screenGeometry = QApplication::desktop()->screenGeometry(screen);
+#endif
     this->move(screenGeometry.x() + (screenGeometry.width() - this->width()) / 2,
                screenGeometry.y() + (screenGeometry.height() - this->height()) / 2);
 }
