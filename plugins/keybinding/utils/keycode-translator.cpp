@@ -15,9 +15,11 @@
 #include "keycode-translator.h"
 #include "logging-category.h"
 
+#include <QtXkbCommonSupport/private/qxkbcommon_p.h>
 #include <qt5-log-i.h>
-#include <QMetaEnum>
 #include <QApplication>
+#include <QMetaEnum>
+#include "keycode-helper.h"
 
 static QMetaEnum keyMetaEnum = QMetaEnum::fromType<KeycodeTranslator::Key>();
 
@@ -89,23 +91,22 @@ static const QMap<QString, QString> MediaKeyMap = {
 KeycodeTranslator::KeycodeTranslator(QObject *parent)
     : QObject(parent)
 {
-
 }
 
 QString KeycodeTranslator::keycode2ReadableString(const QList<int> &keycodes)
 {
     QStringList keyStrings;
 
-    for( int key : keycodes )
+    for (int key : keycodes)
     {
-        if( (key >= Qt::Key_0) && (key <= Qt::Key_9) )
+        if ((key >= Qt::Key_0) && (key <= Qt::Key_9))
         {
-            keyStrings.append(QString::number(key-Qt::Key_0));
+            keyStrings.append(QString::number(key - Qt::Key_0));
             continue;
         }
 
-        const char* keyValue = keyMetaEnum.valueToKey(key);
-        if( keyValue == nullptr )
+        const char *keyValue = keyMetaEnum.valueToKey(key);
+        if (keyValue == nullptr)
         {
             KLOG_WARNING(qLcKeybinding) << "can't convert key:" << key;
             continue;
@@ -113,12 +114,12 @@ QString KeycodeTranslator::keycode2ReadableString(const QList<int> &keycodes)
 
         QString keyStr(keyValue);
         //特殊按键经QMetaEnum翻译之后再经过SpecialKeyMap翻译
-        if( SpecialKeyMap.contains(keyStr.toLower()) )
+        if (SpecialKeyMap.contains(keyStr.toLower()))
         {
             keyStrings.append(SpecialKeyMap.value(keyStr.toLower()));
         }
         //特殊按键 "_" 转换成 " "
-        else if( (key >= Audio_Lower_Volume) && (key <= Audio_Mic_Mute) )
+        else if ((key >= Audio_Lower_Volume) && (key <= Audio_Mic_Mute))
         {
             keyStrings.append(keyStr.split("_").join(" "));
         }
@@ -131,33 +132,40 @@ QString KeycodeTranslator::keycode2ReadableString(const QList<int> &keycodes)
     return keyStrings.join('+');
 }
 
+int KeycodeTranslator::keycode2QtKey(unsigned long keycode)
+{
+    auto keysym = KeycodeHelper::keycode2Keysym(keycode);
+    auto qtkey = QXkbCommon::keysymToQtKey(keysym, Qt::KeyboardModifier::NoModifier);
+    return qtkey;
+}
+
 QString KeycodeTranslator::backendKeyString2Readable(const QString &keyString)
 {
     QString readableString;
 
-    if( keyString.isEmpty() )
+    if (keyString.isEmpty())
     {
         readableString = tr("None");
     }
-    else if( keyString.contains("disable",Qt::CaseInsensitive) )
+    else if (keyString.contains("disable", Qt::CaseInsensitive))
     {
         readableString = tr("disabled");
     }
     else
     {
         QString temp = keyString;
-        temp = temp.replace("<","");
-        temp = temp.replace(">","-");
+        temp = temp.replace("<", "");
+        temp = temp.replace(">", "-");
 #if (QT_VERSION < QT_VERSION_CHECK(5, 14, 0))
         QStringList keyList = temp.split("-", QString::SkipEmptyParts);
 #else
-        QStringList keyList = temp.split("-",Qt::SkipEmptyParts);
+        QStringList keyList = temp.split("-", Qt::SkipEmptyParts);
 #endif
-        for(int i=0;i<keyList.size();i++)
+        for (int i = 0; i < keyList.size(); i++)
         {
-            if( SpecialKeyMap.contains(keyList.at(i).toLower()) )
+            if (SpecialKeyMap.contains(keyList.at(i).toLower()))
             {
-                keyList.replace(i,SpecialKeyMap.value(keyList.at(i).toLower()));
+                keyList.replace(i, SpecialKeyMap.value(keyList.at(i).toLower()));
             }
             else if (MediaKeyMap.contains(keyList.at(i)))
             {
@@ -174,7 +182,7 @@ QString KeycodeTranslator::backendKeyString2Readable(const QString &keyString)
 QString KeycodeTranslator::readableKeyString2Backend(const QString &keyString)
 {
     QStringList keystrings = keyString.split('+');
-    for( int i=0;i<keystrings.count();i++ )
+    for (int i = 0; i < keystrings.count(); i++)
     {
         QString key = keystrings.at(i);
 
