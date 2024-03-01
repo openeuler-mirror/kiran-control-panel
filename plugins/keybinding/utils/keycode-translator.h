@@ -17,7 +17,7 @@
 
 #include <QObject>
 
-class KeycodeTranslator : public  QObject
+class KeycodeTranslator : public QObject
 {
     Q_OBJECT
 public:
@@ -174,9 +174,9 @@ private:
 
 public:
     static QString keycode2ReadableString(const QList<int>& keycodes);
+    static int keycode2QtKey(unsigned long keycode);
     static QString backendKeyString2Readable(const QString& keyString);
     static QString readableKeyString2Backend(const QString& keyString);
 };
 
-
-#endif //KIRAN_CONTROL_PANEL_KEYCODE_TRANSLATOR_H
+#endif  //KIRAN_CONTROL_PANEL_KEYCODE_TRANSLATOR_H
