@@ -17,6 +17,8 @@
 #include <QInputMethodEvent>
 #include <QPainter>
 #include <QStyleOption>
+#include "keycode-translator.h"
+#include "logging-category.h"
 
 CustomLineEdit::CustomLineEdit(QWidget *parent) : QLineEdit(parent)
 {
@@ -33,18 +35,27 @@ void CustomLineEdit::initUI()
     setFocusPolicy(Qt::ClickFocus);
     setReadOnly(true);
     setObjectName("CustomLineEdit");
-//    setStyleSheet("#CustomLineEdit{border:1px solid #393939;border-radius:6px;padding-left:10px;padding-right:10px;}"
-//                  "#CustomLineEdit:focus{border:1px solid #2eb3ff;}");
+    //    setStyleSheet("#CustomLineEdit{border:1px solid #393939;border-radius:6px;padding-left:10px;padding-right:10px;}"
+    //                  "#CustomLineEdit:focus{border:1px solid #2eb3ff;}");
 }
 
 void CustomLineEdit::keyReleaseEvent(QKeyEvent *event)
 {
     QList<int> keycodes;
+    int qtkey = 0;
 
     if (event->key() == Qt::Key_Backspace && event->modifiers() == Qt::NoModifier)
     {
         return;
     }
+
+    //处理shift修饰的快捷键组合，按键不经过shift转化，将原始按键keycode转化为对应的Qt::Key
+    if (event->key() != 0 && (event->modifiers() & Qt::ShiftModifier))
+    {
+        qtkey = KeycodeTranslator::keycode2QtKey(event->nativeScanCode());
+        KLOG_INFO(qLcKeybinding) << "convert KeyCode:" << event->nativeScanCode() << "to Qt::Key:" << qtkey;
+    }
+
     // no modifier
     if (event->key() != 0 && event->modifiers() == Qt::NoModifier)
     {
@@ -56,14 +67,12 @@ void CustomLineEdit::keyReleaseEvent(QKeyEvent *event)
     else if (event->key() != 0 && event->modifiers() == Qt::ShiftModifier)
     {
         keycodes.append(Qt::Key_Shift);
-        keycodes.append(event->key());
-        //KLOG_INFO() << "shift :" << event->key() << event->modifiers();
+        keycodes.append(qtkey ? qtkey : event->key());
     }
     else if (event->key() != 0 && event->modifiers() == Qt::ControlModifier)
     {
         keycodes.append(Qt::Key_Control);
         keycodes.append(event->key());
-        //KLOG_INFO() << "ctrl :" << event->key() << event->text();
     }
     else if (event->key() != 0 && event->modifiers() == Qt::AltModifier)
     {
@@ -76,7 +85,7 @@ void CustomLineEdit::keyReleaseEvent(QKeyEvent *event)
     {
         keycodes.append(Qt::Key_Control);
         keycodes.append(Qt::Key_Shift);
-        keycodes.append(event->key());
+        keycodes.append(qtkey ? qtkey : event->key());
     }
     else if (event->key() != 0 && event->modifiers() == (Qt::ControlModifier | Qt::AltModifier))
     {
@@ -88,7 +97,7 @@ void CustomLineEdit::keyReleaseEvent(QKeyEvent *event)
     {
         keycodes.append(Qt::Key_Shift);
         keycodes.append(Qt::Key_Alt);
-        keycodes.append(event->key());
+        keycodes.append(qtkey ? qtkey : event->key());
     }
     //three modifier
     else if (event->key() != 0 && event->modifiers() == (Qt::AltModifier | Qt::ShiftModifier | Qt::ControlModifier))
@@ -96,7 +105,7 @@ void CustomLineEdit::keyReleaseEvent(QKeyEvent *event)
         keycodes.append(Qt::Key_Shift);
         keycodes.append(Qt::Key_Control);
         keycodes.append(Qt::Key_Alt);
-        keycodes.append(event->key());
+        keycodes.append(qtkey ? qtkey : event->key());
     }
     if (keycodes.size() > 0)
     {
