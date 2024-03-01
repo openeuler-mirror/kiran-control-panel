@@ -1,5 +1,7 @@
 set(TARGET_NAME kiran-cpanel-keybinding)
 
+find_package(Qt5 COMPONENTS XkbCommonSupport)
+
 kiran_qt5_add_dbus_interface_ex(KEYBINDING_PROXY
         data/com.kylinsec.Kiran.SessionDaemon.Keybinding.xml
         keybinding_backEnd_proxy
@@ -16,6 +18,7 @@ target_include_directories(${TARGET_NAME} PRIVATE
         ${CMAKE_CURRENT_BINARY_DIR}
         ${CMAKE_CURRENT_SOURCE_DIR}
         ${CMAKE_CURRENT_SOURCE_DIR}/utils
+        ${Qt5XkbCommonSupport_PRIVATE_INCLUDE_DIRS}
         ${KLOG_INCLUDE_DIRS}
         ${KIRAN_WIDGETS_INCLUDE_DIRS}
         ${KIRAN_CC_DAEMON_INCLUDE_DIRS})
@@ -27,6 +30,8 @@ target_link_libraries(${TARGET_NAME}
         Qt5::Svg
         Qt5::Core
         Qt5::Concurrent
+        X11
+        Qt5::XkbCommonSupport
         ${KIRANWIDGETS_LIBRARIES}
         ${KLOG_LIBRARIES})
 
