@@ -83,9 +83,13 @@ void AudioSystemTray::initMixedSettingPage()
 
 void AudioSystemTray::initTrayIcon()
 {
-    QDBusPendingReply<QString> defaultSinkPath = m_audioInterface->GetDefaultSink();
-    AudioDeviceInterface defaultSink (AUDIO_DBUS_NAME, defaultSinkPath, QDBusConnection::sessionBus());
-    double currentVolumeDouble = defaultSink.volume() * 100;
+    double currentVolumeDouble = 0;
+    if(!m_audioInterface->getCards().isEmpty())
+    {
+        QDBusPendingReply<QString> defaultSinkPath = m_audioInterface->GetDefaultSink();
+        AudioDeviceInterface defaultSink (AUDIO_DBUS_NAME, defaultSinkPath, QDBusConnection::sessionBus());
+        currentVolumeDouble = defaultSink.volume() * 100;
+    }
     setTrayIcon(round(currentVolumeDouble));
 }
 
