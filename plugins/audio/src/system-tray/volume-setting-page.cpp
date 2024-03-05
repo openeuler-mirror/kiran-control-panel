@@ -299,6 +299,7 @@ void VolumeSettingPage::disableSettings()
     ui->volume->setText(QString::number(0) + "%");
     ui->volumeSetting->setEnabled(false);
     setVolumeIcon(0);
+    emit volumeChanged(0);
 }
 
 void VolumeSettingPage::hideLine()
