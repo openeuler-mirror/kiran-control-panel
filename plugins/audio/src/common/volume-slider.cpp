@@ -21,10 +21,6 @@ VolumeSlider::VolumeSlider(QWidget *parent) : QSlider(parent)
 {
 }
 
-VolumeSlider::~VolumeSlider() noexcept
-{
-}
-
 void VolumeSlider::mousePressEvent(QMouseEvent *event)
 {
     int value = QStyle::sliderValueFromPosition(minimum(), maximum(), event->pos().x(), width());

@@ -37,29 +37,38 @@ public:
     ~OutputPage() override;
     QSize sizeHint() const override;
 
-public slots:
-    void handleDefaultSinkChanged(int index);
-    void handleSinkAdded(int index);
-    void handleSinkDelete(int index);
-    void handleActivePortChanged(const QString &value);
-    void handleVolumeChanged(double value);
-    void handleBalanceChanged(double value);
+private slots:
+    void defaultSinkChanged(int index);
+    void addSink(int index);
+    void deleteSink(uint index);
+
+    void changeDefaultOutputCard(int index);
+    void onActivePortChanged(const QString &value);
+    void changeVolumeSlider(double value);
+    void changeBalanceSlider(double value);
+
+    void setActivePort(int index);
+    void setVolume(int value);
+    void setBalance(int value);
 
 private:
     void init();
-    void initOutputDevice();
-    void initOutputSettins();
     void initConnect();
+    
+    void initSettins();
+    void initCardOptions();
     void initActivedPort();
-    void initVolumeValue();
-    void initBalanceValue();
-
+    void initVolumeAndBalance();
     void disableSettings();
+    
+    void setDefaultSink(int sinkIndex);
+
+    void reload();
+    void clear();
 
 private:
     Ui::OutputPage *ui;
     AudioInterface *m_audioInterface;
-    QMap<int, AudioDeviceInterface *> m_outputDevicesMap;
     AudioDeviceInterface *m_defaultSink;
     QDBusServiceWatcher *m_dbusServiceWatcher;
 };
