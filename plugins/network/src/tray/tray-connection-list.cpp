@@ -47,7 +47,6 @@ void TrayConnectionList::addConnection(NetworkManager::Connection::Ptr ptr, cons
 {
     if (ptr == nullptr)
     {
-        KLOG_ERROR() << "ptr == null";
         return;
     }
 
@@ -108,14 +107,14 @@ void TrayConnectionList::addWirelessNetwork(NetworkManager::WirelessNetwork::Ptr
                                             const QString& devicePath)
 
 {
-    // KLOG_DEBUG() << "network ssid:" << network->ssid();
+    // KLOG_DEBUG(qLcNetwork) << "network ssid:" << network->ssid();
     AccessPoint::Ptr accessPoint = network->referenceAccessPoint();
     NetworkConnectionInfo connectionInfo;
     connectionInfo.isWireless = true;
     connectionInfo.wirelessInfo.ssid = network->ssid();
     connectionInfo.wirelessInfo.accessPointPath = accessPoint->uni();
     connectionInfo.wirelessInfo.signalStrength = accessPoint->signalStrength();
-    // KLOG_DEBUG() << "accessPoint signalStrength:" << connectionInfo.wirelessInfo.signalStrength;
+    // KLOG_DEBUG(qLcNetwork) << "accessPoint signalStrength:" << connectionInfo.wirelessInfo.signalStrength;
     connectionInfo.devicePath = devicePath;
     if (accessPoint->capabilities() == AccessPoint::Capability::None)
         connectionInfo.wirelessInfo.securitySetting = false;
@@ -282,7 +281,6 @@ void TrayConnectionList::handleConnectionItemClicked()
     if (activeConnectionPath.isEmpty())
     {
         bool isWireless = connectionInfo.isWireless;
-        QString connectionPath = connectionInfo.connectionPath;
 
         // 若itemWidget的size为EXTENDED_SIZE,说明itemWidget已经展开，并进入了激活操作流程
         if (clickedItemWidget->size() != TRAY_ITEM_EXTENDED_SIZE)

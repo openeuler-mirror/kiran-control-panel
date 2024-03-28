@@ -99,7 +99,7 @@ void ConnectionDetailsWidget::setWirelessSpecificDetails()
     AccessPoint::Ptr activeAccessPoint = wirelessDevice->activeAccessPoint();
 
     const char *securityType = "None";
-    int bitRate, frequency;
+    int bitRate = 0, frequency = 0;
     if (activeAccessPoint != nullptr)
     {
         AccessPoint::Capabilities capabilities = activeAccessPoint->capabilities();

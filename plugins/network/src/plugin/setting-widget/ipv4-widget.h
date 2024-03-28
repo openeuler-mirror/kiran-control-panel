@@ -50,6 +50,8 @@ public slots:
     bool isInputValid();
 
 private:
+    bool isIpv4ManualConfigValid();
+private:
     Ui::Ipv4Widget *ui;
     NetworkManager::Ipv4Setting::Ptr m_ipv4Setting;
     KiranTips *m_errorTip = nullptr;

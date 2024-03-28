@@ -227,7 +227,6 @@ void VpnManager::activateVPNConnection(const QString &connectionPath, const QStr
     else
     {
         KLOG_DEBUG() << "reply.reply():" << reply.reply();
-        QString activatedPath = reply.value().path();
     }
 }
 

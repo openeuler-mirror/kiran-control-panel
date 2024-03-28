@@ -15,7 +15,6 @@
 #ifndef KIRAN_CPANEL_NETWORK_UTILS_H
 #define KIRAN_CPANEL_NETWORK_UTILS_H
 
-#include <QWidget>
 #include <NetworkManagerQt/Manager>
 #include <QDebug>
 
@@ -31,6 +30,16 @@ NetworkManager::Device::List getDeviceList(NetworkManager::Device::Type type);
 NetworkManager::Device::List getAvailableDeviceList(NetworkManager::Device::Type type);
 
 NetworkManager::Device::List getManagedDeviceList(NetworkManager::Device::Type type);
+
+NetworkManager::Connection::Ptr getAvailableConnectionBySsid(const QString &devicePath, const QString &ssid);
+
+NetworkManager::ConnectionSettings::Ptr createWirelessConnectionSettings(const QString &ssid, const QString &devicePath, const QString &accessPointPath);
+
+bool isAvailableConnection(const QString &devicePath, NetworkManager::Connection::Ptr connection);
+
+NetworkManager::Connection::List getAvailableWiredConnections(const QString &devicePath);
+
+bool isExistedActivatedDevice();
 
 QDebug operator<<(QDebug dbg, NetworkManager::Device *device);
 

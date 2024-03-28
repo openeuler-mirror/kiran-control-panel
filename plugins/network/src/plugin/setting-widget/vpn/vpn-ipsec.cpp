@@ -28,6 +28,10 @@ VpnIPsec::VpnIPsec(QWidget *parent) : QWidget(parent), ui(new Ui::VpnIPsec)
 VpnIPsec::~VpnIPsec()
 {
     delete ui;
+    if(m_enableIPsec)
+    {
+        m_enableIPsec->deleteLater();
+    }
 }
 
 void VpnIPsec::initUI()

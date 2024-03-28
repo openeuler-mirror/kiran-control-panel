@@ -139,7 +139,7 @@ void ConnectionNameWidget::showVpnSettings(VpnType vpnType)
     }
 }
 
-int ConnectionNameWidget::connectionSuffixNum(QString &connName)
+int ConnectionNameWidget::connectionSuffixNum(const QString &connName)
 {
     if (connName.isEmpty())
     {

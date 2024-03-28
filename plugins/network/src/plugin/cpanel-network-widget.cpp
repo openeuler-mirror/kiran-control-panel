@@ -16,6 +16,7 @@
 #include <kiran-sidebar-item.h>
 #include <qt5-log-i.h>
 #include "details-page/details-page.h"
+#include "signal-forward.h"
 #include "ui_cpanel-network-widget.h"
 #include "utils.h"
 #include "vpn-manager.h"
@@ -25,12 +26,15 @@
 using namespace NetworkManager;
 #define MAX_WAIT_COUNTS 10
 
-enum NetworkSettingsPages
+enum NetworkSidebarItems
 {
-    PAGE_WIRED,
-    PAGE_WIRELESS,
-    PAGE_VPN
+    ITEM_WIRED,
+    ITEM_WIRELESS,
+    ITEM_VPN,
+    ITEM_DETAILS,
 };
+
+#define NETWORK_SIDEBAR_ITEM "NetworkSidebarItem"
 
 CPanelNetworkWidget::CPanelNetworkWidget(QWidget *parent) : QWidget(parent), ui(new Ui::CPanelNetworkWidget)
 {
@@ -51,211 +55,227 @@ void CPanelNetworkWidget::init()
     initConnect();
 }
 
-// ui->stackedWidget与ui->sidebar的index对应
 void CPanelNetworkWidget::initPage()
 {
     m_subItemsList.clear();
-    m_wiredDeviceList = NetworkUtils::getManagedDeviceList(Device::Ethernet);
-    m_wirelessDeviceList = NetworkUtils::getManagedDeviceList(Device::Wifi);
 
-    int row = 0;
-    for (int i = 0; i < m_wiredDeviceList.count(); i++)
-    {
-        Device::Ptr device = m_wiredDeviceList.value(i);
-        QString devicePath = device->uni();
-        QString deviceName = device->interfaceName();
-        WiredManager *wiredManager = new WiredManager(devicePath, this);
-        ui->stackedWidget->insertWidget(row, wiredManager);
+    initWiredManager();
+    initWirelessManager();
 
-        KiranSidebarItem *sidebarItem = new KiranSidebarItem();
-        sidebarItem->setText(deviceName);
-        m_subItemsList << deviceName;
-        ui->sidebar->insertItem(row, sidebarItem);
-        m_deviceToSidebarItem.insert(devicePath, sidebarItem);
-        sidebarItem->setData(Qt::UserRole, row);
-        sidebarItem->setIcon(NetworkUtils::trayIconColorSwitch(":/kcp-network-images/wired.svg"));
-        setSidebarItemStatus(sidebarItem, device->state());
-        row++;
-
-        connect(device.data(), &Device::managedChanged, this, &CPanelNetworkWidget::handleManagedChanged, Qt::UniqueConnection);
-        connect(device.data(), &Device::stateChanged, this, &CPanelNetworkWidget::handleStateChanged, Qt::UniqueConnection);
-    }
-
-    for (int i = 0; i < m_wirelessDeviceList.count(); i++)
-    {
-        Device::Ptr device = m_wirelessDeviceList.value(i);
-        QString devicePath = device->uni();
-        QString deviceName = device->interfaceName();
-        WirelessManager *wirelessManager = new WirelessManager(devicePath, this);
-        ui->stackedWidget->insertWidget(row, wirelessManager);
-
-        KiranSidebarItem *sidebarItem = new KiranSidebarItem();
-        sidebarItem->setText(deviceName);
-        m_subItemsList << deviceName;
-        ui->sidebar->insertItem(row, sidebarItem);
-
-        m_deviceToSidebarItem.insert(devicePath, sidebarItem);
-        sidebarItem->setData(Qt::UserRole, row);
-        sidebarItem->setIcon(NetworkUtils::trayIconColorSwitch(":/kcp-network-images/wireless.svg"));
-        setSidebarItemStatus(sidebarItem, device->state());
-        row++;
-
-        connect(device.data(), &Device::managedChanged, this, &CPanelNetworkWidget::handleManagedChanged, Qt::UniqueConnection);
-        connect(device.data(), &Device::stateChanged, this, &CPanelNetworkWidget::handleStateChanged, Qt::UniqueConnection);
-    }
-
-    // TODO:是否要添加VPN的sidebarItem状态描述
     VpnManager *vpnManager = new VpnManager(this);
-    ui->stackedWidget->insertWidget(row, vpnManager);
+    vpnManager->setProperty(NETWORK_SIDEBAR_ITEM, ITEM_VPN);
+
+    ui->stackedWidget->addWidget(vpnManager);
 
     KiranSidebarItem *sidebarItem = new KiranSidebarItem(tr("VPN"));
-    ui->sidebar->insertItem(row, sidebarItem);
-    ui->sidebar->item(row)->setData(Qt::UserRole, row);
-    ui->sidebar->item(row)->setIcon(NetworkUtils::trayIconColorSwitch(":/kcp-network-images/vpn.svg"));
+    ui->sidebar->addItem(sidebarItem);
+    sidebarItem->setIcon(NetworkUtils::trayIconColorSwitch(":/kcp-network-images/vpn.svg"));
     m_subItemsList << tr("VPN");
-    row++;
 
     DetailsPage *networkDetails = new DetailsPage(this);
-    ui->stackedWidget->insertWidget(row, networkDetails);
-    ui->sidebar->insertItem(row, tr("Network Details"));
-    ui->sidebar->item(row)->setData(Qt::UserRole, row);
-    ui->sidebar->item(row)->setIcon(NetworkUtils::trayIconColorSwitch(":/kcp-network-images/network-details.svg"));
-    m_subItemsList << tr("Network Details");
-    row++;
+    networkDetails->setProperty(NETWORK_SIDEBAR_ITEM, ITEM_DETAILS);
 
-    ui->sidebar->setCurrentRow(0);
+    ui->stackedWidget->addWidget(networkDetails);
+    ui->sidebar->addItem(tr("Network Details"));
+    auto lastItem = ui->sidebar->item(ui->sidebar->count() - 1);
+    lastItem->setIcon(NetworkUtils::trayIconColorSwitch(":/kcp-network-images/network-details.svg"));
+    m_subItemsList << tr("Network Details");
+
+    setCurrentSubItem(0);
 }
 
 //Note: 处理设备插拔情况，使用deviceAdded/deviceRemoved，但之前偶现过插拔时没有deviceAdded/deviceRemoved信号发出
 // 增加Device::managedChanged 信号处理设备插拔，增加冗余度
 void CPanelNetworkWidget::initConnect()
 {
-    m_Timer.setInterval(500);
-    m_Timer.setSingleShot(true);
-    m_waitCounts = 1;
     // Note:新设备插入后，需要等待一段时间，Device::List networkInterfaces() 来不及更新
     // Note:DeviceAdded signal is emitted when a new network interface is available.
 
     // XXX:当发出deviceAdded信号时，应该已经managed，需要修改并重新测试
     // deviceAdded信号发出时，根据信号的定义，此时device state为managed，但实际上并为unmanaged
-    connect(notifier(), &Notifier::deviceAdded, this, [this](const QString &uni)
-            {
-                m_addDevicePath = uni;
-                Device::Ptr device = findNetworkInterface(m_addDevicePath);
-                if(device.isNull())
-                {
-                    KLOG_DEBUG() << "this device interface is not found";
-                    return;
-                }
-                if(device->managed())
-                {
-                    handleDeviceAdded(m_addDevicePath);
-                }
-                else
-                {
-                    KLOG_INFO() << "this device interface is invalid!";
-                    m_Timer.start();
-                    KLOG_INFO() << "wait counts:" << m_waitCounts;
-                } });
 
-    connect(&m_Timer, &QTimer::timeout, this, [this]()
-            {
-                Device::Ptr device = findNetworkInterface(m_addDevicePath);
-                if(device->managed())
-                {
-                    handleDeviceAdded(m_addDevicePath);
-                    m_Timer.stop();
-                }
-                else
-                {
-                    KLOG_INFO() << "this device interface is invalid!";
-                    m_Timer.start();
-                }
-                m_waitCounts++;
-                if(m_waitCounts > MAX_WAIT_COUNTS)
-                {
-                    KLOG_INFO() << "This device is currently invalid by NetworkManager";
-                    m_Timer.stop();
-                } });
+    connect(SignalForward::instance(), &SignalForward::wirelessDeviceAdded, this, &CPanelNetworkWidget::addWirelessDevice);
+    connect(SignalForward::instance(), &SignalForward::wiredDeviceAdded, this, &CPanelNetworkWidget::addWiredDevice);
 
-    connect(notifier(), &Notifier::deviceRemoved, this, &CPanelNetworkWidget::handleDeviceRemoved);
+    connect(notifier(), &Notifier::deviceRemoved, this, &CPanelNetworkWidget::removeDevice);
 
     connect(notifier(), &Notifier::wirelessEnabledChanged, this, &CPanelNetworkWidget::handleWirelessEnabledChanged);
     connect(notifier(), &Notifier::networkingEnabledChanged, this, &CPanelNetworkWidget::handleNetworkingEnabledChanged);
 
-    connect(ui->sidebar, &QListWidget::itemClicked, this, &CPanelNetworkWidget::handleSideBarItemClicked);
+    connect(ui->sidebar, &QListWidget::currentItemChanged, this, &CPanelNetworkWidget::changeSideBarItem);
 
-    connect(Kiran::StylePalette::instance(), &Kiran::StylePalette::themeChanged, this, &CPanelNetworkWidget::handleThemeChanged);
+    connect(Kiran::StylePalette::instance(), &Kiran::StylePalette::themeChanged, this, &CPanelNetworkWidget::changeTheme);
 }
 
-
-void CPanelNetworkWidget::handleManagedChanged()
+void CPanelNetworkWidget::initWiredManager()
 {
-    auto device = qobject_cast<Device *>(sender());
-    if (device != nullptr)
+    auto wiredDeviceList = NetworkUtils::getManagedDeviceList(Device::Ethernet);
+    if (wiredDeviceList.count() == 0)
     {
-        if (device->managed())
-        {
-        }
-    }
-    KLOG_DEBUG() << "Device Managed Changed";
-    reload();
-    emit subItemsChanged();
-}
-
-void CPanelNetworkWidget::handleStateChanged(NetworkManager::Device::State newstate, NetworkManager::Device::State oldstate, NetworkManager::Device::StateChangeReason reason)
-{
-    KLOG_DEBUG() << "---------newstate:" << newstate;
-    KLOG_DEBUG() << "---------oldstate:" << oldstate;
-    KLOG_DEBUG() << "---------reason:" << reason;
-    auto device = qobject_cast<NetworkManager::Device *>(sender());
-    if (device == nullptr)
-    {
-        KLOG_DEBUG() << "device ptr is null";
         return;
     }
 
-    QString devicePath = device->uni();
-    KiranSidebarItem *item = m_deviceToSidebarItem.value(devicePath);
-    setSidebarItemStatus(item, newstate);
+    WiredManager *wiredManager = new WiredManager("", this);
+    wiredManager->setProperty(NETWORK_SIDEBAR_ITEM, ITEM_WIRED);
+    ui->stackedWidget->insertWidget(0, wiredManager);
+
+    KiranSidebarItem *wiredSidebarItem = new KiranSidebarItem();
+    wiredSidebarItem->setText(tr("Wired Network"));
+    m_subItemsList << tr("Wired Network");
+    ui->sidebar->insertItem(0, wiredSidebarItem);
+    m_kiranSidebarItems << wiredSidebarItem;
+
+    wiredSidebarItem->setIcon(NetworkUtils::trayIconColorSwitch(":/kcp-network-images/wired.svg"));
+    setSidebarItemStatus(wiredSidebarItem, Device::State::Disconnected);
+
+    for (int i = 0; i < wiredDeviceList.count(); i++)
+    {
+        Device::Ptr device = wiredDeviceList.value(i);
+        connect(device.data(), &Device::stateChanged, this, &CPanelNetworkWidget::changeDeviceState, Qt::UniqueConnection);
+
+        if (device->state() == Device::Activated)
+        {
+            setSidebarItemStatus(wiredSidebarItem, Device::State::Activated);
+        }
+    }
+}
+
+void CPanelNetworkWidget::initWirelessManager()
+{
+    auto wirelessDeviceList = NetworkUtils::getManagedDeviceList(Device::Wifi);
+    if (wirelessDeviceList.count() == 0)
+    {
+        return;
+    }
+
+    WirelessManager *wirelessManager = new WirelessManager("", this);
+    wirelessManager->setProperty(NETWORK_SIDEBAR_ITEM, ITEM_WIRELESS);
+    ui->stackedWidget->insertWidget(0, wirelessManager);
+
+    KiranSidebarItem *wirelessSidebarItem = new KiranSidebarItem();
+    wirelessSidebarItem->setText(tr("Wireless Network"));
+    m_subItemsList << tr("Wireless Network");
+    ui->sidebar->insertItem(0, wirelessSidebarItem);
+    m_kiranSidebarItems << wirelessSidebarItem;
+
+    wirelessSidebarItem->setIcon(NetworkUtils::trayIconColorSwitch(":/kcp-network-images/wireless.svg"));
+    setSidebarItemStatus(wirelessSidebarItem, Device::State::Disconnected);
+
+    for (int i = 0; i < wirelessDeviceList.count(); i++)
+    {
+        Device::Ptr device = wirelessDeviceList.value(i);
+        connect(device.data(), &Device::stateChanged, this, &CPanelNetworkWidget::changeDeviceState, Qt::UniqueConnection);
+
+        if (device->state() == Device::Activated)
+        {
+            setSidebarItemStatus(wirelessSidebarItem, Device::State::Activated);
+        }
+    }
+}
+
+void CPanelNetworkWidget::changeDeviceState(NetworkManager::Device::State newstate, NetworkManager::Device::State oldstate, NetworkManager::Device::StateChangeReason reason)
+{
+    KLOG_DEBUG() << "new state:" << newstate;
+    KLOG_DEBUG() << "old state:" << oldstate;
+    KLOG_DEBUG() << "reason:" << reason;
+    auto device = qobject_cast<NetworkManager::Device *>(sender());
+    if (device == nullptr)
+    {
+        KLOG_DEBUG() << "device is null";
+        return;
+    }
+
+    updateSidebarItemStatus(device->type());
+}
+
+void CPanelNetworkWidget::addWirelessDevice(const QString &devicePath)
+{
+    auto wirelessDevice = findNetworkInterface(devicePath);
+    connect(wirelessDevice.data(), &Device::stateChanged, this, &CPanelNetworkWidget::changeDeviceState, Qt::UniqueConnection);
+    if (!isExistWirelessItem())
+    {
+        initWirelessManager();
+        emit subItemsChanged();
+    }
+}
+
+void CPanelNetworkWidget::addWiredDevice(const QString &devicePath)
+{
+    auto wiredDevice = findNetworkInterface(devicePath);
+    connect(wiredDevice.data(), &Device::stateChanged, this, &CPanelNetworkWidget::changeDeviceState, Qt::UniqueConnection);
+    if (!isExistWiredItem())
+    {
+        initWiredManager();
+        emit subItemsChanged();
+    }
+}
+
+// TODO:需要优化
+void CPanelNetworkWidget::updateSidebarItemStatus(NetworkManager::Device::Type deviceType)
+{
+    QString sidebarItemText;
+    Device::State state = Device::Disconnected;
+
+    auto wiredDeviceList = NetworkUtils::getManagedDeviceList(Device::Ethernet);
+    auto wirelessDeviceList = NetworkUtils::getManagedDeviceList(Device::Wifi);
+
+    if (deviceType == Device::Wifi)
+    {
+        sidebarItemText = tr("Wireless Network");
+        for (auto device : wirelessDeviceList)
+        {
+            if (device->state() == Device::State::Activated)
+            {
+                state = Device::State::Activated;
+                break;
+            }
+        }
+    }
+    else
+    {
+        sidebarItemText = tr("Wired Network");
+        for (auto device : wiredDeviceList)
+        {
+            if (device->state() == Device::State::Activated)
+            {
+                state = Device::State::Activated;
+                break;
+            }
+        }
+    }
+
+    KiranSidebarItem *sidebarItem;
+    for (auto item : m_kiranSidebarItems)
+    {
+        if (item->text() == sidebarItemText)
+        {
+            sidebarItem = item;
+            break;
+        }
+    }
+
+    setSidebarItemStatus(sidebarItem, state);
 }
 
 void CPanelNetworkWidget::setSidebarItemStatus(KiranSidebarItem *sidebarItem, NetworkManager::Device::State state)
 {
-    if (sidebarItem != nullptr)
+    if (sidebarItem == nullptr)
     {
-        if (state == Device::State::Activated)
-        {
-            sidebarItem->setStatusDesc(tr("Connected"), "");
-        }
-        else if (state == Device::State::Unavailable) //对应拔出网线 -- 对应禁用
-        {
-            sidebarItem->setStatusDesc(tr("Unavailable"), "");
-        }
-        else
-        {
-            sidebarItem->setStatusDesc(tr("Disconnected"), "");
-        }
-    }
-}
-
-void CPanelNetworkWidget::reload()
-{
-
-    KLOG_DEBUG() << "reload";
-    for (int i = 0; i < ui->stackedWidget->count(); i++)
-    {
-        auto widget = ui->stackedWidget->widget(i);
-        ui->stackedWidget->removeWidget(widget);
-        delete widget;
+        return;
     }
 
-    ui->sidebar->clear();
-    m_wiredDeviceList.clear();
-    m_wirelessDeviceList.clear();
-
-    initPage();
-    ui->stackedWidget->setCurrentIndex(0);
+    if (state == Device::State::Activated)
+    {
+        sidebarItem->setStatusDesc(tr("Connected"), "");
+    }
+    else if (state == Device::State::Unavailable)  // 对应拔出网线 -- 对应禁用
+    {
+        sidebarItem->setStatusDesc(tr("Unavailable"), "");
+    }
+    else
+    {
+        sidebarItem->setStatusDesc(tr("Disconnected"), "");
+    }
 }
 
 QStringList CPanelNetworkWidget::subItemNameList()
@@ -266,10 +286,10 @@ QStringList CPanelNetworkWidget::subItemNameList()
 void CPanelNetworkWidget::setCurrentSubItem(int index)
 {
     ui->sidebar->setCurrentRow(index);
-    handleSideBarItemClicked(ui->sidebar->currentItem());
+    changeSideBarItem(ui->sidebar->currentItem());
 }
 
-void CPanelNetworkWidget::handleThemeChanged(Kiran::PaletteType paletteType)
+void CPanelNetworkWidget::changeTheme(Kiran::PaletteType paletteType)
 {
     for (int i = 0; i < ui->sidebar->count(); ++i)
     {
@@ -282,16 +302,16 @@ void CPanelNetworkWidget::handleThemeChanged(Kiran::PaletteType paletteType)
     }
 }
 
-void CPanelNetworkWidget::handleSideBarItemClicked(QListWidgetItem *item)
+//  ui->stackedWidget与ui->sidebar的index对应
+void CPanelNetworkWidget::changeSideBarItem(QListWidgetItem *item)
 {
-    ui->stackedWidget->setCurrentIndex(item->data(Qt::UserRole).toInt());
+    ui->stackedWidget->setCurrentIndex(ui->sidebar->row(item));
 
     QString itemText = item->text();
-    KLOG_DEBUG() << "item clicked:" << item->text();
     if (itemText.contains(tr("Wireless Network")))
     {
-        KLOG_DEBUG() << "item clicked wireless";
-        foreach (auto device , m_wirelessDeviceList)
+        auto wirelessDeviceList = NetworkUtils::getManagedDeviceList(Device::Wifi);
+        foreach (auto device, wirelessDeviceList)
         {
             WirelessDevice::Ptr wirelessDevice = qobject_cast<WirelessDevice *>(device);
             QDBusPendingReply<> replyRequestScan = wirelessDevice->requestScan();
@@ -301,27 +321,80 @@ void CPanelNetworkWidget::handleSideBarItemClicked(QListWidgetItem *item)
             {
                 KLOG_DEBUG() << "wireless Device name:" << wirelessDevice->interfaceName() << " requestScan error:" << replyRequestScan.error();
             }
-            else
-            {
-                KLOG_DEBUG() << "wireless Device name:" << wirelessDevice->interfaceName() << " requestScan reply:" << replyRequestScan.reply();
-            }
         }
     }
 }
 
-// XXX:需要优化，改成动态增减侧边栏subItems，而不是全部重新加载
-void CPanelNetworkWidget::handleDeviceAdded(const QString &devicePath)
-{
-    KLOG_DEBUG() << "DeviceAdded :" << devicePath;
-    reload();
-    emit subItemsChanged();
-}
-
-void CPanelNetworkWidget::handleDeviceRemoved(const QString &devicePath)
+void CPanelNetworkWidget::removeDevice(const QString &devicePath)
 {
     KLOG_DEBUG() << "DeviceRemoved: " << devicePath;
-    reload();
-    emit subItemsChanged();
+
+    auto newWiredDeviceList = NetworkUtils::getManagedDeviceList(Device::Ethernet);
+    auto newWirelessDeviceList = NetworkUtils::getManagedDeviceList(Device::Wifi);
+
+    if (newWiredDeviceList.count() == 0 && isExistWiredItem())
+    {
+        QString text = tr("Wired Network");
+        removeSidebarItem(text, ITEM_WIRED);
+        emit subItemsChanged();
+    }
+
+    if (newWirelessDeviceList.count() == 0 && isExistWirelessItem())
+    {
+        QString text = tr("Wireless Network");
+        removeSidebarItem(text, ITEM_WIRELESS);
+        emit subItemsChanged();
+    }
+}
+
+void CPanelNetworkWidget::removeSidebarItem(const QString &text, int index)
+{
+    for (auto item : m_kiranSidebarItems)
+    {
+        if (item->text() == text)
+        {
+            m_kiranSidebarItems.removeOne(item);
+            delete item;
+            break;
+        }
+    }
+    m_subItemsList.removeAll(text);
+
+    for (int i = 0; i < ui->stackedWidget->count(); i++)
+    {
+        auto widget = ui->stackedWidget->widget(i);
+        if (widget->property(NETWORK_SIDEBAR_ITEM).toInt() == index)
+            ;
+        {
+            ui->stackedWidget->removeWidget(widget);
+            delete widget;
+            break;
+        }
+    }
+}
+
+bool CPanelNetworkWidget::isExistWiredItem()
+{
+    for (auto item : m_kiranSidebarItems)
+    {
+        if (item->text() == tr("Wired Network"))
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool CPanelNetworkWidget::isExistWirelessItem()
+{
+    for (auto item : m_kiranSidebarItems)
+    {
+        if (item->text() == tr("Wireless Network"))
+        {
+            return true;
+        }
+    }
+    return false;
 }
 
 void CPanelNetworkWidget::handleWirelessEnabledChanged(bool enable)

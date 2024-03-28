@@ -22,9 +22,10 @@
 #include "utils.h"
 using namespace NetworkManager;
 
-WiredTrayWidget::WiredTrayWidget(const QString &devicePath, QWidget *parent) : TrayWidget(parent)
+WiredTrayWidget::WiredTrayWidget(const QString &devicePath, QWidget *parent)
+    : TrayWidget(parent),
+      m_devicePath(devicePath)
 {
-    m_devicePath = devicePath;
     m_devicePtr = findNetworkInterface(m_devicePath);
     m_wiredDevice = qobject_cast<WiredDevice *>(m_devicePtr);
     init();
@@ -43,10 +44,9 @@ void WiredTrayWidget::init()
     {
         connect(activatedConnection.data(), &ActiveConnection::stateChanged, this, &WiredTrayWidget::handleActiveConnectionStateChanged, Qt::UniqueConnection);
     }
-       
 }
 
-//NOTE:设备状态 Device::State::Unavailable和Unmanaged 统一初始化为UnavailableWidget
+// NOTE:设备状态 Device::State::Unavailable和Unmanaged 统一初始化为UnavailableWidget
 void WiredTrayWidget::initUI()
 {
     // m_wiredDevice->state(); 设备状态在最开始初始化托盘页面时已经判断过了
@@ -67,10 +67,10 @@ void WiredTrayWidget::initConnection()
     connect(m_wiredDevice.data(), &WiredDevice::carrierChanged, this, &WiredTrayWidget::handleCarrierChanged, Qt::UniqueConnection);
     connect(m_wiredDevice.data(), &Device::stateChanged, this, &WiredTrayWidget::handleStateChanged, Qt::UniqueConnection);
 
-    connect(SignalForward::instance(), &SignalForward::wiredConnectionAdded, this, &WiredTrayWidget::handleNotifierConnectionAdded,Qt::UniqueConnection);
-    connect(SignalForward::instance(), &SignalForward::connectionRemoved, this, &WiredTrayWidget::handleNotifierConnectionRemoved,Qt::UniqueConnection);
-    connect(SignalForward::instance(), &SignalForward::wiredActiveConnectionAdded, this, &WiredTrayWidget::handleActiveConnectionAdded,Qt::UniqueConnection);
-    connect(SignalForward::instance(), &SignalForward::activeConnectionRemoved, this, &WiredTrayWidget::handleActiveConnectionRemoved,Qt::UniqueConnection);
+    connect(SignalForward::instance(), &SignalForward::wiredConnectionAdded, this, &WiredTrayWidget::handleNotifierConnectionAdded, Qt::UniqueConnection);
+    connect(SignalForward::instance(), &SignalForward::connectionRemoved, this, &WiredTrayWidget::handleNotifierConnectionRemoved, Qt::UniqueConnection);
+    connect(SignalForward::instance(), &SignalForward::wiredActiveConnectionAdded, this, &WiredTrayWidget::handleActiveConnectionAdded, Qt::UniqueConnection);
+    connect(SignalForward::instance(), &SignalForward::activeConnectionRemoved, this, &WiredTrayWidget::handleActiveConnectionRemoved, Qt::UniqueConnection);
 }
 
 void WiredTrayWidget::showWiredConnectionLists()
@@ -79,7 +79,7 @@ void WiredTrayWidget::showWiredConnectionLists()
     m_connectionList->showConnectionList(ConnectionSettings::Wired);
 }
 
-//网线插入后，wiredDevice state 还处在不可用状态,因此无法立即显示出可用连接
+// 网线插入后，wiredDevice state 还处在不可用状态,因此无法立即显示出可用连接
 /**
  * 暂时不使用CarrierChanged信号处理网线插拔情况，使用更改NetworkManager的配置方式处理。
  * 1、如果不更改配置，网线改变时只有CarrierChanged信号，NetworkManager不会发出其他信号，例如设备状态改变信号
@@ -94,7 +94,7 @@ void WiredTrayWidget::handleCarrierChanged(bool plugged)
 void WiredTrayWidget::handleStateChanged(NetworkManager::Device::State newstate, NetworkManager::Device::State oldstate, NetworkManager::Device::StateChangeReason reason)
 {
     // XXX:此处是对网线插拔的冗余操作，
-    //因为偶现过一次，StateChanged信号丢失Device::Unavailable的情况
+    // 因为偶现过一次，StateChanged信号丢失Device::Unavailable的情况
     if (!m_wiredDevice.isNull())
     {
         if (m_wiredDevice->carrier())
@@ -123,14 +123,16 @@ void WiredTrayWidget::handleActivateSelectedConnection(const QString &connection
     else
     {
         KLOG_DEBUG() << "reply:" << reply.reply();
-        QString activatedPath = reply.value().path();
     }
 }
 
 void WiredTrayWidget::handleNotifierConnectionAdded(const QString &path)
 {
     Connection::Ptr connection = findConnection(path);
-    m_connectionList->addConnection(connection, m_devicePath);
+    if (NetworkUtils::isAvailableConnection(m_devicePath, connection))
+    {
+        m_connectionList->addConnection(connection, m_devicePath);
+    }
 }
 
 void WiredTrayWidget::handleNotifierConnectionRemoved(const QString &path)

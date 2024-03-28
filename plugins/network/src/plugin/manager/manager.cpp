@@ -31,7 +31,6 @@ Manager::~Manager()
 
 void Manager::refreshConnectionLists()
 {
-    KLOG_DEBUG() << "Manager::refreshConnectionLists()";
 }
 
 void Manager::handleActiveConnectionStateChanged(ActiveConnection::State state)
