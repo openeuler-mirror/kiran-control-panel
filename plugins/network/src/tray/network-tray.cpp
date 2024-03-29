@@ -756,7 +756,11 @@ void NetworkTray::initTcpSocket()
 {
     m_tcpClient = new QTcpSocket(this);
     connect(m_tcpClient, &QTcpSocket::connected, this, &NetworkTray::internetConnected);
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 15, 0))
     connect(m_tcpClient, &QAbstractSocket::errorOccurred, this, &NetworkTray::internetError);
+#else
+    connect(m_tcpClient, QOverload<QAbstractSocket::SocketError>::of(&QAbstractSocket::error),this, &NetworkTray::internetError);
+#endif
 }
 
 void NetworkTray::checkInternetConnectivity()

@@ -522,8 +522,12 @@ void ConnectionItemWidget::activateWirelessNetwork()
 
 void ConnectionItemWidget::handleThemeChanged(Kiran::PaletteType paletteType)
 {
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 15, 0))
     QPixmap pixmap = m_connectionTypeIcon->pixmap(Qt::ReturnByValue);
     QImage image = pixmap.toImage();
+#else
+    QImage image = m_connectionTypeIcon->pixmap()->toImage();
+#endif
     image.invertPixels(QImage::InvertRgb);
     m_connectionTypeIcon->setPixmap(QPixmap::fromImage(image));
     m_editButton->setIcon(NetworkUtils::trayIconColorSwitch(":/kcp-network-images/details-info.svg"));
