@@ -4,12 +4,12 @@
 <context>
     <name>AudioSystemTray</name>
     <message>
-        <location filename="../src/system-tray/audio-system-tray.cpp" line="91"/>
+        <location filename="../src/system-tray/audio-system-tray.cpp" line="98"/>
         <source>Volume Setting</source>
         <translation>声音设置</translation>
     </message>
     <message>
-        <location filename="../src/system-tray/audio-system-tray.cpp" line="92"/>
+        <location filename="../src/system-tray/audio-system-tray.cpp" line="99"/>
         <source>Mixed Setting</source>
         <translation>混合设置</translation>
     </message>
@@ -41,31 +41,36 @@
     </message>
     <message>
         <location filename="../src/plugin/input-page.ui" line="40"/>
+        <source>Input cards</source>
+        <translation>输入声卡</translation>
+    </message>
+    <message>
+        <location filename="../src/plugin/input-page.ui" line="64"/>
         <source>Input devices</source>
         <translation>输入设备</translation>
     </message>
     <message>
-        <location filename="../src/plugin/input-page.ui" line="66"/>
+        <location filename="../src/plugin/input-page.ui" line="90"/>
         <source>ComboBoxInputDevices</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/plugin/input-page.ui" line="83"/>
+        <location filename="../src/plugin/input-page.ui" line="107"/>
         <source>Input volume</source>
         <translation>输入音量</translation>
     </message>
     <message>
-        <location filename="../src/plugin/input-page.ui" line="134"/>
+        <location filename="../src/plugin/input-page.ui" line="158"/>
         <source>SliderVolumeSetting</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/plugin/input-page.ui" line="154"/>
+        <location filename="../src/plugin/input-page.ui" line="178"/>
         <source>Feedback volume</source>
         <translation>反馈音量</translation>
     </message>
     <message>
-        <location filename="../src/plugin/input-page.cpp" line="240"/>
+        <location filename="../src/plugin/input-page.cpp" line="297"/>
         <source>No input device detected</source>
         <translation>未检测到输入设备</translation>
     </message>
@@ -78,47 +83,52 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/plugin/output-page.ui" line="49"/>
+        <location filename="../src/plugin/output-page.ui" line="40"/>
+        <source>Output cards</source>
+        <translation>输出声卡</translation>
+    </message>
+    <message>
+        <location filename="../src/plugin/output-page.ui" line="73"/>
         <source>Output devices</source>
         <translation>输出设备</translation>
     </message>
     <message>
-        <location filename="../src/plugin/output-page.ui" line="78"/>
+        <location filename="../src/plugin/output-page.ui" line="102"/>
         <source>ComboBoxOutputDevices</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/plugin/output-page.ui" line="101"/>
+        <location filename="../src/plugin/output-page.ui" line="125"/>
         <source>Output volume</source>
         <translation>输出音量</translation>
     </message>
     <message>
-        <location filename="../src/plugin/output-page.ui" line="158"/>
+        <location filename="../src/plugin/output-page.ui" line="182"/>
         <source>SlilderVolumeSetting</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/plugin/output-page.ui" line="184"/>
+        <location filename="../src/plugin/output-page.ui" line="208"/>
         <source>Left/right balance</source>
         <translation>左/右平衡</translation>
     </message>
     <message>
-        <location filename="../src/plugin/output-page.ui" line="222"/>
+        <location filename="../src/plugin/output-page.ui" line="246"/>
         <source>SliderVolumeBalance</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/plugin/output-page.ui" line="236"/>
+        <location filename="../src/plugin/output-page.ui" line="260"/>
         <source>Left</source>
         <translation>左</translation>
     </message>
     <message>
-        <location filename="../src/plugin/output-page.ui" line="262"/>
+        <location filename="../src/plugin/output-page.ui" line="286"/>
         <source>Right</source>
         <translation>右</translation>
     </message>
     <message>
-        <location filename="../src/plugin/output-page.cpp" line="96"/>
+        <location filename="../src/plugin/output-page.cpp" line="282"/>
         <source>No output device detected</source>
         <translation>未检测到输出设备</translation>
     </message>
@@ -126,7 +136,7 @@
 <context>
     <name>VolumeIntputSubItem</name>
     <message>
-        <location filename="../src/plugin/volume-input-subitem.h" line="32"/>
+        <location filename="../src/plugin/volume-input-subitem.h" line="45"/>
         <source>VolumeInput</source>
         <translation>输入</translation>
     </message>
@@ -134,7 +144,7 @@
 <context>
     <name>VolumeOutputSubItem</name>
     <message>
-        <location filename="../src/plugin/volume-output-subitem.h" line="32"/>
+        <location filename="../src/plugin/volume-output-subitem.h" line="45"/>
         <source>VolumeOutput</source>
         <translation>输出</translation>
     </message>
@@ -148,7 +158,7 @@
     </message>
     <message>
         <location filename="../src/system-tray/volume-setting-page.ui" line="101"/>
-        <location filename="../src/system-tray/volume-setting-page.cpp" line="59"/>
+        <location filename="../src/system-tray/volume-setting-page.cpp" line="98"/>
         <source>Volume</source>
         <translation>音量</translation>
     </message>

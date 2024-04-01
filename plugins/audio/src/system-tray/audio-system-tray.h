@@ -32,12 +32,7 @@ public:
     explicit AudioSystemTray(QWidget* parent = nullptr);
     ~AudioSystemTray();
 
-    void initVolumeSettingPage(QString objectPath);
-    void initMixedSettingPage();
-    void initTrayIcon();
-    void initMenu();
-    void initConnect();
-    void initDbusServiceWatcher();
+public:
     void setVolumeSettingPos();
     void setMixedSettingPos();
     QPixmap trayIconColorSwitch(const QString& iconPath, const int iconSize = 16);
@@ -47,9 +42,16 @@ public slots:
     void handleAudioTrayClicked(QSystemTrayIcon::ActivationReason reason);
     void handleMixedSettingClicked();
     void handleVolumeSettingClicked();
-    void getTrayIconStyle();
     void setTrayIcon(int value);
     void handleAdjustedMixedSettingPageSize();
+
+private:
+    void initVolumeSettingPage(QString objectPath);
+    void initMixedSettingPage();
+    void initTrayIcon();
+    void initMenu();
+    void initConnect();
+    void initDbusServiceWatcher();
 
 private:
     QSystemTrayIcon* m_systemTray;
@@ -70,7 +72,7 @@ private:
     AudioInterface* m_audioInterface;
 
     QString m_colorTheme;
-    int m_xTray, m_yTray, m_heightTray, m_widthTray;
+    int m_xTray, m_yTray, m_heightTray, m_widthTray = 0;
 
     QDBusServiceWatcher *m_dbusServiceWatcher;
 };

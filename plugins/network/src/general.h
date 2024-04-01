@@ -15,7 +15,47 @@
 #ifndef KIRAN_CPANEL_NETWORK_GENERAL_H
 #define KIRAN_CPANEL_NETWORK_GENERAL_H
 
+#include <QString>
+
 #define PROPERTY_NETWORK_CONNECTION_INFO "NetworkConnectionInfo"
 #define TRAY_ITEM_NORAML_HIEGHT 50
+#define MAX_WAIT_COUNTS 10
+#define PLUGIN_ITEM_WIDGET_HEIGHT 36
+
+enum NetworkState
+{
+    UNKNOWN,
+    WIRED_CONNECTED,
+    WIRED_CONNECTED_BUT_NOT_ACCESS_INTERNET,
+    WIRELESS_CONNECTED,
+    WIRELESS_CONNECTED_BUT_NOT_ACCESS_INTERNET,
+    DISCONNECTED
+};
+
+struct NetworkStateInfo
+{
+    QString iconPath;
+    QString description;
+};
+
+struct WirelessConnectionInfo
+{
+    int signalStrength = 0;
+    QString accessPointPath;
+    QString ssid;
+    bool securitySetting;
+};
+
+struct NetworkConnectionInfo
+{
+    QString id;
+    QString uuid;
+    QString connectionPath;
+    QString devicePath;
+    QString activeConnectionPath;
+    bool isWireless = false;
+    WirelessConnectionInfo wirelessInfo;
+    int type;
+};
 
 #endif  // KIRAN_CPANEL_NETWORK_GENERAL_H

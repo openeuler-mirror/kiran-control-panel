@@ -13,9 +13,17 @@
  */
 
 #include "utils.h"
-#include <style-palette.h>
-#include <QIcon>
 #include <qt5-log-i.h>
+#include <style-palette.h>
+#include <NetworkManagerQt/Ipv4Setting>
+#include <NetworkManagerQt/Settings>
+#include <NetworkManagerQt/WiredDevice>
+#include <NetworkManagerQt/WiredSetting>
+#include <NetworkManagerQt/WirelessDevice>
+#include <NetworkManagerQt/WirelessSecuritySetting>
+#include <NetworkManagerQt/WirelessSetting>
+
+#include <QIcon>
 using namespace NetworkManager;
 
 QPixmap NetworkUtils::trayIconColorSwitch(const QString &iconPath, const int iconSize)
@@ -43,14 +51,13 @@ QPixmap NetworkUtils::trayIconColorSwitch(QPixmap pixmap)
     return QPixmap();
 }
 
-
 NetworkManager::Device::List NetworkUtils::getDeviceList(NetworkManager::Device::Type type)
 {
     const Device::List deviceList = networkInterfaces();
     Device::List list;
     for (Device::Ptr dev : deviceList)
     {
-        if(dev->type() == type)
+        if (dev->type() == type)
         {
             list << dev;
         }
@@ -58,14 +65,13 @@ NetworkManager::Device::List NetworkUtils::getDeviceList(NetworkManager::Device:
     return list;
 }
 
-
 Device::List NetworkUtils::getAvailableDeviceList(NetworkManager::Device::Type type)
 {
     const Device::List deviceList = networkInterfaces();
     Device::List list;
     for (Device::Ptr dev : deviceList)
     {
-        if(dev->type() == type)
+        if (dev->type() == type)
         {
             if (dev->state() == Device::Unmanaged)
                 continue;
@@ -83,7 +89,7 @@ Device::List NetworkUtils::getManagedDeviceList(NetworkManager::Device::Type typ
     Device::List list;
     for (Device::Ptr dev : deviceList)
     {
-        if(dev->type() == type)
+        if (dev->type() == type)
         {
             if (dev->state() == Device::Unmanaged)
                 continue;
@@ -103,3 +109,175 @@ QDebug NetworkUtils::operator<<(QDebug dbg, NetworkManager::Device *device)
     return dbg.maybeSpace();
 }
 
+NetworkManager::Connection::Ptr NetworkUtils::getAvailableConnectionBySsid(const QString &devicePath, const QString &ssid)
+{
+    auto device = findNetworkInterface(devicePath);
+    Connection::List availableConnectionList = device->availableConnections();
+    for (Connection::Ptr conn : availableConnectionList)
+    {
+        if (conn->settings()->connectionType() == ConnectionSettings::Wireless)
+        {
+            WirelessSetting::Ptr wirelessSetting = conn->settings()->setting(Setting::SettingType::Wireless).dynamicCast<WirelessSetting>();
+            if (ssid == QString(wirelessSetting->ssid()))
+            {
+                return conn;
+            }
+        }
+    }
+    return NetworkManager::Connection::Ptr();
+}
+
+NetworkManager::ConnectionSettings::Ptr NetworkUtils::createWirelessConnectionSettings(const QString &ssid, const QString &devicePath, const QString &accessPointPath)
+{
+    ConnectionSettings::Ptr connectionSettings = ConnectionSettings::Ptr(new ConnectionSettings(ConnectionSettings::Wireless));
+    connectionSettings->setId(ssid);
+    connectionSettings->setUuid(NetworkManager::ConnectionSettings::createNewUuid());
+
+    WirelessSetting::Ptr wirelessSetting = connectionSettings->setting(Setting::Wireless).dynamicCast<WirelessSetting>();
+    wirelessSetting->setInitialized(true);
+    wirelessSetting->setSsid(ssid.toUtf8());
+
+    WirelessSecuritySetting::Ptr wirelessSecurity =
+        connectionSettings->setting(NetworkManager::Setting::WirelessSecurity).dynamicCast<NetworkManager::WirelessSecuritySetting>();
+    wirelessSecurity->setInitialized(true);
+    wirelessSetting->setSecurity(QStringLiteral("802-11-wireless-security"));
+
+    Ipv4Setting::Ptr ipv4Setting = connectionSettings->setting(Setting::Ipv4).dynamicCast<Ipv4Setting>();
+    ipv4Setting->setMethod(NetworkManager::Ipv4Setting::Automatic);
+
+    // 处理不同验证的情况
+    // accessPointPath路径为空，对应隐藏网络情况，则默认为WpaPsk
+    if (accessPointPath.isEmpty())
+    {
+        wirelessSetting->setHidden(true);
+        WirelessSecuritySetting::KeyMgmt keyMgmt = WirelessSecuritySetting::KeyMgmt::WpaPsk;
+        wirelessSecurity->setKeyMgmt(keyMgmt);
+    }
+    else
+    {
+        auto device = findNetworkInterface(devicePath);
+        WirelessDevice::Ptr wirelessDevice = qobject_cast<WirelessDevice *>(device);
+        AccessPoint::Ptr accessPoint = wirelessDevice->findAccessPoint(accessPointPath);
+        AccessPoint::Capabilities capabilities = accessPoint->capabilities();
+        AccessPoint::WpaFlags wpaFlags = accessPoint->wpaFlags();
+        AccessPoint::WpaFlags rsnFlags = accessPoint->rsnFlags();
+
+        WirelessSecuritySetting::KeyMgmt keyMgmt = WirelessSecuritySetting::KeyMgmt::WpaNone;
+
+        if (capabilities.testFlag(AccessPoint::Capability::Privacy) &&
+            !wpaFlags.testFlag(AccessPoint::WpaFlag::KeyMgmtPsk) &&
+            !wpaFlags.testFlag(AccessPoint::WpaFlag::KeyMgmt8021x))
+        {
+            keyMgmt = WirelessSecuritySetting::KeyMgmt::Wep;
+        }
+
+        if (wpaFlags.testFlag(AccessPoint::WpaFlag::KeyMgmtPsk) ||
+            rsnFlags.testFlag(AccessPoint::WpaFlag::KeyMgmtPsk))
+        {
+            keyMgmt = WirelessSecuritySetting::KeyMgmt::WpaPsk;
+        }
+
+        if (wpaFlags.testFlag(AccessPoint::WpaFlag::KeyMgmt8021x) ||
+            rsnFlags.testFlag(AccessPoint::WpaFlag::KeyMgmt8021x))
+        {
+            keyMgmt = WirelessSecuritySetting::KeyMgmt::WpaEap;
+        }
+        wirelessSecurity->setKeyMgmt(keyMgmt);
+    }
+
+    return connectionSettings;
+}
+
+bool NetworkUtils::isAvailableConnection(const QString &devicePath, NetworkManager::Connection::Ptr connection)
+{
+    auto device = findNetworkInterface(devicePath);
+    if (device->type() == Device::Ethernet)
+    {
+        auto settings = connection->settings();
+        WiredSetting::Ptr wiredSetting = settings->setting(Setting::SettingType::Wired).dynamicCast<WiredSetting>();
+        QString mac = wiredSetting->macAddress().toHex(':').toUpper();
+        auto wiredDevice = device->as<WiredDevice>();
+        QString permanentHardwareAddress = wiredDevice->permanentHardwareAddress();
+
+        if (mac == permanentHardwareAddress || mac.isEmpty())
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    else
+    {
+        return true;
+    }
+}
+
+NetworkManager::Connection::List NetworkUtils::getAvailableWiredConnections(const QString &devicePath)
+{
+    auto device = findNetworkInterface(devicePath);
+    if (device->type() != Device::Ethernet)
+    {
+        return NetworkManager::Connection::List();
+    }
+
+    Connection::List availableConnections;
+    if (device->state() > Device::Unavailable)
+    {
+        availableConnections = device->availableConnections();
+    }
+    else
+    {
+        auto wiredDevice = device->as<WiredDevice>();
+        QString permanentHardwareAddress = wiredDevice->permanentHardwareAddress();
+
+        auto allConnections = listConnections();
+        for (auto connection : allConnections)
+        {
+            auto settings = connection->settings();
+            if (settings->connectionType() != ConnectionSettings::Wired)
+            {
+                continue;
+            }
+            WiredSetting::Ptr wiredSetting = settings->setting(Setting::SettingType::Wired).dynamicCast<WiredSetting>();
+            QString mac = wiredSetting->macAddress().toHex(':').toUpper();
+            if (mac == permanentHardwareAddress || mac.isEmpty())
+            {
+                availableConnections << connection;
+            }
+        }
+    }
+    return availableConnections;
+}
+
+bool NetworkUtils::isExistedActivatedDevice()
+{
+    auto devices = networkInterfaces();
+    Device::List activatedDeviceList;
+    for (auto device : devices)
+    {
+        if (device->state() == Device::Activated)
+        {
+            activatedDeviceList << device;
+        }
+    }
+
+    bool isExistedSupportedDevice = false;
+    for (auto device : activatedDeviceList)
+    {
+        auto deviceType = device->type();
+        QSet<Device::Type> deviceTypes = {
+            Device::Ethernet,
+            Device::Wifi,
+            Device::Modem,
+            Device::Bluetooth};
+
+        if (deviceTypes.contains(deviceType))
+        {
+            isExistedSupportedDevice = true;
+            break;
+        }
+    }
+    return isExistedSupportedDevice;
+}

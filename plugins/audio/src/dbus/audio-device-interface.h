@@ -26,11 +26,14 @@
 #include <QtDBus/QtDBus>
 #include "audio-device-interface.h"
 
+#define PORT_AVAILABLE_NO 1
+
 struct AudioPortInfo
 {
     QString description;
     QString name;
     double priority;
+    int available;
 };
 
 /*
@@ -111,6 +114,7 @@ public:
     }
 
     QList<AudioPortInfo> getPortsInfo();
+    bool isAvailablePorts();
 
 public Q_SLOTS:  // METHODS
     inline QDBusPendingReply<QString> GetPorts()

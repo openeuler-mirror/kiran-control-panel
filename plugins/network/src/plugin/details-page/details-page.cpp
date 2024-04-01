@@ -43,17 +43,21 @@ void DetailsPage::initUI()
     Device::List deviceList = networkInterfaces();
     for (Device::Ptr device : deviceList)
     {
-        if ((device->type() == Device::Wifi) ||
-            (device->type() == Device::Ethernet))
+        if ((device->type() != Device::Wifi) &&
+            (device->type() != Device::Ethernet))
         {
-            ActiveConnection::Ptr activeConnection = device->activeConnection();
-            if (activeConnection != nullptr)
-            {
-                if (activeConnection->state() == ActiveConnection::Activated)
-                {
-                    m_deviceList << device;
-                }
-            }
+            continue;
+        }
+
+        ActiveConnection::Ptr activeConnection = device->activeConnection();
+        if (activeConnection.isNull())
+        {
+            continue;
+        }
+
+        if (activeConnection->state() == ActiveConnection::Activated)
+        {
+            m_deviceList << device;
         }
     }
 
@@ -82,10 +86,10 @@ void DetailsPage::initMultiConnectionDetailsWidget()
         ui->stackedWidget->addWidget(widget);
     }
     connect(ui->activatedConnectionComboBox, QOverload<int>::of(&QComboBox::activated), this,
-            &DetailsPage::handleActivatedConnectionComboBoxActivated, Qt::UniqueConnection);
+            &DetailsPage::activateComboBox, Qt::UniqueConnection);
 }
 
-void DetailsPage::handleActivatedConnectionComboBoxActivated(int index)
+void DetailsPage::activateComboBox(int index)
 {
     ui->stackedWidget->setCurrentIndex(index);
 }

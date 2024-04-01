@@ -21,7 +21,7 @@
     <number>24</number>
    </property>
    <property name="topMargin">
-    <number>0</number>
+    <number>24</number>
    </property>
    <property name="rightMargin">
     <number>24</number>
@@ -30,12 +30,36 @@
     <number>0</number>
    </property>
    <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_5">
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+     <item>
+      <widget class="QLabel" name="label_3">
+       <property name="text">
+        <string>Output cards</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QVBoxLayout" name="verticalLayout_5">
+     <property name="topMargin">
+      <number>10</number>
+     </property>
+     <item>
+      <widget class="QComboBox" name="outputCards"/>
+     </item>
+    </layout>
+   </item>
+   <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <property name="spacing">
       <number>0</number>
      </property>
      <property name="topMargin">
-      <number>24</number>
+      <number>16</number>
      </property>
      <item>
       <widget class="QLabel" name="label">

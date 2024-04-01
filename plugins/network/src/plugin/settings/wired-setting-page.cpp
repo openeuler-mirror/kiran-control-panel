@@ -21,6 +21,7 @@
 #include <NetworkManagerQt/Settings>
 #include "kiran-tips/kiran-tips.h"
 #include "ui_wired-setting-page.h"
+#include <NetworkManagerQt/WiredDevice>
 
 using namespace NetworkManager;
 
@@ -114,10 +115,27 @@ void WiredSettingPage::clearPtr()
     ui->ethernetWidget->clearPtr();
 }
 
+void WiredSettingPage::createSettingPage(const QString &devicePath)
+{
+    showSettingPage();
+    
+    auto device = findNetworkInterface(devicePath);
+    WiredDevice::Ptr wiredDevice = qobject_cast<WiredDevice *>(device);
+    QString macAddress = wiredDevice->permanentHardwareAddress();
+    if(macAddress.isEmpty())
+    {
+        macAddress = wiredDevice->hardwareAddress();
+    }
+    KLOG_DEBUG() << "binding MAC Address:" << macAddress;
+    ui->ethernetWidget->setDefaultMacAddress(macAddress);
+}
+
 bool WiredSettingPage::isInputValid()
 {
-    if (ui->ipv4Widget->isInputValid() && ui->ipv6Widget->isInputValid() &&
-        ui->connectionNameWidget->isInputValid() && ui->ethernetWidget->isInputValid())
+    if (ui->ipv4Widget->isInputValid() && 
+        ui->ipv6Widget->isInputValid() &&
+        ui->connectionNameWidget->isInputValid() && 
+        ui->ethernetWidget->isInputValid())
         return true;
     else
         return false;

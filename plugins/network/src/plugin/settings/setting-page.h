@@ -65,7 +65,7 @@ protected:
     KiranTips *m_errorTip = nullptr;
 
 private:
-    bool m_isNewConnection;
+    bool m_isNewConnection = true;
 };
 
 #endif  // KIRAN_CPANEL_NETWORK_SETTINGPAGE_H

@@ -52,6 +52,8 @@ AudioSystemTray::AudioSystemTray(QWidget *parent) : QWidget(parent)
 
 AudioSystemTray::~AudioSystemTray()
 {
+    delete m_volumeSettingPage;
+    delete m_mixedSettingPage;
 }
 
 void AudioSystemTray::initVolumeSettingPage(QString objectPath)
@@ -80,25 +82,12 @@ void AudioSystemTray::initMixedSettingPage()
 
 void AudioSystemTray::initTrayIcon()
 {
-    getTrayIconStyle();
-    
-    QDBusPendingReply<QString> defaultSinkPath = m_audioInterface->GetDefaultSink();
-    AudioDeviceInterface defaultSink (AUDIO_DBUS_NAME, defaultSinkPath, QDBusConnection::sessionBus());
-    
     double currentVolumeDouble = 0;
-    /**
-     * NOTE:此处是在判断是否存在实际的声卡设备
-     * 1、在高版本2.6中使用GetCards来判断
-     * 2、即使没有实际的声卡设备，default sink还是会存在，通过是否存在可用端口（port）来判断是否存在可用声卡
-    */
-    QDBusPendingReply<QString> getPorts = defaultSink.GetPorts();
-    // 解析默认sink的端口信息
-    QJsonParseError jsonParseError;
-    QJsonDocument doc = QJsonDocument::fromJson(getPorts.value().toLatin1(), &jsonParseError);
-    if (!doc.isNull() && jsonParseError.error == QJsonParseError::NoError)
-    {        
+    if(!m_audioInterface->getCards().isEmpty())
+    {
+        QDBusPendingReply<QString> defaultSinkPath = m_audioInterface->GetDefaultSink();
+        AudioDeviceInterface defaultSink (AUDIO_DBUS_NAME, defaultSinkPath, QDBusConnection::sessionBus());
         currentVolumeDouble = defaultSink.volume() * 100;
-        KLOG_INFO() << "current Volume Double" << round(currentVolumeDouble);
     }
     setTrayIcon(round(currentVolumeDouble));
 }
@@ -133,10 +122,10 @@ void AudioSystemTray::initConnect()
 {
     connect(m_systemTray, &QSystemTrayIcon::activated, this, &AudioSystemTray::handleAudioTrayClicked);
 
-    connect(m_volumeSettingPage,&VolumeSettingPage::volumeChanged,[=](double value)
+    connect(m_volumeSettingPage,&VolumeSettingPage::volumeChanged,[this](double value)
     {
         int currentVolume = round(value * 100);  //表示数值的时候向上取整
-        KLOG_DEBUG() << "m_sink volumeChanged :" << currentVolume;
+        KLOG_DEBUG() << "sink volume changed :" << currentVolume;
         setTrayIcon(currentVolume);
     });
 
@@ -151,12 +140,9 @@ void AudioSystemTray::initConnect()
             setTrayIcon(currentVolume);
         }
     });
-    
-    connect(m_statusNotifierManager, &StatusNotifierManagerInterface::StyleChanged, [=](const QString &style)
+
+    connect(Kiran::StylePalette::instance(), &Kiran::StylePalette::themeChanged, [this](Kiran::PaletteType paletteType)
             {
-                KLOG_DEBUG() << "StyleChanged";
-                //重新获取style
-                getTrayIconStyle();
                 //获取当前音量值重新设置TrayIcon
                 QDBusPendingReply<QString> defaultSinkPath = m_audioInterface->GetDefaultSink();
                 AudioDeviceInterface defaultSink (AUDIO_DBUS_NAME, defaultSinkPath, QDBusConnection::sessionBus());
@@ -177,6 +163,8 @@ void AudioSystemTray::handleAudioTrayClicked(QSystemTrayIcon::ActivationReason r
             setVolumeSettingPos();
             m_volumenPopup->show();
         }
+        break;
+    default:
         break;
     }
 }
@@ -232,7 +220,7 @@ void AudioSystemTray::handleAdjustedMixedSettingPageSize()
 QPixmap AudioSystemTray::trayIconColorSwitch(const QString &iconPath, const int iconSize)
 {
     // icon原本为浅色
-    QIcon icon(iconPath);
+    QIcon icon = QIcon::fromTheme(iconPath);
     QPixmap pixmap = icon.pixmap(iconSize, iconSize);
     if (Kiran::StylePalette::instance()->paletteType() != Kiran::PALETTE_DARK)
     {
@@ -246,35 +234,31 @@ QPixmap AudioSystemTray::trayIconColorSwitch(const QString &iconPath, const int 
 void AudioSystemTray::getTrayGeometry()
 {
     QDBusPendingReply<QString> getGeometry = m_statusNotifierManager->GetGeometry("~02-volume");
-    KLOG_DEBUG() << "getGeometry.value():" << getGeometry.value();
 
-    double height, width, x, y;
     QJsonParseError jsonParseError;
     QJsonDocument doc = QJsonDocument::fromJson(getGeometry.value().toLatin1(), &jsonParseError);
-    if (!doc.isNull() && jsonParseError.error == QJsonParseError::NoError)
+
+    if(doc.isNull() || !doc.isObject() || (jsonParseError.error != QJsonParseError::NoError))
     {
-        if (doc.isObject() && jsonParseError.error == QJsonParseError::NoError)
-        {
-            if (doc.isObject())
-            {
-                QJsonObject object = doc.object();
-                QStringList list = object.keys();
-                height = object.value("height").toDouble();
-                width = object.value("width").toDouble();
-                x = object.value("x").toDouble();
-                y = object.value("y").toDouble();
-            }
-        }
+        return;
     }
+    
+    double height, width, x, y = 0;
+    QJsonObject object = doc.object();
+    height = object.value("height").toDouble();
+    width = object.value("width").toDouble();
+    x = object.value("x").toDouble();
+    y = object.value("y").toDouble();
+    
     m_heightTray = static_cast<int>(height);
     m_widthTray = static_cast<int>(width);
     m_xTray = static_cast<int>(x);
     m_yTray = static_cast<int>(y);
-    KLOG_DEBUG() << "getTrayGeometry ";
-    KLOG_DEBUG() << "heightTray" << m_heightTray;
-    KLOG_DEBUG() << "widthTray" << m_widthTray;
-    KLOG_DEBUG() << "xTray" << m_xTray;
-    KLOG_DEBUG() << "yTray" << m_yTray;
+    KLOG_DEBUG() << "tray geometry" 
+                        << "height:" << m_heightTray 
+                        << "width:" << m_widthTray
+                        << "x:" << m_xTray
+                        << "y:" << m_yTray;
 }
 
 // XXX:频繁调用函数,需要优化
@@ -286,12 +270,12 @@ void AudioSystemTray::setTrayIcon(int value)
         icon.addPixmap(trayIconColorSwitch(":/kcp-audio-images/kcp-audio-mute.svg"));
         icon.addPixmap(trayIconColorSwitch(":/kcp-audio-images/kcp-audio-mute.svg", 64));
     }
-    else if (0 < value && value <= 33)
+    else if (0 < value && value <= 34)
     {
         icon.addPixmap(trayIconColorSwitch(":/kcp-audio-images/kcp-audio-low.svg"));
         icon.addPixmap(trayIconColorSwitch(":/kcp-audio-images/kcp-audio-low.svg", 64));
     }
-    else if (33 < value && value <= 66)
+    else if (33 < value && value <= 67)
     {
         icon.addPixmap(trayIconColorSwitch(":/kcp-audio-images/kcp-audio-medium.svg"));
         icon.addPixmap(trayIconColorSwitch(":/kcp-audio-images/kcp-audio-medium.svg", 64));
@@ -316,32 +300,3 @@ void AudioSystemTray::handleVolumeSettingClicked()
     process.startDetached("kiran-control-panel", arguments);
 }
 
-//暂时不使用，改成从平台主题中获取颜色
-void AudioSystemTray::getTrayIconStyle()
-{
-    QDBusPendingReply<QString> getStyle = m_statusNotifierManager->GetStyle();
-    KLOG_DEBUG() << "getStyle.value()" << getStyle.value();
-    double red, green, blue, alpha;
-    QJsonParseError jsonParseError;
-    QJsonDocument doc = QJsonDocument::fromJson(getStyle.value().toLatin1(), &jsonParseError);
-    if (!doc.isNull() && jsonParseError.error == QJsonParseError::NoError)
-    {
-        if (doc.isObject() && jsonParseError.error == QJsonParseError::NoError)
-        {
-            if (doc.isObject())
-            {
-                QJsonObject object = doc.object();
-                QStringList list = object.keys();
-                KLOG_DEBUG() << "fg_color" << object.value("fg_color");
-                QJsonObject rgba = object.value("fg_color").toObject();
-                red = rgba.value("red").toDouble();
-                green = rgba.value("green").toDouble();
-                blue = rgba.value("blue").toDouble();
-                alpha = rgba.value("alpha").toDouble();
-            }
-        }
-    }
-    //暂时用rgb,rgba设置无效，需要完善
-    m_colorTheme = QString("rgb(%1,%2,%3)").arg(red * 255).arg(green * 255).arg(blue * 255);
-    KLOG_DEBUG() << "getTrayIconStyle:" << m_colorTheme;
-}

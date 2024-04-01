@@ -8,4 +8,6 @@
 
 #define TRANSLATE_PREFIX           "@TRANSLATION_INSTALL_DIR@"
 
+#define SETTINGS_PATH              "@KCP_SETTINGS@"
+
 #endif // __KIRAN_CONFIG_H__

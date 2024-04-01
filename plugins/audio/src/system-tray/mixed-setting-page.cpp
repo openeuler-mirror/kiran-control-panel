@@ -84,16 +84,17 @@ void MixedSettingPage::initSink()
 void MixedSettingPage::initSinkInput()
 {
     QDBusPendingReply<QStringList> getSinkInputs = m_audioInterface->GetSinkInputs();
-    KLOG_DEBUG() << "getSinkInputs:" << getSinkInputs.value();
+    KLOG_DEBUG() << "all sink inputs:" << getSinkInputs.value();
     QStringList sinkInputsList = getSinkInputs.value();
 
     for (int i = 0; i < sinkInputsList.count(); ++i)
     {
         QString objectPath = sinkInputsList.at(i);
-        KLOG_DEBUG() << "objectPath :" << objectPath << "count:" << objectPath.count();
         VolumeSettingPage *sinkInputSettings = new VolumeSettingPage(AUDIO_STREAM, objectPath);
         int index = objectPath.mid(49).toInt();  //获取SinkInput的index
-        KLOG_DEBUG() << "index" << index;
+        KLOG_DEBUG() << "objectPath :" << objectPath 
+                            << "count:" << objectPath.count() 
+                            << "index:" << index;
         m_sinkInputsMap[index] = sinkInputSettings;
         m_vboxLayout->addWidget(sinkInputSettings);
         // m_vboxScrollAreaLayout->addWidget(sinkInputSettings);
@@ -102,9 +103,8 @@ void MixedSettingPage::initSinkInput()
 
 void MixedSettingPage::handleSinkInputAdded(int index)
 {
-    KLOG_DEBUG() << "SinkInputAdded index: " << index;
     QString objectPath = QString("/com/kylinsec/Kiran/SessionDaemon/Audio/SinkInput%1").arg(index);
-    KLOG_DEBUG() << "SinkInputAdded objectPath:" << objectPath;
+    KLOG_DEBUG() << "sink input added index: " << index << "objectPath:" << objectPath;
     VolumeSettingPage *sinkInputAdded = new VolumeSettingPage(AUDIO_STREAM, objectPath);
     m_sinkInputsMap[index] = sinkInputAdded;
     m_vboxLayout->addWidget(sinkInputAdded);
@@ -114,10 +114,10 @@ void MixedSettingPage::handleSinkInputAdded(int index)
 
 void MixedSettingPage::handleSinkInputDelete(int index)
 {
-    KLOG_DEBUG() << "SinkInputDelete index: " << index;
+    KLOG_DEBUG() << "Sink Input Delete index: " << index;
     delete m_sinkInputsMap[index];
     m_sinkInputsMap[index] = nullptr;
-    int removeNum = m_sinkInputsMap.remove(index);
+    m_sinkInputsMap.remove(index);
     update();
     adjustSize();
     Q_EMIT adjustedMixedSettingPageSize();
@@ -125,7 +125,6 @@ void MixedSettingPage::handleSinkInputDelete(int index)
 
 int MixedSettingPage::getHeight()
 {
-    // KLOG_DEBUG() << "m_vboxLayout->sizeHint():" << m_vboxLayout->sizeHint();
     int height = 66 * (m_sinkInputsMap.count() + 1);
 
     if (height > 198)

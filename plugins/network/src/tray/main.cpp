@@ -22,6 +22,7 @@
 #include "config.h"
 #include "dbus-tray-monitor.h"
 #include "network-tray.h"
+#include <QScopedPointer>
 
 int main(int argc, char* argv[])
 {
@@ -41,11 +42,11 @@ int main(int argc, char* argv[])
         KLOG_WARNING() << "installTranslator failed";
     }
 
-    NetworkTray* tray = nullptr;
+    QScopedPointer<NetworkTray> tray;
     if (KiranControlPanel::isDBusTrayAvailable())
     {
         KLOG_DEBUG() << KDE_STATUS_NOTIFIER_HOST << "is registered,create network tray icon";
-        tray = new NetworkTray;
+        tray.reset(new NetworkTray);
     }
     else
     {
@@ -57,7 +58,7 @@ int main(int argc, char* argv[])
                             if(tray == nullptr)
                             {
                                 KLOG_DEBUG() << KDE_STATUS_NOTIFIER_HOST << "is registered,create network tray icon";
-                                tray = new NetworkTray;
+                                tray.reset(new NetworkTray);
                             } 
                         });
     }

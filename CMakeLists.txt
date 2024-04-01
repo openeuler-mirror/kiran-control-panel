@@ -25,6 +25,7 @@ include(kcp-qdbus-wrapper.cmake)
 configure_file(${CMAKE_SOURCE_DIR}/data/config.h.in ${CMAKE_BINARY_DIR}/config.h)
 configure_file(${CMAKE_SOURCE_DIR}/data/${PROJECT_NAME}.desktop.in ${CMAKE_BINARY_DIR}/${PROJECT_NAME}.desktop)
 configure_file(${CMAKE_SOURCE_DIR}/data/${PROJECT_NAME}.pc.in ${CMAKE_BINARY_DIR}/${PROJECT_NAME}.pc @ONLY)
+configure_file(./settings.ini.in ${CMAKE_BINARY_DIR}/settings.ini)
 
 file(GLOB_RECURSE INCLUDE_SRC "./include/*")
 file(GLOB_RECURSE CONTROL_PANEL_SRC "./src/*")
@@ -86,6 +87,9 @@ file(GLOB CATEGORY_ICONS "./data/category/images/*")
 install(FILES ${CATEGORY_ICONS} DESTINATION ${CATEGORY_ICON_INSTALL_DIR})
 #安装kiran-control-panel icon文件
 install(FILES "${CMAKE_SOURCE_DIR}/data/kiran-control-panel.svg" DESTINATION ${INSTALL_DATADIR}/icons/hicolor/)
+
+get_filename_component(KCP_SETTINGS_DIR ${KCP_SETTINGS} DIRECTORY CACHE)
+install(FILES ${CMAKE_BINARY_DIR}/settings.ini DESTINATION ${KCP_SETTINGS_DIR})
 
 add_subdirectory(lib)
 add_subdirectory(launcher)
