@@ -39,16 +39,21 @@ bool UPowerInterface::haveBattery()
 #endif
     void *device = nullptr;
     UpDeviceKind kind;
+    gboolean is_present = FALSE;
     for (int i = 0; i < devices->len; i++)
     {
         device = g_ptr_array_index(devices, i);
         g_object_get(device,
                      "kind", &kind,
                      NULL);
-        if (kind == UP_DEVICE_KIND_BATTERY)
+
+        g_object_get(device,
+                     "is-present", &is_present,
+                     NULL);
+        if (kind == UP_DEVICE_KIND_BATTERY && is_present)
             hasBattery = true;
     }
-    g_ptr_array_unref (devices);
+    g_ptr_array_unref(devices);
     g_object_unref(upClient);
     return hasBattery;
 }
