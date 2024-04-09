@@ -14,8 +14,8 @@
 
 #include "upower-interface.h"
 #include <upower.h>
-#include <cstdio>
 #include <QtGlobal>
+#include <cstdio>
 
 // 由于Glib定义与Qt内部相关定义冲突，将该函数单独封装起来
 bool UPowerInterface::haveBattery()
@@ -43,16 +43,21 @@ bool UPowerInterface::haveBattery()
 #endif
     void *device = nullptr;
     UpDeviceKind kind;
+    gboolean is_present = FALSE;
     for (unsigned int i = 0; i < devices->len; i++)
     {
         device = g_ptr_array_index(devices, i);
         g_object_get(device,
                      "kind", &kind,
                      NULL);
-        if (kind == UP_DEVICE_KIND_BATTERY)
+
+        g_object_get(device,
+                     "is-present", &is_present,
+                     NULL);
+        if (kind == UP_DEVICE_KIND_BATTERY && is_present)
             hasBattery = true;
     }
-    g_ptr_array_unref (devices);
+    g_ptr_array_unref(devices);
     g_object_unref(upClient);
     return hasBattery;
 }
