@@ -363,7 +363,7 @@ void ConnectionItemWidget::updateConnection()
             (mac != hardwareAddress))
         {
             KLOG_INFO(qLcNetwork) << "the binding device MAC has changed";
-            SignalForward::instance()->connectionMacChanged(connectionPath(), hardwareAddress);
+            SignalForward::instance()->connectionMacChanged(connectionPath(), mac);
             return;
         }
     }
