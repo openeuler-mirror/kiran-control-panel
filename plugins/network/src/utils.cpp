@@ -240,12 +240,23 @@ NetworkManager::Connection::List NetworkUtils::getAvailableWiredConnections(cons
             {
                 continue;
             }
+
+            // 匹配配置以及设备中的Mac地址是否匹配
             WiredSetting::Ptr wiredSetting = settings->setting(Setting::SettingType::Wired).dynamicCast<WiredSetting>();
             QString mac = wiredSetting->macAddress().toHex(':').toUpper();
-            if (mac == permanentHardwareAddress || mac.isEmpty())
+            if ( !mac.isEmpty() && mac != permanentHardwareAddress )
             {
-                availableConnections << connection;
+                continue;
             }
+
+            // 匹配配置中指定的DEVICE是否和设备名匹配
+            QString settingSpecifyDevice = settings->interfaceName();
+            if ( !settingSpecifyDevice.isEmpty() && settingSpecifyDevice != device->interfaceName() )
+            {
+                continue;
+            }
+
+            availableConnections << connection;
         }
     }
     return availableConnections;
