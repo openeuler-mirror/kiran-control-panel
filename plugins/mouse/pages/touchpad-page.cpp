@@ -13,11 +13,11 @@
  */
 
 #include "touchpad-page.h"
-#include "kcm-manager.h"
 #include <kiran-log/qt5-log-i.h>
 #include <kiran-session-daemon/touchpad-i.h>
 #include <QCheckBox>
 #include <QDBusConnection>
+#include "kcm-manager.h"
 #include "touchPad_backEnd_proxy.h"
 #include "ui_touchpad-page.h"
 
@@ -204,35 +204,49 @@ void TouchPadPage::initComponent()
         },
         Qt::QueuedConnection);
 
-    //打字时触摸板禁用
-    m_disabelWhileTyping = m_touchPadInterface->disable_while_typing();
-    ui->checkBox_disable_while_typing->setChecked(m_disabelWhileTyping);
-    connect(ui->checkBox_disable_while_typing, &KiranSwitchButton::toggled,
-            [this](bool disabelWhileTyping) {
-                m_disabelWhileTyping = disabelWhileTyping;
-                m_touchPadInterface->setDisable_while_typing(m_disabelWhileTyping);
-            });
-    connect(
-        m_touchPadInterface.data(), &TouchPadBackEndProxy::disable_while_typingChanged, this,
-        [this](bool value) {
-            setValue(ui->checkBox_disable_while_typing, m_disabelWhileTyping, value);
-        },
-        Qt::QueuedConnection);
+    if (m_touchPadInterface->disable_while_typing_support())
+    {
+        //打字时触摸板禁用
+        m_disabelWhileTyping = m_touchPadInterface->disable_while_typing();
+        ui->checkBox_disable_while_typing->setChecked(m_disabelWhileTyping);
+        connect(ui->checkBox_disable_while_typing, &KiranSwitchButton::toggled,
+                [this](bool disabelWhileTyping) {
+                    m_disabelWhileTyping = disabelWhileTyping;
+                    m_touchPadInterface->setDisable_while_typing(m_disabelWhileTyping);
+                });
+        connect(
+            m_touchPadInterface.data(), &TouchPadBackEndProxy::disable_while_typingChanged, this,
+            [this](bool value) {
+                setValue(ui->checkBox_disable_while_typing, m_disabelWhileTyping, value);
+            },
+            Qt::QueuedConnection);
+    }
+    else
+    {
+        ui->widget_disable_while_typing->hide();
+    }
 
-    //轻击(不按下)触摸板功能是否生效
-    m_tapToClick = m_touchPadInterface->tap_to_click();
-    ui->checkBox_tap_to_click->setChecked(m_tapToClick);
-    connect(ui->checkBox_tap_to_click, &KiranSwitchButton::toggled,
-            [this](bool isTapToClick) {
-                m_tapToClick = isTapToClick;
-                m_touchPadInterface->setTap_to_click(m_tapToClick);
-            });
-    connect(
-        m_touchPadInterface.data(), &TouchPadBackEndProxy::tap_to_clickChanged, this,
-        [this](bool value) {
-            setValue(ui->checkBox_tap_to_click, m_tapToClick, value);
-        },
-        Qt::QueuedConnection);
+    if (m_touchPadInterface->tap_to_click_support())
+    {
+        //轻击(不按下)触摸板功能是否生效
+        m_tapToClick = m_touchPadInterface->tap_to_click();
+        ui->checkBox_tap_to_click->setChecked(m_tapToClick);
+        connect(ui->checkBox_tap_to_click, &KiranSwitchButton::toggled,
+                [this](bool isTapToClick) {
+                    m_tapToClick = isTapToClick;
+                    m_touchPadInterface->setTap_to_click(m_tapToClick);
+                });
+        connect(
+            m_touchPadInterface.data(), &TouchPadBackEndProxy::tap_to_clickChanged, this,
+            [this](bool value) {
+                setValue(ui->checkBox_tap_to_click, m_tapToClick, value);
+            },
+            Qt::QueuedConnection);
+    }
+    else
+    {
+        ui->widget_tap_to_click->hide();
+    }
 }
 
 void TouchPadPage::setValue(KiranSwitchButton *receiveWidget, bool &origVal, bool newVal)
