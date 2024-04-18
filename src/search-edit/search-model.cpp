@@ -51,6 +51,16 @@ void SearchModel::loadSearchModel()
 
         auto subitems = category->getSubItems();
 
+        if(subitems.size() > 0)
+        {
+            // 添加分类搜索项
+            appendItem(categoryName, categoryID, subitems.at(0)->getID());
+        }
+
+        /**
+         * NOTE: 分类下单个子功能项应不添加搜索项
+         * 避免 显示设置分类下显示设置子功能项，构成"显示设置->显示设置"这种搜索项
+        */
         bool addSubItemNamePrefix = true;
         if (subitems.size() == 1)
         {
@@ -65,15 +75,13 @@ void SearchModel::loadSearchModel()
             QString subItemPrefix;
             if (addSubItemNamePrefix)
             {
-                QString searchText = QString("%1 -> %2").arg(categoryName).arg(subitemName);
-                appendItem(searchText, categoryID, subitemID);
-                subItemPrefix = searchText;
+                QString subItemSearchKey = QString("%1 -> %2").arg(categoryName).arg(subitemName);
+                appendItem(subItemSearchKey, categoryID, subitemID);
+                subItemPrefix = subItemSearchKey;
             }
             else
             {
-                QString searchText = categoryName;
-                appendItem(searchText, categoryID, subitemID);
-                subItemPrefix = searchText;
+                subItemPrefix = categoryName;
             }
 
             auto searchItems = subitem->getSearchKeys();
@@ -81,7 +89,7 @@ void SearchModel::loadSearchModel()
             {
                 QString searchName = searchItem.first;
                 QString searchKey = searchItem.second;
-                QString searchText = QString("%1 : %2").arg(subItemPrefix).arg(searchName);
+                QString searchText = QString("%1 -> %2").arg(subItemPrefix).arg(searchName);
                 appendItem(searchText, categoryID, subitemID, searchKey);
             }
         }
