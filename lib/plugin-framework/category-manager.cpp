@@ -288,6 +288,9 @@ void CategoryManager::removeSubItem(const QString& categoryID, Plugin* plugin, c
     }
 }
 
+/**
+ * NOTE: 该方法为插件调用触发，主面板处理子功能项目信息发生变化
+*/
 void CategoryManager::handlePluginSubItemInfoChanged(const QString& subiemID)
 {
     Plugin* plugin = qobject_cast<Plugin*>(sender());
@@ -301,11 +304,16 @@ void CategoryManager::handlePluginSubItemInfoChanged(const QString& subiemID)
         {
             QString categoryID = cacheItem.categoryID;
             Category* category = m_categorysMap[categoryID];
+            // 发出主分类子功能项信息变化信号，感兴趣类通过该方法
+            // 重新加载该主分类下子功能项的信息，例如搜索项
             emit category->subItemInfoChanged(subiemID);
         }
     }
 }
 
+/**
+ * NOTE: 该方法为插件调用触发，主面板处理子功能变更，更新二级分类
+*/
 void CategoryManager::handlePluginSubItemChanged()
 {
     Plugin* plugin = qobject_cast<Plugin*>(sender());
