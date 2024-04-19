@@ -116,36 +116,25 @@ void NetworkSubItem::handleSubItemsChanged()
     m_interface->handlePluginSubItemInfoChanged(getID());
 }
 
+//TODO:
+//1.用翻译文本做Key后续得改
+//2.这些文本存在多次拷贝，后续改到一处，避免后续改动不全出问题
 QStringList NetworkSubItem::subItemsList()
 {
     QStringList subItemsList;
     auto wiredList = NetworkUtils::getManagedDeviceList(NetworkManager::Device::Ethernet);
     auto wirelessList = NetworkUtils::getManagedDeviceList(NetworkManager::Device::Wifi);
-    for (int i = 0; i < wiredList.count(); i++)
+
+    if (!wiredList.isEmpty())
     {
-        QString subItemName = tr("Wired Network %1");
-        QString subItemNameStr = subItemName.arg(i + 1);
-        if (wiredList.count() == 1)
-        {
-            QString name = tr("Wired Network");
-            subItemsList << name;
-        }
-        else
-            subItemsList << subItemNameStr;
+        QString name = tr("Wired Network");
+        subItemsList << name;
     }
 
-    for (int i = 0; i < wirelessList.count(); i++)
+    if( !wirelessList.isEmpty() )
     {
-        QString subItemName = tr("Wireless Network %1");
-        QString subItemNameStr = subItemName.arg(i + 1);
-
-        if (wirelessList.count() == 1)
-        {
-            QString name = tr("Wireless Network");
-            subItemsList << name;
-        }
-        else
-            subItemsList << subItemNameStr;
+        QString name = tr("Wireless Network");
+        subItemsList << name;
     }
 
     subItemsList << tr("VPN");
