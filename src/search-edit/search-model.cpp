@@ -50,12 +50,13 @@ void SearchModel::loadSearchModel()
         QString categoryID = category->getID();
 
         auto subitems = category->getSubItems();
-
-        if(subitems.size() > 0)
+        if( subitems.size() == 0 )
         {
-            // 添加分类搜索项
-            appendItem(categoryName, categoryID, subitems.at(0)->getID());
+            continue;
         }
+
+        // 添加分类搜索项
+        appendItem(categoryName, categoryID, subitems.at(0)->getID());
 
         /**
          * NOTE: 分类下单个子功能项应不添加搜索项
@@ -77,6 +78,7 @@ void SearchModel::loadSearchModel()
             {
                 QString subItemSearchKey = QString("%1 -> %2").arg(categoryName).arg(subitemName);
                 appendItem(subItemSearchKey, categoryID, subitemID);
+
                 subItemPrefix = subItemSearchKey;
             }
             else
@@ -89,6 +91,7 @@ void SearchModel::loadSearchModel()
             {
                 QString searchName = searchItem.first;
                 QString searchKey = searchItem.second;
+
                 QString searchText = QString("%1 -> %2").arg(subItemPrefix).arg(searchName);
                 appendItem(searchText, categoryID, subitemID, searchKey);
             }
