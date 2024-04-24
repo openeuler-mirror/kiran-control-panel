@@ -1,13 +1,13 @@
 [Kiran Control Panel Category]
 Category=audio
 
-Name=audio
+Name=Audio
 Name[zh_CN]=声音
 Name[bo_CN]=སྐད་སྒྲ།
 Name[kk_KG]=үн
 Name[kk_KZ]=дыбыс
 Name[mn_MN]=дуу чимээ
-Name[ug_CN]=ئاۋاز 
+Name[ug_CN]=ئاۋاز
 
 Comment=audio settings
 Comment[zh_CN]=声音设置
@@ -15,7 +15,7 @@ Comment[bo_CN]=སྐད་སྒྲ་སྒྲིག་པ།
 Comment[kk_KG]=Үн параметрлери
 Comment[kk_KZ]=Дыбыс параметрлері
 Comment[mn_MN]=Дуу чимээний тохиргоо
-Comment[ug_CN]=ئاۋاز تەسىس قىلىش 
+Comment[ug_CN]=ئاۋاز تەسىس قىلىش
 
 Icon=audio.png
 
@@ -26,5 +26,5 @@ Keywords[bo_CN]=སྐད་སྒྲ།
 Keywords[kk_KG]=үн
 Keywords[kk_KZ]=дыбыс
 Keywords[mn_MN]=дуу чимээ
-Keywords[ug_CN]=ئاۋاز 
+Keywords[ug_CN]=ئاۋاز
 Keywords=audio
