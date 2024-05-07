@@ -98,7 +98,7 @@ void NetworkTray::initConnect()
                 if(device->isValid())
                 {
                     handleDeviceAdded(m_addDevicePath);
-                }               
+                }
                 else
                 {
                     KLOG_INFO() << "this device interface is invalid!";
@@ -361,7 +361,10 @@ void NetworkTray::updateTrayIcon()
 {
     KLOG_DEBUG() << "update tray icon";
     auto status = NetworkManager::status();
-    if (status < NetworkManager::Status::Connected)
+
+    // 将ConnectedLinkLocal，ConnectedSiteOnly，Connected三种状态标识为连接
+    // 后续根据CheckInternetConnectivity，在做状态细分
+    if (status < NetworkManager::Status::ConnectedLinkLocal)
     {
         setTrayIcon(DISCONNECTED);
         return;
@@ -765,6 +768,15 @@ void NetworkTray::initTcpSocket()
 
 void NetworkTray::checkInternetConnectivity()
 {
+    QSettings confSettings(SETTINGS_PATH, QSettings::NativeFormat);
+    QVariant enable = confSettings.value(QString("Network/CheckInternetConnectivity"));
+    KLOG_DEBUG() << "check Internet Connectivity : " << enable;
+    if (!enable.toBool())
+    {
+        internetConnected();
+        return;
+    }
+
     // NetworkManager::connectivity() 不准确，使用checkConnectivity
     QDBusPendingReply<uint> reply = NetworkManager::checkConnectivity();
     reply.waitForFinished();
@@ -774,14 +786,6 @@ void NetworkTray::checkInternetConnectivity()
         return;
     }
 
-    QSettings confSettings(SETTINGS_PATH, QSettings::NativeFormat);
-    QVariant enable = confSettings.value(QString("Network/CheckInternetConnectivity"));
-    KLOG_DEBUG() << "check Internet Connectivity : " << enable;
-    if (!enable.toBool())
-    {
-        internetConnected();
-        return;
-    }
     QVariant address = confSettings.value(QString("Network/Address"));
     QVariant port = confSettings.value(QString("Network/Port"));
     if (m_tcpClient->state() != QAbstractSocket::UnconnectedState)
