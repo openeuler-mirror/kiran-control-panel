@@ -18,6 +18,7 @@
 #include "pages/battery-settings-page.h"
 #include "pages/general-settings-page.h"
 #include "pages/power-settings-page.h"
+#include "pages/server-general-settings.h"
 #include "plugin-subitem.h"
 #include "upower-interface.h"
 
@@ -38,6 +39,7 @@ int PowerPlugin::init(KiranControlPanel::PanelInterface* interface)
 {
     PowerInterface::globalInit();
 
+#ifndef SERVER_MODE
     auto generalSettingsSubItemCreater = []() -> QWidget*
     {
         return new GeneralSettingsPage();
@@ -71,10 +73,11 @@ int PowerPlugin::init(KiranControlPanel::PanelInterface* interface)
 
     m_subitems = {
         generalSettingsSubItem,
-        powerSettingsSubItem};
+        powerSettingsSubItem
+    };
 
-    // if (UPowerInterface::haveBattery())
-    // {
+    if (UPowerInterface::haveBattery())
+    {
         auto batterySettings = new PluginSubItem("BatterySettings",
                                                  tr("Battery Settings"),
                                                  "power-management",
@@ -83,8 +86,22 @@ int PowerPlugin::init(KiranControlPanel::PanelInterface* interface)
                                                  1,
                                                  batterySettingsSubItemCreator);
         m_subitems << KiranControlPanel::SubItemPtr(batterySettings);
-    // }
-
+    }
+#else
+    // 服务器类型下，只提供关于空闲锁屏以及空闲时的设置
+    auto serverGeneralSettingsCreater = []() -> QWidget*
+    {
+        return new ServerGeneralSettings();
+    };
+    auto serverGeneralSettings = new PluginSubItem("ServerGeneralSettings",
+                                                    tr("General Settings"),
+                                                    "power-management",
+                                                    "",
+                                                    "kcp-power-general-settings",
+                                                    1,
+                                                    serverGeneralSettingsCreater);
+    m_subitems = {KiranControlPanel::SubItemPtr(serverGeneralSettings)};
+#endif
     return 0;
 }
 
