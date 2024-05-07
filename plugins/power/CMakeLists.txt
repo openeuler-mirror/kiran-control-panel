@@ -2,7 +2,9 @@ cmake_minimum_required(VERSION 3.2)
 
 set(TARGET_NAME kiran-cpanel-power)
 
-#add_definitions(-DTEST)
+if (SERVER_MODE)
+    add_definitions(-DSERVER_MODE)
+endif ()
 
 pkg_search_module(UPOWER_GLIB REQUIRED upower-glib)
 
@@ -47,6 +49,7 @@ target_include_directories(${TARGET_NAME} PRIVATE
         ${KLOG_INCLUDE_DIRS}
         ${QGSETTINGS_INCLUDE_DIRS}
         ${UPOWER_GLIB_INCLUDE_DIRS}
+        ${KIRAN_STYLE_INCLUDE_DIRS}
         ${KCP_PLUGIN_INCLUDE_DIR})
 
 target_link_libraries(${TARGET_NAME}
@@ -54,6 +57,7 @@ target_link_libraries(${TARGET_NAME}
         Qt5::DBus
         ${KIRAN_WIDGETS_LIBRARIES}
         ${KIRAN_CC_DAEMON_LIBRARIES}
+        ${KIRAN_STYLE_LIBRARIES}
         ${KLOG_LIBRARIES}
         ${QGSETTINGS_LIBRARIES}
         ${UPOWER_GLIB_LIBRARIES})
