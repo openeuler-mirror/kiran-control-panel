@@ -256,17 +256,17 @@
 <context>
     <name>AppearancePlugin</name>
     <message>
-        <location filename="../plugins/appearance/appearance-plugin.cpp" line="67"/>
+        <location filename="../plugins/appearance/appearance-plugin.cpp" line="80"/>
         <source>Theme</source>
         <translation>主题</translation>
     </message>
     <message>
-        <location filename="../plugins/appearance/appearance-plugin.cpp" line="74"/>
+        <location filename="../plugins/appearance/appearance-plugin.cpp" line="87"/>
         <source>Wallpaper</source>
         <translation>壁纸</translation>
     </message>
     <message>
-        <location filename="../plugins/appearance/appearance-plugin.cpp" line="81"/>
+        <location filename="../plugins/appearance/appearance-plugin.cpp" line="94"/>
         <source>Font</source>
         <translation>字体</translation>
     </message>
@@ -287,12 +287,12 @@
 <context>
     <name>AudioSystemTray</name>
     <message>
-        <location filename="../plugins/audio/src/system-tray/audio-system-tray.cpp" line="93"/>
+        <location filename="../plugins/audio/src/system-tray/audio-system-tray.cpp" line="99"/>
         <source>Volume Setting</source>
         <translation>声音设置</translation>
     </message>
     <message>
-        <location filename="../plugins/audio/src/system-tray/audio-system-tray.cpp" line="94"/>
+        <location filename="../plugins/audio/src/system-tray/audio-system-tray.cpp" line="100"/>
         <source>Mixed Setting</source>
         <translation>混合设置</translation>
     </message>
@@ -813,53 +813,53 @@
 <context>
     <name>ConnectionItemWidget</name>
     <message>
-        <location filename="../plugins/network/src/plugin/connection-itemwidget.cpp" line="79"/>
+        <location filename="../plugins/network/src/plugin/connection-itemwidget.cpp" line="80"/>
         <source>disconnect</source>
         <translation>断开</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/plugin/connection-itemwidget.cpp" line="120"/>
+        <location filename="../plugins/network/src/plugin/connection-itemwidget.cpp" line="121"/>
         <source>ignore</source>
         <translation>忽略</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/plugin/connection-itemwidget.cpp" line="126"/>
+        <location filename="../plugins/network/src/plugin/connection-itemwidget.cpp" line="127"/>
         <source>remove</source>
         <translation>移除</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/plugin/connection-itemwidget.cpp" line="292"/>
+        <location filename="../plugins/network/src/plugin/connection-itemwidget.cpp" line="293"/>
         <source>The current device:%1 is not available</source>
         <translation>当前设备：%1 不可用</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/plugin/connection-itemwidget.cpp" line="308"/>
+        <location filename="../plugins/network/src/plugin/connection-itemwidget.cpp" line="309"/>
         <source>The carrier is pulled out</source>
         <translation>网线被拔出</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/plugin/connection-itemwidget.cpp" line="396"/>
+        <location filename="../plugins/network/src/plugin/connection-itemwidget.cpp" line="395"/>
         <source>Are you sure you want to delete the connection %1</source>
         <translation>您是否确定要删除连接 &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/plugin/connection-itemwidget.cpp" line="397"/>
+        <location filename="../plugins/network/src/plugin/connection-itemwidget.cpp" line="396"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/plugin/connection-itemwidget.cpp" line="454"/>
-        <location filename="../plugins/network/src/plugin/connection-itemwidget.cpp" line="467"/>
+        <location filename="../plugins/network/src/plugin/connection-itemwidget.cpp" line="453"/>
+        <location filename="../plugins/network/src/plugin/connection-itemwidget.cpp" line="466"/>
         <source>Tips</source>
         <translation>提示</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/plugin/connection-itemwidget.cpp" line="455"/>
+        <location filename="../plugins/network/src/plugin/connection-itemwidget.cpp" line="454"/>
         <source>Password required to connect to %1.</source>
         <translation>连接网络 &quot;%1&quot; 需要密码</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/plugin/connection-itemwidget.cpp" line="468"/>
+        <location filename="../plugins/network/src/plugin/connection-itemwidget.cpp" line="467"/>
         <source>Please input a network name</source>
         <translation>请输入网络名称</translation>
     </message>
@@ -1297,12 +1297,12 @@
 <context>
     <name>DeviceAvailableConnectionWidget</name>
     <message>
-        <location filename="../plugins/network/src/plugin/device-available-connection-widget.cpp" line="281"/>
+        <location filename="../plugins/network/src/plugin/device-available-connection-widget.cpp" line="278"/>
         <source>Network card: %1</source>
         <translation>网卡：%1</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/plugin/device-available-connection-widget.cpp" line="408"/>
+        <location filename="../plugins/network/src/plugin/device-available-connection-widget.cpp" line="405"/>
         <source>Other WiFi networks</source>
         <translation>其它WIFI网络</translation>
     </message>
@@ -1637,7 +1637,7 @@
 <context>
     <name>DisplaySubitem</name>
     <message>
-        <location filename="../plugins/display/src/display-subitem.h" line="29"/>
+        <location filename="../plugins/display/src/display-subitem.h" line="42"/>
         <source>Display</source>
         <translation>显示</translation>
     </message>
@@ -2632,7 +2632,7 @@
 <context>
     <name>HardwareSubItem</name>
     <message>
-        <location filename="../plugins/system/hardware-subitem.h" line="33"/>
+        <location filename="../plugins/system/hardware-subitem.h" line="46"/>
         <source>Hardware Information</source>
         <translation>硬件信息</translation>
     </message>
@@ -2758,7 +2758,7 @@
         <translation>反馈音量</translation>
     </message>
     <message>
-        <location filename="../plugins/audio/src/plugin/input-page.cpp" line="295"/>
+        <location filename="../plugins/audio/src/plugin/input-page.cpp" line="298"/>
         <source>No input device detected</source>
         <translation>未检测到输入设备</translation>
     </message>
@@ -3078,12 +3078,12 @@
 <context>
     <name>KeycodeTranslator</name>
     <message>
-        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="140"/>
+        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="148"/>
         <source>None</source>
         <translation>暂无</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="144"/>
+        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="152"/>
         <source>disabled</source>
         <translation>禁用</translation>
     </message>
@@ -3337,7 +3337,7 @@
         <translation>日期时间格式设置</translation>
     </message>
     <message>
-        <location filename="../plugins/timedate/kiran-timedate-widget.cpp" line="196"/>
+        <location filename="../plugins/timedate/kiran-timedate-widget.cpp" line="195"/>
         <source>%1(%2)</source>
         <translation>%1时间(%2)</translation>
     </message>
@@ -3436,13 +3436,13 @@
     </message>
     <message>
         <location filename="../plugins/keyboard/pages/layout-page.ui" line="105"/>
-        <location filename="../plugins/keyboard/pages/layout-page.cpp" line="383"/>
+        <location filename="../plugins/keyboard/pages/layout-page.cpp" line="382"/>
         <source>Edit</source>
         <translation>编辑</translation>
     </message>
     <message>
         <location filename="../plugins/keyboard/pages/layout-page.ui" line="206"/>
-        <location filename="../plugins/keyboard/pages/layout-page.cpp" line="265"/>
+        <location filename="../plugins/keyboard/pages/layout-page.cpp" line="264"/>
         <source>Add Layout</source>
         <translation>添加布局</translation>
     </message>
@@ -3468,9 +3468,9 @@
     </message>
     <message>
         <location filename="../plugins/keyboard/pages/layout-page.cpp" line="112"/>
-        <location filename="../plugins/keyboard/pages/layout-page.cpp" line="287"/>
-        <location filename="../plugins/keyboard/pages/layout-page.cpp" line="326"/>
-        <location filename="../plugins/keyboard/pages/layout-page.cpp" line="359"/>
+        <location filename="../plugins/keyboard/pages/layout-page.cpp" line="286"/>
+        <location filename="../plugins/keyboard/pages/layout-page.cpp" line="325"/>
+        <location filename="../plugins/keyboard/pages/layout-page.cpp" line="358"/>
         <source>Failed</source>
         <translation>失败</translation>
     </message>
@@ -3480,27 +3480,27 @@
         <translation>您已经添加过该布局</translation>
     </message>
     <message>
-        <location filename="../plugins/keyboard/pages/layout-page.cpp" line="288"/>
+        <location filename="../plugins/keyboard/pages/layout-page.cpp" line="287"/>
         <source>The %1 keyboard layout does not exist!</source>
         <translation>该 %1 键盘布局不存在!</translation>
     </message>
     <message>
-        <location filename="../plugins/keyboard/pages/layout-page.cpp" line="327"/>
+        <location filename="../plugins/keyboard/pages/layout-page.cpp" line="326"/>
         <source>The keyboard layout is currently in use and cannot be deleted!</source>
         <translation>该布局目前正在使用，无法删除!</translation>
     </message>
     <message>
-        <location filename="../plugins/keyboard/pages/layout-page.cpp" line="339"/>
+        <location filename="../plugins/keyboard/pages/layout-page.cpp" line="338"/>
         <source>Delete Layout</source>
         <translation>删除布局</translation>
     </message>
     <message>
-        <location filename="../plugins/keyboard/pages/layout-page.cpp" line="360"/>
+        <location filename="../plugins/keyboard/pages/layout-page.cpp" line="359"/>
         <source>You do not appear to have added %1 keyboard layout!</source>
         <translation>您似乎没有添加 %1 键盘布局！</translation>
     </message>
     <message>
-        <location filename="../plugins/keyboard/pages/layout-page.cpp" line="374"/>
+        <location filename="../plugins/keyboard/pages/layout-page.cpp" line="373"/>
         <source>Finish</source>
         <translation>完成</translation>
     </message>
@@ -3710,87 +3710,87 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>Media Key</name>
     <message>
-        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="69"/>
+        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="71"/>
         <source>Audio Play</source>
         <translation>音频播放</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="70"/>
+        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="72"/>
         <source>Search</source>
         <translation>搜索</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="71"/>
+        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="73"/>
         <source>WWW</source>
         <translation>万维网</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="72"/>
+        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="74"/>
         <source>Audio Lower Volume</source>
         <translation>减小音量</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="73"/>
+        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="75"/>
         <source>Audio Raise Volume</source>
         <translation>增大音量</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="74"/>
+        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="76"/>
         <source>Mic Mute</source>
         <translation>输入静音</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="75"/>
+        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="77"/>
         <source>Audio Stop</source>
         <translation>音频停止</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="76"/>
+        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="78"/>
         <source>Explorer</source>
         <translation>浏览</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="77"/>
+        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="79"/>
         <source>Calculator</source>
         <translation>计算器</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="78"/>
+        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="80"/>
         <source>Audio Mute</source>
         <translation>音频暂停</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="79"/>
+        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="81"/>
         <source>Audio Pause</source>
         <translation>音频暂停</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="80"/>
+        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="82"/>
         <source>Audio Prev</source>
         <translation>音频上一个</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="81"/>
+        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="83"/>
         <source>Audio Media</source>
         <translation>音频媒体</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="82"/>
+        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="84"/>
         <source>Audio Next</source>
         <translation>音频下一个</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="83"/>
+        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="85"/>
         <source>Mail</source>
         <translation>邮件</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="84"/>
+        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="86"/>
         <source>Tools</source>
         <translation>工具</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="85"/>
+        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="87"/>
         <source>Eject</source>
         <translation>弹出</translation>
     </message>
@@ -4029,9 +4029,8 @@ This is line 50 of the test text</source>
 <context>
     <name>NetworkSubItem</name>
     <message>
-        <location filename="../plugins/network/src/plugin/network-subitem.cpp" line="126"/>
         <source>Wired Network %1</source>
-        <translation>有线网络 %1</translation>
+        <translation type="vanished">有线网络 %1</translation>
     </message>
     <message>
         <location filename="../plugins/network/src/plugin/network-subitem.cpp" line="130"/>
@@ -4039,22 +4038,21 @@ This is line 50 of the test text</source>
         <translation>有线网络</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/plugin/network-subitem.cpp" line="139"/>
         <source>Wireless Network %1</source>
-        <translation>无线网络  %1</translation>
+        <translation type="vanished">无线网络  %1</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/plugin/network-subitem.cpp" line="144"/>
+        <location filename="../plugins/network/src/plugin/network-subitem.cpp" line="136"/>
         <source>Wireless Network</source>
         <translation>无线网络</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/plugin/network-subitem.cpp" line="151"/>
+        <location filename="../plugins/network/src/plugin/network-subitem.cpp" line="140"/>
         <source>VPN</source>
         <translation>VPN</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/plugin/network-subitem.cpp" line="152"/>
+        <location filename="../plugins/network/src/plugin/network-subitem.cpp" line="141"/>
         <source>Network Details</source>
         <translation>网络详情</translation>
     </message>
@@ -4062,13 +4060,13 @@ This is line 50 of the test text</source>
 <context>
     <name>NetworkTray</name>
     <message>
-        <location filename="../plugins/network/src/tray/network-tray.cpp" line="165"/>
+        <location filename="../plugins/network/src/tray/network-tray.cpp" line="166"/>
         <source>Network settings</source>
         <translation>网络设置</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/tray/network-tray.cpp" line="235"/>
-        <location filename="../plugins/network/src/tray/network-tray.cpp" line="555"/>
+        <location filename="../plugins/network/src/tray/network-tray.cpp" line="236"/>
+        <location filename="../plugins/network/src/tray/network-tray.cpp" line="563"/>
         <source>Network unavailable</source>
         <translation>网络不可用</translation>
     </message>
@@ -4084,22 +4082,22 @@ This is line 50 of the test text</source>
         <translation>网络已断开</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/tray/network-tray.cpp" line="519"/>
+        <location filename="../plugins/network/src/tray/network-tray.cpp" line="527"/>
         <source>Wired network card: %1 available</source>
         <translation>有线网卡: %1 可用</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/tray/network-tray.cpp" line="524"/>
+        <location filename="../plugins/network/src/tray/network-tray.cpp" line="532"/>
         <source>Wireless network card: %1 available</source>
         <translation>无线网卡: %1 可用</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/tray/network-tray.cpp" line="561"/>
+        <location filename="../plugins/network/src/tray/network-tray.cpp" line="569"/>
         <source>Wired network card: %1 unavailable</source>
         <translation>有线网卡: %1 不可用</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/tray/network-tray.cpp" line="566"/>
+        <location filename="../plugins/network/src/tray/network-tray.cpp" line="574"/>
         <source>Wireless network card: %1 unavailable</source>
         <translation>无线网卡: %1 不可用</translation>
     </message>
@@ -4299,17 +4297,18 @@ This is line 50 of the test text</source>
 <context>
     <name>PowerPlugin</name>
     <message>
-        <location filename="../plugins/power/power-plugin.cpp" line="55"/>
+        <location filename="../plugins/power/power-plugin.cpp" line="57"/>
+        <location filename="../plugins/power/power-plugin.cpp" line="97"/>
         <source>General Settings</source>
         <translation>通用设置</translation>
     </message>
     <message>
-        <location filename="../plugins/power/power-plugin.cpp" line="64"/>
+        <location filename="../plugins/power/power-plugin.cpp" line="66"/>
         <source>Power Settings</source>
         <translation>电源设置</translation>
     </message>
     <message>
-        <location filename="../plugins/power/power-plugin.cpp" line="79"/>
+        <location filename="../plugins/power/power-plugin.cpp" line="82"/>
         <source>Battery Settings</source>
         <translation>电池设置</translation>
     </message>
@@ -4522,7 +4521,7 @@ This is line 50 of the test text</source>
         <translation>无搜索结果，请重新搜索...</translation>
     </message>
     <message>
-        <location filename="../plugins/display/src/display-config.cpp" line="466"/>
+        <location filename="../plugins/display/src/display-config.cpp" line="468"/>
         <location filename="../plugins/display/src/display-config.h" line="134"/>
         <location filename="../plugins/display/src/display-page.cpp" line="400"/>
         <location filename="../plugins/display/src/display-page.cpp" line="418"/>
@@ -4530,7 +4529,7 @@ This is line 50 of the test text</source>
         <translation>提示</translation>
     </message>
     <message>
-        <location filename="../plugins/display/src/display-config.cpp" line="469"/>
+        <location filename="../plugins/display/src/display-config.cpp" line="471"/>
         <location filename="../plugins/display/src/display-config.h" line="137"/>
         <location filename="../plugins/display/src/display-page.cpp" line="403"/>
         <location filename="../plugins/display/src/display-page.cpp" line="421"/>
@@ -4624,6 +4623,44 @@ This is line 50 of the test text</source>
     </message>
 </context>
 <context>
+    <name>ServerGeneralSettings</name>
+    <message>
+        <location filename="../plugins/power/pages/server-general-settings.ui" line="14"/>
+        <source>ServerGeneralSettings</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../plugins/power/pages/server-general-settings.ui" line="175"/>
+        <source>Regard computer as idle after</source>
+        <translation>于此时间后视计算机为空闲</translation>
+    </message>
+    <message>
+        <location filename="../plugins/power/pages/server-general-settings.ui" line="229"/>
+        <source>SliderComputerIdleTime</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../plugins/power/pages/server-general-settings.ui" line="260"/>
+        <source>Lock screen when idle</source>
+        <translation>计算机空闲时锁定屏幕</translation>
+    </message>
+    <message>
+        <location filename="../plugins/power/pages/server-general-settings.cpp" line="116"/>
+        <source>General Settings</source>
+        <translation type="unfinished">通用设置</translation>
+    </message>
+    <message>
+        <location filename="../plugins/power/pages/server-general-settings.cpp" line="194"/>
+        <source>%1hour</source>
+        <translation>%1小时</translation>
+    </message>
+    <message>
+        <location filename="../plugins/power/pages/server-general-settings.cpp" line="198"/>
+        <source>%1minute</source>
+        <translation>%1分钟</translation>
+    </message>
+</context>
+<context>
     <name>SettingBriefWidget</name>
     <message>
         <location filename="../lib/common-widgets/setting-brief-widget/setting-brief-widget.ui" line="26"/>
@@ -4658,7 +4695,7 @@ This is line 50 of the test text</source>
     <message>
         <location filename="../plugins/keybinding/shortcut.ui" line="210"/>
         <location filename="../plugins/keybinding/shortcut.cpp" line="174"/>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="580"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="579"/>
         <source>Edit</source>
         <translation>编辑</translation>
     </message>
@@ -4819,80 +4856,80 @@ This is line 50 of the test text</source>
         <translation>桌面文件(*.desktop)</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="633"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="631"/>
         <source>System</source>
         <translation>系统</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="635"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="633"/>
         <source>Sound</source>
         <translation>声音</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="637"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="635"/>
         <source>Accessibility</source>
         <translation>辅助功能</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="687"/>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="737"/>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="758"/>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="793"/>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="814"/>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="847"/>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="868"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="685"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="735"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="756"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="791"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="812"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="845"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="866"/>
         <source>Failed</source>
         <translation>失败</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="688"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="686"/>
         <source>Delete shortcut failed,error:</source>
         <translation>删除快捷键失败，错误：</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="701"/>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="776"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="699"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="774"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="702"/>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="777"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="700"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="775"/>
         <source>Please complete the shortcut information!</source>
         <translation>请完善快捷键信息！</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="711"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="709"/>
         <source>Set shortcut</source>
         <translation>设置快捷键</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="712"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="710"/>
         <source>Are you sure you want to disable this shortcut?</source>
         <translation>是否确定要禁用此快捷键？</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="738"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="736"/>
         <source>Modify system shortcut failed,error:</source>
         <translation>修改系统快捷键失败，错误：</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="759"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="757"/>
         <source>Modify custom shortcut failed,error:</source>
         <translation>修改自定义快捷键失败，错误：</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="794"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="792"/>
         <source>Add custom shortcut failed,error:</source>
         <translation>添加自定义快捷键失败，错误：</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="815"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="813"/>
         <source>Reset shortcut failed,error:</source>
         <translation>重置快捷键失败，错误：</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="848"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="846"/>
         <source>Cannot use shortcut &quot;%1&quot;,Please keep pressing the modifier keys such as Ctrl,Alt, and Shift before pressing the last key of the shortcut key</source>
         <translation>无法使用快捷键&quot;%1&quot;, 请保持按压Ctrl、Alt、Shift等修饰键后，再按压快捷键的最后一个键</translation>
     </message>
@@ -4901,7 +4938,7 @@ This is line 50 of the test text</source>
         <translation type="vanished">无法使用快捷键&quot;%1&quot;,因为使用此键将无法输入，请同时使用Ctrl，Alt，Shift再试一次。</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="869"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="867"/>
         <source>Shortcut keys %1 are already used in %2,Please try again!</source>
         <translation>快捷键%1已用于%2，请再试一次！</translation>
     </message>
@@ -4996,7 +5033,7 @@ This is line 50 of the test text</source>
 <context>
     <name>SystemInfoSubItem</name>
     <message>
-        <location filename="../plugins/system/system-subitem.h" line="33"/>
+        <location filename="../plugins/system/system-subitem.h" line="46"/>
         <source>System Information</source>
         <translation>系统信息</translation>
     </message>
@@ -5367,12 +5404,12 @@ This is line 50 of the test text</source>
 <context>
     <name>ThreadObject</name>
     <message>
-        <location filename="../plugins/keybinding/utils/thread-object.cpp" line="137"/>
+        <location filename="../plugins/keybinding/utils/thread-object.cpp" line="145"/>
         <source>Failed</source>
         <translation>失败</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/utils/thread-object.cpp" line="138"/>
+        <location filename="../plugins/keybinding/utils/thread-object.cpp" line="146"/>
         <source>List shortcut failed,error:</source>
         <translation>列出快捷键失败，错误：</translation>
     </message>
@@ -5549,32 +5586,32 @@ This is line 50 of the test text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/mouse/pages/touchpad-page.cpp" line="268"/>
+        <location filename="../plugins/mouse/pages/touchpad-page.cpp" line="282"/>
         <source>Right Hand Mode</source>
         <translation>右手模式</translation>
     </message>
     <message>
-        <location filename="../plugins/mouse/pages/touchpad-page.cpp" line="268"/>
+        <location filename="../plugins/mouse/pages/touchpad-page.cpp" line="282"/>
         <source>Left Hand Mode</source>
         <translation>左手模式</translation>
     </message>
     <message>
-        <location filename="../plugins/mouse/pages/touchpad-page.cpp" line="272"/>
+        <location filename="../plugins/mouse/pages/touchpad-page.cpp" line="286"/>
         <source>Press and Tap</source>
         <translation>按键和轻触</translation>
     </message>
     <message>
-        <location filename="../plugins/mouse/pages/touchpad-page.cpp" line="272"/>
+        <location filename="../plugins/mouse/pages/touchpad-page.cpp" line="286"/>
         <source>Tap</source>
         <translation>轻触</translation>
     </message>
     <message>
-        <location filename="../plugins/mouse/pages/touchpad-page.cpp" line="276"/>
+        <location filename="../plugins/mouse/pages/touchpad-page.cpp" line="290"/>
         <source>Two Finger Scroll</source>
         <translation>两指滑动</translation>
     </message>
     <message>
-        <location filename="../plugins/mouse/pages/touchpad-page.cpp" line="276"/>
+        <location filename="../plugins/mouse/pages/touchpad-page.cpp" line="290"/>
         <source>Edge Scroll</source>
         <translation>边缘滑动</translation>
     </message>
@@ -6045,7 +6082,7 @@ This is line 50 of the test text</source>
 <context>
     <name>VolumeIntputSubItem</name>
     <message>
-        <location filename="../plugins/audio/src/plugin/volume-input-subitem.h" line="32"/>
+        <location filename="../plugins/audio/src/plugin/volume-input-subitem.h" line="45"/>
         <source>VolumeInput</source>
         <translation>输入</translation>
     </message>
@@ -6053,7 +6090,7 @@ This is line 50 of the test text</source>
 <context>
     <name>VolumeOutputSubItem</name>
     <message>
-        <location filename="../plugins/audio/src/plugin/volume-output-subitem.h" line="32"/>
+        <location filename="../plugins/audio/src/plugin/volume-output-subitem.h" line="45"/>
         <source>VolumeOutput</source>
         <translation>输出</translation>
     </message>
