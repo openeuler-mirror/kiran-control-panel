@@ -58,11 +58,13 @@ int PowerPlugin::init(KiranControlPanel::PanelInterface* interface)
     }
 
     m_subitems.append(KiranControlPanel::SubItemPtr(new GeneralSettingsSubItem()));
+#ifndef SERVER_MODE
     m_subitems.append(KiranControlPanel::SubItemPtr(new PowerSubItem()));
     if (UPowerInterface::haveBattery())
     {
         m_subitems.append(KiranControlPanel::SubItemPtr(new BatterySubItem()));
     }
+#endif
 
     return 0;
 }
