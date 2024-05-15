@@ -17,6 +17,8 @@
 #include <QObject>
 
 #include "pages/general-settings/general-settings-page.h"
+#include "pages/general-settings/server-general-settings.h"
+
 #include "panel-interface.h"
 #include "plugin-subitem-interface.h"
 
@@ -73,7 +75,11 @@ public:
     // 创建显示控件
     QWidget* createWidget() override
     {
+#ifndef SERVER_MODE
         return new GeneralSettingsPage();
+#else
+        return new ServerGeneralSettings();
+#endif
     }
 
     // 获取自定义搜索关键词
