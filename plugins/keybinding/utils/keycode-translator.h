@@ -16,6 +16,7 @@
 #define KIRAN_CONTROL_PANEL_KEYCODE_TRANSLATOR_H
 
 #include <QObject>
+#include <QKeyEvent>
 
 class KeycodeTranslator : public QObject
 {
@@ -174,7 +175,11 @@ private:
 
 public:
     static QString keycode2ReadableString(const QList<int>& keycodes);
+#if QT_VERSION < QT_VERSION_CHECK(5, 12, 2)
+    static int keycode2QtKey(const QKeyEvent* keyEvent);
+#else
     static int keycode2QtKey(unsigned long keycode);
+#endif
     static QString backendKeyString2Readable(const QString& keyString);
     static QString readableKeyString2Backend(const QString& keyString);
 };

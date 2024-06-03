@@ -15,7 +15,6 @@
 #include "keycode-translator.h"
 #include "logging-category.h"
 
-#include <QtXkbCommonSupport/private/qxkbcommon_p.h>
 #include <qt5-log-i.h>
 #include <QApplication>
 #include <QMetaEnum>
@@ -132,12 +131,33 @@ QString KeycodeTranslator::keycode2ReadableString(const QList<int> &keycodes)
     return keyStrings.join('+');
 }
 
+#if QT_VERSION < QT_VERSION_CHECK(5, 12, 2)
+#include <QtGui/private/qkeymapper_p.h>
+int KeycodeTranslator::keycode2QtKey(const QKeyEvent* keyEvent)
+{
+    QKeyEvent fakeEvent(*keyEvent);
+    fakeEvent.setModifiers(Qt::NoModifier);
+
+    auto keys = QKeyMapper::instance()->possibleKeys(&fakeEvent);
+
+    if( keys.isEmpty() )
+    {
+        return 0;
+    }
+    else
+    {
+        return keys.first();
+    }
+}
+#else
+#include <QtXkbCommonSupport/private/qxkbcommon_p.h>
 int KeycodeTranslator::keycode2QtKey(unsigned long keycode)
 {
     auto keysym = KeycodeHelper::keycode2Keysym(keycode);
     auto qtkey = QXkbCommon::keysymToQtKey(keysym, Qt::KeyboardModifier::NoModifier);
     return qtkey;
 }
+#endif
 
 QString KeycodeTranslator::backendKeyString2Readable(const QString &keyString)
 {
