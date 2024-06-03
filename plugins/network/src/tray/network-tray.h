@@ -27,7 +27,7 @@ class WiredTrayWidget;
 class WirelessTrayWidget;
 class StatusNotifierManagerInterface;
 class TrayPage;
-class QTcpSocket; 
+class QTcpSocket;
 class QVBoxLayout;
 
 class NetworkTray : public KiranRoundedTrayPopup
@@ -74,13 +74,13 @@ private slots:
     void handleDeviceStateChanged(NetworkManager::Device::State newstate,
                                   NetworkManager::Device::State oldstate,
                                   NetworkManager::Device::StateChangeReason reason);
+    void handleCarrierChanged();
     void handleDeviceManagedChanged();
     void handleWirelessEnabledChanged(bool enable);
 
     void handleAdjustedTraySize(QSize sizeHint);
 
     void handleThemeChanged(Kiran::PaletteType paletteType);
-
     void internetConnected();
     void internetError(QAbstractSocket::SocketError socketError);
 
@@ -108,29 +108,12 @@ private:
     QSize m_wirelessTraySizeHint;
     QTcpSocket *m_tcpClient;
 
-    // clang-format off
-    QMap<NetworkState, NetworkStateInfo> m_StateInfoMap = {
-        {
-            WIRED_CONNECTED,
-            {":/kcp-network-images/wired-connection.svg",tr("Network connected")}
-        },
-        {
-            WIRED_CONNECTED_BUT_NOT_ACCESS_INTERNET,
-            {":/kcp-network-images/wired-error.svg",tr("The network is connected, but you cannot access the Internet")}
-        },
-        {
-            WIRELESS_CONNECTED,
-            {":/kcp-network-images/wireless-4.svg",tr("Network connected")}
-        },
-        {
-            WIRELESS_CONNECTED_BUT_NOT_ACCESS_INTERNET,
-            {":/kcp-network-images/wired-error.svg",tr("The network is connected, but you cannot access the Internet")}
-        },
-        {
-            DISCONNECTED,
-            {":/kcp-network-images/wired-disconnected.svg",tr("Network not connected")}
-        }};
-    // clang-format on
+    struct CheckConnectivityContext {
+        bool enable = false;
+        QString address;
+        quint64 port;
+    } m_checkConnectivityContext;
+    bool m_checkWiredCarrier = false;
 };
 
 #endif  // KIRAN_CPANEL_NETWORK_MANAGER_TRAY_H

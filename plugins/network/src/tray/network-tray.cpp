@@ -39,10 +39,11 @@ using namespace NetworkManager;
 #define MAX_WAIT_COUNTS 10
 #define MAX_HEIGHT 868
 
-NetworkTray::NetworkTray(QWidget *parent) : KiranRoundedTrayPopup(parent),
-                                            m_wiredTrayPage(nullptr),
-                                            m_wirelessTrayPage(nullptr),
-                                            m_unavailableWidget(nullptr)
+NetworkTray::NetworkTray(QWidget *parent)
+    : KiranRoundedTrayPopup(parent),
+      m_wiredTrayPage(nullptr),
+      m_wirelessTrayPage(nullptr),
+      m_unavailableWidget(nullptr)
 {
     init();
 }
@@ -54,7 +55,28 @@ NetworkTray::~NetworkTray()
 
 void NetworkTray::init()
 {
-    m_statusNotifierManager = new StatusNotifierManagerInterface(STATUS_NOTIFIER_MANAGER, STATUS_NOTIFIER_MANAGER_OBJECT_NAME, QDBusConnection::sessionBus(), this);
+    m_statusNotifierManager = new StatusNotifierManagerInterface(STATUS_NOTIFIER_MANAGER,
+                                                                 STATUS_NOTIFIER_MANAGER_OBJECT_NAME,
+                                                                 QDBusConnection::sessionBus(),
+                                                                 this);
+
+    QSettings confSettings(SETTINGS_PATH, QSettings::NativeFormat);
+    // 是否开启联通性检查
+    QVariant checkConnectivityVar = confSettings.value(QString("Network/CheckInternetConnectivity"), true);
+    m_checkConnectivityContext.enable = checkConnectivityVar.toBool();
+    if (m_checkConnectivityContext.enable)
+    {
+        QVariant addressVar = confSettings.value(QString("Network/Address"));
+        m_checkConnectivityContext.address = addressVar.toString();
+
+        QVariant portVar = confSettings.value(QString("Network/Port"));
+        m_checkConnectivityContext.port = portVar.toInt();
+    }
+
+    // 检查网线网口负载,作为托盘显示连接状态的一个依据，CYSR定制需求(#36646)
+    QVariant checkWiredCarrier = confSettings.value(QString("Network/CheckWiredCarrier"), false);
+    m_checkWiredCarrier = checkWiredCarrier.toBool();
+
     initTcpSocket();
     initUI();
     initMenu();
@@ -68,9 +90,18 @@ void NetworkTray::init()
     for (Device::Ptr dev : deviceList)
     {
         auto type = dev->type();
-        if (type == Device::Ethernet || type == Device::Wifi)
+
+        if (type != Device::Ethernet && type != Device::Wifi)
         {
-            connect(dev.data(), &Device::stateChanged, this, &NetworkTray::handleDeviceStateChanged, Qt::UniqueConnection);
+            continue;
+        }
+
+        connect(dev.data(), &Device::stateChanged, this, &NetworkTray::handleDeviceStateChanged, Qt::UniqueConnection);
+
+        auto wiredDevice = qobject_cast<NetworkManager::WiredDevice *>(dev.data());
+        if (wiredDevice)
+        {
+            connect(wiredDevice, &WiredDevice::carrierChanged, this, &NetworkTray::handleCarrierChanged, Qt::UniqueConnection);
         }
     }
 }
@@ -338,7 +369,7 @@ void NetworkTray::getTrayGeometry()
     QJsonParseError jsonParseError;
     QJsonDocument doc = QJsonDocument::fromJson(getGeometry.value().toLatin1(), &jsonParseError);
 
-    if(doc.isNull() || !doc.isObject() || jsonParseError.error != QJsonParseError::NoError)
+    if (doc.isNull() || !doc.isObject() || jsonParseError.error != QJsonParseError::NoError)
     {
         return;
     }
@@ -386,48 +417,77 @@ void NetworkTray::updateTrayIcon()
     }
 
     NetworkState state = UNKNOWN;
+
     // 判断主连接类型，托盘网络图标以主连接类型为准
     // NetworkManager::primaryConnectionType() 更新不及时，暂时不用
+    ActiveConnection::Ptr primaryConn = primaryConnection();
+    if (primaryConn.isNull())
+    {
+        /**
+         * NOTE:
+         * 注意特殊情况，如果当网络状态为已连接，但是没有主连接，则遍历所有已激活的连接，
+         * 按有线优先于无线的原则，如果存在激活的有线连接，则显示有线网络图标;其次显示无线网络图标
+         * 如果既不是有线也不是无线，则显示有线网络图标
+         */
+        ActiveConnection::List list = activeConnections();
+        ConnectionSettings::ConnectionType wantConnectionTypes[] =
+            {ConnectionSettings::ConnectionType::Wired,
+             ConnectionSettings::ConnectionType::Wireless};
+
+        for (auto wantConnectionType : wantConnectionTypes)
+        {
+            for (auto activeConn : list)
+            {
+                if (activeConn->type() == wantConnectionType)
+                {
+                    primaryConn = activeConn;
+                    break;
+                }
+            }
+            if (!primaryConn.isNull())
+            {
+                break;
+            }
+        }
+    }
+
+    if (primaryConn->type() == ConnectionSettings::Wireless)
+    {
+        state = WIRELESS_CONNECTED_BUT_NOT_ACCESS_INTERNET;
+    }
+    else
+    {
+        state = WIRED_CONNECTED_BUT_NOT_ACCESS_INTERNET;
+    }
+
     /**
-     * NOTE:
-     * 注意特殊情况，如果当网络状态为已连接，但是没有主连接，则遍历所有已激活的连接，
-     * 按有线优先于无线的原则，如果存在激活的有线连接，则显示有线网络图标;其次显示无线网络图标
-     * 如果既不是有线也不是无线，则显示有线网络图标
+     * CYSR定制需求(#36646)
+     * 根据有线网口物理连接状态设置托盘图标
+     * 若有线网口物理连接状态都为未检测到连接时，则托盘图标为无网络
      */
-    ActiveConnection::Ptr primaryActiveConnection = primaryConnection();
-    if (!primaryActiveConnection.isNull())
+    if (m_checkWiredCarrier)
     {
-        if (primaryActiveConnection->type() == ConnectionSettings::Wireless)
+        bool hasCarrier = false;
+        auto devices = NetworkManager::networkInterfaces();
+        for (auto device : devices)
         {
-            state = WIRELESS_CONNECTED_BUT_NOT_ACCESS_INTERNET;
+            if (device->type() == NetworkManager::Device::Ethernet && qobject_cast<NetworkManager::WiredDevice *>(device))
+            {
+                auto wiredDevice = qobject_cast<NetworkManager::WiredDevice *>(device);
+                if (wiredDevice->carrier())
+                {
+                    hasCarrier = true;
+                    break;
+                }
+            }
         }
-        else
+        if (!hasCarrier)
         {
-            state = WIRED_CONNECTED_BUT_NOT_ACCESS_INTERNET;
+            setTrayIcon(DISCONNECTED);
+            return;
         }
     }
     SET_TRAY_ICON_AND_CHECK_CONNECTIVITY_AND_RETURN(state);
-
-    KLOG_INFO(qLcNetwork) << "primary active connection is null";
-    ActiveConnection::List list = activeConnections();
-    for (auto connection : list)
-    {
-        if (connection->type() == ConnectionSettings::ConnectionType::Wired)
-        {
-            state = WIRED_CONNECTED_BUT_NOT_ACCESS_INTERNET;
-            break;
-        }
-    }
-    SET_TRAY_ICON_AND_CHECK_CONNECTIVITY_AND_RETURN(state);
-
-    for (auto connection : list)
-    {
-        if (connection->type() == ConnectionSettings::ConnectionType::Wireless)
-        {
-            state = WIRELESS_CONNECTED_BUT_NOT_ACCESS_INTERNET;
-            break;
-        }
-    }
 
     // 最后如果既不是有线也不是无线，则显示有线网络图标
     if (state == UNKNOWN)
@@ -439,7 +499,19 @@ void NetworkTray::updateTrayIcon()
 
 void NetworkTray::setTrayIcon(NetworkState state)
 {
-    auto stateInfo = m_StateInfoMap.value(state);
+    QMap<NetworkState, NetworkStateInfo> stateInfoMap = {
+        {WIRED_CONNECTED,
+         {":/kcp-network-images/wired-connection.svg", tr("Network connected")}},
+        {WIRED_CONNECTED_BUT_NOT_ACCESS_INTERNET,
+         {":/kcp-network-images/wired-error.svg", tr("The network is connected, but you cannot access the Internet")}},
+        {WIRELESS_CONNECTED,
+         {":/kcp-network-images/wireless-4.svg", tr("Network connected")}},
+        {WIRELESS_CONNECTED_BUT_NOT_ACCESS_INTERNET,
+         {":/kcp-network-images/wired-error.svg", tr("The network is connected, but you cannot access the Internet")}},
+        {DISCONNECTED,
+         {":/kcp-network-images/wired-disconnected.svg", tr("Network not connected")}}};
+
+    auto stateInfo = stateInfoMap.value(state);
     setTrayIcon(stateInfo.iconPath, stateInfo.description);
 }
 
@@ -478,6 +550,12 @@ void NetworkTray::handleDeviceAdded(const QString &devicePath)
             }
         }
         connect(device.data(), &Device::stateChanged, this, &NetworkTray::handleDeviceStateChanged, Qt::UniqueConnection);
+
+        auto wiredDevice = qobject_cast<NetworkManager::WiredDevice *>(device.data());
+        if (wiredDevice)
+        {
+            connect(wiredDevice, &WiredDevice::carrierChanged, this, &NetworkTray::handleCarrierChanged, Qt::UniqueConnection);
+        }
     }
 }
 
@@ -507,10 +585,10 @@ void NetworkTray::handleDeviceStateChanged(NetworkManager::Device::State newstat
 {
     Device *device = qobject_cast<Device *>(sender());
     auto deviceType = device->type();
-    KLOG_DEBUG(qLcNetwork) << "Device interfaceName:" << device->interfaceName()
-                           << "newstate:" << newstate
-                           << "oldstate:" << oldstate
-                           << "reason:" << reason;
+    KLOG_DEBUG() << "Device interfaceName:" << device->interfaceName()
+                 << "newstate:" << newstate
+                 << "oldstate:" << oldstate
+                 << "reason:" << reason;
 
     QSet<Device::State> unavailableStates = {
         Device::Unavailable,
@@ -577,16 +655,23 @@ void NetworkTray::handleDeviceStateChanged(NetworkManager::Device::State newstat
         return;
     }
 
-    if (newstate == Device::State::Activated && oldstate != Device::State::Activated)
+    Device::State needUpdateIconStates[] = {
+        Device::State::Activated,
+        Device::State::Disconnected,
+        Device::State::Unavailable};
+
+    if (std::find(std::begin(needUpdateIconStates), std::end(needUpdateIconStates), newstate) != std::end(needUpdateIconStates) && oldstate != newstate)
     {
         updateTrayIcon();
         return;
     }
+}
 
-    if (newstate == Device::State::Disconnected && oldstate != Device::State::Disconnected)
+void NetworkTray::handleCarrierChanged()
+{
+    if (m_checkWiredCarrier)
     {
         updateTrayIcon();
-        return;
     }
 }
 
@@ -763,16 +848,13 @@ void NetworkTray::initTcpSocket()
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 15, 0))
     connect(m_tcpClient, &QAbstractSocket::errorOccurred, this, &NetworkTray::internetError);
 #else
-    connect(m_tcpClient, QOverload<QAbstractSocket::SocketError>::of(&QAbstractSocket::error),this, &NetworkTray::internetError);
+    connect(m_tcpClient, QOverload<QAbstractSocket::SocketError>::of(&QAbstractSocket::error), this, &NetworkTray::internetError);
 #endif
 }
 
 void NetworkTray::checkInternetConnectivity()
 {
-    QSettings confSettings(SETTINGS_PATH, QSettings::NativeFormat);
-    QVariant enable = confSettings.value(QString("Network/CheckInternetConnectivity"));
-    KLOG_DEBUG(qLcNetwork) << "check Internet Connectivity : " << enable;
-    if (!enable.toBool())
+    if (!m_checkConnectivityContext.enable)
     {
         internetConnected();
         return;
@@ -787,13 +869,12 @@ void NetworkTray::checkInternetConnectivity()
         return;
     }
 
-    QVariant address = confSettings.value(QString("Network/Address"));
-    QVariant port = confSettings.value(QString("Network/Port"));
     if (m_tcpClient->state() != QAbstractSocket::UnconnectedState)
     {
         m_tcpClient->abort();
     }
-    m_tcpClient->connectToHost(address.toString(), port.toInt());
+    m_tcpClient->connectToHost(m_checkConnectivityContext.address,
+                               m_checkConnectivityContext.port);
 }
 
 void NetworkTray::internetConnected()
