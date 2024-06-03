@@ -131,7 +131,7 @@ QString KeycodeTranslator::keycode2ReadableString(const QList<int> &keycodes)
     return keyStrings.join('+');
 }
 
-#if QT_VERSION < QT_VERSION_CHECK(5, 12, 2))
+#if QT_VERSION < QT_VERSION_CHECK(5, 12, 2)
 #include <QtGui/private/qkeymapper_p.h>
 int KeycodeTranslator::keycode2QtKey(const QKeyEvent* keyEvent)
 {

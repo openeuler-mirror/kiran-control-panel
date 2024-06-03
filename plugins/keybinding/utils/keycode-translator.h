@@ -175,7 +175,7 @@ private:
 
 public:
     static QString keycode2ReadableString(const QList<int>& keycodes);
-#if QT_VERSION < QT_VERSION_CHECK(5, 12, 2))
+#if QT_VERSION < QT_VERSION_CHECK(5, 12, 2)
     static int keycode2QtKey(const QKeyEvent* keyEvent);
 #else
     static int keycode2QtKey(unsigned long keycode);
