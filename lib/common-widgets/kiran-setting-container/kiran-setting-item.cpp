@@ -63,6 +63,14 @@ void KiranSettingItem::setRightButtonVisible(bool visible, const QIcon& icon, bo
     updateIcon();
 }
 
+void KiranSettingItem::setMidButtonVisible(bool visible, const QIcon& icon, bool midIconChanged)
+{
+    m_midButton->setVisible(visible);
+    m_midIcon = icon;
+    m_midIconChanged = midIconChanged;
+    updateIcon();
+}
+
 void KiranSettingItem::setSwitcherVisible(bool visible)
 {
     m_switcher->setVisible(visible);
@@ -114,6 +122,12 @@ void KiranSettingItem::initUI()
     connect(m_switcher, &KiranSwitchButton::toggled, this, [this](bool checked)
         { emit switchButtonToggled(m_userData, checked); });
 
+    m_midButton = new QPushButton(this);
+    m_midButton->setFixedSize(16, 16);
+    m_midButton->setFlat(true);
+    m_midButton->setVisible(false);
+    layout->addWidget(m_midButton);
+
     m_rightButton = new QPushButton(this);
     m_rightButton->setFixedSize(16, 16);
     m_rightButton->setFlat(true);
@@ -137,7 +151,8 @@ void KiranSettingItem::updateIcon()
     };
     QVector<ButtonIcon> buttonIconMap = {
         {m_leftButton, m_leftIcon, m_leftIconChanged},
-        {m_rightButton, m_rightIcon, m_rightIconChanged}};
+        {m_rightButton, m_rightIcon, m_rightIconChanged},
+        {m_midButton, m_midIcon, m_midIconChanged}};
 
     for (auto& iter : buttonIconMap)
     {

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist gettext-domain="@PROJECT_NAME@">
+    <schema id="com.kylinsec.kiran.language" path="/com/kylinsec/kiran/language/">
+        <key name="language-list" type="as">
+            <default>['en_US.UTF-8','zh_CN.UTF-8']</default>
+            <description>Show Language list.</description>
+        </key>
+    </schema>
+</schemalist>
+

@@ -93,4 +93,7 @@
         <file>images/desktop-file.svg</file>
     </qresource>
 
+    <qresource prefix="/kcp-language">
+        <file>images/language.svg</file>
+    </qresource>
 </RCC>
