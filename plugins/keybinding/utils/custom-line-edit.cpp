@@ -52,7 +52,11 @@ void CustomLineEdit::keyReleaseEvent(QKeyEvent *event)
     //处理shift修饰的快捷键组合，按键不经过shift转化，将原始按键keycode转化为对应的Qt::Key
     if (event->key() != 0 && (event->modifiers() & Qt::ShiftModifier))
     {
+#if QT_VERSION < QT_VERSION_CHECK(5, 12, 2))
+        qtkey = KeycodeTranslator::keycode2QtKey(event);
+#else
         qtkey = KeycodeTranslator::keycode2QtKey(event->nativeScanCode());
+#endif
         KLOG_INFO(qLcKeybinding) << "convert KeyCode:" << event->nativeScanCode() << "to Qt::Key:" << qtkey;
     }
 
