@@ -35,7 +35,7 @@ target_link_libraries(${TARGET_NAME}
 
 if(Qt5XkbCommonSupport_FOUND)
         target_include_directories(${TARGET_NAME} PRIVATE ${Qt5XkbCommonSupport_PRIVATE_INCLUDE_DIRS})
-        target_link_libraries(${TARGET_NAME} PRIVATE Qt5::XkbCommonSupport)
+        target_link_libraries(${TARGET_NAME}  Qt5::XkbCommonSupport)
 else()
         target_include_directories(${TARGET_NAME} PRIVATE ${Qt5Gui_PRIVATE_INCLUDE_DIRS})
 endif()
