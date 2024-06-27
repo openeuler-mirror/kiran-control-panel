@@ -16,13 +16,14 @@
 #include <kiran-sidebar-item.h>
 #include <qt5-log-i.h>
 #include "details-page/details-page.h"
+#include "logging-category.h"
 #include "signal-forward.h"
 #include "ui_cpanel-network-widget.h"
 #include "utils.h"
 #include "vpn-manager.h"
 #include "wired-manager.h"
 #include "wireless-manager.h"
-#include "logging-category.h"
+#include "prefs.h"
 
 using namespace NetworkManager;
 #define MAX_WAIT_COUNTS 10
@@ -36,6 +37,7 @@ enum NetworkSidebarItems
 };
 
 #define NETWORK_SIDEBAR_ITEM "NetworkSidebarItem"
+#define SIDERBAR_ITEM_TYPE_ROLE Qt::UserRole+100
 
 CPanelNetworkWidget::CPanelNetworkWidget(QWidget *parent) : QWidget(parent), ui(new Ui::CPanelNetworkWidget)
 {
@@ -85,8 +87,8 @@ void CPanelNetworkWidget::initPage()
     setCurrentSubItem(0);
 }
 
-//Note: 处理设备插拔情况，使用deviceAdded/deviceRemoved，但之前偶现过插拔时没有deviceAdded/deviceRemoved信号发出
-// 增加Device::managedChanged 信号处理设备插拔，增加冗余度
+// Note: 处理设备插拔情况，使用deviceAdded/deviceRemoved，但之前偶现过插拔时没有deviceAdded/deviceRemoved信号发出
+//  增加Device::managedChanged 信号处理设备插拔，增加冗余度
 void CPanelNetworkWidget::initConnect()
 {
     // Note:新设备插入后，需要等待一段时间，Device::List networkInterfaces() 来不及更新
@@ -122,6 +124,7 @@ void CPanelNetworkWidget::initWiredManager()
 
     KiranSidebarItem *wiredSidebarItem = new KiranSidebarItem();
     wiredSidebarItem->setText(tr("Wired Network"));
+    wiredSidebarItem->setData(SIDERBAR_ITEM_TYPE_ROLE,Device::Ethernet);
     m_subItemsList << tr("Wired Network");
     ui->sidebar->insertItem(0, wiredSidebarItem);
     m_kiranSidebarItems << wiredSidebarItem;
@@ -134,11 +137,15 @@ void CPanelNetworkWidget::initWiredManager()
         Device::Ptr device = wiredDeviceList.value(i);
         connect(device.data(), &Device::stateChanged, this, &CPanelNetworkWidget::changeDeviceState, Qt::UniqueConnection);
 
-        if (device->state() == Device::Activated)
+        if( Network::Prefs::instance()->getCheckWiredCarrier() )
         {
-            setSidebarItemStatus(wiredSidebarItem, Device::State::Activated);
+            auto wiredDevice = qobject_cast<WiredDevice*>(device.data());
+            connect(wiredDevice,&WiredDevice::carrierChanged,this,[this](){
+                updateSidebarItemStatus(NetworkManager::Device::Ethernet);
+            });
         }
     }
+    updateSidebarItemStatus(NetworkManager::Device::Ethernet);
 }
 
 void CPanelNetworkWidget::initWirelessManager()
@@ -155,7 +162,9 @@ void CPanelNetworkWidget::initWirelessManager()
 
     KiranSidebarItem *wirelessSidebarItem = new KiranSidebarItem();
     wirelessSidebarItem->setText(tr("Wireless Network"));
+    wirelessSidebarItem->setData(SIDERBAR_ITEM_TYPE_ROLE,Device::Wifi);
     m_subItemsList << tr("Wireless Network");
+
     ui->sidebar->insertItem(0, wirelessSidebarItem);
     m_kiranSidebarItems << wirelessSidebarItem;
 
@@ -166,12 +175,8 @@ void CPanelNetworkWidget::initWirelessManager()
     {
         Device::Ptr device = wirelessDeviceList.value(i);
         connect(device.data(), &Device::stateChanged, this, &CPanelNetworkWidget::changeDeviceState, Qt::UniqueConnection);
-
-        if (device->state() == Device::Activated)
-        {
-            setSidebarItemStatus(wirelessSidebarItem, Device::State::Activated);
-        }
     }
+    updateSidebarItemStatus(NetworkManager::Device::Wifi);
 }
 
 void CPanelNetworkWidget::changeDeviceState(NetworkManager::Device::State newstate, NetworkManager::Device::State oldstate, NetworkManager::Device::StateChangeReason reason)
@@ -211,50 +216,46 @@ void CPanelNetworkWidget::addWiredDevice(const QString &devicePath)
     }
 }
 
-// TODO:需要优化
 void CPanelNetworkWidget::updateSidebarItemStatus(NetworkManager::Device::Type deviceType)
 {
     QString sidebarItemText;
     Device::State state = Device::Disconnected;
 
-    auto wiredDeviceList = NetworkUtils::getManagedDeviceList(Device::Ethernet);
-    auto wirelessDeviceList = NetworkUtils::getManagedDeviceList(Device::Wifi);
-
-    if (deviceType == Device::Wifi)
+    if (deviceType != Device::Ethernet &&
+        deviceType != Device::Wifi)
     {
-        sidebarItemText = tr("Wireless Network");
-        for (auto device : wirelessDeviceList)
+        return;
+    }
+
+    auto deviceList = NetworkUtils::getManagedDeviceList(deviceType);
+    for (auto device : deviceList)
+    {
+        bool checkWiredCarrier = Network::Prefs::instance()->getCheckWiredCarrier();
+        auto wireDevice = qobject_cast<WiredDevice*>(device);
+        if( checkWiredCarrier && wireDevice )
         {
-            if (device->state() == Device::State::Activated)
+            if ( wireDevice->carrier() && device->state() == Device::State::Activated )
             {
                 state = Device::State::Activated;
                 break;
             }
         }
-    }
-    else
-    {
-        sidebarItemText = tr("Wired Network");
-        for (auto device : wiredDeviceList)
+        else if( device->state() == Device::State::Activated )
         {
-            if (device->state() == Device::State::Activated)
-            {
-                state = Device::State::Activated;
-                break;
-            }
+            state = Device::State::Activated;
+            break;
         }
     }
 
-    KiranSidebarItem *sidebarItem;
+    KiranSidebarItem *sidebarItem = nullptr;
     for (auto item : m_kiranSidebarItems)
     {
-        if (item->text() == sidebarItemText)
+        if (item->data(SIDERBAR_ITEM_TYPE_ROLE).toInt() == deviceType)
         {
             sidebarItem = item;
             break;
         }
     }
-
     setSidebarItemStatus(sidebarItem, state);
 }
 
@@ -378,7 +379,7 @@ bool CPanelNetworkWidget::isExistWiredItem()
 {
     for (auto item : m_kiranSidebarItems)
     {
-        if (item->text() == tr("Wired Network"))
+        if (item->data(SIDERBAR_ITEM_TYPE_ROLE).toInt() == Device::Ethernet)
         {
             return true;
         }
@@ -390,7 +391,7 @@ bool CPanelNetworkWidget::isExistWirelessItem()
 {
     for (auto item : m_kiranSidebarItems)
     {
-        if (item->text() == tr("Wireless Network"))
+        if (item->data(SIDERBAR_ITEM_TYPE_ROLE).toInt() == Device::Wifi)
         {
             return true;
         }
