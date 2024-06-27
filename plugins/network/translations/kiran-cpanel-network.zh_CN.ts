@@ -903,7 +903,12 @@
         <translation>已连接</translation>
     </message>
     <message>
-        <location filename="../src/tray/tray-itemwidget.cpp" line="158"/>
+        <location filename="../src/tray/tray-itemwidget.cpp" line="181"/>
+        <source>cable not connected</source>
+        <translation>网线未连接</translation>
+    </message>
+    <message>
+        <location filename="../src/tray/tray-itemwidget.cpp" line="198"/>
         <source>Unconnected</source>
         <translation>未连接</translation>
     </message>

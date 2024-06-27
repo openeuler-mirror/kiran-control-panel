@@ -14,6 +14,7 @@
 
 #include "tray-connection-list.h"
 #include <qt5-log-i.h>
+#include <NetworkManagerQt/WiredDevice>
 #include <NetworkManagerQt/WirelessSetting>
 #include "general.h"
 #include "status-notification.h"
@@ -50,53 +51,55 @@ void TrayConnectionList::addConnection(NetworkManager::Connection::Ptr ptr, cons
         return;
     }
 
-    NetworkConnectionInfo connectionInfo;
-    connectionInfo.id = ptr->name();
-    connectionInfo.uuid = ptr->uuid();
-    connectionInfo.connectionPath = ptr->path();
-    connectionInfo.devicePath = devicePath;
-
     TrayItemWidget* trayItemWidget = new TrayItemWidget();
     trayItemWidget->setName(ptr->name());
     trayItemWidget->setWiredStatusIcon();
     trayItemWidget->setFixedSize(TRAY_ITEM_NORAML_SIZE);
 
     ActiveConnection::List activeConnectionList = activeConnections();
-    for (ActiveConnection::Ptr activeConnection : activeConnectionList)
+    ActiveConnection::Ptr activeConnection;
+    for (ActiveConnection::Ptr conn : activeConnectionList)
     {
-        QStringList deviceList = activeConnection->devices();
-        if (activeConnection->uuid() == ptr->uuid() &&
+        QStringList deviceList = conn->devices();
+        if (conn->uuid() == ptr->uuid() &&
             (deviceList.contains(devicePath) || devicePath.isEmpty()))
         {
-            connectionInfo.activeConnectionPath = activeConnection->path();
-            switch (activeConnection->state())
-            {
-            case ActiveConnection::Activating:
-                trayItemWidget->setFixedSize(TRAY_ITEM_EXTENDED_SIZE);
-                trayItemWidget->activatingStatus();
-                break;
-            case ActiveConnection::Activated:
-                trayItemWidget->setFixedSize(TRAY_ITEM_EXTENDED_SIZE);
-                trayItemWidget->activatedStatus();
-                break;
-            default:
-                break;
-            }
+            activeConnection = conn;
         }
     }
+
+    NetworkConnectionInfo connectionInfo;
+    connectionInfo.id = ptr->name();
+    connectionInfo.uuid = ptr->uuid();
+    connectionInfo.connectionPath = ptr->path();
+    connectionInfo.devicePath = devicePath;
+    connectionInfo.activeConnectionPath = activeConnection.isNull()?"":activeConnection->path();
 
     QVariant var;
     var.setValue(connectionInfo);
     // item中保存connection的相关信息
     trayItemWidget->setProperty(PROPERTY_NETWORK_CONNECTION_INFO, var);
     trayItemWidget->setAccessibleName(QString("WiredConnectionItem::%1").arg(connectionInfo.id));
+    if (!activeConnection.isNull())
+    {
+        auto connectionState = activeConnection->state();
+        if (connectionState == ActiveConnection::Activating)
+        {
+            trayItemWidget->setFixedSize(TRAY_ITEM_EXTENDED_SIZE);
+            trayItemWidget->activatingStatus();
+        }
+        else if (connectionState == ActiveConnection::Activated)
+        {
+            trayItemWidget->setFixedSize(TRAY_ITEM_EXTENDED_SIZE);
+            trayItemWidget->activatedStatus();
+        }
+    }
 
     this->addWidget(trayItemWidget);
     this->sort();
     adjustTraySize();
 
     connect(ptr.data(), &Connection::updated, this, &TrayConnectionList::handleConnectionUpdated, Qt::UniqueConnection);
-
     connect(trayItemWidget, &TrayItemWidget::disconnectButttonClicked, this, &TrayConnectionList::handleDisconnectButtonClicked);
     connect(trayItemWidget, &TrayItemWidget::connectButtonClicked, this, &TrayConnectionList::handleConnectButtonClicked);
     connect(trayItemWidget, &TrayItemWidget::cancelButtonClicked, this, &TrayConnectionList::handleCancelButtonClicked);
@@ -285,7 +288,7 @@ void TrayConnectionList::handleConnectionItemClicked()
         // 若itemWidget的size为EXTENDED_SIZE,说明itemWidget已经展开，并进入了激活操作流程
         if (clickedItemWidget->size() != TRAY_ITEM_EXTENDED_SIZE)
         {
-            //调整itemWidget的height，将其展开
+            // 调整itemWidget的height，将其展开
             clickedItemWidget->setFixedSize(TRAY_ITEM_EXTENDED_SIZE);
             if (isWireless)
             {
@@ -300,7 +303,7 @@ void TrayConnectionList::handleConnectionItemClicked()
             else
                 clickedItemWidget->prepareConnectStatus();
 
-            //将其它展开但是未激活的itemWidget收缩回去
+            // 将其它展开但是未激活的itemWidget收缩回去
             QList<QWidget*> widgetList = itemWidgetList();
             for (auto widget : widgetList)
             {
@@ -363,7 +366,7 @@ void TrayConnectionList::handleCancelButtonClicked()
             if (activeConnectionPathFromItem == path)
             {
                 ActiveConnection::Ptr activeConnection = findActiveConnection(path);
-                if(activeConnection.isNull())
+                if (activeConnection.isNull())
                 {
                     break;
                 }
