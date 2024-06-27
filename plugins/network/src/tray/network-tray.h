@@ -29,6 +29,10 @@ class StatusNotifierManagerInterface;
 class TrayPage;
 class QTcpSocket;
 class QVBoxLayout;
+namespace Network
+{
+class Prefs;
+}
 
 class NetworkTray : public KiranRoundedTrayPopup
 {
@@ -85,6 +89,7 @@ private slots:
     void internetError(QAbstractSocket::SocketError socketError);
 
 private:
+    Network::Prefs* m_prefs;
     QSystemTrayIcon *m_systemTray;
     QMenu *m_menu;
     QAction *m_networkSetting;
@@ -107,13 +112,6 @@ private:
     int m_waitCounts;
     QSize m_wirelessTraySizeHint;
     QTcpSocket *m_tcpClient;
-
-    struct CheckConnectivityContext {
-        bool enable = false;
-        QString address;
-        quint64 port;
-    } m_checkConnectivityContext;
-    bool m_checkWiredCarrier = false;
 };
 
 #endif  // KIRAN_CPANEL_NETWORK_MANAGER_TRAY_H

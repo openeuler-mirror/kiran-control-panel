@@ -16,8 +16,7 @@ file(GLOB_RECURSE PLUGIN_SRC "src/plugin/*.cpp" "src/plugin/*.h" "src/plugin/*.u
 file(GLOB_RECURSE TRAY_SRC "src/tray/*.cpp" "src/tray/*.h" "src/tray/*.ui")
 
 file(GLOB_RECURSE COMMON_SRC "src/animation-loading-label*" "src/connection-list*"
- "src/status-notification*" "src/utils*" "src/signal-forward*" "src/general.h")
-
+ "src/status-notification*" "src/utils*" "src/signal-forward*" "src/general.h" "src/prefs.*")
 file(GLOB_RECURSE QRC "resources/*.qrc")
 
 add_library(${TARGET_NAME} SHARED
@@ -64,7 +63,7 @@ target_link_libraries(${TARGET_NAME}
         ${KIRAN_STYLE_HELPER_LIBRARIES}
         KF5::NetworkManagerQt
         )
-      
+
 set(TRAY_PROCESS kiran-network-status-icon)
 
 add_executable(${TRAY_PROCESS}
