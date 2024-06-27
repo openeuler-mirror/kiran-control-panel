@@ -231,5 +231,5 @@ void WiredTrayWidget::handleConnectionUpdated(const QString &path)
 {
     m_connectionList->removeConnectionFromList(path);
     Connection::Ptr updateConnection = findConnection(path);
-    m_connectionList->addConnection(updateConnection, "");
+    m_connectionList->addConnection(updateConnection, m_devicePath);
 }
