@@ -16,14 +16,19 @@
 #include <qt5-log-i.h>
 #include <style-palette.h>
 #include <style-property.h>
+#include <NetworkManagerQt/Settings>
+#include <NetworkManagerQt/WiredDevice>
 #include <QMouseEvent>
 #include <QPainter>
 #include <QPainterPath>
 #include <QStyleOption>
 #include <QSvgRenderer>
+#include "general.h"
 #include "ui_tray-itemwidget.h"
 #include "utils.h"
+#include "prefs.h"
 
+Q_DECLARE_METATYPE(NetworkConnectionInfo)
 TrayItemWidget::TrayItemWidget(QWidget *parent) : QWidget(parent), ui(new Ui::TrayItemWidget)
 {
     ui->setupUi(this);
@@ -145,6 +150,41 @@ void TrayItemWidget::activatedStatus()
     ui->disconnectButton->setVisible(true);
     ui->ignoreButton->setVisible(false);
     ui->connectionStatus->setText(tr("Connected"));
+
+    bool checkWiredCarrier = Network::Prefs::instance()->getCheckWiredCarrier();
+    /**
+     * 临时更改:
+     * CYSR需求，连接状态配置跟随有线设备硬件状态
+     * 配置被激活时，连接对应设备的Carrier状态，刷新该状态
+     * 文本显示 已启用,未连接
+     */
+    auto connectionInfo = property(PROPERTY_NETWORK_CONNECTION_INFO).value<NetworkConnectionInfo>();
+    do
+    {
+        if (connectionInfo.isWireless || !checkWiredCarrier)
+        {
+            break;
+        }
+
+        auto devicePath = connectionInfo.devicePath;
+        auto device = NetworkManager::findNetworkInterface(devicePath);
+        auto wiredDevice = qobject_cast<NetworkManager::WiredDevice *>(device);
+        if (device.isNull() ||
+            !device->isValid() ||
+            !wiredDevice)
+        {
+            break;
+        }
+
+        if (!wiredDevice->carrier())
+        {
+            ui->connectionStatus->setText(tr("cable not connected"));
+        }
+
+        disconnect(this, SLOT(onCarrierChanged(bool)));
+        connect(wiredDevice.data(), &NetworkManager::WiredDevice::carrierChanged,
+                this, &TrayItemWidget::onCarrierChanged, Qt::UniqueConnection);
+    } while (0);
 }
 
 void TrayItemWidget::deactivateStatus()
@@ -301,6 +341,19 @@ void TrayItemWidget::handleThemeChanged(Kiran::PaletteType paletteType)
     image.invertPixels(QImage::InvertRgb);
     QPixmap pixmap = QPixmap::fromImage(image);
     ui->connectionTypeIcon->setPixmap(pixmap);
+}
+
+void TrayItemWidget::onCarrierChanged(bool plogged)
+{
+    auto connectionInfo = property(PROPERTY_NETWORK_CONNECTION_INFO).value<NetworkConnectionInfo>();
+    if (!connectionInfo.activeConnectionPath.isEmpty())
+    {
+        auto activeConnection = NetworkManager::findActiveConnection(connectionInfo.activeConnectionPath);
+        if (activeConnection->state())
+        {
+            activatedStatus();
+        }
+    }
 }
 
 void TrayItemWidget::mousePressEvent(QMouseEvent *event)

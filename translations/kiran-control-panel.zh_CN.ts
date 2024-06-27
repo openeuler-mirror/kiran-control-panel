@@ -605,48 +605,44 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/plugin/cpanel-network-widget.cpp" line="71"/>
-        <location filename="../plugins/network/src/plugin/cpanel-network-widget.cpp" line="74"/>
+        <location filename="../plugins/network/src/plugin/cpanel-network-widget.cpp" line="72"/>
+        <location filename="../plugins/network/src/plugin/cpanel-network-widget.cpp" line="75"/>
         <source>VPN</source>
         <translation>VPN</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/plugin/cpanel-network-widget.cpp" line="80"/>
-        <location filename="../plugins/network/src/plugin/cpanel-network-widget.cpp" line="83"/>
+        <location filename="../plugins/network/src/plugin/cpanel-network-widget.cpp" line="81"/>
+        <location filename="../plugins/network/src/plugin/cpanel-network-widget.cpp" line="84"/>
         <source>Network Details</source>
         <translation>网络详情</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/plugin/cpanel-network-widget.cpp" line="124"/>
         <location filename="../plugins/network/src/plugin/cpanel-network-widget.cpp" line="125"/>
-        <location filename="../plugins/network/src/plugin/cpanel-network-widget.cpp" line="237"/>
-        <location filename="../plugins/network/src/plugin/cpanel-network-widget.cpp" line="338"/>
-        <location filename="../plugins/network/src/plugin/cpanel-network-widget.cpp" line="381"/>
+        <location filename="../plugins/network/src/plugin/cpanel-network-widget.cpp" line="127"/>
+        <location filename="../plugins/network/src/plugin/cpanel-network-widget.cpp" line="329"/>
         <source>Wired Network</source>
         <translation>有线网络</translation>
     </message>
     <message>
+        <location filename="../plugins/network/src/plugin/cpanel-network-widget.cpp" line="155"/>
         <location filename="../plugins/network/src/plugin/cpanel-network-widget.cpp" line="157"/>
-        <location filename="../plugins/network/src/plugin/cpanel-network-widget.cpp" line="158"/>
-        <location filename="../plugins/network/src/plugin/cpanel-network-widget.cpp" line="225"/>
-        <location filename="../plugins/network/src/plugin/cpanel-network-widget.cpp" line="312"/>
-        <location filename="../plugins/network/src/plugin/cpanel-network-widget.cpp" line="345"/>
-        <location filename="../plugins/network/src/plugin/cpanel-network-widget.cpp" line="393"/>
+        <location filename="../plugins/network/src/plugin/cpanel-network-widget.cpp" line="303"/>
+        <location filename="../plugins/network/src/plugin/cpanel-network-widget.cpp" line="336"/>
         <source>Wireless Network</source>
         <translation>无线网络</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/plugin/cpanel-network-widget.cpp" line="270"/>
+        <location filename="../plugins/network/src/plugin/cpanel-network-widget.cpp" line="261"/>
         <source>Connected</source>
         <translation>已连接</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/plugin/cpanel-network-widget.cpp" line="274"/>
+        <location filename="../plugins/network/src/plugin/cpanel-network-widget.cpp" line="265"/>
         <source>Unavailable</source>
         <translation>已禁用</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/plugin/cpanel-network-widget.cpp" line="278"/>
+        <location filename="../plugins/network/src/plugin/cpanel-network-widget.cpp" line="269"/>
         <source>Disconnected</source>
         <translation>已断开</translation>
     </message>
@@ -3088,12 +3084,12 @@
 <context>
     <name>KeycodeTranslator</name>
     <message>
-        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="148"/>
+        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="168"/>
         <source>None</source>
         <translation>暂无</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="152"/>
+        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="172"/>
         <source>disabled</source>
         <translation>禁用</translation>
     </message>
@@ -3720,87 +3716,87 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>Media Key</name>
     <message>
-        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="71"/>
+        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="70"/>
         <source>Audio Play</source>
         <translation>音频播放</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="72"/>
+        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="71"/>
         <source>Search</source>
         <translation>搜索</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="73"/>
+        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="72"/>
         <source>WWW</source>
         <translation>万维网</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="74"/>
+        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="73"/>
         <source>Audio Lower Volume</source>
         <translation>减小音量</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="75"/>
+        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="74"/>
         <source>Audio Raise Volume</source>
         <translation>增大音量</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="76"/>
+        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="75"/>
         <source>Mic Mute</source>
         <translation>输入静音</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="77"/>
+        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="76"/>
         <source>Audio Stop</source>
         <translation>音频停止</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="78"/>
+        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="77"/>
         <source>Explorer</source>
         <translation>浏览</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="79"/>
+        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="78"/>
         <source>Calculator</source>
         <translation>计算器</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="80"/>
+        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="79"/>
         <source>Audio Mute</source>
         <translation>音频暂停</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="81"/>
+        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="80"/>
         <source>Audio Pause</source>
         <translation>音频暂停</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="82"/>
+        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="81"/>
         <source>Audio Prev</source>
         <translation>音频上一个</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="83"/>
+        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="82"/>
         <source>Audio Media</source>
         <translation>音频媒体</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="84"/>
+        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="83"/>
         <source>Audio Next</source>
         <translation>音频下一个</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="85"/>
+        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="84"/>
         <source>Mail</source>
         <translation>邮件</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="86"/>
+        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="85"/>
         <source>Tools</source>
         <translation>工具</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="87"/>
+        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="86"/>
         <source>Eject</source>
         <translation>弹出</translation>
     </message>
@@ -4070,50 +4066,50 @@ This is line 50 of the test text</source>
 <context>
     <name>NetworkTray</name>
     <message>
-        <location filename="../plugins/network/src/tray/network-tray.cpp" line="166"/>
+        <location filename="../plugins/network/src/tray/network-tray.cpp" line="197"/>
         <source>Network settings</source>
         <translation>网络设置</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/tray/network-tray.cpp" line="236"/>
-        <location filename="../plugins/network/src/tray/network-tray.cpp" line="563"/>
+        <location filename="../plugins/network/src/tray/network-tray.cpp" line="267"/>
+        <location filename="../plugins/network/src/tray/network-tray.cpp" line="646"/>
         <source>Network unavailable</source>
         <translation>网络不可用</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/tray/network-tray.h" line="119"/>
-        <location filename="../plugins/network/src/tray/network-tray.h" line="127"/>
+        <location filename="../plugins/network/src/tray/network-tray.cpp" line="511"/>
+        <location filename="../plugins/network/src/tray/network-tray.cpp" line="515"/>
         <source>The network is connected, but you cannot access the Internet</source>
         <translation>网络已连接，但不能访问互联网</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/tray/network-tray.h" line="131"/>
+        <location filename="../plugins/network/src/tray/network-tray.cpp" line="517"/>
         <source>Network not connected</source>
         <translation>网络已断开</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/tray/network-tray.cpp" line="527"/>
+        <location filename="../plugins/network/src/tray/network-tray.cpp" line="610"/>
         <source>Wired network card: %1 available</source>
         <translation>有线网卡: %1 可用</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/tray/network-tray.cpp" line="532"/>
+        <location filename="../plugins/network/src/tray/network-tray.cpp" line="615"/>
         <source>Wireless network card: %1 available</source>
         <translation>无线网卡: %1 可用</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/tray/network-tray.cpp" line="569"/>
+        <location filename="../plugins/network/src/tray/network-tray.cpp" line="652"/>
         <source>Wired network card: %1 unavailable</source>
         <translation>有线网卡: %1 不可用</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/tray/network-tray.cpp" line="574"/>
+        <location filename="../plugins/network/src/tray/network-tray.cpp" line="657"/>
         <source>Wireless network card: %1 unavailable</source>
         <translation>无线网卡: %1 不可用</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/tray/network-tray.h" line="115"/>
-        <location filename="../plugins/network/src/tray/network-tray.h" line="123"/>
+        <location filename="../plugins/network/src/tray/network-tray.cpp" line="509"/>
+        <location filename="../plugins/network/src/tray/network-tray.cpp" line="513"/>
         <source>Network connected</source>
         <translation>网络已连接</translation>
     </message>
@@ -5716,7 +5712,7 @@ This is line 50 of the test text</source>
 <context>
     <name>TrayConnectionList</name>
     <message>
-        <location filename="../plugins/network/src/tray/tray-connection-list.cpp" line="185"/>
+        <location filename="../plugins/network/src/tray/tray-connection-list.cpp" line="188"/>
         <source>Other WiFi networks</source>
         <translation>其它WIFI网络</translation>
     </message>
@@ -5766,22 +5762,27 @@ This is line 50 of the test text</source>
         <translation>连接</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/tray/tray-itemwidget.cpp" line="147"/>
+        <location filename="../plugins/network/src/tray/tray-itemwidget.cpp" line="151"/>
         <source>Connected</source>
         <translation>已连接</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/tray/tray-itemwidget.cpp" line="158"/>
+        <location filename="../plugins/network/src/tray/tray-itemwidget.cpp" line="182"/>
+        <source>cable not connected</source>
+        <translation>网线未连接</translation>
+    </message>
+    <message>
+        <location filename="../plugins/network/src/tray/tray-itemwidget.cpp" line="199"/>
         <source>Unconnected</source>
         <translation>未连接</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/tray/tray-itemwidget.cpp" line="192"/>
+        <location filename="../plugins/network/src/tray/tray-itemwidget.cpp" line="233"/>
         <source>Please input password</source>
         <translation>请输入密码</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/tray/tray-itemwidget.cpp" line="201"/>
+        <location filename="../plugins/network/src/tray/tray-itemwidget.cpp" line="242"/>
         <source>Please input a network name</source>
         <translation>请输入网络名称</translation>
     </message>
