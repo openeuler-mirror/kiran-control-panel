@@ -31,6 +31,7 @@
 #include "utils.h"
 #include "wired-tray-widget.h"
 #include "wireless-tray-widget.h"
+#include "prefs.h"
 
 using namespace NetworkManager;
 
@@ -55,27 +56,11 @@ NetworkTray::~NetworkTray()
 
 void NetworkTray::init()
 {
+    m_prefs = Network::Prefs::instance();
     m_statusNotifierManager = new StatusNotifierManagerInterface(STATUS_NOTIFIER_MANAGER,
                                                                  STATUS_NOTIFIER_MANAGER_OBJECT_NAME,
                                                                  QDBusConnection::sessionBus(),
                                                                  this);
-
-    QSettings confSettings(SETTINGS_PATH, QSettings::NativeFormat);
-    // 是否开启联通性检查
-    QVariant checkConnectivityVar = confSettings.value(QString("Network/CheckInternetConnectivity"), true);
-    m_checkConnectivityContext.enable = checkConnectivityVar.toBool();
-    if (m_checkConnectivityContext.enable)
-    {
-        QVariant addressVar = confSettings.value(QString("Network/Address"));
-        m_checkConnectivityContext.address = addressVar.toString();
-
-        QVariant portVar = confSettings.value(QString("Network/Port"));
-        m_checkConnectivityContext.port = portVar.toInt();
-    }
-
-    // 检查网线网口负载,作为托盘显示连接状态的一个依据，CYSR定制需求(#36646)
-    QVariant checkWiredCarrier = confSettings.value(QString("Network/CheckWiredCarrier"), false);
-    m_checkWiredCarrier = checkWiredCarrier.toBool();
 
     initTcpSocket();
     initUI();
@@ -465,12 +450,17 @@ void NetworkTray::updateTrayIcon()
      * 根据有线网口物理连接状态设置托盘图标
      * 若有线网口物理连接状态都为未检测到连接时，则托盘图标为无网络
      */
-    if (m_checkWiredCarrier)
+    if (m_prefs->getCheckWiredCarrier())
     {
         bool hasCarrier = false;
         auto devices = NetworkManager::networkInterfaces();
         for (auto device : devices)
         {
+            if( device->state() == Device::Unmanaged )
+            {
+                continue;
+            }
+
             if (device->type() == NetworkManager::Device::Ethernet && qobject_cast<NetworkManager::WiredDevice *>(device))
             {
                 auto wiredDevice = qobject_cast<NetworkManager::WiredDevice *>(device);
@@ -669,7 +659,7 @@ void NetworkTray::handleDeviceStateChanged(NetworkManager::Device::State newstat
 
 void NetworkTray::handleCarrierChanged()
 {
-    if (m_checkWiredCarrier)
+    if (m_prefs->getCheckWiredCarrier())
     {
         updateTrayIcon();
     }
@@ -854,7 +844,7 @@ void NetworkTray::initTcpSocket()
 
 void NetworkTray::checkInternetConnectivity()
 {
-    if (!m_checkConnectivityContext.enable)
+    if (!m_prefs->getCheckConnectivity())
     {
         internetConnected();
         return;
@@ -873,8 +863,8 @@ void NetworkTray::checkInternetConnectivity()
     {
         m_tcpClient->abort();
     }
-    m_tcpClient->connectToHost(m_checkConnectivityContext.address,
-                               m_checkConnectivityContext.port);
+    m_tcpClient->connectToHost(m_prefs->getConnectivityAddress(),
+                               m_prefs->getConnectivityPort());
 }
 
 void NetworkTray::internetConnected()

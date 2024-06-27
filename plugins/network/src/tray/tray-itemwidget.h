@@ -75,6 +75,7 @@ public slots:
     void handleInputText();
     QString getPassword();
     void handleThemeChanged(Kiran::PaletteType paletteType);
+    void onCarrierChanged(bool plogged);
 
 protected:
     void paintEvent(QPaintEvent *event) override;
