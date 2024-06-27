@@ -4,7 +4,7 @@ set(TARGET_NAME kiran-cpanel-network)
 file(GLOB_RECURSE PLUGIN_SRC "src/plugin/*.cpp" "src/plugin/*.h" "src/plugin/*.ui")
 file(GLOB_RECURSE TRAY_SRC "src/tray/*.cpp" "src/tray/*.h" "src/tray/*.ui")
 file(GLOB_RECURSE COMMON_SRC "src/animation-loading-label*" "src/connection-list*"
- "src/status-notification*" "src/utils*" "src/signal-forward*" "src/general.h")
+ "src/status-notification*" "src/utils*" "src/signal-forward*" "src/general.h" "src/network-prefs.*" "src/prefs.*")
 file(GLOB_RECURSE QRC "resources/*.qrc")
 
 add_library(${TARGET_NAME} SHARED
