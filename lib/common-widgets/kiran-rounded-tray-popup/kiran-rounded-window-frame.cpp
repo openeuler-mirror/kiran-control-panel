@@ -16,6 +16,7 @@
 #include <QPainter>
 #include <QPainterPath>
 #include <QBitmap>
+#include <QX11Info>
 
 #include "kiran-rounded-window-frame.h"
 
@@ -44,8 +45,10 @@ void KiranRoundedWindowFrame::paintEvent(QPaintEvent *event)
 
     QPainterPath painterPath;
     QRectF rectf = rect();
-    painterPath.addRoundedRect(rectf.adjusted(0.5,0.5,-0.5,-0.5),radius,radius);
-    
+
+    int tmpRadius = QX11Info::isCompositingManagerRunning()?radius:0;
+    painterPath.addRoundedRect(rectf.adjusted(0.5,0.5,-0.5,-0.5),tmpRadius,tmpRadius);
+
     QPen pen;
     pen.setJoinStyle(Qt::RoundJoin);
     pen.setCapStyle(Qt::RoundCap);
