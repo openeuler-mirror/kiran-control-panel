@@ -21,6 +21,7 @@
 #include <QGraphicsDropShadowEffect>
 #include <QPainter>
 #include <QPainterPath>
+#include <QX11Info>
 
 KiranRoundedTrayPopup::KiranRoundedTrayPopup(QWidget *parent)
     : QWidget(parent)
@@ -76,16 +77,10 @@ void KiranRoundedTrayPopup::setContentWidget(QWidget *widget)
 
 void KiranRoundedTrayPopup::init()
 {
-    auto shadowEffect = new QGraphicsDropShadowEffect(this);
-    shadowEffect->setBlurRadius(15);
-    shadowEffect->setOffset(0);
-    shadowEffect->setColor("#111111");
-    setGraphicsEffect(shadowEffect);
-
     QVBoxLayout *layout = new QVBoxLayout(this);
     layout->setSpacing(0);
-    layout->setMargin(8);
     layout->setSizeConstraint(QLayout::SetMinAndMaxSize);
+    layout->setMargin(0);
 
     auto roundedFrame = new KiranRoundedWindowFrame(this);
     m_contentLayout = new QVBoxLayout(roundedFrame);
@@ -94,4 +89,15 @@ void KiranRoundedTrayPopup::init()
     m_contentLayout->setSizeConstraint(QLayout::SetMinAndMaxSize);
 
     layout->addWidget(roundedFrame);
+
+    if (QX11Info::isCompositingManagerRunning())
+    {
+        auto shadowEffect = new QGraphicsDropShadowEffect(this);
+        shadowEffect->setBlurRadius(15);
+        shadowEffect->setOffset(0);
+        shadowEffect->setColor("#111111");
+
+        setGraphicsEffect(shadowEffect);
+        layout->setMargin(8);
+    }
 }
