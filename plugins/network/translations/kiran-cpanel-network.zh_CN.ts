@@ -9,48 +9,44 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="156"/>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="157"/>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="224"/>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="311"/>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="344"/>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="392"/>
+        <location filename="../src/plugin/cpanel-network-widget.cpp" line="163"/>
+        <location filename="../src/plugin/cpanel-network-widget.cpp" line="165"/>
+        <location filename="../src/plugin/cpanel-network-widget.cpp" line="312"/>
+        <location filename="../src/plugin/cpanel-network-widget.cpp" line="345"/>
         <source>Wireless Network</source>
         <translation>无线网络</translation>
     </message>
     <message>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="70"/>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="73"/>
+        <location filename="../src/plugin/cpanel-network-widget.cpp" line="72"/>
+        <location filename="../src/plugin/cpanel-network-widget.cpp" line="75"/>
         <source>VPN</source>
         <translation>VPN</translation>
     </message>
     <message>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="79"/>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="82"/>
+        <location filename="../src/plugin/cpanel-network-widget.cpp" line="81"/>
+        <location filename="../src/plugin/cpanel-network-widget.cpp" line="84"/>
         <source>Network Details</source>
         <translation>网络详情</translation>
     </message>
     <message>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="123"/>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="124"/>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="236"/>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="337"/>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="380"/>
+        <location filename="../src/plugin/cpanel-network-widget.cpp" line="125"/>
+        <location filename="../src/plugin/cpanel-network-widget.cpp" line="127"/>
+        <location filename="../src/plugin/cpanel-network-widget.cpp" line="338"/>
         <source>Wired Network</source>
         <translation>有线网络</translation>
     </message>
     <message>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="269"/>
+        <location filename="../src/plugin/cpanel-network-widget.cpp" line="270"/>
         <source>Connected</source>
         <translation>已连接</translation>
     </message>
     <message>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="273"/>
+        <location filename="../src/plugin/cpanel-network-widget.cpp" line="274"/>
         <source>Unavailable</source>
         <translation>已禁用</translation>
     </message>
     <message>
-        <location filename="../src/plugin/cpanel-network-widget.cpp" line="277"/>
+        <location filename="../src/plugin/cpanel-network-widget.cpp" line="278"/>
         <source>Disconnected</source>
         <translation>已断开</translation>
     </message>
@@ -523,10 +519,18 @@
         <translation>手动</translation>
     </message>
     <message>
-        <location filename="../src/plugin/setting-widget/ipv4-widget.cpp" line="40"/>
-        <location filename="../src/plugin/setting-widget/ipv4-widget.cpp" line="41"/>
         <source>Required</source>
-        <translation>必填</translation>
+        <translation type="vanished">必填</translation>
+    </message>
+    <message>
+        <location filename="../src/plugin/setting-widget/ipv4-widget.cpp" line="40"/>
+        <source>Required,separated multiple entries by semicolon</source>
+        <translation>必填，请用分号分隔多个条目</translation>
+    </message>
+    <message>
+        <location filename="../src/plugin/setting-widget/ipv4-widget.cpp" line="41"/>
+        <source>Required,separate multiple entries by semicolon</source>
+        <translation>必填，请用分号分隔多个条目</translation>
     </message>
     <message>
         <location filename="../src/plugin/setting-widget/ipv4-widget.cpp" line="42"/>
@@ -534,32 +538,50 @@
         <translation>请用分号分隔多个DNS</translation>
     </message>
     <message>
-        <location filename="../src/plugin/setting-widget/ipv4-widget.cpp" line="247"/>
+        <location filename="../src/plugin/setting-widget/ipv4-widget.cpp" line="266"/>
         <source>Ipv4 DNS invalid</source>
         <translation>无效的Ipv4 DNS</translation>
     </message>
     <message>
-        <location filename="../src/plugin/setting-widget/ipv4-widget.cpp" line="266"/>
+        <location filename="../src/plugin/setting-widget/ipv4-widget.cpp" line="287"/>
         <source>Ipv4 address can not be empty</source>
         <translation>Ipv4地址不能为空</translation>
     </message>
     <message>
-        <location filename="../src/plugin/setting-widget/ipv4-widget.cpp" line="276"/>
-        <source>Ipv4 Address invalid</source>
+        <location filename="../src/plugin/setting-widget/ipv4-widget.cpp" line="303"/>
+        <source>Ipv4 address is invalid</source>
         <translation>无效的Ipv4地址</translation>
     </message>
     <message>
-        <location filename="../src/plugin/setting-widget/ipv4-widget.cpp" line="286"/>
+        <location filename="../src/plugin/setting-widget/ipv4-widget.cpp" line="329"/>
+        <source>NetMask is invalid</source>
+        <translation>无效的子网掩码</translation>
+    </message>
+    <message>
+        <location filename="../src/plugin/setting-widget/ipv4-widget.cpp" line="341"/>
+        <source>The number of IPs and masks cannot correspond</source>
+        <translation>ipv4地址和子网掩码数量不等，请确认</translation>
+    </message>
+    <message>
+        <location filename="../src/plugin/setting-widget/ipv4-widget.cpp" line="349"/>
+        <source>The entries of IPs and masks cannot exceed 10</source>
+        <translation>IP和掩码的条目不能超过10个</translation>
+    </message>
+    <message>
+        <source>Ipv4 Address invalid</source>
+        <translation type="vanished">无效的Ipv4地址</translation>
+    </message>
+    <message>
+        <location filename="../src/plugin/setting-widget/ipv4-widget.cpp" line="315"/>
         <source>NetMask can not be empty</source>
         <translation>子网掩码不能为空</translation>
     </message>
     <message>
-        <location filename="../src/plugin/setting-widget/ipv4-widget.cpp" line="296"/>
         <source>Netmask invalid</source>
-        <translation>无效的子网掩码</translation>
+        <translation type="vanished">无效的子网掩码</translation>
     </message>
     <message>
-        <location filename="../src/plugin/setting-widget/ipv4-widget.cpp" line="308"/>
+        <location filename="../src/plugin/setting-widget/ipv4-widget.cpp" line="359"/>
         <source>Ipv4 Gateway invalid</source>
         <translation>无效的Ipv4网关</translation>
     </message>
@@ -670,9 +692,8 @@
 <context>
     <name>NetworkSubItem</name>
     <message>
-        <location filename="../src/plugin/network-subitem.cpp" line="125"/>
         <source>Wired Network %1</source>
-        <translation>有线网络 %1</translation>
+        <translation type="vanished">有线网络 %1</translation>
     </message>
     <message>
         <location filename="../src/plugin/network-subitem.cpp" line="129"/>
@@ -680,22 +701,21 @@
         <translation>有线网络</translation>
     </message>
     <message>
-        <location filename="../src/plugin/network-subitem.cpp" line="138"/>
         <source>Wireless Network %1</source>
-        <translation>无线网络  %1</translation>
+        <translation type="vanished">无线网络  %1</translation>
     </message>
     <message>
-        <location filename="../src/plugin/network-subitem.cpp" line="143"/>
+        <location filename="../src/plugin/network-subitem.cpp" line="135"/>
         <source>Wireless Network</source>
         <translation>无线网络</translation>
     </message>
     <message>
-        <location filename="../src/plugin/network-subitem.cpp" line="150"/>
+        <location filename="../src/plugin/network-subitem.cpp" line="139"/>
         <source>VPN</source>
         <translation>VPN</translation>
     </message>
     <message>
-        <location filename="../src/plugin/network-subitem.cpp" line="151"/>
+        <location filename="../src/plugin/network-subitem.cpp" line="140"/>
         <source>Network Details</source>
         <translation>网络详情</translation>
     </message>
@@ -703,50 +723,50 @@
 <context>
     <name>NetworkTray</name>
     <message>
-        <location filename="../src/tray/network-tray.cpp" line="165"/>
+        <location filename="../src/tray/network-tray.cpp" line="181"/>
         <source>Network settings</source>
         <translation>网络设置</translation>
     </message>
     <message>
-        <location filename="../src/tray/network-tray.cpp" line="235"/>
-        <location filename="../src/tray/network-tray.cpp" line="559"/>
+        <location filename="../src/tray/network-tray.cpp" line="251"/>
+        <location filename="../src/tray/network-tray.cpp" line="630"/>
         <source>Network unavailable</source>
         <translation>网络不可用</translation>
     </message>
     <message>
-        <location filename="../src/tray/network-tray.cpp" line="523"/>
+        <location filename="../src/tray/network-tray.cpp" line="594"/>
         <source>Wired network card: %1 available</source>
         <translation>有线网卡: %1 可用</translation>
     </message>
     <message>
-        <location filename="../src/tray/network-tray.cpp" line="528"/>
+        <location filename="../src/tray/network-tray.cpp" line="599"/>
         <source>Wireless network card: %1 available</source>
         <translation>无线网卡: %1 可用</translation>
     </message>
     <message>
-        <location filename="../src/tray/network-tray.cpp" line="565"/>
+        <location filename="../src/tray/network-tray.cpp" line="636"/>
         <source>Wired network card: %1 unavailable</source>
         <translation>有线网卡: %1 不可用</translation>
     </message>
     <message>
-        <location filename="../src/tray/network-tray.cpp" line="570"/>
+        <location filename="../src/tray/network-tray.cpp" line="641"/>
         <source>Wireless network card: %1 unavailable</source>
         <translation>无线网卡: %1 不可用</translation>
     </message>
     <message>
-        <location filename="../src/tray/network-tray.h" line="115"/>
-        <location filename="../src/tray/network-tray.h" line="123"/>
+        <location filename="../src/tray/network-tray.cpp" line="493"/>
+        <location filename="../src/tray/network-tray.cpp" line="497"/>
         <source>Network connected</source>
         <translation>网络已连接</translation>
     </message>
     <message>
-        <location filename="../src/tray/network-tray.h" line="119"/>
-        <location filename="../src/tray/network-tray.h" line="127"/>
+        <location filename="../src/tray/network-tray.cpp" line="495"/>
+        <location filename="../src/tray/network-tray.cpp" line="499"/>
         <source>The network is connected, but you cannot access the Internet</source>
         <translation>网络已连接，但不能访问互联网</translation>
     </message>
     <message>
-        <location filename="../src/tray/network-tray.h" line="131"/>
+        <location filename="../src/tray/network-tray.cpp" line="501"/>
         <source>Network not connected</source>
         <translation>网络已断开</translation>
     </message>
@@ -848,7 +868,7 @@
 <context>
     <name>TrayConnectionList</name>
     <message>
-        <location filename="../src/tray/tray-connection-list.cpp" line="184"/>
+        <location filename="../src/tray/tray-connection-list.cpp" line="187"/>
         <source>Other WiFi networks</source>
         <translation>其它WIFI网络</translation>
     </message>
@@ -898,7 +918,7 @@
         <translation>连接</translation>
     </message>
     <message>
-        <location filename="../src/tray/tray-itemwidget.cpp" line="147"/>
+        <location filename="../src/tray/tray-itemwidget.cpp" line="152"/>
         <source>Connected</source>
         <translation>已连接</translation>
     </message>
@@ -913,12 +933,12 @@
         <translation>未连接</translation>
     </message>
     <message>
-        <location filename="../src/tray/tray-itemwidget.cpp" line="192"/>
+        <location filename="../src/tray/tray-itemwidget.cpp" line="232"/>
         <source>Please input password</source>
         <translation>请输入密码</translation>
     </message>
     <message>
-        <location filename="../src/tray/tray-itemwidget.cpp" line="201"/>
+        <location filename="../src/tray/tray-itemwidget.cpp" line="241"/>
         <source>Please input a network name</source>
         <translation>请输入网络名称</translation>
     </message>
