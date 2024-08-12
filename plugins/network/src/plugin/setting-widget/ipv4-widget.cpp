@@ -38,8 +38,8 @@ void Ipv4Widget::initUI()
     ui->ipv4Method->addItem(tr("Auto"), Ipv4Setting::ConfigMethod::Automatic);
     ui->ipv4Method->addItem(tr("Manual"), Ipv4Setting::ConfigMethod::Manual);
     ui->ipv4Manual->setVisible(false);
-    ui->ipv4Address->setPlaceholderText(tr("Required"));
-    ui->ipv4Netmask->setPlaceholderText(tr("Required"));
+    ui->ipv4Address->setPlaceholderText(tr("Required,separated multiple entries by semicolon"));
+    ui->ipv4Netmask->setPlaceholderText(tr("Required,separate multiple entries by semicolon"));
     ui->ipv4DNS->setPlaceholderText(tr("Please separate multiple DNS entries by semicolon"));
 }
 
@@ -81,48 +81,64 @@ void Ipv4Widget::saveSettings()
         return;
     }
 
-    IpAddress ipv4Address;
     Ipv4Setting::ConfigMethod method = ui->ipv4Method->currentData().value<NetworkManager::Ipv4Setting::ConfigMethod>();
     if (method == Ipv4Setting::ConfigMethod::Automatic)
     {
+        IpAddress emptyAddress;
+        emptyAddress.setIp(QHostAddress(""));
+        emptyAddress.setNetmask(QHostAddress(""));
+        emptyAddress.setGateway(QHostAddress(""));
+
         m_ipv4Setting->setMethod(method);
-        ipv4Address.setIp(QHostAddress(""));
-        ipv4Address.setNetmask(QHostAddress(""));
-        ipv4Address.setGateway(QHostAddress(""));
-        m_ipv4Setting->setAddresses(QList<NetworkManager::IpAddress>() << ipv4Address);
+        m_ipv4Setting->setAddresses(QList<NetworkManager::IpAddress>() << emptyAddress);
     }
     else if (method == Ipv4Setting::ConfigMethod::Manual)
     {
         m_ipv4Setting->setMethod(method);
 
-        ipv4Address.setIp(QHostAddress(ui->ipv4Address->text()));
-        //TODO：net mask 支持十进制设置
-        QString netMask = ui->ipv4Netmask->text();
-        if (!netMask.contains("."))
+        QList<IpAddress> ipv4AddresseList;
+        auto ipVec = ui->ipv4Address->text().split(';').toVector();
+        auto maskVec = ui->ipv4Netmask->text().split(';').toVector();
+        auto gateway = ui->ipv4Gateway->text();
+        for ( int i=0; i<ipVec.size();i++ )
         {
-            int netPrefix = netMask.toInt();
-            if ((netPrefix > 0) & (netPrefix < 33))
+            IpAddress ipv4Address;
+            QString ipStr = ipVec[i];
+
+            ipv4Address.setIp(QHostAddress(ipStr));
+
+            if( i >= maskVec.size() )
             {
-                ipv4Address.setPrefixLength(netPrefix);
+                KLOG_WARNING(qLcNetwork) << ipStr << "lack net prefix.";
+                continue;
             }
             else
             {
-                KLOG_DEBUG(qLcNetwork) << "Net prefix length error";
+                QString netMaskTemp = maskVec.at(i);
+                if( !netMaskTemp.contains(".") ) //十进制掩码
+                {
+                    int netPrefix = netMaskTemp.toInt();
+                    if ( netPrefix <= 0 || netPrefix >= 33 )
+                    {
+                        KLOG_WARNING(qLcNetwork) << ipStr << "net prefix length error";
+                        continue;
+                    }
+                    ipv4Address.setPrefixLength(netPrefix);
+                }
+                else //点分十进制
+                {
+                    ipv4Address.setNetmask(QHostAddress(netMaskTemp));
+                }
             }
-        }
-        else
-        {
-            ipv4Address.setNetmask(QHostAddress(netMask));
-        }
+            ipv4Address.setGateway(QHostAddress(gateway));
+            KLOG_DEBUG(qLcNetwork) << "ipv4 name:" << m_ipv4Setting->name();
+            KLOG_DEBUG(qLcNetwork) << "\tappend" << ipv4Address.ip().toString() 
+                                   << ipv4Address.netmask().toString() 
+                                   << ipv4Address.gateway().toString()
+                                   << ipv4Address.gateway().toString();
 
-        ipv4Address.setGateway(QHostAddress(ui->ipv4Gateway->text()));
-        KLOG_DEBUG(qLcNetwork) << "ipv4 ip:" << ipv4Address.ip();
-        KLOG_DEBUG(qLcNetwork) << "ipv4 netmask:" << ipv4Address.netmask();
-        KLOG_DEBUG(qLcNetwork) << "ipv4 prefix Length:" << ipv4Address.prefixLength();
-        KLOG_DEBUG(qLcNetwork) << "ipv4 gateway:" << ipv4Address.gateway();
-
-        QList<IpAddress> ipv4AddresseList;
-        ipv4AddresseList << ipv4Address;
+            ipv4AddresseList << ipv4Address;
+        }
         m_ipv4Setting->setAddresses(ipv4AddresseList);
     }
 
@@ -162,26 +178,29 @@ void Ipv4Widget::showSettings()
     {
         int ipv4MethodIndex = ui->ipv4Method->findData(m_ipv4Setting->method());
         ui->ipv4Method->setCurrentIndex(ipv4MethodIndex);
-        // xxx:取addresses的方式有待改进
-        IpAddress ipv4Address = m_ipv4Setting->addresses().value(0);
-        QString address = ipv4Address.ip().toString();
-        QString netmask = ipv4Address.netmask().toString();
-        QString gateway = ipv4Address.gateway().toString();
 
-        KLOG_DEBUG(qLcNetwork) << "address:" << address;
-        KLOG_DEBUG(qLcNetwork) << "netmask:" << netmask;
-        KLOG_DEBUG(qLcNetwork) << "gateway:" << gateway;
+        QList<QString> ipList;
+        QList<QString> maskList;
+        QString gateway;
+        auto ipAdresss = m_ipv4Setting->addresses(); 
+        for ( auto ipv4Address : ipAdresss )
+        {
+            QString address = ipv4Address.ip().toString();
+            ipList << address;
 
-        ui->ipv4Address->setText(address);
-        ui->ipv4Netmask->setText(netmask);
-        if(gateway != "0.0.0.0")
-        {
-            ui->ipv4Gateway->setText(gateway);
+            QString netmask = ipv4Address.netmask().toString();
+            maskList << netmask;
+
+            QString temp = ipv4Address.gateway().toString();
+            if(temp != "0.0.0.0")
+            {
+                gateway = temp;
+            }
         }
-        else
-        {
-            ui->ipv4Gateway->clear();
-        }
+
+        ui->ipv4Address->setText(ipList.join(';'));
+        ui->ipv4Netmask->setText(maskList.join(';'));
+        ui->ipv4Gateway->setText(gateway);
     }
 
     QString dnsString = "";
@@ -258,6 +277,8 @@ bool Ipv4Widget::isInputValid()
 
 bool Ipv4Widget::isIpv4ManualConfigValid()
 {
+    int ipCount = 0;
+    int maskCount = 0;
     QString ipv4 = ui->ipv4Address->text();
     QString netMask = ui->ipv4Netmask->text();
     QString ipv4Gateway = ui->ipv4Gateway->text();
@@ -267,18 +288,26 @@ bool Ipv4Widget::isIpv4ManualConfigValid()
         QString error = QString(tr("Ipv4 address can not be empty"));
         m_errorTip->setText(error);
         m_errorTip->showTipAroundWidget(ui->ipv4Address);
+
         KLOG_DEBUG(qLcNetwork) << "Ipv4 address can not be empty";
         return false;
     }
     else
     {
-        if (!isIpv4AddressValid(ipv4))
+        auto ipVector = ipv4.split(";").toVector();
+        ipCount = ipVector.size();
+
+        for (int i = 0; i < ipCount; i++)
         {
-            QString error = QString(tr("Ipv4 Address invalid"));
-            m_errorTip->setText(error);
-            m_errorTip->showTipAroundWidget(ui->ipv4Address);
-            KLOG_DEBUG(qLcNetwork) << "Ipv4 Address invalid";
-            return false;
+            if (!isIpv4AddressValid(ipVector[i]))
+            {
+                QString error = QString(tr("Ipv4 address is invalid"));
+                m_errorTip->setText(error);
+                m_errorTip->showTipAroundWidget(ui->ipv4Address);
+
+                KLOG_DEBUG(qLcNetwork) << "Ipv4 address is invalid";
+                return false;
+            }
         }
     }
 
@@ -292,14 +321,36 @@ bool Ipv4Widget::isIpv4ManualConfigValid()
     }
     else
     {
-        if (!isIpv4NetmaskValid(netMask))
+        auto netMaskVector = netMask.split(";").toVector();
+        maskCount = netMaskVector.size();
+        for (auto netMask : netMaskVector)
         {
-            QString error = QString(tr("Netmask invalid"));
-            m_errorTip->setText(error);
-            m_errorTip->showTipAroundWidget(ui->ipv4Netmask);
-            KLOG_DEBUG(qLcNetwork) << "Netmask invalid";
-            return false;
+            if (!isIpv4NetmaskValid(netMask))
+            {
+                QString error = QString(tr("NetMask is invalid"));
+                m_errorTip->setText(error);
+                m_errorTip->showTipAroundWidget(ui->ipv4Netmask);
+                KLOG_DEBUG(qLcNetwork) << "NetMaskis invalid";
+
+                return false;
+            }
         }
+    }
+
+    if( ipCount != maskCount )
+    {
+        QString error = QString(tr("The number of IPs and masks cannot correspond"));
+        m_errorTip->setText(error);
+        m_errorTip->showTipAroundWidget(ui->ipv4Netmask);
+        return false;
+    }
+
+    if( ipCount > 10 || maskCount > 10 )
+    {
+        QString error = QString(tr("The entries of IPs and masks cannot exceed 10"));
+        m_errorTip->setText(error);
+        m_errorTip->showTipAroundWidget(ipCount>10?ui->ipv4Address:ui->ipv4Netmask);
+        return false;
     }
 
     if (!ipv4Gateway.isEmpty())
