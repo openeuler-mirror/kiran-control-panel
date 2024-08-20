@@ -70,7 +70,7 @@ VolumeSettingPage::~VolumeSettingPage()
 
 void VolumeSettingPage::initDbusServiceWatcher()
 {
-    m_dbusServiceWatcher = new QDBusServiceWatcher();
+    m_dbusServiceWatcher = new QDBusServiceWatcher(this);
     m_dbusServiceWatcher->setConnection(QDBusConnection::sessionBus());
     m_dbusServiceWatcher->addWatchedService(AUDIO_DBUS_NAME);
     m_dbusServiceWatcher->setWatchMode(QDBusServiceWatcher::WatchForUnregistration);

@@ -30,7 +30,7 @@ OutputPage::OutputPage(QWidget *parent) : QWidget(parent),
     m_audioInterface = AudioInterface::instance();
     init();
 
-    m_dbusServiceWatcher = new QDBusServiceWatcher();
+    m_dbusServiceWatcher = new QDBusServiceWatcher(this);
     m_dbusServiceWatcher->setConnection(QDBusConnection::sessionBus());
     m_dbusServiceWatcher->addWatchedService(AUDIO_DBUS_NAME);
 
