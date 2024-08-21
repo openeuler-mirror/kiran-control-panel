@@ -148,13 +148,16 @@ void ConnectionDetailsWidget::setIpDetails()
 {
     KLOG_INFO(qLcNetwork) << m_device << "ip details";
 
+    QStringList addressList,netmaskList;
     IpConfig ipV4Config = m_activeConnection->ipV4Config();
-    IpAddress ipv4Address = ipV4Config.addresses().value(0);
-    QString address = ipv4Address.ip().toString();
-    QString netmask = ipv4Address.netmask().toString();
     QString gateway = ipV4Config.gateway();
-    ui->ipv4->setText(address);
-    ui->subnetMask->setText(netmask);
+    for( const auto &address : ipV4Config.addresses() )
+    {
+        addressList << address.ip().toString();
+        netmaskList << address.netmask().toString();
+    }
+    ui->ipv4->setText(addressList.join(";"));
+    ui->subnetMask->setText(netmaskList.join(";"));
     ui->ipv4Gateway->setText(gateway);
 
     Dhcp4Config::Ptr dhcp = m_activeConnection->dhcp4Config();
@@ -214,8 +217,8 @@ void ConnectionDetailsWidget::setIpDetails()
     ui->prefix->setText(QString::number(prefix));
 
     KLOG_INFO(qLcNetwork) << "active connection state:" << m_activeConnection->state();
-    KLOG_INFO(qLcNetwork) << "ipv4:" << address;
-    KLOG_INFO(qLcNetwork) << "netmask:" << netmask;
+    KLOG_INFO(qLcNetwork) << "ipv4:" << addressList;
+    KLOG_INFO(qLcNetwork) << "netmask:" << netmaskList;
     KLOG_INFO(qLcNetwork) << "gateway:" << gateway;
     KLOG_INFO(qLcNetwork) << "dhcp options:" << dhcpOptions;
     KLOG_INFO(qLcNetwork) << "ipv6:" << ipv6;
