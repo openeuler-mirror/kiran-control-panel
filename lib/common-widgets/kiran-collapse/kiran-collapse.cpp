@@ -250,6 +250,15 @@ void KiranCollapse::setExpansionMargin(int left, int top, int right, int bottom)
                                                     m_expansionMarginRight,
                                                     m_expansionMarginBottom);
 }
+
+QMargins KiranCollapse::expansionMargin()
+{
+    return QMargins(m_expansionMarginLeft,
+                    m_expansionMarginTop,
+                    m_expansionMarginRight,
+                    m_expansionMarginBottom);
+}
+
 void KiranCollapse::setTopBarMargin(int left, int top, int right, int bottom)
 {
     ui->topBar->setTopBarMargin(left, top, right, bottom);

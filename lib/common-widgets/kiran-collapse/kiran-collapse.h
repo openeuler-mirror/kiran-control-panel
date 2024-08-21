@@ -60,6 +60,8 @@ public:
      */
     void setExpansionMargin(int left, int top, int right, int bottom);
 
+    QMargins expansionMargin();
+
     /**
      * @brief 设置顶栏内部间距
      * @param left, top, right, bottom
