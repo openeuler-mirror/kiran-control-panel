@@ -72,6 +72,7 @@ private:
     void addConnectionItem(ConnectionItemWidget *item);
     void removeConnectionItem(ConnectionItemWidget *item);
     void addHiddenNetworkItem();
+    void updateMaximumExpansionHeight();
 
     void updateConnectionItemStatus(ConnectionItemWidget *item);
 
