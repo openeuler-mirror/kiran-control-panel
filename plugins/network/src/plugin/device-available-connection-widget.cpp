@@ -383,6 +383,7 @@ void DeviceAvailableConnectionWidget::addConnectionItem(ConnectionItemWidget *ne
     }
 
     m_contentWidgetLayout->insertWidget(insertPosition, newItem);
+    updateMaximumExpansionHeight();
     m_connectionItemList << newItem;
 }
 
@@ -390,6 +391,7 @@ void DeviceAvailableConnectionWidget::removeConnectionItem(ConnectionItemWidget 
 {
     m_contentWidgetLayout->removeWidget(item);
     m_connectionItemList.removeOne(item);
+    updateMaximumExpansionHeight();
 }
 
 void DeviceAvailableConnectionWidget::addHiddenNetworkItem()
@@ -409,6 +411,22 @@ void DeviceAvailableConnectionWidget::addHiddenNetworkItem()
     connectionItemWidget->setFixedHeight(PLUGIN_ITEM_WIDGET_HEIGHT);
 
     m_contentWidgetLayout->addWidget(connectionItemWidget);
+    updateMaximumExpansionHeight();
+}
+
+void DeviceAvailableConnectionWidget::updateMaximumExpansionHeight()
+{
+    auto expansionMargin = KiranCollapse::expansionMargin();
+    auto contentWidgetMargin = m_contentWidgetLayout->contentsMargins();
+    auto contentWidgetSpacing = m_contentWidgetLayout->spacing();
+
+    //计算KiranCollapse::expansionSpace最大展开高度
+    int maximumHeight = expansionMargin.top() + expansionMargin.bottom() +
+                        contentWidgetMargin.top() + contentWidgetMargin.bottom() +
+                        (contentWidgetSpacing * (m_contentWidgetLayout->count() - 1)) +
+                        (m_contentWidgetLayout->count() * PLUGIN_ITEM_WIDGET_HEIGHT);
+
+    KiranCollapse::setMaximumExpansionHeight(maximumHeight);
 }
 
 // TODO:需要优化
