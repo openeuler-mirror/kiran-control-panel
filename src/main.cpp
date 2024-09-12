@@ -155,6 +155,10 @@ static QScreen *screenAt(const QPoint &point)
 
 int main(int argc, char *argv[])
 {
+    // 用户内单例可能存在同一用户登录多个图形会话（本地+远程）
+    // 加入DISPLAY信息一起做进程单例的判断，确保一个会话内只存在一个
+    // XDG_SESSION_ID不准确，tigervnc vncserver/vncsession 手动拉不会创logind会话
+    KiranSingleApplication::addApplicationIDUserData(qgetenv("DISPLAY"));
     KiranSingleApplication app(argc,
                              argv,
                              true,
