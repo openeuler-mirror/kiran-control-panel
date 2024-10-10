@@ -46,9 +46,7 @@ void DeviceList::init(NetworkManager::Device::Type type)
     auto managedDeviceList = NetworkUtils::getManagedDeviceList(type);
     for (auto device : managedDeviceList)
     {
-        auto widget = new DeviceAvailableConnectionWidget(device, m_scrollAreaWidgetContents);
-        m_managedDevicePaths << device->uni();
-        addWidget(widget);
+        addDevice(device->uni());
     }
 
     // 在最后添加Spacer
@@ -90,13 +88,31 @@ void DeviceList::removeWidget(QWidget *widget)
 void DeviceList::addDevice(const QString &devicePath)
 {
     Device::Ptr device = findNetworkInterface(devicePath);
-    if(m_deviceType == device->type())
+    if ( device.isNull() )
     {
-        KLOG_INFO(qLcNetwork) << "add new device:" << device;
-        auto widget = new DeviceAvailableConnectionWidget(device, m_scrollAreaWidgetContents);
-        addWidget(widget);
-        m_managedDevicePaths << devicePath;
+        KLOG_ERROR(qLcNetwork) << "failed to add device, failed to find device:" << devicePath;
+        return;
     }
+
+    if( m_deviceType != device->type() )
+    {
+        return;
+    }
+
+    if ( m_managedDevicePaths.contains(devicePath) )
+    {
+        KLOG_WARNING(qLcNetwork) << "device has been added:" << device->type() 
+                                                             << device->interfaceName() 
+                                                             << device->uni();
+        return;
+    }
+
+    KLOG_INFO(qLcNetwork) << "add new device:" << device->type()
+                                               << device->interfaceName() 
+                                               << device->uni();
+    auto widget = new DeviceAvailableConnectionWidget(device, m_scrollAreaWidgetContents);
+    addWidget(widget);
+    m_managedDevicePaths << devicePath;
 }
 
 void DeviceList::removeDevice(const QString &devicePath)
