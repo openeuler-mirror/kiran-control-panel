@@ -40,8 +40,8 @@ void handlerCommandOption(const QApplication& app)
                                           "preview image",
                                           "image path",
                                           "");
-    QCommandLineOption clipedImageSavePathOption("cliped-save-path",
-                                                 "cliped image save path",
+    QCommandLineOption clipedImageSavePathOption("clipped-save-path",
+                                                 "clipped image save path",
                                                  "save path",
                                                  "");
 
@@ -84,7 +84,7 @@ void handlerCommandOption(const QApplication& app)
 
         if (!dir.exists() && !dir.mkpath(dir.absolutePath()))
         {
-            std::cerr << QString("craete dir(%1) failed.").arg(dir.absolutePath()).toStdString() << std::endl;
+            std::cerr << QString("create dir(%1) failed.").arg(dir.absolutePath()).toStdString() << std::endl;
             exit(EXIT_CODE_BAD_ARG);
         }
         if (!dirInfo.isWritable())
@@ -94,14 +94,14 @@ void handlerCommandOption(const QApplication& app)
         }
         if (fileInfo.exists())
         {
-            std::cerr << QString("cliped image save path(%1) is exist.").arg(tempPath).toStdString() << std::endl;
+            std::cerr << QString("clipped image save path(%1) is exist.").arg(tempPath).toStdString() << std::endl;
             exit(EXIT_CODE_BAD_ARG);
         }
         cliped_image_save_path = tempPath;
     }
 
     KLOG_INFO() << "preview image:" << prewview_image;
-    KLOG_INFO() << "cliped image save path:" << cliped_image_save_path;
+    KLOG_INFO() << "clipped image save path:" << cliped_image_save_path;
 }
 
 void loadStylesheet()
