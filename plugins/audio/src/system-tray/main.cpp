@@ -51,7 +51,7 @@ int main(int argc, char *argv[])
      QScopedPointer<AudioSystemTray> audioSystemTray;
     if (KiranControlPanel::isDBusTrayAvailable())
     {
-        KLOG_DEBUG() << KDE_STATUS_NOTIFIER_HOST << "is registered,create network tray icon";
+        KLOG_INFO() << KDE_STATUS_NOTIFIER_HOST << "is registered,create audio tray icon";
         audioSystemTray.reset(new AudioSystemTray);
     }
     else
@@ -59,14 +59,16 @@ int main(int argc, char *argv[])
         KLOG_WARNING() << KDE_STATUS_NOTIFIER_HOST << "is not registered,wait";
 
         auto dBusTrayMonitor = new KiranControlPanel::DBusTrayMonitor();
+        // clang-format off
         QObject::connect(dBusTrayMonitor, &KiranControlPanel::DBusTrayMonitor::dbusTrayAvailable, [&audioSystemTray]()
-                         {
-                            if(audioSystemTray == nullptr)
-                            {
-                                KLOG_DEBUG() << KDE_STATUS_NOTIFIER_HOST << "is registered,create network tray icon";
-                                audioSystemTray.reset(new AudioSystemTray);
-                            } 
-                        });
+        {
+            if(audioSystemTray.isNull())
+            {
+                KLOG_INFO() << KDE_STATUS_NOTIFIER_HOST << "is registered,create audio tray icon";
+                audioSystemTray.reset(new AudioSystemTray);
+            }
+        });
+        // clang-format on
     }
     return QApplication::exec();
 }
