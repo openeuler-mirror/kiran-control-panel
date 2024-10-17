@@ -150,6 +150,8 @@ bool SystemInformation::initUI()
         frame->setRadius(6);
         frame->setDrawBroder(false);
     }
+    // #35818 在系统中不再单独提供隐私协议
+    ui->widget_privacy_policy->hide();
 
     return true;
 }
