@@ -46,7 +46,7 @@ int main(int argc, char* argv[])
     QScopedPointer<NetworkTray> tray;
     if (KiranControlPanel::isDBusTrayAvailable())
     {
-        KLOG_DEBUG(qLcNetwork) << KDE_STATUS_NOTIFIER_HOST << "is registered,create network tray icon";
+        KLOG_INFO(qLcNetwork) << KDE_STATUS_NOTIFIER_HOST << "is registered,create network tray icon";
         tray.reset(new NetworkTray);
     }
     else
@@ -54,14 +54,16 @@ int main(int argc, char* argv[])
         KLOG_WARNING() << KDE_STATUS_NOTIFIER_HOST << "is not registered,wait";
 
         auto dBusTrayMonitor = new KiranControlPanel::DBusTrayMonitor();
+        // clang-format off
         QObject::connect(dBusTrayMonitor, &KiranControlPanel::DBusTrayMonitor::dbusTrayAvailable, [&tray]()
-                         {
-                            if(tray == nullptr)
-                            {
-                                KLOG_DEBUG(qLcNetwork) << KDE_STATUS_NOTIFIER_HOST << "is registered,create network tray icon";
-                                tray.reset(new NetworkTray);
-                            } 
-                        });
+        {
+            if(tray.isNull())
+            {
+                KLOG_INFO(qLcNetwork) << KDE_STATUS_NOTIFIER_HOST << "is registered,create network tray icon";
+                tray.reset(new NetworkTray);
+            } 
+        });
+        // clang-format on
     }
 
     return QApplication::exec();

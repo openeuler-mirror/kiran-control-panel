@@ -20,6 +20,7 @@
 #include <QDBusArgument>
 #include <QMap>
 #include <QObject>
+#include <QTimer>
 
 #define KDE_STATUS_NOTIFIER_WATCHER_SERVICE        "org.kde.StatusNotifierWatcher"
 #define KDE_STATUS_NOTIFIER_WATCHER_PATH           "/StatusNotifierWatcher"
@@ -30,6 +31,24 @@
 
 namespace KiranControlPanel
 {
+static bool isDBusTrayAvailable()
+{
+    bool dbusTrayAvailable = false;
+
+    QDBusInterface trayWatcherInterface(KDE_STATUS_NOTIFIER_WATCHER_SERVICE, 
+                                        KDE_STATUS_NOTIFIER_WATCHER_PATH,
+                                        KDE_STATUS_NOTIFIER_WATCHER_SERVICE,
+                                        QDBusConnection::sessionBus());
+
+    if( trayWatcherInterface.isValid() &&
+        trayWatcherInterface.property("IsStatusNotifierHostRegistered").toBool() )
+    {
+        dbusTrayAvailable = true;
+    }
+
+    return dbusTrayAvailable;
+}
+
 class DBusTrayMonitor : public QObject
 {
     Q_OBJECT
@@ -37,38 +56,37 @@ public:
     DBusTrayMonitor(QObject *parent = nullptr)
         : QObject(parent),
           m_connection(QDBusConnection::sessionBus()),
-          m_statusNotifierHostRegistered(false)
+          m_registered(false)
     {
+        // 托盘服务Watcher不存在/Host未注册/IsStatusNotifierHostRegistered属性未更新
+        // 连接到DBus Daemon,处理Watcher属性变化信号
+        bool bRes =  m_connection.connect(KDE_STATUS_NOTIFIER_WATCHER_SERVICE,
+                                    KDE_STATUS_NOTIFIER_WATCHER_PATH,
+                                    FREEDESKTOP_DBUS_PROPERTIES_INTERFACE,
+                                    FREEDESKTOP_DBUS_PROPERTIES_CHANGED_METHOD, 
+                                    this, SLOT(onWatcherServicePropertyChanged(QDBusMessage)));
 
-        QDBusInterface trayWatcherInterface(KDE_STATUS_NOTIFIER_WATCHER_SERVICE, KDE_STATUS_NOTIFIER_WATCHER_PATH,
-                                            KDE_STATUS_NOTIFIER_WATCHER_SERVICE, QDBusConnection::sessionBus());
-
-        // 确认托盘服务Watcher是否存在，检测Watcher IsStatusNotifierHostRegistered是否为true(满足QDBusTray可用的条件，具体可参考Qt代码)
-        if (trayWatcherInterface.isValid() && trayWatcherInterface.property("IsStatusNotifierHostRegistered").toBool())
+        KLOG_INFO() << "connect to StatusNotifierHost:" << bRes;
+        bool dbusTrayAvailable = isDBusTrayAvailable();
+        if( dbusTrayAvailable )
         {
-            m_statusNotifierHostRegistered = true;
-        }
-        else
-        {
-            // 托盘服务Watcher不存在/Host未注册/IsStatusNotifierHostRegistered属性未更新
-            // 连接到DBus Daemon,处理Watcher属性变化信号
-            m_connection.connect(KDE_STATUS_NOTIFIER_WATCHER_SERVICE,
-                                 KDE_STATUS_NOTIFIER_WATCHER_PATH,
-                                 FREEDESKTOP_DBUS_PROPERTIES_INTERFACE,
-                                 FREEDESKTOP_DBUS_PROPERTIES_CHANGED_METHOD, 
-                                 this, SLOT(onWatcherServicePropertyChanged(QDBusMessage)));
+            KLOG_INFO() << "StatusNotifierHost is registered.";
+            m_registered = true;
+            QTimer::singleShot(0, [this]() {
+                emit this->dbusTrayAvailable();
+            });
         }
     }
 
     ~DBusTrayMonitor() {}
 
-    bool isStatusNotifierHostRegistered() const { return m_statusNotifierHostRegistered; }
+    bool isStatusNotifierHostRegistered() const { return m_registered; }
 
 private slots:
     void onWatcherServicePropertyChanged(QDBusMessage msg)
     {
         // 若Host已注册过，无需判断
-        if (m_statusNotifierHostRegistered)
+        if (m_registered)
             return;
 
         QList<QVariant> args = msg.arguments();
@@ -83,7 +101,7 @@ private slots:
             // 后续属性变化不关注
             if (iter.value().toBool())
             {
-                m_statusNotifierHostRegistered = true;
+                m_registered = true;
                 KLOG_DEBUG() << "notifier host registered,dbus tray available!";
                 emit dbusTrayAvailable();
             }
@@ -96,16 +114,6 @@ signals:
 
 private:
     QDBusConnection m_connection;
-    bool m_statusNotifierHostRegistered;
+    bool m_registered;
 };
-
-static bool isDBusTrayAvailable()
-{
-    bool dbusTrayAvailable = false;
-        DBusTrayMonitor conn;
-        if (conn.isStatusNotifierHostRegistered())
-            dbusTrayAvailable = true;
-    return dbusTrayAvailable;
-}
-
 }  // namespace KiranControlPanel

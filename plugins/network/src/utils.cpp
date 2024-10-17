@@ -197,9 +197,15 @@ bool NetworkUtils::isAvailableConnection(const QString &devicePath, NetworkManag
         WiredSetting::Ptr wiredSetting = settings->setting(Setting::SettingType::Wired).dynamicCast<WiredSetting>();
         QString mac = wiredSetting->macAddress().toHex(':').toUpper();
         auto wiredDevice = device->as<WiredDevice>();
-        QString permanentHardwareAddress = wiredDevice->permanentHardwareAddress();
 
-        if (mac == permanentHardwareAddress || mac.isEmpty())
+        QString deviceMac = wiredDevice->permanentHardwareAddress();
+        if( deviceMac.isEmpty() )
+        {
+            // USB共享网络时，某些设备存在PermHWAddress为空，此时取HWAddress
+            deviceMac = wiredDevice->hardwareAddress();
+        }
+
+        if (mac == deviceMac || mac.isEmpty())
         {
             return true;
         }
