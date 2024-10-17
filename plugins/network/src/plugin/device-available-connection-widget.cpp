@@ -164,17 +164,22 @@ void DeviceAvailableConnectionWidget::removeActiveConnection(const QString &acti
 void DeviceAvailableConnectionWidget::addConnection(const QString &path)
 {
     Connection::Ptr connection = findConnection(path);
-    KLOG_DEBUG(qLcNetwork) << "add connection::" << connection->name();
 
     if (deviceType() == Device::Ethernet)
     {
-        if (NetworkUtils::isAvailableConnection(m_devicePath, connection))
+        bool available = NetworkUtils::isAvailableConnection(m_devicePath, connection);
+        KLOG_INFO(qLcNetwork) << m_device->type() << m_devicePath 
+                              << "handle new connection:" << connection->name()
+                              << "available:" << available;
+        if (available)
         {
             onAddConnection(connection);
         }
     }
     else
     {
+        KLOG_INFO(qLcNetwork) << m_device->type() << m_devicePath 
+                              << "handle new connection:" << connection->name();
         onAddConnection(connection);
     }
 }
