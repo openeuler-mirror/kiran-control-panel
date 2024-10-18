@@ -201,13 +201,7 @@ void DeviceAvailableConnectionWidget::createConnection()
 }
 
 void DeviceAvailableConnectionWidget::updateConnection(const QString &connectionPath, const QString &mac)
-{
-    ConnectionItemWidget *connectionItem = findConnectionItemByPath(connectionPath);
-    if (connectionItem == nullptr)
-    {
-        return;
-    }
-
+{    
     // 判断配置是否应该出现在该设备下，应判断两个属性permanentHardwareAddress，hardwareAddress
     // 部分手机共享网络permanentHardwareAddress属性为空
     QString deviceMac = m_wiredDevice->permanentHardwareAddress();
@@ -216,15 +210,29 @@ void DeviceAvailableConnectionWidget::updateConnection(const QString &connection
         deviceMac = m_wiredDevice->hardwareAddress();
     }
 
+    ConnectionItemWidget *connectionItem = findConnectionItemByPath(connectionPath);
+    
     if (deviceMac == mac)
     {
-        auto connection = findConnection(connectionPath);
-        onAddConnection(connection);
+        // 配置Mac等于设备Mac，更新或新增该配置
+        if( connectionItem )
+        {
+             updateConnectionItemStatus(connectionItem);
+        }
+        else
+        {
+            auto connection = findConnection(connectionPath);
+            onAddConnection(connection);
+        }
     }
-    else
+    else 
     {
-        removeConnectionItem(connectionItem);
-        connectionItem->deleteLater();
+        //配置mac不等于设备Mac，删除该配置
+        if( connectionItem )
+        {
+            removeConnectionItem(connectionItem);
+            connectionItem->deleteLater();
+        }
     }
 }
 

@@ -357,7 +357,13 @@ void ConnectionItemWidget::updateConnection()
         QString devicePath = m_connectionInfo.devicePath;
         auto device = findNetworkInterface(devicePath);
         WiredDevice::Ptr wiredDevice = qobject_cast<WiredDevice*>(device);
+
         QString hardwareAddress = wiredDevice->permanentHardwareAddress();
+        if (hardwareAddress.isEmpty())
+        {
+            hardwareAddress = wiredDevice->hardwareAddress();
+        }
+
         // 检查绑定的设备信息是否改变
         if (!mac.isEmpty() &&
             (mac != hardwareAddress))
