@@ -236,7 +236,12 @@ NetworkManager::Connection::List NetworkUtils::getAvailableWiredConnections(cons
     else
     {
         auto wiredDevice = device->as<WiredDevice>();
-        QString permanentHardwareAddress = wiredDevice->permanentHardwareAddress();
+        
+        QString deviceHardwareAddress = wiredDevice->permanentHardwareAddress();
+        if( deviceHardwareAddress.isEmpty() )
+        {
+            deviceHardwareAddress = wiredDevice->hardwareAddress();
+        }
 
         auto allConnections = listConnections();
         for (auto connection : allConnections)
@@ -250,7 +255,7 @@ NetworkManager::Connection::List NetworkUtils::getAvailableWiredConnections(cons
             // 匹配配置以及设备中的Mac地址是否匹配
             WiredSetting::Ptr wiredSetting = settings->setting(Setting::SettingType::Wired).dynamicCast<WiredSetting>();
             QString mac = wiredSetting->macAddress().toHex(':').toUpper();
-            if ( !mac.isEmpty() && mac != permanentHardwareAddress )
+            if ( !mac.isEmpty() && mac != deviceHardwareAddress )
             {
                 continue;
             }
