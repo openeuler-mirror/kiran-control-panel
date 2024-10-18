@@ -207,7 +207,15 @@ void DeviceAvailableConnectionWidget::updateConnection(const QString &connection
         return;
     }
 
-    if (m_wiredDevice->permanentHardwareAddress() == mac)
+    // 判断配置是否应该出现在该设备下，应判断两个属性permanentHardwareAddress，hardwareAddress
+    // 部分手机共享网络permanentHardwareAddress属性为空
+    QString deviceMac = m_wiredDevice->permanentHardwareAddress();
+    if (deviceMac.isEmpty())
+    {
+        deviceMac = m_wiredDevice->hardwareAddress();
+    }
+
+    if (deviceMac == mac)
     {
         auto connection = findConnection(connectionPath);
         onAddConnection(connection);
