@@ -21,6 +21,7 @@
 #include "pages/server-general-settings.h"
 #include "plugin-subitem.h"
 #include "upower-interface.h"
+#include "power-prefs.h"
 
 #include <kiran-log/qt5-log-i.h>
 #include <QCoreApplication>
@@ -38,8 +39,22 @@ PowerPlugin::~PowerPlugin()
 int PowerPlugin::init(KiranControlPanel::PanelInterface* interface)
 {
     PowerInterface::globalInit();
+    Power::Prefs prefs;
 
-#ifndef SERVER_MODE
+    if( prefs.enableServerMode() )
+    {
+        initServerPower();
+    }
+    else
+    {
+        initDesktopPower();
+    }
+
+    return 0;
+}
+
+void PowerPlugin::initDesktopPower()
+{
     auto generalSettingsSubItemCreater = []() -> QWidget*
     {
         return new GeneralSettingsPage();
@@ -87,7 +102,10 @@ int PowerPlugin::init(KiranControlPanel::PanelInterface* interface)
                                                  batterySettingsSubItemCreator);
         m_subitems << KiranControlPanel::SubItemPtr(batterySettings);
     }
-#else
+}
+
+void PowerPlugin::initServerPower()
+{
     // 服务器类型下，只提供关于空闲锁屏以及空闲时的设置
     auto serverGeneralSettingsCreater = []() -> QWidget*
     {
@@ -101,8 +119,6 @@ int PowerPlugin::init(KiranControlPanel::PanelInterface* interface)
                                                     1,
                                                     serverGeneralSettingsCreater);
     m_subitems = {KiranControlPanel::SubItemPtr(serverGeneralSettings)};
-#endif
-    return 0;
 }
 
 void PowerPlugin::uninit()

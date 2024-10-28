@@ -16,6 +16,12 @@ include("kcp_variables")
 include("kcp-qdbus-wrapper")
 
 configure_file(./config.h.in ${CMAKE_BINARY_DIR}/config.h)
+
+if( SERVER_MODE )
+    set(ENABLE_SERVER_MODE true)
+else()
+    set(ENABLE_SERVER_MODE false)
+endif()
 configure_file(./settings.ini.in ${CMAKE_BINARY_DIR}/settings.ini)
 
 find_package(Qt5 COMPONENTS
