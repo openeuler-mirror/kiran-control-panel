@@ -2,10 +2,6 @@ cmake_minimum_required(VERSION 3.2)
 
 set(TARGET_NAME kiran-cpanel-power)
 
-if (SERVER_MODE)
-    add_definitions(-DSERVER_MODE)
-endif ()
-
 pkg_search_module(UPOWER_GLIB REQUIRED upower-glib)
 
 set(POWER_PLUGIN_DBUS_SRC_LIST "")
