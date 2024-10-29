@@ -32,6 +32,8 @@ public:
     ~PowerPlugin();
 
     int init(KiranControlPanel::PanelInterface* interface) override;
+    void initDesktopPower();
+    void initServerPower();
     void uninit() override;
 
     QVector<KiranControlPanel::SubItemPtr> getSubItems() override;

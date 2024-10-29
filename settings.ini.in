@@ -6,3 +6,6 @@ CheckWiredCarrier=false
 CheckInternetConnectivity=true
 Address=www.kylinsec.com.cn
 Port=80
+
+[Power]
+EnableServerMode=@ENABLE_SERVER_MODE@
