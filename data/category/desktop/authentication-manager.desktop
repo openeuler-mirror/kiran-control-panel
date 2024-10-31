@@ -9,7 +9,7 @@ Comment[zh_CN]=认证管理
 
 Icon=authentication-manager
 
-Weight=10
+Weight=2
 Keywords[zh_CN]=认证管理
 Keywords=Authentication Manager
 
