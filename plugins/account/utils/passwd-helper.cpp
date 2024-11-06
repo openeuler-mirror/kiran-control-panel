@@ -38,6 +38,7 @@ bool PasswdHelper::encryptPasswordByRsa(const QString &publicKey, const QString 
     CryptoPP::RandomPool random_pool;
     StringSource public_source(publicKey.toStdString(), true, new Base64Decoder(new HexDecoder));
     RSAES_OAEP_SHA_Encryptor rsa_encryptor(public_source);
+    //NOTE: 加密输入上限22
     if ( ((size_t)pwd.size()) > rsa_encryptor.FixedMaxPlaintextLength())
     {
         KLOG_WARNING("The length(%d) of message is greater than the value(%d) which FixedMaxPlaintextLength return.",
