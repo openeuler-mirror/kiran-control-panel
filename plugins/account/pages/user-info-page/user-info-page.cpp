@@ -161,10 +161,12 @@ void UserInfoPage::initUI()
     ui->editcheck_curpasswd->setEchoMode(QLineEdit::Password);
     ui->editcheck_curpasswd->setAttribute(Qt::WA_InputMethodEnabled,false);
 
+    ui->editcheck_newPasswd->setMaxLength(20);
     ui->editcheck_newPasswd->setEchoMode(QLineEdit::Password);
     ui->editcheck_newPasswd->setAttribute(Qt::WA_InputMethodEnabled,false);
     ui->editcheck_newPasswd->installEventFilter(this);
 
+    ui->editcheck_confirmPasswd->setMaxLength(20);
     ui->editcheck_confirmPasswd->setEchoMode(QLineEdit::Password);
     ui->editcheck_confirmPasswd->setAttribute(Qt::WA_InputMethodEnabled,false);
     ui->editcheck_confirmPasswd->installEventFilter(this);
