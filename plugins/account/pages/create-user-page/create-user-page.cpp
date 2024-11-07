@@ -90,12 +90,12 @@ void CreateUserPage::initUI()
     ui->edit_name->setMaxLength(32);
 
     /// 密码输入框
-    ui->editcheck_passwd->setMaxLength(24);
+    ui->editcheck_passwd->setMaxLength(20);
     ui->editcheck_passwd->setEchoMode(QLineEdit::Password);
     ui->editcheck_passwd->setAttribute(Qt::WA_InputMethodEnabled, false);
     ui->editcheck_passwd->installEventFilter(this);
-
-    ui->editcheck_confirmPasswd->setMaxLength(24);
+    
+    ui->editcheck_confirmPasswd->setMaxLength(20);
     ui->editcheck_confirmPasswd->setEchoMode(QLineEdit::Password);
     ui->editcheck_confirmPasswd->setAttribute(Qt::WA_InputMethodEnabled, false);
     ui->editcheck_confirmPasswd->installEventFilter(this);
