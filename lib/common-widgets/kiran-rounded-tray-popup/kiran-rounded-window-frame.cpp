@@ -12,22 +12,21 @@
  * Author:     liuxinhao <liuxinhao@kylinsec.com.cn>
  */
 
-#include <style-palette.h>
+#include <palette.h>
+#include <QBitmap>
 #include <QPainter>
 #include <QPainterPath>
-#include <QBitmap>
 #include <QX11Info>
 
 #include "kiran-rounded-window-frame.h"
 
-using namespace Kiran;
+using namespace Kiran::Theme;
 
 const int KiranRoundedWindowFrame::radius = 6;
 
 KiranRoundedWindowFrame::KiranRoundedWindowFrame(QWidget *parent)
     : QFrame(parent)
 {
-
 }
 
 KiranRoundedWindowFrame::~KiranRoundedWindowFrame()
@@ -36,9 +35,10 @@ KiranRoundedWindowFrame::~KiranRoundedWindowFrame()
 
 void KiranRoundedWindowFrame::paintEvent(QPaintEvent *event)
 {
-    auto stylePalette = StylePalette::instance();
-    auto backgroundColor = stylePalette->color(StylePalette::Normal,StylePalette::Window,StylePalette::Background);
-    auto borderColor = stylePalette->color(StylePalette::Normal,StylePalette::Window,StylePalette::Border);
+    auto palette = DEFAULT_PALETTE();
+    // FIXME：暂时使用ACTIVE代替Normal
+    auto backgroundColor = palette->getColor(Palette::ColorGroup::ACTIVE, Palette::ColorRole::WINDOW);
+    auto borderColor = palette->getColor(Palette::ColorGroup::ACTIVE, Palette::ColorRole::BORDER);
 
     QPainter p(this);
     p.setRenderHint(QPainter::Antialiasing);
@@ -46,8 +46,8 @@ void KiranRoundedWindowFrame::paintEvent(QPaintEvent *event)
     QPainterPath painterPath;
     QRectF rectf = rect();
 
-    int tmpRadius = QX11Info::isCompositingManagerRunning()?radius:0;
-    painterPath.addRoundedRect(rectf.adjusted(0.5,0.5,-0.5,-0.5),tmpRadius,tmpRadius);
+    int tmpRadius = QX11Info::isCompositingManagerRunning() ? radius : 0;
+    painterPath.addRoundedRect(rectf.adjusted(0.5, 0.5, -0.5, -0.5), tmpRadius, tmpRadius);
 
     QPen pen;
     pen.setJoinStyle(Qt::RoundJoin);

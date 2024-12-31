@@ -14,17 +14,16 @@
 
 #include "input-dialog.h"
 #include <kiran-color-block.h>
-#include <style-property.h>
 #include <kiran-passwd-edit.h>
+#include <qt5-log-i.h>
 #include <QBoxLayout>
 #include <QEventLoop>
 #include <QLabel>
 #include <QLineEdit>
 #include <QPushButton>
-#include <qt5-log-i.h>
 
 InputDialog::InputDialog(QWidget* parent)
-    : KiranTitlebarWindow(parent,Qt::Dialog),
+    : KiranTitlebarWindow(parent, Qt::Dialog),
       m_success(false)
 {
     setAttribute(Qt::WA_ShowModal, true);
@@ -40,12 +39,12 @@ QString InputDialog::getText()
     return m_edit->lineEdit()->text();
 }
 
-void InputDialog::setDesc(const QString&desc)
+void InputDialog::setDesc(const QString& desc)
 {
     m_labelDesc->setText(desc);
 }
 
-void InputDialog::setInputMode(QLineEdit::EchoMode mode,qint32 maxLength)
+void InputDialog::setInputMode(QLineEdit::EchoMode mode, qint32 maxLength)
 {
     m_edit->setEchoMode(mode);
     m_edit->lineEdit()->setMaxLength(maxLength);
@@ -114,7 +113,9 @@ void InputDialog::initUI()
     auto confirmButton = new QPushButton(this);
     confirmButton->setFixedSize(QSize(110, 40));
     confirmButton->setText(tr("Confirm"));
-    Kiran::StylePropertyHelper::setButtonType(confirmButton, Kiran::BUTTON_Default);
+
+    // FIXME: 后续使用新版kiran-integration-qt5中提供的setButtonType函数
+    // Kiran::StylePropertyHelper::setButtonType(confirmButton, Kiran::BUTTON_Default);
     connect(confirmButton, &QPushButton::clicked, this, &InputDialog::onConfirmClicked);
     boxlayout->addWidget(confirmButton);
 

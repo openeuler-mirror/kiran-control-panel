@@ -7,14 +7,14 @@ target_include_directories(${TARGET_NAME} PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}
         ${PROJECT_SOURCE_DIR}/common
         ${PROJECT_SOURCE_DIR}/include
-        ${KIRAN_STYLE_INCLUDE_DIRS})
+        ${KIRAN_INTEGRATION_THEME_INCLUDE_DIRS})
 
 target_include_directories(${TARGET_NAME} PRIVATE
         ${CMAKE_CURRENT_BINARY_DIR}
         ${PROJECT_BINARY_DIR}
         ${KLOG_INCLUDE_DIRS}
         ${KIRAN_WIDGETS_INCLUDE_DIRS}
-        ${KIRAN_STYLE_INCLUDE_DIRS})
+        ${KIRAN_INTEGRATION_THEME_INCLUDE_DIRS})
 
 target_link_libraries(${TARGET_NAME}
         Qt5::Core
@@ -22,4 +22,4 @@ target_link_libraries(${TARGET_NAME}
         Qt5::Svg
         plugin-framework
         ${KIRAN_WIDGETS_LIBRARIES}
-        ${KIRAN_STYLE_LIBRARIES})
+        ${KIRAN_INTEGRATION_THEME_LIBRARIES})

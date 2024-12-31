@@ -14,13 +14,16 @@
 
 #include "kiran-setting-item.h"
 #include <kiran-label.h>
-#include <style-palette.h>
+#include <palette.h>
+#include <style-helper.h>
 #include <QBoxLayout>
 #include <QLabel>
 #include <QPushButton>
 #include <QToolButton>
 #include "auxiliary.h"
 #include "kiran-switch-button.h"
+
+using namespace Kiran::Theme;
 
 KiranSettingItem::KiranSettingItem(QWidget* parent)
     : KiranFrame(parent)
@@ -99,7 +102,7 @@ void KiranSettingItem::initUI()
     m_leftButton->setVisible(true);
     layout->addWidget(m_leftButton);
     connect(m_leftButton, &QPushButton::clicked, this, [this]()
-        { emit leftButtonClicked(m_userData); });
+            { emit leftButtonClicked(m_userData); });
 
     m_label = new KiranLabel(this);
     m_label->setAlignment(Qt::AlignVCenter);
@@ -112,7 +115,7 @@ void KiranSettingItem::initUI()
     m_switcher->setVisible(false);
     layout->addWidget(m_switcher, 0, Qt::AlignVCenter);
     connect(m_switcher, &KiranSwitchButton::toggled, this, [this](bool checked)
-        { emit switchButtonToggled(m_userData, checked); });
+            { emit switchButtonToggled(m_userData, checked); });
 
     m_rightButton = new QPushButton(this);
     m_rightButton->setFixedSize(16, 16);
@@ -120,14 +123,14 @@ void KiranSettingItem::initUI()
     m_rightButton->setVisible(false);
     layout->addWidget(m_rightButton);
     connect(m_rightButton, &QPushButton::clicked, this, [this]()
-        { emit rightButtonClicked(m_userData); });
+            { emit rightButtonClicked(m_userData); });
 
-    connect(Kiran::StylePalette::instance(), &Kiran::StylePalette::themeChanged, this, &KiranSettingItem::updateIcon);
+    connect(DEFAULT_PALETTE(), &Palette::baseColorsChanged, this, &KiranSettingItem::updateIcon);
 }
 
 void KiranSettingItem::updateIcon()
 {
-    auto kiranPalette = Kiran::StylePalette::instance();
+    auto styleHelper = DEFAULT_STYLE_HELPER();
 
     struct ButtonIcon
     {
@@ -146,7 +149,7 @@ void KiranSettingItem::updateIcon()
         auto iconChanged = iter.iconChange;
 
         auto pixmap = icon.pixmap(QSize(16, 16));
-        if (kiranPalette->paletteType() == Kiran::PALETTE_LIGHT && iconChanged)
+        if (styleHelper->paletteType() == PaletteType::PALETTE_LIGHT && iconChanged)
         {
             auto image = pixmap.toImage();
             image.invertPixels(QImage::InvertRgb);

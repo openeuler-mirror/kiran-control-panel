@@ -14,17 +14,16 @@
 
 #include "kiran-icon-pushbutton.h"
 
-using namespace Kiran;
+using namespace Kiran::Theme;
 
 KiranIconPushButton::KiranIconPushButton(QWidget *parent)
     : QPushButton(parent)
 {
-    connect(StylePalette::instance(),&StylePalette::themeChanged,this,&KiranIconPushButton::updatePixmapForTheme);
+    connect(DEFAULT_PALETTE(), &Palette::baseColorsChanged, this, &KiranIconPushButton::updatePixmapForTheme);
 }
 
 KiranIconPushButton::~KiranIconPushButton()
 {
-
 }
 
 void KiranIconPushButton::setThemeIcon(QPixmap pixmap, PaletteType paletteType)
@@ -36,12 +35,11 @@ void KiranIconPushButton::setThemeIcon(QPixmap pixmap, PaletteType paletteType)
 
 void KiranIconPushButton::updatePixmapForTheme()
 {
-    if( m_pixmap.isNull() || m_iconPaletteType==PALETTE_LAST )
+    if (m_pixmap.isNull() || m_iconPaletteType == PaletteType::PALETTE_LAST)
         return;
 
-    auto kiranPalette = StylePalette::instance();
     QPixmap pixmap(m_pixmap);
-    if( kiranPalette->paletteType() != m_iconPaletteType )
+    if (DEFAULT_STYLE_HELPER()->paletteType() != m_iconPaletteType)
     {
         auto image = pixmap.toImage();
         image.invertPixels(QImage::InvertRgb);

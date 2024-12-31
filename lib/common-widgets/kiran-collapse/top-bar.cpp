@@ -17,14 +17,15 @@
 #include "logging-category.h"
 #include "ui_top-bar.h"
 
-#include <kiran-style/style-global-define.h>
-#include <kiran-style/style-palette.h>
 #include <kiran-switch-button.h>
+#include <palette.h>
+#include <style-helper.h>
 #include <QMouseEvent>
 #include <QPainter>
 #include "QtSvg/QSvgRenderer"
 #include "top-bar-flag-pixmap.h"
 
+using namespace Kiran::Theme;
 TopBar::TopBar(QWidget* parent) : QWidget(parent),
                                   ui(new Ui::TopBar)
 {
@@ -53,8 +54,8 @@ void TopBar::init()
     this->setFixedHeight(m_height);
     this->refreshFlagPixmap(true);
 
-    auto stylePalette = Kiran::StylePalette::instance();
-    connect(stylePalette, &Kiran::StylePalette::themeChanged, this, [=](Kiran::PaletteType paletteType) {
+    connect(DEFAULT_PALETTE(), &Palette::baseColorsChanged, this, [=]()
+            {
         // 将 QPixmap 转换为 QImage
         QImage image = ui->flag->pixmap()->toImage();
 
@@ -70,8 +71,7 @@ void TopBar::init()
         }
 
         // 将反转颜色后的 QImage 设置为标志的 pixmap
-        ui->flag->setPixmap(QPixmap::fromImage(image));
-    });
+        ui->flag->setPixmap(QPixmap::fromImage(image)); });
 }
 
 void TopBar::setFlagPixmap(const QString& flag_url)
@@ -93,20 +93,19 @@ void TopBar::setFlagPixmap(const QPixmap& pixmap)
 
 void TopBar::refreshFlagPixmap(bool isExpanded)
 {
-    auto stylePalette = Kiran::StylePalette::instance();
-    auto styleType = stylePalette->paletteType();
+    auto styleType = DEFAULT_STYLE_HELPER()->paletteType();
     // clang-format off
     if (isExpanded)
     {
         ui->flag->setPixmap(
-            (styleType == Kiran::PALETTE_DARK) ?
+            (styleType == PaletteType::PALETTE_DARK) ?
                    FlagPixmap::expansionFlagPixmap().scaled(ui->flag->size(),Qt::IgnoreAspectRatio,Qt::SmoothTransformation) :
                    FlagPixmap::expansionFlagPixmapDark().scaled(ui->flag->size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation)
         );
         return;
     }
     ui->flag->setPixmap(
-        (styleType == Kiran::PALETTE_DARK) ?
+        (styleType == PaletteType::PALETTE_DARK) ?
                FlagPixmap::collapseFlagPixmap().scaled(ui->flag->size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation) :
                FlagPixmap::collapseFlagPixmapDark().scaled(ui->flag->size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation)
         );

@@ -13,7 +13,7 @@
  */
 
 #include "kiran-collapse.h"
-#include <kiran-style/style-palette.h>
+#include <palette.h>
 #include "ui_kiran-collapse.h"
 
 #include <QDebug>
@@ -24,14 +24,13 @@
 #include <QStyleOption>
 
 KiranCollapse::KiranCollapse(QWidget *parent)
-        :KiranCollapse(false, "", nullptr, parent)
+    : KiranCollapse(false, "", nullptr, parent)
 {
 }
 
 KiranCollapse::KiranCollapse(bool defaultIsExpand, const QString &title,
                              QWidget *expansionSpaceWidget, QWidget *parent)
-        : QWidget(parent), ui(new Ui::KiranCollapse),
-        m_isExpanded(defaultIsExpand), m_topBarTitle(title), m_esWidget(expansionSpaceWidget)
+    : QWidget(parent), ui(new Ui::KiranCollapse), m_isExpanded(defaultIsExpand), m_topBarTitle(title), m_esWidget(expansionSpaceWidget)
 {
     init();
 }
@@ -141,36 +140,16 @@ void KiranCollapse::paintEvent(QPaintEvent *event)
     qRect.adjust(0.5, 0.5, -0.5, -0.5);
     painterPath.addRoundedRect(qRect, m_radius, m_radius);
 
-    using namespace Kiran;
-    auto getStateFunc = [this](QStyle::State state) -> StylePalette::ColorState {
-        if (!(state & QStyle::State_Enabled))
-        {
-            return StylePalette::Disabled;
-        }
-        else if (state & QStyle::State_Sunken)
-        {
-            return StylePalette::Active;
-        }
-        else if ((state & QStyle::State_MouseOver) && testAttribute(Qt::WA_Hover))
-        {
-            return StylePalette::Hover;
-        }
-        else
-        {
-            return StylePalette::Normal;
-        }
-    };
+    using namespace Kiran::Theme;
 
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
 
-    auto kiranPalette = StylePalette::instance();
+    auto kiranPalette = DEFAULT_PALETTE();
     if (m_drawBackground)
     {
         QColor backgroundColor;
-        backgroundColor = kiranPalette->color(getStateFunc(state),
-                                              StylePalette::Widget,
-                                              StylePalette::Background);
+        backgroundColor = kiranPalette->getColor(state, Palette::WIDGET);
         painter.fillPath(painterPath, backgroundColor);
     }
 

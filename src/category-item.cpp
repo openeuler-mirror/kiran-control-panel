@@ -46,7 +46,7 @@ void CategoryItem::paintEvent(QPaintEvent *e)
     p.setRenderHint(QPainter::Antialiasing);
 
     QColor background;
-    auto kiranPalette = Palette::getDefault();
+    auto kiranPalette = DEFAULT_PALETTE();
 
     // FIXME: 暂时使用ACTIVE代替Normal,SELECTED状态代替checked
     Palette::ColorGroup colorState = Palette::ColorGroup::ACTIVE;
