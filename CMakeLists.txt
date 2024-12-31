@@ -41,7 +41,7 @@ find_package(Qt5 COMPONENTS
 find_package(PkgConfig REQUIRED)
 pkg_search_module(KLOG REQUIRED klog-qt5)
 pkg_search_module(KIRAN_WIDGETS REQUIRED kiranwidgets-qt5)
-pkg_search_module(KIRAN_STYLE REQUIRED kiran-style-helper)
+pkg_search_module(KIRAN_INTEGRATION_THEME REQUIRED kiran-integration-theme)
 pkg_search_module(GLIB_2 REQUIRED glib-2.0)
 pkg_search_module(KIRAN_CC_DAEMON REQUIRED kiran-cc-daemon)
 pkg_search_module(QGSETTINGS REQUIRED gsettings-qt)
@@ -79,7 +79,7 @@ target_include_directories(${PROJECT_NAME} PRIVATE
         src
         ${KLOG_INCLUDE_DIRS}
         ${KIRAN_WIDGETS_INCLUDE_DIRS}
-        ${KIRAN_STYLE_INCLUDE_DIRS}
+        ${KIRAN_INTEGRATION_THEME_INCLUDE_DIRS}
         ${GLIB_2_INCLUDE_DIRS})
 
 target_link_libraries(${PROJECT_NAME}
@@ -94,7 +94,7 @@ target_link_libraries(${PROJECT_NAME}
         pthread
         ${KLOG_LIBRARIES}
         ${KIRAN_WIDGETS_LIBRARIES}
-        ${KIRAN_STYLE_LIBRARIES}
+        ${KIRAN_INTEGRATION_THEME_LIBRARIES}
         ${GLIB_2_LIBRARIES})
 
 install(FILES ${INCLUDE_SRC} DESTINATION ${KCP_INCLUDEDIR})
