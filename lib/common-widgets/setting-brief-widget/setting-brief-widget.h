@@ -36,7 +36,6 @@ public:
 
 private:
     void initUI(QString title);
-    QString getThemeArrowIcon();
 
 protected:
     virtual void mousePressEvent(QMouseEvent *event);

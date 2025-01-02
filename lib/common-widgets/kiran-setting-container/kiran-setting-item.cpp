@@ -50,20 +50,16 @@ QString KiranSettingItem::getText()
     return m_label->text();
 }
 
-void KiranSettingItem::setLeftButtonVisible(bool visible, const QIcon& icon, bool leftIconChanged)
+void KiranSettingItem::setLeftButtonVisible(bool visible, const QIcon& icon)
 {
     m_leftButton->setVisible(visible);
-    m_leftIcon = icon;
-    m_leftIconChanged = leftIconChanged;
-    updateIcon();
+    m_leftButton->setIcon(icon);
 }
 
-void KiranSettingItem::setRightButtonVisible(bool visible, const QIcon& icon, bool rightIconChanged)
+void KiranSettingItem::setRightButtonVisible(bool visible, const QIcon& icon)
 {
     m_rightButton->setVisible(visible);
-    m_rightIcon = icon;
-    m_rightIconChanged = rightIconChanged;
-    updateIcon();
+    m_rightButton->setIcon(icon);
 }
 
 void KiranSettingItem::setSwitcherVisible(bool visible)
@@ -124,40 +120,6 @@ void KiranSettingItem::initUI()
     layout->addWidget(m_rightButton);
     connect(m_rightButton, &QPushButton::clicked, this, [this]()
             { emit rightButtonClicked(m_userData); });
-
-    connect(DEFAULT_PALETTE(), &Palette::baseColorsChanged, this, &KiranSettingItem::updateIcon);
-}
-
-void KiranSettingItem::updateIcon()
-{
-    auto styleHelper = DEFAULT_STYLE_HELPER();
-
-    struct ButtonIcon
-    {
-        QPushButton* pushButton;
-        QIcon icon;
-        bool iconChange;
-    };
-    QVector<ButtonIcon> buttonIconMap = {
-        {m_leftButton, m_leftIcon, m_leftIconChanged},
-        {m_rightButton, m_rightIcon, m_rightIconChanged}};
-
-    for (auto& iter : buttonIconMap)
-    {
-        auto button = iter.pushButton;
-        auto icon = iter.icon;
-        auto iconChanged = iter.iconChange;
-
-        auto pixmap = icon.pixmap(QSize(16, 16));
-        if (styleHelper->paletteType() == PaletteType::PALETTE_LIGHT && iconChanged)
-        {
-            auto image = pixmap.toImage();
-            image.invertPixels(QImage::InvertRgb);
-            pixmap = QPixmap::fromImage(image);
-        }
-
-        button->setIcon(pixmap);
-    }
 }
 
 void KiranSettingItem::mousePressEvent(QMouseEvent* event)

@@ -34,8 +34,8 @@ public:
     void setText(const QString& text);
     QString getText();
 
-    void setLeftButtonVisible(bool visible, const QIcon& icon, bool leftIconChanged = true);
-    void setRightButtonVisible(bool visible, const QIcon& icon, bool rightIconChanged = true);
+    void setLeftButtonVisible(bool visible, const QIcon& icon);
+    void setRightButtonVisible(bool visible, const QIcon& icon);
 
     void setSwitcherVisible(bool visible);
     void setSwitcherChecked(bool checked);
@@ -51,15 +51,11 @@ signals:
 
 private:
     void initUI();
-    Q_INVOKABLE void updateIcon();
     virtual void mousePressEvent(QMouseEvent* event) override;
     virtual void mouseReleaseEvent(QMouseEvent* event) override;
 
 private:
     QVariant m_userData;
-
-    QIcon m_leftIcon;
-    QIcon m_rightIcon;
 
     QPushButton* m_leftButton;
     KiranLabel* m_label;
@@ -68,7 +64,4 @@ private:
 
     bool m_clickable = false;
     bool m_clicked = false;
-
-    bool m_leftIconChanged;
-    bool m_rightIconChanged;
 };

@@ -48,7 +48,7 @@ void SettingBriefWidget::initUI(QString title)
 {
     ui->label_text->setText(title);
     ui->label_arrow->setFixedSize(16, 16);
-    ui->label_arrow->setPixmap(QPixmap(getThemeArrowIcon()));
+    updateThemeArrowIcon();
     connect(DEFAULT_PALETTE(), &Palette::baseColorsChanged, this, &SettingBriefWidget::updateThemeArrowIcon);
 }
 
@@ -90,15 +90,16 @@ void SettingBriefWidget::paintEvent(QPaintEvent *)
     p.fillPath(painterPath, background);
 }
 
-QString SettingBriefWidget::getThemeArrowIcon()
-{
-    static QMap<PaletteType, QString> arrowIcons = {
-        {PALETTE_LIGHT, ":/kcp-appearance/images/select-black.svg"},
-        {PALETTE_DARK, ":/kcp-appearance/images/select.svg"}};
-    return arrowIcons.value(DEFAULT_STYLE_HELPER()->paletteType());
-}
-
 void SettingBriefWidget::updateThemeArrowIcon()
 {
-    ui->label_arrow->setPixmap(QPixmap(getThemeArrowIcon()));
+    QPixmap pixmap(":/kcp-appearance/images/select.svg");
+
+    if (DEFAULT_STYLE_HELPER()->paletteType() != PaletteType::PALETTE_DARK)
+    {
+        QImage image = pixmap.toImage();
+        image.invertPixels(QImage::InvertRgb);
+        pixmap = QPixmap::fromImage(image);
+    }
+
+    ui->label_arrow->setPixmap(pixmap);
 }
