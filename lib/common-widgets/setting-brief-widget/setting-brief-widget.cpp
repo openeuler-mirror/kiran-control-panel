@@ -18,13 +18,14 @@
 #include <QPainter>
 #include <QStyleOption>
 
-#include <style-palette.h>
+#include <palette.h>
+#include <style-helper.h>
 #include <QPainterPath>
 
-using namespace Kiran;
+using namespace Kiran::Theme;
 
 SettingBriefWidget::SettingBriefWidget(QString title, int type, QWidget *parent) : QWidget(parent),
-                                                                         ui(new Ui::SettingBriefWidget)
+                                                                                   ui(new Ui::SettingBriefWidget)
 {
     setAccessibleName("SettingBriefWidget");
     ui->setupUi(this);
@@ -47,8 +48,8 @@ void SettingBriefWidget::initUI(QString title)
 {
     ui->label_text->setText(title);
     ui->label_arrow->setFixedSize(16, 16);
-    ui->label_arrow->setPixmap(QPixmap(getThemeArrowIcon()));
-    connect(StylePalette::instance(),&StylePalette::themeChanged,this,&SettingBriefWidget::updateThemeArrowIcon);
+    updateThemeArrowIcon();
+    connect(DEFAULT_PALETTE(), &Palette::baseColorsChanged, this, &SettingBriefWidget::updateThemeArrowIcon);
 }
 
 void SettingBriefWidget::mousePressEvent(QMouseEvent *event)
@@ -65,40 +66,40 @@ void SettingBriefWidget::paintEvent(QPaintEvent *)
     QStyleOption opt;
     opt.init(this);
 
-    StylePalette::ColorState colorState = StylePalette::Normal;
-    if( !(opt.state & QStyle::State_Enabled) )
+    // FIXME: 暂时使用ACTIVE代替Normal
+    Palette::ColorGroup colorState = Palette::ColorGroup::ACTIVE;
+    if (!(opt.state & QStyle::State_Enabled))
     {
-        colorState = StylePalette::Disabled;
+        colorState = Palette::ColorGroup::DISABLED;
     }
-    else if( opt.state & QStyle::State_Sunken )
+    else if (opt.state & QStyle::State_Sunken)
     {
-        colorState = StylePalette::Active;
+        colorState = Palette::ColorGroup::SUNKEN;
     }
-    else if ( opt.state & QStyle::State_MouseOver )
+    else if (opt.state & QStyle::State_MouseOver)
     {
-        colorState = StylePalette::Hover;
+        colorState = Palette::ColorGroup::MOUSE_OVER;
     }
 
-    auto kiranPalette = StylePalette::instance();
-    auto background = kiranPalette->color(colorState,StylePalette::Widget,StylePalette::Background);
+    auto background = DEFAULT_PALETTE()->getColor(colorState, Palette::ColorRole::WIDGET);
 
     QPainter p(this);
     QPainterPath painterPath;
-    painterPath.addRoundedRect(opt.rect,6,6);
+    painterPath.addRoundedRect(opt.rect, 6, 6);
 
-    p.fillPath(painterPath,background);
-}
-
-QString SettingBriefWidget::getThemeArrowIcon()
-{
-    static QMap<Kiran::PaletteType,QString> arrowIcons = {
-        {PALETTE_LIGHT,":/kcp-appearance/images/select-black.svg"},
-        {PALETTE_DARK,":/kcp-appearance/images/select.svg"}
-    };
-    return arrowIcons.value(StylePalette::instance()->paletteType());
+    p.fillPath(painterPath, background);
 }
 
 void SettingBriefWidget::updateThemeArrowIcon()
 {
-    ui->label_arrow->setPixmap(QPixmap(getThemeArrowIcon()));
+    QPixmap pixmap(":/kcp-appearance/images/select.svg");
+
+    if (DEFAULT_STYLE_HELPER()->paletteType() != PaletteType::PALETTE_DARK)
+    {
+        QImage image = pixmap.toImage();
+        image.invertPixels(QImage::InvertRgb);
+        pixmap = QPixmap::fromImage(image);
+    }
+
+    ui->label_arrow->setPixmap(pixmap);
 }

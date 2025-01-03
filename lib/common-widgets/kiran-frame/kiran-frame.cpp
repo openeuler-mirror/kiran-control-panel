@@ -13,12 +13,12 @@
  */
 
 #include "kiran-frame.h"
+#include <QDebug>
 #include <QPainter>
 #include <QPainterPath>
 #include <QStyleOption>
-#include <QDebug>
 
-using namespace Kiran;
+using namespace Kiran::Theme;
 
 KiranFrame::KiranFrame(QWidget* parent, Qt::WindowFlags f) : QWidget(parent, f)
 {
@@ -52,7 +52,7 @@ void KiranFrame::setDrawBackground(bool enable)
     update();
 }
 
-void KiranFrame::setFixedBackgroundState(Kiran::StylePalette::ColorState state)
+void KiranFrame::setFixedBackgroundState(Palette::ColorGroup state)
 {
     if (m_fixedBackground && m_fixedBackgroundState == state)
         return;
@@ -84,7 +84,7 @@ void KiranFrame::setDrawBroder(bool enable)
 
 void KiranFrame::setBorderWidth(int width)
 {
-    if( width <= 0)
+    if (width <= 0)
     {
         return;
     }
@@ -93,7 +93,7 @@ void KiranFrame::setBorderWidth(int width)
     update();
 }
 
-void KiranFrame::setFixedBorderState(Kiran::StylePalette::ColorState state)
+void KiranFrame::setFixedBorderState(Palette::ColorGroup state)
 {
     if (m_fixedBorder && m_fixedBorderState == state)
         return;
@@ -121,52 +121,28 @@ void KiranFrame::paintEvent(QPaintEvent* event)
 
     QPainterPath painterPath;
     QRectF frect = opt.rect;
-    frect.adjust(0.5,0.5,-0.5,-0.5);
+    frect.adjust(0.5, 0.5, -0.5, -0.5);
     painterPath.addRoundedRect(frect, m_radius, m_radius);
-
-    auto getStateFunc = [this](QStyle::State state) -> StylePalette::ColorState
-    {
-        if (!(state & QStyle::State_Enabled))
-        {
-            return StylePalette::Disabled;
-        }
-        else if (state & QStyle::State_Sunken)
-        {
-            return StylePalette::Active;
-        }
-        else if  ( (state & QStyle::State_MouseOver) && testAttribute(Qt::WA_Hover) )
-        {
-            return StylePalette::Hover;
-        }
-        else
-        {
-            return StylePalette::Normal;
-        }
-    };
 
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
 
-    auto kiranPalette = StylePalette::instance();
+    auto kiranPalette = DEFAULT_PALETTE();
     if (m_drawBackground)
     {
         QColor backgroundColor;
-        backgroundColor = kiranPalette->color(m_fixedBackground ? m_fixedBackgroundState : getStateFunc(state),
-                                              StylePalette::Widget,
-                                              StylePalette::Background);
-        painter.fillPath(painterPath,backgroundColor);
+        backgroundColor = m_fixedBackground ? kiranPalette->getColor(m_fixedBackgroundState, Palette::ColorRole::WIDGET) : kiranPalette->getColor(state, Palette::ColorRole::WIDGET);
+        painter.fillPath(painterPath, backgroundColor);
     }
 
-    if(m_drawBorder)
+    if (m_drawBorder)
     {
         QColor borderColor;
-        borderColor = kiranPalette->color(m_fixedBorder ? m_fixedBorderState : getStateFunc(state),
-                                          StylePalette::Widget,
-                                          StylePalette::Border);
+        borderColor = m_fixedBorder ? kiranPalette->getColor(m_fixedBorderState, Palette::ColorRole::BORDER) : kiranPalette->getColor(state, Palette::ColorRole::BORDER);
         auto pen = painter.pen();
         pen.setWidth(m_borderWidth);
         pen.setColor(borderColor);
-        painter.strokePath(painterPath,pen);
+        painter.strokePath(painterPath, pen);
     }
 
     QWidget::paintEvent(event);

@@ -12,13 +12,13 @@
  * Author:     liuxinhao <liuxinhao@kylinsec.com.cn>
  */
 #include "kiran-slider.h"
-#include <style-palette.h>
+#include <palette.h>
 #include <QDebug>
 #include <QMouseEvent>
 #include <QPainter>
 #include <QPainterPath>
 
-using namespace Kiran;
+using namespace Kiran::Theme;
 
 static const int sliderMargin = 16;
 
@@ -76,7 +76,7 @@ QSize KiranSlider::sizeHint() const
 {
     const int sliderLength = 160;
 
-    int w , h;
+    int w, h;
     w = h = 2 * sliderMargin;
 
     w += sliderLength;
@@ -92,7 +92,7 @@ QSize KiranSlider::minimumSizeHint() const
 {
     const int sliderLength = 160;
 
-    int w , h;
+    int w, h;
     w = h = 2 * sliderMargin;
 
     w += sliderLength;
@@ -271,9 +271,8 @@ void KiranSlider::drawBackground(QPainter& painter)
 
     painter.save();
 
-    auto backgroundColor = StylePalette::instance()->color(StylePalette::Normal,
-                                                           StylePalette::Widget,
-                                                           StylePalette::Background);
+    // FIXME：暂时使用ACTIVE代替Normal
+    auto backgroundColor = DEFAULT_PALETTE()->getColor(Palette::ACTIVE, Palette::WIDGET);
     painter.fillPath(backgroundPath, backgroundColor);
 
     painter.restore();
@@ -281,13 +280,9 @@ void KiranSlider::drawBackground(QPainter& painter)
 
 void KiranSlider::drawSliderGroove(QPainter& painter)
 {
-    auto backgroundColor = StylePalette::instance()->color(StylePalette::Normal,
-                                                           StylePalette::Bare,
-                                                           StylePalette::Background);
-
-    auto foregroundColor = StylePalette::instance()->color(StylePalette::Checked,
-                                                           StylePalette::Bare,
-                                                           StylePalette::Foreground);
+    // FIXME：暂时使用ACTIVE代替Normal,SELECTED状态代替Checked
+    auto backgroundColor = DEFAULT_PALETTE()->getColor(Palette::ACTIVE, Palette::WIDGET);
+    auto foregroundColor = DEFAULT_PALETTE()->getColor(Palette::SELECTED, Palette::WIDGET);
 
     painter.save();
     painter.fillRect(m_grooveRect, backgroundColor);
@@ -315,9 +310,8 @@ void KiranSlider::drawTickmarks(QPainter& painter)
 
 void KiranSlider::drawSliderHandle(QPainter& painter)
 {
-    auto foregroundColor = StylePalette::instance()->color(StylePalette::Checked,
-                                                           StylePalette::Bare,
-                                                           StylePalette::Foreground);
+    // FIXME：暂时使用SELECTED状态代替Checked,WIDGET代替Bare 无边框控件
+    auto foregroundColor = DEFAULT_PALETTE()->getColor(Palette::SELECTED, Palette::WIDGET);
 
     QRect cricleRect(0, 0, sliderHandleWidth, sliderHandleWidth);
     cricleRect.moveCenter(m_handleRect.center());
@@ -344,9 +338,8 @@ void KiranSlider::drawTickmark(QPainter& painter,
     QFont font("Noto Sans CJK SC regular", 12);
     QFontMetrics metrics(font);
 
-    auto backgroundColor = StylePalette::instance()->color(StylePalette::Normal,
-                                                           StylePalette::Bare,
-                                                           StylePalette::Background);
+    // FIXME：暂时使用ACTIVE代替Normal，WIDGET代替Bare 无边框控件
+    auto backgroundColor = DEFAULT_PALETTE()->getColor(Palette::ACTIVE, Palette::WIDGET);
 
     QPen pen = painter.pen();
     pen.setColor(backgroundColor);
@@ -366,7 +359,7 @@ void KiranSlider::drawTickmark(QPainter& painter,
     ticknessRect.moveLeft(m_grooveRect.left() + offset + ticknessRect.width() / 2);
 
     // 计算tickmark描述位置
-    int descFontWidth=0;
+    int descFontWidth = 0;
 #if (QT_VERSION < QT_VERSION_CHECK(5, 11, 0))
     descFontWidth = metrics.width(point.desc);
 #else

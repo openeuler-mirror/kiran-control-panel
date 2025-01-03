@@ -17,14 +17,11 @@
 #include <QVBoxLayout>
 
 #include <kiran-color-block.h>
-#include <style-property.h>
 
 #include "avatar-editor-exit-code.h"
 #include "image-preview-widget.h"
 #include "kiran-avatar-editor.h"
 #include "ui-defines.h"
-
-using namespace Kiran;
 
 KiranAvatarEditor::KiranAvatarEditor(const QString &srcImagePath, const QString &dstImagePath, QWidget *parent)
     : KiranTitlebarWindow(parent)
@@ -45,7 +42,7 @@ void KiranAvatarEditor::initUI(const QString &srcImagePath,
     setButtonHints(TitlebarMinimizeButtonHint | TitlebarCloseButtonHint);
     setTitlebarColorBlockEnable(true);
 
-    //主布局
+    // 主布局
     m_layout = new QVBoxLayout(getWindowContentWidget());
     m_layout->setSpacing(0);
     m_layout->setMargin(4);
@@ -56,7 +53,7 @@ void KiranAvatarEditor::initUI(const QString &srcImagePath,
     layout->setContentsMargins(6, 6, 6, 6);
     layout->setSpacing(10);
 
-    //预览图片
+    // 预览图片
     m_imagePreview = new ImagePreviewWidget(this);
     m_imagePreview->setSizePolicy(QSizePolicy::Expanding,
                                   QSizePolicy::Expanding);
@@ -64,14 +61,14 @@ void KiranAvatarEditor::initUI(const QString &srcImagePath,
     m_imagePreview->setDstImagePath(dstImagePath);
     layout->addWidget(m_imagePreview);
 
-    //分割线
+    // 分割线
     auto *dividingLine = new QWidget(this);
     dividingLine->setObjectName("dividingLine");
     dividingLine->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
     dividingLine->setFixedHeight(1);
     layout->addWidget(dividingLine);
 
-    //按钮
+    // 按钮
     m_buttonWidget = new QWidget(getWindowContentWidget());
     m_buttonWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
     m_buttonWidget->setContentsMargins(-1, 15, -1, 15);
@@ -85,12 +82,15 @@ void KiranAvatarEditor::initUI(const QString &srcImagePath,
     buttonLayout->addItem(spacerItem_1);
 
     m_btnConfrim = new QPushButton(this);
-    StylePropertyHelper::setButtonType(m_btnConfrim,BUTTON_Default);
+
+    // FIXME: 后续使用新版kiran-integration-qt5中提供的setButtonType函数
+    // StylePropertyHelper::setButtonType(m_btnConfrim,BUTTON_Default);
     m_btnConfrim->setObjectName("btn_confirm");
     m_btnConfrim->setFixedSize(100, 50);
     m_btnConfrim->setText(tr("Confirm"));
     buttonLayout->addWidget(m_btnConfrim);
-    connect(m_btnConfrim, &QPushButton::clicked, [this]() {
+    connect(m_btnConfrim, &QPushButton::clicked, [this]()
+            {
         if (m_imagePreview->saveAvatar())
         {
             qApp->exit(EXIT_CODE_SUCCESS);
@@ -98,8 +98,7 @@ void KiranAvatarEditor::initUI(const QString &srcImagePath,
         else
         {
             qApp->exit(EXIT_CODE_SAVE_FAILED);
-        }
-    });
+        } });
 
     auto *spacerItem_2 = new QSpacerItem(80, 20,
                                          QSizePolicy::Fixed,
@@ -110,10 +109,10 @@ void KiranAvatarEditor::initUI(const QString &srcImagePath,
     m_btnCancel->setObjectName("btn_cancel");
     m_btnCancel->setFixedSize(100, 50);
     m_btnCancel->setText(tr("Cancel"));
-    connect(m_btnCancel, &QPushButton::clicked, [this]() {
+    connect(m_btnCancel, &QPushButton::clicked, [this]()
+            {
         //TODO:询问，退出不会保存
-        qApp->exit(EXIT_CODE_CANCEL);
-    });
+        qApp->exit(EXIT_CODE_CANCEL); });
     buttonLayout->addWidget(m_btnCancel);
 
     QSpacerItem *spacerItem_3;

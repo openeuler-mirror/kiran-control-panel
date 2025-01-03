@@ -12,13 +12,13 @@ target_include_directories(kiran-avatar-editor PRIVATE
         ${CMAKE_BINARY_DIR}
         ${KIRAN_WIDGETS_INCLUDE_DIRS}
         ${KLOG_INCLUDE_DIRS}
-        ${KIRAN_STYLE_INCLUDE_DIRS})
+        ${KIRAN_INTEGRATION_THEME_INCLUDE_DIRS})
 
 target_link_libraries(kiran-avatar-editor
         Qt5::Widgets
         ${KIRAN_WIDGETS_LIBRARIES}
         ${KLOG_LIBRARIES}
-        ${KIRAN_STYLE_LIBRARIES})
+        ${KIRAN_INTEGRATION_THEME_LIBRARIES})
 
 install(TARGETS kiran-avatar-editor DESTINATION ${CMAKE_INSTALL_FULL_LIBEXECDIR})
 install(FILES ${AVATAR_EDITOR_QM_FILES} DESTINATION ${TRANSLATION_DIR} )

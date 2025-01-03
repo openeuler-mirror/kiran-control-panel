@@ -14,12 +14,12 @@
 
 #include "category-item.h"
 
+#include <palette.h>
 #include <QAbstractButton>
 #include <QPainter>
 #include <QPainterPath>
-#include <style-palette.h>
 
-using namespace Kiran;
+using namespace Kiran::Theme;
 
 CategoryItem::CategoryItem(QWidget *parent) : QAbstractButton(parent)
 {
@@ -46,19 +46,20 @@ void CategoryItem::paintEvent(QPaintEvent *e)
     p.setRenderHint(QPainter::Antialiasing);
 
     QColor background;
-    auto kiranPalette = StylePalette::instance();
+    auto kiranPalette = DEFAULT_PALETTE();
 
-    StylePalette::ColorState colorState = StylePalette::Normal;
-    if( isChecked() )
-        colorState = StylePalette::Checked;
-    else if( underMouse() )
-        colorState = StylePalette::Hover;
+    // FIXME: 暂时使用ACTIVE代替Normal,SELECTED状态代替checked
+    Palette::ColorGroup colorState = Palette::ColorGroup::ACTIVE;
+    if (isChecked())
+        colorState = Palette::ColorGroup::SELECTED;
+    else if (underMouse())
+        colorState = Palette::ColorGroup::MOUSE_OVER;
 
-    if( parentWidget() && colorState!=StylePalette::Normal )
+    if (parentWidget() && colorState != Palette::ColorGroup::ACTIVE)
     {
         QPainterPath path;
         path.addRoundedRect(rect(), 6, 6);
-        background = kiranPalette->color(colorState,StylePalette::Widget,StylePalette::Background);
+        background = kiranPalette->getColor(colorState, Palette::ColorRole::WIDGET);
         p.fillPath(path, background);
     }
 
@@ -69,7 +70,7 @@ void CategoryItem::paintEvent(QPaintEvent *e)
     p.drawPixmap(iconRect, pixmap);
 
     QRect textRect(iconRect.right() + 13, rect().top(), rect().right() - iconRect.right() - 10, rect().height());
-    if( isChecked() )
+    if (isChecked())
     {
         p.setPen(QColor("white"));
     }

@@ -15,8 +15,6 @@
 #include "category-item.h"
 #include "category-manager.h"
 
-#include <style-palette.h>
-
 #include <QBoxLayout>
 #include <QButtonGroup>
 #include <QEvent>
@@ -39,12 +37,12 @@ void CategorySideBar::init()
 {
     setAccessibleName("ControlPanelCategory");
 
-    //布局
+    // 布局
     auto layout = new QHBoxLayout(this);
     layout->setSpacing(0);
     layout->setMargin(0);
 
-    //滚动区域
+    // 滚动区域
     auto pScrollArea = new QScrollArea(this);
     pScrollArea->setAutoFillBackground(false);
     pScrollArea->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
