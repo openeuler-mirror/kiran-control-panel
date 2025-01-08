@@ -18,10 +18,6 @@
 #include "timedate-interface.h"
 #include "ui_date-time-settings.h"
 
-#include <style-property.h>
-
-using namespace Kiran;
-
 DateTimeSettings::DateTimeSettings(QWidget *parent) : QWidget(parent), ui(new Ui::DateTimeSettings)
 {
     ui->setupUi(this);
@@ -35,7 +31,8 @@ DateTimeSettings::~DateTimeSettings()
 
 void DateTimeSettings::init()
 {
-    StylePropertyHelper::setButtonType(ui->btn_save,Kiran::BUTTON_Default);
+    // FIXME: 后续使用新版kiran-integration-qt5中提供的setButtonType函数
+    // StylePropertyHelper::setButtonType(ui->btn_save,Kiran::BUTTON_Default);
     connect(ui->btn_save, &QPushButton::clicked, this, &DateTimeSettings::handleButtonSaveClicked);
     connect(ui->btn_reset, &QPushButton::clicked, this, &DateTimeSettings::handleButtonResetClicked);
 }

@@ -16,9 +16,6 @@
 
 #include "time-zone-settings.h"
 #include "ui_time-zone-settings.h"
-#include <style-property.h>
-
-using namespace Kiran;
 
 TimezoneSettings::TimezoneSettings(QWidget *parent) : QWidget(parent), ui(new Ui::TimezoneSettings)
 {
@@ -33,9 +30,10 @@ TimezoneSettings::~TimezoneSettings()
 
 void TimezoneSettings::init()
 {
-    StylePropertyHelper::setButtonType(ui->btn_save,BUTTON_Default);
-    connect(ui->btn_save,&QPushButton::clicked,this,&TimezoneSettings::handleSaveButtonClicked);
-    connect(ui->btn_reset,&QPushButton::clicked,this,&TimezoneSettings::handleResetButtonClicked);
+    // FIXME: 后续使用新版kiran-integration-qt5中提供的setButtonType函数
+    // StylePropertyHelper::setButtonType(ui->btn_save,BUTTON_Default);
+    connect(ui->btn_save, &QPushButton::clicked, this, &TimezoneSettings::handleSaveButtonClicked);
+    connect(ui->btn_reset, &QPushButton::clicked, this, &TimezoneSettings::handleResetButtonClicked);
 }
 
 void TimezoneSettings::reset()

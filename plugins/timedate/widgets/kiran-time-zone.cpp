@@ -13,12 +13,12 @@
  */
 
 #include "kiran-time-zone.h"
-#include "ui_kiran-time-zone.h"
 #include "kiran-time-zone-item.h"
-#include "timedate-interface.h"
 #include "kiran-timedate-global-data.h"
+#include "timedate-interface.h"
+#include "ui_kiran-time-zone.h"
 
-#include <style-palette.h>
+#include <palette.h>
 
 #include <QDebug>
 #include <QMessageBox>
@@ -27,18 +27,17 @@
 #include <QStyle>
 #include <QStyleOption>
 
-using namespace Kiran;
+using namespace Kiran::Theme;
 
-KiranTimeZone::KiranTimeZone(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::KiranTimeZone),
-    m_editHasFocus(false)
+KiranTimeZone::KiranTimeZone(QWidget *parent) : QWidget(parent),
+                                                ui(new Ui::KiranTimeZone),
+                                                m_editHasFocus(false)
 {
     ui->setupUi(this);
     setAttribute(Qt::WA_TranslucentBackground);
     setAccessibleName("TimeZoneWidget");
     ui->edit_search->installEventFilter(this);
-    initUI();;
+    initUI();
 }
 
 KiranTimeZone::~KiranTimeZone()
@@ -56,13 +55,15 @@ QSize KiranTimeZone::sizeHint() const
 
 bool KiranTimeZone::save()
 {
-    if( KiranTimeDateGlobalData::instance()->systemTimeZone()==m_selectedZoneID ){
+    if (KiranTimeDateGlobalData::instance()->systemTimeZone() == m_selectedZoneID)
+    {
         return true;
     }
 
-    QPair<bool,QString> res = ComKylinsecKiranSystemDaemonTimeDateInterface::instance()->SyncSetTimeZone(m_selectedZoneID);
+    QPair<bool, QString> res = ComKylinsecKiranSystemDaemonTimeDateInterface::instance()->SyncSetTimeZone(m_selectedZoneID);
 
-    if(!res.first){
+    if (!res.first)
+    {
         qInfo() << "SetTimeZone failed," << res.second;
         return false;
     }
@@ -74,17 +75,19 @@ void KiranTimeZone::reset()
 {
     ui->edit_search->clear();
     ui->timeZoneList->reset();
-    QTimer::singleShot(0,this,SLOT(scrollToCurrent()));
+    QTimer::singleShot(0, this, SLOT(scrollToCurrent()));
 }
 
 void KiranTimeZone::scrollToCurrent()
 {
     QObjectList objList = ui->timeZoneList->allTimeZoneWidget()->children();
-    foreach (QObject* obj, objList) {
-        KiranTimeZoneItem* item = qobject_cast<KiranTimeZoneItem*>(obj);
-        if(item&&item->getTimeZoneID()==m_selectedZoneID){
-            int ymargin = ui->timeZoneList->height()/2 - 20;
-            ui->scrollArea->ensureWidgetVisible(item,0,ymargin);
+    foreach (QObject *obj, objList)
+    {
+        KiranTimeZoneItem *item = qobject_cast<KiranTimeZoneItem *>(obj);
+        if (item && item->getTimeZoneID() == m_selectedZoneID)
+        {
+            int ymargin = ui->timeZoneList->height() / 2 - 20;
+            ui->scrollArea->ensureWidgetVisible(item, 0, ymargin);
         }
     }
 }
@@ -98,35 +101,35 @@ void KiranTimeZone::initUI()
     /// NOTE: 为了完成搜索项的数目变更，窗口高度自动适应的效果
     ///        通过设置最大高度setMaximumHeight,来将控件压缩到40px,不然始终占据过多空间
     /// 当滚动区域高度变化，调整该窗口最大高度
-    connect(ui->timeZoneList,&KiranTimeZoneList::sigHeightChanged,[this](int height){
+    connect(ui->timeZoneList, &KiranTimeZoneList::sigHeightChanged, [this](int height)
+            {
         setMaximumHeight(ui->widget_edit->height()+
                          height+
                          contentsMargins().top()+
                          contentsMargins().bottom()+
                          layout()->spacing()+
                          2);
-        updateGeometry();
-    });
+        updateGeometry(); });
     /// 搜索文本变化时，调用timeZone
-    connect(ui->edit_search,&QLineEdit::textChanged,[this](const QString& text){
+    connect(ui->edit_search, &QLineEdit::textChanged, [this](const QString &text)
+            {
        if(text.isEmpty()){
            ui->timeZoneList->switchToAllTimeZone();
            QTimer::singleShot(0,this,SLOT(scrollToCurrent()));
        }else{
            ui->timeZoneList->addSearchTimeoutTask(text);
-       }
-    });
+       } });
 
-    connect(ui->timeZoneList,&KiranTimeZoneList::sigSeletedZoneInfoChanged,[this](const QString& zoneID){
-        m_selectedZoneID = zoneID;
-    });
+    connect(ui->timeZoneList, &KiranTimeZoneList::sigSeletedZoneInfoChanged, [this](const QString &zoneID)
+            { m_selectedZoneID = zoneID; });
 
     ui->timeZoneList->initAllTimeZone();
 }
 
 bool KiranTimeZone::event(QEvent *event)
 {
-    if(event->type()==QEvent::ShowToParent){
+    if (event->type() == QEvent::ShowToParent)
+    {
         scrollToCurrent();
     }
     return QWidget::event(event);
@@ -140,19 +143,19 @@ void KiranTimeZone::paintEvent(QPaintEvent *event)
     QPainter p(this);
     p.setRenderHint(QPainter::Antialiasing);
 
-    if( m_editHasFocus )
+    if (m_editHasFocus)
     {
         opt.state |= QStyle::State_Selected;
     }
 
-    auto kiranPalette = StylePalette::instance();
-    auto borderColor = kiranPalette->color(m_editHasFocus?StylePalette::Checked:StylePalette::Normal,
-                                           StylePalette::Widget,
-                                           StylePalette::Border);
+    auto kiranPalette = DEFAULT_PALETTE();
+    // FIXME：暂时使用ACTIVE代替Normal,SELECTED代替Checked
+    auto borderColor = kiranPalette->getColor(m_editHasFocus ? Palette::SELECTED : Palette::ACTIVE,
+                                              Palette::BORDER);
 
     QPainterPath painterPath;
     QRectF rectF = opt.rect;
-    painterPath.addRoundedRect(rectF.adjusted(0.5,0.5,-0.5,-0.5),6,6);
+    painterPath.addRoundedRect(rectF.adjusted(0.5, 0.5, -0.5, -0.5), 6, 6);
 
     QPen pen;
     pen.setWidth(0);
@@ -169,9 +172,11 @@ void KiranTimeZone::paintEvent(QPaintEvent *event)
 
 bool KiranTimeZone::eventFilter(QObject *obj, QEvent *event)
 {
-    ///NOTE: 通过event filter来获取输入框聚焦事件,修改样式为聚焦样式
-    if(obj==ui->edit_search){
-        switch ( event->type() ) {
+    /// NOTE: 通过event filter来获取输入框聚焦事件,修改样式为聚焦样式
+    if (obj == ui->edit_search)
+    {
+        switch (event->type())
+        {
         case QEvent::FocusIn:
             m_editHasFocus = true;
             update();
@@ -187,6 +192,5 @@ bool KiranTimeZone::eventFilter(QObject *obj, QEvent *event)
         }
     }
 
-    return QWidget::eventFilter(obj,event);
+    return QWidget::eventFilter(obj, event);
 }
-

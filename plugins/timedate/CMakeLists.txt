@@ -7,7 +7,7 @@ find_package(Qt5 COMPONENTS Widgets Svg DBus Network LinguistTools)
 pkg_search_module(KIRAN_WIDGETS_QT5 REQUIRED kiranwidgets-qt5)
 pkg_search_module(KLOG_QT5 REQUIRED klog-qt5)
 pkg_search_module(KIRAN_CC_DAEMON REQUIRED kiran-cc-daemon)
-pkg_search_module(KIRAN_STYLE_HELPER REQUIRED kiran-style-helper)
+pkg_search_module(KIRAN_INTEGRATION_THEME REQUIRED kiran-integration-theme)
 
 file(GLOB_RECURSE SRC
         ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp
@@ -29,7 +29,7 @@ target_include_directories(${TARGET_NAME} PRIVATE
         ${KLOG_QT5_INCLUDE_DIRS}
         ${KIRAN_CONTROL_PANEL_PKG_INCLUDE_DIRS}
         ${KIRAN_CC_DAEMON_INCLUDE_DIRS}
-        ${KIRAN_STYLE_HELPER_INCLUDE_DIRS})
+        ${KIRAN_INTEGRATION_THEME_INCLUDE_DIRS})
 
 target_link_libraries(${TARGET_NAME}
         Qt5::Widgets
@@ -40,7 +40,7 @@ target_link_libraries(${TARGET_NAME}
         Xrandr
         ${KIRAN_WIDGETS_QT5_LIBRARIES}
         ${KLOG_QT5_LIBRARIES}
-        ${KIRAN_STYLE_HELPER_LIBRARIES})
+        ${KIRAN_INTEGRATION_THEME_LIBRARIES})
 
 #安装插件
 install(TARGETS ${TARGET_NAME} DESTINATION ${PLUGIN_LIBS_DIR})

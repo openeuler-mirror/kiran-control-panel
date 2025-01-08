@@ -21,9 +21,6 @@
 #include <QScreen>
 
 #include <kiranwidgets-qt5/kiran-message-box.h>
-#include <style-property.h>
-
-using namespace Kiran;
 
 ChangeHostNameWidget::ChangeHostNameWidget(QWidget* parent)
     : KiranTitlebarWindow(parent),
@@ -35,7 +32,8 @@ ChangeHostNameWidget::ChangeHostNameWidget(QWidget* parent)
     setResizeable(false);
     setTitlebarColorBlockEnable(true);
 
-    StylePropertyHelper::setButtonType(ui->btn_save, Kiran::BUTTON_Default);
+    // FIXME: 后续使用新版kiran-integration-qt5中提供的setButtonType函数
+    // StylePropertyHelper::setButtonType(ui->btn_save, Kiran::BUTTON_Default);
     initUI();
     connect(ui->btn_cancel, SIGNAL(clicked()), this, SLOT(close()));
     connect(ui->btn_save, SIGNAL(clicked()), this, SLOT(setNewHostName()));

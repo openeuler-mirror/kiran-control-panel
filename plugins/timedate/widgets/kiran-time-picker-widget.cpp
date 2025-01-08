@@ -14,30 +14,27 @@
 #include "kiran-time-picker-widget.h"
 #include "ui_kiran-time-picker-widget.h"
 
-#include <style-palette.h>
-
-#include <QStyleOption>
-#include <QPainter>
+#include <palette.h>
 #include <QDebug>
+#include <QPainter>
+#include <QStyleOption>
 
-using namespace Kiran;
+using namespace Kiran::Theme;
 
-KiranTimePickerWidget::KiranTimePickerWidget(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::KiranTimePickerWidget),
-    m_pickerType(PICKER_HOUR_MINUTE_SECOND),
-    m_hightLightColor(QColor(255,255,255,255*0.05))
+KiranTimePickerWidget::KiranTimePickerWidget(QWidget *parent) : QWidget(parent),
+                                                                ui(new Ui::KiranTimePickerWidget),
+                                                                m_pickerType(PICKER_HOUR_MINUTE_SECOND),
+                                                                m_hightLightColor(QColor(255, 255, 255, 255 * 0.05))
 {
     ui->setupUi(this);
     initUI();
     setAccessibleName("TimePicker");
 }
 
-KiranTimePickerWidget::KiranTimePickerWidget(KiranTimePickerWidget::TimePickerType type, QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::KiranTimePickerWidget),
-    m_pickerType(PICKER_HOUR_MINUTE),
-    m_hightLightColor(QColor(255,255,255,255*0.05))
+KiranTimePickerWidget::KiranTimePickerWidget(KiranTimePickerWidget::TimePickerType type, QWidget *parent) : QWidget(parent),
+                                                                                                            ui(new Ui::KiranTimePickerWidget),
+                                                                                                            m_pickerType(PICKER_HOUR_MINUTE),
+                                                                                                            m_hightLightColor(QColor(255, 255, 255, 255 * 0.05))
 {
     ui->setupUi(this);
     initUI();
@@ -51,7 +48,8 @@ KiranTimePickerWidget::~KiranTimePickerWidget()
 void KiranTimePickerWidget::setPickerType(KiranTimePickerWidget::TimePickerType pickerType)
 {
     m_pickerType = pickerType;
-    switch (pickerType) {
+    switch (pickerType)
+    {
     case PICKER_HOUR_MINUTE:
         ui->scrollpicker_second->setVisible(false);
         break;
@@ -71,16 +69,16 @@ QTime KiranTimePickerWidget::currentTime()
     int minute = ui->scrollpicker_minute->currentData().toInt();
     int second = ui->scrollpicker_second->currentData().toInt();
 
-    time.setHMS(hour,minute,second);
+    time.setHMS(hour, minute, second);
 
     return time;
 }
 
 void KiranTimePickerWidget::setCurrentTime(const QTime &time)
 {
-    ui->scrollpicker_hour->setCurrentText(QString("%1").arg(time.hour(),2,10,QChar('0')),true);
-    ui->scrollpicker_minute->setCurrentText(QString("%1").arg(time.minute(),2,10,QChar('0')),true);
-    ui->scrollpicker_second->setCurrentText(QString("%1").arg(time.second(),2,10,QChar('0')),true);
+    ui->scrollpicker_hour->setCurrentText(QString("%1").arg(time.hour(), 2, 10, QChar('0')), true);
+    ui->scrollpicker_minute->setCurrentText(QString("%1").arg(time.minute(), 2, 10, QChar('0')), true);
+    ui->scrollpicker_second->setCurrentText(QString("%1").arg(time.second(), 2, 10, QChar('0')), true);
 }
 
 QColor KiranTimePickerWidget::hightLightColor() const
@@ -95,7 +93,8 @@ void KiranTimePickerWidget::reset()
 
 void KiranTimePickerWidget::setHightLightColor(QColor hightLightColor)
 {
-    if(hightLightColor==m_hightLightColor){
+    if (hightLightColor == m_hightLightColor)
+    {
         return;
     }
     m_hightLightColor = hightLightColor;
@@ -106,20 +105,23 @@ void KiranTimePickerWidget::initUI()
 {
     ui->scrollpicker_hour->setShowCount(3);
     ui->scrollpicker_hour->setLoop(true);
-    for(int i=0;i<24;i++){
-        ui->scrollpicker_hour->addItem(QString("%1").arg(i,2,10,QChar('0')),i);
+    for (int i = 0; i < 24; i++)
+    {
+        ui->scrollpicker_hour->addItem(QString("%1").arg(i, 2, 10, QChar('0')), i);
     }
 
     ui->scrollpicker_minute->setShowCount(3);
     ui->scrollpicker_minute->setLoop(true);
-    for(int i=0;i<60;i++){
-        ui->scrollpicker_minute->addItem(QString("%1").arg(i,2,10,QChar('0')),i);
+    for (int i = 0; i < 60; i++)
+    {
+        ui->scrollpicker_minute->addItem(QString("%1").arg(i, 2, 10, QChar('0')), i);
     }
 
     ui->scrollpicker_second->setShowCount(3);
     ui->scrollpicker_second->setLoop(true);
-    for(int i=0;i<60;i++){
-        ui->scrollpicker_second->addItem(QString("%1").arg(i,2,10,QChar('0')),i);
+    for (int i = 0; i < 60; i++)
+    {
+        ui->scrollpicker_second->addItem(QString("%1").arg(i, 2, 10, QChar('0')), i);
     }
 
     setPickerType(m_pickerType);
@@ -127,17 +129,14 @@ void KiranTimePickerWidget::initUI()
     setCurrentTime(QTime::currentTime());
 
     updateScrollPickerColor();
-    connect(StylePalette::instance(),&StylePalette::themeChanged,this,&KiranTimePickerWidget::updateScrollPickerColor);
+    connect(DEFAULT_PALETTE(), &Palette::baseColorsChanged, this, &KiranTimePickerWidget::updateScrollPickerColor);
 
-    connect(ui->scrollpicker_hour,QOverload<const QString&>::of(&ScrollPicker::currentTextChanged),[this](){
-        emitCurrentTimeChanged();
-    });
-    connect(ui->scrollpicker_minute,QOverload<const QString&>::of(&ScrollPicker::currentTextChanged),[this](){
-        emitCurrentTimeChanged();
-    });
-    connect(ui->scrollpicker_second,QOverload<const QString&>::of(&ScrollPicker::currentTextChanged),[this](){
-        emitCurrentTimeChanged();
-    });
+    connect(ui->scrollpicker_hour, QOverload<const QString &>::of(&ScrollPicker::currentTextChanged), [this]()
+            { emitCurrentTimeChanged(); });
+    connect(ui->scrollpicker_minute, QOverload<const QString &>::of(&ScrollPicker::currentTextChanged), [this]()
+            { emitCurrentTimeChanged(); });
+    connect(ui->scrollpicker_second, QOverload<const QString &>::of(&ScrollPicker::currentTextChanged), [this]()
+            { emitCurrentTimeChanged(); });
 }
 
 void KiranTimePickerWidget::emitCurrentTimeChanged()
@@ -152,9 +151,9 @@ void KiranTimePickerWidget::paintEvent(QPaintEvent *event)
     QPainter painter(this);
     painter.setRenderHint(QPainter::HighQualityAntialiasing);
 
-    ///绘制高亮区域
-    QRect hightLightRect(QPoint(0,height()/2-20),QSize(width(),40));
-    painter.fillRect(hightLightRect,m_hightLightColor);
+    /// 绘制高亮区域
+    QRect hightLightRect(QPoint(0, height() / 2 - 20), QSize(width(), 40));
+    painter.fillRect(hightLightRect, m_hightLightColor);
 
     QStyleOption opt;
     opt.init(this);
@@ -165,8 +164,9 @@ void KiranTimePickerWidget::paintEvent(QPaintEvent *event)
 
 void KiranTimePickerWidget::updateScrollPickerColor()
 {
-    auto kiranPalette = StylePalette::instance();
-    QColor fontColor = kiranPalette->color(StylePalette::Normal,StylePalette::Widget,StylePalette::Foreground);
+    auto palette = DEFAULT_PALETTE();
+    // FIXME：暂时使用ACTIVE代替Normal
+    QColor fontColor = palette->getColor(Palette::ACTIVE, Palette::TEXT);
 
     ui->scrollpicker_hour->setFontColor(fontColor);
     ui->scrollpicker_minute->setFontColor(fontColor);
