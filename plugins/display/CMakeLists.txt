@@ -34,7 +34,7 @@ target_include_directories(${TARGET_NAME} PRIVATE
         ${KLOG_INCLUDE_DIRS}
         ${KIRAN_WIDGETS_INCLUDE_DIRS}
         ${KCP_PLUGIN_INCLUDE_DIR}
-        ${KIRAN_STYLE_INCLUDE_DIRS})
+        ${KIRAN_INTEGRATION_THEME_INCLUDE_DIRS})
 
 target_link_libraries(${TARGET_NAME}
         common-widgets
@@ -42,9 +42,8 @@ target_link_libraries(${TARGET_NAME}
         Qt5::DBus
         Qt5::X11Extras
         Qt5::Svg
-        ${KIRAN_STYLE_LIBRARIES}
         ${KIRAN_WIDGETS_LIBRARIES}
-        ${KLOG_LIBRARIES})
+        ${KIRAN_INTEGRATION_THEME_LIBRARIES})
 
 #安装插件到指定目录
 install(TARGETS ${TARGET_NAME} DESTINATION ${PLUGIN_LIBS_DIR}/)

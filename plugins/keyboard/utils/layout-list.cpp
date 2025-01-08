@@ -17,12 +17,12 @@
 #include "ui_layout-list.h"
 
 #include <kiran-log/qt5-log-i.h>
+#include <palette.h>
 #include <QPainter>
 #include <QPainterPath>
 #include <QScrollBar>
-#include <style-palette.h>
 
-using namespace Kiran;
+using namespace Kiran::Theme;
 
 LayoutList::LayoutList(QWidget* parent) : QWidget(parent),
                                           ui(new Ui::LayoutList),
@@ -42,7 +42,8 @@ LayoutList::LayoutList(QWidget* parent) : QWidget(parent),
             });
 
     connect(ui->lineEdit_search, &QLineEdit::textChanged,
-            [this](QString text) {
+            [this](QString text)
+            {
                 if (text.isEmpty())
                 {
                     ui->stackedWidget->setCurrentWidget(ui->page_list);
@@ -57,7 +58,8 @@ LayoutList::LayoutList(QWidget* parent) : QWidget(parent),
                 }
             });
     connect(this, &LayoutList::heightChanged,
-            [this](int height) {
+            [this](int height)
+            {
                 setMaximumHeight(height +
                                  contentsMargins().top() +
                                  contentsMargins().bottom() +
@@ -117,7 +119,7 @@ void LayoutList::setEditHasFocus(bool editHasFocus)
     m_editHasFocus = editHasFocus;
     emit editHasFocusChanged(m_editHasFocus);
     style()->polish(this);
-    ///NOTE:如果不重绘，聚焦边框样式不会更新
+    /// NOTE:如果不重绘，聚焦边框样式不会更新
     update();
 }
 
@@ -198,13 +200,12 @@ void LayoutList::paintEvent(QPaintEvent* event)
 
     QPainterPath painterPath;
     QRectF frect = rect();
-    frect.adjust(0.5,0.5,-0.5,-0.5);
-    painterPath.addRoundedRect(frect,6,6);
+    frect.adjust(0.5, 0.5, -0.5, -0.5);
+    painterPath.addRoundedRect(frect, 6, 6);
 
-    auto stylePalette = StylePalette::instance();
-    QColor borderColor = stylePalette->color(editHasFocus()?StylePalette::Checked:StylePalette::Normal,
-                                             StylePalette::Widget,
-                                             StylePalette::Border);
+    // FIXME: 暂时使用SELECTED代替Checked，ACTIVE代替Normal
+    QColor borderColor = DEFAULT_PALETTE()->getColor(editHasFocus() ? Palette::ColorGroup::SELECTED : Palette::ColorGroup::ACTIVE,
+                                                     Palette::ColorRole::BORDER);
 
     p.setPen(borderColor);
     p.drawPath(painterPath);
@@ -223,7 +224,7 @@ void LayoutList::paintEvent(QPaintEvent* event)
 
 bool LayoutList::eventFilter(QObject* obj, QEvent* event)
 {
-    ///NOTE: 通过event filter来获取输入框聚焦事件,修改样式为聚焦样式
+    /// NOTE: 通过event filter来获取输入框聚焦事件,修改样式为聚焦样式
     if (obj == ui->lineEdit_search)
     {
         switch (event->type())

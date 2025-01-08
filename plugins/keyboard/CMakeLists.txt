@@ -25,7 +25,7 @@ target_include_directories(${TARGET_NAME} PRIVATE
         ${KIRAN_WIDGETS_INCLUDE_DIRS}
         ${KLOG_INCLUDE_DIRS}
         ${KIRAN_CC_DAEMON_INCLUDE_DIRS}
-        ${KIRAN_STYLE_INCLUDE_DIRS})
+        ${KIRAN_INTEGRATION_THEME_INCLUDE_DIRS})
 
 target_link_libraries(${TARGET_NAME}
         common-widgets
@@ -35,7 +35,7 @@ target_link_libraries(${TARGET_NAME}
         Qt5::Core
         ${KIRANWIDGETS_LIBRARIES}
         ${KLOG_LIBRARIES}
-        ${KIRAN_STYLE_LIBRARIES})
+        ${KIRAN_INTEGRATION_THEME_LIBRARIES})
 
 if (MODIFIER_LOCK_TIPS_VISIBLE)
     add_definitions(-DMODIFIER_LOCK_TIPS)

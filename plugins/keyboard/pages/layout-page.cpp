@@ -13,15 +13,14 @@
  */
 
 #include "layout-page.h"
-#include "keyboard_backEnd_proxy.h"
-#include "ui_layout-page.h"
 #include "choose-item.h"
-#include "layout-list.h"
+#include "keyboard_backEnd_proxy.h"
 #include "kiran-session-daemon/keyboard-i.h"
+#include "layout-list.h"
+#include "ui_layout-page.h"
 
 #include <kiran-log/qt5-log-i.h>
 #include <kiran-message-box.h>
-#include <style-property.h>
 
 #include <QJsonArray>
 #include <QJsonDocument>
@@ -33,8 +32,8 @@ using namespace Kiran;
 
 LayoutPage::LayoutPage(QWidget *parent)
     : QWidget(parent),
-    ui(new Ui::LayoutPage),
-    m_keyboardInterface(new KeyboardBackEndProxy(KEYBOARD_DBUS_NAME,KEYBOARD_OBJECT_PATH,QDBusConnection::sessionBus(),this))
+      ui(new Ui::LayoutPage),
+      m_keyboardInterface(new KeyboardBackEndProxy(KEYBOARD_DBUS_NAME, KEYBOARD_OBJECT_PATH, QDBusConnection::sessionBus(), this))
 {
     ui->setupUi(this);
     init();
@@ -59,8 +58,9 @@ void LayoutPage::init()
 
 void LayoutPage::initUI()
 {
-    StylePropertyHelper::setButtonType(ui->btn_add,BUTTON_Default);
-    ui->btn_add->setIconSize(QSize(32,32));
+    // FIXME: 后续使用新版kiran-integration-qt5中提供的setButtonType函数
+    // StylePropertyHelper::setButtonType(ui->btn_add, BUTTON_Default);
+    ui->btn_add->setIconSize(QSize(32, 32));
     ui->btn_add->setIcon(QPixmap(":/kcp-keyboard/images/addition.svg"));
 
     m_vLayout = new QVBoxLayout();
@@ -69,27 +69,29 @@ void LayoutPage::initUI()
     m_vLayout->setSpacing(10);
     ui->layout_selector->setLayout(m_vLayout);
     ui->stackedWidget->setCurrentWidget(ui->page_layoutList);
-    StylePropertyHelper::setButtonType(ui->btn_page_add,BUTTON_Default);
+
+    // FIXME: 后续使用新版kiran-integration-qt5中提供的setButtonType函数
+    // StylePropertyHelper::setButtonType(ui->btn_page_add, BUTTON_Default);
 
     ui->btn_page_add->setDisabled(true);
 }
 
 void LayoutPage::initConnection()
 {
-    connect(m_keyboardInterface, &KeyboardBackEndProxy::layoutsChanged,[this](QStringList layoutList) {
+    connect(m_keyboardInterface, &KeyboardBackEndProxy::layoutsChanged, [this](QStringList layoutList)
+            {
         KLOG_DEBUG() << "keyboard layout: layouts changed:" << layoutList;
         m_layoutList = layoutList;
         //更新界面
-        updateLayout();
-    });
+        updateLayout(); });
 
     connect(ui->btn_edit, &QPushButton::clicked, this, &LayoutPage::setEditMode);
 
-    connect(ui->btn_add, &QToolButton::clicked,[this] {
-        ui->stackedWidget->setCurrentWidget(ui->page_layoutAddition);
-    });
+    connect(ui->btn_add, &QToolButton::clicked, [this]
+            { ui->stackedWidget->setCurrentWidget(ui->page_layoutAddition); });
 
-    connect(ui->btn_page_add, &QPushButton::clicked,[this] {
+    connect(ui->btn_page_add, &QPushButton::clicked, [this]
+            {
         QString additionLayout;
         QString countryName = ui->widget_layout_list->getSelectedCountry();
         QMap<QString, QString>::const_iterator i = m_layoutMap.begin();
@@ -110,16 +112,13 @@ void LayoutPage::initConnection()
         else
         {
             KiranMessageBox::message(nullptr,tr("Failed"),tr("You have added this keyboard layout!"),KiranMessageBox::Ok);
-        }
-    });
+        } });
 
-    connect(ui->widget_layout_list, &LayoutList::itemChanged,[this](QString countryName) {
-        ui->btn_page_add->setDisabled(false);
-    });
+    connect(ui->widget_layout_list, &LayoutList::itemChanged, [this](QString countryName)
+            { ui->btn_page_add->setDisabled(false); });
 
-    connect(ui->btn_return, &QPushButton::clicked,[this] {
-        ui->stackedWidget->setCurrentWidget(ui->page_layoutList);
-    });
+    connect(ui->btn_return, &QPushButton::clicked, [this]
+            { ui->stackedWidget->setCurrentWidget(ui->page_layoutList); });
 }
 
 void LayoutPage::loadValidLayouts()
@@ -134,30 +133,30 @@ void LayoutPage::loadValidLayouts()
 
     QString jsonString = reply.argumentAt(0).toString();
     QJsonParseError jsonError{};
-    QJsonDocument jsonDoc = QJsonDocument::fromJson(jsonString.toLocal8Bit().data(),&jsonError);
-    if( jsonDoc.isNull() || jsonError.error!=QJsonParseError::NoError )
+    QJsonDocument jsonDoc = QJsonDocument::fromJson(jsonString.toLocal8Bit().data(), &jsonError);
+    if (jsonDoc.isNull() || jsonError.error != QJsonParseError::NoError)
     {
         KLOG_ERROR() << "keyboard layout: parse valid layouts failed,QJsonParseError:" << jsonError.error << jsonError.errorString();
         return;
     }
 
-    if( !jsonDoc.isArray() )
+    if (!jsonDoc.isArray())
     {
         KLOG_ERROR() << "keyboard layout: valid layouts json result isn't array!";
-        return ;
+        return;
     }
 
     QJsonArray validLayoutArray = jsonDoc.array();
     QStringList countryNameList;
-    for(const auto& validLayout:validLayoutArray)
+    for (const auto &validLayout : validLayoutArray)
     {
-        if( !validLayout.isObject() )
+        if (!validLayout.isObject())
         {
             KLOG_WARNING() << "keyboard layout: valid layout item isn't json object!";
             continue;
         }
         QJsonObject validLayoutObject = validLayout.toObject();
-        if( !validLayoutObject.contains("layout_name") || !validLayoutObject.contains("country_name") )
+        if (!validLayoutObject.contains("layout_name") || !validLayoutObject.contains("country_name"))
         {
             KLOG_WARNING() << "keyboard layout: valid layout item missing json key: layout_name or country_name!";
             continue;
@@ -173,8 +172,8 @@ void LayoutPage::loadValidLayouts()
 
 void LayoutPage::createLayoutItem()
 {
-    //addLayout("vn");
-    //addLayout("tr alt");
+    // addLayout("vn");
+    // addLayout("tr alt");
     m_layoutList = m_keyboardInterface->layouts();
     m_layout = m_layoutList.first();
     for (int i = 0; i < m_layoutList.size(); i++)
@@ -211,7 +210,7 @@ void LayoutPage::updateLayout()
         {
             for (int i = 0; i < (m_layoutList.size() - m_itemList.size()); i++)
             {
-                //添加缺少的选择项
+                // 添加缺少的选择项
                 ChooseItem *item = new ChooseItem(this);
                 connect(item, &ChooseItem::clicked, this, &LayoutPage::chooseItemClicked);
                 connect(item, &ChooseItem::sigDelete, this, &LayoutPage::deleteLayout);
@@ -220,11 +219,11 @@ void LayoutPage::updateLayout()
                 m_itemList.append(item);
             }
         }
-        else if (m_layoutList.size() < m_itemList.size())  //delete
+        else if (m_layoutList.size() < m_itemList.size())  // delete
         {
             for (int i = 0; i < (m_itemList.size() - m_layoutList.size()); i++)
             {
-                //删除多余的选择项
+                // 删除多余的选择项
                 ChooseItem *item = m_itemList.takeLast();
                 delete item;
                 item = nullptr;
@@ -310,7 +309,7 @@ void LayoutPage::chooseItemClicked()
         {
             m_layoutList.clear();
             m_layout = selectedLayoutName;
-            ///TODO:是否需要自己更新layoutList而不是通过dbus获取
+            /// TODO:是否需要自己更新layoutList而不是通过dbus获取
             m_layoutList = m_keyboardInterface->layouts();
             updateLayout();
         }
@@ -344,9 +343,9 @@ void LayoutPage::deleteLayout(QString deletedLayout)
         {
             m_layoutList.clear();
             ChooseItem *item = dynamic_cast<ChooseItem *>(sender());
-            ///TODO:是否需要自己更新layoutList而不是通过dbus获取
+            /// TODO:是否需要自己更新layoutList而不是通过dbus获取
             m_layoutList = m_keyboardInterface->layouts();
-            //界面上删除选择项
+            // 界面上删除选择项
             m_itemList.removeOne(item);
             delete item;
             item = nullptr;
@@ -385,5 +384,5 @@ void LayoutPage::setEditMode()
 
 QSize LayoutPage::sizeHint() const
 {
-    return {419,595};
+    return {419, 595};
 }
