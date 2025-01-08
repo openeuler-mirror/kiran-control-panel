@@ -15,7 +15,7 @@ target_include_directories(${TARGET_NAME} PRIVATE
         ${KLOG_INCLUDE_DIRS}
         ${KIRAN_WIDGETS_INCLUDE_DIRS}
         ${KIRAN_CC_DAEMON_INCLUDE_DIRS}
-        ${KIRAN_STYLE_HELPER_INCLUDE_DIRS})
+        ${KIRAN_INTEGRATION_THEME_INCLUDE_DIRS})
 
 target_link_libraries(${TARGET_NAME}
         common-widgets
@@ -28,7 +28,7 @@ target_link_libraries(${TARGET_NAME}
         X11
         ${KIRANWIDGETS_LIBRARIES}
         ${KLOG_LIBRARIES}
-        ${KIRAN_STYLE_LIBRARIES})
+        ${KIRAN_INTEGRATION_THEME_LIBRARIES})
 
 install(TARGETS ${TARGET_NAME}
         DESTINATION ${PLUGIN_LIBS_DIR}/)

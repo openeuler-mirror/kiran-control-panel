@@ -14,25 +14,22 @@
 
 #include "create-user-page.h"
 #include "accounts-global-info.h"
+#include "advance-settings-page/advance-settings.h"
 #include "kiran-tips/kiran-tips.h"
 #include "passwd-helper.h"
-#include "advance-settings-page/advance-settings.h"
 #include "ui_create-user-page.h"
 #include "user-name-validator.h"
 
+#include <kiranwidgets-qt5/kiran-message-box.h>
 #include <qt5-log-i.h>
 #include <QEvent>
 #include <QKeyEvent>
 #include <QListView>
 #include <QMessageBox>
-#include <kiranwidgets-qt5/kiran-message-box.h>
-#include <style-property.h>
-
-using namespace Kiran;
 
 CreateUserPage::CreateUserPage(QWidget *parent)
     : QWidget(parent),
-    ui(new Ui::CreateUserPage)
+      ui(new Ui::CreateUserPage)
 {
     ui->setupUi(this);
     initUI();
@@ -62,7 +59,7 @@ void CreateUserPage::setAvatarIconPath(const QString &iconPath)
     ui->avatar->setImage(iconPath);
 }
 
-//初始化界面
+// 初始化界面
 void CreateUserPage::initUI()
 {
     /// 提示框
@@ -73,9 +70,8 @@ void CreateUserPage::initUI()
     /// 用户头像
     ui->avatar->setHoverImage(":/kcp-account/images/change-user-avatar.png");
     ui->avatar->setClickEnable(true);
-    connect(ui->avatar, &UserAvatarWidget::pressed, [this]() {
-        emit requestIconPageForNewUser(ui->avatar->iconPath());
-    });
+    connect(ui->avatar, &UserAvatarWidget::pressed, [this]()
+            { emit requestIconPageForNewUser(ui->avatar->iconPath()); });
 
     /// 用户类型ComboBox
     QListView *view = new QListView(ui->combo_userType);
@@ -86,7 +82,7 @@ void CreateUserPage::initUI()
 
     /// 用户名输入框
     ui->edit_name->setValidator(new UserNameValidator(ui->edit_name));
-    //NOTE:用户名不能超过32字符长
+    // NOTE:用户名不能超过32字符长
     ui->edit_name->setMaxLength(32);
 
     /// 密码输入框
@@ -94,14 +90,15 @@ void CreateUserPage::initUI()
     ui->editcheck_passwd->setEchoMode(QLineEdit::Password);
     ui->editcheck_passwd->setAttribute(Qt::WA_InputMethodEnabled, false);
     ui->editcheck_passwd->installEventFilter(this);
-    
+
     ui->editcheck_confirmPasswd->setMaxLength(20);
     ui->editcheck_confirmPasswd->setEchoMode(QLineEdit::Password);
     ui->editcheck_confirmPasswd->setAttribute(Qt::WA_InputMethodEnabled, false);
     ui->editcheck_confirmPasswd->installEventFilter(this);
 
     /// 高级设置按钮
-    connect(ui->btn_advanceSetting, &QPushButton::clicked, [this]() {
+    connect(ui->btn_advanceSetting, &QPushButton::clicked, [this]()
+            {
         if (ui->edit_name->text().isEmpty())
         {
             m_errorTip->setText(tr("Please enter user name first"));
@@ -109,22 +106,21 @@ void CreateUserPage::initUI()
             return;
         }
 
-        AdvanceSettings::exec(ui->edit_name->text(),m_advanceSettingsInfo);
-    });
+        AdvanceSettings::exec(ui->edit_name->text(),m_advanceSettingsInfo); });
 
     /// 确认按钮
-    StylePropertyHelper::setButtonType(ui->btn_confirm, BUTTON_Default);
+    /// FIXME:后续使用新版kiran-integration-qt5中提供的setButtonType函数
+    /// StylePropertyHelper::setButtonType(ui->btn_confirm, BUTTON_Default);
     connect(ui->btn_confirm, &QPushButton::clicked, this, &CreateUserPage::onCreateUserClicked);
 
     /// 取消按钮
-    connect(ui->btn_cancel, &QPushButton::clicked, [this]() {
-        reset();
-    });
+    connect(ui->btn_cancel, &QPushButton::clicked, [this]()
+            { reset(); });
 }
 
 void CreateUserPage::onCreateUserClicked()
 {
-    //step1.检验用户名是否为空，是否重名
+    // step1.检验用户名是否为空，是否重名
     KLOG_DEBUG(qLcAccount) << "create user clicked,check user name";
     QString userName = ui->edit_name->text();
 
@@ -158,7 +154,7 @@ void CreateUserPage::onCreateUserClicked()
         return;
     }
 
-    //step2.检验密码、确认密码是否为空，是否相等
+    // step2.检验密码、确认密码是否为空，是否相等
     KLOG_DEBUG(qLcAccount) << "create user clicked,check user passwd";
     QString passwd = ui->editcheck_passwd->text();
     QString confirmPasswd = ui->editcheck_confirmPasswd->text();
@@ -184,7 +180,7 @@ void CreateUserPage::onCreateUserClicked()
         return;
     }
 
-    //step3.调用crypt密码加密
+    // step3.调用crypt密码加密
     KLOG_DEBUG(qLcAccount) << "create user clicked,start encrypt passwd";
     QString encryptedPasswd;
     if (!PasswdHelper::encryptPasswordByRsa(AccountsGlobalInfo::rsaPublicKey(), passwd, encryptedPasswd))
@@ -211,14 +207,14 @@ void CreateUserPage::onCreateUserClicked()
     emit busyChanged(true);
     ui->btn_confirm->setBusy(true);
     emit requestCreateUser(userName, uid, accountType,
-                       encryptedPasswd,
-                       homeDir,
-                       shell,
-                       iconFile);
+                           encryptedPasswd,
+                           homeDir,
+                           shell,
+                           iconFile);
 }
 
 void CreateUserPage::onCreateUserDone(QString userPath,
-                                                QString errMsg)
+                                      QString errMsg)
 {
     emit busyChanged(false);
     ui->btn_confirm->setBusy(false);

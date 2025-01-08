@@ -19,11 +19,8 @@
 #include <kiran-switch-button.h>
 #include <kiran-system-daemon/accounts-i.h>
 #include <qt5-log-i.h>
-#include <style-property.h>
 #include <QDBusPendingReply>
 #include <QJsonDocument>
-
-using namespace Kiran;
 
 PasswordExpirationPolicyPage::PasswordExpirationPolicyPage(QWidget *parent)
     : QWidget(parent),
@@ -56,7 +53,8 @@ void PasswordExpirationPolicyPage::setCurrentUser(const QString &objectPath)
 
 void PasswordExpirationPolicyPage::initUI()
 {
-    StylePropertyHelper::setButtonType(ui->btn_save, BUTTON_Default);
+    // FIXME: 后续使用新版kiran-integration-qt5中提供的setButtonType函数
+    // StylePropertyHelper::setButtonType(ui->btn_save, BUTTON_Default);
 
     // 用户过期时间
     m_userExpiresSwitch = new KiranSwitchButton(this);
@@ -107,7 +105,7 @@ void PasswordExpirationPolicyPage::updateInfo()
     QJsonDocument jsonDoc = QJsonDocument::fromJson(policy.toUtf8());
     QJsonObject jsonObject = jsonDoc.object();
 
-    KLOG_DEBUG(qLcAccount) << "update passwd expiration policy page: \n\t" <<policy;
+    KLOG_DEBUG(qLcAccount) << "update passwd expiration policy page: \n\t" << policy;
 
     QVariantMap varMap = jsonObject.toVariantMap();
     if (!varMap.contains(ACCOUNTS_PEP_EXPIRATION_TIME) ||
