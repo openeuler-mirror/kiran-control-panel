@@ -17,9 +17,9 @@
 #include "dbus/audio-interface.h"
 #include "dbus/status-notifier-manager.h"
 #include "kiran-rounded-tray-popup/kiran-rounded-tray-popup.h"
+#include "logging-category.h"
 #include "system-tray/mixed-setting-page.h"
 #include "system-tray/volume-setting-page.h"
-#include "logging-category.h"
 
 #include <kiran-session-daemon/audio-i.h>
 #include <qt5-log-i.h>
@@ -30,7 +30,10 @@
 #include <QScreen>
 #include <QSvgRenderer>
 
-#include <style-palette.h>
+#include <palette.h>
+#include <style-helper.h>
+
+using namespace Kiran::Theme;
 
 #define STATUS_NOTIFIER_MANAGER "org.kde.StatusNotifierManager"
 #define STATUS_NOTIFIER_MANAGER_OBJECT_NAME "/StatusNotifierManager"
@@ -84,10 +87,10 @@ void AudioSystemTray::initMixedSettingPage()
 void AudioSystemTray::initTrayIcon()
 {
     double currentVolumeDouble = 0;
-    if(!m_audioInterface->getCards().isEmpty())
+    if (!m_audioInterface->getCards().isEmpty())
     {
         QDBusPendingReply<QString> defaultSinkPath = m_audioInterface->GetDefaultSink();
-        AudioDeviceInterface defaultSink (AUDIO_DBUS_NAME, defaultSinkPath, QDBusConnection::sessionBus());
+        AudioDeviceInterface defaultSink(AUDIO_DBUS_NAME, defaultSinkPath, QDBusConnection::sessionBus());
         currentVolumeDouble = defaultSink.volume() * 100;
     }
     setTrayIcon(round(currentVolumeDouble));
@@ -114,24 +117,21 @@ void AudioSystemTray::initDbusServiceWatcher()
     m_dbusServiceWatcher->addWatchedService(AUDIO_DBUS_NAME);
     m_dbusServiceWatcher->setWatchMode(QDBusServiceWatcher::WatchForUnregistration);
     connect(m_dbusServiceWatcher, &QDBusServiceWatcher::serviceUnregistered, [this](const QString &service)
-            {
-                setTrayIcon(0);
-            });
+            { setTrayIcon(0); });
 }
 
 void AudioSystemTray::initConnect()
 {
     connect(m_systemTray, &QSystemTrayIcon::activated, this, &AudioSystemTray::handleAudioTrayClicked);
 
-    connect(m_volumeSettingPage,&VolumeSettingPage::volumeChanged,[this](double value)
-    {
+    connect(m_volumeSettingPage, &VolumeSettingPage::volumeChanged, [this](double value)
+            {
         int currentVolume = round(value * 100);  //表示数值的时候向上取整
         KLOG_DEBUG(qLcAudio) << "sink volume changed :" << currentVolume;
-        setTrayIcon(currentVolume);
-    });
+        setTrayIcon(currentVolume); });
 
-    connect(m_volumeSettingPage,&VolumeSettingPage::sinkMuteChanged,[this](bool mute,double currentVolume)
-    {
+    connect(m_volumeSettingPage, &VolumeSettingPage::sinkMuteChanged, [this](bool mute, double currentVolume)
+            {
         if(mute)
         {
             setTrayIcon(0);
@@ -139,17 +139,15 @@ void AudioSystemTray::initConnect()
         else
         {
             setTrayIcon(currentVolume);
-        }
-    });
+        } });
 
-    connect(Kiran::StylePalette::instance(), &Kiran::StylePalette::themeChanged, [this](Kiran::PaletteType paletteType)
+    connect(DEFAULT_PALETTE(), &Palette::baseColorsChanged, [this]()
             {
                 //获取当前音量值重新设置TrayIcon
                 QDBusPendingReply<QString> defaultSinkPath = m_audioInterface->GetDefaultSink();
                 AudioDeviceInterface defaultSink (AUDIO_DBUS_NAME, defaultSinkPath, QDBusConnection::sessionBus());
                 double currentVolumeDouble = defaultSink.volume() * 100;
-                setTrayIcon(round(currentVolumeDouble)); 
-            });
+                setTrayIcon(round(currentVolumeDouble)); });
 }
 
 void AudioSystemTray::handleAudioTrayClicked(QSystemTrayIcon::ActivationReason reason)
@@ -157,7 +155,7 @@ void AudioSystemTray::handleAudioTrayClicked(QSystemTrayIcon::ActivationReason r
     switch (reason)
     {
     case QSystemTrayIcon::Trigger:
-        if(m_volumenPopup->isVisible())
+        if (m_volumenPopup->isVisible())
             m_volumenPopup->hide();
         else
         {
@@ -177,15 +175,15 @@ void AudioSystemTray::setVolumeSettingPos()
     int pageWidth = 300;
     int pageHeight = 66;
 
-    int showPosY; 
+    int showPosY;
     // 托盘程序在顶端
-    if(m_yTray == 0)
+    if (m_yTray == 0)
     {
-        showPosY  = m_heightTray - offset;
+        showPosY = m_heightTray - offset;
     }
     else
     {
-        //托盘程序在底部
+        // 托盘程序在底部
         showPosY = m_yTray - pageHeight - offset;
     }
 
@@ -223,7 +221,7 @@ QPixmap AudioSystemTray::trayIconColorSwitch(const QString &iconPath, const int 
     // icon原本为浅色
     QIcon icon = QIcon::fromTheme(iconPath);
     QPixmap pixmap = icon.pixmap(iconSize, iconSize);
-    if (Kiran::StylePalette::instance()->paletteType() != Kiran::PALETTE_DARK)
+    if (DEFAULT_STYLE_HELPER()->paletteType() != PaletteType::PALETTE_DARK)
     {
         QImage image = pixmap.toImage();
         image.invertPixels(QImage::InvertRgb);
@@ -239,27 +237,27 @@ void AudioSystemTray::getTrayGeometry()
     QJsonParseError jsonParseError;
     QJsonDocument doc = QJsonDocument::fromJson(getGeometry.value().toLatin1(), &jsonParseError);
 
-    if(doc.isNull() || !doc.isObject() || (jsonParseError.error != QJsonParseError::NoError))
+    if (doc.isNull() || !doc.isObject() || (jsonParseError.error != QJsonParseError::NoError))
     {
         return;
     }
-    
+
     double height, width, x, y = 0;
     QJsonObject object = doc.object();
     height = object.value("height").toDouble();
     width = object.value("width").toDouble();
     x = object.value("x").toDouble();
     y = object.value("y").toDouble();
-    
+
     m_heightTray = static_cast<int>(height);
     m_widthTray = static_cast<int>(width);
     m_xTray = static_cast<int>(x);
     m_yTray = static_cast<int>(y);
-    KLOG_DEBUG(qLcAudio) << "tray geometry" 
-                        << "height:" << m_heightTray 
-                        << "width:" << m_widthTray
-                        << "x:" << m_xTray
-                        << "y:" << m_yTray;
+    KLOG_DEBUG(qLcAudio) << "tray geometry"
+                         << "height:" << m_heightTray
+                         << "width:" << m_widthTray
+                         << "x:" << m_xTray
+                         << "y:" << m_yTray;
 }
 
 // XXX:频繁调用函数,需要优化
@@ -300,4 +298,3 @@ void AudioSystemTray::handleVolumeSettingClicked()
               << "OutputPage";
     process.startDetached("kiran-control-panel", arguments);
 }
-

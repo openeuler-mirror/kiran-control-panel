@@ -24,7 +24,6 @@
 
 #include <kiran-message-box.h>
 #include <qt5-log-i.h>
-#include <style-property.h>
 #include <sys/types.h>
 #include <unistd.h>
 #include <QBoxLayout>
@@ -167,11 +166,11 @@ void FingerPage::stopEnroll()
 }
 
 void FingerPage::updateEnrollStatus(const QString& iid, bool isComplete,
-                                      int progress, const QString& message)
+                                    int progress, const QString& message)
 {
     KLOG_DEBUG(qLcAuthentication) << "update enroll status:"
                                   << "iid" << iid << ","
-                                  << "complete"<< isComplete << ","
+                                  << "complete" << isComplete << ","
                                   << "progress" << progress << ","
                                   << "message" << message;
 

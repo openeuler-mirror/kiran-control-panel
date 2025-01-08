@@ -54,7 +54,7 @@ target_include_directories(${TRAY_PROCESS} PRIVATE
         ${KIRAN_WIDGETS_INCLUDE_DIRS}
         ${KIRAN_CC_DAEMON_INCLUDE_DIRS}
         ${KLOG_INCLUDE_DIRS}
-        ${KIRAN_STYLE_HELPER_DIRS})
+        ${KIRAN_INTEGRATION_THEME_INCLUDE_DIRS})
 
 target_link_libraries(${TRAY_PROCESS}
         common-widgets
@@ -62,7 +62,7 @@ target_link_libraries(${TRAY_PROCESS}
         ${KIRAN_WIDGETS_LIBRARIES}
         ${KIRAN_CC_DAEMON_LIBRARIES}
         ${KLOG_LIBRARIES}
-        ${KIRAN_STYLE_LIBRARIES})
+        ${KIRAN_INTEGRATION_THEME_LIBRARIES})
 
 
 set(AUTOSTART_DESKTOP_DIR /etc/xdg/autostart)

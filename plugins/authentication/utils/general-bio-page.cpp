@@ -21,7 +21,6 @@
 
 #include <kiran-message-box.h>
 #include <qt5-log-i.h>
-#include <style-property.h>
 #include <QBoxLayout>
 #include <QComboBox>
 #include <QLabel>
@@ -69,7 +68,7 @@ QString GeneralBioPage::autoGenerateFeatureName()
         qsrand(QTime(0, 0, 0).secsTo(QTime::currentTime()));
         auto featureNumber = qrand() % MAX_FEATURE_NUMBER + 1;
 #endif
-// sonarqube block on
+        // sonarqube block on
         auto temp = QString("%1 %2").arg(m_featureNamePrefix).arg(featureNumber);
 
         if (!m_featureNameSet.contains(temp))
@@ -86,6 +85,7 @@ void GeneralBioPage::addFeature(const QString& featureName, const QString& featu
     auto featureItem = new AuthSettingItem;
     featureItem->setUserData(featureIID);
     featureItem->setText(featureName);
+    // FIXME:后续统一改成ksvg开头的图标名
     featureItem->setLeftButtonVisible(true, ":/kcp-authentication/images/rename.svg");
     featureItem->setRightButtonVisible(true, ":/kcp-authentication/images/trash.svg");
 
@@ -272,7 +272,9 @@ void GeneralBioPage::initUI()
     auto addButton = new QPushButton(this);
     featureManagerLayout->addWidget(addButton);
     addButton->setIcon(QPixmap(":/kcp-keyboard/images/addition.svg"));
-    Kiran::StylePropertyHelper::setButtonType(addButton, Kiran::BUTTON_Default);
+
+    // FIXME:后续使用新版kiran-integration-qt5中提供的setButtonType函数
+    // Kiran::StylePropertyHelper::setButtonType(addButton, Kiran::BUTTON_Default);
     connect(addButton, &QPushButton::clicked, this, &GeneralBioPage::startEnrollFeature);
 
     featureManagerLayout->addStretch();

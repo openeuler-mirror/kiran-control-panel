@@ -44,20 +44,16 @@ public:
 signals:
     void leftButtonClicked(const QVariant& userData);
     void rightButtonClicked(const QVariant& userData);
-    void switchButtonToggled(const QVariant& userData,bool checked);
+    void switchButtonToggled(const QVariant& userData, bool checked);
     void clicked();
-    
+
 private:
     void initUI();
-    Q_INVOKABLE void updateIcon();
-    virtual void mousePressEvent(QMouseEvent *event) override;
-    virtual void mouseReleaseEvent(QMouseEvent *event) override;
+    virtual void mousePressEvent(QMouseEvent* event) override;
+    virtual void mouseReleaseEvent(QMouseEvent* event) override;
 
 private:
     QVariant m_userData;
-
-    QString m_leftIcon;
-    QString m_rightIcon;
 
     QPushButton* m_leftButton;
     KiranLabel* m_label;
