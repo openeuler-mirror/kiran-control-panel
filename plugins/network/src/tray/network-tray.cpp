@@ -13,8 +13,8 @@
  */
 
 #include "network-tray.h"
+#include <palette.h>
 #include <qt5-log-i.h>
-#include <style-palette.h>
 #include <NetworkManagerQt/Settings>
 #include <QLabel>
 #include <QMenu>
@@ -25,15 +25,16 @@
 #include <QVBoxLayout>
 #include "config.h"
 #include "logging-category.h"
+#include "prefs.h"
 #include "status-notification.h"
 #include "status-notifier-manager.h"
 #include "tray-page.h"
 #include "utils.h"
 #include "wired-tray-widget.h"
 #include "wireless-tray-widget.h"
-#include "prefs.h"
 
 using namespace NetworkManager;
+using namespace Kiran::Theme;
 
 #define STATUS_NOTIFIER_MANAGER "org.kde.StatusNotifierManager"
 #define STATUS_NOTIFIER_MANAGER_OBJECT_NAME "/StatusNotifierManager"
@@ -165,7 +166,7 @@ void NetworkTray::initConnect()
     connect(&m_wirelessTimer, &QTimer::timeout, this, [this]()
             { handleAdjustedTraySize(m_wirelessTraySizeHint); });
 
-    connect(Kiran::StylePalette::instance(), &Kiran::StylePalette::themeChanged, this, &NetworkTray::handleThemeChanged);
+    connect(DEFAULT_PALETTE(), &Palette::baseColorsChanged, this, &NetworkTray::handleThemeChanged);
 }
 
 void NetworkTray::initTrayIcon()
@@ -456,7 +457,7 @@ void NetworkTray::updateTrayIcon()
         auto devices = NetworkManager::networkInterfaces();
         for (auto device : devices)
         {
-            if( device->state() == Device::Unmanaged )
+            if (device->state() == Device::Unmanaged)
             {
                 continue;
             }
@@ -826,7 +827,7 @@ void NetworkTray::handleAdjustedTraySize(QSize sizeHint)
                             setTrayPagePos(); });
 }
 
-void NetworkTray::handleThemeChanged(Kiran::PaletteType paletteType)
+void NetworkTray::handleThemeChanged()
 {
     updateTrayIcon();
 }

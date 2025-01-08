@@ -13,7 +13,6 @@
  */
 #include "wireless-manager.h"
 #include <qt5-log-i.h>
-#include <style-property.h>
 #include <NetworkManagerQt/Device>
 #include <NetworkManagerQt/Settings>
 #include <NetworkManagerQt/WirelessDevice>

@@ -51,7 +51,7 @@ public:
     void setOtherNetworkIcon();
     void setMoreOptionsVisible(bool isVisible);
     void setConnectionInfo(NetworkConnectionInfo connectionInfo) { m_connectionInfo = connectionInfo; };
-    
+
     NetworkConnectionInfo connectionInfo() { return m_connectionInfo; };
     int type() { return m_connectionInfo.type; };
     QString uuid() { return m_connectionInfo.uuid; };
@@ -59,7 +59,7 @@ public:
     QString ssid() { return m_connectionInfo.wirelessInfo.ssid; };
     int signalStrength() { return m_connectionInfo.wirelessInfo.signalStrength; };
     QString activeConnectionPath() { return m_connectionInfo.activeConnectionPath; };
-    
+
     void setActiveConnectionPath(QString path) { m_connectionInfo.activeConnectionPath = path; };
     void setActiveStatus(NetworkManager::ActiveConnection::State state);
 
@@ -68,7 +68,7 @@ public slots:
     void disconnectConnection();
 
 private slots:
-    void handleThemeChanged(Kiran::PaletteType paletteType);
+    void handleThemeChanged();
     void editConnection();
     void updateConnection();
     void removeConnection();

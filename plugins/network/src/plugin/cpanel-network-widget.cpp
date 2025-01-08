@@ -17,15 +17,16 @@
 #include <qt5-log-i.h>
 #include "details-page/details-page.h"
 #include "logging-category.h"
+#include "prefs.h"
 #include "signal-forward.h"
 #include "ui_cpanel-network-widget.h"
 #include "utils.h"
 #include "vpn-manager.h"
 #include "wired-manager.h"
 #include "wireless-manager.h"
-#include "prefs.h"
 
 using namespace NetworkManager;
+using namespace Kiran::Theme;
 #define MAX_WAIT_COUNTS 10
 
 enum NetworkSidebarItems
@@ -37,7 +38,7 @@ enum NetworkSidebarItems
 };
 
 #define NETWORK_SIDEBAR_ITEM "NetworkSidebarItem"
-#define SIDERBAR_ITEM_TYPE_ROLE Qt::UserRole+100
+#define SIDERBAR_ITEM_TYPE_ROLE Qt::UserRole + 100
 
 CPanelNetworkWidget::CPanelNetworkWidget(QWidget *parent) : QWidget(parent), ui(new Ui::CPanelNetworkWidget)
 {
@@ -107,7 +108,7 @@ void CPanelNetworkWidget::initConnect()
 
     connect(ui->sidebar, &QListWidget::currentItemChanged, this, &CPanelNetworkWidget::changeSideBarItem);
 
-    connect(Kiran::StylePalette::instance(), &Kiran::StylePalette::themeChanged, this, &CPanelNetworkWidget::changeTheme);
+    connect(DEFAULT_PALETTE(), &Palette::baseColorsChanged, this, &CPanelNetworkWidget::changeTheme);
 }
 
 void CPanelNetworkWidget::initWiredManager()
@@ -124,7 +125,7 @@ void CPanelNetworkWidget::initWiredManager()
 
     KiranSidebarItem *wiredSidebarItem = new KiranSidebarItem();
     wiredSidebarItem->setText(tr("Wired Network"));
-    wiredSidebarItem->setData(SIDERBAR_ITEM_TYPE_ROLE,Device::Ethernet);
+    wiredSidebarItem->setData(SIDERBAR_ITEM_TYPE_ROLE, Device::Ethernet);
     m_subItemsList << tr("Wired Network");
     ui->sidebar->insertItem(0, wiredSidebarItem);
     m_kiranSidebarItems << wiredSidebarItem;
@@ -137,12 +138,11 @@ void CPanelNetworkWidget::initWiredManager()
         Device::Ptr device = wiredDeviceList.value(i);
         connect(device.data(), &Device::stateChanged, this, &CPanelNetworkWidget::changeDeviceState, Qt::UniqueConnection);
 
-        if( Network::Prefs::instance()->getCheckWiredCarrier() )
+        if (Network::Prefs::instance()->getCheckWiredCarrier())
         {
-            auto wiredDevice = qobject_cast<WiredDevice*>(device.data());
-            connect(wiredDevice,&WiredDevice::carrierChanged,this,[this](){
-                updateSidebarItemStatus(NetworkManager::Device::Ethernet);
-            });
+            auto wiredDevice = qobject_cast<WiredDevice *>(device.data());
+            connect(wiredDevice, &WiredDevice::carrierChanged, this, [this]()
+                    { updateSidebarItemStatus(NetworkManager::Device::Ethernet); });
         }
     }
     updateSidebarItemStatus(NetworkManager::Device::Ethernet);
@@ -162,7 +162,7 @@ void CPanelNetworkWidget::initWirelessManager()
 
     KiranSidebarItem *wirelessSidebarItem = new KiranSidebarItem();
     wirelessSidebarItem->setText(tr("Wireless Network"));
-    wirelessSidebarItem->setData(SIDERBAR_ITEM_TYPE_ROLE,Device::Wifi);
+    wirelessSidebarItem->setData(SIDERBAR_ITEM_TYPE_ROLE, Device::Wifi);
     m_subItemsList << tr("Wireless Network");
 
     ui->sidebar->insertItem(0, wirelessSidebarItem);
@@ -231,16 +231,16 @@ void CPanelNetworkWidget::updateSidebarItemStatus(NetworkManager::Device::Type d
     for (auto device : deviceList)
     {
         bool checkWiredCarrier = Network::Prefs::instance()->getCheckWiredCarrier();
-        auto wireDevice = qobject_cast<WiredDevice*>(device);
-        if( checkWiredCarrier && wireDevice )
+        auto wireDevice = qobject_cast<WiredDevice *>(device);
+        if (checkWiredCarrier && wireDevice)
         {
-            if ( wireDevice->carrier() && device->state() == Device::State::Activated )
+            if (wireDevice->carrier() && device->state() == Device::State::Activated)
             {
                 state = Device::State::Activated;
                 break;
             }
         }
-        else if( device->state() == Device::State::Activated )
+        else if (device->state() == Device::State::Activated)
         {
             state = Device::State::Activated;
             break;
@@ -291,7 +291,7 @@ void CPanelNetworkWidget::setCurrentSubItem(int index)
     changeSideBarItem(ui->sidebar->currentItem());
 }
 
-void CPanelNetworkWidget::changeTheme(Kiran::PaletteType paletteType)
+void CPanelNetworkWidget::changeTheme()
 {
     for (int i = 0; i < ui->sidebar->count(); ++i)
     {

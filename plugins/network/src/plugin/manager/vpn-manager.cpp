@@ -14,7 +14,6 @@
 
 #include "vpn-manager.h"
 #include <qt5-log-i.h>
-#include <style-property.h>
 #include <NetworkManagerQt/Manager>
 #include <NetworkManagerQt/Settings>
 #include <NetworkManagerQt/VpnConnection>
@@ -22,11 +21,11 @@
 #include <QPointer>
 #include <QScrollBar>
 #include "connection-name-widget.h"
+#include "logging-category.h"
 #include "signal-forward.h"
 #include "status-notification.h"
 #include "text-input-dialog.h"
 #include "ui_vpn-manager.h"
-#include "logging-category.h"
 using namespace NetworkManager;
 
 Q_DECLARE_METATYPE(VpnType)
@@ -51,7 +50,8 @@ void VpnManager::initUI()
 
     ui->vpnType->addItem(tr("L2TP"), VPN_TYPE_L2TP);
     // ui->vpnType->addItem(tr("PPTP"), VPN_TYPE_PPTP);
-    Kiran::StylePropertyHelper::setButtonType(ui->saveButton, Kiran::BUTTON_Default);
+    // FIXME: 后续使用新版kiran-integration-qt5中提供的setButtonType函数
+    // Kiran::StylePropertyHelper::setButtonType(ui->saveButton, Kiran::BUTTON_Default);
 }
 
 // XXX:是否使用模板提升通用性
@@ -94,7 +94,7 @@ void VpnManager::initConnection()
 
 void VpnManager::handleCreatConnection()
 {
-    //默认创建vpn类型：L2TP
+    // 默认创建vpn类型：L2TP
     ui->vpnTypeWidget->setVisible(true);
     ui->vpnType->setCurrentIndex(VPN_TYPE_L2TP);
     ui->vpnTypeStacked->setCurrentIndex(VPN_TYPE_L2TP);
@@ -108,7 +108,7 @@ void VpnManager::handleCreatConnection()
 
 void VpnManager::handleEditConnection(const QString &uuid, QString activeConnectionPath)
 {
-    //隐藏选择VPN类型
+    // 隐藏选择VPN类型
     ui->vpnTypeWidget->setVisible(false);
 
     Connection::Ptr connection = findConnectionByUuid(uuid);
@@ -168,8 +168,8 @@ void VpnManager::handleSaveButtonClicked()
     }
 }
 
-//考虑弹窗输入密码的情况
-// TODO: AgentOwned的作用
+// 考虑弹窗输入密码的情况
+//  TODO: AgentOwned的作用
 void VpnManager::handleActivateSelectedConnection(const QString &connectionPath, const QString &connectionParameter)
 {
     Connection::Ptr connection = findConnection(connectionPath);
@@ -436,7 +436,7 @@ void VpnManager::handleConnectionUpdated(const QString &path)
     Connection::Ptr updateConnection = findConnection(path);
     if (updateConnection->settings()->connectionType() == ConnectionSettings::Vpn)
     {
-        //移除后再加载进来以更新信息
+        // 移除后再加载进来以更新信息
         ui->connectionShowPage->removeConnectionFromList(path);
         ui->connectionShowPage->addConnection(updateConnection, "");
         if (ui->stackedWidget->currentIndex() != PAGE_SETTING)

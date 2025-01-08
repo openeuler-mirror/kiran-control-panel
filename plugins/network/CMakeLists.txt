@@ -32,7 +32,7 @@ target_include_directories(${TARGET_NAME} PRIVATE
         ${KIRAN_WIDGETS_INCLUDE_DIRS}
         ${KLOG_INCLUDE_DIRS}
         ${LIBNOTIFY_INCLUDE_DIRS}
-        ${KIRAN_STYLE_INCLUDE_DIRS}
+        ${KIRAN_INTEGRATION_THEME_INCLUDE_DIRS}
         )
 
 target_link_libraries(${TARGET_NAME}
@@ -41,7 +41,7 @@ target_link_libraries(${TARGET_NAME}
         ${KIRAN_WIDGETS_QT5_LIBRARIES}
         ${KLOG_QT5_LIBRARIES}
         ${LIBNOTIFY_LIBRARIES}
-        ${KIRAN_STYLE_HELPER_LIBRARIES}
+        ${KIRAN_INTEGRATION_THEME_LIBRARIES}
         KF5::NetworkManagerQt
         )
 
@@ -71,7 +71,7 @@ target_include_directories(${TRAY_PROCESS} PRIVATE
         ${KIRAN_WIDGETS_QT5_INCLUDE_DIRS}
         ${KLOG_QT5_INCLUDE_DIRS}
         ${LIBNOTIFY_INCLUDE_DIRS}
-        ${KIRAN_STYLE_HELPER_INCLUDE_DIRS}
+        ${KIRAN_INTEGRATION_THEME_INCLUDE_DIRS}
         )
 
 target_link_libraries(${TRAY_PROCESS}
@@ -80,7 +80,7 @@ target_link_libraries(${TRAY_PROCESS}
         ${KIRAN_WIDGETS_LIBRARIES}
         ${KLOG_LIBRARIES}
         ${LIBNOTIFY_LIBRARIES}
-        ${KIRAN_STYLE_HELPER_LIBRARIES}
+        ${KIRAN_INTEGRATION_THEME_LIBRARIES}
         KF5::NetworkManagerQt
         )
 

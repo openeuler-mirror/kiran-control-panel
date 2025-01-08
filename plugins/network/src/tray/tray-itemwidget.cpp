@@ -13,9 +13,9 @@
  */
 
 #include "tray-itemwidget.h"
+#include <palette.h>
 #include <qt5-log-i.h>
-#include <style-palette.h>
-#include <style-property.h>
+#include <style-helper.h>
 #include <NetworkManagerQt/Settings>
 #include <NetworkManagerQt/WiredDevice>
 #include <QMouseEvent>
@@ -24,9 +24,11 @@
 #include <QStyleOption>
 #include <QSvgRenderer>
 #include "general.h"
+#include "prefs.h"
 #include "ui_tray-itemwidget.h"
 #include "utils.h"
-#include "prefs.h"
+
+using namespace Kiran::Theme;
 
 Q_DECLARE_METATYPE(NetworkConnectionInfo)
 TrayItemWidget::TrayItemWidget(QWidget *parent) : QWidget(parent), ui(new Ui::TrayItemWidget)
@@ -47,8 +49,10 @@ void TrayItemWidget::initUI()
     ui->inputTextWidget->setVisible(false);
     ui->connectionName->setElideMode(Qt::TextElideMode::ElideRight);
     ui->connectionStatus->setStyleSheet("color:#919191;font-family: \"Noto Sans CJK SC Regular\";");
-    Kiran::StylePropertyHelper::setButtonType(ui->connectButton, Kiran::BUTTON_Default);
-    Kiran::StylePropertyHelper::setButtonType(ui->inputTextConnectButton, Kiran::BUTTON_Default);
+
+    // FIXME:后续使用新版kiran-integration-qt5中提供的setButtonType函数
+    // Kiran::StylePropertyHelper::setButtonType(ui->connectButton, Kiran::BUTTON_Default);
+    // Kiran::StylePropertyHelper::setButtonType(ui->inputTextConnectButton, Kiran::BUTTON_Default);
 
     setFixedWidth(240);
     setContentsMargins(10, 10, 10, 10);
@@ -73,7 +77,7 @@ void TrayItemWidget::initConnection()
 
     connect(ui->inputTextEdit, &QLineEdit::returnPressed, this, &TrayItemWidget::handleInputText);
 
-    connect(Kiran::StylePalette::instance(), &Kiran::StylePalette::themeChanged, this, &TrayItemWidget::handleThemeChanged);
+    connect(DEFAULT_PALETTE(), &Palette::baseColorsChanged, this, &TrayItemWidget::handleThemeChanged);
 }
 
 void TrayItemWidget::setWidgetsInDifferentStatus(TrayItemWidgetStatus WidgetStatus)
@@ -301,27 +305,24 @@ void TrayItemWidget::paintEvent(QPaintEvent *event)
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
 
-    auto kiranPalette = Kiran::StylePalette::instance();
     QColor backgroundColor;
 
     if ((state & QStyle::State_MouseOver) && testAttribute(Qt::WA_Hover))
     {
-        backgroundColor = kiranPalette->color(Kiran::StylePalette::Hover,
-                                              Kiran::StylePalette::Window,
-                                              Kiran::StylePalette::Background);
+        backgroundColor = DEFAULT_PALETTE()->getColor(Palette::ColorGroup::MOUSE_OVER,
+                                                      Palette::ColorRole::WINDOW);
     }
     else
     {
-        backgroundColor = kiranPalette->color(Kiran::StylePalette::Normal,
-                                              Kiran::StylePalette::Window,
-                                              Kiran::StylePalette::Background);
+        // FIXME:暂时使用ACTIVE代替normal
+        backgroundColor = DEFAULT_PALETTE()->getColor(Palette::ColorGroup::ACTIVE,
+                                                      Palette::ColorRole::WINDOW);
     }
     painter.fillRect(frect, backgroundColor);
 
     QColor borderColor;
-    borderColor = kiranPalette->color(Kiran::StylePalette::Normal,
-                                      Kiran::StylePalette::Widget,
-                                      Kiran::StylePalette::Border);
+    borderColor = DEFAULT_PALETTE()->getColor(Palette::ColorGroup::ACTIVE,
+                                              Palette::ColorRole::BORDER);
 
     auto pen = painter.pen();
     pen.setWidth(1);
@@ -335,7 +336,7 @@ void TrayItemWidget::paintEvent(QPaintEvent *event)
     QWidget::paintEvent(event);
 }
 
-void TrayItemWidget::handleThemeChanged(Kiran::PaletteType paletteType)
+void TrayItemWidget::handleThemeChanged()
 {
     QImage image = ui->connectionTypeIcon->pixmap()->toImage();
     image.invertPixels(QImage::InvertRgb);

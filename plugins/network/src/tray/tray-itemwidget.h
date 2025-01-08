@@ -15,7 +15,7 @@
 #ifndef KIRAN_CPANEL_NETWORK_TRAY_ITEMWIDGET_H
 #define KIRAN_CPANEL_NETWORK_TRAY_ITEMWIDGET_H
 
-#include <style-palette.h>
+#include <palette.h>
 #include <QWidget>
 QT_BEGIN_NAMESPACE
 namespace Ui
@@ -74,7 +74,7 @@ public:
 public slots:
     void handleInputText();
     QString getPassword();
-    void handleThemeChanged(Kiran::PaletteType paletteType);
+    void handleThemeChanged();
     void onCarrierChanged(bool plogged);
 
 protected:
