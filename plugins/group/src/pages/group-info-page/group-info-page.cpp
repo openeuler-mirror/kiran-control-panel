@@ -12,7 +12,8 @@
  * Author:     wangshichang <shichang@isrc.iscas.ac.cn>
  */
 #include "group-info-page.h"
-#include <style-property.h>
+#include <palette.h>
+#include <style-helper.h>
 #include "./ui_group-info-page.h"
 #include "accounts-global-info.h"
 #include "config.h"
@@ -25,6 +26,8 @@
 #include <QAction>
 #include <QKeyEvent>
 #include <QPainter>
+
+using namespace Kiran::Theme;
 
 enum PageEnum
 {
@@ -63,8 +66,9 @@ void GroupInfoPage::initUI()
     m_usersContainer = new UsersContainer(ui->page_addUser);
     ui->layoutUserList->addWidget(m_usersContainer);
 
-    Kiran::StylePropertyHelper::setButtonType(ui->add_member_button, Kiran::BUTTON_Default);
-    Kiran::StylePropertyHelper::setButtonType(ui->confirm_add_button, Kiran::BUTTON_Default);
+    // FIXME: 后续使用新版kiran-integration-qt5中提供的setButtonType函数
+    // Kiran::StylePropertyHelper::setButtonType(ui->add_member_button, Kiran::BUTTON_Default);
+    // Kiran::StylePropertyHelper::setButtonType(ui->confirm_add_button, Kiran::BUTTON_Default);
 
     connect(ui->add_member_button, &QPushButton::clicked, [this]()
             { ui->stackedWidget->setCurrentIndex(PAGE_ADD_USER); });
@@ -72,10 +76,9 @@ void GroupInfoPage::initUI()
     connect(ui->cancel_button, &QPushButton::clicked, [this]()
             {
                 m_errorTip->hideTip();
-                ui->stackedWidget->setCurrentIndex(PAGE_GROUP_INFO);
-            });
+                ui->stackedWidget->setCurrentIndex(PAGE_GROUP_INFO); });
 
-    //用户组icon
+    // 用户组icon
     QString groupIconFile = QString(":/kcp-group-images/group_icon_large.png");
     QImage *iconImage = new QImage;
     iconImage->load(groupIconFile);
@@ -87,7 +90,7 @@ void GroupInfoPage::initUI()
     ui->change_name_button->setStyleSheet("border:none;");
 
     updateIcon();
-    connect(Kiran::StylePalette::instance(), &Kiran::StylePalette::themeChanged, this, &GroupInfoPage::updateIcon);
+    connect(DEFAULT_PALETTE(), &Palette::baseColorsChanged, this, &GroupInfoPage::updateIcon);
 
     ui->stackedWidget_edit_name->setCurrentIndex(NAME_LABEL);
 
@@ -95,8 +98,7 @@ void GroupInfoPage::initUI()
             {
                 //                emit sigIsBusyChanged(true);
                 ui->delete_button->setBusy(true);
-                emit sigDeleteGroup(gid, m_curShowGroupName);
-            });
+                emit sigDeleteGroup(gid, m_curShowGroupName); });
 
     connect(ui->change_name_button, &QPushButton::clicked, [this]()
             { ui->stackedWidget_edit_name->setCurrentIndex(LINE_EDIT); });
@@ -136,8 +138,7 @@ void GroupInfoPage::initUI()
                         userNameList.append(userListWidget->getText());
                     }
                 }
-                emit sigAddUserToGroup(m_curShowGroupPath, userNameList);
-            });
+                emit sigAddUserToGroup(m_curShowGroupPath, userNameList); });
 }
 
 void GroupInfoPage::appendMemberListItem(const QString &userName)
@@ -151,8 +152,7 @@ void GroupInfoPage::appendMemberListItem(const QString &userName)
             {
                 //                emit sigIsBusyChanged(true);
                 ui->add_member_button->setBusy(true);
-                emit sigRemoveMember(m_curShowGroupPath, userName.toString());
-            });
+                emit sigRemoveMember(m_curShowGroupPath, userName.toString()); });
 
     m_memberContainer->addFeatureItem(itemWidget);
 }
@@ -225,8 +225,7 @@ void GroupInfoPage::appendUserListItem(const QString &userPath)
                 else
                 {
                     item->setRightButtonVisible(false, QString(":/kcp-group-images/chosen_icon.svg"));
-                }
-            });
+                } });
 
     m_usersContainer->addFeatureItem(item);
 }
@@ -366,20 +365,12 @@ void GroupInfoPage::updateIcon()
     QIcon groupIcon(":/kcp-group-images/group_icon_large.png");
     QPixmap groupPixmap = groupIcon.pixmap(90, 90);
 
-    QIcon changeNameIcon(":/kcp-group-images/change_name_icon.svg");
-    QPixmap changeNamePixmap = changeNameIcon.pixmap(16, 16);
-
-    if (Kiran::StylePalette::instance()->paletteType() != Kiran::PALETTE_DARK)
+    if (DEFAULT_STYLE_HELPER()->paletteType() != PaletteType::PALETTE_DARK)
     {
         QImage groupImage = groupPixmap.toImage();
         groupImage.invertPixels(QImage::InvertRgb);
         groupPixmap = QPixmap::fromImage(groupImage);
-
-        QImage changeNameImage = changeNamePixmap.toImage();
-        changeNameImage.invertPixels(QImage::InvertRgb);
-        changeNamePixmap = QPixmap::fromImage(changeNameImage);
     }
 
     ui->avatar->setPixmap(groupPixmap);
-    ui->change_name_button->setIcon(changeNamePixmap);
 }

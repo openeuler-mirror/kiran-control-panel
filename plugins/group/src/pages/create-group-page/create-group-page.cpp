@@ -1,14 +1,14 @@
 /**
- * Copyright (c) 2020 ~ 2021 KylinSec Co., Ltd. 
+ * Copyright (c) 2020 ~ 2021 KylinSec Co., Ltd.
  * kiran-cpanel-group is licensed under Mulan PSL v2.
- * You can use this software according to the terms and conditions of the Mulan PSL v2. 
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
  * You may obtain a copy of Mulan PSL v2 at:
- *          http://license.coscl.org.cn/MulanPSL2 
- * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND, 
- * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT, 
- * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.  
- * See the Mulan PSL v2 for more details.  
- * 
+ *          http://license.coscl.org.cn/MulanPSL2
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ *
  * Author:     wangshichang <shichang@isrc.iscas.ac.cn>
  */
 #include "create-group-page.h"
@@ -23,8 +23,7 @@
 #include <kiranwidgets-qt5/kiran-color-block.h>
 #include <kiranwidgets-qt5/kiran-message-box.h>
 #include <qt5-log-i.h>
-#include <style-property.h>
-//#include <widget-property-helper.h>
+// #include <widget-property-helper.h>
 
 #define ITEM_USER_NAME_ROLE Qt::UserRole + 2
 
@@ -62,9 +61,11 @@ void CreateGroupPage::initUI()
         appendUserListItem(iter);
     }
 
-    ///确认按钮
+    /// 确认按钮
     connect(ui->confirm_button, &QPushButton::clicked, this, &CreateGroupPage::handlerCreateNewGroup);
-    Kiran::StylePropertyHelper::setButtonType(ui->confirm_button, Kiran::BUTTON_Default);
+
+    // FIXME: 后续使用新版kiran-integration-qt5中提供的setButtonType函数
+    // Kiran::StylePropertyHelper::setButtonType(ui->confirm_button, Kiran::BUTTON_Default);
 }
 
 void CreateGroupPage::appendUserListItem(const QString &userPath)
@@ -85,14 +86,13 @@ void CreateGroupPage::appendUserListItem(const QString &userPath)
                 else
                 {
                     itemWidget->setRightButtonVisible(false, QString(":/kcp-group-images/chosen_icon.svg"));
-                }
-            });
+                } });
     m_userContainter->addFeatureItem(itemWidget);
 }
 
 void CreateGroupPage::handlerCreateNewGroup()
 {
-    //检验用户组名是否为空，是否重名
+    // 检验用户组名是否为空，是否重名
     KLOG_INFO() << "start check group name";
     QString groupName = ui->name_edit->text();
 
@@ -141,7 +141,7 @@ void CreateGroupPage::handlerCreateNewGroupIsDone(QString groupPath, QString err
     auto userList = m_userContainter->getAllFeatureItem();
     for (auto &item : userList)
     {
-        auto userListWidget =  qobject_cast<UserListWidget *>(item);
+        auto userListWidget = qobject_cast<UserListWidget *>(item);
         if (userListWidget->getRightButtionVisible())
         {
             userNameList.append(userListWidget->getText());

@@ -17,7 +17,7 @@
 
 #include <QWidget>
 
-#include <style-palette.h>
+#include <palette.h>
 
 //给控制中心组件提供色块的控件,用于突出显示
 class KiranFrame : public QWidget
@@ -47,7 +47,7 @@ public:
      * 设置绘制背景固定的状态，不根据实际状态从KiranPalette之中取出颜色(除了disable状态，disable将还是从KiranPalette之中取出禁用色)
      * @param state 希望固定的颜色状态
      */
-    void setFixedBackgroundState(Kiran::StylePalette::ColorState state);
+    void setFixedBackgroundState(Kiran::Theme::Palette::ColorGroup state);
     /**
      * 取消掉固定背景状态，背景色根据实际状态取出
      */
@@ -65,7 +65,7 @@ public:
      * 设置绘制背景固定的状态，不根据实际状态从KiranPalette之中取出颜色(除了disable状态，disable将还是从KiranPalette之中取出禁用色)
      * @param state 希望固定的颜色状态
      */
-    void setFixedBorderState(Kiran::StylePalette::ColorState state);
+    void setFixedBorderState(Kiran::Theme::Palette::ColorGroup state);
     /**
      * 取消掉固定背景状态，背景色根据实际状态取出
      */
@@ -79,11 +79,13 @@ private:
 
     bool m_drawBackground = true;
     bool m_fixedBackground = false;
-    Kiran::StylePalette::ColorState m_fixedBackgroundState = Kiran::StylePalette::Normal;
+    //FIXME：暂时使用ACTIVE代替Normal
+    Kiran::Theme::Palette::ColorGroup m_fixedBackgroundState = Kiran::Theme::Palette::ColorGroup::ACTIVE;
 
     bool m_drawBorder = true;
     bool m_fixedBorder = false;
-    Kiran::StylePalette::ColorState m_fixedBorderState = Kiran::StylePalette::Normal;
+    //FIXME：暂时使用ACTIVE代替Normal
+    Kiran::Theme::Palette::ColorGroup m_fixedBorderState = Kiran::Theme::Palette::ColorGroup::ACTIVE;
 };
 
 #endif  // KIRAN_CONTROL_PANEL_KIRAN_FRAME_H

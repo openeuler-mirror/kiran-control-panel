@@ -13,7 +13,6 @@
  */
 #include "user-list-widget.h"
 #include <kiran-label.h>
-#include <style-palette.h>
 #include <QBoxLayout>
 #include <QLabel>
 #include <QPushButton>
@@ -49,15 +48,13 @@ QString UserListWidget::getText()
 void UserListWidget::setLeftButtonVisible(bool visible, const QString& iconPath)
 {
     m_leftButton->setVisible(visible);
-    m_leftIcon = iconPath;
-    updateIcon();
+    m_leftButton->setIcon(QIcon(iconPath));
 }
 
 void UserListWidget::setRightButtonVisible(bool visible, const QString& iconPath)
 {
     m_rightButton->setVisible(visible);
-    m_rightIcon = iconPath;
-    updateIcon();
+    m_rightButton->setIcon(QIcon(iconPath));
 }
 
 bool UserListWidget::getRightButtionVisible()
@@ -123,35 +120,6 @@ void UserListWidget::initUI()
     layout->addWidget(m_rightButton);
     connect(m_rightButton, &QPushButton::clicked, this, [this]()
             { emit rightButtonClicked(m_userData); });
-
-    updateIcon();
-    connect(Kiran::StylePalette::instance(), &Kiran::StylePalette::themeChanged, this, &UserListWidget::updateIcon);
-}
-
-void UserListWidget::updateIcon()
-{
-    auto kiranPalette = Kiran::StylePalette::instance();
-
-    QMap<QPushButton*, QString> buttonIconMap = {
-        {m_leftButton, m_leftIcon},
-        {m_rightButton, m_rightIcon}};
-
-    for (auto iter = buttonIconMap.begin(); iter != buttonIconMap.end(); iter++)
-    {
-        auto button = iter.key();
-        auto iconPath = iter.value();
-
-        QIcon icon(iconPath);
-        auto pixmap = icon.pixmap(QSize(16, 16));
-        if (kiranPalette->paletteType() == Kiran::PALETTE_LIGHT)
-        {
-            auto image = pixmap.toImage();
-            image.invertPixels(QImage::InvertRgb);
-            pixmap = QPixmap::fromImage(image);
-        }
-
-        button->setIcon(pixmap);
-    }
 }
 
 void UserListWidget::mousePressEvent(QMouseEvent* event)

@@ -1,18 +1,17 @@
 /**
- * Copyright (c) 2020 ~ 2021 KylinSec Co., Ltd. 
+ * Copyright (c) 2020 ~ 2021 KylinSec Co., Ltd.
  * kiran-cpanel-group is licensed under Mulan PSL v2.
- * You can use this software according to the terms and conditions of the Mulan PSL v2. 
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
  * You may obtain a copy of Mulan PSL v2 at:
- *          http://license.coscl.org.cn/MulanPSL2 
- * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND, 
- * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT, 
- * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.  
- * See the Mulan PSL v2 for more details.  
- * 
+ *          http://license.coscl.org.cn/MulanPSL2
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ *
  * Author:     wangshichang <shichang@isrc.iscas.ac.cn>
  */
 #include "kiran-group-manager.h"
-#include <kiran-style/style-palette.h>
 #include "accounts-global-info.h"
 #include "config.h"
 #include "create-group-page/create-group-page.h"
@@ -33,7 +32,6 @@
 #include <QtWidgets/QListWidgetItem>
 
 #define ITEM_GROUP_OBJ_PATH_ROLE Qt::UserRole + 1
-
 
 KiranGroupManager::KiranGroupManager(QWidget *parent)
     : QWidget(parent)
@@ -134,10 +132,9 @@ void KiranGroupManager::initGroupList()
                     //切换到用户组信息
                     m_stackWidget->setCurrentIndex(PAGE_GROUP_INFO);
                     m_currentItemData = groupObjPath;
-                }
-            });
+                } });
 
-    ///创建用户组按钮
+    /// 创建用户组按钮
     m_createGroupItem = new QListWidgetItem(tr("Create new group"), m_tabList);
     m_tabList->addItem(m_createGroupItem);
 
@@ -198,9 +195,9 @@ void KiranGroupManager::appendSidebarItem(QString groupPath, QString errMsg)
     m_tabList->addItem(item);
     m_tabList->setCurrentItem(item);
 
-    //更新用户组信息页面
+    // 更新用户组信息页面
     m_page_groupInfo->setCurrentShowGroupPath(groupPath);
-    //切换到用户组信息
+    // 切换到用户组信息
     m_stackWidget->setCurrentIndex(PAGE_GROUP_INFO);
     m_currentItemData = groupPath;
 }
@@ -224,9 +221,9 @@ void KiranGroupManager::deleteSidebarItem(QString groupName, QString errMsg)
         }
     }
     setDefaultSiderbarItem();
-    //重置创建用户组页面
+    // 重置创建用户组页面
     m_pageCreateGroup->reset();
-    //切换到创建用户组
+    // 切换到创建用户组
     m_stackWidget->setCurrentIndex(PAGE_CREATE_GROUP);
     m_currentItemData = "";
 }
@@ -247,9 +244,9 @@ void KiranGroupManager::updateSidebarItem(QString groupPath, QString errMsg)
             KSDGroupAdminListProxy interface(GROUP_ADMIN_DBUS_NAME, groupPath, QDBusConnection::systemBus());
             item->setText(interface.groupName());
             m_tabList->setCurrentItem(item);
-            //更新用户组信息页面
+            // 更新用户组信息页面
             m_page_groupInfo->setCurrentShowGroupPath(groupPath);
-            //切换到用户组信息
+            // 切换到用户组信息
             m_stackWidget->setCurrentIndex(PAGE_GROUP_INFO);
             m_currentItemData = groupPath;
         }

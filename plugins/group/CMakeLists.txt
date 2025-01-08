@@ -52,6 +52,8 @@ add_library(${TARGET_NAME} SHARED
         )
 
 target_include_directories(${TARGET_NAME} PRIVATE
+        ${PROJECT_SOURCE_DIR}/include
+        ${PROJECT_SOURCE_DIR}/common
         src/pages
         src/widgets
         src
@@ -63,8 +65,7 @@ target_include_directories(${TARGET_NAME} PRIVATE
 	${KIRAN_WIDGETS_INCLUDE_DIRS}
         ${KLOG_QT5_INCLUDE_DIRS}
         ${KIRAN_CC_DAEMON_INCLUDE_DIRS}
-        ${KIRAN_STYLE_INCLUDE_DIRS}
-        )
+        ${KIRAN_INTEGRATION_THEME_INCLUDE_DIRS})
 
 target_link_libraries(${TARGET_NAME}
         Qt5::Core
@@ -77,7 +78,7 @@ target_link_libraries(${TARGET_NAME}
         X11
         ${GLIB_LIBRARIES}
         ${GSETTINGS_QT_LIBRARIES}
-        ${KIRAN_STYLE_LIBRARIES}
+        ${KIRAN_INTEGRATION_THEME_LIBRARIES}
 	${KIRAN_WIDGETS_LIBRAIES}
         ${KLOG_QT5_LIBRARIES}
         ${KIRAN_CC_DAEMON_LIBRARIES})
