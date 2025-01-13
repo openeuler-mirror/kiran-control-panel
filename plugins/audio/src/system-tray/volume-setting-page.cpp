@@ -21,11 +21,13 @@
 #include <kiran-session-daemon/audio-i.h>
 #include <qt5-log-i.h>
 
-#include <style-palette.h>
+#include <style-helper.h>
 #include <QMouseEvent>
 #include <QPainter>
 #include <QStyleOption>
 #include <QSvgRenderer>
+
+using namespace Kiran::Theme;
 
 VolumeSettingPage::VolumeSettingPage(enum AudioNode audio, const QString objectPath, QWidget *parent) : QWidget(parent), ui(new Ui::VolumeSettingPage)
 {
@@ -130,7 +132,7 @@ void VolumeSettingPage::initSettings(Audio *audio)
 void VolumeSettingPage::changeSinkActivePort(const QString &value)
 {
     KLOG_DEBUG() << "active port changed :" << value;
-    if(value.isEmpty())
+    if (value.isEmpty())
     {
         disableSettings();
         return;
@@ -174,7 +176,7 @@ void VolumeSettingPage::changeSinkInputMute(bool value)
 
 void VolumeSettingPage::handleVolumeChanged(double value)
 {
-    if(!ui->volumeSetting->isEnabled())
+    if (!ui->volumeSetting->isEnabled())
     {
         return;
     }
@@ -281,7 +283,7 @@ QPixmap VolumeSettingPage::trayIconColorSwitch(const QString &iconPath)
     // icon原本为浅色
     QIcon icon = QIcon::fromTheme(iconPath);
     QPixmap pixmap = icon.pixmap(16, 16);
-    if (Kiran::StylePalette::instance()->paletteType() != Kiran::PALETTE_DARK)
+    if (DEFAULT_STYLE_HELPER()->paletteType() != PaletteType::PALETTE_DARK)
     {
         QImage image = pixmap.toImage();
         image.invertPixels(QImage::InvertRgb);

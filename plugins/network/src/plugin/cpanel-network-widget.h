@@ -15,11 +15,11 @@
 #ifndef KIRAN_CPANEL_NETWORK_CPANEL_NETWORK_WIDGET_H
 #define KIRAN_CPANEL_NETWORK_CPANEL_NETWORK_WIDGET_H
 
+#include <palette.h>
 #include <NetworkManagerQt/Device>
 #include <QTimer>
 #include <QWidget>
 #include "kiran-sidebar-widget.h"
-#include "style-palette.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui
@@ -42,7 +42,7 @@ public:
 
 private slots:
     void removeDevice(const QString &devicePath);
-    void changeTheme(Kiran::PaletteType paletteType);
+    void changeTheme();
 
     void changeSideBarItem(QListWidgetItem *item);
     void addWirelessDevice(const QString &devicePath);
@@ -61,7 +61,7 @@ private:
 
     void updateSidebarItemStatus(NetworkManager::Device::Type deviceType);
     void setSidebarItemStatus(KiranSidebarItem *sidebarItem, NetworkManager::Device::State state);
-    void removeSidebarItem(const QString &text,int index);
+    void removeSidebarItem(const QString &text, int index);
 
     bool isExistWiredItem();
     bool isExistWirelessItem();

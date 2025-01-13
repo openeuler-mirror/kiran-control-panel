@@ -14,14 +14,14 @@
 #include "kiran-time-zone-item.h"
 #include "ui_kiran-time-zone-item.h"
 
-#include <style-palette.h>
+#include <palette.h>
 
 #include <QDebug>
 #include <QMouseEvent>
 #include <QPainter>
 #include <QStyleOption>
 
-using namespace Kiran;
+using namespace Kiran::Theme;
 KiranTimeZoneItem::KiranTimeZoneItem(const ZoneInfo zoneInfo, QWidget *parent)
     : QWidget(parent),
       ui(new Ui::KiranTimeZoneItem),
@@ -168,18 +168,18 @@ void KiranTimeZoneItem::paintEvent(QPaintEvent *event)
     QStyleOption opt;
     opt.init(this);
 
-    auto kiranPalette = StylePalette::instance();
+    auto kiranPalette = DEFAULT_PALETTE();
 
     bool hover = opt.state & QStyle::State_MouseOver;
 
-    QColor background=Qt::transparent, border;
+    QColor background = Qt::transparent, border;
     if (hover)
     {
-        background = kiranPalette->color(StylePalette::Hover, StylePalette::Widget, StylePalette::Background);
+        background = kiranPalette->getColor(Palette::MOUSE_OVER, Palette::WIDGET);
     }
-    border = kiranPalette->color(StylePalette::Normal,
-                                 StylePalette::Widget,
-                                 StylePalette::Border);
+    // FIXME：暂时使用ACTIVE代替Normal
+    border = kiranPalette->getColor(Palette::ACTIVE,
+                                    Palette::BORDER);
 
     QPainter p(this);
     p.fillRect(opt.rect, background);

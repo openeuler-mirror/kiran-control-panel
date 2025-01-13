@@ -14,7 +14,6 @@
 #include "autostart-page.h"
 #include <kiran-message-box.h>
 #include <qt5-log-i.h>
-#include <style-property.h>
 #include <QBoxLayout>
 #include <QDir>
 #include <QFileDialog>
@@ -120,7 +119,9 @@ void AutostartPage::initAutoStartAppUI()
 void AutostartPage::initAddBtn()
 {
     m_autoStartButton = new QPushButton(this);
-    Kiran::StylePropertyHelper::setButtonType(m_autoStartButton, Kiran::BUTTON_Default);
+
+    // FIXME: 后续使用新版kiran-integration-qt5中提供的setButtonType函数
+    // Kiran::StylePropertyHelper::setButtonType(m_autoStartButton, Kiran::BUTTON_Default);
     m_autoStartButton->setIcon(QIcon(":/kcp-application/images/addition.svg"));
     autoStartAppContainer->addItem(m_autoStartButton);
     connect(m_autoStartButton, &QPushButton::clicked, this, &AutostartPage::selectDesktopForAutoStart);
@@ -172,8 +173,8 @@ KiranSettingItem *AutostartPage::createAutoStartAppItem(const QString &desktopNa
     auto autoStartAppItem = new KiranSettingItem(this);
 
     autoStartAppItem->setClickable(false);
-    autoStartAppItem->setLeftButtonVisible(true, autoStartApp.getIcon(), false);
-    autoStartAppItem->setRightButtonVisible(true, QIcon(":/kiran-control-panel/images/trash.svg"), true);
+    autoStartAppItem->setLeftButtonVisible(true, autoStartApp.getIcon());
+    autoStartAppItem->setRightButtonVisible(true, QIcon(":/kiran-control-panel/images/trash.svg"));
     autoStartAppItem->setSwitcherVisible(true);
     autoStartAppItem->setSwitcherChecked(!autoStartApp.getHidden());
     autoStartAppItem->setText(autoStartApp.getName());

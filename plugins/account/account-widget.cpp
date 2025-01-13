@@ -11,29 +11,30 @@
  *
  * Author:     liuxinhao <liuxinhao@kylinsec.com.cn>
  */
-#include "config.h"
 #include "account-widget.h"
 #include "accounts-global-info.h"
+#include "config.h"
 #include "hard-worker.h"
 
 #include "create-user-page/create-user-page.h"
+#include "mask-widget/mask-widget.h"
+#include "passwd-expiration-policy/password-expiration-policy-page.h"
 #include "select-avatar-page/select-avatar-page.h"
 #include "user-info-page/user-info-page.h"
-#include "passwd-expiration-policy/password-expiration-policy-page.h"
-#include "mask-widget/mask-widget.h"
 
 #include <kiran-color-block.h>
 #include <kiran-sidebar-widget.h>
 #include <kiran-style-public-define.h>
+#include <palette.h>
 #include <qt5-log-i.h>
-#include <style-palette.h>
+#include <style-helper.h>
 #include <QHBoxLayout>
 #include <QIcon>
 #include <QScrollArea>
 #include <QStackedWidget>
 #include <QtWidgets/QListWidgetItem>
 
-using namespace Kiran;
+using namespace Kiran::Theme;
 
 #define ITEM_USER_OBJ_PATH_ROLE Qt::UserRole + 1
 
@@ -223,7 +224,6 @@ void AccountWidget::initUserList()
     m_createUserItem = new QListWidgetItem(tr("Create new user"), m_tabList);
     m_tabList->addItem(m_createUserItem);
     updateCreateUserIcon();
-    connect(StylePalette::instance(), &StylePalette::themeChanged, this, &AccountWidget::updateCreateUserIcon);
 
     // 加载非系统用户
     QList<QString> userObjList;
@@ -338,14 +338,17 @@ void AccountWidget::updateCreateUserIcon()
     QIcon icon(":/kcp-account/images/create-user-avatar.png");
     QPixmap pixmap = icon.pixmap(40, 40);
 
-    if (StylePalette::instance()->paletteType() != Kiran::PALETTE_DARK)
-    {
-        QImage image = pixmap.toImage();
-        image.invertPixels(QImage::InvertRgb);
-        pixmap = QPixmap::fromImage(image);
-    }
+    // FIXME:先使用直接设置setIcon，切换主题时是否能改变图标颜色
+    m_createUserItem->setIcon(icon);
 
-    m_createUserItem->setIcon(pixmap);
+    // if (DEFAULT_STYLE_HELPER()->paletteType() != PaletteType::PALETTE_DARK)
+    // {
+    //     QImage image = pixmap.toImage();
+    //     image.invertPixels(QImage::InvertRgb);
+    //     pixmap = QPixmap::fromImage(image);
+    // }
+
+    // m_createUserItem->setIcon(pixmap);
 }
 
 void AccountWidget::onUserAdded(const QString &objectPath)

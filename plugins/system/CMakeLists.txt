@@ -10,7 +10,7 @@ find_package(PkgConfig REQUIRED)
 find_package(Qt5 COMPONENTS Widgets Svg DBus LinguistTools PrintSupport)
 pkg_search_module(KLOG_QT5 REQUIRED klog-qt5)
 pkg_search_module(KIRAN_CC_DAEMON REQUIRED kiran-cc-daemon)
-pkg_search_module(KIRAN_STYLE_HELPER REQUIRED kiran-style-helper)
+pkg_search_module(KIRAN_INTEGRATION_THEME REQUIRED kiran-integration-theme)
 
 file(GLOB_RECURSE SYSTEM_SRC ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp
                              ${CMAKE_CURRENT_SOURCE_DIR}/*.h
@@ -37,7 +37,7 @@ target_include_directories(${TARGET_NAME} PRIVATE
         ${KLOG_INCLUDE_DIRS}
         ${KIRAN_WIDGETS_INCLUDE_DIRS}
         ${KIRAN_CC_DAEMON_INCLUDE_DIRS}
-        ${KIRAN_STYLE_INCLUDE_DIRS})
+        ${KIRAN_INTEGRATION_THEME_INCLUDE_DIRS})
 
 target_link_libraries(${TARGET_NAME}
         common-widgets
@@ -47,7 +47,7 @@ target_link_libraries(${TARGET_NAME}
         Qt5::PrintSupport
         ${KIRAN_WIDGETS_LIBRARIES}
         ${KLOG_LIBRARIES}
-        ${KIRAN_STYLE_HELPER_LIBRARIES})
+        ${KIRAN_INTEGRATION_THEME_LIBRARIES})
 
 install(TARGETS ${TARGET_NAME} DESTINATION ${PLUGIN_LIBS_DIR})
 install(FILES ${SYSTEM_QM} DESTINATION ${TRANSLATION_DIR}/)

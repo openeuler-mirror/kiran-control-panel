@@ -14,8 +14,8 @@
 #include "theme-preview-widget.h"
 #include <kiran-frame/kiran-frame.h>
 #include <QBoxLayout>
-#include <QLabel>
 #include <QEvent>
+#include <QLabel>
 
 ThemePreviewWidget::ThemePreviewWidget(QWidget* parent)
     : ExclusionWidget(parent)
@@ -73,14 +73,14 @@ void ThemePreviewWidget::setPreviewPixmapSize(QSize size)
 
 void ThemePreviewWidget::appendPreviewPixmap(const QList<QPixmap>& pixmaps)
 {
-    for(auto pixmap : pixmaps)
+    for (auto pixmap : pixmaps)
     {
         auto labelPixmap = new QLabel(this);
         labelPixmap->setFixedSize(m_previewSize);
-        labelPixmap->setPixmap(pixmap.scaled(m_previewSize,Qt::IgnoreAspectRatio,Qt::SmoothTransformation));
+        labelPixmap->setPixmap(pixmap.scaled(m_previewSize, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
 
         // 插入在选择指示器之前
-        m_frameLayout->insertWidget(m_frameLayout->count()-2,labelPixmap,0,Qt::AlignCenter);
+        m_frameLayout->insertWidget(m_frameLayout->count() - 2, labelPixmap, 0, Qt::AlignCenter);
     }
 }
 
@@ -91,9 +91,9 @@ QString ThemePreviewWidget::getID() const
 
 void ThemePreviewWidget::setSelected(bool selected)
 {
-    if( selected )
+    if (selected)
     {
-        if( m_selectedIndicatorEnable )
+        if (m_selectedIndicatorEnable)
         {
             m_selectedIndicator->setVisible(true);
         }
@@ -111,7 +111,7 @@ void ThemePreviewWidget::setSelected(bool selected)
 
 void ThemePreviewWidget::initUI()
 {
-    setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Fixed);
+    setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
 
     auto mainLayout = new QVBoxLayout(this);
     mainLayout->setSpacing(6);
@@ -121,7 +121,7 @@ void ThemePreviewWidget::initUI()
     m_frame = new KiranFrame(this);
     m_frame->setObjectName("ThemePreviewFrame");
     m_frame->setDrawBroder(false);
-    m_frame->setFixedBorderState(Kiran::StylePalette::Checked);
+    m_frame->setFixedBorderState(Kiran::Theme::Palette::ColorGroup::SELECTED);
     m_frame->installEventFilter(this);
 
     m_frameLayout = new QHBoxLayout(m_frame);
@@ -133,7 +133,7 @@ void ThemePreviewWidget::initUI()
     m_selectedIndicator->setVisible(false);
     m_selectedIndicator->setPixmap(QPixmap(":/kcp-appearance/images/indicator-selected.png"));
 
-    auto spacerItem = new QSpacerItem(0,10,QSizePolicy::Expanding,QSizePolicy::Preferred);
+    auto spacerItem = new QSpacerItem(0, 10, QSizePolicy::Expanding, QSizePolicy::Preferred);
     m_frameLayout->addSpacerItem(spacerItem);
     m_frameLayout->addWidget(m_selectedIndicator);
 

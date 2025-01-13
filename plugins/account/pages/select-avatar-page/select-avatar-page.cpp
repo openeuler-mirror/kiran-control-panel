@@ -11,15 +11,14 @@
  *
  * Author:     liuxinhao <liuxinhao@kylinsec.com.cn>
  */
-#include "config.h"
 #include "select-avatar-page.h"
 #include "avatar-button/avatar-button.h"
-#include "flow-layout/flowlayout.h"
 #include "avatar-editor-wrapper.h"
+#include "config.h"
+#include "flow-layout/flowlayout.h"
 
+#include <palette.h>
 #include <qt5-log-i.h>
-#include <style-palette.h>
-#include <style-property.h>
 #include <QButtonGroup>
 #include <QDir>
 #include <QFileDialog>
@@ -31,8 +30,6 @@
 #define USER_AVATAR_OBJ_NAME "avatar_button_user"
 #define ADD_AVATAR_OBJ_NAME "avatar_button_add"
 #define CUSTOM_AVATAR_OBJ_NAME "avatar_button_custom"
-
-using namespace Kiran;
 
 SelectAvatarPage::SelectAvatarPage(QWidget *parent) : QWidget(parent),
                                                       m_mode(CHANGE_AVATAR_FOR_USER)
@@ -146,7 +143,9 @@ void SelectAvatarPage::initUI()
     btn->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     btn->setFixedSize(110, 40);
     btn->setText(tr("Confirm"));
-    StylePropertyHelper::setButtonType(btn, BUTTON_Default);
+
+    // FIXME: 后续使用新版kiran-integration-qt5中提供的setButtonType函数
+    // StylePropertyHelper::setButtonType(btn, BUTTON_Default);
     m_btnLayout->addWidget(btn);
     connect(btn, &QPushButton::clicked, [this]()
             { sigReturnToPrevPage(m_mode, true); });
@@ -171,8 +170,8 @@ void SelectAvatarPage::initUI()
 
     m_addButton = addAvatar(":/kcp-account/images/create-user-avatar.png", AVATAR_ADD, false);
     m_addButton->setAccessibleName("ButtonAddAvatar");
-    updateAddAvatarIcon();
-    connect(Kiran::StylePalette::instance(), &Kiran::StylePalette::themeChanged, this, &SelectAvatarPage::updateAddAvatarIcon);
+    m_addButton->setIcon(":/kcp-account/images/create-user-avatar.png");
+
     connect(m_addButton, &AvatarButton::clicked, [this]()
             {
         //1.选择图片
@@ -258,26 +257,4 @@ void SelectAvatarPage::moveAddButtonToEnd()
 {
     m_flowLayout->removeWidget(m_addButton);
     m_flowLayout->addWidget(m_addButton);
-}
-
-void SelectAvatarPage::updateAddAvatarIcon()
-{
-    QString iconPath;
-
-    Kiran::PaletteType paletteType = Kiran::StylePalette::instance()->paletteType();
-    if (paletteType == Kiran::PALETTE_LIGHT)
-    {
-        iconPath = ":/kcp-account/images/create-user-avatar-black.png";
-    }
-    else
-    {
-        iconPath = ":/kcp-account/images/create-user-avatar.png";
-    }
-
-    if (iconPath == m_addButton->iconPath())
-    {
-        return;
-    }
-
-    m_addButton->setIcon(iconPath);
 }

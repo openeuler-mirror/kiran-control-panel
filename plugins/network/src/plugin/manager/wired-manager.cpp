@@ -14,18 +14,17 @@
 #include "wired-manager.h"
 #include <libnm/nm-connection.h>
 #include <qt5-log-i.h>
-#include <style-property.h>
 #include <NetworkManagerQt/ActiveConnection>
+#include <NetworkManagerQt/Device>
 #include <NetworkManagerQt/Manager>
 #include <NetworkManagerQt/Settings>
 #include <QPointer>
 #include <QScrollBar>
+#include "device-list.h"
+#include "logging-category.h"
 #include "signal-forward.h"
 #include "status-notification.h"
 #include "ui_wired-manager.h"
-#include "device-list.h"
-#include <NetworkManagerQt/Device>
-#include "logging-category.h"
 
 using namespace NetworkManager;
 
@@ -45,7 +44,8 @@ WiredManager::~WiredManager()
 
 void WiredManager::initUI()
 {
-    Kiran::StylePropertyHelper::setButtonType(ui->saveButton, Kiran::BUTTON_Default);
+    // FIXME: 后续使用新版kiran-integration-qt5中提供的setButtonType函数
+    // Kiran::StylePropertyHelper::setButtonType(ui->saveButton, Kiran::BUTTON_Default);
 }
 
 void WiredManager::initConnection()
@@ -55,7 +55,7 @@ void WiredManager::initConnection()
     connect(ui->wiredSettingPage, &WiredSettingPage::returnPreviousPage, this, &WiredManager::returnPreviousPage);
 
     connect(SignalForward::instance(), &SignalForward::wiredConnectionEdited, this, &WiredManager::editConnection);
-    connect(SignalForward::instance(), &SignalForward::createConnection,this, &WiredManager::creatConnection);
+    connect(SignalForward::instance(), &SignalForward::createConnection, this, &WiredManager::creatConnection);
 }
 
 void WiredManager::creatConnection(const QString &devicePath)
@@ -94,5 +94,3 @@ void WiredManager::saveConnectionSettings()
         KLOG_DEBUG(qLcNetwork) << "Invalid input exists";
     }
 }
-
-

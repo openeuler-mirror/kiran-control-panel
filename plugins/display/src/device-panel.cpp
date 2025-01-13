@@ -17,13 +17,13 @@
 #include "screen-identifying.h"
 #include "ui_device-panel.h"
 
-#include <style-palette.h>
-#include <style-property.h>
+#include <palette.h>
+#include <style-helper.h>
 #include <QPainter>
 #include <QPainterPath>
 #include <QToolTip>
 
-using namespace Kiran;
+using namespace Kiran::Theme;
 
 DevicePanel::DevicePanel(QWidget *parent) : QFrame(parent),
                                             ui(new Ui::DevicePanel)
@@ -31,19 +31,19 @@ DevicePanel::DevicePanel(QWidget *parent) : QFrame(parent),
     ui->setupUi(this);
     setAccessibleName("DevicePanel");
 
-    ui->pushButton_left->setThemeIcon(QPixmap(":/kcp-display/images/rotation-left.svg"), PALETTE_DARK);
-    ui->pushButton_right->setThemeIcon(QPixmap(":/kcp-display/images/rotation-right.svg"), PALETTE_DARK);
-    ui->pushButton_horizontal->setThemeIcon(QPixmap(":/kcp-display/images/flip-h.svg"), PALETTE_DARK);
-    ui->pushButton_vertical->setThemeIcon(QPixmap(":/kcp-display/images/flip-v.svg"), PALETTE_DARK);
-    ui->pushButton_identifying->setThemeIcon(QPixmap(":/kcp-display/images/identification.svg"), PALETTE_DARK);
+    // FIXME:后续将图标名称都改为ksvg前缀
+    ui->pushButton_left->setIcon(QIcon(":/kcp-display/images/rotation-left.svg"));
+    ui->pushButton_right->setIcon(QIcon(":/kcp-display/images/rotation-right.svg"));
+    ui->pushButton_horizontal->setIcon(QIcon(":/kcp-display/images/flip-h.svg"));
+    ui->pushButton_vertical->setIcon(QIcon(":/kcp-display/images/flip-v.svg"));
+    ui->pushButton_identifying->setIcon(QIcon(":/kcp-display/images/identification.svg"));
     ui->btns_widget->setAttribute(Qt::WA_TranslucentBackground, true);
 
     connect(ui->contain, &DevicePanelWidget::screenItemChecked, this, [this](QString monitorPath)
             {
                 ui->pushButton_horizontal->setChecked(ui->contain->getHorizontalDisplayReflectType());
                 ui->pushButton_vertical->setChecked(ui->contain->getVerticalDisplayReflectType());
-                emit screenItemChecked(monitorPath);
-            });
+                emit screenItemChecked(monitorPath); });
     connect(ui->contain, &DevicePanelWidget::screenItemEnableChanged, this, [=](const bool &enabled)
             { ui->btns_widget->setEnabled(enabled); });
 
@@ -52,8 +52,7 @@ DevicePanel::DevicePanel(QWidget *parent) : QFrame(parent),
                 if (configMode == ConfigMode::CONFIG_MODE_EXTRA)
                     ui->pushButton_identifying->setVisible(true);
                 else
-                    ui->pushButton_identifying->setVisible(false);
-            });
+                    ui->pushButton_identifying->setVisible(false); });
 }
 
 DevicePanel::~DevicePanel()
@@ -85,7 +84,7 @@ void DevicePanel::on_pushButton_right_clicked()
 {
     ui->contain->setRotateDrect(-1);
 }
-//标注屏幕
+// 标注屏幕
 void DevicePanel::on_pushButton_identifying_clicked()
 {
     QString monitorPath = ui->contain->getCurMonitorPath();
@@ -100,8 +99,7 @@ void DevicePanel::on_pushButton_identifying_clicked()
 
 void DevicePanel::paintEvent(QPaintEvent *event)
 {
-    auto kiranPalette = StylePalette::instance();
-    QColor backgroundColor = kiranPalette->color(StylePalette::Normal, StylePalette::Widget, StylePalette::Background);
+    QColor backgroundColor = DEFAULT_PALETTE()->getColor(Palette::ColorGroup::ACTIVE, Palette::ColorRole::WIDGET);
 
     QPainterPath painterPath;
     painterPath.addRoundedRect(this->rect(), 6, 6);

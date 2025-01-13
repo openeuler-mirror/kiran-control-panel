@@ -14,7 +14,9 @@
 
 #include "connection-itemwidget.h"
 #include <kiran-message-box.h>
+#include <palette.h>
 #include <qt5-log-i.h>
+#include <style-helper.h>
 #include <NetworkManagerQt/Device>
 #include <NetworkManagerQt/Settings>
 #include <NetworkManagerQt/WiredDevice>
@@ -35,6 +37,7 @@
 #include "utils.h"
 
 using namespace NetworkManager;
+using namespace Kiran::Theme;
 // 使用默认析构函数，父对象被释放时，会释放子对象
 ConnectionItemWidget::ConnectionItemWidget(QWidget* parent) : KiranFrame(parent)
 {
@@ -59,7 +62,7 @@ void ConnectionItemWidget::initUI()
     initPluginItemWidget();
     setDrawBroder(false);
     setAttribute(Qt::WA_Hover);
-    connect(Kiran::StylePalette::instance(), &Kiran::StylePalette::themeChanged, this, &ConnectionItemWidget::handleThemeChanged);
+    connect(DEFAULT_PALETTE(), &Palette::baseColorsChanged, this, &ConnectionItemWidget::handleThemeChanged);
     // TODO:obsolete
     connect(m_editButton, &QPushButton::clicked, this, &ConnectionItemWidget::editButtonClicked);
 
@@ -83,7 +86,7 @@ void ConnectionItemWidget::initPluginItemWidget()
     m_connectionName->setElideMode(Qt::TextElideMode::ElideRight);
     m_connectionTypeIcon->setVisible(false);
 
-    m_editButton->setIcon(NetworkUtils::trayIconColorSwitch(":/kcp-network-images/details-info.svg"));
+    m_editButton->setIcon(QIcon(":/kcp-network-images/details-info.svg"));
     m_editButton->setIconSize(QSize(16, 16));
     m_editButton->setFixedSize(30, 36);
     m_editButton->setFlat(true);
@@ -527,7 +530,7 @@ void ConnectionItemWidget::activateWirelessNetwork()
     addAndActivateWirelessConnection(m_connnectionSettings);
 }
 
-void ConnectionItemWidget::handleThemeChanged(Kiran::PaletteType paletteType)
+void ConnectionItemWidget::handleThemeChanged()
 {
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 15, 0))
     QPixmap pixmap = m_connectionTypeIcon->pixmap(Qt::ReturnByValue);
@@ -537,7 +540,6 @@ void ConnectionItemWidget::handleThemeChanged(Kiran::PaletteType paletteType)
 #endif
     image.invertPixels(QImage::InvertRgb);
     m_connectionTypeIcon->setPixmap(QPixmap::fromImage(image));
-    m_editButton->setIcon(NetworkUtils::trayIconColorSwitch(":/kcp-network-images/details-info.svg"));
 }
 
 void ConnectionItemWidget::mousePressEvent(QMouseEvent* event)

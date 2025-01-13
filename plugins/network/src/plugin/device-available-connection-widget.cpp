@@ -15,7 +15,6 @@
 #include "device-available-connection-widget.h"
 #include <kiran-switch-button.h>
 #include <qt5-log-i.h>
-#include <style-property.h>
 #include <NetworkManagerQt/Manager>
 #include <NetworkManagerQt/Settings>
 #include <NetworkManagerQt/WiredSetting>
@@ -168,7 +167,7 @@ void DeviceAvailableConnectionWidget::addConnection(const QString &path)
     if (deviceType() == Device::Ethernet)
     {
         bool available = NetworkUtils::isAvailableConnection(m_devicePath, connection);
-        KLOG_INFO(qLcNetwork) << m_device->type() << m_devicePath 
+        KLOG_INFO(qLcNetwork) << m_device->type() << m_devicePath
                               << "handle new connection:" << connection->name()
                               << "available:" << available;
         if (available)
@@ -178,7 +177,7 @@ void DeviceAvailableConnectionWidget::addConnection(const QString &path)
     }
     else
     {
-        KLOG_INFO(qLcNetwork) << m_device->type() << m_devicePath 
+        KLOG_INFO(qLcNetwork) << m_device->type() << m_devicePath
                               << "handle new connection:" << connection->name();
         onAddConnection(connection);
     }
@@ -201,7 +200,7 @@ void DeviceAvailableConnectionWidget::createConnection()
 }
 
 void DeviceAvailableConnectionWidget::updateConnection(const QString &connectionPath, const QString &mac)
-{    
+{
     // 判断配置是否应该出现在该设备下，应判断两个属性permanentHardwareAddress，hardwareAddress
     // 部分手机共享网络permanentHardwareAddress属性为空
     QString deviceMac = m_wiredDevice->permanentHardwareAddress();
@@ -211,13 +210,13 @@ void DeviceAvailableConnectionWidget::updateConnection(const QString &connection
     }
 
     ConnectionItemWidget *connectionItem = findConnectionItemByPath(connectionPath);
-    
+
     if (deviceMac == mac)
     {
         // 配置Mac等于设备Mac，更新或新增该配置
-        if( connectionItem )
+        if (connectionItem)
         {
-             updateConnectionItemStatus(connectionItem);
+            updateConnectionItemStatus(connectionItem);
         }
         else
         {
@@ -225,10 +224,10 @@ void DeviceAvailableConnectionWidget::updateConnection(const QString &connection
             onAddConnection(connection);
         }
     }
-    else 
+    else
     {
-        //配置mac不等于设备Mac，删除该配置
-        if( connectionItem )
+        // 配置mac不等于设备Mac，删除该配置
+        if (connectionItem)
         {
             removeConnectionItem(connectionItem);
             connectionItem->deleteLater();
@@ -309,7 +308,8 @@ void DeviceAvailableConnectionWidget::initUI()
     if (m_deviceType == Device::Ethernet)
     {
         m_createConnectionButton = new QPushButton(m_contentWidget);
-        Kiran::StylePropertyHelper::setButtonType(m_createConnectionButton, Kiran::BUTTON_Default);
+        // FIXME: 后续使用新版kiran-integration-qt5中提供的setButtonType函数
+        // Kiran::StylePropertyHelper::setButtonType(m_createConnectionButton, Kiran::BUTTON_Default);
         m_createConnectionButton->setIcon(QIcon(":/kcp-network-images/connection-add.svg"));
         m_contentWidgetLayout->addWidget(m_createConnectionButton);
         connect(m_createConnectionButton, &QPushButton::clicked, this, &DeviceAvailableConnectionWidget::createConnection);
@@ -441,7 +441,7 @@ void DeviceAvailableConnectionWidget::updateMaximumExpansionHeight()
     auto contentWidgetMargin = m_contentWidgetLayout->contentsMargins();
     auto contentWidgetSpacing = m_contentWidgetLayout->spacing();
 
-    //计算KiranCollapse::expansionSpace最大展开高度
+    // 计算KiranCollapse::expansionSpace最大展开高度
     int maximumHeight = expansionMargin.top() + expansionMargin.bottom() +
                         contentWidgetMargin.top() + contentWidgetMargin.bottom() +
                         (contentWidgetSpacing * (m_contentWidgetLayout->count() - 1)) +

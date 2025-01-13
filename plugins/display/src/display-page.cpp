@@ -15,7 +15,6 @@
 #include "display-page.h"
 #include <kiran-session-daemon/display-i.h>
 #include <qt5-log-i.h>
-#include <style-property.h>
 #include <QButtonGroup>
 #include <QResizeEvent>
 #include <QTimer>
@@ -32,13 +31,14 @@ DisplayPage::DisplayPage(QWidget *parent)
 {
     ui->setupUi(this);
 
-    Kiran::StylePropertyHelper::setButtonType(ui->applyButton, Kiran::BUTTON_Default);
-    Kiran::StylePropertyHelper::setButtonType(ui->cancelButton, Kiran::BUTTON_Normal);
+    // FIXME:后续使用新版kiran-integration-qt5中提供的setButtonType函数
+    // Kiran::StylePropertyHelper::setButtonType(ui->applyButton, Kiran::BUTTON_Default);
+    // Kiran::StylePropertyHelper::setButtonType(ui->cancelButton, Kiran::BUTTON_Normal);
     init();
     initConnect();
     refreshWidget();
 
-    //XXX:复制模式下，暂时不显示刷新率
+    // XXX:复制模式下，暂时不显示刷新率
     ui->label_2->setVisible(false);
     ui->comboBox_refreshRate->setVisible(false);
 }
@@ -71,8 +71,8 @@ void DisplayPage::initConnect()
     connect(ui->comboBox_extra_resolving, QOverload<const QString &>::of(&QComboBox::currentTextChanged), this,
             &DisplayPage::handleExtraResolvingCurrentTextChanged);
 
-    //XXX:复制模式下，暂时不显示刷新率
-    //    connect(ui->comboBox_refreshRate, QOverload<int>::of(&QComboBox::currentIndexChanged),this,&DisplayPage::handleRefreshRateChanged);
+    // XXX:复制模式下，暂时不显示刷新率
+    //     connect(ui->comboBox_refreshRate, QOverload<int>::of(&QComboBox::currentIndexChanged),this,&DisplayPage::handleRefreshRateChanged);
     connect(ui->comboBox_extra_refreshRate, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &DisplayPage::handleExtraRefreshRateChanged);
 
     connect(ui->comboBox_windowScalingFactor, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &DisplayPage::handleWindowScalingFactor);
@@ -85,10 +85,10 @@ void DisplayPage::initConnect()
     connect(ui->pushButton_extra_primary, &QAbstractButton::toggled, this, &DisplayPage::handlePrimaryDisplayButtonToggled);
 }
 
-//调用refreshWidget时，configData实际上也刷新了
+// 调用refreshWidget时，configData实际上也刷新了
 void DisplayPage::refreshWidget()
 {
-    //从DBusInterface获取数据，更新displayBufferDate
+    // 从DBusInterface获取数据，更新displayBufferDate
     m_displayConfigData->setPrimary(m_displayConfig->primary());
     m_displayConfigData->setWindowScalingFactor(m_displayConfig->windowScalingFactor());
 
@@ -96,7 +96,7 @@ void DisplayPage::refreshWidget()
     m_listMonitors = m_displayConfig->listMonitors();
 
     QList<MonitorInterface> monitorInterfaceList = m_displayConfig->monitorInterfaceList();
-    foreach (MonitorInterface monitorInterface, monitorInterfaceList)  //如果显示器未开启，且没有最佳分辨率，就认为时虚拟机中的异常情况，就认为此显示器不存在。
+    foreach (MonitorInterface monitorInterface, monitorInterfaceList)  // 如果显示器未开启，且没有最佳分辨率，就认为时虚拟机中的异常情况，就认为此显示器不存在。
     {
         if (!monitorInterface->enabled())
         {
@@ -111,7 +111,7 @@ void DisplayPage::refreshWidget()
         }
     }
 
-    //如果只有一个屏幕，应当隐藏“复制模式”和“扩展模式”的选项卡。多屏幕扩展模式（包含单屏幕扩展）。多屏幕复制模式。
+    // 如果只有一个屏幕，应当隐藏“复制模式”和“扩展模式”的选项卡。多屏幕扩展模式（包含单屏幕扩展）。多屏幕复制模式。
     QStringList listMonitors = m_listMonitors;
     ui->tabBtnWidget->setVisible(listMonitors.count() > 1);
     ui->enable_widget->setVisible(listMonitors.count() > 1);
@@ -139,7 +139,6 @@ void DisplayPage::switchDisplayConfigMode(int index, const bool &checked)
     ui->stackedWidget->setCurrentIndex(index);
 }
 
-
 void DisplayPage::onScreenItemChecked(QString monitorPath)
 {
     int windowScalingFactor = m_displayConfigData->windowScalingFactor();
@@ -153,10 +152,10 @@ void DisplayPage::onScreenItemChecked(QString monitorPath)
         QList<DisplayModesStu> list = intersectionMonitorModes();
         QMap<int, modeInfoPair> map = getResolutionFromModes(list);
         initComboBoxResolution(ui->comboBox_resolving, map);
-        if (m_displayConfig->isCopyMode())  //当前实际模式不是复制模式，而是从扩展模式初次切换到复制模式，此时，不获取的那个前模式。
+        if (m_displayConfig->isCopyMode())  // 当前实际模式不是复制模式，而是从扩展模式初次切换到复制模式，此时，不获取的那个前模式。
         {
             DisplayModesStu stu = curIntersectionMonitorMode();
-            //复制模式没有推荐，直接set text。
+            // 复制模式没有推荐，直接set text。
             ui->comboBox_resolving->setCurrentText(QString("%1x%2").arg(stu.w).arg(stu.h));
             ui->comboBox_refreshRate->setCurrentText(QString("%1HZ").arg(stu.refreshRate));
             ui->comboBox_windowScalingFactor->setCurrentIndex(windowScalingFactor);
@@ -276,7 +275,7 @@ void DisplayPage::initExtraComboBoxRefreshRate(QComboBox *comboBox, const QList<
     foreach (double r, t_refreshRateList)
     {
         QString text = QString("%1HZ").arg(QString::asprintf("%.2f", r));
-        if (QString::asprintf("%.2f", r) == QString::asprintf("%.2f", recommendRefreshRate)) 
+        if (QString::asprintf("%.2f", r) == QString::asprintf("%.2f", recommendRefreshRate))
         {
             text.append(strPostfix);
         }
@@ -286,7 +285,7 @@ void DisplayPage::initExtraComboBoxRefreshRate(QComboBox *comboBox, const QList<
     for (size_t i = 0; i < comboBox->count(); i++)
     {
         double refreshRate = comboBox->itemData(i).toDouble();
-        if(QString::asprintf("%.2f", refreshRate) == QString::asprintf("%.2f", recommendRefreshRate))
+        if (QString::asprintf("%.2f", refreshRate) == QString::asprintf("%.2f", recommendRefreshRate))
         {
             comboBox->setCurrentIndex(i);
             break;
@@ -383,8 +382,7 @@ void DisplayPage::confirmSaveMessageBox()
     QObject::connect(&timer, &QTimer::timeout, [&]()
                      {
                          box.setText(text.arg(countdown--));
-                         if (countdown < 0) box.reject();
-                     });
+                         if (countdown < 0) box.reject(); });
     timer.start();
 
     box.setText(text.arg(countdown--));
@@ -392,7 +390,7 @@ void DisplayPage::confirmSaveMessageBox()
     if (box.clickedButton() == &saveBtn)
     {
         int flag = 0;
-        //后期可能根据var中返回的值来判断异常。
+        // 后期可能根据var中返回的值来判断异常。
         QVariant var = DBusInterface::Display("Save", QVariantList(), &flag);
         if (flag < 0)
         {
@@ -433,7 +431,7 @@ void DisplayPage::showExtraModeData(const QString &monitorPath)
     QList<DisplayModesStu> list = m_displayConfig->listModes(monitorPath);
     QMap<int, modeInfoPair> map = getResolutionFromModes(list);
 
-    //Get current data from cache
+    // Get current data from cache
     //----------
     ui->comboBox_extra_resolving->blockSignals(true);
     initExtraComboBoxResolution(ui->comboBox_extra_resolving, map);
@@ -452,11 +450,11 @@ void DisplayPage::showExtraModeData(const QString &monitorPath)
     QString primaryName = m_displayConfigData->primary();
 
     ui->enabledButton->setChecked(m_currentMonitorData->enabled());
-    if(ui->enabledButton->isChecked())
+    if (ui->enabledButton->isChecked())
         ui->pushButton_extra_primary->setChecked(primaryName == clickedName);
 
-    //多屏幕扩展模式，只有一个屏幕可用时，该屏幕不现实‘关闭’‘设为主屏幕’两项。
-    QStringList enablePaths;  //可用的屏幕的路径集合
+    // 多屏幕扩展模式，只有一个屏幕可用时，该屏幕不现实‘关闭’‘设为主屏幕’两项。
+    QStringList enablePaths;  // 可用的屏幕的路径集合
     QStringList listMonitors = m_listMonitors;
     foreach (QString monitor, listMonitors)
     {
@@ -466,7 +464,7 @@ void DisplayPage::showExtraModeData(const QString &monitorPath)
     if (enablePaths.count() <= 1 && enablePaths.contains(m_curMonitorPath))
     {
         // 当只剩一个开启的显示器时，选择为主显示器
-        if(ui->enabledButton->isChecked())
+        if (ui->enabledButton->isChecked())
             ui->pushButton_extra_primary->setChecked(true);
     }
     else
@@ -539,7 +537,7 @@ void DisplayPage::handleDbusPropertiesChanged()
 void DisplayPage::handleEnabledButtonToggled(bool checked)
 {
     m_currentMonitorData->setEnabled(checked);
-    if(checked == false)
+    if (checked == false)
         ui->pushButton_extra_primary->setChecked(false);
     ui->pushButton_extra_primary->setEnabled(extraPrimaryBtnStatus(!ui->enabledButton->isEnabled(), checked));
 

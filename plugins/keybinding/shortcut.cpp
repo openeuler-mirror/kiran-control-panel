@@ -24,7 +24,6 @@
 #include <kiran-log/qt5-log-i.h>
 #include <kiran-message-box.h>
 #include <kiran-session-daemon/keybinding-i.h>
-#include <style-property.h>
 
 #include <QClipboard>
 #include <QFileDialog>
@@ -39,7 +38,7 @@ using namespace Kiran;
 
 Shortcut::Shortcut(QWidget *parent)
     : QWidget(parent),
-    ui(new Ui::Shortcut)
+      ui(new Ui::Shortcut)
 {
     ui->setupUi(this);
     init();
@@ -89,9 +88,10 @@ void Shortcut::initUI()
 {
     ui->lineEdit_search->setPlaceholderText(tr("Please enter a search keyword..."));
 
-    StylePropertyHelper::setButtonType(ui->btn_shortcut_add, Kiran::BUTTON_Default);
-    StylePropertyHelper::setButtonType(ui->btn_page_add, Kiran::BUTTON_Default);
-    StylePropertyHelper::setButtonType(ui->btn_save, Kiran::BUTTON_Default);
+    // FIXME:后续使用新版kiran-integration-qt5中提供的setButtonType函数
+    // StylePropertyHelper::setButtonType(ui->btn_shortcut_add, Kiran::BUTTON_Default);
+    // StylePropertyHelper::setButtonType(ui->btn_page_add, Kiran::BUTTON_Default);
+    // StylePropertyHelper::setButtonType(ui->btn_save, Kiran::BUTTON_Default);
 
     ui->stackedWidget->setCurrentWidget(ui->page_shortcut);
     ui->stackedWidget_search->setCurrentWidget(ui->page_shortcut_list);
@@ -120,7 +120,7 @@ void Shortcut::initUI()
 
     ui->lineEdit_custom_app->setTextMargins(25, 0, m_btnCustomApp->width(), 0);
     connect(m_btnCustomApp, &QToolButton::clicked, this, &Shortcut::openFileSys);
-    connect(ui->lineEdit_custom_app,&QLineEdit::textChanged,this,&Shortcut::handleCustomAppTextChanged);
+    connect(ui->lineEdit_custom_app, &QLineEdit::textChanged, this, &Shortcut::handleCustomAppTextChanged);
 
     QHBoxLayout *hLayoutModifyApp = new QHBoxLayout(ui->lineEdit_modify_app);
     m_btnModifyApp = new QToolButton;
@@ -404,8 +404,8 @@ void Shortcut::openFileSys()
     {
         KLOG_ERROR(qLcKeybinding) << "cant't get Exec key from " << fileName;
         KiranMessageBox::message(this, tr("Error"),
-                                    "Extracting the program to be executed from the application's desktop file failed",
-                                    KiranMessageBox::Ok);
+                                 "Extracting the program to be executed from the application's desktop file failed",
+                                 KiranMessageBox::Ok);
         return;
     }
 
@@ -415,13 +415,13 @@ void Shortcut::openFileSys()
     m_lastIconExec = cmd;
 
     QIcon appIcon = QIcon::fromTheme(icon);
-    if( appIcon.isNull() )
+    if (appIcon.isNull())
     {
         m_lastIcon = DEFAULT_APP_ICON;
         appIcon = QIcon::fromTheme(DEFAULT_APP_ICON);
     }
 
-    m_customAppIcon->setPixmap(appIcon.pixmap(QSize(APP_ICON_WIDTH,APP_ICON_WIDTH)));
+    m_customAppIcon->setPixmap(appIcon.pixmap(QSize(APP_ICON_WIDTH, APP_ICON_WIDTH)));
     lineEdit->setText(cmd);
 }
 
@@ -817,13 +817,13 @@ void Shortcut::handleResetClicked()
     }
 }
 
-void Shortcut::handleCustomAppTextChanged(const QString& text)
+void Shortcut::handleCustomAppTextChanged(const QString &text)
 {
     // 直接编辑自定义应用输入框，修改命令
     // 导致和desktop读取出来的不一致时清空图标
-    if( !text.isEmpty() && text != m_lastIconExec )
+    if (!text.isEmpty() && text != m_lastIconExec)
     {
-        m_customAppIcon->setPixmap(QIcon::fromTheme(DEFAULT_APP_ICON).pixmap(20,20));
+        m_customAppIcon->setPixmap(QIcon::fromTheme(DEFAULT_APP_ICON).pixmap(20, 20));
     }
 }
 
@@ -844,8 +844,8 @@ void Shortcut::handleInputKeycode(QList<int> keycodes)
             KiranMessageBox::message(nullptr,
                                      tr("Failed"),
                                      QString(tr("Cannot use shortcut \"%1\","
-                                         "Please keep pressing the modifier keys such as Ctrl,"
-                                         "Alt, and Shift before pressing the last key of the shortcut key"))
+                                                "Please keep pressing the modifier keys such as Ctrl,"
+                                                "Alt, and Shift before pressing the last key of the shortcut key"))
                                          .arg(keyStr),
                                      KiranMessageBox::Ok);
             return;

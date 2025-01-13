@@ -15,7 +15,6 @@
 #include "connection-show-page.h"
 #include <kiran-switch-button.h>
 #include <qt5-log-i.h>
-#include <style-property.h>
 #include <NetworkManagerQt/Settings>
 #include <NetworkManagerQt/WiredDevice>
 #include <NetworkManagerQt/WirelessDevice>
@@ -74,7 +73,8 @@ void ConnectionShowPage::initUI()
     ui->connectionList->setMaximumHeight((ui->connectionList->widgetContentsSpacing() + PLUGIN_ITEM_WIDGET_HEIGHT) *
                                          ui->connectionList->count());
 
-    Kiran::StylePropertyHelper::setButtonType(ui->createConnectionButton, Kiran::BUTTON_Default);
+    // FIXME:后续使用新版kiran-integration-qt5中提供的setButtonType函数
+    // Kiran::StylePropertyHelper::setButtonType(ui->createConnectionButton, Kiran::BUTTON_Default);
     ui->createConnectionButton->setIcon(QIcon(":/kcp-network-images/connection-add.svg"));
 
     if (m_connectionType == ConnectionSettings::Wireless)

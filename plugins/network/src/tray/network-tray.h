@@ -14,7 +14,7 @@
 #ifndef KIRAN_CPANEL_NETWORK_MANAGER_TRAY_H
 #define KIRAN_CPANEL_NETWORK_MANAGER_TRAY_H
 
-#include <style-palette.h>
+#include <palette.h>
 #include <NetworkManagerQt/Device>
 #include <NetworkManagerQt/Manager>
 #include <QSystemTrayIcon>
@@ -84,12 +84,12 @@ private slots:
 
     void handleAdjustedTraySize(QSize sizeHint);
 
-    void handleThemeChanged(Kiran::PaletteType paletteType);
+    void handleThemeChanged();
     void internetConnected();
     void internetError(QAbstractSocket::SocketError socketError);
 
 private:
-    Network::Prefs* m_prefs;
+    Network::Prefs *m_prefs;
     QSystemTrayIcon *m_systemTray;
     QMenu *m_menu;
     QAction *m_networkSetting;

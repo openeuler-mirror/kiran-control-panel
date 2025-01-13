@@ -14,7 +14,7 @@
 
 #include "utils.h"
 #include <qt5-log-i.h>
-#include <style-palette.h>
+#include <style-helper.h>
 #include <NetworkManagerQt/Ipv4Setting>
 #include <NetworkManagerQt/Settings>
 #include <NetworkManagerQt/WiredDevice>
@@ -25,13 +25,14 @@
 
 #include <QIcon>
 using namespace NetworkManager;
+using namespace Kiran::Theme;
 
 QPixmap NetworkUtils::trayIconColorSwitch(const QString &iconPath, const int iconSize)
 {
     // icon原本为浅色
     QIcon icon(iconPath);
     QPixmap pixmap = icon.pixmap(iconSize, iconSize);
-    if (Kiran::StylePalette::instance()->paletteType() != Kiran::PALETTE_DARK)
+    if (DEFAULT_STYLE_HELPER()->paletteType() != PaletteType::PALETTE_DARK)
     {
         QImage image = pixmap.toImage();
         image.invertPixels(QImage::InvertRgb);
@@ -199,7 +200,7 @@ bool NetworkUtils::isAvailableConnection(const QString &devicePath, NetworkManag
         auto wiredDevice = device->as<WiredDevice>();
 
         QString deviceMac = wiredDevice->permanentHardwareAddress();
-        if( deviceMac.isEmpty() )
+        if (deviceMac.isEmpty())
         {
             // USB共享网络时，某些设备存在PermHWAddress为空，此时取HWAddress
             deviceMac = wiredDevice->hardwareAddress();
@@ -236,9 +237,9 @@ NetworkManager::Connection::List NetworkUtils::getAvailableWiredConnections(cons
     else
     {
         auto wiredDevice = device->as<WiredDevice>();
-        
+
         QString deviceHardwareAddress = wiredDevice->permanentHardwareAddress();
-        if( deviceHardwareAddress.isEmpty() )
+        if (deviceHardwareAddress.isEmpty())
         {
             deviceHardwareAddress = wiredDevice->hardwareAddress();
         }
@@ -255,14 +256,14 @@ NetworkManager::Connection::List NetworkUtils::getAvailableWiredConnections(cons
             // 匹配配置以及设备中的Mac地址是否匹配
             WiredSetting::Ptr wiredSetting = settings->setting(Setting::SettingType::Wired).dynamicCast<WiredSetting>();
             QString mac = wiredSetting->macAddress().toHex(':').toUpper();
-            if ( !mac.isEmpty() && mac != deviceHardwareAddress )
+            if (!mac.isEmpty() && mac != deviceHardwareAddress)
             {
                 continue;
             }
 
             // 匹配配置中指定的DEVICE是否和设备名匹配
             QString settingSpecifyDevice = settings->interfaceName();
-            if ( !settingSpecifyDevice.isEmpty() && settingSpecifyDevice != device->interfaceName() )
+            if (!settingSpecifyDevice.isEmpty() && settingSpecifyDevice != device->interfaceName())
             {
                 continue;
             }

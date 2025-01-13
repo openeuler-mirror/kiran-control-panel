@@ -16,7 +16,6 @@
 
 #include <kiran-log/qt5-log-i.h>
 #include <kiranwidgets-qt5/kiran-message-box.h>
-#include <style-property.h>
 
 #include <QDesktopWidget>
 #include <QFile>
@@ -39,8 +38,6 @@ enum LicenseType
     PRIVACY_POLICY
 };
 
-using namespace Kiran;
-
 LicenseAgreement::LicenseAgreement(QWidget *parent, Qt::WindowFlags windowFlags)
     : KiranTitlebarWindow(parent),
       ui(new Ui::LicenseAgreement)
@@ -53,8 +50,9 @@ LicenseAgreement::LicenseAgreement(QWidget *parent, Qt::WindowFlags windowFlags)
     setTitlebarColorBlockEnable(true);
     ui->text_license->viewport()->setAutoFillBackground(false);
 
-    StylePropertyHelper::setButtonType(ui->btn_license_close, BUTTON_Default);
-    StylePropertyHelper::setButtonType(ui->btn_license_export, BUTTON_Normal);
+    // FIXME: 后续使用新版kiran-integration-qt5中提供的setButtonType函数
+    // StylePropertyHelper::setButtonType(ui->btn_license_close, BUTTON_Default);
+    // StylePropertyHelper::setButtonType(ui->btn_license_export, BUTTON_Normal);
 
     setWindowModality(Qt::ApplicationModal);
 
@@ -106,7 +104,7 @@ void LicenseAgreement::exportLicense()
     }
     else
     {
-        //将EULA文字转化为PDF
+        // 将EULA文字转化为PDF
         QPrinter printer(QPrinter::PrinterResolution);
         printer.setOutputFormat(QPrinter::PdfFormat);
         printer.setPageSize(QPageSize(QPageSize::A4));
