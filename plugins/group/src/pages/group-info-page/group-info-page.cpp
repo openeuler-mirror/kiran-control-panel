@@ -21,6 +21,7 @@
 #include "member-list-widget.h"
 #include "user-list-widget.h"
 
+#include <kiran-push-button.h>
 #include <kiranwidgets-qt5/kiran-message-box.h>
 #include <qt5-log-i.h>
 #include <QAction>
@@ -66,9 +67,8 @@ void GroupInfoPage::initUI()
     m_usersContainer = new UsersContainer(ui->page_addUser);
     ui->layoutUserList->addWidget(m_usersContainer);
 
-    // FIXME: 后续使用新版kiran-integration-qt5中提供的setButtonType函数
-    // Kiran::StylePropertyHelper::setButtonType(ui->add_member_button, Kiran::BUTTON_Default);
-    // Kiran::StylePropertyHelper::setButtonType(ui->confirm_add_button, Kiran::BUTTON_Default);
+    KiranPushButton::setButtonType(ui->add_member_button, KiranPushButton::BUTTON_Default);
+    KiranPushButton::setButtonType(ui->confirm_add_button, KiranPushButton::BUTTON_Default);
 
     connect(ui->add_member_button, &QPushButton::clicked, [this]()
             { ui->stackedWidget->setCurrentIndex(PAGE_ADD_USER); });

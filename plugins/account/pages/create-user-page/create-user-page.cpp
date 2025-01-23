@@ -20,6 +20,7 @@
 #include "ui_create-user-page.h"
 #include "user-name-validator.h"
 
+#include <kiran-push-button.h>
 #include <kiranwidgets-qt5/kiran-message-box.h>
 #include <qt5-log-i.h>
 #include <QEvent>
@@ -109,8 +110,7 @@ void CreateUserPage::initUI()
         AdvanceSettings::exec(ui->edit_name->text(),m_advanceSettingsInfo); });
 
     /// 确认按钮
-    /// FIXME:后续使用新版kiran-integration-qt5中提供的setButtonType函数
-    /// StylePropertyHelper::setButtonType(ui->btn_confirm, BUTTON_Default);
+    KiranPushButton::setButtonType(ui->btn_confirm, KiranPushButton::BUTTON_Default);
     connect(ui->btn_confirm, &QPushButton::clicked, this, &CreateUserPage::onCreateUserClicked);
 
     /// 取消按钮

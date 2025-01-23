@@ -20,10 +20,10 @@
 #include "ui_create-group-page.h"
 #include "user-list-widget.h"
 
+#include <kiran-push-button.h>
 #include <kiranwidgets-qt5/kiran-color-block.h>
 #include <kiranwidgets-qt5/kiran-message-box.h>
 #include <qt5-log-i.h>
-// #include <widget-property-helper.h>
 
 #define ITEM_USER_NAME_ROLE Qt::UserRole + 2
 
@@ -64,8 +64,7 @@ void CreateGroupPage::initUI()
     /// 确认按钮
     connect(ui->confirm_button, &QPushButton::clicked, this, &CreateGroupPage::handlerCreateNewGroup);
 
-    // FIXME: 后续使用新版kiran-integration-qt5中提供的setButtonType函数
-    // Kiran::StylePropertyHelper::setButtonType(ui->confirm_button, Kiran::BUTTON_Default);
+    KiranPushButton::setButtonType(ui->confirm_button, KiranPushButton::BUTTON_Default);
 }
 
 void CreateGroupPage::appendUserListItem(const QString &userPath)

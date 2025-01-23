@@ -13,6 +13,7 @@
  */
 
 #include "connection-show-page.h"
+#include <kiran-push-button.h>
 #include <kiran-switch-button.h>
 #include <qt5-log-i.h>
 #include <NetworkManagerQt/Settings>
@@ -74,7 +75,7 @@ void ConnectionShowPage::initUI()
                                          ui->connectionList->count());
 
     // FIXME:后续使用新版kiran-integration-qt5中提供的setButtonType函数
-    // Kiran::StylePropertyHelper::setButtonType(ui->createConnectionButton, Kiran::BUTTON_Default);
+    KiranPushButton::setButtonType(ui->createConnectionButton, KiranPushButton::BUTTON_Default);
     ui->createConnectionButton->setIcon(QIcon(":/kcp-network-images/connection-add.svg"));
 
     if (m_connectionType == ConnectionSettings::Wireless)

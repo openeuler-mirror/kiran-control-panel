@@ -23,8 +23,8 @@
 
 #include <kiran-log/qt5-log-i.h>
 #include <kiran-message-box.h>
+#include <kiran-push-button.h>
 #include <kiran-session-daemon/keybinding-i.h>
-
 #include <QClipboard>
 #include <QFileDialog>
 #include <QKeyEvent>
@@ -88,10 +88,9 @@ void Shortcut::initUI()
 {
     ui->lineEdit_search->setPlaceholderText(tr("Please enter a search keyword..."));
 
-    // FIXME:后续使用新版kiran-integration-qt5中提供的setButtonType函数
-    // StylePropertyHelper::setButtonType(ui->btn_shortcut_add, Kiran::BUTTON_Default);
-    // StylePropertyHelper::setButtonType(ui->btn_page_add, Kiran::BUTTON_Default);
-    // StylePropertyHelper::setButtonType(ui->btn_save, Kiran::BUTTON_Default);
+    KiranPushButton::setButtonType(ui->btn_shortcut_add, KiranPushButton::BUTTON_Default);
+    KiranPushButton::setButtonType(ui->btn_page_add, KiranPushButton::BUTTON_Default);
+    KiranPushButton::setButtonType(ui->btn_save, KiranPushButton::BUTTON_Default);
 
     ui->stackedWidget->setCurrentWidget(ui->page_shortcut);
     ui->stackedWidget_search->setCurrentWidget(ui->page_shortcut_list);

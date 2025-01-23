@@ -13,6 +13,7 @@
  */
 
 #include "tray-itemwidget.h"
+#include <kiran-push-button.h>
 #include <palette.h>
 #include <qt5-log-i.h>
 #include <style-helper.h>
@@ -51,8 +52,8 @@ void TrayItemWidget::initUI()
     ui->connectionStatus->setStyleSheet("color:#919191;font-family: \"Noto Sans CJK SC Regular\";");
 
     // FIXME:后续使用新版kiran-integration-qt5中提供的setButtonType函数
-    // Kiran::StylePropertyHelper::setButtonType(ui->connectButton, Kiran::BUTTON_Default);
-    // Kiran::StylePropertyHelper::setButtonType(ui->inputTextConnectButton, Kiran::BUTTON_Default);
+    KiranPushButton::setButtonType(ui->connectButton, KiranPushButton::BUTTON_Default);
+    KiranPushButton::setButtonType(ui->inputTextConnectButton, KiranPushButton::BUTTON_Default);
 
     setFixedWidth(240);
     setContentsMargins(10, 10, 10, 10);
