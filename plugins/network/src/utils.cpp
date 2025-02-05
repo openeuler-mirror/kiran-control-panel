@@ -113,6 +113,11 @@ QDebug NetworkUtils::operator<<(QDebug dbg, NetworkManager::Device *device)
 NetworkManager::Connection::Ptr NetworkUtils::getAvailableConnectionBySsid(const QString &devicePath, const QString &ssid)
 {
     auto device = findNetworkInterface(devicePath);
+    if( device.isNull() )
+    {
+        return NetworkManager::Connection::Ptr();
+    }
+
     Connection::List availableConnectionList = device->availableConnections();
     for (Connection::Ptr conn : availableConnectionList)
     {
@@ -125,6 +130,7 @@ NetworkManager::Connection::Ptr NetworkUtils::getAvailableConnectionBySsid(const
             }
         }
     }
+    
     return NetworkManager::Connection::Ptr();
 }
 
@@ -224,7 +230,7 @@ bool NetworkUtils::isAvailableConnection(const QString &devicePath, NetworkManag
 NetworkManager::Connection::List NetworkUtils::getAvailableWiredConnections(const QString &devicePath)
 {
     auto device = findNetworkInterface(devicePath);
-    if (device->type() != Device::Ethernet)
+    if (!device || device->type() != Device::Ethernet)
     {
         return NetworkManager::Connection::List();
     }
