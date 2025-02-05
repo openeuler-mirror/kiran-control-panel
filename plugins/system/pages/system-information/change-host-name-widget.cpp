@@ -88,11 +88,9 @@ void ChangeHostNameWidget::setInputEditStatus()
     if (ui->lineEdit_input_name->text().isEmpty())
     {
         ui->btn_save->setEnabled(false);
-        ui->btn_save->setStyleSheet("QPushButton#btn_save { color: rgba(255,255,255,0.3);}");
     }
     else
     {
         ui->btn_save->setEnabled(true);
-        ui->btn_save->setStyleSheet("QPushButton#btn_save { color:#ffffff;}");
     }
 }

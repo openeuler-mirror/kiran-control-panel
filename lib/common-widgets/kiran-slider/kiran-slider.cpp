@@ -338,8 +338,8 @@ void KiranSlider::drawTickmark(QPainter& painter,
     QFont font("Noto Sans CJK SC regular", 12);
     QFontMetrics metrics(font);
 
-    // FIXME：暂时使用ACTIVE代替Normal，WIDGET代替Bare 无边框控件
-    auto backgroundColor = DEFAULT_PALETTE()->getColor(Palette::ACTIVE, Palette::WIDGET);
+    // 使用Palette::TEXT文字颜色表示刻度条以及描述
+    auto backgroundColor = DEFAULT_PALETTE()->getColor(Palette::ACTIVE, Palette::TEXT);
 
     QPen pen = painter.pen();
     pen.setColor(backgroundColor);
