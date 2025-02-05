@@ -67,7 +67,7 @@ void SignalForward::initConnect()
     connect(&m_Timer, &QTimer::timeout, this, [this]()
             {
                 Device::Ptr device = findNetworkInterface(m_tmpDevicePath);
-                if(device->managed())
+                if(!device.isNull() && device->managed())
                 {
                     addDevice(m_tmpDevicePath);
                     m_Timer.stop();
@@ -166,7 +166,7 @@ void SignalForward::addDevice(const QString &uni)
 {
     Device::Ptr device = findNetworkInterface(uni);
     m_tmpDevicePath = uni;
-    if(device->managed())
+    if (!device.isNull() && device->managed())
     {
         KLOG_INFO(qLcNetwork) << "add device:" << uni;
         switch (device->type())
