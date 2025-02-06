@@ -124,6 +124,26 @@ void KiranFrame::paintEvent(QPaintEvent* event)
     frect.adjust(0.5, 0.5, -0.5, -0.5);
     painterPath.addRoundedRect(frect, m_radius, m_radius);
 
+    auto getStateFunc = [this](QStyle::State state) -> Palette::ColorGroup
+    {
+        if (!(state & QStyle::State_Enabled))
+        {
+            return Palette::ColorGroup::DISABLED;
+        }
+        else if (state & QStyle::State_Sunken)
+        {
+            return Palette::ColorGroup::ACTIVE;
+        }
+        else if ((state & QStyle::State_MouseOver) && testAttribute(Qt::WA_Hover))
+        {
+            return Palette::ColorGroup::MOUSE_OVER;
+        }
+        else
+        {
+            return Palette::ColorGroup::ACTIVE;
+        }
+    };
+
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
 
@@ -131,14 +151,16 @@ void KiranFrame::paintEvent(QPaintEvent* event)
     if (m_drawBackground)
     {
         QColor backgroundColor;
-        backgroundColor = m_fixedBackground ? kiranPalette->getColor(m_fixedBackgroundState, Palette::ColorRole::WIDGET) : kiranPalette->getColor(state, Palette::ColorRole::WIDGET);
+        backgroundColor = kiranPalette->getColor(m_fixedBackground ? m_fixedBackgroundState : getStateFunc(state),
+                                                 Palette::ColorRole::WIDGET);
         painter.fillPath(painterPath, backgroundColor);
     }
 
     if (m_drawBorder)
     {
         QColor borderColor;
-        borderColor = m_fixedBorder ? kiranPalette->getColor(m_fixedBorderState, Palette::ColorRole::BORDER) : kiranPalette->getColor(state, Palette::ColorRole::BORDER);
+        borderColor = kiranPalette->getColor(m_fixedBorder ? m_fixedBorderState : getStateFunc(state),
+                                             Palette::ColorRole::BORDER);
         auto pen = painter.pen();
         pen.setWidth(m_borderWidth);
         pen.setColor(borderColor);

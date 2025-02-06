@@ -21,6 +21,7 @@
 
 #include <kiran-log/qt5-log-i.h>
 #include <kiran-message-box.h>
+#include <kiran-push-button.h>
 
 #include <QJsonArray>
 #include <QJsonDocument>
@@ -58,8 +59,7 @@ void LayoutPage::init()
 
 void LayoutPage::initUI()
 {
-    // FIXME: 后续使用新版kiran-integration-qt5中提供的setButtonType函数
-    // StylePropertyHelper::setButtonType(ui->btn_add, BUTTON_Default);
+    KiranPushButton::setButtonType(ui->btn_add, KiranPushButton::BUTTON_Default);
     ui->btn_add->setIconSize(QSize(32, 32));
     ui->btn_add->setIcon(QPixmap(":/kcp-keyboard/images/addition.svg"));
 
@@ -70,8 +70,7 @@ void LayoutPage::initUI()
     ui->layout_selector->setLayout(m_vLayout);
     ui->stackedWidget->setCurrentWidget(ui->page_layoutList);
 
-    // FIXME: 后续使用新版kiran-integration-qt5中提供的setButtonType函数
-    // StylePropertyHelper::setButtonType(ui->btn_page_add, BUTTON_Default);
+    KiranPushButton::setButtonType(ui->btn_page_add, KiranPushButton::BUTTON_Default);
 
     ui->btn_page_add->setDisabled(true);
 }

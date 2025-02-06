@@ -177,7 +177,6 @@ void KiranTimeZoneItem::paintEvent(QPaintEvent *event)
     {
         background = kiranPalette->getColor(Palette::MOUSE_OVER, Palette::WIDGET);
     }
-    // FIXME：暂时使用ACTIVE代替Normal
     border = kiranPalette->getColor(Palette::ACTIVE,
                                     Palette::BORDER);
 

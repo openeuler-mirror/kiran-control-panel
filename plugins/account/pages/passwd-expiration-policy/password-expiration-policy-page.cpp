@@ -16,6 +16,7 @@
 #include "kiran-account-service-wrapper.h"
 #include "ui_password-expiration-policy-page.h"
 
+#include <kiran-push-button.h>
 #include <kiran-switch-button.h>
 #include <kiran-system-daemon/accounts-i.h>
 #include <qt5-log-i.h>
@@ -53,8 +54,7 @@ void PasswordExpirationPolicyPage::setCurrentUser(const QString &objectPath)
 
 void PasswordExpirationPolicyPage::initUI()
 {
-    // FIXME: 后续使用新版kiran-integration-qt5中提供的setButtonType函数
-    // StylePropertyHelper::setButtonType(ui->btn_save, BUTTON_Default);
+    KiranPushButton::setButtonType(ui->btn_save, KiranPushButton::BUTTON_Default);
 
     // 用户过期时间
     m_userExpiresSwitch = new KiranSwitchButton(this);

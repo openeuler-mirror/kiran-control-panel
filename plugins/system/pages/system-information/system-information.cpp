@@ -20,6 +20,7 @@
 
 #include <kiran-log/qt5-log-i.h>
 #include <kiran-message-box.h>
+#include <kiran-push-button.h>
 #include <QDBusConnection>
 #include <QDBusConnectionInterface>
 #include <QDateTime>
@@ -92,12 +93,11 @@ void SystemInformation::init()
     // clang-format on
     connect(ui->btn_change_name, &QPushButton::clicked, this, &SystemInformation::handleChangeHostName);
 
-    // FIXME: 后续使用新版kiran-integration-qt5中提供的setButtonType函数
-    // Kiran::StylePropertyHelper::setButtonType(ui->btn_change_name, Kiran::BUTTON_Default);
-    // Kiran::StylePropertyHelper::setButtonType(ui->btn_EULA, Kiran::BUTTON_Default);
-    // Kiran::StylePropertyHelper::setButtonType(ui->btn_version_license, Kiran::BUTTON_Default);
-    // Kiran::StylePropertyHelper::setButtonType(ui->btn_license_show, Kiran::BUTTON_Default);
-    // Kiran::StylePropertyHelper::setButtonType(ui->btn_privacy_policy, Kiran::BUTTON_Default);
+    KiranPushButton::setButtonType(ui->btn_change_name, KiranPushButton::BUTTON_Default);
+    KiranPushButton::setButtonType(ui->btn_EULA, KiranPushButton::BUTTON_Default);
+    KiranPushButton::setButtonType(ui->btn_version_license, KiranPushButton::BUTTON_Default);
+    KiranPushButton::setButtonType(ui->btn_license_show, KiranPushButton::BUTTON_Default);
+    KiranPushButton::setButtonType(ui->btn_privacy_policy, KiranPushButton::BUTTON_Default);
 }
 
 bool SystemInformation::initUI()

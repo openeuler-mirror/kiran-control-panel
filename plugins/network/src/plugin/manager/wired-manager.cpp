@@ -12,6 +12,7 @@
  * Author:     luoqing <luoqing@kylinsec.com.cn>
  */
 #include "wired-manager.h"
+#include <kiran-push-button.h>
 #include <libnm/nm-connection.h>
 #include <qt5-log-i.h>
 #include <NetworkManagerQt/ActiveConnection>
@@ -44,8 +45,7 @@ WiredManager::~WiredManager()
 
 void WiredManager::initUI()
 {
-    // FIXME: 后续使用新版kiran-integration-qt5中提供的setButtonType函数
-    // Kiran::StylePropertyHelper::setButtonType(ui->saveButton, Kiran::BUTTON_Default);
+    KiranPushButton::setButtonType(ui->saveButton, KiranPushButton::BUTTON_Default);
 }
 
 void WiredManager::initConnection()

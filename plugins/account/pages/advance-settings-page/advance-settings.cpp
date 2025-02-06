@@ -17,6 +17,7 @@
 #include "ui_advance-settings.h"
 #include "uid-validator.h"
 
+#include <kiran-push-button.h>
 #include <kiran-switch-button.h>
 #include <QDebug>
 #include <QDir>
@@ -177,8 +178,7 @@ void AdvanceSettings::initUI()
         } });
 
     /// confirm,cancel
-    /// FIXME:后续使用新版kiran-integration-qt5中提供的setButtonType函数
-    /// StylePropertyHelper::setButtonType(ui->btn_confirm, BUTTON_Default);
+    KiranPushButton::setButtonType(ui->btn_confirm, KiranPushButton::BUTTON_Default);
     connect(ui->btn_confirm, &QPushButton::clicked, [this]()
             {
         QFileInfo fileInfo;

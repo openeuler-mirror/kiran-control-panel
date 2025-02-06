@@ -15,6 +15,7 @@
 #include "ui_license-agreement.h"
 
 #include <kiran-log/qt5-log-i.h>
+#include <kiran-push-button.h>
 #include <kiranwidgets-qt5/kiran-message-box.h>
 
 #include <QDesktopWidget>
@@ -50,9 +51,8 @@ LicenseAgreement::LicenseAgreement(QWidget *parent, Qt::WindowFlags windowFlags)
     setTitlebarColorBlockEnable(true);
     ui->text_license->viewport()->setAutoFillBackground(false);
 
-    // FIXME: 后续使用新版kiran-integration-qt5中提供的setButtonType函数
-    // StylePropertyHelper::setButtonType(ui->btn_license_close, BUTTON_Default);
-    // StylePropertyHelper::setButtonType(ui->btn_license_export, BUTTON_Normal);
+    KiranPushButton::setButtonType(ui->btn_license_close, KiranPushButton::BUTTON_Default);
+    KiranPushButton::setButtonType(ui->btn_license_export, KiranPushButton::BUTTON_Normal);
 
     setWindowModality(Qt::ApplicationModal);
 

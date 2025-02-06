@@ -203,7 +203,6 @@ void LayoutList::paintEvent(QPaintEvent* event)
     frect.adjust(0.5, 0.5, -0.5, -0.5);
     painterPath.addRoundedRect(frect, 6, 6);
 
-    // FIXME: 暂时使用SELECTED代替Checked，ACTIVE代替Normal
     QColor borderColor = DEFAULT_PALETTE()->getColor(editHasFocus() ? Palette::ColorGroup::SELECTED : Palette::ColorGroup::ACTIVE,
                                                      Palette::ColorRole::BORDER);
 

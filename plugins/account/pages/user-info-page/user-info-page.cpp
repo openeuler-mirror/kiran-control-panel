@@ -19,6 +19,7 @@
 #include "passwd-helper.h"
 #include "ui_user-info-page.h"
 
+#include <kiran-push-button.h>
 #include <kiran-switch-button.h>
 #include <kiran-system-daemon/accounts-i.h>
 #include <kiranwidgets-qt5/kiran-message-box.h>
@@ -124,10 +125,9 @@ void UserInfoPage::initUI()
     m_userStatusSwitch = new KiranSwitchButton(this);
     ui->layout_userStatusSwitch->insertWidget(0, m_userStatusSwitch);
 
-    // FIXME: 后续使用新版kiran-integration-qt5中提供的setButtonType函数
-    // StylePropertyHelper::setButtonType(ui->btn_saveProperty, BUTTON_Default);
-    // StylePropertyHelper::setButtonType(ui->btn_deleteUser, BUTTON_Warning);
-    // StylePropertyHelper::setButtonType(ui->btn_savePasswd, BUTTON_Default);
+    KiranPushButton::setButtonType(ui->btn_saveProperty, KiranPushButton::BUTTON_Default);
+    KiranPushButton::setButtonType(ui->btn_deleteUser, KiranPushButton::BUTTON_Warning);
+    KiranPushButton::setButtonType(ui->btn_savePasswd, KiranPushButton::BUTTON_Default);
 
     /* 用户显示页面 */
     // 用户头像

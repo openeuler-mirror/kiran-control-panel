@@ -20,6 +20,7 @@
 #include "utils/kiran-auth-dbus-proxy.h"
 
 #include <kiran-message-box.h>
+#include <kiran-push-button.h>
 #include <qt5-log-i.h>
 #include <QBoxLayout>
 #include <QComboBox>
@@ -273,8 +274,7 @@ void GeneralBioPage::initUI()
     featureManagerLayout->addWidget(addButton);
     addButton->setIcon(QPixmap(":/kcp-keyboard/images/addition.svg"));
 
-    // FIXME:后续使用新版kiran-integration-qt5中提供的setButtonType函数
-    // Kiran::StylePropertyHelper::setButtonType(addButton, Kiran::BUTTON_Default);
+    KiranPushButton::setButtonType(addButton, KiranPushButton::BUTTON_Default);
     connect(addButton, &QPushButton::clicked, this, &GeneralBioPage::startEnrollFeature);
 
     featureManagerLayout->addStretch();

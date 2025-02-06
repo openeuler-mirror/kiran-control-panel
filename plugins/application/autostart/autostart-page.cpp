@@ -13,6 +13,7 @@
  */
 #include "autostart-page.h"
 #include <kiran-message-box.h>
+#include <kiran-push-button.h>
 #include <qt5-log-i.h>
 #include <QBoxLayout>
 #include <QDir>
@@ -120,8 +121,7 @@ void AutostartPage::initAddBtn()
 {
     m_autoStartButton = new QPushButton(this);
 
-    // FIXME: 后续使用新版kiran-integration-qt5中提供的setButtonType函数
-    // Kiran::StylePropertyHelper::setButtonType(m_autoStartButton, Kiran::BUTTON_Default);
+    KiranPushButton::setButtonType(m_autoStartButton, KiranPushButton::BUTTON_Default);
     m_autoStartButton->setIcon(QIcon(":/kcp-application/images/addition.svg"));
     autoStartAppContainer->addItem(m_autoStartButton);
     connect(m_autoStartButton, &QPushButton::clicked, this, &AutostartPage::selectDesktopForAutoStart);
