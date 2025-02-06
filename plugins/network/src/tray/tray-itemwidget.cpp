@@ -51,7 +51,6 @@ void TrayItemWidget::initUI()
     ui->connectionName->setElideMode(Qt::TextElideMode::ElideRight);
     ui->connectionStatus->setStyleSheet("color:#919191;font-family: \"Noto Sans CJK SC Regular\";");
 
-    // FIXME:后续使用新版kiran-integration-qt5中提供的setButtonType函数
     KiranPushButton::setButtonType(ui->connectButton, KiranPushButton::BUTTON_Default);
     KiranPushButton::setButtonType(ui->inputTextConnectButton, KiranPushButton::BUTTON_Default);
 
@@ -315,7 +314,6 @@ void TrayItemWidget::paintEvent(QPaintEvent *event)
     }
     else
     {
-        // FIXME:暂时使用ACTIVE代替normal
         backgroundColor = DEFAULT_PALETTE()->getColor(Palette::ColorGroup::ACTIVE,
                                                       Palette::ColorRole::WINDOW);
     }

@@ -165,7 +165,6 @@ void KiranTimePickerWidget::paintEvent(QPaintEvent *event)
 void KiranTimePickerWidget::updateScrollPickerColor()
 {
     auto palette = DEFAULT_PALETTE();
-    // FIXME：暂时使用ACTIVE代替Normal
     QColor fontColor = palette->getColor(Palette::ACTIVE, Palette::TEXT);
 
     ui->scrollpicker_hour->setFontColor(fontColor);

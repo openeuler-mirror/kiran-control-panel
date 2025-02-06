@@ -274,7 +274,6 @@ void GeneralBioPage::initUI()
     featureManagerLayout->addWidget(addButton);
     addButton->setIcon(QPixmap(":/kcp-keyboard/images/addition.svg"));
 
-    // FIXME:后续使用新版kiran-integration-qt5中提供的setButtonType函数
     KiranPushButton::setButtonType(addButton, KiranPushButton::BUTTON_Default);
     connect(addButton, &QPushButton::clicked, this, &GeneralBioPage::startEnrollFeature);
 

@@ -48,7 +48,6 @@ void CategoryItem::paintEvent(QPaintEvent *e)
     QColor background;
     auto kiranPalette = DEFAULT_PALETTE();
 
-    // FIXME: 暂时使用ACTIVE代替Normal,SELECTED状态代替checked
     Palette::ColorGroup colorState = Palette::ColorGroup::ACTIVE;
     if (isChecked())
         colorState = Palette::ColorGroup::SELECTED;

@@ -74,7 +74,6 @@ void ConnectionShowPage::initUI()
     ui->connectionList->setMaximumHeight((ui->connectionList->widgetContentsSpacing() + PLUGIN_ITEM_WIDGET_HEIGHT) *
                                          ui->connectionList->count());
 
-    // FIXME:后续使用新版kiran-integration-qt5中提供的setButtonType函数
     KiranPushButton::setButtonType(ui->createConnectionButton, KiranPushButton::BUTTON_Default);
     ui->createConnectionButton->setIcon(QIcon(":/kcp-network-images/connection-add.svg"));
 
