@@ -19,7 +19,7 @@
 
 #include <palette.h>
 
-//给控制中心组件提供色块的控件,用于突出显示
+// 给控制中心组件提供色块的控件,用于突出显示
 class KiranFrame : public QWidget
 {
     Q_OBJECT
@@ -79,12 +79,10 @@ private:
 
     bool m_drawBackground = true;
     bool m_fixedBackground = false;
-    //FIXME：暂时使用ACTIVE代替Normal
     Kiran::Theme::Palette::ColorGroup m_fixedBackgroundState = Kiran::Theme::Palette::ColorGroup::ACTIVE;
 
     bool m_drawBorder = true;
     bool m_fixedBorder = false;
-    //FIXME：暂时使用ACTIVE代替Normal
     Kiran::Theme::Palette::ColorGroup m_fixedBorderState = Kiran::Theme::Palette::ColorGroup::ACTIVE;
 };
 

@@ -149,7 +149,6 @@ void KiranTimeZone::paintEvent(QPaintEvent *event)
     }
 
     auto kiranPalette = DEFAULT_PALETTE();
-    // FIXME：暂时使用ACTIVE代替Normal,SELECTED代替Checked
     auto borderColor = kiranPalette->getColor(m_editHasFocus ? Palette::SELECTED : Palette::ACTIVE,
                                               Palette::BORDER);
 

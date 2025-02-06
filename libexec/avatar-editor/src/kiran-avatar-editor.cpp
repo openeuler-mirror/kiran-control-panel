@@ -17,6 +17,7 @@
 #include <QVBoxLayout>
 
 #include <kiran-color-block.h>
+#include <kiran-push-button.h>
 
 #include "avatar-editor-exit-code.h"
 #include "image-preview-widget.h"
@@ -83,8 +84,7 @@ void KiranAvatarEditor::initUI(const QString &srcImagePath,
 
     m_btnConfrim = new QPushButton(this);
 
-    // FIXME: 后续使用新版kiran-integration-qt5中提供的setButtonType函数
-    // StylePropertyHelper::setButtonType(m_btnConfrim,BUTTON_Default);
+    KiranPushButton::setButtonType(m_btnConfrim, KiranPushButton::BUTTON_Default);
     m_btnConfrim->setObjectName("btn_confirm");
     m_btnConfrim->setFixedSize(100, 50);
     m_btnConfrim->setText(tr("Confirm"));

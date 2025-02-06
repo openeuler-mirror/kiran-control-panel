@@ -13,6 +13,7 @@
  */
 
 #include "device-available-connection-widget.h"
+#include <kiran-push-button.h>
 #include <kiran-switch-button.h>
 #include <qt5-log-i.h>
 #include <NetworkManagerQt/Manager>
@@ -308,8 +309,7 @@ void DeviceAvailableConnectionWidget::initUI()
     if (m_deviceType == Device::Ethernet)
     {
         m_createConnectionButton = new QPushButton(m_contentWidget);
-        // FIXME: 后续使用新版kiran-integration-qt5中提供的setButtonType函数
-        // Kiran::StylePropertyHelper::setButtonType(m_createConnectionButton, Kiran::BUTTON_Default);
+        KiranPushButton::setButtonType(m_createConnectionButton, KiranPushButton::BUTTON_Default);
         m_createConnectionButton->setIcon(QIcon(":/kcp-network-images/connection-add.svg"));
         m_contentWidgetLayout->addWidget(m_createConnectionButton);
         connect(m_createConnectionButton, &QPushButton::clicked, this, &DeviceAvailableConnectionWidget::createConnection);

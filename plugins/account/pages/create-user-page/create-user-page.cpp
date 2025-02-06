@@ -20,11 +20,11 @@
 #include "ui_create-user-page.h"
 #include "user-name-validator.h"
 
+#include <kiran-push-button.h>
 #include <kiranwidgets-qt5/kiran-message-box.h>
 #include <qt5-log-i.h>
 #include <QEvent>
 #include <QKeyEvent>
-#include <QListView>
 #include <QMessageBox>
 
 CreateUserPage::CreateUserPage(QWidget *parent)
@@ -74,11 +74,8 @@ void CreateUserPage::initUI()
             { emit requestIconPageForNewUser(ui->avatar->iconPath()); });
 
     /// 用户类型ComboBox
-    QListView *view = new QListView(ui->combo_userType);
-    ui->combo_userType->setView(view);
     ui->combo_userType->addItem(tr("standard"));
     ui->combo_userType->addItem(tr("administrator"));
-    ui->combo_userType->view()->window()->setAttribute(Qt::WA_TranslucentBackground);
 
     /// 用户名输入框
     ui->edit_name->setValidator(new UserNameValidator(ui->edit_name));
@@ -109,8 +106,7 @@ void CreateUserPage::initUI()
         AdvanceSettings::exec(ui->edit_name->text(),m_advanceSettingsInfo); });
 
     /// 确认按钮
-    /// FIXME:后续使用新版kiran-integration-qt5中提供的setButtonType函数
-    /// StylePropertyHelper::setButtonType(ui->btn_confirm, BUTTON_Default);
+    KiranPushButton::setButtonType(ui->btn_confirm, KiranPushButton::BUTTON_Default);
     connect(ui->btn_confirm, &QPushButton::clicked, this, &CreateUserPage::onCreateUserClicked);
 
     /// 取消按钮

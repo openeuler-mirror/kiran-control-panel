@@ -13,6 +13,7 @@
  */
 
 #include "display-page.h"
+#include <kiran-push-button.h>
 #include <kiran-session-daemon/display-i.h>
 #include <qt5-log-i.h>
 #include <QButtonGroup>
@@ -31,9 +32,8 @@ DisplayPage::DisplayPage(QWidget *parent)
 {
     ui->setupUi(this);
 
-    // FIXME:后续使用新版kiran-integration-qt5中提供的setButtonType函数
-    // Kiran::StylePropertyHelper::setButtonType(ui->applyButton, Kiran::BUTTON_Default);
-    // Kiran::StylePropertyHelper::setButtonType(ui->cancelButton, Kiran::BUTTON_Normal);
+    KiranPushButton::setButtonType(ui->applyButton, KiranPushButton::BUTTON_Default);
+    KiranPushButton::setButtonType(ui->cancelButton, KiranPushButton::BUTTON_Normal);
     init();
     initConnect();
     refreshWidget();

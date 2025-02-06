@@ -13,6 +13,7 @@
  */
 
 #include "vpn-manager.h"
+#include <kiran-push-button.h>
 #include <qt5-log-i.h>
 #include <NetworkManagerQt/Manager>
 #include <NetworkManagerQt/Settings>
@@ -50,8 +51,7 @@ void VpnManager::initUI()
 
     ui->vpnType->addItem(tr("L2TP"), VPN_TYPE_L2TP);
     // ui->vpnType->addItem(tr("PPTP"), VPN_TYPE_PPTP);
-    // FIXME: 后续使用新版kiran-integration-qt5中提供的setButtonType函数
-    // Kiran::StylePropertyHelper::setButtonType(ui->saveButton, Kiran::BUTTON_Default);
+    KiranPushButton::setButtonType(ui->saveButton, KiranPushButton::BUTTON_Default);
 }
 
 // XXX:是否使用模板提升通用性

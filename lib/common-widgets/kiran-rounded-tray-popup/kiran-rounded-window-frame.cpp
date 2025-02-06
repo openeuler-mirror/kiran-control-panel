@@ -36,7 +36,6 @@ KiranRoundedWindowFrame::~KiranRoundedWindowFrame()
 void KiranRoundedWindowFrame::paintEvent(QPaintEvent *event)
 {
     auto palette = DEFAULT_PALETTE();
-    // FIXME：暂时使用ACTIVE代替Normal
     auto backgroundColor = palette->getColor(Palette::ColorGroup::ACTIVE, Palette::ColorRole::WINDOW);
     auto borderColor = palette->getColor(Palette::ColorGroup::ACTIVE, Palette::ColorRole::BORDER);
 

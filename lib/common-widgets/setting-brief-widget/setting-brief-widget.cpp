@@ -66,7 +66,6 @@ void SettingBriefWidget::paintEvent(QPaintEvent *)
     QStyleOption opt;
     opt.init(this);
 
-    // FIXME: 暂时使用ACTIVE代替Normal
     Palette::ColorGroup colorState = Palette::ColorGroup::ACTIVE;
     if (!(opt.state & QStyle::State_Enabled))
     {

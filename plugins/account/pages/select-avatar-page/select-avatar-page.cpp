@@ -17,6 +17,8 @@
 #include "config.h"
 #include "flow-layout/flowlayout.h"
 
+#include <kiran-push-button.h>
+
 #include <palette.h>
 #include <qt5-log-i.h>
 #include <QButtonGroup>
@@ -144,8 +146,7 @@ void SelectAvatarPage::initUI()
     btn->setFixedSize(110, 40);
     btn->setText(tr("Confirm"));
 
-    // FIXME: 后续使用新版kiran-integration-qt5中提供的setButtonType函数
-    // StylePropertyHelper::setButtonType(btn, BUTTON_Default);
+    KiranPushButton::setButtonType(btn, KiranPushButton::BUTTON_Default);
     m_btnLayout->addWidget(btn);
     connect(btn, &QPushButton::clicked, [this]()
             { sigReturnToPrevPage(m_mode, true); });

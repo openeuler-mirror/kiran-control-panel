@@ -15,6 +15,7 @@
 // You may need to build the project (run Qt uic code generator) to get "ui_date-time-settings.h" resolved
 
 #include "date-time-settings.h"
+#include <kiran-push-button.h>
 #include "timedate-interface.h"
 #include "ui_date-time-settings.h"
 
@@ -31,8 +32,7 @@ DateTimeSettings::~DateTimeSettings()
 
 void DateTimeSettings::init()
 {
-    // FIXME: 后续使用新版kiran-integration-qt5中提供的setButtonType函数
-    // StylePropertyHelper::setButtonType(ui->btn_save,Kiran::BUTTON_Default);
+    KiranPushButton::setButtonType(ui->btn_save, KiranPushButton::BUTTON_Default);
     connect(ui->btn_save, &QPushButton::clicked, this, &DateTimeSettings::handleButtonSaveClicked);
     connect(ui->btn_reset, &QPushButton::clicked, this, &DateTimeSettings::handleButtonResetClicked);
 }
