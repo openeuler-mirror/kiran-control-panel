@@ -25,7 +25,6 @@
 #include <qt5-log-i.h>
 #include <QEvent>
 #include <QKeyEvent>
-#include <QListView>
 #include <QMessageBox>
 
 CreateUserPage::CreateUserPage(QWidget *parent)
@@ -75,11 +74,8 @@ void CreateUserPage::initUI()
             { emit requestIconPageForNewUser(ui->avatar->iconPath()); });
 
     /// 用户类型ComboBox
-    QListView *view = new QListView(ui->combo_userType);
-    ui->combo_userType->setView(view);
     ui->combo_userType->addItem(tr("standard"));
     ui->combo_userType->addItem(tr("administrator"));
-    ui->combo_userType->view()->window()->setAttribute(Qt::WA_TranslucentBackground);
 
     /// 用户名输入框
     ui->edit_name->setValidator(new UserNameValidator(ui->edit_name));
