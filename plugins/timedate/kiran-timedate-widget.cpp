@@ -23,7 +23,6 @@
 
 #include <kiran-switch-button.h>
 #include <qt5-log-i.h>
-#include <widget-property-helper.h>
 #include <QDateTime>
 #include <QDebug>
 #include <QFontDatabase>
