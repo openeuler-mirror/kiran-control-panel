@@ -22,7 +22,6 @@
 #include "mask-widget.h"
 
 #include <kiran-sidebar-widget.h>
-#include <kiran-style-public-define.h>
 #include <qt5-log-i.h>
 #include <QDebug>
 #include <QHBoxLayout>
