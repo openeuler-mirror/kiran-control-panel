@@ -24,7 +24,7 @@
 
 #include <kiran-color-block.h>
 #include <kiran-sidebar-widget.h>
-#include <kiran-style-public-define.h>
+#include <kiran-sidebar-item.h>
 #include <palette.h>
 #include <qt5-log-i.h>
 #include <style-helper.h>
@@ -95,11 +95,10 @@ void AccountWidget::appendUser(const QString &userPath)
         iconFile = ACCOUNT_DEFAULT_AVATAR;
     }
 
-    auto item = new QListWidgetItem(userName, m_tabList);
+    auto item = new KiranSidebarItem(userName, m_tabList);
     item->setSizeHint(QSize(240, 50));
     item->setIcon(QPixmap(iconFile));
-    item->setData(Kiran::ItemStatus_Role, userLocked ? tr("disable") : tr("enable"));
-    item->setData(Kiran::ItemStatusColor_Role, userLocked ? QColor("#fa4949") : QColor("#43a3f2"));
+    item->setStatusDesc(userLocked ? tr("disable") : tr("enable"), userLocked ? QColor("#fa4949") : QColor("#43a3f2"));
     item->setData(ITEM_USER_OBJ_PATH_ROLE, userPath);
 
     m_tabList->addItem(item);
@@ -418,8 +417,7 @@ void AccountWidget::onUserPropertyChanged(const QString &objectPath, const QStri
             bool isLocked = accountAPI->locked();
             item->setText(userName);
             item->setIcon(QIcon(iconFile));
-            item->setData(Kiran::ItemStatus_Role, isLocked ? tr("disable") : tr("enable"));
-            item->setData(Kiran::ItemStatusColor_Role, isLocked ? QColor("#fa4949") : QColor("#43a3f2"));
+            ((KiranSidebarItem*)item)->setStatusDesc(isLocked ? tr("disable") : tr("enable"), isLocked ? QColor("#fa4949") : QColor("#43a3f2"));
             break;
         }
     }
