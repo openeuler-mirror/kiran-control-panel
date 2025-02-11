@@ -32,8 +32,8 @@ public:
     void setText(const QString& text);
     QString getText();
 
-    void setLeftButtonVisible(bool visible, const QString& iconPath = QString());
-    void setRightButtonVisible(bool visible, const QString& iconPath = QString());
+    void setLeftButtonVisible(bool visible, const QIcon& icon);
+    void setRightButtonVisible(bool visible, const QIcon& icon);
     bool getRightButtionVisible();
 
     void setSwitcherVisible(bool visible);

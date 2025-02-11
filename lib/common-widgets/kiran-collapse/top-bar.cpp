@@ -54,6 +54,7 @@ void TopBar::init()
     this->setFixedHeight(m_height);
     this->refreshFlagPixmap(true);
 
+    // TODO: 后续使用KiranIcon代替QLable，无需跟随主题变化转换像素
     connect(DEFAULT_PALETTE(), &Palette::baseColorsChanged, this, [=]()
             {
         // 将 QPixmap 转换为 QImage

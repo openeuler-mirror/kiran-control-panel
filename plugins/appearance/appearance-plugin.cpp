@@ -80,22 +80,21 @@ void AppearancePlugin::initSubItem()
                                                         tr("Theme"),
                                                         "individuation",
                                                         "",
-                                                        "kcp-appearance-themes",
+                                                        "ksvg-kcp-appearance-themes",
                                                         99,
                                                         themeSubItemCreater)),
         KiranControlPanel::SubItemPtr(new PluginSubItem("Wallpaper",
                                                         tr("Wallpaper"),
                                                         "individuation",
                                                         "",
-                                                        "kcp-appearance-wallpaper",
+                                                        "ksvg-kcp-appearance-wallpaper",
                                                         98,
                                                         wallpaperSubItemCreater)),
         KiranControlPanel::SubItemPtr(new PluginSubItem("Fonts",
                                                         tr("Font"),
                                                         "individuation",
                                                         "",
-                                                        "kcp-appearance-font",
+                                                        "ksvg-kcp-appearance-font",
                                                         97,
-                                                        fontSubItemCreater))
-    };
+                                                        fontSubItemCreater))};
 }

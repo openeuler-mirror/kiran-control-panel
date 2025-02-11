@@ -14,8 +14,8 @@
 
 #include "kiran-timedate-widget.h"
 #include "kiran-timedate-global-data.h"
-#include "widgets/mask-widget.h"
 #include "ui_kiran-timedate-widget.h"
+#include "widgets/mask-widget.h"
 
 #include "date-time-settings/date-time-settings.h"
 #include "display-format-settings/display-format-settings.h"
@@ -70,7 +70,6 @@ void KiranTimeDateWidget::initUI()
             this, &KiranTimeDateWidget::handleSysntemCanNTPChanged);
 
     /* 初始化侧边栏Tab列表 */
-    ui->tabList->setInvertIconPixelsEnable(true);
     ui->tabList->viewport()->setAutoFillBackground(false);
     ui->tabList->setIconSize(QSize(16, 16));
     connect(ui->tabList, &KiranSidebarWidget::itemSelectionChanged,
@@ -118,7 +117,7 @@ void KiranTimeDateWidget::initTimeZoneSettingsPage()
 {
     auto sideBarItem = new QListWidgetItem(ui->tabList);
     sideBarItem->setText(tr("Change Time Zone"));
-    sideBarItem->setIcon(QIcon(":/kcp-timedate/images/time-zone.svg"));
+    sideBarItem->setIcon(QIcon::fromTheme("ksvg-time-zone"));
     ui->tabList->addItem(sideBarItem);
 
     m_zoneSettingsPage = new TimezoneSettings(this);
@@ -134,7 +133,7 @@ void KiranTimeDateWidget::initDateTimeSettingsPage()
     setTimeManualIcon.addPixmap(QPixmap(":/kcp-timedate-images/time.png"), QIcon::Normal);
     setTimeManualIcon.addPixmap(QPixmap(":/kcp-timedate-images/time_d.png"), QIcon::Disabled);
 #endif
-    sideBarItem->setIcon(QIcon(":/kcp-timedate/images/time.svg"));
+    sideBarItem->setIcon(QIcon::fromTheme("ksvg-time"));
     ui->tabList->addItem(sideBarItem);
 
     m_dateTimeSettingsPage = new DateTimeSettings(this);
@@ -145,7 +144,7 @@ void KiranTimeDateWidget::initDisplayFormatSettingsPage()
 {
     auto sideBarItem = new QListWidgetItem(ui->tabList);
     sideBarItem->setText(tr("Time date format setting"));
-    sideBarItem->setIcon(QIcon(":/kcp-timedate/images/time-format.svg"));
+    sideBarItem->setIcon(QIcon::fromTheme("ksvg-time-format"));
     ui->tabList->addItem(sideBarItem);
 
     m_formatSettingsPage = new DisplayFormatSettings(this);

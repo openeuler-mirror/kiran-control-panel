@@ -12,13 +12,13 @@
  * Author:     yinhongchang <yinhongchang@kylinsec.com.cn>
  */
 
-#include <QString>
-#include <QIcon>
-#include <KDesktopFile>
-#include <KConfigGroup>
-#include <QFileInfo>
-#include <qt5-log-i.h>
 #include "autostart-app.h"
+#include <qt5-log-i.h>
+#include <KConfigGroup>
+#include <KDesktopFile>
+#include <QFileInfo>
+#include <QIcon>
+#include <QString>
 
 #define DESKTOP_ENTRY_HIDDEN "Hidden"
 #define DESKTOP_ENTRY_NODISPLAY "NoDisplay"
@@ -32,9 +32,7 @@ AutostartApp::AutostartApp(QString autoStartAppFilePath) : m_filePath(autoStartA
 
 AutostartApp::~AutostartApp()
 {
-
 }
-
 
 void AutostartApp::parseAutoStartApp(const QString& filePath)
 {
@@ -67,11 +65,11 @@ void AutostartApp::parseAutoStartApp(const QString& filePath)
 
     if (!iconName.isEmpty())
     {
-        m_icon = QIcon::fromTheme(iconName, QIcon(QString(":/kcp-application/images/desktop-file.svg")));
+        m_icon = QIcon::fromTheme(iconName, QIcon::fromTheme("ksvg-desktop-file"));
     }
     else
     {
-        m_icon = QIcon(QString(":/kcp-application/images/desktop-file.svg"));
+        m_icon = QIcon::fromTheme("ksvg-desktop-file");
     }
 
     if (m_name.isEmpty())
@@ -81,7 +79,6 @@ void AutostartApp::parseAutoStartApp(const QString& filePath)
 
     return;
 }
-
 
 void AutostartApp::setAutoStartAppStatus(bool status)
 {

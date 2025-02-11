@@ -48,12 +48,11 @@ private:
 private Q_SLOTS:
     void setCurrentUser(const QString &userPath);
     void setMaskVisible(bool visible);
-    void updateCreateUserIcon();
-    void onUserAdded(const QString& objectPath);
-    void onUserDeleted(const QString& objectPath);
-    void onUserPropertyChanged(const QString& objectPath,const QString& propertyName,QVariant value);
-    void onRequestIconPageForNewUser(const QString& iconPath);
-    void onRequestSetCurrentUser(const QString& userPath);
+    void onUserAdded(const QString &objectPath);
+    void onUserDeleted(const QString &objectPath);
+    void onUserPropertyChanged(const QString &objectPath, const QString &propertyName, QVariant value);
+    void onRequestIconPageForNewUser(const QString &iconPath);
+    void onRequestSetCurrentUser(const QString &userPath);
 
 private:
     void appendUser(const QString &userPath);

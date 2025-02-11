@@ -56,7 +56,7 @@ QString TimeDateSubItem::getDesc()
 
 QString TimeDateSubItem::getIcon()
 {
-    return "kcp-timedate";
+    return "ksvg-kcp-timedate";
 }
 
 int TimeDateSubItem::getWeight()

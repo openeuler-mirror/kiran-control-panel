@@ -31,12 +31,11 @@ DevicePanel::DevicePanel(QWidget *parent) : QFrame(parent),
     ui->setupUi(this);
     setAccessibleName("DevicePanel");
 
-    // FIXME:后续将图标名称都改为ksvg前缀
-    ui->pushButton_left->setIcon(QIcon(":/kcp-display/images/rotation-left.svg"));
-    ui->pushButton_right->setIcon(QIcon(":/kcp-display/images/rotation-right.svg"));
-    ui->pushButton_horizontal->setIcon(QIcon(":/kcp-display/images/flip-h.svg"));
-    ui->pushButton_vertical->setIcon(QIcon(":/kcp-display/images/flip-v.svg"));
-    ui->pushButton_identifying->setIcon(QIcon(":/kcp-display/images/identification.svg"));
+    ui->pushButton_left->setIcon(QIcon::fromTheme("ksvg-rotation-left"));
+    ui->pushButton_right->setIcon(QIcon::fromTheme("ksvg-rotation-right"));
+    ui->pushButton_horizontal->setIcon(QIcon::fromTheme("ksvg-flip-h"));
+    ui->pushButton_vertical->setIcon(QIcon::fromTheme("ksvg-flip-v"));
+    ui->pushButton_identifying->setIcon(QIcon::fromTheme("ksvg-identification"));
     ui->btns_widget->setAttribute(Qt::WA_TranslucentBackground, true);
 
     connect(ui->contain, &DevicePanelWidget::screenItemChecked, this, [this](QString monitorPath)

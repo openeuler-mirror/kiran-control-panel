@@ -15,8 +15,9 @@
 #ifndef __AUTOSTART_APP_H__
 #define __AUTOSTART_APP_H__
 
-class QString;
-class QIcon;
+#include <QIcon>
+#include <QString>
+
 class AutostartApp
 {
 public:
@@ -44,6 +45,5 @@ private:
     bool m_noDisplay = false;
     QIcon m_icon;
 };
-
 
 #endif

@@ -12,8 +12,8 @@
  * Author:     liuxinhao <liuxinhao@kylinsec.com.cn>
  */
 #include "account-subitem.h"
-#include "accounts-global-info.h"
 #include "account-widget.h"
+#include "accounts-global-info.h"
 
 #define ACCOUNT_SEARCH_COMMAND_ADD_USER "@NewUser"
 #define ACCOUNT_SEARCH_COMMAND_JUMP_TO_USER "@User:"
@@ -61,7 +61,7 @@ QString AccountSubItem::getDesc()
 
 QString AccountSubItem::getIcon()
 {
-    return "kcp-account";
+    return "ksvg-kcp-account";
 }
 
 int AccountSubItem::getWeight()

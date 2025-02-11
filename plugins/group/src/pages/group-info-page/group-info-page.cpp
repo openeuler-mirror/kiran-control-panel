@@ -78,17 +78,11 @@ void GroupInfoPage::initUI()
                 m_errorTip->hideTip();
                 ui->stackedWidget->setCurrentIndex(PAGE_GROUP_INFO); });
 
-    // 用户组icon
-    QString groupIconFile = QString(":/kcp-group-images/group_icon_large.png");
-    QImage *iconImage = new QImage;
-    iconImage->load(groupIconFile);
-    ui->avatar->setPixmap(QPixmap::fromImage(*iconImage));
-
-    QString changeNameIconFile = QString(":/kcp-group-images/change_name_icon.svg");
-    ui->change_name_button->setIcon(QIcon(changeNameIconFile));
+    ui->change_name_button->setIcon(QIcon::fromTheme("ksvg-rename"));
     ui->change_name_button->setFocusPolicy(Qt::NoFocus);
     ui->change_name_button->setStyleSheet("border:none;");
 
+    // 用户组icon
     updateIcon();
     connect(DEFAULT_PALETTE(), &Palette::baseColorsChanged, this, &GroupInfoPage::updateIcon);
 
@@ -146,7 +140,7 @@ void GroupInfoPage::appendMemberListItem(const QString &userName)
     UserListWidget *itemWidget = new UserListWidget(m_memberContainer);
     itemWidget->setText(userName);
     itemWidget->setUserData(userName);
-    itemWidget->setRightButtonVisible(true, QString(":/kcp-group-images/delete_member_icon.svg"));
+    itemWidget->setRightButtonVisible(true, QIcon::fromTheme("ksvg-trash"));
 
     connect(itemWidget, &UserListWidget::rightButtonClicked, [this](const QVariant &userName)
             {
@@ -214,17 +208,17 @@ void GroupInfoPage::appendUserListItem(const QString &userPath)
     item->setText(interface.user_name());
     item->setClickable(true);
     item->setUserData(interface.user_name());
-    item->setRightButtonVisible(false, QString(":/kcp-group-images/chosen_icon.svg"));
+    item->setRightButtonVisible(false, QIcon(":/kcp-group-images/chosen_icon.svg"));
 
     connect(item, &UserListWidget::clicked, [item]()
             {
                 if (!item->getRightButtionVisible())
                 {
-                    item->setRightButtonVisible(true, QString(":/kcp-group-images/chosen_icon.svg"));
+                    item->setRightButtonVisible(true, QIcon(":/kcp-group-images/chosen_icon.svg"));
                 }
                 else
                 {
-                    item->setRightButtonVisible(false, QString(":/kcp-group-images/chosen_icon.svg"));
+                    item->setRightButtonVisible(false, QIcon(":/kcp-group-images/chosen_icon.svg"));
                 } });
 
     m_usersContainer->addFeatureItem(item);
@@ -362,8 +356,9 @@ void GroupInfoPage::searchFilter(QString filterString)
 
 void GroupInfoPage::updateIcon()
 {
-    QIcon groupIcon(":/kcp-group-images/group_icon_large.png");
-    QPixmap groupPixmap = groupIcon.pixmap(90, 90);
+    // TODO: 后续使用KiranIcon代替QLable，无需跟随主题变化转换像素
+    auto icon = QIcon::fromTheme("krsvg-group-icon");
+    auto groupPixmap = icon.pixmap(QSize(90, 90));
 
     if (DEFAULT_STYLE_HELPER()->paletteType() != PaletteType::PALETTE_DARK)
     {

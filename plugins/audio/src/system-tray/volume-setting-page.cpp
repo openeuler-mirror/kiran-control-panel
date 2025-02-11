@@ -262,34 +262,20 @@ void VolumeSettingPage::setVolumeIcon(int value)
 {
     if (value == 0)
     {
-        ui->muteButton->setIcon(trayIconColorSwitch("kcp-audio-mute"));
+        ui->muteButton->setIcon(QIcon::fromTheme("ksvg-kcp-audio-mute"));
     }
     else if (0 < value && value <= 34)
     {
-        ui->muteButton->setIcon(trayIconColorSwitch("kcp-audio-low"));
+        ui->muteButton->setIcon(QIcon::fromTheme("ksvg-kcp-audio-low"));
     }
     else if (33 < value && value <= 67)
     {
-        ui->muteButton->setIcon(trayIconColorSwitch("kcp-audio-medium"));
+        ui->muteButton->setIcon(QIcon::fromTheme("ksvg-kcp-audio-medium"));
     }
     else
     {
-        ui->muteButton->setIcon(trayIconColorSwitch("kcp-audio-loud"));
+        ui->muteButton->setIcon(QIcon::fromTheme("ksvg-kcp-audio-loud"));
     }
-}
-
-QPixmap VolumeSettingPage::trayIconColorSwitch(const QString &iconPath)
-{
-    // icon原本为浅色
-    QIcon icon = QIcon::fromTheme(iconPath);
-    QPixmap pixmap = icon.pixmap(16, 16);
-    if (DEFAULT_STYLE_HELPER()->paletteType() != PaletteType::PALETTE_DARK)
-    {
-        QImage image = pixmap.toImage();
-        image.invertPixels(QImage::InvertRgb);
-        pixmap = QPixmap::fromImage(image);
-    }
-    return pixmap;
 }
 
 void VolumeSettingPage::disableSettings()

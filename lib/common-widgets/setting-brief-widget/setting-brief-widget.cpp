@@ -91,7 +91,9 @@ void SettingBriefWidget::paintEvent(QPaintEvent *)
 
 void SettingBriefWidget::updateThemeArrowIcon()
 {
-    QPixmap pixmap(":/kcp-appearance/images/select.svg");
+    // TODO: 后续使用KiranIcon代替QLable，无需跟随主题变化转换像素
+    auto icon = QIcon::fromTheme("ksvg-arrow");
+    auto pixmap = icon.pixmap(QSize(16, 16));
 
     if (DEFAULT_STYLE_HELPER()->paletteType() != PaletteType::PALETTE_DARK)
     {
