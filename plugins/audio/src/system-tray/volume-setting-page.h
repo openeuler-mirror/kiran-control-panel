@@ -15,9 +15,9 @@
 #ifndef KIRAN_CPANEL_AUDIO_VOLUME_SETTING_PAGE_H
 #define KIRAN_CPANEL_AUDIO_VOLUME_SETTING_PAGE_H
 
+#include <QDBusServiceWatcher>
 #include <QWidget>
 #include "common/audio-node.h"
-#include <QDBusServiceWatcher>
 
 QT_BEGIN_NAMESPACE
 namespace Ui
@@ -37,7 +37,6 @@ public:
     explicit VolumeSettingPage(enum AudioNode audio, const QString objectPath, QWidget *parent = nullptr);
     ~VolumeSettingPage() override;
 
-    QPixmap trayIconColorSwitch(const QString &iconPath);
     void disableSettings();
     void hideLine();
 

@@ -76,7 +76,6 @@ void KiranGroupManager::initUI()
     vLayout->setObjectName("SiderbarVLayout");
 
     m_tabList = new KiranSidebarWidget(siderbar);
-    m_tabList->setInvertIconPixelsEnable(true);
     m_tabList->viewport()->setAutoFillBackground(false);
     m_tabList->setFrameShape(QFrame::NoFrame);
     m_tabList->setObjectName("tabList");
@@ -137,7 +136,7 @@ void KiranGroupManager::initGroupList()
     m_createGroupItem = new QListWidgetItem(tr("Create new group"), m_tabList);
     m_tabList->addItem(m_createGroupItem);
 
-    m_createGroupItem->setIcon(QIcon(":/kcp-group-images/create_group_icon.png"));
+    m_createGroupItem->setIcon(QIcon::fromTheme("krsvg-create-group-icon"));
 
     QList<QString> groupObjList;
     groupObjList = GroupsGlobalInfo::instance()->getGroupList();
@@ -148,7 +147,7 @@ void KiranGroupManager::initGroupList()
             KSDGroupAdminListProxy interface(GROUP_ADMIN_DBUS_NAME, iter, QDBusConnection::systemBus());
 
             auto item = new QListWidgetItem(interface.groupName(), m_tabList);
-            item->setIcon(QPixmap(":/kcp-group-images/group_icon_small.png"));
+            item->setIcon(QIcon::fromTheme("krsvg-group-icon"));
             item->setData(Kiran::ItemStatusColor_Role, QColor("#fa4949"));
             item->setData(ITEM_GROUP_OBJ_PATH_ROLE, iter);
             m_tabList->addItem(item);
@@ -184,10 +183,8 @@ void KiranGroupManager::appendSidebarItem(QString groupPath, QString errMsg)
     KLOG_INFO() << "current Thread:" << QThread::currentThreadId();
     KSDGroupAdminListProxy interface(GROUP_ADMIN_DBUS_NAME, groupPath, QDBusConnection::systemBus());
 
-    QString iconFile = ":/kcp-group-images/group_icon_small.png";
-
     auto item = new QListWidgetItem(interface.groupName(), m_tabList);
-    item->setIcon(QPixmap(iconFile));
+    item->setIcon(QIcon::fromTheme("krsvg-group-icon"));
     item->setData(Kiran::ItemStatusColor_Role, QColor("#fa4949"));
     item->setData(ITEM_GROUP_OBJ_PATH_ROLE, groupPath);
 

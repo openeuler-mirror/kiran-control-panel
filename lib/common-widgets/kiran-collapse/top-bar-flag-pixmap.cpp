@@ -13,24 +13,37 @@
  */
 
 #include "top-bar-flag-pixmap.h"
+#include <QIcon>
 
 QPixmap FlagPixmap::expansionFlagPixmap()
 {
-    QImage image(RIGHT_ARROW);
+    // TODO: 后续使用KiranIcon代替QLable，无需跟随主题变化转换像素
+    auto icon = QIcon::fromTheme(RIGHT_ARROW);
+    auto pixmap = icon.pixmap(QSize(16, 16));
+    auto image = pixmap.toImage();
+
     QImage transformedImage = rotateImage(image, 90.0);
     return QPixmap::fromImage(transformedImage);
 }
 
 QPixmap FlagPixmap::collapseFlagPixmap()
 {
-    QImage image(RIGHT_ARROW);
+    // TODO: 后续使用KiranIcon代替QLable，无需跟随主题变化转换像素
+    auto icon = QIcon::fromTheme(RIGHT_ARROW);
+    auto pixmap = icon.pixmap(QSize(16, 16));
+    auto image = pixmap.toImage();
+
     QImage transformedImage = rotateImage(image, -90.0);
     return QPixmap::fromImage(transformedImage);
 }
 
 QPixmap FlagPixmap::expansionFlagPixmapDark()
 {
-    QImage image(RIGHT_ARROW);
+    // TODO: 后续使用KiranIcon代替QLable，无需跟随主题变化转换像素
+    auto icon = QIcon::fromTheme(RIGHT_ARROW);
+    auto pixmap = icon.pixmap(QSize(16, 16));
+    auto image = pixmap.toImage();
+
     QImage transformedImage = rotateImage(image, 90.0);
     invertColors(transformedImage);
     return QPixmap::fromImage(transformedImage);
@@ -38,7 +51,11 @@ QPixmap FlagPixmap::expansionFlagPixmapDark()
 
 QPixmap FlagPixmap::collapseFlagPixmapDark()
 {
-    QImage image(RIGHT_ARROW);
+    // TODO: 后续使用KiranIcon代替QLable，无需跟随主题变化转换像素
+    auto icon = QIcon::fromTheme(RIGHT_ARROW);
+    auto pixmap = icon.pixmap(QSize(16, 16));
+    auto image = pixmap.toImage();
+
     QImage transformedImage = rotateImage(image, -90.0);
     invertColors(transformedImage);
     return QPixmap::fromImage(transformedImage);

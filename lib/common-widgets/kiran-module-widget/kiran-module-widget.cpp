@@ -69,7 +69,6 @@ void KiranModuleWidget::clear()
 
 void KiranModuleWidget::init()
 {
-    ui->list_subItems->setInvertIconPixelsEnable(true);
     ui->list_subItems->setFrameShape(QFrame::NoFrame);
     ui->list_subItems->setSelectionMode(QListWidget::SingleSelection);
     ui->list_subItems->viewport()->setAutoFillBackground(false);

@@ -221,8 +221,8 @@ void AccountWidget::initUserList()
 
     /// 创建用户按钮
     m_createUserItem = new QListWidgetItem(tr("Create new user"), m_tabList);
+    m_createUserItem->setIcon(QIcon::fromTheme("krsvg-create-user-avatar"));
     m_tabList->addItem(m_createUserItem);
-    updateCreateUserIcon();
 
     // 加载非系统用户
     QList<QString> userObjList;
@@ -330,24 +330,6 @@ void AccountWidget::setMaskVisible(bool visible)
     {
         m_maskWidget->hide();
     }
-}
-
-void AccountWidget::updateCreateUserIcon()
-{
-    QIcon icon(":/kcp-account/images/create-user-avatar.png");
-    QPixmap pixmap = icon.pixmap(40, 40);
-
-    // FIXME:先使用直接设置setIcon，切换主题时是否能改变图标颜色
-    m_createUserItem->setIcon(icon);
-
-    // if (DEFAULT_STYLE_HELPER()->paletteType() != PaletteType::PALETTE_DARK)
-    // {
-    //     QImage image = pixmap.toImage();
-    //     image.invertPixels(QImage::InvertRgb);
-    //     pixmap = QPixmap::fromImage(image);
-    // }
-
-    // m_createUserItem->setIcon(pixmap);
 }
 
 void AccountWidget::onUserAdded(const QString &objectPath)

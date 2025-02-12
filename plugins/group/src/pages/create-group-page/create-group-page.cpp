@@ -72,19 +72,18 @@ void CreateGroupPage::appendUserListItem(const QString &userPath)
     KSDAccountsUserProxy interface(ACCOUNTS_DBUS_NAME, userPath, QDBusConnection::systemBus());
 
     UserListWidget *itemWidget = new UserListWidget(m_userContainter);
-    QString chosenIconFile = QString(":/kcp-group-images/chosen_icon.svg");
-    itemWidget->setRightButtonVisible(false, chosenIconFile);
+    itemWidget->setRightButtonVisible(false, QIcon(":/kcp-group-images/chosen_icon.svg"));
     itemWidget->setText(interface.user_name());
     itemWidget->setClickable(true);
     connect(itemWidget, &UserListWidget::clicked, [itemWidget]()
             {
                 if (!itemWidget->getRightButtionVisible())
                 {
-                    itemWidget->setRightButtonVisible(true, QString(":/kcp-group-images/chosen_icon.svg"));
+                    itemWidget->setRightButtonVisible(true, QIcon(":/kcp-group-images/chosen_icon.svg"));
                 }
                 else
                 {
-                    itemWidget->setRightButtonVisible(false, QString(":/kcp-group-images/chosen_icon.svg"));
+                    itemWidget->setRightButtonVisible(false, QIcon(":/kcp-group-images/chosen_icon.svg"));
                 } });
     m_userContainter->addFeatureItem(itemWidget);
 }

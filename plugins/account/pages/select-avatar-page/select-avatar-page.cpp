@@ -169,9 +169,9 @@ void SelectAvatarPage::initUI()
 
     loadAvatar();
 
-    m_addButton = addAvatar(":/kcp-account/images/create-user-avatar.png", AVATAR_ADD, false);
+    m_addButton = addAvatar("krsvg-create-user-avatar", AVATAR_ADD, false);
     m_addButton->setAccessibleName("ButtonAddAvatar");
-    m_addButton->setIcon(":/kcp-account/images/create-user-avatar.png");
+    m_addButton->setIcon(QIcon::fromTheme("krsvg-create-user-avatar"));
 
     connect(m_addButton, &AvatarButton::clicked, [this]()
             {
@@ -223,7 +223,7 @@ AvatarButton *SelectAvatarPage::addAvatar(const QString &iconPath, AvatarTypeEnu
         btn->setObjectName(CUSTOM_AVATAR_OBJ_NAME);
         break;
     }
-    btn->setIcon(iconPath);
+    btn->setIcon(QIcon::fromTheme(iconPath));
     btn->setFixedSize(80, 80);
     btn->setAccessibleName(QString("AvatarButton::%1").arg(iconPath));
     if (type != AVATAR_ADD)

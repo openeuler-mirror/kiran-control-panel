@@ -12,11 +12,11 @@
  * Author:     liuxinhao <liuxinhao@kylinsec.com.cn>
  */
 #include "image-enroll-progressbar.h"
+#include <qt5-log-i.h>
 #include <QDebug>
+#include <QIcon>
 #include <QLabel>
 #include <QTimer>
-#include <qt5-log-i.h>
-#include <QIcon>
 
 #include "pixmap-preview.h"
 
@@ -34,27 +34,27 @@ ImageEnrollProgressBar::~ImageEnrollProgressBar()
 void ImageEnrollProgressBar::registerPercentImage(uint percent, const QString& img)
 {
     auto iter = m_progressRangePixmapList.begin();
-    for ( ; iter != m_progressRangePixmapList.end(); iter++)
+    for (; iter != m_progressRangePixmapList.end(); iter++)
     {
         auto iterPercent = std::get<0>(*iter);
         auto iterImg = std::get<1>(*iter);
 
-        if( percent >= iterPercent )
+        if (percent >= iterPercent)
         {
             break;
         }
     }
 
-    if( iter == m_progressRangePixmapList.end() && !m_progressRangePixmapList.empty() )
+    if (iter == m_progressRangePixmapList.end() && !m_progressRangePixmapList.empty())
     {
         KLOG_WARNING() << "can't register percent image:" << percent << img;
         return;
     }
 
-    m_progressRangePixmapList.insert(iter,std::make_tuple(percent,img));
+    m_progressRangePixmapList.insert(iter, std::make_tuple(percent, img));
 }
 
-void ImageEnrollProgressBar::registerPercentImages(const std::list<std::tuple<uint,QString>>& percentImages)
+void ImageEnrollProgressBar::registerPercentImages(const std::list<std::tuple<uint, QString>>& percentImages)
 {
     m_progressRangePixmapList = percentImages;
 }
@@ -68,8 +68,9 @@ void ImageEnrollProgressBar::setProgress(uint progress)
         if (progress >= min)
         {
             QString imgPath = std::get<1>(iter);
-            QIcon icon(imgPath);
-            pixmap= icon.pixmap(m_fingerWidget->size());
+            // TODO: 后续使用KiranIcon代替QLable，无需跟随主题变化转换像素
+            QIcon icon(QIcon::fromTheme(imgPath));
+            pixmap = icon.pixmap(m_fingerWidget->size());
         }
     }
 

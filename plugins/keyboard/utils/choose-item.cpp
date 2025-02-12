@@ -25,9 +25,8 @@ ChooseItem::ChooseItem(QWidget *parent) : KiranFrame(parent),
     ui->setupUi(this);
     setObjectName("ChooseItem");
     initUI();
-    connect(ui->btn_delete, &QToolButton::clicked,[this] {
-        emit sigDelete(m_layoutName);
-    });
+    connect(ui->btn_delete, &QToolButton::clicked, [this]
+            { emit sigDelete(m_layoutName); });
 }
 
 ChooseItem::~ChooseItem()
@@ -60,7 +59,7 @@ void ChooseItem::initUI()
 {
     setDrawBroder(false);
     setAttribute(Qt::WA_Hover);
-    ui->btn_delete->setIcon(QIcon(":/kiran-control-panel/images/trash.svg"));
+    ui->btn_delete->setIcon(QIcon::fromTheme("ksvg-trash"));
     ui->btn_delete->hide();
 
     QPixmap pixmap(":/kiran-control-panel/images/indicator-selected.png");
@@ -76,7 +75,6 @@ void ChooseItem::mousePressEvent(QMouseEvent *event)
     }
     QWidget::mousePressEvent(event);
 }
-
 
 void ChooseItem::seletedLayoutChanged(QString selectLayout)
 {
