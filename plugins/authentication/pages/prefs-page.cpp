@@ -87,7 +87,7 @@ QWidget* PrefsPage::initAuthTypePage()
         settingsItem->setUserData(authType);
         settingsItem->setSwitcherVisible(true);
         settingsItem->setClickable(true);
-        settingsItem->setRightButtonVisible(true, ":/kcp-authentication/images/arrow.svg");
+        settingsItem->setRightButtonVisible(true, "ksvg-arrow");
         settingsItem->setText(std::get<1>(iter));
         container->addAuthSettingItem(settingsItem);
 

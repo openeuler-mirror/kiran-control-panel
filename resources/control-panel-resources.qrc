@@ -1,61 +1,33 @@
 <RCC>
     <qresource prefix="/kiran-control-panel">
         <file>images/search.svg</file>
-        <file>images/arrow.svg</file>
         <file>images/loading.svg</file>
         <file>images/tips-err.svg</file>
         <file>images/tips-suc.svg</file>
         <file>images/tips-info.svg</file>
         <file>images/tips-warning.svg</file>
-        <file>images/selected.png</file>
-        <file>images/trash.svg</file>
         <file>images/trash-hover.svg</file>
         <file>images/trash-pressed.svg</file>
         <file>images/indicator-selected.png</file>
         <file alias="images/success-indicator.svg">images/current-avatar-indicator.svg</file>
         <file>images/error-indicator.svg</file>
-        <file>images/more-options.svg</file>
     </qresource>
 
     <qresource prefix="/kcp-account">
-        <file>images/create-user-avatar.png</file>
-        <file>images/create-user-avatar-black.png</file>
         <file>images/change-user-avatar.png</file>
         <file>images/current-avatar-indicator.svg</file>
-        <file>images/finger-0.svg</file>
-        <file>images/finger-25.svg</file>
-        <file>images/finger-50.svg</file>
-        <file>images/finger-75.svg</file>
-        <file>images/finger-100.svg</file>
-        <file>images/trash.svg</file>
         <file>images/trash-hover.svg</file>
         <file>images/trash-pressed.svg</file>
     </qresource>
 
     <qresource prefix="/kcp-appearance">
-        <file alias="images/select.svg">images/arrow.svg</file>
-        <file alias="images/select-black.svg">images/arrow-black.svg</file>
         <file>images/indicator-selected.png</file>
-        <file>images/dark-theme.png</file>
-        <file>images/light-theme.png</file>
         <file>images/wallpaper-delete-normal.png</file>
         <file>images/wallpaper-delete-pre.png</file>
         <file>images/wallpaper-delete-select.png</file>
-        <file>images/kcp-appearance-font.svg</file>
-        <file>images/kcp-appearance-themes.svg</file>
-        <file>images/kcp-appearance-wallpaper.svg</file>
-
         <file>images/theme-light.png</file>
         <file>images/theme-dark.png</file>
         <file>images/theme-auto.png</file>
-    </qresource>
-
-    <qresource prefix="/kcp-display">
-        <file>images/flip-h.svg</file>
-        <file>images/flip-v.svg</file>
-        <file>images/identification.svg</file>
-        <file>images/rotation-left.svg</file>
-        <file>images/rotation-right.svg</file>
     </qresource>
 
     <qresource prefix="/kcp-timedate">
@@ -63,9 +35,6 @@
         <file>images/hour-hand.svg</file>
         <file>images/minute-hand.svg</file>
         <file>images/second-hand.svg</file>
-        <file>images/time.svg</file>
-        <file>images/time-zone.svg</file>
-        <file>images/time-format.svg</file>
     </qresource>
 
     <qresource prefix="/kcp-keyboard">
@@ -73,24 +42,11 @@
     </qresource>
 
     <qresource prefix="/kcp-authentication">
-        <file>images/rename.svg</file>
-        <file>images/trash.svg</file>
         <file>images/addition.svg</file>
-        <file>images/finger-0.svg</file>
-        <file>images/finger-25.svg</file>
-        <file>images/finger-50.svg</file>
-        <file>images/finger-75.svg</file>
-        <file>images/finger-100.svg</file>
-        <file>images/face-0.svg</file>
-        <file>images/iris-0.svg</file>
-        <file>images/arrow.svg</file>
     </qresource>
 
     <qresource prefix="/kcp-application">
         <file>images/addition.svg</file>
-        <file>images/defaultapp.svg</file>
-        <file>images/autostart.svg</file>
-        <file>images/desktop-file.svg</file>
     </qresource>
 
 </RCC>

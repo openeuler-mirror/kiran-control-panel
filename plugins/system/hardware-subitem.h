@@ -61,7 +61,7 @@ public:
     // 获取功能项图标显示，用于形成功能项侧边栏的左侧图标
     QString getIcon() override
     {
-        return "kcp-page-hardware-information";
+        return "ksvg-kcp-page-hardware-information";
     }
 
     // 获取功能项权重，用于多个功能项排序

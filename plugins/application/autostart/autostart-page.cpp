@@ -174,7 +174,7 @@ KiranSettingItem *AutostartPage::createAutoStartAppItem(const QString &desktopNa
 
     autoStartAppItem->setClickable(false);
     autoStartAppItem->setLeftButtonVisible(true, autoStartApp.getIcon());
-    autoStartAppItem->setRightButtonVisible(true, QIcon(":/kiran-control-panel/images/trash.svg"));
+    autoStartAppItem->setRightButtonVisible(true, QIcon::fromTheme("ksvg-trash"));
     autoStartAppItem->setSwitcherVisible(true);
     autoStartAppItem->setSwitcherChecked(!autoStartApp.getHidden());
     autoStartAppItem->setText(autoStartApp.getName());

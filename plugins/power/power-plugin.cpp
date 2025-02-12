@@ -20,8 +20,8 @@
 #include "pages/power-settings-page.h"
 #include "pages/server-general-settings.h"
 #include "plugin-subitem.h"
-#include "upower-interface.h"
 #include "power-prefs.h"
+#include "upower-interface.h"
 
 #include <kiran-log/qt5-log-i.h>
 #include <QCoreApplication>
@@ -41,7 +41,7 @@ int PowerPlugin::init(KiranControlPanel::PanelInterface* interface)
     PowerInterface::globalInit();
     Power::Prefs prefs;
 
-    if( prefs.enableServerMode() )
+    if (prefs.enableServerMode())
     {
         initServerPower();
     }
@@ -72,7 +72,7 @@ void PowerPlugin::initDesktopPower()
                                              tr("General Settings"),
                                              "power-management",
                                              "",
-                                             "kcp-power-general-settings",
+                                             "ksvg-kcp-power-general-settings",
                                              3,
                                              generalSettingsSubItemCreater);
     auto generalSettingsSubItem = KiranControlPanel::SubItemPtr(generalSettings);
@@ -81,15 +81,14 @@ void PowerPlugin::initDesktopPower()
                                            tr("Power Settings"),
                                            "power-management",
                                            "",
-                                           "kcp-power-power-settings",
+                                           "ksvg-kcp-power-power-settings",
                                            2,
                                            powerSettingsSubItemCreator);
     auto powerSettingsSubItem = KiranControlPanel::SubItemPtr(powerSettings);
 
     m_subitems = {
         generalSettingsSubItem,
-        powerSettingsSubItem
-    };
+        powerSettingsSubItem};
 
     if (UPowerInterface::haveBattery())
     {
@@ -97,7 +96,7 @@ void PowerPlugin::initDesktopPower()
                                                  tr("Battery Settings"),
                                                  "power-management",
                                                  "",
-                                                 "kcp-power-battery-settings",
+                                                 "ksvg-kcp-power-battery-settings",
                                                  1,
                                                  batterySettingsSubItemCreator);
         m_subitems << KiranControlPanel::SubItemPtr(batterySettings);
@@ -112,12 +111,12 @@ void PowerPlugin::initServerPower()
         return new ServerGeneralSettings();
     };
     auto serverGeneralSettings = new PluginSubItem("ServerGeneralSettings",
-                                                    tr("General Settings"),
-                                                    "power-management",
-                                                    "",
-                                                    "kcp-power-general-settings",
-                                                    1,
-                                                    serverGeneralSettingsCreater);
+                                                   tr("General Settings"),
+                                                   "power-management",
+                                                   "",
+                                                   "ksvg-kcp-power-general-settings",
+                                                   1,
+                                                   serverGeneralSettingsCreater);
     m_subitems = {KiranControlPanel::SubItemPtr(serverGeneralSettings)};
 }
 

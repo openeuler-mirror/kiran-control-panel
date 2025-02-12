@@ -15,9 +15,9 @@
 #ifndef KIRAN_CPANEL_AUDIO_AUDIOSYSTEMTRAY_H
 #define KIRAN_CPANEL_AUDIO_AUDIOSYSTEMTRAY_H
 
+#include <QDBusServiceWatcher>
 #include <QSystemTrayIcon>
 #include <QWidget>
-#include <QDBusServiceWatcher>
 
 class VolumeSettingPage;
 class MixedSettingPage;
@@ -35,7 +35,6 @@ public:
 public:
     void setVolumeSettingPos();
     void setMixedSettingPos();
-    QPixmap trayIconColorSwitch(const QString& iconPath, const int iconSize = 16);
     void getTrayGeometry();
 
 public slots:
@@ -74,7 +73,7 @@ private:
     QString m_colorTheme;
     int m_xTray, m_yTray, m_heightTray, m_widthTray = 0;
 
-    QDBusServiceWatcher *m_dbusServiceWatcher;
+    QDBusServiceWatcher* m_dbusServiceWatcher;
 };
 
 #endif  // KIRAN_CPANEL_AUDIO_AUDIOSYSTEMTRAY_H

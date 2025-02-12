@@ -216,20 +216,6 @@ void AudioSystemTray::handleAdjustedMixedSettingPageSize()
     }
 }
 
-QPixmap AudioSystemTray::trayIconColorSwitch(const QString &iconPath, const int iconSize)
-{
-    // icon原本为浅色
-    QIcon icon = QIcon::fromTheme(iconPath);
-    QPixmap pixmap = icon.pixmap(iconSize, iconSize);
-    if (DEFAULT_STYLE_HELPER()->paletteType() != PaletteType::PALETTE_DARK)
-    {
-        QImage image = pixmap.toImage();
-        image.invertPixels(QImage::InvertRgb);
-        pixmap = QPixmap::fromImage(image);
-    }
-    return pixmap;
-}
-
 void AudioSystemTray::getTrayGeometry()
 {
     QDBusPendingReply<QString> getGeometry = m_statusNotifierManager->GetGeometry("~02-volume");
@@ -263,28 +249,25 @@ void AudioSystemTray::getTrayGeometry()
 // XXX:频繁调用函数,需要优化
 void AudioSystemTray::setTrayIcon(int value)
 {
-    QIcon icon;
+    QString iconName;
     if (value == 0)
     {
-        icon.addPixmap(trayIconColorSwitch("kcp-audio-mute"));
-        icon.addPixmap(trayIconColorSwitch("kcp-audio-mute", 64));
+        iconName = "ksvg-kcp-audio-mute";
     }
     else if (0 < value && value <= 34)
     {
-        icon.addPixmap(trayIconColorSwitch("kcp-audio-low"));
-        icon.addPixmap(trayIconColorSwitch("kcp-audio-low", 64));
+        iconName = "ksvg-kcp-audio-low";
     }
     else if (33 < value && value <= 67)
     {
-        icon.addPixmap(trayIconColorSwitch("kcp-audio-medium"));
-        icon.addPixmap(trayIconColorSwitch("kcp-audio-medium", 64));
+        iconName = "ksvg-kcp-audio-medium";
     }
     else
     {
-        icon.addPixmap(trayIconColorSwitch("kcp-audio-loud"));
-        icon.addPixmap(trayIconColorSwitch("kcp-audio-loud", 64));
+        iconName = "ksvg-kcp-audio-loud";
     }
-    m_systemTray->setIcon(icon);
+
+    m_systemTray->setIcon(QIcon::fromTheme(iconName));
     m_systemTray->show();
 }
 

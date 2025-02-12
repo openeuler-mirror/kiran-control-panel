@@ -45,16 +45,16 @@ QString UserListWidget::getText()
     return m_label->text();
 }
 
-void UserListWidget::setLeftButtonVisible(bool visible, const QString& iconPath)
+void UserListWidget::setLeftButtonVisible(bool visible, const QIcon& icon)
 {
     m_leftButton->setVisible(visible);
-    m_leftButton->setIcon(QIcon(iconPath));
+    m_leftButton->setIcon(icon);
 }
 
-void UserListWidget::setRightButtonVisible(bool visible, const QString& iconPath)
+void UserListWidget::setRightButtonVisible(bool visible, const QIcon& icon)
 {
     m_rightButton->setVisible(visible);
-    m_rightButton->setIcon(QIcon(iconPath));
+    m_rightButton->setIcon(icon);
 }
 
 bool UserListWidget::getRightButtionVisible()

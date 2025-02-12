@@ -13,10 +13,10 @@
  */
 
 #include "application-plugin.h"
-#include "config.h"
 #include "application-subitem.h"
-#include "defaultapp/defaultapp.h"
 #include "autostart/autostart-page.h"
+#include "config.h"
+#include "defaultapp/defaultapp.h"
 
 #include <kiran-log/qt5-log-i.h>
 #include <kiran-session-daemon/appearance-i.h>
@@ -71,14 +71,14 @@ void ApplicationPlugin::initSubItem()
          tr("DefaultApp"),
          "app-manager",
          "",
-         ":/kcp-application/images/defaultapp.svg",
+         "ksvg-kcp-app-defaultapp",
          99,
          defaultAppSubItemCreater},
         {"AutoStart",
          tr("AutoStart"),
          "app-manager",
          "",
-         ":/kcp-application/images/autostart.svg",
+         "ksvg-kcp-app-autostart",
          98,
          autoStartSubItemCreater}};
 

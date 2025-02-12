@@ -86,9 +86,8 @@ void GeneralBioPage::addFeature(const QString& featureName, const QString& featu
     auto featureItem = new AuthSettingItem;
     featureItem->setUserData(featureIID);
     featureItem->setText(featureName);
-    // FIXME:后续统一改成ksvg开头的图标名
-    featureItem->setLeftButtonVisible(true, ":/kcp-authentication/images/rename.svg");
-    featureItem->setRightButtonVisible(true, ":/kcp-authentication/images/trash.svg");
+    featureItem->setLeftButtonVisible(true, "ksvg-rename");
+    featureItem->setRightButtonVisible(true, "ksvg-trash");
 
     m_featureContainer->addAuthSettingItem(featureItem);
 

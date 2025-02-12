@@ -13,8 +13,8 @@
  */
 
 #include "shortcut-item.h"
-#include "ui_shortcut-item.h"
 #include "keycode-translator.h"
+#include "ui_shortcut-item.h"
 
 #include <kiran-log/qt5-log-i.h>
 
@@ -46,7 +46,7 @@ void ShortcutItem::initUI()
     setDrawBroder(false);
 
     ui->btn_delete->hide();
-    ui->btn_delete->setIcon(QIcon(":/kiran-control-panel/images/trash.svg"));
+    ui->btn_delete->setIcon(QIcon::fromTheme("ksvg-trash"));
 
     ui->label_keybination->setStyleSheet("QLabel#label_keybination{color:#919191}");
 
@@ -55,9 +55,8 @@ void ShortcutItem::initUI()
     QString readableString = KeycodeTranslator::backendKeyString2Readable(m_shortcutInfo->keyCombination);
     ui->label_keybination->setText(readableString);
 
-    connect(ui->btn_delete, &QToolButton::clicked, [this]{
-        sigDelete(m_shortcutInfo->uid);
-    });
+    connect(ui->btn_delete, &QToolButton::clicked, [this]
+            { sigDelete(m_shortcutInfo->uid); });
 }
 
 void ShortcutItem::setName(QString name)

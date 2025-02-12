@@ -49,13 +49,13 @@ QString AuthSettingItem::getText()
 void AuthSettingItem::setLeftButtonVisible(bool visible, const QString& iconPath)
 {
     m_leftButton->setVisible(visible);
-    m_leftButton->setIcon(QIcon(iconPath));
+    m_leftButton->setIcon(QIcon::fromTheme(iconPath));
 }
 
 void AuthSettingItem::setRightButtonVisible(bool visible, const QString& iconPath)
 {
     m_rightButton->setVisible(visible);
-    m_rightButton->setIcon(QIcon(iconPath));
+    m_rightButton->setIcon(QIcon::fromTheme(iconPath));
 }
 
 void AuthSettingItem::setSwitcherVisible(bool visible)

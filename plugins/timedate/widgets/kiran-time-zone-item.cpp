@@ -58,9 +58,9 @@ KiranTimeZoneItem::KiranTimeZoneItem(QWidget *parent) : QWidget(parent),
 {
     ui->setupUi(this);
 
-    QImage selectedImage(":/kiran-control-panel/images/selected.png");
-    selectedImage = selectedImage.scaled(11, 8);
-    m_selectedIcon = QPixmap::fromImage(selectedImage);
+    // TODO: 后续使用KiranIcon代替QLable，无需跟随主题变化转换像素
+    auto icon = QIcon::fromTheme("ksvg-selected");
+    m_selectedIcon = icon.pixmap(QSize(11, 8));
 
     setAttribute(Qt::WA_Hover);
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);

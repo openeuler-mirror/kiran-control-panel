@@ -116,22 +116,9 @@ void ServerGeneralSettings::initUI()
     ui->siderbar->setFrameShape(QFrame::NoFrame);
     auto generalSettingItem = new QListWidgetItem(tr("General Settings"), ui->siderbar);
 
-    // FIXME: 后续图标会统一改成ksvg开头
-    auto subItemIcon = QIcon::fromTheme("kcp-power-general-settings");
-    if (!subItemIcon.isNull())
-    {
-        QPixmap pixmap = subItemIcon.pixmap(40, 40);
-        // FIXME：先注释，看后续切换主题会不会生效
-        generalSettingItem->setIcon(subItemIcon);
+    auto subItemIcon = QIcon::fromTheme("ksvg-kcp-power-general-settings");
+    generalSettingItem->setIcon(subItemIcon);
 
-        // if (DEFAULT_STYLE_HELPER()->paletteType() != PaletteType::PALETTE_DARK)
-        // {
-        //     QImage image = pixmap.toImage();
-        //     image.invertPixels(QImage::InvertRgb);
-        //     pixmap = QPixmap::fromImage(image);
-        // }
-        // generalSettingItem->setIcon(pixmap);
-    }
     ui->siderbar->addItem(generalSettingItem);
     ui->siderbar->setCurrentRow(0);
 

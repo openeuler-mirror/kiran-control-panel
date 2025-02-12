@@ -16,7 +16,7 @@
 
 #include <QPixmap>
 
-#define RIGHT_ARROW ":/kiran-control-panel/images/arrow.svg"
+#define RIGHT_ARROW "ksvg-arrow"
 
 class FlagPixmap
 {
