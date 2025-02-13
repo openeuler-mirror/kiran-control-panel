@@ -69,14 +69,18 @@
     </widget>
    </item>
    <item>
-    <widget class="QLabel" name="label_arrow">
-     <property name="text">
-      <string>TextLabel</string>
-     </property>
-    </widget>
+    <widget class="KiranIcon" name="arrow" native="true"/>
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>KiranIcon</class>
+   <extends>QWidget</extends>
+   <header>kiran-icon.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

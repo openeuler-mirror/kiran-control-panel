@@ -31,8 +31,7 @@ KiranTimeZoneItem::KiranTimeZoneItem(const ZoneInfo zoneInfo, QWidget *parent)
 {
     ui->setupUi(this);
 
-    QImage selectedImage(":/kiran-control-panel/images/indicator-selected.png");
-    m_selectedIcon = QPixmap::fromImage(selectedImage);
+    m_selectedIcon = QIcon(":/kiran-control-panel/images/indicator-selected.png");
 
     setAttribute(Qt::WA_Hover);
     setFocusPolicy(Qt::TabFocus);
@@ -58,9 +57,7 @@ KiranTimeZoneItem::KiranTimeZoneItem(QWidget *parent) : QWidget(parent),
 {
     ui->setupUi(this);
 
-    // TODO: 后续使用KiranIcon代替QLable，无需跟随主题变化转换像素
-    auto icon = QIcon::fromTheme("ksvg-selected");
-    m_selectedIcon = icon.pixmap(QSize(11, 8));
+    m_selectedIcon = QIcon::fromTheme("ksvg-selected");
 
     setAttribute(Qt::WA_Hover);
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
@@ -144,12 +141,12 @@ void KiranTimeZoneItem::setisSelected(bool isSelected)
     if (m_isSelected)
     {  /// 选中状态，取消掉关键词高亮
         unsetHeightLightKeyword();
-        ui->icon->setPixmap(m_selectedIcon);
+        ui->icon->setIcon(m_selectedIcon);
     }
     else
     {  /// 取消选中，若存在关键词则设置关键词高亮
         setHeightLightKeyword(m_keyword);
-        ui->icon->setPixmap(QPixmap());
+        ui->icon->setIcon(QIcon());
     }
     emit isSelectedChanged(m_isSelected);
 }

@@ -23,18 +23,14 @@
 #include "user-info-page/user-info-page.h"
 
 #include <kiran-color-block.h>
-#include <kiran-sidebar-widget.h>
 #include <kiran-sidebar-item.h>
-#include <palette.h>
+#include <kiran-sidebar-widget.h>
 #include <qt5-log-i.h>
-#include <style-helper.h>
 #include <QHBoxLayout>
 #include <QIcon>
 #include <QScrollArea>
 #include <QStackedWidget>
 #include <QtWidgets/QListWidgetItem>
-
-using namespace Kiran::Theme;
 
 #define ITEM_USER_OBJ_PATH_ROLE Qt::UserRole + 1
 
@@ -399,7 +395,7 @@ void AccountWidget::onUserPropertyChanged(const QString &objectPath, const QStri
             bool isLocked = accountAPI->locked();
             item->setText(userName);
             item->setIcon(QIcon(iconFile));
-            ((KiranSidebarItem*)item)->setStatusDesc(isLocked ? tr("disable") : tr("enable"), isLocked ? QColor("#fa4949") : QColor("#43a3f2"));
+            ((KiranSidebarItem *)item)->setStatusDesc(isLocked ? tr("disable") : tr("enable"), isLocked ? QColor("#fa4949") : QColor("#43a3f2"));
             break;
         }
     }

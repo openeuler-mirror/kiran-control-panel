@@ -21,13 +21,10 @@
 #include <kiran-session-daemon/audio-i.h>
 #include <qt5-log-i.h>
 
-#include <style-helper.h>
 #include <QMouseEvent>
 #include <QPainter>
 #include <QStyleOption>
 #include <QSvgRenderer>
-
-using namespace Kiran::Theme;
 
 VolumeSettingPage::VolumeSettingPage(enum AudioNode audio, const QString objectPath, QWidget *parent) : QWidget(parent), ui(new Ui::VolumeSettingPage)
 {
