@@ -58,10 +58,7 @@
       </spacer>
      </item>
      <item>
-      <widget class="QLabel" name="flag">
-       <property name="enabled">
-        <bool>true</bool>
-       </property>
+      <widget class="KiranIcon" name="flag" native="true">
        <property name="minimumSize">
         <size>
          <width>10</width>
@@ -74,15 +71,20 @@
          <height>10</height>
         </size>
        </property>
-       <property name="text">
-        <string>FLAG</string>
-       </property>
       </widget>
      </item>
     </layout>
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>KiranIcon</class>
+   <extends>QWidget</extends>
+   <header>kiran-icon.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

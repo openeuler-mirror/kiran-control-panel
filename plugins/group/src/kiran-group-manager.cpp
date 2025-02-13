@@ -21,6 +21,7 @@
 #include "kiran-color-block.h"
 #include "mask-widget.h"
 
+#include <kiran-sidebar-item.h>
 #include <kiran-sidebar-widget.h>
 #include <qt5-log-i.h>
 #include <QDebug>
@@ -146,9 +147,9 @@ void KiranGroupManager::initGroupList()
         {
             KSDGroupAdminListProxy interface(GROUP_ADMIN_DBUS_NAME, iter, QDBusConnection::systemBus());
 
-            auto item = new QListWidgetItem(interface.groupName(), m_tabList);
+            auto item = new KiranSidebarItem(interface.groupName(), m_tabList);
             item->setIcon(QIcon::fromTheme("krsvg-group-icon"));
-            item->setData(Kiran::ItemStatusColor_Role, QColor("#fa4949"));
+            item->setStatusDesc(tr(""), QColor("#fa4949"));
             item->setData(ITEM_GROUP_OBJ_PATH_ROLE, iter);
             m_tabList->addItem(item);
         }
@@ -183,9 +184,9 @@ void KiranGroupManager::appendSidebarItem(QString groupPath, QString errMsg)
     KLOG_INFO() << "current Thread:" << QThread::currentThreadId();
     KSDGroupAdminListProxy interface(GROUP_ADMIN_DBUS_NAME, groupPath, QDBusConnection::systemBus());
 
-    auto item = new QListWidgetItem(interface.groupName(), m_tabList);
+    auto item = new KiranSidebarItem(interface.groupName(), m_tabList);
     item->setIcon(QIcon::fromTheme("krsvg-group-icon"));
-    item->setData(Kiran::ItemStatusColor_Role, QColor("#fa4949"));
+    item->setStatusDesc(tr(""), QColor("#fa4949"));
     item->setData(ITEM_GROUP_OBJ_PATH_ROLE, groupPath);
 
     m_tabList->addItem(item);

@@ -14,11 +14,13 @@
 #ifndef KIRANTIMEZONEITEM_H
 #define KIRANTIMEZONEITEM_H
 
+#include <QIcon>
 #include <QWidget>
 
 #include "dbus-api-wrapper/timedate-interface.h"
 
-namespace Ui {
+namespace Ui
+{
 class KiranTimeZoneItem;
 }
 
@@ -28,8 +30,8 @@ class KiranTimeZoneItem : public QWidget
     Q_PROPERTY(QColor searchHighLightColor READ searchHighLightColor WRITE setSearchHighLightColor)
     Q_PROPERTY(bool isSelected READ isSelected WRITE setisSelected NOTIFY isSelectedChanged)
 public:
-    explicit KiranTimeZoneItem(const ZoneInfo zoneInfo,QWidget *parent = nullptr);
-    explicit KiranTimeZoneItem(QWidget* parent=nullptr);
+    explicit KiranTimeZoneItem(const ZoneInfo zoneInfo, QWidget *parent = nullptr);
+    explicit KiranTimeZoneItem(QWidget *parent = nullptr);
 
     ~KiranTimeZoneItem();
 
@@ -39,7 +41,7 @@ public:
 
     bool isSelected() const;
 
-    void setHeightLightKeyword(const QString& keyword);
+    void setHeightLightKeyword(const QString &keyword);
     void unsetHeightLightKeyword();
 Q_SIGNALS:
     void clicked();
@@ -48,7 +50,7 @@ Q_SIGNALS:
 
 public slots:
     void setSearchHighLightColor(QColor searchHighLightColor);
-    void seletedZoneInfoChanged(const QString& zoneID);
+    void seletedZoneInfoChanged(const QString &zoneID);
     void setisSelected(bool isSelected);
     void mousePressEvent(QMouseEvent *event) override;
 
@@ -57,7 +59,7 @@ protected:
 
 private:
     Ui::KiranTimeZoneItem *ui;
-    QPixmap m_selectedIcon;
+    QIcon m_selectedIcon;
     QColor m_searchHighLightColor;
     bool m_isSelected;
     QString m_keyword;
@@ -67,4 +69,4 @@ private:
     bool m_isResultTip;
 };
 
-#endif // KIRANTIMEZONEITEM_H
+#endif  // KIRANTIMEZONEITEM_H

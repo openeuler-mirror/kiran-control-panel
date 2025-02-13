@@ -68,8 +68,7 @@ void ImageEnrollProgressBar::setProgress(uint progress)
         if (progress >= min)
         {
             QString imgPath = std::get<1>(iter);
-            // TODO: 后续使用KiranIcon代替QLable，无需跟随主题变化转换像素
-            QIcon icon(QIcon::fromTheme(imgPath));
+            QIcon icon(imgPath);
             pixmap = icon.pixmap(m_fingerWidget->size());
         }
     }

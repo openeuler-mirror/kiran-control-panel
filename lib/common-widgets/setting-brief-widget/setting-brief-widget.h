@@ -44,9 +44,6 @@ protected:
 signals:
     void clicked();
 
-private slots:
-    void updateThemeArrowIcon();
-
 private:
     Ui::SettingBriefWidget *ui;
     int m_wallpaperType = -1;

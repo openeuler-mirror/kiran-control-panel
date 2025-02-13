@@ -43,6 +43,13 @@
 
     <qresource prefix="/kcp-authentication">
         <file>images/addition.svg</file>
+        <file>images/finger-0.svg</file>
+        <file>images/finger-25.svg</file>
+        <file>images/finger-50.svg</file>
+        <file>images/finger-75.svg</file>
+        <file>images/finger-100.svg</file>
+        <file>images/face-0.svg</file>
+        <file>images/iris-0.svg</file>
     </qresource>
 
     <qresource prefix="/kcp-application">
