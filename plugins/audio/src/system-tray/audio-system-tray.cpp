@@ -30,11 +30,6 @@
 #include <QScreen>
 #include <QSvgRenderer>
 
-#include <palette.h>
-#include <style-helper.h>
-
-using namespace Kiran::Theme;
-
 #define STATUS_NOTIFIER_MANAGER "org.kde.StatusNotifierManager"
 #define STATUS_NOTIFIER_MANAGER_OBJECT_NAME "/StatusNotifierManager"
 
@@ -140,14 +135,6 @@ void AudioSystemTray::initConnect()
         {
             setTrayIcon(currentVolume);
         } });
-
-    connect(DEFAULT_PALETTE(), &Palette::baseColorsChanged, [this]()
-            {
-                //获取当前音量值重新设置TrayIcon
-                QDBusPendingReply<QString> defaultSinkPath = m_audioInterface->GetDefaultSink();
-                AudioDeviceInterface defaultSink (AUDIO_DBUS_NAME, defaultSinkPath, QDBusConnection::sessionBus());
-                double currentVolumeDouble = defaultSink.volume() * 100;
-                setTrayIcon(round(currentVolumeDouble)); });
 }
 
 void AudioSystemTray::handleAudioTrayClicked(QSystemTrayIcon::ActivationReason reason)

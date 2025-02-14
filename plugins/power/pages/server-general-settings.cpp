@@ -16,12 +16,8 @@
 #include "ui_server-general-settings.h"
 
 #include <kiran-switch-button.h>
-#include <palette.h>
 #include <qt5-log-i.h>
-#include <style-helper.h>
 #include <QGSettings>
-
-using namespace Kiran::Theme;
 
 #define MAX_IDLE_TIME 120
 

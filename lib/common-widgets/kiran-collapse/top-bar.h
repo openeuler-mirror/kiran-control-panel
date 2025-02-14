@@ -39,12 +39,8 @@ public:
     void setTopBarMargin(int left, int top, int right, int bottom);
     // 设置控件间距
     void setTopBarSpacing(int spacing);
-    // 接收图标 URL
-    void setFlagPixmap(const QString& flag_url);
-    // 接收 Pixmap 图标
-    void setFlagPixmap(const QPixmap& pixmap);
-    // 刷新 Pixmap 图标
-    void refreshFlagPixmap(bool isExpanded);
+    // 刷新 Icon 图标
+    void refreshFlagIcon(bool isExpanded);
 
 protected:
     void mouseReleaseEvent(QMouseEvent* event) override;
@@ -54,6 +50,7 @@ signals:
 
 private:
     void init();
+    QIcon rotateFlagIcon(qreal angle);
 
 private:
     Ui::TopBar* ui;

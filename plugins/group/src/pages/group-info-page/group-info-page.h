@@ -35,7 +35,7 @@ public:
     GroupInfoPage(QWidget *parent = nullptr);
     ~GroupInfoPage();
 
-    ///　从GroupAdmin服务中重新加载用户信息
+    /// 　从GroupAdmin服务中重新加载用户信息
     void updateInfo();
 
     /// 设置当前显示的用户组的DBus对象路径
@@ -74,8 +74,6 @@ private Q_SLOTS:
     void handlerAddUserToGroupIsDone(QString errMsg);
 
     void searchFilter(QString filterString);
-
-    void updateIcon();
 
 private:
     /// 初始化界面

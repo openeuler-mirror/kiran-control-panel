@@ -113,7 +113,7 @@
            </spacer>
           </item>
           <item>
-           <widget class="QLabel" name="avatar">
+           <widget class="KiranIcon" name="avatar" native="true">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -131,9 +131,6 @@
               <width>90</width>
               <height>90</height>
              </size>
-            </property>
-            <property name="text">
-             <string>TextLabel</string>
             </property>
            </widget>
           </item>
@@ -753,6 +750,12 @@
    <class>AnimationPushButton</class>
    <extends>QPushButton</extends>
    <header location="global">animation-push-button.h</header>
+  </customwidget>
+  <customwidget>
+   <class>KiranIcon</class>
+   <extends>QWidget</extends>
+   <header>kiranwidgets-qt5/kiran-icon.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>

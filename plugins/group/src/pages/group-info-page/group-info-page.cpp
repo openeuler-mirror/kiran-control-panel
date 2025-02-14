@@ -12,8 +12,6 @@
  * Author:     wangshichang <shichang@isrc.iscas.ac.cn>
  */
 #include "group-info-page.h"
-#include <palette.h>
-#include <style-helper.h>
 #include "./ui_group-info-page.h"
 #include "accounts-global-info.h"
 #include "config.h"
@@ -27,8 +25,6 @@
 #include <QAction>
 #include <QKeyEvent>
 #include <QPainter>
-
-using namespace Kiran::Theme;
 
 enum PageEnum
 {
@@ -83,8 +79,7 @@ void GroupInfoPage::initUI()
     ui->change_name_button->setStyleSheet("border:none;");
 
     // 用户组icon
-    updateIcon();
-    connect(DEFAULT_PALETTE(), &Palette::baseColorsChanged, this, &GroupInfoPage::updateIcon);
+    ui->avatar->setIcon(QIcon::fromTheme("krsvg-group-icon"));
 
     ui->stackedWidget_edit_name->setCurrentIndex(NAME_LABEL);
 
@@ -352,20 +347,4 @@ void GroupInfoPage::searchFilter(QString filterString)
             }
         }
     }
-}
-
-void GroupInfoPage::updateIcon()
-{
-    // TODO: 后续使用KiranIcon代替QLable，无需跟随主题变化转换像素
-    auto icon = QIcon::fromTheme("krsvg-group-icon");
-    auto groupPixmap = icon.pixmap(QSize(90, 90));
-
-    if (DEFAULT_STYLE_HELPER()->paletteType() != PaletteType::PALETTE_DARK)
-    {
-        QImage groupImage = groupPixmap.toImage();
-        groupImage.invertPixels(QImage::InvertRgb);
-        groupPixmap = QPixmap::fromImage(groupImage);
-    }
-
-    ui->avatar->setPixmap(groupPixmap);
 }

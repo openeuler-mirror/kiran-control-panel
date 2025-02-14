@@ -40,7 +40,7 @@
     </widget>
    </item>
    <item>
-    <widget class="QLabel" name="icon">
+    <widget class="KiranIcon" name="icon" native="true">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
        <horstretch>0</horstretch>
@@ -56,19 +56,21 @@
      <property name="maximumSize">
       <size>
        <width>16</width>
-       <height>10</height>
+       <height>16</height>
       </size>
-     </property>
-     <property name="lineWidth">
-      <number>0</number>
-     </property>
-     <property name="text">
-      <string/>
      </property>
     </widget>
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>KiranIcon</class>
+   <extends>QWidget</extends>
+   <header>kiranwidgets-qt5/kiran-icon.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

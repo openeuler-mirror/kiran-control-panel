@@ -18,14 +18,11 @@
 #include "ui_top-bar.h"
 
 #include <kiran-switch-button.h>
-#include <palette.h>
-#include <style-helper.h>
+#include <QIcon>
 #include <QMouseEvent>
 #include <QPainter>
 #include "QtSvg/QSvgRenderer"
-#include "top-bar-flag-pixmap.h"
 
-using namespace Kiran::Theme;
 TopBar::TopBar(QWidget* parent) : QWidget(parent),
                                   ui(new Ui::TopBar)
 {
@@ -52,65 +49,19 @@ void TopBar::init()
                        m_topBarMarginBottom);
     ui->horizontalLayout->setSpacing(m_spacing);
     this->setFixedHeight(m_height);
-    this->refreshFlagPixmap(true);
-
-    // TODO: 后续使用KiranIcon代替QLable，无需跟随主题变化转换像素
-    connect(DEFAULT_PALETTE(), &Palette::baseColorsChanged, this, [=]()
-            {
-        // 将 QPixmap 转换为 QImage
-        QImage image = ui->flag->pixmap()->toImage();
-
-        // 反转颜色
-        for (int y = 0; y < image.height(); ++y)
-        {
-            for (int x = 0; x < image.width(); ++x)
-            {
-                QColor color = image.pixelColor(x, y);
-                QColor invertedColor = QColor(255 - color.red(), 255 - color.green(), 255 - color.blue(), color.alpha());
-                image.setPixelColor(x, y, invertedColor);
-            }
-        }
-
-        // 将反转颜色后的 QImage 设置为标志的 pixmap
-        ui->flag->setPixmap(QPixmap::fromImage(image)); });
+    this->refreshFlagIcon(true);
 }
 
-void TopBar::setFlagPixmap(const QString& flag_url)
+void TopBar::refreshFlagIcon(bool isExpanded)
 {
-    if (flag_url.isEmpty())
-    {
-        KLOG_WARNING(qLcCommonWidget) << "flag_url is empty!";
-        return;
-    }
-    m_flag = QPixmap(flag_url).scaled(ui->flag->size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-    ui->flag->setPixmap(m_flag);
-}
-
-void TopBar::setFlagPixmap(const QPixmap& pixmap)
-{
-    m_flag = pixmap;
-    ui->flag->setPixmap(m_flag);
-}
-
-void TopBar::refreshFlagPixmap(bool isExpanded)
-{
-    auto styleType = DEFAULT_STYLE_HELPER()->paletteType();
-    // clang-format off
     if (isExpanded)
     {
-        ui->flag->setPixmap(
-            (styleType == PaletteType::PALETTE_DARK) ?
-                   FlagPixmap::expansionFlagPixmap().scaled(ui->flag->size(),Qt::IgnoreAspectRatio,Qt::SmoothTransformation) :
-                   FlagPixmap::expansionFlagPixmapDark().scaled(ui->flag->size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation)
-        );
-        return;
+        ui->flag->setIcon(rotateFlagIcon(90));
     }
-    ui->flag->setPixmap(
-        (styleType == PaletteType::PALETTE_DARK) ?
-               FlagPixmap::collapseFlagPixmap().scaled(ui->flag->size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation) :
-               FlagPixmap::collapseFlagPixmapDark().scaled(ui->flag->size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation)
-        );
-    // clang-format on
+    else
+    {
+        ui->flag->setIcon(rotateFlagIcon(-90));
+    }
 }
 
 void TopBar::addWidget(QWidget* widget)
@@ -141,4 +92,19 @@ void TopBar::setTopBarSpacing(int spacing)
 {
     m_spacing = spacing;
     ui->horizontalLayout->setSpacing(m_spacing);
+}
+
+QIcon TopBar::rotateFlagIcon(qreal angle)
+{
+    auto icon = QIcon::fromTheme("ksvg-arrow");
+    auto pixmap = icon.pixmap(QSize(16, 16));
+    // 创建旋转变换
+    QTransform transform;
+    transform.rotate(angle);
+
+    // 应用旋转
+    QPixmap rotatedPixmap = pixmap.transformed(transform, Qt::SmoothTransformation);
+
+    // 将旋转后的 QPixmap 转换为 QIcon
+    return QIcon(rotatedPixmap);
 }
