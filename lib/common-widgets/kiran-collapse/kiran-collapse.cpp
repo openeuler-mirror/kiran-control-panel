@@ -13,15 +13,17 @@
  */
 
 #include "kiran-collapse.h"
-#include <palette.h>
 #include "ui_kiran-collapse.h"
 
+#include <palette.h>
 #include <QDebug>
 #include <QHBoxLayout>
 #include <QPainter>
 #include <QPainterPath>
 #include <QPropertyAnimation>
 #include <QStyleOption>
+
+using namespace Kiran::Theme;
 
 KiranCollapse::KiranCollapse(QWidget *parent)
     : KiranCollapse(false, "", nullptr, parent)
@@ -96,7 +98,7 @@ void KiranCollapse::expand()
     m_animationForES->start();
 
     m_isExpanded = true;
-    ui->topBar->refreshFlagPixmap(m_isExpanded);
+    ui->topBar->refreshFlagIcon(m_isExpanded);
     emit expandSpaceExpanded();
 }
 
@@ -111,7 +113,7 @@ void KiranCollapse::collapse()
     m_animationForES->setEndValue(0);
     m_animationForES->start();
     m_isExpanded = false;
-    ui->topBar->refreshFlagPixmap(m_isExpanded);
+    ui->topBar->refreshFlagIcon(m_isExpanded);
     emit expandSpaceCollapsed();
 }
 
@@ -188,7 +190,7 @@ void KiranCollapse::setIsExpand(bool isExpanded)
     m_isExpanded = isExpanded;
     // 根据展开/折叠设置最大高度
     ui->expansionSpace->setMaximumHeight(m_isExpanded ? m_maximumExpansionSpaceHeight : 0);
-    ui->topBar->refreshFlagPixmap(m_isExpanded);
+    ui->topBar->refreshFlagIcon(m_isExpanded);
 }
 
 void KiranCollapse::addTopBarWidget(QWidget *widget)

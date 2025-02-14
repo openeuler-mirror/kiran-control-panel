@@ -19,7 +19,6 @@
 #include <QStyleOption>
 
 #include <palette.h>
-#include <style-helper.h>
 #include <QPainterPath>
 
 using namespace Kiran::Theme;
@@ -47,9 +46,8 @@ void SettingBriefWidget::setName(QString name)
 void SettingBriefWidget::initUI(QString title)
 {
     ui->label_text->setText(title);
-    ui->label_arrow->setFixedSize(16, 16);
-    updateThemeArrowIcon();
-    connect(DEFAULT_PALETTE(), &Palette::baseColorsChanged, this, &SettingBriefWidget::updateThemeArrowIcon);
+    ui->arrow->setFixedSize(16, 16);
+    ui->arrow->setIcon(QIcon::fromTheme("ksvg-arrow"));
 }
 
 void SettingBriefWidget::mousePressEvent(QMouseEvent *event)
@@ -87,20 +85,4 @@ void SettingBriefWidget::paintEvent(QPaintEvent *)
     painterPath.addRoundedRect(opt.rect, 6, 6);
 
     p.fillPath(painterPath, background);
-}
-
-void SettingBriefWidget::updateThemeArrowIcon()
-{
-    // TODO: 后续使用KiranIcon代替QLable，无需跟随主题变化转换像素
-    auto icon = QIcon::fromTheme("ksvg-arrow");
-    auto pixmap = icon.pixmap(QSize(16, 16));
-
-    if (DEFAULT_STYLE_HELPER()->paletteType() != PaletteType::PALETTE_DARK)
-    {
-        QImage image = pixmap.toImage();
-        image.invertPixels(QImage::InvertRgb);
-        pixmap = QPixmap::fromImage(image);
-    }
-
-    ui->label_arrow->setPixmap(pixmap);
 }

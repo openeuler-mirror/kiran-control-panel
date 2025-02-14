@@ -14,8 +14,6 @@
 
 #include "kiran-setting-item.h"
 #include <kiran-label.h>
-#include <palette.h>
-#include <style-helper.h>
 #include <QBoxLayout>
 #include <QLabel>
 #include <QPushButton>

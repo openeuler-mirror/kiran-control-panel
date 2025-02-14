@@ -78,7 +78,7 @@ QWidget* FacePage::initFeatureEnrollPage()
     featureEnrollLayout->setContentsMargins(0, 0, 0, 16);
 
     m_enrollProgress = new ImageEnrollProgressBar(featureEnrollWidget);
-    m_enrollProgress->registerPercentImage(0, "ksvg-face-0");
+    m_enrollProgress->registerPercentImage(0, ":/kcp-authentication/images/face-0.svg");
     m_enrollProgress->setFixedSize(272, 272);
     m_enrollProgress->setProgress(50);
     featureEnrollLayout->addWidget(m_enrollProgress, 0, Qt::AlignHCenter);

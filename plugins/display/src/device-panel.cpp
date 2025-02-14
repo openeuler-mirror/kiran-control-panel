@@ -18,7 +18,6 @@
 #include "ui_device-panel.h"
 
 #include <palette.h>
-#include <style-helper.h>
 #include <QPainter>
 #include <QPainterPath>
 #include <QToolTip>
