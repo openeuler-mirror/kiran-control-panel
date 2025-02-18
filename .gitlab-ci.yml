@@ -1,22 +1,15 @@
 variables:
   EXTRA_DNF_REPOS: |
-                   [Kiran2.6]
-                   name=Kiran2.6
-                   gpgcheck=0
-                   baseurl=http://build.kylinsec.com.cn:82/KylinSec:/3.5.2:/Customize:/Kiran2.6/standard_x86_64/
-                   [KylinSec_3.5.2_Epol]
-                   name=KylinSec 3.5.2 (standard_x86_64)
-                   baseurl=http://build.kylinsec.com.cn:82/KylinSec:/3.5.2:/Epol/standard_x86_64/
-                   enabled=1
-                   gpgcheck=0
-                   [KylinSec_3.5.2_Mainline]
-                   name=KylinSec 3.5.2 (standard_x86_64)
-                   baseurl=http://build.kylinsec.com.cn:82/KylinSec:/3.5.2:/Mainline/standard_x86_64/
-                   gpgcheck=0
-                   gpgkey=http://build.kylinsec.com.cn:82/KylinSec:/3.5.2:/Mainline/standard_x86_64/repodata/repomd.xml.key
+                   [KylinSec_3.5.2_Customize_Kiran2.7]
+                   name=Kiran2.7(standard_x86_64)
+                   type=rpm-md
+                   baseurl=http://build.kylinsec.com.cn:82/KylinSec:/3.5.2:/Customize:/Kiran2.7/standard_x86_64/
+                   gpgcheck=1
+                   gpgkey=http://build.kylinsec.com.cn:82/KylinSec:/3.5.2:/Customize:/Kiran2.7/standard_x86_64/repodata/repomd.xml.key
                    enabled=1
   CMAKE_OPTIONS: -DBUILD_EXAMPLE=true
-  RPM_BUILD_REQUIRES: 'gcc-c++ cmake glib2-devel upower-devel zeromq-devel libnotify-devel pam-devel cryptopp-devel qt5-qtbase-devel qt5-qtx11extras-devel qt5-qtsvg-devel qt5-qtmultimedia-devel qt5-linguist kf5-networkmanager-qt-devel kiran-log-qt5-devel kiran-widgets-qt5-devel kiran-qt5-integration-devel kiran-qdbusxml2cpp kiran-cc-daemon-devel libqtxdg-devel kf5-kconfig-devel kiran-authentication-service-devel'
+  RPM_BUILD_REQUIRES: 'gcc-c++ cmake glib2-devel upower-devel zeromq-devel libnotify-devel pam-devel cryptopp-devel qt5-qtbase-devel qt5-qtx11extras-devel qt5-qtsvg-devel qt5-qtmultimedia-devel qt5-linguist kf5-networkmanager-qt-devel kiran-log-qt5-devel kiran-widgets-qt5-devel kiran-qt5-integration-devel kiran-qdbusxml2cpp kiran-cc-daemon-devel libqtxdg-devel kf5-kconfig-devel kiran-authentication-service-devel qt5-qtbase-static qt5-qtbase-private-devel'
+  DEFAULT_IMAGE: kylinsec-3.5.2
 include:
   - project: 'os/ks-devops'
     ref: main
