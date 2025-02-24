@@ -38,6 +38,20 @@ ConnectionDetailsWidget::~ConnectionDetailsWidget()
     delete ui;
 }
 
+QSize ConnectionDetailsWidget::sizeHint() const
+{
+    // 网络详情中存在多个IP地址一行会撑大布局，限制默认宽度在一个合适大小
+    auto size = QWidget::sizeHint();
+    return QSize(425,size.height());
+}
+
+QSize ConnectionDetailsWidget::minimumSizeHint() const
+{
+    // 网络详情中存在多个IP地址一行会撑大布局，限制默认宽度在一个合适大小
+    auto size = QWidget::minimumSizeHint();
+    return QSize(425,size.height());
+}
+
 void ConnectionDetailsWidget::init()
 {
     initUI();
@@ -87,7 +101,8 @@ void ConnectionDetailsWidget::initUI()
             label->setText("-");
         label->setStyleSheet("color:#919191;font-family: \"Noto Sans CJK SC Light\";");
     }
-
+    ui->ipv4->setElideMode(Qt::ElideRight);
+    ui->ipv6->setElideMode(Qt::ElideRight);
     ui->ipv6GatewayWidget->setVisible(false);
 }
 
@@ -155,7 +170,9 @@ void ConnectionDetailsWidget::setIpDetails()
         netmaskList << address.netmask().toString();
     }
     ui->ipv4->setText(addressList.join(";"));
+    ui->ipv4->setToolTip(addressList.join(";"));
     ui->subnetMask->setText(netmaskList.join(";"));
+    ui->subnetMask->setToolTip(netmaskList.join(";"));
     ui->ipv4Gateway->setText(gateway);
 
     Dhcp4Config::Ptr dhcp = m_activeConnection->dhcp4Config();
@@ -179,12 +196,12 @@ void ConnectionDetailsWidget::setIpDetails()
     {
         manualDNS << address.toString();
     }
+
     /**
      * NOTE:
      * 1、自动获取IP（DNS）后，网络详情显示自动获取到的DNS
      * 2、手动配置DNS，网络详情中DNS服务器仅显示手动配置的DNS
     */
-
     QString detailsDNS;
     manualDNS.isEmpty() ? tmpDNS = dhcpDns : tmpDNS = manualDNS;
     if(!tmpDNS.isEmpty())
