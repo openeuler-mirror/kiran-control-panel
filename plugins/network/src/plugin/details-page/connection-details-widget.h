@@ -35,6 +35,10 @@ public:
     ~ConnectionDetailsWidget() override;
     
 private:
+    virtual QSize sizeHint() const override;
+    virtual QSize minimumSizeHint() const override;
+
+private:
     void init();
     void initUI();
     void setWirelessSpecificDetails();

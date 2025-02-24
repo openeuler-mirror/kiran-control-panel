@@ -442,7 +442,7 @@
          </spacer>
         </item>
         <item>
-         <widget class="QLabel" name="ipv4">
+         <widget class="KiranLabel" name="ipv4">
           <property name="text">
            <string>TextLabel</string>
           </property>
@@ -706,7 +706,7 @@
          </spacer>
         </item>
         <item>
-         <widget class="QLabel" name="ipv6">
+         <widget class="KiranLabel" name="ipv6">
           <property name="text">
            <string>TextLabel</string>
           </property>
@@ -936,6 +936,11 @@
    <extends>QWidget</extends>
    <header location="global">kiran-frame/kiran-frame.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>KiranLabel</class>
+   <extends>QLabel</extends>
+   <header>kiran-label.h</header>
   </customwidget>
  </customwidgets>
  <resources/>
