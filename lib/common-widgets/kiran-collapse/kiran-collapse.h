@@ -11,10 +11,11 @@
  *
  * Author:     youzhengcai <youzhengcai@kylinsec.com.cn>
  */
-
+#pragma once
 #include <QWidget>
 
 class QPropertyAnimation;
+class QEvent;
 
 namespace Ui
 {
@@ -87,10 +88,10 @@ public:
     void setIsExpand(bool isExpanded);
 
     /**
-     * @brief 设置扩展区最大展开高度
-     * @param maxExpandHeight 最大展开高度 (默认为400)
+     * @brief 设置扩展区固定最大展开高度
+     * @param maxExpandHeight 最大展开高度
      */
-    void setMaximumExpansionHeight(int maxExpandHeight);
+    void setFixMaxExpansionHeight(int maxExpandHeight);
 
     /**
      * @brief 添加控件到扩展区
@@ -130,6 +131,7 @@ signals:
     void expandSpaceCollapsed();
 
 protected:
+    bool event(QEvent* event) override;
     void paintEvent(QPaintEvent* event) override;
 
 private slots:
@@ -141,12 +143,13 @@ private:
     void collapse();
 
 private:
-    Ui::KiranCollapse* ui;
+    ::Ui::KiranCollapse* ui;
 
     // 是否展开
     bool m_isExpanded = false;
-    // 展开最大高度
-    int m_maximumExpansionSpaceHeight = 400;
+
+    // 展开最大高度,为-1时，高度为内容高度
+    int m_fixMaxExpansionHeight = -1;
 
     // 扩展区内边距 (默认12)
     int m_expansionMarginLeft = 12;
