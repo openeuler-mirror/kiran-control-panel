@@ -14,17 +14,16 @@
 #include "group-info-page.h"
 #include "./ui_group-info-page.h"
 #include "accounts-global-info.h"
-#include "config.h"
+#include "def.h"
 #include "ksd_group_admin_list_proxy.h"
-#include "member-list-widget.h"
-#include "user-list-widget.h"
+#include "tools/group-name-checker.h"
+#include "tools/group-name-validator.h"
+#include "user-list-item.h"
 
+#include <kiran-message-box.h>
 #include <kiran-push-button.h>
-#include <kiranwidgets-qt5/kiran-message-box.h>
 #include <qt5-log-i.h>
-#include <QAction>
 #include <QKeyEvent>
-#include <QPainter>
 
 enum PageEnum
 {
@@ -32,13 +31,11 @@ enum PageEnum
     PAGE_ADD_USER
 };
 
-enum NameEdit
+enum NameEditor
 {
     NAME_LABEL,
-    LINE_EDIT
+    NAME_EDIT
 };
-
-#define ITEM_USER_NAME_ROLE Qt::UserRole + 2
 
 GroupInfoPage::GroupInfoPage(QWidget *parent)
     : QWidget(parent), ui(new Ui::GroupInfoPage)
@@ -58,293 +55,180 @@ void GroupInfoPage::initUI()
     m_errorTip->setShowPosition(KiranTips::POSITION_BOTTM);
     m_errorTip->setAnimationEnable(true);
 
-    m_memberContainer = new UsersContainer(ui->page_groupInfo);
-    ui->layoutMenberList->addWidget(m_memberContainer);
-    m_usersContainer = new UsersContainer(ui->page_addUser);
-    ui->layoutUserList->addWidget(m_usersContainer);
+    // 所有用户名
+    m_allUserName = getAllUserName();
 
-    KiranPushButton::setButtonType(ui->add_member_button, KiranPushButton::BUTTON_Default);
-    KiranPushButton::setButtonType(ui->confirm_add_button, KiranPushButton::BUTTON_Default);
+    // 用户列表容器
+    m_memberContainer = new UsersContainer(this);
+    ui->layout_menber_list->addWidget(m_memberContainer);
 
-    connect(ui->add_member_button, &QPushButton::clicked, [this]()
-            { ui->stackedWidget->setCurrentIndex(PAGE_ADD_USER); });
+    KiranPushButton::setButtonType(ui->btn_add_user, KiranPushButton::BUTTON_Default);
+    KiranPushButton::setButtonType(ui->btn_delete, KiranPushButton::BUTTON_Warning);
 
-    connect(ui->cancel_button, &QPushButton::clicked, [this]()
-            {
-                m_errorTip->hideTip();
-                ui->stackedWidget->setCurrentIndex(PAGE_GROUP_INFO); });
-
-    ui->change_name_button->setIcon(QIcon::fromTheme("ksvg-rename"));
-    ui->change_name_button->setFocusPolicy(Qt::NoFocus);
-    ui->change_name_button->setStyleSheet("border:none;");
+    ui->btn_change_name->setIcon(QIcon::fromTheme("ksvg-rename"));
+    ui->btn_change_name->setFocusPolicy(Qt::NoFocus);
+    ui->btn_change_name->setStyleSheet("border:none;");
 
     // 用户组icon
     ui->avatar->setIcon(QIcon::fromTheme("krsvg-group-icon"));
 
-    ui->stackedWidget_edit_name->setCurrentIndex(NAME_LABEL);
+    ui->stacked_name_editor->setCurrentIndex(NAME_LABEL);
+    ui->edit_name->setValidator(new GroupNameValidator(ui->edit_name));
+    ui->edit_name->installEventFilter(this);
 
-    connect(ui->delete_button, &QPushButton::clicked, [this]()
+    connect(ui->edit_name, &QLineEdit::returnPressed, this, &GroupInfoPage::onEditNameReturn);
+
+    connect(ui->btn_change_name, &QPushButton::clicked, [this]()
+            { 
+                ui->edit_name->setFocus();
+                ui->stacked_name_editor->setCurrentIndex(NAME_EDIT); });
+
+    connect(ui->btn_add_user, &QPushButton::clicked, [this]()
+            { emit requestAddUsersPage(m_curShowGroupPath); });
+
+    connect(ui->btn_delete, &QPushButton::clicked, [this]()
             {
-                //                emit sigIsBusyChanged(true);
-                ui->delete_button->setBusy(true);
-                emit sigDeleteGroup(gid, m_curShowGroupName); });
-
-    connect(ui->change_name_button, &QPushButton::clicked, [this]()
-            { ui->stackedWidget_edit_name->setCurrentIndex(LINE_EDIT); });
-
-    ui->lineEdit->installEventFilter(this);
-
-    /// 连接搜索框和user_list，使搜索框输入文字时在user_list上显示匹配到的用户
-    connect(ui->search_box, &QLineEdit::textEdited, this, &GroupInfoPage::searchFilter);
-
-    QPixmap in(":/kcp-group-images/search.svg");
-    QPixmap out(in.size() * 10 / 5);
-    QRect r = in.rect();
-    r.moveCenter(out.rect().center());
-    out.fill(Qt::transparent);
-
-    QPainter painter(&out);
-    painter.drawPixmap(r, in);
-    painter.end();
-    QIcon searchIcon(out);
-    QAction *action = new QAction(this);
-    action->setIcon(searchIcon);
-    ui->search_box->addAction(action, QLineEdit::LeadingPosition);
-
-    ui->search_box->setPlaceholderText(tr("Please input keys for search..."));
-
-    connect(ui->confirm_add_button, &QPushButton::clicked, [this]()
-            {
-                //                emit sigIsBusyChanged(true);
-                ui->confirm_add_button->setBusy(true);
-                QStringList userNameList;
-
-                for (auto &item : m_usersContainer->getAllFeatureItem())
-                {
-                    auto userListWidget = qobject_cast<UserListWidget *>(item);
-                    if (userListWidget->getRightButtionVisible())
-                    {
-                        userNameList.append(userListWidget->getText());
-                    }
-                }
-                emit sigAddUserToGroup(m_curShowGroupPath, userNameList); });
-}
-
-void GroupInfoPage::appendMemberListItem(const QString &userName)
-{
-    UserListWidget *itemWidget = new UserListWidget(m_memberContainer);
-    itemWidget->setText(userName);
-    itemWidget->setUserData(userName);
-    itemWidget->setRightButtonVisible(true, QIcon::fromTheme("ksvg-trash"));
-
-    connect(itemWidget, &UserListWidget::rightButtonClicked, [this](const QVariant &userName)
-            {
-                //                emit sigIsBusyChanged(true);
-                ui->add_member_button->setBusy(true);
-                emit sigRemoveMember(m_curShowGroupPath, userName.toString()); });
-
-    m_memberContainer->addFeatureItem(itemWidget);
+                ui->btn_delete->setBusy(true);
+                emit requestDeleteGroup(m_gid, m_curShowGroupName); });
 }
 
 void GroupInfoPage::updateInfo()
 {
     m_errorTip->hideTip();
 
+    // 更新用户名列表
+    m_allUserName = getAllUserName();
+
     KSDGroupAdminListProxy groupProxy(GROUP_ADMIN_DBUS_NAME,
                                       m_curShowGroupPath,
                                       QDBusConnection::systemBus());
+    m_gid = groupProxy.gid();
 
-    QString groupName = groupProxy.groupName();
-
-    gid = groupProxy.gid();
-
-    ui->name_label->setText(groupName);
-
+    auto groupName = groupProxy.groupName();
+    ui->label_name->setText(groupName);
     m_curShowGroupName = groupName;
 
-    ui->stackedWidget->setCurrentIndex(PAGE_GROUP_INFO);
-
     m_memberContainer->clear();
-
     /// 成员列表
-    QList<QString> memberList;
-    memberList = groupProxy.users();
-
-    for (auto &iter : memberList)
+    auto memberList = groupProxy.users();
+    for (auto iter : memberList)
     {
-        appendMemberListItem(iter);
-    }
-
-    m_usersContainer->clear();
-
-    /// 加载不在用户组中的用户
-    QStringList usersInGroup = groupProxy.users();
-    QStringList userObjList;
-    userObjList = AccountsGlobalInfo::instance()->getUserList();
-    for (auto &iter : userObjList)
-    {
-        auto userProxy = new KSDAccountsUserProxy(ACCOUNTS_DBUS_NAME,
-                                                  iter,
-                                                  QDBusConnection::systemBus(),
-                                                  this);
-        QString userName = userProxy->user_name();
-        if (usersInGroup.indexOf(userName) == -1)
+        if (!iter.isEmpty())
         {
-            appendUserListItem(iter);
+            appendMemberListItem(iter);
         }
     }
 }
 
-void GroupInfoPage::appendUserListItem(const QString &userPath)
+void GroupInfoPage::appendMemberListItem(const QString &userName)
 {
-    KSDAccountsUserProxy interface(ACCOUNTS_DBUS_NAME, userPath, QDBusConnection::systemBus());
+    auto item = new UserListItem(m_memberContainer);
+    item->setName(userName);
+    item->setRightBtnIcon(QIcon::fromTheme("ksvg-trash"));
+    item->setRightBtnVisible(true);
+    m_memberContainer->addItem(item);
 
-    auto item = new UserListWidget(m_usersContainer);
-    item->setText(interface.user_name());
-    item->setClickable(true);
-    item->setUserData(interface.user_name());
-    item->setRightButtonVisible(false, QIcon(":/kcp-group-images/chosen_icon.svg"));
-
-    connect(item, &UserListWidget::clicked, [item]()
+    connect(item, &UserListItem::rightButtonClicked, this, [this, item]()
             {
-                if (!item->getRightButtionVisible())
-                {
-                    item->setRightButtonVisible(true, QIcon(":/kcp-group-images/chosen_icon.svg"));
-                }
-                else
-                {
-                    item->setRightButtonVisible(false, QIcon(":/kcp-group-images/chosen_icon.svg"));
-                } });
+                ui->btn_add_user->setBusy(true);
+                emit requestRemoveMember(m_curShowGroupPath, item->name()); });
+}
 
-    m_usersContainer->addFeatureItem(item);
+QStringList GroupInfoPage::getAllUserName()
+{
+    QStringList result;
+    auto userObjList = AccountsGlobalInfo::instance()->getUserList();
+    for (auto iter : userObjList)
+    {
+        KSDAccountsUserProxy interface(ACCOUNTS_DBUS_NAME, iter, QDBusConnection::systemBus());
+        auto userName = interface.user_name();
+        result.append(userName);
+    }
+    return result;
 }
 
 void GroupInfoPage::setCurrentShowGroupPath(const QString &groupObj)
 {
     m_curShowGroupPath = groupObj;
     updateInfo();
-    ui->stackedWidget_edit_name->setCurrentIndex(NAME_LABEL);
+    ui->stacked_name_editor->setCurrentIndex(NAME_LABEL);
 }
 
-void GroupInfoPage::handlerRemoveMemberIsDone(QString errMsg)
+void GroupInfoPage::onEditNameReturn()
 {
-    //    emit sigIsBusyChanged(false);
-    ui->add_member_button->setBusy(false);
+    QString errorMessage;
+    if (!GroupNameChecker::isValid(ui->edit_name->text(), errorMessage))
+    {
+        m_errorTip->setText(errorMessage);
+        m_errorTip->showTipAroundWidget(ui->edit_name);
+        return;
+    }
+
+    emit requestChangeGroupName(m_curShowGroupPath, ui->edit_name->text());
+    ui->edit_name->clear();
+}
+
+void GroupInfoPage::onRemoveMemberFromGroupDone(QString errMsg)
+{
+    ui->btn_add_user->setBusy(false);
     if (!errMsg.isEmpty())
     {
         KiranMessageBox::message(nullptr, tr("Error"),
-                                 errMsg, KiranMessageBox::Yes | KiranMessageBox::No);
+                                 errMsg, KiranMessageBox::Ok);
+        return;
     }
     updateInfo();
 }
 
-void GroupInfoPage::handlerDeleteGroupIsDone(QString groupName, QString errMsg)
+void GroupInfoPage::onAddUserToGroupDone(QString errMsg)
 {
-    //    emit sigIsBusyChanged(false);
-    ui->delete_button->setBusy(false);
     if (!errMsg.isEmpty())
     {
         KiranMessageBox::message(nullptr, tr("Error"),
-                                 errMsg, KiranMessageBox::Yes | KiranMessageBox::No);
-    }
-}
-
-void GroupInfoPage::handlerChangeGroupNameIsDone(QString groupPath, QString errMsg)
-{
-    //    emit sigIsBusyChanged(false);
-    if (!errMsg.isEmpty())
-    {
-        KiranMessageBox::message(nullptr, tr("Error"),
-                                 errMsg, KiranMessageBox::Yes | KiranMessageBox::No);
-    }
-}
-
-void GroupInfoPage::handlerAddUserToGroupIsDone(QString errMsg)
-{
-    //    emit sigIsBusyChanged(false);
-    ui->confirm_add_button->setBusy(false);
-    if (!errMsg.isEmpty())
-    {
-        KiranMessageBox::message(nullptr, tr("Error"),
-                                 errMsg, KiranMessageBox::Yes | KiranMessageBox::No);
+                                 errMsg, KiranMessageBox::Ok);
+        return;
     }
     updateInfo();
-    ui->stackedWidget->setCurrentIndex(PAGE_GROUP_INFO);
+}
+
+void GroupInfoPage::onDeleteGroupDone(QString groupName, QString errMsg)
+{
+    ui->btn_delete->setBusy(false);
+    if (!errMsg.isEmpty())
+    {
+        KiranMessageBox::message(nullptr, tr("Error"),
+                                 errMsg, KiranMessageBox::Ok);
+    }
+}
+
+void GroupInfoPage::onChangeGroupNameDone(QString groupPath, QString errMsg)
+{
+    if (!errMsg.isEmpty())
+    {
+        KiranMessageBox::message(nullptr, tr("Error"),
+                                 errMsg, KiranMessageBox::Ok);
+    }
 }
 
 bool GroupInfoPage::eventFilter(QObject *watched, QEvent *event)
 {
-    if (ui->lineEdit == watched)
+    if (ui->edit_name == watched)
     {
         if (event->type() == QEvent::FocusOut)
         {
-            ui->lineEdit->clear();
-            ui->stackedWidget_edit_name->setCurrentIndex(NAME_LABEL);
+            ui->edit_name->clear();
+            ui->stacked_name_editor->setCurrentIndex(NAME_LABEL);
         }
         else if (event->type() == QEvent::KeyPress)
         {
             QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
-            if ((keyEvent->key() == Qt::Key_Return) ||
-                (keyEvent->key() == Qt::Key_Enter))
-            {
-                //                emit sigIsBusyChanged(false);
-                emit sigChangeGroupName(m_curShowGroupPath, ui->lineEdit->text());
-                ui->lineEdit->clear();
-            }
             if (keyEvent->key() == Qt::Key_Escape)
             {
-                ui->lineEdit->clear();
-                ui->stackedWidget_edit_name->setCurrentIndex(NAME_LABEL);
+                ui->stacked_name_editor->setCurrentIndex(NAME_LABEL);
+                ui->edit_name->clear();
             }
         }
     }
 
     return QWidget::eventFilter(watched, event);
-}
-
-void GroupInfoPage::searchFilter(QString filterString)
-{
-    KSDGroupAdminListProxy groupProxy(GROUP_ADMIN_DBUS_NAME,
-                                      m_curShowGroupPath,
-                                      QDBusConnection::systemBus());
-    QStringList usersInGroup = groupProxy.users();
-    QStringList userObjList;
-    userObjList = AccountsGlobalInfo::instance()->getUserList();
-    m_usersContainer->clear();
-
-    if (filterString.size() == 0)
-    {
-        /// 加载不在用户组中的用户
-        for (auto &iter : userObjList)
-        {
-            auto userProxy = new KSDAccountsUserProxy(ACCOUNTS_DBUS_NAME,
-                                                      iter,
-                                                      QDBusConnection::systemBus(),
-                                                      this);
-            QString userName = userProxy->user_name();
-            if (usersInGroup.indexOf(userName) == -1)
-            {
-                appendUserListItem(iter);
-            }
-        }
-    }
-    else
-    {
-        for (auto &iter : userObjList)
-        {
-            auto userProxy = new KSDAccountsUserProxy(ACCOUNTS_DBUS_NAME,
-                                                      iter,
-                                                      QDBusConnection::systemBus(),
-                                                      this);
-            QString userName = userProxy->user_name();
-            if (usersInGroup.indexOf(userName) == -1)
-            {
-                if (userName.indexOf(filterString) != -1)
-                {
-                    appendUserListItem(iter);
-                    continue;
-                }
-            }
-        }
-    }
 }
