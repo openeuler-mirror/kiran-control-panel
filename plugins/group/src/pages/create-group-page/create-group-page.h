@@ -17,8 +17,8 @@
 #include <QThread>
 #include <QWidget>
 
-#include "kiran-tips.h"
-#include "kiranwidgets-qt5/kiran-sidebar-widget.h"
+#include <kiran-sidebar-widget.h>
+#include "kiran-tips/kiran-tips.h"
 #include "users-container.h"
 
 QT_BEGIN_NAMESPACE
@@ -39,22 +39,18 @@ public:
 
     void reset();
 
-signals:
-    void sigCreateGroup(QString groupName);
-    void sigIsBusyChanged(bool isBusy);
-    void sigRequestSetCurrentGroup(const QString &groupPath);
-    void sigAddUserToGroup(QString groupPath, QStringList userName);
-
 private:
     void initUI();
-    void initUserList();
     void appendUserListItem(const QString &userPath);
-    void loadUsers();
 
 public Q_SLOTS:
-    void handlerCreateNewGroup();
-    void handlerCreateNewGroupIsDone(QString groupPath, QString errMsg);
-    void handlerAddUserToGroupIsDone(QString errMsg);
+    void onCreateGroupClicked();
+    void onCreateGroupDone(QString groupPath, QString errMsg);
+    void onAddUserToGroupDone(QString errMsg);
+
+signals:
+    void requestCreateGroup(const QString groupName);
+    void requestAddUserToGroup(const QString groupPath, const QStringList userName);
 
 private:
     Ui::CreateGroupPage *ui;

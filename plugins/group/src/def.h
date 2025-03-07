@@ -11,8 +11,7 @@
  *
  * Author:     wangshichang <shichang@isrc.iscas.ac.cn>
  */
-#ifndef CONFIG_H
-#define CONFIG_H
+#pragma once
 
 #define GROUP_ADMIN_DBUS_NAME "org.group.admin"
 #define GROUP_ADMIN_OBJECT_PATH "/org/group/admin"
@@ -20,6 +19,3 @@
 #define ACCOUNTS_DBUS_NAME "com.kylinsec.Kiran.SystemDaemon.Accounts"
 #define ACCOUNTS_OBJECT_PATH "/com/kylinsec/Kiran/SystemDaemon/Accounts"
 #define ACCOUNTS_DBUS_INTERFACE_NAME "com.kylinsec.Kiran.SystemDaemon.Accounts"
-#define CONFIG_FILE_PATH "/etc/kiran-cpanel-account/kiran-account-manager.conf"
-
-#endif

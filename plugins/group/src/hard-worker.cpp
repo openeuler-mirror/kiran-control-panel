@@ -1,18 +1,18 @@
 /**
- * Copyright (c) 2020 ~ 2021 KylinSec Co., Ltd. 
+ * Copyright (c) 2020 ~ 2021 KylinSec Co., Ltd.
  * kiran-cpanel-group is licensed under Mulan PSL v2.
- * You can use this software according to the terms and conditions of the Mulan PSL v2. 
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
  * You may obtain a copy of Mulan PSL v2 at:
- *          http://license.coscl.org.cn/MulanPSL2 
- * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND, 
- * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT, 
- * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.  
- * See the Mulan PSL v2 for more details.  
- * 
+ *          http://license.coscl.org.cn/MulanPSL2
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ *
  * Author:     wangshichang <shichang@isrc.iscas.ac.cn>
  */
 #include "hard-worker.h"
-#include "config.h"
+#include "def.h"
 #include "groups-global-info.h"
 #include "ksd_group_admin_list_proxy.h"
 #include "ksd_group_admin_proxy.h"
@@ -35,45 +35,23 @@ void HardWorker::doCreateGroup(QString groupName)
                                   GROUP_ADMIN_OBJECT_PATH,
                                   QDBusConnection::systemBus());
     QString groupObjPath;
-    QString errMsgPrefix = tr("Create Group failed");
-    QString errMsgDetail;
+    QString errMsg;
 
-    QDBusPendingReply<QDBusObjectPath> createGroupRep;
-    createGroupRep = groupAdmin.CreateGroup(groupName);
-    createGroupRep.waitForFinished();
-    if (createGroupRep.isError())
+    QDBusPendingReply<QDBusObjectPath> reply;
+    reply = groupAdmin.CreateGroup(groupName);
+    reply.waitForFinished();
+    if (reply.isError())
     {
-        KLOG_WARNING() << "create group failed," << createGroupRep.error();
-        errMsgDetail = createGroupRep.error().message();
-        goto failed;
+        KLOG_WARNING() << "create group failed," << reply.error();
+        errMsg = QString(tr("Failed to create group, %1")).arg(reply.error().message());
+        emit sigCreateGroupDone("", errMsg);
+        return;
     }
 
-    groupObjPath = createGroupRep.value().path();
+    groupObjPath = reply.value().path();
 
-    KLOG_INFO() << QString("create group(%1) is done").arg(groupName);
+    KLOG_INFO() << QString("create group(%1) is done.").arg(groupName);
     emit sigCreateGroupDone(groupObjPath, "");
-    return;
-failed:
-    if (!groupObjPath.isEmpty())
-    {
-        KSDGroupAdminListProxy groupListInterface(GROUP_ADMIN_DBUS_NAME,
-                                                  groupObjPath,
-                                                  QDBusConnection::systemBus());
-        qulonglong groupID = groupListInterface.gid();
-        auto reply = groupAdmin.DeleteGroup(groupID);
-        reply.waitForFinished();
-        if (reply.isError())
-        {
-            KLOG_WARNING() << "create group failed,delete group:" << reply.error();
-        }
-    }
-    QString errMsg = errMsgPrefix;
-    if (!errMsgDetail.isEmpty())
-    {
-        errMsg.append(",");
-        errMsg.append(errMsgDetail);
-    }
-    emit sigCreateGroupDone("", errMsg);
 }
 
 void HardWorker::doDeleteGroup(int gid, QString groupName)
@@ -88,18 +66,20 @@ void HardWorker::doDeleteGroup(int gid, QString groupName)
     reply.waitForFinished();
     if (reply.isError())
     {
-        KLOG_INFO() << "delete group" << reply.error();
-        QString errMsg = QString(tr("Failed to delete group,%1")).arg(reply.error().message());
+        KLOG_WARNING() << "delete group failed," << reply.error();
+        QString errMsg = QString(tr("Failed to delete group, %1")).arg(reply.error().message());
         emit sigDeleteGroupDone("", errMsg);
     }
     else
     {
+        KLOG_INFO() << QString("delete group(%1) is done.").arg(groupName);
         emit sigDeleteGroupDone(groupName, "");
     }
 }
 
 void HardWorker::doAddUserToGroup(QString groupPath, QStringList userNameList)
 {
+    QString errMsg;
     KSDGroupAdminListProxy groupProxy(GROUP_ADMIN_DBUS_NAME, groupPath,
                                       QDBusConnection::systemBus());
 
@@ -110,8 +90,8 @@ void HardWorker::doAddUserToGroup(QString groupPath, QStringList userNameList)
         if (reply.isError())
         {
             KLOG_WARNING() << "add user " << userName << " failed, " << reply.error();
-            emit sigAddUserToGroupDone(tr(" add user to group failed"));
-            return;
+            errMsg = QString(tr("Failed to add %1 to group, %2")).arg(userName).arg(reply.error().message());
+            break;
         }
         else
         {
@@ -119,7 +99,7 @@ void HardWorker::doAddUserToGroup(QString groupPath, QStringList userNameList)
         }
     }
 
-    emit sigAddUserToGroupDone("");
+    emit sigAddUserToGroupDone(errMsg);
 }
 
 void HardWorker::doRemoveMemberFromGroup(QString groupPath, QString userName)
@@ -132,7 +112,8 @@ void HardWorker::doRemoveMemberFromGroup(QString groupPath, QString userName)
     if (reply.isError())
     {
         KLOG_WARNING() << "remove member " << userName << " failed, " << reply.error();
-        emit sigRemoveMemberFromGroupDone(tr(" add user to group failed"));
+        auto errMsg = QString(tr("Failed to remove %1 from group, %2")).arg(userName).arg(reply.error().message());
+        emit sigRemoveMemberFromGroupDone(errMsg);
     }
     else
     {
@@ -155,7 +136,8 @@ void HardWorker::doChangeGroupName(QString groupPath, QString groupName)
         if (reply.isError())
         {
             KLOG_WARNING() << "change group name for " << groupProxy.groupName() << "( to name " << groupName << ") failed, " << reply.error();
-            emit sigChangeGroupNameDone("", tr(" change group name failed"));
+            auto errMsg = QString(tr("Failed to change group name to %1, %2")).arg(groupName).arg(reply.error().message());
+            emit sigChangeGroupNameDone("", errMsg);
         }
         else
         {
@@ -166,6 +148,7 @@ void HardWorker::doChangeGroupName(QString groupPath, QString groupName)
     else
     {
         KLOG_WARNING() << "change group name for " << groupProxy.groupName() << "( to name " << groupName << ") failed, the new group name is occupied";
-        emit sigChangeGroupNameDone("", tr(" change group name failed, the new group name is occupied"));
+        auto errMsg = QString(tr("Failed to change group name to %1, the new group name is occupied!")).arg(groupName);
+        emit sigChangeGroupNameDone("", errMsg);
     }
 }

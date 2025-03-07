@@ -1,21 +1,21 @@
 /**
- * Copyright (c) 2020 ~ 2021 KylinSec Co., Ltd. 
+ * Copyright (c) 2020 ~ 2021 KylinSec Co., Ltd.
  * kiran-cpanel-group is licensed under Mulan PSL v2.
- * You can use this software according to the terms and conditions of the Mulan PSL v2. 
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
  * You may obtain a copy of Mulan PSL v2 at:
- *          http://license.coscl.org.cn/MulanPSL2 
- * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND, 
- * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT, 
- * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.  
- * See the Mulan PSL v2 for more details.  
- * 
+ *          http://license.coscl.org.cn/MulanPSL2
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ *
  * Author:     wangshichang <shichang@isrc.iscas.ac.cn>
  */
 #ifndef GROUPSGLOBALINFO_H
 #define GROUPSGLOBALINFO_H
 
-#include "ksd_group_admin_proxy.h"
 #include "ksd_group_admin_list_proxy.h"
+#include "ksd_group_admin_proxy.h"
 
 #include <QList>
 #include <QObject>
@@ -45,7 +45,7 @@ public:
 
     /**
      * @brief 检查是否存在重名用户组
-     * @param account 需检查的用户组名
+     * @param groupName 需检查的用户组名
      * @return 是否可用
      */
     bool checkGroupNameAvaliable(const QString &groupName);
@@ -55,8 +55,8 @@ private:
     void deleteGroupFromMap(const QDBusObjectPath &group);
 
 signals:
-    void GroupAdded(const QDBusObjectPath &obj);
-    void GroupDeleted(const QDBusObjectPath &obj);
+    void GroupAdded(const QString &groupPath);
+    void GroupDeleted(const QString &groupPath);
     void GroupPropertyChanged(QString groupPath,
                               QString propertyName,
                               QVariant value);
@@ -66,7 +66,7 @@ private Q_SLOTS:
 
 private:
     KSDGroupAdminProxy m_groupAdminInterface;
-    QMap<QString,KSDGroupAdminListProxy*> m_groupsMap; // QMap<DBus对象路径,用户相关接口>
+    QMap<QString, KSDGroupAdminListProxy *> m_groupsMap;  // QMap<DBus对象路径,用户相关接口>
 };
 
 #endif  // GROUPSGLOBALINFO_H

@@ -1,34 +1,32 @@
 /**
- * Copyright (c) 2020 ~ 2021 KylinSec Co., Ltd. 
+ * Copyright (c) 2020 ~ 2021 KylinSec Co., Ltd.
  * kiran-cpanel-group is licensed under Mulan PSL v2.
- * You can use this software according to the terms and conditions of the Mulan PSL v2. 
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
  * You may obtain a copy of Mulan PSL v2 at:
- *          http://license.coscl.org.cn/MulanPSL2 
- * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND, 
- * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT, 
- * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.  
- * See the Mulan PSL v2 for more details.  
- * 
+ *          http://license.coscl.org.cn/MulanPSL2
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ *
  * Author:     wangshichang <shichang@isrc.iscas.ac.cn>
  */
 #include "groups-global-info.h"
-#include "ksd_group_admin_proxy.h"
+#include "def.h"
 #include "ksd_group_admin_list_proxy.h"
-#include "config.h"
+#include "ksd_group_admin_proxy.h"
 
 #include <qt5-log-i.h>
 #include <QDBusObjectPath>
 
 GroupsGlobalInfo::GroupsGlobalInfo(QObject *parent)
-    : QObject(parent), 
+    : QObject(parent),
       m_groupAdminInterface(GROUP_ADMIN_DBUS_NAME, GROUP_ADMIN_OBJECT_PATH, QDBusConnection::systemBus())
 {
-
 }
 
 GroupsGlobalInfo::~GroupsGlobalInfo()
 {
-
 }
 
 GroupsGlobalInfo *GroupsGlobalInfo::instance()
@@ -50,18 +48,17 @@ GroupsGlobalInfo *GroupsGlobalInfo::instance()
 
 bool GroupsGlobalInfo::init()
 {
-    connect(&m_groupAdminInterface, &KSDGroupAdminProxy::GroupAdded, [this](const QDBusObjectPath &group) {
-        addGroupToMap(group);
-    });//添加用户后自动更新表
-    connect(&m_groupAdminInterface, &KSDGroupAdminProxy::GroupDeleted, [this](const QDBusObjectPath &group) {
-        deleteGroupFromMap(group);
-    });
+    connect(&m_groupAdminInterface, &KSDGroupAdminProxy::GroupAdded, [this](const QDBusObjectPath &group)
+            { addGroupToMap(group); });
+    connect(&m_groupAdminInterface, &KSDGroupAdminProxy::GroupDeleted, [this](const QDBusObjectPath &group)
+            { deleteGroupFromMap(group); });
 
     QList<QDBusObjectPath> groups;
     QDBusPendingReply<QList<QDBusObjectPath>> pendingReply;
     QList<QDBusObjectPath> objList;
     QList<QDBusObjectPath>::iterator objListIter;
-    //获取所有用户组
+
+    // 获取所有用户组
     pendingReply = m_groupAdminInterface.ListCachedGroups();
     pendingReply.waitForFinished();
     if (pendingReply.isError())
@@ -70,8 +67,9 @@ bool GroupsGlobalInfo::init()
                      << pendingReply.error();
         return false;
     }
+
     objList = pendingReply.value();
-    //将用户组列表添加到表中
+    // 将用户组列表添加到表中
     for (objListIter = objList.begin();
          objListIter != objList.end();
          ++objListIter)
@@ -99,7 +97,7 @@ bool GroupsGlobalInfo::checkGroupNameAvaliable(const QString &groupName)
 
     for (auto &iter : m_groupsMap)
     {
-        if (iter->groupName() == groupName)//KSDGroupAdminListProxy的成员函数groupName()
+        if (iter->groupName() == groupName)  // KSDGroupAdminListProxy的成员函数groupName()
         {
             isValid = false;
             break;
@@ -117,9 +115,9 @@ void GroupsGlobalInfo::addGroupToMap(const QDBusObjectPath &group)
     }
 
     auto groupProxy = new KSDGroupAdminListProxy(GROUP_ADMIN_DBUS_NAME,
-                                              group.path(),
-                                              QDBusConnection::systemBus(),
-                                              this);
+                                                 group.path(),
+                                                 QDBusConnection::systemBus(),
+                                                 this);
 
     connect(groupProxy,
             &KSDGroupAdminListProxy::dbusPropertyChanged,
@@ -127,7 +125,8 @@ void GroupsGlobalInfo::addGroupToMap(const QDBusObjectPath &group)
             &GroupsGlobalInfo::handlerPropertyChanged);
 
     m_groupsMap.insert(group.path(), groupProxy);
-    emit GroupAdded(group);
+
+    emit GroupAdded(group.path());
 }
 
 void GroupsGlobalInfo::deleteGroupFromMap(const QDBusObjectPath &group)
@@ -144,12 +143,12 @@ void GroupsGlobalInfo::deleteGroupFromMap(const QDBusObjectPath &group)
                &GroupsGlobalInfo::handlerPropertyChanged);
     delete groupProxy;
 
-    emit GroupDeleted(group);
+    emit GroupDeleted(group.path());
 }
 
 void GroupsGlobalInfo::handlerPropertyChanged(const QString &propertyName, const QVariant &value)
 {
-    auto groupProxy = qobject_cast<KSDGroupAdminListProxy*>(sender());
+    auto groupProxy = qobject_cast<KSDGroupAdminListProxy *>(sender());
 
     KLOG_DEBUG() << "property changed:" << groupProxy->path();
     KLOG_DEBUG() << "\tname: " << propertyName;
@@ -157,4 +156,3 @@ void GroupsGlobalInfo::handlerPropertyChanged(const QString &propertyName, const
 
     emit GroupPropertyChanged(groupProxy->path(), propertyName, value);
 }
-

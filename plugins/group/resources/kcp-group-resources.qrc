@@ -1,7 +1,5 @@
 <RCC>
     <qresource prefix="/">
-        <file>kcp-group-images/loading.svg</file>
         <file>kcp-group-images/chosen_icon.svg</file>
-        <file>kcp-group-images/search.svg</file>
     </qresource>
 </RCC>
