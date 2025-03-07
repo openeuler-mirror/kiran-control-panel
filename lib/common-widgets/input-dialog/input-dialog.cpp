@@ -101,6 +101,7 @@ void InputDialog::initUI()
     m_edit = new KiranPasswdEdit(this);
     m_edit->setEchoMode(QLineEdit::Password);
     m_edit->lineEdit()->setMaxLength(32);
+    connect(m_edit, &KiranPasswdEdit::passwordChanged, this, &InputDialog::processTextChanged);
     layout->addWidget(m_edit);
 
     layout->addSpacerItem(new QSpacerItem(10, 16, QSizePolicy::Minimum, QSizePolicy::Fixed));
@@ -110,13 +111,15 @@ void InputDialog::initUI()
 
     boxlayout->addStretch();
 
-    auto confirmButton = new QPushButton(this);
-    confirmButton->setFixedSize(QSize(110, 40));
-    confirmButton->setText(tr("Confirm"));
+    m_confirmButton = new QPushButton(this);
+    m_confirmButton->setFixedSize(QSize(110, 40));
+    m_confirmButton->setText(tr("Confirm"));
+    // checkValid检查输入有效性才启用
+    m_confirmButton->setEnabled(false);
 
-    KiranPushButton::setButtonType(confirmButton, KiranPushButton::BUTTON_Default);
-    connect(confirmButton, &QPushButton::clicked, this, &InputDialog::onConfirmClicked);
-    boxlayout->addWidget(confirmButton);
+    KiranPushButton::setButtonType(m_confirmButton, KiranPushButton::BUTTON_Default);
+    connect(m_confirmButton, &QPushButton::clicked, this, &InputDialog::onConfirmClicked);
+    boxlayout->addWidget(m_confirmButton);
 
     boxlayout->addSpacerItem(new QSpacerItem(40, 10, QSizePolicy::Fixed, QSizePolicy::Minimum));
 
@@ -132,4 +135,9 @@ void InputDialog::initUI()
     layout->addLayout(boxlayout);
 
     setWindowContentWidget(container);
+}
+
+void InputDialog::processTextChanged(const QString& text)
+{
+    m_confirmButton->setEnabled(checkValid(text));
 }

@@ -17,6 +17,7 @@
 
 class KiranPasswdEdit;
 class QLabel;
+class QPushButton;
 class InputDialog : public KiranTitlebarWindow
 {
     Q_OBJECT
@@ -24,11 +25,12 @@ public:
     InputDialog(QWidget* parent = nullptr);
     ~InputDialog();
 
-    void setDesc(const QString&desc);
-    void setInputMode(QLineEdit::EchoMode mode,qint32 maxLength);
+    void setDesc(const QString& desc);
+    void setInputMode(QLineEdit::EchoMode mode, qint32 maxLength);
     virtual int exec();
 
     QString getText();
+
 signals:
     void completed();
 
@@ -38,9 +40,14 @@ private:
 
 private:
     void initUI();
+    virtual bool checkValid(const QString& text) { return true; };
+
+private slots:
+    void processTextChanged(const QString& text);
 
 private:
     bool m_success;
     QLabel* m_labelDesc;
     KiranPasswdEdit* m_edit;
+    QPushButton* m_confirmButton = nullptr;
 };
