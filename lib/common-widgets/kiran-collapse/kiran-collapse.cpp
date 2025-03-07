@@ -17,6 +17,7 @@
 
 #include <palette.h>
 #include <QDebug>
+#include <QEvent>
 #include <QHBoxLayout>
 #include <QPainter>
 #include <QPainterPath>
@@ -92,9 +93,18 @@ void KiranCollapse::expand()
     {
         return;
     }
-    m_animationForES->setEasingCurve(QEasingCurve::OutCubic);
+    m_animationForES->setEasingCurve(QEasingCurve::InCubic);
     m_animationForES->setStartValue(ui->expansionSpace->height());
-    m_animationForES->setEndValue(m_maximumExpansionSpaceHeight);
+
+    // 未设置最大高度，根据实际情况展开
+    if (m_fixMaxExpansionHeight == -1)
+    {
+        m_animationForES->setEndValue(ui->expansionSpace->sizeHint().height());
+    }
+    else
+    {
+        m_animationForES->setEndValue(m_fixMaxExpansionHeight);
+    }
     m_animationForES->start();
 
     m_isExpanded = true;
@@ -109,7 +119,7 @@ void KiranCollapse::collapse()
         return;
     }
     m_animationForES->setEasingCurve(QEasingCurve::InCubic);
-    m_animationForES->setStartValue(m_maximumExpansionSpaceHeight);
+    m_animationForES->setStartValue(ui->expansionSpace->height());
     m_animationForES->setEndValue(0);
     m_animationForES->start();
     m_isExpanded = false;
@@ -127,6 +137,22 @@ void KiranCollapse::changeExpansionState()
     {
         expand();
     }
+}
+
+bool KiranCollapse::event(QEvent *event)
+{
+    // 已展开，未设定固定最大展开高度
+    // 收到LayoutRequest布局更新请求时，更新expansionSpace最大高度
+    const bool isLayoutRequest = (event->type() == QEvent::LayoutRequest);
+    const bool notSpecifyMaxHeight = (m_fixMaxExpansionHeight == -1);
+    const bool inAnimation = (m_animationForES && m_animationForES->state() == QAbstractAnimation::Running);
+
+    if (isLayoutRequest && m_isExpanded &&
+        notSpecifyMaxHeight && !inAnimation)
+    {
+        ui->expansionSpace->setMaximumHeight(ui->expansionSpace->sizeHint().height());
+    }
+    return QWidget::event(event);
 }
 
 void KiranCollapse::paintEvent(QPaintEvent *event)
@@ -148,6 +174,8 @@ void KiranCollapse::paintEvent(QPaintEvent *event)
     painter.setRenderHint(QPainter::Antialiasing);
 
     auto kiranPalette = DEFAULT_PALETTE();
+    state &= ~QStyle::State_MouseOver;
+
     if (m_drawBackground)
     {
         QColor backgroundColor;
@@ -176,7 +204,7 @@ void KiranCollapse::init()
         ui->expansionSpaceContainer->addWidget(m_esWidget);
     }
     m_animationForES = new QPropertyAnimation(ui->expansionSpace, "maximumHeight", this);
-    m_animationForES->setDuration(200);
+    m_animationForES->setDuration(100);
     connect(ui->topBar, &TopBar::clickedBar, this, &KiranCollapse::changeExpansionState);
 }
 
@@ -189,7 +217,14 @@ void KiranCollapse::setIsExpand(bool isExpanded)
 {
     m_isExpanded = isExpanded;
     // 根据展开/折叠设置最大高度
-    ui->expansionSpace->setMaximumHeight(m_isExpanded ? m_maximumExpansionSpaceHeight : 0);
+    if (m_fixMaxExpansionHeight != -1)
+    {
+        ui->expansionSpace->setMaximumHeight(m_isExpanded ? m_fixMaxExpansionHeight : 0);
+    }
+    else
+    {
+        ui->expansionSpace->setMaximumHeight(m_isExpanded ? ui->expansionSpace->sizeHint().height() : 0);
+    }
     ui->topBar->refreshFlagIcon(m_isExpanded);
 }
 
@@ -208,9 +243,9 @@ void KiranCollapse::setTobBarFixedHeight(int height)
     ui->topBar->setFixedHeight(height);
 }
 
-void KiranCollapse::setMaximumExpansionHeight(int maxExpandHeight)
+void KiranCollapse::setFixMaxExpansionHeight(int maxExpandHeight)
 {
-    m_maximumExpansionSpaceHeight = maxExpandHeight;
+    m_fixMaxExpansionHeight = maxExpandHeight;
     // 缓存设置最大高度之前的原始高度
     int curHeight = ui->expansionSpace->height();
     ui->expansionSpace->setMaximumHeight(maxExpandHeight);
