@@ -11,24 +11,23 @@
  *
  * Author:     wangshichang <shichang@isrc.iscas.ac.cn>
  */
-#include "hard-worker.h"
-#include "def.h"
-#include "groups-global-info.h"
+#include "group-interface.h"
+#include "group-manager.h"
 #include "ksd_group_admin_list_proxy.h"
 #include "ksd_group_admin_proxy.h"
 
 #include <qt5-log-i.h>
 #include <QDBusObjectPath>
 
-HardWorker::HardWorker() : QObject(nullptr)
+GroupInterface::GroupInterface() : QObject(nullptr)
 {
 }
 
-HardWorker::~HardWorker()
+GroupInterface::~GroupInterface()
 {
 }
 
-void HardWorker::doCreateGroup(QString groupName)
+void GroupInterface::doCreateGroup(QString groupName)
 {
     KLOG_INFO() << "current Thread:" << QThread::currentThreadId();
     KSDGroupAdminProxy groupAdmin(GROUP_ADMIN_DBUS_NAME,
@@ -54,7 +53,7 @@ void HardWorker::doCreateGroup(QString groupName)
     emit sigCreateGroupDone(groupObjPath, "");
 }
 
-void HardWorker::doDeleteGroup(int gid, QString groupName)
+void GroupInterface::doDeleteGroup(int gid, QString groupName)
 {
     KLOG_INFO() << "current Thread:" << QThread::currentThreadId();
 
@@ -77,7 +76,7 @@ void HardWorker::doDeleteGroup(int gid, QString groupName)
     }
 }
 
-void HardWorker::doAddUserToGroup(QString groupPath, QStringList userNameList)
+void GroupInterface::doAddUserToGroup(QString groupPath, QStringList userNameList)
 {
     QString errMsg;
     KSDGroupAdminListProxy groupProxy(GROUP_ADMIN_DBUS_NAME, groupPath,
@@ -102,7 +101,7 @@ void HardWorker::doAddUserToGroup(QString groupPath, QStringList userNameList)
     emit sigAddUserToGroupDone(errMsg);
 }
 
-void HardWorker::doRemoveMemberFromGroup(QString groupPath, QString userName)
+void GroupInterface::doRemoveMemberFromGroup(QString groupPath, QString userName)
 {
     KSDGroupAdminListProxy groupProxy(GROUP_ADMIN_DBUS_NAME, groupPath,
                                       QDBusConnection::systemBus());
@@ -122,14 +121,14 @@ void HardWorker::doRemoveMemberFromGroup(QString groupPath, QString userName)
     }
 }
 
-void HardWorker::doChangeGroupName(QString groupPath, QString groupName)
+void GroupInterface::doChangeGroupName(QString groupPath, QString groupName)
 {
     KLOG_INFO() << "current Thread:" << QThread::currentThreadId();
 
     KSDGroupAdminListProxy groupProxy(GROUP_ADMIN_DBUS_NAME, groupPath,
                                       QDBusConnection::systemBus());
 
-    if (GroupsGlobalInfo::instance()->checkGroupNameAvaliable(groupName))
+    if (GroupManager::instance()->checkGroupNameAvaliable(groupName))
     {
         auto reply = groupProxy.ChangeGroupName(groupName);
         reply.waitForFinished();

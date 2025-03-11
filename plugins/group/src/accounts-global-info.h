@@ -15,12 +15,17 @@
 #ifndef ACCOUNTSGLOBALINFO_H
 #define ACCOUNTSGLOBALINFO_H
 
-#include "ksd_accounts_proxy.h"
-#include "ksd_accounts_user_proxy.h"
-
+#include <QDBusObjectPath>
 #include <QList>
 #include <QObject>
+#include <QSharedPointer>
 
+#define ACCOUNTS_DBUS_NAME "com.kylinsec.Kiran.SystemDaemon.Accounts"
+#define ACCOUNTS_OBJECT_PATH "/com/kylinsec/Kiran/SystemDaemon/Accounts"
+#define ACCOUNTS_DBUS_INTERFACE_NAME "com.kylinsec.Kiran.SystemDaemon.Accounts"
+
+class KSDAccountsProxy;
+class KSDAccountsUserProxy;
 class AccountsGlobalInfo : public QObject
 {
     Q_OBJECT
@@ -44,6 +49,14 @@ public:
      */
     QList<QString> getUserList();
 
+    /**
+     * @brief 获取用户名
+     * @param userPath 用户DBusObjectPath
+     * @param userName 存储用户名
+     * @return 是否获取成功
+     */
+    bool getUserName(const QString &userPath, QString &userName);
+
 private:
     void addUserToMap(const QDBusObjectPath &user);
     void deleteUserFromMap(const QDBusObjectPath &user);
@@ -59,8 +72,8 @@ private Q_SLOTS:
     void handlerPropertyChanged(const QString &propertyName, const QVariant &value);
 
 private:
-    KSDAccountsProxy m_accountsInterface;
-    QMap<QString, KSDAccountsUserProxy *> m_usersMap;  // QMap<DBus对象路径,用户相关接口>
+    KSDAccountsProxy *m_accountsInterface;
+    QMap<QString, QSharedPointer<KSDAccountsUserProxy>> m_usersMap;  // QMap<DBus对象路径,用户相关接口>
 };
 
 #endif  // ACCOUNTSGLOBALINFO_H

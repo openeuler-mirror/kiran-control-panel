@@ -19,33 +19,36 @@
 
 class QStackedWidget;
 class KiranSidebarWidget;
-class HardWorker;
+class GroupInterface;
 class QListWidgetItem;
 class CreateGroupPage;
 class GroupInfoPage;
 class AddUsersPage;
 
-enum StackWidgetPageEnum
-{
-    PAGE_CREATE_GROUP,
-    PAGE_GROUP_INFO,
-    PAGE_ADD_USERS
-};
-
-class KiranGroupManager : public QWidget
+class GroupPage : public QWidget
 {
     Q_OBJECT
+
 public:
-    explicit KiranGroupManager(QWidget *parent = nullptr);
-    ~KiranGroupManager();
+    enum StackWidgetPageEnum
+    {
+        PAGE_CREATE_GROUP,
+        PAGE_GROUP_INFO,
+        PAGE_ADD_USERS
+    };
+
+public:
+    explicit GroupPage(QWidget *parent = nullptr);
+    ~GroupPage();
     QSize sizeHint() const;
+    void jumpToPage(StackWidgetPageEnum page);
 
 private Q_SLOTS:
-    void onGroupAdded(const QString &groupPath);
-    void onGroupDeleted(const QString &groupPath);
-    void onGroupPropertyChanged(QString groupPath,
-                                QString propertyName,
-                                QVariant value);
+    void addGroup(const QString &groupPath);
+    void deleteGroup(const QString &groupPath);
+    void handleGroupProperty(QString groupPath,
+                             QString propertyName,
+                             QVariant value);
 
     void appendSidebarItem(const QString &groupPath);
     void deleteSidebarItem(const QString &groupName);
@@ -59,14 +62,12 @@ private:
     void initPageAddUsers();
     void connectToInfoChange();
 
-    // 判断是否为用户自己创建的用户组（gid>=1000)
-    bool isNoSystemGroup(qulonglong gid);
     void setDefaultSiderbarItem();
 
 private:
     KiranSidebarWidget *m_tabList = nullptr;
     QThread m_workThread;
-    HardWorker *m_hardworker = nullptr;
+    GroupInterface *m_groupInterface = nullptr;
     QListWidgetItem *m_createGroupItem = nullptr;
     CreateGroupPage *m_pageCreateGroup = nullptr;
     GroupInfoPage *m_pageGroupInfo = nullptr;

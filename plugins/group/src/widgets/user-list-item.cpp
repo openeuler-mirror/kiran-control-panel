@@ -15,7 +15,6 @@
 #include "user-list-item.h"
 #include <kiran-label.h>
 #include <QBoxLayout>
-#include <QLabel>
 #include <QPushButton>
 UserListItem::UserListItem(QWidget* parent) : KiranFrame(parent)
 {

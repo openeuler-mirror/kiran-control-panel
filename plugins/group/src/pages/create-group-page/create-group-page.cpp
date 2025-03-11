@@ -11,20 +11,21 @@
  *
  * Author:     wangshichang <shichang@isrc.iscas.ac.cn>
  */
+
 #include "create-group-page.h"
 #include "accounts-global-info.h"
-#include "def.h"
+#include "group-manager.h"
 #include "group-name-checker.h"
 #include "group-name-validator.h"
-#include "groups-global-info.h"
+#include "kiran-tips/kiran-tips.h"
 #include "ksd_accounts_user_proxy.h"
 #include "ui_create-group-page.h"
 #include "user-list-item.h"
+#include "users-container.h"
 
 #include <kiran-message-box.h>
 #include <kiran-push-button.h>
 #include <qt5-log-i.h>
-#include <QRegularExpression>
 
 CreateGroupPage::CreateGroupPage(QWidget *parent)
     : QWidget(parent), ui(new Ui::CreateGroupPage)
@@ -63,22 +64,24 @@ void CreateGroupPage::initUI()
 
     /// 确认按钮
     KiranPushButton::setButtonType(ui->btn_confirm, KiranPushButton::BUTTON_Default);
-    connect(ui->btn_confirm, &QPushButton::clicked, this, &CreateGroupPage::onCreateGroupClicked);
+    connect(ui->btn_confirm, &QPushButton::clicked, this, &CreateGroupPage::createGroup);
 }
 
 void CreateGroupPage::appendUserListItem(const QString &userPath)
 {
-    KSDAccountsUserProxy interface(ACCOUNTS_DBUS_NAME, userPath, QDBusConnection::systemBus());
-
-    auto item = new UserListItem(m_userContainter);
-    item->setRightBtnIcon(QIcon(":/kcp-group-images/chosen_icon.svg"));
-    item->setRightBtnVisible(false);
-    item->setName(interface.user_name());
-    item->setClickable(true);
-    m_userContainter->addItem(item);
+    QString userName;
+    if (AccountsGlobalInfo::instance()->getUserName(userPath, userName))
+    {
+        auto item = new UserListItem(m_userContainter);
+        item->setRightBtnIcon(QIcon(":/kcp-group-images/chosen_icon.svg"));
+        item->setRightBtnVisible(false);
+        item->setName(userName);
+        item->setClickable(true);
+        m_userContainter->addItem(item);
+    }
 }
 
-void CreateGroupPage::onCreateGroupClicked()
+void CreateGroupPage::createGroup()
 {
     QString errorMessage;
     auto groupName = ui->edit_name->text();
@@ -93,7 +96,7 @@ void CreateGroupPage::onCreateGroupClicked()
     emit requestCreateGroup(groupName);
 }
 
-void CreateGroupPage::onCreateGroupDone(QString groupPath, QString errMsg)
+void CreateGroupPage::addUserToGroup(QString groupPath, QString errMsg)
 {
     ui->btn_confirm->setBusy(false);
 
@@ -124,7 +127,7 @@ void CreateGroupPage::onCreateGroupDone(QString groupPath, QString errMsg)
     }
 }
 
-void CreateGroupPage::onAddUserToGroupDone(QString errMsg)
+void CreateGroupPage::updateUI(QString errMsg)
 {
     ui->btn_confirm->setBusy(false);
     if (!errMsg.isEmpty())

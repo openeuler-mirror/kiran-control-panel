@@ -15,7 +15,6 @@
 #pragma once
 
 #include <kiran-frame/kiran-frame.h>
-#include <QVariant>
 
 class KiranLabel;
 class QPushButton;

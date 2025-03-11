@@ -11,46 +11,62 @@
  *
  * Author:     wangshichang <shichang@isrc.iscas.ac.cn>
  */
-#include "groups-global-info.h"
-#include "def.h"
+#include "group-manager.h"
+#include "group-interface.h"
 #include "ksd_group_admin_list_proxy.h"
 #include "ksd_group_admin_proxy.h"
 
 #include <qt5-log-i.h>
 #include <QDBusObjectPath>
+#include <QDBusPendingCall>
+#include <QMutex>
+#include <QScopedPointer>
 
-GroupsGlobalInfo::GroupsGlobalInfo(QObject *parent)
+GroupManager::GroupManager(QObject *parent)
     : QObject(parent),
-      m_groupAdminInterface(GROUP_ADMIN_DBUS_NAME, GROUP_ADMIN_OBJECT_PATH, QDBusConnection::systemBus())
+      m_groupAdminProxy(new KSDGroupAdminProxy(GROUP_ADMIN_DBUS_NAME, GROUP_ADMIN_OBJECT_PATH, QDBusConnection::systemBus())),
+      m_groupInterface(new GroupInterface())
 {
 }
 
-GroupsGlobalInfo::~GroupsGlobalInfo()
+GroupManager::~GroupManager()
 {
+    if (m_groupAdminProxy)
+    {
+        delete m_groupAdminProxy;
+        m_groupAdminProxy = nullptr;
+    }
+    if (m_groupInterface)
+    {
+        delete m_groupInterface;
+        m_groupInterface = nullptr;
+    }
+
+    m_groupsMap.clear();
 }
 
-GroupsGlobalInfo *GroupsGlobalInfo::instance()
+GroupManager *GroupManager::instance()
 {
     static QMutex mutex;
-    static QScopedPointer<GroupsGlobalInfo> pInst;
+    static QScopedPointer<GroupManager> pInst;
 
     if (Q_UNLIKELY(!pInst))
     {
         QMutexLocker locker(&mutex);
         if (pInst.isNull())
         {
-            pInst.reset(new GroupsGlobalInfo);
+            pInst.reset(new GroupManager);
         }
     }
 
     return pInst.data();
 }
 
-bool GroupsGlobalInfo::init()
+bool GroupManager::init()
 {
-    connect(&m_groupAdminInterface, &KSDGroupAdminProxy::GroupAdded, [this](const QDBusObjectPath &group)
+    connect(m_groupAdminProxy, &KSDGroupAdminProxy::GroupAdded, [this](const QDBusObjectPath &group)
             { addGroupToMap(group); });
-    connect(&m_groupAdminInterface, &KSDGroupAdminProxy::GroupDeleted, [this](const QDBusObjectPath &group)
+    connect(m_groupAdminProxy, &KSDGroupAdminProxy::GroupDeleted, [this](const QDBusObjectPath &group)
             { deleteGroupFromMap(group); });
 
     QList<QDBusObjectPath> groups;
@@ -59,7 +75,7 @@ bool GroupsGlobalInfo::init()
     QList<QDBusObjectPath>::iterator objListIter;
 
     // 获取所有用户组
-    pendingReply = m_groupAdminInterface.ListCachedGroups();
+    pendingReply = m_groupAdminProxy->ListCachedGroups();
     pendingReply.waitForFinished();
     if (pendingReply.isError())
     {
@@ -79,7 +95,12 @@ bool GroupsGlobalInfo::init()
     return true;
 }
 
-QList<QString> GroupsGlobalInfo::getGroupList()
+GroupInterface *GroupManager::getInterface()
+{
+    return m_groupInterface;
+}
+
+QList<QString> GroupManager::getGroupList()
 {
     QList<QString> groupObjPathList;
     for (auto iter = m_groupsMap.begin();
@@ -91,13 +112,28 @@ QList<QString> GroupsGlobalInfo::getGroupList()
     return groupObjPathList;
 }
 
-bool GroupsGlobalInfo::checkGroupNameAvaliable(const QString &groupName)
+bool GroupManager::getGroupInfo(const QString groupPath, GroupManager::GroupInfo &groupInfo)
+{
+    KSDGroupAdminListProxy interface(GROUP_ADMIN_DBUS_NAME, groupPath, QDBusConnection::systemBus());
+    if (!interface.isValid())
+    {
+        KLOG_WARNING() << "Failed to get group info:" << interface.lastError().message();
+        return false;
+    }
+    groupInfo.name = interface.groupName();
+    groupInfo.gid = interface.gid();
+    groupInfo.users = interface.users();
+    groupInfo.isNotSystemGroup = interface.gid() >= 1000 && interface.gid() < 65534;
+    return true;
+}
+
+bool GroupManager::checkGroupNameAvaliable(const QString &groupName)
 {
     bool isValid = true;
 
-    for (auto &iter : m_groupsMap)
+    for (auto iter : m_groupsMap)
     {
-        if (iter->groupName() == groupName)  // KSDGroupAdminListProxy的成员函数groupName()
+        if (iter.data()->groupName() == groupName)  // KSDGroupAdminListProxy的成员函数groupName()
         {
             isValid = false;
             break;
@@ -107,29 +143,29 @@ bool GroupsGlobalInfo::checkGroupNameAvaliable(const QString &groupName)
     return isValid;
 }
 
-void GroupsGlobalInfo::addGroupToMap(const QDBusObjectPath &group)
+void GroupManager::addGroupToMap(const QDBusObjectPath &group)
 {
     if (m_groupsMap.find(group.path()) != m_groupsMap.end())
     {
         return;
     }
 
-    auto groupProxy = new KSDGroupAdminListProxy(GROUP_ADMIN_DBUS_NAME,
-                                                 group.path(),
-                                                 QDBusConnection::systemBus(),
-                                                 this);
+    auto groupProxy = QSharedPointer<KSDGroupAdminListProxy>::create(GROUP_ADMIN_DBUS_NAME,
+                                                                     group.path(),
+                                                                     QDBusConnection::systemBus(),
+                                                                     this);
 
-    connect(groupProxy,
+    connect(groupProxy.data(),
             &KSDGroupAdminListProxy::dbusPropertyChanged,
             this,
-            &GroupsGlobalInfo::handlerPropertyChanged);
+            &GroupManager::handlerPropertyChanged);
 
     m_groupsMap.insert(group.path(), groupProxy);
 
     emit GroupAdded(group.path());
 }
 
-void GroupsGlobalInfo::deleteGroupFromMap(const QDBusObjectPath &group)
+void GroupManager::deleteGroupFromMap(const QDBusObjectPath &group)
 {
     if (m_groupsMap.find(group.path()) == m_groupsMap.end())
     {
@@ -137,16 +173,15 @@ void GroupsGlobalInfo::deleteGroupFromMap(const QDBusObjectPath &group)
     }
 
     auto groupProxy = m_groupsMap.take(group.path());
-    disconnect(groupProxy,
+    disconnect(groupProxy.data(),
                &KSDGroupAdminListProxy::dbusPropertyChanged,
                this,
-               &GroupsGlobalInfo::handlerPropertyChanged);
-    delete groupProxy;
+               &GroupManager::handlerPropertyChanged);
 
     emit GroupDeleted(group.path());
 }
 
-void GroupsGlobalInfo::handlerPropertyChanged(const QString &propertyName, const QVariant &value)
+void GroupManager::handlerPropertyChanged(const QString &propertyName, const QVariant &value)
 {
     auto groupProxy = qobject_cast<KSDGroupAdminListProxy *>(sender());
 

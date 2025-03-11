@@ -9,19 +9,15 @@
  * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
  * See the Mulan PSL v2 for more details.
  *
- * Author:     liuxinhao <liuxinhao@kylinsec.com.cn>
+ * Author:     yuanxing <yuanxing@kylinsec.com.cn>
  */
 
-#ifndef __SYSTEM_SUBITEM_H__
-#define __SYSTEM_SUBITEM_H__
+#pragma once
 
 #include <QObject>
-
-//#include "kiran-timedate-widget.h"
-#include "kiran-group-manager.h"
-#include "panel-interface.h"
 #include "plugin-subitem-interface.h"
 
+class GroupPage;
 class GroupSubItem : public QObject,
                      public KiranControlPanel::PluginSubitemInterface
 {
@@ -60,7 +56,5 @@ public:
     bool haveUnSavedOptions() override { return false; };
 
 private:
-    KiranGroupManager* m_kiranGroupManager = nullptr;
+    GroupPage* m_groupPage = nullptr;
 };
-
-#endif

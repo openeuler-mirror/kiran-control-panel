@@ -11,50 +11,48 @@
  *
  * Author:     wangshichang <shichang@isrc.iscas.ac.cn>
  */
-#include "kiran-group-manager.h"
+#include "group-page.h"
 #include "accounts-global-info.h"
 #include "add-users-page/add-users-page.h"
 #include "create-group-page/create-group-page.h"
-#include "def.h"
 #include "group-info-page/group-info-page.h"
-#include "groups-global-info.h"
-#include "hard-worker.h"
+#include "group-interface.h"
+#include "group-manager.h"
 #include "kiran-color-block.h"
 
 #include <kiran-sidebar-item.h>
 #include <kiran-sidebar-widget.h>
 #include <qt5-log-i.h>
-#include <QDebug>
 #include <QHBoxLayout>
 #include <QIcon>
+#include <QListWidgetItem>
 #include <QStackedWidget>
-#include <QtWidgets/QListWidgetItem>
+#include <QTimer>
 
 #define ITEM_GROUP_OBJ_PATH_ROLE Qt::UserRole + 1
 
-KiranGroupManager::KiranGroupManager(QWidget *parent)
+GroupPage::GroupPage(QWidget *parent)
     : QWidget(parent)
 {
     m_workThread.start();
-    m_hardworker = new HardWorker();
-    m_hardworker->moveToThread(&m_workThread);
+    m_groupInterface = GroupManager::instance()->getInterface();
+    m_groupInterface->moveToThread(&m_workThread);
 
     KLOG_INFO() << "WorkThread:" << m_workThread.currentThreadId();
     KLOG_INFO() << "current Thread:" << QThread::currentThreadId();
     initUI();
 }
 
-KiranGroupManager::~KiranGroupManager()
+GroupPage::~GroupPage()
 {
     if (m_workThread.isRunning())
     {
         m_workThread.quit();
         m_workThread.wait();
     }
-    delete m_hardworker;
 }
 
-void KiranGroupManager::initUI()
+void GroupPage::initUI()
 {
     /*初始化界面主布局*/
     auto contentLayout = new QHBoxLayout(this);
@@ -106,13 +104,14 @@ void KiranGroupManager::initUI()
 
     m_stackWidget->setCurrentIndex(PAGE_CREATE_GROUP);
 
-    // FIXME:由于在调用添加、删除、修改用户组属性等接口时，dbus后台会发送多次信号，导致前端显示不正确，后续看是否需要监听dbus信号
+    // FIXME:由于在调用添加、删除、修改用户组属性等dbus接口时，dbus后台会发送多次信号，导致前端显示不正确，后续优化
+    // 暂时只监听由UI界面发出的用户组操作信号
     //  connectToInfoChange();
 
-    QTimer::singleShot(0, this, &KiranGroupManager::setDefaultSiderbarItem);
+    QTimer::singleShot(0, this, &GroupPage::setDefaultSiderbarItem);
 }
 
-void KiranGroupManager::initGroupList()
+void GroupPage::initGroupList()
 {
     connect(m_tabList, &KiranSidebarWidget::itemSelectionChanged, [this]()
             {
@@ -144,46 +143,49 @@ void KiranGroupManager::initGroupList()
     m_tabList->addItem(m_createGroupItem);
 
     QList<QString> groupObjList;
-    groupObjList = GroupsGlobalInfo::instance()->getGroupList();
+    groupObjList = GroupManager::instance()->getGroupList();
+
+    GroupManager::GroupInfo groupInfo;
     for (auto &iter : groupObjList)
     {
-        KSDGroupAdminListProxy interface(GROUP_ADMIN_DBUS_NAME, iter, QDBusConnection::systemBus());
-        if (isNoSystemGroup(interface.gid()))
+        if (GroupManager::instance()->getGroupInfo(iter, groupInfo))
         {
-            auto item = new KiranSidebarItem(interface.groupName(), m_tabList);
-            item->setIcon(QIcon::fromTheme("krsvg-group-icon"));
-            item->setData(ITEM_GROUP_OBJ_PATH_ROLE, iter);
-            m_tabList->addItem(item);
+            if (groupInfo.isNotSystemGroup)
+            {
+                auto groupName = groupInfo.name;
+                auto item = new KiranSidebarItem(groupName, m_tabList);
+                item->setIcon(QIcon::fromTheme("krsvg-group-icon"));
+                item->setData(ITEM_GROUP_OBJ_PATH_ROLE, iter);
+                m_tabList->addItem(item);
+            }
         }
     }
 }
 
-bool KiranGroupManager::isNoSystemGroup(qulonglong gid)
-{
-    return (gid >= 1000 && gid < 65534);
-}
-
-void KiranGroupManager::appendSidebarItem(const QString &groupPath)
+void GroupPage::appendSidebarItem(const QString &groupPath)
 {
     KLOG_INFO() << "current Thread:" << QThread::currentThreadId();
 
-    KSDGroupAdminListProxy interface(GROUP_ADMIN_DBUS_NAME, groupPath, QDBusConnection::systemBus());
-    if (isNoSystemGroup(interface.gid()))
+    GroupManager::GroupInfo groupInfo;
+    if (GroupManager::instance()->getGroupInfo(groupPath, groupInfo))
     {
-        auto item = new KiranSidebarItem(interface.groupName(), m_tabList);
-        item->setIcon(QIcon::fromTheme("krsvg-group-icon"));
-        item->setData(ITEM_GROUP_OBJ_PATH_ROLE, groupPath);
-        m_tabList->addItem(item);
-        m_tabList->setCurrentItem(item);
+        if (groupInfo.isNotSystemGroup)
+        {
+            auto item = new KiranSidebarItem(groupInfo.name, m_tabList);
+            item->setIcon(QIcon::fromTheme("krsvg-group-icon"));
+            item->setData(ITEM_GROUP_OBJ_PATH_ROLE, groupPath);
+            m_tabList->addItem(item);
+            m_tabList->setCurrentItem(item);
 
-        // 更新用户组信息页面
-        m_pageGroupInfo->setCurrentShowGroupPath(groupPath);
-        // 切换到用户组信息
-        m_stackWidget->setCurrentIndex(PAGE_GROUP_INFO);
+            // 更新用户组信息页面
+            m_pageGroupInfo->setCurrentShowGroupPath(groupPath);
+            // 切换到用户组信息
+            m_stackWidget->setCurrentIndex(PAGE_GROUP_INFO);
+        }
     }
 }
 
-void KiranGroupManager::deleteSidebarItem(const QString &groupName)
+void GroupPage::deleteSidebarItem(const QString &groupName)
 {
     KLOG_INFO() << "current Thread:" << QThread::currentThreadId();
     auto itemCount = m_tabList->count();
@@ -204,7 +206,7 @@ void KiranGroupManager::deleteSidebarItem(const QString &groupName)
     m_stackWidget->setCurrentIndex(PAGE_CREATE_GROUP);
 }
 
-void KiranGroupManager::updateSidebarItem(QString groupPath, QString errMsg)
+void GroupPage::updateSidebarItem(QString groupPath, QString errMsg)
 {
     if (!errMsg.isEmpty())
     {
@@ -217,36 +219,39 @@ void KiranGroupManager::updateSidebarItem(QString groupPath, QString errMsg)
         auto item = m_tabList->item(i);
         if (item->data(ITEM_GROUP_OBJ_PATH_ROLE) == groupPath)
         {
-            KSDGroupAdminListProxy interface(GROUP_ADMIN_DBUS_NAME, groupPath, QDBusConnection::systemBus());
-            item->setText(interface.groupName());
-            m_tabList->setCurrentItem(item);
+            GroupManager::GroupInfo groupInfo;
+            if (GroupManager::instance()->getGroupInfo(groupPath, groupInfo))
+            {
+                item->setText(groupInfo.name);
+                m_tabList->setCurrentItem(item);
 
-            //  更新用户组信息页面
-            m_pageGroupInfo->setCurrentShowGroupPath(groupPath);
-            // 切换到用户组信息
-            m_stackWidget->setCurrentIndex(PAGE_GROUP_INFO);
+                //  更新用户组信息页面
+                m_pageGroupInfo->setCurrentShowGroupPath(groupPath);
+                // 切换到用户组信息
+                m_stackWidget->setCurrentIndex(PAGE_GROUP_INFO);
+            }
         }
     }
 }
 
-void KiranGroupManager::initPageCreateGroup()
+void GroupPage::initPageCreateGroup()
 {
     // 创建用户组
     connect(m_pageCreateGroup, &CreateGroupPage::requestCreateGroup,
-            m_hardworker, &HardWorker::doCreateGroup);
-    connect(m_hardworker, &HardWorker::sigCreateGroupDone,
-            m_pageCreateGroup, &CreateGroupPage::onCreateGroupDone);
-    connect(m_hardworker, &HardWorker::sigCreateGroupDone,
-            this, &KiranGroupManager::appendSidebarItem);
+            m_groupInterface, &GroupInterface::doCreateGroup);
+    connect(m_groupInterface, &GroupInterface::sigCreateGroupDone,
+            m_pageCreateGroup, &CreateGroupPage::addUserToGroup);
+    connect(m_groupInterface, &GroupInterface::sigCreateGroupDone,
+            this, &GroupPage::appendSidebarItem);
 
     // 添加用户到用户组
     connect(m_pageCreateGroup, &CreateGroupPage::requestAddUserToGroup,
-            m_hardworker, &HardWorker::doAddUserToGroup);
-    connect(m_hardworker, &HardWorker::sigAddUserToGroupDone,
-            m_pageCreateGroup, &CreateGroupPage::onAddUserToGroupDone);
+            m_groupInterface, &GroupInterface::doAddUserToGroup);
+    connect(m_groupInterface, &GroupInterface::sigAddUserToGroupDone,
+            m_pageCreateGroup, &CreateGroupPage::updateUI);
 }
 
-void KiranGroupManager::initPageGroupInfo()
+void GroupPage::initPageGroupInfo()
 {
     connect(m_pageGroupInfo, &GroupInfoPage::requestAddUsersPage, [this](QString groupPath)
             { m_stackWidget->setCurrentIndex(PAGE_ADD_USERS);
@@ -254,71 +259,84 @@ void KiranGroupManager::initPageGroupInfo()
 
     // 从用户组移除用户
     connect(m_pageGroupInfo, &GroupInfoPage::requestRemoveMember,
-            m_hardworker, &HardWorker::doRemoveMemberFromGroup);
-    connect(m_hardworker, &HardWorker::sigRemoveMemberFromGroupDone,
-            m_pageGroupInfo, &GroupInfoPage::onRemoveMemberFromGroupDone);
+            m_groupInterface, &GroupInterface::doRemoveMemberFromGroup);
+    connect(m_groupInterface, &GroupInterface::sigRemoveMemberFromGroupDone,
+            m_pageGroupInfo, &GroupInfoPage::handleMemberRemoved);
 
     // 添加用户到用户组
-    connect(m_hardworker, &HardWorker::sigAddUserToGroupDone,
-            m_pageGroupInfo, &GroupInfoPage::onAddUserToGroupDone);
+    connect(m_groupInterface, &GroupInterface::sigAddUserToGroupDone,
+            m_pageGroupInfo, &GroupInfoPage::handleMemberAdded);
 
     // 删除用户组
     connect(m_pageGroupInfo, &GroupInfoPage::requestDeleteGroup,
-            m_hardworker, &HardWorker::doDeleteGroup);
-    connect(m_hardworker, &HardWorker::sigDeleteGroupDone,
-            m_pageGroupInfo, &GroupInfoPage::onDeleteGroupDone);
-    connect(m_hardworker, &HardWorker::sigDeleteGroupDone,
-            this, &KiranGroupManager::deleteSidebarItem);
+            m_groupInterface, &GroupInterface::doDeleteGroup);
+    connect(m_groupInterface, &GroupInterface::sigDeleteGroupDone,
+            m_pageGroupInfo, &GroupInfoPage::handleGroupDeleted);
+    connect(m_groupInterface, &GroupInterface::sigDeleteGroupDone,
+            this, &GroupPage::deleteSidebarItem);
 
     // 更改用户组名
     connect(m_pageGroupInfo, &GroupInfoPage::requestChangeGroupName,
-            m_hardworker, &HardWorker::doChangeGroupName);
-    connect(m_hardworker, &HardWorker::sigChangeGroupNameDone,
-            m_pageGroupInfo, &GroupInfoPage::onChangeGroupNameDone);
-    connect(m_hardworker, &HardWorker::sigChangeGroupNameDone,
-            this, &KiranGroupManager::updateSidebarItem);
+            m_groupInterface, &GroupInterface::doChangeGroupName);
+    connect(m_groupInterface, &GroupInterface::sigChangeGroupNameDone,
+            m_pageGroupInfo, &GroupInfoPage::handleGroupNameChanged);
+    connect(m_groupInterface, &GroupInterface::sigChangeGroupNameDone,
+            this, &GroupPage::updateSidebarItem);
 }
 
-void KiranGroupManager::initPageAddUsers()
+void GroupPage::initPageAddUsers()
 {
     connect(m_pageAddUsers, &AddUsersPage::requestGroupInfoPage, [this]()
             { m_stackWidget->setCurrentIndex(PAGE_GROUP_INFO); });
 
     // 添加用户到用户组
     connect(m_pageAddUsers, &AddUsersPage::requestAddUserToGroup,
-            m_hardworker, &HardWorker::doAddUserToGroup);
-    connect(m_hardworker, &HardWorker::sigAddUserToGroupDone,
-            m_pageAddUsers, &AddUsersPage::onAddUserToGroupDone);
+            m_groupInterface, &GroupInterface::doAddUserToGroup);
+    connect(m_groupInterface, &GroupInterface::sigAddUserToGroupDone,
+            m_pageAddUsers, &AddUsersPage::updateUI);
 }
 
-void KiranGroupManager::connectToInfoChange()
+void GroupPage::connectToInfoChange()
 {
-    connect(GroupsGlobalInfo::instance(), &GroupsGlobalInfo::GroupAdded, this, &KiranGroupManager::onGroupAdded);
-    connect(GroupsGlobalInfo::instance(), &GroupsGlobalInfo::GroupDeleted, this, &KiranGroupManager::onGroupDeleted);
-    connect(GroupsGlobalInfo::instance(), &GroupsGlobalInfo::GroupPropertyChanged, this, &KiranGroupManager::onGroupPropertyChanged);
+    connect(GroupManager::instance(), &GroupManager::GroupAdded, this, &GroupPage::addGroup);
+    connect(GroupManager::instance(), &GroupManager::GroupDeleted, this, &GroupPage::deleteGroup);
+    connect(GroupManager::instance(), &GroupManager::GroupPropertyChanged, this, &GroupPage::handleGroupProperty);
 }
 
-void KiranGroupManager::setDefaultSiderbarItem()
+void GroupPage::setDefaultSiderbarItem()
 {
     m_tabList->setCurrentRow(0);
 }
 
-QSize KiranGroupManager::sizeHint() const
+QSize GroupPage::sizeHint() const
 {
     return {780, 657};
 }
 
-void KiranGroupManager::onGroupAdded(const QString &groupPath)
+void GroupPage::jumpToPage(StackWidgetPageEnum page)
+{
+    if (page == GroupPage::PAGE_CREATE_GROUP)
+    {
+        m_tabList->setCurrentRow(0);
+    }
+    else if (page == GroupPage::PAGE_GROUP_INFO)
+    {
+        // 默认跳转至第一个用户组界面，若无用户组，则跳转至创建界面
+        m_tabList->count() >= 2 ? m_tabList->setCurrentRow(1) : m_tabList->setCurrentRow(0);
+    }
+}
+
+void GroupPage::addGroup(const QString &groupPath)
 {
     KLOG_DEBUG() << "on group added, add group" << groupPath << "to sidebar";
 }
 
-void KiranGroupManager::onGroupDeleted(const QString &groupPath)
+void GroupPage::deleteGroup(const QString &groupPath)
 {
     KLOG_DEBUG() << "on group deleted, delete group" << groupPath << "from sidebar";
 }
 
-void KiranGroupManager::onGroupPropertyChanged(QString groupPath, QString propertyName, QVariant value)
+void GroupPage::handleGroupProperty(QString groupPath, QString propertyName, QVariant value)
 {
     KLOG_DEBUG() << "on group property changed, changed property:" << groupPath << propertyName << value;
 }

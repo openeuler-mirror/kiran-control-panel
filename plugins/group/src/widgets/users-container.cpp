@@ -15,7 +15,6 @@
 #include "users-container.h"
 #include <qt5-log-i.h>
 #include <QBoxLayout>
-#include <QResizeEvent>
 #include <QScrollArea>
 #include "user-list-item.h"
 void deleteAllItemOfLayout(QLayout* layout)
@@ -111,11 +110,10 @@ void UsersContainer::init()
     m_mainLayout->addWidget(m_scrollArea);
 
     m_contentWidget = new QWidget(this);
-    m_contentWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     m_containerLayout = new QBoxLayout(QBoxLayout::TopToBottom, m_contentWidget);
     m_containerLayout->setSizeConstraint(QLayout::SetMinimumSize);
     m_containerLayout->setSpacing(10);
-    m_containerLayout->setContentsMargins(0, 0, 0, 0);
+    m_containerLayout->setContentsMargins(0, 0, 5, 0);
     m_scrollArea->setWidget(m_contentWidget);
 }
 
@@ -126,7 +124,23 @@ void UsersContainer::adjustSizeToItmes()
     auto contentSpacing = m_containerLayout->spacing();
 
     int height = mainMargin.top() + mainMargin.bottom() + contentMargin.top() + contentMargin.bottom();
-    height += contentSpacing * (m_containerLayout->count() - 1);
-    height += 36 * m_containerLayout->count();
+
+    // 累加可见的item高度
+    for (int i = 0; i < m_containerLayout->count(); ++i)
+    {
+        auto layoutItem = m_containerLayout->itemAt(i);
+        if (layoutItem && layoutItem->widget())
+        {
+            auto item = qobject_cast<UserListItem*>(layoutItem->widget());
+            if (item && item->isVisible())
+            {
+                height += item->height();
+                height += contentSpacing;
+            }
+        }
+    }
+
+    // 减去多余的间隙
+    height -= contentSpacing;
     m_contentWidget->setMaximumHeight(height > 0 ? height : 0);
 }

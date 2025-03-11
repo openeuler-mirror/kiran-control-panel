@@ -11,18 +11,18 @@
  *
  * Author:     wangshichang <shichang@isrc.iscas.ac.cn>
  */
-#ifndef KIRAN_ACCOUNT_MANAGER_HARD_WORKER_H
-#define KIRAN_ACCOUNT_MANAGER_HARD_WORKER_H
+
+#pragma once
 
 #include <QObject>
 
-class HardWorker : public QObject
+class GroupInterface : public QObject
 {
     Q_OBJECT
 public:
-    explicit HardWorker();
+    explicit GroupInterface();
 
-    ~HardWorker();
+    ~GroupInterface();
 
 public slots:
 
@@ -72,5 +72,3 @@ signals:
     /// \param errMsg 错误信息，不为空表示失败，弹出提示框
     void sigChangeGroupNameDone(QString groupPath, QString errMsg);
 };
-
-#endif  // KIRAN_ACCOUNT_MANAGER_HARD_WORKER_H

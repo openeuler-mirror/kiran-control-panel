@@ -11,25 +11,39 @@
  *
  * Author:     wangshichang <shichang@isrc.iscas.ac.cn>
  */
-#ifndef GROUPSGLOBALINFO_H
-#define GROUPSGLOBALINFO_H
 
-#include "ksd_group_admin_list_proxy.h"
-#include "ksd_group_admin_proxy.h"
+#pragma once
 
+#include <QDBusObjectPath>
 #include <QList>
 #include <QObject>
+#include <QSharedPointer>
 
-class GroupsGlobalInfo : public QObject
+#define GROUP_ADMIN_DBUS_NAME "org.group.admin"
+#define GROUP_ADMIN_OBJECT_PATH "/org/group/admin"
+
+class KSDGroupAdminProxy;
+class KSDGroupAdminListProxy;
+class GroupInterface;
+class GroupManager : public QObject
 {
     Q_OBJECT
 private:
-    explicit GroupsGlobalInfo(QObject *parent = nullptr);
+    explicit GroupManager(QObject *parent = nullptr);
 
 public:
-    ~GroupsGlobalInfo();
+    struct GroupInfo
+    {
+        QString name;
+        qlonglong gid;
+        QStringList users;
+        bool isNotSystemGroup = false;
+    };
 
-    static GroupsGlobalInfo *instance();
+public:
+    ~GroupManager();
+
+    static GroupManager *instance();
 
     /**
      * @brief 初始化，加载用户组列表
@@ -37,11 +51,19 @@ public:
      */
     bool init();
 
+    GroupInterface *getInterface();
+
     /**
      * @brief  获取排序之后的用户组列表
      * @return QList<QString> 用户DBusObjectPath列表
      */
     QList<QString> getGroupList();
+
+    /// @brief 获取用户组信息
+    /// @param groupPath 用户组DBus对象路径
+    /// @param groupInfo 存储用户组信息
+    /// @return 是否获取成功
+    bool getGroupInfo(const QString groupPath, GroupManager::GroupInfo &groupInfo);
 
     /**
      * @brief 检查是否存在重名用户组
@@ -65,8 +87,7 @@ private Q_SLOTS:
     void handlerPropertyChanged(const QString &propertyName, const QVariant &value);
 
 private:
-    KSDGroupAdminProxy m_groupAdminInterface;
-    QMap<QString, KSDGroupAdminListProxy *> m_groupsMap;  // QMap<DBus对象路径,用户相关接口>
+    KSDGroupAdminProxy *m_groupAdminProxy;
+    QMap<QString, QSharedPointer<KSDGroupAdminListProxy>> m_groupsMap;  // QMap<DBus对象路径,用户相关接口>
+    GroupInterface *m_groupInterface;
 };
-
-#endif  // GROUPSGLOBALINFO_H
