@@ -11,15 +11,18 @@
  *
  * Author:     wangshichang <shichang@isrc.iscas.ac.cn>
  */
-#ifndef CONFIG_H
-#define CONFIG_H
 
-#define GROUP_ADMIN_DBUS_NAME "org.group.admin"
-#define GROUP_ADMIN_OBJECT_PATH "/org/group/admin"
+#ifndef GROUP_NAME_VALIDATOR_H
+#define GROUP_NAME_VALIDATOR_H
 
-#define ACCOUNTS_DBUS_NAME "com.kylinsec.Kiran.SystemDaemon.Accounts"
-#define ACCOUNTS_OBJECT_PATH "/com/kylinsec/Kiran/SystemDaemon/Accounts"
-#define ACCOUNTS_DBUS_INTERFACE_NAME "com.kylinsec.Kiran.SystemDaemon.Accounts"
-#define CONFIG_FILE_PATH "/etc/kiran-cpanel-account/kiran-account-manager.conf"
+#include <QValidator>
 
-#endif
+class GroupNameValidator : public QValidator
+{
+    Q_OBJECT
+public:
+    explicit GroupNameValidator(QObject *parent = nullptr);
+    State validate(QString &input, int &pos) const Q_DECL_OVERRIDE;
+};
+
+#endif  // GROUP_NAME_VALIDATOR_H
