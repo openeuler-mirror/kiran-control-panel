@@ -11,9 +11,14 @@
  *
  * Author:     liuxinhao <liuxinhao@kylinsec.com.cn>
  */
+
 #include "group-subitem.h"
+#include "group-page.h"
+
 #include <QEvent>
-#include <QMap>
+
+#define GROUP_SEARCH_COMMAND_CREATE_GROUP "@CreateGroup"
+#define GROUP_SEARCH_COMMAND_JUMP_TO_GROUP_INFO "@GroupInfo"
 
 GroupSubItem::GroupSubItem(QObject* parent)
     : QObject(parent)
@@ -26,9 +31,9 @@ GroupSubItem::~GroupSubItem()
 
 bool GroupSubItem::eventFilter(QObject* watched, QEvent* event)
 {
-    if (watched == m_kiranGroupManager && event->type() == QEvent::Destroy)
+    if (watched == m_groupPage && event->type() == QEvent::Destroy)
     {
-        m_kiranGroupManager = nullptr;
+        m_groupPage = nullptr;
     }
 
     return QObject::eventFilter(watched, event);
@@ -66,22 +71,34 @@ int GroupSubItem::getWeight()
 
 QWidget* GroupSubItem::createWidget()
 {
-    m_kiranGroupManager = new KiranGroupManager();
-    m_kiranGroupManager->installEventFilter(this);
-    return m_kiranGroupManager;
+    m_groupPage = new GroupPage();
+    m_groupPage->installEventFilter(this);
+    return m_groupPage;
 }
 
 QVector<QPair<QString, QString>> GroupSubItem::getSearchKeys()
 {
-     return {{tr("Creat group"), "CreatGroup"},
-            {tr("Change group name"), "ChangeGroupName"},
-            {tr("Add group member"), "AddGroupMember"}};
+    return {{tr("Create group"), GROUP_SEARCH_COMMAND_CREATE_GROUP},
+            {tr("Group information"), GROUP_SEARCH_COMMAND_JUMP_TO_GROUP_INFO}};
 }
 
 bool GroupSubItem::jumpToSearchEntry(const QString& key)
-{ 
-        if (!m_kiranGroupManager)
-            return false;
+{
+    if (!m_groupPage)
+        return false;
 
-        return true;
+    if (key == GROUP_SEARCH_COMMAND_CREATE_GROUP)
+    {
+        m_groupPage->jumpToPage(GroupPage::PAGE_CREATE_GROUP);
+    }
+    else if (key == GROUP_SEARCH_COMMAND_JUMP_TO_GROUP_INFO)
+    {
+        m_groupPage->jumpToPage(GroupPage::PAGE_GROUP_INFO);
+    }
+    else
+    {
+        return false;
+    }
+
+    return true;
 }

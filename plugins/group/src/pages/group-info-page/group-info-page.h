@@ -14,18 +14,15 @@
 #ifndef GROUPINFOPAGE_H
 #define GROUPINFOPAGE_H
 
-#include "kiran-tips/kiran-tips.h"
-#include "users-container.h"
-
 #include <QWidget>
 
-QT_BEGIN_NAMESPACE
 namespace Ui
 {
 class GroupInfoPage;
 }
-QT_END_NAMESPACE
 
+class UsersContainer;
+class KiranTips;
 class GroupInfoPage : public QWidget
 {
     Q_OBJECT
@@ -43,33 +40,32 @@ public:
 signals:
     void requestAddUsersPage(QString groupPath);
 
-    /// 向HardWorker发送移除成员的信号
+    /// 向GroupInterface发送移除成员的信号
     /// \param groupPath 要移除成员的用户组DBus对象路径
     /// \param userName 要被移除的成员名
     void requestRemoveMember(QString groupPath, QString userName);
 
-    /// 向HardWorker发送移除用户组的信号
+    /// 向GroupInterface发送移除用户组的信号
     /// \param gid 要移除的用户组id
     void requestDeleteGroup(int gid, QString groupName);
 
-    /// 向HardWorker发送更改用户组名称的信号
+    /// 向GroupInterface发送更改用户组名称的信号
     /// \param groupPath 要更改名称的用户组DBus对象路径
     /// \param groupName 新的用户组名
     void requestChangeGroupName(QString groupPath, QString groupName);
 
 public Q_SLOTS:
-    void onEditNameReturn();
-    void onRemoveMemberFromGroupDone(QString errMsg);
-    void onAddUserToGroupDone(QString errMsg);
-    void onDeleteGroupDone(QString groupPath, QString errMsg);
-    void onChangeGroupNameDone(QString groupPath, QString errMsg);
+    void changeGroupName();
+    void handleMemberRemoved(QString errMsg);
+    void handleMemberAdded(QString errMsg);
+    void handleGroupDeleted(QString groupPath, QString errMsg);
+    void handleGroupNameChanged(QString groupPath, QString errMsg);
 
 private:
     /// 初始化界面
     void initUI();
     /// 　从GroupAdmin服务中重新加载用户信息
     void updateInfo();
-    QStringList getAllUserName();
     void appendMemberListItem(const QString &userName);
 
     bool eventFilter(QObject *watched, QEvent *event);
@@ -79,7 +75,6 @@ private:
     KiranTips *m_errorTip;
     QString m_curShowGroupPath;
     QString m_curShowGroupName;
-    QStringList m_allUserName;
     UsersContainer *m_memberContainer;
     int m_gid;
 };

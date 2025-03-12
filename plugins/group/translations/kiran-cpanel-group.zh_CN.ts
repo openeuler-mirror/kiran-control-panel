@@ -19,12 +19,12 @@
         <translation>添加组成员</translation>
     </message>
     <message>
-        <location filename="../src/pages/add-users-page/add-users-page.ui" line="176"/>
+        <location filename="../src/pages/add-users-page/add-users-page.ui" line="120"/>
         <source>Save</source>
         <translation>添加</translation>
     </message>
     <message>
-        <location filename="../src/pages/add-users-page/add-users-page.ui" line="223"/>
+        <location filename="../src/pages/add-users-page/add-users-page.ui" line="167"/>
         <source>Cancel</source>
         <translation>返回</translation>
     </message>
@@ -47,7 +47,7 @@
         <translation>添加组成员</translation>
     </message>
     <message>
-        <location filename="../src/pages/create-group-page/create-group-page.ui" line="141"/>
+        <location filename="../src/pages/create-group-page/create-group-page.ui" line="128"/>
         <source>Confirm</source>
         <translation>创建</translation>
     </message>
@@ -56,8 +56,8 @@
         <translation type="obsolete">返回</translation>
     </message>
     <message>
-        <location filename="../src/pages/create-group-page/create-group-page.cpp" line="102"/>
-        <location filename="../src/pages/create-group-page/create-group-page.cpp" line="132"/>
+        <location filename="../src/pages/create-group-page/create-group-page.cpp" line="105"/>
+        <location filename="../src/pages/create-group-page/create-group-page.cpp" line="135"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>
@@ -84,7 +84,7 @@
         <translation>组成员</translation>
     </message>
     <message>
-        <location filename="../src/pages/group-info-page/group-info-page.ui" line="340"/>
+        <location filename="../src/pages/group-info-page/group-info-page.ui" line="327"/>
         <source>Add User</source>
         <translation>添加成员</translation>
     </message>
@@ -101,7 +101,7 @@
         <translation type="vanished">添加组成员</translation>
     </message>
     <message>
-        <location filename="../src/pages/group-info-page/group-info-page.ui" line="387"/>
+        <location filename="../src/pages/group-info-page/group-info-page.ui" line="374"/>
         <source>Delete</source>
         <translation>删除组</translation>
     </message>
@@ -110,12 +110,45 @@
         <translation type="vanished">请输入搜索关键词...</translation>
     </message>
     <message>
-        <location filename="../src/pages/group-info-page/group-info-page.cpp" line="176"/>
-        <location filename="../src/pages/group-info-page/group-info-page.cpp" line="187"/>
-        <location filename="../src/pages/group-info-page/group-info-page.cpp" line="199"/>
-        <location filename="../src/pages/group-info-page/group-info-page.cpp" line="208"/>
+        <location filename="../src/pages/group-info-page/group-info-page.cpp" line="160"/>
+        <location filename="../src/pages/group-info-page/group-info-page.cpp" line="171"/>
+        <location filename="../src/pages/group-info-page/group-info-page.cpp" line="183"/>
+        <location filename="../src/pages/group-info-page/group-info-page.cpp" line="192"/>
         <source>Error</source>
         <translation>错误</translation>
+    </message>
+</context>
+<context>
+    <name>GroupInterface</name>
+    <message>
+        <location filename="../src/group-interface.cpp" line="45"/>
+        <source>Failed to create group, %1</source>
+        <translation>创建用户组失败， %1</translation>
+    </message>
+    <message>
+        <location filename="../src/group-interface.cpp" line="69"/>
+        <source>Failed to delete group, %1</source>
+        <translation>删除用户组失败， %1</translation>
+    </message>
+    <message>
+        <location filename="../src/group-interface.cpp" line="92"/>
+        <source>Failed to add %1 to group, %2</source>
+        <translation>添加用户%1到用户组失败， %2</translation>
+    </message>
+    <message>
+        <location filename="../src/group-interface.cpp" line="114"/>
+        <source>Failed to remove %1 from group, %2</source>
+        <translation>从用户组移除用户%1失败， %2</translation>
+    </message>
+    <message>
+        <location filename="../src/group-interface.cpp" line="138"/>
+        <source>Failed to change group name to %1, %2</source>
+        <translation>修改用户组名为%1失败，%2</translation>
+    </message>
+    <message>
+        <location filename="../src/group-interface.cpp" line="150"/>
+        <source>Failed to change group name to %1, the new group name is occupied!</source>
+        <translation>修改用户组名为%1失败，新名称已被使用！</translation>
     </message>
 </context>
 <context>
@@ -145,26 +178,41 @@
     </message>
 </context>
 <context>
+    <name>GroupPage</name>
+    <message>
+        <location filename="../src/group-page.cpp" line="141"/>
+        <source>Create new group</source>
+        <translation>创建组</translation>
+    </message>
+</context>
+<context>
     <name>GroupSubItem</name>
     <message>
-        <location filename="../src/group-subitem.cpp" line="44"/>
+        <location filename="../src/group-subitem.cpp" line="49"/>
         <source>Group</source>
         <translation>组</translation>
     </message>
     <message>
-        <location filename="../src/group-subitem.cpp" line="76"/>
+        <location filename="../src/group-subitem.cpp" line="81"/>
+        <source>Create group</source>
+        <translation>创建用户组</translation>
+    </message>
+    <message>
+        <location filename="../src/group-subitem.cpp" line="82"/>
+        <source>Group information</source>
+        <translation>用户组信息</translation>
+    </message>
+    <message>
         <source>Creat group</source>
-        <translation>创建组</translation>
+        <translation type="vanished">创建组</translation>
     </message>
     <message>
-        <location filename="../src/group-subitem.cpp" line="77"/>
         <source>Change group name</source>
-        <translation>修改用户组名</translation>
+        <translation type="vanished">修改用户组名</translation>
     </message>
     <message>
-        <location filename="../src/group-subitem.cpp" line="78"/>
         <source>Add group member</source>
-        <translation>添加用户组成员</translation>
+        <translation type="vanished">添加用户组成员</translation>
     </message>
 </context>
 <context>
@@ -190,42 +238,35 @@
         <translation type="vanished">修改组名失败，新组名已存在</translation>
     </message>
     <message>
-        <location filename="../src/hard-worker.cpp" line="46"/>
         <source>Failed to create group, %1</source>
-        <translation>创建用户组失败， %1</translation>
+        <translation type="vanished">创建用户组失败， %1</translation>
     </message>
     <message>
-        <location filename="../src/hard-worker.cpp" line="70"/>
         <source>Failed to delete group, %1</source>
-        <translation>删除用户组失败， %1</translation>
+        <translation type="vanished">删除用户组失败， %1</translation>
     </message>
     <message>
-        <location filename="../src/hard-worker.cpp" line="93"/>
         <source>Failed to add %1 to group, %2</source>
-        <translation>添加用户%1到用户组失败， %2</translation>
+        <translation type="vanished">添加用户%1到用户组失败， %2</translation>
     </message>
     <message>
-        <location filename="../src/hard-worker.cpp" line="115"/>
         <source>Failed to remove %1 from group, %2</source>
-        <translation>从用户组移除用户%1失败， %2</translation>
+        <translation type="vanished">从用户组移除用户%1失败， %2</translation>
     </message>
     <message>
-        <location filename="../src/hard-worker.cpp" line="139"/>
         <source>Failed to change group name to %1, %2</source>
-        <translation>修改用户组名为%1失败，%2</translation>
+        <translation type="vanished">修改用户组名为%1失败，%2</translation>
     </message>
     <message>
-        <location filename="../src/hard-worker.cpp" line="151"/>
         <source>Failed to change group name to %1, the new group name is occupied!</source>
-        <translation>修改用户组名为%1失败，新名称已被使用！</translation>
+        <translation type="vanished">修改用户组名为%1失败，新名称已被使用！</translation>
     </message>
 </context>
 <context>
     <name>KiranGroupManager</name>
     <message>
-        <location filename="../src/kiran-group-manager.cpp" line="142"/>
         <source>Create new group</source>
-        <translation>创建组</translation>
+        <translation type="vanished">创建组</translation>
     </message>
 </context>
 </TS>

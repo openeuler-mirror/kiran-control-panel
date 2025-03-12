@@ -13,8 +13,8 @@
  */
 
 #include "group-name-checker.h"
-#include "groups-global-info.h"
-
+#include <QRegularExpression>
+#include "group-manager.h"
 bool GroupNameChecker::isValid(const QString& name, QString& errorMessage)
 {
     errorMessage = "";
@@ -35,7 +35,7 @@ bool GroupNameChecker::isValid(const QString& name, QString& errorMessage)
     }
 
     // 检验用户组名是否为重复
-    if (!GroupsGlobalInfo::instance()->checkGroupNameAvaliable(name))
+    if (!GroupManager::instance()->checkGroupNameAvaliable(name))
     {
         errorMessage = tr("Group name already exists");
         return false;

@@ -14,23 +14,17 @@
 #ifndef CREATEGROUPPAGE_H
 #define CREATEGROUPPAGE_H
 
-#include <QThread>
 #include <QWidget>
 
-#include <kiran-sidebar-widget.h>
-#include "kiran-tips/kiran-tips.h"
-#include "users-container.h"
-
-QT_BEGIN_NAMESPACE
 namespace Ui
 {
 class CreateGroupPage;
 }
-QT_END_NAMESPACE
 
+class UsersContainer;
+class KiranTips;
 class CreateGroupPage : public QWidget
 {
-    friend class KiranGroupManager;
     Q_OBJECT
 
 public:
@@ -43,10 +37,12 @@ private:
     void initUI();
     void appendUserListItem(const QString &userPath);
 
+private Q_SLOTS:
+    void createGroup();
+
 public Q_SLOTS:
-    void onCreateGroupClicked();
-    void onCreateGroupDone(QString groupPath, QString errMsg);
-    void onAddUserToGroupDone(QString errMsg);
+    void addUserToGroup(QString groupPath, QString errMsg);
+    void updateUI(QString errMsg);
 
 signals:
     void requestCreateGroup(const QString groupName);

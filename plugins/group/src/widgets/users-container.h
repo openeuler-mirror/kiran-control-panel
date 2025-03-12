@@ -17,10 +17,7 @@
 
 #include <QWidget>
 
-QT_BEGIN_NAMESPACE
 class QBoxLayout;
-QT_END_NAMESPACE
-
 class QScrollArea;
 class UserListItem;
 class UsersContainer : public QWidget

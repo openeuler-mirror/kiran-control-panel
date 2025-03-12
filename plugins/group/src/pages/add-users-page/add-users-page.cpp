@@ -13,13 +13,13 @@
  */
 
 #include "add-users-page.h"
-#include "./ui_add-users-page.h"
-#include "def.h"
-#include "ksd_group_admin_list_proxy.h"
-#include "src/accounts-global-info.h"
+#include "accounts-global-info.h"
+#include "group-manager.h"
+#include "ksd_accounts_user_proxy.h"
+#include "ui_add-users-page.h"
 #include "user-list-item.h"
+#include "users-container.h"
 
-#include <kiran-message-box.h>
 #include <kiran-push-button.h>
 #include <qt5-log-i.h>
 
@@ -69,12 +69,14 @@ void AddUsersPage::initUI()
 QStringList AddUsersPage::getAllUserName()
 {
     QStringList result;
+    QString userName;
     auto userObjList = AccountsGlobalInfo::instance()->getUserList();
     for (auto iter : userObjList)
     {
-        KSDAccountsUserProxy interface(ACCOUNTS_DBUS_NAME, iter, QDBusConnection::systemBus());
-        auto userName = interface.user_name();
-        result.append(userName);
+        if (AccountsGlobalInfo::instance()->getUserName(iter, userName))
+        {
+            result.append(userName);
+        }
     }
     return result;
 }
@@ -83,21 +85,24 @@ void AddUsersPage::updateUsersList(const QString &groupObj)
 {
     m_curShowGroupPath = groupObj;
 
-    KSDGroupAdminListProxy groupProxy(GROUP_ADMIN_DBUS_NAME,
-                                      m_curShowGroupPath,
-                                      QDBusConnection::systemBus());
     m_usersContainer->clear();
-    /// 加载不在用户组中的用户
-    auto usersInGroup = groupProxy.users();
-    for (auto name : m_allUserName)
+
+    GroupManager::GroupInfo groupInfo;
+    if (GroupManager::instance()->getGroupInfo(m_curShowGroupPath, groupInfo))
     {
-        if (!usersInGroup.contains(name))
+        /// 加载不在用户组中的用户
+        auto usersInGroup = groupInfo.users;
+        for (auto name : m_allUserName)
         {
-            appendUserListItem(name);
+            if (!usersInGroup.contains(name))
+            {
+                appendUserListItem(name);
+            }
         }
     }
 
     ui->search_box->setFocus();
+    ui->search_box->clear();
 }
 
 void AddUsersPage::appendUserListItem(const QString &userName)
@@ -112,44 +117,22 @@ void AddUsersPage::appendUserListItem(const QString &userName)
 
 void AddUsersPage::searchFilter(QString filterString)
 {
-    KSDGroupAdminListProxy groupProxy(GROUP_ADMIN_DBUS_NAME,
-                                      m_curShowGroupPath,
-                                      QDBusConnection::systemBus());
-    auto usersInGroup = groupProxy.users();
+    GroupManager::GroupInfo groupInfo;
+    if (!GroupManager::instance()->getGroupInfo(m_curShowGroupPath, groupInfo))
+        return;
 
-    if (filterString.size() == 0)
+    auto usersInGroup = groupInfo.users;
+    for (auto name : m_allUserName)
     {
-        /// 加载不在用户组中的用户
-        for (auto name : m_allUserName)
+        if (!usersInGroup.contains(name))
         {
-            if (!usersInGroup.contains(name))
-            {
-                m_usersContainer->setItemVisible(name, true);
-            }
-        }
-    }
-    else
-    {
-        for (auto name : m_allUserName)
-        {
-            if (!usersInGroup.contains(name))
-            {
-                // 显示/隐藏过滤后的用户
-                if (name.contains(filterString))
-                {
-                    m_usersContainer->setItemVisible(name, true);
-                }
-                else
-                {
-                    m_usersContainer->setItemVisible(name, false);
-                }
-                continue;
-            }
+            bool isVisible = filterString.isEmpty() || name.contains(filterString);
+            m_usersContainer->setItemVisible(name, isVisible);
         }
     }
 }
 
-void AddUsersPage::onAddUserToGroupDone(QString errMsg)
+void AddUsersPage::updateUI(QString errMsg)
 {
     ui->btn_save->setBusy(false);
     emit requestGroupInfoPage();

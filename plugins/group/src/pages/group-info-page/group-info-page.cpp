@@ -12,13 +12,15 @@
  * Author:     wangshichang <shichang@isrc.iscas.ac.cn>
  */
 #include "group-info-page.h"
-#include "./ui_group-info-page.h"
 #include "accounts-global-info.h"
-#include "def.h"
-#include "ksd_group_admin_list_proxy.h"
-#include "tools/group-name-checker.h"
-#include "tools/group-name-validator.h"
+#include "group-manager.h"
+#include "group-name-checker.h"
+#include "group-name-validator.h"
+#include "kiran-tips/kiran-tips.h"
+#include "ksd_accounts_user_proxy.h"
+#include "ui_group-info-page.h"
 #include "user-list-item.h"
+#include "users-container.h"
 
 #include <kiran-message-box.h>
 #include <kiran-push-button.h>
@@ -55,9 +57,6 @@ void GroupInfoPage::initUI()
     m_errorTip->setShowPosition(KiranTips::POSITION_BOTTM);
     m_errorTip->setAnimationEnable(true);
 
-    // 所有用户名
-    m_allUserName = getAllUserName();
-
     // 用户列表容器
     m_memberContainer = new UsersContainer(this);
     ui->layout_menber_list->addWidget(m_memberContainer);
@@ -76,7 +75,7 @@ void GroupInfoPage::initUI()
     ui->edit_name->setValidator(new GroupNameValidator(ui->edit_name));
     ui->edit_name->installEventFilter(this);
 
-    connect(ui->edit_name, &QLineEdit::returnPressed, this, &GroupInfoPage::onEditNameReturn);
+    connect(ui->edit_name, &QLineEdit::returnPressed, this, &GroupInfoPage::changeGroupName);
 
     connect(ui->btn_change_name, &QPushButton::clicked, [this]()
             { 
@@ -96,26 +95,24 @@ void GroupInfoPage::updateInfo()
 {
     m_errorTip->hideTip();
 
-    // 更新用户名列表
-    m_allUserName = getAllUserName();
-
-    KSDGroupAdminListProxy groupProxy(GROUP_ADMIN_DBUS_NAME,
-                                      m_curShowGroupPath,
-                                      QDBusConnection::systemBus());
-    m_gid = groupProxy.gid();
-
-    auto groupName = groupProxy.groupName();
-    ui->label_name->setText(groupName);
-    m_curShowGroupName = groupName;
-
-    m_memberContainer->clear();
-    /// 成员列表
-    auto memberList = groupProxy.users();
-    for (auto iter : memberList)
+    GroupManager::GroupInfo groupInfo;
+    if (GroupManager::instance()->getGroupInfo(m_curShowGroupPath, groupInfo))
     {
-        if (!iter.isEmpty())
+        m_gid = groupInfo.gid;
+
+        auto groupName = groupInfo.name;
+        ui->label_name->setText(groupName);
+        m_curShowGroupName = groupName;
+
+        m_memberContainer->clear();
+        /// 成员列表
+        auto memberList = groupInfo.users;
+        for (auto iter : memberList)
         {
-            appendMemberListItem(iter);
+            if (!iter.isEmpty())
+            {
+                appendMemberListItem(iter);
+            }
         }
     }
 }
@@ -134,19 +131,6 @@ void GroupInfoPage::appendMemberListItem(const QString &userName)
                 emit requestRemoveMember(m_curShowGroupPath, item->name()); });
 }
 
-QStringList GroupInfoPage::getAllUserName()
-{
-    QStringList result;
-    auto userObjList = AccountsGlobalInfo::instance()->getUserList();
-    for (auto iter : userObjList)
-    {
-        KSDAccountsUserProxy interface(ACCOUNTS_DBUS_NAME, iter, QDBusConnection::systemBus());
-        auto userName = interface.user_name();
-        result.append(userName);
-    }
-    return result;
-}
-
 void GroupInfoPage::setCurrentShowGroupPath(const QString &groupObj)
 {
     m_curShowGroupPath = groupObj;
@@ -154,7 +138,7 @@ void GroupInfoPage::setCurrentShowGroupPath(const QString &groupObj)
     ui->stacked_name_editor->setCurrentIndex(NAME_LABEL);
 }
 
-void GroupInfoPage::onEditNameReturn()
+void GroupInfoPage::changeGroupName()
 {
     QString errorMessage;
     if (!GroupNameChecker::isValid(ui->edit_name->text(), errorMessage))
@@ -168,7 +152,7 @@ void GroupInfoPage::onEditNameReturn()
     ui->edit_name->clear();
 }
 
-void GroupInfoPage::onRemoveMemberFromGroupDone(QString errMsg)
+void GroupInfoPage::handleMemberRemoved(QString errMsg)
 {
     ui->btn_add_user->setBusy(false);
     if (!errMsg.isEmpty())
@@ -180,7 +164,7 @@ void GroupInfoPage::onRemoveMemberFromGroupDone(QString errMsg)
     updateInfo();
 }
 
-void GroupInfoPage::onAddUserToGroupDone(QString errMsg)
+void GroupInfoPage::handleMemberAdded(QString errMsg)
 {
     if (!errMsg.isEmpty())
     {
@@ -191,7 +175,7 @@ void GroupInfoPage::onAddUserToGroupDone(QString errMsg)
     updateInfo();
 }
 
-void GroupInfoPage::onDeleteGroupDone(QString groupName, QString errMsg)
+void GroupInfoPage::handleGroupDeleted(QString groupName, QString errMsg)
 {
     ui->btn_delete->setBusy(false);
     if (!errMsg.isEmpty())
@@ -201,13 +185,14 @@ void GroupInfoPage::onDeleteGroupDone(QString groupName, QString errMsg)
     }
 }
 
-void GroupInfoPage::onChangeGroupNameDone(QString groupPath, QString errMsg)
+void GroupInfoPage::handleGroupNameChanged(QString groupPath, QString errMsg)
 {
     if (!errMsg.isEmpty())
     {
         KiranMessageBox::message(nullptr, tr("Error"),
                                  errMsg, KiranMessageBox::Ok);
     }
+    updateInfo();
 }
 
 bool GroupInfoPage::eventFilter(QObject *watched, QEvent *event)

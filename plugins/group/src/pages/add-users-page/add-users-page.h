@@ -15,18 +15,14 @@
 #ifndef ADDUSERSPAGE_H
 #define ADDUSERSPAGE_H
 
-#include "kiran-tips/kiran-tips.h"
-#include "users-container.h"
-
 #include <QWidget>
 
-QT_BEGIN_NAMESPACE
 namespace Ui
 {
 class AddUsersPage;
 }
-QT_END_NAMESPACE
 
+class UsersContainer;
 class AddUsersPage : public QWidget
 {
     Q_OBJECT
@@ -48,7 +44,7 @@ signals:
 public Q_SLOTS:
     void searchFilter(QString filterString);
 
-    void onAddUserToGroupDone(QString errMsg);
+    void updateUI(QString errMsg);
 
 private:
     /// 初始化界面
