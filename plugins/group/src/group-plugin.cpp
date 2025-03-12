@@ -15,14 +15,12 @@
 #include "group-plugin.h"
 #include "accounts-global-info.h"
 #include "config.h"
+#include "group-manager.h"
+#include "group-page.h"
 #include "group-subitem.h"
-#include "groups-global-info.h"
-#include "kiran-group-manager.h"
-#include "plugin-group-config.h"
 
 #include <qt5-log-i.h>
 #include <QCoreApplication>
-#include <QList>
 #include <QLocale>
 #include <QTranslator>
 
@@ -38,7 +36,7 @@ GroupPlugin::~GroupPlugin()
 int GroupPlugin::init(KiranControlPanel::PanelInterface *interface)
 {
     m_panelInterface = interface;
-    if (!GroupsGlobalInfo::instance()->init())
+    if (!GroupManager::instance()->init())
     {
         KLOG_ERROR() << "load group info failed!";
         return -1;
@@ -56,8 +54,12 @@ int GroupPlugin::init(KiranControlPanel::PanelInterface *interface)
     }
 
     m_translator = new QTranslator;
-    if (!m_translator->load(QLocale(), "kiran-cpanel-group", ".",
-                            PLUGIN_TRANSLATION_DIR, ".qm"))
+
+    if (!m_translator->load(QLocale(),
+                            "kiran-cpanel-group",
+                            ".",
+                            TRANSLATE_PREFIX,
+                            ".qm"))
     {
         m_translator->deleteLater();
         m_translator = nullptr;

@@ -1,27 +1,31 @@
 /**
- * Copyright (c) 2020 ~ 2021 KylinSec Co., Ltd. 
+ * Copyright (c) 2020 ~ 2021 KylinSec Co., Ltd.
  * kiran-cpanel-group is licensed under Mulan PSL v2.
- * You can use this software according to the terms and conditions of the Mulan PSL v2. 
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
  * You may obtain a copy of Mulan PSL v2 at:
- *          http://license.coscl.org.cn/MulanPSL2 
- * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND, 
- * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT, 
- * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.  
- * See the Mulan PSL v2 for more details.  
- * 
+ *          http://license.coscl.org.cn/MulanPSL2
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ *
  * Author:     wangshichang <shichang@isrc.iscas.ac.cn>
  */
 
- 
 #ifndef ACCOUNTSGLOBALINFO_H
 #define ACCOUNTSGLOBALINFO_H
 
-#include "ksd_accounts_proxy.h"
-#include "ksd_accounts_user_proxy.h"
-
+#include <QDBusObjectPath>
 #include <QList>
 #include <QObject>
+#include <QSharedPointer>
 
+#define ACCOUNTS_DBUS_NAME "com.kylinsec.Kiran.SystemDaemon.Accounts"
+#define ACCOUNTS_OBJECT_PATH "/com/kylinsec/Kiran/SystemDaemon/Accounts"
+#define ACCOUNTS_DBUS_INTERFACE_NAME "com.kylinsec.Kiran.SystemDaemon.Accounts"
+
+class KSDAccountsProxy;
+class KSDAccountsUserProxy;
 class AccountsGlobalInfo : public QObject
 {
     Q_OBJECT
@@ -46,13 +50,12 @@ public:
     QList<QString> getUserList();
 
     /**
-     * @brief 检查是否存在重名用户
-     * @param account 需检查的用户名
-     * @return 是否可用
+     * @brief 获取用户名
+     * @param userPath 用户DBusObjectPath
+     * @param userName 存储用户名
+     * @return 是否获取成功
      */
-    bool checkUserNameAvaliable(const QString &userName);
-    
-    QString getCurrentUser();
+    bool getUserName(const QString &userPath, QString &userName);
 
 private:
     void addUserToMap(const QDBusObjectPath &user);
@@ -69,10 +72,8 @@ private Q_SLOTS:
     void handlerPropertyChanged(const QString &propertyName, const QVariant &value);
 
 private:
-    KSDAccountsProxy m_accountsInterface;
-    QMap<QString,KSDAccountsUserProxy*> m_usersMap; // QMap<DBus对象路径,用户相关接口>
-    QString m_curUserName;
-    bool m_showRoot =  false;
+    KSDAccountsProxy *m_accountsInterface;
+    QMap<QString, QSharedPointer<KSDAccountsUserProxy>> m_usersMap;  // QMap<DBus对象路径,用户相关接口>
 };
 
 #endif  // ACCOUNTSGLOBALINFO_H
