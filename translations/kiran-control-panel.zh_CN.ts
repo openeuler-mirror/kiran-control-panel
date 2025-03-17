@@ -846,28 +846,28 @@
         <translation>网线被拔出</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/plugin/connection-itemwidget.cpp" line="395"/>
+        <location filename="../plugins/network/src/plugin/connection-itemwidget.cpp" line="401"/>
         <source>Are you sure you want to delete the connection %1</source>
         <translation>您是否确定要删除连接 &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/plugin/connection-itemwidget.cpp" line="396"/>
+        <location filename="../plugins/network/src/plugin/connection-itemwidget.cpp" line="402"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/plugin/connection-itemwidget.cpp" line="453"/>
-        <location filename="../plugins/network/src/plugin/connection-itemwidget.cpp" line="466"/>
+        <location filename="../plugins/network/src/plugin/connection-itemwidget.cpp" line="459"/>
+        <location filename="../plugins/network/src/plugin/connection-itemwidget.cpp" line="472"/>
         <source>Tips</source>
         <translation>提示</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/plugin/connection-itemwidget.cpp" line="454"/>
+        <location filename="../plugins/network/src/plugin/connection-itemwidget.cpp" line="460"/>
         <source>Password required to connect to %1.</source>
         <translation>连接网络 &quot;%1&quot; 需要密码</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/plugin/connection-itemwidget.cpp" line="467"/>
+        <location filename="../plugins/network/src/plugin/connection-itemwidget.cpp" line="473"/>
         <source>Please input a network name</source>
         <translation>请输入网络名称</translation>
     </message>
@@ -1305,12 +1305,12 @@
 <context>
     <name>DeviceAvailableConnectionWidget</name>
     <message>
-        <location filename="../plugins/network/src/plugin/device-available-connection-widget.cpp" line="278"/>
+        <location filename="../plugins/network/src/plugin/device-available-connection-widget.cpp" line="299"/>
         <source>Network card: %1</source>
         <translation>网卡：%1</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/plugin/device-available-connection-widget.cpp" line="405"/>
+        <location filename="../plugins/network/src/plugin/device-available-connection-widget.cpp" line="428"/>
         <source>Other WiFi networks</source>
         <translation>其它WIFI网络</translation>
     </message>
@@ -1318,12 +1318,12 @@
 <context>
     <name>DeviceList</name>
     <message>
-        <location filename="../plugins/network/src/plugin/device-list.cpp" line="154"/>
+        <location filename="../plugins/network/src/plugin/device-list.cpp" line="170"/>
         <source>Wired Network Adapter</source>
         <translation>有线网络配置</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/plugin/device-list.cpp" line="158"/>
+        <location filename="../plugins/network/src/plugin/device-list.cpp" line="174"/>
         <source>Wireless Network Adapter</source>
         <translation>无线网络配置</translation>
     </message>
@@ -2017,16 +2017,6 @@
         <translation type="unfinished">系统字体</translation>
     </message>
     <message>
-        <location filename="../plugins/appearance/pages/font/fonts.ui" line="35"/>
-        <source>Word size</source>
-        <translation>字号</translation>
-    </message>
-    <message>
-        <location filename="../plugins/appearance/pages/font/fonts.ui" line="96"/>
-        <source>System font</source>
-        <translation>系统字体</translation>
-    </message>
-    <message>
         <location filename="../plugins/appearance/pages/font/fonts.ui" line="142"/>
         <source>Monospaced font</source>
         <translation>等宽字体</translation>
@@ -2065,7 +2055,7 @@
         <translation>提示</translation>
     </message>
     <message>
-        <location filename="../plugins/authentication/utils/general-bio-page.cpp" line="220"/>
+        <location filename="../plugins/authentication/utils/general-bio-page.cpp" line="235"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>
@@ -4193,7 +4183,37 @@ This is line 50 of the test text</source>
         <translation>右</translation>
     </message>
     <message>
-        <location filename="../plugins/audio/src/plugin/output-page.cpp" line="283"/>
+        <location filename="../plugins/audio/src/plugin/output-page.ui" line="300"/>
+        <source>Sound Test</source>
+        <translation>音效测试</translation>
+    </message>
+    <message>
+        <location filename="../plugins/audio/src/plugin/output-page.ui" line="338"/>
+        <source>Play</source>
+        <translation>播放</translation>
+    </message>
+    <message>
+        <location filename="../plugins/audio/src/plugin/output-page.cpp" line="183"/>
+        <source>bark</source>
+        <translation>犬吠</translation>
+    </message>
+    <message>
+        <location filename="../plugins/audio/src/plugin/output-page.cpp" line="184"/>
+        <source>drip</source>
+        <translation>水滴</translation>
+    </message>
+    <message>
+        <location filename="../plugins/audio/src/plugin/output-page.cpp" line="185"/>
+        <source>glass</source>
+        <translation>玻璃</translation>
+    </message>
+    <message>
+        <location filename="../plugins/audio/src/plugin/output-page.cpp" line="186"/>
+        <source>sonar</source>
+        <translation>声纳</translation>
+    </message>
+    <message>
+        <location filename="../plugins/audio/src/plugin/output-page.cpp" line="329"/>
         <source>No output device detected</source>
         <translation>未检测到输出设备</translation>
     </message>
@@ -4329,18 +4349,18 @@ This is line 50 of the test text</source>
 <context>
     <name>PowerPlugin</name>
     <message>
-        <location filename="../plugins/power/power-plugin.cpp" line="57"/>
-        <location filename="../plugins/power/power-plugin.cpp" line="97"/>
+        <location filename="../plugins/power/power-plugin.cpp" line="72"/>
+        <location filename="../plugins/power/power-plugin.cpp" line="115"/>
         <source>General Settings</source>
         <translation>通用设置</translation>
     </message>
     <message>
-        <location filename="../plugins/power/power-plugin.cpp" line="66"/>
+        <location filename="../plugins/power/power-plugin.cpp" line="81"/>
         <source>Power Settings</source>
         <translation>电源设置</translation>
     </message>
     <message>
-        <location filename="../plugins/power/power-plugin.cpp" line="82"/>
+        <location filename="../plugins/power/power-plugin.cpp" line="97"/>
         <source>Battery Settings</source>
         <translation>电池设置</translation>
     </message>
@@ -5178,32 +5198,32 @@ This is line 50 of the test text</source>
         <translation>未知</translation>
     </message>
     <message>
-        <location filename="../plugins/system/pages/system-information/system-information.cpp" line="246"/>
+        <location filename="../plugins/system/pages/system-information/system-information.cpp" line="248"/>
         <source>UnActivated</source>
         <translation>未激活</translation>
     </message>
     <message>
-        <location filename="../plugins/system/pages/system-information/system-information.cpp" line="255"/>
+        <location filename="../plugins/system/pages/system-information/system-information.cpp" line="257"/>
         <source>Activation code has expired</source>
         <translation>激活码已过期</translation>
     </message>
     <message>
-        <location filename="../plugins/system/pages/system-information/system-information.cpp" line="260"/>
+        <location filename="../plugins/system/pages/system-information/system-information.cpp" line="262"/>
         <source>Permanently activated</source>
         <translation>永久激活</translation>
     </message>
     <message>
-        <location filename="../plugins/system/pages/system-information/system-information.cpp" line="265"/>
+        <location filename="../plugins/system/pages/system-information/system-information.cpp" line="267"/>
         <source>Activated</source>
         <translation>已激活</translation>
     </message>
     <message>
-        <location filename="../plugins/system/pages/system-information/system-information.cpp" line="308"/>
+        <location filename="../plugins/system/pages/system-information/system-information.cpp" line="310"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../plugins/system/pages/system-information/system-information.cpp" line="308"/>
+        <location filename="../plugins/system/pages/system-information/system-information.cpp" line="310"/>
         <source>Failed to open the license activator</source>
         <translation>启动激活许可证弹窗失败</translation>
     </message>
@@ -6016,67 +6036,67 @@ This is line 50 of the test text</source>
         <translation>管理员</translation>
     </message>
     <message>
-        <location filename="../plugins/account/pages/user-info-page/user-info-page.cpp" line="222"/>
+        <location filename="../plugins/account/pages/user-info-page/user-info-page.cpp" line="224"/>
         <source>Please enter the new user password</source>
         <translation>请输入新密码</translation>
     </message>
     <message>
-        <location filename="../plugins/account/pages/user-info-page/user-info-page.cpp" line="230"/>
+        <location filename="../plugins/account/pages/user-info-page/user-info-page.cpp" line="232"/>
         <source>Please enter the password again</source>
         <translation>请再次输入密码</translation>
     </message>
     <message>
-        <location filename="../plugins/account/pages/user-info-page/user-info-page.cpp" line="236"/>
+        <location filename="../plugins/account/pages/user-info-page/user-info-page.cpp" line="238"/>
         <source>The password you enter must be the same as the former one</source>
         <translation>两次密码不相同，请核对后，再次输入</translation>
     </message>
     <message>
-        <location filename="../plugins/account/pages/user-info-page/user-info-page.cpp" line="248"/>
+        <location filename="../plugins/account/pages/user-info-page/user-info-page.cpp" line="250"/>
         <source>Please enter the current user password</source>
         <translation>请输入当前密码</translation>
     </message>
     <message>
-        <location filename="../plugins/account/pages/user-info-page/user-info-page.cpp" line="254"/>
+        <location filename="../plugins/account/pages/user-info-page/user-info-page.cpp" line="256"/>
         <source>The current password is incorrect</source>
         <translation>当前密码错误，请再次输入</translation>
     </message>
     <message>
-        <location filename="../plugins/account/pages/user-info-page/user-info-page.cpp" line="261"/>
+        <location filename="../plugins/account/pages/user-info-page/user-info-page.cpp" line="263"/>
         <source>The new password cannot be the same as the current password</source>
         <translation>新密码不能和旧密码相同，请重新输入</translation>
     </message>
     <message>
-        <location filename="../plugins/account/pages/user-info-page/user-info-page.cpp" line="267"/>
-        <location filename="../plugins/account/pages/user-info-page/user-info-page.cpp" line="275"/>
-        <location filename="../plugins/account/pages/user-info-page/user-info-page.cpp" line="313"/>
-        <location filename="../plugins/account/pages/user-info-page/user-info-page.cpp" line="332"/>
-        <location filename="../plugins/account/pages/user-info-page/user-info-page.cpp" line="366"/>
+        <location filename="../plugins/account/pages/user-info-page/user-info-page.cpp" line="269"/>
+        <location filename="../plugins/account/pages/user-info-page/user-info-page.cpp" line="277"/>
+        <location filename="../plugins/account/pages/user-info-page/user-info-page.cpp" line="315"/>
+        <location filename="../plugins/account/pages/user-info-page/user-info-page.cpp" line="334"/>
+        <location filename="../plugins/account/pages/user-info-page/user-info-page.cpp" line="368"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../plugins/account/pages/user-info-page/user-info-page.cpp" line="267"/>
-        <location filename="../plugins/account/pages/user-info-page/user-info-page.cpp" line="275"/>
+        <location filename="../plugins/account/pages/user-info-page/user-info-page.cpp" line="269"/>
+        <location filename="../plugins/account/pages/user-info-page/user-info-page.cpp" line="277"/>
         <source>Password encryption failed</source>
         <translation>密码加密失败</translation>
     </message>
     <message>
-        <location filename="../plugins/account/pages/user-info-page/user-info-page.cpp" line="318"/>
+        <location filename="../plugins/account/pages/user-info-page/user-info-page.cpp" line="320"/>
         <source>user information updated successfully</source>
         <translation>用户信息更新成功</translation>
     </message>
     <message>
-        <location filename="../plugins/account/pages/user-info-page/user-info-page.cpp" line="338"/>
+        <location filename="../plugins/account/pages/user-info-page/user-info-page.cpp" line="340"/>
         <source>Password updated successfully</source>
         <translation>密码更新成功</translation>
     </message>
     <message>
-        <location filename="../plugins/account/pages/user-info-page/user-info-page.cpp" line="344"/>
+        <location filename="../plugins/account/pages/user-info-page/user-info-page.cpp" line="346"/>
         <source>The directory and files under the user&apos;s home directory are deleted with the user.Are you sure you want to delete the user(%1)?</source>
         <translation>用户目录下的目录和文件会随用户一起删除，确定要删除%1用户吗？</translation>
     </message>
     <message>
-        <location filename="../plugins/account/pages/user-info-page/user-info-page.cpp" line="347"/>
+        <location filename="../plugins/account/pages/user-info-page/user-info-page.cpp" line="349"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
