@@ -16,6 +16,7 @@ target_include_directories(${TARGET_NAME} PRIVATE
         dbus
         ${PROJECT_SOURCE_DIR}/common
         ${PROJECT_SOURCE_DIR}/include
+        ${CMAKE_BINARY_DIR}
         ${CMAKE_CURRENT_BINARY_DIR}
         ${KIRAN_WIDGETS_INCLUDE_DIRS}
         ${KIRAN_CC_DAEMON_INCLUDE_DIRS}

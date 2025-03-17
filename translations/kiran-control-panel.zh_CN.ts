@@ -17,21 +17,49 @@
 <context>
     <name>AccountWidget</name>
     <message>
-        <location filename="../plugins/account/account-widget.cpp" line="101"/>
-        <location filename="../plugins/account/account-widget.cpp" line="402"/>
+        <location filename="../plugins/account/account-widget.cpp" line="97"/>
+        <location filename="../plugins/account/account-widget.cpp" line="398"/>
         <source>disable</source>
         <translation>禁用</translation>
     </message>
     <message>
-        <location filename="../plugins/account/account-widget.cpp" line="101"/>
-        <location filename="../plugins/account/account-widget.cpp" line="402"/>
+        <location filename="../plugins/account/account-widget.cpp" line="97"/>
+        <location filename="../plugins/account/account-widget.cpp" line="398"/>
         <source>enable</source>
         <translation>启用</translation>
     </message>
     <message>
-        <location filename="../plugins/account/account-widget.cpp" line="223"/>
+        <location filename="../plugins/account/account-widget.cpp" line="219"/>
         <source>Create new user</source>
         <translation>创建新用户</translation>
+    </message>
+</context>
+<context>
+    <name>AddUsersPage</name>
+    <message>
+        <location filename="../plugins/group/src/pages/add-users-page/add-users-page.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../plugins/group/src/pages/add-users-page/add-users-page.ui" line="40"/>
+        <source>Add Member</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../plugins/group/src/pages/add-users-page/add-users-page.ui" line="120"/>
+        <source>Save</source>
+        <translation type="unfinished">保存</translation>
+    </message>
+    <message>
+        <location filename="../plugins/group/src/pages/add-users-page/add-users-page.ui" line="167"/>
+        <source>Cancel</source>
+        <translation type="unfinished">取消</translation>
+    </message>
+    <message>
+        <location filename="../plugins/group/src/pages/add-users-page/add-users-page.cpp" line="49"/>
+        <source>Please input keys for search...</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -157,14 +185,12 @@
 <context>
     <name>AudioSystemTray</name>
     <message>
-        <location filename="../plugins/audio/src/system-tray/audio-system-tray.cpp" line="102"/>
         <source>Volume Setting</source>
-        <translation>声音设置</translation>
+        <translation type="vanished">声音设置</translation>
     </message>
     <message>
-        <location filename="../plugins/audio/src/system-tray/audio-system-tray.cpp" line="103"/>
         <source>Mixed Setting</source>
-        <translation>混合设置</translation>
+        <translation type="vanished">混合设置</translation>
     </message>
 </context>
 <context>
@@ -340,17 +366,17 @@
 <context>
     <name>CPanelAudioWidget</name>
     <message>
-        <location filename="../plugins/audio/src/plugin/cpanel-audio-widget.ui" line="14"/>
+        <location filename="../plugins/audio/plugin/cpanel-audio-widget.ui" line="14"/>
         <source>CPanelAudioWidget</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../plugins/audio/src/plugin/cpanel-audio-widget.cpp" line="40"/>
+        <location filename="../plugins/audio/plugin/cpanel-audio-widget.cpp" line="40"/>
         <source>Output</source>
         <translation>输出</translation>
     </message>
     <message>
-        <location filename="../plugins/audio/src/plugin/cpanel-audio-widget.cpp" line="41"/>
+        <location filename="../plugins/audio/plugin/cpanel-audio-widget.cpp" line="41"/>
         <source>Input</source>
         <translation>输入</translation>
     </message>
@@ -478,43 +504,28 @@
 <context>
     <name>CreateGroupPage</name>
     <message>
-        <location filename="../plugins/group/src/pages/create-group-page/create-group-page.ui" line="32"/>
+        <location filename="../plugins/group/src/pages/create-group-page/create-group-page.ui" line="20"/>
         <source>CreateGroupPage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/group/src/pages/create-group-page/create-group-page.ui" line="95"/>
+        <location filename="../plugins/group/src/pages/create-group-page/create-group-page.ui" line="46"/>
         <source>Create Group</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/group/src/pages/create-group-page/create-group-page.ui" line="166"/>
+        <location filename="../plugins/group/src/pages/create-group-page/create-group-page.ui" line="76"/>
         <source>Add Group Members</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/group/src/pages/create-group-page/create-group-page.ui" line="246"/>
+        <location filename="../plugins/group/src/pages/create-group-page/create-group-page.ui" line="128"/>
         <source>Confirm</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/group/src/pages/create-group-page/create-group-page.cpp" line="99"/>
-        <source>Please enter your group name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../plugins/group/src/pages/create-group-page/create-group-page.cpp" line="116"/>
-        <source>group name cannot be a pure number</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../plugins/group/src/pages/create-group-page/create-group-page.cpp" line="123"/>
-        <source>group name already exists</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../plugins/group/src/pages/create-group-page/create-group-page.cpp" line="151"/>
-        <location filename="../plugins/group/src/pages/create-group-page/create-group-page.cpp" line="170"/>
+        <location filename="../plugins/group/src/pages/create-group-page/create-group-page.cpp" line="105"/>
+        <location filename="../plugins/group/src/pages/create-group-page/create-group-page.cpp" line="135"/>
         <source>Error</source>
         <translation type="unfinished">错误</translation>
     </message>
@@ -1613,84 +1624,121 @@
 <context>
     <name>GroupInfoPage</name>
     <message>
-        <location filename="../plugins/group/src/pages/group-info-page/group-info-page.ui" line="32"/>
+        <location filename="../plugins/group/src/pages/group-info-page/group-info-page.ui" line="14"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/group/src/pages/group-info-page/group-info-page.ui" line="136"/>
-        <source>TextLabel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../plugins/group/src/pages/group-info-page/group-info-page.ui" line="236"/>
+        <location filename="../plugins/group/src/pages/group-info-page/group-info-page.ui" line="175"/>
         <source>Group</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/group/src/pages/group-info-page/group-info-page.ui" line="335"/>
+        <location filename="../plugins/group/src/pages/group-info-page/group-info-page.ui" line="269"/>
         <source>Member List</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/group/src/pages/group-info-page/group-info-page.ui" line="435"/>
+        <location filename="../plugins/group/src/pages/group-info-page/group-info-page.ui" line="327"/>
         <source>Add User</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/group/src/pages/group-info-page/group-info-page.ui" line="482"/>
+        <location filename="../plugins/group/src/pages/group-info-page/group-info-page.ui" line="374"/>
         <source>Delete</source>
         <translation type="unfinished">删除用户</translation>
     </message>
     <message>
-        <location filename="../plugins/group/src/pages/group-info-page/group-info-page.ui" line="564"/>
-        <source>Add Member</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../plugins/group/src/pages/group-info-page/group-info-page.ui" line="679"/>
         <source>Save</source>
-        <translation type="unfinished">保存</translation>
+        <translation type="obsolete">保存</translation>
     </message>
     <message>
-        <location filename="../plugins/group/src/pages/group-info-page/group-info-page.ui" line="726"/>
         <source>Cancel</source>
-        <translation type="unfinished">取消</translation>
+        <translation type="obsolete">取消</translation>
     </message>
     <message>
-        <location filename="../plugins/group/src/pages/group-info-page/group-info-page.cpp" line="119"/>
-        <source>Please input keys for search...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../plugins/group/src/pages/group-info-page/group-info-page.cpp" line="240"/>
-        <location filename="../plugins/group/src/pages/group-info-page/group-info-page.cpp" line="252"/>
-        <location filename="../plugins/group/src/pages/group-info-page/group-info-page.cpp" line="262"/>
-        <location filename="../plugins/group/src/pages/group-info-page/group-info-page.cpp" line="273"/>
+        <location filename="../plugins/group/src/pages/group-info-page/group-info-page.cpp" line="160"/>
+        <location filename="../plugins/group/src/pages/group-info-page/group-info-page.cpp" line="171"/>
+        <location filename="../plugins/group/src/pages/group-info-page/group-info-page.cpp" line="183"/>
+        <location filename="../plugins/group/src/pages/group-info-page/group-info-page.cpp" line="192"/>
         <source>Error</source>
         <translation type="unfinished">错误</translation>
     </message>
 </context>
 <context>
+    <name>GroupInterface</name>
+    <message>
+        <location filename="../plugins/group/src/group-interface.cpp" line="45"/>
+        <source>Failed to create group, %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../plugins/group/src/group-interface.cpp" line="69"/>
+        <source>Failed to delete group, %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../plugins/group/src/group-interface.cpp" line="92"/>
+        <source>Failed to add %1 to group, %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../plugins/group/src/group-interface.cpp" line="114"/>
+        <source>Failed to remove %1 from group, %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../plugins/group/src/group-interface.cpp" line="138"/>
+        <source>Failed to change group name to %1, %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../plugins/group/src/group-interface.cpp" line="150"/>
+        <source>Failed to change group name to %1, the new group name is occupied!</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>GroupNameChecker</name>
+    <message>
+        <location filename="../plugins/group/src/tools/group-name-checker.cpp" line="24"/>
+        <source>Please enter your group name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../plugins/group/src/tools/group-name-checker.cpp" line="33"/>
+        <source>Group name cannot be a pure number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../plugins/group/src/tools/group-name-checker.cpp" line="40"/>
+        <source>Group name already exists</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>GroupPage</name>
+    <message>
+        <location filename="../plugins/group/src/group-page.cpp" line="141"/>
+        <source>Create new group</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>GroupSubItem</name>
     <message>
-        <location filename="../plugins/group/src/group-subitem.cpp" line="44"/>
+        <location filename="../plugins/group/src/group-subitem.cpp" line="49"/>
         <source>Group</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/group/src/group-subitem.cpp" line="76"/>
-        <source>Creat group</source>
+        <location filename="../plugins/group/src/group-subitem.cpp" line="81"/>
+        <source>Create group</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/group/src/group-subitem.cpp" line="77"/>
-        <source>Change group name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../plugins/group/src/group-subitem.cpp" line="78"/>
-        <source>Add group member</source>
+        <location filename="../plugins/group/src/group-subitem.cpp" line="82"/>
+        <source>Group information</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1734,32 +1782,6 @@
     <message>
         <location filename="../plugins/account/utils/hard-worker.cpp" line="59"/>
         <source>Failed to connect to the account management service</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../plugins/group/src/hard-worker.cpp" line="38"/>
-        <source>Create Group failed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../plugins/group/src/hard-worker.cpp" line="92"/>
-        <source>Failed to delete group,%1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../plugins/group/src/hard-worker.cpp" line="113"/>
-        <location filename="../plugins/group/src/hard-worker.cpp" line="135"/>
-        <source> add user to group failed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../plugins/group/src/hard-worker.cpp" line="158"/>
-        <source> change group name failed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../plugins/group/src/hard-worker.cpp" line="169"/>
-        <source> change group name failed, the new group name is occupied</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1884,42 +1906,42 @@
 <context>
     <name>InputPage</name>
     <message>
-        <location filename="../plugins/audio/src/plugin/input-page.ui" line="14"/>
+        <location filename="../plugins/audio/plugin/input-page.ui" line="14"/>
         <source>InputPage</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../plugins/audio/src/plugin/input-page.ui" line="40"/>
+        <location filename="../plugins/audio/plugin/input-page.ui" line="40"/>
         <source>Input cards</source>
         <translation>输入声卡</translation>
     </message>
     <message>
-        <location filename="../plugins/audio/src/plugin/input-page.ui" line="64"/>
+        <location filename="../plugins/audio/plugin/input-page.ui" line="64"/>
         <source>Input devices</source>
         <translation>输入设备</translation>
     </message>
     <message>
-        <location filename="../plugins/audio/src/plugin/input-page.ui" line="90"/>
+        <location filename="../plugins/audio/plugin/input-page.ui" line="90"/>
         <source>ComboBoxInputDevices</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../plugins/audio/src/plugin/input-page.ui" line="107"/>
+        <location filename="../plugins/audio/plugin/input-page.ui" line="107"/>
         <source>Input volume</source>
         <translation>输入音量</translation>
     </message>
     <message>
-        <location filename="../plugins/audio/src/plugin/input-page.ui" line="158"/>
+        <location filename="../plugins/audio/plugin/input-page.ui" line="158"/>
         <source>SliderVolumeSetting</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../plugins/audio/src/plugin/input-page.ui" line="178"/>
+        <location filename="../plugins/audio/plugin/input-page.ui" line="178"/>
         <source>Feedback volume</source>
         <translation>反馈音量</translation>
     </message>
     <message>
-        <location filename="../plugins/audio/src/plugin/input-page.cpp" line="298"/>
+        <location filename="../plugins/audio/plugin/input-page.cpp" line="298"/>
         <source>No input device detected</source>
         <translation>未检测到输入设备</translation>
     </message>
@@ -2395,8 +2417,8 @@
 <context>
     <name>Kiran::Network::WirelessPage</name>
     <message>
-        <location filename="../plugins/network/pages/wireless/wireless-page.cpp" line="70"/>
-        <location filename="../plugins/network/pages/wireless/wireless-page.cpp" line="71"/>
+        <location filename="../plugins/network/pages/wireless/wireless-page.cpp" line="79"/>
+        <location filename="../plugins/network/pages/wireless/wireless-page.cpp" line="80"/>
         <source>Managing known wireless networks</source>
         <translation>管理已知无线网络</translation>
     </message>
@@ -2432,14 +2454,6 @@
     <message>
         <location filename="../plugins/timedate/widgets/kiran-date-picker-widget.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>KiranGroupManager</name>
-    <message>
-        <location filename="../plugins/group/src/kiran-group-manager.cpp" line="136"/>
-        <source>Create new group</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2513,7 +2527,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/timedate/widgets/kiran-time-zone-item.cpp" line="70"/>
+        <location filename="../plugins/timedate/widgets/kiran-time-zone-item.cpp" line="67"/>
         <source>No search results, please search again...</source>
         <translation>无搜索结果，请重新搜索...</translation>
     </message>
@@ -2529,7 +2543,6 @@
 <context>
     <name>KiranTips</name>
     <message>
-        <location filename="../plugins/group/src/widgets/kiran-tips.ui" line="29"/>
         <location filename="../lib/common-widgets/kiran-tips/kiran-tips.ui" line="29"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
@@ -3034,57 +3047,87 @@ This is line 50 of the test text</source>
 <context>
     <name>OutputPage</name>
     <message>
-        <location filename="../plugins/audio/src/plugin/output-page.ui" line="14"/>
+        <location filename="../plugins/audio/plugin/output-page.ui" line="14"/>
         <source>OutputPage</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../plugins/audio/src/plugin/output-page.ui" line="40"/>
+        <location filename="../plugins/audio/plugin/output-page.ui" line="40"/>
         <source>Output cards</source>
         <translation>输出声卡</translation>
     </message>
     <message>
-        <location filename="../plugins/audio/src/plugin/output-page.ui" line="73"/>
+        <location filename="../plugins/audio/plugin/output-page.ui" line="73"/>
         <source>Output devices</source>
         <translation>输出设备</translation>
     </message>
     <message>
-        <location filename="../plugins/audio/src/plugin/output-page.ui" line="102"/>
+        <location filename="../plugins/audio/plugin/output-page.ui" line="102"/>
         <source>ComboBoxOutputDevices</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../plugins/audio/src/plugin/output-page.ui" line="125"/>
+        <location filename="../plugins/audio/plugin/output-page.ui" line="125"/>
         <source>Output volume</source>
         <translation>输出音量</translation>
     </message>
     <message>
-        <location filename="../plugins/audio/src/plugin/output-page.ui" line="182"/>
+        <location filename="../plugins/audio/plugin/output-page.ui" line="182"/>
         <source>SlilderVolumeSetting</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../plugins/audio/src/plugin/output-page.ui" line="208"/>
+        <location filename="../plugins/audio/plugin/output-page.ui" line="208"/>
         <source>Left/right balance</source>
         <translation>左/右平衡</translation>
     </message>
     <message>
-        <location filename="../plugins/audio/src/plugin/output-page.ui" line="246"/>
+        <location filename="../plugins/audio/plugin/output-page.ui" line="246"/>
         <source>SliderVolumeBalance</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../plugins/audio/src/plugin/output-page.ui" line="260"/>
+        <location filename="../plugins/audio/plugin/output-page.ui" line="260"/>
         <source>Left</source>
         <translation>左</translation>
     </message>
     <message>
-        <location filename="../plugins/audio/src/plugin/output-page.ui" line="286"/>
+        <location filename="../plugins/audio/plugin/output-page.ui" line="286"/>
         <source>Right</source>
         <translation>右</translation>
     </message>
     <message>
-        <location filename="../plugins/audio/src/plugin/output-page.cpp" line="283"/>
+        <location filename="../plugins/audio/plugin/output-page.ui" line="300"/>
+        <source>Sound Test</source>
+        <translation>音效测试</translation>
+    </message>
+    <message>
+        <location filename="../plugins/audio/plugin/output-page.ui" line="338"/>
+        <source>Play</source>
+        <translation>播放</translation>
+    </message>
+    <message>
+        <location filename="../plugins/audio/plugin/output-page.cpp" line="184"/>
+        <source>bark</source>
+        <translation>犬吠</translation>
+    </message>
+    <message>
+        <location filename="../plugins/audio/plugin/output-page.cpp" line="185"/>
+        <source>drip</source>
+        <translation>水滴</translation>
+    </message>
+    <message>
+        <location filename="../plugins/audio/plugin/output-page.cpp" line="186"/>
+        <source>glass</source>
+        <translation>玻璃</translation>
+    </message>
+    <message>
+        <location filename="../plugins/audio/plugin/output-page.cpp" line="187"/>
+        <source>sonar</source>
+        <translation>声纳</translation>
+    </message>
+    <message>
+        <location filename="../plugins/audio/plugin/output-page.cpp" line="330"/>
         <source>No output device detected</source>
         <translation>未检测到输出设备</translation>
     </message>
@@ -3457,17 +3500,17 @@ This is line 50 of the test text</source>
         <translation>计算机空闲时锁定屏幕</translation>
     </message>
     <message>
-        <location filename="../plugins/power/pages/server-general-settings.cpp" line="117"/>
+        <location filename="../plugins/power/pages/server-general-settings.cpp" line="113"/>
         <source>General Settings</source>
         <translation type="unfinished">通用设置</translation>
     </message>
     <message>
-        <location filename="../plugins/power/pages/server-general-settings.cpp" line="186"/>
+        <location filename="../plugins/power/pages/server-general-settings.cpp" line="182"/>
         <source>%1hour</source>
         <translation>%1小时</translation>
     </message>
     <message>
-        <location filename="../plugins/power/pages/server-general-settings.cpp" line="190"/>
+        <location filename="../plugins/power/pages/server-general-settings.cpp" line="186"/>
         <source>%1minute</source>
         <translation>%1分钟</translation>
     </message>
@@ -3482,7 +3525,6 @@ This is line 50 of the test text</source>
     <message>
         <location filename="../lib/common-widgets/setting-brief-widget/setting-brief-widget.ui" line="47"/>
         <location filename="../lib/common-widgets/setting-brief-widget/setting-brief-widget.ui" line="67"/>
-        <location filename="../lib/common-widgets/setting-brief-widget/setting-brief-widget.ui" line="74"/>
         <source>TextLabel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4046,11 +4088,6 @@ This is line 50 of the test text</source>
         <source>TITLE</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <location filename="../lib/common-widgets/kiran-collapse/top-bar.ui" line="78"/>
-        <source>FLAG</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>TouchPadPage</name>
@@ -4409,7 +4446,7 @@ This is line 50 of the test text</source>
 <context>
     <name>VolumeIntputSubItem</name>
     <message>
-        <location filename="../plugins/audio/src/plugin/volume-input-subitem.h" line="45"/>
+        <location filename="../plugins/audio/plugin/volume-input-subitem.h" line="45"/>
         <source>VolumeInput</source>
         <translation>输入</translation>
     </message>
@@ -4417,7 +4454,7 @@ This is line 50 of the test text</source>
 <context>
     <name>VolumeOutputSubItem</name>
     <message>
-        <location filename="../plugins/audio/src/plugin/volume-output-subitem.h" line="45"/>
+        <location filename="../plugins/audio/plugin/volume-output-subitem.h" line="45"/>
         <source>VolumeOutput</source>
         <translation>输出</translation>
     </message>
@@ -4425,15 +4462,8 @@ This is line 50 of the test text</source>
 <context>
     <name>VolumeSettingPage</name>
     <message>
-        <location filename="../plugins/audio/src/system-tray/volume-setting-page.ui" line="35"/>
-        <source>VolumeSettingPage</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../plugins/audio/src/system-tray/volume-setting-page.ui" line="101"/>
-        <location filename="../plugins/audio/src/system-tray/volume-setting-page.cpp" line="101"/>
         <source>Volume</source>
-        <translation>音量</translation>
+        <translation type="vanished">音量</translation>
     </message>
 </context>
 <context>
