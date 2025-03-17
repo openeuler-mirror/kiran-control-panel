@@ -13,7 +13,6 @@
  */
 
 #include "audio-plugin.h"
-#include "config.h"
 #include "volume-input-subitem.h"
 #include "volume-output-subitem.h"
 #include "logging-category.h"
