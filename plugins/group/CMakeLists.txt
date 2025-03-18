@@ -52,10 +52,14 @@ add_library(${TARGET_NAME} SHARED
         )
 
 target_include_directories(${TARGET_NAME} PRIVATE
-        src/pages
-        src/widgets
-        src
-        tools
+        ${PROJECT_BINARY_DIR}
+        ${CMAKE_CURRENT_BINARY_DIR}
+        ${PROJECT_SOURCE_DIR}/include
+        ${PROJECT_SOURCE_DIR}/common
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/pages
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/tools
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/widgets
         ${KCP_PLUGIN_INCLUDE_DIR}
         ${GLIB_INCLUDE_DIRS}
         ${GSETTINGS_QT_INCLUDE_DIRS}
@@ -63,10 +67,10 @@ target_include_directories(${TARGET_NAME} PRIVATE
 	${KIRAN_WIDGETS_INCLUDE_DIRS}
         ${KLOG_QT5_INCLUDE_DIRS}
         ${KIRAN_CC_DAEMON_INCLUDE_DIRS}
-        ${KIRAN_STYLE_INCLUDE_DIRS}
-        )
+        ${KIRAN_STYLE_INCLUDE_DIRS})
 
 target_link_libraries(${TARGET_NAME}
+        common-widgets
         Qt5::Core
         Qt5::Gui
         Qt5::Svg
@@ -82,20 +86,11 @@ target_link_libraries(${TARGET_NAME}
         ${KLOG_QT5_LIBRARIES}
         ${KIRAN_CC_DAEMON_LIBRARIES})
 
-set(PLUGIN_ICONS_DIR ${INSTALL_DATADIR}/icons/hicolor/scalable/apps )
-set(PLUGIN_TRANSLATION_DIR ${TRANSLATION_INSTALL_DIR}/)
-configure_file(data/kiran-cpanel-group-config.h.in ${CMAKE_CURRENT_BINARY_DIR}/plugin-group-config.h)
 
 #安装控制中心插件
 install(TARGETS ${TARGET_NAME} DESTINATION ${PLUGIN_LIBS_DIR}/)
-#安装控制中心插件desktop
-
-
-
 
 #安装翻译文件
-install(FILES ${GROUP_QM_FILES} DESTINATION ${TRANSLATION_INSTALL_DIR}/)
-# #安装账户管理配置文件
-# install(FILES ./config/kiran-group-manager.conf DESTINATION ${KGM_CONF_DIR})
+install(FILES ${GROUP_QM_FILES} DESTINATION ${TRANSLATION_DIR} )
 
 
