@@ -175,7 +175,7 @@ ThemePreviewWidget* IconThemePage::createPreviewWidget(const QString& themeName,
     previewWidget->setSelected(selected);
     previewWidget->setThemeInfo(iconThemeWhiteList.value(themeName, themeName), themeName);
     previewWidget->setPreviewPixmapSize(QSize(40, 40));
-    previewWidget->appendPreviewPixmap(pixmaps);
+    previewWidget->setPreviewPixmaps(pixmaps);
     connect(previewWidget, &ThemePreviewWidget::pressed, this, [this]() { emit requestReturn(); });
 
     return previewWidget;
