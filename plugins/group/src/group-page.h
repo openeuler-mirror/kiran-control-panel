@@ -51,8 +51,8 @@ private Q_SLOTS:
                              QVariant value);
 
     void appendSidebarItem(const QString &groupPath);
-    void deleteSidebarItem(const QString &groupName);
-    void updateSidebarItem(QString groupPath, QString errMsg);
+    void deleteSidebarItem(const QString &groupPath);
+    void updateSidebarItem(const QString &groupPath);
 
 private:
     void initUI();
