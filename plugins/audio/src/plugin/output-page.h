@@ -27,6 +27,7 @@ QT_END_NAMESPACE
 
 class AudioInterface;
 class AudioDeviceInterface;
+class QMediaPlayer;
 
 class OutputPage : public QWidget
 {
@@ -51,9 +52,12 @@ private slots:
     void setVolume(int value);
     void setBalance(int value);
 
+    void playSoundExample();
+
 private:
     void init();
     void initConnect();
+    void loadSoundExamples();
     
     void initSettins();
     void initCardOptions();
@@ -71,6 +75,7 @@ private:
     AudioInterface *m_audioInterface;
     AudioDeviceInterface *m_defaultSink;
     QDBusServiceWatcher *m_dbusServiceWatcher;
+    QMediaPlayer* m_mediaPlayer;
 };
 
 

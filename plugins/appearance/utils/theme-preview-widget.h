@@ -45,7 +45,7 @@ public:
     void setPreviewPixmapSize(QSize size);
 
     // 追加展示的预览图片
-    void appendPreviewPixmap(const QList<QPixmap>& pixmaps);
+    void setPreviewPixmaps(const QList<QPixmap>& pixmaps);
 
     // 获取该展示控件的主题ID
     QString getID() const override;

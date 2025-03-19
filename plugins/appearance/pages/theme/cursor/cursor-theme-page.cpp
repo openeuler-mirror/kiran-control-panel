@@ -104,7 +104,7 @@ ThemePreviewWidget* CursorThemePage::createPreviewWidget(const QString& themeNam
     previewWidget->setSelectedIndicatorEnable(true);
     previewWidget->setThemeInfo(themeName, themeName);
     previewWidget->setPreviewPixmapSize(QSize(22, 22));
-    previewWidget->appendPreviewPixmap(pixmaps);
+    previewWidget->setPreviewPixmaps(pixmaps);
     previewWidget->setSelected(selected);
 
     connect(previewWidget, &ThemePreviewWidget::pressed, this, [this]()

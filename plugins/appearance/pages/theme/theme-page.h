@@ -25,6 +25,7 @@ class ThemePage;
 class IconThemePage;
 class SettingBriefWidget;
 class CursorThemePage;
+class WMThemePage;
 class ExclusionGroup;
 class ThemePage : public QWidget
 {
@@ -39,6 +40,7 @@ private:
     bool initUITheme();
     bool initIconTheme();
     bool initCursorTheme();
+    void initWindowTheme();
     void createThemeWidget();
 
 public slots:
@@ -62,6 +64,9 @@ private:
     SettingBriefWidget *m_chooseCursorWidget;
     QString m_currCursorThemes;
 
+    WMThemePage* m_wmThemePage;
+    SettingBriefWidget *m_chooseWMThemeWidget;
+    QString m_currWMTheme;
     bool m_enableAutoSwitchWindowTheme = false;
 };
 

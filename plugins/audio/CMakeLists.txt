@@ -26,6 +26,7 @@ target_include_directories(${TARGET_NAME} PRIVATE
         resources
         ${CMAKE_CURRENT_BINARY_DIR}
         ${KIRAN_WIDGETS_INCLUDE_DIRS}
+        ${KIRAN_STYLE_INCLUDE_DIRS}
         ${KIRAN_CC_DAEMON_INCLUDE_DIRS}
         ${KLOG_INCLUDE_DIRS})
 
