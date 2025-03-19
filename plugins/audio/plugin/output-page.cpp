@@ -13,14 +13,18 @@
  */
 
 #include "output-page.h"
+#include <kiran-push-button.h>
+#include <qt5-log-i.h>
+#include <QComboBox>
+#include <QDir>
+#include <QFileInfo>
+#include <QMediaPlayer>
+#include "config.h"
 #include "dbus/audio-device-interface.h"
 #include "dbus/audio-interface.h"
 #include "kiran-session-daemon/audio-i.h"
 #include "logging-category.h"
 #include "ui_output-page.h"
-
-#include <qt5-log-i.h>
-#include <QComboBox>
 
 OutputPage::OutputPage(QWidget *parent) : QWidget(parent),
                                           ui(new Ui::OutputPage),
@@ -29,6 +33,7 @@ OutputPage::OutputPage(QWidget *parent) : QWidget(parent),
 {
     ui->setupUi(this);
     m_audioInterface = AudioInterface::instance();
+    m_mediaPlayer = new QMediaPlayer(this);
     init();
 
     m_dbusServiceWatcher = new QDBusServiceWatcher(this);
@@ -58,6 +63,10 @@ void OutputPage::init()
     ui->volumeBalance->setRange(-100, 100);
     ui->volumeBalance->setSingleStep(1);
     ui->volumeBalance->setPageStep(1);
+
+    loadSoundExamples();
+    KiranPushButton::setButtonType(ui->btn_play, KiranPushButton::BUTTON_Default);
+    connect(ui->btn_play, &QPushButton::clicked, this, &OutputPage::playSoundExample);
 
     initSettins();
     initConnect();
@@ -169,6 +178,29 @@ void OutputPage::initConnect()
     connect(ui->volumeBalance, &QSlider::valueChanged, this, &OutputPage::setBalance);
 }
 
+void OutputPage::loadSoundExamples()
+{
+    static QMap<QString, QString> examplesTransMap = {
+        {"bark", QT_TR_NOOP("bark")},
+        {"drip", QT_TR_NOOP("drip")},
+        {"glass", QT_TR_NOOP("glass")},
+        {"sonar", QT_TR_NOOP("sonar")},
+    };
+    QDir examplsDir(AUDIO_SOUNDS_DIR);
+    for (auto fileName : examplsDir.entryList(QDir::Files))
+    {
+        QString filePath = examplsDir.absoluteFilePath(fileName);
+        QFileInfo fileInfo(filePath);
+        if (fileInfo.suffix() != "ogg")
+        {
+            continue;
+        }
+
+        auto baseName = fileInfo.baseName();
+        ui->combo_sound->addItem(tr(baseName.toStdString().c_str()), filePath);
+    }
+}
+
 void OutputPage::onActivePortChanged(const QString &value)
 {
     KLOG_INFO(qLcAudio) << "output device (active Port) changed :" << value;
@@ -228,6 +260,21 @@ void OutputPage::setBalance(int value)
     }
     m_defaultSink->SetBalance(balanceValue);
     KLOG_DEBUG(qLcAudio) << "set balance" << balanceValue;
+}
+
+void OutputPage::playSoundExample()
+{
+    m_mediaPlayer->stop();
+
+    auto soundExamplePath = ui->combo_sound->currentData().toString();
+    if (soundExamplePath.isEmpty())
+    {
+        KLOG_INFO(qLcAudio) << "sound example path is empty";
+        return;
+    }
+
+    m_mediaPlayer->setMedia(QUrl::fromLocalFile(soundExamplePath));
+    m_mediaPlayer->play();
 }
 
 /**

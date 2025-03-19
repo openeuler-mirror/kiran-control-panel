@@ -36,3 +36,7 @@ install(FILES ${CMAKE_BINARY_DIR}/${PROJECT_NAME}.pc DESTINATION ${CMAKE_INSTALL
 install(FILES ${CMAKE_SOURCE_DIR}/data/00-server.conf DESTINATION /etc/NetworkManager/conf.d)
 
 install(DIRECTORY ./avatars DESTINATION ${KCP_ACCOUNT_DATADIR} )
+
+# 声音测试音频文件
+file(GLOB SOUND_FILES "sounds/*.ogg")
+install(FILES ${SOUND_FILES} DESTINATION ${AUDIO_SOUNDS_DIR})

@@ -1,6 +1,6 @@
 set(TARGET_NAME kiran-avatar-editor)
 
-file(GLOB_RECURSE AVATAR_EDITOR_SRC "src/*.cpp" "src/*.h" "src/*.ui")
+file(GLOB_RECURSE AVATAR_EDITOR_SRC "*.cpp" "*.h" "*.ui")
 set(AVATAR_EDITOR_RESOURCES resources/avatar-editor-resources.qrc)
 file(GLOB TS_FILES "translations/*.ts")
 qt5_create_translation( AVATAR_EDITOR_QM_FILES ${CMAKE_CURRENT_SOURCE_DIR} ${TS_FILES} )

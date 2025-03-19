@@ -4,17 +4,17 @@
 <context>
     <name>KiranAvatarEditor</name>
     <message>
-        <location filename="../src/kiran-avatar-editor.cpp" line="42"/>
+        <location filename="../kiran-avatar-editor.cpp" line="40"/>
         <source>Avatar Editor</source>
         <translation>Аватар редактор</translation>
     </message>
     <message>
-        <location filename="../src/kiran-avatar-editor.cpp" line="91"/>
+        <location filename="../kiran-avatar-editor.cpp" line="90"/>
         <source>Confirm</source>
         <translation>Баталгаа</translation>
     </message>
     <message>
-        <location filename="../src/kiran-avatar-editor.cpp" line="112"/>
+        <location filename="../kiran-avatar-editor.cpp" line="111"/>
         <source>Cancel</source>
         <translation>Цуцлах</translation>
     </message>
