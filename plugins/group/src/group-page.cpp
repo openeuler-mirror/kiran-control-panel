@@ -104,9 +104,7 @@ void GroupPage::initUI()
 
     m_stackWidget->setCurrentIndex(PAGE_CREATE_GROUP);
 
-    // FIXME:由于在调用添加、删除、修改用户组属性等dbus接口时，dbus后台会发送多次信号，导致前端显示不正确，后续优化
-    // 暂时只监听由UI界面发出的用户组操作信号
-    //  connectToInfoChange();
+    connectToInfoChange();
 
     QTimer::singleShot(0, this, &GroupPage::setDefaultSiderbarItem);
 }
@@ -185,33 +183,32 @@ void GroupPage::appendSidebarItem(const QString &groupPath)
     }
 }
 
-void GroupPage::deleteSidebarItem(const QString &groupName)
+void GroupPage::deleteSidebarItem(const QString &groupPath)
 {
     KLOG_INFO() << "current Thread:" << QThread::currentThreadId();
     auto itemCount = m_tabList->count();
-
-    for (int i = 0; i < itemCount; i++)
+    GroupManager::GroupInfo groupInfo;
+    if (GroupManager::instance()->getGroupInfo(groupPath, groupInfo))
     {
-        auto item = m_tabList->item(i);
-        if (item->text() == groupName)
+        for (int i = 0; i < itemCount; i++)
         {
-            delete item;
-            break;
+            auto item = m_tabList->item(i);
+            if (item->text() == groupInfo.name)
+            {
+                delete item;
+                break;
+            }
         }
+        setDefaultSiderbarItem();
+        // 重置创建用户组页面
+        m_pageCreateGroup->reset();
+        // 切换到创建用户组
+        m_stackWidget->setCurrentIndex(PAGE_CREATE_GROUP);
     }
-    setDefaultSiderbarItem();
-    // 重置创建用户组页面
-    m_pageCreateGroup->reset();
-    // 切换到创建用户组
-    m_stackWidget->setCurrentIndex(PAGE_CREATE_GROUP);
 }
 
-void GroupPage::updateSidebarItem(QString groupPath, QString errMsg)
+void GroupPage::updateSidebarItem(const QString &groupPath)
 {
-    if (!errMsg.isEmpty())
-    {
-        return;
-    }
     KLOG_INFO() << "current Thread:" << QThread::currentThreadId();
     auto itemCount = m_tabList->count();
     for (int i = 0; i < itemCount; i++)
@@ -241,8 +238,6 @@ void GroupPage::initPageCreateGroup()
             m_groupInterface, &GroupInterface::doCreateGroup);
     connect(m_groupInterface, &GroupInterface::sigCreateGroupDone,
             m_pageCreateGroup, &CreateGroupPage::addUserToGroup);
-    connect(m_groupInterface, &GroupInterface::sigCreateGroupDone,
-            this, &GroupPage::appendSidebarItem);
 
     // 添加用户到用户组
     connect(m_pageCreateGroup, &CreateGroupPage::requestAddUserToGroup,
@@ -272,16 +267,12 @@ void GroupPage::initPageGroupInfo()
             m_groupInterface, &GroupInterface::doDeleteGroup);
     connect(m_groupInterface, &GroupInterface::sigDeleteGroupDone,
             m_pageGroupInfo, &GroupInfoPage::handleGroupDeleted);
-    connect(m_groupInterface, &GroupInterface::sigDeleteGroupDone,
-            this, &GroupPage::deleteSidebarItem);
 
     // 更改用户组名
     connect(m_pageGroupInfo, &GroupInfoPage::requestChangeGroupName,
             m_groupInterface, &GroupInterface::doChangeGroupName);
     connect(m_groupInterface, &GroupInterface::sigChangeGroupNameDone,
             m_pageGroupInfo, &GroupInfoPage::handleGroupNameChanged);
-    connect(m_groupInterface, &GroupInterface::sigChangeGroupNameDone,
-            this, &GroupPage::updateSidebarItem);
 }
 
 void GroupPage::initPageAddUsers()
@@ -329,14 +320,17 @@ void GroupPage::jumpToPage(StackWidgetPageEnum page)
 void GroupPage::addGroup(const QString &groupPath)
 {
     KLOG_DEBUG() << "on group added, add group" << groupPath << "to sidebar";
+    appendSidebarItem(groupPath);
 }
 
 void GroupPage::deleteGroup(const QString &groupPath)
 {
     KLOG_DEBUG() << "on group deleted, delete group" << groupPath << "from sidebar";
+    deleteSidebarItem(groupPath);
 }
 
 void GroupPage::handleGroupProperty(QString groupPath, QString propertyName, QVariant value)
 {
     KLOG_DEBUG() << "on group property changed, changed property:" << groupPath << propertyName << value;
+    updateSidebarItem(groupPath);
 }
