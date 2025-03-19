@@ -5380,33 +5380,39 @@ This is line 50 of the test text</source>
         <translation>打开或关闭窗口特效</translation>
     </message>
     <message>
-        <location filename="../plugins/appearance/pages/theme/theme-page.cpp" line="88"/>
-        <location filename="../plugins/appearance/pages/theme/theme-page.cpp" line="120"/>
+        <location filename="../plugins/appearance/pages/theme/theme-page.cpp" line="90"/>
+        <location filename="../plugins/appearance/pages/theme/theme-page.cpp" line="123"/>
+        <location filename="../plugins/appearance/pages/theme/theme-page.cpp" line="153"/>
         <source>Unknown</source>
         <translation>未知</translation>
     </message>
     <message>
-        <location filename="../plugins/appearance/pages/theme/theme-page.cpp" line="151"/>
+        <location filename="../plugins/appearance/pages/theme/theme-page.cpp" line="147"/>
+        <source>Choose window Themes</source>
+        <translation>选择窗口主题</translation>
+    </message>
+    <message>
+        <location filename="../plugins/appearance/pages/theme/theme-page.cpp" line="187"/>
         <source>Light Theme</source>
         <translation>冰晶白</translation>
     </message>
     <message>
-        <location filename="../plugins/appearance/pages/theme/theme-page.cpp" line="152"/>
+        <location filename="../plugins/appearance/pages/theme/theme-page.cpp" line="188"/>
         <source>Auto</source>
         <translation>自动</translation>
     </message>
     <message>
-        <location filename="../plugins/appearance/pages/theme/theme-page.cpp" line="153"/>
+        <location filename="../plugins/appearance/pages/theme/theme-page.cpp" line="189"/>
         <source>Dark Theme</source>
         <translation>曜岩黑</translation>
     </message>
     <message>
-        <location filename="../plugins/appearance/pages/theme/theme-page.cpp" line="82"/>
+        <location filename="../plugins/appearance/pages/theme/theme-page.cpp" line="84"/>
         <source>Choose icon Theme</source>
         <translation>选择图标主题</translation>
     </message>
     <message>
-        <location filename="../plugins/appearance/pages/theme/theme-page.cpp" line="114"/>
+        <location filename="../plugins/appearance/pages/theme/theme-page.cpp" line="117"/>
         <source>Choose cursor Themes</source>
         <translation>选择光标主题</translation>
     </message>

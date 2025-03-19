@@ -16,6 +16,8 @@
 #include <QBoxLayout>
 #include <QLabel>
 #include <QEvent>
+#include <QLabel>
+#include <QVariant>
 
 ThemePreviewWidget::ThemePreviewWidget(QWidget* parent)
     : ExclusionWidget(parent)
@@ -46,9 +48,15 @@ void ThemePreviewWidget::setSpacingAndMargin(int spacing, QMargins margins)
 void ThemePreviewWidget::setSelectedIndicatorEnable(bool enable)
 {
     m_selectedIndicatorEnable = enable;
+
     if (m_selectedIndicator->isVisible())
     {
         m_selectedIndicator->setVisible(false);
+    }
+
+    if (!m_selectedIndicatorEnable)
+    {
+        m_frame->setDrawBroder(false);
     }
 }
 
@@ -71,11 +79,30 @@ void ThemePreviewWidget::setPreviewPixmapSize(QSize size)
     m_previewSize = size;
 }
 
-void ThemePreviewWidget::appendPreviewPixmap(const QList<QPixmap>& pixmaps)
+void ThemePreviewWidget::setPreviewPixmaps(const QList<QPixmap>& pixmaps)
 {
-    for(auto pixmap : pixmaps)
+    static const char* preview_pixmap_property = "_theme_preview_flag_";
+
+    // 清理
+    for (int i = 0; i < m_frameLayout->count();)
+    {
+        auto item = m_frameLayout->itemAt(i);
+        auto widget = item->widget();
+
+        if (widget && !widget->property(preview_pixmap_property).isNull())
+        {
+            m_frameLayout->removeWidget(widget);
+            delete widget;
+            continue;
+        }
+
+        i++;
+    }
+
+    for (auto pixmap : pixmaps)
     {
         auto labelPixmap = new QLabel(this);
+        labelPixmap->setProperty(preview_pixmap_property, QVariant(1));
         labelPixmap->setFixedSize(m_previewSize);
         labelPixmap->setPixmap(pixmap.scaled(m_previewSize,Qt::IgnoreAspectRatio,Qt::SmoothTransformation));
 
@@ -96,9 +123,8 @@ void ThemePreviewWidget::setSelected(bool selected)
         if( m_selectedIndicatorEnable )
         {
             m_selectedIndicator->setVisible(true);
+            m_frame->setDrawBroder(true);
         }
-
-        m_frame->setDrawBroder(true);
     }
     else
     {
@@ -119,6 +145,7 @@ void ThemePreviewWidget::initUI()
 
     // 主题展示Frame
     m_frame = new KiranFrame(this);
+    m_frame->setCursor(Qt::PointingHandCursor);
     m_frame->setObjectName("ThemePreviewFrame");
     m_frame->setDrawBroder(false);
     m_frame->setFixedBorderState(Kiran::StylePalette::Checked);
