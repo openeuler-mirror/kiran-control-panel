@@ -19,6 +19,7 @@
 #include "setting-brief-widget/setting-brief-widget.h"
 #include "theme-preview-widget.h"
 #include "ui_theme-page.h"
+#include "wm/wm-theme-page.h"
 
 #include <kiran-log/qt5-log-i.h>
 #include <kiran-session-daemon/appearance-i.h>
@@ -63,6 +64,7 @@ void ThemePage::init()
     initUITheme();
     initIconTheme();
     initCursorTheme();
+    initWindowTheme();
 
     connect(AppearanceGlobalInfo::instance(), &AppearanceGlobalInfo::AutoSwitchWindowThemeChanged, this, &ThemePage::onAutoSwitchWindowThemeChanged);
     connect(AppearanceGlobalInfo::instance(), &AppearanceGlobalInfo::themeChanged, this, &ThemePage::handleThemeChange);
@@ -92,16 +94,17 @@ bool ThemePage::initIconTheme()
     m_chooseIconWidget->setName(iconThemeWhiteList.value(m_currIconTheme, m_currIconTheme));
 
     m_iconThemePage = new IconThemePage(ui->stackedWidget);
-    m_iconThemePage->installEventFilter(this);
     ui->stackedWidget->addWidget(m_iconThemePage);
 
     connect(m_chooseIconWidget, &SettingBriefWidget::clicked, this,
-            [this] {
+            [this]
+            {
                 ui->stackedWidget->setCurrentWidget(m_iconThemePage);
             });
 
     connect(m_iconThemePage, &IconThemePage::requestReturn, this,
-            [&, this]() {
+            [&, this]()
+            {
                 ui->stackedWidget->setCurrentIndex(0);
             });
 
@@ -122,20 +125,49 @@ bool ThemePage::initCursorTheme()
     m_chooseCursorWidget->setName(m_currCursorThemes);
 
     m_cursorThemePage = new CursorThemePage(ui->stackedWidget);
-    m_cursorThemePage->installEventFilter(this);
     ui->stackedWidget->addWidget(m_cursorThemePage);
 
     connect(m_chooseCursorWidget, &SettingBriefWidget::clicked,
-            [this] {
+            [this]
+            {
                 ui->stackedWidget->setCurrentWidget(m_cursorThemePage);
             });
 
     connect(m_cursorThemePage, &CursorThemePage::requestReturn,
-            [this]() {
+            [this]()
+            {
                 ui->stackedWidget->setCurrentIndex(0);
             });
 
     return true;
+}
+
+void ThemePage::initWindowTheme()
+{
+    m_chooseWMThemeWidget = new SettingBriefWidget(tr("Choose window Themes"));
+    m_chooseWMThemeWidget->setObjectName("chooseWindowThemeWidget");
+    ui->verticalLayout_choose_widget->addWidget(m_chooseWMThemeWidget);
+
+    if (!AppearanceGlobalInfo::instance()->getTheme(APPEARANCE_THEME_TYPE_METACITY, m_currWMTheme))
+    {
+        m_chooseWMThemeWidget->setName(tr("Unknown"));
+    }
+    m_chooseWMThemeWidget->setName(m_currWMTheme);
+
+    m_wmThemePage = new WMThemePage(ui->stackedWidget);
+    ui->stackedWidget->addWidget(m_wmThemePage);
+
+    connect(m_chooseWMThemeWidget, &SettingBriefWidget::clicked, this,
+            [this]
+            {
+                ui->stackedWidget->setCurrentWidget(m_wmThemePage);
+            });
+
+    connect(m_wmThemePage, &WMThemePage::requestReturn, this,
+            [&, this]()
+            {
+                ui->stackedWidget->setCurrentIndex(0);
+            });
 }
 
 void ThemePage::createThemeWidget()
@@ -166,7 +198,7 @@ void ThemePage::createThemeWidget()
 
         QList<QPixmap> pixmaps;
         pixmaps << QPixmap(uiTheme.pixmap).scaled(QSize(136, 76), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-        previewWidget->appendPreviewPixmap(pixmaps);
+        previewWidget->setPreviewPixmaps(pixmaps);
         m_uiThemeExclusionGroup->addExclusionItem(previewWidget);
 
         ui->gridLayout_themes->addWidget(previewWidget, 0, i, Qt::AlignHCenter);
@@ -211,6 +243,14 @@ void ThemePage::handleThemeChange(int type)
         m_iconThemePage->updateCurrentTheme(iconName);
         break;
     }
+    case APPEARANCE_THEME_TYPE_METACITY:
+    {
+        QString wmTheme;
+        AppearanceGlobalInfo::instance()->getTheme(APPEARANCE_THEME_TYPE_METACITY, wmTheme);
+        m_chooseWMThemeWidget->setName(wmTheme);
+        m_wmThemePage->updateCurrentTheme(wmTheme);
+        break;
+    }
     default:
         break;
     }
@@ -232,20 +272,19 @@ void ThemePage::onCurrentUiThemeChanged()
     auto item = m_uiThemeExclusionGroup->getCurrent();
     QString currentID = item->getID();
 
-    KLOG_INFO(qLcAppearance) << "ui theme changed:" << currentID;
+    KLOG_INFO(qLcAppearance) << "meta theme changed:" << currentID;
     if (currentID == THEME_AUTO_NAME)
     {
         m_enableAutoSwitchWindowTheme = true;
         AppearanceGlobalInfo::instance()->enableAutoSwitchWindowTheme();
-        KLOG_INFO(qLcAppearance) << "enable auto switch window theme";
+        KLOG_INFO(qLcAppearance) << "enable auto switch meta theme";
     }
     else
     {
-        if (!AppearanceGlobalInfo::instance()->setTheme(APPEARANCE_THEME_TYPE_GTK, currentID) ||
-            !AppearanceGlobalInfo::instance()->setTheme(APPEARANCE_THEME_TYPE_METACITY, currentID))
+        if (!AppearanceGlobalInfo::instance()->setTheme(APPEARANCE_THEME_TYPE_META, currentID))
         {
-            KLOG_WARNING(qLcAppearance) << "set theme,type:"
-                                        << APPEARANCE_THEME_TYPE_GTK << "," << APPEARANCE_THEME_TYPE_METACITY
+            KLOG_WARNING(qLcAppearance) << "set theme type:"
+                                        << APPEARANCE_THEME_TYPE_META
                                         << " value:" << currentID << "failed";
         }
         else
