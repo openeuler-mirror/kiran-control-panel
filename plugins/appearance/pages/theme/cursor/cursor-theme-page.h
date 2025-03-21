@@ -13,8 +13,8 @@
  */
 #pragma once
 
-#include <QWidget>
 #include <QMap>
+#include <QWidget>
 
 class ExclusionGroup;
 class QVBoxLayout;
@@ -42,7 +42,6 @@ private slots:
     void onCurrentItemChanged();
 
 private:
-    static QStringList m_previewCursors;
     ExclusionGroup* m_exclusionGroup;
     QVBoxLayout* m_cursorVlayout;
     QString m_currentCursorTheme;
