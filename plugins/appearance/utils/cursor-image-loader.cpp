@@ -40,8 +40,12 @@ QImage CursorImageLoader::getCursorImage(const QString& cursorTheme, const QStri
     XcursorImage* xCursorImage = XcursorLibraryLoadImage(cursorName.toStdString().c_str(),
                                                          cursorTheme.toStdString().c_str(),
                                                          size);
+    if (!xCursorImage)
+    {
+        return QImage();
+    }
 
-    QImage img(reinterpret_cast<uchar*> (xCursorImage->pixels),
+    QImage img(reinterpret_cast<uchar*>(xCursorImage->pixels),
                xCursorImage->width, xCursorImage->height,
                QImage::Format_ARGB32_Premultiplied);
 
