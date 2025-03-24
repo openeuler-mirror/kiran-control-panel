@@ -33,6 +33,15 @@
 
 static QStringList cursors{"left_ptr", "right_ptr", "top_left_corner", "top_right_corner", "size_hor", "pointer"};
 
+// 兼容不同开源版本光标名称，若光标名不存在，则使用默认光标
+static const std::vector<const char *> cursorNames[] = {
+    {"left_ptr", "default", "top_left_arrow", "left_arrow"},
+    {"pointing_hand", "pointer", "hand1", "e29285e634086352946a0e7090d73106", "default"},
+    {"size_ver", "ns-resize", "v_double_arrow", "00008160000006810000408080010102", "default"},
+    {"size_hor", "ew-resize", "h_double_arrow", "028006030e0e7ebffc7f7070c0600140", "default"},
+    {"size_bdiag", "nesw-resize", "50585d75b494802d0151028115016902", "fcf1c3c7cd4491d801f1e1c78f100000", "default"},
+    {"size_fdiag", "nwse-resize", "38c5dff7c7b8962045400281044508d2", "c7088f0f3e6c8088236ef8e1e3e70000", "default"}};
+
 CursorThemes::CursorThemes(QWidget *parent) : QWidget(parent)
 {
 }
@@ -162,22 +171,23 @@ QWidget *CursorThemes::createCursorWidget()
         QList<QPixmap> cursorMap;
         QDir cursorThemesDir(m_cursorThemesPath.at(i));
 
-        for (int j = 0; j < cursors.size(); j++)
+        for (const auto &cursors : cursorNames)
         {
-            QString cursor = cursors.at(j);
-            //将xcursor转化为image
-            std::string cursorName = cursor.toStdString();
-            std::string cursorTheme = cursorThemesDir.dirName().toStdString();
-            XcursorImage *xCursorImage = XcursorLibraryLoadImage(cursorName.c_str(), cursorTheme.c_str(), size);
+            for (const QString &name : cursors)
+            {
+                QPixmap cursorPixmap = loadCursorImage(name, cursorThemesDir.dirName(), size);
+                if (!cursorPixmap.isNull())
+                {
+                    cursorMap.append(cursorPixmap);
+                    break;
+                }
+            }
+        }
 
-            QImage img((uchar *)xCursorImage->pixels,
-                       xCursorImage->width, xCursorImage->height,
-                       QImage::Format_ARGB32_Premultiplied);
-
-            QImage cursorImg = convertToNomalImage(img);
-            XcursorImageDestroy(xCursorImage);
-
-            cursorMap.append(QPixmap::fromImage(cursorImg));
+        if (cursorMap.isEmpty())
+        {
+            KLOG_WARNING() << "No valid cursors found for theme:" << m_cursorThemesPath.at(i);
+            continue;
         }
 
         ThemeWidget *themeWidget = new ThemeWidget(QSize(size, size), m_currentCursorTheme,
@@ -194,7 +204,8 @@ QWidget *CursorThemes::createCursorWidget()
     mainVLayout->addStretch();
 
     connect(m_themeWidgetGroup, &ThemeWidgetGroup::themeWidgetChange,
-            [=](ThemeWidget *preWidget, ThemeWidget *currWidget) {
+            [=](ThemeWidget *preWidget, ThemeWidget *currWidget)
+            {
                 if (preWidget)
                 {
                     if (preWidget == currWidget)
@@ -244,4 +255,25 @@ QImage CursorThemes::convertToNomalImage(const QImage &cursorImage)
         }
     }
     return cursorImage.copy(rect.normalized());
+}
+
+QPixmap CursorThemes::loadCursorImage(const QString &name, const QString &theme, int size)
+{
+    std::string cursorName = name.toStdString();
+    std::string cursorTheme = theme.toStdString();
+    XcursorImage *xCursorImage = XcursorLibraryLoadImage(cursorName.c_str(), cursorTheme.c_str(), size);
+
+    if (!xCursorImage)
+    {
+        KLOG_WARNING() << "Failed to load cursor image:" << name << "in theme" << theme;
+        return QPixmap();
+    }
+
+    QImage img((uchar *)xCursorImage->pixels,
+               xCursorImage->width, xCursorImage->height,
+               QImage::Format_ARGB32_Premultiplied);
+
+    QImage cursorImg = convertToNomalImage(img);
+    XcursorImageDestroy(xCursorImage);
+    return QPixmap::fromImage(cursorImg);
 }
