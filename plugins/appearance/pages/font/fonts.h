@@ -34,7 +34,7 @@ public:
     explicit Fonts(QWidget *parent = 0);
     ~Fonts();
     QSize sizeHint() const override;
-
+    static QWidget* createPage();
 private:
     bool initUI();
     void initConnections();

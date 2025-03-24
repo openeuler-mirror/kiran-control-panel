@@ -18,6 +18,7 @@
 #include "plugin-subitem.h"
 
 #include "pages/font/fonts.h"
+#include "pages/screensaver/screensaver-page.h"
 #include "pages/theme/theme-page.h"
 #include "pages/wallpaper/wallpaper.h"
 
@@ -62,19 +63,6 @@ QVector<KiranControlPanel::SubItemPtr> AppearancePlugin::getSubItems()
 
 void AppearancePlugin::initSubItem()
 {
-    auto wallpaperSubItemCreater = []() -> QWidget*
-    {
-        return new Wallpaper();
-    };
-    auto fontSubItemCreater = []() -> QWidget*
-    {
-        return new Fonts();
-    };
-    auto themeSubItemCreater = []() -> QWidget*
-    {
-        return new ThemePage();
-    };
-
     m_subitems = {
         KiranControlPanel::SubItemPtr(new PluginSubItem("Themes",
                                                         tr("Theme"),
@@ -82,20 +70,30 @@ void AppearancePlugin::initSubItem()
                                                         "",
                                                         "kcp-appearance-themes",
                                                         99,
-                                                        themeSubItemCreater)),
+                                                        ThemePage::createPage)),
         KiranControlPanel::SubItemPtr(new PluginSubItem("Wallpaper",
                                                         tr("Wallpaper"),
                                                         "individuation",
                                                         "",
                                                         "kcp-appearance-wallpaper",
                                                         98,
-                                                        wallpaperSubItemCreater)),
+                                                        Wallpaper::createPage)),
         KiranControlPanel::SubItemPtr(new PluginSubItem("Fonts",
                                                         tr("Font"),
                                                         "individuation",
                                                         "",
                                                         "kcp-appearance-font",
                                                         97,
-                                                        fontSubItemCreater))
-    };
+                                                        Fonts::createPage))};
+
+    if (ScreensaverPage::isSupported())
+    {
+        m_subitems.append(KiranControlPanel::SubItemPtr(new PluginSubItem("Screensaver",
+                                                                          tr("Screensaver"),
+                                                                          "individuation",
+                                                                          "",
+                                                                          "ksvg-kcp-general-settings",
+                                                                          95,
+                                                                          ScreensaverPage::createPage)));
+    }
 }
