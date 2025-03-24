@@ -54,6 +54,11 @@ QSize ThemePage::sizeHint() const
     return QSize(670, 730);
 }
 
+QWidget *ThemePage::createPage()
+{
+    return new ThemePage();
+}
+
 void ThemePage::init()
 {
     ui->stackedWidget->setCurrentIndex(0);

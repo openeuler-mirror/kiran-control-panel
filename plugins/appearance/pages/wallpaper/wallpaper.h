@@ -35,7 +35,7 @@ public:
     ~Wallpaper();
 
     virtual QSize sizeHint() const override;
-
+    static QWidget* createPage();
 private:
     void initUI();
     void createPreviewLabel();

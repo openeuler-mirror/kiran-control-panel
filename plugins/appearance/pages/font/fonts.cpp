@@ -250,3 +250,8 @@ QSize Fonts::sizeHint() const
 {
     return {500, 657};
 }
+
+QWidget* Fonts::createPage()
+{
+    return new Fonts();
+}
