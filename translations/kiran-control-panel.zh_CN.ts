@@ -256,19 +256,24 @@
 <context>
     <name>AppearancePlugin</name>
     <message>
-        <location filename="../plugins/appearance/appearance-plugin.cpp" line="80"/>
+        <location filename="../plugins/appearance/appearance-plugin.cpp" line="68"/>
         <source>Theme</source>
         <translation>主题</translation>
     </message>
     <message>
-        <location filename="../plugins/appearance/appearance-plugin.cpp" line="87"/>
+        <location filename="../plugins/appearance/appearance-plugin.cpp" line="75"/>
         <source>Wallpaper</source>
         <translation>壁纸</translation>
     </message>
     <message>
-        <location filename="../plugins/appearance/appearance-plugin.cpp" line="94"/>
+        <location filename="../plugins/appearance/appearance-plugin.cpp" line="82"/>
         <source>Font</source>
         <translation>字体</translation>
+    </message>
+    <message>
+        <location filename="../plugins/appearance/appearance-plugin.cpp" line="89"/>
+        <source>Screensaver</source>
+        <translation>屏保</translation>
     </message>
 </context>
 <context>
@@ -2423,8 +2428,26 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/group/src/group-subitem.cpp" line="78"/>
-        <source>Add group member</source>
+        <location filename="../plugins/group/src/group-page.cpp" line="139"/>
+        <source>Create new group</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>GroupSubItem</name>
+    <message>
+        <location filename="../plugins/group/src/group-subitem.cpp" line="49"/>
+        <source>Group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../plugins/group/src/group-subitem.cpp" line="81"/>
+        <source>Create group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../plugins/group/src/group-subitem.cpp" line="82"/>
+        <source>Group information</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4634,6 +4657,54 @@ This is line 50 of the test text</source>
     </message>
 </context>
 <context>
+    <name>ScreensaverPage</name>
+    <message>
+        <location filename="../plugins/appearance/pages/screensaver/screensaver-page.ui" line="14"/>
+        <source>Widget</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../plugins/appearance/pages/screensaver/screensaver-page.ui" line="35"/>
+        <source>ScreenSaver Settings</source>
+        <translation>屏保设置</translation>
+    </message>
+    <message>
+        <location filename="../plugins/appearance/pages/screensaver/screensaver-page.ui" line="60"/>
+        <source>Activate screen saver when idle</source>
+        <translation>空闲时激活屏幕保护</translation>
+    </message>
+    <message>
+        <location filename="../plugins/appearance/pages/screensaver/screensaver-page.ui" line="98"/>
+        <source>Selecting a Screensaver Theme</source>
+        <translation>选择屏保主题</translation>
+    </message>
+    <message>
+        <location filename="../plugins/appearance/pages/screensaver/screensaver-page.cpp" line="42"/>
+        <source>Classical</source>
+        <translation>经典</translation>
+    </message>
+    <message>
+        <location filename="../plugins/appearance/pages/screensaver/screensaver-page.cpp" line="43"/>
+        <source>Atlantis</source>
+        <translation>深蓝秘境</translation>
+    </message>
+    <message>
+        <location filename="../plugins/appearance/pages/screensaver/screensaver-page.cpp" line="44"/>
+        <source>Binaryhorizon</source>
+        <translation>数界穹顶</translation>
+    </message>
+    <message>
+        <location filename="../plugins/appearance/pages/screensaver/screensaver-page.cpp" line="45"/>
+        <source>Epicycle</source>
+        <translation>晶轨旋生</translation>
+    </message>
+    <message>
+        <location filename="../plugins/appearance/pages/screensaver/screensaver-page.cpp" line="46"/>
+        <source>Rubik</source>
+        <translation>​熵立方体</translation>
+    </message>
+</context>
+<context>
     <name>SearchEdit</name>
     <message>
         <location filename="../src/search-edit/search-edit.cpp" line="45"/>
@@ -5380,39 +5451,39 @@ This is line 50 of the test text</source>
         <translation>打开或关闭窗口特效</translation>
     </message>
     <message>
-        <location filename="../plugins/appearance/pages/theme/theme-page.cpp" line="90"/>
-        <location filename="../plugins/appearance/pages/theme/theme-page.cpp" line="123"/>
-        <location filename="../plugins/appearance/pages/theme/theme-page.cpp" line="153"/>
+        <location filename="../plugins/appearance/pages/theme/theme-page.cpp" line="95"/>
+        <location filename="../plugins/appearance/pages/theme/theme-page.cpp" line="128"/>
+        <location filename="../plugins/appearance/pages/theme/theme-page.cpp" line="158"/>
         <source>Unknown</source>
         <translation>未知</translation>
     </message>
     <message>
-        <location filename="../plugins/appearance/pages/theme/theme-page.cpp" line="147"/>
+        <location filename="../plugins/appearance/pages/theme/theme-page.cpp" line="152"/>
         <source>Choose window Themes</source>
         <translation>选择窗口主题</translation>
     </message>
     <message>
-        <location filename="../plugins/appearance/pages/theme/theme-page.cpp" line="187"/>
+        <location filename="../plugins/appearance/pages/theme/theme-page.cpp" line="188"/>
         <source>Light Theme</source>
         <translation>冰晶白</translation>
     </message>
     <message>
-        <location filename="../plugins/appearance/pages/theme/theme-page.cpp" line="188"/>
+        <location filename="../plugins/appearance/pages/theme/theme-page.cpp" line="189"/>
         <source>Auto</source>
         <translation>自动</translation>
     </message>
     <message>
-        <location filename="../plugins/appearance/pages/theme/theme-page.cpp" line="189"/>
+        <location filename="../plugins/appearance/pages/theme/theme-page.cpp" line="190"/>
         <source>Dark Theme</source>
         <translation>曜岩黑</translation>
     </message>
     <message>
-        <location filename="../plugins/appearance/pages/theme/theme-page.cpp" line="84"/>
+        <location filename="../plugins/appearance/pages/theme/theme-page.cpp" line="89"/>
         <source>Choose icon Theme</source>
         <translation>选择图标主题</translation>
     </message>
     <message>
-        <location filename="../plugins/appearance/pages/theme/theme-page.cpp" line="117"/>
+        <location filename="../plugins/appearance/pages/theme/theme-page.cpp" line="122"/>
         <source>Choose cursor Themes</source>
         <translation>选择光标主题</translation>
     </message>

@@ -67,7 +67,7 @@ public:
     // 获取功能项权重，用于多个功能项排序
     int getWeight() override
     {
-        return 0;
+        return 96;
     }
 
     // 创建显示控件
