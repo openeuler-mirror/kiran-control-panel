@@ -27,6 +27,7 @@ public:
     explicit ScreensaverPage(QWidget *parent = nullptr);
     ~ScreensaverPage();
 
+    static bool isSupported();
     static QWidget* createPage();
     
 private:

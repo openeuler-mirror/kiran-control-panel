@@ -84,12 +84,16 @@ void AppearancePlugin::initSubItem()
                                                         "",
                                                         "kcp-appearance-font",
                                                         97,
-                                                        Fonts::createPage)),
-        KiranControlPanel::SubItemPtr(new PluginSubItem("Screensaver",
-                                                        tr("Screensaver"),
-                                                        "individuation",
-                                                        "",
-                                                        "ksvg-kcp-general-settings",
-                                                        95,
-                                                        ScreensaverPage::createPage))};
+                                                        Fonts::createPage))};
+
+    if (ScreensaverPage::isSupported())
+    {
+        m_subitems.append(KiranControlPanel::SubItemPtr(new PluginSubItem("Screensaver",
+                                                                          tr("Screensaver"),
+                                                                          "individuation",
+                                                                          "",
+                                                                          "ksvg-kcp-general-settings",
+                                                                          95,
+                                                                          ScreensaverPage::createPage)));
+    }
 }
