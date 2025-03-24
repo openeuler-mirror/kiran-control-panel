@@ -41,6 +41,17 @@ ScreensaverPage::~ScreensaverPage()
 {
 }
 
+bool ScreensaverPage::isSupported()
+{
+    QGSettings settings(SCHEMA_KIRAN_SCREENSAVER);
+    auto keys = settings.keys();
+    if( keys.contains(KEY_IDLE_ACTIVATION_SCREENSAVER) && keys.contains(KEY_SCREENSAVER_THEME) )
+    {
+        return true;
+    }
+    return false;
+}
+
 QWidget* ScreensaverPage::createPage()
 {
     return new ScreensaverPage();
