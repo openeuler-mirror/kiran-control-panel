@@ -351,6 +351,11 @@ QSize Wallpaper::sizeHint() const
     return QSize(670, 730);
 }
 
+QWidget *Wallpaper::createPage()
+{
+    return new Wallpaper();
+}
+
 /**
  * @brief Wallpaper::loadVisibleWallpapers 创建线程加载壁纸信息
  */
