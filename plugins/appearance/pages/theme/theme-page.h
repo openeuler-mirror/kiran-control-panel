@@ -34,7 +34,7 @@ public:
     explicit ThemePage(QWidget *parent = 0);
     ~ThemePage();
     QSize sizeHint() const override;
-
+    static QWidget* createPage();
 private:
     void init();
     bool initUITheme();
