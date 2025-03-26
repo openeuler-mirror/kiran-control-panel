@@ -247,6 +247,7 @@ void DetailsPage::updateConnectionSecurityInfo()
     {
         const auto authalg = wirelessSecurity->authAlg();
         const auto keyMgmt = wirelessSecurity->keyMgmt();
+        Q_UNUSED(authalg)
         switch (keyMgmt)
         {
         case WirelessSecuritySetting::KeyMgmt::Unknown:

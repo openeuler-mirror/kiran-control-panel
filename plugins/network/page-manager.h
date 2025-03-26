@@ -81,7 +81,7 @@ private slots:
 
 private:
     static PageManager* instance_;
-    DeviceManager* m_deviceManager;
+    DeviceManager* m_deviceManager = nullptr;
     QMap<PageType, bool> m_pageAvailable;
 };
 }  // namespace Network
