@@ -57,6 +57,7 @@ private slots:
     void onSliderIdleTimeChanged(int value);
     void updateIdleTime();
     void updateIdleLockEnable(bool enable);
+    void updateDisplayIdleDimmedEnable(bool enable);
     void updateSuspendLockEnable(bool enable);
     void onSwitchAutoColorTempToggoled(bool checked);
     void updateColorTempatureValue();
@@ -75,6 +76,7 @@ private:
     QGSettings* m_screensaverSettings = nullptr;
     KiranSwitchButton* m_switchAutoColorTemp = nullptr;
     KiranSwitchButton* m_switchIdlelockScreen = nullptr;
+    KiranSwitchButton* m_switchDisplayIdleDimmed = nullptr;
     KiranSwitchButton* m_switchSuspendLockScreen = nullptr;
 };
 

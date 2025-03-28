@@ -24,6 +24,6 @@ public:
     bool enableServerMode() const;
 
 private:
-    QSettings *m_settings;
+    QSettings m_settings;
 };
 }
