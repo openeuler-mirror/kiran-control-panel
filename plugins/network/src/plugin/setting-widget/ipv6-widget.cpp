@@ -162,11 +162,17 @@ void Ipv6Widget::showSettings()
         int ipv6MethodIndex = ui->ipv6Method->findData(m_ipv6Setting->method());
         ui->ipv6Method->setCurrentIndex(ipv6MethodIndex);
 
-        // xxx:取addresses的方式有待改进
-        IpAddress ipv6Address = m_ipv6Setting->addresses().at(0);
-        QString ip = ipv6Address.ip().toString();
-        int prefix = ipv6Address.prefixLength();
-        QString gateway = ipv6Address.gateway().toString();
+        QString ip,gateway;
+        int prefix=64;
+
+        const auto addresses = m_ipv6Setting->addresses();
+        if ( addresses.size() > 0 )
+        {
+            IpAddress ipv6Address = addresses.at(0);
+            ip = ipv6Address.ip().toString();
+            prefix = ipv6Address.prefixLength();
+            gateway = ipv6Address.gateway().toString();
+        }
 
         ui->ipv6Address->setText(ip);
         ui->ipv6Prefix->setValue(prefix);
