@@ -17,17 +17,17 @@
 namespace Power
 {
 Prefs::Prefs()
-    :m_settings(new QSettings(SETTINGS_PATH,QSettings::IniFormat))
+    :m_settings(SETTINGS_PATH,QSettings::IniFormat)
 {
 
 }
 Prefs::~Prefs()
 {
-    delete m_settings;
 }
+
 bool Prefs::enableServerMode() const
 {
-    if( m_settings->value("Power/EnableServerMode",false).toBool() )
+    if( m_settings.value("Power/EnableServerMode",false).toBool() )
     {
         return true;
     }

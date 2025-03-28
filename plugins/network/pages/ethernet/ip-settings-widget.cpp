@@ -646,7 +646,7 @@ void IpSettingsWidget::processConfigMethodChanged()
     // 由于QStackedLayout::sizeHint计算子页最大大小，手动计算高度
     auto contentsMargin = layout()->contentsMargins();
     auto sizeHintHeight = contentsMargin.top() + contentsMargin.bottom();
-    sizeHintHeight = ui->widget_config_method->sizeHint().height();
+    sizeHintHeight += ui->widget_config_method->sizeHint().height();
     if (ui->stackedWidget->currentWidget())
     {
         sizeHintHeight += ui->stackedWidget->currentWidget()->sizeHint().height() + layout()->spacing();
