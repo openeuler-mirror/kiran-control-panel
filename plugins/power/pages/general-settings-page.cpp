@@ -194,6 +194,10 @@ void GeneralSettingsPage::initUI()
     m_switchIdlelockScreen->setAccessibleName("SwitchIdleLockScreen");
     ui->layout_idleLock->addWidget(m_switchIdlelockScreen);
 
+    // 空闲时变暗显示器
+    m_switchDisplayIdleDimmed = new KiranSwitchButton(this);
+    ui->layout_displayIdleDimmed->addWidget(m_switchDisplayIdleDimmed);
+
     // 待机唤醒是否需要输入密码
     m_switchSuspendLockScreen = new KiranSwitchButton(this);
     m_switchSuspendLockScreen->setAccessibleName("SwitchSuspendLockScreen");
@@ -234,6 +238,8 @@ void GeneralSettingsPage::initConnection()
 
     connect(m_switchIdlelockScreen, &QAbstractButton::toggled,
             this, &GeneralSettingsPage::updateIdleLockEnable);
+    connect(m_switchDisplayIdleDimmed, &QAbstractButton::toggled,
+            this, &GeneralSettingsPage::updateDisplayIdleDimmedEnable);
     connect(m_switchSuspendLockScreen, &QAbstractButton::toggled,
             this, &GeneralSettingsPage::updateSuspendLockEnable);
 }
@@ -350,6 +356,12 @@ void GeneralSettingsPage::load()
         m_switchIdlelockScreen->setCheckable(false);
     }
 
+    // 空闲时变暗显示器
+    QSignalBlocker displayDimmedIdleBlocker(m_switchDisplayIdleDimmed);
+    auto displayDimmedIdle = m_powerInterface->displayIdleDimmedEnabled();
+    m_switchDisplayIdleDimmed->setChecked(displayDimmedIdle);
+    m_switchDisplayIdleDimmed->setCheckable(true);
+
     // 待机唤醒时需要输入密码
     QSignalBlocker suspendLockScreenBlocker(m_switchSuspendLockScreen);
     auto lockwhenSuspend = m_powerInterface->screenLockedWhenSuspend();
@@ -463,6 +475,12 @@ void GeneralSettingsPage::updateIdleLockEnable(bool enable)
     m_screensaverSettings->set(KEY_IDLE_ACTIVATION_LOCK, enable);
 
     KLOG_INFO(qLcPower) << "update idle lock enable" << enable;
+}
+
+void GeneralSettingsPage::updateDisplayIdleDimmedEnable(bool enable)
+{
+    m_powerInterface->EnableDisplayIdleDimmed(enable);
+    KLOG_INFO(qLcPower) << "update display idle dimmed enable" << enable;
 }
 
 void GeneralSettingsPage::updateSuspendLockEnable(bool checked)
