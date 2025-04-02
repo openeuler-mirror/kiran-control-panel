@@ -3,7 +3,7 @@ ShowRoot=false
 
 [Network]
 CheckWiredCarrier=false
-CheckInternetConnectivity=true
+CheckInternetConnectivity=false
 Address=www.kylinsec.com.cn
 Port=80
 
