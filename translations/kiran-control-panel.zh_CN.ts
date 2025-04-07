@@ -677,7 +677,7 @@
 <context>
     <name>CursorThemePage</name>
     <message>
-        <location filename="../plugins/appearance/pages/theme/cursor/cursor-theme-page.cpp" line="55"/>
+        <location filename="../plugins/appearance/pages/theme/cursor/cursor-theme-page.cpp" line="62"/>
         <source>Cursor Themes Settings</source>
         <translation>光标主题设置</translation>
     </message>
@@ -1550,7 +1550,12 @@
         <translation>计算机空闲时锁定屏幕</translation>
     </message>
     <message>
-        <location filename="../plugins/power/pages/general-settings-page.ui" line="823"/>
+        <location filename="../plugins/power/pages/general-settings-page.ui" line="833"/>
+        <source>Display dimmed when idle</source>
+        <translation>空闲时显示器变暗</translation>
+    </message>
+    <message>
+        <location filename="../plugins/power/pages/general-settings-page.ui" line="877"/>
         <source>password is required to wake up in standby mode</source>
         <translation>待机时唤醒需要输入密码</translation>
     </message>
@@ -1603,17 +1608,17 @@
         <translation>高性能模式</translation>
     </message>
     <message>
-        <location filename="../plugins/power/pages/general-settings-page.cpp" line="422"/>
+        <location filename="../plugins/power/pages/general-settings-page.cpp" line="434"/>
         <source>ERROR</source>
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../plugins/power/pages/general-settings-page.cpp" line="549"/>
+        <location filename="../plugins/power/pages/general-settings-page.cpp" line="567"/>
         <source>%1hour</source>
         <translation>%1小时</translation>
     </message>
     <message>
-        <location filename="../plugins/power/pages/general-settings-page.cpp" line="553"/>
+        <location filename="../plugins/power/pages/general-settings-page.cpp" line="571"/>
         <source>%1minute</source>
         <translation>%1分钟</translation>
     </message>
@@ -2136,32 +2141,32 @@
     <name>Kiran::Network::DetailsPage</name>
     <message>
         <location filename="../plugins/network/pages/details/details-page.cpp" line="245"/>
-        <location filename="../plugins/network/pages/details/details-page.cpp" line="255"/>
+        <location filename="../plugins/network/pages/details/details-page.cpp" line="256"/>
         <source>Unknown</source>
         <translation>未知</translation>
     </message>
     <message>
-        <location filename="../plugins/network/pages/details/details-page.cpp" line="258"/>
+        <location filename="../plugins/network/pages/details/details-page.cpp" line="259"/>
         <source>WEP</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../plugins/network/pages/details/details-page.cpp" line="261"/>
+        <location filename="../plugins/network/pages/details/details-page.cpp" line="262"/>
         <source>None</source>
         <translation>无</translation>
     </message>
     <message>
-        <location filename="../plugins/network/pages/details/details-page.cpp" line="264"/>
+        <location filename="../plugins/network/pages/details/details-page.cpp" line="265"/>
         <source>WPA/WPA2 Personal</source>
         <translation>WPA/WPA2个人版</translation>
     </message>
     <message>
-        <location filename="../plugins/network/pages/details/details-page.cpp" line="267"/>
+        <location filename="../plugins/network/pages/details/details-page.cpp" line="268"/>
         <source>WPA3 Personal</source>
         <translation>WPA3个人版</translation>
     </message>
     <message>
-        <location filename="../plugins/network/pages/details/details-page.cpp" line="270"/>
+        <location filename="../plugins/network/pages/details/details-page.cpp" line="271"/>
         <source>WPA/WPA2 Enterprise</source>
         <translation>WPA/WPA2 企业级</translation>
     </message>
@@ -3464,27 +3469,27 @@ This is line 50 of the test text</source>
         <translation>选择屏保主题</translation>
     </message>
     <message>
-        <location filename="../plugins/appearance/pages/screensaver/screensaver-page.cpp" line="42"/>
+        <location filename="../plugins/appearance/pages/screensaver/screensaver-page.cpp" line="55"/>
         <source>Classical</source>
         <translation>经典</translation>
     </message>
     <message>
-        <location filename="../plugins/appearance/pages/screensaver/screensaver-page.cpp" line="43"/>
+        <location filename="../plugins/appearance/pages/screensaver/screensaver-page.cpp" line="56"/>
         <source>Atlantis</source>
         <translation>深蓝秘境</translation>
     </message>
     <message>
-        <location filename="../plugins/appearance/pages/screensaver/screensaver-page.cpp" line="44"/>
+        <location filename="../plugins/appearance/pages/screensaver/screensaver-page.cpp" line="57"/>
         <source>Binaryhorizon</source>
         <translation>数界穹顶</translation>
     </message>
     <message>
-        <location filename="../plugins/appearance/pages/screensaver/screensaver-page.cpp" line="45"/>
+        <location filename="../plugins/appearance/pages/screensaver/screensaver-page.cpp" line="58"/>
         <source>Epicycle</source>
         <translation>晶轨旋生</translation>
     </message>
     <message>
-        <location filename="../plugins/appearance/pages/screensaver/screensaver-page.cpp" line="46"/>
+        <location filename="../plugins/appearance/pages/screensaver/screensaver-page.cpp" line="59"/>
         <source>Rubik</source>
         <translation>​熵立方体</translation>
     </message>
