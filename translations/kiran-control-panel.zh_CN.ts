@@ -35,18 +35,18 @@
         <location filename="../plugins/account/account-widget.cpp" line="100"/>
         <location filename="../plugins/account/account-widget.cpp" line="418"/>
         <source>disable</source>
-        <translation type="unfinished">禁用</translation>
+        <translation>禁用</translation>
     </message>
     <message>
         <location filename="../plugins/account/account-widget.cpp" line="100"/>
         <location filename="../plugins/account/account-widget.cpp" line="418"/>
         <source>enable</source>
-        <translation type="unfinished">启用</translation>
+        <translation>启用</translation>
     </message>
     <message>
         <location filename="../plugins/account/account-widget.cpp" line="223"/>
         <source>Create new user</source>
-        <translation type="unfinished">创建新用户</translation>
+        <translation>创建新用户</translation>
     </message>
 </context>
 <context>
@@ -161,6 +161,34 @@
     </message>
 </context>
 <context>
+    <name>AddUsersPage</name>
+    <message>
+        <location filename="../plugins/group/src/pages/add-users-page/add-users-page.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../plugins/group/src/pages/add-users-page/add-users-page.ui" line="40"/>
+        <source>Add Member</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../plugins/group/src/pages/add-users-page/add-users-page.ui" line="120"/>
+        <source>Save</source>
+        <translation type="unfinished">保存</translation>
+    </message>
+    <message>
+        <location filename="../plugins/group/src/pages/add-users-page/add-users-page.ui" line="167"/>
+        <source>Cancel</source>
+        <translation type="unfinished">取消</translation>
+    </message>
+    <message>
+        <location filename="../plugins/group/src/pages/add-users-page/add-users-page.cpp" line="51"/>
+        <source>Please input keys for search...</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>AdvanceSettings</name>
     <message>
         <location filename="../plugins/account/pages/advance-settings-page/advance-settings.cpp" line="133"/>
@@ -271,7 +299,7 @@
         <translation>字体</translation>
     </message>
     <message>
-        <location filename="../plugins/appearance/appearance-plugin.cpp" line="89"/>
+        <location filename="../plugins/appearance/appearance-plugin.cpp" line="92"/>
         <source>Screensaver</source>
         <translation>屏保</translation>
     </message>
@@ -946,43 +974,28 @@
 <context>
     <name>CreateGroupPage</name>
     <message>
-        <location filename="../plugins/group/src/pages/create-group-page/create-group-page.ui" line="32"/>
+        <location filename="../plugins/group/src/pages/create-group-page/create-group-page.ui" line="20"/>
         <source>CreateGroupPage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/group/src/pages/create-group-page/create-group-page.ui" line="95"/>
+        <location filename="../plugins/group/src/pages/create-group-page/create-group-page.ui" line="46"/>
         <source>Create Group</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/group/src/pages/create-group-page/create-group-page.ui" line="166"/>
+        <location filename="../plugins/group/src/pages/create-group-page/create-group-page.ui" line="76"/>
         <source>Add Group Members</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/group/src/pages/create-group-page/create-group-page.ui" line="246"/>
+        <location filename="../plugins/group/src/pages/create-group-page/create-group-page.ui" line="128"/>
         <source>Confirm</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/group/src/pages/create-group-page/create-group-page.cpp" line="101"/>
-        <source>Please enter your group name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../plugins/group/src/pages/create-group-page/create-group-page.cpp" line="118"/>
-        <source>group name cannot be a pure number</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../plugins/group/src/pages/create-group-page/create-group-page.cpp" line="125"/>
-        <source>group name already exists</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../plugins/group/src/pages/create-group-page/create-group-page.cpp" line="153"/>
-        <location filename="../plugins/group/src/pages/create-group-page/create-group-page.cpp" line="172"/>
+        <location filename="../plugins/group/src/pages/create-group-page/create-group-page.cpp" line="107"/>
+        <location filename="../plugins/group/src/pages/create-group-page/create-group-page.cpp" line="137"/>
         <source>Error</source>
         <translation type="unfinished">错误</translation>
     </message>
@@ -1153,7 +1166,7 @@
 <context>
     <name>CursorThemePage</name>
     <message>
-        <location filename="../plugins/appearance/pages/theme/cursor/cursor-theme-page.cpp" line="55"/>
+        <location filename="../plugins/appearance/pages/theme/cursor/cursor-theme-page.cpp" line="62"/>
         <source>Cursor Themes Settings</source>
         <translation type="unfinished">光标主题设置</translation>
     </message>
@@ -1550,7 +1563,7 @@
     <message>
         <location filename="../plugins/display/src/display-page.ui" line="377"/>
         <source>ComboZoomRate</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../plugins/display/src/display-page.ui" line="381"/>
@@ -2266,7 +2279,12 @@
         <translation>计算机空闲时锁定屏幕</translation>
     </message>
     <message>
-        <location filename="../plugins/power/pages/general-settings-page.ui" line="823"/>
+        <location filename="../plugins/power/pages/general-settings-page.ui" line="833"/>
+        <source>Display dimmed when idle</source>
+        <translation>空闲时显示器变暗</translation>
+    </message>
+    <message>
+        <location filename="../plugins/power/pages/general-settings-page.ui" line="877"/>
         <source>password is required to wake up in standby mode</source>
         <translation>待机时唤醒需要输入密码</translation>
     </message>
@@ -2319,17 +2337,17 @@
         <translation>高性能模式</translation>
     </message>
     <message>
-        <location filename="../plugins/power/pages/general-settings-page.cpp" line="422"/>
+        <location filename="../plugins/power/pages/general-settings-page.cpp" line="434"/>
         <source>ERROR</source>
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../plugins/power/pages/general-settings-page.cpp" line="549"/>
+        <location filename="../plugins/power/pages/general-settings-page.cpp" line="567"/>
         <source>%1hour</source>
         <translation>%1小时</translation>
     </message>
     <message>
-        <location filename="../plugins/power/pages/general-settings-page.cpp" line="553"/>
+        <location filename="../plugins/power/pages/general-settings-page.cpp" line="571"/>
         <source>%1minute</source>
         <translation>%1分钟</translation>
     </message>
@@ -2352,83 +2370,102 @@
 <context>
     <name>GroupInfoPage</name>
     <message>
-        <location filename="../plugins/group/src/pages/group-info-page/group-info-page.ui" line="32"/>
+        <location filename="../plugins/group/src/pages/group-info-page/group-info-page.ui" line="14"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/group/src/pages/group-info-page/group-info-page.ui" line="136"/>
-        <source>TextLabel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../plugins/group/src/pages/group-info-page/group-info-page.ui" line="236"/>
+        <location filename="../plugins/group/src/pages/group-info-page/group-info-page.ui" line="178"/>
         <source>Group</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/group/src/pages/group-info-page/group-info-page.ui" line="335"/>
+        <location filename="../plugins/group/src/pages/group-info-page/group-info-page.ui" line="272"/>
         <source>Member List</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/group/src/pages/group-info-page/group-info-page.ui" line="435"/>
+        <location filename="../plugins/group/src/pages/group-info-page/group-info-page.ui" line="330"/>
         <source>Add User</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/group/src/pages/group-info-page/group-info-page.ui" line="482"/>
+        <location filename="../plugins/group/src/pages/group-info-page/group-info-page.ui" line="377"/>
         <source>Delete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/group/src/pages/group-info-page/group-info-page.ui" line="564"/>
-        <source>Add Member</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../plugins/group/src/pages/group-info-page/group-info-page.ui" line="679"/>
         <source>Save</source>
-        <translation type="unfinished">保存</translation>
+        <translation type="obsolete">保存</translation>
     </message>
     <message>
-        <location filename="../plugins/group/src/pages/group-info-page/group-info-page.ui" line="726"/>
         <source>Cancel</source>
-        <translation type="unfinished">取消</translation>
+        <translation type="obsolete">取消</translation>
     </message>
     <message>
-        <location filename="../plugins/group/src/pages/group-info-page/group-info-page.cpp" line="123"/>
-        <source>Please input keys for search...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../plugins/group/src/pages/group-info-page/group-info-page.cpp" line="247"/>
-        <location filename="../plugins/group/src/pages/group-info-page/group-info-page.cpp" line="259"/>
-        <location filename="../plugins/group/src/pages/group-info-page/group-info-page.cpp" line="269"/>
-        <location filename="../plugins/group/src/pages/group-info-page/group-info-page.cpp" line="280"/>
+        <location filename="../plugins/group/src/pages/group-info-page/group-info-page.cpp" line="168"/>
+        <location filename="../plugins/group/src/pages/group-info-page/group-info-page.cpp" line="179"/>
+        <location filename="../plugins/group/src/pages/group-info-page/group-info-page.cpp" line="191"/>
+        <location filename="../plugins/group/src/pages/group-info-page/group-info-page.cpp" line="200"/>
         <source>Error</source>
         <translation type="unfinished">错误</translation>
     </message>
 </context>
 <context>
-    <name>GroupSubItem</name>
+    <name>GroupInterface</name>
     <message>
-        <location filename="../plugins/group/src/group-subitem.cpp" line="44"/>
-        <source>Group</source>
+        <location filename="../plugins/group/src/group-interface.cpp" line="45"/>
+        <source>Failed to create group, %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/group/src/group-subitem.cpp" line="76"/>
-        <source>Creat group</source>
+        <location filename="../plugins/group/src/group-interface.cpp" line="69"/>
+        <source>Failed to delete group, %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/group/src/group-subitem.cpp" line="77"/>
-        <source>Change group name</source>
+        <location filename="../plugins/group/src/group-interface.cpp" line="92"/>
+        <source>Failed to add %1 to group, %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/group/src/group-page.cpp" line="139"/>
+        <location filename="../plugins/group/src/group-interface.cpp" line="114"/>
+        <source>Failed to remove %1 from group, %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../plugins/group/src/group-interface.cpp" line="138"/>
+        <source>Failed to change group name to %1, %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../plugins/group/src/group-interface.cpp" line="150"/>
+        <source>Failed to change group name to %1, the new group name is occupied!</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>GroupNameChecker</name>
+    <message>
+        <location filename="../plugins/group/src/tools/group-name-checker.cpp" line="24"/>
+        <source>Please enter your group name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../plugins/group/src/tools/group-name-checker.cpp" line="33"/>
+        <source>Group name cannot be a pure number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../plugins/group/src/tools/group-name-checker.cpp" line="40"/>
+        <source>Group name already exists</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>GroupPage</name>
+    <message>
+        <location filename="../plugins/group/src/group-page.cpp" line="143"/>
         <source>Create new group</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2523,32 +2560,6 @@
     <message>
         <location filename="../plugins/account/utils/hard-worker.cpp" line="59"/>
         <source>Failed to connect to the account management service</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../plugins/group/src/hard-worker.cpp" line="38"/>
-        <source>Create Group failed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../plugins/group/src/hard-worker.cpp" line="92"/>
-        <source>Failed to delete group,%1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../plugins/group/src/hard-worker.cpp" line="113"/>
-        <location filename="../plugins/group/src/hard-worker.cpp" line="135"/>
-        <source> add user to group failed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../plugins/group/src/hard-worker.cpp" line="158"/>
-        <source> change group name failed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../plugins/group/src/hard-worker.cpp" line="169"/>
-        <source> change group name failed, the new group name is occupied</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3016,22 +3027,22 @@
         <translation>请用分号分隔多个DNS</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/plugin/setting-widget/ipv6-widget.cpp" line="240"/>
+        <location filename="../plugins/network/src/plugin/setting-widget/ipv6-widget.cpp" line="246"/>
         <source>Ipv6 DNS invalid</source>
         <translation>无效的Ipv6 DNS</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/plugin/setting-widget/ipv6-widget.cpp" line="256"/>
+        <location filename="../plugins/network/src/plugin/setting-widget/ipv6-widget.cpp" line="262"/>
         <source>Ipv6 address can not be empty</source>
         <translation>Ipv6地址不能为空</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/plugin/setting-widget/ipv6-widget.cpp" line="267"/>
+        <location filename="../plugins/network/src/plugin/setting-widget/ipv6-widget.cpp" line="273"/>
         <source>Ipv6 address invalid</source>
         <translation>无效的Ipv6地址</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/plugin/setting-widget/ipv6-widget.cpp" line="280"/>
+        <location filename="../plugins/network/src/plugin/setting-widget/ipv6-widget.cpp" line="286"/>
         <source>Ipv6 Gateway invalid</source>
         <translation>无效的Ipv6网关</translation>
     </message>
@@ -3159,17 +3170,17 @@
 <context>
     <name>KiranAvatarEditor</name>
     <message>
-        <location filename="../libexec/avatar-editor/src/kiran-avatar-editor.cpp" line="42"/>
+        <location filename="../libexec/avatar-editor/kiran-avatar-editor.cpp" line="42"/>
         <source>Avatar Editor</source>
         <translation>头像编辑器</translation>
     </message>
     <message>
-        <location filename="../libexec/avatar-editor/src/kiran-avatar-editor.cpp" line="91"/>
+        <location filename="../libexec/avatar-editor/kiran-avatar-editor.cpp" line="91"/>
         <source>Confirm</source>
         <translation>确认</translation>
     </message>
     <message>
-        <location filename="../libexec/avatar-editor/src/kiran-avatar-editor.cpp" line="112"/>
+        <location filename="../libexec/avatar-editor/kiran-avatar-editor.cpp" line="112"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
@@ -3320,14 +3331,6 @@
     </message>
 </context>
 <context>
-    <name>KiranGroupManager</name>
-    <message>
-        <location filename="../plugins/group/src/kiran-group-manager.cpp" line="141"/>
-        <source>Create new group</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>KiranModuleWidget</name>
     <message>
         <source>Warning</source>
@@ -3432,7 +3435,6 @@
 <context>
     <name>KiranTips</name>
     <message>
-        <location filename="../plugins/group/src/widgets/kiran-tips.ui" line="29"/>
         <location filename="../lib/common-widgets/kiran-tips/kiran-tips.ui" line="29"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
@@ -4216,27 +4218,27 @@ This is line 50 of the test text</source>
         <translation>播放</translation>
     </message>
     <message>
-        <location filename="../plugins/audio/src/plugin/output-page.cpp" line="183"/>
+        <location filename="../plugins/audio/src/plugin/output-page.cpp" line="184"/>
         <source>bark</source>
         <translation>犬吠</translation>
     </message>
     <message>
-        <location filename="../plugins/audio/src/plugin/output-page.cpp" line="184"/>
+        <location filename="../plugins/audio/src/plugin/output-page.cpp" line="185"/>
         <source>drip</source>
         <translation>水滴</translation>
     </message>
     <message>
-        <location filename="../plugins/audio/src/plugin/output-page.cpp" line="185"/>
+        <location filename="../plugins/audio/src/plugin/output-page.cpp" line="186"/>
         <source>glass</source>
         <translation>玻璃</translation>
     </message>
     <message>
-        <location filename="../plugins/audio/src/plugin/output-page.cpp" line="186"/>
+        <location filename="../plugins/audio/src/plugin/output-page.cpp" line="187"/>
         <source>sonar</source>
         <translation>声纳</translation>
     </message>
     <message>
-        <location filename="../plugins/audio/src/plugin/output-page.cpp" line="329"/>
+        <location filename="../plugins/audio/src/plugin/output-page.cpp" line="330"/>
         <source>No output device detected</source>
         <translation>未检测到输出设备</translation>
     </message>
@@ -4679,27 +4681,27 @@ This is line 50 of the test text</source>
         <translation>选择屏保主题</translation>
     </message>
     <message>
-        <location filename="../plugins/appearance/pages/screensaver/screensaver-page.cpp" line="42"/>
+        <location filename="../plugins/appearance/pages/screensaver/screensaver-page.cpp" line="66"/>
         <source>Classical</source>
         <translation>经典</translation>
     </message>
     <message>
-        <location filename="../plugins/appearance/pages/screensaver/screensaver-page.cpp" line="43"/>
+        <location filename="../plugins/appearance/pages/screensaver/screensaver-page.cpp" line="67"/>
         <source>Atlantis</source>
         <translation>深蓝秘境</translation>
     </message>
     <message>
-        <location filename="../plugins/appearance/pages/screensaver/screensaver-page.cpp" line="44"/>
+        <location filename="../plugins/appearance/pages/screensaver/screensaver-page.cpp" line="68"/>
         <source>Binaryhorizon</source>
         <translation>数界穹顶</translation>
     </message>
     <message>
-        <location filename="../plugins/appearance/pages/screensaver/screensaver-page.cpp" line="45"/>
+        <location filename="../plugins/appearance/pages/screensaver/screensaver-page.cpp" line="69"/>
         <source>Epicycle</source>
         <translation>晶轨旋生</translation>
     </message>
     <message>
-        <location filename="../plugins/appearance/pages/screensaver/screensaver-page.cpp" line="46"/>
+        <location filename="../plugins/appearance/pages/screensaver/screensaver-page.cpp" line="70"/>
         <source>Rubik</source>
         <translation>​熵立方体</translation>
     </message>
@@ -6635,6 +6637,19 @@ This is line 50 of the test text</source>
         <location filename="../plugins/network/src/plugin/setting-widget/vpn/vpn-widget.cpp" line="234"/>
         <source>password can not be empty</source>
         <translation>密码不能为空</translation>
+    </message>
+</context>
+<context>
+    <name>WMThemePage</name>
+    <message>
+        <location filename="../plugins/appearance/pages/theme/wm/wm-theme-page.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../plugins/appearance/pages/theme/wm/wm-theme-page.ui" line="35"/>
+        <source>Window Themes Setting</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

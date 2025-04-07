@@ -34,6 +34,9 @@
 #include "text-input-dialog.h"
 #include "utils.h"
 
+static const char* EditIconResource = ":/kcp-network-images/details-info.svg";
+static const char* MoreOptsIconResource = ":/kiran-control-panel/images/more-options.svg";
+
 using namespace NetworkManager;
 // 使用默认析构函数，父对象被释放时，会释放子对象
 ConnectionItemWidget::ConnectionItemWidget(QWidget* parent) : KiranFrame(parent)
@@ -83,13 +86,13 @@ void ConnectionItemWidget::initPluginItemWidget()
     m_connectionName->setElideMode(Qt::TextElideMode::ElideRight);
     m_connectionTypeIcon->setVisible(false);
 
-    m_editButton->setIcon(NetworkUtils::trayIconColorSwitch(":/kcp-network-images/details-info.svg"));
+    m_editButton->setIcon(NetworkUtils::trayIconColorSwitch(EditIconResource));
     m_editButton->setIconSize(QSize(16, 16));
     m_editButton->setFixedSize(30, 36);
     m_editButton->setFlat(true);
 
     m_moreOptions->setMenu(m_menu);
-    m_moreOptions->setIcon(QIcon(":/kiran-control-panel/images/more-options.svg"));
+    m_moreOptions->setIcon(NetworkUtils::trayIconColorSwitch(MoreOptsIconResource));
     m_moreOptions->setIconSize(QSize(16, 16));
     m_moreOptions->setFixedSize(30, 36);
     m_moreOptions->setFlat(true);
@@ -537,7 +540,9 @@ void ConnectionItemWidget::handleThemeChanged(Kiran::PaletteType paletteType)
 #endif
     image.invertPixels(QImage::InvertRgb);
     m_connectionTypeIcon->setPixmap(QPixmap::fromImage(image));
-    m_editButton->setIcon(NetworkUtils::trayIconColorSwitch(":/kcp-network-images/details-info.svg"));
+
+    m_editButton->setIcon(NetworkUtils::trayIconColorSwitch(EditIconResource));
+    m_moreOptions->setIcon(NetworkUtils::trayIconColorSwitch(MoreOptsIconResource));
 }
 
 void ConnectionItemWidget::mousePressEvent(QMouseEvent* event)
