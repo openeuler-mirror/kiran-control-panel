@@ -205,6 +205,9 @@ void GeneralSettingsPage::initUI()
 
     // NOTE: 根据#48515缺陷单所做修改,隐藏挂起按钮相关配置项，后续若有需要再进行打开
     ui->widget_suspend->setVisible(false);
+
+    // 先隐藏通用设置->空闲时变暗选项，保留电池设置里得空闲时变暗选项
+    ui->widget_displayIdleDimmed->setVisible(false);
 }
 
 void GeneralSettingsPage::initConnection()
