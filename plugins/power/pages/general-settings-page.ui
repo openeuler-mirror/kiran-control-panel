@@ -797,29 +797,13 @@
               </layout>
              </item>
              <item>
-              <spacer name="verticalSpacer_18">
-               <property name="orientation">
-                <enum>Qt::Vertical</enum>
-               </property>
-               <property name="sizeType">
-                <enum>QSizePolicy::Fixed</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>20</width>
-                 <height>16</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-             <item>
               <widget class="QWidget" name="widget_displayIdleDimmed" native="true">
                <layout class="QHBoxLayout" name="layout_displayIdleDimmed">
                 <property name="leftMargin">
                  <number>0</number>
                 </property>
                 <property name="topMargin">
-                 <number>0</number>
+                 <number>16</number>
                 </property>
                 <property name="rightMargin">
                  <number>0</number>
