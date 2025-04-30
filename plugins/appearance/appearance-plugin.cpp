@@ -85,7 +85,7 @@ void AppearancePlugin::initSubItem()
                                                         "kcp-appearance-font",
                                                         97,
                                                         Fonts::createPage))};
-
+#ifdef APPEARANCE_SCREENSAVER
     if (ScreensaverPage::isSupported())
     {
         m_subitems.append(KiranControlPanel::SubItemPtr(new PluginSubItem("Screensaver",
@@ -96,4 +96,5 @@ void AppearancePlugin::initSubItem()
                                                                           95,
                                                                           ScreensaverPage::createPage)));
     }
+#endif
 }
