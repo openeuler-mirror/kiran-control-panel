@@ -43,7 +43,6 @@ private slots:
     void processCurrentActiveConnChanged();
     void loadActiveConnectionInfo();
     void updateConnectionDeviceInfo();
-    void loadWirelessInfo();
     void updateConnectionSecurityInfo();
     void updateConnectionIpDetails();
     
