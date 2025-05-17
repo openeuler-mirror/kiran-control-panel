@@ -41,7 +41,6 @@ private:
 
 private slots:
     void updateActivatedState();
-    void editConnectionSettings();
     void disconnectConnectionSettings();
     void connectConnectionSettings();
     void removeConnectionSettings();
