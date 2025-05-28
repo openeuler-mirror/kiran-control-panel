@@ -62,8 +62,9 @@ static const QMap<QString, QString> SpecialKeyMap = {
         {"asciitilde", "~"},
         {"grave", "`"},
         {"control", "Ctrl"},
-        {"super_l", "Super"},
-        {"super_r", "Super"}
+        {"super_l", "Super_L"},
+        {"super_r", "Super_R"},
+        {"meta", "Super"}
 };
 
 static const QMap<QString, QString> MediaKeyMap = {
@@ -112,12 +113,12 @@ QString KeycodeTranslator::keycode2ReadableString(const QList<int> &keycodes)
         }
 
         QString keyStr(keyValue);
-        //特殊按键经QMetaEnum翻译之后再经过SpecialKeyMap翻译
+        // 特殊按键经QMetaEnum翻译之后再经过SpecialKeyMap翻译
         if (SpecialKeyMap.contains(keyStr.toLower()))
         {
             keyStrings.append(SpecialKeyMap.value(keyStr.toLower()));
         }
-        //特殊按键 "_" 转换成 " "
+        // 特殊按键 "_" 转换成 " "
         else if ((key >= Audio_Lower_Volume) && (key <= Audio_Mic_Mute))
         {
             keyStrings.append(keyStr.split("_").join(" "));
@@ -133,14 +134,14 @@ QString KeycodeTranslator::keycode2ReadableString(const QList<int> &keycodes)
 
 #if QT_VERSION < QT_VERSION_CHECK(5, 12, 2)
 #include <QtGui/private/qkeymapper_p.h>
-int KeycodeTranslator::keycode2QtKey(const QKeyEvent* keyEvent)
+int KeycodeTranslator::keycode2QtKey(const QKeyEvent *keyEvent)
 {
     QKeyEvent fakeEvent(*keyEvent);
     fakeEvent.setModifiers(Qt::NoModifier);
 
     auto keys = QKeyMapper::instance()->possibleKeys(&fakeEvent);
 
-    if( keys.isEmpty() )
+    if (keys.isEmpty())
     {
         return 0;
     }
@@ -206,21 +207,22 @@ QString KeycodeTranslator::readableKeyString2Backend(const QString &keyString)
     {
         QString key = keystrings.at(i);
 
-        //modifier
+        // modifier
         if (!key.compare("Alt", Qt::CaseInsensitive) ||
             !key.compare("Shift", Qt::CaseInsensitive) ||
-            !key.compare("Ctrl", Qt::CaseInsensitive))
+            !key.compare("Ctrl", Qt::CaseInsensitive) ||
+            !key.compare("Super", Qt::CaseInsensitive))
         {
             QString str = "<" + key + ">";
             keystrings.replace(i, str);
         }
-        //media key
+        // media key
         else if (key.contains(" "))
         {
             QString str = QString("XF86%1").arg(key.split(" ").join(""));
             keystrings.replace(i, str);
         }
-        //special key
+        // special key
         else if (!key.contains(QRegExp("[A-Z]")) &&
                  !key.contains(QRegExp("[a-z]")) &&
                  !key.contains(QRegExp("[0-9]")))
