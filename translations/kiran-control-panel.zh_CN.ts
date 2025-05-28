@@ -1550,12 +1550,12 @@
         <translation>计算机空闲时锁定屏幕</translation>
     </message>
     <message>
-        <location filename="../plugins/power/pages/general-settings-page.ui" line="833"/>
+        <location filename="../plugins/power/pages/general-settings-page.ui" line="817"/>
         <source>Display dimmed when idle</source>
         <translation>空闲时显示器变暗</translation>
     </message>
     <message>
-        <location filename="../plugins/power/pages/general-settings-page.ui" line="877"/>
+        <location filename="../plugins/power/pages/general-settings-page.ui" line="861"/>
         <source>password is required to wake up in standby mode</source>
         <translation>待机时唤醒需要输入密码</translation>
     </message>
@@ -1608,17 +1608,17 @@
         <translation>高性能模式</translation>
     </message>
     <message>
-        <location filename="../plugins/power/pages/general-settings-page.cpp" line="434"/>
+        <location filename="../plugins/power/pages/general-settings-page.cpp" line="437"/>
         <source>ERROR</source>
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../plugins/power/pages/general-settings-page.cpp" line="567"/>
+        <location filename="../plugins/power/pages/general-settings-page.cpp" line="570"/>
         <source>%1hour</source>
         <translation>%1小时</translation>
     </message>
     <message>
-        <location filename="../plugins/power/pages/general-settings-page.cpp" line="571"/>
+        <location filename="../plugins/power/pages/general-settings-page.cpp" line="574"/>
         <source>%1minute</source>
         <translation>%1分钟</translation>
     </message>
@@ -2071,12 +2071,12 @@
 <context>
     <name>KeycodeTranslator</name>
     <message>
-        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="168"/>
+        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="169"/>
         <source>None</source>
         <translation>暂无</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="172"/>
+        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="173"/>
         <source>disabled</source>
         <translation>禁用</translation>
     </message>
@@ -2777,87 +2777,87 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>Media Key</name>
     <message>
-        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="70"/>
+        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="71"/>
         <source>Audio Play</source>
         <translation>音频播放</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="71"/>
+        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="72"/>
         <source>Search</source>
         <translation>搜索</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="72"/>
+        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="73"/>
         <source>WWW</source>
         <translation>万维网</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="73"/>
+        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="74"/>
         <source>Audio Lower Volume</source>
         <translation>减小音量</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="74"/>
+        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="75"/>
         <source>Audio Raise Volume</source>
         <translation>增大音量</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="75"/>
+        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="76"/>
         <source>Mic Mute</source>
         <translation>输入静音</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="76"/>
+        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="77"/>
         <source>Audio Stop</source>
         <translation>音频停止</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="77"/>
+        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="78"/>
         <source>Explorer</source>
         <translation>浏览</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="78"/>
+        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="79"/>
         <source>Calculator</source>
         <translation>计算器</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="79"/>
+        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="80"/>
         <source>Audio Mute</source>
         <translation>音频暂停</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="80"/>
+        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="81"/>
         <source>Audio Pause</source>
         <translation>音频暂停</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="81"/>
+        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="82"/>
         <source>Audio Prev</source>
         <translation>音频上一个</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="82"/>
+        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="83"/>
         <source>Audio Media</source>
         <translation>音频媒体</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="83"/>
+        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="84"/>
         <source>Audio Next</source>
         <translation>音频下一个</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="84"/>
+        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="85"/>
         <source>Mail</source>
         <translation>邮件</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="85"/>
+        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="86"/>
         <source>Tools</source>
         <translation>工具</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="86"/>
+        <location filename="../plugins/keybinding/utils/keycode-translator.cpp" line="87"/>
         <source>Eject</source>
         <translation>弹出</translation>
     </message>
@@ -3243,6 +3243,29 @@ This is line 50 of the test text</source>
         <location filename="../plugins/account/pages/passwd-expiration-policy/password-expiration-policy-page.cpp" line="86"/>
         <source>day</source>
         <translation>日</translation>
+    </message>
+</context>
+<context>
+    <name>Popup</name>
+    <message>
+        <location filename="../example/kiran-cpanel-demo/src/subitem/popup.cpp" line="23"/>
+        <source>cancel</source>
+        <translation type="unfinished">取消</translation>
+    </message>
+    <message>
+        <location filename="../example/kiran-cpanel-demo/src/subitem/popup.ui" line="14"/>
+        <source>Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../example/kiran-cpanel-demo/src/subitem/popup.ui" line="26"/>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../example/kiran-cpanel-demo/src/subitem/popup.ui" line="39"/>
+        <source>TextLabel</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3784,12 +3807,13 @@ This is line 50 of the test text</source>
     </message>
     <message>
         <location filename="../plugins/keybinding/shortcut.cpp" line="684"/>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="734"/>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="755"/>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="790"/>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="811"/>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="844"/>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="865"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="736"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="757"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="794"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="815"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="845"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="862"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="879"/>
         <source>Failed</source>
         <translation>失败</translation>
     </message>
@@ -3800,13 +3824,13 @@ This is line 50 of the test text</source>
     </message>
     <message>
         <location filename="../plugins/keybinding/shortcut.cpp" line="698"/>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="773"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="775"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
     <message>
         <location filename="../plugins/keybinding/shortcut.cpp" line="699"/>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="774"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="776"/>
         <source>Please complete the shortcut information!</source>
         <translation>请完善快捷键信息！</translation>
     </message>
@@ -3821,32 +3845,41 @@ This is line 50 of the test text</source>
         <translation>是否确定要禁用此快捷键？</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="735"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="737"/>
         <source>Modify system shortcut failed,error:</source>
         <translation>修改系统快捷键失败，错误：</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="756"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="758"/>
         <source>Modify custom shortcut failed,error:</source>
         <translation>修改自定义快捷键失败，错误：</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="791"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="795"/>
         <source>Add custom shortcut failed,error:</source>
         <translation>添加自定义快捷键失败，错误：</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="812"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="816"/>
         <source>Reset shortcut failed,error:</source>
         <translation>重置快捷键失败，错误：</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="845"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="846"/>
+        <source>Cannot use shortcut &quot;%1&quot;,Shortcuts cannot be set to only modifier keys. Please add a regular key, like A-Z, and so on.</source>
+        <translation>无法使用快捷键&quot;%1&quot;, 快捷键不能仅包含修饰键。请添加一个主键，如A-Z等。</translation>
+    </message>
+    <message>
+        <source>Cannot use shortcut &quot;%1&quot;,Super key is currently not supported for shortcut.Please try again.</source>
+        <translation type="vanished">无法使用快捷键&quot;%1&quot;,暂不支持设置包含Super键的快捷键。请重新输入。</translation>
+    </message>
+    <message>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="863"/>
         <source>Cannot use shortcut &quot;%1&quot;,Please keep pressing the modifier keys such as Ctrl,Alt, and Shift before pressing the last key of the shortcut key</source>
         <translation>无法使用快捷键&quot;%1&quot;, 请保持按压Ctrl、Alt、Shift等修饰键后，再按压快捷键的最后一个键</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="866"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="880"/>
         <source>Shortcut keys %1 are already used in %2,Please try again!</source>
         <translation>快捷键%1已用于%2，请再试一次！</translation>
     </message>
@@ -3863,6 +3896,37 @@ This is line 50 of the test text</source>
         <location filename="../plugins/keybinding/utils/shortcut-item.ui" line="73"/>
         <source>TextLabel</source>
         <translation></translation>
+    </message>
+</context>
+<context>
+    <name>SubItem1</name>
+    <message>
+        <location filename="../example/kiran-cpanel-demo/src/subitem/subitem1.ui" line="14"/>
+        <source>Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../example/kiran-cpanel-demo/src/subitem/subitem1.ui" line="20"/>
+        <source>弹窗</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../example/kiran-cpanel-demo/src/subitem/subitem1.ui" line="27"/>
+        <source>SubItem1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SubItem2</name>
+    <message>
+        <location filename="../example/kiran-cpanel-demo/src/subitem/subitem2.ui" line="14"/>
+        <source>Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../example/kiran-cpanel-demo/src/subitem/subitem2.ui" line="20"/>
+        <source>SubItem2</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
