@@ -16,9 +16,9 @@
 #define KEYBINDING_DEF_H
 
 #include <QMap>
+#include <QSharedPointer>
 #include <QString>
 #include <QStringList>
-#include <QSharedPointer>
 
 #define SHORTCUT_KIND_SOUND "Sound"
 #define SHORTCUT_KIND_WINDOW_MANAGE "窗口管理"
@@ -62,5 +62,5 @@ enum ShortcutType
     SHORTCUT_TYPE_CUSTOM
 };
 
-//static const QMap<QString,QString>
+// static const QMap<QString,QString>
 #endif  // KEYBINDING_DEF_HSSS
