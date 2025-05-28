@@ -15,7 +15,9 @@
 #ifndef CUSTOMLINEEDIT_H
 #define CUSTOMLINEEDIT_H
 
+#include <QHash>
 #include <QLineEdit>
+#include <QList>
 #include <QWidget>
 
 class CustomLineEdit : public QLineEdit
@@ -37,9 +39,9 @@ signals:
 
 private:
     void initUI();
-    bool m_flag = false;
 
 private:
+    bool m_flag = false;
 };
 
 #endif  // CUSTOMLINEEDIT_H

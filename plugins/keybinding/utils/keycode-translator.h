@@ -15,14 +15,14 @@
 #ifndef KIRAN_CONTROL_PANEL_KEYCODE_TRANSLATOR_H
 #define KIRAN_CONTROL_PANEL_KEYCODE_TRANSLATOR_H
 
-#include <QObject>
 #include <QKeyEvent>
+#include <QObject>
 
 class KeycodeTranslator : public QObject
 {
     Q_OBJECT
 public:
-    //TODO:该处的枚举值应和Qt::Key对应，不应直接赋值
+    // TODO:该处的枚举值应和Qt::Key对应，不应直接赋值
     enum Key
     {
         Escape = 0x01000000,
@@ -76,7 +76,7 @@ public:
         Any = Space,
         Exclam = 0x21,      //!
         QuoteDbl = 0x22,    //
-        NumberSign = 0x23,  //#
+        NumberSign = 0x23,  // #
         Dollar = 0x24,      //$
         Percent = 0x25,
         Ampersand = 0x26,  //&
@@ -142,7 +142,7 @@ public:
         Bar = 0x7c,         //|
         BraceRight = 0x7d,  //}
         AsciiTilde = 0x7e,  //~
-        //media
+        // media
         Audio_Lower_Volume = 0x01000070,
         Audio_Mute = 0x01000071,
         Audio_Raise_Volume = 0x01000072,
@@ -184,4 +184,4 @@ public:
     static QString readableKeyString2Backend(const QString& keyString);
 };
 
-#endif  //KIRAN_CONTROL_PANEL_KEYCODE_TRANSLATOR_H
+#endif  // KIRAN_CONTROL_PANEL_KEYCODE_TRANSLATOR_H

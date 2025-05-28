@@ -344,11 +344,11 @@ bool Shortcut::isConflict(QString &originName, QString newKeyCombination)
     return false;
 }
 
-// 判断是否都散修饰键
+// 判断是否都是修饰键
 bool Shortcut::isValidKeycode(QList<int> keycodes)
 {
     static QSet<int> modifierSets = {
-        Qt::Key_Shift, Qt::Key_Control, Qt::Key_Alt};
+        Qt::Key_Shift, Qt::Key_Control, Qt::Key_Alt, Qt::Key_Meta};
 
     bool pureModifier = true;
 
@@ -721,6 +721,8 @@ void Shortcut::handleSaveClicked()
     else
         newKeyCombination = KeycodeTranslator::readableKeyString2Backend(m_lEModifyKey->text());
 
+    KLOG_DEBUG(qLcKeybinding) << "Modify new keybind to backend: " << newKeyCombination;
+
     if (type == SHORTCUT_TYPE_SYSTEM)
     {
         QDBusPendingReply<> reply = m_keybindingInterface->ModifySystemShortcut(m_editUid, newKeyCombination);
@@ -779,6 +781,8 @@ void Shortcut::handleAppendClicked()
     // dbus ->AddCustomShortcut
     QString keyCombination = newKey.isEmpty() ? "disabled" : KeycodeTranslator::readableKeyString2Backend(newKey);
 
+    KLOG_DEBUG(qLcKeybinding) << "Add custom shortcut to backend:" << newName << keyCombination << newAction;
+
     QDBusPendingReply<QString> reply = m_keybindingInterface->AddCustomShortcut(newName, newAction, keyCombination);
     reply.waitForFinished();
     if (reply.isError() || !reply.isValid())
@@ -832,6 +836,20 @@ void Shortcut::handleInputKeycode(QList<int> keycodes)
 
     // 转化成字符串列表,用于显示
     QString keyStr = KeycodeTranslator::keycode2ReadableString(keycodes);
+    KLOG_DEBUG(qLcKeybinding) << "The input key code: " << keycodes << "Readable string: " << keyStr;
+
+    // 判断快捷键输入是否合法（排除都是修饰键的情况）
+    if (!isValidKeycode(keycodes))
+    {
+        KiranMessageBox::message(nullptr,
+                                 tr("Failed"),
+                                 QString(tr("Cannot use shortcut \"%1\","
+                                            "Shortcuts cannot be set to only modifier keys. "
+                                            "Please add a regular key, like A-Z, and so on."))
+                                     .arg(keyStr),
+                                 KiranMessageBox::Ok);
+        return;
+    }
 
     // 判断单个key是否在ignoreKey中
     if (keycodes.size() == 1)
@@ -850,10 +868,6 @@ void Shortcut::handleInputKeycode(QList<int> keycodes)
             return;
         }
     }
-
-    // 判断快捷键输入是否合法（排除都是修饰键的情况）
-    if (!isValidKeycode(keycodes))
-        return;
 
     QString keyCombination = KeycodeTranslator::readableKeyString2Backend(keyStr);
 
