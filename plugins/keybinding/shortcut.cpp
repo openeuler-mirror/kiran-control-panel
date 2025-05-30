@@ -839,6 +839,19 @@ void Shortcut::handleInputKeycode(QList<int> keycodes)
     QString keyStr = KeycodeTranslator::keycode2ReadableString(keycodes);
     KLOG_DEBUG(qLcKeybinding) << "The input key code: " << keycodes << "Readable string: " << keyStr;
 
+    // 判断快捷键中是否包含Super按键
+    if (keycodes.contains(Qt::Key_Super_L) ||  keycodes.contains(Qt::Key_Super_R) || keycodes.contains(Qt::Key_Meta))
+    {
+        KiranMessageBox::message(nullptr,
+                                 tr("Failed"),
+                                 QString(tr("Cannot use shortcut \"%1\","
+                                            "Super key is currently not supported for shortcut."
+                                            "Please try again."))
+                                     .arg(keyStr),
+                                 KiranMessageBox::Ok);
+        return;
+    }
+
     // 判断快捷键输入是否合法（排除都是修饰键的情况）
     if (!isValidKeycode(keycodes))
     {
@@ -852,19 +865,7 @@ void Shortcut::handleInputKeycode(QList<int> keycodes)
         return;
     }
 
-    // 判断快捷键中是否包含Super按键
-    if (keycodes.contains(Qt::Key_Super_L) || keycodes.contains(Qt::Key_Meta))
-    {
-        KiranMessageBox::message(nullptr,
-                                 tr("Failed"),
-                                 QString(tr("Cannot use shortcut \"%1\","
-                                            "Super key is currently not supported for shortcut."
-                                            "Please try again."))
-                                     .arg(keyStr),
-                                 KiranMessageBox::Ok);
-        return;
-    }
-
+    
     // 判断单个key是否在ignoreKey中
     if (keycodes.size() == 1)
     {
