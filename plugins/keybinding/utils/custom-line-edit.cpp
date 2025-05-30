@@ -87,7 +87,7 @@ void CustomLineEdit::keyReleaseEvent(QKeyEvent *event)
      * 2.先按下其他修饰键，再按下super键：qt会识别Qt::Key_Super_L为主键，修饰键为Qt::MetaModifier+其他修饰键
      * super作为主键的情况下，修饰键都会包含Qt::MetaModifier，为了防止后续转化为可读字串时出现两个Super，将Qt::MetaModifier去除
      */
-    if (event->key() == Qt::Key_Super_L)
+    if (event->key() == Qt::Key_Super_L || event->key() == Qt::Key_Super_R)
     {
         // 添加除Qt::MetaModifier之外的修饰键
         auto modifiersWithoutMeta = event->modifiers();
@@ -101,7 +101,7 @@ void CustomLineEdit::keyReleaseEvent(QKeyEvent *event)
         }
 
         // 添加主键
-        keycodes.append(Qt::Key_Super_L);
+        keycodes.append(event->key());
         emit inputKeyCodes(keycodes);
         return;
     }
