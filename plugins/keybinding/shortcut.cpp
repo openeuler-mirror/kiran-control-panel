@@ -39,7 +39,7 @@ using namespace Kiran;
 
 Shortcut::Shortcut(QWidget *parent)
     : QWidget(parent),
-    ui(new Ui::Shortcut)
+      ui(new Ui::Shortcut)
 {
     ui->setupUi(this);
     init();
@@ -120,7 +120,7 @@ void Shortcut::initUI()
 
     ui->lineEdit_custom_app->setTextMargins(25, 0, m_btnCustomApp->width(), 0);
     connect(m_btnCustomApp, &QToolButton::clicked, this, &Shortcut::openFileSys);
-    connect(ui->lineEdit_custom_app,&QLineEdit::textChanged,this,&Shortcut::handleCustomAppTextChanged);
+    connect(ui->lineEdit_custom_app, &QLineEdit::textChanged, this, &Shortcut::handleCustomAppTextChanged);
 
     QHBoxLayout *hLayoutModifyApp = new QHBoxLayout(ui->lineEdit_modify_app);
     m_btnModifyApp = new QToolButton;
@@ -345,11 +345,11 @@ bool Shortcut::isConflict(QString &originName, QString newKeyCombination)
     return false;
 }
 
-// 判断是否都散修饰键
+// 判断是否都是修饰键
 bool Shortcut::isValidKeycode(QList<int> keycodes)
 {
     static QSet<int> modifierSets = {
-        Qt::Key_Shift, Qt::Key_Control, Qt::Key_Alt};
+        Qt::Key_Shift, Qt::Key_Control, Qt::Key_Alt, Qt::Key_Meta};
 
     bool pureModifier = true;
 
@@ -404,8 +404,8 @@ void Shortcut::openFileSys()
     {
         KLOG_ERROR(qLcKeybinding) << "cant't get Exec key from " << fileName;
         KiranMessageBox::message(this, tr("Error"),
-                                    "Extracting the program to be executed from the application's desktop file failed",
-                                    KiranMessageBox::Ok);
+                                 "Extracting the program to be executed from the application's desktop file failed",
+                                 KiranMessageBox::Ok);
         return;
     }
 
@@ -415,13 +415,13 @@ void Shortcut::openFileSys()
     m_lastIconExec = cmd;
 
     QIcon appIcon = QIcon::fromTheme(icon);
-    if( appIcon.isNull() )
+    if (appIcon.isNull())
     {
         m_lastIcon = DEFAULT_APP_ICON;
         appIcon = QIcon::fromTheme(DEFAULT_APP_ICON);
     }
 
-    m_customAppIcon->setPixmap(appIcon.pixmap(QSize(APP_ICON_WIDTH,APP_ICON_WIDTH)));
+    m_customAppIcon->setPixmap(appIcon.pixmap(QSize(APP_ICON_WIDTH, APP_ICON_WIDTH)));
     lineEdit->setText(cmd);
 }
 
@@ -722,6 +722,8 @@ void Shortcut::handleSaveClicked()
     else
         newKeyCombination = KeycodeTranslator::readableKeyString2Backend(m_lEModifyKey->text());
 
+    KLOG_DEBUG(qLcKeybinding) << "Modify new keybind to backend: " << newKeyCombination;
+
     if (type == SHORTCUT_TYPE_SYSTEM)
     {
         QDBusPendingReply<> reply = m_keybindingInterface->ModifySystemShortcut(m_editUid, newKeyCombination);
@@ -780,6 +782,8 @@ void Shortcut::handleAppendClicked()
     // dbus ->AddCustomShortcut
     QString keyCombination = newKey.isEmpty() ? "disabled" : KeycodeTranslator::readableKeyString2Backend(newKey);
 
+    KLOG_DEBUG(qLcKeybinding) << "Add custom shortcut to backend:" << newName << keyCombination << newAction;
+
     QDBusPendingReply<QString> reply = m_keybindingInterface->AddCustomShortcut(newName, newAction, keyCombination);
     reply.waitForFinished();
     if (reply.isError() || !reply.isValid())
@@ -817,13 +821,13 @@ void Shortcut::handleResetClicked()
     }
 }
 
-void Shortcut::handleCustomAppTextChanged(const QString& text)
+void Shortcut::handleCustomAppTextChanged(const QString &text)
 {
     // 直接编辑自定义应用输入框，修改命令
     // 导致和desktop读取出来的不一致时清空图标
-    if( !text.isEmpty() && text != m_lastIconExec )
+    if (!text.isEmpty() && text != m_lastIconExec)
     {
-        m_customAppIcon->setPixmap(QIcon::fromTheme(DEFAULT_APP_ICON).pixmap(20,20));
+        m_customAppIcon->setPixmap(QIcon::fromTheme(DEFAULT_APP_ICON).pixmap(20, 20));
     }
 }
 
@@ -833,7 +837,35 @@ void Shortcut::handleInputKeycode(QList<int> keycodes)
 
     // 转化成字符串列表,用于显示
     QString keyStr = KeycodeTranslator::keycode2ReadableString(keycodes);
+    KLOG_DEBUG(qLcKeybinding) << "The input key code: " << keycodes << "Readable string: " << keyStr;
 
+    // 判断快捷键中是否包含Super按键
+    if (keycodes.contains(Qt::Key_Super_L) ||  keycodes.contains(Qt::Key_Super_R) || keycodes.contains(Qt::Key_Meta))
+    {
+        KiranMessageBox::message(nullptr,
+                                 tr("Failed"),
+                                 QString(tr("Cannot use shortcut \"%1\","
+                                            "Super key is currently not supported for shortcut."
+                                            "Please try again."))
+                                     .arg(keyStr),
+                                 KiranMessageBox::Ok);
+        return;
+    }
+
+    // 判断快捷键输入是否合法（排除都是修饰键的情况）
+    if (!isValidKeycode(keycodes))
+    {
+        KiranMessageBox::message(nullptr,
+                                 tr("Failed"),
+                                 QString(tr("Cannot use shortcut \"%1\","
+                                            "Shortcuts cannot be set to only modifier keys. "
+                                            "Please add a regular key, like A-Z, and so on."))
+                                     .arg(keyStr),
+                                 KiranMessageBox::Ok);
+        return;
+    }
+
+    
     // 判断单个key是否在ignoreKey中
     if (keycodes.size() == 1)
     {
@@ -844,17 +876,13 @@ void Shortcut::handleInputKeycode(QList<int> keycodes)
             KiranMessageBox::message(nullptr,
                                      tr("Failed"),
                                      QString(tr("Cannot use shortcut \"%1\","
-                                         "Please keep pressing the modifier keys such as Ctrl,"
-                                         "Alt, and Shift before pressing the last key of the shortcut key"))
+                                                "Please keep pressing the modifier keys such as Ctrl,"
+                                                "Alt, and Shift before pressing the last key of the shortcut key"))
                                          .arg(keyStr),
                                      KiranMessageBox::Ok);
             return;
         }
     }
-
-    // 判断快捷键输入是否合法（排除都是修饰键的情况）
-    if (!isValidKeycode(keycodes))
-        return;
 
     QString keyCombination = KeycodeTranslator::readableKeyString2Backend(keyStr);
 

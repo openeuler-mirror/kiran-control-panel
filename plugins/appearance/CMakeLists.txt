@@ -1,5 +1,9 @@
 set(TARGET_NAME kiran-cpanel-appearance)
 
+if (ENABLE_APPEARANCE_SCREENSAVER)
+    add_definitions(-DAPPEARANCE_SCREENSAVER)
+endif ()
+
 file(GLOB_RECURSE APPEARANCE_SRC
         ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/*.h
