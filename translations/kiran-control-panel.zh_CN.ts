@@ -6708,7 +6708,7 @@ This is line 50 of the test text</source>
     <message>
         <location filename="../plugins/appearance/pages/theme/wm/wm-theme-page.ui" line="35"/>
         <source>Window Themes Setting</source>
-        <translation type="unfinished"></translation>
+        <translation>窗口主题设置</translation>
     </message>
 </context>
 <context>
