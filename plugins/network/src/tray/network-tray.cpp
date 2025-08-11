@@ -436,6 +436,13 @@ void NetworkTray::updateTrayIcon()
         }
     }
 
+    if( primaryConn.isNull() )
+    {
+        KLOG_INFO(qLcNetwork) << "no primary or active connection found";
+        setTrayIcon(DISCONNECTED);
+        return;
+    }
+
     if (primaryConn->type() == ConnectionSettings::Wireless)
     {
         state = WIRELESS_CONNECTED_BUT_NOT_ACCESS_INTERNET;
