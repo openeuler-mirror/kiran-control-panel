@@ -26,7 +26,7 @@
 using namespace Kiran;
 
 ChangeHostNameWidget::ChangeHostNameWidget(QWidget* parent)
-    : KiranTitlebarWindow(parent),
+    : KiranTitlebarWindow(parent,Qt::Dialog),
       ui(new Ui::ChangeHostNameWidget)
 {
     ui->setupUi(getWindowContentWidget());
