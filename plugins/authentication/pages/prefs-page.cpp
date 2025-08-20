@@ -21,12 +21,27 @@
 #include <QLabel>
 #include <QPushButton>
 #include <QStackedWidget>
+#include <QCoreApplication>
 
 enum PrefsPageEnum
 {
     PREFS_PAGE_AUTH_TYPE,
     PREFS_PAGE_AUTH_APPLICATION
 };
+
+QString getAuthTypeDisplayName(KADAuthType authType)
+{
+    static QMap<KADAuthType, QString> authAppMap = {
+        {KAD_AUTH_TYPE_PASSWORD, QT_TRANSLATE_NOOP("KADAuthType","password")},
+        {KAD_AUTH_TYPE_FINGERPRINT, QT_TRANSLATE_NOOP("KADAuthType","fingerprint")},
+        {KAD_AUTH_TYPE_FACE, QT_TRANSLATE_NOOP("KADAuthType","face")},
+        {KAD_AUTH_TYPE_UKEY, QT_TRANSLATE_NOOP("KADAuthType","ukey")},
+        {KAD_AUTH_TYPE_FINGERVEIN, QT_TRANSLATE_NOOP("KADAuthType","fingervein")},
+        {KAD_AUTH_TYPE_IRIS, QT_TRANSLATE_NOOP("KADAuthType","iris")}
+    };
+    QString key = authAppMap.value(authType, QString());
+    return QCoreApplication::translate("KADAuthType", key.toUtf8().constData());
+}
 
 PrefsPage::PrefsPage(KiranAuthDBusProxy* proxy, QWidget* parent)
     : QWidget(parent),
@@ -71,24 +86,21 @@ QWidget* PrefsPage::initAuthTypePage()
 
     authTypeLayout->addStretch();
 
-    std::list<std::tuple<KADAuthType, QString>> authTypes = {
-        std::make_tuple(KAD_AUTH_TYPE_FINGERPRINT, tr("fingerprint")),
-        std::make_tuple(KAD_AUTH_TYPE_FINGERVEIN, tr("fingervein")),
-        std::make_tuple(KAD_AUTH_TYPE_UKEY, tr("ukey")),
-        std::make_tuple(KAD_AUTH_TYPE_IRIS, tr("iris")),
-        std::make_tuple(KAD_AUTH_TYPE_FACE, tr("face"))};
-
     // fill auth types
-    for (auto iter : authTypes)
+    auto authTypes = {
+        KAD_AUTH_TYPE_FINGERPRINT,KAD_AUTH_TYPE_FINGERVEIN,
+        KAD_AUTH_TYPE_UKEY,KAD_AUTH_TYPE_IRIS,
+        KAD_AUTH_TYPE_FACE
+    };
+    for (auto authType : authTypes)
     {
-        auto authType = std::get<0>(iter);
         auto settingsItem = new AuthSettingItem(this);
         settingsItem->setSwitcherVisible(true);
         settingsItem->setUserData(authType);
         settingsItem->setSwitcherVisible(true);
         settingsItem->setClickable(true);
         settingsItem->setRightButtonVisible(true, ":/kcp-authentication/images/arrow.svg");
-        settingsItem->setText(std::get<1>(iter));
+        settingsItem->setText(getAuthTypeDisplayName(authType));
         container->addAuthSettingItem(settingsItem);
 
         auto authTypeClickedSlot = std::bind(&PrefsPage::updateCurrentAuthType, this, authType);
@@ -175,7 +187,7 @@ void PrefsPage::refreshAuthTypeEnabled()
 
 void PrefsPage::refreshAuthApplicationEanbled()
 {
-    QString authName = m_currentAuthType == KAD_AUTH_TYPE_FINGERVEIN ? tr("fingervein") : tr("fingerprint");
+    QString authName = getAuthTypeDisplayName(m_currentAuthType);
     QString desc = QString(tr("Apply the %1 authentication to the following applications").arg(authName));
     m_labelAuthApp->setText(desc);
 
