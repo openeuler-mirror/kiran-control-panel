@@ -3113,6 +3113,39 @@
     </message>
 </context>
 <context>
+    <name>KADAuthType</name>
+    <message>
+        <location filename="../plugins/authentication/pages/prefs-page.cpp" line="35"/>
+        <source>password</source>
+        <translation>密码</translation>
+    </message>
+    <message>
+        <location filename="../plugins/authentication/pages/prefs-page.cpp" line="36"/>
+        <source>fingerprint</source>
+        <translation>指纹</translation>
+    </message>
+    <message>
+        <location filename="../plugins/authentication/pages/prefs-page.cpp" line="37"/>
+        <source>face</source>
+        <translation>人脸</translation>
+    </message>
+    <message>
+        <location filename="../plugins/authentication/pages/prefs-page.cpp" line="38"/>
+        <source>ukey</source>
+        <translation>UKey</translation>
+    </message>
+    <message>
+        <location filename="../plugins/authentication/pages/prefs-page.cpp" line="39"/>
+        <source>fingervein</source>
+        <translation>指静脉</translation>
+    </message>
+    <message>
+        <location filename="../plugins/authentication/pages/prefs-page.cpp" line="40"/>
+        <source>iris</source>
+        <translation>虹膜</translation>
+    </message>
+</context>
+<context>
     <name>KcpInterface</name>
     <message>
         <source>Warning</source>
@@ -4113,44 +4146,44 @@ This is line 50 of the test text</source>
     </message>
     <message>
         <location filename="../plugins/network/src/tray/network-tray.cpp" line="252"/>
-        <location filename="../plugins/network/src/tray/network-tray.cpp" line="631"/>
+        <location filename="../plugins/network/src/tray/network-tray.cpp" line="638"/>
         <source>Network unavailable</source>
         <translation>网络不可用</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/tray/network-tray.cpp" line="496"/>
-        <location filename="../plugins/network/src/tray/network-tray.cpp" line="500"/>
+        <location filename="../plugins/network/src/tray/network-tray.cpp" line="503"/>
+        <location filename="../plugins/network/src/tray/network-tray.cpp" line="507"/>
         <source>The network is connected, but you cannot access the Internet</source>
         <translation>网络已连接，但不能访问互联网</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/tray/network-tray.cpp" line="502"/>
+        <location filename="../plugins/network/src/tray/network-tray.cpp" line="509"/>
         <source>Network not connected</source>
         <translation>网络已断开</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/tray/network-tray.cpp" line="595"/>
+        <location filename="../plugins/network/src/tray/network-tray.cpp" line="602"/>
         <source>Wired network card: %1 available</source>
         <translation>有线网卡: %1 可用</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/tray/network-tray.cpp" line="600"/>
+        <location filename="../plugins/network/src/tray/network-tray.cpp" line="607"/>
         <source>Wireless network card: %1 available</source>
         <translation>无线网卡: %1 可用</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/tray/network-tray.cpp" line="637"/>
+        <location filename="../plugins/network/src/tray/network-tray.cpp" line="644"/>
         <source>Wired network card: %1 unavailable</source>
         <translation>有线网卡: %1 不可用</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/tray/network-tray.cpp" line="642"/>
+        <location filename="../plugins/network/src/tray/network-tray.cpp" line="649"/>
         <source>Wireless network card: %1 unavailable</source>
         <translation>无线网卡: %1 不可用</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/tray/network-tray.cpp" line="494"/>
-        <location filename="../plugins/network/src/tray/network-tray.cpp" line="498"/>
+        <location filename="../plugins/network/src/tray/network-tray.cpp" line="501"/>
+        <location filename="../plugins/network/src/tray/network-tray.cpp" line="505"/>
         <source>Network connected</source>
         <translation>网络已连接</translation>
     </message>
@@ -4367,24 +4400,8 @@ This is line 50 of the test text</source>
 <context>
     <name>Popup</name>
     <message>
-        <location filename="../example/kiran-cpanel-demo/src/subitem/popup.cpp" line="23"/>
         <source>cancel</source>
-        <translation type="unfinished">取消</translation>
-    </message>
-    <message>
-        <location filename="../example/kiran-cpanel-demo/src/subitem/popup.ui" line="14"/>
-        <source>Dialog</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../example/kiran-cpanel-demo/src/subitem/popup.ui" line="26"/>
-        <source>Ok</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../example/kiran-cpanel-demo/src/subitem/popup.ui" line="39"/>
-        <source>TextLabel</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">取消</translation>
     </message>
 </context>
 <context>
@@ -4484,66 +4501,59 @@ This is line 50 of the test text</source>
 <context>
     <name>PrefsPage</name>
     <message>
-        <location filename="../plugins/authentication/pages/prefs-page.cpp" line="64"/>
+        <location filename="../plugins/authentication/pages/prefs-page.cpp" line="79"/>
         <source>Authentication type Enabled status</source>
         <translation>认证类型启用状态</translation>
     </message>
     <message>
-        <location filename="../plugins/authentication/pages/prefs-page.cpp" line="75"/>
-        <location filename="../plugins/authentication/pages/prefs-page.cpp" line="178"/>
         <source>fingerprint</source>
-        <translation>指纹</translation>
+        <translation type="vanished">指纹</translation>
     </message>
     <message>
-        <location filename="../plugins/authentication/pages/prefs-page.cpp" line="76"/>
-        <location filename="../plugins/authentication/pages/prefs-page.cpp" line="178"/>
         <source>fingervein</source>
-        <translation>指静脉</translation>
+        <translation type="vanished">指静脉</translation>
     </message>
     <message>
-        <location filename="../plugins/authentication/pages/prefs-page.cpp" line="115"/>
+        <location filename="../plugins/authentication/pages/prefs-page.cpp" line="127"/>
         <source>...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/authentication/pages/prefs-page.cpp" line="130"/>
+        <location filename="../plugins/authentication/pages/prefs-page.cpp" line="142"/>
         <source>Return</source>
         <translation>返回</translation>
     </message>
     <message>
-        <location filename="../plugins/authentication/pages/prefs-page.cpp" line="138"/>
+        <location filename="../plugins/authentication/pages/prefs-page.cpp" line="150"/>
         <source>login</source>
         <translation>登录</translation>
     </message>
     <message>
-        <location filename="../plugins/authentication/pages/prefs-page.cpp" line="139"/>
+        <location filename="../plugins/authentication/pages/prefs-page.cpp" line="151"/>
         <source>unlock</source>
         <translation>解锁</translation>
     </message>
     <message>
-        <location filename="../plugins/authentication/pages/prefs-page.cpp" line="140"/>
+        <location filename="../plugins/authentication/pages/prefs-page.cpp" line="152"/>
         <source>empowerment</source>
         <translation>授权</translation>
     </message>
     <message>
-        <location filename="../plugins/authentication/pages/prefs-page.cpp" line="179"/>
+        <location filename="../plugins/authentication/pages/prefs-page.cpp" line="191"/>
         <source>Apply the %1 authentication to the following applications</source>
         <translation>启用%1认证在以下的认证应用中</translation>
     </message>
     <message>
-        <location filename="../plugins/authentication/pages/prefs-page.cpp" line="77"/>
         <source>ukey</source>
-        <translation>UKey</translation>
+        <translation type="vanished">UKey</translation>
     </message>
     <message>
-        <location filename="../plugins/authentication/pages/prefs-page.cpp" line="78"/>
         <source>iris</source>
-        <translation>虹膜</translation>
+        <translation type="vanished">虹膜</translation>
     </message>
     <message>
-        <location filename="../plugins/authentication/pages/prefs-page.cpp" line="79"/>
         <source>face</source>
-        <translation>人脸</translation>
+        <translation type="vanished">人脸</translation>
     </message>
 </context>
 <context>
@@ -5019,8 +5029,8 @@ This is line 50 of the test text</source>
         <location filename="../plugins/keybinding/shortcut.cpp" line="816"/>
         <location filename="../plugins/keybinding/shortcut.cpp" line="846"/>
         <location filename="../plugins/keybinding/shortcut.cpp" line="859"/>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="876"/>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="893"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="877"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="894"/>
         <source>Failed</source>
         <translation>失败</translation>
     </message>
@@ -5072,17 +5082,17 @@ This is line 50 of the test text</source>
         <translation>重置快捷键失败，错误：</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="847"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="860"/>
         <source>Cannot use shortcut &quot;%1&quot;,Shortcuts cannot be set to only modifier keys. Please add a regular key, like A-Z, and so on.</source>
         <translation>无法使用快捷键&quot;%1&quot;, 快捷键不能仅包含修饰键。请添加一个主键，如A-Z等。</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="860"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="847"/>
         <source>Cannot use shortcut &quot;%1&quot;,Super key is currently not supported for shortcut.Please try again.</source>
         <translation type="unfinished">无法使用快捷键&quot;%1&quot;，暂不支持设置包含Super键的快捷键。请重新输入。</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="877"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="878"/>
         <source>Cannot use shortcut &quot;%1&quot;,Please keep pressing the modifier keys such as Ctrl,Alt, and Shift before pressing the last key of the shortcut key</source>
         <translation>无法使用快捷键&quot;%1&quot;, 请保持按压Ctrl、Alt、Shift等修饰键后，再按压快捷键的最后一个键</translation>
     </message>
@@ -5091,7 +5101,7 @@ This is line 50 of the test text</source>
         <translation type="vanished">无法使用快捷键&quot;%1&quot;,因为使用此键将无法输入，请同时使用Ctrl，Alt，Shift再试一次。</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="894"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="895"/>
         <source>Shortcut keys %1 are already used in %2,Please try again!</source>
         <translation>快捷键%1已用于%2，请再试一次！</translation>
     </message>
@@ -5181,37 +5191,6 @@ This is line 50 of the test text</source>
         <location filename="../plugins/network/src/status-notification.cpp" line="91"/>
         <source>The connection has been deleted &quot;%1&quot;</source>
         <translation>已删除连接 &quot;%1&quot;</translation>
-    </message>
-</context>
-<context>
-    <name>SubItem1</name>
-    <message>
-        <location filename="../example/kiran-cpanel-demo/src/subitem/subitem1.ui" line="14"/>
-        <source>Dialog</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../example/kiran-cpanel-demo/src/subitem/subitem1.ui" line="20"/>
-        <source>弹窗</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../example/kiran-cpanel-demo/src/subitem/subitem1.ui" line="27"/>
-        <source>SubItem1</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>SubItem2</name>
-    <message>
-        <location filename="../example/kiran-cpanel-demo/src/subitem/subitem2.ui" line="14"/>
-        <source>Dialog</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../example/kiran-cpanel-demo/src/subitem/subitem2.ui" line="20"/>
-        <source>SubItem2</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
