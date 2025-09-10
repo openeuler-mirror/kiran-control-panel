@@ -777,6 +777,13 @@ void NetworkTray::reloadWiredTrayPage()
     m_wiredDeviceList = NetworkUtils::getAvailableDeviceList(Device::Ethernet);
     if (m_wiredDeviceList.count() != 0)
     {
+        if (m_unavailableWidget)
+        {
+            m_verticalLayout->removeWidget(m_unavailableWidget);
+            m_unavailableWidget->deleteLater();
+            m_unavailableWidget = nullptr;
+        }
+
         m_wiredTrayPage = new TrayPage(m_wiredDeviceList, this);
         m_verticalLayout->insertWidget(0, m_wiredTrayPage);
         m_verticalLayout->setMargin(0);
@@ -799,6 +806,13 @@ void NetworkTray::reloadWirelessTrayPage()
     m_wirelessDeviceList = NetworkUtils::getAvailableDeviceList(Device::Wifi);
     if (m_wirelessDeviceList.count() != 0)
     {
+        if (m_unavailableWidget)
+        {
+            m_verticalLayout->removeWidget(m_unavailableWidget);
+            m_unavailableWidget->deleteLater();
+            m_unavailableWidget = nullptr;
+        }
+
         m_wirelessTrayPage = new TrayPage(m_wirelessDeviceList, this);
         m_verticalLayout->insertWidget(-1, m_wirelessTrayPage);
         m_verticalLayout->setMargin(0);
