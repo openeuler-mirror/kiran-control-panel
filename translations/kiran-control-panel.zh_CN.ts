@@ -4190,12 +4190,17 @@ This is line 50 of the test text</source>
     <message>
         <location filename="../plugins/authentication/pages/ukey-page.cpp" line="95"/>
         <source>UKey Enroll</source>
-        <translation type="unfinished">UKey录入</translation>
+        <translation>UKey录入</translation>
     </message>
     <message>
         <location filename="../plugins/authentication/pages/ukey-page.cpp" line="96"/>
         <source>Please enter the ukey pin code</source>
-        <translation type="unfinished">请输入UKey PIN码</translation>
+        <translation>请输入UKey PIN码</translation>
+    </message>
+    <message>
+        <location filename="../plugins/authentication/pages/ukey-page.cpp" line="125"/>
+        <source>Failed to record UKey device features %1</source>
+        <translation>录入UKey设备特征失败: %1</translation>
     </message>
 </context>
 <context>
