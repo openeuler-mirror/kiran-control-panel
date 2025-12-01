@@ -1,5 +1,3 @@
-cmake_minimum_required(VERSION 3.5)
-
 set(TARGET_NAME kiran-cpanel-test)
 
 find_package(PkgConfig REQUIRED)
