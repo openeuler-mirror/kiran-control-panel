@@ -1,5 +1,3 @@
-cmake_minimum_required(VERSION 3.2)
-
 set(TARGET_NAME kiran-cpanel-power)
 
 pkg_search_module(UPOWER_GLIB REQUIRED upower-glib)
