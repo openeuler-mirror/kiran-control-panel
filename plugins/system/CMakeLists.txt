@@ -12,6 +12,10 @@ pkg_search_module(KLOG_QT5 REQUIRED klog-qt5)
 pkg_search_module(KIRAN_CC_DAEMON REQUIRED kiran-cc-daemon)
 pkg_search_module(KIRAN_STYLE_HELPER REQUIRED kiran-style-helper)
 
+if (ENABLE_SYSTEM_PRIVACY_POLICY)
+    add_definitions(-DSYSTEM_PRIVACY_POLICY)
+endif ()
+
 file(GLOB_RECURSE SYSTEM_SRC ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp
                              ${CMAKE_CURRENT_SOURCE_DIR}/*.h
                              ${CMAKE_CURRENT_SOURCE_DIR}/*.ui)
