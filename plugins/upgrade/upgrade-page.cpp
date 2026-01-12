@@ -239,7 +239,7 @@ void UpgradePage::setReminderInterval(int index)
         ui->cb_reminder->setCurrentIndex(ui->cb_reminder->findData(reminderInterval));
         return;
     }
-    KLOG_INFO(qLcUpgrade) << "Set reminder interval to " << reminderInterval << " successfully";
+    KLOG_INFO(qLcUpgrade) << "Set reminder interval successfully";
 }
 
 QStringList UpgradePage::getSelectedPkgIDs()
@@ -337,7 +337,17 @@ void UpgradePage::handleScanCompleted(bool success, const QString &errorMessage)
         setUpgradeStatus(UPGRADE_STATUS_SCAN_SUCCESS_NO_UPDATE);
         return;
     }
-    KLOG_INFO(qLcUpgrade) << "Scan completed, get upgrade pkgs info: " << upgradePkgsInfo;
+    KLOG_INFO(qLcUpgrade) << "Scan successfully";
+    for (const auto &pkg : upgradePkgsInfo)
+    {
+        KLOG_INFO(qLcUpgrade) << "Upgrade available pkg: "
+                              << pkg.id << ", "
+                              << pkg.name << ", "
+                              << pkg.currentVersion << ", "
+                              << pkg.latestVersion << ", "
+                              << pkg.kinds << ", "
+                              << pkg.size;
+    }
 
     //更新界面
     setUpgradeStatus(UPGRADE_STATUS_SCAN_SUCCESS_HAS_UPDATE);
@@ -352,11 +362,12 @@ void UpgradePage::handleSolveDepsCompleted(bool success, const QString &pkgDepsI
     if (!errorMessage.isEmpty())
     {
         setUpgradeStatus(UPGRADE_STATUS_SOLVING_DEPS_FAILED);
-        ui->label_error->setText(errorMessage);
         KLOG_WARNING(qLcUpgrade) << "Solve deps failed: " << errorMessage;
+        KiranMessageBox::message(nullptr,
+                                 tr("Error"), errorMessage,
+                                 KiranMessageBox::Ok);
         return;
     }
-    ui->label_error->clear();
 
     //更新界面
     setUpgradeStatus(UPGRADE_STATUS_SOLVING_DEPS_SUCCESS);
@@ -413,6 +424,7 @@ void UpgradePage::upgrade()
     QString errorMessage;
     if (!m_upgradeInterface->upgrade(m_selectedPkgIDs, errorMessage))
     {
+        ui->label_error->setText(errorMessage);
         //回退到扫描成功且有更新包状态
         setUpgradeStatus(UPGRADE_STATUS_SCAN_SUCCESS_HAS_UPDATE);
         return;

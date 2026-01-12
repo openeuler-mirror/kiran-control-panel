@@ -75,6 +75,7 @@ bool UpgradeInterface::setReminderInterval(int interval, QString& errorMessage)
         errorMessage = reply.error().message();
         return false;
     }
+    KLOG_INFO(qLcUpgrade) << "Set reminder interval to " << interval;
     return true;
 }
 
@@ -88,6 +89,7 @@ bool UpgradeInterface::scan(QString& errorMessage)
         errorMessage = reply.error().message();
         return false;
     }
+    KLOG_INFO(qLcUpgrade) << "Begin to scan system upgrade pkgs";
     return true;
 }
 
@@ -145,6 +147,7 @@ bool UpgradeInterface::solveDeps(const QStringList& pkgIDs, QString& errorMessag
         errorMessage = reply.error().message();
         return false;
     }
+    KLOG_INFO(qLcUpgrade) << "Begin to solve deps pkgs:" << pkgIDs;
     return true;
 }
 
@@ -158,6 +161,7 @@ bool UpgradeInterface::upgrade(const QStringList& pkgIDs, QString& errorMessage)
         errorMessage = reply.error().message();
         return false;
     }
+    KLOG_INFO(qLcUpgrade) << "Begin to upgrade pkgs:" << pkgIDs;
     return true;
 }
 
