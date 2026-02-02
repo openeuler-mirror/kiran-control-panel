@@ -2,6 +2,7 @@ set(TARGET_NAME kiran-cpanel-audio)
 
 file(GLOB_RECURSE AUDIO_TRANSLATION_SRC ./*.cpp ./*.h ./*.ui)
 
+file(GLOB_RECURSE PROJECT_COMMON_SRC ${PROJECT_SOURCE_DIR}/common/*.cpp ${PROJECT_SOURCE_DIR}/common/*.h)
 file(GLOB_RECURSE COMMON_SRC "src/audio-node.h" "src/volume-slider.cpp" "src/volume-slider.h")
 file(GLOB_RECURSE DBUS_SRC "src/dbus/*.cpp" "src/dbus/*.h")
 file(GLOB_RECURSE PLUGIN_SRC "src/plugin/*.cpp" "src/plugin/*.h" "src/plugin/*.ui")
@@ -9,6 +10,7 @@ file(GLOB_RECURSE SYSTEM_TRAY_SRC "src/system-tray/*.cpp" "src/system-tray/*.h" 
 file(GLOB_RECURSE QRC "resources/*.qrc")
 
 add_library(${TARGET_NAME} SHARED
+        ${PROJECT_COMMON_SRC}
         ${COMMON_SRC}
         ${DBUS_SRC}
         ${PLUGIN_SRC}
