@@ -30,6 +30,7 @@ file(GLOB_RECURSE POWER_SRC
         ${CMAKE_CURRENT_SOURCE_DIR}/*.ui)
 
 add_library(${TARGET_NAME} SHARED
+        ${COMMON_SRC}
         ${POWER_SRC}
         ${POWER_PLUGIN_DBUS_SRC_LIST})
 
