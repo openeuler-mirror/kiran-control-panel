@@ -141,6 +141,9 @@ bool SystemInformation::initUI()
         frame->setDrawBroder(false);
     }
 
+    // #126107 商业版本不能以开源许可证声明，不再显示本版协议
+    ui->widget_version_license->hide();
+
     return true;
 }
 
@@ -257,7 +260,7 @@ bool SystemInformation::getLicenseDesc(QString& licenseStatus)
         }
     }
 
-    licenseStatus = QString("<font color=%1>%2</font>").arg(expired?"#ff3838":"#5ab940").arg(statusDesc);
+    licenseStatus = QString("<font color=%1>%2</font>").arg(expired ? "#ff3838" : "#5ab940").arg(statusDesc);
     return true;
 }
 
