@@ -854,53 +854,58 @@
 <context>
     <name>ConnectionItemWidget</name>
     <message>
-        <location filename="../plugins/network/src/plugin/connection-itemwidget.cpp" line="83"/>
+        <location filename="../plugins/network/src/plugin/connection-itemwidget.cpp" line="85"/>
+        <source>advanced settings</source>
+        <translation>高级设置</translation>
+    </message>
+    <message>
+        <location filename="../plugins/network/src/plugin/connection-itemwidget.cpp" line="87"/>
         <source>disconnect</source>
         <translation>断开</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/plugin/connection-itemwidget.cpp" line="124"/>
+        <location filename="../plugins/network/src/plugin/connection-itemwidget.cpp" line="128"/>
         <source>ignore</source>
         <translation>忽略</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/plugin/connection-itemwidget.cpp" line="130"/>
+        <location filename="../plugins/network/src/plugin/connection-itemwidget.cpp" line="134"/>
         <source>remove</source>
         <translation>移除</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/plugin/connection-itemwidget.cpp" line="296"/>
+        <location filename="../plugins/network/src/plugin/connection-itemwidget.cpp" line="300"/>
         <source>The current device:%1 is not available</source>
         <translation>当前设备：%1 不可用</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/plugin/connection-itemwidget.cpp" line="312"/>
+        <location filename="../plugins/network/src/plugin/connection-itemwidget.cpp" line="316"/>
         <source>The carrier is pulled out</source>
         <translation>网线被拔出</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/plugin/connection-itemwidget.cpp" line="404"/>
+        <location filename="../plugins/network/src/plugin/connection-itemwidget.cpp" line="429"/>
         <source>Are you sure you want to delete the connection %1</source>
         <translation>您是否确定要删除连接 &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/plugin/connection-itemwidget.cpp" line="405"/>
+        <location filename="../plugins/network/src/plugin/connection-itemwidget.cpp" line="430"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/plugin/connection-itemwidget.cpp" line="462"/>
-        <location filename="../plugins/network/src/plugin/connection-itemwidget.cpp" line="475"/>
+        <location filename="../plugins/network/src/plugin/connection-itemwidget.cpp" line="487"/>
+        <location filename="../plugins/network/src/plugin/connection-itemwidget.cpp" line="500"/>
         <source>Tips</source>
         <translation>提示</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/plugin/connection-itemwidget.cpp" line="463"/>
+        <location filename="../plugins/network/src/plugin/connection-itemwidget.cpp" line="488"/>
         <source>Password required to connect to %1.</source>
         <translation>连接网络 &quot;%1&quot; 需要密码</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/plugin/connection-itemwidget.cpp" line="476"/>
+        <location filename="../plugins/network/src/plugin/connection-itemwidget.cpp" line="501"/>
         <source>Please input a network name</source>
         <translation>请输入网络名称</translation>
     </message>
@@ -1650,12 +1655,12 @@
         <translation>保存当前配置(K)</translation>
     </message>
     <message>
-        <location filename="../plugins/display/src/display-page.cpp" line="371"/>
+        <location filename="../plugins/display/src/display-page.cpp" line="372"/>
         <source>Restore previous configuration(R)</source>
         <translation>恢复之前的配置(R)</translation>
     </message>
     <message>
-        <location filename="../plugins/display/src/display-page.cpp" line="379"/>
+        <location filename="../plugins/display/src/display-page.cpp" line="381"/>
         <source>The display will resume the previous configuration in %1 seconds</source>
         <translation>显示将会在 %1 秒后恢复之前的配置</translation>
     </message>
@@ -2851,12 +2856,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/plugin/setting-widget/ipv4-widget.cpp" line="38"/>
+        <location filename="../plugins/network/src/plugin/setting-widget/ipv4-widget.cpp" line="39"/>
         <source>Auto</source>
         <translation>自动</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/plugin/setting-widget/ipv4-widget.cpp" line="39"/>
+        <location filename="../plugins/network/src/plugin/setting-widget/ipv4-widget.cpp" line="40"/>
         <source>Manual</source>
         <translation>手动</translation>
     </message>
@@ -2865,47 +2870,47 @@
         <translation type="vanished">必填</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/plugin/setting-widget/ipv4-widget.cpp" line="41"/>
+        <location filename="../plugins/network/src/plugin/setting-widget/ipv4-widget.cpp" line="42"/>
         <source>Required,separated multiple entries by semicolon</source>
         <translation>必填，请用分号分隔多个条目</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/plugin/setting-widget/ipv4-widget.cpp" line="42"/>
+        <location filename="../plugins/network/src/plugin/setting-widget/ipv4-widget.cpp" line="43"/>
         <source>Required,separate multiple entries by semicolon</source>
         <translation>必填，请用分号分隔多个条目</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/plugin/setting-widget/ipv4-widget.cpp" line="43"/>
+        <location filename="../plugins/network/src/plugin/setting-widget/ipv4-widget.cpp" line="44"/>
         <source>Please separate multiple DNS entries by semicolon</source>
         <translation>请用分号分隔多个DNS</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/plugin/setting-widget/ipv4-widget.cpp" line="267"/>
+        <location filename="../plugins/network/src/plugin/setting-widget/ipv4-widget.cpp" line="278"/>
         <source>Ipv4 DNS invalid</source>
         <translation>无效的Ipv4 DNS</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/plugin/setting-widget/ipv4-widget.cpp" line="288"/>
+        <location filename="../plugins/network/src/plugin/setting-widget/ipv4-widget.cpp" line="299"/>
         <source>Ipv4 address can not be empty</source>
         <translation>Ipv4地址不能为空</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/plugin/setting-widget/ipv4-widget.cpp" line="304"/>
+        <location filename="../plugins/network/src/plugin/setting-widget/ipv4-widget.cpp" line="315"/>
         <source>Ipv4 address is invalid</source>
         <translation>无效的Ipv4地址</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/plugin/setting-widget/ipv4-widget.cpp" line="330"/>
+        <location filename="../plugins/network/src/plugin/setting-widget/ipv4-widget.cpp" line="341"/>
         <source>NetMask is invalid</source>
         <translation>无效的子网掩码</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/plugin/setting-widget/ipv4-widget.cpp" line="342"/>
+        <location filename="../plugins/network/src/plugin/setting-widget/ipv4-widget.cpp" line="353"/>
         <source>The number of IPs and masks cannot correspond</source>
         <translation>ipv4地址和子网掩码数量不等，请确认</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/plugin/setting-widget/ipv4-widget.cpp" line="350"/>
+        <location filename="../plugins/network/src/plugin/setting-widget/ipv4-widget.cpp" line="361"/>
         <source>The entries of IPs and masks cannot exceed 10</source>
         <translation>IP和掩码的条目不能超过10个</translation>
     </message>
@@ -2914,7 +2919,7 @@
         <translation type="vanished">无效的Ipv4地址</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/plugin/setting-widget/ipv4-widget.cpp" line="316"/>
+        <location filename="../plugins/network/src/plugin/setting-widget/ipv4-widget.cpp" line="327"/>
         <source>NetMask can not be empty</source>
         <translation>子网掩码不能为空</translation>
     </message>
@@ -2923,7 +2928,7 @@
         <translation type="vanished">无效的子网掩码</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/plugin/setting-widget/ipv4-widget.cpp" line="360"/>
+        <location filename="../plugins/network/src/plugin/setting-widget/ipv4-widget.cpp" line="371"/>
         <source>Ipv4 Gateway invalid</source>
         <translation>无效的Ipv4网关</translation>
     </message>
@@ -3635,42 +3640,42 @@ p, li { white-space: pre-wrap; }
         <translation>关闭</translation>
     </message>
     <message>
-        <location filename="../plugins/system/pages/system-information/license-agreement.cpp" line="88"/>
+        <location filename="../plugins/system/pages/system-information/license-agreement.cpp" line="187"/>
         <source>Save</source>
         <translation>保存</translation>
     </message>
     <message>
-        <location filename="../plugins/system/pages/system-information/license-agreement.cpp" line="90"/>
+        <location filename="../plugins/system/pages/system-information/license-agreement.cpp" line="189"/>
         <source>PDF(*.pdf)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/system/pages/system-information/license-agreement.cpp" line="99"/>
+        <location filename="../plugins/system/pages/system-information/license-agreement.cpp" line="198"/>
         <source>Export License</source>
         <translation>导出协议</translation>
     </message>
     <message>
-        <location filename="../plugins/system/pages/system-information/license-agreement.cpp" line="100"/>
+        <location filename="../plugins/system/pages/system-information/license-agreement.cpp" line="199"/>
         <source>Export License failed!</source>
         <translation>导出协议失败!</translation>
     </message>
     <message>
-        <location filename="../plugins/system/pages/system-information/license-agreement.cpp" line="142"/>
+        <location filename="../plugins/system/pages/system-information/license-agreement.cpp" line="241"/>
         <source>User End License Agreement</source>
         <translation>最终用户许可协议</translation>
     </message>
     <message>
-        <location filename="../plugins/system/pages/system-information/license-agreement.cpp" line="161"/>
-        <location filename="../plugins/system/pages/system-information/license-agreement.cpp" line="174"/>
-        <location filename="../plugins/system/pages/system-information/license-agreement.cpp" line="235"/>
-        <location filename="../plugins/system/pages/system-information/license-agreement.cpp" line="243"/>
-        <location filename="../plugins/system/pages/system-information/license-agreement.cpp" line="279"/>
-        <location filename="../plugins/system/pages/system-information/license-agreement.cpp" line="286"/>
+        <location filename="../plugins/system/pages/system-information/license-agreement.cpp" line="247"/>
+        <location filename="../plugins/system/pages/system-information/license-agreement.cpp" line="256"/>
+        <location filename="../plugins/system/pages/system-information/license-agreement.cpp" line="316"/>
+        <location filename="../plugins/system/pages/system-information/license-agreement.cpp" line="324"/>
+        <location filename="../plugins/system/pages/system-information/license-agreement.cpp" line="359"/>
+        <location filename="../plugins/system/pages/system-information/license-agreement.cpp" line="369"/>
         <source>None</source>
         <translation>暂无</translation>
     </message>
     <message>
-        <location filename="../plugins/system/pages/system-information/license-agreement.cpp" line="190"/>
+        <location filename="../plugins/system/pages/system-information/license-agreement.cpp" line="270"/>
         <source>Version License</source>
         <translation>版本协议</translation>
     </message>
@@ -3683,8 +3688,8 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">导出最终用户许可协议失败!</translation>
     </message>
     <message>
-        <location filename="../plugins/system/pages/system-information/license-agreement.cpp" line="269"/>
-        <location filename="../plugins/system/pages/system-information/license-agreement.cpp" line="271"/>
+        <location filename="../plugins/system/pages/system-information/license-agreement.cpp" line="350"/>
+        <location filename="../plugins/system/pages/system-information/license-agreement.cpp" line="352"/>
         <source>Privacy Policy</source>
         <translation>隐私协议</translation>
     </message>
@@ -4626,26 +4631,26 @@ This is line 50 of the test text</source>
     <message>
         <location filename="../plugins/display/src/display-config.cpp" line="468"/>
         <location filename="../plugins/display/src/display-config.h" line="134"/>
-        <location filename="../plugins/display/src/display-page.cpp" line="400"/>
-        <location filename="../plugins/display/src/display-page.cpp" line="418"/>
+        <location filename="../plugins/display/src/display-page.cpp" line="402"/>
+        <location filename="../plugins/display/src/display-page.cpp" line="421"/>
         <source>Tips</source>
         <translation>提示</translation>
     </message>
     <message>
         <location filename="../plugins/display/src/display-config.cpp" line="471"/>
         <location filename="../plugins/display/src/display-config.h" line="137"/>
-        <location filename="../plugins/display/src/display-page.cpp" line="403"/>
-        <location filename="../plugins/display/src/display-page.cpp" line="421"/>
+        <location filename="../plugins/display/src/display-page.cpp" line="405"/>
+        <location filename="../plugins/display/src/display-page.cpp" line="424"/>
         <source>OK(K)</source>
         <translation>确定(K)</translation>
     </message>
     <message>
-        <location filename="../plugins/display/src/display-page.cpp" line="407"/>
+        <location filename="../plugins/display/src/display-page.cpp" line="410"/>
         <source>Failed to apply display settings!%1</source>
         <translation>应用显示设置失败!%1</translation>
     </message>
     <message>
-        <location filename="../plugins/display/src/display-page.cpp" line="425"/>
+        <location filename="../plugins/display/src/display-page.cpp" line="429"/>
         <source>Fallback display setting failed! %1</source>
         <translation>回撤显示设置失败! %1</translation>
     </message>
@@ -5301,40 +5306,40 @@ This is line 50 of the test text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/system/pages/system-information/system-information.cpp" line="108"/>
-        <location filename="../plugins/system/pages/system-information/system-information.cpp" line="109"/>
-        <location filename="../plugins/system/pages/system-information/system-information.cpp" line="110"/>
-        <location filename="../plugins/system/pages/system-information/system-information.cpp" line="111"/>
+        <location filename="../plugins/system/pages/system-information/system-information.cpp" line="101"/>
+        <location filename="../plugins/system/pages/system-information/system-information.cpp" line="102"/>
+        <location filename="../plugins/system/pages/system-information/system-information.cpp" line="103"/>
+        <location filename="../plugins/system/pages/system-information/system-information.cpp" line="104"/>
         <source>Unknow</source>
         <translation>未知</translation>
     </message>
     <message>
-        <location filename="../plugins/system/pages/system-information/system-information.cpp" line="248"/>
+        <location filename="../plugins/system/pages/system-information/system-information.cpp" line="257"/>
         <source>UnActivated</source>
         <translation>未激活</translation>
     </message>
     <message>
-        <location filename="../plugins/system/pages/system-information/system-information.cpp" line="257"/>
+        <location filename="../plugins/system/pages/system-information/system-information.cpp" line="266"/>
         <source>Activation code has expired</source>
         <translation>激活码已过期</translation>
     </message>
     <message>
-        <location filename="../plugins/system/pages/system-information/system-information.cpp" line="262"/>
+        <location filename="../plugins/system/pages/system-information/system-information.cpp" line="271"/>
         <source>Permanently activated</source>
         <translation>永久激活</translation>
     </message>
     <message>
-        <location filename="../plugins/system/pages/system-information/system-information.cpp" line="267"/>
+        <location filename="../plugins/system/pages/system-information/system-information.cpp" line="276"/>
         <source>Activated</source>
         <translation>已激活</translation>
     </message>
     <message>
-        <location filename="../plugins/system/pages/system-information/system-information.cpp" line="310"/>
+        <location filename="../plugins/system/pages/system-information/system-information.cpp" line="319"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../plugins/system/pages/system-information/system-information.cpp" line="310"/>
+        <location filename="../plugins/system/pages/system-information/system-information.cpp" line="319"/>
         <source>Failed to open the license activator</source>
         <translation>启动激活许可证弹窗失败</translation>
     </message>

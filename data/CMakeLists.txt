@@ -38,3 +38,7 @@ install(DIRECTORY ./avatars DESTINATION ${KCP_ACCOUNT_DATADIR} )
 # 声音测试音频文件
 file(GLOB SOUND_FILES "sounds/*.ogg")
 install(FILES ${SOUND_FILES} DESTINATION ${AUDIO_SOUNDS_DIR})
+
+ # GSettings配置
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/com.kylinsec.kiran.control-panel.plugin.gschema.xml
+    DESTINATION ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATADIR}/glib-2.0/schemas/)

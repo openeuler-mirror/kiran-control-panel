@@ -26,6 +26,7 @@
 #include <QMenu>
 #include <QMouseEvent>
 #include <QPainter>
+#include <QProcess>
 #include <QSvgRenderer>
 #include "animation-loading-label.h"
 #include "logging-category.h"
@@ -68,6 +69,7 @@ void ConnectionItemWidget::initUI()
 
     connect(m_editButton, &QPushButton::clicked, this, &ConnectionItemWidget::editConnection);
     connect(m_disconnectAction, &QAction::triggered, this, &ConnectionItemWidget::disconnectConnection);
+    connect(m_advancedSettingsAction, &QAction::triggered, this, &ConnectionItemWidget::showAdvancedSettings);
 }
 
 void ConnectionItemWidget::initPluginItemWidget()
@@ -80,6 +82,9 @@ void ConnectionItemWidget::initPluginItemWidget()
     m_moreOptions = new QPushButton(this);
 
     m_menu = new QMenu(this);
+    m_advancedSettingsAction = new QAction(tr("advanced settings"), this);
+    m_menu->addAction(m_advancedSettingsAction);
+
     m_disconnectAction = new QAction(tr("disconnect"), this);
     m_menu->addAction(m_disconnectAction);
 
@@ -378,6 +383,27 @@ void ConnectionItemWidget::updateConnection()
     }
 
     setName(connection->name());
+}
+
+void ConnectionItemWidget::showAdvancedSettings()
+{
+    QString connectionUuid = uuid();
+    if (connectionUuid.isEmpty() && !connectionPath().isEmpty())
+    {
+        Connection::Ptr connection = findConnection(connectionPath());
+        if (connection != nullptr)
+        {
+            connectionUuid = connection->uuid();
+        }
+    }
+
+    if (connectionUuid.isEmpty())
+    {
+        KLOG_WARNING(qLcNetwork) << "Can't show advanced settings, uuid is empty";
+        return;
+    }
+
+    QProcess::startDetached("nm-connection-editor", {"-e", connectionUuid});
 }
 
 void ConnectionItemWidget::disconnectConnection()

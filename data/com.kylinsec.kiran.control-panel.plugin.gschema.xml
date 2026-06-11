@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist>
+    <schema id="com.kylinsec.kiran.control-panel.plugin" path="/com/kylinsec/kiran/control-panel/">
+        <key name="show-ipv4-gateway" type="b">
+            <default>true</default>
+            <summary>Show gateway in IPv4 setting</summary>
+            <description>Whether to show the IPv4 gateway field in IPv4 setting page for network plugins.</description>
+        </key>
+    </schema>
+</schemalist>
