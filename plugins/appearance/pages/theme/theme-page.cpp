@@ -16,11 +16,11 @@
 #include "appearance-global-info.h"
 #include "cursor/cursor-theme-page.h"
 #include "icon/icon-theme-page.h"
+#include "logging-category.h"
 #include "setting-brief-widget/setting-brief-widget.h"
 #include "theme-preview.h"
 #include "ui_theme-page.h"
 #include "wm/wm-theme-page.h"
-#include "logging-category.h"
 
 #include <kiran-log/qt5-log-i.h>
 #include <kiran-session-daemon/appearance-i.h>
@@ -74,6 +74,7 @@ void ThemePage::init()
 
     connect(AppearanceGlobalInfo::instance(), &AppearanceGlobalInfo::AutoSwitchWindowThemeChanged, this, &ThemePage::onAutoSwitchWindowThemeChanged);
     connect(AppearanceGlobalInfo::instance(), &AppearanceGlobalInfo::themeChanged, this, &ThemePage::handleThemeChange);
+    connect(AppearanceGlobalInfo::instance(), &AppearanceGlobalInfo::cursorSizeChanged, m_cursorThemePage, &CursorThemePage::updateCursorSize);
 }
 
 bool ThemePage::initUITheme()

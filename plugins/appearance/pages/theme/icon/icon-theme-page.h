@@ -51,8 +51,8 @@ private:
     void initUI();
     void loadIconThemes();
     ThemePreview* createPreviewWidget(const QString& themeName,
-                                            const QList<QPixmap> pixmaps,
-                                            bool selected = false);
+                                      const QList<QPixmap> pixmaps,
+                                      bool selected = false);
 
 private:
     static const QStringList m_fallbackIcons;

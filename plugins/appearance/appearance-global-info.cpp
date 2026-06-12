@@ -53,13 +53,13 @@ AppearanceGlobalInfo::AppearanceGlobalInfo(QObject *parent)
                                           << "font info:" << fontInfo;
                 QString fontFamily;
                 int fontSize;
-                if( !parseFontInfo(fontInfo,fontFamily,fontSize) )
+                if (!parseFontInfo(fontInfo, fontFamily, fontSize))
                 {
                     KLOG_WARNING(qLcAppearance) << "check font changed value failed,invald format";
                     return;
                 }
 
-                emit fontChanged(type, fontFamily,fontSize);
+                emit fontChanged(type, fontFamily, fontSize);
             });
     connect(m_appearanceInterface.data(), &AppearanceInterface::AutoSwitchWindowThemeChanged, this,
             [this](bool enable)
@@ -67,6 +67,13 @@ AppearanceGlobalInfo::AppearanceGlobalInfo(QObject *parent)
                 KLOG_DEBUG(qLcAppearance) << "auto switch window theme changed,"
                                           << "enable:" << enable;
                 emit AutoSwitchWindowThemeChanged(enable);
+            });
+    connect(m_appearanceInterface.data(), &AppearanceInterface::CursorSizeChanged, this,
+            [this](int size)
+            {
+                KLOG_DEBUG(qLcAppearance) << "cursor size changed,"
+                                          << "size:" << size;
+                emit cursorSizeChanged(size);
             });
 }
 
@@ -260,7 +267,7 @@ bool AppearanceGlobalInfo::getFont(int type, QString &fontName, int &fontSize)
     auto fontValue = getFontReply.argumentAt(0).toString();
     KLOG_DEBUG(qLcAppearance) << "get font,font type:" << type << "font info:" << fontValue;
 
-    if( !parseFontInfo(fontValue,fontName,fontSize) )
+    if (!parseFontInfo(fontValue, fontName, fontSize))
     {
         KLOG_WARNING(qLcAppearance) << "parse font value failed,invalid format:" << fontValue;
         return false;
@@ -295,6 +302,42 @@ bool AppearanceGlobalInfo::resetFont(int fontType)
     {
         KLOG_WARNING(qLcAppearance) << "reset font failed,font type:" << fontType
                                     << "error:" << reply.error().message();
+        return false;
+    }
+
+    return true;
+}
+
+bool AppearanceGlobalInfo::getCursorSize(int &size)
+{
+    QDBusPendingReply<int> reply = m_appearanceInterface->GetCursorSize();
+    reply.waitForFinished();
+    if (reply.isError() || !reply.isValid())
+    {
+        KLOG_DEBUG(qLcAppearance) << "get cursor size failed, error:" << reply.error().message();
+        return false;
+    }
+    else if (reply.count() < 1)
+    {
+        KLOG_WARNING(qLcAppearance) << "get cursor size failed, reply count is 0!";
+        return false;
+    }
+
+    size = reply.argumentAt(0).toInt();
+    KLOG_DEBUG(qLcAppearance) << "get cursor size:" << size;
+
+    return true;
+}
+
+bool AppearanceGlobalInfo::setCursorSize(int size)
+{
+    KLOG_DEBUG(qLcAppearance) << "set cursor size:" << size;
+
+    QDBusPendingReply<> reply = m_appearanceInterface->SetCursorSize(size);
+    reply.waitForFinished();
+    if (reply.isError() || !reply.isValid())
+    {
+        KLOG_WARNING(qLcAppearance) << "set cursor size failed, error:" << reply.error().message();
         return false;
     }
 
