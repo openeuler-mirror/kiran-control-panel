@@ -22,19 +22,20 @@ class AppearanceGlobalInfo : public QObject
 {
     Q_OBJECT
 public:
-    AppearanceGlobalInfo(QObject *parent = nullptr);
+    AppearanceGlobalInfo(QObject* parent = nullptr);
     ~AppearanceGlobalInfo();
 
-    static AppearanceGlobalInfo *instance();
+    static AppearanceGlobalInfo* instance();
 
-    struct ThemeInfo{
+    struct ThemeInfo
+    {
         QString name;
         QString path;
     };
     QList<ThemeInfo> getAllThemes(int themeType);
 
     bool setTheme(int themeType, QString themeName);
-    bool getTheme(int type, QString &theme);
+    bool getTheme(int type, QString& theme);
     bool getAutoSwitchWindowTheme();
     void enableAutoSwitchWindowTheme();
 
@@ -44,18 +45,22 @@ public:
     QString getLockScreenBackground();
     bool setLockScreenBackground(QString);
 
-    bool getFont(int type,QString& fontName,int& fontSize);
-    bool setFont(int fontType,const QString& fontInfo);
+    bool getFont(int type, QString& fontName, int& fontSize);
+    bool setFont(int fontType, const QString& fontInfo);
     bool resetFont(int fontType);
 
+    bool getCursorSize(int& size);
+    bool setCursorSize(int size);
+
 private:
-    bool parseFontInfo(const QString& fontInfo,QString& fontFamily,int& fontSize);
+    bool parseFontInfo(const QString& fontInfo, QString& fontFamily, int& fontSize);
 
 signals:
-    void themeChanged(int type, const QString &theme_name);
-    void fontChanged(int type, const QString &fontFamily,int fontSize);
-    void desktopBackgroundChanged(const QString &value) const;
-    void lockScreenBackgroundChanged(const QString &value) const;
+    void themeChanged(int type, const QString& theme_name);
+    void fontChanged(int type, const QString& fontFamily, int fontSize);
+    void cursorSizeChanged(int size);
+    void desktopBackgroundChanged(const QString& value) const;
+    void lockScreenBackgroundChanged(const QString& value) const;
     void AutoSwitchWindowThemeChanged(bool autoSwitch);
 
 private:

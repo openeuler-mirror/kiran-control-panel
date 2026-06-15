@@ -17,6 +17,7 @@
 #include <QWidget>
 
 class ExclusionGroup;
+class KiranSlider;
 class QVBoxLayout;
 class ThemePreview;
 class CursorThemePage : public QWidget
@@ -27,6 +28,7 @@ public:
     ~CursorThemePage();
 
     void updateCurrentTheme(QString newCursorTheme);
+    void updateCursorSize(int newCursorSize);
 
 signals:
     void requestReturn();
@@ -34,15 +36,21 @@ signals:
 private:
     void init();
     void initUI();
+    void loadCursorSize();
     void loadCurosrThemes();
     ThemePreview* createPreviewWidget(const QString& themeName,
-                                            const QList<QPixmap> pixmaps,
-                                            bool selected = false);
+                                      const QList<QPixmap> pixmaps,
+                                      bool selected = false);
+    // 获取最接近的光标大小用于显示在slider上
+    int getNearestCursorSize(int size);
+
 private slots:
     void onCurrentItemChanged();
+    void onCursorSizeChanged(int size);
 
 private:
     ExclusionGroup* m_exclusionGroup;
+    KiranSlider* m_sizeSlider;
     QVBoxLayout* m_cursorVlayout;
     QString m_currentCursorTheme;
     QMap<QString, QString> m_cursorThemes;

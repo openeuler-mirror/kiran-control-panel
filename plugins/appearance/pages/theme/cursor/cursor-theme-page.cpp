@@ -14,6 +14,7 @@
 #include "cursor-theme-page.h"
 #include <kiran-message-box.h>
 #include <kiran-session-daemon/appearance-i.h>
+#include <kiran-slider/kiran-slider.h>
 #include <QDir>
 #include <QIcon>
 #include <QJsonArray>
@@ -21,12 +22,15 @@
 #include <QJsonObject>
 #include <QJsonParseError>
 #include <QLabel>
+#include <QSignalBlocker>
 #include <QVBoxLayout>
 #include "appearance-global-info.h"
 #include "cursor-image-loader.h"
 #include "exclusion-group.h"
 #include "logging-category.h"
 #include "theme-preview.h"
+
+static const QList<int> cursorSizes = {24, 32, 48};
 
 // 兼容不同开源版本光标名称，若光标名不存在，则使用默认光标
 static const std::vector<const char*> cursorNames[] = {
@@ -37,7 +41,7 @@ static const std::vector<const char*> cursorNames[] = {
     {"size_bdiag", "nesw-resize", "50585d75b494802d0151028115016902", "fcf1c3c7cd4491d801f1e1c78f100000", "default"},
     {"size_fdiag", "nwse-resize", "38c5dff7c7b8962045400281044508d2", "c7088f0f3e6c8088236ef8e1e3e70000", "default"}};
 
-CursorThemePage::CursorThemePage(QWidget* parent) : QWidget(parent)
+CursorThemePage::CursorThemePage(QWidget* parent) : QWidget(parent), m_sizeSlider(nullptr)
 {
     init();
 }
@@ -49,6 +53,7 @@ CursorThemePage::~CursorThemePage()
 void CursorThemePage::init()
 {
     initUI();
+    loadCursorSize();
     loadCurosrThemes();
 }
 
@@ -58,6 +63,35 @@ void CursorThemePage::initUI()
     layout->setMargin(0);
     layout->setSpacing(10);
 
+    // 光标大小控件
+    auto sizeWidget = new QWidget(this);
+    auto sizeLayout = new QVBoxLayout(sizeWidget);
+    sizeLayout->setMargin(0);
+    sizeLayout->setSpacing(10);
+
+    auto label_size = new QLabel(tr("Cursor Size Settings"), sizeWidget);
+    sizeLayout->addWidget(label_size);
+
+    m_sizeSlider = new KiranSlider(sizeWidget);
+    m_sizeSlider->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+    m_sizeSlider->setMinimumHeight(80);
+    m_sizeSlider->setMaximumHeight(80);
+    m_sizeSlider->setRange(0, cursorSizes.size() - 1);
+
+    const QStringList cursorSizeLabels = {tr("Small"), tr("Medium"), tr("Large")};
+    QList<KiranSlider::MarkPoint> markPoints;
+    for (int i = 0; i < cursorSizes.size(); ++i)
+    {
+        markPoints << KiranSlider::MarkPoint(i, cursorSizeLabels.at(i));
+    }
+    m_sizeSlider->addMarks(markPoints);
+    m_sizeSlider->setValue(0);
+    connect(m_sizeSlider, &QAbstractSlider::valueChanged, this, &CursorThemePage::onCursorSizeChanged);
+    sizeLayout->addWidget(m_sizeSlider);
+
+    layout->addWidget(sizeWidget);
+
+    // 光标主题列表
     QLabel* label_text = new QLabel(this);
     label_text->setText(tr("Cursor Themes Settings"));
     layout->addWidget(label_text);
@@ -72,6 +106,39 @@ void CursorThemePage::initUI()
     layout->addWidget(cursorsContainer);
 
     layout->addStretch();
+}
+
+void CursorThemePage::loadCursorSize()
+{
+    int cursorSize = cursorSizes.first();
+    if (!AppearanceGlobalInfo::instance()->getCursorSize(cursorSize))
+    {
+        KLOG_WARNING(qLcAppearance) << "get cursor size failed, use default:" << cursorSize;
+    }
+
+    const int nearestSize = getNearestCursorSize(cursorSize);
+    QSignalBlocker blocker(m_sizeSlider);
+    m_sizeSlider->setValue(cursorSizes.indexOf(nearestSize));
+    m_sizeSlider->ensureLayoutUpdated();
+}
+
+void CursorThemePage::onCursorSizeChanged(int index)
+{
+    if (index < 0 || index >= cursorSizes.size())
+    {
+        return;
+    }
+
+    const int cursorSize = cursorSizes.at(index);
+    KLOG_INFO(qLcAppearance) << "cursor size ui changed:" << cursorSize;
+    if (!AppearanceGlobalInfo::instance()->setCursorSize(cursorSize))
+    {
+        KLOG_WARNING(qLcAppearance) << "set cursor size" << cursorSize << "failed!";
+    }
+    else
+    {
+        KLOG_INFO(qLcAppearance) << "cursor size updated:" << cursorSize;
+    }
 }
 
 void CursorThemePage::loadCurosrThemes()
@@ -146,4 +213,33 @@ void CursorThemePage::updateCurrentTheme(QString newCursorTheme)
 {
     QSignalBlocker blocker(m_exclusionGroup);
     m_exclusionGroup->setCurrent(newCursorTheme);
+}
+
+void CursorThemePage::updateCursorSize(int newCursorSize)
+{
+    const int nearestSize = getNearestCursorSize(newCursorSize);
+    QSignalBlocker blocker(m_sizeSlider);
+    m_sizeSlider->setValue(cursorSizes.indexOf(nearestSize));
+    m_sizeSlider->ensureLayoutUpdated();
+}
+
+int CursorThemePage::getNearestCursorSize(int size)
+{
+    if (cursorSizes.contains(size))
+    {
+        return size;
+    }
+
+    int nearest = cursorSizes.first();
+    int minDiff = qAbs(size - nearest);
+    for (int preset : cursorSizes)
+    {
+        const int diff = qAbs(size - preset);
+        if (diff < minDiff)
+        {
+            minDiff = diff;
+            nearest = preset;
+        }
+    }
+    return nearest;
 }
