@@ -19,6 +19,7 @@
 #include <QFileInfo>
 #include <QProcess>
 #include <QTimer>
+#include <QScroller>
 #include "appearance-global-info.h"
 #include "config.h"
 #include "decoration-config.h"
@@ -92,6 +93,7 @@ void WMThemePage::updateExclusionGroupCurrent(const QString& plugin, const QStri
 
 void WMThemePage::init()
 {
+    QScroller::grabGesture(ui->scrollArea, QScroller::LeftMouseButtonGesture);
     m_decorationConfig = new DecorationConfig(this);
     m_exclusionGroup = new ExclusionGroup(this);
 

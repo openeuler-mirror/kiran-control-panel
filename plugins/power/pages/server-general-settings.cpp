@@ -18,6 +18,7 @@
 #include <kiran-switch-button.h>
 #include <qt5-log-i.h>
 #include <QGSettings>
+#include <QScroller>
 
 #define MAX_IDLE_TIME 120
 
@@ -48,6 +49,7 @@ QSize ServerGeneralSettings::sizeHint() const
 
 void ServerGeneralSettings::init()
 {
+    QScroller::grabGesture(ui->scrollArea, QScroller::LeftMouseButtonGesture);
     initSessionSettings();
     initScreensaverSettings();
     initUI();
