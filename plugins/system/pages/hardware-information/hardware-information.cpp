@@ -27,6 +27,7 @@
 #include <QPainter>
 #include <QEvent>
 #include <QResizeEvent>
+#include <QScroller>
 
 HardwareInformation::HardwareInformation(QWidget *parent)
     : QWidget(parent),
@@ -60,6 +61,7 @@ bool HardwareInformation::eventFilter(QObject *watched, QEvent *event)
 
 void HardwareInformation::initUI(void)
 {
+    QScroller::grabGesture(ui->scrollArea, QScroller::LeftMouseButtonGesture);
     QString hardwareJson, memory, cpu;
     QStringList disks, graphics, eths;
 

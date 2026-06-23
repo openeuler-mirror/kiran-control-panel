@@ -28,6 +28,7 @@
 
 #include <QClipboard>
 #include <QFileDialog>
+#include <QScroller>
 #include <QKeyEvent>
 #include <QtConcurrentRun>
 
@@ -65,6 +66,8 @@ QSize Shortcut::sizeHint() const
 
 void Shortcut::init()
 {
+    QScroller::grabGesture(ui->scrollArea, QScroller::LeftMouseButtonGesture);
+    QScroller::grabGesture(ui->scrollArea_2, QScroller::LeftMouseButtonGesture);
     qRegisterMetaType<QList<ShortcutInfoPtr>>("QList<ShortcutInfoPtr>");
 
     m_keybindingInterface = new KeybindingBackEndProxy(KEYBINDING_DBUS_NAME,

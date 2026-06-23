@@ -13,6 +13,7 @@
  */
 #include "connection-list.h"
 #include <qt5-log-i.h>
+#include <QScroller>
 #include <NetworkManagerQt/Settings>
 #include <NetworkManagerQt/WirelessDevice>
 #include <QCollator>
@@ -52,6 +53,7 @@ void ConnectionList::initUI()
 
     // QScrollArea::setWidget会更改传入的widget的parentWidget
     m_scrollArea->setWidget(m_scrollAreaWidgetContents);
+    QScroller::grabGesture(m_scrollArea, QScroller::LeftMouseButtonGesture);
 
     m_verticalLayout->addWidget(m_scrollArea);
     m_verticalLayout->setContentsMargins(0, 0, 0, 0);

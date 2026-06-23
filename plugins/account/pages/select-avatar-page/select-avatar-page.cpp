@@ -26,6 +26,7 @@
 #include <QHBoxLayout>
 #include <QPushButton>
 #include <QScrollArea>
+#include <QScroller>
 
 #define SYSTEM_AVATAR_OBJ_NAME "avatar_button_system"
 #define USER_AVATAR_OBJ_NAME "avatar_button_user"
@@ -120,6 +121,7 @@ void SelectAvatarPage::initUI()
     m_scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
     m_scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     m_scrollArea->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    QScroller::grabGesture(m_scrollArea, QScroller::LeftMouseButtonGesture);
     m_mainLayout->addWidget(m_scrollArea);
 
     m_buttonGroup = new QButtonGroup(this);

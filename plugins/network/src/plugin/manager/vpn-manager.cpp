@@ -21,6 +21,7 @@
 #include <QDialog>
 #include <QPointer>
 #include <QScrollBar>
+#include <QScroller>
 #include "connection-name-widget.h"
 #include "signal-forward.h"
 #include "status-notification.h"
@@ -45,6 +46,7 @@ VpnManager::~VpnManager()
 
 void VpnManager::initUI()
 {
+    QScroller::grabGesture(ui->scrollArea, QScroller::LeftMouseButtonGesture);
     ui->connectionShowPage->init(ConnectionSettings::Vpn, "");
     ui->connectionShowPage->setTitle(tr("VPN"));
     ui->connectionShowPage->setSwitchButtonVisible(false);

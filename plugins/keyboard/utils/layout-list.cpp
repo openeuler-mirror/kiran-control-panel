@@ -20,6 +20,7 @@
 #include <QPainter>
 #include <QPainterPath>
 #include <QScrollBar>
+#include <QScroller>
 #include <style-palette.h>
 
 using namespace Kiran;
@@ -29,6 +30,7 @@ LayoutList::LayoutList(QWidget* parent) : QWidget(parent),
                                           m_editHasFocus(false)
 {
     ui->setupUi(this);
+    QScroller::grabGesture(ui->scrollArea, QScroller::LeftMouseButtonGesture);
     m_timer = new QTimer(this);
     ui->stackedWidget->setCurrentWidget(ui->page_list);
     ui->lineEdit_search->installEventFilter(this);

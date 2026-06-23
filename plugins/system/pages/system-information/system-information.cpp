@@ -18,6 +18,7 @@
 #include "license-agreement.h"
 #include "ui_system-information.h"
 
+#include <QScroller>
 #include <kiran-log/qt5-log-i.h>
 #include <kiran-message-box.h>
 #include <style-property.h>
@@ -64,6 +65,7 @@ SystemInformation::~SystemInformation()
 
 void SystemInformation::init()
 {
+    QScroller::grabGesture(ui->scrollArea, QScroller::LeftMouseButtonGesture);
     setMinimumHeight(400);
     initUI();
     // clang-format off

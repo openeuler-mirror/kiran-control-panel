@@ -14,6 +14,7 @@
 #include "kiran-setting-container.h"
 #include <QBoxLayout>
 #include <QScrollArea>
+#include <QScroller>
 
 void SettingsContainer::delAllItemOfLayout(QLayout* layout)
 {
@@ -86,6 +87,7 @@ void SettingsContainer::init()
     scrollarea->setSizeAdjustPolicy(QScrollArea::AdjustToContents);
     scrollarea->setFrameStyle(QFrame::NoFrame);
     scrollarea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    QScroller::grabGesture(scrollarea, QScroller::LeftMouseButtonGesture);
     m_mainLayout->addWidget(scrollarea);
 
     auto contentWidget = new QWidget(this);

@@ -18,6 +18,7 @@
 #include <QFileInfo>
 #include <QProcess>
 #include <QTimer>
+#include <QScroller>
 #include "appearance-global-info.h"
 #include "config.h"
 #include "exclusion-group.h"
@@ -121,6 +122,7 @@ void WMThemePage::createThumbnailCache()
 
 void WMThemePage::init()
 {
+    QScroller::grabGesture(ui->scrollArea, QScroller::LeftMouseButtonGesture);
     createThumbnailCache();
 
     m_exclusionGroup = new ExclusionGroup(this);
