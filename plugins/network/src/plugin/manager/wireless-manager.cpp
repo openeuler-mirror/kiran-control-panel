@@ -20,6 +20,7 @@
 #include <QEventLoop>
 #include <QPointer>
 #include <QScrollBar>
+#include <QScroller>
 #include "signal-forward.h"
 #include "status-notification.h"
 #include "text-input-dialog.h"
@@ -44,6 +45,7 @@ WirelessManager::~WirelessManager()
 
 void WirelessManager::initUI()
 {
+    QScroller::grabGesture(ui->scrollArea, QScroller::LeftMouseButtonGesture);
 }
 
 void WirelessManager::initConnection()

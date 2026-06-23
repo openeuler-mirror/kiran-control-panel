@@ -20,6 +20,7 @@
 #include <NetworkManagerQt/Settings>
 #include <QPointer>
 #include <QScrollBar>
+#include <QScroller>
 #include "signal-forward.h"
 #include "status-notification.h"
 #include "ui_wired-manager.h"
@@ -45,6 +46,7 @@ WiredManager::~WiredManager()
 
 void WiredManager::initUI()
 {
+    QScroller::grabGesture(ui->scrollArea, QScroller::LeftMouseButtonGesture);
     Kiran::StylePropertyHelper::setButtonType(ui->saveButton, Kiran::BUTTON_Default);
 }
 

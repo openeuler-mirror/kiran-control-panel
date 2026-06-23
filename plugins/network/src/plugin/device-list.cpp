@@ -14,6 +14,7 @@
 
 #include "device-list.h"
 #include <qt5-log-i.h>
+#include <QScroller>
 #include <NetworkManagerQt/Manager>
 #include <QEvent>
 #include "device-available-connection-widget.h"
@@ -198,6 +199,7 @@ void DeviceList::initUI()
     m_scrollArea->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
 
     m_scrollArea->installEventFilter(this);
+    QScroller::grabGesture(m_scrollArea, QScroller::LeftMouseButtonGesture);
 
     m_verticalLayout->addWidget(m_scrollArea);
     m_verticalLayout->setContentsMargins(0, 0, 0, 0);

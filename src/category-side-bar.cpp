@@ -24,6 +24,7 @@
 #include <QPainter>
 #include <QResizeEvent>
 #include <QScrollArea>
+#include <QScroller>
 
 CategorySideBar::CategorySideBar(QWidget *parent)
     : KiranColorBlock(parent)
@@ -60,6 +61,8 @@ void CategorySideBar::init()
 
     pScrollArea->setWidget(m_contentWidget);
     pScrollArea->setWidgetResizable(true);
+
+    QScroller::grabGesture(pScrollArea, QScroller::LeftMouseButtonGesture);
 
     m_categoryBtnGroup = new QButtonGroup(this);
     m_categoryBtnGroup->setExclusive(true);

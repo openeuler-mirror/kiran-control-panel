@@ -15,6 +15,7 @@
 #include "logging-category.h"
 #include "ui_server-general-settings.h"
 
+#include <QScroller>
 #include <kiran-switch-button.h>
 #include <qt5-log-i.h>
 #include <style-palette.h>
@@ -51,6 +52,7 @@ QSize ServerGeneralSettings::sizeHint() const
 
 void ServerGeneralSettings::init()
 {
+    QScroller::grabGesture(ui->scrollArea, QScroller::LeftMouseButtonGesture);
     initSessionSettings();
     initScreensaverSettings();
     initUI();

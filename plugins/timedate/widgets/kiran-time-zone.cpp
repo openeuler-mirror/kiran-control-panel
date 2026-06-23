@@ -26,6 +26,7 @@
 #include <QPainterPath>
 #include <QStyle>
 #include <QStyleOption>
+#include <QScroller>
 
 using namespace Kiran;
 
@@ -91,6 +92,7 @@ void KiranTimeZone::scrollToCurrent()
 
 void KiranTimeZone::initUI()
 {
+    QScroller::grabGesture(ui->scrollArea, QScroller::LeftMouseButtonGesture);
     ui->label_search->setPixmap(QPixmap(":/kiran-control-panel/images/search.svg"));
     ui->edit_search->setPlaceholderText(tr("Search in all time zones..."));
     ui->scrollArea->setWidgetResizable(true);

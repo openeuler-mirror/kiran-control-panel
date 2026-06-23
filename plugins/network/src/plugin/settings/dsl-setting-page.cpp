@@ -14,6 +14,7 @@
 
 #include "dsl-setting-page.h"
 #include <kiran-switch-button.h>
+#include <QScroller>
 #include "ui_dsl-setting-page.h"
 
 DslSettingPage::DslSettingPage(QWidget *parent) : QWidget(parent), ui(new Ui::DslSettingPage)
@@ -30,7 +31,7 @@ DslSettingPage::~DslSettingPage()
 
 void DslSettingPage::initUI()
 {
-
+    QScroller::grabGesture(ui->scrollArea, QScroller::LeftMouseButtonGesture);
 }
 
 void DslSettingPage::initConnection()

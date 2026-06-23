@@ -20,6 +20,8 @@
 #include "mouse_backEnd_proxy.h"
 #include "ui_mouse-page.h"
 
+#include <QScroller>
+
 #define TIMEOUT 100
 #define SLIDER_MINIMUM 0
 #define SLIDER_MAXIMUN 100
@@ -69,6 +71,8 @@ QSize MousePage::sizeHint() const
  */
 void MousePage::initUI()
 {
+    QScroller::grabGesture(ui->scrollArea, QScroller::LeftMouseButtonGesture);
+    QScroller::grabGesture(ui->testScrollArea, QScroller::LeftMouseButtonGesture);
     KCMManager *kcmManager = new KCMManager;
 
     m_mouseInterface = kcmManager->getMouseInterface();
