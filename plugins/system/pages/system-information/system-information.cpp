@@ -31,6 +31,7 @@
 #include <QJsonValue>
 #include <QPainter>
 #include <QProcess>
+#include <QScroller>
 
 #define HOST_NAME "host_name"
 #define ARCH "arch"
@@ -64,6 +65,7 @@ SystemInformation::~SystemInformation()
 
 void SystemInformation::init()
 {
+    QScroller::grabGesture(ui->scrollArea, QScroller::LeftMouseButtonGesture);
     setMinimumHeight(400);
     initUI();
     // clang-format off

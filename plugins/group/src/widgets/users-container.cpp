@@ -16,6 +16,7 @@
 #include <qt5-log-i.h>
 #include <QBoxLayout>
 #include <QScrollArea>
+#include <QScroller>
 #include "user-list-item.h"
 void deleteAllItemOfLayout(QLayout* layout)
 {
@@ -107,6 +108,7 @@ void UsersContainer::init()
     m_scrollArea->setSizeAdjustPolicy(QScrollArea::AdjustToContents);
     m_scrollArea->setFrameStyle(QFrame::NoFrame);
     m_scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    QScroller::grabGesture(m_scrollArea, QScroller::LeftMouseButtonGesture);
     m_mainLayout->addWidget(m_scrollArea);
 
     m_contentWidget = new QWidget(this);

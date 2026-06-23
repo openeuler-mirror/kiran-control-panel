@@ -18,6 +18,7 @@
 #include <QPainter>
 #include <QResizeEvent>
 #include <QScrollArea>
+#include <QScroller>
 #include <QStyleOption>
 #include <iostream>
 #include "../wallpaper-def.h"
@@ -58,6 +59,7 @@ void ImageSelector::initUI()
     scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
     scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     scrollArea->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    QScroller::grabGesture(scrollArea, QScroller::LeftMouseButtonGesture);
 
     vLayout->addWidget(scrollArea);
 

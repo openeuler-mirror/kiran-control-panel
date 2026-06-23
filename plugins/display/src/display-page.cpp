@@ -19,6 +19,7 @@
 #include <QButtonGroup>
 #include <QResizeEvent>
 #include <QTimer>
+#include <QScroller>
 #include "display_backEnd_proxy.h"
 #include "ui_display-page.h"
 
@@ -50,6 +51,7 @@ DisplayPage::~DisplayPage()
 
 void DisplayPage::init()
 {
+    QScroller::grabGesture(ui->scrollArea, QScroller::LeftMouseButtonGesture);
     ui->scrollAreaWidgetContents->setContentsMargins(0, 0, 10, 0);
     m_btnGroup = new QButtonGroup(this);
     m_btnGroup->addButton(ui->pushButton_copy_display, 0);

@@ -13,6 +13,7 @@
 
 #include "auth-setting-container.h"
 #include <QScrollArea>
+#include <QScroller>
 #include <QBoxLayout>
 
 void deleteAllItemOfLayout(QLayout* layout)
@@ -68,6 +69,7 @@ void AuthSettingContainer::init()
     scrollarea->setSizeAdjustPolicy(QScrollArea::AdjustToContents);
     scrollarea->setFrameStyle(QFrame::NoFrame);
     scrollarea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    QScroller::grabGesture(scrollarea, QScroller::LeftMouseButtonGesture);
     m_mainLayout->addWidget(scrollarea);
 
     auto contentWidget = new QWidget(this);

@@ -22,6 +22,7 @@
 #include "kiran-message-box.h"
 #include "kiran-session-daemon/power-i.h"
 #include "logging-category.h"
+#include <QScroller>
 #include "ui_general-settings-page.h"
 
 #define MAX_IDLE_TIME 120
@@ -50,6 +51,7 @@ GeneralSettingsPage::~GeneralSettingsPage()
 
 void GeneralSettingsPage::init()
 {
+    QScroller::grabGesture(ui->scrollArea, QScroller::LeftMouseButtonGesture);
     initSessionSetting();
     initScreenSaverSetting();
     initUI();

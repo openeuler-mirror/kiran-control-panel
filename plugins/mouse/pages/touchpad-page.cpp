@@ -21,6 +21,8 @@
 #include "touchPad_backEnd_proxy.h"
 #include "ui_touchpad-page.h"
 
+#include <QScroller>
+
 #define TIMEOUT 2000
 #define SLIDER_MINIMUM 0
 #define SLIDER_MAXIMUN 100
@@ -64,6 +66,7 @@ TouchPadPage::~TouchPadPage()
  */
 void TouchPadPage::initUI()
 {
+    QScroller::grabGesture(ui->scrollArea, QScroller::LeftMouseButtonGesture);
     KCMManager *kcmManager = new KCMManager;
 
     m_touchPadInterface = kcmManager->getTouchPadInterface();
