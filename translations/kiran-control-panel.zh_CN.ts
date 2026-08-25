@@ -1251,50 +1251,79 @@
 <context>
     <name>FacePage</name>
     <message>
-        <location filename="../plugins/authentication/pages/face-page.cpp" line="66"/>
+        <location filename="../plugins/authentication/pages/face-page.cpp" line="78"/>
         <source>Default face device</source>
         <translation>默认人脸设备</translation>
     </message>
     <message>
-        <location filename="../plugins/authentication/pages/face-page.cpp" line="67"/>
+        <location filename="../plugins/authentication/pages/face-page.cpp" line="79"/>
         <source>face feature list</source>
         <translation>人脸特征列表</translation>
     </message>
     <message>
-        <location filename="../plugins/authentication/pages/face-page.cpp" line="65"/>
+        <location filename="../plugins/authentication/pages/face-page.cpp" line="77"/>
         <source>face</source>
         <translation>人脸</translation>
     </message>
     <message>
-        <location filename="../plugins/authentication/pages/face-page.cpp" line="99"/>
+        <location filename="../plugins/authentication/pages/face-page.cpp" line="108"/>
+        <source>Capture</source>
+        <translation>拍照/录入</translation>
+    </message>
+    <message>
+        <location filename="../plugins/authentication/pages/face-page.cpp" line="115"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="../plugins/authentication/pages/face-page.cpp" line="147"/>
+        <location filename="../plugins/authentication/pages/face-page.cpp" line="140"/>
+        <source>Camera error, please check the camera</source>
+        <translation>摄像头异常,请检查摄像头</translation>
+    </message>
+    <message>
+        <location filename="../plugins/authentication/pages/face-page.cpp" line="146"/>
+        <source>Please face the camera and click Capture</source>
+        <translation>请面对摄像头,点击拍照/录入</translation>
+    </message>
+    <message>
+        <location filename="../plugins/authentication/pages/face-page.cpp" line="183"/>
+        <source>Capturing...</source>
+        <translation>正在拍照...</translation>
+    </message>
+    <message>
+        <location filename="../plugins/authentication/pages/face-page.cpp" line="199"/>
+        <source>Capture failed, please try again</source>
+        <translation>拍照失败,请重试</translation>
+    </message>
+    <message>
+        <location filename="../plugins/authentication/pages/face-page.cpp" line="213"/>
+        <source>Capture failed,%1</source>
+        <translation>拍照失败,%1</translation>
+    </message>
+    <message>
+        <location filename="../plugins/authentication/pages/face-page.cpp" line="237"/>
         <source>Start enroll failed,%1</source>
         <translation>开始录入失败,%1</translation>
     </message>
     <message>
-        <location filename="../plugins/authentication/pages/face-page.cpp" line="148"/>
-        <location filename="../plugins/authentication/pages/face-page.cpp" line="179"/>
-        <source>Error</source>
-        <translation>错误</translation>
+        <location filename="../plugins/authentication/pages/face-page.cpp" line="243"/>
+        <source>Processing...</source>
+        <translation>正在处理...</translation>
     </message>
     <message>
-        <location filename="../plugins/authentication/pages/face-page.cpp" line="173"/>
+        <location filename="../plugins/authentication/pages/face-page.cpp" line="302"/>
+        <source>Failed to record(%1), please try again</source>
+        <translation>录入特征失败(%1),请重试</translation>
+    </message>
+    <message>
+        <location filename="../plugins/authentication/pages/face-page.cpp" line="294"/>
         <source>The biometric features were successfully recorded. The feature name is:%1</source>
         <translation>特征已成功录入，特征名为:%1</translation>
     </message>
     <message>
-        <location filename="../plugins/authentication/pages/face-page.cpp" line="174"/>
+        <location filename="../plugins/authentication/pages/face-page.cpp" line="295"/>
         <source>Tips</source>
         <translation>提示</translation>
-    </message>
-    <message>
-        <location filename="../plugins/authentication/pages/face-page.cpp" line="178"/>
-        <source>Failed to record biometrics(%1), Please try again</source>
-        <translation>录入特征失败(%1),请重试</translation>
     </message>
 </context>
 <context>
