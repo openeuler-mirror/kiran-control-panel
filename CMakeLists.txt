@@ -29,6 +29,7 @@ find_package(Qt5 COMPONENTS
         Gui
         Widgets
         Multimedia
+        MultimediaWidgets
         Network
         X11Extras
         Svg
