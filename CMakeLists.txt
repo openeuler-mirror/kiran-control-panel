@@ -21,6 +21,7 @@ find_package(
              Gui
              Widgets
              Multimedia
+             MultimediaWidgets
              Network
              X11Extras
              Svg

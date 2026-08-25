@@ -23,6 +23,8 @@ target_link_libraries(
   Qt5::Widgets
   Qt5::DBus
   Qt5::Svg
+  Qt5::Multimedia
+  Qt5::MultimediaWidgets
   pam
   ${KIRAN_WIDGETS_LIBRARIES}
   ${KLOG_LIBRARIES}

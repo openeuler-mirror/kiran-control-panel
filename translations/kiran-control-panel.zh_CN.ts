@@ -708,7 +708,7 @@
         <translation>光标大小设置</translation>
     </message>
     <message>
-        <location filename="../plugins/appearance/pages/theme/cursor/cursor-theme-page.cpp" line="95"/>
+        <location filename="../plugins/appearance/pages/theme/cursor/cursor-theme-page.cpp" line="96"/>
         <source>Cursor Themes Settings</source>
         <translation>光标主题设置</translation>
     </message>
@@ -1183,28 +1183,28 @@
         <translation>关闭</translation>
     </message>
     <message>
-        <location filename="../plugins/display/src/display-page.cpp" line="258"/>
-        <location filename="../plugins/display/src/display-page.cpp" line="276"/>
+        <location filename="../plugins/display/src/display-page.cpp" line="260"/>
+        <location filename="../plugins/display/src/display-page.cpp" line="278"/>
         <source> (recommended)</source>
         <translation> (推荐)</translation>
     </message>
     <message>
-        <location filename="../plugins/display/src/display-page.cpp" line="367"/>
+        <location filename="../plugins/display/src/display-page.cpp" line="369"/>
         <source>Is the display normal?</source>
         <translation>显示是否正常?</translation>
     </message>
     <message>
-        <location filename="../plugins/display/src/display-page.cpp" line="370"/>
+        <location filename="../plugins/display/src/display-page.cpp" line="372"/>
         <source>Save current configuration(K)</source>
         <translation>保存当前配置(K)</translation>
     </message>
     <message>
-        <location filename="../plugins/display/src/display-page.cpp" line="375"/>
+        <location filename="../plugins/display/src/display-page.cpp" line="377"/>
         <source>Restore previous configuration(R)</source>
         <translation>恢复之前的配置(R)</translation>
     </message>
     <message>
-        <location filename="../plugins/display/src/display-page.cpp" line="384"/>
+        <location filename="../plugins/display/src/display-page.cpp" line="386"/>
         <source>The display will resume the previous configuration in %1 seconds</source>
         <translation>显示将会在 %1 秒后恢复之前的配置</translation>
     </message>
@@ -1271,50 +1271,79 @@
 <context>
     <name>FacePage</name>
     <message>
-        <location filename="../plugins/authentication/pages/face-page.cpp" line="66"/>
+        <location filename="../plugins/authentication/pages/face-page.cpp" line="78"/>
         <source>Default face device</source>
         <translation>默认人脸设备</translation>
     </message>
     <message>
-        <location filename="../plugins/authentication/pages/face-page.cpp" line="67"/>
+        <location filename="../plugins/authentication/pages/face-page.cpp" line="79"/>
         <source>face feature list</source>
         <translation>人脸特征列表</translation>
     </message>
     <message>
-        <location filename="../plugins/authentication/pages/face-page.cpp" line="65"/>
+        <location filename="../plugins/authentication/pages/face-page.cpp" line="77"/>
         <source>face</source>
         <translation>人脸</translation>
     </message>
     <message>
-        <location filename="../plugins/authentication/pages/face-page.cpp" line="99"/>
+        <location filename="../plugins/authentication/pages/face-page.cpp" line="108"/>
+        <source>Capture</source>
+        <translation>拍照/录入</translation>
+    </message>
+    <message>
+        <location filename="../plugins/authentication/pages/face-page.cpp" line="115"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="../plugins/authentication/pages/face-page.cpp" line="147"/>
+        <location filename="../plugins/authentication/pages/face-page.cpp" line="140"/>
+        <source>Camera error, please check the camera</source>
+        <translation>摄像头异常,请检查摄像头</translation>
+    </message>
+    <message>
+        <location filename="../plugins/authentication/pages/face-page.cpp" line="146"/>
+        <source>Please face the camera and click Capture</source>
+        <translation>请面对摄像头,点击拍照/录入</translation>
+    </message>
+    <message>
+        <location filename="../plugins/authentication/pages/face-page.cpp" line="183"/>
+        <source>Capturing...</source>
+        <translation>正在拍照...</translation>
+    </message>
+    <message>
+        <location filename="../plugins/authentication/pages/face-page.cpp" line="199"/>
+        <source>Capture failed, please try again</source>
+        <translation>拍照失败,请重试</translation>
+    </message>
+    <message>
+        <location filename="../plugins/authentication/pages/face-page.cpp" line="213"/>
+        <source>Capture failed,%1</source>
+        <translation>拍照失败,%1</translation>
+    </message>
+    <message>
+        <location filename="../plugins/authentication/pages/face-page.cpp" line="237"/>
         <source>Start enroll failed,%1</source>
         <translation>开始录入失败,%1</translation>
     </message>
     <message>
-        <location filename="../plugins/authentication/pages/face-page.cpp" line="148"/>
-        <location filename="../plugins/authentication/pages/face-page.cpp" line="179"/>
-        <source>Error</source>
-        <translation>错误</translation>
+        <location filename="../plugins/authentication/pages/face-page.cpp" line="243"/>
+        <source>Processing...</source>
+        <translation>正在处理...</translation>
     </message>
     <message>
-        <location filename="../plugins/authentication/pages/face-page.cpp" line="173"/>
+        <location filename="../plugins/authentication/pages/face-page.cpp" line="302"/>
+        <source>Failed to record(%1), please try again</source>
+        <translation>录入特征失败(%1),请重试</translation>
+    </message>
+    <message>
+        <location filename="../plugins/authentication/pages/face-page.cpp" line="294"/>
         <source>The biometric features were successfully recorded. The feature name is:%1</source>
         <translation>特征已成功录入，特征名为:%1</translation>
     </message>
     <message>
-        <location filename="../plugins/authentication/pages/face-page.cpp" line="174"/>
+        <location filename="../plugins/authentication/pages/face-page.cpp" line="295"/>
         <source>Tips</source>
         <translation>提示</translation>
-    </message>
-    <message>
-        <location filename="../plugins/authentication/pages/face-page.cpp" line="178"/>
-        <source>Failed to record biometrics(%1), Please try again</source>
-        <translation>录入特征失败(%1),请重试</translation>
     </message>
 </context>
 <context>
@@ -1614,65 +1643,65 @@
         <translation>待机时唤醒需要输入密码</translation>
     </message>
     <message>
-        <location filename="../plugins/power/pages/general-settings-page.cpp" line="116"/>
-        <location filename="../plugins/power/pages/general-settings-page.cpp" line="129"/>
+        <location filename="../plugins/power/pages/general-settings-page.cpp" line="118"/>
+        <location filename="../plugins/power/pages/general-settings-page.cpp" line="131"/>
         <source>shutdown</source>
         <translation>关机</translation>
     </message>
     <message>
-        <location filename="../plugins/power/pages/general-settings-page.cpp" line="117"/>
-        <location filename="../plugins/power/pages/general-settings-page.cpp" line="123"/>
-        <location filename="../plugins/power/pages/general-settings-page.cpp" line="128"/>
+        <location filename="../plugins/power/pages/general-settings-page.cpp" line="119"/>
+        <location filename="../plugins/power/pages/general-settings-page.cpp" line="125"/>
+        <location filename="../plugins/power/pages/general-settings-page.cpp" line="130"/>
         <source>hibernate</source>
         <translation>休眠</translation>
     </message>
     <message>
-        <location filename="../plugins/power/pages/general-settings-page.cpp" line="118"/>
-        <location filename="../plugins/power/pages/general-settings-page.cpp" line="122"/>
-        <location filename="../plugins/power/pages/general-settings-page.cpp" line="127"/>
+        <location filename="../plugins/power/pages/general-settings-page.cpp" line="120"/>
+        <location filename="../plugins/power/pages/general-settings-page.cpp" line="124"/>
+        <location filename="../plugins/power/pages/general-settings-page.cpp" line="129"/>
         <source>suspend</source>
         <translation>待机</translation>
     </message>
     <message>
-        <location filename="../plugins/power/pages/general-settings-page.cpp" line="119"/>
-        <location filename="../plugins/power/pages/general-settings-page.cpp" line="124"/>
+        <location filename="../plugins/power/pages/general-settings-page.cpp" line="121"/>
+        <location filename="../plugins/power/pages/general-settings-page.cpp" line="126"/>
         <source>display off</source>
         <translation>关闭显示器</translation>
     </message>
     <message>
-        <location filename="../plugins/power/pages/general-settings-page.cpp" line="120"/>
-        <location filename="../plugins/power/pages/general-settings-page.cpp" line="125"/>
-        <location filename="../plugins/power/pages/general-settings-page.cpp" line="130"/>
+        <location filename="../plugins/power/pages/general-settings-page.cpp" line="122"/>
+        <location filename="../plugins/power/pages/general-settings-page.cpp" line="127"/>
+        <location filename="../plugins/power/pages/general-settings-page.cpp" line="132"/>
         <source>do nothing</source>
         <translation>不执行操作</translation>
     </message>
     <message>
-        <location filename="../plugins/power/pages/general-settings-page.cpp" line="151"/>
+        <location filename="../plugins/power/pages/general-settings-page.cpp" line="153"/>
         <source>Energy-saving mode</source>
         <translation>节能模式</translation>
     </message>
     <message>
-        <location filename="../plugins/power/pages/general-settings-page.cpp" line="152"/>
+        <location filename="../plugins/power/pages/general-settings-page.cpp" line="154"/>
         <source>Balanced mode</source>
         <translation>平衡模式</translation>
     </message>
     <message>
-        <location filename="../plugins/power/pages/general-settings-page.cpp" line="153"/>
+        <location filename="../plugins/power/pages/general-settings-page.cpp" line="155"/>
         <source>High performance mode</source>
         <translation>高性能模式</translation>
     </message>
     <message>
-        <location filename="../plugins/power/pages/general-settings-page.cpp" line="395"/>
+        <location filename="../plugins/power/pages/general-settings-page.cpp" line="397"/>
         <source>ERROR</source>
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../plugins/power/pages/general-settings-page.cpp" line="495"/>
+        <location filename="../plugins/power/pages/general-settings-page.cpp" line="497"/>
         <source>%1hour</source>
         <translation>%1小时</translation>
     </message>
     <message>
-        <location filename="../plugins/power/pages/general-settings-page.cpp" line="499"/>
+        <location filename="../plugins/power/pages/general-settings-page.cpp" line="501"/>
         <source>%1minute</source>
         <translation>%1分钟</translation>
     </message>
@@ -1886,14 +1915,14 @@
         <translation>网卡:</translation>
     </message>
     <message>
-        <location filename="../plugins/system/pages/hardware-information/hardware-information.cpp" line="109"/>
-        <location filename="../plugins/system/pages/hardware-information/hardware-information.cpp" line="110"/>
-        <location filename="../plugins/system/pages/hardware-information/hardware-information.cpp" line="118"/>
+        <location filename="../plugins/system/pages/hardware-information/hardware-information.cpp" line="111"/>
+        <location filename="../plugins/system/pages/hardware-information/hardware-information.cpp" line="112"/>
+        <location filename="../plugins/system/pages/hardware-information/hardware-information.cpp" line="120"/>
         <source>Unknow</source>
         <translation>未知</translation>
     </message>
     <message>
-        <location filename="../plugins/system/pages/hardware-information/hardware-information.cpp" line="177"/>
+        <location filename="../plugins/system/pages/hardware-information/hardware-information.cpp" line="179"/>
         <source>%1 GB (%2 GB available)</source>
         <translation>%1 GB (%2 GB 可用)</translation>
     </message>
@@ -1955,22 +1984,22 @@
 <context>
     <name>ImageSelector</name>
     <message>
-        <location filename="../plugins/appearance/pages/wallpaper/widget/image-selector.cpp" line="104"/>
+        <location filename="../plugins/appearance/pages/wallpaper/widget/image-selector.cpp" line="106"/>
         <source>Add Image Failed</source>
         <translation>添加壁纸失败</translation>
     </message>
     <message>
-        <location filename="../plugins/appearance/pages/wallpaper/widget/image-selector.cpp" line="105"/>
+        <location filename="../plugins/appearance/pages/wallpaper/widget/image-selector.cpp" line="107"/>
         <source>The image already exists!</source>
         <translation>该壁纸已存在!</translation>
     </message>
     <message>
-        <location filename="../plugins/appearance/pages/wallpaper/widget/image-selector.cpp" line="193"/>
+        <location filename="../plugins/appearance/pages/wallpaper/widget/image-selector.cpp" line="195"/>
         <source>Delete image</source>
         <translation>删除壁纸</translation>
     </message>
     <message>
-        <location filename="../plugins/appearance/pages/wallpaper/widget/image-selector.cpp" line="194"/>
+        <location filename="../plugins/appearance/pages/wallpaper/widget/image-selector.cpp" line="196"/>
         <source>Are you sure you want to delete this picture?</source>
         <translation>您确定要删除此壁纸?</translation>
     </message>
@@ -2611,7 +2640,7 @@
         <translation type="unfinished">Form</translation>
     </message>
     <message>
-        <location filename="../plugins/timedate/widgets/kiran-time-zone.cpp" line="98"/>
+        <location filename="../plugins/timedate/widgets/kiran-time-zone.cpp" line="100"/>
         <source>Search in all time zones...</source>
         <translation>在所有时区中搜索...</translation>
     </message>
@@ -3027,12 +3056,12 @@ This is line 50 of the test text</source>
 这是第50行测试文字</translation>
     </message>
     <message>
-        <location filename="../plugins/mouse/pages/mouse-page.cpp" line="80"/>
+        <location filename="../plugins/mouse/pages/mouse-page.cpp" line="84"/>
         <source>Right Hand Mode</source>
         <translation>右手模式</translation>
     </message>
     <message>
-        <location filename="../plugins/mouse/pages/mouse-page.cpp" line="80"/>
+        <location filename="../plugins/mouse/pages/mouse-page.cpp" line="84"/>
         <source>Left Hand Mode</source>
         <translation>左手模式</translation>
     </message>
@@ -3397,33 +3426,33 @@ This is line 50 of the test text</source>
         <translation>从不</translation>
     </message>
     <message>
-        <location filename="../plugins/keyboard/utils/layout-list.cpp" line="144"/>
+        <location filename="../plugins/keyboard/utils/layout-list.cpp" line="146"/>
         <source>No search results, please search again...</source>
         <translation>无搜索结果，请重新搜索...</translation>
     </message>
     <message>
         <location filename="../plugins/display/src/display-config.cpp" line="468"/>
         <location filename="../plugins/display/src/display-config.h" line="134"/>
-        <location filename="../plugins/display/src/display-page.cpp" line="405"/>
-        <location filename="../plugins/display/src/display-page.cpp" line="424"/>
+        <location filename="../plugins/display/src/display-page.cpp" line="407"/>
+        <location filename="../plugins/display/src/display-page.cpp" line="426"/>
         <source>Tips</source>
         <translation>提示</translation>
     </message>
     <message>
         <location filename="../plugins/display/src/display-config.cpp" line="471"/>
         <location filename="../plugins/display/src/display-config.h" line="137"/>
-        <location filename="../plugins/display/src/display-page.cpp" line="408"/>
-        <location filename="../plugins/display/src/display-page.cpp" line="427"/>
+        <location filename="../plugins/display/src/display-page.cpp" line="410"/>
+        <location filename="../plugins/display/src/display-page.cpp" line="429"/>
         <source>OK(K)</source>
         <translation>确定(K)</translation>
     </message>
     <message>
-        <location filename="../plugins/display/src/display-page.cpp" line="413"/>
+        <location filename="../plugins/display/src/display-page.cpp" line="415"/>
         <source>Failed to apply display settings!%1</source>
         <translation>应用显示设置失败!%1</translation>
     </message>
     <message>
-        <location filename="../plugins/display/src/display-page.cpp" line="432"/>
+        <location filename="../plugins/display/src/display-page.cpp" line="434"/>
         <source>Fallback display setting failed! %1</source>
         <translation>回撤显示设置失败! %1</translation>
     </message>
@@ -3522,22 +3551,22 @@ This is line 50 of the test text</source>
 <context>
     <name>SelectAvatarPage</name>
     <message>
-        <location filename="../plugins/account/pages/select-avatar-page/select-avatar-page.cpp" line="147"/>
+        <location filename="../plugins/account/pages/select-avatar-page/select-avatar-page.cpp" line="149"/>
         <source>Confirm</source>
         <translation>确认</translation>
     </message>
     <message>
-        <location filename="../plugins/account/pages/select-avatar-page/select-avatar-page.cpp" line="162"/>
+        <location filename="../plugins/account/pages/select-avatar-page/select-avatar-page.cpp" line="164"/>
         <source>Return</source>
         <translation>返回</translation>
     </message>
     <message>
-        <location filename="../plugins/account/pages/select-avatar-page/select-avatar-page.cpp" line="179"/>
+        <location filename="../plugins/account/pages/select-avatar-page/select-avatar-page.cpp" line="181"/>
         <source>select picture</source>
         <translation>选择图片</translation>
     </message>
     <message>
-        <location filename="../plugins/account/pages/select-avatar-page/select-avatar-page.cpp" line="181"/>
+        <location filename="../plugins/account/pages/select-avatar-page/select-avatar-page.cpp" line="183"/>
         <source>image files(*.bmp *.jpg *.png *.tif *.gif *.pcx *.tga *.exif *.fpx *.svg *.psd *.cdr *.pcd *.dxf *.ufo *.eps *.ai *.raw *.WMF *.webp)</source>
         <translation>图片文件(*.bmp *.jpg *.png *.tif *.gif *.pcx *.tga *.exif *.fpx *.svg *.psd *.cdr *.pcd *.dxf *.ufo *.eps *.ai *.raw *.WMF *.webp)</translation>
     </message>
@@ -3565,17 +3594,17 @@ This is line 50 of the test text</source>
         <translation>计算机空闲时锁定屏幕</translation>
     </message>
     <message>
-        <location filename="../plugins/power/pages/server-general-settings.cpp" line="113"/>
+        <location filename="../plugins/power/pages/server-general-settings.cpp" line="115"/>
         <source>General Settings</source>
         <translation type="unfinished">通用设置</translation>
     </message>
     <message>
-        <location filename="../plugins/power/pages/server-general-settings.cpp" line="182"/>
+        <location filename="../plugins/power/pages/server-general-settings.cpp" line="184"/>
         <source>%1hour</source>
         <translation>%1小时</translation>
     </message>
     <message>
-        <location filename="../plugins/power/pages/server-general-settings.cpp" line="186"/>
+        <location filename="../plugins/power/pages/server-general-settings.cpp" line="188"/>
         <source>%1minute</source>
         <translation>%1分钟</translation>
     </message>
@@ -3613,8 +3642,8 @@ This is line 50 of the test text</source>
     </message>
     <message>
         <location filename="../plugins/keybinding/shortcut.ui" line="210"/>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="175"/>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="592"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="178"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="595"/>
         <source>Edit</source>
         <translation>编辑</translation>
     </message>
@@ -3626,8 +3655,8 @@ This is line 50 of the test text</source>
     <message>
         <location filename="../plugins/keybinding/shortcut.ui" line="346"/>
         <location filename="../plugins/keybinding/shortcut.ui" line="551"/>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="115"/>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="128"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="118"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="131"/>
         <source>Add</source>
         <translation>添加</translation>
     </message>
@@ -3723,149 +3752,149 @@ This is line 50 of the test text</source>
         <translation>返回</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="89"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="92"/>
         <source>Please enter a search keyword...</source>
         <translation>请输入搜索关键字...</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="101"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="104"/>
         <source>Required</source>
         <translation>必填</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="137"/>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="144"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="140"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="147"/>
         <source>Please press the new shortcut key</source>
         <translation>请输入新快捷键</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="173"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="176"/>
         <source>Finished</source>
         <translation>完成</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="227"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="230"/>
         <source>failed to load shortcut key data!</source>
         <translation>加载快捷键数据失败！</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="280"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="283"/>
         <source>List shortcut failed,error:%1</source>
         <translation>列出快捷键失败，错误:%1</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="323"/>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="419"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="326"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="422"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="324"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="327"/>
         <source>Get shortcut failed,error:</source>
         <translation>获取快捷键失败，错误：</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="408"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="411"/>
         <source>Open File</source>
         <translation>打开文件</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="410"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="413"/>
         <source>Desktop entries(*.desktop)</source>
         <translation>桌面文件(*.desktop)</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="644"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="647"/>
         <source>System</source>
         <translation>系统</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="646"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="649"/>
         <source>Sound</source>
         <translation>声音</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="648"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="651"/>
         <source>Accessibility</source>
         <translation>辅助功能</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="698"/>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="750"/>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="771"/>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="808"/>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="829"/>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="859"/>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="872"/>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="885"/>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="898"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="701"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="753"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="774"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="811"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="832"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="862"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="875"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="888"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="901"/>
         <source>Failed</source>
         <translation>失败</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="699"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="702"/>
         <source>Delete shortcut failed,error:</source>
         <translation>删除快捷键失败，错误：</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="712"/>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="789"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="715"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="792"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="713"/>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="790"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="716"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="793"/>
         <source>Please complete the shortcut information!</source>
         <translation>请完善快捷键信息！</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="722"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="725"/>
         <source>Set shortcut</source>
         <translation>设置快捷键</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="723"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="726"/>
         <source>Are you sure you want to disable this shortcut?</source>
         <translation>是否确定要禁用此快捷键？</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="751"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="754"/>
         <source>Modify system shortcut failed,error:</source>
         <translation>修改系统快捷键失败，错误：</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="772"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="775"/>
         <source>Modify custom shortcut failed,error:</source>
         <translation>修改自定义快捷键失败，错误：</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="809"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="812"/>
         <source>Add custom shortcut failed,error:</source>
         <translation>添加自定义快捷键失败，错误：</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="830"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="833"/>
         <source>Reset shortcut failed,error:</source>
         <translation>重置快捷键失败，错误：</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="860"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="863"/>
         <source>Cannot use shortcut &quot;%1&quot;,Shortcuts cannot be set to only modifier keys. Please add a regular key, like A-Z, and so on.</source>
         <translation>无法使用快捷键&quot;%1&quot;, 快捷键不能仅包含修饰键。请添加一个主键，如A-Z等。</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="873"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="876"/>
         <source>Cannot use shortcut &quot;%1&quot;,Please keep pressing the modifier keys such as Ctrl,Alt, and Shift before pressing the last key of the shortcut key</source>
         <translation>无法使用快捷键&quot;%1&quot;, 请保持按压Ctrl、Alt、Shift等修饰键后，再按压快捷键的最后一个键</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="886"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="889"/>
         <source>Cannot use shortcut &quot;%1&quot;,Please continue to input modifier keys like Ctrl, Alt, and Meta.</source>
         <translation>无法使用快捷键&quot;%1&quot;,暂不支持设置仅包含Shift修饰键的快捷键。请重新输入。</translation>
     </message>
     <message>
-        <location filename="../plugins/keybinding/shortcut.cpp" line="899"/>
+        <location filename="../plugins/keybinding/shortcut.cpp" line="902"/>
         <source>Shortcut keys %1 are already used in %2,Please try again!</source>
         <translation>快捷键%1已用于%2，请再试一次！</translation>
     </message>
@@ -3992,40 +4021,40 @@ This is line 50 of the test text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/system/pages/system-information/system-information.cpp" line="163"/>
-        <location filename="../plugins/system/pages/system-information/system-information.cpp" line="164"/>
         <location filename="../plugins/system/pages/system-information/system-information.cpp" line="165"/>
         <location filename="../plugins/system/pages/system-information/system-information.cpp" line="166"/>
+        <location filename="../plugins/system/pages/system-information/system-information.cpp" line="167"/>
+        <location filename="../plugins/system/pages/system-information/system-information.cpp" line="168"/>
         <source>Unknow</source>
         <translation>未知</translation>
     </message>
     <message>
-        <location filename="../plugins/system/pages/system-information/system-information.cpp" line="272"/>
+        <location filename="../plugins/system/pages/system-information/system-information.cpp" line="274"/>
         <source>UnActivated</source>
         <translation>未激活</translation>
     </message>
     <message>
-        <location filename="../plugins/system/pages/system-information/system-information.cpp" line="281"/>
+        <location filename="../plugins/system/pages/system-information/system-information.cpp" line="283"/>
         <source>Activation code has expired</source>
         <translation>激活码已过期</translation>
     </message>
     <message>
-        <location filename="../plugins/system/pages/system-information/system-information.cpp" line="286"/>
+        <location filename="../plugins/system/pages/system-information/system-information.cpp" line="288"/>
         <source>Permanently activated</source>
         <translation>永久激活</translation>
     </message>
     <message>
-        <location filename="../plugins/system/pages/system-information/system-information.cpp" line="291"/>
+        <location filename="../plugins/system/pages/system-information/system-information.cpp" line="293"/>
         <source>Activated</source>
         <translation>已激活</translation>
     </message>
     <message>
-        <location filename="../plugins/system/pages/system-information/system-information.cpp" line="321"/>
+        <location filename="../plugins/system/pages/system-information/system-information.cpp" line="323"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../plugins/system/pages/system-information/system-information.cpp" line="321"/>
+        <location filename="../plugins/system/pages/system-information/system-information.cpp" line="323"/>
         <source>Failed to open the license activator</source>
         <translation>启动激活许可证弹窗失败</translation>
     </message>
@@ -4256,32 +4285,32 @@ This is line 50 of the test text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/mouse/pages/touchpad-page.cpp" line="282"/>
+        <location filename="../plugins/mouse/pages/touchpad-page.cpp" line="285"/>
         <source>Right Hand Mode</source>
         <translation>右手模式</translation>
     </message>
     <message>
-        <location filename="../plugins/mouse/pages/touchpad-page.cpp" line="282"/>
+        <location filename="../plugins/mouse/pages/touchpad-page.cpp" line="285"/>
         <source>Left Hand Mode</source>
         <translation>左手模式</translation>
     </message>
     <message>
-        <location filename="../plugins/mouse/pages/touchpad-page.cpp" line="286"/>
+        <location filename="../plugins/mouse/pages/touchpad-page.cpp" line="289"/>
         <source>Press and Tap</source>
         <translation>按键和轻触</translation>
     </message>
     <message>
-        <location filename="../plugins/mouse/pages/touchpad-page.cpp" line="286"/>
+        <location filename="../plugins/mouse/pages/touchpad-page.cpp" line="289"/>
         <source>Tap</source>
         <translation>轻触</translation>
     </message>
     <message>
-        <location filename="../plugins/mouse/pages/touchpad-page.cpp" line="290"/>
+        <location filename="../plugins/mouse/pages/touchpad-page.cpp" line="293"/>
         <source>Two Finger Scroll</source>
         <translation>两指滑动</translation>
     </message>
     <message>
-        <location filename="../plugins/mouse/pages/touchpad-page.cpp" line="290"/>
+        <location filename="../plugins/mouse/pages/touchpad-page.cpp" line="293"/>
         <source>Edge Scroll</source>
         <translation>边缘滑动</translation>
     </message>
