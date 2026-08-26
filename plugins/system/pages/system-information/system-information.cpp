@@ -18,7 +18,6 @@
 #include "license-agreement.h"
 #include "ui_system-information.h"
 
-#include <QScroller>
 #include <kiran-log/qt5-log-i.h>
 #include <kiran-message-box.h>
 #include <style-property.h>
@@ -32,6 +31,7 @@
 #include <QJsonValue>
 #include <QPainter>
 #include <QProcess>
+#include <QScroller>
 
 #define HOST_NAME "host_name"
 #define ARCH "arch"
@@ -87,11 +87,13 @@ void SystemInformation::init()
 
     // clang-format on
     connect(ui->btn_change_name, &QPushButton::clicked, this, &SystemInformation::handleChangeHostName);
+    connect(ui->btn_resources_monitor, &QPushButton::clicked, this, &SystemInformation::handleResourcesMonitor);
     Kiran::StylePropertyHelper::setButtonType(ui->btn_change_name, Kiran::BUTTON_Default);
     Kiran::StylePropertyHelper::setButtonType(ui->btn_EULA, Kiran::BUTTON_Default);
     Kiran::StylePropertyHelper::setButtonType(ui->btn_version_license, Kiran::BUTTON_Default);
     Kiran::StylePropertyHelper::setButtonType(ui->btn_license_show, Kiran::BUTTON_Default);
     Kiran::StylePropertyHelper::setButtonType(ui->btn_privacy_policy, Kiran::BUTTON_Default);
+    Kiran::StylePropertyHelper::setButtonType(ui->btn_resources_monitor, Kiran::BUTTON_Default);
 }
 
 bool SystemInformation::initUI()
@@ -162,6 +164,11 @@ bool SystemInformation::initUI()
 #else
     // #35818 在系统中不再单独提供隐私协议
     ui->widget_privacy_policy->hide();
+#endif
+
+#ifndef ENABLE_SYSTEM_MONITOR
+    // 默认不显示跳转系统监视器按钮，开启 -DENABLE_SYSTEM_MONITOR=ON 后显示
+    ui->widget_resources_monitor->hide();
 #endif
 
     return true;
@@ -319,6 +326,14 @@ void SystemInformation::handleShowLicenseDialog()
     if (!QProcess::startDetached("/usr/bin/ksl-os-gui", QStringList()))
     {
         KiranMessageBox::message(this, tr("Error"), tr("Failed to open the license activator"), KiranMessageBox::Ok);
+    }
+}
+
+void SystemInformation::handleResourcesMonitor()
+{
+    if (!QProcess::startDetached("/usr/bin/mate-system-monitor", QStringList()))
+    {
+        KiranMessageBox::message(this, tr("Error"), tr("Failed to open the system monitor"), KiranMessageBox::Ok);
     }
 }
 
