@@ -5063,4 +5063,97 @@ This is line 50 of the test text</source>
         <translation>yyyy年</translation>
     </message>
 </context>
+<context>
+    <name>PrinterCard</name>
+    <message>
+        <source>Default Printer</source>
+        <translation>默认打印机</translation>
+    </message>
+    <message>
+        <source>Set as Default</source>
+        <translation>设为默认</translation>
+    </message>
+    <message>
+        <source>Print Test Page</source>
+        <translation>打印测试页</translation>
+    </message>
+    <message>
+        <source>Properties</source>
+        <translation>属性</translation>
+    </message>
+    <message>
+        <source>View Print Queue</source>
+        <translation>查看打印队列</translation>
+    </message>
+    <message>
+        <source>Manage Printer</source>
+        <translation>管理打印机</translation>
+    </message>
+    <message>
+        <source>Ready</source>
+        <translation>就绪</translation>
+    </message>
+    <message>
+        <source>Offline</source>
+        <translation>离线</translation>
+    </message>
+    <message>
+        <source>Model: %1</source>
+        <translation>型号: %1</translation>
+    </message>
+</context>
+<context>
+    <name>PrinterPage</name>
+    <message>
+        <source>Printer Settings</source>
+        <translation>打印设置</translation>
+    </message>
+    <message>
+        <source>Search printers...</source>
+        <translation>搜索打印机...</translation>
+    </message>
+    <message>
+        <source>Add Printer</source>
+        <translation>添加打印机</translation>
+    </message>
+    <message>
+        <source>Print service is not running</source>
+        <translation>打印服务未运行</translation>
+    </message>
+    <message>
+        <source>Cannot connect to the CUPS service. Please start the print service before managing printers.</source>
+        <translation>当前无法连接到 CUPS 服务，请先启动打印服务后再管理打印机</translation>
+    </message>
+    <message>
+        <source>Start Service</source>
+        <translation>启动服务</translation>
+    </message>
+    <message>
+        <source>Retry</source>
+        <translation>重试</translation>
+    </message>
+    <message>
+        <source>%1 printer(s)</source>
+        <translation>共 %1 台打印机</translation>
+    </message>
+    <message>
+        <source>Refresh</source>
+        <translation>刷新</translation>
+    </message>
+    <message>
+        <source>Print service unavailable</source>
+        <translation>打印服务不可用</translation>
+    </message>
+    <message>
+        <source>Test Page</source>
+        <translation>测试页</translation>
+    </message>
+</context>
+<context>
+    <name>PrinterSubItem</name>
+    <message>
+        <source>Printer Settings</source>
+        <translation>打印设置</translation>
+    </message>
+</context>
 </TS>
