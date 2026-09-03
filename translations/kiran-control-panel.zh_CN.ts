@@ -7284,4 +7284,120 @@ This is line 50 of the test text</source>
         <translation type="vanished">系统信息</translation>
     </message>
 </context>
+<context>
+    <name>PrinterCard</name>
+    <message>
+        <location filename="../plugins/printer/pages/printer-card.cpp" line="115"/>
+        <source>Default Printer</source>
+        <translation>默认打印机</translation>
+    </message>
+    <message>
+        <location filename="../plugins/printer/pages/printer-card.cpp" line="126"/>
+        <source>Set as Default</source>
+        <translation>设为默认</translation>
+    </message>
+    <message>
+        <location filename="../plugins/printer/pages/printer-card.cpp" line="133"/>
+        <source>Print Test Page</source>
+        <translation>打印测试页</translation>
+    </message>
+    <message>
+        <location filename="../plugins/printer/pages/printer-card.cpp" line="140"/>
+        <source>Properties</source>
+        <translation>属性</translation>
+    </message>
+    <message>
+        <location filename="../plugins/printer/pages/printer-card.cpp" line="152"/>
+        <source>View Print Queue</source>
+        <translation>查看打印队列</translation>
+    </message>
+    <message>
+        <location filename="../plugins/printer/pages/printer-card.cpp" line="156"/>
+        <source>Manage Printer</source>
+        <translation>管理打印机</translation>
+    </message>
+    <message>
+        <location filename="../plugins/printer/pages/printer-card.cpp" line="171"/>
+        <source>Ready</source>
+        <translation>就绪</translation>
+    </message>
+    <message>
+        <location filename="../plugins/printer/pages/printer-card.cpp" line="171"/>
+        <source>Offline</source>
+        <translation>离线</translation>
+    </message>
+    <message>
+        <location filename="../plugins/printer/pages/printer-card.cpp" line="173"/>
+        <source>Model: %1</source>
+        <translation>型号: %1</translation>
+    </message>
+</context>
+<context>
+    <name>PrinterPage</name>
+    <message>
+        <location filename="../plugins/printer/pages/printer-page.ui" line="14"/>
+        <location filename="../plugins/printer/pages/printer-page.ui" line="40"/>
+        <source>Printer Settings</source>
+        <translation>打印设置</translation>
+    </message>
+    <message>
+        <location filename="../plugins/printer/pages/printer-page.ui" line="54"/>
+        <source>Search printers...</source>
+        <translation>搜索打印机...</translation>
+    </message>
+    <message>
+        <location filename="../plugins/printer/pages/printer-page.ui" line="79"/>
+        <source>Add Printer</source>
+        <translation>添加打印机</translation>
+    </message>
+    <message>
+        <location filename="../plugins/printer/pages/printer-page.ui" line="209"/>
+        <source>Print service is not running</source>
+        <translation>打印服务未运行</translation>
+    </message>
+    <message>
+        <location filename="../plugins/printer/pages/printer-page.ui" line="222"/>
+        <source>Cannot connect to the CUPS service. Please start the print service before managing printers.</source>
+        <translation>当前无法连接到 CUPS 服务，请先启动打印服务后再管理打印机</translation>
+    </message>
+    <message>
+        <location filename="../plugins/printer/pages/printer-page.ui" line="250"/>
+        <source>Start Service</source>
+        <translation>启动服务</translation>
+    </message>
+    <message>
+        <location filename="../plugins/printer/pages/printer-page.ui" line="257"/>
+        <source>Retry</source>
+        <translation>重试</translation>
+    </message>
+    <message>
+        <location filename="../plugins/printer/pages/printer-page.ui" line="298"/>
+        <location filename="../plugins/printer/pages/printer-page.cpp" line="194"/>
+        <source>%1 printer(s)</source>
+        <translation>共 %1 台打印机</translation>
+    </message>
+    <message>
+        <location filename="../plugins/printer/pages/printer-page.ui" line="325"/>
+        <source>Refresh</source>
+        <translation>刷新</translation>
+    </message>
+    <message>
+        <location filename="../plugins/printer/pages/printer-page.cpp" line="222"/>
+        <source>Print service unavailable</source>
+        <translation>打印服务不可用</translation>
+    </message>
+    <message>
+        <location filename="../plugins/printer/pages/printer-page.cpp" line="280"/>
+        <source>Test Page</source>
+        <translation>测试页</translation>
+    </message>
+</context>
+<context>
+    <name>PrinterSubItem</name>
+    <message>
+        <location filename="../plugins/printer/printer-subitem.h" line="43"/>
+        <source>Printer Settings</source>
+        <translation>打印设置</translation>
+    </message>
+</context>
 </TS>
