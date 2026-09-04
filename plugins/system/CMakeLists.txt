@@ -19,6 +19,11 @@ endif ()
 if (ENABLE_SYSTEM_MONITOR)
     add_definitions(-DENABLE_SYSTEM_MONITOR)
 endif ()
+
+if (ENABLE_DISK_MANAGEMENT)
+    add_definitions(-DDISK_MANAGEMENT_VISIBLE)
+endif ()
+
 file(GLOB_RECURSE SYSTEM_SRC ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp
                              ${CMAKE_CURRENT_SOURCE_DIR}/*.h
                              ${CMAKE_CURRENT_SOURCE_DIR}/*.ui)

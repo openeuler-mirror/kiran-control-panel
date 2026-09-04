@@ -2810,7 +2810,11 @@
         <source>%1 GB (%2 GB available)</source>
         <translation>%1 GB (%2 GB 可用)</translation>
     </message>
-</context>
+
+        <message>
+            <source>Show</source>
+            <translation>查看</translation>
+        </message></context>
 <context>
     <name>HardwareInformationWidget</name>
     <message>
