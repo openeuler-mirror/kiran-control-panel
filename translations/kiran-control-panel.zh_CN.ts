@@ -1271,77 +1271,77 @@
 <context>
     <name>FacePage</name>
     <message>
-        <location filename="../plugins/authentication/pages/face-page.cpp" line="78"/>
+        <location filename="../plugins/authentication/pages/face-page.cpp" line="93"/>
         <source>Default face device</source>
         <translation>默认人脸设备</translation>
     </message>
     <message>
-        <location filename="../plugins/authentication/pages/face-page.cpp" line="79"/>
+        <location filename="../plugins/authentication/pages/face-page.cpp" line="94"/>
         <source>face feature list</source>
         <translation>人脸特征列表</translation>
     </message>
     <message>
-        <location filename="../plugins/authentication/pages/face-page.cpp" line="77"/>
+        <location filename="../plugins/authentication/pages/face-page.cpp" line="92"/>
         <source>face</source>
         <translation>人脸</translation>
     </message>
     <message>
-        <location filename="../plugins/authentication/pages/face-page.cpp" line="108"/>
+        <location filename="../plugins/authentication/pages/face-page.cpp" line="136"/>
         <source>Capture</source>
         <translation>拍照/录入</translation>
     </message>
     <message>
-        <location filename="../plugins/authentication/pages/face-page.cpp" line="115"/>
+        <location filename="../plugins/authentication/pages/face-page.cpp" line="143"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="../plugins/authentication/pages/face-page.cpp" line="140"/>
+        <location filename="../plugins/authentication/pages/face-page.cpp" line="178"/>
         <source>Camera error, please check the camera</source>
         <translation>摄像头异常,请检查摄像头</translation>
     </message>
     <message>
-        <location filename="../plugins/authentication/pages/face-page.cpp" line="146"/>
+        <location filename="../plugins/authentication/pages/face-page.cpp" line="198"/>
         <source>Please face the camera and click Capture</source>
         <translation>请面对摄像头,点击拍照/录入</translation>
     </message>
     <message>
-        <location filename="../plugins/authentication/pages/face-page.cpp" line="183"/>
+        <location filename="../plugins/authentication/pages/face-page.cpp" line="242"/>
         <source>Capturing...</source>
         <translation>正在拍照...</translation>
     </message>
     <message>
-        <location filename="../plugins/authentication/pages/face-page.cpp" line="199"/>
+        <location filename="../plugins/authentication/pages/face-page.cpp" line="258"/>
         <source>Capture failed, please try again</source>
         <translation>拍照失败,请重试</translation>
     </message>
     <message>
-        <location filename="../plugins/authentication/pages/face-page.cpp" line="213"/>
+        <location filename="../plugins/authentication/pages/face-page.cpp" line="272"/>
         <source>Capture failed,%1</source>
         <translation>拍照失败,%1</translation>
     </message>
     <message>
-        <location filename="../plugins/authentication/pages/face-page.cpp" line="237"/>
+        <location filename="../plugins/authentication/pages/face-page.cpp" line="304"/>
         <source>Start enroll failed,%1</source>
         <translation>开始录入失败,%1</translation>
     </message>
     <message>
-        <location filename="../plugins/authentication/pages/face-page.cpp" line="243"/>
+        <location filename="../plugins/authentication/pages/face-page.cpp" line="310"/>
         <source>Processing...</source>
         <translation>正在处理...</translation>
     </message>
     <message>
-        <location filename="../plugins/authentication/pages/face-page.cpp" line="302"/>
+        <location filename="../plugins/authentication/pages/face-page.cpp" line="369"/>
         <source>Failed to record(%1), please try again</source>
         <translation>录入特征失败(%1),请重试</translation>
     </message>
     <message>
-        <location filename="../plugins/authentication/pages/face-page.cpp" line="294"/>
+        <location filename="../plugins/authentication/pages/face-page.cpp" line="361"/>
         <source>The biometric features were successfully recorded. The feature name is:%1</source>
         <translation>特征已成功录入，特征名为:%1</translation>
     </message>
     <message>
-        <location filename="../plugins/authentication/pages/face-page.cpp" line="295"/>
+        <location filename="../plugins/authentication/pages/face-page.cpp" line="362"/>
         <source>Tips</source>
         <translation>提示</translation>
     </message>
@@ -1398,6 +1398,151 @@
         <location filename="../plugins/authentication/pages/finger-page.cpp" line="89"/>
         <source>Default %1 device</source>
         <translation>默认%1设备</translation>
+    </message>
+</context>
+<context>
+    <name>FontModel</name>
+    <message>
+        <location filename="../plugins/font/widgets/font-table.cpp" line="208"/>
+        <source>Font Name</source>
+        <translation>字体名称</translation>
+    </message>
+    <message>
+        <location filename="../plugins/font/widgets/font-table.cpp" line="210"/>
+        <source>Font Style</source>
+        <translation>字体样式</translation>
+    </message>
+    <message>
+        <location filename="../plugins/font/widgets/font-table.cpp" line="212"/>
+        <source>Source</source>
+        <translation>来源</translation>
+    </message>
+    <message>
+        <location filename="../plugins/font/widgets/font-table.cpp" line="214"/>
+        <source>Status</source>
+        <translation>状态</translation>
+    </message>
+    <message>
+        <location filename="../plugins/font/widgets/font-table.cpp" line="178"/>
+        <source>System</source>
+        <translation>系统</translation>
+    </message>
+    <message>
+        <location filename="../plugins/font/widgets/font-table.cpp" line="178"/>
+        <source>User</source>
+        <translation>用户</translation>
+    </message>
+    <message>
+        <location filename="../plugins/font/widgets/font-table.cpp" line="180"/>
+        <source>Enabled</source>
+        <translation>已启用</translation>
+    </message>
+    <message>
+        <location filename="../plugins/font/widgets/font-table.cpp" line="180"/>
+        <source>Disabled</source>
+        <translation>已禁用</translation>
+    </message>
+</context>
+<context>
+    <name>FontPage</name>
+    <message>
+        <location filename="../plugins/font/font-page.ui" line="14"/>
+        <source>Form</source>
+        <translation>Form</translation>
+    </message>
+    <message>
+        <location filename="../plugins/font/font-page.ui" line="40"/>
+        <source>Font Management</source>
+        <translation>字体管理</translation>
+    </message>
+    <message>
+        <location filename="../plugins/font/font-page.ui" line="47"/>
+        <source>Manage fonts installed in the system; supports adding and deleting fonts.</source>
+        <translation>管理系统中安装的字体，支持新增、删除字体。</translation>
+    </message>
+    <message>
+        <location filename="../plugins/font/font-page.ui" line="76"/>
+        <source>Add Font</source>
+        <translation>新增字体</translation>
+    </message>
+    <message>
+        <location filename="../plugins/font/font-page.ui" line="95"/>
+        <location filename="../plugins/font/font-page.cpp" line="162"/>
+        <source>Delete Font</source>
+        <translation>删除字体</translation>
+    </message>
+    <message>
+        <location filename="../plugins/font/font-page.cpp" line="84"/>
+        <source>System Font</source>
+        <translation>系统字体</translation>
+    </message>
+    <message>
+        <location filename="../plugins/font/font-page.cpp" line="85"/>
+        <source>User Font</source>
+        <translation>用户字体</translation>
+    </message>
+    <message>
+        <location filename="../plugins/font/font-page.cpp" line="76"/>
+        <source>Search Font</source>
+        <translation>搜索字体</translation>
+    </message>
+    <message>
+        <location filename="../plugins/font/font-page.cpp" line="130"/>
+        <source>Select Font Files</source>
+        <translation>选择字体文件</translation>
+    </message>
+    <message>
+        <location filename="../plugins/font/font-page.cpp" line="132"/>
+        <source>Font Files (*.ttf *.otf *.ttc *.otc *.woff *.woff2 *.pcf *.bdf *.pfa *.pfb);;All Files (*)</source>
+        <translation>字体文件 (*.ttf *.otf *.ttc *.otc *.woff *.woff2 *.pcf *.bdf *.pfa *.pfb);;所有文件 (*)</translation>
+    </message>
+    <message>
+        <location filename="../plugins/font/font-page.cpp" line="161"/>
+        <source>Are you sure you want to delete the selected %1 fonts?</source>
+        <translation>确定要删除选中的 %1 个字体吗？</translation>
+    </message>
+    <message>
+        <location filename="../plugins/font/font-page.cpp" line="160"/>
+        <source>Are you sure you want to delete font &quot;%1 %2&quot;?</source>
+        <translation>确定要删除字体“%1 %2”吗？</translation>
+    </message>
+    <message>
+        <location filename="../plugins/font/font-page.cpp" line="207"/>
+        <source>Failed to open the font viewer.</source>
+        <translation>无法打开字体查看器。</translation>
+    </message>
+    <message>
+        <location filename="../plugins/font/font-page.cpp" line="213"/>
+        <source>Error</source>
+        <translation>错误</translation>
+    </message>
+    <message>
+        <location filename="../plugins/font/font-page.cpp" line="252"/>
+        <source>Disable</source>
+        <translation>禁用</translation>
+    </message>
+    <message>
+        <location filename="../plugins/font/font-page.cpp" line="254"/>
+        <source>Enable</source>
+        <translation>启用</translation>
+    </message>
+    <message>
+        <location filename="../plugins/font/font-page.cpp" line="256"/>
+        <source>Delete</source>
+        <translation>删除</translation>
+    </message>
+    <message>
+        <location filename="../plugins/font/font-page.cpp" line="262"/>
+        <source>Open with Font Viewer</source>
+        <translation>使用字体查看器打开</translation>
+    </message>
+</context>
+<context>
+    <name>FontSubItem</name>
+    <message>
+        <location filename="../plugins/font/font-subitem.cpp" line="45"/>
+        <source>Font Management</source>
+        <translation>字体管理</translation>
     </message>
 </context>
 <context>
@@ -3480,6 +3625,63 @@ This is line 50 of the test text</source>
         <location filename="../plugins/upgrade/upgrade-page.cpp" line="43"/>
         <source>Retry</source>
         <translation>重试</translation>
+    </message>
+    <message>
+        <location filename="../plugins/font/privileged-helper.cpp" line="68"/>
+        <source>Font helper is not installed: %1</source>
+        <translation>未安装字体助手程序：%1</translation>
+    </message>
+    <message>
+        <location filename="../plugins/font/privileged-helper.cpp" line="82"/>
+        <source>Failed to start pkexec.</source>
+        <translation>无法启动 pkexec。</translation>
+    </message>
+    <message>
+        <location filename="../plugins/font/privileged-helper.cpp" line="90"/>
+        <source>Privileged operation timed out.</source>
+        <translation>提权操作超时。</translation>
+    </message>
+    <message>
+        <location filename="../plugins/font/privileged-helper.cpp" line="102"/>
+        <source>Authorization was cancelled or pkexec is unavailable.</source>
+        <translation>授权已取消，或 pkexec 不可用。</translation>
+    </message>
+    <message>
+        <location filename="../plugins/font/privileged-helper.cpp" line="106"/>
+        <source>Privileged operation failed.</source>
+        <translation>提权操作失败。</translation>
+    </message>
+    <message>
+        <location filename="../plugins/font/privileged-helper.cpp" line="30"/>
+        <source>Failed to create a temporary directory.</source>
+        <translation>无法创建临时目录。</translation>
+    </message>
+    <message>
+        <location filename="../plugins/font/privileged-helper.cpp" line="48"/>
+        <source>Failed to stage font file: %1</source>
+        <translation>无法暂存字体文件：%1</translation>
+    </message>
+    <message>
+        <location filename="../plugins/font/font-manager.cpp" line="190"/>
+        <location filename="../plugins/font/font-manager.cpp" line="206"/>
+        <location filename="../plugins/font/font-manager.cpp" line="224"/>
+        <source>Not a valid font file: %1</source>
+        <translation>不是有效的字体文件：%1</translation>
+    </message>
+    <message>
+        <location filename="../plugins/font/font-manager.cpp" line="451"/>
+        <source>Failed to initialize fontconfig</source>
+        <translation>初始化 fontconfig 失败</translation>
+    </message>
+    <message>
+        <location filename="../plugins/font/font-manager.cpp" line="463"/>
+        <source>Font file not found: %1</source>
+        <translation>未找到字体文件：%1</translation>
+    </message>
+    <message>
+        <location filename="../plugins/font/font-manager.cpp" line="478"/>
+        <source>Font already installed: %1, %2</source>
+        <translation>字体已安装：%1，%2</translation>
     </message>
 </context>
 <context>
