@@ -2,7 +2,7 @@
 <schemalist>
     <schema id="com.kylinsec.kiran.control-panel.plugin" path="/com/kylinsec/kiran/control-panel/">
         <key name="disabled-plugins" type="as">
-            <default>[]</default>
+            <default>['font']</default>
             <summary>Disable Plugins</summary>
             <description>Disabled plug-ins.</description>
         </key>
