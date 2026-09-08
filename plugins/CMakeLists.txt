@@ -23,4 +23,6 @@ if(ENABLE_USER_GROUP)
     add_subdirectory(group)
 endif()
 
+add_subdirectory(font)
+
 #add_subdirectory(test)

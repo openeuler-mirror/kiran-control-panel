@@ -93,4 +93,11 @@
         <file>images/desktop-file.svg</file>
     </qresource>
 
+    <qresource prefix="/kcp-font">
+        <file>images/add.svg</file>
+        <file>images/trash.svg</file>
+        <file>images/enabled.svg</file>
+        <file>images/disabled.svg</file>
+    </qresource>
+
 </RCC>

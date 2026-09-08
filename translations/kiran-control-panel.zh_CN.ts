@@ -165,7 +165,7 @@
     <message>
         <location filename="../plugins/group/src/pages/add-users-page/add-users-page.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Form</translation>
     </message>
     <message>
         <location filename="../plugins/group/src/pages/add-users-page/add-users-page.ui" line="40"/>
@@ -693,7 +693,7 @@
     <message>
         <location filename="../plugins/system/pages/system-information/change-host-name-widget.ui" line="32"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Form</translation>
     </message>
     <message>
         <location filename="../plugins/system/pages/system-information/change-host-name-widget.ui" line="107"/>
@@ -1356,7 +1356,7 @@
     <message>
         <location filename="../plugins/display/src/device-panel.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Form</translation>
     </message>
     <message>
         <location filename="../plugins/display/src/device-panel.ui" line="122"/>
@@ -2052,6 +2052,151 @@
     </message>
 </context>
 <context>
+    <name>FontModel</name>
+    <message>
+        <location filename="../plugins/font/widgets/font-table.cpp" line="206"/>
+        <source>Font Name</source>
+        <translation>字体名称</translation>
+    </message>
+    <message>
+        <location filename="../plugins/font/widgets/font-table.cpp" line="208"/>
+        <source>Font Style</source>
+        <translation>字体样式</translation>
+    </message>
+    <message>
+        <location filename="../plugins/font/widgets/font-table.cpp" line="210"/>
+        <source>Source</source>
+        <translation>来源</translation>
+    </message>
+    <message>
+        <location filename="../plugins/font/widgets/font-table.cpp" line="212"/>
+        <source>Status</source>
+        <translation>状态</translation>
+    </message>
+    <message>
+        <location filename="../plugins/font/widgets/font-table.cpp" line="176"/>
+        <source>System</source>
+        <translation>系统</translation>
+    </message>
+    <message>
+        <location filename="../plugins/font/widgets/font-table.cpp" line="176"/>
+        <source>User</source>
+        <translation>用户</translation>
+    </message>
+    <message>
+        <location filename="../plugins/font/widgets/font-table.cpp" line="178"/>
+        <source>Enabled</source>
+        <translation>已启用</translation>
+    </message>
+    <message>
+        <location filename="../plugins/font/widgets/font-table.cpp" line="178"/>
+        <source>Disabled</source>
+        <translation>已禁用</translation>
+    </message>
+</context>
+<context>
+    <name>FontPage</name>
+    <message>
+        <location filename="../plugins/font/font-page.ui" line="14"/>
+        <source>Form</source>
+        <translation>Form</translation>
+    </message>
+    <message>
+        <location filename="../plugins/font/font-page.ui" line="40"/>
+        <source>Font Management</source>
+        <translation>字体管理</translation>
+    </message>
+    <message>
+        <location filename="../plugins/font/font-page.ui" line="47"/>
+        <source>Manage fonts installed in the system; supports adding and deleting fonts.</source>
+        <translation>管理系统中安装的字体，支持新增、删除字体。</translation>
+    </message>
+    <message>
+        <location filename="../plugins/font/font-page.ui" line="76"/>
+        <source>Add Font</source>
+        <translation>新增字体</translation>
+    </message>
+    <message>
+        <location filename="../plugins/font/font-page.ui" line="95"/>
+        <location filename="../plugins/font/font-page.cpp" line="161"/>
+        <source>Delete Font</source>
+        <translation>删除字体</translation>
+    </message>
+    <message>
+        <location filename="../plugins/font/font-page.cpp" line="83"/>
+        <source>System Font</source>
+        <translation>系统字体</translation>
+    </message>
+    <message>
+        <location filename="../plugins/font/font-page.cpp" line="84"/>
+        <source>User Font</source>
+        <translation>用户字体</translation>
+    </message>
+    <message>
+        <location filename="../plugins/font/font-page.cpp" line="75"/>
+        <source>Search Font</source>
+        <translation>搜索字体</translation>
+    </message>
+    <message>
+        <location filename="../plugins/font/font-page.cpp" line="129"/>
+        <source>Select Font Files</source>
+        <translation>选择字体文件</translation>
+    </message>
+    <message>
+        <location filename="../plugins/font/font-page.cpp" line="131"/>
+        <source>Font Files (*.ttf *.otf *.ttc *.otc *.woff *.woff2 *.pcf *.bdf *.pfa *.pfb);;All Files (*)</source>
+        <translation>字体文件 (*.ttf *.otf *.ttc *.otc *.woff *.woff2 *.pcf *.bdf *.pfa *.pfb);;所有文件 (*)</translation>
+    </message>
+    <message>
+        <location filename="../plugins/font/font-page.cpp" line="160"/>
+        <source>Are you sure you want to delete the selected %1 fonts?</source>
+        <translation>确定要删除选中的 %1 个字体吗？</translation>
+    </message>
+    <message>
+        <location filename="../plugins/font/font-page.cpp" line="159"/>
+        <source>Are you sure you want to delete font &quot;%1 %2&quot;?</source>
+        <translation>确定要删除字体“%1 %2”吗？</translation>
+    </message>
+    <message>
+        <location filename="../plugins/font/font-page.cpp" line="206"/>
+        <source>Failed to open the font viewer.</source>
+        <translation>无法打开字体查看器。</translation>
+    </message>
+    <message>
+        <location filename="../plugins/font/font-page.cpp" line="212"/>
+        <source>Error</source>
+        <translation>错误</translation>
+    </message>
+    <message>
+        <location filename="../plugins/font/font-page.cpp" line="251"/>
+        <source>Disable</source>
+        <translation>禁用</translation>
+    </message>
+    <message>
+        <location filename="../plugins/font/font-page.cpp" line="253"/>
+        <source>Enable</source>
+        <translation>启用</translation>
+    </message>
+    <message>
+        <location filename="../plugins/font/font-page.cpp" line="255"/>
+        <source>Delete</source>
+        <translation>删除</translation>
+    </message>
+    <message>
+        <location filename="../plugins/font/font-page.cpp" line="261"/>
+        <source>Open with Font Viewer</source>
+        <translation>使用字体查看器打开</translation>
+    </message>
+</context>
+<context>
+    <name>FontSubItem</name>
+    <message>
+        <location filename="../plugins/font/font-subitem.cpp" line="45"/>
+        <source>Font Management</source>
+        <translation>字体管理</translation>
+    </message>
+</context>
+<context>
     <name>Fonts</name>
     <message>
         <location filename="../plugins/appearance/pages/font/fonts.ui" line="14"/>
@@ -2406,7 +2551,7 @@
     <message>
         <location filename="../plugins/group/src/pages/group-info-page/group-info-page.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Form</translation>
     </message>
     <message>
         <location filename="../plugins/group/src/pages/group-info-page/group-info-page.ui" line="178"/>
@@ -2602,7 +2747,7 @@
     <message>
         <location filename="../plugins/system/pages/hardware-information/hardware-information.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Form</translation>
     </message>
     <message>
         <location filename="../plugins/system/pages/hardware-information/hardware-information.ui" line="147"/>
@@ -2706,7 +2851,7 @@
     <message>
         <location filename="../plugins/appearance/pages/theme/icon/icon-theme-page.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Form</translation>
     </message>
     <message>
         <location filename="../plugins/appearance/pages/theme/icon/icon-theme-page.ui" line="35"/>
@@ -3394,7 +3539,7 @@
     <message>
         <location filename="../plugins/timedate/widgets/kiran-date-picker-widget.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Form</translation>
     </message>
 </context>
 <context>
@@ -3410,7 +3555,7 @@
     <message>
         <location filename="../lib/common-widgets/kiran-module-widget/kiran-module-widget.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Form</translation>
     </message>
 </context>
 <context>
@@ -3462,7 +3607,7 @@
     <message>
         <location filename="../plugins/timedate/widgets/kiran-time-picker-widget.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Form</translation>
     </message>
 </context>
 <context>
@@ -3470,7 +3615,7 @@
     <message>
         <location filename="../plugins/timedate/widgets/kiran-time-zone.ui" line="23"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Form</translation>
     </message>
     <message>
         <location filename="../plugins/timedate/widgets/kiran-time-zone.cpp" line="97"/>
@@ -3483,7 +3628,7 @@
     <message>
         <location filename="../plugins/timedate/widgets/kiran-time-zone-item.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Form</translation>
     </message>
     <message>
         <location filename="../plugins/timedate/widgets/kiran-time-zone-item.cpp" line="70"/>
@@ -3496,7 +3641,7 @@
     <message>
         <location filename="../plugins/timedate/widgets/kiran-time-zone-list.ui" line="20"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Form</translation>
     </message>
 </context>
 <context>
@@ -3504,7 +3649,7 @@
     <message>
         <location filename="../lib/common-widgets/kiran-tips/kiran-tips.ui" line="29"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Form</translation>
     </message>
 </context>
 <context>
@@ -3632,7 +3777,7 @@
     <message>
         <location filename="../plugins/system/pages/system-information/license-agreement.ui" line="32"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Form</translation>
     </message>
     <message>
         <location filename="../plugins/system/pages/system-information/license-agreement.ui" line="88"/>
@@ -3922,7 +4067,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../plugins/mouse/pages/mouse-page.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Form</translation>
     </message>
     <message>
         <location filename="../plugins/mouse/pages/mouse-page.ui" line="68"/>
@@ -4717,6 +4862,63 @@ This is line 50 of the test text</source>
         <source>Summer</source>
         <translation>盛夏</translation>
     </message>
+    <message>
+        <location filename="../plugins/font/privileged-helper.cpp" line="68"/>
+        <source>Font helper is not installed: %1</source>
+        <translation>未安装字体助手程序：%1</translation>
+    </message>
+    <message>
+        <location filename="../plugins/font/privileged-helper.cpp" line="82"/>
+        <source>Failed to start pkexec.</source>
+        <translation>无法启动 pkexec。</translation>
+    </message>
+    <message>
+        <location filename="../plugins/font/privileged-helper.cpp" line="90"/>
+        <source>Privileged operation timed out.</source>
+        <translation>提权操作超时。</translation>
+    </message>
+    <message>
+        <location filename="../plugins/font/privileged-helper.cpp" line="102"/>
+        <source>Authorization was cancelled or pkexec is unavailable.</source>
+        <translation>授权已取消，或 pkexec 不可用。</translation>
+    </message>
+    <message>
+        <location filename="../plugins/font/privileged-helper.cpp" line="106"/>
+        <source>Privileged operation failed.</source>
+        <translation>提权操作失败。</translation>
+    </message>
+    <message>
+        <location filename="../plugins/font/privileged-helper.cpp" line="30"/>
+        <source>Failed to create a temporary directory.</source>
+        <translation>无法创建临时目录。</translation>
+    </message>
+    <message>
+        <location filename="../plugins/font/privileged-helper.cpp" line="48"/>
+        <source>Failed to stage font file: %1</source>
+        <translation>无法暂存字体文件：%1</translation>
+    </message>
+    <message>
+        <location filename="../plugins/font/font-manager.cpp" line="190"/>
+        <location filename="../plugins/font/font-manager.cpp" line="206"/>
+        <location filename="../plugins/font/font-manager.cpp" line="224"/>
+        <source>Not a valid font file: %1</source>
+        <translation>不是有效的字体文件：%1</translation>
+    </message>
+    <message>
+        <location filename="../plugins/font/font-manager.cpp" line="451"/>
+        <source>Failed to initialize fontconfig</source>
+        <translation>初始化 fontconfig 失败</translation>
+    </message>
+    <message>
+        <location filename="../plugins/font/font-manager.cpp" line="463"/>
+        <source>Font file not found: %1</source>
+        <translation>未找到字体文件：%1</translation>
+    </message>
+    <message>
+        <location filename="../plugins/font/font-manager.cpp" line="478"/>
+        <source>Font already installed: %1, %2</source>
+        <translation>字体已安装：%1，%2</translation>
+    </message>
 </context>
 <context>
     <name>ScreensaverPage</name>
@@ -4850,7 +5052,7 @@ This is line 50 of the test text</source>
     <message>
         <location filename="../lib/common-widgets/setting-brief-widget/setting-brief-widget.ui" line="26"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Form</translation>
     </message>
     <message>
         <location filename="../lib/common-widgets/setting-brief-widget/setting-brief-widget.ui" line="47"/>
@@ -5240,7 +5442,7 @@ This is line 50 of the test text</source>
     <message>
         <location filename="../plugins/system/pages/system-information/system-information.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Form</translation>
     </message>
     <message>
         <location filename="../plugins/system/pages/system-information/system-information.ui" line="152"/>
@@ -5335,12 +5537,12 @@ This is line 50 of the test text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/system/pages/system-information/system-information.ui" line="760"/>
+        <location filename="../plugins/system/pages/system-information/system-information.ui" line="772"/>
         <source>Resources  Monitor:</source>
         <translation>资源监视器:</translation>
     </message>
     <message>
-        <location filename="../plugins/system/pages/system-information/system-information.ui" line="792"/>
+        <location filename="../plugins/system/pages/system-information/system-information.ui" line="804"/>
         <source>Open</source>
         <translation>打开</translation>
     </message>
@@ -5353,38 +5555,38 @@ This is line 50 of the test text</source>
         <translation>未知</translation>
     </message>
     <message>
-        <location filename="../plugins/system/pages/system-information/system-information.cpp" line="261"/>
+        <location filename="../plugins/system/pages/system-information/system-information.cpp" line="266"/>
         <source>UnActivated</source>
         <translation>未激活</translation>
     </message>
     <message>
-        <location filename="../plugins/system/pages/system-information/system-information.cpp" line="270"/>
+        <location filename="../plugins/system/pages/system-information/system-information.cpp" line="275"/>
         <source>Activation code has expired</source>
         <translation>激活码已过期</translation>
     </message>
     <message>
-        <location filename="../plugins/system/pages/system-information/system-information.cpp" line="275"/>
+        <location filename="../plugins/system/pages/system-information/system-information.cpp" line="280"/>
         <source>Permanently activated</source>
         <translation>永久激活</translation>
     </message>
     <message>
-        <location filename="../plugins/system/pages/system-information/system-information.cpp" line="280"/>
+        <location filename="../plugins/system/pages/system-information/system-information.cpp" line="285"/>
         <source>Activated</source>
         <translation>已激活</translation>
     </message>
     <message>
-        <location filename="../plugins/system/pages/system-information/system-information.cpp" line="323"/>
-        <location filename="../plugins/system/pages/system-information/system-information.cpp" line="331"/>
+        <location filename="../plugins/system/pages/system-information/system-information.cpp" line="328"/>
+        <location filename="../plugins/system/pages/system-information/system-information.cpp" line="336"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../plugins/system/pages/system-information/system-information.cpp" line="323"/>
+        <location filename="../plugins/system/pages/system-information/system-information.cpp" line="328"/>
         <source>Failed to open the license activator</source>
         <translation>启动激活许可证弹窗失败</translation>
     </message>
     <message>
-        <location filename="../plugins/system/pages/system-information/system-information.cpp" line="331"/>
+        <location filename="../plugins/system/pages/system-information/system-information.cpp" line="336"/>
         <source>Failed to open the system monitor</source>
         <translation>打开资源监视器失败</translation>
     </message>
@@ -5712,7 +5914,7 @@ This is line 50 of the test text</source>
     <message>
         <location filename="../plugins/mouse/pages/touchpad-page.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Form</translation>
     </message>
     <message>
         <location filename="../plugins/mouse/pages/touchpad-page.ui" line="86"/>
@@ -6732,7 +6934,7 @@ This is line 50 of the test text</source>
     <message>
         <location filename="../plugins/appearance/pages/theme/wm/wm-theme-page.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Form</translation>
     </message>
     <message>
         <location filename="../plugins/appearance/pages/theme/wm/wm-theme-page.ui" line="35"/>
