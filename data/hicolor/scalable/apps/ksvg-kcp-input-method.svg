@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+  <!-- 方形按键轮廓：透明填充、白色线条。 -->
+  <rect id="输入按键" x="1.4" y="1.4" width="13.2" height="13.2" rx="0.35"
+        fill="none" stroke="#fff" stroke-width="1.1" stroke-linejoin="round"/>
+
+  <!-- 字母转为固定路径，避免运行环境字体差异。 -->
+  <path id="字母A" fill="#fff" fill-rule="evenodd"
+        d="M3.85,12.25,7,3.75H9l3.15,8.5H10.25L9.5,10.1h-3l-.75,2.15H3.85ZM7.05,8.5H8.95L8,5.75,7.05,8.5Z"/>
+</svg>
