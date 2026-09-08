@@ -30,6 +30,15 @@
 #include <QMessageBox>
 #include <QTimerEvent>
 
+namespace {
+QString safeLongDateFormat(const QStringList &formats, int index)
+{
+    if (formats.isEmpty() || index < 0 || index >= formats.size())
+        return formats.isEmpty() ? QString() : formats.first();
+    return formats.at(index);
+}
+}
+
 KiranTimeDateWidget::KiranTimeDateWidget(QWidget* parent)
     : QWidget(parent),
       ui(new Ui::KiranTimeDateWidget),
@@ -87,7 +96,7 @@ void KiranTimeDateWidget::initUI()
             this, &KiranTimeDateWidget::handleSystemHourFormatChanged);
     /// 时间显示格式设置
     m_showSeconds = globalData->secondsShowing();
-    m_curTimeDateFormat = globalData->longDateFormatList().at(KiranTimeDateGlobalData::instance()->longDateFormatIndex());
+    m_curTimeDateFormat = safeLongDateFormat(globalData->longDateFormatList(), KiranTimeDateGlobalData::instance()->longDateFormatIndex());
     m_hourFormat = globalData->hourFormat();
     initDisplayFormatSettingsPage();
 
@@ -292,7 +301,7 @@ void KiranTimeDateWidget::handleSystemTimeZoneChanged(QString timeZone)
 
 void KiranTimeDateWidget::handleSystemLongDisplayFormatChanged(int idx)
 {
-    m_curTimeDateFormat = KiranTimeDateGlobalData::instance()->longDateFormatList().at(idx);
+    m_curTimeDateFormat = safeLongDateFormat(KiranTimeDateGlobalData::instance()->longDateFormatList(), idx);
     updateTimeLabel();
 }
 
