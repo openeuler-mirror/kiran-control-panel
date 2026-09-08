@@ -16,6 +16,9 @@ if (ENABLE_SYSTEM_PRIVACY_POLICY)
     add_definitions(-DSYSTEM_PRIVACY_POLICY)
 endif ()
 
+if (ENABLE_SYSTEM_MONITOR)
+    add_definitions(-DENABLE_SYSTEM_MONITOR)
+endif ()
 file(GLOB_RECURSE SYSTEM_SRC ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp
                              ${CMAKE_CURRENT_SOURCE_DIR}/*.h
                              ${CMAKE_CURRENT_SOURCE_DIR}/*.ui)

@@ -16,4 +16,6 @@
 #define ACCOUNT_DEFAULT_AVATAR      "@ACCOUNT_DEFAULT_AVATAR@"
 
 #define AUDIO_SOUNDS_DIR            "@AUDIO_SOUNDS_DIR@"
+
+#define FONT_HELPER_PATH            "@CMAKE_INSTALL_FULL_LIBEXECDIR@/kiran-cpanel-font-helper"
 #endif // __KIRAN_CONFIG_H__

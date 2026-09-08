@@ -50,6 +50,7 @@ private slots:
     void handleChangeHostName(void);
     void updateHostName(bool isChanged, QString name);
     void handleShowLicenseDialog();
+    void handleResourcesMonitor();
 
 protected:
     bool eventFilter(QObject *obj, QEvent *event);
