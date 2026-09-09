@@ -19,9 +19,6 @@
 #include <QObject>
 #include <QSharedPointer>
 
-#define GROUP_ADMIN_DBUS_NAME "org.group.admin"
-#define GROUP_ADMIN_OBJECT_PATH "/org/group/admin"
-
 class KSDGroupAdminProxy;
 class KSDGroupAdminListProxy;
 class GroupInterface;
@@ -51,8 +48,6 @@ public:
      */
     bool init();
 
-    GroupInterface *getInterface();
-
     /**
      * @brief  获取排序之后的用户组列表
      * @return QList<QString> 用户DBusObjectPath列表
@@ -63,7 +58,7 @@ public:
     /// @param groupPath 用户组DBus对象路径
     /// @param groupInfo 存储用户组信息
     /// @return 是否获取成功
-    bool getGroupInfo(const QString groupPath, GroupManager::GroupInfo &groupInfo);
+    bool getGroupInfo(const QString &groupPath, GroupManager::GroupInfo &groupInfo);
 
     /**
      * @brief 检查是否存在重名用户组
@@ -72,6 +67,9 @@ public:
      */
     bool checkGroupNameAvaliable(const QString &groupName);
 
+protected slots:
+    void handlerGroupChanged(const QDBusObjectPath &group);
+
 private:
     void addGroupToMap(const QDBusObjectPath &group);
     void deleteGroupFromMap(const QDBusObjectPath &group);
@@ -79,15 +77,9 @@ private:
 signals:
     void GroupAdded(const QString &groupPath);
     void GroupDeleted(const QString &groupPath);
-    void GroupPropertyChanged(QString groupPath,
-                              QString propertyName,
-                              QVariant value);
-
-private Q_SLOTS:
-    void handlerPropertyChanged(const QString &propertyName, const QVariant &value);
+    void GroupChanged(const QString &groupPath);
 
 private:
     KSDGroupAdminProxy *m_groupAdminProxy;
     QMap<QString, QSharedPointer<KSDGroupAdminListProxy>> m_groupsMap;  // QMap<DBus对象路径,用户相关接口>
-    GroupInterface *m_groupInterface;
 };
