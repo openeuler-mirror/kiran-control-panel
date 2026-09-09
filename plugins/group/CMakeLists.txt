@@ -1,16 +1,14 @@
 set(TARGET_NAME kiran-cpanel-group)
 
 file(GLOB_RECURSE SRC "src/*.cpp" "src/*.h" "src/*.ui")
-file(GLOB GROUP_TS_FILES "translations/*.ts")
 file(GLOB_RECURSE RESOURCES "resources/*.qrc")
 file(GLOB_RECURSE TOOLS_SOURCES "tools/*.cpp")
 file(GLOB_RECURSE TOOLS_HEADERS "tools/*.h")
 
-qt5_create_translation(GROUP_QM_FILES ${CMAKE_CURRENT_SOURCE_DIR} "translations/kiran-cpanel-group.zh_CN.ts")
 #DBus代理代码生成
 set(DBUS_SRC_LIST "")
 ##group admin service
-set(KSD_GROUP_ADMIN_XML data/org.group.admin.xml)
+set(KSD_GROUP_ADMIN_XML data/com.kylinsec.Kiran.SystemDaemon.Groups.xml)
 set_source_files_properties(${KSD_GROUP_ADMIN_XML}
         PROPERTIES
         CLASSNAME KSDGroupAdminProxy
@@ -18,7 +16,7 @@ set_source_files_properties(${KSD_GROUP_ADMIN_XML}
 kiran_qt5_add_dbus_interface(KSD_GROUP_ADMIN_SRC ${KSD_GROUP_ADMIN_XML} ksd_group_admin_proxy)
 list(APPEND DBUS_SRC_LIST ${KSD_GROUP_ADMIN_SRC})
 ##group admin list
-set(KSD_GROUP_ADMIN_LIST_XML data/org.group.admin.list.xml)
+set(KSD_GROUP_ADMIN_LIST_XML data/com.kylinsec.Kiran.SystemDaemon.Groups.Group.xml)
 set_source_files_properties(${KSD_GROUP_ADMIN_LIST_XML}
         PROPERTIES
         CLASSNAME KSDGroupAdminListProxy
@@ -44,7 +42,6 @@ list(APPEND DBUS_SRC_LIST ${KSD_ACCOUNTS_USER_SRC})
 
 add_library(${TARGET_NAME} SHARED
         ${SRC}
-        ${GROUP_QM_FILES}
         ${DBUS_SRC_LIST}
         ${RESOURCES}
         ${TOOLS_SOURCES}
@@ -89,8 +86,3 @@ target_link_libraries(${TARGET_NAME}
 
 #安装控制中心插件
 install(TARGETS ${TARGET_NAME} DESTINATION ${PLUGIN_LIBS_DIR}/)
-
-#安装翻译文件
-install(FILES ${GROUP_QM_FILES} DESTINATION ${TRANSLATION_DIR} )
-
-

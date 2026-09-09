@@ -61,7 +61,7 @@ QString GroupSubItem::getDesc()
 
 QString GroupSubItem::getIcon()
 {
-    return "group";
+    return "kcp-group";
 }
 
 int GroupSubItem::getWeight()

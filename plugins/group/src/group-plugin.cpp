@@ -14,15 +14,10 @@
 
 #include "group-plugin.h"
 #include "accounts-global-info.h"
-#include "config.h"
 #include "group-manager.h"
-#include "group-page.h"
 #include "group-subitem.h"
 
 #include <qt5-log-i.h>
-#include <QCoreApplication>
-#include <QLocale>
-#include <QTranslator>
 
 GroupPlugin::GroupPlugin(QObject *parent)
     : QObject(parent)
@@ -46,29 +41,6 @@ int GroupPlugin::init(KiranControlPanel::PanelInterface *interface)
         KLOG_ERROR() << "load user info failed!";
         return -1;
     }
-    if (m_translator != nullptr)
-    {
-        QCoreApplication::removeTranslator(m_translator);
-        delete m_translator;
-        m_translator = nullptr;
-    }
-
-    m_translator = new QTranslator;
-
-    if (!m_translator->load(QLocale(),
-                            "kiran-cpanel-group",
-                            ".",
-                            TRANSLATE_PREFIX,
-                            ".qm"))
-    {
-        m_translator->deleteLater();
-        m_translator = nullptr;
-        KLOG_ERROR() << "load translator failed!";
-    }
-    else
-    {
-        qApp->installTranslator(m_translator);
-    }
 
     m_subitem.reset(new GroupSubItem());
     return 0;
@@ -76,12 +48,6 @@ int GroupPlugin::init(KiranControlPanel::PanelInterface *interface)
 
 void GroupPlugin::uninit()
 {
-    if (m_translator)
-    {
-        QCoreApplication::removeTranslator(m_translator);
-        delete m_translator;
-        m_translator = nullptr;
-    }
 }
 
 QVector<KiranControlPanel::SubItemPtr> GroupPlugin::getSubItems()

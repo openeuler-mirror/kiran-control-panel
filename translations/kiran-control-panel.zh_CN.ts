@@ -165,27 +165,33 @@
     <message>
         <location filename="../plugins/group/src/pages/add-users-page/add-users-page.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Form</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <location filename="../plugins/group/src/pages/add-users-page/add-users-page.ui" line="40"/>
         <source>Add Member</source>
-        <translation type="unfinished"></translation>
+        <translation>添加组成员</translation>
     </message>
     <message>
         <location filename="../plugins/group/src/pages/add-users-page/add-users-page.ui" line="120"/>
         <source>Save</source>
-        <translation type="unfinished">保存</translation>
+        <translation>添加</translation>
     </message>
     <message>
         <location filename="../plugins/group/src/pages/add-users-page/add-users-page.ui" line="167"/>
         <source>Cancel</source>
-        <translation type="unfinished">取消</translation>
+        <translation>返回</translation>
     </message>
     <message>
         <location filename="../plugins/group/src/pages/add-users-page/add-users-page.cpp" line="51"/>
         <source>Please input keys for search...</source>
-        <translation type="unfinished"></translation>
+        <translation>请输入搜索关键词...</translation>
+    </message>
+
+    <message>
+        <location filename="../plugins/group/src/pages/add-users-page/add-users-page.cpp" line="139"/>
+        <source>Error</source>
+        <translation>错误</translation>
     </message>
 </context>
 <context>
@@ -981,28 +987,28 @@
     <message>
         <location filename="../plugins/group/src/pages/create-group-page/create-group-page.ui" line="20"/>
         <source>CreateGroupPage</source>
-        <translation type="unfinished"></translation>
+        <translation>创建用户组</translation>
     </message>
     <message>
         <location filename="../plugins/group/src/pages/create-group-page/create-group-page.ui" line="46"/>
         <source>Create Group</source>
-        <translation type="unfinished"></translation>
+        <translation>创建组</translation>
     </message>
     <message>
         <location filename="../plugins/group/src/pages/create-group-page/create-group-page.ui" line="76"/>
         <source>Add Group Members</source>
-        <translation type="unfinished"></translation>
+        <translation>添加组成员</translation>
     </message>
     <message>
         <location filename="../plugins/group/src/pages/create-group-page/create-group-page.ui" line="128"/>
         <source>Confirm</source>
-        <translation type="unfinished"></translation>
+        <translation>创建</translation>
     </message>
     <message>
         <location filename="../plugins/group/src/pages/create-group-page/create-group-page.cpp" line="107"/>
         <location filename="../plugins/group/src/pages/create-group-page/create-group-page.cpp" line="137"/>
         <source>Error</source>
-        <translation type="unfinished">错误</translation>
+        <translation>错误</translation>
     </message>
 </context>
 <context>
@@ -2551,27 +2557,27 @@
     <message>
         <location filename="../plugins/group/src/pages/group-info-page/group-info-page.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Form</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <location filename="../plugins/group/src/pages/group-info-page/group-info-page.ui" line="178"/>
         <source>Group</source>
-        <translation type="unfinished"></translation>
+        <translation>组</translation>
     </message>
     <message>
         <location filename="../plugins/group/src/pages/group-info-page/group-info-page.ui" line="272"/>
         <source>Member List</source>
-        <translation type="unfinished"></translation>
+        <translation>组成员</translation>
     </message>
     <message>
         <location filename="../plugins/group/src/pages/group-info-page/group-info-page.ui" line="330"/>
         <source>Add User</source>
-        <translation type="unfinished"></translation>
+        <translation>添加成员</translation>
     </message>
     <message>
         <location filename="../plugins/group/src/pages/group-info-page/group-info-page.ui" line="377"/>
         <source>Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>删除组</translation>
     </message>
     <message>
         <source>Save</source>
@@ -2587,7 +2593,7 @@
         <location filename="../plugins/group/src/pages/group-info-page/group-info-page.cpp" line="191"/>
         <location filename="../plugins/group/src/pages/group-info-page/group-info-page.cpp" line="200"/>
         <source>Error</source>
-        <translation type="unfinished">错误</translation>
+        <translation>错误</translation>
     </message>
 </context>
 <context>
@@ -2595,32 +2601,32 @@
     <message>
         <location filename="../plugins/group/src/group-interface.cpp" line="45"/>
         <source>Failed to create group, %1</source>
-        <translation type="unfinished"></translation>
+        <translation>创建用户组失败，%1</translation>
     </message>
     <message>
         <location filename="../plugins/group/src/group-interface.cpp" line="69"/>
         <source>Failed to delete group, %1</source>
-        <translation type="unfinished"></translation>
+        <translation>删除用户组失败，%1</translation>
     </message>
     <message>
         <location filename="../plugins/group/src/group-interface.cpp" line="92"/>
         <source>Failed to add %1 to group, %2</source>
-        <translation type="unfinished"></translation>
+        <translation>添加用户%1到用户组失败，%2</translation>
     </message>
     <message>
         <location filename="../plugins/group/src/group-interface.cpp" line="114"/>
         <source>Failed to remove %1 from group, %2</source>
-        <translation type="unfinished"></translation>
+        <translation>从用户组移除用户%1失败，%2</translation>
     </message>
     <message>
         <location filename="../plugins/group/src/group-interface.cpp" line="138"/>
         <source>Failed to change group name to %1, %2</source>
-        <translation type="unfinished"></translation>
+        <translation>修改用户组名为%1失败，%2</translation>
     </message>
     <message>
         <location filename="../plugins/group/src/group-interface.cpp" line="150"/>
         <source>Failed to change group name to %1, the new group name is occupied!</source>
-        <translation type="unfinished"></translation>
+        <translation>修改用户组名为%1失败，新组名已被占用！</translation>
     </message>
 </context>
 <context>
@@ -2628,17 +2634,17 @@
     <message>
         <location filename="../plugins/group/src/tools/group-name-checker.cpp" line="24"/>
         <source>Please enter your group name</source>
-        <translation type="unfinished"></translation>
+        <translation>请输入组名</translation>
     </message>
     <message>
         <location filename="../plugins/group/src/tools/group-name-checker.cpp" line="33"/>
         <source>Group name cannot be a pure number</source>
-        <translation type="unfinished"></translation>
+        <translation>组名不能为纯数字</translation>
     </message>
     <message>
         <location filename="../plugins/group/src/tools/group-name-checker.cpp" line="40"/>
         <source>Group name already exists</source>
-        <translation type="unfinished"></translation>
+        <translation>组名已经存在</translation>
     </message>
 </context>
 <context>
@@ -2646,7 +2652,7 @@
     <message>
         <location filename="../plugins/group/src/group-page.cpp" line="143"/>
         <source>Create new group</source>
-        <translation type="unfinished"></translation>
+        <translation>创建组</translation>
     </message>
 </context>
 <context>
@@ -2654,17 +2660,17 @@
     <message>
         <location filename="../plugins/group/src/group-subitem.cpp" line="49"/>
         <source>Group</source>
-        <translation type="unfinished"></translation>
+        <translation>组</translation>
     </message>
     <message>
         <location filename="../plugins/group/src/group-subitem.cpp" line="81"/>
         <source>Create group</source>
-        <translation type="unfinished"></translation>
+        <translation>创建用户组</translation>
     </message>
     <message>
         <location filename="../plugins/group/src/group-subitem.cpp" line="82"/>
         <source>Group information</source>
-        <translation type="unfinished"></translation>
+        <translation>用户组信息</translation>
     </message>
 </context>
 <context>
