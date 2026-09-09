@@ -1977,7 +1977,11 @@
         <source>%1 GB (%2 GB available)</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
+
+        <message>
+            <source>Show</source>
+            <translation type="unfinished"></translation>
+        </message></context>
 <context>
     <name>HardwareSubItem</name>
     <message>

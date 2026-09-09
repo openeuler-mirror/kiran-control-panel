@@ -100,4 +100,13 @@
         <file>images/disabled.svg</file>
     </qresource>
 
+    <qresource prefix="/kcp-printer">
+        <file>images/star.svg</file>
+        <file>images/refresh.svg</file>
+        <file>images/refresh-hover.svg</file>
+        <file>images/refresh-pressed.svg</file>
+        <file>images/printer-online.png</file>
+        <file>images/printer-offline.png</file>
+        <file>images/cups-service-warning.png</file>
+    </qresource>
 </RCC>

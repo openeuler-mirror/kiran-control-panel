@@ -29,6 +29,15 @@
 #include <QResizeEvent>
 #include <QScroller>
 
+// 磁盘管理「查看」按钮（GFB）相关依赖：仅该功能启用时引入，非 GFB 不涉及
+#ifdef DISK_MANAGEMENT_VISIBLE
+#include <QHBoxLayout>
+#include <QProcess>
+#include <QStandardPaths>
+#include <QPushButton>
+#include <style-property.h>
+#endif
+
 HardwareInformation::HardwareInformation(QWidget *parent)
     : QWidget(parent),
       ui(new Ui::HardwareInformation)
@@ -102,6 +111,32 @@ void HardwareInformation::initUI(void)
                 auto label = new KiranLabel(hardwareItem);
                 label->setToolTip(hardwareItem);
                 label->setElideMode(Qt::ElideRight);
+#ifdef DISK_MANAGEMENT_VISIBLE
+                label->setStyleSheet("color:#919191;font-family: \"Noto Sans CJK SC regular\";");
+                if (layout == ui->gridLayout_hard_disk)
+                {
+                    auto *rowWidget = new QWidget();
+                    auto *rowLayout = new QHBoxLayout(rowWidget);
+                    rowLayout->setContentsMargins(0, 0, 0, 0);
+                    rowLayout->setSpacing(6);
+                    rowLayout->addWidget(label);
+
+                    if (!QStandardPaths::findExecutable(QStringLiteral("gnome-disks")).isEmpty())
+                    {
+                        auto *viewBtn = new QPushButton(tr("Show"));
+                        viewBtn->setCursor(Qt::PointingHandCursor);
+                        viewBtn->setFixedSize(56, 28);
+                        Kiran::StylePropertyHelper::setButtonType(viewBtn, Kiran::BUTTON_Default);
+                        connect(viewBtn, &QPushButton::clicked, this, []() {
+                            QProcess::startDetached(QStringLiteral("gnome-disks"), QStringList());
+                        });
+                        rowLayout->addWidget(viewBtn);
+                    }
+
+                    layout->addWidget(rowWidget, layout->count(), 0, Qt::AlignRight);
+                    continue;
+                }
+#endif
                 layout->addWidget(label, layout->count(), 0, Qt::AlignRight);
             }
         }
@@ -134,8 +169,11 @@ void HardwareInformation::initUI(void)
     {
         label->setStyleSheet("color:#919191;font-family: \"Noto Sans CJK SC regular\";");
     }
-
+#ifdef DISK_MANAGEMENT_VISIBLE
+    QList<QLayout *> layouts = {ui->gridLayout_graphics_card, ui->gridLayout_network_card};
+#else
     QList<QLayout *> layouts = {ui->gridLayout_hard_disk, ui->gridLayout_graphics_card, ui->gridLayout_network_card};
+#endif
     for (auto layout : layouts)
     {
         for (int i = 0; i < layout->count(); i++)

@@ -14,3 +14,5 @@ OPTION(ENABLE_APPEARANCE_SCREENSAVER "Whether to enable the personalized screens
 OPTION(ENABLE_SYSTEM_PRIVACY_POLICY "Whether to show the system privacy policy" ON)
 #系统信息，是否显示跳转系统监视器按钮
 OPTION(ENABLE_SYSTEM_MONITOR "Whether to show the system monitor jump button" OFF)
+#硬件信息页，是否显示磁盘管理入口
+OPTION(ENABLE_DISK_MANAGEMENT "Whether to show disk management entry in hardware info page" OFF)
