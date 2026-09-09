@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/kcp-inputmethod">
+        <file>images/addition.svg</file>
+    </qresource>
+</RCC>

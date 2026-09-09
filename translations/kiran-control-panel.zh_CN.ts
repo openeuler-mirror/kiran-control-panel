@@ -7404,4 +7404,61 @@ This is line 50 of the test text</source>
         <translation>打印设置</translation>
     </message>
 </context>
+<context>
+    <name>Fcitx4ImPage</name>
+    <message><location filename="../plugins/inputmethod/fcitx4/fcitx4-im-page.cpp" line="105"/><source>Input Method List</source><translation>输入法列表</translation></message>
+    <message><location filename="../plugins/inputmethod/fcitx4/fcitx4-im-page.cpp" line="111"/><source>The first input method is the inactive state and should usually be a keyboard layout; the second is the default input method after activation.</source><translation>第一个输入法表示未激活状态，通常应为键盘布局；第二个输入法是激活后的默认输入法。</translation></message>
+    <message><location filename="../plugins/inputmethod/fcitx4/fcitx4-im-page.cpp" line="315"/><source>All programs</source><translation>所有程序</translation></message>
+    <message><location filename="../plugins/inputmethod/fcitx4/fcitx4-im-page.cpp" line="316"/><source>By program</source><translation>按程序</translation></message>
+    <message><location filename="../plugins/inputmethod/fcitx4/fcitx4-im-page.cpp" line="317"/><source>Off</source><translation>关闭</translation></message>
+    <message><location filename="../plugins/inputmethod/fcitx4/fcitx4-im-page.cpp" line="335"/><source>Shortcuts</source><translation>快捷键</translation></message>
+    <message><location filename="../plugins/inputmethod/fcitx4/fcitx4-im-page.cpp" line="357"/><source>Switch activation/inactivation of input method</source><translation>切换激活/非激活输入法</translation></message>
+    <message><location filename="../plugins/inputmethod/fcitx4/fcitx4-im-page.cpp" line="358"/><source>Alternative switch</source><translation>备用切换键</translation></message>
+    <message><location filename="../plugins/inputmethod/fcitx4/fcitx4-im-page.cpp" line="369"/><source>Behavior</source><translation>行为</translation></message>
+    <message><location filename="../plugins/inputmethod/fcitx4/fcitx4-im-page.cpp" line="375"/><source>Activate input method by default</source><translation>默认激活输入法</translation></message>
+    <message><location filename="../plugins/inputmethod/fcitx4/fcitx4-im-page.cpp" line="377"/><source>Reset state on focus in</source><translation>获得焦点时重置状态</translation></message>
+    <message><location filename="../plugins/inputmethod/fcitx4/fcitx4-im-page.cpp" line="378"/><source>Share input state</source><translation>共享输入状态</translation></message>
+    <message><location filename="../plugins/inputmethod/fcitx4/fcitx4-im-page.cpp" line="385"/><source>Switch to previous input method</source><translation>向后切换输入法</translation></message>
+    <message><location filename="../plugins/inputmethod/fcitx4/fcitx4-im-page.cpp" line="385"/><source>Ctrl + Left Shift</source><translation>Ctrl + 左 Shift</translation></message>
+    <message><location filename="../plugins/inputmethod/fcitx4/fcitx4-im-page.cpp" line="385"/><source>Alt + Left Shift</source><translation>Alt + 左 Shift</translation></message>
+    <message><location filename="../plugins/inputmethod/fcitx4/fcitx4-im-page.cpp" line="385"/><source>Ctrl + Left Super</source><translation>Ctrl + 左 Super</translation></message>
+    <message><location filename="../plugins/inputmethod/fcitx4/fcitx4-im-page.cpp" line="385"/><source>Alt + Left Super</source><translation>Alt + 左 Super</translation></message>
+    <message><location filename="../plugins/inputmethod/fcitx4/fcitx4-im-page.cpp" line="393"/><source>Advanced Settings...</source><translation>高级设置...</translation></message>
+    <message><location filename="../plugins/inputmethod/fcitx4/fcitx4-im-page.cpp" line="401"/><source>More detailed input method options are available in the input method configuration tool.</source><translation>输入法配置工具提供更多详细选项。</translation></message>
+    <message><location filename="../plugins/inputmethod/fcitx4/fcitx4-im-page.cpp" line="592"/><source>Error</source><translation>错误</translation></message>
+    <message><location filename="../plugins/inputmethod/fcitx4/fcitx4-im-page.cpp" line="592"/><source>Failed to save input method settings.</source><translation>输入法设置保存失败。</translation></message>
+</context>
+<context>
+    <name>AddImDialog</name>
+    <message><location filename="../plugins/inputmethod/add-im-dialog.cpp" line="56"/><source>Add Input Method</source><translation>添加输入法</translation></message>
+    <message><location filename="../plugins/inputmethod/add-im-dialog.cpp" line="70"/><source>Search input method</source><translation>搜索输入法</translation></message>
+    <message><location filename="../plugins/inputmethod/add-im-dialog.cpp" line="102"/><source>OK</source><translation>确定</translation></message>
+    <message><location filename="../plugins/inputmethod/add-im-dialog.cpp" line="106"/><source>Cancel</source><translation>取消</translation></message>
+    <message><location filename="../plugins/inputmethod/add-im-dialog.cpp" line="244"/><source>No search results, please search again...</source><translation>没有搜索结果，请重新搜索...</translation></message>
+    <message><location filename="../plugins/inputmethod/add-im-dialog.cpp" line="249"/><source>No input method available for the current language</source><translation>当前语言没有可用的输入法</translation></message>
+    <message><location filename="../plugins/inputmethod/add-im-dialog.cpp" line="253"/><source>No input method available</source><translation>没有可用的输入法</translation></message>
+</context>
+<context>
+    <name>Fcitx4ImSubItem</name>
+    <message><location filename="../plugins/inputmethod/fcitx4/fcitx4-im-subitem.h" line="47"/><source>Input Method</source><translation>输入法</translation></message>
+</context>
+<context>
+    <name>ImListView</name>
+    <message><location filename="../plugins/inputmethod/widgets/im-list-view.cpp" line="132"/><source>Drag to reorder.</source><translation>拖动以重新排序。</translation></message>
+</context>
+<context>
+    <name>ImListItem</name>
+    <message><location filename="../plugins/inputmethod/widgets/im-list-item.cpp" line="159"/><source>Remove</source><translation>移除</translation></message>
+</context>
+<context>
+    <name>ImChooseItem</name>
+    <message><location filename="../plugins/inputmethod/widgets/im-choose-item.cpp" line="102"/><source>This input method has already been added</source><translation>该输入法已添加</translation></message>
+</context>
+<context>
+    <name>KeySequenceEdit</name>
+    <message><location filename="../lib/common-widgets/key-sequence-edit/key-sequence-edit.cpp" line="129"/><source>Clear shortcut</source><translation>清除快捷键</translation></message>
+    <message><location filename="../lib/common-widgets/key-sequence-edit/key-sequence-edit.cpp" line="229"/><source>Press shortcut...</source><translation>请输入快捷键...</translation></message>
+    <message><location filename="../lib/common-widgets/key-sequence-edit/key-sequence-edit.cpp" line="234"/><source>None</source><translation>无</translation></message>
+    <message><location filename="../lib/common-widgets/key-sequence-edit/key-sequence-edit.cpp" line="245"/><source>Shortcut "%1" is already in use</source><translation>快捷键“%1”已被使用</translation></message>
+</context>
 </TS>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  精简版 org.fcitx.Fcitx.InputMethod 接口定义（仅保留 kiran 输入法插件用到的成员）。
+  来源：fcitx4 源码 src/lib/fcitx-qt/interfaces/org.fcitx.Fcitx.InputMethod.xml（精简）。
+  用途：qdbusxml2cpp 生成 proxy 的输入（构建期 add_custom_command）。
+  IMList 属性 QtTypeName 从官方 FcitxQtInputMethodItemList 改为 frameworks/fcitx4/fcitx4-dbus-types.h
+  的自定义类型 Fcitx4ImItemList（a(sssb) 字段顺序不变），编解码见 frameworks/fcitx4/fcitx4-dbus-types.cpp。
+-->
+<!DOCTYPE node PUBLIC "-//freedesktop//DTD D-BUS Object Introspection 1.0//EN"
+"http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd">
+<node>
+  <interface name="org.fcitx.Fcitx.InputMethod">
+    <method name="GetCurrentIM">
+      <arg name="im" direction="out" type="s"/>
+    </method>
+    <method name="SetCurrentIM">
+      <arg name="im" direction="in" type="s"/>
+    </method>
+    <method name="ReloadConfig">
+    </method>
+    <method name="Configure">
+    </method>
+    <method name="ResetIMList">
+    </method>
+    <property access="readwrite" type="a(sssb)" name="IMList">
+      <annotation name="org.freedesktop.DBus.Property.EmitsChangedSignal" value="true"/>
+      <annotation name="org.qtproject.QtDBus.QtTypeName" value="Fcitx4ImItemList" />
+    </property>
+    <property access="readwrite" type="s" name="CurrentIM">
+      <annotation name="org.freedesktop.DBus.Property.EmitsChangedSignal" value="true"/>
+    </property>
+  </interface>
+</node>
