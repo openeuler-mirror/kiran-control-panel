@@ -103,13 +103,28 @@ void Ipv4Widget::saveSettings()
     Ipv4Setting::ConfigMethod method = ui->ipv4Method->currentData().value<NetworkManager::Ipv4Setting::ConfigMethod>();
     if (method == Ipv4Setting::ConfigMethod::Automatic)
     {
-        IpAddress emptyAddress;
-        emptyAddress.setIp(QHostAddress(""));
-        emptyAddress.setNetmask(QHostAddress(""));
-        emptyAddress.setGateway(QHostAddress(""));
-
+        // NOTE: 自动(DHCP)模式下不应提交任何静态地址。
+        // 原实现塞入的 IpAddress 其 IP 与 netmask 均为空，而
+        // NetworkManager::IpAddress 继承自 QNetworkAddressEntry，空 netmask 会使
+        // prefixLength 变为 -1(0xFFFFFFFF)，等于提交了一个非法的 ipv4.addresses。
+        //
+        // 该非法值在不同 NetworkManager 版本上表现不同：
+        //   - NM <= 1.44.x：D-Bus 侧仅 g_warning 后将此地址过滤掉，连接仍能创建
+        //     成功，但配置被静默丢弃（客户端无从感知）；
+        //   - NM >= 1.46.0：D-Bus 侧改为 strict 模式解析地址，遇到非法前缀直接
+        //     返回错误，整个连接被拒绝并报
+        //     InvalidProperty("无效 IPv4 地址前缀 4294967295")。
+        //
+        // 分界点为上游 commit e2ac10b97d（"libnm/dbus: notify errors for invalid
+        // IPv4 properties"，2023-10-10），该改动首次进入 1.45.9-dev/1.46-rc1，
+        // 正式版自 1.46.0 起，未回合至 1.44.x stable 分支。
+        // 因此本缺陷在 NM >= 1.46 上暴露（openEuler 26.09 使用 NM 1.56），
+        // 在 NM <= 1.44 上被掩盖（KylinSec 6 使用 NM 1.44.2）。
+        //
+        // 此处与 nm-connection-editor 的实现保持一致（其 ui_to_setting() 中明确
+        // 不把空的地址数组写入 setting）。
         m_ipv4Setting->setMethod(method);
-        m_ipv4Setting->setAddresses(QList<NetworkManager::IpAddress>() << emptyAddress);
+        m_ipv4Setting->setAddresses(QList<NetworkManager::IpAddress>());
     }
     else if (method == Ipv4Setting::ConfigMethod::Manual)
     {

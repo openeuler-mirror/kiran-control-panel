@@ -3069,32 +3069,32 @@
         <translation>请用分号分隔多个DNS</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/plugin/setting-widget/ipv4-widget.cpp" line="286"/>
+        <location filename="../plugins/network/src/plugin/setting-widget/ipv4-widget.cpp" line="301"/>
         <source>Ipv4 DNS invalid</source>
         <translation>无效的Ipv4 DNS</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/plugin/setting-widget/ipv4-widget.cpp" line="307"/>
+        <location filename="../plugins/network/src/plugin/setting-widget/ipv4-widget.cpp" line="322"/>
         <source>Ipv4 address can not be empty</source>
         <translation>Ipv4地址不能为空</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/plugin/setting-widget/ipv4-widget.cpp" line="323"/>
+        <location filename="../plugins/network/src/plugin/setting-widget/ipv4-widget.cpp" line="338"/>
         <source>Ipv4 address is invalid</source>
         <translation>无效的Ipv4地址</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/plugin/setting-widget/ipv4-widget.cpp" line="349"/>
+        <location filename="../plugins/network/src/plugin/setting-widget/ipv4-widget.cpp" line="364"/>
         <source>NetMask is invalid</source>
         <translation>无效的子网掩码</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/plugin/setting-widget/ipv4-widget.cpp" line="361"/>
+        <location filename="../plugins/network/src/plugin/setting-widget/ipv4-widget.cpp" line="376"/>
         <source>The number of IPs and masks cannot correspond</source>
         <translation>ipv4地址和子网掩码数量不等，请确认</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/plugin/setting-widget/ipv4-widget.cpp" line="369"/>
+        <location filename="../plugins/network/src/plugin/setting-widget/ipv4-widget.cpp" line="384"/>
         <source>The entries of IPs and masks cannot exceed 10</source>
         <translation>IP和掩码的条目不能超过10个</translation>
     </message>
@@ -3103,7 +3103,7 @@
         <translation type="vanished">无效的Ipv4地址</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/plugin/setting-widget/ipv4-widget.cpp" line="335"/>
+        <location filename="../plugins/network/src/plugin/setting-widget/ipv4-widget.cpp" line="350"/>
         <source>NetMask can not be empty</source>
         <translation>子网掩码不能为空</translation>
     </message>
@@ -3112,7 +3112,7 @@
         <translation type="vanished">无效的子网掩码</translation>
     </message>
     <message>
-        <location filename="../plugins/network/src/plugin/setting-widget/ipv4-widget.cpp" line="379"/>
+        <location filename="../plugins/network/src/plugin/setting-widget/ipv4-widget.cpp" line="394"/>
         <source>Ipv4 Gateway invalid</source>
         <translation>无效的Ipv4网关</translation>
     </message>
@@ -5070,6 +5070,25 @@ This is line 50 of the test text</source>
         <location filename="../lib/common-widgets/setting-brief-widget/setting-brief-widget.ui" line="74"/>
         <source>TextLabel</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SettingPage</name>
+    <message>
+        <location filename="../plugins/network/src/plugin/settings/setting-page.cpp" line="96"/>
+        <location filename="../plugins/network/src/plugin/settings/setting-page.cpp" line="134"/>
+        <source>Error</source>
+        <translation>错误</translation>
+    </message>
+    <message>
+        <location filename="../plugins/network/src/plugin/settings/setting-page.cpp" line="97"/>
+        <source>Failed to add the connection: %1</source>
+        <translation>添加连接失败：%1</translation>
+    </message>
+    <message>
+        <location filename="../plugins/network/src/plugin/settings/setting-page.cpp" line="135"/>
+        <source>Failed to save the connection: %1</source>
+        <translation>保存连接失败：%1</translation>
     </message>
 </context>
 <context>

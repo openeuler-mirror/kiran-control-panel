@@ -97,13 +97,9 @@ void Ipv6Widget::saveSettings()
     }
     else if (method == Ipv6Setting::ConfigMethod::Automatic)
     {
+        // 自动模式下不应提交静态地址，原因见 Ipv4Widget::saveSettings()
         m_ipv6Setting->setMethod(method);
-
-        NetworkManager::IpAddress ipAddressAuto;
-        ipAddressAuto.setIp(QHostAddress(""));
-        ipAddressAuto.setPrefixLength(0);
-        ipAddressAuto.setGateway(QHostAddress(""));
-        m_ipv6Setting->setAddresses(QList<NetworkManager::IpAddress>() << ipAddressAuto);
+        m_ipv6Setting->setAddresses(QList<NetworkManager::IpAddress>());
     }
     else if (method == Ipv6Setting::ConfigMethod::Manual)
     {

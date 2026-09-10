@@ -86,14 +86,19 @@ void WiredManager::returnPreviousPage()
 
 void WiredManager::saveConnectionSettings()
 {
-    if (ui->wiredSettingPage->isInputValid())
+    if (!ui->wiredSettingPage->isInputValid())
     {
-        ui->wiredSettingPage->handleSaveButtonClicked(ConnectionSettings::ConnectionType::Wired);
-        returnPreviousPage();
+        // 校验失败的具体原因已由各输入控件通过 errorTip 提示，此处停留在当前
+        // 页面便于用户修正输入
+        KLOG_WARNING(qLcNetwork) << "Invalid input exists";
+        return;
     }
-    else
+
+    // 仅在保存成功时才返回上一页，避免保存失败(例如 NetworkManager 拒绝配置)
+    // 时页面被切走、且用户看不到任何错误提示
+    if (ui->wiredSettingPage->handleSaveButtonClicked(ConnectionSettings::ConnectionType::Wired))
     {
-        KLOG_DEBUG(qLcNetwork) << "Invalid input exists";
+        returnPreviousPage();
     }
 }
 

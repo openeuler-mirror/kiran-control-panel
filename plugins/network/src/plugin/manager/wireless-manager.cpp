@@ -55,8 +55,10 @@ void WirelessManager::initConnection()
     connect(ui->returnButton, &QPushButton::clicked, this, &WirelessManager::returnPreviousPage);
     connect(ui->saveButton, &QPushButton::clicked, this, [this]()
             {
-                ui->wirelessSettingPage->handleSaveButtonClicked(ConnectionSettings::ConnectionType::Wireless);
-                returnPreviousPage(); });
+                if (ui->wirelessSettingPage->handleSaveButtonClicked(ConnectionSettings::ConnectionType::Wireless))
+                {
+                    returnPreviousPage();
+                } });
 
     connect(ui->wirelessSettingPage, &WirelessSettingPage::returnPreviousPage, this, &WirelessManager::returnPreviousPage);
 }
