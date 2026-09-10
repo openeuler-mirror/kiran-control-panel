@@ -231,8 +231,16 @@ void ImageSelector::handlerImageDelete(QString imagePath)
                     else  //若是最后一个，则设置为前一个
                     {
                         KLOG_INFO() << "is last one";
-                        m_itemList.at(deletePosIndex - 1)->setIsSelected(true);
-                        m_selectedImagePath = m_itemList.at(deletePosIndex - 1)->imagePath();
+                        if (!m_itemList.isEmpty())
+                        {
+                            auto lastItem = m_itemList.at(qMax(0, deletePosIndex - 1));
+                            lastItem->setIsSelected(true);
+                            m_selectedImagePath = lastItem->imagePath();
+                        }
+                        else
+                        {
+                            m_selectedImagePath.clear();
+                        }
                     }
                     KLOG_INFO() << "changed selected ImagePath = " << m_selectedImagePath;
                     emit selectedImageChanged(m_selectorType, m_selectedImagePath);
