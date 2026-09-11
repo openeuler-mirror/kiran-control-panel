@@ -16,6 +16,7 @@
 #define KIRANMODULEWIDGET_H
 
 #include <QMap>
+#include <QVector>
 #include <QWidget>
 #include "plugin-subitem-interface.h"
 namespace Ui

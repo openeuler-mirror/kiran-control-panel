@@ -149,7 +149,11 @@ QRect ImChooseItem::langLabelRect() const
     QFont labelFont = font();
     labelFont.setPointSizeF(qMax(6.0, font().pointSizeF() - 1));
     QFontMetrics fm(labelFont);
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 11, 0))
     int labelWidth = fm.horizontalAdvance(m_entry.langCode) + kLangLabelPadding * 2;
+#else
+    int labelWidth = fm.width(m_entry.langCode) + kLangLabelPadding * 2;
+#endif
 
     int x = width() - kMarginRight - labelWidth;
     int y = (height() - kLangLabelHeight) / 2;

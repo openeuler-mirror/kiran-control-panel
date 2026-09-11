@@ -71,6 +71,54 @@
 #define IPP_DEFAULT_NOTIFY_INTERVAL_SEC 1
 #define IPP_MAX_NOTIFY_INTERVAL_SEC 5
 
+/* 兼容老版本 CUPS：以下符号在 CUPS 2.0 起才由 ipp.h 提供，1.6.x 只有旧名 */
+#if defined(CUPS_VERSION_MAJOR) && CUPS_VERSION_MAJOR < 2
+#ifndef IPP_OP_CREATE_PRINTER_SUBSCRIPTIONS
+#define IPP_OP_CREATE_PRINTER_SUBSCRIPTIONS IPP_CREATE_PRINTER_SUBSCRIPTION
+#endif
+#ifndef IPP_OP_CANCEL_SUBSCRIPTION
+#define IPP_OP_CANCEL_SUBSCRIPTION IPP_CANCEL_SUBSCRIPTION
+#endif
+#ifndef IPP_OP_GET_NOTIFICATIONS
+#define IPP_OP_GET_NOTIFICATIONS IPP_GET_NOTIFICATIONS
+#endif
+#ifndef IPP_STATUS_ERROR_BAD_REQUEST
+#define IPP_STATUS_ERROR_BAD_REQUEST IPP_BAD_REQUEST
+#endif
+#ifndef IPP_STATUS_ERROR_NOT_FOUND
+#define IPP_STATUS_ERROR_NOT_FOUND IPP_NOT_FOUND
+#endif
+#ifndef IPP_PSTATE_IDLE
+#define IPP_PSTATE_IDLE IPP_PRINTER_IDLE
+#endif
+#ifndef IPP_PSTATE_PROCESSING
+#define IPP_PSTATE_PROCESSING IPP_PRINTER_PROCESSING
+#endif
+#endif
+
+/* 兼容 CUPS 1.7 之前：无 httpConnect2，退化为 httpConnectEncrypt（无连接超时；
+ * 调用发生在后台线程，不会阻塞界面） */
+#if defined(CUPS_VERSION_MAJOR) && CUPS_VERSION_MAJOR < 2
+#ifndef httpConnect2
+static http_t *kcpHttpConnect2(const char *host,
+                               int port,
+                               http_addrlist_t *addrlist,
+                               int family,
+                               http_encryption_t encryption,
+                               int blocking,
+                               int msec,
+                               int *cancel)
+{
+    (void)addrlist;
+    (void)family;
+    (void)msec;
+    (void)cancel;
+    return httpConnectEncrypt(host, port, encryption);
+}
+#define httpConnect2 kcpHttpConnect2
+#endif
+#endif
+
 namespace
 {
 http_t *openCupsHttp()
