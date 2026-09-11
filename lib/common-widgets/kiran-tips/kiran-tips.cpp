@@ -16,6 +16,7 @@
 #include "ui_kiran-tips.h"
 
 #include <QDebug>
+#include <QFontMetrics>
 #include <QGraphicsDropShadowEffect>
 #include <QGraphicsOpacityEffect>
 #include <QPainter>

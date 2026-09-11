@@ -21,6 +21,7 @@
 #include <QSaveFile>
 #include <QStandardPaths>
 #include <QTextStream>
+#include <QVector>
 
 namespace
 {

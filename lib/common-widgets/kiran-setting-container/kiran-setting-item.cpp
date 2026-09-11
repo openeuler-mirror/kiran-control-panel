@@ -19,6 +19,7 @@
 #include <QLabel>
 #include <QPushButton>
 #include <QToolButton>
+#include <QVector>
 #include "auxiliary.h"
 #include "kiran-switch-button.h"
 

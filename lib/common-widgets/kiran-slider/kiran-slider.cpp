@@ -14,6 +14,7 @@
 #include "kiran-slider.h"
 #include <style-palette.h>
 #include <QDebug>
+#include <QFontMetrics>
 #include <QMouseEvent>
 #include <QPainter>
 #include <QPainterPath>
