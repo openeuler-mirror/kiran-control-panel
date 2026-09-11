@@ -24,7 +24,6 @@
 #include <QScrollBar>
 #include <QStyle>
 #include <QStyleOptionButton>
-#include <QToolTip>
 
 FontDelegate::FontDelegate(QObject *parent)
     : QStyledItemDelegate(parent)
@@ -184,6 +183,17 @@ QVariant FontModel::data(const QModelIndex &index, int role) const
         if (column == FONT_TABLE_FIELD_CHECKBOX)
             return info.selected;
         break;
+    case Qt::ToolTipRole:
+        switch (column)
+        {
+        case FONT_TABLE_FIELD_NAME:
+        case FONT_TABLE_FIELD_STYLE:
+        case FONT_TABLE_FIELD_SOURCE:
+            return data(index, Qt::DisplayRole);
+        default:
+            break;
+        }
+        break;
     case FontEnabledRole:
         return info.enabled;
     case Qt::TextAlignmentRole:
@@ -300,8 +310,6 @@ FontTable::FontTable(QWidget *parent)
 
     verticalHeader()->setVisible(false);
     verticalHeader()->setDefaultSectionSize(60);
-
-    connect(this, &FontTable::entered, this, &FontTable::mouseEnter);
 }
 
 void FontTable::searchTextChanged(const QString &text)
@@ -390,18 +398,6 @@ void FontTable::paintEvent(QPaintEvent *event)
     }
 
     QTableView::paintEvent(event);
-}
-
-void FontTable::mouseEnter(const QModelIndex &index)
-{
-    if (index.column() != FONT_TABLE_FIELD_NAME &&
-        index.column() != FONT_TABLE_FIELD_STYLE &&
-        index.column() != FONT_TABLE_FIELD_SOURCE)
-    {
-        return;
-    }
-
-    QToolTip::showText(QCursor::pos(), index.data().toString(), this, rect(), 2000);
 }
 
 void FontTable::checkedAllItem(Qt::CheckState checkState)
