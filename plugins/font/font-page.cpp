@@ -58,11 +58,6 @@ QWidget *FontPage::createPage()
 
 void FontPage::initUI()
 {
-    QFont titleFont = ui->label_title->font();
-    titleFont.setPointSize(titleFont.pointSize() + 3);
-    titleFont.setBold(true);
-    ui->label_title->setFont(titleFont);
-
     QPalette descPalette = ui->label_desc->palette();
     descPalette.setColor(QPalette::WindowText, descPalette.color(QPalette::Disabled, QPalette::WindowText));
     ui->label_desc->setPalette(descPalette);
