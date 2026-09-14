@@ -118,9 +118,6 @@ private:
     void updateHeaderState();
     void setHoverRow(int row);
 
-private slots:
-    void mouseEnter(const QModelIndex &index);
-
 private:
     FontFilterModel *m_filterProxy;
     FontModel *m_model;
