@@ -485,8 +485,9 @@ void IpSettingsWidget::saveIpv4Settings()
     }
     else
     {
-        // 非手动配置清理静态地址配置
-        m_ipv4Setting->setAddresses({IpAddress()});
+        // 非手动配置清理静态地址配置，须传空列表；
+        // 传 IpAddress() 会因空 netmask 产生非法前缀，导致 NM 1.46 起拒绝该连接
+        m_ipv4Setting->setAddresses({});
     }
 
     // 写入DNS配置
@@ -531,7 +532,8 @@ void IpSettingsWidget::saveIpv6Settings()
     }
     else
     {
-        m_ipv6Setting->setAddresses({IpAddress()});
+        // 同上，须传空列表
+        m_ipv6Setting->setAddresses({});
     }
 
     m_ipv6Setting->setDns({});

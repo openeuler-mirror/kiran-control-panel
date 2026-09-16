@@ -1,4 +1,5 @@
 #include "connection-settings-page.h"
+#include <kiran-message-box.h>
 #include <NetworkManagerQt/Manager>
 #include <NetworkManagerQt/Settings>
 #include <NetworkManagerQt/WiredDevice>
@@ -283,14 +284,30 @@ void ConnectionSettingsPage::save()
         // 已有配置修改
         auto reply = m_existingConnection->update(m_connectionSettings->toMap());
         reply.waitForFinished();
-        KLOG_INFO(qLcNetwork) << "connection setting saved" << m_connectionSettings->id() << "result:" << !reply.isError();
+        if (reply.isError())
+        {
+            KLOG_WARNING(qLcNetwork) << "connection setting save failed" << reply.error();
+            KiranMessageBox::message(this, tr("Error"),
+                                     tr("Failed to save the connection: %1").arg(reply.error().message()),
+                                     KiranMessageBox::Ok);
+            return;
+        }
+        KLOG_INFO(qLcNetwork) << "connection setting saved" << m_connectionSettings->id();
     }
     else
     {
         // 新增配置
         auto reply = NetworkManager::addConnection(m_connectionSettings->toMap());
         reply.waitForFinished();
-        KLOG_INFO(qLcNetwork) << "connection setting added" << m_connectionSettings->id() << "result:" << !reply.isError();
+        if (reply.isError())
+        {
+            KLOG_WARNING(qLcNetwork) << "connection setting add failed" << reply.error();
+            KiranMessageBox::message(this, tr("Error"),
+                                     tr("Failed to add the connection: %1").arg(reply.error().message()),
+                                     KiranMessageBox::Ok);
+            return;
+        }
+        KLOG_INFO(qLcNetwork) << "connection setting added" << m_connectionSettings->id();
     }
 
     emit PM_INSTANCE->requestWiredDevicePage();

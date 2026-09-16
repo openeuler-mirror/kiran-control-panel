@@ -2381,6 +2381,22 @@
         <translation>请填入连接配置名</translation>
     </message>
     <message>
+        <location filename="../plugins/network/pages/ethernet/connection-settings-page.cpp" line="290"/>
+        <location filename="../plugins/network/pages/ethernet/connection-settings-page.cpp" line="305"/>
+        <source>Error</source>
+        <translation>错误</translation>
+    </message>
+    <message>
+        <location filename="../plugins/network/pages/ethernet/connection-settings-page.cpp" line="291"/>
+        <source>Failed to save the connection: %1</source>
+        <translation>保存连接失败：%1</translation>
+    </message>
+    <message>
+        <location filename="../plugins/network/pages/ethernet/connection-settings-page.cpp" line="306"/>
+        <source>Failed to add the connection: %1</source>
+        <translation>添加连接失败：%1</translation>
+    </message>
+    <message>
         <location filename="../plugins/network/pages/ethernet/connection-settings-page.cpp" line="312"/>
         <source>Wired Connection %1</source>
         <translation>有线网络%1</translation>
