@@ -36,7 +36,7 @@
 #define HOST_NAME "host_name"
 #define ARCH "arch"
 #define KERNEL_VERSION "kernel_version"
-#define KERNEL_NAME "kernal_name"
+#define KERNEL_NAME "kernel_name"
 #define KERNEL_RELEASE "kernel_release"
 #define PRODUCT_RELEASE "product_release"
 
@@ -206,22 +206,22 @@ void SystemInformation::parseSoftwareInfoJson(QString jsonString,
         return;
     }
     QJsonObject rootObject = jsonDocument.object();
-    if (rootObject.contains("host_name") && rootObject["host_name"].isString())
+    if (rootObject.contains(HOST_NAME) && rootObject[HOST_NAME].isString())
     {
-        hostName = rootObject["host_name"].toString();
+        hostName = rootObject[HOST_NAME].toString();
     }
-    if (rootObject.contains("arch") && rootObject["arch"].isString())
+    if (rootObject.contains(ARCH) && rootObject[ARCH].isString())
     {
-        arch = rootObject["arch"].toString();
+        arch = rootObject[ARCH].toString();
     }
-    if (rootObject.contains("product_release") && rootObject["product_release"].isString())
+    if (rootObject.contains(PRODUCT_RELEASE) && rootObject[PRODUCT_RELEASE].isString())
     {
-        systemVersion = rootObject["product_release"].toString();
+        systemVersion = rootObject[PRODUCT_RELEASE].toString();
     }
-    if (rootObject.contains("kernal_name") && rootObject["kernal_name"].isString() &&
-        rootObject.contains("kernel_release") && rootObject["kernel_release"].isString())
+    if (rootObject.contains(KERNEL_NAME) && rootObject[KERNEL_NAME].isString() &&
+        rootObject.contains(KERNEL_RELEASE) && rootObject[KERNEL_RELEASE].isString())
     {
-        kernelVersion = rootObject["kernal_name"].toString() + " " + rootObject["kernel_release"].toString();
+        kernelVersion = rootObject[KERNEL_NAME].toString() + " " + rootObject[KERNEL_RELEASE].toString();
     }
 }
 
