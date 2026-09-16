@@ -18,6 +18,13 @@
 
 #include <fontconfig/fontconfig.h>
 
+// fontconfig 2.18.1 起 FreeType 相关接口（含 FcFreeTypeQueryAll）只在 fcfreetype.h 中声明，
+// 2.13 到 2.17 仍在 fontconfig.h 中。这里按 2.18 版本线（FC_VERSION >= 21800）统一处理：
+// 2.18.0 尚未拆分，多包含一次该头无副作用；低版本则不引入 freetype 头依赖。
+#if FC_VERSION >= 21800
+#include <fontconfig/fcfreetype.h>
+#endif
+
 #include <QFile>
 #include <QFileInfo>
 #include <QMap>
