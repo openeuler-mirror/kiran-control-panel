@@ -77,8 +77,13 @@ void SettingPage::setConnectionSettings(const ConnectionSettings::Ptr& other)
 
 bool SettingPage::handleSaveButtonClicked(ConnectionSettings::ConnectionType connectionType)
 {
-    if (m_connectionSettings == nullptr)
+    // 本函数同时服务“新建连接”和“编辑已有连接”：m_connection 为空即新建（页面上还没有
+    // 对应的 NM 连接对象），非空即编辑。不能用 m_connectionSettings 判断——新建保存失败后
+    // 会停留在本页，该对象已被创建过，再次保存会被误判为编辑并对空的 m_connection 调用 update()。
+    if (m_connection.isNull())
     {
+        // 新建：initConnectionSettings() 会重建一份 settings（新 uuid），
+        // 不复用上次失败残留的对象；表单当前内容由 saveSettingPage() 回读
         initConnectionSettings(connectionType);
         initSettingPage();
         saveSettingPage();
