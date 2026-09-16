@@ -35,7 +35,7 @@
 #define HOST_NAME "host_name"
 #define ARCH "arch"
 #define KERNEL_VERSION "kernel_version"
-#define KERNEL_NAME "kernal_name"
+#define KERNEL_NAME "kernel_name"
 #define KERNEL_RELEASE "kernel_release"
 #define PRODUCT_RELEASE "product_release"
 
@@ -216,10 +216,20 @@ void SystemInformation::parseSoftwareInfoJson(QString jsonString,
     {
         systemVersion = rootObject["product_release"].toString();
     }
-    if (rootObject.contains("kernal_name") && rootObject["kernal_name"].isString() &&
+    QString kernelName;
+    if (rootObject.contains("kernel_name") && rootObject["kernel_name"].isString())
+    {
+        kernelName = rootObject["kernel_name"].toString();
+    }
+    else if (rootObject.contains("kernal_name") && rootObject["kernal_name"].isString())
+    {
+        // 兼容旧版本 daemon 输出的错误 key
+        kernelName = rootObject["kernal_name"].toString();
+    }
+    if (!kernelName.isEmpty() &&
         rootObject.contains("kernel_release") && rootObject["kernel_release"].isString())
     {
-        kernelVersion = rootObject["kernal_name"].toString() + " " + rootObject["kernel_release"].toString();
+        kernelVersion = kernelName + " " + rootObject["kernel_release"].toString();
     }
 }
 
