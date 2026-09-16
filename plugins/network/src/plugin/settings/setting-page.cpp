@@ -75,10 +75,15 @@ void SettingPage::setConnectionSettings(const ConnectionSettings::Ptr& other)
     m_connectionSettings = other;
 }
 
-void SettingPage::handleSaveButtonClicked(ConnectionSettings::ConnectionType connectionType)
+bool SettingPage::handleSaveButtonClicked(ConnectionSettings::ConnectionType connectionType)
 {
-    if (m_connectionSettings == nullptr)
+    // 本函数同时服务“新建连接”和“编辑已有连接”：m_connection 为空即新建（页面上还没有
+    // 对应的 NM 连接对象），非空即编辑。不能用 m_connectionSettings 判断——新建保存失败后
+    // 会停留在本页，该对象已被创建过，再次保存会被误判为编辑并对空的 m_connection 调用 update()。
+    if (m_connection.isNull())
     {
+        // 新建：initConnectionSettings() 会重建一份 settings（新 uuid），
+        // 不复用上次失败残留的对象；表单当前内容由 saveSettingPage() 回读
         initConnectionSettings(connectionType);
         initSettingPage();
         saveSettingPage();
@@ -87,12 +92,18 @@ void SettingPage::handleSaveButtonClicked(ConnectionSettings::ConnectionType con
         replyAdd.waitForFinished();
         if (replyAdd.isError())
         {
-            KLOG_DEBUG(qLcNetwork) << "add connection failed," << replyAdd.error();
+            // NOTE: 此处原先仅以 KLOG_DEBUG 记录，而系统日志配置会过滤掉带分类的
+            // DEBUG 日志，导致保存失败时用户界面上没有任何反馈。改为 WARNING 级别
+            // 记录并弹出错误提示。
+            KLOG_WARNING(qLcNetwork) << "add connection failed," << replyAdd.error();
+            KiranMessageBox::message(this, tr("Error"),
+                                     tr("Failed to add the connection: %1").arg(replyAdd.error().message()),
+                                     KiranMessageBox::Ok);
+            return false;
         }
-        else
-        {
-            KLOG_DEBUG(qLcNetwork) << "add new connection reply:" << replyAdd.reply();
-        }
+
+        KLOG_DEBUG(qLcNetwork) << "add new connection reply:" << replyAdd.reply();
+        return true;
     }
     else
     {
@@ -122,8 +133,14 @@ void SettingPage::handleSaveButtonClicked(ConnectionSettings::ConnectionType con
         replyUpdate.waitForFinished();
         if (replyUpdate.isError())
         {
-            KLOG_DEBUG(qLcNetwork) << "error occurred while updating the connection" << replyUpdate.error();
+            KLOG_WARNING(qLcNetwork) << "error occurred while updating the connection" << replyUpdate.error();
+            KiranMessageBox::message(this, tr("Error"),
+                                     tr("Failed to save the connection: %1").arg(replyUpdate.error().message()),
+                                     KiranMessageBox::Ok);
+            return false;
         }
+
+        return true;
     }
 }
 

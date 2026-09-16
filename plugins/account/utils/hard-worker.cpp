@@ -20,6 +20,53 @@
 #include <qt5-log-i.h>
 #include <QDBusConnection>
 #include <QDebug>
+#include <QFile>
+
+#include <cerrno>
+#include <sys/stat.h>
+
+namespace
+{
+/// 目录存在状态
+enum class DirExistence
+{
+    EXISTS,      ///< 已存在（含被同名文件占用）
+    NOT_EXISTS,  ///< 确认不存在
+    UNKNOWN,     ///< 无法判定（如无权限搜索父目录），应保守按 EXISTS 处理
+};
+
+/// 探测目录存在状态。不用 QFileInfo::exists()：父目录无搜索权限（EACCES）时
+/// 它同样返回 false，会把"探测不到"误判为"不存在"。
+static DirExistence probeDirExistence(const QString &path)
+{
+    struct stat st;
+    if (::stat(QFile::encodeName(path).constData(), &st) == 0)
+    {
+        return DirExistence::EXISTS;
+    }
+
+    if (errno == ENOENT || errno == ENOTDIR)  // 查无此项 / 路径中某组件不是目录
+    {
+        return DirExistence::NOT_EXISTS;
+    }
+
+    return DirExistence::UNKNOWN;  // EACCES 等：无法确认目录是否真实存在
+}
+
+/// 目录存在状态的文本描述（用于日志）
+static const char *dirExistenceName(DirExistence existence)
+{
+    switch (existence)
+    {
+    case DirExistence::EXISTS:
+        return "exists";
+    case DirExistence::NOT_EXISTS:
+        return "not exists";
+    default:
+        return "unknown";
+    }
+}
+}  // namespace
 
 HardWorker::HardWorker() : QObject(nullptr)
 {
@@ -75,12 +122,22 @@ void HardWorker::doCreateUser(QString userName,
 
     userObjPath = createUserRep.value().path();
     auto userInterface = DBusWrapper::createKiranAccountServiceUserAPI(userObjPath);
+
+    /// 回退删除用户时是否连带清理用户主目录。仅当主目录属本次流程产物时为 true：
+    /// 未指定目录（useradd 生成的默认目录），或指定目录确认不存在（由本次流程新建）。
+    /// 指定目录已存在或无法判定时必须为 false，防止回退误删用户既有数据。
+    bool removeHomeDirOnRollback = true;
     auto deleteUserAndReplyError = [this, createUserDoneWithError,
-                                    accountsServiceAPI, userInterface](const QString& errorDetail) -> void
+                                    accountsServiceAPI, userInterface,
+                                    &removeHomeDirOnRollback](const QString& errorDetail) -> void
     {
         auto uid = userInterface->uid();
 
-        auto reply = accountsServiceAPI->DeleteUser(uid, true);
+        KLOG_INFO(qLcAccount) << "rollback delete user, uid:" << uid
+                              << ", remove home directory:" << removeHomeDirOnRollback
+                              << ", reason:" << errorDetail;
+
+        auto reply = accountsServiceAPI->DeleteUser(uid, removeHomeDirOnRollback);
         reply.waitForFinished();
 
         createUserDoneWithError(errorDetail);
@@ -99,6 +156,16 @@ void HardWorker::doCreateUser(QString userName,
     /// step3.　设置Home
     if (!homeDir.isEmpty())
     {
+        /// 指定目录仅当确认不存在时才由本次流程新建，回退可随之清理；否则视为
+        /// 用户既有数据目录，回退不得清理——SetHomeDirectory 失败时 passwd 中的
+        /// home 也可能已被 usermod 改写为该目录（改写不随 usermod 失败回退），
+        /// 清理会误删其中数据。
+        DirExistence homeDirExistence = probeDirExistence(homeDir);
+        removeHomeDirOnRollback = (homeDirExistence == DirExistence::NOT_EXISTS);
+        KLOG_INFO(qLcAccount) << "probe specified home directory:" << homeDir
+                              << ", existence:" << dirExistenceName(homeDirExistence)
+                              << ", remove home directory on rollback:" << removeHomeDirOnRollback;
+
         QDBusPendingReply<> setHomeRep = userInterface->SetHomeDirectory(homeDir);
         setHomeRep.waitForFinished();
         if (setHomeRep.isError())

@@ -46,7 +46,8 @@ public:
     virtual void clearPtr();
 
 public slots:
-    void handleSaveButtonClicked(NetworkManager::ConnectionSettings::ConnectionType connectionType);
+    // 返回值表示保存是否成功，调用方应仅在成功时返回上一页
+    bool handleSaveButtonClicked(NetworkManager::ConnectionSettings::ConnectionType connectionType);
 
 signals:
     void returnPreviousPage();

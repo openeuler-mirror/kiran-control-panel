@@ -152,16 +152,16 @@ void VpnManager::handleSaveButtonClicked()
     switch (index)
     {
     case VPN_TYPE_L2TP:
-        if (ui->l2tpSetting->isInputValid())
+        if (ui->l2tpSetting->isInputValid() &&
+            ui->l2tpSetting->handleSaveButtonClicked(ConnectionSettings::ConnectionType::Vpn))
         {
-            ui->l2tpSetting->handleSaveButtonClicked(ConnectionSettings::ConnectionType::Vpn);
             handleReturnPreviousPage();
         }
         break;
     case VPN_TYPE_PPTP:
-        if (ui->pptpSetting->isInputValid())
+        if (ui->pptpSetting->isInputValid() &&
+            ui->pptpSetting->handleSaveButtonClicked(ConnectionSettings::ConnectionType::Vpn))
         {
-            ui->pptpSetting->handleSaveButtonClicked(ConnectionSettings::ConnectionType::Vpn);
             handleReturnPreviousPage();
         }
         break;
