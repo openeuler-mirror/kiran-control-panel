@@ -2801,10 +2801,6 @@
         <translation type="vanished">版权所有 ©</translation>
     </message>
     <message>
-        <source>KylinSec. All rights reserved.</source>
-        <translation type="vanished">KylinSec.保留所有权利.</translation>
-    </message>
-    <message>
         <location filename="../plugins/system/pages/hardware-information/hardware-information.cpp" line="111"/>
         <location filename="../plugins/system/pages/hardware-information/hardware-information.cpp" line="112"/>
         <location filename="../plugins/system/pages/hardware-information/hardware-information.cpp" line="120"/>
@@ -3666,13 +3662,8 @@
     <name>KylinsecLogo</name>
     <message>
         <location filename="../plugins/system/kylinsec-logo.cpp" line="36"/>
-        <source>Copyright ©</source>
-        <translation type="unfinished">版权所有 ©</translation>
-    </message>
-    <message>
-        <location filename="../plugins/system/kylinsec-logo.cpp" line="36"/>
-        <source>KylinSec. All rights reserved.</source>
-        <translation type="unfinished">KylinSec.保留所有权利.</translation>
+        <source>Copyright © %1 Hunan Kylinsec Technology Co., Ltd. All rights reserved.</source>
+        <translation>©%1 湖南麒麟信安科技股份有限公司 版权所有</translation>
     </message>
 </context>
 <context>
@@ -3962,10 +3953,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Copyright ©</source>
         <translation type="vanished">版权所有 ©</translation>
-    </message>
-    <message>
-        <source>KylinSec. All rights reserved.</source>
-        <translation type="vanished">KylinSec.保留所有权利.</translation>
     </message>
 </context>
 <context>
@@ -5605,10 +5592,6 @@ This is line 50 of the test text</source>
         <translation type="vanished">版权所有 ©</translation>
     </message>
     <message>
-        <source>KylinSec. All rights reserved.</source>
-        <translation type="vanished">KylinSec.保留所有权利.</translation>
-    </message>
-    <message>
         <location filename="../plugins/system/pages/system-information/system-information.ui" line="700"/>
         <source>Privacy policy:</source>
         <translation>隐私协议:</translation>
@@ -5707,10 +5690,6 @@ This is line 50 of the test text</source>
     <message>
         <source>Copyright ©</source>
         <translation type="vanished">版权所有 ©</translation>
-    </message>
-    <message>
-        <source>KylinSec. All rights reserved.</source>
-        <translation type="vanished">KylinSec.保留所有权利.</translation>
     </message>
 </context>
 <context>
