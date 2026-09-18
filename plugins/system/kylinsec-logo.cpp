@@ -19,7 +19,7 @@
 #define SYSTEM_LOGO "KylinSec OS"
 
 KylinsecLogo::KylinsecLogo(QWidget *parent)
-    :QWidget(parent)
+    : QWidget(parent)
 {
     setAccessibleName("KylinsecLogo");
 }
@@ -33,11 +33,11 @@ void KylinsecLogo::paintEvent(QPaintEvent *event)
     QDate currentDate = QDate::currentDate();
     QString date = currentDate.toString("yyyy-MM-dd");
     QString year = date.left(4);
-    QString copyright = QString(tr("Copyright ©")) + QString("%1 ").arg(year) + QString(tr("KylinSec. All rights reserved."));
+    QString copyright = tr("Copyright © %1 Hunan Kylinsec Technology Co., Ltd. All rights reserved.").arg(year);
 
     QPainter painter(this);
     QFont font = QFont("Noto Sans CJK SC regular", 46);
-    QRect drawRecLogo = QRect( 24, 16, this->width(), 157 - 16);
+    QRect drawRecLogo = QRect(24, 16, this->width(), 157 - 16);
 
     QTextOption textOption(Qt::AlignLeft);
     textOption.setWrapMode(QTextOption::NoWrap);

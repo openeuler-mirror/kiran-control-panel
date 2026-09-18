@@ -1403,42 +1403,42 @@
 <context>
     <name>FontModel</name>
     <message>
-        <location filename="../plugins/font/widgets/font-table.cpp" line="208"/>
+        <location filename="../plugins/font/widgets/font-table.cpp" line="218"/>
         <source>Font Name</source>
         <translation>字体名称</translation>
     </message>
     <message>
-        <location filename="../plugins/font/widgets/font-table.cpp" line="210"/>
+        <location filename="../plugins/font/widgets/font-table.cpp" line="220"/>
         <source>Font Style</source>
         <translation>字体样式</translation>
     </message>
     <message>
-        <location filename="../plugins/font/widgets/font-table.cpp" line="212"/>
+        <location filename="../plugins/font/widgets/font-table.cpp" line="222"/>
         <source>Source</source>
         <translation>来源</translation>
     </message>
     <message>
-        <location filename="../plugins/font/widgets/font-table.cpp" line="214"/>
+        <location filename="../plugins/font/widgets/font-table.cpp" line="224"/>
         <source>Status</source>
         <translation>状态</translation>
     </message>
     <message>
-        <location filename="../plugins/font/widgets/font-table.cpp" line="178"/>
+        <location filename="../plugins/font/widgets/font-table.cpp" line="177"/>
         <source>System</source>
         <translation>系统</translation>
     </message>
     <message>
-        <location filename="../plugins/font/widgets/font-table.cpp" line="178"/>
+        <location filename="../plugins/font/widgets/font-table.cpp" line="177"/>
         <source>User</source>
         <translation>用户</translation>
     </message>
     <message>
-        <location filename="../plugins/font/widgets/font-table.cpp" line="180"/>
+        <location filename="../plugins/font/widgets/font-table.cpp" line="179"/>
         <source>Enabled</source>
         <translation>已启用</translation>
     </message>
     <message>
-        <location filename="../plugins/font/widgets/font-table.cpp" line="180"/>
+        <location filename="../plugins/font/widgets/font-table.cpp" line="179"/>
         <source>Disabled</source>
         <translation>已禁用</translation>
     </message>
@@ -1467,72 +1467,72 @@
     </message>
     <message>
         <location filename="../plugins/font/font-page.ui" line="95"/>
-        <location filename="../plugins/font/font-page.cpp" line="162"/>
+        <location filename="../plugins/font/font-page.cpp" line="157"/>
         <source>Delete Font</source>
         <translation>删除字体</translation>
     </message>
     <message>
-        <location filename="../plugins/font/font-page.cpp" line="84"/>
+        <location filename="../plugins/font/font-page.cpp" line="79"/>
         <source>System Font</source>
         <translation>系统字体</translation>
     </message>
     <message>
-        <location filename="../plugins/font/font-page.cpp" line="85"/>
+        <location filename="../plugins/font/font-page.cpp" line="80"/>
         <source>User Font</source>
         <translation>用户字体</translation>
     </message>
     <message>
-        <location filename="../plugins/font/font-page.cpp" line="76"/>
+        <location filename="../plugins/font/font-page.cpp" line="71"/>
         <source>Search Font</source>
         <translation>搜索字体</translation>
     </message>
     <message>
-        <location filename="../plugins/font/font-page.cpp" line="130"/>
+        <location filename="../plugins/font/font-page.cpp" line="125"/>
         <source>Select Font Files</source>
         <translation>选择字体文件</translation>
     </message>
     <message>
-        <location filename="../plugins/font/font-page.cpp" line="132"/>
+        <location filename="../plugins/font/font-page.cpp" line="127"/>
         <source>Font Files (*.ttf *.otf *.ttc *.otc *.woff *.woff2 *.pcf *.bdf *.pfa *.pfb);;All Files (*)</source>
         <translation>字体文件 (*.ttf *.otf *.ttc *.otc *.woff *.woff2 *.pcf *.bdf *.pfa *.pfb);;所有文件 (*)</translation>
     </message>
     <message>
-        <location filename="../plugins/font/font-page.cpp" line="161"/>
+        <location filename="../plugins/font/font-page.cpp" line="156"/>
         <source>Are you sure you want to delete the selected %1 fonts?</source>
         <translation>确定要删除选中的 %1 个字体吗？</translation>
     </message>
     <message>
-        <location filename="../plugins/font/font-page.cpp" line="160"/>
+        <location filename="../plugins/font/font-page.cpp" line="155"/>
         <source>Are you sure you want to delete font &quot;%1 %2&quot;?</source>
         <translation>确定要删除字体“%1 %2”吗？</translation>
     </message>
     <message>
-        <location filename="../plugins/font/font-page.cpp" line="207"/>
+        <location filename="../plugins/font/font-page.cpp" line="202"/>
         <source>Failed to open the font viewer.</source>
         <translation>无法打开字体查看器。</translation>
     </message>
     <message>
-        <location filename="../plugins/font/font-page.cpp" line="213"/>
+        <location filename="../plugins/font/font-page.cpp" line="208"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../plugins/font/font-page.cpp" line="252"/>
+        <location filename="../plugins/font/font-page.cpp" line="247"/>
         <source>Disable</source>
         <translation>禁用</translation>
     </message>
     <message>
-        <location filename="../plugins/font/font-page.cpp" line="254"/>
+        <location filename="../plugins/font/font-page.cpp" line="249"/>
         <source>Enable</source>
         <translation>启用</translation>
     </message>
     <message>
-        <location filename="../plugins/font/font-page.cpp" line="256"/>
+        <location filename="../plugins/font/font-page.cpp" line="251"/>
         <source>Delete</source>
         <translation>删除</translation>
     </message>
     <message>
-        <location filename="../plugins/font/font-page.cpp" line="262"/>
+        <location filename="../plugins/font/font-page.cpp" line="257"/>
         <source>Open with Font Viewer</source>
         <translation>使用字体查看器打开</translation>
     </message>
@@ -2839,13 +2839,8 @@
     <name>KylinsecLogo</name>
     <message>
         <location filename="../plugins/system/kylinsec-logo.cpp" line="36"/>
-        <source>Copyright ©</source>
-        <translation type="unfinished">版权所有 ©</translation>
-    </message>
-    <message>
-        <location filename="../plugins/system/kylinsec-logo.cpp" line="36"/>
-        <source>KylinSec. All rights reserved.</source>
-        <translation type="unfinished">KylinSec.保留所有权利.</translation>
+        <source>Copyright © %1 Hunan Kylinsec Technology Co., Ltd. All rights reserved.</source>
+        <translation>©%1 湖南麒麟信安科技股份有限公司 版权所有</translation>
     </message>
 </context>
 <context>
@@ -3562,6 +3557,122 @@ This is line 50 of the test text</source>
         <location filename="../plugins/authentication/pages/prefs-page.cpp" line="192"/>
         <source>Apply the %1 authentication to the following applications</source>
         <translation>启用%1认证在以下的认证应用中</translation>
+    </message>
+</context>
+<context>
+    <name>PrinterCard</name>
+    <message>
+        <location filename="../plugins/printer/pages/printer-card.cpp" line="105"/>
+        <source>Default Printer</source>
+        <translation>默认打印机</translation>
+    </message>
+    <message>
+        <location filename="../plugins/printer/pages/printer-card.cpp" line="117"/>
+        <source>Set as Default</source>
+        <translation>设为默认</translation>
+    </message>
+    <message>
+        <location filename="../plugins/printer/pages/printer-card.cpp" line="125"/>
+        <source>Print Test Page</source>
+        <translation>打印测试页</translation>
+    </message>
+    <message>
+        <location filename="../plugins/printer/pages/printer-card.cpp" line="133"/>
+        <source>Properties</source>
+        <translation>属性</translation>
+    </message>
+    <message>
+        <location filename="../plugins/printer/pages/printer-card.cpp" line="146"/>
+        <source>View Print Queue</source>
+        <translation>查看打印队列</translation>
+    </message>
+    <message>
+        <location filename="../plugins/printer/pages/printer-card.cpp" line="150"/>
+        <source>Manage Printer</source>
+        <translation>管理打印机</translation>
+    </message>
+    <message>
+        <location filename="../plugins/printer/pages/printer-card.cpp" line="178"/>
+        <source>Ready</source>
+        <translation>就绪</translation>
+    </message>
+    <message>
+        <location filename="../plugins/printer/pages/printer-card.cpp" line="178"/>
+        <source>Offline</source>
+        <translation>离线</translation>
+    </message>
+    <message>
+        <location filename="../plugins/printer/pages/printer-card.cpp" line="180"/>
+        <source>Model: %1</source>
+        <translation>型号: %1</translation>
+    </message>
+</context>
+<context>
+    <name>PrinterPage</name>
+    <message>
+        <location filename="../plugins/printer/pages/printer-page.ui" line="14"/>
+        <location filename="../plugins/printer/pages/printer-page.ui" line="40"/>
+        <source>Printer Settings</source>
+        <translation>打印设置</translation>
+    </message>
+    <message>
+        <location filename="../plugins/printer/pages/printer-page.ui" line="54"/>
+        <source>Search printers...</source>
+        <translation>搜索打印机...</translation>
+    </message>
+    <message>
+        <location filename="../plugins/printer/pages/printer-page.ui" line="79"/>
+        <source>Add Printer</source>
+        <translation>添加打印机</translation>
+    </message>
+    <message>
+        <location filename="../plugins/printer/pages/printer-page.ui" line="209"/>
+        <source>Print service is not running</source>
+        <translation>打印服务未运行</translation>
+    </message>
+    <message>
+        <location filename="../plugins/printer/pages/printer-page.ui" line="222"/>
+        <source>Cannot connect to the CUPS service. Please start the print service before managing printers.</source>
+        <translation>当前无法连接到 CUPS 服务，请先启动打印服务后再管理打印机</translation>
+    </message>
+    <message>
+        <location filename="../plugins/printer/pages/printer-page.ui" line="262"/>
+        <source>Start Service</source>
+        <translation>启动服务</translation>
+    </message>
+    <message>
+        <location filename="../plugins/printer/pages/printer-page.ui" line="281"/>
+        <source>Retry</source>
+        <translation>重试</translation>
+    </message>
+    <message>
+        <location filename="../plugins/printer/pages/printer-page.ui" line="341"/>
+        <location filename="../plugins/printer/pages/printer-page.cpp" line="232"/>
+        <source>%1 printer(s)</source>
+        <translation>共 %1 台打印机</translation>
+    </message>
+    <message>
+        <location filename="../plugins/printer/pages/printer-page.ui" line="380"/>
+        <source>Refresh</source>
+        <translation>刷新</translation>
+    </message>
+    <message>
+        <location filename="../plugins/printer/pages/printer-page.cpp" line="260"/>
+        <source>Print service unavailable</source>
+        <translation>打印服务不可用</translation>
+    </message>
+    <message>
+        <location filename="../plugins/printer/pages/printer-page.cpp" line="316"/>
+        <source>Test Page</source>
+        <translation>测试页</translation>
+    </message>
+</context>
+<context>
+    <name>PrinterSubItem</name>
+    <message>
+        <location filename="../plugins/printer/printer-subitem.h" line="44"/>
+        <source>Printer Settings</source>
+        <translation>打印设置</translation>
     </message>
 </context>
 <context>
@@ -5077,99 +5188,6 @@ This is line 50 of the test text</source>
         <location filename="../plugins/timedate/widgets/date-spinbox.h" line="35"/>
         <source>yyyy</source>
         <translation>yyyy年</translation>
-    </message>
-</context>
-<context>
-    <name>PrinterCard</name>
-    <message>
-        <source>Default Printer</source>
-        <translation>默认打印机</translation>
-    </message>
-    <message>
-        <source>Set as Default</source>
-        <translation>设为默认</translation>
-    </message>
-    <message>
-        <source>Print Test Page</source>
-        <translation>打印测试页</translation>
-    </message>
-    <message>
-        <source>Properties</source>
-        <translation>属性</translation>
-    </message>
-    <message>
-        <source>View Print Queue</source>
-        <translation>查看打印队列</translation>
-    </message>
-    <message>
-        <source>Manage Printer</source>
-        <translation>管理打印机</translation>
-    </message>
-    <message>
-        <source>Ready</source>
-        <translation>就绪</translation>
-    </message>
-    <message>
-        <source>Offline</source>
-        <translation>离线</translation>
-    </message>
-    <message>
-        <source>Model: %1</source>
-        <translation>型号: %1</translation>
-    </message>
-</context>
-<context>
-    <name>PrinterPage</name>
-    <message>
-        <source>Printer Settings</source>
-        <translation>打印设置</translation>
-    </message>
-    <message>
-        <source>Search printers...</source>
-        <translation>搜索打印机...</translation>
-    </message>
-    <message>
-        <source>Add Printer</source>
-        <translation>添加打印机</translation>
-    </message>
-    <message>
-        <source>Print service is not running</source>
-        <translation>打印服务未运行</translation>
-    </message>
-    <message>
-        <source>Cannot connect to the CUPS service. Please start the print service before managing printers.</source>
-        <translation>当前无法连接到 CUPS 服务，请先启动打印服务后再管理打印机</translation>
-    </message>
-    <message>
-        <source>Start Service</source>
-        <translation>启动服务</translation>
-    </message>
-    <message>
-        <source>Retry</source>
-        <translation>重试</translation>
-    </message>
-    <message>
-        <source>%1 printer(s)</source>
-        <translation>共 %1 台打印机</translation>
-    </message>
-    <message>
-        <source>Refresh</source>
-        <translation>刷新</translation>
-    </message>
-    <message>
-        <source>Print service unavailable</source>
-        <translation>打印服务不可用</translation>
-    </message>
-    <message>
-        <source>Test Page</source>
-        <translation>测试页</translation>
-    </message>
-</context>
-<context>
-    <name>PrinterSubItem</name>
-    <message>
-        <source>Printer Settings</source>
-        <translation>打印设置</translation>
     </message>
 </context>
 </TS>
