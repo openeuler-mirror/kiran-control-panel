@@ -8,8 +8,6 @@ OPTION(ENABLE_USER_GROUP "Enable user group" ON)
 OPTION(ENABLE_NETWORK "Enable network plugin" ON)
 OPTION(ENABLE_AUDIO "Enable audio plugin" ON)
 OPTION(ENABLE_APPLICATION "Enable application plugin" ON)
-#个性化，是否显示屏保界面
-OPTION(ENABLE_APPEARANCE_SCREENSAVER "Whether to enable the personalized screensaver page" OFF)
 #系统信息，是否显示隐私协议
 OPTION(ENABLE_SYSTEM_PRIVACY_POLICY "Whether to show the system privacy policy" ON)
 #系统信息，是否显示跳转系统监视器按钮
