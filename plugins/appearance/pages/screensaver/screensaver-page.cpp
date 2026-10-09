@@ -26,6 +26,7 @@
 #define SCHEMA_KIRAN_SCREENSAVER "com.kylinsec.kiran.screensaver"
 #define KEY_IDLE_ACTIVATION_SCREENSAVER "idleActivationScreensaver"
 #define KEY_SCREENSAVER_THEME "screensaverTheme"
+#define KEY_SPLIT_SCREENSAVER_AND_LOCK "splitScreensaverAndLock"
 
 using namespace Kiran;
 
@@ -45,11 +46,16 @@ bool ScreensaverPage::isSupported()
 {
     QGSettings settings(SCHEMA_KIRAN_SCREENSAVER);
     auto keys = settings.keys();
-    if( keys.contains(KEY_IDLE_ACTIVATION_SCREENSAVER) && keys.contains(KEY_SCREENSAVER_THEME) )
+    // 屏保和锁屏未拆分时，空闲触发屏保复用锁屏配置项，
+    // 页面上的屏保开关不会生效，因此此时不应显示该页面
+    if (!keys.contains(KEY_IDLE_ACTIVATION_SCREENSAVER) ||
+        !keys.contains(KEY_SCREENSAVER_THEME) ||
+        !keys.contains(KEY_SPLIT_SCREENSAVER_AND_LOCK))
     {
-        return true;
+        return false;
     }
-    return false;
+
+    return settings.get(KEY_SPLIT_SCREENSAVER_AND_LOCK).toBool();
 }
 
 QWidget* ScreensaverPage::createPage()
