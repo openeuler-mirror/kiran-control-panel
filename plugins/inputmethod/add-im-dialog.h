@@ -25,6 +25,7 @@
 #include "im-entry.h"
 #include "im-list-provider.h"
 
+class QCheckBox;
 class QLabel;
 class QVBoxLayout;
 class QPushButton;
@@ -75,6 +76,8 @@ private slots:
 private:
     /// UI
     KiranSearchBox* m_searchBox = nullptr;
+    /// 仅显示当前语言，与 GSettings only-current-language 同步
+    QCheckBox* m_onlyCurrentLanguageBox = nullptr;
     QScrollArea* m_scrollArea = nullptr;
     QWidget* m_itemContainer = nullptr;
     QVBoxLayout* m_itemLayout = nullptr;
@@ -83,6 +86,8 @@ private:
     QPushButton* m_cancelButton = nullptr;
     /// 搜索防抖，避免每次按键都遍历 700+ 项
     QTimer* m_searchTimer = nullptr;
+    /// 语言过滤开关防抖，避免连续切换触发多次候选重建
+    QTimer* m_reloadTimer = nullptr;
     ImListProvider* m_provider = nullptr;
     /// 候选列表项
     QList<ImChooseItem*> m_items;

@@ -16,15 +16,8 @@
 #include "fcitx4/fcitx4-controller.h"
 #include "fcitx4/fcitx4-im-subitem.h"
 #include "im-candidate-filter.h"
+#include "im-settings.h"
 #include "logging-category.h"
-
-#include <QGSettings>
-
-namespace
-{
-const QByteArray kControlPanelPluginSchema("com.kylinsec.kiran.control-panel.plugin");
-const QString kOnlyCurrentLanguageKey = QStringLiteral("onlyCurrentLanguage");
-}  // namespace
 
 Q_LOGGING_CATEGORY(qLcInputMethod, "kcp.inputmethod", QtMsgType::QtDebugMsg);
 
@@ -41,26 +34,9 @@ int InputMethodPlugin::init(KiranControlPanel::PanelInterface* interface)
 {
     Q_UNUSED(interface);
 
-    // 默认仅显示当前语言；GSettings 为定制和运维提供关闭语言过滤的出口。
+    // 默认仅显示当前语言；GSettings 为定制和运维提供关闭语言过滤的出口
     ImCandidateFilter filter;
-    if (QGSettings::isSchemaInstalled(kControlPanelPluginSchema))
-    {
-        QGSettings settings(kControlPanelPluginSchema);
-        if (settings.keys().contains(kOnlyCurrentLanguageKey))
-        {
-            filter.setOnlyCurrentLanguage(settings.get(kOnlyCurrentLanguageKey).toBool());
-        }
-        else
-        {
-            KLOG_WARNING(qLcInputMethod) << kControlPanelPluginSchema << "has no key"
-                                         << kOnlyCurrentLanguageKey << ", use default candidate filter";
-        }
-    }
-    else
-    {
-        KLOG_WARNING(qLcInputMethod) << kControlPanelPluginSchema
-                                     << "is not installed, use default candidate filter";
-    }
+    filter.setOnlyCurrentLanguage(ImSettings::onlyCurrentLanguage());
 
     KLOG_DEBUG(qLcInputMethod) << "candidate filter: onlyCurrentLanguage"
                                << filter.onlyCurrentLanguage()
