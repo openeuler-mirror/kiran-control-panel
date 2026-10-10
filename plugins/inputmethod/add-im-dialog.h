@@ -18,7 +18,6 @@
 #include <kiran-titlebar-window.h>
 
 #include <QList>
-#include <QSet>
 #include <QString>
 #include <QVector>
 
@@ -87,8 +86,6 @@ private:
     ImListProvider* m_provider = nullptr;
     /// 候选列表项
     QList<ImChooseItem*> m_items;
-    /// 已启用项名称集合
-    QSet<QString> m_enabledNames;
     ImCandidateFilter m_candidateFilter;
     /// 被过滤策略排除的候选数，用于区分空状态提示
     int m_filteredOutCount = 0;

@@ -23,9 +23,8 @@ QString ImCandidateFilter::localeName() const
 
 bool ImCandidateFilter::languageMatches(const QString& langCode) const
 {
-    // fcitx5 的 langCode 粒度不统一：输入引擎多为 "zh_CN"，键盘布局多为 "zh"/"en"，
-    // 另有一批（盲文、国际音标等）为空。取前两字符做语族比较，
-    // 并用「系统 locale 以该语族开头」的方向匹配（"zh_CN".startsWith("zh")）。
+    // fcitx4 的 langCode 粒度不统一：输入引擎多为 "zh_CN"，键盘布局为语言码（如 "en"），
+    // 另有一批（盲文、国际音标等）为空。取前两字符做语族比较。
     const QString language = langCode.left(2);
     if (language.isEmpty())
     {
@@ -36,11 +35,19 @@ bool ImCandidateFilter::languageMatches(const QString& langCode) const
     return localeName().startsWith(language);
 }
 
+bool ImCandidateFilter::isLanguageFilterExempt(const ImEntry& entry)
+{
+    // fcitx-keyboard-us 是 fcitx4 的兜底键盘布局，langCode 为 "en"，zh_CN 下会被语言
+    // 过滤挡掉；而它一旦被用户从已启用列表删除，就再也无法通过本面板添加回来。
+    return entry.uniqueName == QLatin1String("fcitx-keyboard-us");
+}
+
 bool ImCandidateFilter::accepts(const ImEntry& entry) const
 {
-    if (!m_allowKeyboardLayout && entry.isKeyboard)
+    // 只豁免语言预过滤；无关搜索词仍会由 ImChooseItem::matches() 隐藏该项。
+    if (isLanguageFilterExempt(entry))
     {
-        return false;
+        return true;
     }
 
     if (m_onlyCurrentLanguage && !languageMatches(entry.langCode))

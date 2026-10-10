@@ -18,6 +18,14 @@
 #include "im-candidate-filter.h"
 #include "logging-category.h"
 
+#include <QGSettings>
+
+namespace
+{
+const QByteArray kControlPanelPluginSchema("com.kylinsec.kiran.control-panel.plugin");
+const QString kOnlyCurrentLanguageKey = QStringLiteral("onlyCurrentLanguage");
+}  // namespace
+
 Q_LOGGING_CATEGORY(qLcInputMethod, "kcp.inputmethod", QtMsgType::QtDebugMsg);
 
 InputMethodPlugin::InputMethodPlugin(QObject* parent)
@@ -33,12 +41,29 @@ int InputMethodPlugin::init(KiranControlPanel::PanelInterface* interface)
 {
     Q_UNUSED(interface);
 
-    // 「添加输入法」的候选过滤策略：2.6 的 PanelInterface 无 queryCofnig 配置下发，
-    // 使用默认策略（关闭键盘布局显示、仅当前语言）。
+    // 默认仅显示当前语言；GSettings 为定制和运维提供关闭语言过滤的出口。
     ImCandidateFilter filter;
-    KLOG_DEBUG(qLcInputMethod) << "candidate filter: allowKeyboardLayout"
-                               << filter.allowKeyboardLayout()
-                               << "onlyCurrentLanguage" << filter.onlyCurrentLanguage()
+    if (QGSettings::isSchemaInstalled(kControlPanelPluginSchema))
+    {
+        QGSettings settings(kControlPanelPluginSchema);
+        if (settings.keys().contains(kOnlyCurrentLanguageKey))
+        {
+            filter.setOnlyCurrentLanguage(settings.get(kOnlyCurrentLanguageKey).toBool());
+        }
+        else
+        {
+            KLOG_WARNING(qLcInputMethod) << kControlPanelPluginSchema << "has no key"
+                                         << kOnlyCurrentLanguageKey << ", use default candidate filter";
+        }
+    }
+    else
+    {
+        KLOG_WARNING(qLcInputMethod) << kControlPanelPluginSchema
+                                     << "is not installed, use default candidate filter";
+    }
+
+    KLOG_DEBUG(qLcInputMethod) << "candidate filter: onlyCurrentLanguage"
+                               << filter.onlyCurrentLanguage()
                                << "locale" << filter.localeName();
 
     // 本插件服务fcitx4，子项注册只表示提供输入法设置入口，不依赖初始化瞬间的D-Bus在线状态。

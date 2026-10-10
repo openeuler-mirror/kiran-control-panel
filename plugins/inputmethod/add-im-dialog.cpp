@@ -25,6 +25,7 @@
 #include <QPushButton>
 #include <QScrollArea>
 #include <QScrollBar>
+#include <QSet>
 #include <QTimer>
 #include <QVBoxLayout>
 
@@ -154,7 +155,6 @@ void AddImDialog::clearItems()
 void AddImDialog::reloadEntries()
 {
     clearItems();
-    m_enabledNames.clear();
     m_filteredOutCount = 0;
 
     if (!m_provider || !m_provider->isAvailable())
@@ -165,10 +165,10 @@ void AddImDialog::reloadEntries()
     }
 
     // 先记录已启用项，用于置灰去重
-    const QVector<ImEntry> enabled = m_provider->enabledEntries();
-    for (const auto& entry : enabled)
+    QSet<QString> enabledNames;
+    for (const auto& entry : m_provider->enabledEntries())
     {
-        m_enabledNames.insert(entry.uniqueName);
+        enabledNames.insert(entry.uniqueName);
     }
 
     const QVector<ImEntry> available = m_provider->availableEntries();
@@ -184,7 +184,7 @@ void AddImDialog::reloadEntries()
 
         auto* item = new ImChooseItem(m_itemContainer);
         item->setEntry(entry);
-        item->setAlreadyEnabled(m_enabledNames.contains(entry.uniqueName));
+        item->setAlreadyEnabled(enabledNames.contains(entry.uniqueName));
 
         connect(item, &ImChooseItem::toggled, this,
                 [this](bool)
@@ -198,10 +198,10 @@ void AddImDialog::reloadEntries()
     }
 
     qCDebug(qLcInputMethod) << "loaded" << m_items.size() << "candidates,"
-                            << m_enabledNames.size() << "already enabled,"
+                            << enabledNames.size() << "already enabled,"
                             << m_filteredOutCount << "filtered out"
-                            << "(allowKeyboardLayout" << m_candidateFilter.allowKeyboardLayout()
-                            << "onlyCurrentLanguage" << m_candidateFilter.onlyCurrentLanguage() << ")";
+                            << "(onlyCurrentLanguage" << m_candidateFilter.onlyCurrentLanguage()
+                            << "locale" << m_candidateFilter.localeName() << ")";
 
     applyFilter(m_searchBox->text().trimmed());
 }
