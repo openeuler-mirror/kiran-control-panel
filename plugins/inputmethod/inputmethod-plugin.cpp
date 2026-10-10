@@ -16,6 +16,7 @@
 #include "fcitx4/fcitx4-controller.h"
 #include "fcitx4/fcitx4-im-subitem.h"
 #include "im-candidate-filter.h"
+#include "im-settings.h"
 #include "logging-category.h"
 
 Q_LOGGING_CATEGORY(qLcInputMethod, "kcp.inputmethod", QtMsgType::QtDebugMsg);
@@ -33,12 +34,12 @@ int InputMethodPlugin::init(KiranControlPanel::PanelInterface* interface)
 {
     Q_UNUSED(interface);
 
-    // 「添加输入法」的候选过滤策略：2.6 的 PanelInterface 无 queryCofnig 配置下发，
-    // 使用默认策略（关闭键盘布局显示、仅当前语言）。
+    // 默认仅显示当前语言；GSettings 为定制和运维提供关闭语言过滤的出口
     ImCandidateFilter filter;
-    KLOG_DEBUG(qLcInputMethod) << "candidate filter: allowKeyboardLayout"
-                               << filter.allowKeyboardLayout()
-                               << "onlyCurrentLanguage" << filter.onlyCurrentLanguage()
+    filter.setOnlyCurrentLanguage(ImSettings::onlyCurrentLanguage());
+
+    KLOG_DEBUG(qLcInputMethod) << "candidate filter: onlyCurrentLanguage"
+                               << filter.onlyCurrentLanguage()
                                << "locale" << filter.localeName();
 
     // 本插件服务fcitx4，子项注册只表示提供输入法设置入口，不依赖初始化瞬间的D-Bus在线状态。

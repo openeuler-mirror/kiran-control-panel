@@ -6,5 +6,10 @@
             <summary>Show gateway in IPv4 setting</summary>
             <description>Whether to show the IPv4 gateway field in IPv4 setting page for network plugins.</description>
         </key>
+        <key name="only-current-language" type="b">
+            <default>true</default>
+            <summary>Only show input methods for the current language</summary>
+            <description>Whether to limit input method candidates to the current and enabled language families.</description>
+        </key>
     </schema>
 </schemalist>

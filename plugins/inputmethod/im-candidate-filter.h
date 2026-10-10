@@ -22,22 +22,14 @@
 /**
  * @brief 「添加输入法」候选过滤策略
  *
- * 两个开关由 gsettings 提供（com.kylinsec.kiran.control-panel.plugin）：
- *   - allowKeyboardLayout   默认 false，不把键盘布局列为候选
- *   - onlyCurrentLanguage   默认 true，只列出与当前系统语言匹配的候选
- *
- * 默认组合下只纯中文输入引擎。
- *
- * 注意：这里是硬过滤，被排除的候选也无法通过搜索找到。这与 fcitx5-configtool
- * 「搜索时绕过语言过滤」的行为不同，是产品上有意的选择。
+ * onlyCurrentLanguage 由 GSettings 提供，默认只列出与当前系统语言同语族的候选。
+ * fcitx-keyboard-us 豁免语言预过滤，保证误删后仍可重新搜索添加；它仍参与文本搜索，
+ * 因此无关搜索词下不会强制显示。
  */
 class ImCandidateFilter
 {
 public:
     ImCandidateFilter() = default;
-
-    void setAllowKeyboardLayout(bool allow) { m_allowKeyboardLayout = allow; }
-    bool allowKeyboardLayout() const { return m_allowKeyboardLayout; }
 
     void setOnlyCurrentLanguage(bool only) { m_onlyCurrentLanguage = only; }
     bool onlyCurrentLanguage() const { return m_onlyCurrentLanguage; }
@@ -46,14 +38,14 @@ public:
     void setLocaleName(const QString& localeName) { m_localeName = localeName; }
     QString localeName() const;
 
-    /// 候选是否应出现在「添加输入法」列表中
+    /// 候选是否应进入「添加输入法」列表；文本搜索由对话框另行处理
     bool accepts(const ImEntry& entry) const;
 
 private:
+    static bool isLanguageFilterExempt(const ImEntry& entry);
     bool languageMatches(const QString& langCode) const;
 
 private:
-    bool m_allowKeyboardLayout = false;
     bool m_onlyCurrentLanguage = true;
     QString m_localeName;
 };

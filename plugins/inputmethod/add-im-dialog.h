@@ -18,7 +18,6 @@
 #include <kiran-titlebar-window.h>
 
 #include <QList>
-#include <QSet>
 #include <QString>
 #include <QVector>
 
@@ -26,6 +25,7 @@
 #include "im-entry.h"
 #include "im-list-provider.h"
 
+class QCheckBox;
 class QLabel;
 class QVBoxLayout;
 class QPushButton;
@@ -76,6 +76,8 @@ private slots:
 private:
     /// UI
     KiranSearchBox* m_searchBox = nullptr;
+    /// 仅显示当前语言，与 GSettings only-current-language 同步
+    QCheckBox* m_onlyCurrentLanguageBox = nullptr;
     QScrollArea* m_scrollArea = nullptr;
     QWidget* m_itemContainer = nullptr;
     QVBoxLayout* m_itemLayout = nullptr;
@@ -84,11 +86,11 @@ private:
     QPushButton* m_cancelButton = nullptr;
     /// 搜索防抖，避免每次按键都遍历 700+ 项
     QTimer* m_searchTimer = nullptr;
+    /// 语言过滤开关防抖，避免连续切换触发多次候选重建
+    QTimer* m_reloadTimer = nullptr;
     ImListProvider* m_provider = nullptr;
     /// 候选列表项
     QList<ImChooseItem*> m_items;
-    /// 已启用项名称集合
-    QSet<QString> m_enabledNames;
     ImCandidateFilter m_candidateFilter;
     /// 被过滤策略排除的候选数，用于区分空状态提示
     int m_filteredOutCount = 0;

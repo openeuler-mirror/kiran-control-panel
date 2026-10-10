@@ -7441,6 +7441,7 @@ This is line 50 of the test text</source>
     <message><location filename="../plugins/inputmethod/add-im-dialog.cpp" line="244"/><source>No search results, please search again...</source><translation>没有搜索结果，请重新搜索...</translation></message>
     <message><location filename="../plugins/inputmethod/add-im-dialog.cpp" line="249"/><source>No input method available for the current language</source><translation>当前语言没有可用的输入法</translation></message>
     <message><location filename="../plugins/inputmethod/add-im-dialog.cpp" line="253"/><source>No input method available</source><translation>没有可用的输入法</translation></message>
+    <message><location filename="../plugins/inputmethod/add-im-dialog.cpp" line="79"/><source>Show only current language</source><translation>仅显示当前语言</translation></message>
 </context>
 <context>
     <name>Fcitx4ImSubItem</name>

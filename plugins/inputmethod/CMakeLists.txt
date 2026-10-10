@@ -22,7 +22,8 @@ target_include_directories(${TARGET_NAME} PRIVATE
         ${KCP_PLUGIN_INCLUDE_DIR}
         ${KIRAN_WIDGETS_INCLUDE_DIRS}
         ${KLOG_INCLUDE_DIRS}
-        ${KIRAN_STYLE_INCLUDE_DIRS})
+        ${KIRAN_STYLE_INCLUDE_DIRS}
+        ${QGSETTINGS_INCLUDE_DIRS})
 
 target_link_libraries(${TARGET_NAME}
         common-widgets
@@ -31,7 +32,8 @@ target_link_libraries(${TARGET_NAME}
         Qt5::DBus
         ${KIRAN_WIDGETS_LIBRARIES}
         ${KLOG_LIBRARIES}
-        ${KIRAN_STYLE_LIBRARIES})
+        ${KIRAN_STYLE_LIBRARIES}
+        ${QGSETTINGS_LIBRARIES})
 
 install(TARGETS ${TARGET_NAME}
         DESTINATION ${PLUGIN_LIBS_DIR}/)

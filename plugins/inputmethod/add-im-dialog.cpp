@@ -14,17 +14,20 @@
 
 #include "add-im-dialog.h"
 #include "widgets/im-choose-item.h"
+#include "im-settings.h"
 #include "logging-category.h"
 
 #include <kiran-push-button.h>
 #include <kiran-search-box.h>
 #include <style-property.h>
 
+#include <QCheckBox>
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QPushButton>
 #include <QScrollArea>
 #include <QScrollBar>
+#include <QSet>
 #include <QTimer>
 #include <QVBoxLayout>
 
@@ -37,6 +40,8 @@ const int kDialogHeight = 500;
 const int kItemSpacing = 2;
 // 搜索防抖间隔
 const int kSearchDelayMs = 150;
+// 语言过滤开关切换后重建候选的防抖间隔
+const int kReloadDelayMs = 250;
 }  // namespace
 
 AddImDialog::AddImDialog(QWidget* parent)
@@ -69,6 +74,12 @@ void AddImDialog::initUI()
     m_searchBox->setPlaceholderText(tr("Search input method"));
     m_searchBox->setClearButtonEnabled(true);
     mainLayout->addWidget(m_searchBox);
+
+    // 语言过滤开关，初值取自 GSettings，切换后写回
+    m_onlyCurrentLanguageBox = new QCheckBox(tr("Show only current language"), content);
+    m_onlyCurrentLanguageBox->setObjectName("checkBox_onlyCurrentLanguage");
+    m_onlyCurrentLanguageBox->setChecked(ImSettings::onlyCurrentLanguage());
+    mainLayout->addWidget(m_onlyCurrentLanguageBox);
 
     // 候选列表滚动区
     m_scrollArea = new QScrollArea(content);
@@ -115,6 +126,10 @@ void AddImDialog::initUI()
     m_searchTimer = new QTimer(this);
     m_searchTimer->setSingleShot(true);
     m_searchTimer->setInterval(kSearchDelayMs);
+
+    m_reloadTimer = new QTimer(this);
+    m_reloadTimer->setSingleShot(true);
+    m_reloadTimer->setInterval(kReloadDelayMs);
 }
 
 void AddImDialog::initConnection()
@@ -125,6 +140,15 @@ void AddImDialog::initConnection()
             {
                 applyFilter(m_searchBox->text().trimmed());
             });
+
+    // 勾选态立即持久化，候选重建走防抖，避免连续切换反复建 700+ 条目
+    connect(m_onlyCurrentLanguageBox, &QCheckBox::toggled, this,
+            [this](bool checked)
+            {
+                ImSettings::setOnlyCurrentLanguage(checked);
+                m_reloadTimer->start();
+            });
+    connect(m_reloadTimer, &QTimer::timeout, this, &AddImDialog::reloadEntries);
 
     connect(m_confirmButton, &QPushButton::clicked, this, &AddImDialog::onConfirmClicked);
     connect(m_cancelButton, &QPushButton::clicked, this, &AddImDialog::close);
@@ -154,8 +178,10 @@ void AddImDialog::clearItems()
 void AddImDialog::reloadEntries()
 {
     clearItems();
-    m_enabledNames.clear();
     m_filteredOutCount = 0;
+
+    // 过滤开关以界面勾选态为准，避免与 GSettings 的外部改动产生歧义
+    m_candidateFilter.setOnlyCurrentLanguage(m_onlyCurrentLanguageBox->isChecked());
 
     if (!m_provider || !m_provider->isAvailable())
     {
@@ -165,10 +191,10 @@ void AddImDialog::reloadEntries()
     }
 
     // 先记录已启用项，用于置灰去重
-    const QVector<ImEntry> enabled = m_provider->enabledEntries();
-    for (const auto& entry : enabled)
+    QSet<QString> enabledNames;
+    for (const auto& entry : m_provider->enabledEntries())
     {
-        m_enabledNames.insert(entry.uniqueName);
+        enabledNames.insert(entry.uniqueName);
     }
 
     const QVector<ImEntry> available = m_provider->availableEntries();
@@ -184,7 +210,7 @@ void AddImDialog::reloadEntries()
 
         auto* item = new ImChooseItem(m_itemContainer);
         item->setEntry(entry);
-        item->setAlreadyEnabled(m_enabledNames.contains(entry.uniqueName));
+        item->setAlreadyEnabled(enabledNames.contains(entry.uniqueName));
 
         connect(item, &ImChooseItem::toggled, this,
                 [this](bool)
@@ -198,10 +224,10 @@ void AddImDialog::reloadEntries()
     }
 
     qCDebug(qLcInputMethod) << "loaded" << m_items.size() << "candidates,"
-                            << m_enabledNames.size() << "already enabled,"
+                            << enabledNames.size() << "already enabled,"
                             << m_filteredOutCount << "filtered out"
-                            << "(allowKeyboardLayout" << m_candidateFilter.allowKeyboardLayout()
-                            << "onlyCurrentLanguage" << m_candidateFilter.onlyCurrentLanguage() << ")";
+                            << "(onlyCurrentLanguage" << m_candidateFilter.onlyCurrentLanguage()
+                            << "locale" << m_candidateFilter.localeName() << ")";
 
     applyFilter(m_searchBox->text().trimmed());
 }
