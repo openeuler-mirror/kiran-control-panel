@@ -11,5 +11,10 @@
             <summary>Only show input methods for the current language</summary>
             <description>Whether to limit input method candidates to the current and enabled language families.</description>
         </key>
+        <key name="enable-keyboard-layout-subitem" type="b">
+            <default>false</default>
+            <summary>Enable the keyboard layout setting item</summary>
+            <description>Whether the keyboard plugin provides the keyboard layout setting item. Disable it when the input method plugin takes over keyboard layout configuration to avoid both sides rewriting the XKB settings.</description>
+        </key>
     </schema>
 </schemalist>
