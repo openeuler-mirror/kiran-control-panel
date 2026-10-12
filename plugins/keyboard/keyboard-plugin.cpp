@@ -13,6 +13,7 @@
  */
 #include "keyboard-plugin.h"
 #include "general-subitem.h"
+#include "keyboard-settings.h"
 #include "layout-subitem.h"
 
 #include <kiran-log/qt5-log-i.h>
@@ -42,7 +43,19 @@ int KeyboardPlugin::init(KiranControlPanel::PanelInterface* interface)
     }
 
     m_subitems.append(KiranControlPanel::SubItemPtr(new GeneralSubItem));
-    m_subitems.append(KiranControlPanel::SubItemPtr(new LayoutSubItem));
+
+    // 「键盘布局」子项是否提供由 GSettings 决定：
+    // 输入法插件的键盘输入法（fcitx-keyboard-*）可承担布局的添加与切换，
+    // 两者并存会相互改写 XKB 设置，故提供开关供发行版按需关闭该子项。
+    if (KeyboardSettings::enableLayoutSubItem())
+    {
+        m_subitems.append(KiranControlPanel::SubItemPtr(new LayoutSubItem));
+    }
+    else
+    {
+        KLOG_INFO() << "keyboard layout subitem is disabled by gsettings";
+    }
+
     return 0;
 }
 
