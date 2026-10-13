@@ -1,6 +1,6 @@
 #是否构建控制中心示例
 OPTION(BUILD_EXAMPLE "Whether to build a control center plugin example" OFF)
-#是否构建为服务器版本
+#是否构建为服务器版本（决定 gschema 中 server-mode 的默认值；仅为兼容性，定制化推荐放 kiran-desktop override）
 OPTION(SERVER_MODE "Whether to build a server version" OFF)
 #账户信息页面，密码过期策略是否显示
 option(PASSWD_EXPIRATION_POLICY_VISIBLE "Is password expiration policy visible" OFF)

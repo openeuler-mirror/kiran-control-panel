@@ -12,25 +12,45 @@
  * Author:     liuxinhao <liuxinhao@kylinsec.com.cn>
  */
 #include "power-prefs.h"
-#include "config.h"
+
+#include <kiran-log/qt5-log-i.h>
+#include <QGSettings>
 
 namespace Power
 {
-Prefs::Prefs()
-    :m_settings(new QSettings(SETTINGS_PATH,QSettings::IniFormat))
+namespace
 {
+const QByteArray kPluginSchema("com.kylinsec.kiran.control-panel.plugin");
+// QGSettings 以 camelCase 暴露 key（dconf 中为 server-mode）
+const QString kServerModeKey = QStringLiteral("serverMode");
+// 默认桌面模式，服务器版由打包时安装的 gschema override 打开
+const bool kServerModeDefault = false;
+}  // namespace
 
+Prefs::Prefs()
+{
+    if (!QGSettings::isSchemaInstalled(kPluginSchema))
+    {
+        KLOG_WARNING() << kPluginSchema << "is not installed, use default server mode";
+        return;
+    }
+
+    m_settings = new QGSettings(kPluginSchema);
 }
+
 Prefs::~Prefs()
 {
     delete m_settings;
+    m_settings = nullptr;
 }
+
 bool Prefs::enableServerMode() const
 {
-    if( m_settings->value("Power/EnableServerMode",false).toBool() )
+    if (!m_settings || !m_settings->keys().contains(kServerModeKey))
     {
-        return true;
+        return kServerModeDefault;
     }
-    return false;
+
+    return m_settings->get(kServerModeKey).toBool();
 }
-}
+}  // namespace Power
