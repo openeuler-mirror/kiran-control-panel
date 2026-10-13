@@ -13,12 +13,11 @@
  */
 
 #include "create-group-page.h"
-#include "accounts-global-info.h"
+#include "accounts-data-provider.h"
 #include "group-manager.h"
 #include "group-name-checker.h"
 #include "group-name-validator.h"
 #include "kiran-tips/kiran-tips.h"
-#include "ksd_accounts_user_proxy.h"
 #include "ui_create-group-page.h"
 #include "user-list-item.h"
 #include "users-container.h"
@@ -26,12 +25,15 @@
 #include <kiran-message-box.h>
 #include <qt5-log-i.h>
 #include <style-property.h>
+#include <QTimer>
 
 using namespace Kiran;
 
-CreateGroupPage::CreateGroupPage(QWidget *parent)
+CreateGroupPage::CreateGroupPage(AccountsDataProvider *accountsDataProvider, QWidget *parent)
     : QWidget(parent), ui(new Ui::CreateGroupPage)
 {
+    m_accountsDataProvider = accountsDataProvider;
+
     ui->setupUi(this);
 
     initUI();
@@ -56,31 +58,66 @@ void CreateGroupPage::initUI()
     m_userContainter = new UsersContainer(this);
     ui->userListLayout->addWidget(m_userContainter);
 
-    /// 初始用户列表
-    QList<QString> userObjList;
-    userObjList = AccountsGlobalInfo::instance()->getUserList();
-    for (auto &iter : userObjList)
-    {
-        appendUserListItem(iter);
-    }
+    connect(m_accountsDataProvider, &AccountsDataProvider::UserAdded,
+            this, &CreateGroupPage::appendUser);
 
     /// 确认按钮
     StylePropertyHelper::setButtonType(ui->btn_confirm, BUTTON_Default);
     connect(ui->btn_confirm, &QPushButton::clicked, this, &CreateGroupPage::createGroup);
 }
 
-void CreateGroupPage::appendUserListItem(const QString &userPath)
+void CreateGroupPage::appendUser(const QDBusObjectPath &objectPath, const QString &userName)
 {
-    QString userName;
-    if (AccountsGlobalInfo::instance()->getUserName(userPath, userName))
+    Q_UNUSED(objectPath);
+
+    m_allUserName.append(userName);
+    m_pendingUserNames.append(userName);
+    scheduleAppend();
+}
+
+void CreateGroupPage::scheduleAppend()
+{
+    if (m_appendPending)
     {
-        auto item = new UserListItem(m_userContainter);
-        item->setRightBtnIcon(QIcon(":/kcp-group-images/chosen_icon.svg"));
-        item->setRightBtnVisible(false);
-        item->setName(userName);
-        item->setClickable(true);
-        m_userContainter->addItem(item);
+        return;
     }
+
+    m_appendPending = true;
+    QTimer::singleShot(0, this, &CreateGroupPage::appendPendingUsers);
+}
+
+void CreateGroupPage::appendPendingUsers()
+{
+    m_appendPending = false;
+
+    // 每次只补入一部分，避免一次建出上万个条目把界面卡住
+    int count = 0;
+    while (!m_pendingUserNames.isEmpty() && count < 100)
+    {
+        appendUserListItem(m_pendingUserNames.takeFirst());
+        count++;
+    }
+
+    // 一批加完统一重算一次高度，逐条重算会把布局反复作废（O(N^2)）
+    if (count > 0)
+    {
+        m_userContainter->adjustSizeToItmes();
+    }
+
+    if (!m_pendingUserNames.isEmpty())
+    {
+        scheduleAppend();
+    }
+}
+
+void CreateGroupPage::appendUserListItem(const QString &userName)
+{
+    auto item = new UserListItem(m_userContainter);
+    item->setRightBtnIcon(QIcon(":/kcp-group-images/chosen_icon.svg"));
+    item->setRightBtnVisible(false);
+    item->setName(userName);
+    item->setClickable(true);
+    m_userContainter->addItem(item);
 }
 
 void CreateGroupPage::createGroup()
@@ -121,11 +158,7 @@ void CreateGroupPage::reset()
 {
     ui->edit_name->clear();
     m_userContainter->clear();
-    QList<QString> userObjList;
-    userObjList = AccountsGlobalInfo::instance()->getUserList();
-    for (auto &iter : userObjList)
-    {
-        appendUserListItem(iter);
-    }
+    m_pendingUserNames = m_allUserName;
+    scheduleAppend();
     m_errorTip->hideTip();
 }

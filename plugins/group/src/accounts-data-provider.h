@@ -12,68 +12,54 @@
  * Author:     wangshichang <shichang@isrc.iscas.ac.cn>
  */
 
-#ifndef ACCOUNTSGLOBALINFO_H
-#define ACCOUNTSGLOBALINFO_H
+#ifndef ACCOUNTSDATAPROVIDER_H
+#define ACCOUNTSDATAPROVIDER_H
 
 #include <QDBusObjectPath>
-#include <QList>
 #include <QObject>
-#include <QSharedPointer>
+#include <QStringList>
+#include <QVariantMap>
 
 #define ACCOUNTS_DBUS_NAME "com.kylinsec.Kiran.SystemDaemon.Accounts"
 #define ACCOUNTS_OBJECT_PATH "/com/kylinsec/Kiran/SystemDaemon/Accounts"
 #define ACCOUNTS_DBUS_INTERFACE_NAME "com.kylinsec.Kiran.SystemDaemon.Accounts"
 
+class QThread;
 class KSDAccountsProxy;
-class KSDAccountsUserProxy;
-class AccountsGlobalInfo : public QObject
+class UserLoader;
+
+/// @brief 用户信息的持有者，生命周期跟着使用它的页面控件走
+///        不为每个用户创建 D-Bus 代理：用户名在后台线程加载，随 UserAdded 一起下发
+class AccountsDataProvider : public QObject
 {
     Q_OBJECT
-private:
-    explicit AccountsGlobalInfo(QObject *parent = nullptr);
-
 public:
-    ~AccountsGlobalInfo();
-
-    static AccountsGlobalInfo *instance();
-
-    /**
-     * @brief 初始化，加载用户列表
-     * @return
-     */
-    bool init();
+    explicit AccountsDataProvider(QObject *parent = nullptr);
+    ~AccountsDataProvider();
 
     /**
-     * @brief  获取排序之后的用户列表
-     * @return QList<QString> 用户DBusObjectPath列表
+     * @brief 枚举用户并在后台线程加载用户名，页面创建时调用一次
      */
-    QList<QString> getUserList();
-
-    /**
-     * @brief 获取用户名
-     * @param userPath 用户DBusObjectPath
-     * @param userName 存储用户名
-     * @return 是否获取成功
-     */
-    bool getUserName(const QString &userPath, QString &userName);
-
-private:
-    void addUserToMap(const QDBusObjectPath &user);
-    void deleteUserFromMap(const QDBusObjectPath &user);
+    void loadUsers();
 
 signals:
-    void UserAdded(const QDBusObjectPath &obj);
+    void UserAdded(const QDBusObjectPath &obj, const QString &userName);
     void UserDeleted(const QDBusObjectPath &obj);
-    void UserPropertyChanged(const QString &userPath,
-                             const QString &propertyName,
-                             const QVariant &value);
 
 private Q_SLOTS:
-    void handlerPropertyChanged(const QString &propertyName, const QVariant &value);
+    // 一个用户加载完成
+    void handleUserLoaded(const QString &objectPath, const QVariantMap &values);
 
 private:
-    KSDAccountsProxy *m_accountsInterface;
-    QMap<QString, QSharedPointer<KSDAccountsUserProxy>> m_usersMap;  // QMap<DBus对象路径,用户相关接口>
+    void handleUserAdded(const QDBusObjectPath &user);
+    void handleUserDeleted(const QDBusObjectPath &user);
+    void startBackgroundLoad(const QStringList &objectPaths);
+    void stopBackgroundLoad();
+
+private:
+    KSDAccountsProxy *m_accountsInterface = nullptr;
+    UserLoader *m_loader = nullptr;
+    QThread *m_loaderThread = nullptr;
 };
 
-#endif  // ACCOUNTSGLOBALINFO_H
+#endif  // ACCOUNTSDATAPROVIDER_H

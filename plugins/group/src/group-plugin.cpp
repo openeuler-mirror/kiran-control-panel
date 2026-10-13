@@ -13,8 +13,6 @@
  */
 
 #include "group-plugin.h"
-#include "accounts-global-info.h"
-#include "group-manager.h"
 #include "group-subitem.h"
 
 #include <qt5-log-i.h>
@@ -31,17 +29,6 @@ GroupPlugin::~GroupPlugin()
 int GroupPlugin::init(KiranControlPanel::PanelInterface *interface)
 {
     m_panelInterface = interface;
-    if (!GroupManager::instance()->init())
-    {
-        KLOG_ERROR() << "load group info failed!";
-        return -1;
-    }
-    if (!AccountsGlobalInfo::instance()->init())
-    {
-        KLOG_ERROR() << "load user info failed!";
-        return -1;
-    }
-
     m_subitem.reset(new GroupSubItem());
     return 0;
 }

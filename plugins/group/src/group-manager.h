@@ -17,16 +17,19 @@
 #include <QDBusObjectPath>
 #include <QList>
 #include <QObject>
-#include <QSharedPointer>
+#include <QStringList>
+#include <QVariantMap>
 
+class QThread;
 class KSDGroupAdminProxy;
-class KSDGroupAdminListProxy;
-class GroupInterface;
+class GroupLoader;
+
+/// @brief 用户组信息的持有者，生命周期跟着使用它的页面控件走
+///        不为每个用户组创建 D-Bus 代理：名称与 gid 在后台线程加载，随 GroupAdded 一起下发；
+///        变化通知在服务上订阅一次，槽里按消息里的对象路径区分用户组
 class GroupManager : public QObject
 {
     Q_OBJECT
-private:
-    explicit GroupManager(QObject *parent = nullptr);
 
 public:
     struct GroupInfo
@@ -38,21 +41,13 @@ public:
     };
 
 public:
+    explicit GroupManager(QObject *parent = nullptr);
     ~GroupManager();
 
-    static GroupManager *instance();
-
     /**
-     * @brief 初始化，加载用户组列表
-     * @return
+     * @brief 枚举用户组并在后台线程加载名称、gid，页面创建时调用一次
      */
-    bool init();
-
-    /**
-     * @brief  获取排序之后的用户组列表
-     * @return QList<QString> 用户DBusObjectPath列表
-     */
-    QList<QString> getGroupList();
+    void loadGroups();
 
     /// @brief 获取用户组信息
     /// @param groupPath 用户组DBus对象路径
@@ -60,26 +55,26 @@ public:
     /// @return 是否获取成功
     bool getGroupInfo(const QString &groupPath, GroupManager::GroupInfo &groupInfo);
 
-    /**
-     * @brief 检查是否存在重名用户组
-     * @param groupName 需检查的用户组名
-     * @return 是否可用
-     */
-    bool checkGroupNameAvaliable(const QString &groupName);
-
-protected slots:
-    void handlerGroupChanged(const QDBusObjectPath &group);
-
-private:
-    void addGroupToMap(const QDBusObjectPath &group);
-    void deleteGroupFromMap(const QDBusObjectPath &group);
-
 signals:
-    void GroupAdded(const QString &groupPath);
+    void GroupAdded(const QString &groupPath, const QString &groupName, qlonglong gid);
     void GroupDeleted(const QString &groupPath);
     void GroupChanged(const QString &groupPath);
 
+private Q_SLOTS:
+    // 服务级订阅的回调，所有用户组的变化都从这里出来
+    void handleDbusGroupChanged(const QDBusObjectPath &group);
+    // 一个用户组加载完成
+    void handleGroupLoaded(const QString &groupPath, const QVariantMap &values);
+
 private:
-    KSDGroupAdminProxy *m_groupAdminProxy;
-    QMap<QString, QSharedPointer<KSDGroupAdminListProxy>> m_groupsMap;  // QMap<DBus对象路径,用户相关接口>
+    void handleGroupAdded(const QDBusObjectPath &group);
+    void handleGroupDeleted(const QDBusObjectPath &group);
+    void emitGroupAdded(const QString &groupPath, const QVariantMap &values);
+    void startBackgroundLoad(const QStringList &objectPaths);
+    void stopBackgroundLoad();
+
+private:
+    KSDGroupAdminProxy *m_groupAdminProxy = nullptr;
+    GroupLoader *m_loader = nullptr;
+    QThread *m_loaderThread = nullptr;
 };

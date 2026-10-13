@@ -12,94 +12,71 @@
  * Author:     wangshichang <shichang@isrc.iscas.ac.cn>
  */
 #include "group-manager.h"
-#include "group-interface.h"
+#include "group-loader.h"
 #include "ksd_group_admin_list_proxy.h"
 #include "ksd_group_admin_proxy.h"
 
 #include <kiran-system-daemon/groups-i.h>
 #include <qt5-log-i.h>
-#include <QDBusObjectPath>
+#include <QDBusConnection>
 #include <QDBusPendingCall>
-#include <QMutex>
-#include <QScopedPointer>
+#include <QThread>
 
 GroupManager::GroupManager(QObject *parent)
     : QObject(parent),
       m_groupAdminProxy(new KSDGroupAdminProxy(GROUPS_DBUS_NAME, GROUPS_OBJECT_PATH, QDBusConnection::systemBus()))
 {
+    connect(m_groupAdminProxy, &KSDGroupAdminProxy::GroupAdded,
+            this, &GroupManager::handleGroupAdded);
+    connect(m_groupAdminProxy, &KSDGroupAdminProxy::GroupDeleted,
+            this, &GroupManager::handleGroupDeleted);
+
+    // 变化通知只在服务上订阅一次：空对象路径表示该服务下的所有对象，槽里再按消息里的
+    // 对象路径区分是哪个用户组。不能每个用户组订阅一次：一个用户组一条 match rule，
+    // 用户组数上千时会撞上 dbus-daemon 的规则数上限，超出的订阅会静默失效
+    QDBusConnection::systemBus().connect(
+        GROUPS_DBUS_NAME,
+        QString(),
+        QStringLiteral("com.kylinsec.Kiran.SystemDaemon.Groups.Group"),
+        QStringLiteral("GroupChanged"),
+        QStringLiteral("o"),
+        this, SLOT(handleDbusGroupChanged(QDBusObjectPath)));
 }
 
 GroupManager::~GroupManager()
 {
-    if (m_groupAdminProxy)
-    {
-        delete m_groupAdminProxy;
-        m_groupAdminProxy = nullptr;
-    }
+    stopBackgroundLoad();
 
-    m_groupsMap.clear();
+    delete m_groupAdminProxy;
+    m_groupAdminProxy = nullptr;
 }
 
-GroupManager *GroupManager::instance()
+void GroupManager::loadGroups()
 {
-    static QMutex mutex;
-    static QScopedPointer<GroupManager> pInst;
-
-    if (Q_UNLIKELY(!pInst))
-    {
-        QMutexLocker locker(&mutex);
-        if (pInst.isNull())
-        {
-            pInst.reset(new GroupManager);
-        }
-    }
-
-    return pInst.data();
-}
-
-bool GroupManager::init()
-{
-    connect(m_groupAdminProxy, &KSDGroupAdminProxy::GroupAdded, [this](const QDBusObjectPath &group)
-            { addGroupToMap(group); });
-    connect(m_groupAdminProxy, &KSDGroupAdminProxy::GroupDeleted, [this](const QDBusObjectPath &group)
-            { deleteGroupFromMap(group); });
-
-    QList<QDBusObjectPath> groups;
-    QDBusPendingReply<QList<QDBusObjectPath>> pendingReply;
-    QList<QDBusObjectPath> objList;
-    QList<QDBusObjectPath>::iterator objListIter;
-
     // 获取所有用户组
-    pendingReply = m_groupAdminProxy->ListCachedGroups();
+    QDBusPendingReply<QList<QDBusObjectPath>> pendingReply = m_groupAdminProxy->ListCachedGroups();
     pendingReply.waitForFinished();
     if (pendingReply.isError())
     {
         KLOG_ERROR() << "GetCachedGroups Error:"
                      << pendingReply.error();
-        return false;
+        return;
     }
 
-    objList = pendingReply.value();
-    // 将用户组列表添加到表中
-    for (objListIter = objList.begin();
+    QStringList allPaths;
+    const QList<QDBusObjectPath> objList = pendingReply.value();
+    for (auto objListIter = objList.begin();
          objListIter != objList.end();
          ++objListIter)
     {
-        addGroupToMap(*objListIter);
+        allPaths.append(objListIter->path());
     }
-    return true;
-}
 
-QList<QString> GroupManager::getGroupList()
-{
-    QList<QString> groupObjPathList;
-    for (auto iter = m_groupsMap.begin();
-         iter != m_groupsMap.end();
-         iter++)
+    if (!allPaths.isEmpty())
     {
-        groupObjPathList.append((*iter)->path());
+        KLOG_DEBUG() << "load" << allPaths.size() << "groups in background";
+        startBackgroundLoad(allPaths);
     }
-    return groupObjPathList;
 }
 
 bool GroupManager::getGroupInfo(const QString &groupPath, GroupManager::GroupInfo &groupInfo)
@@ -122,61 +99,84 @@ bool GroupManager::getGroupInfo(const QString &groupPath, GroupManager::GroupInf
     return true;
 }
 
-bool GroupManager::checkGroupNameAvaliable(const QString &groupName)
+void GroupManager::handleGroupAdded(const QDBusObjectPath &group)
 {
-    bool isValid = true;
-
-    for (auto iter : m_groupsMap)
-    {
-        if (iter.data()->name() == groupName)  // KSDGroupAdminListProxy的成员函数groupName()
-        {
-            isValid = false;
-            break;
-        }
-    }
-
-    return isValid;
+    // 新增用户组的名称、gid也放到加载器线程加载，不在主线程等D-Bus返回
+    startBackgroundLoad(QStringList() << group.path());
 }
 
-void GroupManager::addGroupToMap(const QDBusObjectPath &group)
+void GroupManager::handleGroupDeleted(const QDBusObjectPath &group)
 {
-    if (m_groupsMap.find(group.path()) != m_groupsMap.end())
-    {
-        return;
-    }
-
-    auto groupProxy = QSharedPointer<KSDGroupAdminListProxy>::create(GROUPS_DBUS_NAME,
-                                                                     group.path(),
-                                                                     QDBusConnection::systemBus(),
-                                                                     this);
-
-    connect(groupProxy.data(),
-            &KSDGroupAdminListProxy::GroupChanged,
-            this,
-            &GroupManager::handlerGroupChanged);
-
-    m_groupsMap.insert(group.path(), groupProxy);
-
-    emit GroupAdded(group.path());
-}
-
-void GroupManager::deleteGroupFromMap(const QDBusObjectPath &group)
-{
-    if (m_groupsMap.find(group.path()) == m_groupsMap.end())
-    {
-        return;
-    }
-
-    auto groupProxy = m_groupsMap.take(group.path());
-    disconnect(groupProxy.data(),
-               &KSDGroupAdminListProxy::GroupChanged,
-               this,
-               &GroupManager::handlerGroupChanged);
-
+    KLOG_DEBUG() << "delete group:" << group.path();
     emit GroupDeleted(group.path());
 }
 
-void GroupManager::handlerGroupChanged(const QDBusObjectPath &group)
+void GroupManager::handleDbusGroupChanged(const QDBusObjectPath &group)
 {
+    KLOG_DEBUG() << "group changed:" << group.path();
     emit GroupChanged(group.path());
+}
+
+void GroupManager::handleGroupLoaded(const QString &groupPath, const QVariantMap &values)
+{
+    emitGroupAdded(groupPath, values);
+}
+
+void GroupManager::emitGroupAdded(const QString &groupPath, const QVariantMap &values)
+{
+    emit GroupAdded(groupPath,
+                    values.value(QStringLiteral("name")).toString(),
+                    values.value(QStringLiteral("gid")).toLongLong());
+}
+
+void GroupManager::startBackgroundLoad(const QStringList &objectPaths)
+{
+    if (objectPaths.isEmpty())
+    {
+        return;
+    }
+
+    if (!m_loaderThread)
+    {
+        m_loaderThread = new QThread(this);
+        m_loader = new GroupLoader;
+        m_loader->moveToThread(m_loaderThread);
+
+        // 线程结束时由 loader 自身线程删除，避免主线程跨线程 delete
+        connect(m_loaderThread, &QThread::finished, m_loader, &QObject::deleteLater);
+        connect(m_loader, &GroupLoader::groupLoaded,
+                this, &GroupManager::handleGroupLoaded);
+
+        m_loaderThread->start();
+    }
+
+    // 队列连接，实际加载在加载器线程里做，加载完一个回调一个
+    QMetaObject::invokeMethod(m_loader, "load", Qt::QueuedConnection, Q_ARG(QStringList, objectPaths));
+}
+
+void GroupManager::stopBackgroundLoad()
+{
+    if (!m_loaderThread)
+    {
+        return;
+    }
+
+    m_loader->requestStop();
+    m_loaderThread->quit();
+
+    if (!m_loaderThread->wait(10000))
+    {
+        KLOG_WARNING() << "group loader did not stop in 10s, detach it";
+        // 超时：断开业务连接并放弃管理，避免崩溃
+        disconnect(m_loader, nullptr, this, nullptr);
+        m_loaderThread->setParent(nullptr);
+        m_loader = nullptr;
+        m_loaderThread = nullptr;
+        return;
+    }
+
+    // m_loader 已随线程结束被删除，这里只删线程对象
+    m_loader = nullptr;
+    delete m_loaderThread;
+    m_loaderThread = nullptr;
 }

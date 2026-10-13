@@ -12,149 +12,127 @@
  * Author:     wangshichang <shichang@isrc.iscas.ac.cn>
  */
 
-#include "accounts-global-info.h"
+#include "accounts-data-provider.h"
 #include "ksd_accounts_proxy.h"
-#include "ksd_accounts_user_proxy.h"
+#include "user-loader.h"
 
 #include <kiran-system-daemon/accounts-i.h>
 #include <qt5-log-i.h>
 #include <QDBusPendingCall>
-#include <QMutex>
-#include <QScopedPointer>
+#include <QThread>
 
-AccountsGlobalInfo::AccountsGlobalInfo(QObject *parent)
+AccountsDataProvider::AccountsDataProvider(QObject *parent)
     : QObject(parent),
       m_accountsInterface(new KSDAccountsProxy(ACCOUNTS_DBUS_NAME, ACCOUNTS_OBJECT_PATH, QDBusConnection::systemBus()))
 {
+    connect(m_accountsInterface, &KSDAccountsProxy::UserAdded,
+            this, &AccountsDataProvider::handleUserAdded);
+    connect(m_accountsInterface, &KSDAccountsProxy::UserDeleted,
+            this, &AccountsDataProvider::handleUserDeleted);
 }
 
-AccountsGlobalInfo::~AccountsGlobalInfo()
+AccountsDataProvider::~AccountsDataProvider()
 {
-    if (m_accountsInterface)
-    {
-        delete m_accountsInterface;
-        m_accountsInterface = nullptr;
-    }
-    m_usersMap.clear();
+    stopBackgroundLoad();
+
+    delete m_accountsInterface;
+    m_accountsInterface = nullptr;
 }
 
-AccountsGlobalInfo *AccountsGlobalInfo::instance()
+void AccountsDataProvider::loadUsers()
 {
-    static QMutex mutex;
-    static QScopedPointer<AccountsGlobalInfo> pInst;
-
-    if (Q_UNLIKELY(!pInst))
-    {
-        QMutexLocker locker(&mutex);
-        if (pInst.isNull())
-        {
-            pInst.reset(new AccountsGlobalInfo);
-        }
-    }
-
-    return pInst.data();
-}
-
-bool AccountsGlobalInfo::init()
-{
-    connect(m_accountsInterface, &KSDAccountsProxy::UserAdded, [this](const QDBusObjectPath &user)
-            { addUserToMap(user); });
-    connect(m_accountsInterface, &KSDAccountsProxy::UserDeleted, [this](const QDBusObjectPath &user)
-            { deleteUserFromMap(user); });
-
     /// 加载用户
-    QList<QDBusObjectPath> users;
-    QDBusPendingReply<QList<QDBusObjectPath>> pendingReply;
-    QList<QDBusObjectPath> objList;
-    QList<QDBusObjectPath>::iterator objListIter;
-    pendingReply = m_accountsInterface->GetNonSystemUsers();
+    QDBusPendingReply<QList<QDBusObjectPath>> pendingReply = m_accountsInterface->GetNonSystemUsers();
     pendingReply.waitForFinished();
     if (pendingReply.isError())
     {
         KLOG_ERROR() << "GetNonSystemUsers Error:"
                      << pendingReply.error();
-        return false;
+        return;
     }
-    objList = pendingReply.value();
 
-    for (objListIter = objList.begin();
+    QStringList allPaths;
+    const QList<QDBusObjectPath> objList = pendingReply.value();
+    for (auto objListIter = objList.begin();
          objListIter != objList.end();
          ++objListIter)
     {
-        addUserToMap(*objListIter);
+        allPaths.append(objListIter->path());
     }
-    return true;
+
+    if (!allPaths.isEmpty())
+    {
+        KLOG_DEBUG() << "load" << allPaths.size() << "users in background";
+        startBackgroundLoad(allPaths);
+    }
 }
 
-QList<QString> AccountsGlobalInfo::getUserList()
+void AccountsDataProvider::handleUserAdded(const QDBusObjectPath &user)
 {
-    QList<QString> userObjPathList;
-    for (auto iter = m_usersMap.begin();
-         iter != m_usersMap.end();
-         iter++)
-    {
-        userObjPathList.append((*iter)->path());
-    }
-    return userObjPathList;
+    // 新增用户的用户名也放到加载器线程加载，不在主线程等D-Bus返回
+    startBackgroundLoad(QStringList() << user.path());
 }
 
-bool AccountsGlobalInfo::getUserName(const QString &userPath, QString &userName)
+void AccountsDataProvider::handleUserDeleted(const QDBusObjectPath &user)
 {
-    KSDAccountsUserProxy interface(ACCOUNTS_DBUS_NAME, userPath, QDBusConnection::systemBus());
-    if (!interface.isValid())
-    {
-        KLOG_WARNING() << "Failed to get " << userPath << " user name!" << interface.lastError().message();
-        return false;
-    }
-
-    userName = interface.user_name();
-    return true;
-}
-
-void AccountsGlobalInfo::addUserToMap(const QDBusObjectPath &user)
-{
-    if (m_usersMap.find(user.path()) != m_usersMap.end())
-    {
-        return;
-    }
-
-    auto userProxy = QSharedPointer<KSDAccountsUserProxy>::create(ACCOUNTS_DBUS_NAME,
-                                                                  user.path(),
-                                                                  QDBusConnection::systemBus(),
-                                                                  this);
-
-    connect(userProxy.data(),
-            &KSDAccountsUserProxy::dbusPropertyChanged,
-            this,
-            &AccountsGlobalInfo::handlerPropertyChanged);
-
-    m_usersMap.insert(user.path(), userProxy);
-    emit UserAdded(user);
-}
-
-void AccountsGlobalInfo::deleteUserFromMap(const QDBusObjectPath &user)
-{
-    if (m_usersMap.find(user.path()) == m_usersMap.end())
-    {
-        return;
-    }
-
-    auto userProxy = m_usersMap.take(user.path());
-    disconnect(userProxy.data(),
-               &KSDAccountsUserProxy::dbusPropertyChanged,
-               this,
-               &AccountsGlobalInfo::handlerPropertyChanged);
-
+    KLOG_DEBUG() << "delete user:" << user.path();
     emit UserDeleted(user);
 }
 
-void AccountsGlobalInfo::handlerPropertyChanged(const QString &propertyName, const QVariant &value)
+void AccountsDataProvider::handleUserLoaded(const QString &objectPath, const QVariantMap &values)
 {
-    auto userProxy = qobject_cast<KSDAccountsUserProxy *>(sender());
+    emit UserAdded(QDBusObjectPath(objectPath),
+                   values.value(QStringLiteral("user_name")).toString());
+}
 
-    KLOG_DEBUG() << "property changed:" << userProxy->path();
-    KLOG_DEBUG() << "\tname: " << propertyName;
-    KLOG_DEBUG() << "\tvalue:" << value;
+void AccountsDataProvider::startBackgroundLoad(const QStringList &objectPaths)
+{
+    if (objectPaths.isEmpty())
+    {
+        return;
+    }
 
-    emit UserPropertyChanged(userProxy->path(), propertyName, value);
+    if (!m_loaderThread)
+    {
+        m_loaderThread = new QThread(this);
+        m_loader = new UserLoader;
+        m_loader->moveToThread(m_loaderThread);
+
+        // 线程结束时由 loader 自身线程删除，避免主线程跨线程 delete
+        connect(m_loaderThread, &QThread::finished, m_loader, &QObject::deleteLater);
+        connect(m_loader, &UserLoader::userLoaded,
+                this, &AccountsDataProvider::handleUserLoaded);
+
+        m_loaderThread->start();
+    }
+
+    // 队列连接，实际加载在加载器线程里做，加载完一个回调一个
+    QMetaObject::invokeMethod(m_loader, "load", Qt::QueuedConnection, Q_ARG(QStringList, objectPaths));
+}
+
+void AccountsDataProvider::stopBackgroundLoad()
+{
+    if (!m_loaderThread)
+    {
+        return;
+    }
+
+    m_loader->requestStop();
+    m_loaderThread->quit();
+
+    if (!m_loaderThread->wait(10000))
+    {
+        KLOG_WARNING() << "user loader did not stop in 10s, detach it";
+        // 超时：断开业务连接并放弃管理，避免崩溃
+        disconnect(m_loader, nullptr, this, nullptr);
+        m_loaderThread->setParent(nullptr);
+        m_loader = nullptr;
+        m_loaderThread = nullptr;
+        return;
+    }
+
+    // m_loader 已随线程结束被删除，这里只删线程对象
+    m_loader = nullptr;
+    delete m_loaderThread;
+    m_loaderThread = nullptr;
 }

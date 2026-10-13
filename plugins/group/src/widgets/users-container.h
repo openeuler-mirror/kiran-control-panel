@@ -44,9 +44,11 @@ public:
     /// @brief 清空用户条目
     void clear();
 
+    /// @brief 按当前条目重新计算内容高度（批量添加完一批后调用一次）
+    void adjustSizeToItmes();
+
 private:
     void init();
-    void adjustSizeToItmes();
 
 private:
     QBoxLayout* m_mainLayout;
