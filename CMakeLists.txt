@@ -17,12 +17,19 @@ include("kcp-qdbus-wrapper")
 
 configure_file(./config.h.in ${CMAKE_BINARY_DIR}/config.h)
 
-if( SERVER_MODE )
-    set(ENABLE_SERVER_MODE true)
-else()
-    set(ENABLE_SERVER_MODE false)
-endif()
+# settings.ini 供 account/network 插件读取
 configure_file(./settings.ini.in ${CMAKE_BINARY_DIR}/settings.ini)
+
+# 服务器模式默认值由构建参数 SERVER_MODE 在构建期写入 gschema，仅为兼容性考虑：
+# 让各形态的包自带正确的默认值，升级控制中心时不必依赖 kiran-desktop 等其它包同步升级。
+# 定制化配置(例如统一调整系统形态)更推荐放到 kiran-desktop 的 override 机制，其优先级高于此默认值。
+if(SERVER_MODE)
+    set(KCP_SERVER_MODE_DEFAULT true)
+else()
+    set(KCP_SERVER_MODE_DEFAULT false)
+endif()
+configure_file(./data/com.kylinsec.kiran.control-panel.plugin.gschema.xml.in
+        ${CMAKE_BINARY_DIR}/com.kylinsec.kiran.control-panel.plugin.gschema.xml @ONLY)
 
 find_package(Qt5 COMPONENTS
         Core

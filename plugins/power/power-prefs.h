@@ -13,7 +13,8 @@
  */
 #pragma once
 
-#include <QSettings>
+class QGSettings;
+
 namespace Power
 {
 class Prefs
@@ -21,9 +22,11 @@ class Prefs
 public:
     explicit Prefs();
     ~Prefs();
+
+    /// 是否运行于服务器模式，取自 GSettings 的 server-mode，schema 或 key 缺失时回落桌面模式
     bool enableServerMode() const;
 
 private:
-    QSettings *m_settings;
+    QGSettings* m_settings = nullptr;
 };
 }

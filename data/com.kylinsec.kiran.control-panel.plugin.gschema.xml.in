@@ -16,5 +16,11 @@
             <summary>Enable the keyboard layout setting item</summary>
             <description>Whether the keyboard plugin provides the keyboard layout setting item. Disable it when the input method plugin takes over keyboard layout configuration to avoid both sides rewriting the XKB settings.</description>
         </key>
+        <!-- 默认值由构建参数 SERVER_MODE 生成，仅为兼容性；定制化推荐经 kiran-desktop 的 override 覆写 -->
+        <key name="server-mode" type="b">
+            <default>@KCP_SERVER_MODE_DEFAULT@</default>
+            <summary>Server Mode</summary>
+            <description>Whether the Control Center is running in server mode.</description>
+        </key>
     </schema>
 </schemalist>
