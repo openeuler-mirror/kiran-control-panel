@@ -13,7 +13,6 @@
  */
 
 #include "account-plugin.h"
-#include "accounts-global-info.h"
 #include "config.h"
 #include "temporary-dir-manager.h"
 #include "logging-category.h"
@@ -33,12 +32,6 @@ AccountPlugin ::~AccountPlugin()
 int AccountPlugin::init(KiranControlPanel::PanelInterface* interface)
 {
     m_panelInterface = interface;
-
-    if (!AccountsGlobalInfo::instance()->init())
-    {
-        KLOG_ERROR(qLcAccount) << "load user info failed!";
-        return -1;
-    }
 
     if (!TemporaryDirManager::instance()->init(qAppName()))
     {

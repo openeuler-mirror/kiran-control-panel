@@ -21,6 +21,7 @@
 #include "advance-settings-page/advance-settings.h"
 
 class KiranTips;
+class AccountsDataProvider;
 
 namespace Ui
 {
@@ -32,7 +33,7 @@ class CreateUserPage : public QWidget
     friend class AccountWidget;
     Q_OBJECT
 public:
-    explicit CreateUserPage(QWidget *parent = nullptr);
+    explicit CreateUserPage(AccountsDataProvider *accountsDataProvider, QWidget *parent = nullptr);
     ~CreateUserPage();
     void reset();
     void setAvatarIconPath(const QString &iconPath);
@@ -61,6 +62,7 @@ private:
     Ui::CreateUserPage *ui;
     AdvanceSettingsInfo m_advanceSettingsInfo;
     KiranTips *m_errorTip;
+    AccountsDataProvider *m_accountsDataProvider;
 };
 
 #endif  // CREATEUSERPAGE_H

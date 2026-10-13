@@ -13,7 +13,7 @@
  */
 #include "config.h"
 #include "account-widget.h"
-#include "accounts-global-info.h"
+#include "accounts-data-provider.h"
 #include "hard-worker.h"
 
 #include "create-user-page/create-user-page.h"
@@ -49,6 +49,9 @@ enum StackWidgetPageEnum
 AccountWidget::AccountWidget(QWidget *parent)
     : QWidget(parent)
 {
+    // 用户信息跟着页面走：切分类时页面被销毁重建，代理与后台线程随之释放
+    m_accountsDataProvider = new AccountsDataProvider(this);
+
     m_workThread.start();
     m_hardworker = new HardWorker();
     m_hardworker->moveToThread(&m_workThread);
@@ -81,13 +84,11 @@ void AccountWidget::setCurrentUser(const QString &userPath)
     m_tabList->setCurrentRow(findIdx);
 }
 
-void AccountWidget::appendUser(const QString &userPath)
+void AccountWidget::appendUser(const QString &userPath,
+                               const QString &userName,
+                               QString iconFile,
+                               bool userLocked)
 {
-    auto accountUserBackend = DBusWrapper::createKiranAccountServiceUserAPI(userPath);
-    QString iconFile = accountUserBackend->icon_file();
-    QString userName = accountUserBackend->user_name();
-    bool userLocked = accountUserBackend->locked();
-
     QPixmap temp;
     if (iconFile.isEmpty() || !temp.load(iconFile))
     {
@@ -101,12 +102,13 @@ void AccountWidget::appendUser(const QString &userPath)
     item->setData(Kiran::ItemStatusColor_Role, userLocked ? QColor("#fa4949") : QColor("#43a3f2"));
     item->setData(ITEM_USER_OBJ_PATH_ROLE, userPath);
 
+    m_userItems.insert(userPath, item);
     m_tabList->addItem(item);
 }
 
 void AccountWidget::setDefaultSelectedUser()
 {
-    auto items = m_tabList->findItems(AccountsGlobalInfo::instance()->getCurrentUser(), Qt::MatchCaseSensitive);
+    auto items = m_tabList->findItems(m_accountsDataProvider->getCurrentUser(), Qt::MatchCaseSensitive);
     if (items.size() >= 1)
     {
         auto userItem = items.at(0);
@@ -173,11 +175,11 @@ void AccountWidget::initUI()
     //    scrollArea->setWidget(scrollAreaContentWidget);
     //    contentLayout->addWidget(scrollArea);
 
-    m_page_createUser = new CreateUserPage(m_stackWidget);
+    m_page_createUser = new CreateUserPage(m_accountsDataProvider, m_stackWidget);
     m_stackWidget->insertWidget(PAGE_CREATE_USER, m_page_createUser);
     initPageCreateUser();
 
-    m_page_userinfo = new UserInfoPage(m_stackWidget);
+    m_page_userinfo = new UserInfoPage(m_accountsDataProvider, m_stackWidget);
     m_stackWidget->insertWidget(PAGE_USER_INFO, m_page_userinfo);
     initPageUserInfo();
 
@@ -190,6 +192,10 @@ void AccountWidget::initUI()
     initPagePasswdExpirationPolicy();
 
     connectToInfoChange();
+
+    // 页面已经把信号接好，再触发加载
+    m_accountsDataProvider->loadUsers();
+
     QTimer::singleShot(0, this, &AccountWidget::setDefaultSelectedUser);
 }
 
@@ -224,14 +230,6 @@ void AccountWidget::initUserList()
     m_tabList->addItem(m_createUserItem);
     updateCreateUserIcon();
     connect(StylePalette::instance(), &StylePalette::themeChanged, this, &AccountWidget::updateCreateUserIcon);
-
-    // 加载非系统用户
-    QList<QString> userObjList;
-    userObjList = AccountsGlobalInfo::instance()->getUserObjectPathList();
-    for (auto &iter : userObjList)
-    {
-        appendUser(iter);
-    }
 }
 
 void AccountWidget::initPageCreateUser()
@@ -315,9 +313,9 @@ void AccountWidget::initPageSelectAvatar()
 
 void AccountWidget::connectToInfoChange()
 {
-    connect(AccountsGlobalInfo::instance(), &AccountsGlobalInfo::UserAdded, this, &AccountWidget::onUserAdded);
-    connect(AccountsGlobalInfo::instance(), &AccountsGlobalInfo::UserDeleted, this, &AccountWidget::onUserDeleted);
-    connect(AccountsGlobalInfo::instance(), &AccountsGlobalInfo::UserPropertyChanged, this, &AccountWidget::onUserPropertyChanged);
+    connect(m_accountsDataProvider, &AccountsDataProvider::UserAdded, this, &AccountWidget::onUserAdded);
+    connect(m_accountsDataProvider, &AccountsDataProvider::UserDeleted, this, &AccountWidget::onUserDeleted);
+    connect(m_accountsDataProvider, &AccountsDataProvider::UserPropertyChanged, this, &AccountWidget::onUserPropertyChanged);
 }
 
 void AccountWidget::setMaskVisible(bool visible)
@@ -348,10 +346,13 @@ void AccountWidget::updateCreateUserIcon()
     m_createUserItem->setIcon(pixmap);
 }
 
-void AccountWidget::onUserAdded(const QString &objectPath)
+void AccountWidget::onUserAdded(const QString &objectPath,
+                                const QString &userName,
+                                const QString &iconFile,
+                                bool locked)
 {
     KLOG_DEBUG(qLcAccount) << "on user added,add user" << objectPath << "to sidebar";
-    appendUser(objectPath);
+    appendUser(objectPath, userName, iconFile, locked);
 }
 
 void AccountWidget::onUserDeleted(const QString &objectPath)
@@ -377,6 +378,8 @@ void AccountWidget::onUserDeleted(const QString &objectPath)
     bool needResetSidebarItem = m_tabList->item(findIdx)->isSelected();
 
     QListWidgetItem *widgetItem = m_tabList->takeItem(findIdx);
+    // 索引里也要摘掉这一行，否则会留下已释放的指针
+    m_userItems.remove(objectPath);
     delete widgetItem;
 
     if (needResetSidebarItem)
@@ -392,36 +395,42 @@ void AccountWidget::onUserPropertyChanged(const QString &objectPath, const QStri
                            << " property name:" << propertyName
                            << " value:" << value;
 
-    // 侧边栏
-    if ((propertyName == "locked") || (propertyName == "icon_file"))
+    // 侧边栏：变化的属性和值都在这个事件里（PropertiesChanged 的 a{sv}），
+    // 按对象路径直接从索引里取到那一行，不再遍历列表、也不去后端重读
+    QListWidgetItem *item = m_userItems.value(objectPath);
+    if (item)
     {
-        for (int i = 0; i < m_tabList->count(); i++)
+        if (propertyName == "locked")
         {
-            QListWidgetItem *item = m_tabList->item(i);
-            QString itemUserPath = item->data(ITEM_USER_OBJ_PATH_ROLE).toString();
-            if (itemUserPath != objectPath)
+            bool isLocked = value.toBool();
+            QString status = isLocked ? tr("disable") : tr("enable");
+            // 后端做整体刷新时会把没有变化的属性一起重发，值没变就不用动界面
+            if (item->data(Kiran::ItemStatus_Role).toString() != status)
             {
-                continue;
+                item->setData(Kiran::ItemStatus_Role, status);
+                item->setData(Kiran::ItemStatusColor_Role, isLocked ? QColor("#fa4949") : QColor("#43a3f2"));
             }
-            auto accountAPI = DBusWrapper::createKiranAccountServiceUserAPI(itemUserPath);
-            QString userName = accountAPI->user_name();
-            QString iconFile = accountAPI->icon_file();
+        }
+        else if (propertyName == "icon_file")
+        {
+            QString iconFile = value.toString();
             QPixmap tempPixmap;
             if (iconFile.isEmpty() || !tempPixmap.load(iconFile))
             {
                 iconFile = ACCOUNT_DEFAULT_AVATAR;
             }
-
-            bool isLocked = accountAPI->locked();
-            item->setText(userName);
             item->setIcon(QIcon(iconFile));
-            item->setData(Kiran::ItemStatus_Role, isLocked ? tr("disable") : tr("enable"));
-            item->setData(Kiran::ItemStatusColor_Role, isLocked ? QColor("#fa4949") : QColor("#43a3f2"));
-            break;
+        }
+        else if (propertyName == "user_name")
+        {
+            if (item->text() != value.toString())
+            {
+                item->setText(value.toString());
+            }
         }
     }
 
-    // 用户详情页面
+    // 用户详情页面字段多（uid、类型、密码策略…），只对当前显示的那一个用户按需重读
     QString currentUserPath = m_page_userinfo->getCurrentShowUserPath();
     if (objectPath == currentUserPath)
     {
