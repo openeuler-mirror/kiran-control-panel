@@ -23,12 +23,13 @@ class GroupInfoPage;
 
 class UsersContainer;
 class KiranTips;
+class GroupManager;
 class GroupInfoPage : public QWidget
 {
     Q_OBJECT
 
 public:
-    GroupInfoPage(QWidget *parent = nullptr);
+    GroupInfoPage(GroupManager *groupManager, QWidget *parent = nullptr);
     ~GroupInfoPage();
 
     /// 设置当前显示的用户组的DBus对象路径
@@ -77,6 +78,7 @@ private:
     QString m_curShowGroupPath;
     QString m_curShowGroupName;
     UsersContainer *m_memberContainer;
+    GroupManager *m_groupManager;
     int m_gid;
 };
 #endif  // GROUPINFOPAGE_H

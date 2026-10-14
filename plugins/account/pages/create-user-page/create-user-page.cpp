@@ -13,7 +13,7 @@
  */
 
 #include "create-user-page.h"
-#include "accounts-global-info.h"
+#include "accounts-data-provider.h"
 #include "kiran-tips/kiran-tips.h"
 #include "passwd-helper.h"
 #include "advance-settings-page/advance-settings.h"
@@ -30,10 +30,12 @@
 
 using namespace Kiran;
 
-CreateUserPage::CreateUserPage(QWidget *parent)
+CreateUserPage::CreateUserPage(AccountsDataProvider *accountsDataProvider, QWidget *parent)
     : QWidget(parent),
     ui(new Ui::CreateUserPage)
 {
+    m_accountsDataProvider = accountsDataProvider;
+
     ui->setupUi(this);
     initUI();
 }
@@ -151,7 +153,7 @@ void CreateUserPage::onCreateUserClicked()
         return;
     }
 
-    if (!AccountsGlobalInfo::instance()->checkUserNameAvaliable(userName))
+    if (!m_accountsDataProvider->checkUserNameAvaliable(userName))
     {
         m_errorTip->setText(tr("user name already exists"));
         m_errorTip->showTipAroundWidget(ui->edit_name);
@@ -187,7 +189,7 @@ void CreateUserPage::onCreateUserClicked()
     //step3.调用crypt密码加密
     KLOG_DEBUG(qLcAccount) << "create user clicked,start encrypt passwd";
     QString encryptedPasswd;
-    if (!PasswdHelper::encryptPasswordByRsa(AccountsGlobalInfo::rsaPublicKey(), passwd, encryptedPasswd))
+    if (!PasswdHelper::encryptPasswordByRsa(m_accountsDataProvider->rsaPublicKey(), passwd, encryptedPasswd))
     {
         QMessageBox::warning(this, tr("Error"), tr("Password encryption failed"));
         return;

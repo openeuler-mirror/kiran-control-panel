@@ -13,7 +13,7 @@
  */
 
 #include "user-info-page.h"
-#include "accounts-global-info.h"
+#include "accounts-data-provider.h"
 #include "hover-tips/hover-tips.h"
 #include "kiran-account-service-wrapper.h"
 #include "passwd-helper.h"
@@ -38,9 +38,11 @@ enum PageEnum
 
 using namespace Kiran;
 
-UserInfoPage::UserInfoPage(QWidget *parent) : QWidget(parent),
+UserInfoPage::UserInfoPage(AccountsDataProvider *accountsDataProvider, QWidget *parent) : QWidget(parent),
                                               ui(new Ui::UserInfoPage)
 {
+    m_accountsDataProvider = accountsDataProvider;
+
     ui->setupUi(this);
     initUI();
 }
@@ -68,7 +70,7 @@ void UserInfoPage::updateInfo()
     m_userStatusSwitch->setChecked(!locked);
     m_curShowUserName = userName;
 
-    if (m_curShowUserName != AccountsGlobalInfo::instance()->getCurrentUser())
+    if (m_curShowUserName != m_accountsDataProvider->getCurrentUser())
     {
         ///显示用户非当前登录会话用户
         /// 不验证当前密码，由后端验证ROOT密码
@@ -264,7 +266,7 @@ void UserInfoPage::handlerUpdatePasswd()
             m_errorTip->showTipAroundWidget(ui->editcheck_newPasswd);
             return;
         }
-        if (!PasswdHelper::encryptPasswordByRsa(AccountsGlobalInfo::rsaPublicKey(), curpasswd, encryptedCurPasswd))
+        if (!PasswdHelper::encryptPasswordByRsa(m_accountsDataProvider->rsaPublicKey(), curpasswd, encryptedCurPasswd))
         {
             QMessageBox::warning(this, tr("Error"), tr("Password encryption failed"));
             return;
@@ -272,7 +274,7 @@ void UserInfoPage::handlerUpdatePasswd()
     }
     //密码加密
     QString encryptedPasswd;
-    if (!PasswdHelper::encryptPasswordByRsa(AccountsGlobalInfo::rsaPublicKey(), newpasswd, encryptedPasswd))
+    if (!PasswdHelper::encryptPasswordByRsa(m_accountsDataProvider->rsaPublicKey(), newpasswd, encryptedPasswd))
     {
         QMessageBox::warning(this, tr("Error"), tr("Password encryption failed"));
         return;
@@ -319,7 +321,7 @@ void UserInfoPage::handlerUpdateUserPropertyDone(QString errMsg)
     {
         m_hoverTip->show(HoverTips::HOVE_TIPS_SUC, tr("user information updated successfully"));
     }
-    ///NOTE: 如果属性设置成功了AccountsGlobalInfo会更新当前页面
+    ///NOTE: 如果属性设置成功了AccountsDataProvider会更新当前页面
     ///      手动更新是为了避免设置失败,界面未复位
     updateInfo();
 }

@@ -12,7 +12,7 @@
  * Author:     wangshichang <shichang@isrc.iscas.ac.cn>
  */
 #include "group-info-page.h"
-#include "accounts-global-info.h"
+#include "accounts-data-provider.h"
 #include "group-manager.h"
 #include "group-name-checker.h"
 #include "group-name-validator.h"
@@ -43,9 +43,11 @@ enum NameEditor
     NAME_EDIT
 };
 
-GroupInfoPage::GroupInfoPage(QWidget *parent)
+GroupInfoPage::GroupInfoPage(GroupManager *groupManager, QWidget *parent)
     : QWidget(parent), ui(new Ui::GroupInfoPage)
 {
+    m_groupManager = groupManager;
+
     ui->setupUi(this);
     initUI();
 }
@@ -104,7 +106,7 @@ void GroupInfoPage::updateInfo()
     m_errorTip->hideTip();
 
     GroupManager::GroupInfo groupInfo;
-    if (GroupManager::instance()->getGroupInfo(m_curShowGroupPath, groupInfo))
+    if (m_groupManager->getGroupInfo(m_curShowGroupPath, groupInfo))
     {
         m_gid = groupInfo.gid;
 
@@ -122,6 +124,7 @@ void GroupInfoPage::updateInfo()
                 appendMemberListItem(iter);
             }
         }
+        m_memberContainer->adjustSizeToItmes();
     }
 }
 

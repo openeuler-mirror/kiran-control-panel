@@ -52,7 +52,6 @@ UsersContainer::~UsersContainer()
 void UsersContainer::addItem(UserListItem* widget)
 {
     m_containerLayout->addWidget(widget, 0);
-    adjustSizeToItmes();
 }
 
 void UsersContainer::setItemVisible(const QString& name, bool visible)

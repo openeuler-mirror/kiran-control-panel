@@ -12,7 +12,7 @@
  * Author:     wangshichang <shichang@isrc.iscas.ac.cn>
  */
 #include "group-page.h"
-#include "accounts-global-info.h"
+#include "accounts-data-provider.h"
 #include "add-users-page/add-users-page.h"
 #include "create-group-page/create-group-page.h"
 #include "group-info-page/group-info-page.h"
@@ -37,6 +37,10 @@ using namespace Kiran;
 GroupPage::GroupPage(QWidget *parent)
     : QWidget(parent)
 {
+    // 用户组、用户信息都跟着页面走：切分类时页面被销毁重建，加载线程随之释放
+    m_groupManager = new GroupManager(this);
+    m_accountsDataProvider = new AccountsDataProvider(this);
+
     m_workThread.start();
     m_groupInterface = new GroupInterface();
     m_groupInterface->moveToThread(&m_workThread);
@@ -44,6 +48,10 @@ GroupPage::GroupPage(QWidget *parent)
     KLOG_INFO() << "WorkThread:" << m_workThread.currentThreadId();
     KLOG_INFO() << "current Thread:" << QThread::currentThreadId();
     initUI();
+
+    // 页面已经把信号接好，再触发加载
+    m_groupManager->loadGroups();
+    m_accountsDataProvider->loadUsers();
 }
 
 GroupPage::~GroupPage()
@@ -93,15 +101,15 @@ void GroupPage::initUI()
     stackedColorBlockLayout->addWidget(m_stackWidget);
     contentLayout->addWidget(stackedColorBlock);
 
-    m_pageCreateGroup = new CreateGroupPage(m_stackWidget);
+    m_pageCreateGroup = new CreateGroupPage(m_accountsDataProvider, m_stackWidget);
     m_stackWidget->insertWidget(PAGE_CREATE_GROUP, m_pageCreateGroup);
     initPageCreateGroup();
 
-    m_pageGroupInfo = new GroupInfoPage(m_stackWidget);
+    m_pageGroupInfo = new GroupInfoPage(m_groupManager, m_stackWidget);
     m_stackWidget->insertWidget(PAGE_GROUP_INFO, m_pageGroupInfo);
     initPageGroupInfo();
 
-    m_pageAddUsers = new AddUsersPage(m_stackWidget);
+    m_pageAddUsers = new AddUsersPage(m_accountsDataProvider, m_groupManager, m_stackWidget);
     m_stackWidget->insertWidget(PAGE_ADD_USERS, m_pageAddUsers);
     initPageAddUsers();
 
@@ -143,43 +151,6 @@ void GroupPage::initGroupList()
     m_createGroupItem = new QListWidgetItem(tr("Create new group"), m_tabList);
     m_createGroupItem->setIcon(QIcon(":/kcp-group-images/create_group_icon.png"));
     m_tabList->addItem(m_createGroupItem);
-
-    QList<QString> groupObjList;
-    groupObjList = GroupManager::instance()->getGroupList();
-
-    GroupManager::GroupInfo groupInfo;
-    for (auto &iter : groupObjList)
-    {
-        if (GroupManager::instance()->getGroupInfo(iter, groupInfo))
-        {
-            if (groupInfo.isNotSystemGroup)
-            {
-                auto groupName = groupInfo.name;
-                auto item = new KiranSidebarItem(groupName, m_tabList);
-                item->setData(ITEM_GROUP_OBJ_PATH_ROLE, iter);
-                item->setIcon(QPixmap(":/kcp-group-images/group_icon_small.png"));
-                m_tabList->addItem(item);
-            }
-        }
-    }
-}
-
-void GroupPage::appendSidebarItem(const QString &groupPath)
-{
-    KLOG_INFO() << "current Thread:" << QThread::currentThreadId();
-
-    GroupManager::GroupInfo groupInfo;
-    if (GroupManager::instance()->getGroupInfo(groupPath, groupInfo))
-    {
-        if (groupInfo.isNotSystemGroup)
-        {
-            auto item = new KiranSidebarItem(groupInfo.name, m_tabList);
-            item->setData(ITEM_GROUP_OBJ_PATH_ROLE, groupPath);
-            item->setIcon(QPixmap(":/kcp-group-images/group_icon_small.png"));
-            m_tabList->addItem(item);
-            m_tabList->setCurrentItem(item);
-        }
-    }
 }
 
 void GroupPage::deleteSidebarItem(const QString &groupPath)
@@ -210,7 +181,7 @@ void GroupPage::updateSidebarItem(const QString &groupPath)
         if (item->data(ITEM_GROUP_OBJ_PATH_ROLE) == groupPath)
         {
             GroupManager::GroupInfo groupInfo;
-            if (GroupManager::instance()->getGroupInfo(groupPath, groupInfo))
+            if (m_groupManager->getGroupInfo(groupPath, groupInfo))
             {
                 item->setText(groupInfo.name);
                 m_tabList->setCurrentItem(item);
@@ -278,9 +249,9 @@ void GroupPage::initPageAddUsers()
 
 void GroupPage::connectToInfoChange()
 {
-    connect(GroupManager::instance(), &GroupManager::GroupAdded, this, &GroupPage::addGroup);
-    connect(GroupManager::instance(), &GroupManager::GroupDeleted, this, &GroupPage::deleteGroup);
-    connect(GroupManager::instance(), &GroupManager::GroupChanged, this, &GroupPage::handleGroupChanged);
+    connect(m_groupManager, &GroupManager::GroupAdded, this, &GroupPage::addGroup);
+    connect(m_groupManager, &GroupManager::GroupDeleted, this, &GroupPage::deleteGroup);
+    connect(m_groupManager, &GroupManager::GroupChanged, this, &GroupPage::handleGroupChanged);
 }
 
 void GroupPage::setDefaultSiderbarItem()
@@ -306,10 +277,19 @@ void GroupPage::jumpToPage(StackWidgetPageEnum page)
     }
 }
 
-void GroupPage::addGroup(const QString &groupPath)
+void GroupPage::addGroup(const QString &groupPath, const QString &groupName, qlonglong gid)
 {
     KLOG_DEBUG() << "on group added, add group" << groupPath << "to sidebar";
-    appendSidebarItem(groupPath);
+
+    if (gid < 1000 || gid >= 65534)
+    {
+        return;
+    }
+
+    auto item = new KiranSidebarItem(groupName, m_tabList);
+    item->setData(ITEM_GROUP_OBJ_PATH_ROLE, groupPath);
+    item->setIcon(QPixmap(":/kcp-group-images/group_icon_small.png"));
+    m_tabList->addItem(item);
 }
 
 void GroupPage::deleteGroup(const QString &groupPath)

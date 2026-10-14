@@ -20,6 +20,8 @@
 class QStackedWidget;
 class KiranSidebarWidget;
 class GroupInterface;
+class GroupManager;
+class AccountsDataProvider;
 class QListWidgetItem;
 class CreateGroupPage;
 class GroupInfoPage;
@@ -44,11 +46,10 @@ public:
     void jumpToPage(StackWidgetPageEnum page);
 
 private Q_SLOTS:
-    void addGroup(const QString &groupPath);
+    void addGroup(const QString &groupPath, const QString &groupName, qlonglong gid);
     void deleteGroup(const QString &groupPath);
     void handleGroupChanged(const QString &groupPath);
 
-    void appendSidebarItem(const QString &groupPath);
     void deleteSidebarItem(const QString &groupPath);
     void updateSidebarItem(const QString &groupPath);
 
@@ -66,6 +67,8 @@ private:
     KiranSidebarWidget *m_tabList = nullptr;
     QThread m_workThread;
     GroupInterface *m_groupInterface = nullptr;
+    GroupManager *m_groupManager = nullptr;
+    AccountsDataProvider *m_accountsDataProvider = nullptr;
     QListWidgetItem *m_createGroupItem = nullptr;
     CreateGroupPage *m_pageCreateGroup = nullptr;
     GroupInfoPage *m_pageGroupInfo = nullptr;

@@ -47,10 +47,6 @@ public:
     bool haveUnSavedOptions() override;
 
 private:
-    void handleUserAdded(const QString& objectPath);
-    void handleUserDeleted(const QString& objectPath);
-
-private:
     KiranControlPanel::PanelInterface* m_interface = nullptr;
     AccountWidget* m_accountWidget = nullptr;
 };

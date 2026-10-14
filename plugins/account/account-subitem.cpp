@@ -12,8 +12,9 @@
  * Author:     liuxinhao <liuxinhao@kylinsec.com.cn>
  */
 #include "account-subitem.h"
-#include "accounts-global-info.h"
 #include "account-widget.h"
+
+#include <QEvent>
 
 #define ACCOUNT_SEARCH_COMMAND_ADD_USER "@NewUser"
 #define ACCOUNT_SEARCH_COMMAND_JUMP_TO_USER "@User:"
@@ -22,8 +23,6 @@ AccountSubItem::AccountSubItem(KiranControlPanel::PanelInterface* interface, QOb
     : QObject(parent),
       m_interface(interface)
 {
-    connect(AccountsGlobalInfo::instance(), &AccountsGlobalInfo::UserAdded, this, &AccountSubItem::handleUserAdded);
-    connect(AccountsGlobalInfo::instance(), &AccountsGlobalInfo::UserDeleted, this, &AccountSubItem::handleUserDeleted);
 }
 
 AccountSubItem ::~AccountSubItem()
@@ -73,18 +72,12 @@ QVector<QPair<QString, QString>> AccountSubItem::getSearchKeys()
 {
     QVector<QPair<QString, QString>> searchKeys;
     searchKeys.append({tr("New User"), ACCOUNT_SEARCH_COMMAND_ADD_USER});
-
-    QStringList users = AccountsGlobalInfo::instance()->getUserNameList();
-    for (const QString& user : users)
-    {
-        searchKeys.append({user, QString("%1%2").arg(ACCOUNT_SEARCH_COMMAND_JUMP_TO_USER).arg(user)});
-    }
-
     return searchKeys;
 }
 
 QWidget* AccountSubItem::createWidget()
 {
+    // 用户信息由页面自己持有，页面创建时触发加载
     m_accountWidget = new AccountWidget();
     m_accountWidget->installEventFilter(this);
     return m_accountWidget;
@@ -115,14 +108,4 @@ bool AccountSubItem::jumpToSearchEntry(const QString& key)
 bool AccountSubItem::haveUnSavedOptions()
 {
     return false;
-}
-
-void AccountSubItem::handleUserAdded(const QString& userObject)
-{
-    m_interface->handlePluginSubItemInfoChanged(getID());
-}
-
-void AccountSubItem::handleUserDeleted(const QString& userObject)
-{
-    m_interface->handlePluginSubItemInfoChanged(getID());
 }

@@ -25,13 +25,14 @@ class UserInfoPage;
 }
 class HoverTips;
 class KiranSwitchButton;
+class AccountsDataProvider;
 class UserInfoPage : public QWidget
 {
     Q_OBJECT
     friend class AccountWidget;
 
 public:
-    explicit UserInfoPage(QWidget *parent = nullptr);
+    explicit UserInfoPage(AccountsDataProvider *accountsDataProvider, QWidget *parent = nullptr);
     ~UserInfoPage();
 
     bool eventFilter(QObject *watched, QEvent *event) override;
@@ -120,6 +121,7 @@ private:
     KiranTips *m_errorTip;
     HoverTips *m_hoverTip;
     KiranSwitchButton *m_userStatusSwitch;
+    AccountsDataProvider *m_accountsDataProvider;
 };
 
 #endif  // USERINFOPAGE_H

@@ -13,9 +13,8 @@
  */
 
 #include "add-users-page.h"
-#include "accounts-global-info.h"
+#include "accounts-data-provider.h"
 #include "group-manager.h"
-#include "ksd_accounts_user_proxy.h"
 #include "ui_add-users-page.h"
 #include "user-list-item.h"
 #include "users-container.h"
@@ -23,12 +22,16 @@
 #include <kiran-message-box.h>
 #include <qt5-log-i.h>
 #include <style-property.h>
+#include <QTimer>
 
 using namespace Kiran;
 
-AddUsersPage::AddUsersPage(QWidget *parent)
+AddUsersPage::AddUsersPage(AccountsDataProvider *accountsDataProvider, GroupManager *groupManager, QWidget *parent)
     : QWidget(parent), ui(new Ui::AddUsersPage)
 {
+    m_accountsDataProvider = accountsDataProvider;
+    m_groupManager = groupManager;
+
     ui->setupUi(this);
     initUI();
 }
@@ -40,12 +43,12 @@ AddUsersPage::~AddUsersPage()
 
 void AddUsersPage::initUI()
 {
-    // 所有用户名
-    m_allUserName = getAllUserName();
-
     // 用户列表容器
     m_usersContainer = new UsersContainer(this);
     ui->layout_user_list->addWidget(m_usersContainer);
+
+    connect(m_accountsDataProvider, &AccountsDataProvider::UserAdded,
+            this, &AddUsersPage::appendUser);
 
     StylePropertyHelper::setButtonType(ui->btn_save, BUTTON_Default);
 
@@ -69,19 +72,52 @@ void AddUsersPage::initUI()
                     emit requestAddUserToGroup(m_curShowGroupPath, userNameList);} });
 }
 
-QStringList AddUsersPage::getAllUserName()
+void AddUsersPage::appendUser(const QDBusObjectPath &objectPath, const QString &userName)
 {
-    QStringList result;
-    QString userName;
-    auto userObjList = AccountsGlobalInfo::instance()->getUserList();
-    for (auto iter : userObjList)
+    Q_UNUSED(objectPath);
+
+    m_allUserName.append(userName);
+
+    if (!m_curShowGroupPath.isEmpty() && !m_usersInGroup.contains(userName))
     {
-        if (AccountsGlobalInfo::instance()->getUserName(iter, userName))
-        {
-            result.append(userName);
-        }
+        m_pendingUserNames.append(userName);
+        scheduleAppend();
     }
-    return result;
+}
+
+void AddUsersPage::scheduleAppend()
+{
+    if (m_appendPending)
+    {
+        return;
+    }
+
+    m_appendPending = true;
+    QTimer::singleShot(0, this, &AddUsersPage::appendPendingUsers);
+}
+
+void AddUsersPage::appendPendingUsers()
+{
+    m_appendPending = false;
+
+    // 每次只补入一部分，避免一次建出上万个条目把界面卡住
+    int count = 0;
+    while (!m_pendingUserNames.isEmpty() && count < 100)
+    {
+        appendUserListItem(m_pendingUserNames.takeFirst());
+        count++;
+    }
+
+    // 一批加完统一重算一次高度，逐条重算会把布局反复作废（O(N^2)）
+    if (count > 0)
+    {
+        m_usersContainer->adjustSizeToItmes();
+    }
+
+    if (!m_pendingUserNames.isEmpty())
+    {
+        scheduleAppend();
+    }
 }
 
 void AddUsersPage::updateUsersList(const QString &groupObj)
@@ -90,9 +126,10 @@ void AddUsersPage::updateUsersList(const QString &groupObj)
 
     m_usersContainer->clear();
     m_usersInGroup.clear();
+    m_pendingUserNames.clear();
 
     GroupManager::GroupInfo groupInfo;
-    if (GroupManager::instance()->getGroupInfo(m_curShowGroupPath, groupInfo))
+    if (m_groupManager->getGroupInfo(m_curShowGroupPath, groupInfo))
     {
         /// 加载不在用户组中的用户
         m_usersInGroup = groupInfo.users;
@@ -100,10 +137,12 @@ void AddUsersPage::updateUsersList(const QString &groupObj)
         {
             if (!m_usersInGroup.contains(name))
             {
-                appendUserListItem(name);
+                m_pendingUserNames.append(name);
             }
         }
     }
+
+    scheduleAppend();
 
     ui->search_box->setFocus();
     ui->search_box->clear();

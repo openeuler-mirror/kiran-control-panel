@@ -13,6 +13,7 @@
  */
 
 #include "group-subitem.h"
+#include "group-manager.h"
 #include "group-page.h"
 
 #include <QEvent>
@@ -71,6 +72,7 @@ int GroupSubItem::getWeight()
 
 QWidget* GroupSubItem::createWidget()
 {
+    // 用户组、用户信息都由页面自己持有并在构造时加载
     m_groupPage = new GroupPage();
     m_groupPage->installEventFilter(this);
     return m_groupPage;

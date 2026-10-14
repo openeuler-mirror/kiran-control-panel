@@ -15,6 +15,7 @@
 #ifndef ADDUSERSPAGE_H
 #define ADDUSERSPAGE_H
 
+#include <QDBusObjectPath>
 #include <QWidget>
 
 namespace Ui
@@ -23,12 +24,14 @@ class AddUsersPage;
 }
 
 class UsersContainer;
+class AccountsDataProvider;
+class GroupManager;
 class AddUsersPage : public QWidget
 {
     Q_OBJECT
 
 public:
-    AddUsersPage(QWidget *parent = nullptr);
+    AddUsersPage(AccountsDataProvider *accountsDataProvider, GroupManager *groupManager, QWidget *parent = nullptr);
     ~AddUsersPage();
 
     void updateUsersList(const QString &groupObj);
@@ -46,17 +49,25 @@ public Q_SLOTS:
 
     void updateUI(const QString &errMsg);
 
+    void appendUser(const QDBusObjectPath &objectPath, const QString &userName);
+
+    void appendPendingUsers();
+
 private:
     /// 初始化界面
     void initUI();
-    QStringList getAllUserName();
     void appendUserListItem(const QString &userName);
+    void scheduleAppend();
 
 private:
     Ui::AddUsersPage *ui;
     QStringList m_allUserName;
     QStringList m_usersInGroup;
     UsersContainer *m_usersContainer;
+    AccountsDataProvider *m_accountsDataProvider;
+    GroupManager *m_groupManager;
     QString m_curShowGroupPath;
+    QStringList m_pendingUserNames;
+    bool m_appendPending = false;
 };
 #endif  // ADDUSERSPAGE_H

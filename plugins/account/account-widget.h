@@ -13,6 +13,7 @@
  */
 #pragma once
 #include <kiranwidgets-qt5/kiran-titlebar-window.h>
+#include <QHash>
 #include <QThread>
 #include <QWidget>
 
@@ -23,6 +24,7 @@ class SelectAvatarPage;
 class PasswordExpirationPolicyPage;
 class MaskWidget;
 class HardWorker;
+class AccountsDataProvider;
 class KiranSidebarWidget;
 class QListWidgetItem;
 
@@ -49,19 +51,21 @@ private Q_SLOTS:
     void setCurrentUser(const QString &userPath);
     void setMaskVisible(bool visible);
     void updateCreateUserIcon();
-    void onUserAdded(const QString& objectPath);
+    void onUserAdded(const QString &objectPath, const QString &userName, const QString &iconFile, bool locked);
     void onUserDeleted(const QString& objectPath);
     void onUserPropertyChanged(const QString& objectPath,const QString& propertyName,QVariant value);
     void onRequestIconPageForNewUser(const QString& iconPath);
     void onRequestSetCurrentUser(const QString& userPath);
 
 private:
-    void appendUser(const QString &userPath);
+    void appendUser(const QString &userPath, const QString &userName, QString iconFile, bool userLocked);
     void setDefaultSelectedUser();
 
 private:
     KiranSidebarWidget *m_tabList = nullptr;
     QListWidgetItem *m_createUserItem = nullptr;
+    // 用户对象路径 -> 侧边栏条目：属性变化时按路径直接定位，不再遍历整个列表
+    QHash<QString, QListWidgetItem *> m_userItems;
     QStackedWidget *m_stackWidget = nullptr;
     CreateUserPage *m_page_createUser = nullptr;
     UserInfoPage *m_page_userinfo = nullptr;
@@ -70,4 +74,5 @@ private:
     MaskWidget *m_maskWidget = nullptr;
     QThread m_workThread;
     HardWorker *m_hardworker = nullptr;
+    AccountsDataProvider *m_accountsDataProvider = nullptr;
 };
