@@ -20,8 +20,8 @@
 #include <QVariantMap>
 
 /// @brief 在后台线程逐个加载用户，每加载完一个用户发一次 userLoaded
-///        这里不创建用户代理：每个代理都会各自占一条总线订阅（属性变化），
-///        用户数上千时会撞上 dbus-daemon 的 match rule 上限，超出的静默失效
+///        这里不创建用户代理：每个代理都会各自占一条总线订阅，用户数上千时
+///        会撞上 dbus-daemon 的 match rule 上限，超出的静默失效
 class UserLoader : public QObject
 {
     Q_OBJECT

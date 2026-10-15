@@ -66,9 +66,13 @@ void CreateGroupPage::initUI()
     connect(ui->btn_confirm, &QPushButton::clicked, this, &CreateGroupPage::createGroup);
 }
 
-void CreateGroupPage::appendUser(const QDBusObjectPath &objectPath, const QString &userName)
+void CreateGroupPage::appendUser(const QString &objectPath, const QString &userName,
+                                 const QString &iconFile, bool locked)
 {
+    // iconFile / locked 是 account 列表需要的字段，创建用户组页只需要用户名
     Q_UNUSED(objectPath);
+    Q_UNUSED(iconFile);
+    Q_UNUSED(locked);
 
     m_allUserName.append(userName);
     m_pendingUserNames.append(userName);

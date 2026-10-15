@@ -26,7 +26,6 @@ class PasswordExpirationPolicyPage;
 QT_END_NAMESPACE
 
 class KiranSwitchButton;
-class KSDAccountsUserProxy;
 class PasswordExpirationPolicyPage : public QWidget
 {
     Q_OBJECT

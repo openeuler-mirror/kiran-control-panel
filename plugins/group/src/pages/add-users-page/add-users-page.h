@@ -49,7 +49,8 @@ public Q_SLOTS:
 
     void updateUI(const QString &errMsg);
 
-    void appendUser(const QDBusObjectPath &objectPath, const QString &userName);
+    void appendUser(const QString &objectPath, const QString &userName,
+                    const QString &iconFile, bool locked);
 
     void appendPendingUsers();
 

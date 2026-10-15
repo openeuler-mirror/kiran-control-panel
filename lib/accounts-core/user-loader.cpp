@@ -12,18 +12,16 @@
  * Author:     gaobo <gaobo@kylinsec.com.cn>
  */
 #include "user-loader.h"
+#include "kiran-account-service-wrapper.h"
+#include "logging-category.h"
 
-#include <kiran-system-daemon/accounts-i.h>
-#include <qt5-log-i.h>
 #include <QDBusArgument>
 #include <QDBusConnection>
 #include <QDBusMessage>
 #include <algorithm>
+#include <qt5-log-i.h>
 
-namespace
-{
-const int FetchUserValuesTimeoutMs = 2000;
-}
+const int FetchValuesTimeoutMs = 2000;
 
 UserLoader::UserLoader()
 {
@@ -31,13 +29,13 @@ UserLoader::UserLoader()
 
 QVariantMap UserLoader::fetchUserValues(const QString &objectPath)
 {
-    QDBusMessage request = QDBusMessage::createMethodCall(ACCOUNTS_DBUS_NAME,
+    QDBusMessage request = QDBusMessage::createMethodCall(DBusWrapper::KiranAccountServiceName,
                                                           objectPath,
                                                           QStringLiteral("org.freedesktop.DBus.Properties"),
                                                           QStringLiteral("GetAll"));
-    request << QStringLiteral("com.kylinsec.Kiran.SystemDaemon.Accounts.User");
+    request << QString::fromLatin1(KiranAccountServiceUser::staticInterfaceName());
 
-    const QDBusMessage reply = QDBusConnection::systemBus().call(request, QDBus::Block, FetchUserValuesTimeoutMs);
+    const QDBusMessage reply = QDBusConnection::systemBus().call(request, QDBus::Block, FetchValuesTimeoutMs);
     if (reply.type() != QDBusMessage::ReplyMessage || reply.arguments().isEmpty())
     {
         return QVariantMap();
@@ -66,7 +64,7 @@ void UserLoader::load(const QStringList &objectPaths)
     {
         if (m_stopRequested.loadAcquire() != 0)
         {
-            KLOG_DEBUG() << "user loader stopped," << paths.size() << "users not loaded";
+            KLOG_DEBUG(qLcAccountsCore) << "user loader stopped," << paths.size() << "users not loaded";
             break;
         }
 
@@ -74,7 +72,7 @@ void UserLoader::load(const QStringList &objectPaths)
         if (values.isEmpty())
         {
             // 读取失败，或者读取的途中该用户已经被删除
-            KLOG_WARNING() << "fetch user values failed:" << objectPath;
+            KLOG_WARNING(qLcAccountsCore) << "fetch user values failed:" << objectPath;
             continue;
         }
 

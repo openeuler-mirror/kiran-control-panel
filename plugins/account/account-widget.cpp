@@ -50,7 +50,8 @@ AccountWidget::AccountWidget(QWidget *parent)
     : QWidget(parent)
 {
     // 用户信息跟着页面走：切分类时页面被销毁重建，代理与后台线程随之释放
-    m_accountsDataProvider = new AccountsDataProvider(this);
+    // 账户列表要按事件实时更新锁定/头像，开启整服务属性变化订阅
+    m_accountsDataProvider = new AccountsDataProvider(this, true);
 
     m_workThread.start();
     m_hardworker = new HardWorker();

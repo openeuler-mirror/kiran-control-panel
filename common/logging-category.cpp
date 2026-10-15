@@ -16,6 +16,7 @@
 Q_LOGGING_CATEGORY(qLcDbusWrapper,"kcp.dbus-wrapper",QtMsgType::QtDebugMsg)
 Q_LOGGING_CATEGORY(qLcCommonWidget,"kcp.common-widget",QtMsgType::QtDebugMsg)
 Q_LOGGING_CATEGORY(qLcPluginFramework,"kcp.plugin-framework",QtMsgType::QtDebugMsg)
+Q_LOGGING_CATEGORY(qLcAccountsCore,"kcp.accounts-core",QtMsgType::QtDebugMsg)
 
 Q_LOGGING_CATEGORY(qLcAccount,"kcp.account",QtMsgType::QtDebugMsg)
 Q_LOGGING_CATEGORY(qLcAppearance,"kcp.appearance",QtMsgType::QtDebugMsg)
