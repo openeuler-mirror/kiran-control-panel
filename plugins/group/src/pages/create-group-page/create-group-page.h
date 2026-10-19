@@ -42,7 +42,8 @@ private:
 
 private Q_SLOTS:
     void createGroup();
-    void appendUser(const QDBusObjectPath &objectPath, const QString &userName);
+    void appendUser(const QString &objectPath, const QString &userName,
+                    const QString &iconFile, bool locked);
     void appendPendingUsers();
 
 public Q_SLOTS:

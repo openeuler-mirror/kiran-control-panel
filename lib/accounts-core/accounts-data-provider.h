@@ -9,30 +9,37 @@
  * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
  * See the Mulan PSL v2 for more details.
  *
- * Author:     liuxinhao <liuxinhao@kylinsec.com.cn>
+ * Author:     gaobo <gaobo@kylinsec.com.cn>
  */
-#ifndef ACCOUNTSDATAPROVIDER_H
-#define ACCOUNTSDATAPROVIDER_H
+#ifndef ACCOUNTSCOREDATAPROVIDER_H
+#define ACCOUNTSCOREDATAPROVIDER_H
 
-#include "kiran-account-service-wrapper.h"
-
+#include <QDBusMessage>
+#include <QDBusObjectPath>
 #include <QList>
 #include <QObject>
+#include <QSharedPointer>
 #include <QStringList>
 #include <QVariant>
 #include <QVariantMap>
 
+class KiranAccountService;
 class QThread;
 class UserLoader;
 
-/// @brief 用户信息的持有者，生命周期跟着使用它的页面控件走
+/// @brief 用户信息的持有者，account / group 两个插件共享。
+///        生命周期跟着使用它的页面控件走；
 ///        不为每个用户创建 D-Bus 代理：展示值在后台线程加载，随 UserAdded 一起下发；
-///        属性变化订阅整个服务一次，在槽里按消息里的用户对象路径区分
+///        属性变化订阅整个服务一次（仅 account 开启），在槽里按消息里的用户对象路径区分
 class AccountsDataProvider : public QObject
 {
     Q_OBJECT
 public:
-    explicit AccountsDataProvider(QObject *parent = nullptr);
+    /// @param parent 父对象
+    /// @param trackUserPropertyChanges 是否订阅整个服务的属性变化并下发 UserPropertyChanged。
+    ///        account 的账户列表需要按事件实时更新锁定/头像，传 true；
+    ///        group 只需要用户名，保持 false，不给总线增加额外消息负担
+    explicit AccountsDataProvider(QObject *parent = nullptr, bool trackUserPropertyChanges = false);
     ~AccountsDataProvider();
 
     QString rsaPublicKey();
@@ -57,7 +64,7 @@ signals:
                              QVariant value);
 
 private Q_SLOTS:
-    // 服务级订阅的回调，所有用户对象的属性变化都从这里出来
+    // 服务级订阅的回调，所有用户对象的属性变化都从这里出来（仅 trackUserPropertyChanges 时订阅）
     void handleDbusPropertiesChanged(const QDBusMessage &message);
     // 一个用户加载完成
     void handleUserLoaded(const QString &objectPath, const QVariantMap &values);
@@ -71,7 +78,9 @@ private:
     void stopBackgroundLoad();
 
 private:
-    DBusWrapper::KiranAccountServicePtr m_accountsInterface;
+    // 只前置声明 KiranAccountService：公共头不再 include dbus-wrapper 的 wrapper 头，
+    // 于是 dbus-wrapper / common / qt5-log-i 的依赖都只留在本库的 .cpp 里，消费者仅需 Qt
+    QSharedPointer<KiranAccountService> m_accountsInterface;
     UserLoader *m_loader = nullptr;
     QThread *m_loaderThread = nullptr;
     QString m_curUserName;
@@ -79,4 +88,4 @@ private:
     QString m_pubkey;
 };
 
-#endif  // ACCOUNTSDATAPROVIDER_H
+#endif  // ACCOUNTSCOREDATAPROVIDER_H

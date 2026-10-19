@@ -23,21 +23,6 @@ set_source_files_properties(${KSD_GROUP_ADMIN_LIST_XML}
         NO_NAMESPACE true)
 kiran_qt5_add_dbus_interface(KSD_GROUP_ADMIN_LIST_SRC ${KSD_GROUP_ADMIN_LIST_XML} ksd_group_admin_list_proxy)
 list(APPEND DBUS_SRC_LIST ${KSD_GROUP_ADMIN_LIST_SRC})
-set(KSD_ACCOUNTS_XML data/com.kylinsec.Kiran.SystemDaemon.Accounts.xml)
-set_source_files_properties(${KSD_ACCOUNTS_XML}
-        PROPERTIES
-        CLASSNAME KSDAccountsProxy
-        NO_NAMESPACE true)
-kiran_qt5_add_dbus_interface(KSD_ACCOUNTS_SRC ${KSD_ACCOUNTS_XML} ksd_accounts_proxy)
-list(APPEND DBUS_SRC_LIST ${KSD_ACCOUNTS_SRC})
-##kiran accounts user
-set(KSD_ACCOUNTS_USER_XML data/com.kylinsec.Kiran.SystemDaemon.Accounts.User.xml)
-set_source_files_properties(${KSD_ACCOUNTS_USER_XML}
-        PROPERTIES
-        CLASSNAME KSDAccountsUserProxy
-        NO_NAMESPACE true)
-kiran_qt5_add_dbus_interface(KSD_ACCOUNTS_USER_SRC ${KSD_ACCOUNTS_USER_XML} ksd_accounts_user_proxy)
-list(APPEND DBUS_SRC_LIST ${KSD_ACCOUNTS_USER_SRC})
 
 
 add_library(${TARGET_NAME} SHARED
@@ -68,6 +53,7 @@ target_include_directories(${TARGET_NAME} PRIVATE
 
 target_link_libraries(${TARGET_NAME}
         common-widgets
+        accounts-core
         Qt5::Core
         Qt5::Gui
         Qt5::Svg

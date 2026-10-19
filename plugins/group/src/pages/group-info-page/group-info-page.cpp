@@ -17,7 +17,6 @@
 #include "group-name-checker.h"
 #include "group-name-validator.h"
 #include "kiran-tips/kiran-tips.h"
-#include "ksd_accounts_user_proxy.h"
 #include "ui_group-info-page.h"
 #include "user-list-item.h"
 #include "users-container.h"

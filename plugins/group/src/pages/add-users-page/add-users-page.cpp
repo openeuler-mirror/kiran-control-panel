@@ -72,9 +72,13 @@ void AddUsersPage::initUI()
                     emit requestAddUserToGroup(m_curShowGroupPath, userNameList);} });
 }
 
-void AddUsersPage::appendUser(const QDBusObjectPath &objectPath, const QString &userName)
+void AddUsersPage::appendUser(const QString &objectPath, const QString &userName,
+                              const QString &iconFile, bool locked)
 {
+    // iconFile / locked 是 account 列表需要的字段，添加成员页只需要用户名
     Q_UNUSED(objectPath);
+    Q_UNUSED(iconFile);
+    Q_UNUSED(locked);
 
     m_allUserName.append(userName);
 

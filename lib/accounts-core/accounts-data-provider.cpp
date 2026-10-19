@@ -9,10 +9,11 @@
  * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
  * See the Mulan PSL v2 for more details.
  *
- * Author:     liuxinhao <liuxinhao@kylinsec.com.cn>
+ * Author:     gaobo <gaobo@kylinsec.com.cn>
  */
 #include "accounts-data-provider.h"
 #include "config.h"
+#include "kiran-account-service-wrapper.h"
 #include "logging-category.h"
 #include "user-loader.h"
 
@@ -28,13 +29,13 @@
 #include <QSettings>
 #include <QThread>
 
-AccountsDataProvider::AccountsDataProvider(QObject *parent)
+AccountsDataProvider::AccountsDataProvider(QObject *parent, bool trackUserPropertyChanges)
     : QObject(parent),
       m_accountsInterface(DBusWrapper::createKiranAccountServiceAPI())
 {
     if (m_accountsInterface.isNull())
     {
-        KLOG_ERROR(qLcAccount) << "create accounts service interface failed!";
+        KLOG_ERROR(qLcAccountsCore) << "create accounts service interface failed!";
         return;
     }
 
@@ -46,30 +47,34 @@ AccountsDataProvider::AccountsDataProvider(QObject *parent)
             [this](const QString &publicKey)
             { m_pubkey = publicKey; });
 
-    // 属性变化只在服务上订阅一次：空对象路径表示该服务下的所有对象，
-    // arg0(发生变化的接口名)过滤到用户接口，槽里再按消息里的对象路径区分是哪个用户。
-    // 不能每个用户订阅一次：一个用户一条 match rule，用户数上千时会撞上 dbus-daemon
-    // 的规则数上限(默认512)，超出的订阅会静默失效
-    QDBusConnection::systemBus().connect(
-        DBusWrapper::KiranAccountServiceName,
-        QString(),
-        QStringLiteral("org.freedesktop.DBus.Properties"),
-        QStringLiteral("PropertiesChanged"),
-        QStringList() << QString::fromLatin1(KiranAccountServiceUser::staticInterfaceName()),
-        QStringLiteral("sa{sv}as"),
-        this, SLOT(handleDbusPropertiesChanged(QDBusMessage)));
+    if (trackUserPropertyChanges)
+    {
+        // 属性变化只在服务上订阅一次：空对象路径表示该服务下的所有对象，
+        // arg0(发生变化的接口名)过滤到用户接口，槽里再按消息里的对象路径区分是哪个用户。
+        // 不能每个用户订阅一次：一个用户一条 match rule，用户数上千时会撞上 dbus-daemon
+        // 的规则数上限(默认512)，超出的订阅会静默失效。
+        // 只有 account 需要按事件实时更新锁定/头像，group 不订阅，避免无谓的总线消息
+        QDBusConnection::systemBus().connect(
+            DBusWrapper::KiranAccountServiceName,
+            QString(),
+            QStringLiteral("org.freedesktop.DBus.Properties"),
+            QStringLiteral("PropertiesChanged"),
+            QStringList() << QString::fromLatin1(KiranAccountServiceUser::staticInterfaceName()),
+            QStringLiteral("sa{sv}as"),
+            this, SLOT(handleDbusPropertiesChanged(QDBusMessage)));
+    }
 
     // 判断是否显示ROOT用户
     QSettings settings(SETTINGS_PATH, QSettings::IniFormat);
     if (settings.status() != QSettings::NoError)
     {
-        KLOG_WARNING(qLcAccount) << "parse" << SETTINGS_PATH << "failed!" << settings.status();
+        KLOG_WARNING(qLcAccountsCore) << "parse" << SETTINGS_PATH << "failed!" << settings.status();
     }
     else
     {
         m_showRoot = settings.value("Account/ShowRoot", false).toBool();
     };
-    KLOG_DEBUG(qLcAccount, "show root:%s", m_showRoot ? "true" : "false");
+    KLOG_DEBUG(qLcAccountsCore) << "show root:" << (m_showRoot ? "true" : "false");
 }
 
 AccountsDataProvider::~AccountsDataProvider()
@@ -89,8 +94,8 @@ void AccountsDataProvider::loadUsers()
     getUsersReply.waitForFinished();
     if (getUsersReply.isError())
     {
-        KLOG_ERROR(qLcAccount) << "get non system users error:"
-                               << getUsersReply.error();
+        KLOG_ERROR(qLcAccountsCore) << "get non system users error:"
+                     << getUsersReply.error();
         return;
     }
     QList<QDBusObjectPath> objList = getUsersReply.value();
@@ -102,8 +107,8 @@ void AccountsDataProvider::loadUsers()
         getRootReply.waitForFinished();
         if (getRootReply.isError())
         {
-            KLOG_ERROR(qLcAccount) << "insert root to users cache failed,"
-                                   << "cant find root by id:" << getRootReply.error();
+            KLOG_ERROR(qLcAccountsCore) << "insert root to users cache failed,"
+                         << "cant find root by id:" << getRootReply.error();
         }
         else
         {
@@ -124,7 +129,7 @@ void AccountsDataProvider::loadUsers()
 
     if (!allPaths.isEmpty())
     {
-        KLOG_DEBUG(qLcAccount) << "load" << allPaths.size() << "users in background";
+        KLOG_DEBUG(qLcAccountsCore) << "load" << allPaths.size() << "users in background";
         startBackgroundLoad(allPaths);
     }
 }
@@ -135,14 +140,14 @@ QString AccountsDataProvider::prepareCurrentUser(const QList<QDBusObjectPath> &u
     findUserReply.waitForFinished();
     if (findUserReply.isError())
     {
-        KLOG_WARNING(qLcAccount) << "find current user failed!";
+        KLOG_WARNING(qLcAccountsCore) << "find current user failed!";
         return QString();
     }
 
     const QString currentUserPath = findUserReply.value().path();
     const QVariantMap values = UserLoader::fetchUserValues(currentUserPath);
     m_curUserName = values.value(QStringLiteral("user_name")).toString();
-    KLOG_DEBUG(qLcAccount) << "current user:" << m_curUserName;
+    KLOG_DEBUG(qLcAccountsCore) << "current user:" << m_curUserName;
 
     // 当前用户不一定在用户列表里（例如未开启 ShowRoot 时的 root），只在会显示时才下发
     if (userList.contains(QDBusObjectPath(currentUserPath)) && !values.isEmpty())
@@ -167,7 +172,7 @@ bool AccountsDataProvider::checkUserNameAvaliable(const QString &userName)
     if (findUserReply.isError())
     {
         // 后端用错误回复表示没有发现该用户
-        KLOG_DEBUG(qLcAccount) << "find user by name failed:" << findUserReply.error();
+        KLOG_DEBUG(qLcAccountsCore) << "find user by name failed:" << findUserReply.error();
         return true;
     }
 
@@ -192,7 +197,7 @@ void AccountsDataProvider::handleUserAdded(const QDBusObjectPath &user)
 
 void AccountsDataProvider::handleUserDeleted(const QDBusObjectPath &user)
 {
-    KLOG_DEBUG(qLcAccount) << "delete user:" << user.path();
+    KLOG_DEBUG(qLcAccountsCore) << "delete user:" << user.path();
     emit UserDeleted(user.path());
 }
 
@@ -226,10 +231,10 @@ void AccountsDataProvider::handleDbusPropertiesChanged(const QDBusMessage &messa
     const QVariantMap changedProperties = qdbus_cast<QVariantMap>(args.at(1).value<QDBusArgument>());
     for (auto iter = changedProperties.begin(); iter != changedProperties.end(); iter++)
     {
-        KLOG_DEBUG(qLcAccount) << "user property changed:"
-                               << " user:" << message.path()
-                               << " property name:" << iter.key()
-                               << " value:" << iter.value();
+        KLOG_DEBUG(qLcAccountsCore) << "user property changed:"
+                     << " user:" << message.path()
+                     << " property name:" << iter.key()
+                     << " value:" << iter.value();
         emit UserPropertyChanged(message.path(), iter.key(), iter.value());
     }
 }
@@ -271,7 +276,7 @@ void AccountsDataProvider::stopBackgroundLoad()
 
     if (!m_loaderThread->wait(10000))
     {
-        KLOG_WARNING(qLcAccount) << "user loader did not stop in 10s, detach it";
+        KLOG_WARNING(qLcAccountsCore) << "user loader did not stop in 10s, detach it";
         // 超时：断开业务连接并放弃管理，避免崩溃
         disconnect(m_loader, nullptr, this, nullptr);
         m_loaderThread->setParent(nullptr);
