@@ -62,7 +62,7 @@ public:
     QList<Device> getDevicesByType(KADAuthType type);
 
     QString getDefaultDeviceID(KADAuthType type);
-    void setDefaultDeviceID(KADAuthType type,const QString& deviceID);
+    bool setDefaultDeviceID(KADAuthType type,const QString& deviceID);
 
     QList<Driver> getDriversByType(KADAuthType type);
     void setDriverEnalbe(const QString& driverName,bool enable);
