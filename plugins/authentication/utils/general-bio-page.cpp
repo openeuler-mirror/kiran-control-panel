@@ -151,10 +151,12 @@ int GeneralBioPage::getDeviceCount()
 void GeneralBioPage::updateDefaultDevice(int idx)
 {
     auto combo = qobject_cast<QComboBox*>(sender());
-    auto name = combo->itemText(idx);
     auto id = combo->itemData(idx).toString();
 
-    m_proxy->setDefaultDeviceID(m_authType, id);
+    if (!m_proxy->setDefaultDeviceID(m_authType, id))
+    {
+        refreshDeviceComboBox();
+    }
 }
 
 void GeneralBioPage::renameFeature()
