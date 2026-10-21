@@ -110,8 +110,9 @@ QString KiranAuthDBusProxy::getDefaultDeviceID(KADAuthType type)
     return pendingReply.value();
 }
 
-void KiranAuthDBusProxy::setDefaultDeviceID(KADAuthType type, const QString& deviceID)
+bool KiranAuthDBusProxy::setDefaultDeviceID(KADAuthType type, const QString& deviceID)
 {
+    // 设置默认设备需要管理员认证，认证被取消或超时会返回错误
     auto pendingReply = m_authProxy->SetDefaultDeviceID(type, deviceID);
     pendingReply.waitForFinished();
     if (pendingReply.isError())
@@ -119,7 +120,9 @@ void KiranAuthDBusProxy::setDefaultDeviceID(KADAuthType type, const QString& dev
         KLOG_ERROR(qLcAuthentication) << "set default device id" << type
                                       << "device id" << deviceID
                                       << "failed" << pendingReply.error().message();
+        return false;
     }
+    return true;
 }
 
 QList<KiranAuthDBusProxy::Driver>
@@ -186,6 +189,14 @@ KiranAuthDBusProxy::getUserIdentifications(KADAuthType type)
     RETURN_VAL_IF_FALSE(m_authUserProxy, identifications);
 
     auto pendingReply = m_authUserProxy->GetIdentifications(type);
+    if (pendingReply.isError())
+    {
+        KLOG_WARNING(qLcAuthentication) << "get user identifications failed,"
+                                        << "auth type:" << type
+                                        << pendingReply.error().message();
+        return identifications;
+    }
+
     auto identificationJson = pendingReply.value();
 
     QJsonDocument doc = QJsonDocument::fromJson(identificationJson.toUtf8());
