@@ -18,6 +18,7 @@
 #include "kiran-timedate-global-data.h"
 #include "ui_display-format-settings.h"
 
+#include <QSignalBlocker>
 #include <kiran-switch-button.h>
 #include <kiran-system-daemon/timedate-i.h>
 
@@ -104,6 +105,7 @@ void DisplayFormatSettings::handleLongDisplayFormatChanged(int idx)
     if (!reply.first)
     {
         qWarning() << "set long date format failed," << reply.second;
+        QSignalBlocker blocker(ui->combo_longDateFormat);
         ui->combo_longDateFormat->setCurrentIndex(KiranTimeDateGlobalData::instance()->longDateFormatIndex());
     }
 }
@@ -112,6 +114,7 @@ void DisplayFormatSettings::handleSystemLongDisplayFormatChanged(int idx)
 {
     if (idx >= 0 && idx < ui->combo_longDateFormat->count())
     {
+        QSignalBlocker blocker(ui->combo_longDateFormat);
         ui->combo_longDateFormat->setCurrentIndex(idx);
     }
 }
@@ -122,6 +125,7 @@ void DisplayFormatSettings::handleShortgDisplayFormatChanged(int idx)
     if (!reply.first)
     {
         qWarning() << "set short date formate failed," << reply.second;
+        QSignalBlocker blocker(ui->combo_shortDateFormat);
         ui->combo_shortDateFormat->setCurrentIndex(KiranTimeDateGlobalData::instance()->shortDateFormatIndex());
     }
 }
@@ -130,6 +134,7 @@ void DisplayFormatSettings::handleSystemShortDisplayFormatChanged(int idx)
 {
     if (idx >= 0 && idx < ui->combo_shortDateFormat->count())
     {
+        QSignalBlocker blocker(ui->combo_shortDateFormat);
         ui->combo_shortDateFormat->setCurrentIndex(idx);
     }
 }
@@ -142,7 +147,8 @@ void DisplayFormatSettings::handleHourFormatChanged(int idx)
     if (!reply.first)
     {
         qWarning() << "set hour formate failed," << reply.second;
-        ui->combo_timeFormat->setCurrentIndex(KiranTimeDateGlobalData::instance()->hourFormat());
+        QSignalBlocker blocker(ui->combo_timeFormat);
+        ui->combo_timeFormat->setCurrentIndex(ui->combo_timeFormat->findData(KiranTimeDateGlobalData::instance()->hourFormat()));
     }
 }
 
@@ -152,6 +158,7 @@ void DisplayFormatSettings::handleSystemHourFormatChanged(TimedateHourFormat for
     int idx = ui->combo_timeFormat->findData(format);
     if (idx != -1)
     {
+        QSignalBlocker blocker(ui->combo_timeFormat);
         ui->combo_timeFormat->setCurrentIndex(idx);
     }
 }
@@ -162,11 +169,13 @@ void DisplayFormatSettings::handleTimeSecondVisibleChanged(bool enable)
     if (!reply.first)
     {
         qWarning() << "set seconds showing failed," << reply.second;
+        QSignalBlocker blocker(m_showSecondSwitch);
         m_showSecondSwitch->setChecked(KiranTimeDateGlobalData::instance()->secondsShowing());
     }
 }
 
 void DisplayFormatSettings::handleSystemTimeSecondVisibleChanged(bool enable)
 {
+    QSignalBlocker blocker(m_showSecondSwitch);
     m_showSecondSwitch->setChecked(enable);
 }
