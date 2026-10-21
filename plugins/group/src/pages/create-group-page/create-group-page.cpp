@@ -13,7 +13,6 @@
  */
 
 #include "create-group-page.h"
-#include "accounts-data-provider.h"
 #include "group-manager.h"
 #include "group-name-checker.h"
 #include "group-name-validator.h"
@@ -29,11 +28,9 @@
 
 using namespace Kiran;
 
-CreateGroupPage::CreateGroupPage(AccountsDataProvider *accountsDataProvider, QWidget *parent)
+CreateGroupPage::CreateGroupPage(QWidget *parent)
     : QWidget(parent), ui(new Ui::CreateGroupPage)
 {
-    m_accountsDataProvider = accountsDataProvider;
-
     ui->setupUi(this);
 
     initUI();
@@ -58,25 +55,33 @@ void CreateGroupPage::initUI()
     m_userContainter = new UsersContainer(this);
     ui->userListLayout->addWidget(m_userContainter);
 
-    connect(m_accountsDataProvider, &AccountsDataProvider::UserAdded,
-            this, &CreateGroupPage::appendUser);
-
     /// 确认按钮
     StylePropertyHelper::setButtonType(ui->btn_confirm, BUTTON_Default);
     connect(ui->btn_confirm, &QPushButton::clicked, this, &CreateGroupPage::createGroup);
 }
 
-void CreateGroupPage::appendUser(const QString &objectPath, const QString &userName,
-                                 const QString &iconFile, bool locked)
+void CreateGroupPage::appendUser(const QString &userName)
 {
-    // iconFile / locked 是 account 列表需要的字段，创建用户组页只需要用户名
-    Q_UNUSED(objectPath);
-    Q_UNUSED(iconFile);
-    Q_UNUSED(locked);
-
     m_allUserName.append(userName);
     m_pendingUserNames.append(userName);
     scheduleAppend();
+}
+
+void CreateGroupPage::removeUser(const QString &userName)
+{
+    if (userName.isEmpty())
+    {
+        return;
+    }
+
+    KLOG_DEBUG() << "user deleted, remove" << userName << "from member candidate list";
+
+    // m_allUserName 是 reset() 重建列表的数据源，待生成队列也必须清，
+    // 否则下一批会把刚删掉的名字又加回来
+    m_pendingUserNames.removeAll(userName);
+    m_allUserName.removeAll(userName);
+
+    m_userContainter->removeItem(userName);
 }
 
 void CreateGroupPage::scheduleAppend()

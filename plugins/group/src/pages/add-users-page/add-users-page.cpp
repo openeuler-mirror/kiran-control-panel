@@ -13,7 +13,6 @@
  */
 
 #include "add-users-page.h"
-#include "accounts-data-provider.h"
 #include "group-manager.h"
 #include "ui_add-users-page.h"
 #include "user-list-item.h"
@@ -26,10 +25,9 @@
 
 using namespace Kiran;
 
-AddUsersPage::AddUsersPage(AccountsDataProvider *accountsDataProvider, GroupManager *groupManager, QWidget *parent)
+AddUsersPage::AddUsersPage(GroupManager *groupManager, QWidget *parent)
     : QWidget(parent), ui(new Ui::AddUsersPage)
 {
-    m_accountsDataProvider = accountsDataProvider;
     m_groupManager = groupManager;
 
     ui->setupUi(this);
@@ -46,9 +44,6 @@ void AddUsersPage::initUI()
     // 用户列表容器
     m_usersContainer = new UsersContainer(this);
     ui->layout_user_list->addWidget(m_usersContainer);
-
-    connect(m_accountsDataProvider, &AccountsDataProvider::UserAdded,
-            this, &AddUsersPage::appendUser);
 
     StylePropertyHelper::setButtonType(ui->btn_save, BUTTON_Default);
 
@@ -72,14 +67,8 @@ void AddUsersPage::initUI()
                     emit requestAddUserToGroup(m_curShowGroupPath, userNameList);} });
 }
 
-void AddUsersPage::appendUser(const QString &objectPath, const QString &userName,
-                              const QString &iconFile, bool locked)
+void AddUsersPage::appendUser(const QString &userName)
 {
-    // iconFile / locked 是 account 列表需要的字段，添加成员页只需要用户名
-    Q_UNUSED(objectPath);
-    Q_UNUSED(iconFile);
-    Q_UNUSED(locked);
-
     m_allUserName.append(userName);
 
     if (!m_curShowGroupPath.isEmpty() && !m_usersInGroup.contains(userName))
@@ -87,6 +76,24 @@ void AddUsersPage::appendUser(const QString &objectPath, const QString &userName
         m_pendingUserNames.append(userName);
         scheduleAppend();
     }
+}
+
+void AddUsersPage::removeUser(const QString &userName)
+{
+    if (userName.isEmpty())
+    {
+        return;
+    }
+
+    KLOG_DEBUG() << "user deleted, remove" << userName << "from candidate list";
+
+    // 待生成队列必须一起清：条目是 0ms 定时器分批生成的，只删已经生成的那一条，
+    // 下一批会把刚删掉的名字又加回来
+    m_pendingUserNames.removeAll(userName);
+    m_allUserName.removeAll(userName);
+    m_usersInGroup.removeAll(userName);
+
+    m_usersContainer->removeItem(userName);
 }
 
 void AddUsersPage::scheduleAppend()

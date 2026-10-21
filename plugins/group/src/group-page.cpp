@@ -101,7 +101,7 @@ void GroupPage::initUI()
     stackedColorBlockLayout->addWidget(m_stackWidget);
     contentLayout->addWidget(stackedColorBlock);
 
-    m_pageCreateGroup = new CreateGroupPage(m_accountsDataProvider, m_stackWidget);
+    m_pageCreateGroup = new CreateGroupPage(m_stackWidget);
     m_stackWidget->insertWidget(PAGE_CREATE_GROUP, m_pageCreateGroup);
     initPageCreateGroup();
 
@@ -109,7 +109,7 @@ void GroupPage::initUI()
     m_stackWidget->insertWidget(PAGE_GROUP_INFO, m_pageGroupInfo);
     initPageGroupInfo();
 
-    m_pageAddUsers = new AddUsersPage(m_accountsDataProvider, m_groupManager, m_stackWidget);
+    m_pageAddUsers = new AddUsersPage(m_groupManager, m_stackWidget);
     m_stackWidget->insertWidget(PAGE_ADD_USERS, m_pageAddUsers);
     initPageAddUsers();
 
@@ -197,6 +197,10 @@ void GroupPage::updateSidebarItem(const QString &groupPath)
 
 void GroupPage::initPageCreateGroup()
 {
+    // 创建用户组页的成员候选列表跟随用户增减
+    connect(this, &GroupPage::userAdded, m_pageCreateGroup, &CreateGroupPage::appendUser);
+    connect(this, &GroupPage::userDeleted, m_pageCreateGroup, &CreateGroupPage::removeUser);
+
     // 创建用户组
     connect(m_pageCreateGroup, &CreateGroupPage::requestCreateGroup,
             m_groupInterface, &GroupInterface::doCreateGroup);
@@ -211,6 +215,9 @@ void GroupPage::initPageGroupInfo()
                 m_stackWidget->setCurrentIndex(PAGE_ADD_USERS);
                 m_pageAddUsers->updateUsersList(groupPath);
             });
+
+    // 用户组信息页的成员列表跟随用户删除
+    connect(this, &GroupPage::userDeleted, m_pageGroupInfo, &GroupInfoPage::removeMember);
 
     // 从用户组移除用户
     connect(m_pageGroupInfo, &GroupInfoPage::requestRemoveMember,
@@ -240,6 +247,10 @@ void GroupPage::initPageAddUsers()
     connect(m_pageAddUsers, &AddUsersPage::requestGroupInfoPage, [this]()
             { m_stackWidget->setCurrentIndex(PAGE_GROUP_INFO); });
 
+    // 添加成员页的候选列表跟随用户增减
+    connect(this, &GroupPage::userAdded, m_pageAddUsers, &AddUsersPage::appendUser);
+    connect(this, &GroupPage::userDeleted, m_pageAddUsers, &AddUsersPage::removeUser);
+
     // 添加用户到用户组
     connect(m_pageAddUsers, &AddUsersPage::requestAddUserToGroup,
             m_groupInterface, &GroupInterface::doAddUserToGroup);
@@ -252,6 +263,47 @@ void GroupPage::connectToInfoChange()
     connect(m_groupManager, &GroupManager::GroupAdded, this, &GroupPage::addGroup);
     connect(m_groupManager, &GroupManager::GroupDeleted, this, &GroupPage::deleteGroup);
     connect(m_groupManager, &GroupManager::GroupChanged, this, &GroupPage::handleGroupChanged);
+
+    connect(m_accountsDataProvider, &AccountsDataProvider::UserAdded,
+            this, &GroupPage::handleUserAdded);
+    connect(m_accountsDataProvider, &AccountsDataProvider::UserDeleted,
+            this, &GroupPage::handleUserDeleted);
+}
+
+void GroupPage::handleUserAdded(const QString &objectPath, const QString &userName,
+                                const QString &iconFile, bool locked)
+{
+    // 下发 UserAdded 的展示值里有头像和锁定状态，group 的页面只需要用户名
+    Q_UNUSED(iconFile);
+    Q_UNUSED(locked);
+
+    if (userName.isEmpty())
+    {
+        // 属性读取失败，或者读取途中用户已经被删，没有名字就不往页面上加
+        KLOG_WARNING() << "user added without name, ignore, object path:" << objectPath;
+        return;
+    }
+
+    m_userNameByPath.insert(objectPath, userName);
+
+    // 页面不直接接服务，由这里统一转发
+    emit userAdded(userName);
+}
+
+void GroupPage::handleUserDeleted(const QString &objectPath)
+{
+    const QString userName = m_userNameByPath.take(objectPath);
+    if (userName.isEmpty())
+    {
+        // 没记录过名字，说明页面还没收到过这个用户的 UserAdded，界面上也就没有它的条目。
+        // 加载线程投递的 UserAdded 若比删除信号还晚到（窗口极小），才会残留一条，重开页面即恢复
+        KLOG_WARNING() << "user deleted without known name, object path:" << objectPath;
+        return;
+    }
+
+    KLOG_DEBUG() << "user deleted, forward" << userName << "to group pages, object path:" << objectPath;
+
+    emit userDeleted(userName);
 }
 
 void GroupPage::setDefaultSiderbarItem()

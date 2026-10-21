@@ -12,7 +12,6 @@
  * Author:     wangshichang <shichang@isrc.iscas.ac.cn>
  */
 #include "group-info-page.h"
-#include "accounts-data-provider.h"
 #include "group-manager.h"
 #include "group-name-checker.h"
 #include "group-name-validator.h"
@@ -160,6 +159,18 @@ void GroupInfoPage::changeGroupName()
 
     emit requestChangeGroupName(m_curShowGroupPath, ui->edit_name->text());
     ui->edit_name->clear();
+}
+
+void GroupInfoPage::removeMember(const QString &userName)
+{
+    if (userName.isEmpty())
+    {
+        return;
+    }
+
+    KLOG_DEBUG() << "user deleted, remove" << userName << "from member list";
+
+    m_memberContainer->removeItem(userName);
 }
 
 void GroupInfoPage::handleMemberRemoved(const QString &errMsg)

@@ -36,6 +36,11 @@ public:
     /// @param visible 是否可见
     void setItemVisible(const QString& name, bool visible);
 
+    /// @brief 移除指定名称的用户条目（用户被删除时用）
+    /// @param name 用户条目的name
+    /// @return 是否找到并移除
+    bool removeItem(const QString& name);
+
     /// @brief 获取选中的用户条目
     /// @return 选中的用户条目
     /// @note 获取到的用户条目是选中状态的

@@ -71,6 +71,31 @@ void UsersContainer::setItemVisible(const QString& name, bool visible)
     }
 }
 
+bool UsersContainer::removeItem(const QString& name)
+{
+    for (int i = 0; i < m_containerLayout->count(); ++i)
+    {
+        auto layoutItem = m_containerLayout->itemAt(i);
+        if (!layoutItem || !layoutItem->widget())
+        {
+            continue;
+        }
+
+        auto item = qobject_cast<UserListItem*>(layoutItem->widget());
+        if (item && item->name() == name)
+        {
+            // 先脱离布局，再延后删除：调用点可能正在这个条目的信号处理栈里
+            m_containerLayout->removeWidget(item);
+            item->setParent(nullptr);
+            item->deleteLater();
+            adjustSizeToItmes();
+            return true;
+        }
+    }
+
+    return false;
+}
+
 QList<UserListItem*> UsersContainer::getSelectedItems()
 {
     QList<UserListItem*> result;
