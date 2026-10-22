@@ -108,7 +108,7 @@ void PrinterWorker::poll()
     }
     applyAvailability(m_cups->serviceAvailable());
     // 服务不可用时仅对账状态（applyAvailability 内处理）；可用才确保订阅并取列表
-    if (m_available)
+    if (m_availability == Availability::Available)
     {
         subscribe();
         refreshPrinters();
@@ -117,7 +117,7 @@ void PrinterWorker::poll()
 
 void PrinterWorker::setDefaultPrinter(const QString &printerName)
 {
-    if (m_cups && m_available)
+    if (m_cups && m_availability == Availability::Available)
     {
         if (m_cups->setDefaultPrinter(printerName))
         {
@@ -129,7 +129,7 @@ void PrinterWorker::setDefaultPrinter(const QString &printerName)
 
 void PrinterWorker::printTestPage(const QString &printerName, const QString &title)
 {
-    if (m_cups && m_available)
+    if (m_cups && m_availability == Availability::Available)
     {
         m_cups->printTestPage(printerName, title);
     }
@@ -183,9 +183,9 @@ void PrinterWorker::refreshPrinters()
     }
     const QList<PrinterInfo> printers = m_cups->getPrinters();
     // 仅当列表相对上次快照有变化时通知界面
-    if (!m_hasSnapshot || printers != m_lastPrinters)
+    if (!m_hasPrinterSnapshot || printers != m_lastPrinters)
     {
-        m_hasSnapshot = true;
+        m_hasPrinterSnapshot = true;
         m_lastPrinters = printers;
         emit printersChanged(printers);
     }
@@ -194,7 +194,7 @@ void PrinterWorker::refreshPrinters()
 void PrinterWorker::onPollTimer()
 {
     // 仅运行中且服务可用时拉取事件（不可用期间定时器已被停）
-    if (!m_running || !m_available || !m_cups)
+    if (!m_running || m_availability != Availability::Available || !m_cups)
     {
         return;
     }
@@ -229,16 +229,18 @@ void PrinterWorker::handleServiceAvailableChanged(bool available)
 
 void PrinterWorker::applyAvailability(bool available)
 {
-    const bool changed = (available != m_available);
-    m_available = available;
+    const Availability state = available ? Availability::Available : Availability::Unavailable;
+    const bool changed = (state != m_availability);
+    m_availability = state;
 
-    // 可用性状态翻转才通知界面，同状态重复调用不刷 UI
+    // 首轮 m_availability 为 Unknown，无论 available 是 true 还是 false 都会上报一次；
+    // 之后只在状态翻转时通知界面
     if (changed)
     {
         emit serviceAvailableChanged(available);
     }
 
-    if (!available)
+    if (state == Availability::Unavailable)
     {
         // 服务不可用：停轮询并取消订阅（服务端订阅随服务停止消失），清空列表快照
         if (m_timer)
@@ -246,7 +248,7 @@ void PrinterWorker::applyAvailability(bool available)
             m_timer->stop();
         }
         unsubscribe();
-        m_hasSnapshot = false;
+        m_hasPrinterSnapshot = false;
         m_lastPrinters.clear();
         return;
     }

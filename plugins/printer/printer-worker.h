@@ -63,7 +63,15 @@ private:
     CupsWrapper *m_cups = nullptr;  // 在本对象线程创建，随本对象析构
     QTimer *m_timer = nullptr;      // 周期轮询（本对象线程内触发）
     bool m_running = false;         // 生命周期开关：start 后才允许请求与轮询
-    bool m_available = false;       // CUPS 服务可用快照（systemd 信号 / 手动对账维护）
-    bool m_hasSnapshot = false;     // 是否已上报过快照（首刷无条件上报一次）
+    // 服务可用性：Unknown 表示还没拿过状态
+    enum class Availability
+    {
+        Unknown,
+        Unavailable,
+        Available,
+    };
+
+    Availability m_availability = Availability::Unknown;
+    bool m_hasPrinterSnapshot = false;  // 是否拿过打印机列表快照（首刷无条件上报一次）
     QList<PrinterInfo> m_lastPrinters;  // 上次上报的列表快照，用于变化比对
 };
