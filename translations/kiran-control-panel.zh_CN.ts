@@ -2258,7 +2258,12 @@
         <translation>提示</translation>
     </message>
     <message>
-        <location filename="../plugins/authentication/utils/general-bio-page.cpp" line="235"/>
+        <location filename="../plugins/authentication/utils/general-bio-page.cpp" line="224"/>
+        <source>Delete failed</source>
+        <translation>删除失败</translation>
+    </message>
+    <message>
+        <location filename="../plugins/authentication/utils/general-bio-page.cpp" line="223"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>

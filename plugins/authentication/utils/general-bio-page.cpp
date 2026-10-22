@@ -216,7 +216,16 @@ void GeneralBioPage::removeFeature()
         return;
     }
 
-    m_proxy->deleteIdentification(iid);
+    QString errorString;
+    if (!m_proxy->deleteIdentification(iid, &errorString))
+    {
+        KLOG_WARNING(qLcAuthentication) << "feature" << iid << name << "delete failed:" << errorString;
+        KiranMessageBox::message(this, tr("Error"),
+                                 errorString.isEmpty() ? tr("Delete failed") : errorString,
+                                 KiranMessageBox::Ok);
+        return;
+    }
+
     KLOG_INFO(qLcAuthentication) << "feature" << iid << name << "deleted";
 
     refreshFeature();
