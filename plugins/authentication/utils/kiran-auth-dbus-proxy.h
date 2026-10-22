@@ -71,7 +71,8 @@ public:
     void stopEnroll();
 
     QList<Identification> getUserIdentifications(KADAuthType type);
-    void deleteIdentification(const QString& iid);
+    /** @param errorString 失败时带回服务端错误文案（可选，已翻译可直接展示） */
+    bool deleteIdentification(const QString& iid, QString* errorString = nullptr);
     void renameIdentification(const QString& iid,const QString& name);
 
 signals:
