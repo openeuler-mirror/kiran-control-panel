@@ -221,17 +221,25 @@ KiranAuthDBusProxy::getUserIdentifications(KADAuthType type)
     return identifications;
 }
 
-void KiranAuthDBusProxy::deleteIdentification(const QString& iid)
+bool KiranAuthDBusProxy::deleteIdentification(const QString& iid, QString* errorString)
 {
-    RETURN_IF_FALSE(m_authUserProxy);
+    RETURN_VAL_IF_FALSE(m_authUserProxy, false);
 
     auto reply = m_authUserProxy->DeleteIdentification(iid);
     reply.waitForFinished();
     if (reply.isError())
     {
+        const QString msg = reply.error().message();
         KLOG_WARNING(qLcAuthentication) << "delete identification failed,"
-                                        << "identification id:" << iid;
+                                        << "identification id:" << iid
+                                        << "error:" << msg;
+        if (errorString)
+        {
+            *errorString = msg;
+        }
+        return false;
     }
+    return true;
 }
 
 void KiranAuthDBusProxy::renameIdentification(const QString& iid, const QString& name)
