@@ -24,14 +24,13 @@ class AddUsersPage;
 }
 
 class UsersContainer;
-class AccountsDataProvider;
 class GroupManager;
 class AddUsersPage : public QWidget
 {
     Q_OBJECT
 
 public:
-    AddUsersPage(AccountsDataProvider *accountsDataProvider, GroupManager *groupManager, QWidget *parent = nullptr);
+    AddUsersPage(GroupManager *groupManager, QWidget *parent = nullptr);
     ~AddUsersPage();
 
     void updateUsersList(const QString &groupObj);
@@ -49,8 +48,13 @@ public Q_SLOTS:
 
     void updateUI(const QString &errMsg);
 
-    void appendUser(const QString &objectPath, const QString &userName,
-                    const QString &iconFile, bool locked);
+    /// 有用户新增时追加到候选列表（信号来自 GroupPage 的转发）
+    /// @param userName 新增用户的用户名
+    void appendUser(const QString &userName);
+
+    /// 用户被删除时把候选列表里的条目清掉，避免已删除的用户还留在界面上
+    /// @param userName 被删除用户的用户名（由 GroupPage 从对象路径解析后传入）
+    void removeUser(const QString &userName);
 
     void appendPendingUsers();
 
@@ -65,7 +69,6 @@ private:
     QStringList m_allUserName;
     QStringList m_usersInGroup;
     UsersContainer *m_usersContainer;
-    AccountsDataProvider *m_accountsDataProvider;
     GroupManager *m_groupManager;
     QString m_curShowGroupPath;
     QStringList m_pendingUserNames;

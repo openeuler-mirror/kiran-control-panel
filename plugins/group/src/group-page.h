@@ -14,6 +14,7 @@
 
 #pragma once
 
+#include <QHash>
 #include <QThread>
 #include <QWidget>
 
@@ -45,6 +46,15 @@ public:
     QSize sizeHint() const;
     void jumpToPage(StackWidgetPageEnum page);
 
+signals:
+    /// 有用户新增：页面不直接连账号服务，由 GroupPage 统一转发
+    /// @param userName 新增用户的用户名
+    void userAdded(const QString &userName);
+
+    /// 有用户被删除：页面据此清掉界面上的残留条目
+    /// @param userName 被删除用户的用户名
+    void userDeleted(const QString &userName);
+
 private Q_SLOTS:
     void addGroup(const QString &groupPath, const QString &groupName, qlonglong gid);
     void deleteGroup(const QString &groupPath);
@@ -52,6 +62,13 @@ private Q_SLOTS:
 
     void deleteSidebarItem(const QString &groupPath);
     void updateSidebarItem(const QString &groupPath);
+
+    /// 有用户新增：记下对象路径与用户名的对应关系后转发给页面。
+    /// 记下来是因为删除信号只带对象路径，而那时用户对象已经被服务销毁、查不到名字了
+    void handleUserAdded(const QString &objectPath, const QString &userName,
+                         const QString &iconFile, bool locked);
+    /// 用户被删除：把用户名转发给需要清理的页面
+    void handleUserDeleted(const QString &objectPath);
 
 private:
     void initUI();
@@ -74,4 +91,6 @@ private:
     GroupInfoPage *m_pageGroupInfo = nullptr;
     AddUsersPage *m_pageAddUsers = nullptr;
     QStackedWidget *m_stackWidget = nullptr;
+    // 用户对象路径 -> 用户名：删除信号只给对象路径，删除时已经查不到名字，只能提前记下来
+    QHash<QString, QString> m_userNameByPath;
 };

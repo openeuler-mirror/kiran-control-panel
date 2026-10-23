@@ -57,6 +57,11 @@ signals:
 
 public Q_SLOTS:
     void changeGroupName();
+
+    /// 用户被删除时把成员列表里的条目清掉，避免已删除的用户还留在界面上
+    /// @param userName 被删除用户的用户名（由 GroupPage 从对象路径解析后传入）
+    void removeMember(const QString &userName);
+
     void handleMemberRemoved(const QString &errMsg);
     void handleMemberAdded(const QString &errMsg);
     void handleGroupDeleted(const QString &groupPath, const QString &errMsg);
